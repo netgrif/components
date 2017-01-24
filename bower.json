@@ -1,0 +1,29 @@
+{
+  "name": "Workflow Management System",
+  "authors": [
+    "Milan Mladoniczky <milan.befinger@gmail.com>",
+    "Juraj Mažári <mazari.juraj@gmail.com>",
+    "Tomáš Gažo <tominog38@gmail.com>",
+    "Martin Makáň <martin.makan@gmail.com>"
+  ],
+  "description": "Client for worflow management system",
+  "main": "",
+  "keywords": [
+    "wms",
+    "workflow"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.1.1",
+    "angular-hal": "^2.3.0"
+  }
+}
