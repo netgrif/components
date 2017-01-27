@@ -18,12 +18,12 @@
     <!-- RequireJS loaded scripts -->
 </head>
 <body>
-    <div class="loading-container">
-        <img alt="loading" src="assets/book_shelf_loading.gif">
+    <div ng-controller="ContentRoutingController as cr">
+        <div class="loading-container" ng-show="cr.isLoading">
+            <img alt="loading" src="assets/book_shelf_loading.gif">
+        </div>
+        <div ng-show="!cr.isLoading" ng-include="'views/main.html'" onload="cr.templateLoaded()"></div>
     </div>
-
-    <md-button class="md-raised md-primary">It works</md-button>
-
     <!-- RequireJS -->
     <script src="bower_components/requirejs/require.js" data-main="scripts/main" async></script>
 </body>

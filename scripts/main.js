@@ -2,17 +2,17 @@
  * Created by Milan on 26.1.2017.
  */
 requirejs.config({
-    baseUrl: "bower_components",
+    baseUrl: './',
     paths: {
-        'jquery': "jquery/dist/jquery.min",
-        'angular': "angular/angular.min",
-        'angularAnimate': "angular-animate/angular-animate.min",
-        'angularAria': "angular-aria/angular-aria.min",
-        'angularMessages': "angular-messages/angular-messages.min",
-        'angularHal': "angular-hal/dist/angular-hal.min",
-        'angularMaterial': "angular-material/angular-material.min",
-        'domReady': "requirejs/domReady",
-        'app': "../scripts/app"
+        'jquery': "bower_components/jquery/dist/jquery.min",
+        'angular': "bower_components/angular/angular.min",
+        'angularAnimate': "bower_components/angular-animate/angular-animate.min",
+        'angularAria': "bower_components/angular-aria/angular-aria.min",
+        'angularMessages': "bower_components/angular-messages/angular-messages.min",
+        'angularHal': "bower_components/angular-hal/dist/angular-hal.min",
+        'angularMaterial': "bower_components/angular-material/angular-material.min",
+        'domReady': "bower_components/requirejs/domReady",
+        'app': "scripts/app"
     },
     shim: {
         'angular': {
