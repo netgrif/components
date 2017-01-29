@@ -1,1 +1,16 @@
-<p>Tu bude dashboard</p>
+<div ng-cloak layout-xs>
+    <div ng-repeat="n in dbc.range(20)">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Dashboard</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <p>Nejaký obsah dashboardu!</p>
+                <p>Index {{n}}</p>
+            </md-card-content>
+        </md-card>
+    </div>
+
+</div>

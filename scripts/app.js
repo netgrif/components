@@ -23,7 +23,8 @@ define('app',
         $routeProvider
             .when('/',{
                 templateUrl: 'views/dashboard.html',
-                controller: 'DashboardController'
+                controller: 'DashboardController',
+                controllerAs: 'dbc'
             })
             .when('/profile',{
                 templateUrl: 'views/profile.html',

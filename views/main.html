@@ -1,7 +1,21 @@
-<div>
-    <p>Tu bude toolbar</p>
-    <a href="#!">Dashboard</a>
-    <a href="#!profile">Profile</a>
-
-    <div ng-view onload="clr.viewLoaded()"></div>
+<div ng-cloak class="fill-height" layout="column">
+    <md-toolbar class="md-primary">
+        <div class="md-toolbar-tools">
+            <a href="#!"><h2>Workflow management system</h2></a>
+            <span flex></span>
+            <div>
+                <a href="#!profile"><md-button class="md-raised md-accent">Profile</md-button></a>
+            </div>
+        </div>
+    </md-toolbar>
+    <section layout="row" flex>
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="true" md-whiteframe="4">
+            <md-content layout-padding>
+                <h3>Tu budu ikonky sidebaru</h3>
+            </md-content>
+        </md-sidenav>
+        <md-content layout-wrap flex>
+            <div ng-view onload="clr.viewLoaded()"></div>
+        </md-content>
+    </section>
 </div>

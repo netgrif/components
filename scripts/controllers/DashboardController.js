@@ -14,8 +14,16 @@ function (angular) {
                 $timeout(function () {
                     $log.debug("Dashboard Content Loaded");
                     contentLoader.contentLoaded();
-                },2000);
+                },500);
             }
+
+            self.range = function (range) {
+                var a = [];
+                for(var i=0; i<range; i++){
+                    a.push(i);
+                }
+                return a;
+            };
 
         }]);
 });

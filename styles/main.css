@@ -1,12 +1,13 @@
 html, body {
     padding: 0;
     margin: 0;
-    background-color: #1E6CC7;
 }
 
 div.loading-container {
-    height: 500px;
+    height: 100vh;
+    width: 100vw;
     position: relative;
+    background-color: #1E6CC7;
 }
 
 div.loading-container img {
@@ -15,4 +16,8 @@ div.loading-container img {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
+}
+
+.fill-height {
+    height: 100vh;
 }
