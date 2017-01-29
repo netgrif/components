@@ -21,3 +21,13 @@ div.loading-container img {
 .fill-height {
     height: 100vh;
 }
+
+.toolbar-logo {
+    width: 70%;
+    height: 70%;
+}
+
+.toolbar-avatar {
+    width: 36px;
+    height: 36px;
+}

@@ -1,17 +1,29 @@
 <div ng-cloak class="fill-height" layout="column">
-    <md-toolbar class="md-primary">
+    <md-toolbar class="md-primary" md-whiteframe="3">
         <div class="md-toolbar-tools">
-            <a href="#!"><h2>Workflow management system</h2></a>
+            <a href="/"><img alt="logo" src="assets/logo.png" class="toolbar-logo"></a>
+            <md-input-container>
+                <label><i class="material-icons">search</i></label>
+                <input ng-model="searchInput">
+            </md-input-container>
             <span flex></span>
-            <div>
-                <a href="#!profile"><md-button class="md-raised md-accent">Profile</md-button></a>
+            <div layout="row">
+                <div layout="column">
+                    <span class="md-accent">{{user.name}}</span>
+                    <span>{{user.email}}</span>
+                </div>
+                <a href="/profile"><img alt="user_avatar" ng-src="assets/{{user.avatar}}" class="toolbar-avatar"></a>
             </div>
         </div>
     </md-toolbar>
     <section layout="row" flex>
         <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="true" md-whiteframe="4">
-            <md-content layout-padding>
-                <h3>Tu budu ikonky sidebaru</h3>
+            <md-content layout="column">
+                <a href="/"><md-button flex>Dashboard</md-button></a>
+                <a href="/tasks"><md-button flex>Tasks</md-button></a>
+                <a href="/data"><md-button flex>Data</md-button></a>
+                <a href="/workflow"><md-button flex>Workflow</md-button></a>
+                <a href="/roles"><md-button flex>Roles</md-button></a>
             </md-content>
         </md-sidenav>
         <md-content layout-wrap flex>

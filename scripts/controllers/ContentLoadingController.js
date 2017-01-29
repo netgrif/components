@@ -6,6 +6,15 @@ define(['angular','../modules/Main', 'angularRoute'], function (angular) {
     ['$log','$scope','$route','contentLoader', function ($log, $scope, $route, contentLoader) {
         var self = this;
 
+        $scope.user = {
+            name: "Jožko Mrkvička",
+            email: "jozko.mrkvicka@fmservis.sk",
+            avatar: "user.png"
+        };
+
+        $scope.searchInput = "";
+
+
         self.initLoading = true;
         self.viewLoading = true;
 
