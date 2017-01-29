@@ -14,12 +14,12 @@
     <!-- Angular style -->
     <link rel="stylesheet" type="text/css" href="../bower_components/angular-material/angular-material.min.css">
     <!-- Main style -->
-    <link rel="stylesheet" type="text/css" href="../styles/login.css">
+    <link rel="stylesheet" type="text/css" href="../styles/css/login.css">
     <!-- RequireJS loaded scripts -->
 </head>
 <body ng-app="app">
     <div>
-        <div ng-include="'./login_form.html'"></div>
+        <div ng-include="'./signin_form.html'"></div>
     </div>
 
 <!-- scripts -->
@@ -32,15 +32,35 @@
 <script src="../bower_components/angular-material/angular-material.min.js"></script>
 <!-- custom scripts -->
 <script>
-    angular.module('app', ['ngMaterial', 'ngMessages'])
-        .config(function ($mdThemingProvider) {
-            $mdThemingProvider.theme('default')
-                .primaryPalette('blue')
-                .accentPalette('amber');
-        })
-        .run(function ($log) {
-            $log.debug("Login app is running...");
-        });
+	angular.module('app', ['ngMaterial', 'ngMessages'])
+		.config(function ($mdThemingProvider) {
+			$mdThemingProvider.definePalette('fmService', {
+				'50': '#f3e0e6',
+				'100': '#e0b3bf',
+				'200': '#cc8095',
+				'300': '#b74d6b',
+				'400': '#a7264b',
+				'500': '#98002b',
+				'600': '#900026',
+				'700': '#850020',
+				'800': '#7b001a',
+				'900': '#6a0010',
+				'A100': '#ff99a1',
+				'A200': '#ff6672',
+				'A400': '#ff3343',
+				'A700': '#ff1a2b',
+				'contrastDefaultColor': 'light',
+				'contrastDarkColors': '50 100 200 A100 A200',
+				'contrastLightColors': undefined
+			});
+
+			$mdThemingProvider.theme('default')
+				.primaryPalette('blue-grey')
+				.accentPalette('fmService');
+		})
+		.run(function ($log) {
+			$log.debug("Login app is running...");
+		});
 </script>
 </body>
 </html>
