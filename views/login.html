@@ -1,3 +1,46 @@
-<div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workflow Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Workflow Management software">
+    <meta name="keywords" content="PetriNet, wms, workflow">
+    <meta name="author" content="Gažo, Mažári, Makáň, Mladoniczky">
+    <!-- -- CSS -- -->
+    <!-- Material font and icons -->
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700'>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Angular style -->
+    <link rel="stylesheet" type="text/css" href="../bower_components/angular-material/angular-material.min.css">
+    <!-- Main style -->
+    <link rel="stylesheet" type="text/css" href="../styles/login.css">
+    <!-- RequireJS loaded scripts -->
+</head>
+<body ng-app="app">
+    <div>
+        <div ng-include="'./login_form.html'"></div>
+    </div>
 
-</div>
+<!-- scripts -->
+<!-- Libraries -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<!-- custom scripts -->
+<script>
+    angular.module('app', ['ngMaterial', 'ngMessages'])
+        .config(function ($mdThemingProvider) {
+            $mdThemingProvider.theme('default')
+                .primaryPalette('blue')
+                .accentPalette('amber');
+        })
+        .run(function ($log) {
+            $log.debug("Login app is running...");
+        });
+</script>
+</body>
+</html>
