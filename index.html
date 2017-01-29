@@ -18,11 +18,11 @@
     <!-- RequireJS loaded scripts -->
 </head>
 <body>
-<div ng-controller="ContentRoutingController as cr">
-    <div class="loading-container" ng-show="cr.isLoading">
+<div ng-controller="ContentLoadingController as clr">
+    <div class="loading-container" ng-show="clr.initLoading">
         <img alt="loading" src="assets/book_shelf_loading.gif">
     </div>
-    <div ng-show="!cr.isLoading" ng-include="'views/main.html'" onload="cr.templateLoaded()"></div>
+    <div ng-show="!clr.initLoading" ng-include="'views/main.html'" onload="clr.templateLoaded()"></div>
 </div>
 <!-- RequireJS -->
 <script src="bower_components/requirejs/require.js" data-main="scripts/main" async></script>

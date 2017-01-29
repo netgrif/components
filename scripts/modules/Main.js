@@ -5,6 +5,6 @@
     Main module
     async load directive, inner content routing
  */
-define(['angular'], function (angular) {
-    return angular.module('ngMain',[]);
+define(['angular','angularRoute'], function (angular) {
+    return angular.module('ngMain',['ngRoute']);
 });
