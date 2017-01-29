@@ -1,25 +1,21 @@
 /**
  * Created by Milan on 27.1.2017.
  */
-define(['angular','../modules/Dashboard','../modules/Main','../services/ContentRouter'],
+define(['angular','../modules/Dashboard','../modules/Main','../services/ContentLoader'],
 function (angular) {
    angular.module('ngDashboard').controller('DashboardController',
-       ['$log','$scope','contentRouter',
-        function ($log, $scope, contentRouter) {
+       ['$log','$scope','contentLoader','$timeout',
+        function ($log, $scope, contentLoader, $timeout) {
             var self = this;
 
-            self.isInForeground = true;
+            contentLoader.register('DashboardController',init);
 
-            self.moduleLoaded = function () {
-                $log.debug("Dashboard loaded");
-                contentRouter.register('dashboard',changeVisibility);
-            };
-
-            function changeVisibility(visible) {
-                self.isInForeground = visible;
+            function init() {
+                $timeout(function () {
+                    $log.debug("Dashboard Content Loaded");
+                    contentLoader.contentLoaded();
+                },2000);
             }
-
-
 
         }]);
 });

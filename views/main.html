@@ -1,7 +1,7 @@
 <div>
-    Tu bude toolbar
-    <br>
-    <div ng-controller="DashboardController as dbc">
-        <div ng-include="'views/dashboard.html'" onload="dbc.moduleLoaded()" ng-show="dbc.isInForeground"></div>
-    </div>
+    <p>Tu bude toolbar</p>
+    <a href="#!">Dashboard</a>
+    <a href="#!profile">Profile</a>
+
+    <div ng-view onload="clr.viewLoaded()"></div>
 </div>
