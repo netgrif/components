@@ -10,6 +10,7 @@ requirejs.config({
         'angularAria': "bower_components/angular-aria/angular-aria.min",
         'angularMessages': "bower_components/angular-messages/angular-messages.min",
         'angularHal': "bower_components/angular-hal/dist/angular-hal.min",
+        'angularRoute': "bower_components/angular-route/angular-route.min",
         'angularMaterial': "bower_components/angular-material/angular-material.min",
         'domReady': "bower_components/requirejs/domReady",
         'app': "scripts/app"
@@ -23,6 +24,7 @@ requirejs.config({
         'angularAria': ['angular'],
         'angularMessages': ['angular'],
         'angularHal': ['angular'],
+        'angularRoute': ['angular'],
         'angularMaterial': ['angular', 'angularAnimate', 'angularAria', 'angularMessages']
     }
 });

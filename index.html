@@ -14,17 +14,31 @@
     <!-- Angular style -->
     <link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.min.css">
     <!-- Main style -->
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <link rel="stylesheet" type="text/css" href="styles/login.css">
     <!-- RequireJS loaded scripts -->
 </head>
-<body>
-    <div ng-controller="ContentRoutingController as cr">
-        <div class="loading-container" ng-show="cr.isLoading">
-            <img alt="loading" src="assets/book_shelf_loading.gif">
-        </div>
-        <div ng-show="!cr.isLoading" ng-include="'views/main.html'" onload="cr.templateLoaded()"></div>
-    </div>
-    <!-- RequireJS -->
-    <script src="bower_components/requirejs/require.js" data-main="scripts/main" async></script>
+<body ng-app="app">
+    <div ng-include="'views/login.html'"></div>
+
+    <!-- scripts -->
+    <!-- Libraries -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <!-- custom scripts -->
+    <script>
+        angular.module('app',['ngMaterial','ngMessages'])
+            .config(function ($mdThemingProvider) {
+                $mdThemingProvider.theme('default')
+                    .primaryPalette('blue')
+                    .accentPalette('amber');
+            })
+            .run(function ($log) {
+                $log.debug("Login app is running...");
+            });
+    </script>
 </body>
 </html>
