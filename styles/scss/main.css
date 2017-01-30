@@ -1,0 +1,43 @@
+/* line 1, C:/Users/martin/Desktop/diplomka/frontend/styles/scss/_global.scss */
+body {
+  min-height: 100%; }
+
+/* line 9, C:/Users/martin/Desktop/diplomka/frontend/styles/scss/_global.scss */
+.layout-vh-100 {
+  height: 100vh; }
+
+/* line 3, C:/Users/martin/Desktop/diplomka/frontend/styles/scss/main.scss */
+html, body {
+  padding: 0;
+  margin: 0; }
+
+/* line 8, C:/Users/martin/Desktop/diplomka/frontend/styles/scss/main.scss */
+div.loading-container {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background-color: #1E6CC7; }
+
+/* line 17, C:/Users/martin/Desktop/diplomka/frontend/styles/scss/main.scss */
+div.loading-container img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%); }
+
+/* line 26, C:/Users/martin/Desktop/diplomka/frontend/styles/scss/main.scss */
+.fill-height {
+  height: 100vh; }
+
+/* line 30, C:/Users/martin/Desktop/diplomka/frontend/styles/scss/main.scss */
+.toolbar-logo {
+  width: 70%;
+  height: 70%; }
+
+/* line 35, C:/Users/martin/Desktop/diplomka/frontend/styles/scss/main.scss */
+.toolbar-avatar {
+  width: 36px;
+  height: 36px; }
+
+/*# sourceMappingURL=main.css.map */
