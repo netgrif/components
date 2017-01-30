@@ -1,9 +1,11 @@
 <div ng-cloak layout="column" layout-align="center center" class="layout-vh-100">
-	<md-card>
+	<md-card layout-padding class="card-login">
 		<md-input-container class="md-block">
+			<md-icon class="material-icons">email</md-icon>
 			<input ng-model="user.email" type="email" placeholder="Email" ng-required="true">
 		</md-input-container>
 		<md-input-container class="md-block">
+			<md-icon class="material-icons">lock</md-icon>
 			<input ng-model="user.psw" type="password" placeholder="Password" ng-required="true">
 		</md-input-container>
 		<md-card-actions layout="row" layout-align="end center">

@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="../styles/css/login.css">
     <!-- RequireJS loaded scripts -->
 </head>
-<body ng-app="app">
+<body ng-app="app" class="base">
 	<div ng-include="'./signin_form.html'"></div>
 
 <!-- scripts -->
@@ -54,7 +54,7 @@
 
 			$mdThemingProvider.theme('default')
 				.primaryPalette('blue-grey')
-				.accentPalette('fmService');
+				.accentPalette('fmService')
 		})
 		.run(function ($log) {
 			$log.debug("Login app is running...");
