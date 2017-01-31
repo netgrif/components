@@ -1,21 +1,12 @@
 /**
  * Created by Milan on 27.1.2017.
  */
-define(['angular','../modules/Dashboard','../modules/Main','../services/ContentLoader'],
+define(['angular','../modules/Dashboard','../modules/Main'],
 function (angular) {
    angular.module('ngDashboard').controller('DashboardController',
-       ['$log','$scope','contentLoader','$timeout',
-        function ($log, $scope, contentLoader, $timeout) {
+       ['$log','$scope','$timeout',
+        function ($log, $scope, $timeout) {
             var self = this;
-
-            contentLoader.register('DashboardController',init);
-
-            function init() {
-                $timeout(function () {
-                    $log.debug("Dashboard Content Loaded");
-                    contentLoader.contentLoaded();
-                },500);
-            }
 
             self.range = function (range) {
                 var a = [];

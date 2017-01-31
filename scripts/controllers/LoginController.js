@@ -1,33 +1,39 @@
-// todo: change according to our needs
-angular.module('navigation', ['ngRoute', 'auth']).controller(
-    'navigation',
 
-    function($route, auth) {
-
+define(['angular','../modules/Main','../services/Auth'], function (angular) {
+    angular.module('ngMain').controller('LoginController',['$auth', '$loading','$log',
+    function ($auth, $loading, $log) {
         var self = this;
 
-        self.credentials = {};
+        self.credentials = {
+            username: "",
+            password: ""
+        };
+        self.error = {};
 
-        self.tab = function(route) {
-            return $route.current && route === $route.current.controller;
+        self.loaded = function () {
+            $loading.showLoading(false);
         };
 
-        self.authenticated = function() {
-            return auth.authenticated;
-        }
-
-        self.login = function() {
-            auth.authenticate(self.credentials, function(authenticated) {
-                if (authenticated) {
-                    console.log("Login succeeded")
-                    self.error = false;
+        self.login = function () {
+            $auth.authenticate(self.credentials, function (authenticated) {
+                if(authenticated){
+                    $log.debug("Login succeeded");
+                    self.error = {
+                        error: false
+                    };
                 } else {
-                    console.log("Login failed")
-                    self.error = true;
+                    $log.debug("Login failed");
+                    self.error = {
+                        error: true,
+                        msg: "Wrong user name or password"
+                    };
+                    $log.debug(self.error.msg);
                 }
             })
         };
 
-        self.logout = auth.clear;
-
-    });
+        self.logout = function () {
+            $auth.logout();
+        }
+    }]);
+});
