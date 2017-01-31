@@ -1,3 +1,32 @@
-<div>
-
+<div ng-cloak layout="column" layout-align="center center" class="layout-vh-100">
+	<md-card layout-padding class="card-login">
+		<md-input-container class="md-block">
+			<md-icon class="material-icons">email</md-icon>
+			<input ng-model="user.email" type="email" placeholder="Email" ng-required="true">
+		</md-input-container>
+		<md-input-container class="md-block">
+			<md-icon class="material-icons">lock</md-icon>
+			<input ng-model="user.psw" type="password" placeholder="Password" ng-required="true">
+		</md-input-container>
+		<md-input-container class="md-block">
+			<md-icon class="material-icons">lock</md-icon>
+			<input ng-model="user.psw" type="password" placeholder="Password again" ng-required="true">
+		</md-input-container>
+		<md-input-container class="md-block">
+			<md-icon class="material-icons">perm_identity</md-icon>
+			<input ng-model="user.name" type="text" placeholder="Name" ng-required="true">
+		</md-input-container>
+		<md-input-container class="md-block">
+			<md-icon class="material-icons">perm_identity</md-icon>
+			<input ng-model="user.surname" type="text" placeholder="Surname" ng-required="true">
+		</md-input-container>
+		<md-input-container class="md-block">
+			<md-icon class="material-icons">phone</md-icon>
+			<input ng-model="user.phone" type="text" placeholder="Phone number" ng-required="false">
+		</md-input-container>
+		
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button>Sign in</md-button>
+		</md-card-actions>
+	</md-card>
 </div>
