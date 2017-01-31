@@ -37,8 +37,8 @@ define('app',
         });
 
         $mdThemingProvider.theme('default')
-            .primaryPalette('blue-grey')
-            .accentPalette('fmService');
+            .primaryPalette('fmService')
+            .accentPalette('blue-grey');
 
         $routeSegmentProvider
             .when('/','app')
