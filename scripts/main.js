@@ -11,7 +11,7 @@ requirejs.config({
         'angularMessages': "bower_components/angular-messages/angular-messages.min",
         'angularHal': "bower_components/angular-hal/dist/angular-hal.min",
         'angularRoute': "bower_components/angular-route/angular-route.min",
-        'angularRouteSegment': "bower_components/angular-route-segment/angular-route-segment",
+        'angularRouteSegment': "bower_components/angular-route-segment/build/angular-route-segment",
         'angularMaterial': "bower_components/angular-material/angular-material.min",
         'domReady': "bower_components/requirejs/domReady",
         'app': "scripts/app"

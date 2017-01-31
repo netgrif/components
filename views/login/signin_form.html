@@ -1,0 +1,15 @@
+<div ng-cloak layout="column" layout-align="center center" class="layout-vh-100">
+	<md-card layout-padding class="card-login">
+		<md-input-container class="md-block">
+			<md-icon class="material-icons">email</md-icon>
+			<input ng-model="loginCtrl.credentials.username" type="text" placeholder="Email" ng-required="true">
+		</md-input-container>
+		<md-input-container class="md-block">
+			<md-icon class="material-icons">lock</md-icon>
+			<input ng-model="loginCtrl.credentials.password" type="password" placeholder="Password" ng-required="true">
+		</md-input-container>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button ng-click="loginCtrl.login()">Sign in</md-button>
+		</md-card-actions>
+	</md-card>
+</div>

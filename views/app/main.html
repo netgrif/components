@@ -27,7 +27,7 @@
             </md-content>
         </md-sidenav>
         <md-content layout-wrap flex>
-            <div ng-view onload="clr.viewLoaded()"></div>
+            <div app-view-segment="1" onload="mainCtrl.loadData()"></div>
         </md-content>
     </section>
 </div>

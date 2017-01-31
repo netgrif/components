@@ -5,7 +5,7 @@
     map all application components
  */
 define('app',
-    ['angular','angularMaterial','angularHal', 'angularRoute',
+    ['angular','angularMaterial','angularHal', 'angularRoute','angularRouteSegment',
      'scripts/directives/DirectivesLoader',
      'scripts/filters/FiltersLoader',
      'scripts/services/ServicesLoader',
@@ -13,9 +13,9 @@ define('app',
     function (angular) {
     // console.log(angular.version);
     var app = angular.module('app',
-        ['ngMaterial','angular-hal','ngMessages','ngRoute',
+        ['ngMaterial','angular-hal','ngMessages','ngRoute','route-segment','view-segment',
          'ngMain','ngDashboard']); //here add modules that you defined
-    app.config(function ($mdThemingProvider, $routeProvider, $locationProvider) {
+    app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider) {
         $mdThemingProvider.definePalette('fmService', {
             '50': '#f3e0e6',
             '100': '#e0b3bf',
@@ -40,22 +40,53 @@ define('app',
             .primaryPalette('blue-grey')
             .accentPalette('fmService');
 
-        $routeProvider
-            .when('/',{
-                templateUrl: 'views/dashboard.html',
-                controller: 'DashboardController',
-                controllerAs: 'dbc'
+        $routeSegmentProvider
+            .when('/','app')
+            .when('/login','login')
+            .when('/login/signin','login.signin')
+            .when('/login/signup','login.signup')
+            .when('/dashboard','app.dashboard')
+            .when('/profile','app.profile')
+
+            .segment('app',{
+                templateUrl: "views/app/main.html",
+                controller: 'MainController',
+                controllerAs: 'mainCtrl'
             })
-            .when('/profile',{
-                templateUrl: 'views/profile.html',
-                controller: 'ProfileController'
-            });
+            .within()
+                .segment('dashboard',{
+                    default: true,
+                    templateUrl: "views/app/dashboard.html",
+                    controller: 'DashboardController',
+                    controllerAs: 'dashCtrl'
+                })
+                .segment('profile',{
+                    templateUrl: "views/app/profile.html",
+                    controller: 'ProfileController',
+                    controllerAs: 'profCtrl'
+                })
+            .up()
+            .segment('login',{
+                templateUrl: "views/login/login.html",
+                controller: 'LoginController',
+                controllerAs: 'loginCtrl'
+            })
+            .within()
+                .segment('signin',{
+                    default: true,
+                    templateUrl: "views/login/signin_form.html"
+                })
+                .segment('signip',{
+                    templateUrl: "views/login/signup_form.html"
+                });
 
         $locationProvider.html5Mode(true);
+        $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
     });
-    // app.run(function ($log) {
-    //     $log.debug("App is running...");
-    // });
+    app.run(function ($log,$auth) {
+        $log.debug("App is running...");
+        $auth.init();
+    });
 
     return app;
 });
