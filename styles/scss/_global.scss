@@ -1,11 +1,6 @@
 // Global HTML5 elements
 body {
 	min-height: 100%;
-	background-image: url(../../assets/vectorpaint.svg);
-	background-size: cover;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
 }
 
 // Layout
@@ -17,4 +12,43 @@ body {
 			height: 100vh;
 		}
 	}
+}
+
+
+//TODO: To be changed
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+div.loading-container {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    background-color: #1E6CC7;
+}
+
+div.loading-container {
+
+	img {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-right: -50%;
+		transform: translate(-50%, -50%);
+	}
+}
+
+.fill-height {
+    height: 100vh;
+}
+
+.toolbar-logo {
+    width: 70%;
+    height: 70%;
+}
+
+.toolbar-avatar {
+    width: 36px;
+    height: 36px;
 }

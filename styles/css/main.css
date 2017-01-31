@@ -23,7 +23,9 @@ div.loading-container img {
   top: 50%;
   left: 50%;
   margin-right: -50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .fill-height {
@@ -38,4 +40,16 @@ div.loading-container img {
 .toolbar-avatar {
   width: 36px;
   height: 36px;
+}
+
+.base .card-login {
+  width: 400px;
+}
+
+.base .background-welcome {
+  background-image: url(../../assets/vectorpaint.svg);
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }

@@ -1,39 +1,11 @@
+@import 'colors';
+@import 'dims';
+@import 'functions';
 @import 'global';
 
-// To be changed
-html, body {
-    padding: 0;
-    margin: 0;
+.base {
+    // Blocks & Elements
+	@import 'blocks/card.scss';
+	@import 'blocks/welcome_screen.scss';
 }
 
-div.loading-container {
-    height: 100vh;
-    width: 100vw;
-    position: relative;
-    background-color: #1E6CC7;
-}
-
-div.loading-container {
-
-	img {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin-right: -50%;
-		transform: translate(-50%, -50%);
-	}
-}
-
-.fill-height {
-    height: 100vh;
-}
-
-.toolbar-logo {
-    width: 70%;
-    height: 70%;
-}
-
-.toolbar-avatar {
-    width: 36px;
-    height: 36px;
-}
