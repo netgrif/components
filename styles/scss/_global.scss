@@ -1,13 +1,16 @@
 // Global HTML5 elements
 body {
 	min-height: 100%;
+	background-image: url(../../img/vectorpaint.svg);
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
 }
 
 // Layout
 .layout {
-
 	&-vh {
-
 		&-100 {
 			height: 100vh;
 		}
