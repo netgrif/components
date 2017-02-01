@@ -1,14 +1,16 @@
 
 define(['angular','../modules/Main','../services/Auth'], function (angular) {
-    angular.module('ngMain').controller('LoginController',['$auth', '$loading','$log', '$mdToast',
-    function ($auth, $loading, $log, $mdToast) {
+    angular.module('ngMain').controller('LoginController',['$auth', '$loading','$log', '$snackbar',
+    function ($auth, $loading, $log, $snackbar) {
         var self = this;
 
         self.credentials = {
             username: "",
             password: ""
         };
-        self.error = {};
+        self.error = {
+            error: false
+        };
 
         //$loading.registerLoadWatcher("/login", loaded);
 
@@ -41,11 +43,7 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
         };
 
 		self.showToast = function(msg) {
-			$mdToast.show($mdToast.simple()
-						  .textContent(msg)
-						  .position("bottom right")
-						  .hideDelay(3000)
-			);
+            $snackbar.show(msg);
 		};
     }]);
 });
