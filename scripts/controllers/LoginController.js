@@ -43,6 +43,7 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
 		self.showToast = function(msg) {
 			$mdToast.show($mdToast.simple()
 						  .textContent(msg)
+						  .position("bottom right")
 						  .hideDelay(3000)
 			);
 		};
