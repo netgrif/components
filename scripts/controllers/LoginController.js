@@ -10,9 +10,13 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
         };
         self.error = {};
 
-        self.loaded = function () {
+        //$loading.registerLoadWatcher("/login", loaded);
+
+        self.viewLoaded = loaded;
+        function loaded() {
+            $log.debug("Login loaded");
             $loading.showLoading(false);
-        };
+        }
 
         self.login = function () {
             $auth.authenticate(self.credentials, function (authenticated) {
