@@ -1,7 +1,7 @@
 
 define(['angular','../modules/Main','../services/Auth'], function (angular) {
-    angular.module('ngMain').controller('LoginController',['$auth', '$loading','$log',
-    function ($auth, $loading, $log) {
+    angular.module('ngMain').controller('LoginController',['$auth', '$loading','$log', '$mdToast',
+    function ($auth, $loading, $log, $mdToast) {
         var self = this;
 
         self.credentials = {
@@ -34,6 +34,14 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
 
         self.logout = function () {
             $auth.logout();
-        }
+        };
+
+		self.showToast(msg) {
+			$mdToast.show($mdToast.simple()
+						  .textContent('Simple Toast!')
+						  .hideDelay(3000)
+			);
+		}
+
     }]);
 });
