@@ -15,14 +15,15 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
             authenticate: function (credentials, callback) {
                 $log.debug(credentials);
                 var headers = credentials && credentials.username ? {
-                    'Authorization' : "Basic" + btoa(credentials.username + ":" + credentials.password)
+                    'Authorization' : "Basic " + btoa(credentials.username + ":" + credentials.password)
                 } : {};
 
                 $log.debug(headers);
                 $http.get(auth.userPath,{
                     headers: headers
                 }).then(function (response) {
-                    auth.authenticated = !!response.data.name;
+                    $log.debug(response);
+                    auth.authenticated = !!response.name;
                     callback && callback(auth.authenticated);
                     $location.path(auth.path == auth.loginPath ? auth.appPath : auth.path);
 
