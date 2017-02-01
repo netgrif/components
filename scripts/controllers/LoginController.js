@@ -40,12 +40,11 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             $auth.logout();
         };
 
-		self.showToast(msg) {
+		self.showToast = function(msg) {
 			$mdToast.show($mdToast.simple()
-						  .textContent('Simple Toast!')
+						  .textContent(msg)
 						  .hideDelay(3000)
 			);
-		}
-
+		};
     }]);
 });
