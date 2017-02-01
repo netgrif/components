@@ -15,7 +15,7 @@ define('app',
     var app = angular.module('app',
         ['ngMaterial','angular-hal','ngMessages','ngRoute','route-segment','view-segment',
          'ngMain','ngDashboard']); //here add modules that you defined
-    app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider) {
+    app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $qProvider) {
         $mdThemingProvider.definePalette('fmService', {
             '50': '#f3e0e6',
             '100': '#e0b3bf',
@@ -82,6 +82,8 @@ define('app',
 
         $locationProvider.html5Mode(true);
         $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
+
+        //$qProvider.errorOnUnhandledRejections(false);
     });
     app.run(function ($log,$auth) {
         $log.debug("App is running...");

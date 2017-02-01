@@ -8,7 +8,9 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             username: "",
             password: ""
         };
-        self.error = {};
+        self.error = {
+            error: false
+        };
 
         //$loading.registerLoadWatcher("/login", loaded);
 

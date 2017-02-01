@@ -20,10 +20,10 @@
 </head>
 <body>
 <div ng-controller="MainController as mainCtrl">
-    <div class="loading-container" ng-show="mainCtrl.showLoading">
+    <div class="loading-container" ng-show="showLoading">
         <img alt="loading" src="assets/book_shelf_loading.gif">
     </div>
-    <div ng-show="!mainCtrl.showLoading" app-view-segment="0"></div>
+    <div ng-show="!showLoading" app-view-segment="0"></div>
 </div>
 <!-- RequireJS -->
 <script src="bower_components/requirejs/require.js" data-main="scripts/main" async></script>
