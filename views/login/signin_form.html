@@ -1,17 +1,23 @@
 <div ng-cloak layout="column" layout-align="center center" class="layout-vh-100 background-welcome">
-	<md-card layout-padding class="card-login">
-		<form ng-submit="loginCtrl.login()">
-			<md-input-container class="md-block">
-				<md-icon class="material-icons">email</md-icon>
-				<input ng-model="loginCtrl.credentials.username" type="text" placeholder="Email" ng-required="true">
-			</md-input-container>
-			<md-input-container class="md-block">
-				<md-icon class="material-icons">lock</md-icon>
-				<input ng-model="loginCtrl.credentials.password" type="password" placeholder="Password" ng-required="true">
-			</md-input-container>
-			<md-card-actions layout="row" layout-align="end center">
-				<md-button type="submit">Sign in</md-button>
-			</md-card-actions>
-		</form>
+	<md-card layout="row" layout-xs="column" layout-align="center center" layout-padding class="card-welcome">
+		<div flex="50">
+			<img ng-src="../../assets/FMlogo.png">
+		</div>
+		<div flex="50">
+			<form ng-submit="loginCtrl.login()">
+				<md-input-container class="md-block">
+					<md-icon class="material-icons">email</md-icon>
+					<input ng-model="loginCtrl.credentials.username" type="text" placeholder="Email" ng-required="true">
+				</md-input-container>
+				<md-input-container class="md-block">
+					<md-icon class="material-icons">lock</md-icon>
+					<input ng-model="loginCtrl.credentials.password" type="password" placeholder="Password" ng-required="true">
+				</md-input-container>
+				<md-card-actions layout="row" layout-xs="column" layout-align="space-between center">
+					<a flex-order-xs="1" href="#" md-colors="{color: 'accent-500'}">Forgot password</a>
+					<md-button type="submit" flex-order-xs="-1" md-colors="{background: 'primary-500'}">Sign in</md-button>
+				</md-card-actions>
+			</form>
+		</div>
 	</md-card>
 </div>

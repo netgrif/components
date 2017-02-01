@@ -1,6 +1,21 @@
 .card {
 
-	&-login {
-		width: 400px;
+	// TODO
+	&-welcome {
+		min-height: 300px;
+		width: 600px;
+
+		img {
+			max-height: 150px;
+			max-width: auto;
+		}
+
+		a {
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 	}
 }

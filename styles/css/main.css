@@ -42,8 +42,22 @@ div.loading-container img {
   height: 36px;
 }
 
-.base .card-login {
-  width: 400px;
+.base .card-welcome {
+  min-height: 300px;
+  width: 600px;
+}
+
+.base .card-welcome img {
+  max-height: 150px;
+  max-width: auto;
+}
+
+.base .card-welcome a {
+  text-decoration: none;
+}
+
+.base .card-welcome a:hover {
+  text-decoration: underline;
 }
 
 .base .background-welcome {
