@@ -1,0 +1,27 @@
+.main-toolbar {
+	height: 80px;
+	background-color: $color-grey-200;
+
+	// TODO temp
+	.md-toolbar-tools {
+
+		a {
+			height: 70px;
+			padding: 0;
+
+			.toolbar {
+
+				&-logo {
+					height: 70px;
+					width: auto;
+				}
+
+				&-avatar {
+					width: 70px;
+    				height: 70px;
+				}
+
+			}
+		}
+	}
+}

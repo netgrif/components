@@ -1,26 +1,26 @@
-<div ng-cloak class="fill-height" layout="column">
-    <md-toolbar class="md-primary" md-whiteframe="3">
+<div ng-cloak class="base layout-vh-100" layout="column">
+    <md-toolbar class="main-toolbar" md-whiteframe="5" layout="row" layout-align="center center">
         <div class="md-toolbar-tools">
             <a href="/dashboard"><img alt="logo" src="assets/logo.png" class="toolbar-logo"></a>
-            <span flex></span>
-            <div layout="row">
-                <div layout="column">
-                    <span class="md-accent">USER NAME</span>
-                    <span>USER EMAIL</span>
+            <div flex></div>
+            <div layout="row" layout-align="center center">
+                <div layout="column" md-colors="{color: 'accent-800'}">
+                    <span>Gandalf The White</span>
+                    <span>whistle.likeboss@gmail.com</span>
                 </div>
                 <a href="/profile"><img alt="user_avatar" ng-src="assets/user.png" class="toolbar-avatar"></a>
             </div>
         </div>
     </md-toolbar>
     <section layout="row" flex>
-        <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="true" md-whiteframe="4">
-            <md-content layout="column">
-                <a href="/dashboard"><md-button flex>Dashboard</md-button></a>
-                <a href="/tasks"><md-button flex>Tasks</md-button></a>
-                <a href="/data"><md-button flex>Data</md-button></a>
-                <a href="/workflow"><md-button flex>Workflow</md-button></a>
-                <a href="/roles"><md-button flex>Roles</md-button></a>
-            </md-content>
+        <md-sidenav class="md-sidenav-left main-sidenav" md-component-id="left" md-is-locked-open="true" md-whiteframe="5">
+            <div layout="column">
+                <a href="/dashboard" layout="row" layout-align="left center"><i class="material-icons">dashboard</i>Dashboard</a>
+				<a href="/tasks" layout="row" layout-align="left center"><i class="material-icons">view_list</i>Tasks</a>
+                <a href="/data" layout="row" layout-align="left center"><i class="material-icons">storage</i>Data</a>
+                <a href="/workflow" layout="row" layout-align="left center"><i class="material-icons">multiline_chart</i>Workflow</a>
+                <a href="/roles" layout="row" layout-align="left center"><i class="material-icons">people</i>Roles</a>
+            </div>
         </md-sidenav>
         <md-content layout-wrap flex>
             <div app-view-segment="1" onload="mainCtrl.startLoadingData()"></div>

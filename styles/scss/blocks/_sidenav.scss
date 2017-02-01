@@ -1,0 +1,26 @@
+.main-sidenav {
+	width: 200px;
+	background-color: $color-grey-800;
+
+
+		// TODO temp
+		a {
+			width: 100%;
+			text-decoration: none;
+			color: white;
+			font-size: 20px;
+			padding: 5px 10px;
+
+			&:hover {
+				background-color: $color-fm-500;
+			}
+
+			&:first-child {
+				margin-top: 30px;
+			}
+
+			i {
+				margin-right: 10px;
+			}
+		}
+}
