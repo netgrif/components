@@ -19,10 +19,13 @@ define(['angular','../modules/Main','../services/Loading'],function (angular) {
             dataLoadingStarted = true;
             //load necessary data on beginning
             $log.debug("Data loaded");
-            $loading.showLoading(false);
-            $log.debug($scope.showLoading);
-            $loading.showLoading(true);
-            $loading.showLoading(false);
+            if($scope.showLoading){
+                $loading.showLoading(false);
+                //TODO resolve angular error
+                //TEMP solution - very bad!!!!
+                angular.element(".loading-container").hide();
+            }
+
         }
 
 
