@@ -2,6 +2,7 @@
 @import 'dims';
 @import 'functions';
 @import 'global';
+@import 'blocks/spinner.scss';
 
 .base {
     // Blocks & Elements
@@ -11,6 +12,6 @@
 	@import 'blocks/sidenav.scss';
 }
 
-.loader {
-	@import 'blocks/spinner.scss';
-}
+//.loader {
+//	@import 'blocks/spinner.scss';
+//}
