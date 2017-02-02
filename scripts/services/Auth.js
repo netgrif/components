@@ -44,6 +44,8 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                 });
             },
             init: function () {
+                if($location.path() == '/test') return;
+
                 this.authenticate({},function (isLogedIn) {
                     if(isLogedIn) $location.path(auth.path);
                 });

@@ -47,6 +47,7 @@ define('app',
             .when('/login/signup','login.signup')
             .when('/dashboard','app.dashboard')
             .when('/profile','app.profile')
+            .when('/test','test')
 
             .segment('app',{
                 templateUrl: "views/app/main.html",
@@ -78,7 +79,11 @@ define('app',
                 })
                 .segment('signip',{
                     templateUrl: "views/login/signup_form.html"
-                });
+                })
+            .up()
+            .segment('test',{
+                templateUrl: "views/test.html"
+            });
 
         $locationProvider.html5Mode(true);
         $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
