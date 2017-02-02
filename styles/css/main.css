@@ -6,6 +6,10 @@ body {
   height: 100vh;
 }
 
+.layout-vw-100 {
+  width: 100vw;
+}
+
 html, body {
   padding: 0;
   margin: 0;
@@ -26,6 +30,146 @@ div.loading-container img {
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+}
+
+.loader {
+  height: 100%;
+  width: 100%;
+  background-image: url(../../../assets/welcome_background.jpg);
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+@-webkit-keyframes spinner-right {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-right {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spinner-left {
+  to {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+
+@keyframes spinner-left {
+  to {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+
+.spinner:before {
+  content: 'Loading';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.spinner:not(:required):before {
+  content: '';
+  border-radius: 50%;
+  border-style: solid;
+  border-color: transparent;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.orbit1 {
+  height: 50px;
+  width: 50px;
+}
+
+.orbit1:before {
+  height: 50px;
+  width: 50px;
+  margin-top: -25px;
+  margin-left: -25px;
+}
+
+.orbit1:not(:required):before {
+  border-width: 5px;
+  border-top-color: white;
+  -webkit-animation-name: spinner-left;
+          animation-name: spinner-left;
+  -webkit-animation-duration: .7s;
+          animation-duration: .7s;
+}
+
+.orbit2 {
+  height: 100px;
+  width: 100px;
+}
+
+.orbit2:before {
+  height: 100px;
+  width: 100px;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+
+.orbit2:not(:required):before {
+  border-width: 7px;
+  border-top-color: #212121;
+  -webkit-animation-name: spinner-right;
+          animation-name: spinner-right;
+  -webkit-animation-duration: .9s;
+          animation-duration: .9s;
+}
+
+.orbit3 {
+  height: 150px;
+  width: 150px;
+}
+
+.orbit3:before {
+  height: 150px;
+  width: 150px;
+  margin-top: -75px;
+  margin-left: -75px;
+}
+
+.orbit3:not(:required):before {
+  border-width: 5px;
+  border-top-color: white;
+  -webkit-animation-name: spinner-left;
+          animation-name: spinner-left;
+  -webkit-animation-duration: .8s;
+          animation-duration: .8s;
+}
+
+.orbit4 {
+  height: 200px;
+  width: 200px;
+}
+
+.orbit4:before {
+  height: 200px;
+  width: 200px;
+  margin-top: -100px;
+  margin-left: -100px;
+}
+
+.orbit4:not(:required):before {
+  border-width: 7px;
+  border-top-color: #212121;
+  -webkit-animation-name: spinner-left;
+          animation-name: spinner-left;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
 }
 
 .base .card-welcome {
@@ -97,165 +241,4 @@ div.loading-container img {
 
 .base .main-sidenav a i {
   margin-right: 10px;
-}
-
-.loader {
-  /* loader 1 */
-  /*loader 2  */
-  /*loader 3  */
-  /* loader 4 */
-}
-
-@-webkit-keyframes rotate {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  50% {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
-@keyframes rotate {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  50% {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes rotate2 {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    border-top-color: rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
-    border-top-color: rgba(0, 0, 255, 0.5);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-    border-top-color: rgba(0, 0, 0, 0.5);
-  }
-}
-
-@keyframes rotate2 {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    border-top-color: rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
-    border-top-color: rgba(0, 0, 255, 0.5);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-    border-top-color: rgba(0, 0, 0, 0.5);
-  }
-}
-
-.loader * {
-  box-sizing: border-box;
-}
-
-.loader body {
-  background: #f9f9f9;
-  padding-bottom: 100px;
-}
-
-.loader h1, .loader h3 {
-  display: block;
-  margin: 0px auto;
-  text-align: center;
-  font-family: 'Tahoma';
-  font-weight: lighter;
-  color: rgba(0, 0, 0, 0.5);
-  letter-spacing: 1.5px;
-}
-
-.loader h1 {
-  margin: 50px auto;
-}
-
-.loader .loader1, .loader .loader2, .loader .loader3, .loader .loader4 {
-  position: relative;
-  margin: 75px auto;
-  width: 150px;
-  height: 150px;
-  display: block;
-  overflow: hidden;
-}
-
-.loader .loader1 div, .loader .loader2 div, .loader .loader3 div, .loader .loader4 div {
-  height: 100%;
-}
-
-.loader .loader1, .loader .loader1 div {
-  border-radius: 50%;
-  padding: 8px;
-  border: 2px solid transparent;
-  -webkit-animation: rotate linear 3.5s infinite;
-          animation: rotate linear 3.5s infinite;
-  border-top-color: rgba(0, 0, 0, 0.5);
-  border-bottom-color: rgba(0, 0, 255, 0.5);
-}
-
-.loader .loader2, .loader .loader2 div {
-  border-radius: 50%;
-  padding: 8px;
-  border: 2px solid transparent;
-  -webkit-animation: rotate linear 3.5s infinite;
-          animation: rotate linear 3.5s infinite;
-  border-top-color: rgba(0, 0, 255, 0.5);
-  border-left-color: rgba(0, 0, 0, 0.5);
-  border-right-color: rgba(0, 0, 0, 0.5);
-}
-
-.loader .loader3, .loader .loader3 div {
-  border-radius: 50%;
-  padding: 8px;
-  border: 2px solid transparent;
-  -webkit-animation: rotate linear 3.5s infinite;
-          animation: rotate linear 3.5s infinite;
-  border-top-color: rgba(0, 0, 0, 0.5);
-  border-left-color: rgba(0, 0, 255, 0.5);
-  -webkit-animation-timing-function: cubic-bezier(0.55, 0.38, 0.21, 0.88);
-          animation-timing-function: cubic-bezier(0.55, 0.38, 0.21, 0.88);
-  -webkit-animation-duration: 3s;
-          animation-duration: 3s;
-}
-
-.loader .loader4, .loader .loader4 div {
-  border-radius: 50%;
-  padding: 8px;
-  border: 2px solid transparent;
-  -webkit-animation: rotate linear 3.5s infinite;
-          animation: rotate linear 3.5s infinite;
-  border-radius: 50%;
-  padding: 4px;
-  -webkit-animation: rotate2 4s infinite linear;
-          animation: rotate2 4s infinite linear;
-}
-
-.loader div:hover {
-  -webkit-animation-play-state: paused;
-          animation-play-state: paused;
 }

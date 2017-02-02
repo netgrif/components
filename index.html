@@ -22,19 +22,11 @@
 
 <body>
 	<div ng-controller="MainController as mainCtrl" class="loader">
-		<div class="loader2" ng-show="showLoading">
-			<div>
-				<div>
-					<div>
-						<div>
-							<div>
-								<div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="loader" ng-show="showLoading">
+			<div class="spinner orbit1"></div>
+			<div class="spinner orbit2"></div>
+			<div class="spinner orbit3"></div>
+			<div class="spinner orbit4"></div>
 		</div>
 		<div ng-show="!showLoading" app-view-segment="0"></div>
 	</div>

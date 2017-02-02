@@ -12,6 +12,13 @@ body {
 			height: 100vh;
 		}
 	}
+
+	&-vw {
+
+		&-100 {
+			width: 100vw;
+		}
+	}
 }
 
 

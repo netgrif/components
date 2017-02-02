@@ -16,6 +16,10 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
 
         self.viewLoaded = loaded;
         function loaded() {
+//			setTimeout(function() {
+//				$log.debug("Login loaded");
+//				$loading.showLoading(false);
+//			}, 3000);
 			$log.debug("Login loaded");
 			$loading.showLoading(false);
         }
