@@ -1,54 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Workflow Management System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Workflow Management software">
-    <meta name="keywords" content="PetriNet, wms, workflow">
-    <meta name="author" content="Gažo, Mažári, Makáň, Mladoniczky">
-    <!-- -- CSS -- -->
-    <!-- Material font and icons -->
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700'>
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- Angular style -->
-    <link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.min.css">
-    <!-- Main style -->
-    <link rel="stylesheet" type="text/css" href="styles/css/main.css">
-    <!-- RequireJS loaded scripts -->
-    <base href="/">
+	<meta charset="UTF-8">
+	<title>Workflow Management System</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Workflow Management software">
+	<meta name="keywords" content="PetriNet, wms, workflow">
+	<meta name="author" content="Gažo, Mažári, Makáň, Mladoniczky">
+	<!-- -- CSS -- -->
+	<!-- Material font and icons -->
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700'>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<!-- Angular style -->
+	<link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.min.css">
+	<!-- Main style -->
+	<link rel="stylesheet" type="text/css" href="styles/css/main.css">
+	<!-- RequireJS loaded scripts -->
+	<base href="/">
 </head>
+
 <body>
-<div ng-controller="MainController as mainCtrl">
-    <div id="phrase_box" class="loader" ng-show="showLoading">
-        <svg width="100%" height="100%">
-            <defs>
-                <!--<style type="text/css">
-                  @font-face {
-                    font-family: "Proxima";
-                    src: url('');
-                  }
-                </style>-->
-                <mask id="mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
-                    <linearGradient id="linearGradient" gradientUnits="objectBoundingBox" x2="0" y2="1">
-                        <stop stop-color="white" stop-opacity="0" offset="0%"/>
-                        <stop stop-color="white" stop-opacity="1" offset="30%"/>
-                        <stop stop-color="white" stop-opacity="1" offset="70%"/>
-                        <stop stop-color="white" stop-opacity="0" offset="100%"/>
-                    </linearGradient>
-                    <rect width="100%" height="100%" fill="url(#linearGradient)"/>
-                </mask>
-            </defs>
-            <g width="100%" height="100%" style="mask: url(#mask);">
-                <g id="phrases"></g>
-            </g>
-        </svg>
-    </div>
-    <div ng-show="!showLoading" app-view-segment="0"></div>
-</div>
-<!-- Loader animation -->
-<script src="scripts/phrase_loader.js"></script>
-<!-- RequireJS -->
-<script src="bower_components/requirejs/require.js" data-main="scripts/main" async></script>
+	<div ng-controller="MainController as mainCtrl" class="loader">
+		<div class="loader2" ng-show="showLoading">
+			<div>
+				<div>
+					<div>
+						<div>
+							<div>
+								<div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="!showLoading" app-view-segment="0"></div>
+	</div>
+	<!-- RequireJS -->
+	<script src="bower_components/requirejs/require.js" data-main="scripts/main" async></script>
 </body>
+
 </html>

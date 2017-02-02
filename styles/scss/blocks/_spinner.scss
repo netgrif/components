@@ -1,0 +1,121 @@
+$c1: rgba(0,0,0,.5);
+$c2: rgba(0,0,255,.5);
+
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate2 {
+    0% {
+        transform: rotate(0deg);
+        border-top-color: $c1;
+    }
+    50% {
+        transform: rotate(180deg);
+        border-top-color: $c2;
+    }
+    100% {
+        transform: rotate(360deg);
+        border-top-color: $c1;
+    }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f9f9f9;
+	padding-bottom: 100px;
+}
+
+h1,h3 {
+  display: block;
+  margin: 0px auto;
+  text-align: center;
+  font-family: 'Tahoma';
+  font-weight: lighter;
+  color: $c1;
+  letter-spacing: 1.5px;
+}
+
+h1 {
+  margin: 50px auto;
+}
+
+@mixin lm {
+  position: relative;
+  margin: 75px auto;
+  width: 150px;
+  height: 150px;
+  display: block;
+  overflow: hidden;
+}
+
+@mixin lmd {
+  border-radius: 50%;
+  padding: 8px;
+  border: 2px solid transparent;
+  animation: rotate linear 3.5s infinite;
+}
+
+@mixin ld{
+  height: 100%;
+}
+
+.loader1, .loader2, .loader3, .loader4 {
+  @include lm;
+}
+
+.loader1 div, .loader2 div, .loader3 div, .loader4 div {
+   @include ld;
+}
+
+/* loader 1 */
+.loader1, .loader1 div{
+  @include lmd;
+  border-top-color: $c1;
+  border-bottom-color: $c2;
+
+}
+
+/*loader 2  */
+.loader2, .loader2 div{
+  @include lmd;
+  border-top-color: $c2;
+  border-left-color: $c1;
+  border-right-color: $c1;
+}
+
+
+
+/*loader 3  */
+.loader3, .loader3 div{
+  @include lmd;
+  border-top-color: $c1;
+  border-left-color: $c2;
+  animation-timing-function: cubic-bezier(.55, .38, .21, .88);
+  animation-duration: 3s;
+}
+
+
+/* loader 4 */
+.loader4, .loader4 div{
+  @include lmd;
+  border-radius: 50%;
+  padding: 4px;
+  animation: rotate2 4s infinite linear;
+}
+
+div:hover {
+  animation-play-state: paused;
+}

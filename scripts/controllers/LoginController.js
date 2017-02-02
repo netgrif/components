@@ -16,8 +16,8 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
 
         self.viewLoaded = loaded;
         function loaded() {
-            $log.debug("Login loaded");
-            $loading.showLoading(false);
+			$log.debug("Login loaded");
+			$loading.showLoading(false);
         }
 
         self.login = function () {

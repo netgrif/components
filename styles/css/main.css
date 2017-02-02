@@ -99,577 +99,163 @@ div.loading-container img {
   margin-right: 10px;
 }
 
-.loader #phrase_box {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-flow: column;
-      -ms-flex-flow: column;
-          flex-flow: column;
+.loader {
+  /* loader 1 */
+  /*loader 2  */
+  /*loader 3  */
+  /* loader 4 */
+}
+
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rotate2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    border-top-color: rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    border-top-color: rgba(0, 0, 255, 0.5);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+    border-top-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes rotate2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    border-top-color: rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    border-top-color: rgba(0, 0, 255, 0.5);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+    border-top-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.loader * {
+  box-sizing: border-box;
+}
+
+.loader body {
+  background: #f9f9f9;
+  padding-bottom: 100px;
+}
+
+.loader h1, .loader h3 {
+  display: block;
+  margin: 0px auto;
+  text-align: center;
+  font-family: 'Tahoma';
+  font-weight: lighter;
+  color: rgba(0, 0, 0, 0.5);
+  letter-spacing: 1.5px;
+}
+
+.loader h1 {
+  margin: 50px auto;
+}
+
+.loader .loader1, .loader .loader2, .loader .loader3, .loader .loader4 {
+  position: relative;
+  margin: 75px auto;
+  width: 150px;
   height: 150px;
+  display: block;
   overflow: hidden;
-  width: 260px;
 }
 
-.loader #phrases {
-  -webkit-animation: slide-phrases-upward 20s;
-          animation: slide-phrases-upward 20s;
+.loader .loader1 div, .loader .loader2 div, .loader .loader3 div, .loader .loader4 div {
+  height: 100%;
 }
 
-@-webkit-keyframes slide-phrases-upward {
-  0% {
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-  }
-  5% {
-    -webkit-transform: translateY(-50px);
-            transform: translateY(-50px);
-  }
-  10% {
-    -webkit-transform: translateY(-100px);
-            transform: translateY(-100px);
-  }
-  15% {
-    -webkit-transform: translateY(-150px);
-            transform: translateY(-150px);
-  }
-  20% {
-    -webkit-transform: translateY(-200px);
-            transform: translateY(-200px);
-  }
-  25% {
-    -webkit-transform: translateY(-250px);
-            transform: translateY(-250px);
-  }
-  30% {
-    -webkit-transform: translateY(-300px);
-            transform: translateY(-300px);
-  }
-  35% {
-    -webkit-transform: translateY(-350px);
-            transform: translateY(-350px);
-  }
-  40% {
-    -webkit-transform: translateY(-400px);
-            transform: translateY(-400px);
-  }
-  45% {
-    -webkit-transform: translateY(-450px);
-            transform: translateY(-450px);
-  }
-  50% {
-    -webkit-transform: translateY(-500px);
-            transform: translateY(-500px);
-  }
-  55% {
-    -webkit-transform: translateY(-550px);
-            transform: translateY(-550px);
-  }
-  60% {
-    -webkit-transform: translateY(-600px);
-            transform: translateY(-600px);
-  }
-  65% {
-    -webkit-transform: translateY(-650px);
-            transform: translateY(-650px);
-  }
-  70% {
-    -webkit-transform: translateY(-700px);
-            transform: translateY(-700px);
-  }
-  75% {
-    -webkit-transform: translateY(-750px);
-            transform: translateY(-750px);
-  }
-  80% {
-    -webkit-transform: translateY(-800px);
-            transform: translateY(-800px);
-  }
-  85% {
-    -webkit-transform: translateY(-850px);
-            transform: translateY(-850px);
-  }
-  90% {
-    -webkit-transform: translateY(-900px);
-            transform: translateY(-900px);
-  }
-  95% {
-    -webkit-transform: translateY(-950px);
-            transform: translateY(-950px);
-  }
-  100% {
-    -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
-  }
+.loader .loader1, .loader .loader1 div {
+  border-radius: 50%;
+  padding: 8px;
+  border: 2px solid transparent;
+  -webkit-animation: rotate linear 3.5s infinite;
+          animation: rotate linear 3.5s infinite;
+  border-top-color: rgba(0, 0, 0, 0.5);
+  border-bottom-color: rgba(0, 0, 255, 0.5);
 }
 
-@keyframes slide-phrases-upward {
-  0% {
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-  }
-  5% {
-    -webkit-transform: translateY(-50px);
-            transform: translateY(-50px);
-  }
-  10% {
-    -webkit-transform: translateY(-100px);
-            transform: translateY(-100px);
-  }
-  15% {
-    -webkit-transform: translateY(-150px);
-            transform: translateY(-150px);
-  }
-  20% {
-    -webkit-transform: translateY(-200px);
-            transform: translateY(-200px);
-  }
-  25% {
-    -webkit-transform: translateY(-250px);
-            transform: translateY(-250px);
-  }
-  30% {
-    -webkit-transform: translateY(-300px);
-            transform: translateY(-300px);
-  }
-  35% {
-    -webkit-transform: translateY(-350px);
-            transform: translateY(-350px);
-  }
-  40% {
-    -webkit-transform: translateY(-400px);
-            transform: translateY(-400px);
-  }
-  45% {
-    -webkit-transform: translateY(-450px);
-            transform: translateY(-450px);
-  }
-  50% {
-    -webkit-transform: translateY(-500px);
-            transform: translateY(-500px);
-  }
-  55% {
-    -webkit-transform: translateY(-550px);
-            transform: translateY(-550px);
-  }
-  60% {
-    -webkit-transform: translateY(-600px);
-            transform: translateY(-600px);
-  }
-  65% {
-    -webkit-transform: translateY(-650px);
-            transform: translateY(-650px);
-  }
-  70% {
-    -webkit-transform: translateY(-700px);
-            transform: translateY(-700px);
-  }
-  75% {
-    -webkit-transform: translateY(-750px);
-            transform: translateY(-750px);
-  }
-  80% {
-    -webkit-transform: translateY(-800px);
-            transform: translateY(-800px);
-  }
-  85% {
-    -webkit-transform: translateY(-850px);
-            transform: translateY(-850px);
-  }
-  90% {
-    -webkit-transform: translateY(-900px);
-            transform: translateY(-900px);
-  }
-  95% {
-    -webkit-transform: translateY(-950px);
-            transform: translateY(-950px);
-  }
-  100% {
-    -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
-  }
+.loader .loader2, .loader .loader2 div {
+  border-radius: 50%;
+  padding: 8px;
+  border: 2px solid transparent;
+  -webkit-animation: rotate linear 3.5s infinite;
+          animation: rotate linear 3.5s infinite;
+  border-top-color: rgba(0, 0, 255, 0.5);
+  border-left-color: rgba(0, 0, 0, 0.5);
+  border-right-color: rgba(0, 0, 0, 0.5);
 }
 
-.loader #loadingCheckCircleSVG-0 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: -1.5s;
-          animation-delay: -1.5s;
-  fill: #FFFFFF;
-  opacity: 0;
+.loader .loader3, .loader .loader3 div {
+  border-radius: 50%;
+  padding: 8px;
+  border: 2px solid transparent;
+  -webkit-animation: rotate linear 3.5s infinite;
+          animation: rotate linear 3.5s infinite;
+  border-top-color: rgba(0, 0, 0, 0.5);
+  border-left-color: rgba(0, 0, 255, 0.5);
+  -webkit-animation-timing-function: cubic-bezier(0.55, 0.38, 0.21, 0.88);
+          animation-timing-function: cubic-bezier(0.55, 0.38, 0.21, 0.88);
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
 }
 
-.loader #loadingCheckCircleSVG-1 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: -0.5s;
-          animation-delay: -0.5s;
-  fill: #FFFFFF;
-  opacity: 0;
+.loader .loader4, .loader .loader4 div {
+  border-radius: 50%;
+  padding: 8px;
+  border: 2px solid transparent;
+  -webkit-animation: rotate linear 3.5s infinite;
+          animation: rotate linear 3.5s infinite;
+  border-radius: 50%;
+  padding: 4px;
+  -webkit-animation: rotate2 4s infinite linear;
+          animation: rotate2 4s infinite linear;
 }
 
-.loader #loadingCheckCircleSVG-2 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 0.5s;
-          animation-delay: 0.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-3 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 1.5s;
-          animation-delay: 1.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-4 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 2.5s;
-          animation-delay: 2.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-5 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 3.5s;
-          animation-delay: 3.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-6 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 4.5s;
-          animation-delay: 4.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-7 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 5.5s;
-          animation-delay: 5.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-8 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 6.5s;
-          animation-delay: 6.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-9 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 7.5s;
-          animation-delay: 7.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-10 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 8.5s;
-          animation-delay: 8.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-11 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 9.5s;
-          animation-delay: 9.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-12 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 10.5s;
-          animation-delay: 10.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-13 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 11.5s;
-          animation-delay: 11.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-14 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 12.5s;
-          animation-delay: 12.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-15 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 13.5s;
-          animation-delay: 13.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-16 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 14.5s;
-          animation-delay: 14.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-17 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 15.5s;
-          animation-delay: 15.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-18 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 16.5s;
-          animation-delay: 16.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-19 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 17.5s;
-          animation-delay: 17.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-.loader #loadingCheckCircleSVG-20 {
-  -webkit-animation: fill-to-white 5000ms;
-          animation: fill-to-white 5000ms;
-  -webkit-animation-delay: 18.5s;
-          animation-delay: 18.5s;
-  fill: #FFFFFF;
-  opacity: 0;
-}
-
-@-webkit-keyframes fill-to-white {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes fill-to-white {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.loader #loadingCheckSVG-0 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: -1.5s;
-          animation-delay: -1.5s;
-}
-
-.loader #loadingCheckSVG-1 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: -0.5s;
-          animation-delay: -0.5s;
-}
-
-.loader #loadingCheckSVG-2 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 0.5s;
-          animation-delay: 0.5s;
-}
-
-.loader #loadingCheckSVG-3 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 1.5s;
-          animation-delay: 1.5s;
-}
-
-.loader #loadingCheckSVG-4 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 2.5s;
-          animation-delay: 2.5s;
-}
-
-.loader #loadingCheckSVG-5 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 3.5s;
-          animation-delay: 3.5s;
-}
-
-.loader #loadingCheckSVG-6 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 4.5s;
-          animation-delay: 4.5s;
-}
-
-.loader #loadingCheckSVG-7 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 5.5s;
-          animation-delay: 5.5s;
-}
-
-.loader #loadingCheckSVG-8 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 6.5s;
-          animation-delay: 6.5s;
-}
-
-.loader #loadingCheckSVG-9 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 7.5s;
-          animation-delay: 7.5s;
-}
-
-.loader #loadingCheckSVG-10 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 8.5s;
-          animation-delay: 8.5s;
-}
-
-.loader #loadingCheckSVG-11 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 9.5s;
-          animation-delay: 9.5s;
-}
-
-.loader #loadingCheckSVG-12 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 10.5s;
-          animation-delay: 10.5s;
-}
-
-.loader #loadingCheckSVG-13 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 11.5s;
-          animation-delay: 11.5s;
-}
-
-.loader #loadingCheckSVG-14 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 12.5s;
-          animation-delay: 12.5s;
-}
-
-.loader #loadingCheckSVG-15 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 13.5s;
-          animation-delay: 13.5s;
-}
-
-.loader #loadingCheckSVG-16 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 14.5s;
-          animation-delay: 14.5s;
-}
-
-.loader #loadingCheckSVG-17 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 15.5s;
-          animation-delay: 15.5s;
-}
-
-.loader #loadingCheckSVG-18 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 16.5s;
-          animation-delay: 16.5s;
-}
-
-.loader #loadingCheckSVG-19 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 17.5s;
-          animation-delay: 17.5s;
-}
-
-.loader #loadingCheckSVG-20 {
-  -webkit-animation: fill-to-coral 5000ms;
-          animation: fill-to-coral 5000ms;
-  -webkit-animation-delay: 18.5s;
-          animation-delay: 18.5s;
-}
-
-@-webkit-keyframes fill-to-coral {
-  0% {
-    fill: #FFFFFF;
-  }
-  10% {
-    fill: #730008;
-  }
-  100% {
-    fill: #730008;
-  }
-}
-
-@keyframes fill-to-coral {
-  0% {
-    fill: #FFFFFF;
-  }
-  10% {
-    fill: #730008;
-  }
-  100% {
-    fill: #730008;
-  }
+.loader div:hover {
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
 }
