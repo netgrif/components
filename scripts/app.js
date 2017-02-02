@@ -82,7 +82,9 @@ define('app',
                 })
             .up()
             .segment('test',{
-                templateUrl: "views/test.html"
+                templateUrl: "views/test.html",
+                controller: 'MainController',
+                controllerAs: 'mainCtrl'
             });
 
         $locationProvider.html5Mode(true);

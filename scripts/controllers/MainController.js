@@ -28,7 +28,6 @@ define(['angular','../modules/Main','../services/Loading'],function (angular) {
 
         }
 
-
         function setLoading(show) {
             $scope.showLoading = show;
         }
