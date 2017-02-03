@@ -12,8 +12,6 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             error: false
         };
 
-        //$loading.registerLoadWatcher("/login", loaded);
-
         self.viewLoaded = loaded;
         function loaded() {
 //			setTimeout(function() {
