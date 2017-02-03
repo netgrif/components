@@ -44,6 +44,13 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                     $log.debug("Logout failed");
                 });
             },
+            signup: function (formData) {
+                $http.post(auth.signupPath, {
+                    data: formData
+                }).then(function (response) {
+                    $log.debug(response);
+                });
+            },
             init: function () {
                 if($location.path() == '/test') return;
 

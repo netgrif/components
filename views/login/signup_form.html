@@ -1,6 +1,6 @@
 <div ng-cloak layout="column" layout-align="center center" class="layout-vh-100">
 	<md-card layout-padding class="card-login">
-		<form ng-submit="">
+		<form id="signup-form" ng-submit="loginCtrl.signup()">
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">vpn_key</md-icon>
 				<input ng-model="user.token" name="token" type="text" placeholder="Token" ng-required="true">

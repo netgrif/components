@@ -1,16 +1,42 @@
-<div ng-cloak layout-xs>
-    <div ng-repeat="n in dashCtrl.range(20)">
+<div ng-cloak layout-xs="column" layout="row">
+    <div layout-md="column">
         <md-card>
             <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">Dashboard</span>
-                </md-card-title-text>
+                <md--card-title-text>
+                    <span class="md-headline">Welcome to F&M Workflow application</span>
+                </md--card-title-text>
             </md-card-title>
             <md-card-content>
-                <p>Nejaký obsah dashboardu!</p>
-                <p>Index {{n}}</p>
+                here will be some text
+            </md-card-content>
+        </md-card>
+        <div layout-md="row">
+            <md-card>
+                <md-card-title>
+                    <md--card-title-text>
+                        <span class="md-headline">Some fancy graph</span>
+                    </md--card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    FANCY GRAPH
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+    <div layout-md="column">
+        <md-card>
+            <md-card-title>
+                <md--card-title-text>
+                    <span class="md-headline">Changelog</span>
+                </md--card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <ul>
+                    <li>Some changes</li>
+                    <li>Some changes</li>
+                    <li>Some changes</li>
+                </ul>
             </md-card-content>
         </md-card>
     </div>
-
 </div>

@@ -8,13 +8,7 @@ function (angular) {
         function ($log, $scope, $timeout) {
             var self = this;
 
-            self.range = function (range) {
-                var a = [];
-                for(var i=0; i<range; i++){
-                    a.push(i);
-                }
-                return a;
-            };
+
 
         }]);
 });

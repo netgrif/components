@@ -46,6 +46,12 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             $auth.logout();
         };
 
+        self.signup = function () {
+            var formData = angular.element("form#signup-form").serialize();
+            $log.debug("formData: "+formData);
+            $auth.signup(formData);
+        };
+
 		self.showToast = function(msg) {
             $snackbar.show(msg);
 		};
