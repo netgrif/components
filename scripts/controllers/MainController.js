@@ -6,12 +6,15 @@ define(['angular','../modules/Main','../services/Loading'],function (angular) {
     function ($loading, $log, $scope) {
         var self = this;
 
-        $scope.showLoading = true;
+        self.loaderVisible = true;
 
+        var loaderContainer = angular.element("div#loader-container");
+        var viewContainer = angular.element("div#view-container");
         var dataLoadingStarted = false;
 
-        $loading.setMainControllerCallback(setLoading);
+        $loading.setMainControllerCallback(setShowingLoading);
        // $loading.registerLoadWatcher("/", loadData);
+        viewContainer.hide();
 
         self.startLoadingData = loadData;
         function loadData() {
@@ -19,17 +22,19 @@ define(['angular','../modules/Main','../services/Loading'],function (angular) {
             dataLoadingStarted = true;
             //load necessary data on beginning
             $log.debug("Data loaded");
-            if($scope.showLoading){
-                $loading.showLoading(false);
-                //TODO resolve angular error
-                //TEMP solution - very bad!!!!
-                angular.element(".loading-container").hide();
-            }
+            $loading.showLoading(false);
 
         }
 
-        function setLoading(show) {
-            $scope.showLoading = show;
+        function setShowingLoading(show) {
+            self.loaderVisible = show;
+            if(show){
+                viewContainer.hide();
+                loaderContainer.show();
+            } else {
+                loaderContainer.hide();
+                viewContainer.show();
+            }
         }
 
 
