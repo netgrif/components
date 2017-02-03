@@ -77,7 +77,7 @@ define('app',
                     default: true,
                     templateUrl: "views/login/signin_form.html"
                 })
-                .segment('signip',{
+                .segment('signup',{
                     templateUrl: "views/login/signup_form.html"
                 })
             .up()

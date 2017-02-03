@@ -9,6 +9,7 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
             loginPath: "/login",
             userPath: "user",
             logoutPath: "/logout",
+            signupPath: "/login/signup",
             appPath: "/",
             path: $location.path(),
 
@@ -46,12 +47,14 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
             init: function () {
                 if($location.path() == '/test') return;
 
-                this.authenticate({},function (isLogedIn) {
-                    if(isLogedIn) $location.path(auth.path);
-                });
+                if($location.path() != auth.loginPath && $location.path() != auth.signupPath) {
+                    this.authenticate({}, function (isLoggedIn) {
+                        if (isLoggedIn) $location.path(auth.path);
+                    });
+                }
 
                 $rootScope.$on('$locationChangeStart',function () {
-                    if($location.path != auth.loginPath){
+                    if($location.path() != auth.loginPath && $location.path() != auth.signupPath){
                         auth.path = $location.path();
                         if(!auth.authenticated) $location.path(auth.loginPath);
                     }
