@@ -1,13 +1,3 @@
-.loader {
-	height: 100%;
-	width: 100%;
-	background-image: url(../../../assets/welcome_background.jpg);
-	background-size: cover;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-}
-
 @keyframes spinner-right {
 	to {
 		transform: rotate(360deg);

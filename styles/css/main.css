@@ -10,36 +10,12 @@ body {
   width: 100vw;
 }
 
-html, body {
-  padding: 0;
-  margin: 0;
-}
-
-div.loading-container {
-  height: 100vh;
-  width: 100vw;
-  position: relative;
-  background-color: #1E6CC7;
-}
-
-div.loading-container img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
-
-.loader {
+.layout-rh-100 {
   height: 100%;
+}
+
+.layout-rw-100 {
   width: 100%;
-  background-image: url(../../../assets/welcome_background.jpg);
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
 }
 
 @-webkit-keyframes spinner-right {
@@ -190,12 +166,21 @@ div.loading-container img {
   text-decoration: underline;
 }
 
+.base .background {
+  height: 100%;
+  width: 100%;
+}
+
 .base .background-welcome {
   background-image: url(../../../assets/welcome_background.jpg);
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+}
+
+.base .background-white {
+  background-color: white;
 }
 
 .base .main-toolbar {

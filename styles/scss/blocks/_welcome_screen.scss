@@ -1,4 +1,6 @@
 .background {
+	height: 100%;
+	width: 100%;
 
 	&-welcome {
 		background-image: url(../../../assets/welcome_background.jpg);
@@ -6,5 +8,9 @@
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
 		-o-background-size: cover;
+	}
+
+	&-white {
+		background-color: white;
 	}
 }
