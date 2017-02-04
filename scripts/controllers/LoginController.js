@@ -40,10 +40,6 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             })
         };
 
-        self.logout = function () {
-            $auth.logout();
-        };
-
         self.signup = function () {
             var formData = angular.element("form#signup-form").serialize();
             $log.debug("formData: "+formData);

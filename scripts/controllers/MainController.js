@@ -28,6 +28,10 @@ define(['angular','../modules/Main','../services/Loading','../services/Auth'],fu
 
         };
 
+        self.logout = function () {
+            $auth.logout();
+        };
+
         function setShowingLoading(show) {
             self.loaderVisible = show;
             if(show){

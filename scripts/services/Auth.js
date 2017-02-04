@@ -38,11 +38,10 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                 });
             },
             logout: function () {
-                $location.path(auth.loginPath);
-                auth.authenticated = false;
-
                 $http.post(auth.logoutPath,{}).then(function () {
                     $log.debug("Logout successful");
+                    auth.authenticated = false;
+                    $location.path(auth.loginPath);
                 }, function () {
                     $log.debug("Logout failed");
                 });

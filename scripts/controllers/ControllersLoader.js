@@ -6,4 +6,4 @@
     controller itself should be handling registration to angular app module
  */
 var path = 'scripts/controllers/';
-define([path+'MainController',path+'DashboardController',path+'LoginController'], function () {});
+define([path+'MainController',path+'DashboardController',path+'LoginController',path+'ProfileController'], function () {});
