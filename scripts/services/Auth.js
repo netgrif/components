@@ -47,10 +47,11 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                 });
             },
             signup: function (formData) {
-                $http.post(auth.signupPath, {
-                    data: formData
-                }).then(function (response) {
+                $http.post(auth.signupPath, formData)
+                .then(function (response) {
                     $log.debug(response);
+                }, function () {
+                    $log.debug("Sign up failed!");
                 });
             },
             init: function () {

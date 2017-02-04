@@ -3,27 +3,27 @@
 		<form id="signup-form" ng-submit="loginCtrl.signup()">
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">vpn_key</md-icon>
-				<input ng-model="user.token" name="token" type="text" placeholder="Token" ng-required="true">
+				<input ng-model="loginCtrl.signupUser.token" name="token" type="text" placeholder="Token" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">email</md-icon>
-				<input ng-model="user.email" name="email" type="email" placeholder="Email" ng-required="true">
+				<input ng-model="loginCtrl.signupUser.email" name="email" type="email" placeholder="Email" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">lock</md-icon>
-				<input ng-model="user.psw" name="password" type="password" placeholder="Password" ng-required="true">
+				<input ng-model="loginCtrl.signupUser.password" name="password" type="password" placeholder="Password" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">lock</md-icon>
-				<input ng-model="user.psw" type="password" placeholder="Password again" ng-required="true">
+				<input type="password" placeholder="Password again" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">perm_identity</md-icon>
-				<input ng-model="user.name" name="name" type="text" placeholder="Name" ng-required="true">
+				<input ng-model="loginCtrl.signupUser.name" name="name" type="text" placeholder="Name" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">perm_identity</md-icon>
-				<input ng-model="user.surname" name="surname" type="text" placeholder="Surname" ng-required="true">
+				<input ng-model="loginCtrl.signupUser.surname" name="surname" type="text" placeholder="Surname" ng-required="true">
 			</md-input-container>
 			<md-card-actions layout="row" layout-align="end center">
 				<md-button type="submit">Sign in</md-button>

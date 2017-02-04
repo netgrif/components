@@ -8,6 +8,13 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             username: "",
             password: ""
         };
+        self.signupUser = {
+            token: "",
+            email: "",
+            password: "",
+            name: "",
+            surname: ""
+        };
         self.error = {
             error: false
         };
@@ -41,9 +48,9 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
         };
 
         self.signup = function () {
-            var formData = angular.element("form#signup-form").serialize();
-            $log.debug("formData: "+formData);
-            $auth.signup(formData);
+            var jsonSignupData = JSON.stringify(self.signupUser);
+            $log.debug("formData: "+jsonSignupData);
+            $auth.signup(jsonSignupData);
         };
 
 		self.showToast = function(msg) {
