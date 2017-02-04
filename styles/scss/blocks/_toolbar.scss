@@ -26,23 +26,10 @@
 
 				.material-icons {
 					font-size: 48px;
-					margin-right: 16px;
+					margin-left: 16px;
 					color: $color-fm-500;
 				}
 			}
-
-			.nested {
-				font-size: 15px; // doesnt work
-
-				.material-icons {
-					margin-top: 1.5px !important; // doesnt work
-					margin-bottom: 1.5px !important; // doesnt work
-					margin-right: 16px !important; // doesnt work
-				}
-			}
-			// TODO fix nested menu trigger styling - meanwhile hardcoded hours_wasted=2
-
-			//TODO style menu items
 		}
 	}
 }

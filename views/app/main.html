@@ -6,7 +6,7 @@
 				<div layout="row" layout-align="center center">
 					<md-menu-bar class="toolbar-menu">
 						<md-menu>
-							<md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center" md-menu-origin>{{mainCtrl.user.email}} &nbsp;&nbsp;&nbsp;<i class="material-icons">account_circle</i></md-button>
+							<md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center" md-menu-origin>{{mainCtrl.user.email}}<i class="material-icons">account_circle</i></md-button>
 							<md-menu-content width="4">
 								<md-menu-item class="toolbar-menu-item">
 									<md-button href="/#">
@@ -23,7 +23,7 @@
 								<md-menu-item>
 									<md-menu>
 										<md-button ng-click="$mdOpenMenu($event)">
-											<div class="nested">
+											<div>
 												<md-icon class="material-icons" style="margin-right:14px;margin-top:1.5px;margin-bottom:1.5px;font-size:24px;">settings</md-icon>
 												<span style="font-size:15px; margin-left:-1px;">Settings</span>
 											</div>

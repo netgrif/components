@@ -208,18 +208,8 @@ body {
 
 .base .main-toolbar .toolbar-menu .md-button .material-icons {
   font-size: 48px;
-  margin-right: 16px;
+  margin-left: 16px;
   color: #98002b;
-}
-
-.base .main-toolbar .toolbar-menu .nested {
-  font-size: 15px;
-}
-
-.base .main-toolbar .toolbar-menu .nested .material-icons {
-  margin-top: 1.5px !important;
-  margin-bottom: 1.5px !important;
-  margin-right: 16px !important;
 }
 
 .base .main-sidenav {
