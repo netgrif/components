@@ -1,0 +1,20 @@
+<div ng-cloak layout="column">
+    <md-card>
+        <md-card-title>
+            <md--card-title-text>
+                <span class="md-headline">Invite new user</span>
+            </md--card-title-text>
+        </md-card-title>
+        <form id="admin-invite-form" ng-submit="adminCtrl.invite()">
+            <md-card-content>
+                <md-input-container>
+                    <label>Email</label>
+                    <input name="email" type="email" ng-required="true">
+                </md-input-container>
+            </md-card-content>
+            <md-card-actions>
+                <md-button type="submit">Send invite</md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+</div>

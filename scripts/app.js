@@ -47,6 +47,7 @@ define('app',
             .when('/login/signup','login.signup')
             .when('/dashboard','app.dashboard')
             .when('/profile','app.profile')
+            .when('/console','app.console')
             .when('/test','test')
 
             .segment('app',{
@@ -65,6 +66,11 @@ define('app',
                     templateUrl: "views/app/profile.html",
                     controller: 'ProfileController',
                     controllerAs: 'profCtrl'
+                })
+                .segment('console',{
+                    templateUrl: "views/app/console.html",
+                    controller: 'AdminConsoleController',
+                    controllerAs: 'adminCtrl'
                 })
             .up()
             .segment('login',{
