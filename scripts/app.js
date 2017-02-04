@@ -92,9 +92,10 @@ define('app',
 
         //$qProvider.errorOnUnhandledRejections(false);
     });
-    app.run(function ($log,$auth) {
+    app.run(function ($log,$auth,$rootScope,$i18n) {
         $log.debug("App is running...");
         $auth.init();
+        $rootScope.$i18n = $i18n;
     });
 
     return app;

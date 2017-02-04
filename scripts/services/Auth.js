@@ -5,6 +5,7 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
     angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log) {
         var auth = {
             authenticated: false,
+            loggedUser: {},
 
             loginPath: "/login",
             userPath: "user",
@@ -25,6 +26,8 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                 }).then(function (response) {
                     $log.debug(response);
                     auth.authenticated = !!response.name;
+                    auth.loggedUser.authority = response.authorities[0].authority;
+                    auth.loggedUser.login = response.name;
                     callback && callback(auth.authenticated);
                     $location.path(auth.path == auth.loginPath ? auth.appPath : auth.path);
 
