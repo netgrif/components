@@ -13,6 +13,7 @@ define(['angular','../modules/Main'],function (angular) {
             .then(function (response) {
                 $log.debug("Invite sent");
                 $log.debug(response);
+                angular.element("form#admin-invite-form input").val("");
             },function () {
                 $log.debug("Invite failed!");
             });

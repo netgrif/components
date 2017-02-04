@@ -18,6 +18,7 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
         self.error = {
             error: false
         };
+        self.signupMsg = undefined;
 
         self.viewLoaded = loaded;
         function loaded() {
@@ -50,7 +51,14 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
         self.signup = function () {
             var jsonSignupData = JSON.stringify(self.signupUser);
             $log.debug("formData: "+jsonSignupData);
-            $auth.signup(jsonSignupData);
+            $auth.signup(jsonSignupData,function (response) {
+                if(response){
+                    self.signupMsg = "Registration succeeded! Redirecting to login page.";
+                    angular.element("form#signup-form").trigger("reset");
+                } else {
+                    self.signupMsg = "Registration failed!";
+                }
+            });
         };
 
 		self.showToast = function(msg) {

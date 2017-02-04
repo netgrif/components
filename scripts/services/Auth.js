@@ -2,7 +2,7 @@
  * Created by Milan on 31.1.2017.
  */
 define(['angular','angularRoute','../modules/Main'],function (angular) {
-    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log) {
+    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log,$timeout) {
         var auth = {
             authenticated: false,
             loggedUser: {},
@@ -46,12 +46,18 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                     $log.debug("Logout failed");
                 });
             },
-            signup: function (formData) {
+            signup: function (formData, callback) {
                 $http.post(auth.signupPath, formData)
                 .then(function (response) {
                     $log.debug(response);
+                    callback(response);
+                    $timeout(function () {
+                        auth.path = auth.loginPath;
+                        $location.path(auth.loginPath);
+                    },2000);
                 }, function () {
                     $log.debug("Sign up failed!");
+                    callback(false);
                 });
             },
             init: function () {
