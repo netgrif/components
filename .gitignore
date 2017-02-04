@@ -19,3 +19,4 @@ target/
 _issues/
 /prepros.cfg
 /styles/scss/prepros.cfg
+/views/test.html

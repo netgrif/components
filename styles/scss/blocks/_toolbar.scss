@@ -1,27 +1,48 @@
 .main-toolbar {
-	height: 80px;
+	height: 64px;
 	background-color: $color-grey-200;
 
-	// TODO temp
 	.md-toolbar-tools {
+		height: 100%;
+	}
 
-		a {
-			height: 70px;
-			padding: 0;
+	.toolbar {
 
-			.toolbar {
+		&-logo {
+			height: 60px;
+			width: auto;
+			padding-top: 2px;
+			padding-bottom: 2px;
 
-				&-logo {
-					height: 70px;
-					width: auto;
+		}
+
+		&-menu {
+
+			.md-button {
+				height: 100%;
+				font-size: 20px;
+				color: $color-grey-700;
+				text-transform: none;
+
+				.material-icons {
+					font-size: 48px;
+					margin-right: 16px;
+					color: $color-fm-500;
 				}
-
-				&-avatar {
-					width: 70px;
-    				height: 70px;
-				}
-
 			}
+
+			.nested {
+				font-size: 15px; // doesnt work
+
+				.material-icons {
+					margin-top: 1.5px !important; // doesnt work
+					margin-bottom: 1.5px !important; // doesnt work
+					margin-right: 16px !important; // doesnt work
+				}
+			}
+			// TODO fix nested menu trigger styling - meanwhile hardcoded hours_wasted=2
+
+			//TODO style menu items
 		}
 	}
 }

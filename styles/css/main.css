@@ -184,46 +184,67 @@ body {
 }
 
 .base .main-toolbar {
-  height: 80px;
+  height: 64px;
   background-color: #EEEEEE;
 }
 
-.base .main-toolbar .md-toolbar-tools a {
-  height: 70px;
-  padding: 0;
+.base .main-toolbar .md-toolbar-tools {
+  height: 100%;
 }
 
-.base .main-toolbar .md-toolbar-tools a .toolbar-logo {
-  height: 70px;
+.base .main-toolbar .toolbar-logo {
+  height: 60px;
   width: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
-.base .main-toolbar .md-toolbar-tools a .toolbar-avatar {
-  width: 70px;
-  height: 70px;
+.base .main-toolbar .toolbar-menu .md-button {
+  height: 100%;
+  font-size: 20px;
+  color: #616161;
+  text-transform: none;
+}
+
+.base .main-toolbar .toolbar-menu .md-button .material-icons {
+  font-size: 48px;
+  margin-right: 16px;
+  color: #98002b;
+}
+
+.base .main-toolbar .toolbar-menu .nested {
+  font-size: 15px;
+}
+
+.base .main-toolbar .toolbar-menu .nested .material-icons {
+  margin-top: 1.5px !important;
+  margin-bottom: 1.5px !important;
+  margin-right: 16px !important;
 }
 
 .base .main-sidenav {
-  width: 200px;
+  width: 180px;
   background-color: #424242;
 }
 
-.base .main-sidenav a {
+.base .main-sidenav .md-button {
+  height: 30px;
   width: 100%;
-  text-decoration: none;
+  text-transform: none;
   color: white;
-  font-size: 20px;
+  font-size: 17px;
+  margin: 0;
   padding: 5px 10px;
 }
 
-.base .main-sidenav a:hover {
+.base .main-sidenav .md-button:hover {
   background-color: #98002b;
 }
 
-.base .main-sidenav a:first-child {
+.base .main-sidenav .md-button:first-child {
   margin-top: 30px;
 }
 
-.base .main-sidenav a i {
+.base .main-sidenav .md-button i {
   margin-right: 10px;
 }
