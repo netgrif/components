@@ -7,4 +7,4 @@
  */
 var path = 'scripts/controllers/';
 define([path+'MainController',path+'DashboardController',path+'LoginController',path+'ProfileController',
-        path+'AdminConsoleController'], function () {});
+        ,path+'TasksController',path+'AdminConsoleController'], function () {});

@@ -6,6 +6,7 @@
                     <span class="md-headline">Welcome to F&M Workflow application</span>
                 </md--card-title-text>
             </md-card-title>
+            <md-divider></md-divider>
             <md-card-content>
                 here will be some text
             </md-card-content>
@@ -17,8 +18,22 @@
                         <span class="md-headline">Some fancy graph</span>
                     </md--card-title-text>
                 </md-card-title>
+                <md-divider></md-divider>
                 <md-card-content>
-                    FANCY GRAPH
+                    <img src="../../assets/fakegraph.jpg">             
+                </md-card-content>
+            </md-card>
+        </div>
+        <div layout-md="row">
+            <md-card>
+                <md-card-title>
+                    <md--card-title-text>
+                        <span class="md-headline">Workflow</span>
+                    </md--card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <img src="../../assets/fakeflow.PNG">             
                 </md-card-content>
             </md-card>
         </div>
@@ -31,11 +46,57 @@
                 </md--card-title-text>
             </md-card-title>
             <md-card-content>
-                <ul>
-                    <li>Some changes</li>
-                    <li>Some changes</li>
-                    <li>Some changes</li>
-                </ul>
+            <md-divider></md-divider>
+    <md-list>
+      <md-list-item class="md-3-line" >
+        <div class="md-list-item-text">
+          <h3>ID-157</h3>
+          <h4>Jozef Mrkva</h4>
+          <p>21.2.17 14:53:37 Finnished task ID-157: Copy new documents</p>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+      <md-list-item class="md-3-line" >
+        <div class="md-list-item-text">
+          <h3>ID-485</h3>
+          <h4>Peter Veľký</h4>
+          <p>21.2.17 14:50:35 Assigned task ID-485: Pick up documents to himself</p>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+      <md-list-item class="md-3-line" >
+        <div class="md-list-item-text">
+          <h3>ID-698</h3>
+          <h4>Mária Jednoduchá</h4>
+          <p>21.2.17 14:38:42 Finnished task ID-698: Scan new documents</p>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+      <md-list-item class="md-3-line" >
+        <div class="md-list-item-text">
+          <h3>ID-485</h3>
+          <h4>Ivan Hrozný</h4>
+          <p>21.2.17 14:36:45 Assigned task ID-485: Pick up documents to Jozef Mrkva</p>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+      <md-list-item class="md-3-line" >
+        <div class="md-list-item-text">
+          <h3>ID-487</h3>
+          <h4>Ivan Hrozný</h4>
+          <p>21.2.17 14:30:29 Assigned task ID-487: Pick up documents to Jozef Mrkva</p>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+      <md-list-item class="md-3-line" >
+        <div class="md-list-item-text">
+          <h3>ID-693</h3>
+          <h4>Ivan Hrozný</h4>
+          <p>21.2.17 14:10:15 Finnished task ID-693: Scan new documents</p>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
             </md-card-content>
         </md-card>
     </div>
