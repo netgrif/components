@@ -1,103 +1,203 @@
-<div ng-cloak layout-xs="column" layout="row">
-    <div layout-md="column">
-        <md-card>
-            <md-card-title>
-                <md--card-title-text>
-                    <span class="md-headline">Welcome to F&M Workflow application</span>
-                </md--card-title-text>
-            </md-card-title>
-            <md-divider></md-divider>
-            <md-card-content>
-                here will be some text
-            </md-card-content>
-        </md-card>
-        <div layout-md="row">
-            <md-card>
-                <md-card-title>
-                    <md--card-title-text>
-                        <span class="md-headline">Some fancy graph</span>
-                    </md--card-title-text>
-                </md-card-title>
-                <md-divider></md-divider>
-                <md-card-content>
-                    <img src="../../assets/fakegraph.jpg">             
-                </md-card-content>
-            </md-card>
-        </div>
-        <div layout-md="row">
-            <md-card>
-                <md-card-title>
-                    <md--card-title-text>
-                        <span class="md-headline">Workflow</span>
-                    </md--card-title-text>
-                </md-card-title>
-                <md-divider></md-divider>
-                <md-card-content>
-                    <img src="../../assets/fakeflow.PNG">             
-                </md-card-content>
-            </md-card>
-        </div>
-    </div>
-    <div layout-md="column">
-        <md-card>
-            <md-card-title>
-                <md--card-title-text>
-                    <span class="md-headline">Changelog</span>
-                </md--card-title-text>
-            </md-card-title>
-            <md-card-content>
-            <md-divider></md-divider>
-    <md-list>
-      <md-list-item class="md-3-line" >
-        <div class="md-list-item-text">
-          <h3>ID-157</h3>
-          <h4>Jozef Mrkva</h4>
-          <p>21.2.17 14:53:37 Finnished task ID-157: Copy new documents</p>
-        </div>
-        <md-divider ng-if="!$last"></md-divider>
-      </md-list-item>
-      <md-list-item class="md-3-line" >
-        <div class="md-list-item-text">
-          <h3>ID-485</h3>
-          <h4>Peter Veľký</h4>
-          <p>21.2.17 14:50:35 Assigned task ID-485: Pick up documents to himself</p>
-        </div>
-        <md-divider ng-if="!$last"></md-divider>
-      </md-list-item>
-      <md-list-item class="md-3-line" >
-        <div class="md-list-item-text">
-          <h3>ID-698</h3>
-          <h4>Mária Jednoduchá</h4>
-          <p>21.2.17 14:38:42 Finnished task ID-698: Scan new documents</p>
-        </div>
-        <md-divider ng-if="!$last"></md-divider>
-      </md-list-item>
-      <md-list-item class="md-3-line" >
-        <div class="md-list-item-text">
-          <h3>ID-485</h3>
-          <h4>Ivan Hrozný</h4>
-          <p>21.2.17 14:36:45 Assigned task ID-485: Pick up documents to Jozef Mrkva</p>
-        </div>
-        <md-divider ng-if="!$last"></md-divider>
-      </md-list-item>
-      <md-list-item class="md-3-line" >
-        <div class="md-list-item-text">
-          <h3>ID-487</h3>
-          <h4>Ivan Hrozný</h4>
-          <p>21.2.17 14:30:29 Assigned task ID-487: Pick up documents to Jozef Mrkva</p>
-        </div>
-        <md-divider ng-if="!$last"></md-divider>
-      </md-list-item>
-      <md-list-item class="md-3-line" >
-        <div class="md-list-item-text">
-          <h3>ID-693</h3>
-          <h4>Ivan Hrozný</h4>
-          <p>21.2.17 14:10:15 Finnished task ID-693: Scan new documents</p>
-        </div>
-        <md-divider ng-if="!$last"></md-divider>
-      </md-list-item>
-    </md-list>
-            </md-card-content>
-        </md-card>
-    </div>
+<div ng-cloak layout="column">
+	<div layout="column">
+		<div layout="row">
+			<md-card>
+				<md-card-title>
+					<md--card-title-text>
+						<span class="md-headline">Welcome to F&amp;M Workflow application</span>
+					</md--card-title-text>
+				</md-card-title>
+				<md-divider></md-divider>
+				<md-card-content>
+					Cras dictum diam id est feugiat, sed varius arcu accumsan. Cras eu facilisis ex, sit amet efficitur elit. Aenean a elit placerat, mollis elit a, suscipit nibh. Proin id posuere elit. Duis imperdiet purus a ex tempus pharetra. Nullam ac facilisis nisi.
+				</md-card-content>
+			</md-card>
+		</div>
+		<div layout="row" layout-sm="column" layout-wrap>
+			<md-card>
+				<md-card-title>
+					<md--card-title-text>
+						<span class="md-headline">Graph</span>
+					</md--card-title-text>
+				</md-card-title>
+				<md-divider></md-divider>
+				<md-card-content>
+					<img src="../../assets/fakegraph.jpg">
+				</md-card-content>
+			</md-card>
+			<md-card>
+				<md-card-title>
+					<md--card-title-text>
+						<span class="md-headline">Workflow</span>
+					</md--card-title-text>
+				</md-card-title>
+				<md-divider></md-divider>
+				<md-card-content>
+					<img src="../../assets/fakeflow.PNG">
+				</md-card-content>
+			</md-card>
+		</div>
+	</div>
+	<div layout="row">
+		<md-card flex>
+			<md-card-title>
+				<md--card-title-text>
+					<span class="md-headline">Tasks</span>
+				</md--card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<md-list>
+					<md-list-item layout="row" layout-align="left center">
+						<md-checkbox flex="5" class="md-primary"></md-checkbox>
+						<p flex="5">ID</p>
+						<p flex>Name</p>
+						<p flex="10">Priority</p>
+						<p flex="20">
+							User
+						</p>
+						<p flex="10">Start date</p>
+						<p flex="10">Finish date</p>
+						<div flex="10"></div>
+					</md-list-item>
+					<md-divider></md-divider>
+					<md-list-item layout="row" layout-align="left center">
+						<md-checkbox flex="5" class="md-primary"></md-checkbox>
+						<p flex="5">#1</p>
+						<p flex>Test task 1</p>
+						<p flex="10">High</p>
+						<p flex="20">
+							<md-icon class="material-icons md-primary">account_circle</md-icon>
+							John Smith
+						</p>
+						<p flex="10">5.2.2017</p>
+						<p flex="10">8.2.2017</p>
+						<md-menu>
+							<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+								<md-icon class="material-icons">more_vert</md-icon>
+							</md-button>
+							<md-menu-content>
+								<md-menu-item>
+									<md-button href="/#">Assign</md-button>
+								</md-menu-item>
+								<md-menu-item>
+									<md-button href="/#">Finish</md-button>
+								</md-menu-item>
+							</md-menu-content>
+						</md-menu>
+					</md-list-item>
+					<md-list-item layout="row" layout-align="left center">
+						<md-checkbox flex="5" class="md-primary"></md-checkbox>
+						<p flex="5">#2</p>
+						<p flex>Test task 2</p>
+						<p flex="10">Medium</p>
+						<p flex="20">
+							<md-icon class="material-icons md-primary">account_circle</md-icon>
+							John Smith
+						</p>
+						<p flex="10">7.2.2017</p>
+						<p flex="10">8.2.2017</p>
+						<md-menu>
+							<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+								<md-icon class="material-icons">more_vert</md-icon>
+							</md-button>
+							<md-menu-content>
+								<md-menu-item>
+									<md-button href="/#">Assign</md-button>
+								</md-menu-item>
+								<md-menu-item>
+									<md-button href="/#">Finish</md-button>
+								</md-menu-item>
+							</md-menu-content>
+						</md-menu>
+					</md-list-item>
+					<md-list-item layout="row" layout-align="left center">
+						<md-checkbox flex="5" class="md-primary"></md-checkbox>
+						<p flex="5">#3</p>
+						<p flex>Test task 3</p>
+						<p flex="10">Low</p>
+						<p flex="20">
+							None
+						</p>
+						<p flex="10">7.2.2017</p>
+						<p flex="10">10.2.2017</p>
+						<md-menu>
+							<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+								<md-icon class="material-icons">more_vert</md-icon>
+							</md-button>
+							<md-menu-content>
+								<md-menu-item>
+									<md-button href="/#">Assign</md-button>
+								</md-menu-item>
+								<md-menu-item>
+									<md-button href="/#">Finish</md-button>
+								</md-menu-item>
+							</md-menu-content>
+						</md-menu>
+					</md-list-item>
+				</md-list>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div layout="column">
+		<md-card>
+			<md-card-title>
+				<md--card-title-text>
+					<span class="md-headline">Changelog</span>
+				</md--card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<md-divider></md-divider>
+				<md-list>
+					<md-list-item class="md-3-line">
+						<div class="md-list-item-text">
+							<h3>ID-157</h3>
+							<h4>Jozef Mrkva</h4>
+							<p>21.2.17 14:53:37 Finnished task ID-157: Copy new documents</p>
+						</div>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-list-item>
+					<md-list-item class="md-3-line">
+						<div class="md-list-item-text">
+							<h3>ID-485</h3>
+							<h4>Peter Veľký</h4>
+							<p>21.2.17 14:50:35 Assigned task ID-485: Pick up documents to himself</p>
+						</div>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-list-item>
+					<md-list-item class="md-3-line">
+						<div class="md-list-item-text">
+							<h3>ID-698</h3>
+							<h4>Mária Jednoduchá</h4>
+							<p>21.2.17 14:38:42 Finnished task ID-698: Scan new documents</p>
+						</div>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-list-item>
+					<md-list-item class="md-3-line">
+						<div class="md-list-item-text">
+							<h3>ID-485</h3>
+							<h4>Ivan Hrozný</h4>
+							<p>21.2.17 14:36:45 Assigned task ID-485: Pick up documents to Jozef Mrkva</p>
+						</div>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-list-item>
+					<md-list-item class="md-3-line">
+						<div class="md-list-item-text">
+							<h3>ID-487</h3>
+							<h4>Ivan Hrozný</h4>
+							<p>21.2.17 14:30:29 Assigned task ID-487: Pick up documents to Jozef Mrkva</p>
+						</div>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-list-item>
+					<md-list-item class="md-3-line">
+						<div class="md-list-item-text">
+							<h3>ID-693</h3>
+							<h4>Ivan Hrozný</h4>
+							<p>21.2.17 14:10:15 Finnished task ID-693: Scan new documents</p>
+						</div>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-list-item>
+				</md-list>
+			</md-card-content>
+		</md-card>
+	</div>
 </div>
