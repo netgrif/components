@@ -1,71 +1,77 @@
 <div ng-cloak class="layout-vh-100 background-white" layout="column">
-		<md-toolbar class="main-toolbar" md-whiteframe="5" layout="row" layout-align="center center">
-			<div class="md-toolbar-tools">
-				<a href="/dashboard"><img alt="logo" src="assets/logo.png" class="toolbar-logo"></a>
-				<div flex></div>
-				<div layout="row" layout-align="center center">
-					<md-menu-bar class="toolbar-menu">
-						<md-menu>
-							<md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center" md-menu-origin>{{mainCtrl.user.email}}<i class="material-icons">account_circle</i></md-button>
-							<md-menu-content width="4">
-								<md-menu-item class="toolbar-menu-item">
-									<md-button href="/#">
-										<md-icon class="material-icons">notifications</md-icon>
-										Notifications
+	<md-toolbar class="main-toolbar" md-whiteframe="5" layout="row" layout-align="center center">
+		<div class="md-toolbar-tools">
+			<a href="/dashboard"><img alt="logo" src="assets/logo.png" class="toolbar-logo"></a>
+			<div flex></div>
+			<div layout="row" layout-align="center center">
+				<md-menu-bar class="toolbar-menu">
+					<md-menu>
+						<md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center" md-menu-origin>{{mainCtrl.user.email}}<i class="material-icons">account_circle</i></md-button>
+						<md-menu-content width="4">
+							<md-menu-item class="toolbar-menu-item">
+								<md-button href="/#">
+									<md-icon class="material-icons">notifications</md-icon>
+									Notifications
+								</md-button>
+							</md-menu-item>
+							<md-menu-item>
+								<md-button href="/profile">
+									<md-icon class="material-icons">account_circle</md-icon>
+									Profile
+								</md-button>
+							</md-menu-item>
+							<md-menu-item>
+								<md-menu>
+									<md-button ng-click="$mdOpenMenu($event)">
+										<div>
+											<md-icon class="material-icons" style="margin-right:14px;margin-top:1.5px;margin-bottom:1.5px;font-size:24px;">language</md-icon>
+											<span style="font-size:15px; margin-left:-1px;">Language</span>
+										</div>
 									</md-button>
-								</md-menu-item>
-								<md-menu-item>
-									<md-button href="/profile">
-										<md-icon class="material-icons">account_circle</md-icon>
-										Profile
-									</md-button>
-								</md-menu-item>
-								<md-menu-item>
-									<md-menu>
-										<md-button ng-click="$mdOpenMenu($event)">
-											<div>
-												<md-icon class="material-icons" style="margin-right:14px;margin-top:1.5px;margin-bottom:1.5px;font-size:24px;">settings</md-icon>
-												<span style="font-size:15px; margin-left:-1px;">Settings</span>
-											</div>
-										</md-button>
-										<md-menu-content>
-											<md-menu-item>
-												<md-button href="/#">Item 1</md-button>
-											</md-menu-item>
-											<md-menu-item>
-												<md-button href="/#">Item 2</md-button>
-											</md-menu-item>
-											<md-menu-item>
-												<md-button href="/#">Item 3</md-button>
-											</md-menu-item>
-										</md-menu-content>
-									</md-menu>
-								</md-menu-item>
-								<md-menu-item>
-									<md-button ng-click="mainCtrl.logout()">
-										<md-icon class="material-icons">exit_to_app</md-icon>
-										Logout
-									</md-button>
-								</md-menu-item>
-							</md-menu-content>
-						</md-menu>
-					</md-menu-bar>
-				</div>
+									<md-menu-content>
+										<md-menu-item>
+											<md-button href="/#">English</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button href="/#" disabled>German</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button href="/#" disabled>Spanish</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button href="/#" disabled>Slovak</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button href="/#" disabled>Czech</md-button>
+										</md-menu-item>
+									</md-menu-content>
+								</md-menu>
+							</md-menu-item>
+							<md-menu-item>
+								<md-button ng-click="mainCtrl.logout()">
+									<md-icon class="material-icons">exit_to_app</md-icon>
+									Logout
+								</md-button>
+							</md-menu-item>
+						</md-menu-content>
+					</md-menu>
+				</md-menu-bar>
 			</div>
-		</md-toolbar>
-		<section layout="row" flex>
-			<md-sidenav class="md-sidenav-left main-sidenav" md-component-id="left" md-is-locked-open="true" md-whiteframe="5">
-				<div layout="column">
-					<md-button href="/dashboard" layout="row" layout-align="left center"><i class="material-icons">dashboard</i>Dashboard</md-button>
-					<md-button href="/tasks" layout="row" layout-align="left center"><i class="material-icons">check_box</i>Tasks</md-button>
-					<md-button href="/data" layout="row" layout-align="left center"><i class="material-icons">storage</i>Data</md-button>
-					<md-button href="/roles" layout="row" layout-align="left center"><i class="material-icons">people</i>Roles</md-button>
-					<md-button href="/workflow" layout="row" layout-align="left center"><i class="material-icons">multiline_chart</i>Workflow</md-button>
-                    <md-button ng-if="mainCtrl.user.authority === 'admin'" href="/console" layout="row" layout-align="left center"><i class="material-icons">developer_board</i>Admin Console</md-button>
-				</div>
-			</md-sidenav>
-			<md-content layout-wrap flex>
-                <div app-view-segment="1" onload="mainCtrl.startLoadingData()"></div>
-			</md-content>
-		</section>
-	</div>
+		</div>
+	</md-toolbar>
+	<section layout="row" flex>
+		<md-sidenav class="md-sidenav-left main-sidenav" md-component-id="left" md-is-locked-open="true" md-whiteframe="5">
+			<div layout="column">
+				<md-button href="/dashboard" layout="row" layout-align="left center"><i class="material-icons">dashboard</i>Dashboard</md-button>
+				<md-button href="/tasks" layout="row" layout-align="left center"><i class="material-icons">check_box</i>Tasks</md-button>
+				<md-button href="/data" layout="row" layout-align="left center"><i class="material-icons">storage</i>Data</md-button>
+				<md-button href="/roles" layout="row" layout-align="left center"><i class="material-icons">people</i>Roles</md-button>
+				<md-button href="/workflow" layout="row" layout-align="left center"><i class="material-icons">multiline_chart</i>Workflow</md-button>
+				<md-button ng-if="mainCtrl.user.authority === 'admin'" href="/console" layout="row" layout-align="left center"><i class="material-icons">developer_board</i>Admin Console</md-button>
+			</div>
+		</md-sidenav>
+		<md-content layout-wrap flex>
+			<div app-view-segment="1" onload="mainCtrl.startLoadingData()"></div>
+		</md-content>
+	</section>
+</div>
