@@ -1,13 +1,13 @@
 <div ng-cloak layout="column" layout-align="center center" class="layout-vh-100">
-	<md-card layout-padding class="card-login">
+	<md-card layout-padding class="card-login" style="width: 400px;">
 		<form id="signup-form" ng-submit="loginCtrl.signup()">
-			<md-input-container class="md-block">
-				<md-icon class="material-icons">vpn_key</md-icon>
-				<input ng-model="loginCtrl.signupUser.token" name="token" type="text" placeholder="Token" ng-required="true">
-			</md-input-container>
+			<!--<md-input-container class="md-block">-->
+				<!--<md-icon class="material-icons">vpn_key</md-icon>-->
+				<!--<input ng-model="loginCtrl.signupUser.token" name="token" type="text" placeholder="Token" ng-required="true">-->
+			<!--</md-input-container>-->
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">email</md-icon>
-				<input ng-model="loginCtrl.signupUser.email" name="email" type="email" placeholder="Email" ng-required="true">
+				<input ng-model="loginCtrl.signupUser.email" name="email" type="email" placeholder="Email" ng-required="true" disabled>
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">lock</md-icon>

@@ -63,18 +63,21 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
             init: function () {
                 if($location.path() == '/test') return;
 
-                if($location.path() != auth.loginPath && $location.path() != auth.signupPath) {
+                if(!auth.isLoginPath()) {
                     this.authenticate({}, function (isLoggedIn) {
                         if (isLoggedIn) $location.path(auth.path);
                     });
                 }
 
                 $rootScope.$on('$locationChangeStart',function () {
-                    if($location.path() != auth.loginPath && $location.path() != auth.signupPath){
+                    if(!auth.isLoginPath()){
                         auth.path = $location.path();
                         if(!auth.authenticated) $location.path(auth.loginPath);
                     }
                 });
+            },
+            isLoginPath: function () {
+                return $location.path().startsWith(auth.loginPath);
             }
         };
         return auth;

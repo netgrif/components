@@ -1,34 +1,47 @@
 
 define(['angular','../modules/Main','../services/Auth'], function (angular) {
-    angular.module('ngMain').controller('LoginController',['$auth', '$loading','$log', '$snackbar',
-    function ($auth, $loading, $log, $snackbar) {
+    angular.module('ngMain').controller('LoginController',['$http','$auth', '$loading','$log', '$snackbar','$routeSegment',
+    function ($http, $auth, $loading, $log, $snackbar, $routeSegment) {
         var self = this;
+        var dataLoadingStarted = false;
 
         self.credentials = {
             username: "",
             password: ""
         };
         self.signupUser = {
-            token: "",
-            email: "",
-            password: "",
-            name: "",
-            surname: ""
+            token: $routeSegment.$routeParams.token,
+            email: undefined,
+            password: undefined,
+            name: undefined,
+            surname: undefined
         };
         self.error = {
             error: false
         };
         self.signupMsg = undefined;
 
-        self.viewLoaded = loaded;
-        function loaded() {
-//			setTimeout(function() {
-//				$log.debug("Login loaded");
-//				$loading.showLoading(false);
-//			}, 3000);
-			$log.debug("Login loaded");
-			$loading.showLoading(false);
-        }
+        self.viewLoaded = function () {
+            if(dataLoadingStarted)return;
+            dataLoadingStarted = true;
+
+            if(self.signupUser.token) {
+                $http.post("/login/token", self.signupUser.token)
+                    .then(function (response) {
+                        $log.debug("Login loaded");
+                        self.signupUser.email = response.success;
+                        $loading.showLoading(false);
+
+                    }, function () {
+                        $log.debug("Email retrieval failed");
+                        $loading.showLoading(false);
+                        self.signupMsg = "Failed to identify token! Try again with the right token.";
+                    });
+            } else {
+                $log.debug("Login loaded");
+                $loading.showLoading(false);
+            }
+        };
 
         self.login = function () {
             $auth.authenticate(self.credentials, function (authenticated) {
@@ -49,6 +62,7 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
         };
 
         self.signup = function () {
+            self.signupUser.password = btoa(self.signupUser.password);
             var jsonSignupData = JSON.stringify(self.signupUser);
             $log.debug("formData: "+jsonSignupData);
             $auth.signup(jsonSignupData,function (response) {

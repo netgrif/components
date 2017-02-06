@@ -42,7 +42,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRoute', 'angu
                 .when('/', 'app')
                 .when('/login', 'login')
                 .when('/login/signin', 'login.signin')
-                .when('/login/signup', 'login.signup')
+                .when('/login/signup/:token', 'login.signup')
                 .when('/dashboard', 'app.dashboard')
                 .when('/tasks', 'app.tasks')
                 .when('/profile', 'app.profile')
@@ -88,7 +88,8 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRoute', 'angu
                     templateUrl: "views/login/signin_form.html"
                 })
                 .segment('signup', {
-                    templateUrl: "views/login/signup_form.html"
+                    templateUrl: "views/login/signup_form.html",
+                    dependencies: ['token']
                 })
                 .up()
                 .segment('test', {
