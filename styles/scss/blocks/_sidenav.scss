@@ -10,10 +10,7 @@
 		font-size: 17px;
 		margin: 0;
 		padding: 5px 10px;
-
-		&:hover {
-			background-color: $color-fm-500;
-		}
+		border-radius: 0;
 
 		&:first-child {
 			margin-top: 30px;
@@ -21,6 +18,15 @@
 
 		i {
 			margin-right: 10px;
+		}
+
+		&:hover {
+			background-color: $color-fm-500;
+		}
+
+		&.active {
+			background-color: white;
+			color: $color-fm-500;
 		}
 	}
 }
