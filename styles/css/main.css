@@ -94,6 +94,10 @@
   color: #212121;
 }
 
+.color-fg-blue-grey-50 {
+  color: #ECEFF1;
+}
+
 .color-bg-fm-50 {
   background-color: #f3e0e6;
 }
@@ -188,6 +192,10 @@
 
 .color-bg-grey-900 {
   background-color: #212121;
+}
+
+.color-bg-blue-grey-50 {
+  background-color: #ECEFF1;
 }
 
 body {

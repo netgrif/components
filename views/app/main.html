@@ -70,7 +70,7 @@
 				<md-button ng-if="mainCtrl.user.authority === 'admin'" href="/console" ng-class="{active: ('console' | routeSegmentContains)}" layout="row" layout-align="left center"><i class="material-icons">developer_board</i>Admin Console</md-button>
 			</div>
 		</md-sidenav>
-		<md-content layout-wrap flex>
+		<md-content layout-wrap flex class="color-bg-blue-grey-50">
 			<div app-view-segment="1" onload="mainCtrl.startLoadingData()"></div>
 		</md-content>
 	</section>
