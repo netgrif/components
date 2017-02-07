@@ -13,6 +13,7 @@ requirejs.config({
         'angularRoute': "bower_components/angular-route/angular-route.min",
         'angularRouteSegment': "bower_components/angular-route-segment/build/angular-route-segment",
         'angularMaterial': "bower_components/angular-material/angular-material.min",
+        'angularMaterialExpansionPanels': "bower_components/angular-material-expansion-panel/dist/md-expansion-panel.min",
         'angularCharts': "bower_components/angular-charts-0.0.4.min",
         'domReady': "bower_components/requirejs/domReady",
         'app': "scripts/app"
@@ -29,6 +30,7 @@ requirejs.config({
         'angularRoute': ['angular'],
         'angularRouteSegment': ['angular', 'angularRoute'],
         'angularMaterial': ['angular', 'angularAnimate', 'angularAria', 'angularMessages'],
+        'angularMaterialExpansionPanels': ['angular', 'angularAnimate', 'angularAria', 'angularMessages','angularMaterial'],
         'angularCharts': ['angular']
     }
 });

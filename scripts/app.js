@@ -4,16 +4,16 @@
 /*  Top level module
     map all application components
  */
-define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRoute', 'angularRouteSegment',
+define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment', 'angularMaterialExpansionPanels',
      'scripts/directives/DirectivesLoader',
      'scripts/filters/FiltersLoader',
      'scripts/services/ServicesLoader',
      'scripts/controllers/ControllersLoader'],
     function (angular) {
         // console.log(angular.version);
-        var app = angular.module('app', ['ngMaterial', 'angular-hal', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment',
+        var app = angular.module('app', ['ngMaterial', 'angular-hal', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment','material.components.expansionPanels',
          'ngMain', 'ngDashboard','ngTasks']); //here add modules that you defined
-        app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $qProvider) {
+        app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider) {
             $mdThemingProvider.definePalette('fmService', {
                 '50': '#f3e0e6',
                 '100': '#e0b3bf',
