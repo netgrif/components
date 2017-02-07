@@ -433,6 +433,11 @@ body {
 }
 
 .base .main-sidenav .md-button.active {
-  background-color: white;
+  background-color: #EEEEEE;
   color: #98002b;
+}
+
+.base .main-sidenav .md-button.active:hover {
+  background-color: #98002b;
+  color: white;
 }
