@@ -1,24 +1,223 @@
 <div ng-cloak layout-xs>
-     <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="All tasks">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">All avaliable tasks</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
-        </md-content>
-      </md-tab>
-      <md-tab label="My tasks">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">All tasks assigned to me</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
-          <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
-      </md-tab>
-      <md-tab label="My finnished tasks">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">All tasks finnished by me</h1>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
-      </md-tab>
-    </md-tabs>
-    </div>
+	<div class="background-header background-welcome"></div>
+	<md-tabs md-dynamic-height md-border-bottom>
+		<md-tab label="All tasks">
+			<md-content class="md-padding color-bg-transparent">
+
+				<div class="tasks">
+					<md-card class="tasks-header" layout="row" layout-align="left center">
+						<p flex="15">ID</p>
+						<p flex="30">Name</p>
+						<p flex="15">Priority</p>
+						<p flex="20">
+							User
+						</p>
+						<p flex="15">Start date</p>
+						<p flex="10">Status</p>
+						<md-menu>
+							<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+								<md-icon class="material-icons">settings</md-icon>
+							</md-button>
+							<md-menu-content>
+								<md-menu-item>
+									<md-button href="/#">Table View</md-button>
+								</md-menu-item>
+								<md-menu-item>
+									<md-button href="/#">Expansional View</md-button>
+								</md-menu-item>
+							</md-menu-content>
+						</md-menu>
+					</md-card>
+
+					<md-expansion-panel class="task">
+						<md-expansion-panel-collapsed layout="row" layout-align="left center">
+							<p flex="15" layout="row" layout-align="left center">
+								<i class="material-icons color-fg-teal-500">label</i> UJ-148
+							</p>
+							<p flex="30">Odovzdanie</p>
+							<p flex="15" layout="row" layout-align="left center">
+								<i class="material-icons color-fg-green-500">arrow_downward</i> Low
+							</p>
+							<p flex="20" layout="row" layout-align="left center">
+								<i class="material-icons color-fg-fm-500">account_circle</i> John Smith
+							</p>
+							<p flex="15">5.2.2017</p>
+							<p flex="10">New</p>
+							<md-menu>
+								<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+									<md-icon class="material-icons">more_vert</md-icon>
+								</md-button>
+								<md-menu-content>
+									<md-menu-item>
+										<md-button href="/#">Assign</md-button>
+									</md-menu-item>
+									<md-menu-item>
+										<md-button href="/#">Finish</md-button>
+									</md-menu-item>
+								</md-menu-content>
+							</md-menu>
+						</md-expansion-panel-collapsed>
+						<md-expansion-panel-expanded>
+							<md-expansion-panel-header>
+								<p flex="15" layout="row" layout-align="left center">
+									<i class="material-icons color-fg-teal-500">label</i> UJ-148
+								</p>
+								<p flex="30">Odovzdanie</p>
+								<p flex="15" layout="row" layout-align="left center">
+									<i class="material-icons color-fg-green-500">arrow_downward</i> Low
+								</p>
+								<p flex="20" layout="row" layout-align="left center">
+									<i class="material-icons color-fg-fm-500">account_circle</i> John Smith
+								</p>
+								<p flex="15">5.2.2017</p>
+								<p flex="10">New</p>
+								<md-button ng-click="$panel.collapse()">
+									<md-expansion-panel-icon></md-expansion-panel-icon>
+								</md-button>
+							</md-expansion-panel-header>
+							<md-expansion-panel-content>
+								<h4>Content</h4>
+								<p>Put content in here</p>
+							</md-expansion-panel-content>
+							<md-expansion-panel-footer>
+								<div flex></div>
+								<md-button href="/#">Assign</md-button>
+								<md-button href="/#">Finish</md-button>
+								<md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+							</md-expansion-panel-footer>
+						</md-expansion-panel-expanded>
+					</md-expansion-panel>
+
+					<md-expansion-panel class="task">
+						<md-expansion-panel-collapsed layout="row" layout-align="left center">
+							<p flex="15" layout="row" layout-align="left center">
+								<i class="material-icons color-fg-amber-500">label</i> UJ-148
+							</p>
+							<p flex="30">Odovzdanie</p>
+							<p flex="15" layout="row" layout-align="left center">
+								<i class="material-icons color-fg-amber-500">arrow_upward</i> Medium
+							</p>
+							<p flex="20" layout="row" layout-align="left center">
+								<i class="material-icons color-fg-fm-500">account_circle</i> John Smith
+							</p>
+							<p flex="15">5.2.2017</p>
+							<p flex="10">Done</p>
+							<md-menu>
+								<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+									<md-icon class="material-icons">more_vert</md-icon>
+								</md-button>
+								<md-menu-content>
+									<md-menu-item>
+										<md-button href="/#">Assign</md-button>
+									</md-menu-item>
+									<md-menu-item>
+										<md-button href="/#">Finish</md-button>
+									</md-menu-item>
+								</md-menu-content>
+							</md-menu>
+						</md-expansion-panel-collapsed>
+						<md-expansion-panel-expanded>
+							<md-expansion-panel-header>
+								<p flex="15" layout="row" layout-align="left center">
+									<i class="material-icons color-fg-amber-500">label</i> UJ-148
+								</p>
+								<p flex="30">Odovzdanie</p>
+								<p flex="15" layout="row" layout-align="left center">
+									<i class="material-icons color-fg-amber-500">arrow_upward</i> Medium
+								</p>
+								<p flex="20" layout="row" layout-align="left center">
+									<i class="material-icons color-fg-fm-500">account_circle</i> John Smith
+								</p>
+								<p flex="15">5.2.2017</p>
+								<p flex="10">Done</p>
+								<md-button ng-click="$panel.collapse()">
+									<md-expansion-panel-icon></md-expansion-panel-icon>
+								</md-button>
+							</md-expansion-panel-header>
+							<md-expansion-panel-content>
+								<h4>Content</h4>
+								<p>Put content in here</p>
+							</md-expansion-panel-content>
+							<md-expansion-panel-footer>
+								<div flex></div>
+								<md-button href="/#">Assign</md-button>
+								<md-button href="/#">Finish</md-button>
+								<md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+							</md-expansion-panel-footer>
+						</md-expansion-panel-expanded>
+					</md-expansion-panel>
+
+					<md-expansion-panel class="task">
+						<md-expansion-panel-collapsed layout="row" layout-align="left center">
+							<p flex="15" layout="row" layout-align="left center">
+								<i class="material-icons color-fg-indigo-500">label</i> UJ-148
+							</p>
+							<p flex="30">Odovzdanie</p>
+							<p flex="15" layout="row" layout-align="left center">
+								<i class="material-icons color-fg-red-500">arrow_upward</i> High
+							</p>
+							<p flex="20" layout="row" layout-align="left center">
+								<i class="material-icons color-fg-fm-500">account_circle</i> John Smith
+							</p>
+							<p flex="15">5.2.2017</p>
+							<p flex="10">Assigned</p>
+							<md-menu>
+								<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+									<md-icon class="material-icons">more_vert</md-icon>
+								</md-button>
+								<md-menu-content>
+									<md-menu-item>
+										<md-button href="/#">Assign</md-button>
+									</md-menu-item>
+									<md-menu-item>
+										<md-button href="/#">Finish</md-button>
+									</md-menu-item>
+								</md-menu-content>
+							</md-menu>
+						</md-expansion-panel-collapsed>
+						<md-expansion-panel-expanded>
+							<md-expansion-panel-header>
+								<p flex="15" layout="row" layout-align="left center">
+									<i class="material-icons color-fg-indigo-500">label</i> UJ-148
+								</p>
+								<p flex="30">Odovzdanie</p>
+								<p flex="15" layout="row" layout-align="left center">
+									<i class="material-icons color-fg-red-500">arrow_upward</i> High
+								</p>
+								<p flex="20" layout="row" layout-align="left center">
+									<i class="material-icons color-fg-fm-500">account_circle</i> John Smith
+								</p>
+								<p flex="15">5.2.2017</p>
+								<p flex="10">Assigned</p>
+								<a ng-click="$panel.collapse()">
+									<md-expansion-panel-icon></md-expansion-panel-icon>
+								</a>
+							</md-expansion-panel-header>
+							<md-expansion-panel-content>
+								<h4>Content</h4>
+								<p>Put content in here</p>
+							</md-expansion-panel-content>
+							<md-expansion-panel-footer>
+								<div flex></div>
+								<md-button href="/#">Assign</md-button>
+								<md-button href="/#">Finish</md-button>
+								<md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+							</md-expansion-panel-footer>
+						</md-expansion-panel-expanded>
+					</md-expansion-panel>
+				</div>
+
+			</md-content>
+		</md-tab>
+		<md-tab label="My tasks">
+			<md-content class="md-padding color-bg-transparent">
+				<!--TODO-->
+			</md-content>
+		</md-tab>
+		<md-tab label="My finnished tasks">
+			<md-content class="md-padding color-bg-transparent">
+				<!--TODO-->
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</div>

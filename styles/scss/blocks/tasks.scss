@@ -1,0 +1,24 @@
+.tasks {
+
+	.tasks-header {
+		height: 80px;
+		margin: 0;
+		padding-left: 24px;
+		padding-right: 24px;
+		margin-bottom: 16px;
+
+		> * {
+			font-weight: bold;
+		}
+	}
+
+	.task {
+
+		p {
+
+			> i {
+				margin-right: 16px;
+			}
+		}
+	}
+}

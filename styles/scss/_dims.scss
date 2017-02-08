@@ -5,7 +5,17 @@
 
 
 // Margins
+.margin {
 
+	&-no {
+		margin: 0;
+	}
+}
 
 // Paddings
+.padding {
 
+	&-no {
+		padding: 0;
+	}
+}

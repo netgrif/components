@@ -26,7 +26,16 @@ $color-grey-700: 		#616161;
 $color-grey-800: 		#424242;
 $color-grey-900: 		#212121;
 
+// Background
 $color-blue-grey-50: 	#ECEFF1;
+
+// Other
+$color-blue-grey-500:	#607D8B;
+$color-amber-500:		#FFC107;
+$color-green-500:		#4CAF50;
+$color-red-500:			#F44336;
+$color-indigo-500:		#3F51B5;
+$color-teal-500:		#009688;
 
 
 .color {
@@ -140,6 +149,45 @@ $color-blue-grey-50: 	#ECEFF1;
 			&-50 {
 				color: $color-blue-grey-50;
 			}
+
+			&-500 {
+				color: $color-blue-grey-500;
+			}
+		}
+
+		&-amber {
+
+			&-500 {
+				color: $color-amber-500;
+			}
+		}
+
+		&-green {
+
+			&-500 {
+				color: $color-green-500;
+			}
+		}
+
+		&-red {
+
+			&-500 {
+				color: $color-red-500;
+			}
+		}
+
+		&-indigo {
+
+			&-500 {
+				color: $color-indigo-500;
+			}
+		}
+
+		&-teal {
+
+			&-500 {
+				color: $color-teal-500;
+			}
 		}
 	}
 	
@@ -252,6 +300,49 @@ $color-blue-grey-50: 	#ECEFF1;
 			&-50 {
 				background-color: $color-blue-grey-50;
 			}
+
+			&-500 {
+				background-color: $color-blue-grey-500;
+			}
+		}
+
+		&-amber {
+
+			&-500 {
+				background-color: $color-amber-500;
+			}
+		}
+
+		&-green {
+
+			&-500 {
+				background-color: $color-green-500;
+			}
+		}
+
+		&-red {
+
+			&-500 {
+				background-color: $color-red-500;
+			}
+		}
+
+		&-indigo {
+
+			&-500 {
+				background-color: $color-indigo-500;
+			}
+		}
+
+		&-teal {
+
+			&-500 {
+				background-color: $color-teal-500;
+			}
+		}
+
+		&-transparent {
+			background-color: transparent;
 		}
 	}
 }

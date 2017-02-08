@@ -98,6 +98,30 @@
   color: #ECEFF1;
 }
 
+.color-fg-blue-grey-500 {
+  color: #607D8B;
+}
+
+.color-fg-amber-500 {
+  color: #FFC107;
+}
+
+.color-fg-green-500 {
+  color: #4CAF50;
+}
+
+.color-fg-red-500 {
+  color: #F44336;
+}
+
+.color-fg-indigo-500 {
+  color: #3F51B5;
+}
+
+.color-fg-teal-500 {
+  color: #009688;
+}
+
 .color-bg-fm-50 {
   background-color: #f3e0e6;
 }
@@ -198,6 +222,42 @@
   background-color: #ECEFF1;
 }
 
+.color-bg-blue-grey-500 {
+  background-color: #607D8B;
+}
+
+.color-bg-amber-500 {
+  background-color: #FFC107;
+}
+
+.color-bg-green-500 {
+  background-color: #4CAF50;
+}
+
+.color-bg-red-500 {
+  background-color: #F44336;
+}
+
+.color-bg-indigo-500 {
+  background-color: #3F51B5;
+}
+
+.color-bg-teal-500 {
+  background-color: #009688;
+}
+
+.color-bg-transparent {
+  background-color: transparent;
+}
+
+.margin-no {
+  margin: 0;
+}
+
+.padding-no {
+  padding: 0;
+}
+
 body {
   min-height: 100%;
 }
@@ -216,6 +276,14 @@ body {
 
 .layout-rw-100 {
   width: 100%;
+}
+
+.layout-sh-300 {
+  height: 300px;
+}
+
+.layout-sw-300 {
+  width: 300px;
 }
 
 @-webkit-keyframes spinner-right {
@@ -366,9 +434,11 @@ body {
   text-decoration: underline;
 }
 
-.base .background {
-  height: 100%;
+.base .background-header {
+  position: absolute;
+  height: 300px;
   width: 100%;
+  top: 48px;
 }
 
 .base .background-welcome {
@@ -377,10 +447,6 @@ body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-}
-
-.base .background-white {
-  background-color: white;
 }
 
 .base .main-toolbar {
@@ -448,4 +514,20 @@ body {
 .base .main-sidenav .md-button.active:hover {
   background-color: #98002b;
   color: white;
+}
+
+.base .tasks .tasks-header {
+  height: 80px;
+  margin: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-bottom: 16px;
+}
+
+.base .tasks .tasks-header > * {
+  font-weight: bold;
+}
+
+.base .tasks .task p > i {
+  margin-right: 16px;
 }
