@@ -480,6 +480,8 @@ body {
 
 .base .main-sidenav {
   width: 180px;
+  min-width: 180px;
+  max-width: 180px;
   background-color: #424242;
 }
 
@@ -530,4 +532,28 @@ body {
 
 .base .tasks .task p > i {
   margin-right: 16px;
+}
+
+.base .search-tasks {
+  margin: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-bottom: 16px;
+}
+
+.base .search-tasks .layout-row {
+  height: 64px;
+}
+
+.base .search-tasks .layout-row:last-child {
+  height: 48px;
+  padding-bottom: 16px;
+}
+
+.base .search-tasks .layout-row > form {
+  margin: 0;
+}
+
+.base .search-tasks .layout-row > form > .md-block {
+  margin: 0;
 }

@@ -1,5 +1,7 @@
 .main-sidenav {
 	width: 180px;
+	min-width: 180px; // to prevent grow on mobile devices
+	max-width: 180px;
 	background-color: $color-grey-800;
 
 	.md-button {
