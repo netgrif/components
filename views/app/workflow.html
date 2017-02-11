@@ -16,9 +16,9 @@
                     <input type="text" ng-model="flowCtrl.petriNetMeta.name">
                 </md-input-container>
                 <md-input-container>
-                    <label>Initial</label>
-                    <input md-maxlength="3" type="text" name="short" ng-model="flowCtrl.petriNetMeta.short">
-                    <div ng-messages="petriNetUpload.short.$error">
+                    <label>Initials</label>
+                    <input md-maxlength="3" type="text" name="initials" ng-model="flowCtrl.petriNetMeta.initials">
+                    <div ng-messages="petriNetUpload.initials.$error">
                         <div ng-message="md-maxlength">Petri Net initials must be exactly 3 characters long</div>
                     </div>
                 </md-input-container>

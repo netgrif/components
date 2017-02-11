@@ -14,7 +14,7 @@ define(['angular','../modules/Workflow', '../services/FileUpload'],function (ang
                 var file = $rootScope.mFile;
                 //console.dir(file);
                 var meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
-                $fileUpload.upload(file,meta,"/petrinet", function (response) {
+                $fileUpload.upload(file,meta,"/res/petrinet/import", function (response) {
 
                 });
             }
