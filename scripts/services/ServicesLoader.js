@@ -6,4 +6,4 @@
  service itself should be handling registration to angular app module
  */
 var path = 'scripts/services/';
-define([path+'Loading',path+'Auth',path+'Snackbar',path+'Localization'], function () {});
+define([path+'Loading',path+'Auth',path+'Snackbar',path+'Localization',path+'FileUpload'], function () {});

@@ -1,0 +1,31 @@
+<div ng-cloak layout="row">
+    <md-card ng-if="mainCtrl.user.authority === 'admin'">
+        <md-card-title>
+            <md--card-title-text>
+                <span class="md-headline">Upload PetriNet</span>
+            </md--card-title-text>
+        </md-card-title>
+        <form name="petriNetUpload" ng-submit="flowCtrl.uploadPetriNet()">
+            <md-card-content layout="column">
+                <md-input-container>
+                    <label>Petri Net</label>
+                    <input type="file" file-model="mFile">
+                </md-input-container>
+                <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="flowCtrl.petriNetMeta.name">
+                </md-input-container>
+                <md-input-container>
+                    <label>Initial</label>
+                    <input md-maxlength="3" type="text" name="short" ng-model="flowCtrl.petriNetMeta.short">
+                    <div ng-messages="petriNetUpload.short.$error">
+                        <div ng-message="md-maxlength">Petri Net initials must be exactly 3 characters long</div>
+                    </div>
+                </md-input-container>
+            </md-card-content>
+            <md-card-actions>
+                <md-button type="submit">Upload</md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+</div>

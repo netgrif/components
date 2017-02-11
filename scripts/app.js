@@ -12,7 +12,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
     function (angular) {
         // console.log(angular.version);
         var app = angular.module('app', ['ngMaterial', 'angular-hal', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment','material.components.expansionPanels',
-         'ngMain', 'ngDashboard','ngTasks']); //here add modules that you defined
+         'ngMain', 'ngDashboard','ngTasks','ngWorkflow']); //here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider) {
             $mdThemingProvider.definePalette('fmService', {
                 '50': '#f3e0e6',
@@ -45,6 +45,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                 .when('/login/signup/:token', 'login.signup')
                 .when('/dashboard', 'app.dashboard')
                 .when('/tasks', 'app.tasks')
+                .when('/workflow', 'app.workflow')
                 .when('/profile', 'app.profile')
                 .when('/console', 'app.console')
                 .when('/test', 'test')
@@ -70,6 +71,11 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                     templateUrl: "views/app/tasks.html",
                     controller: 'TasksController',
                     controllerAs: 'tasksCtrl'
+                })
+                .segment('workflow', {
+                    templateUrl: "views/app/workflow.html",
+                    controller: 'WorkflowController',
+                    controllerAs: 'flowCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",

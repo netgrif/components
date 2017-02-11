@@ -5,5 +5,6 @@
  Register all directives that need to be loaded
  directive itself should be handling registration to angular app module
  */
-define([], function () {});
+var path = 'scripts/directives/';
+define([path+'FileModelDirective'], function () {});
 
