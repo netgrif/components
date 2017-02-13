@@ -3,11 +3,12 @@
  */
 define(['angular','../modules/Workflow', '../services/FileUpload'],function (angular) {
     angular.module('ngWorkflow').controller('WorkflowController',
-        ['$log','$scope', '$rootScope','$fileUpload',
-        function ($log, $scope, $rootScope, $fileUpload) {
+        ['$log','$scope', '$rootScope','$fileUpload', '$http',
+        function ($log, $scope, $rootScope, $fileUpload, $http) {
             var self = this;
 
             self.petriNetMeta = {};
+            self.newCase = {};
 
 
             self.uploadPetriNet = function () {
@@ -17,6 +18,26 @@ define(['angular','../modules/Workflow', '../services/FileUpload'],function (ang
                 $fileUpload.upload(file,meta,"/res/petrinet/import", function (response) {
 
                 });
-            }
+            };
+
+            self.createCase = function () {
+                if(!jQuery.isEmptyObject(self.newCase) || !self.newCase.netId){
+                    $http.post("/res/workflow/case", JSON.stringify(self.newCase))
+                        .then(function (response) {
+                            $log.debug(response);
+                        }, function () {
+                            $log.debug("Creating new case failed!");
+                        });
+                }
+            };
+
+            self.loadPetriNets = function () {
+                $http.get("/res/petrinet/refs").then(function (response) {
+                    $log.debug(response);
+                    self.petriNetRefs = response.data._embedded.petriNetReferences;
+                },function () {
+                    $log.debug("Petri net refs get failed!");
+                });
+            };
     }]);
 });

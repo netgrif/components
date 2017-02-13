@@ -28,4 +28,31 @@
             </md-card-actions>
         </form>
     </md-card>
+    <md-card>
+        <md-card-title>
+            <md--card-title-text>
+                <span class="md-headline">Create Case</span>
+            </md--card-title-text>
+        </md-card-title>
+        <form ng-submit="flowCtrl.createCase()">
+            <md-card-content layout="column">
+                <md-input-container>
+                    <label>Petri Net</label>
+                    <md-select ng-model="flowCtrl.newCase.netId" required>
+                        <md-option ng-repeat="net in flowCtrl.petriNetRefs" value="{{net.id}}">
+                            {{net.title}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="flowCtrl.newCase.title" required>
+                </md-input-container>
+            </md-card-content>
+            <md-card-actions>
+                <md-button type="submit">Create</md-button>
+                <md-button ng-click="flowCtrl.loadPetriNets()">Load Petri nets</md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
 </div>
