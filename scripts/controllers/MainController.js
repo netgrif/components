@@ -2,8 +2,8 @@
  * Created by Milan on 31.1.2017.
  */
 define(['angular','../modules/Main','../services/Loading','../services/Auth'],function (angular) {
-    angular.module('ngMain').controller('MainController',['$loading', '$auth','$log', '$scope',
-    function ($loading, $auth, $log, $scope) {
+    angular.module('ngMain').controller('MainController',['$loading', '$auth','$log', '$scope', '$style',
+    function ($loading, $auth, $log, $scope, $style) {
         var self = this;
 
         self.user = {};
@@ -24,6 +24,7 @@ define(['angular','../modules/Main','../services/Loading','../services/Auth'],fu
             self.user.authority = $auth.loggedUser.authority;
             self.user.email = $auth.loggedUser.login;
             $log.debug(self.user);
+			$style.mainView();
             $loading.showLoading(false);
 
         };
@@ -42,7 +43,6 @@ define(['angular','../modules/Main','../services/Loading','../services/Auth'],fu
                 viewContainer.show();
             }
         }
-
 
     }]);
 });
