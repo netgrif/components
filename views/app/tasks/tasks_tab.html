@@ -1,0 +1,68 @@
+<md-content class="md-padding color-bg-transparent">
+    <md-card class="search-tasks" layout="row">
+        <div flex layout="column">
+            <div layout="row" layout-align="left end">
+                <md-icon flex="5" class="material-icons md-primary">search</md-icon>
+                <form flex layout="row" ng-submit="tasksCtrl.search()">
+                    <md-input-container class="md-block">
+                        <input type="text" placeholder="Process">
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <input type="text" placeholder="Task">
+                    </md-input-container>
+                </form>
+            </div>
+            <div layout="row" layout-align="left center">
+                <md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>
+                <md-chips flex>
+                    <md-chip>Process 1 &nbsp;&nbsp;<md-icon class="material-icons">close</md-icon></md-chip>
+                </md-chips>
+            </div>
+        </div>
+        <div layout="column" layout-align="center center">
+            <md-menu>
+                <md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                    <md-icon class="material-icons">more_vert</md-icon>
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="tasksCtrl.saveFilter()">Save</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="tasksCtrl.clearFilter()">Reset</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </md-card>
+
+    <div class="tasks">
+        <md-card class="tasks-header" layout="row" layout-align="left center">
+            <p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('id')">ID</a></p>
+            <p flex="30"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('name')">Name</a></p>
+            <p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('priority')">Priority</a></p>
+            <p flex="20"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('user')">User</a></p>
+            <p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('date')">Start date</a></p>
+            <p flex="10"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('status')">Status</a></p>
+            <md-menu>
+                <md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                    <md-tooltip md-direction="top">View</md-tooltip>
+                    <md-icon class="material-icons">view_carousel</md-icon>
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="tasksCtrl.changeView('table')">Table</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="tasksCtrl.changeView('list')">List</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-card>
+        <div ng-repeat="task in tasksCtrl.tabs[$index].resource">
+            <div ng-include="'views/app/tasks/task.html'"></div>
+        </div>
+
+    </div>
+    <md-button ng-click="tasksCtrl.loadTasks()">Load Tasks</md-button>
+</md-content>

@@ -6,5 +6,5 @@
  directive itself should be handling registration to angular app module
  */
 var path = 'scripts/directives/';
-define([path+'FileModelDirective'], function () {});
+define([path+'FileModelDirective',path+'TaskPriorityDirective'], function () {});
 

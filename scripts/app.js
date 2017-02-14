@@ -109,10 +109,11 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
 
             //$qProvider.errorOnUnhandledRejections(false);
         });
-        app.run(function ($log, $auth, $rootScope, $i18n) {
+        app.run(function ($log, $auth, $rootScope, $i18n, $user) {
             $log.debug("App is running...");
             $auth.init();
             $rootScope.$i18n = $i18n;
+            $rootScope.$user = $user;
         });
 
         return app;

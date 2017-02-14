@@ -34,7 +34,10 @@ define(['angular','../modules/Workflow', '../services/FileUpload'],function (ang
             self.loadPetriNets = function () {
                 $http.get("/res/petrinet/refs").then(function (response) {
                     $log.debug(response);
-                    self.petriNetRefs = response.data._embedded.petriNetReferences;
+                    $log.debug(response.$request());
+                    response.$request().$get("petriNetReferences").then(function (resource) {
+                        self.petriNetRefs = resource;
+                    });
                 },function () {
                     $log.debug("Petri net refs get failed!");
                 });

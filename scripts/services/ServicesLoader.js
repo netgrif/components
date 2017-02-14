@@ -7,4 +7,4 @@
  */
 var path = 'scripts/services/';
 define([path+'Loading',path+'Auth',path+'Snackbar',path+'Localization',path+'FileUpload',
-    path+'Style'], function () {});
+    path+'Style',path+'User'], function () {});

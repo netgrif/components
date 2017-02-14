@@ -1,0 +1,54 @@
+<md-expansion-panel class="task">
+    <md-expansion-panel-collapsed layout="row" layout-align="left center">
+        <p flex="15" layout="row" layout-align="left center">
+            <i class="material-icons {{task.caseColor}}">label</i> {{task.visualId}}
+        </p>
+        <p flex="30">{{task.title}}</p>
+        <task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
+        <p flex="20" layout="row" layout-align="left center">
+            <i ng-if="task.user" class="material-icons color-fg-fm-500">account_circle</i> {{task.user}}
+        </p>
+        <p flex="15">{{task.startDate}}</p>
+        <p flex="10">{{tasksCtrl.getStatus(task); task.status}}</p>
+        <md-menu>
+            <md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                <md-icon class="material-icons">more_vert</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button ng-if="task.status === 'New'" ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-if="task.user.id == $user.id" ng-click="tasksCtrl.finishTask(task)">Finish</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </md-expansion-panel-collapsed>
+    <md-expansion-panel-expanded>
+        <md-expansion-panel-header>
+            <p flex="15" layout="row" layout-align="left center">
+                <i class="material-icons {{task.caseColor}}">label</i> {{task.visualId}}
+            </p>
+            <p flex="30">{{task.title}}</p>
+            <task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
+            <p flex="20" layout="row" layout-align="left center">
+                <i ng-if="task.user" class="material-icons color-fg-fm-500">account_circle</i> {{task.user}}
+            </p>
+            <p flex="15">{{task.startDate}}</p>
+            <p flex="10">{{task.status}}</p>
+            <md-button ng-click="$panel.collapse()">
+                <md-expansion-panel-icon></md-expansion-panel-icon>
+            </md-button>
+        </md-expansion-panel-header>
+        <md-expansion-panel-content>
+            <h4>Content</h4>
+            <p>Put content in here</p>
+        </md-expansion-panel-content>
+        <md-expansion-panel-footer>
+            <div flex></div>
+            <md-button ng-if="task.status === 'New'" ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
+            <md-button ng-if="task.user.id == $user.id" ng-click="tasksCtrl.finishTask(task)">Finish</md-button>
+            <md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+        </md-expansion-panel-footer>
+    </md-expansion-panel-expanded>
+</md-expansion-panel>

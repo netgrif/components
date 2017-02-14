@@ -2,10 +2,9 @@
  * Created by Milan on 31.1.2017.
  */
 define(['angular','angularRoute','../modules/Main'],function (angular) {
-    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log,$timeout) {
+    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log,$timeout,$user) {
         var auth = {
             authenticated: false,
-            loggedUser: {},
 
             loginPath: "/login",
             userPath: "user",
@@ -26,8 +25,13 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                 }).then(function (response) {
                     $log.debug(response);
                     auth.authenticated = !!response.name;
-                    auth.loggedUser.authority = response.authorities[0].authority;
-                    auth.loggedUser.login = response.name;
+
+                    var principal = response.principal;
+                    $user.id = principal.id;
+                    $user.login = principal.username;
+                    $user.authority = principal.authorities[0].authority;
+                    $user.name = principal.fullName;
+
                     callback && callback(auth.authenticated);
                     $location.path(auth.path == auth.loginPath ? auth.appPath : auth.path);
 
@@ -41,6 +45,7 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                 $http.post(auth.logoutPath,{}).then(function () {
                     $log.debug("Logout successful");
                     auth.authenticated = false;
+                    $user.clear();
                     $location.path(auth.loginPath);
                 }, function () {
                     $log.debug("Logout failed");

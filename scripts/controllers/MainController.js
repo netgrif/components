@@ -2,11 +2,10 @@
  * Created by Milan on 31.1.2017.
  */
 define(['angular','../modules/Main','../services/Loading','../services/Auth'],function (angular) {
-    angular.module('ngMain').controller('MainController',['$loading', '$auth','$log', '$scope', '$style',
-    function ($loading, $auth, $log, $scope, $style) {
+    angular.module('ngMain').controller('MainController',['$loading', '$auth','$log', '$scope', '$style','$user',
+    function ($loading, $auth, $log, $scope, $style, $user) {
         var self = this;
 
-        self.user = {};
         self.loaderVisible = true;
 
         var loaderContainer = angular.element("div#loader-container");
@@ -21,9 +20,7 @@ define(['angular','../modules/Main','../services/Loading','../services/Auth'],fu
             dataLoadingStarted = true;
             //load necessary data on beginning
             $log.debug("Data loaded");
-            self.user.authority = $auth.loggedUser.authority;
-            self.user.email = $auth.loggedUser.login;
-            $log.debug(self.user);
+            $log.debug($user);
 			$style.mainView();
             $loading.showLoading(false);
 
