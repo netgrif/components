@@ -5,24 +5,31 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                 function ($log, $scope, $http, $user) {
                     var self = this;
 
-                    self.tabs = [
-                        {
-                            label: "All Tasks",
-                            resource: undefined,
-                            filter: undefined
-                        },
-                        {
-                            label: "My Tasks",
-                            resource: undefined,
-                            filter: undefined
-                        },
-                        {
-                            label: "My Finished Tasks",
-                            resource: undefined,
-                            filter: undefined
-                        }];
+                    self.tabs = [];
                     self.activeTab = 0;
                     self.globalLinks = undefined;
+
+                    function Tab(label) {
+                        this.label = label;
+                        this.resource = undefined;
+                        this.filter = {
+                            process: {},
+                            task: {},
+                            chips: [],
+                            filter: {
+                                process: [],
+                                task: []
+                            },
+                            request: {
+                                pending: false,
+                                process: []
+                            }
+                        }
+                    }
+
+                    self.tabs.push(new Tab("All Tasks"));
+                    self.tabs.push(new Tab("My Tasks"));
+                    self.tabs.push(new Tab("My Finished Tasks"));
 
                     self.loadTasks = function () {
                         var url;
@@ -69,6 +76,56 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             $log.debug("Finishing task "+task.title+" failed");
                         });
                     };
+
+                    self.queryNetRefs = function () {
+                        if(self.tabs[self.activeTab].filter.request.process.length == 0 && !self.tabs[self.activeTab].filter.request.pending){
+                            self.tabs[self.activeTab].filter.request.pending = true;
+                            $http.get("/res/petrinet/refs").then(function (response) {
+                                response.$request().$get("petriNetReferences").then(function (resource) {
+                                    self.tabs[self.activeTab].filter.request.process = resource;
+                                    self.tabs[self.activeTab].filter.request.pending = false;
+                                }, function () {
+                                    $log.debug("Resource not found");
+                                    self.tabs[self.activeTab].filter.request.pending = false;
+                                });
+                            }, function () {
+                                $log.debug("Cannot load references to petri nets");
+                                self.tabs[self.activeTab].filter.request.pending = false;
+                            });
+                        };
+                        var search = self.tabs[self.activeTab].filter.process.search.toLowerCase();
+                        return self.tabs[self.activeTab].filter.request.process.filter(function (item, index, array) {
+                            var text = item.title.toLowerCase();
+                            return text.startsWith(search);
+                        });
+                    };
+
+                    self.processItemChange = function (item){
+                        if(!item) return;
+                        self.tabs[self.activeTab].filter.chips.push({type: 'process', title: item.title});
+                        self.tabs[self.activeTab].filter.filter.process.push(item);
+                    };
+
+                    self.removeChip = function (index) {
+                        var chip = self.tabs[self.activeTab].filter.chips[index];
+                        if(chip.type == 'process'){
+                            self.tabs[self.activeTab].filter.filter.process.some(function (el, index, array) {
+                                if(el.title == chip.title){
+                                    self.tabs[self.activeTab].filter.filter.process.splice(index,1);
+                                    return true;
+                                }
+                            });
+                        } else if (chip.type == 'task'){
+                            self.tabs[self.activeTab].filter.filter.task.some(function (el, index, array) {
+                                if(el.title == chip.title){
+                                    self.tabs[self.activeTab].filter.filter.task.splice(index,1);
+                                    return true;
+                                }
+                            });
+                        }
+                        self.tabs[self.activeTab].filter.chips.splice(index,1);
+                    };
+
 
                 }]);
     });
