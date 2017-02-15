@@ -4,9 +4,22 @@
             <div layout="row" layout-align="left end">
                 <md-icon flex="5" class="material-icons md-primary">search</md-icon>
                 <form flex layout="row" ng-submit="tasksCtrl.search()">
-                    <md-input-container class="md-block">
-                        <input type="text" placeholder="Process">
-                    </md-input-container>
+                    <md-autocomplete
+                        md-search-text="tasksCtrl.tabs[$index].filter.process.search"
+                        md-selected-item="tasksCtrl.tabs[$index].filter.process.item"
+                        md-selected-item-change="tasksCtrl.processItemChange(item)"
+                        md-items="item in tasksCtrl.queryNetRefs()"
+                        md-item-text="item.title"
+                        md-min-length="0"
+                        md-no-cache="true"
+                        md-floating-label="Process">
+                        <md-item-template>
+                            <span md-highlight-text="tasksCtrl.tabs[$index].filter.process.search" md-highlight-flags="i">{{item.title}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            Process {{tasksCtrl.tabs[$index].filter.process.search}} was not found :(
+                        </md-not-found>
+                    </md-autocomplete>
                     <md-input-container class="md-block">
                         <input type="text" placeholder="Task">
                     </md-input-container>
@@ -14,8 +27,10 @@
             </div>
             <div layout="row" layout-align="left center">
                 <md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>
-                <md-chips flex>
-                    <md-chip>Process 1 &nbsp;&nbsp;<md-icon class="material-icons">close</md-icon></md-chip>
+                <md-chips id="chips-container" flex>
+                    <md-chip ng-repeat="chip in tasksCtrl.tabs[$index].filter.chips">
+                        {{chip.title}} &nbsp;&nbsp;<md-icon class="material-icons" ng-click="tasksCtrl.removeChip($index)">close</md-icon>
+                    </md-chip>
                 </md-chips>
             </div>
         </div>
