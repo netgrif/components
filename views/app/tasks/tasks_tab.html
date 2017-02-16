@@ -53,12 +53,12 @@
 
     <div class="tasks">
         <md-card class="tasks-header" layout="row" layout-align="left center">
-            <p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('id')">ID</a></p>
-            <p flex="30"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('name')">Name</a></p>
-            <p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('priority')">Priority</a></p>
-            <p flex="20"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('user')">User</a></p>
-            <p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('date')">Start date</a></p>
-            <p flex="10"><a href="javascript:void(0);" ng-click="tasksCtrl.sort('status')">Status</a></p>
+            <p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('visualId')">ID</a></p>
+            <p flex="30"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('title')">Name</a></p>
+            <p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('priority')">Priority</a></p>
+            <p flex="20"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('user.name')">User</a></p>
+            <p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('startDate')">Start date</a></p>
+            <p flex="10"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('status')">Status</a></p>
             <md-menu>
                 <md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
                     <md-tooltip md-direction="top">View</md-tooltip>
@@ -74,7 +74,7 @@
                 </md-menu-content>
             </md-menu>
         </md-card>
-        <div ng-repeat="task in tasksCtrl.tabs[$index].resource">
+        <div ng-repeat="task in tasksCtrl.tabs[$index].resource | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.sort.reverse">
             <div ng-include="'views/app/tasks/task.html'"></div>
         </div>
 

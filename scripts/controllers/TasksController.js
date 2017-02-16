@@ -4,10 +4,19 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
             ['$log', '$scope', '$http','$user',
                 function ($log, $scope, $http, $user) {
                     var self = this;
+                    var statusOrder = {
+                        New: 1,
+                        Assigned: 2,
+                        Done: 3
+                    };
 
                     self.tabs = [];
                     self.activeTab = 0;
                     self.globalLinks = undefined;
+                    self.sort = {
+                        field: 'visualId',
+                        reverse: false
+                    };
 
                     function Tab(label) {
                         this.label = label;
@@ -124,6 +133,25 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             });
                         }
                         self.tabs[self.activeTab].filter.chips.splice(index,1);
+                    };
+
+                    self.setSortField = function (field) {
+                        self.sort.reverse = self.sort.field == field;
+                        self.sort.field = field;
+                    };
+
+                    self.dynamicOrder = function (task) {
+                        var order = 0;
+                        switch (self.sort.field){
+                            case 'status':
+                                order = statusOrder[task.status];
+                                break;
+                            case 'priority':
+                                self.sort.reverse = true;
+                            default:
+                                order = task[self.sort.field];
+                        }
+                        return order;
                     };
 
 
