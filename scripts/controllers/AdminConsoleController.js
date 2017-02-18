@@ -19,7 +19,5 @@ define(['angular','../modules/Main'],function (angular) {
             });
         };
 
-
-
     }]);
 });

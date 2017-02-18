@@ -15,63 +15,8 @@
 			</md-select>
 		</md-input-container>
 		<div layout="row">
-			<md-button>Upload Net</md-button>
-			<md-button>Create Case</md-button>
+			<md-button ng-if="mainCtrl.user.authority === 'admin'" ng-click="flowCtrl.showDialog('upload_net')">Upload Net</md-button>
+			<md-button ng-click="flowCtrl.showDialog('create_case')">Create Case</md-button>
 		</div>
 	</section>
-	<md-card ng-if="mainCtrl.user.authority === 'admin'">
-		<md-card-title>
-			<md--card-title-text>
-				<span class="md-headline">Upload PetriNet</span>
-			</md--card-title-text>
-		</md-card-title>
-		<form name="petriNetUpload" ng-submit="flowCtrl.uploadPetriNet()">
-			<md-card-content layout="column">
-				<md-input-container>
-					<input type="file" file-model="mFile">
-				</md-input-container>
-				<md-input-container>
-					<label>Name</label>
-					<input type="text" ng-model="flowCtrl.petriNetMeta.name">
-				</md-input-container>
-				<md-input-container>
-					<label>Initials</label>
-					<input md-maxlength="3" type="text" name="initials" ng-model="flowCtrl.petriNetMeta.initials">
-					<div ng-messages="petriNetUpload.initials.$error">
-						<div ng-message="md-maxlength">Petri Net initials must be exactly 3 characters long</div>
-					</div>
-				</md-input-container>
-			</md-card-content>
-			<md-card-actions>
-				<md-button type="submit">Upload</md-button>
-			</md-card-actions>
-		</form>
-	</md-card>
-	<md-card>
-		<md-card-title>
-			<md--card-title-text>
-				<span class="md-headline">Create Case</span>
-			</md--card-title-text>
-		</md-card-title>
-		<form ng-submit="flowCtrl.createCase()">
-			<md-card-content layout="column">
-				<md-input-container>
-					<label>Petri Net</label>
-					<md-select ng-model="flowCtrl.newCase.netId" required>
-						<md-option ng-repeat="net in flowCtrl.petriNetRefs" value="{{net.id}}">
-							{{net.title}}
-						</md-option>
-					</md-select>
-				</md-input-container>
-				<md-input-container>
-					<label>Name</label>
-					<input type="text" ng-model="flowCtrl.newCase.title" required>
-				</md-input-container>
-			</md-card-content>
-			<md-card-actions>
-				<md-button type="submit">Create</md-button>
-				<md-button ng-click="flowCtrl.loadPetriNets()">Load Petri nets</md-button>
-			</md-card-actions>
-		</form>
-	</md-card>
 </div>

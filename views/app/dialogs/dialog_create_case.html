@@ -1,0 +1,36 @@
+<md-dialog aria-label="Create Case" ng-cloak>
+	<form ng-submit="flowCtrl.createCase()">
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<h2>Create Case</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="closeDialog()">
+					<md-icon class="material-icons">close</md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content>
+			<div class="md-dialog-content" layout="column">
+				<md-input-container>
+					<label>Petri Net</label>
+					<md-select ng-model="flowCtrl.newCase.netId" required>
+						<md-option ng-repeat="net in flowCtrl.petriNetRefs" value="{{net.id}}">
+							{{net.title}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container>
+					<label>Name</label>
+					<input type="text" ng-model="flowCtrl.newCase.title" required>
+				</md-input-container>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row">
+			<span flex></span>
+			<md-button ng-click="flowCtrl.loadPetriNets()">Load Petri Nets</md-button>
+			<md-button type="submit">Create</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>
