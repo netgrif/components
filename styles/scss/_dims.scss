@@ -10,6 +10,54 @@
 	&-no {
 		margin: 0;
 	}
+
+	&-default {
+		margin: 8px;
+	}
+
+	&-vertical {
+
+		&-default {
+			margin-top: 8px;
+			margin-bottom: 8px;
+		}
+	}
+
+	&-horizontal {
+
+		&-default {
+			margin-left: 8px;
+			margin-right: 8px;
+		}
+	}
+
+	&-top {
+
+		&-default {
+			margin-top: 8px;
+		}
+	}
+
+	&-bottom {
+
+		&-default {
+			margin-bottom: 8px;
+		}
+	}
+
+	&-left {
+
+		&-default {
+			margin-left: 8px;
+		}
+	}
+
+	&-right {
+
+		&-default {
+			margin-right: 8px;
+		}
+	}
 }
 
 // Paddings
@@ -17,5 +65,53 @@
 
 	&-no {
 		padding: 0;
+	}
+
+	&-default {
+		padding: 8px;
+	}
+
+	&-vertical {
+
+		&-default {
+			padding-top: 8px;
+			padding-bottom: 8px;
+		}
+	}
+
+	&-horizontal {
+
+		&-default {
+			padding-left: 8px;
+			padding-right: 8px;
+		}
+	}
+
+	&-top {
+
+		&-default {
+			padding-top: 8px;
+		}
+	}
+
+	&-bottom {
+
+		&-default {
+			padding-bottom: 8px;
+		}
+	}
+
+	&-left {
+
+		&-default {
+			padding-left: 8px;
+		}
+	}
+
+	&-right {
+
+		&-default {
+			padding-right: 8px;
+		}
 	}
 }

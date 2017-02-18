@@ -254,8 +254,68 @@
   margin: 0;
 }
 
+.margin-default {
+  margin: 8px;
+}
+
+.margin-vertical-default {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.margin-horizontal-default {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.margin-top-default {
+  margin-top: 8px;
+}
+
+.margin-bottom-default {
+  margin-bottom: 8px;
+}
+
+.margin-left-default {
+  margin-left: 8px;
+}
+
+.margin-right-default {
+  margin-right: 8px;
+}
+
 .padding-no {
   padding: 0;
+}
+
+.padding-default {
+  padding: 8px;
+}
+
+.padding-vertical-default {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.padding-horizontal-default {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.padding-top-default {
+  padding-top: 8px;
+}
+
+.padding-bottom-default {
+  padding-bottom: 8px;
+}
+
+.padding-left-default {
+  padding-left: 8px;
+}
+
+.padding-right-default {
+  padding-right: 8px;
 }
 
 body {
@@ -519,7 +579,7 @@ body {
 }
 
 .base .tasks .tasks-header {
-  height: 80px;
+  min-height: 80px;
   margin: 0;
   padding-left: 24px;
   padding-right: 24px;
@@ -529,9 +589,6 @@ body {
 .base .tasks .tasks-header a {
   color: black;
   text-decoration: none;
-}
-
-.base .tasks .tasks-header > * {
   font-weight: bold;
 }
 
