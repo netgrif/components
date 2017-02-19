@@ -4,7 +4,7 @@
             <div layout="row" layout-align="left end">
                 <md-icon flex="5" class="material-icons md-primary">search</md-icon>
                 <form flex layout="row" ng-submit="tasksCtrl.search()">
-                    <md-autocomplete
+                    <md-autocomplete class="md-block autocomplete"
                         md-search-text="tasksCtrl.tabs[$index].filter.process.search"
                         md-selected-item="tasksCtrl.tabs[$index].filter.process.item"
                         md-selected-item-change="tasksCtrl.processItemChange(item)"

@@ -322,6 +322,11 @@ body {
   min-height: 100%;
 }
 
+.img-responsive {
+  width: 100%;
+  height: auto;
+}
+
 .layout-vh-100 {
   height: 100vh;
 }
@@ -592,6 +597,10 @@ body {
   font-weight: bold;
 }
 
+.base .tasks .task {
+  cursor: pointer;
+}
+
 .base .tasks .task p > i, .base .tasks .task task-priority > i {
   margin-right: 16px;
 }
@@ -617,5 +626,10 @@ body {
 }
 
 .base .search-tasks .layout-row > form > .md-block {
+  margin: 0;
+}
+
+.base .search-tasks .layout-row > form > .autocomplete md-input-container {
+  height: 28px;
   margin: 0;
 }
