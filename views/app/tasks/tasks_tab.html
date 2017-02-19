@@ -74,9 +74,12 @@
                 </md-menu-content>
             </md-menu>
         </md-card>
-        <div ng-repeat="task in tasksCtrl.tabs[$index].resource | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.sort.reverse">
-            <div ng-include="'views/app/tasks/task.html'"></div>
-        </div>
+        <md-expansion-panel class="task" ng-repeat="task in tasksCtrl.tabs[$index].resource | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.sort.reverse">
+            <md-expansion-panel-collapsed layout="row" layout-align="left center" ng-include="'views/app/tasks/task_panel_collapsed.html'">
+            </md-expansion-panel-collapsed>
+            <md-expansion-panel-expanded ng-include="'views/app/tasks/task_panel_expanded.html'">
+            </md-expansion-panel-expanded>
+        </md-expansion-panel>
 
     </div>
     <md-button ng-click="tasksCtrl.loadTasks()">Load Tasks</md-button>

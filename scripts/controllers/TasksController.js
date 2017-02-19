@@ -136,7 +136,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.setSortField = function (field) {
-                        self.sort.reverse = self.sort.field == field;
+                        self.sort.reverse = self.sort.field == field ? !self.sort.reverse : false;
                         self.sort.field = field;
                     };
 
