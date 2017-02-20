@@ -24,6 +24,31 @@
 					<label>Name</label>
 					<input type="text" ng-model="flowCtrl.newCase.title" required>
 				</md-input-container>
+				<md-input-container>
+					<label>Label color</label>
+					<md-select ng-model="flowCtrl.newCase.color">
+						<md-option>
+							<md-icon class="material-icons color-fg-fm-500">fiber_manual_record</md-icon>
+							Default
+						</md-option>
+						<md-option>
+							<md-icon class="material-icons color-fg-blue-grey-500">fiber_manual_record</md-icon>
+							Blue grey
+						</md-option>
+						<md-option>
+							<md-icon class="material-icons color-fg-amber-500">fiber_manual_record</md-icon>
+							Amber
+						</md-option>
+						<md-option>
+							<md-icon class="material-icons color-fg-indigo-500">fiber_manual_record</md-icon>
+							Indigo
+						</md-option>
+						<md-option>
+							<md-icon class="material-icons color-fg-teal-500">fiber_manual_record</md-icon>
+							Teal
+						</md-option>
+					</md-select>
+				</md-input-container>
 			</div>
 		</md-dialog-content>
 
