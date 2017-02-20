@@ -250,6 +250,10 @@
   background-color: transparent;
 }
 
+.highlight {
+  color: #98002b;
+}
+
 .margin-no {
   margin: 0;
 }

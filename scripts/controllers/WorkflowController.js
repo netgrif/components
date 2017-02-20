@@ -2,8 +2,8 @@
  * Created by Milan on 11.2.2017.
  */
 define(['angular', '../modules/Workflow', '../services/FileUpload'], function (angular) {
-	angular.module('ngWorkflow').controller('WorkflowController', ['$log', '$scope', '$rootScope', '$fileUpload', '$http', '$mdDialog',
-        function ($log, $scope, $rootScope, $fileUpload, $http, $mdDialog) {
+	angular.module('ngWorkflow').controller('WorkflowController', ['$log', '$scope', '$rootScope', '$fileUpload', '$http', '$dialog',
+        function ($log, $scope, $rootScope, $fileUpload, $http, $dialog) {
 			var self = this;
 
 			self.petriNetMeta = {};
@@ -43,29 +43,7 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 			};
 
 			self.showDialog = function (template) {
-				$log.debug("Dialog opened -> template: " + template);
-				$mdDialog.show({
-					controller: DialogController,
-					templateUrl: '../../views/app/dialogs/dialog_' + template + '.html',
-					parent: angular.element(document.body),
-					clickOutsideToClose: true,
-					escapeToClose: true,
-					fullscreen: true
-				})
-				.then(function () {
-					$log.debug("Dialog closed success");
-				}, function() {
-					$log.debug("Escape to close/click outside to close or dialog error occured");
-				})
-				.finally(function () {
-					//TODO clean up
-				});
+				$dialog.showByTemplate(template);
 			};
-
-			function DialogController($scope, $mdDialog) {
-				$scope.closeDialog = function() {
-					$mdDialog.hide();
-				}
-			}
     }]);
 });
