@@ -1,8 +1,8 @@
 define(['angular', '../modules/Tasks', '../modules/Main'],
     function (angular) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http','$user',
-                function ($log, $scope, $http, $user) {
+            ['$log', '$scope', '$http', '$user','$snackbar',
+                function ($log, $scope, $http, $user, $snackbar) {
                     var self = this;
                     var statusOrder = {
                         New: 1,
@@ -12,48 +12,57 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.tabs = [];
                     self.activeTab = 0;
-                    self.globalLinks = undefined;
-                    self.sort = {
-                        field: 'visualId',
-                        reverse: false
+                    self.global = {
+                        links: undefined,
+                        autocomplete: {
+                            pending: false,
+                            processes: [],
+                            transitions: []
+                        }
                     };
 
+                    //Tab object
                     function Tab(label) {
                         this.label = label;
-                        this.resource = undefined;
+                        this.resources = undefined;
                         this.filter = {
-                            process: {},
-                            task: {},
+                            processes: [],
+                            processesDirty: false,
+                            transitions: [],
                             chips: [],
-                            filter: {
-                                process: [],
-                                task: []
+                            selectedProcess: {
+                                search: "",
+                                item: undefined
                             },
-                            request: {
-                                pending: false,
-                                process: []
+                            selectedTransition: {
+                                search: "",
+                                item: undefined
                             }
-                        }
+                        };
+                        this.sort = {
+                            reverse: false,
+                            field: 'visualId'
+                        };
                     }
 
                     self.tabs.push(new Tab("All Tasks"));
                     self.tabs.push(new Tab("My Tasks"));
                     self.tabs.push(new Tab("My Finished Tasks"));
 
-                    self.loadTasks = function () {
+                    self.loadTasks = function () { //TODO: 20.2. autoload, consider active filter, load only for current task
                         var url;
-                        if(self.activeTab == 0) url = "/res/task";
-                        else if(self.activeTab == 1) url = "/res/task/my";
-                        else if(self.activeTab == 2) url = "/res/task/my/finished";
+                        if (self.activeTab == 0) url = "/res/task";
+                        else if (self.activeTab == 1) url = "/res/task/my";
+                        else if (self.activeTab == 2) url = "/res/task/my/finished";
 
                         var servedTab = self.activeTab;
                         $log.debug("loading data");
                         $http.get(url).then(function (response) {
-                            self.globalLinks = self.activeTab == 0 ? response : undefined;
+                            self.global.links = self.activeTab == 0 ? response : undefined;
                             response.$request().$get("tasks").then(function (resources) {
-                                self.tabs[servedTab].resource = resources;
-                                $log.debug(self.tabs[servedTab].resource);
-                            },function () {
+                                self.tabs[servedTab].resources = resources;
+                                $log.debug(self.tabs[servedTab].resources);
+                            }, function () {
                                 $log.debug("Resource not found");
                             });
 
@@ -63,93 +72,139 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.getStatus = function (task) {
-                        if(task.user && task.finishDate) task.status = "Done";
-                        else if(task.user && !task.finishDate && task.startDate) task.status = "Assigned";
+                        if (task.user && task.finishDate) task.status = "Done";
+                        else if (task.user && !task.finishDate && task.startDate) task.status = "Assigned";
                         else task.status = "New";
                     };
 
                     self.assignTask = function (task) {
-                        $log.debug("Assigning task "+task.title+" to "+$user.name);
+                        $log.debug("Assigning task " + task.title + " to " + $user.name);
                         $http.get(task.$href("assign")).then(function (response) {
                             $log.debug(response);
-                        },function () {
-                            $log.debug("Assigning task "+task.title+" failed");
+                        }, function () {
+                            $log.debug("Assigning task " + task.title + " failed");
                         });
                     };
 
                     self.finishTask = function (task) {
-                        $log.debug("Finishing task "+task.title+" to "+$user.name);
+                        $log.debug("Finishing task " + task.title + " to " + $user.name);
                         $http.get(task.$href("finish")).then(function (response) {
                             $log.debug(response);
-                        },function () {
-                            $log.debug("Finishing task "+task.title+" failed");
+                        }, function () {
+                            $log.debug("Finishing task " + task.title + " failed");
                         });
                     };
 
-                    self.queryNetRefs = function () {
-                        if(self.tabs[self.activeTab].filter.request.process.length == 0 && !self.tabs[self.activeTab].filter.request.pending){
-                            self.tabs[self.activeTab].filter.request.pending = true;
-                            $http.get("/res/petrinet/refs").then(function (response) {
-                                response.$request().$get("petriNetReferences").then(function (resource) {
-                                    self.tabs[self.activeTab].filter.request.process = resource;
-                                    self.tabs[self.activeTab].filter.request.pending = false;
-                                }, function () {
-                                    $log.debug("Resource not found");
-                                    self.tabs[self.activeTab].filter.request.pending = false;
-                                });
+                    function endLoadAutocompleteItems(search, storage) {
+                        self.global.autocomplete.pending = false;
+                        return filterAutocomplete(search, self.global.autocomplete[storage]);
+                    }
+
+                    function loadAutocompleteItems(url, resourceName, storage, search) {
+                        self.global.autocomplete.pending = true;
+                        return $http.get(url).then(function (response) {
+                            return response.$request().$get(resourceName).then(function (resource) {
+                                self.global.autocomplete[storage] = resource;
+                                return endLoadAutocompleteItems(search, storage);
                             }, function () {
-                                $log.debug("Cannot load references to petri nets");
-                                self.tabs[self.activeTab].filter.request.pending = false;
+                                $log.debug("Resource " + resourceName + " not found on url " + url);
+                                return endLoadAutocompleteItems(search, storage);
                             });
-                        };
-                        var search = self.tabs[self.activeTab].filter.process.search.toLowerCase();
-                        return self.tabs[self.activeTab].filter.request.process.filter(function (item, index, array) {
+                        }, function (error) {
+                            $log.debug("Failed to load " + url);
+                            $log.debug(error);
+                            return endLoadAutocompleteItems(search, storage);
+                        });
+                    }
+
+                    function filterAutocomplete(search, storage) {
+                        // if (!search) return storage;
+                        search = search.toLowerCase();
+                        return storage.filter(function (item) {
                             var text = item.title.toLowerCase();
                             return text.startsWith(search);
                         });
+                    }
+
+                    self.queryProcesses = function () {
+                        if (!self.global.autocomplete.pending && self.global.autocomplete.processes.length == 0) {
+                            return loadAutocompleteItems("/res/petrinet/refs", "petriNetReferences", 'processes',
+                                self.tabs[self.activeTab].filter.selectedProcess.search);
+                        }
+                        return filterAutocomplete(self.tabs[self.activeTab].filter.selectedProcess.search, self.global.autocomplete.processes);
                     };
 
-                    self.processItemChange = function (item){
-                        if(!item) return;
-                        self.tabs[self.activeTab].filter.chips.push({type: 'process', title: item.title});
-                        self.tabs[self.activeTab].filter.filter.process.push(item);
+                    self.processSearchChange = function (item) {
+                        if (!item) return;
+                        if (!self.tabs[self.activeTab].filter.processes.some(function (el) {
+                                return el.id === item.id;
+                            })) {
+                            self.tabs[self.activeTab].filter.chips.push({type: 'processes', title: item.title});
+                            self.tabs[self.activeTab].filter.processes.push(item);
+                            self.tabs[self.activeTab].filter.processesDirty = true;
+                        }
                     };
+
+                    function canLoadTransitions() {
+                        var p = self.tabs[self.activeTab].filter.processes.length > 0 &&
+                                self.tabs[self.activeTab].filter.processesDirty;
+                        var t = self.global.autocomplete.transitions.length <= 0;
+                        return (t && p) || p;
+                    }
+
+                    self.queryTransitions = function () {
+                        if (canLoadTransitions() && !self.global.autocomplete.pending) {
+                            var ids = self.tabs[self.activeTab].filter.processes.map(function (item) {
+                                return item.id;
+                            }).toString();
+                            self.tabs[self.activeTab].filter.processesDirty = false;
+                            return loadAutocompleteItems("/res/petrinet/transition/refs/" + ids, "transitionReferences", 'transitions',
+                                self.tabs[self.activeTab].filter.selectedTransition.search);
+                        }
+                        return filterAutocomplete(self.tabs[self.activeTab].filter.selectedTransition.search, self.global.autocomplete.transitions);
+                    };
+
+                    self.transitionSearchChange = function (item) {
+                        if(!item) return;
+                        if(!self.tabs[self.activeTab].filter.transitions.some(function (el) {
+                                return el.id === item.id;
+                            })){
+                            self.tabs[self.activeTab].filter.chips.push({type: 'transitions', title: item.title});
+                            self.tabs[self.activeTab].filter.transitions.push(item);
+                        }
+                    };
+
+                    function removeFilterItem(chip) {
+                        self.tabs[self.activeTab].filter[chip.type].some(function (item, index) {
+                            if (item.title === chip.title) {
+                                self.tabs[self.activeTab].filter[chip.type].splice(index, 1);
+                                if (chip.type === 'processes') self.tabs[self.activeTab].filter.processesDirty = true;
+                                return true;
+                            }
+                        });
+                    }
 
                     self.removeChip = function (index) {
                         var chip = self.tabs[self.activeTab].filter.chips[index];
-                        if(chip.type == 'process'){
-                            self.tabs[self.activeTab].filter.filter.process.some(function (el, index, array) {
-                                if(el.title == chip.title){
-                                    self.tabs[self.activeTab].filter.filter.process.splice(index,1);
-                                    return true;
-                                }
-                            });
-                        } else if (chip.type == 'task'){
-                            self.tabs[self.activeTab].filter.filter.task.some(function (el, index, array) {
-                                if(el.title == chip.title){
-                                    self.tabs[self.activeTab].filter.filter.task.splice(index,1);
-                                    return true;
-                                }
-                            });
-                        }
-                        self.tabs[self.activeTab].filter.chips.splice(index,1);
+                        removeFilterItem(chip);
+                        self.tabs[self.activeTab].filter.chips.splice(index, 1);
                     };
 
                     self.setSortField = function (field) {
-                        self.sort.reverse = self.sort.field == field ? !self.sort.reverse : false;
-                        self.sort.field = field;
+                        self.tabs[self.activeTab].sort.reverse = self.tabs[self.activeTab].sort.field == field ? !self.tabs[self.activeTab].sort.reverse : false;
+                        self.tabs[self.activeTab].sort.field = field;
                     };
 
                     self.dynamicOrder = function (task) {
                         var order = 0;
-                        switch (self.sort.field){
+                        switch (self.tabs[self.activeTab].sort.field) {
                             case 'status':
                                 order = statusOrder[task.status];
                                 break;
                             case 'priority':
-                                self.sort.reverse = true;
+                                self.tabs[self.activeTab].sort.reverse = true;
                             default:
-                                order = task[self.sort.field];
+                                order = task[self.tabs[self.activeTab].sort.field];
                         }
                         return order;
                     };

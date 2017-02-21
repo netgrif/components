@@ -5,31 +5,48 @@
                 <md-icon flex="5" class="material-icons md-primary">search</md-icon>
                 <form flex layout="row" ng-submit="tasksCtrl.search()">
                     <md-autocomplete class="md-block autocomplete"
-                        md-search-text="tasksCtrl.tabs[$index].filter.process.search"
-                        md-selected-item="tasksCtrl.tabs[$index].filter.process.item"
-                        md-selected-item-change="tasksCtrl.processItemChange(item)"
-                        md-items="item in tasksCtrl.queryNetRefs()"
-                        md-item-text="item.title"
-                        md-min-length="0"
-                        md-no-cache="true"
-                        md-floating-label="Process">
+                                     md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search"
+                                     md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item"
+                                     md-selected-item-change="tasksCtrl.processSearchChange(item)"
+                                     md-items="item in tasksCtrl.queryProcesses()"
+                                     md-item-text="item.title"
+                                     md-min-length="0"
+                                     md-no-cache="true"
+                                     md-floating-label="Process">
                         <md-item-template>
-                            <span md-highlight-text="tasksCtrl.tabs[$index].filter.process.search" md-highlight-flags="i">{{item.title}}</span>
+                            <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedProcess.search"
+                                  md-highlight-flags="i">{{item.title}}</span>
                         </md-item-template>
                         <md-not-found>
-                            Process {{tasksCtrl.tabs[$index].filter.process.search}} was not found :(
+                            Process {{tasksCtrl.tabs[$index].filter.selectedProcess.search}} was not found :(
                         </md-not-found>
                     </md-autocomplete>
-                    <md-input-container class="md-block">
-                        <input type="text" placeholder="Task">
-                    </md-input-container>
+                    <md-autocomplete class="md-block autocomplete"
+                                     md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search"
+                                     md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item"
+                                     md-selected-item-change="tasksCtrl.transitionSearchChange(item)"
+                                     md-items="item in tasksCtrl.queryTransitions()"
+                                     md-item-text="item.title"
+                                     md-min-length="0"
+                                     md-no-cache="true"
+                                     md-floating-label="Task">
+                        <md-item-template>
+                            <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedTransition.search"
+                                  md-highlight-flags="i">{{item.title}}
+                            </span>
+                        </md-item-template>
+                        <md-not-found>
+                            Task {{tasksCtrl.tabs[$index].filter.selectedTransition.search}} was not found :(
+                        </md-not-found>
+                    </md-autocomplete>
                 </form>
             </div>
             <div layout="row" layout-align="left center">
                 <md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>
                 <md-chips id="chips-container" flex>
                     <md-chip ng-repeat="chip in tasksCtrl.tabs[$index].filter.chips">
-                        {{chip.title}} &nbsp;&nbsp;<md-icon class="material-icons" ng-click="tasksCtrl.removeChip($index)">close</md-icon>
+                        {{chip.title}} &nbsp;&nbsp;
+                        <md-icon class="material-icons" ng-click="tasksCtrl.removeChip($index)">close</md-icon>
                     </md-chip>
                 </md-chips>
             </div>
@@ -71,16 +88,19 @@
                     <md-menu-item>
                         <md-button ng-click="tasksCtrl.changeView('list')">List</md-button>
                     </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="tasksCtrl.loadTasks()">Refresh</md-button>
+                    </md-menu-item>
                 </md-menu-content>
             </md-menu>
         </md-card>
-        <md-expansion-panel class="task" ng-repeat="task in tasksCtrl.tabs[$index].resource | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.sort.reverse">
-            <md-expansion-panel-collapsed layout="row" layout-align="left center" ng-include="'views/app/tasks/task_panel_collapsed.html'">
+        <md-expansion-panel class="task"
+                            ng-repeat="task in tasksCtrl.tabs[$index].resources | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.tabs[$index].sort.reverse">
+            <md-expansion-panel-collapsed layout="row" layout-align="left center"
+                                          ng-include="'views/app/tasks/task_panel_collapsed.html'">
             </md-expansion-panel-collapsed>
             <md-expansion-panel-expanded ng-include="'views/app/tasks/task_panel_expanded.html'">
             </md-expansion-panel-expanded>
         </md-expansion-panel>
-
     </div>
-    <md-button ng-click="tasksCtrl.loadTasks()">Load Tasks</md-button>
 </md-content>
