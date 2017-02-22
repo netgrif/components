@@ -9,6 +9,12 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         Assigned: 2,
                         Done: 3
                     };
+                    var TAB_TYPE = {
+                        ALL: 0,
+                        MY: 1,
+                        MY_FINISHED: 2,
+                        CUSTOM: 3
+                    };
 
                     self.tabs = [];
                     self.activeTab = 0;
@@ -18,12 +24,15 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             pending: false,
                             processes: [],
                             transitions: []
-                        }
+                        },
+                        availableFilters: []
                     };
 
                     //Tab object
-                    function Tab(label) {
+                    function Tab(label, url) {
                         this.label = label;
+                        this.baseUrl = url;
+                        this.type = undefined;
                         this.resources = undefined;
                         this.filter = {
                             processes: [],
@@ -37,6 +46,9 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             selectedTransition: {
                                 search: "",
                                 item: undefined
+                            },
+                            isEmpty: function () {
+                                return this.chips.length <= 0;
                             }
                         };
                         this.sort = {
@@ -45,30 +57,80 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         };
                     }
 
-                    self.tabs.push(new Tab("All Tasks"));
-                    self.tabs.push(new Tab("My Tasks"));
-                    self.tabs.push(new Tab("My Finished Tasks"));
+                    self.addTab = function (label, url, type) {
+                        if(label && url) self.tabs.push(new Tab(label, url));
+                        else self.tabs.push(self.newTab.label);
 
-                    self.loadTasks = function () { //TODO: 20.2. autoload, consider active filter, load only for current task
-                        var url;
-                        if (self.activeTab == 0) url = "/res/task";
-                        else if (self.activeTab == 1) url = "/res/task/my";
-                        else if (self.activeTab == 2) url = "/res/task/my/finished";
+                        var last = self.tabs.length-1;
+                        self.tabs[last].type = type;
 
-                        var servedTab = self.activeTab;
-                        $log.debug("loading data");
-                        $http.get(url).then(function (response) {
-                            self.global.links = self.activeTab == 0 ? response : undefined;
+                        if(self.newTab){
+                            //TODO: 21.2. parse dropdown filters value to
+                        }
+                    };
+
+                    self.tabChanged = function () {
+                        if(!self.tabs[self.activeTab].resources){
+                            self.loadTasks();
+                        }
+                    };
+
+                    function loadTasksResource(url, tabIndex, searchData) {
+                        $log.debug("loading tasks");
+                        var config = {
+                            method: searchData ? 'POST' : 'GET',
+                            url: url
+                        };
+                        if(searchData) config.data = searchData;
+
+                        $http(config).then(function (response) {
+                            self.global.links = self.activeTab == 0 ? response : self.global.links;
                             response.$request().$get("tasks").then(function (resources) {
-                                self.tabs[servedTab].resources = resources;
-                                $log.debug(self.tabs[servedTab].resources);
+                                self.tabs[tabIndex].resources = resources;
+                                $log.debug(self.tabs[tabIndex].resources);
                             }, function () {
-                                $log.debug("Resource not found");
+                                $log.debug("Resource not found in"+self.tabs[tabIndex].label);
                             });
-
                         }, function () {
-                            $log.debug("Tasks failed to load");
+                            $log.debug("Tasks on "+url+" failed to load");
                         });
+                    }
+
+                    self.loadTasks = function () {
+                        if(self.tabs[self.activeTab].type < TAB_TYPE.CUSTOM){
+                            if(!self.tabs[self.activeTab].filter.isEmpty()){
+                                self.searchTasks();
+                            } else {
+                                loadTasksResource(self.tabs[self.activeTab].baseUrl, self.activeTab);
+                            }
+                        } else {
+                            self.searchTasks();
+                        }
+                    };
+
+                    self.searchTasks = function () {
+                        var url = "/res/task/search";
+                        if(self.tabs[self.activeTab].type === TAB_TYPE.MY ||
+                            self.tabs[self.activeTab].type === TAB_TYPE.MY_FINISHED)
+                            url = self.tabs[self.activeTab].baseUrl;
+
+                        if(self.tabs[self.activeTab].filter.isEmpty()){
+                            $log.debug("Search cannot start - Filter is empty");
+                            return;
+                        }
+
+                        var searchData = {
+                            petrinetIds: [],
+                            transitionIds: []
+                        };
+                        self.tabs[self.activeTab].filter.processes.forEach(function (item) {
+                            searchData.petrinetIds.push(item.id);
+                        });
+                        self.tabs[self.activeTab].filter.transitions.forEach(function (item) {
+                            searchData.transitionIds.push(item.id);
+                        });
+
+                        loadTasksResource(url, self.activeTab, searchData);
                     };
 
                     self.getStatus = function (task) {
@@ -208,7 +270,17 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         }
                         return order;
                     };
+                    
+                    self.loadFilters = function () {
+                        //TODO: http request to server for available filters
+                        self.global.availableFilters.push({name:"Filter 1", access:"Global", filter:{processes:[], transitions:[]}});
+                        self.global.availableFilters.push({name:"Filter 2", access:"Private", filter:{processes:[], transitions:[]}});
+                        self.global.availableFilters.push({name:"Filter 3", access:"FM Servis", filter:{processes:[], transitions:[]}});
+                    };
 
+                    self.addTab("All Tasks", "/res/task", TAB_TYPE.ALL);
+                    self.addTab("My Tasks", "/res/task/my", TAB_TYPE.MY);
+                    self.addTab("My Finished Tasks", "/res/task/my/finished", TAB_TYPE.MY_FINISHED);
 
                 }]);
     });
