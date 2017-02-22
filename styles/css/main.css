@@ -637,3 +637,27 @@ body {
   height: 28px;
   margin: 0;
 }
+
+.base .file-chooser {
+  margin: 0;
+  padding: 0;
+}
+
+.base .file-chooser input {
+  position: absolute;
+  height: 0.1px;
+  width: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.base .file-chooser label .material-icons {
+  color: #98002b;
+}
+
+.base .file-chooser label span {
+  padding-left: 6px;
+  padding-right: 6px;
+  color: rgba(0, 0, 0, 0.38);
+}

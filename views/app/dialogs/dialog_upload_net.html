@@ -12,9 +12,20 @@
 
 		<md-dialog-content>
 			<div class="md-dialog-content" layout="column">
-				<md-input-container>
-					<input type="file" file-model="mFile">
-				</md-input-container>
+				<div layout="row" layout-align="left center">
+					<md-button class="file-chooser" layout="row" layout-align="left center">
+						<input type="file" id="file" file-model="mFile">
+						<label for="file" layout="row" layout-align="left center">
+							<i class="material-icons">file_upload</i>
+							<span>Choose a net</span>
+						</label>
+					</md-button>
+					<span flex></span>
+					<div layout="row" layout-align="left center">
+						<md-tooltip md-direction="right">Requires XML file</md-tooltip>
+						<i class="material-icons color-fg-fm-500">help</i>
+					</div>
+				</div>
 				<md-input-container>
 					<label>Name</label>
 					<input type="text" ng-model="flowCtrl.petriNetMeta.name">
