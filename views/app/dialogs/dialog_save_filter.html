@@ -1,0 +1,51 @@
+<md-dialog aria-label="New Filter">
+    <form ng-submit="parentCtrl.saveFilter()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Save Filter</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeDialog()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column">
+                <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="parentCtrl.newFilter.name" required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Visibility</label>
+                    <md-select ng-model="parentCtrl.newFilter.visibility" required>
+                        <md-option value="0">Global</md-option>
+                        <md-option value="1">Organization</md-option>
+                        <md-option value="2">Private</md-option>
+                    </md-select>
+                </md-input-container>
+                <div layout="column" layout-align="left">
+                    <label>Process</label>
+                    <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.processes" readonly="true" flex>
+                        <md-chip-template>
+                            {{$chip.title}}
+                        </md-chip-template>
+                    </md-chips>
+                </div>
+                <div layout="column" layout-align="left">
+                    <label>Task</label>
+                    <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions" readonly="true" flex>
+                        <md-chip-template>
+                            {{$chip.title}}
+                        </md-chip-template>
+                    </md-chips>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button type="submit">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -43,11 +43,16 @@
             </div>
             <div layout="row" layout-align="left center">
                 <md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>
-                <md-chips id="chips-container" flex>
-                    <md-chip ng-repeat="chip in tasksCtrl.tabs[$index].filter.chips">
-                        {{chip.title}} &nbsp;&nbsp;
-                        <md-icon class="material-icons" ng-click="tasksCtrl.removeChip($index)">close</md-icon>
-                    </md-chip>
+                <md-chips ng-model="tasksCtrl.tabs[$index].filter.chips"
+                          readonly="true"
+                          md-removable="true"
+                          md-on-remove="tasksCtrl.removeChip($chip)"
+                          id="chips-container"
+                          flex>
+                    <md-chip-template>
+                        {{$chip.title}}
+                        <!--<md-icon class="material-icons" ng-click="tasksCtrl.removeChip($index)">close</md-icon>-->
+                    </md-chip-template>
                 </md-chips>
             </div>
         </div>
@@ -58,7 +63,7 @@
                 </md-button>
                 <md-menu-content>
                     <md-menu-item>
-                        <md-button ng-click="tasksCtrl.saveFilter()">Save</md-button>
+                        <md-button ng-click="tasksCtrl.showFilterDialog()">Save</md-button>
                     </md-menu-item>
                     <md-menu-item>
                         <md-button ng-click="tasksCtrl.clearFilter()">Reset</md-button>

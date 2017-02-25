@@ -1,6 +1,6 @@
 <div ng-cloak layout-xs>
     <div class="background-header background-welcome"></div>
-    <md-tabs md-dynamic-height md-border-bottom md-selected="tasksCtrl.activeTab">
+    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="tasksCtrl.activeTab">
         <md-tab ng-repeat="tab in tasksCtrl.tabs" label="{{tab.label}}" md-on-select="tasksCtrl.tabChanged()">
             <div ng-include="'views/app/tasks/tasks_tab.html'"></div>
         </md-tab>
@@ -22,7 +22,7 @@
                                     <label>Label</label>
                                     <input type="text" ng-model="tasksCtrl.newTab.label" required>
                                 </md-input-container>
-                                <md-radio-group ng-model="tasksCtrl.newTab.filter">
+                                <md-radio-group ng-model="tasksCtrl.newTab.filter" required>
                                     <md-list flex>
                                         <md-subheader>Filters</md-subheader>
                                         <md-list-item class="md-3-line"
@@ -33,7 +33,16 @@
                                                 <div class="md-list-item-text" layout="column">
                                                     <h3>{{filter.name}}</h3>
                                                     <h4>{{filter.access}}</h4>
-                                                    <p>Tu budu chipy</p>
+                                                    <md-chips ng-model="filter.filter.processes" readonly="true" flex>
+                                                        <md-chip-template>
+                                                            {{$chip.title}}
+                                                        </md-chip-template>
+                                                    </md-chips>
+                                                    <md-chips ng-model="filter.filter.transitions" readonly="true" flex>
+                                                        <md-chip-template>
+                                                            {{$chip.title}}
+                                                        </md-chip-template>
+                                                    </md-chips>
                                                 </div>
                                             </md-radio-button>
                                             <md-divider></md-divider>
