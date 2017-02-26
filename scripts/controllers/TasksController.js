@@ -65,8 +65,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             return
                         }
 
-                        if(!self.newTab) return;
-                        if(!self.newTab.filter){
+                        if (!self.newTab) return;
+                        if (!self.newTab.filter) {
                             $snackbar.show("You must select filter to apply on new tab!");
                             return;
                         }
@@ -75,11 +75,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         tab.type = TAB_TYPE.CUSTOM;
                         tab.filter.processes = self.newTab.filter.processes;
                         tab.filter.processes.forEach(function (item) {
-                            tab.filter.chips.push({type:'processes', title:item.title});
+                            tab.filter.chips.push({type: 'processes', title: item.title});
                         });
                         tab.filter.transitions = self.newTab.filter.transitions;
                         tab.filter.transitions.forEach(function (item) {
-                            tab.filter.chips.push({type:'transitions', title:item.title});
+                            tab.filter.chips.push({type: 'transitions', title: item.title});
                         });
 
                         self.tabs.push(tab);
@@ -174,6 +174,15 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             $log.debug(response);
                         }, function () {
                             $log.debug("Finishing task " + task.title + " failed");
+                        });
+                    };
+
+                    self.loadTaskData = function (taskIndex) {
+                        if (self.tabs[self.activeTab].resources[taskIndex].data) return;
+                        $http.get(self.tabs[self.activeTab].resources[taskIndex].$href("data")).then(function (response) {
+                            $log.debug(response);
+                        }, function () {
+                            $log.debug("Data for " + self.tabs[self.activeTab].resources[taskIndex].visualId + " failed to load!");
                         });
                     };
 
@@ -278,7 +287,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.dynamicOrder = function (task) {
-                        if(self.activeTab >= self.tabs.length) return;
+                        if (self.activeTab >= self.tabs.length) return;
                         var order = 0;
                         switch (self.tabs[self.activeTab].sort.field) {
                             case 'status':
@@ -292,15 +301,15 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         return order;
                     };
 
-                    function resolveFilterAccess(organization, user){
-                        if(!organization && !user) return "Global";
-                        else if(!organization && user) return "Private";
-                        else if(organization && !user) return organization;
+                    function resolveFilterAccess(organization, user) {
+                        if (!organization && !user) return "Global";
+                        else if (!organization && user) return "Private";
+                        else if (organization && !user) return organization;
 
                     }
 
                     self.loadFilters = function () {
-                        if(self.global.availableFilters.length <= 0){
+                        if (self.global.availableFilters.length <= 0) {
                             $http.get("/res/task/filter").then(function (response) {
                                 response.$request().$get("filters").then(function (resource) {
                                     resource.forEach(function (item, index) {
@@ -324,15 +333,15 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.showFilterDialog = function () {
-                        if(self.tabs[self.activeTab].filter.isEmpty()){
+                        if (self.tabs[self.activeTab].filter.isEmpty()) {
                             $snackbar.show("Your filter is empty! You cannot save empty filter.");
                             return;
                         }
-                        $dialog.showByTemplate('save_filter',self);
+                        $dialog.showByTemplate('save_filter', self);
                     };
 
                     self.saveFilter = function () {
-                        if(!self.newFilter) return;
+                        if (!self.newFilter) return;
 
                         var newFilter = {
                             name: self.newFilter.name,
