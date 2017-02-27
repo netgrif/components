@@ -93,6 +93,12 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         }
                     };
 
+                    self.formatDate = function (date) {
+                        if(!date) return;
+                        return date.dayOfMonth+"."+date.monthValue+"."+date.year+" \n"
+                            +date.hour+":"+date.minute;
+                    };
+
                     function loadTasksResource(url, tabIndex, searchData) {
                         $log.debug("loading tasks");
                         var config = {
