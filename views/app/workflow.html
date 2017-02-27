@@ -16,7 +16,7 @@
 		</md-input-container>
 		<div layout="row">
 			<md-button ng-if="$user.authority === 'admin'" ng-click="flowCtrl.showDialog('upload_net')">Upload Net</md-button>
-			<md-button ng-click="flowCtrl.showDialog('create_case')">Create Case</md-button>
+			<md-button ng-click="flowCtrl.showDialog('create_case'); flowCtrl.loadPetriNets()">Create Case</md-button>
 		</div>
 	</section>
 </div>

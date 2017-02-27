@@ -24,6 +24,8 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 				$fileUpload.upload(file, meta, "/res/petrinet/import", function (response) {
 					if(response.success) $dialog.closeCurrent();
 					else $snackbar.show("Uploading Petri Net failed!");
+					$rootScope.mFile = undefined;
+					self.petriNetMeta = {};
 				});
 			};
 
@@ -32,13 +34,17 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 					$http.post("/res/workflow/case", JSON.stringify(self.newCase))
 						.then(function (response) {
 							$log.debug(response);
+							if(response.success)$dialog.closeCurrent();
+							self.newCase = {};
 						}, function () {
 							$log.debug("Creating new case failed!");
+							self.newCase = {};
 						});
 				}
 			};
 
 			self.loadPetriNets = function () {
+			    if(self.petriNetRefs) return;
 				$http.get("/res/petrinet/refs").then(function (response) {
 					$log.debug(response);
 					$log.debug(response.$request());
