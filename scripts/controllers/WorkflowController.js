@@ -1,9 +1,7 @@
-/**
- * Created by Milan on 11.2.2017.
- */
+
 define(['angular', '../modules/Workflow', '../services/FileUpload'], function (angular) {
-	angular.module('ngWorkflow').controller('WorkflowController', ['$log', '$scope', '$rootScope', '$fileUpload', '$http', '$dialog',
-        function ($log, $scope, $rootScope, $fileUpload, $http, $dialog) {
+	angular.module('ngWorkflow').controller('WorkflowController', ['$log', '$scope', '$rootScope', '$fileUpload', '$http', '$dialog', '$snackbar',
+        function ($log, $scope, $rootScope, $fileUpload, $http, $dialog, $snackbar) {
 			var self = this;
 
 			self.petriNetMeta = {};
@@ -11,11 +9,21 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 
 
 			self.uploadPetriNet = function () {
+				if(!$rootScope.mFile){
+					$snackbar.show("No file was attached!");
+					return;
+				}
+				if($rootScope.mFile.type != "text/xml"){
+					$snackbar.show("File must have XML format!");
+					return;
+				}
 				var file = $rootScope.mFile;
 				//console.dir(file);
+				self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
 				var meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
 				$fileUpload.upload(file, meta, "/res/petrinet/import", function (response) {
-
+					if(response.success) $dialog.closeCurrent();
+					else $snackbar.show("Uploading Petri Net failed!");
 				});
 			};
 
@@ -43,7 +51,7 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 			};
 
 			self.showDialog = function (template) {
-				$dialog.showByTemplate(template);
+				$dialog.showByTemplate(template, self);
 			};
     }]);
 });
