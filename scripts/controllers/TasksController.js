@@ -88,9 +88,18 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.tabChanged = function () {
-                        if (!self.tabs[self.activeTab].resources) {
+                        if (!self.tabs[self.activeTab].resources || self.tabs[self.activeTab].resources.length == 0) {
                             self.loadTasks();
                         }
+                    };
+
+                    self.reloadAfterAction = function () {
+                        self.tabs.forEach(function (tab, index) {
+                            if(index != self.activeTab && self.tabs[index].resources){
+                                self.tabs[index].resources.splice(0,self.tabs[index].resources.length);
+                            }
+                        });
+                        self.loadTasks();
                     };
 
                     self.formatDate = function (date) {
@@ -114,6 +123,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 $log.debug(self.tabs[tabIndex].resources);
                             }, function () {
                                 $log.debug("Resource not found in " + self.tabs[tabIndex].label);
+                                if(self.tabs[tabIndex].resources)
+                                    self.tabs[tabIndex].resources.splice(0,self.tabs[tabIndex].resources.length);
                             });
                         }, function () {
                             $log.debug("Tasks on " + url + " failed to load");
@@ -169,6 +180,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         $log.debug("Assigning task " + task.title + " to " + $user.name);
                         $http.get(task.$href("assign")).then(function (response) {
                             $log.debug(response);
+                            if(response.success) self.reloadAfterAction();
+                            if(response.error) $snackbar.show(response.error);
                         }, function () {
                             $log.debug("Assigning task " + task.title + " failed");
                         });
@@ -178,6 +191,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         $log.debug("Finishing task " + task.title + " to " + $user.name);
                         $http.get(task.$href("finish")).then(function (response) {
                             $log.debug(response);
+                            if(response.success) self.reloadAfterAction();
+                            if(response.error) $snackbar.show(response.error);
                         }, function () {
                             $log.debug("Finishing task " + task.title + " failed");
                         });
@@ -385,7 +400,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.addTab("All Tasks", "/res/task", TAB_TYPE.ALL);
                     self.addTab("My Tasks", "/res/task/my", TAB_TYPE.MY);
-                    self.addTab("My Finished Tasks", "/res/task/my/finished", TAB_TYPE.MY_FINISHED);
+                    //self.addTab("My Finished Tasks", "/res/task/my/finished", TAB_TYPE.MY_FINISHED);
 
                 }]);
     });
