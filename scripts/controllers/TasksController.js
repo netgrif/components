@@ -202,6 +202,14 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (self.tabs[self.activeTab].resources[taskIndex].data) return;
                         $http.get(self.tabs[self.activeTab].resources[taskIndex].$href("data")).then(function (response) {
                             $log.debug(response);
+                            if(response.$response().data._embedded) {
+                                self.tabs[self.activeTab].resources[taskIndex].data = [];
+                                Object.keys(response.$response().data._embedded).forEach(function (item) {
+                                    response.$request().$get(item).then(function (resource) {
+                                        self.tabs[self.activeTab].resources[taskIndex].data = self.tabs[self.activeTab].resources[taskIndex].data.concat(resource);
+                                    });
+                                });
+                            }
                         }, function () {
                             $log.debug("Data for " + self.tabs[self.activeTab].resources[taskIndex].visualId + " failed to load!");
                         });
