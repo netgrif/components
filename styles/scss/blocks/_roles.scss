@@ -1,0 +1,33 @@
+.roles {
+
+  margin: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-bottom: 16px;
+
+  .roles-header {
+    a {
+      color: black;
+      text-decoration: none;
+    }
+
+    > * {
+      font-weight: bold;
+    }
+  }
+
+  //.role {
+
+  //  p, task-priority {
+
+   //   > i {
+   //     margin-right: 16px;
+   //   }
+  //  }
+ // }
+}
+
+.roles-checkbox{
+  margin: 17px;
+
+}

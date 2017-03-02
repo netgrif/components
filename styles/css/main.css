@@ -562,3 +562,27 @@ body {
 .base .search-tasks .layout-row > form > .md-block {
   margin: 0;
 }
+
+.base .roles {
+  margin: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-bottom: 16px;
+}
+
+.base .roles .roles-header a {
+  color: black;
+  text-decoration: none;
+}
+
+.base .roles .roles-header > * {
+  font-weight: bold;
+}
+
+.base .roles-checkbox {
+  margin: 17px;
+}
+
+.base .roletab {
+  width: 200px;
+}
