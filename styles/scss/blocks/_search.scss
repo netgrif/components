@@ -20,6 +20,14 @@
 				> .md-block {
 					margin: 0;
 				}
+
+				> .autocomplete {
+
+					md-input-container {
+						height: 28px;
+						margin: 0;
+					}
+				}
 			}
 		}
 	}

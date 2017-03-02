@@ -1,10 +1,9 @@
-/**
- * Created by Milan on 11.2.2017.
- */
+
 define(['angular','../modules/Workflow'],function (angular) {
     angular.module('ngWorkflow').factory('$fileUpload',function ($log, $http) {
         return {
             upload: function (file, meta, url, callback) {
+                $log.debug("Uploading file "+file.name);
                 var formData = new FormData();
                 formData.append('file',file);
                 meta && formData.append('meta', meta);
@@ -19,7 +18,7 @@ define(['angular','../modules/Workflow'],function (angular) {
 
                 }, function () {
                     $log.debug("File upload failed!");
-                    callback && callback();
+                    callback && callback(false);
                 });
             }
         };

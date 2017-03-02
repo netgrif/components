@@ -250,16 +250,85 @@
   background-color: transparent;
 }
 
+.highlight {
+  color: #98002b;
+}
+
 .margin-no {
   margin: 0;
+}
+
+.margin-default {
+  margin: 8px;
+}
+
+.margin-vertical-default {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.margin-horizontal-default {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.margin-top-default {
+  margin-top: 8px;
+}
+
+.margin-bottom-default {
+  margin-bottom: 8px;
+}
+
+.margin-left-default {
+  margin-left: 8px;
+}
+
+.margin-right-default {
+  margin-right: 8px;
 }
 
 .padding-no {
   padding: 0;
 }
 
+.padding-default {
+  padding: 8px;
+}
+
+.padding-vertical-default {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.padding-horizontal-default {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.padding-top-default {
+  padding-top: 8px;
+}
+
+.padding-bottom-default {
+  padding-bottom: 8px;
+}
+
+.padding-left-default {
+  padding-left: 8px;
+}
+
+.padding-right-default {
+  padding-right: 8px;
+}
+
 body {
   min-height: 100%;
+}
+
+.img-responsive {
+  width: 100%;
+  height: auto;
 }
 
 .layout-vh-100 {
@@ -519,7 +588,7 @@ body {
 }
 
 .base .tasks .tasks-header {
-  height: 80px;
+  min-height: 80px;
   margin: 0;
   padding-left: 24px;
   padding-right: 24px;
@@ -529,10 +598,11 @@ body {
 .base .tasks .tasks-header a {
   color: black;
   text-decoration: none;
+  font-weight: bold;
 }
 
-.base .tasks .tasks-header > * {
-  font-weight: bold;
+.base .tasks .task {
+  cursor: pointer;
 }
 
 .base .tasks .task p > i, .base .tasks .task task-priority > i {
@@ -562,3 +632,35 @@ body {
 .base .search-tasks .layout-row > form > .md-block {
   margin: 0;
 }
+<<<<<<< HEAD
+=======
+
+.base .search-tasks .layout-row > form > .autocomplete md-input-container {
+  height: 28px;
+  margin: 0;
+}
+
+.base .file-chooser {
+  margin: 0;
+  padding: 0;
+}
+
+.base .file-chooser input {
+  position: absolute;
+  height: 0.1px;
+  width: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.base .file-chooser label .material-icons {
+  color: #98002b;
+}
+
+.base .file-chooser label span {
+  padding-left: 6px;
+  padding-right: 6px;
+  color: rgba(0, 0, 0, 0.38);
+}
+>>>>>>> parent of 7c0c09b... Merge branch 'master' of http://147.175.98.23:7990/scm/wms/frontend

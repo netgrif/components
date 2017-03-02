@@ -1,7 +1,7 @@
 .tasks {
 
 	.tasks-header {
-		height: 80px;
+		min-height: 80px;
 		margin: 0;
 		padding-left: 24px;
 		padding-right: 24px;
@@ -10,14 +10,12 @@
 		a {
 			color: black;
 			text-decoration: none;
-		}
-
-		> * {
 			font-weight: bold;
 		}
 	}
 
 	.task {
+		cursor: pointer;
 
 		p, task-priority {
 

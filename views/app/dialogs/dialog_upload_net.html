@@ -1,37 +1,48 @@
-<md-dialog aria-label="Upload Net" ng-cloak>
-	<form name="petriNetUpload" ng-submit="flowCtrl.uploadPetriNet()">
-		<md-toolbar>
-			<div class="md-toolbar-tools">
-				<h2>Upload Net</h2>
-				<span flex></span>
-				<md-button class="md-icon-button" ng-click="closeDialog()">
-					<md-icon class="material-icons">close</md-icon>
-				</md-button>
-			</div>
-		</md-toolbar>
+<md-dialog aria-label="Upload Net">
+    <form name="petriNetUploadForm" ng-submit="parentCtrl.uploadPetriNet()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Upload Net</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeDialog()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
 
-		<md-dialog-content>
-			<div class="md-dialog-content" layout="column">
-				<md-input-container>
-					<input type="file" file-model="mFile">
-				</md-input-container>
-				<md-input-container>
-					<label>Name</label>
-					<input type="text" ng-model="flowCtrl.petriNetMeta.name">
-				</md-input-container>
-				<md-input-container>
-					<label>Initials</label>
-					<input md-maxlength="3" type="text" name="initials" ng-model="flowCtrl.petriNetMeta.initials">
-					<div ng-messages="petriNetUpload.initials.$error">
-						<div ng-message="md-maxlength">Petri Net initials must be exactly 3 characters long</div>
-					</div>
-				</md-input-container>
-			</div>
-		</md-dialog-content>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column">
+                <div layout="row" layout-align="left center">
+                    <md-button class="file-chooser" layout="row" layout-align="left center">
+                        <input type="file" id="file" file-model="mFile">
+                        <label for="file" layout="row" layout-align="left center">
+                            <i class="material-icons">file_upload</i>
+                            <span>{{ $root.mFile ? $root.mFile.name : "Choose a net" }}</span>
+                        </label>
+                    </md-button>
+                    <span flex></span>
+                    <div layout="row" layout-align="left center">
+                        <md-tooltip md-direction="right">Requires XML file</md-tooltip>
+                        <i class="material-icons color-fg-fm-500">help</i>
+                    </div>
+                </div>
+                <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="parentCtrl.petriNetMeta.name" required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Initials</label>
+                    <input md-maxlength="3" type="text" name="initials" ng-model="parentCtrl.petriNetMeta.initials" required>
+                    <div ng-messages="petriNetUploadForm.initials.$error">
+                        <div ng-message="md-maxlength">Petri Net initials must be at least 3 characters long</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
 
-		<md-dialog-actions layout="row">
-			<span flex></span>
-			<md-button type="submit">Upload</md-button>
-		</md-dialog-actions>
-	</form>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button type="submit">Upload</md-button>
+        </md-dialog-actions>
+    </form>
 </md-dialog>

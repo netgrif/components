@@ -1,9 +1,7 @@
-/**
- * Created by Milan on 11.2.2017.
- */
+
 define(['angular', '../modules/Workflow', '../services/FileUpload'], function (angular) {
-	angular.module('ngWorkflow').controller('WorkflowController', ['$log', '$scope', '$rootScope', '$fileUpload', '$http', '$mdDialog',
-        function ($log, $scope, $rootScope, $fileUpload, $http, $mdDialog) {
+	angular.module('ngWorkflow').controller('WorkflowController', ['$log', '$scope', '$rootScope', '$fileUpload', '$http', '$dialog', '$snackbar',
+        function ($log, $scope, $rootScope, $fileUpload, $http, $dialog, $snackbar) {
 			var self = this;
 
 			self.petriNetMeta = {};
@@ -11,11 +9,23 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 
 
 			self.uploadPetriNet = function () {
+				if(!$rootScope.mFile){
+					$snackbar.show("No file was attached!");
+					return;
+				}
+				if($rootScope.mFile.type != "text/xml"){
+					$snackbar.show("File must have XML format!");
+					return;
+				}
 				var file = $rootScope.mFile;
 				//console.dir(file);
+				self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
 				var meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
 				$fileUpload.upload(file, meta, "/res/petrinet/import", function (response) {
-
+					if(response.success) $dialog.closeCurrent();
+					else $snackbar.show("Uploading Petri Net failed!");
+					$rootScope.mFile = undefined;
+					self.petriNetMeta = {};
 				});
 			};
 
@@ -24,13 +34,17 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 					$http.post("/res/workflow/case", JSON.stringify(self.newCase))
 						.then(function (response) {
 							$log.debug(response);
+							if(response.success)$dialog.closeCurrent();
+							self.newCase = {};
 						}, function () {
 							$log.debug("Creating new case failed!");
+							self.newCase = {};
 						});
 				}
 			};
 
 			self.loadPetriNets = function () {
+			    if(self.petriNetRefs) return;
 				$http.get("/res/petrinet/refs").then(function (response) {
 					$log.debug(response);
 					$log.debug(response.$request());
@@ -43,29 +57,7 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 			};
 
 			self.showDialog = function (template) {
-				$log.debug("Dialog opened -> template: " + template);
-				$mdDialog.show({
-					controller: DialogController,
-					templateUrl: '../../views/app/dialogs/dialog_' + template + '.html',
-					parent: angular.element(document.body),
-					clickOutsideToClose: true,
-					escapeToClose: true,
-					fullscreen: true
-				})
-				.then(function () {
-					$log.debug("Dialog closed success");
-				}, function() {
-					$log.debug("Escape to close/click outside to close or dialog error occured");
-				})
-				.finally(function () {
-					//TODO clean up
-				});
+				$dialog.showByTemplate(template, self);
 			};
-
-			function DialogController($scope, $mdDialog) {
-				$scope.closeDialog = function() {
-					$mdDialog.hide();
-				}
-			}
     }]);
 });

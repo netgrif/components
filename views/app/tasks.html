@@ -1,16 +1,62 @@
 <div ng-cloak layout-xs>
-	<div class="background-header background-welcome"></div>
-	<md-tabs md-dynamic-height md-border-bottom md-selected="tasksCtrl.activeTab">
-		<md-tab ng-repeat="tab in tasksCtrl.tabs" label="{{tab.label}}">
-			<div ng-include="'views/app/tasks/tasks_tab.html'"></div>
-		</md-tab>
-		<md-tab>
-			<md-tab-label>
-				<md-icon class="material-icons">add</md-icon>
-			</md-tab-label>
-			<md-content class="md-padding color-bg-transparent">
-				<!--TODO: form to add new tab with filter-->
-			</md-content>
-		</md-tab>
-	</md-tabs>
+    <div class="background-header background-welcome"></div>
+    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="tasksCtrl.activeTab">
+        <md-tab ng-repeat="tab in tasksCtrl.tabs" label="{{tab.label}}" md-on-select="tasksCtrl.tabChanged()">
+            <div ng-include="'views/app/tasks/tasks_tab.html'"></div>
+        </md-tab>
+        <md-tab md-on-select="tasksCtrl.loadFilters()">
+            <md-tab-label>
+                <md-icon class="material-icons md-highlight">add</md-icon>
+            </md-tab-label>
+            <md-tab-body>
+                <md-content class="md-padding color-bg-transparent" layout="column" layout-align="center">
+                    <md-card>
+                        <form ng-submit="tasksCtrl.addTab()">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">New tab</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                            <md-card-content>
+                                <md-input-container class="md-block">
+                                    <label>Label</label>
+                                    <input type="text" ng-model="tasksCtrl.newTab.label" required>
+                                </md-input-container>
+                                <md-radio-group ng-model="tasksCtrl.newTab.filter" required>
+                                    <md-list flex>
+                                        <md-subheader>Filters</md-subheader>
+                                        <md-list-item class="md-3-line"
+                                                      ng-repeat="filter in tasksCtrl.global.availableFilters"
+                                                      ng-click="null">
+                                            <md-radio-button ng-value="filter.filter"
+                                                             class="md-primary" flex>
+                                                <div class="md-list-item-text" layout="column">
+                                                    <h3>{{filter.name}}</h3>
+                                                    <h4>{{filter.access}}</h4>
+                                                    <md-chips ng-model="filter.filter.processes" readonly="true" flex>
+                                                        <md-chip-template>
+                                                            {{$chip.title}}
+                                                        </md-chip-template>
+                                                    </md-chips>
+                                                    <md-chips ng-model="filter.filter.transitions" readonly="true" flex>
+                                                        <md-chip-template>
+                                                            {{$chip.title}}
+                                                        </md-chip-template>
+                                                    </md-chips>
+                                                </div>
+                                            </md-radio-button>
+                                            <md-divider></md-divider>
+                                        </md-list-item>
+                                    </md-list>
+                                </md-radio-group>
+                            </md-card-content>
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-button type="submit">Add tab</md-button>
+                            </md-card-actions>
+                        </form>
+                    </md-card>
+                </md-content>
+            </md-tab-body>
+        </md-tab>
+    </md-tabs>
 </div>

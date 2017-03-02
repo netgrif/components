@@ -1,36 +1,65 @@
-<md-dialog aria-label="Create Case" ng-cloak>
-	<form ng-submit="flowCtrl.createCase()">
-		<md-toolbar>
-			<div class="md-toolbar-tools">
-				<h2>Create Case</h2>
-				<span flex></span>
-				<md-button class="md-icon-button" ng-click="closeDialog()">
-					<md-icon class="material-icons">close</md-icon>
-				</md-button>
-			</div>
-		</md-toolbar>
+<md-dialog aria-label="Create Case">
+    <form ng-submit="parentCtrl.createCase()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Create Case</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeDialog()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
 
-		<md-dialog-content>
-			<div class="md-dialog-content" layout="column">
-				<md-input-container>
-					<label>Petri Net</label>
-					<md-select ng-model="flowCtrl.newCase.netId" required>
-						<md-option ng-repeat="net in flowCtrl.petriNetRefs" value="{{net.id}}">
-							{{net.title}}
-						</md-option>
-					</md-select>
-				</md-input-container>
-				<md-input-container>
-					<label>Name</label>
-					<input type="text" ng-model="flowCtrl.newCase.title" required>
-				</md-input-container>
-			</div>
-		</md-dialog-content>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column">
+                <md-input-container>
+                    <label>Petri Net</label>
+                    <md-select ng-model="parentCtrl.newCase.netId" required>
+                        <md-option ng-repeat="net in parentCtrl.petriNetRefs" value="{{net.entityId}}">
+                            {{net.title}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="parentCtrl.newCase.title" required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Label color</label>
+                    <md-select ng-model="parentCtrl.newCase.color" required>
+                        <md-option value="color-fg-fm-500" selected>
+							<span>
+                                <md-icon class="material-icons color-fg-fm-500">fiber_manual_record</md-icon>
+                                Default
+							</span>
+                        </md-option>
+                        <md-option value="color-fg-blue-grey-500">
+							<span>
+                                <md-icon class="material-icons color-fg-blue-grey-500">fiber_manual_record</md-icon>
+                                Blue grey
+							</span>
+                        </md-option>
+                        <md-option value="color-fg-amber-500">
+                            <md-icon class="material-icons color-fg-amber-500">fiber_manual_record</md-icon>
+                            Amber
+                        </md-option>
+                        <md-option value="color-fg-indigo-500">
+                            <md-icon class="material-icons color-fg-indigo-500">fiber_manual_record</md-icon>
+                            Indigo
+                        </md-option>
+                        <md-option value="color-fg-teal-500">
+                            <md-icon class="material-icons color-fg-teal-500">fiber_manual_record</md-icon>
+                            Teal
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
 
-		<md-dialog-actions layout="row">
-			<span flex></span>
-			<md-button ng-click="flowCtrl.loadPetriNets()">Load Petri Nets</md-button>
-			<md-button type="submit">Create</md-button>
-		</md-dialog-actions>
-	</form>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <!--<md-button ng-click="parentCtrl.loadPetriNets()">Load Petri Nets</md-button>-->
+            <md-button type="submit">Create</md-button>
+        </md-dialog-actions>
+    </form>
 </md-dialog>

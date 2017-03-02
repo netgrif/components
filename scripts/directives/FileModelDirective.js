@@ -1,6 +1,4 @@
-/**
- * Created by Milan on 11.2.2017.
- */
+
 define(['angular','../modules/Workflow'],function (angular) {
     angular.module('ngWorkflow').directive('fileModel',['$parse','$rootScope',
     function ($parse, $rootScope) {
