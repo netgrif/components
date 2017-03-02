@@ -1,0 +1,26 @@
+.file-chooser {
+	margin: 0;
+	padding: 0;
+
+	input {
+		position: absolute;
+		height: 0.1px;
+		width: 0.1px;
+		opacity: 0;
+		overflow: hidden;
+		z-index: -1;
+	}
+
+	label {
+
+		.material-icons {
+			color: $color-fm-500;
+		}
+
+		span {
+			padding-left: 6px;
+			padding-right: 6px;
+			color: $color-material-grey-text;
+		}
+	}
+}
