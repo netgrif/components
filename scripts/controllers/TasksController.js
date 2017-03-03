@@ -189,12 +189,24 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.finishTask = function (task) {
                         $log.debug("Finishing task " + task.title + " to " + $user.name);
-                        $http.get(task.$href("finish")).then(function (response) {
-                            $log.debug(response);
-                            if(response.success) self.reloadAfterAction();
-                            if(response.error) $snackbar.show(response.error);
-                        }, function () {
-                            $log.debug("Finishing task " + task.title + " failed");
+
+                        if(task.data.some(function (item) {
+                            return !item.newValue;
+                        })){
+                            var error = "Not all fields have values! Finish task aborted!";
+                            $log.debug(error);
+                            $snackbar.show(error);
+                            return;
+                        }
+
+                        self.saveData(task, function () {
+                            $http.get(task.$href("finish")).then(function (response) {
+                                $log.debug(response);
+                                if(response.success) self.reloadAfterAction();
+                                if(response.error) $snackbar.show(response.error);
+                            }, function () {
+                                $log.debug("Finishing task " + task.title + " failed");
+                            });
                         });
                     };
 
@@ -207,11 +219,48 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 Object.keys(response.$response().data._embedded).forEach(function (item) {
                                     response.$request().$get(item).then(function (resource) {
                                         self.tabs[self.activeTab].resources[taskIndex].data = self.tabs[self.activeTab].resources[taskIndex].data.concat(resource);
+                                        self.tabs[self.activeTab].resources[taskIndex].data = self.tabs[self.activeTab].resources[taskIndex].data.map(function (item) {
+                                            item.newValue = item.value;
+                                            item.changed = false;
+                                            item.taskIndex = taskIndex;
+                                            return item;
+                                        });
                                     });
                                 });
                             }
                         }, function () {
                             $log.debug("Data for " + self.tabs[self.activeTab].resources[taskIndex].visualId + " failed to load!");
+                        });
+                    };
+
+                    self.dataFieldChanged = function (taskIndex, fieldIndex) {
+                        self.tabs[self.activeTab].resources[taskIndex].data[fieldIndex].changed = true;
+                    };
+
+                    self.saveData = function (task, callback) {
+                        var dataFields = {};
+                        task.data.forEach(function (item) {
+                            if(item.changed) {
+                                dataFields[item.objectId] = item.newValue;
+                            }
+                        });
+
+                        if(jQuery.isEmptyObject(dataFields)){
+                            callback && callback();
+                            return;
+                        }
+
+                        $http.post(task.$href("data-edit"),JSON.stringify(dataFields)).then(function (response) {
+                            $log.debug(response);
+                            task.data.forEach(function (item, index) {
+                                if(item.changed) {
+                                    self.tabs[self.activeTab].resources[item.taskIndex].data[index].changed = false;
+                                }
+                            });
+
+                            callback && callback();
+                        },function () {
+                            $log.debug("Saving data fields failed!");
                         });
                     };
 

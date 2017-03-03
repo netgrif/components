@@ -28,7 +28,10 @@
                     <div layout="column" layout-align="center center" ng-switch="field.type">
                         <md-input-container ng-switch-when="text" class="md-block" flex>
                             <label>{{field.name}}</label>
-                            <input type="text" ng-model="field.value" ng-disabled="!(task.user.email == $user.login && field.logic.editable)">
+                            <input type="text"
+                                   ng-model="field.newValue"
+                                   ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
+                                   ng-disabled="!(task.user.email == $user.login && field.logic.editable)">
                         </md-input-container>
                     </div>
                 </md-card-content>
@@ -42,6 +45,7 @@
 <md-expansion-panel-footer>
     <div flex></div>
     <md-button ng-if="task.status === 'New'" ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
+    <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task)">Save Data</md-button>
     <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task)">Finish</md-button>
     <md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
 </md-expansion-panel-footer>
