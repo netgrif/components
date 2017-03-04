@@ -122,6 +122,10 @@
   color: #009688;
 }
 
+.color-fg-material-grey-text {
+  color: rgba(0, 0, 0, 0.38);
+}
+
 .color-bg-fm-50 {
   background-color: #f3e0e6;
 }
@@ -244,6 +248,10 @@
 
 .color-bg-teal-500 {
   background-color: #009688;
+}
+
+.color-bg-material-grey-text {
+  background-color: rgba(0, 0, 0, 0.38);
 }
 
 .color-bg-transparent {
@@ -632,8 +640,6 @@ body {
 .base .search-tasks .layout-row > form > .md-block {
   margin: 0;
 }
-<<<<<<< HEAD
-=======
 
 .base .search-tasks .layout-row > form > .autocomplete md-input-container {
   height: 28px;
@@ -663,4 +669,3 @@ body {
   padding-right: 6px;
   color: rgba(0, 0, 0, 0.38);
 }
->>>>>>> parent of 7c0c09b... Merge branch 'master' of http://147.175.98.23:7990/scm/wms/frontend

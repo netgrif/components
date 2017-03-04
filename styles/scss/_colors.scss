@@ -192,6 +192,13 @@ $color-teal-500:				#009688;
 				color: $color-teal-500;
 			}
 		}
+
+		&-material-grey {
+
+			&-text {
+				color: $color-material-grey-text;
+			}
+		}
 	}
 	
 	&-bg {
@@ -341,6 +348,13 @@ $color-teal-500:				#009688;
 
 			&-500 {
 				background-color: $color-teal-500;
+			}
+		}
+
+		&-material-grey {
+
+			&-text {
+				background-color: $color-material-grey-text;
 			}
 		}
 
