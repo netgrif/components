@@ -259,7 +259,7 @@
 }
 
 .highlight {
-  color: #98002b;
+  color: #98002b !important;
 }
 
 .margin-no {

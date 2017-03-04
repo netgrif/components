@@ -1,51 +1,47 @@
 <md-expansion-panel-header>
-    <p flex="15" layout="row" layout-align="left center">
-        <i class="material-icons {{task.caseColor}}">label</i> {{task.visualId}}
-    </p>
-    <p flex="30">{{task.title}}</p>
-    <task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
-    <p flex="20" layout="row" layout-align="left center">
-        <i ng-if="task.user" class="material-icons color-fg-fm-500">account_circle</i>
-        {{task.user.name+" "+task.user.surname}}
-    </p>
-    <p flex="15">{{tasksCtrl.formatDate(task.startDate)}}</p>
-    <p flex="10">{{task.status}}</p>
-    <md-button ng-click="$panel.collapse()">
-        <md-icon class="material-icons">keyboard_arrow_up</md-icon>
-    </md-button>
+	<p flex="15" layout="row" layout-align="left center">
+		<i class="material-icons {{task.caseColor}}">label</i> {{task.visualId}}
+	</p>
+	<p flex="30">{{task.title}}</p>
+	<task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
+	<p flex="20" layout="row" layout-align="left center">
+		<i ng-if="task.user" class="material-icons color-fg-fm-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
+	</p>
+	<p flex="15">{{tasksCtrl.formatDate(task.startDate)}}</p>
+	<p flex="10">{{task.status}}</p>
+	<md-button ng-click="$panel.collapse()">
+		<md-icon class="material-icons">keyboard_arrow_up</md-icon>
+	</md-button>
 </md-expansion-panel-header>
 <md-expansion-panel-content>
-    <md-grid-list md-cols="5" md-cols-lg="5" md-cols-sm="3" md-cols-xs="1" md-row-height="16:9" ng-if="task.data">
-        <md-grid-tile ng-repeat="field in task.data">
-            <md-card flex>
-                <md-card-title>
-                    <md--card-title-text>
-                        <span class="md-headline">{{field.name}}</span>
-                        <span class="md-subhead">{{field.description}}</span>
-                    </md--card-title-text>
-                </md-card-title>
-                <md-card-content>
-                    <div layout="column" layout-align="center center" ng-switch="field.type">
-                        <md-input-container ng-switch-when="text" class="md-block" flex>
-                            <label>{{field.name}}</label>
-                            <input type="text"
-                                   ng-model="field.newValue"
-                                   ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
-                                   ng-disabled="!(task.user.email == $user.login && field.logic.editable)">
-                        </md-input-container>
-                    </div>
-                </md-card-content>
-            </md-card>
-        </md-grid-tile>
-    </md-grid-list>
-    <div layout="row" layout-align="center center" ng-if="!task.data">
-        <p>There is no data for this task</p>
-    </div>
+	<md-grid-list md-cols="4" md-cols-lg="5" md-cols-md="4" md-cols-sm="3" md-cols-xs="1" md-row-height="16:9" ng-if="task.data">
+		<md-grid-tile ng-repeat="field in task.data">
+			<md-card flex>
+				<md-card-title>
+					<md--card-title-text>
+						<span class="md-headline">{{field.name}}</span>
+						<span class="md-subhead">{{field.description}}</span>
+					</md--card-title-text>
+				</md-card-title>
+				<md-card-content>
+					<div layout="column" layout-align="center center" ng-switch="field.type">
+						<md-input-container ng-switch-when="text" class="md-block" flex>
+							<label>{{field.name}}</label>
+							<input type="text" ng-model="field.newValue" ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)" ng-disabled="!(task.user.email == $user.login && field.logic.editable)">
+						</md-input-container>
+					</div>
+				</md-card-content>
+			</md-card>
+		</md-grid-tile>
+	</md-grid-list>
+	<div layout="row" layout-align="center center" ng-if="!task.data">
+		<span>There is no data for this task</span>
+	</div>
 </md-expansion-panel-content>
 <md-expansion-panel-footer>
-    <div flex></div>
-    <md-button ng-if="task.status === 'New'" ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
-    <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task)">Save Data</md-button>
-    <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task)">Finish</md-button>
-    <md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+	<div flex></div>
+	<md-button ng-if="task.status === 'New'" ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
+	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task)">Save Data</md-button>
+	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task)">Finish</md-button>
+	<md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
 </md-expansion-panel-footer>
