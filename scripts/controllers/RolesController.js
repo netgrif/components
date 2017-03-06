@@ -9,7 +9,10 @@ define(['angular','angularCharts','../modules/Roles','../modules/Main'],
                     var self = this;
 
 
+
                     self.checkboxes=[];
+                    self.net;
+                    self.userMail;
 
                     self.loadPetriNets = function () {
                         if(self.petriNetRefs) return;
@@ -24,10 +27,10 @@ define(['angular','angularCharts','../modules/Roles','../modules/Main'],
                         });
                     };
 
-                    self.loadRoles = function (net) {
+                    self.loadRoles = function (pickedNet) {
                         if(self.roles || self.users) return;
-
-                        $http.get("/res/petrinet/roles/assign/"+net).then(function (response) {
+                        self.net=pickedNet;
+                        $http.get("/res/petrinet/roles/assign/"+pickedNet).then(function (response) {
                             $log.debug(response);
                             $log.debug(response.$request());
                                 self.roles = response.roles;
@@ -44,6 +47,7 @@ define(['angular','angularCharts','../modules/Roles','../modules/Main'],
                     };
 
                     self.loadRolesForUser = function (email) {
+                        self.userMail=email;
                         for (j=0;j<self.roles.length;j++)
                             self.checkboxes[j].isEnabled=false;
                       var userObj=self.users.find(x => x.email === email);
@@ -58,7 +62,19 @@ define(['angular','angularCharts','../modules/Roles','../modules/Main'],
                         $log.debug(self.checkboxes);
                     };
 
+                    self.saveRole = function () {
+                       // if(self.roles || self.users) return;
 
+                       // $http.post(task.$href("data-edit"),JSON.stringify(dataFields)).then(function (response) {
+                        //$http.post(url,"userMail="+useMail+"&roleId="+roleId).then();
+
+                        $http.post("/res/petrinet/roles/assign/"+self.net,"usermail="+user+"&roleId="+roleId).then(function (response) {
+                            $log.debug(response);
+
+                        }, function () {
+                            $log.debug("Role was not assigned");
+                        });
+                    };
 
 
 
