@@ -229,6 +229,17 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         }
                     };
 
+                    self.cancelTask = function (task) {
+                        $log.debug("Canceling task "+task.visualId);
+                        $http.get(task.$href("cancel")).then(function (response) {
+                            $log.debug(response);
+                            if(response.success) self.reloadAfterAction();
+                            if(response.error) $snackbar.error(response.error);
+                        },function () {
+                            $snackbar.error("Canceling assignment of task "+task.title+" failed");
+                        });
+                    };
+
                     self.loadTaskData = function (taskIndex, callback) {
                         if (self.tabs[self.activeTab].resources[taskIndex].data) return;
                         $http.get(self.tabs[self.activeTab].resources[taskIndex].$href("data")).then(function (response) {
