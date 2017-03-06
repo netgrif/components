@@ -1,8 +1,6 @@
 // Dimmensions
-$margin-default:					8px;
-$margin-double:						2*$margin-default;
-
-$padding-default:					8px;
+$dim-default:					8px;
+$dim-2x:						2*$dim-default;
 
 // Font sizes
 
@@ -15,50 +13,80 @@ $padding-default:					8px;
 	}
 
 	&-default {
-		margin: 8px;
+		margin: $dim-default;
+	}
+
+	&-2x {
+		margin: $dim-2x;
 	}
 
 	&-vertical {
 
 		&-default {
-			margin-top: 8px;
-			margin-bottom: 8px;
+			margin-top: $dim-default;
+			margin-bottom: $dim-default;
+		}
+
+		&-2x {
+			margin-top: $dim-2x;
+			margin-bottom: $dim-2x;
 		}
 	}
 
 	&-horizontal {
 
 		&-default {
-			margin-left: 8px;
-			margin-right: 8px;
+			margin-left: $dim-default;
+			margin-right: $dim-default;
+		}
+
+		&-2x {
+			margin-left: $dim-2x;
+			margin-right: $dim-2x;
 		}
 	}
 
 	&-top {
 
 		&-default {
-			margin-top: 8px;
+			margin-top: $dim-default;
+		}
+
+		&-2x {
+			margin-top: $dim-2x;
 		}
 	}
 
 	&-bottom {
 
 		&-default {
-			margin-bottom: 8px;
+			margin-bottom: $dim-default;
+		}
+
+		&-2x {
+			margin-bottom: $dim-2x;
 		}
 	}
 
 	&-left {
 
 		&-default {
-			margin-left: 8px;
+			margin-left: $dim-default;
+		}
+
+		&-2x {
+			margin-left: $dim-2x;
 		}
 	}
 
 	&-right {
 
 		&-default {
-			margin-right: 8px;
+			margin-right: $dim-default;
+		}
+
+		&-2x {
+			margin-right: $dim-2x;
 		}
 	}
 }
@@ -71,50 +99,80 @@ $padding-default:					8px;
 	}
 
 	&-default {
-		padding: 8px;
+		padding: $dim-default;
+	}
+
+	&-2x {
+		padding: $dim-2x;
 	}
 
 	&-vertical {
 
 		&-default {
-			padding-top: 8px;
-			padding-bottom: 8px;
+			padding-top: $dim-default;
+			padding-bottom: $dim-default;
+		}
+
+		&-2x {
+			padding-top: $dim-2x;
+			padding-bottom: $dim-2x;
 		}
 	}
 
 	&-horizontal {
 
 		&-default {
-			padding-left: 8px;
-			padding-right: 8px;
+			padding-left: $dim-default;
+			padding-right: $dim-default;
+		}
+
+		&-2x {
+			padding-left: $dim-2x;
+			padding-right: $dim-2x;
 		}
 	}
 
 	&-top {
 
 		&-default {
-			padding-top: 8px;
+			padding-top: $dim-default;
+		}
+
+		&-2x {
+			padding-top: $dim-2x;
 		}
 	}
 
 	&-bottom {
 
 		&-default {
-			padding-bottom: 8px;
+			padding-bottom: $dim-default;
+		}
+
+		&-2x {
+			padding-bottom: $dim-2x;
 		}
 	}
 
 	&-left {
 
 		&-default {
-			padding-left: 8px;
+			padding-left: $dim-default;
+		}
+
+		&-2x {
+			padding-left: $dim-2x;
 		}
 	}
 
 	&-right {
 
 		&-default {
-			padding-right: 8px;
+			padding-right: $dim-default;
+		}
+
+		&-2x {
+			padding-right: $dim-2x;
 		}
 	}
 }

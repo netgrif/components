@@ -270,9 +270,18 @@
   margin: 8px;
 }
 
+.margin-2x {
+  margin: 16px;
+}
+
 .margin-vertical-default {
   margin-top: 8px;
   margin-bottom: 8px;
+}
+
+.margin-vertical-2x {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .margin-horizontal-default {
@@ -280,20 +289,41 @@
   margin-right: 8px;
 }
 
+.margin-horizontal-2x {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
 .margin-top-default {
   margin-top: 8px;
+}
+
+.margin-top-2x {
+  margin-top: 16px;
 }
 
 .margin-bottom-default {
   margin-bottom: 8px;
 }
 
+.margin-bottom-2x {
+  margin-bottom: 16px;
+}
+
 .margin-left-default {
   margin-left: 8px;
 }
 
+.margin-left-2x {
+  margin-left: 16px;
+}
+
 .margin-right-default {
   margin-right: 8px;
+}
+
+.margin-right-2x {
+  margin-right: 16px;
 }
 
 .padding-no {
@@ -304,9 +334,18 @@
   padding: 8px;
 }
 
+.padding-2x {
+  padding: 16px;
+}
+
 .padding-vertical-default {
   padding-top: 8px;
   padding-bottom: 8px;
+}
+
+.padding-vertical-2x {
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .padding-horizontal-default {
@@ -314,20 +353,41 @@
   padding-right: 8px;
 }
 
+.padding-horizontal-2x {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
 .padding-top-default {
   padding-top: 8px;
+}
+
+.padding-top-2x {
+  padding-top: 16px;
 }
 
 .padding-bottom-default {
   padding-bottom: 8px;
 }
 
+.padding-bottom-2x {
+  padding-bottom: 16px;
+}
+
 .padding-left-default {
   padding-left: 8px;
 }
 
+.padding-left-2x {
+  padding-left: 16px;
+}
+
 .padding-right-default {
   padding-right: 8px;
+}
+
+.padding-right-2x {
+  padding-right: 16px;
 }
 
 body {
@@ -363,15 +423,31 @@ body {
   width: 300px;
 }
 
+@-webkit-keyframes spinner-right {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
 @keyframes spinner-right {
   to {
-    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spinner-left {
+  to {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
   }
 }
 
 @keyframes spinner-left {
   to {
-    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
   }
 }
 
@@ -387,8 +463,10 @@ body {
   border-radius: 50%;
   border-style: solid;
   border-color: transparent;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
 }
 
 .orbit1 {
@@ -406,8 +484,10 @@ body {
 .orbit1:not(:required):before {
   border-width: 5px;
   border-top-color: white;
-  animation-name: spinner-left;
-  animation-duration: .7s;
+  -webkit-animation-name: spinner-left;
+          animation-name: spinner-left;
+  -webkit-animation-duration: .7s;
+          animation-duration: .7s;
 }
 
 .orbit2 {
@@ -425,8 +505,10 @@ body {
 .orbit2:not(:required):before {
   border-width: 7px;
   border-top-color: #212121;
-  animation-name: spinner-right;
-  animation-duration: .9s;
+  -webkit-animation-name: spinner-right;
+          animation-name: spinner-right;
+  -webkit-animation-duration: .9s;
+          animation-duration: .9s;
 }
 
 .orbit3 {
@@ -444,8 +526,10 @@ body {
 .orbit3:not(:required):before {
   border-width: 5px;
   border-top-color: white;
-  animation-name: spinner-left;
-  animation-duration: .8s;
+  -webkit-animation-name: spinner-left;
+          animation-name: spinner-left;
+  -webkit-animation-duration: .8s;
+          animation-duration: .8s;
 }
 
 .orbit4 {
@@ -463,8 +547,10 @@ body {
 .orbit4:not(:required):before {
   border-width: 7px;
   border-top-color: #212121;
-  animation-name: spinner-left;
-  animation-duration: 1s;
+  -webkit-animation-name: spinner-left;
+          animation-name: spinner-left;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
 }
 
 .base .card-welcome {
