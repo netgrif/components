@@ -61,7 +61,7 @@
                    <md-checkbox layout="row" class="md-primary roles-checkbox" ng-repeat="box in rolesCtrl.checkboxes track by $index" ng-model="box.isEnabled" value="{{box.value}}">{{box.value}}</md-checkbox>
                 </div>
                 <div class="md-padding" layout="column" flex="10">
-                    <md-button>
+                    <md-button ng-click="rolesCtrl.saveRole()">
                         Save
                     </md-button>
                     <md-button>
