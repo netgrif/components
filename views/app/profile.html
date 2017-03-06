@@ -1,12 +1,88 @@
 <div ng-cloak layout-xs>
-    <md-card>
-        <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">Profile</span>
-            </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
-            <p>{{msg}}</p>
-        </md-card-content>
-    </md-card>
+	<md-card>
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">Profile</span>
+			</md-card-title-text>
+		</md-card-title>
+		<md-divider></md-divider>
+		<md-card-content>
+			<div layout="column">
+				<md-progress-linear md-mode="determinate" value="38"></md-progress-linear>
+				<span class="md-headline">General Information</span>
+				<div layout="row" layout-align="left center">
+					<div flex="20"></div>
+					<div flex>
+						<img src="http://placehold.it/200x200">
+					</div>
+					<div flex="10"></div>
+					<div flex layout="column">
+						<md-input-container>
+							<label>First Name</label>
+							<input type="text" ng-model="todo.name">
+						</md-input-container>
+						<md-input-container>
+							<label>Last Name</label>
+							<input type="text" ng-model="todo.surname">
+						</md-input-container>
+					</div>
+					<div flex="20"></div>
+				</div>
+				<span class="md-headline">Change Password</span>
+				<div layout="row" layout-align="left center">
+					<div flex="20"></div>
+					<md-input-container flex>
+						<label>New Password</label>
+						<input type="password" ng-model="todo.psw">
+					</md-input-container>
+					<div flex="10"></div>
+					<md-input-container flex>
+						<label>Retype Password</label>
+						<input type="password" ng-model="todo.repsw">
+					</md-input-container>
+					<div flex="20"></div>
+				</div>
+				<span class="md-headline">System roles</span>
+				<div layout="row" layout-align="left center">
+					<div flex="20"></div>
+					<md-chips flex>
+						<md-chip>Role 1</md-chip>
+						<md-chip>Role 2</md-chip>
+						<md-chip>Role 3</md-chip>
+					</md-chips>
+					<div flex="20"></div>
+				</div>
+				<span class="md-headline">Workflow roles</span>
+				<div layout="row" layout-align="left center">
+					<div flex="20"></div>
+					<md-chips flex>
+						<md-chip>Role 1</md-chip>
+						<md-chip>Role 2</md-chip>
+						<md-chip>Role 3</md-chip>
+						<md-chip>Role 4</md-chip>
+						<md-chip>Role 5</md-chip>
+						<md-chip>Role 6</md-chip>
+					</md-chips>
+					<div flex="20"></div>
+				</div>
+				<span class="md-headline">Contact Information</span>
+				<div layout="row" layout-align="left center">
+					<div flex="20"></div>
+					<md-input-container flex>
+						<label>Phone Number</label>
+						<input type="text" ng-model="todo.phone">
+					</md-input-container>
+					<div flex="10"></div>
+					<md-input-container flex>
+						<label>Email</label>
+						<input type="email" ng-model="todo.email">
+					</md-input-container>
+					<div flex="20"></div>
+				</div>
+			</div>
+		</md-card-content>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button>Update</md-button>
+		</md-card-actions>
+	</md-card>
 </div>

@@ -1,8 +1,8 @@
 /**
  * Created by Milan on 14.2.2017.
  */
-define(['angular','../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$user',function () {
+define(['angular', '../modules/Main'], function (angular) {
+    angular.module('ngMain').factory('$user', function () {
         var user = {
             id: 0,
             login: undefined,

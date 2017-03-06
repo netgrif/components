@@ -51,27 +51,29 @@
 	</md-card>
 
 	<div class="tasks">
-		<md-card class="tasks-header" layout="row" layout-align="left center">
-			<p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('visualId')">ID</a></p>
-			<p flex="30"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('title')">Name</a></p>
-			<p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('priority')">Priority</a></p>
-			<p flex="20"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('user.name')">User</a></p>
-			<p flex="15"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('startDate')">Start date</a></p>
-			<p flex="10"><a href="javascript:void(0);" ng-click="tasksCtrl.setSortField('status')">Status</a></p>
-			<md-menu>
-				<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
-					<md-tooltip md-direction="top">View</md-tooltip>
-					<md-icon class="material-icons">view_carousel</md-icon>
-				</md-button>
-				<md-menu-content>
-					<md-menu-item>
-						<md-button ng-click="tasksCtrl.changeView('list')">List</md-button>
-					</md-menu-item>
-					<md-menu-item>
-						<md-button ng-click="tasksCtrl.changeView('table')" disabled>Table</md-button>
-					</md-menu-item>
-				</md-menu-content>
-			</md-menu>
+		<md-card class="tasks-header" layout="column">
+			<md-card-content layout="row" layout-align="left center">
+				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('visualId')">ID</a>
+				<a flex="30" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">Name</a>
+				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">Priority</a>
+				<a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('user.name')">User</a>
+				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">Start date</a>
+				<a flex="10" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('status')">Status</a>
+				<md-menu>
+					<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+						<md-tooltip md-direction="top">View</md-tooltip>
+						<md-icon class="material-icons">view_carousel</md-icon>
+					</md-button>
+					<md-menu-content>
+						<md-menu-item>
+							<md-button ng-click="tasksCtrl.changeView('list')">List</md-button>
+						</md-menu-item>
+						<md-menu-item>
+							<md-button ng-click="tasksCtrl.changeView('table')" disabled>Table</md-button>
+						</md-menu-item>
+					</md-menu-content>
+				</md-menu>
+			</md-card-content>
 		</md-card>
 		<md-expansion-panel class="task" ng-repeat="task in tasksCtrl.tabs[$index].resources | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.tabs[$index].sort.reverse">
 			<md-expansion-panel-collapsed layout="row" layout-align="left center" ng-click="tasksCtrl.loadTaskData($index)" ng-include="'views/app/tasks/task_panel_collapsed.html'">

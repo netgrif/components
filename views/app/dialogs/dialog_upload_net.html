@@ -34,7 +34,7 @@
                     <label>Initials</label>
                     <input md-maxlength="3" type="text" name="initials" ng-model="parentCtrl.petriNetMeta.initials" required>
                     <div ng-messages="petriNetUploadForm.initials.$error">
-                        <div ng-message="md-maxlength">Petri Net initials must be at least 3 characters long</div>
+                        <div ng-message="md-maxlength">Petri Net initials must be at most 3 characters long</div>
                     </div>
                 </md-input-container>
             </div>
