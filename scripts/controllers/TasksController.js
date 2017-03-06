@@ -122,7 +122,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 self.tabs[tabIndex].resources = resources;
                                 $log.debug(self.tabs[tabIndex].resources);
                             }, function () {
-                                $log.debug("Resource not found in " + self.tabs[tabIndex].label);
+                                //$log.debug("Resource not found in " + self.tabs[tabIndex].label);
+                                $snackbar.error("Resource not found in " + self.tabs[tabIndex].label);
                                 if(self.tabs[tabIndex].resources)
                                     self.tabs[tabIndex].resources.splice(0,self.tabs[tabIndex].resources.length);
                             });
