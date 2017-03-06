@@ -1,8 +1,6 @@
-/**
- * Created by Milan on 31.1.2017.
- */
+
 define(['angular','angularRoute','../modules/Main'],function (angular) {
-    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log,$timeout,$user) {
+    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user) {
         var auth = {
             authenticated: false,
 
@@ -26,7 +24,7 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                     $log.debug(response);
                     auth.authenticated = !!response.name;
 
-                    var principal = response.principal;
+                    let principal = response.principal;
                     $user.id = principal.id;
                     $user.login = principal.username;
                     $user.authority = principal.authorities[0].authority;
@@ -78,6 +76,9 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                     if(!auth.isLoginPath()){
                         auth.path = $location.path();
                         if(!auth.authenticated) $location.path(auth.loginPath);
+                    } else {
+                        auth.authenticated = false;
+                        $user.clear();
                     }
                 });
             },

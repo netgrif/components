@@ -122,7 +122,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 self.tabs[tabIndex].resources = resources;
                                 $log.debug(self.tabs[tabIndex].resources);
                             }, function () {
-                                $log.debug("Resource not found in " + self.tabs[tabIndex].label);
+                                //$log.debug("Resource not found in " + self.tabs[tabIndex].label);
+                                $snackbar.error("Resource not found in " + self.tabs[tabIndex].label);
                                 if(self.tabs[tabIndex].resources)
                                     self.tabs[tabIndex].resources.splice(0,self.tabs[tabIndex].resources.length);
                             });
@@ -187,36 +188,54 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         });
                     };
 
+                    function taskFinish(task) {
+                        $http.get(task.$href("finish")).then(function (response) {
+                            $log.debug(response);
+                            if(response.success) self.reloadAfterAction();
+                            if(response.error) $snackbar.show(response.error);
+                        }, function () {
+                            $log.debug("Finishing task " + task.title + " failed");
+                        });
+                    }
+
+                    function areFieldsValid(task){
+                        let valid = task.data.every(item => !!item.newValue);
+                        if(!valid){
+                            let error = "Not all fields have values! Finish task aborted!";
+                            $log.debug(error);
+                            $snackbar.show(error);
+                        }
+                        return valid;
+                    }
+
                     self.finishTask = function (task) {
                         $log.debug("Finishing task " + task.title + " to " + $user.name);
 
-                        if(task.data.some(function (item) {
-                            return !item.newValue;
-                        })){
-                            var error = "Not all fields have values! Finish task aborted!";
-                            $log.debug(error);
-                            $snackbar.show(error);
-                            return;
-                        }
-
-                        self.saveData(task, function () {
-                            $http.get(task.$href("finish")).then(function (response) {
-                                $log.debug(response);
-                                if(response.success) self.reloadAfterAction();
-                                if(response.error) $snackbar.show(response.error);
-                            }, function () {
-                                $log.debug("Finishing task " + task.title + " failed");
+                        if(!task.data){
+                            let taskIndex = self.tabs[self.activeTab].resources.findIndex(el => el.visualId == task.visualId);
+                            self.loadTaskData(taskIndex, () => {
+                                if(!task.data){
+                                    taskFinish(task);
+                                } else {
+                                    areFieldsValid(task);
+                                }
                             });
-                        });
+                        } else {
+                            if(areFieldsValid(task)){
+                                self.saveData(task, function (success) {
+                                    if(success) taskFinish(task);
+                                });
+                            }
+                        }
                     };
 
-                    self.loadTaskData = function (taskIndex) {
+                    self.loadTaskData = function (taskIndex, callback) {
                         if (self.tabs[self.activeTab].resources[taskIndex].data) return;
                         $http.get(self.tabs[self.activeTab].resources[taskIndex].$href("data")).then(function (response) {
                             $log.debug(response);
                             if(response.$response().data._embedded) {
                                 self.tabs[self.activeTab].resources[taskIndex].data = [];
-                                Object.keys(response.$response().data._embedded).forEach(function (item) {
+                                Object.keys(response.$response().data._embedded).forEach(function (item, index, array) {
                                     response.$request().$get(item).then(function (resource) {
                                         self.tabs[self.activeTab].resources[taskIndex].data = self.tabs[self.activeTab].resources[taskIndex].data.concat(resource);
                                         self.tabs[self.activeTab].resources[taskIndex].data = self.tabs[self.activeTab].resources[taskIndex].data.map(function (item) {
@@ -225,11 +244,18 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                             item.taskIndex = taskIndex;
                                             return item;
                                         });
+                                        if(index == array.length-1){
+                                            callback && callback();
+                                        }
                                     });
                                 });
+                            } else {
+                                $log.debug("No data for task "+self.tabs[self.activeTab].resources[taskIndex].visualId);
+                                callback && callback();
                             }
                         }, function () {
                             $log.debug("Data for " + self.tabs[self.activeTab].resources[taskIndex].visualId + " failed to load!");
+                            callback && callback();
                         });
                     };
 
@@ -238,6 +264,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.saveData = function (task, callback) {
+                        if(!task.data) return;
+
                         var dataFields = {};
                         task.data.forEach(function (item) {
                             if(item.changed) {
@@ -246,7 +274,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         });
 
                         if(jQuery.isEmptyObject(dataFields)){
-                            callback && callback();
+                            callback && callback(true);
                             return;
                         }
 
@@ -258,9 +286,10 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 }
                             });
 
-                            callback && callback();
+                            callback && callback(true);
                         },function () {
                             $log.debug("Saving data fields failed!");
+                            callback && callback(false);
                         });
                     };
 

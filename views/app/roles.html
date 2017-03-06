@@ -1,0 +1,80 @@
+<md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="one">
+        <md-content class="md-padding color-bg-transparent">
+            <md-card class="roles">
+                <div layout="row" layout-align="left center">
+                    <md-input-container class="md-block" flex="20">
+                        <label>Name</label>
+                        <input>
+                    </md-input-container>
+                    <p class="roletab"><a>rola1</a></p>
+                    <p class="roletab"><a>rola2</a></p>
+                    <p class="roletab"><a>rola3</a></p>
+                    <p class="roletab"><a>rola4</a></p>
+                    <p class="roletab"><a>rola5</a></p>
+                    <p class="roletab"><a>rola1</a></p>
+                    <p class="roletab"><a>rola2</a></p>
+                    <p class="roletab"><a>rola3</a></p>
+                    <p class="roletab"><a>rola4</a></p>
+                    <p class="roletab"><a>rola5</a></p>
+                </div>
+                <div layout="row" layout-align="left center">
+                    <md-list layout="row" layout-align="left center">
+                        <md-list-item layout="row" layout-align="left center">
+                            <p>Meno menove</p>
+                            <md-checkbox class="md-secondary"></md-checkbox>
+                            <md-checkbox class="md-secondary"></md-checkbox>
+                            <md-checkbox class="md-secondary"></md-checkbox>
+                            <md-checkbox class="md-secondary"></md-checkbox>
+                            <md-checkbox class="md-secondary"></md-checkbox>
+                        </md-list-item>
+                    </md-list>
+                </div>
+            </md-card>
+        </md-content>
+    </md-tab>
+    <md-tab label="two" ng-click="rolesCtrl.loadPetriNets()">
+        <md-content class="md-padding color-bg-transparent">
+            <md-card layout="row">
+                <div class="md-dialog-content" layout="column">
+                    <md-input-container>
+                        <label>Petri Net</label>
+                        <md-select ng-model="rolesCtrl.petriNetRefs" required>
+                            <md-option ng-repeat="net in rolesCtrl.petriNetRefs"  value="{{net.entityId}}" ng-click="rolesCtrl.loadRoles(net.entityId)">
+                                {{net.title}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    </div>
+            </md-card>
+
+            <md-card layout="row">
+                <div class="md-padding" layout="column" flex="40">
+                    <md-radio-group ng-model="rolesCtrl.radios">
+                        <md-radio-button layout="row" class="md-primary" ng-repeat="user in rolesCtrl.users" ng-click="rolesCtrl.loadRolesForUser(user.email)" value="{{user.email}}" >
+                        {{user.name + " " + user.surname}}
+                        </md-radio-button>
+                    </md-radio-group>
+
+                </div>
+                <div class="md-padding" layout="column" flex="40">
+                   <md-checkbox layout="row" class="md-primary roles-checkbox" ng-repeat="box in rolesCtrl.checkboxes track by $index" ng-model="box.isEnabled" value="{{box.value}}">{{box.value}}</md-checkbox>
+                </div>
+                <div class="md-padding" layout="column" flex="10">
+                    <md-button>
+                        Save
+                    </md-button>
+                    <md-button>
+                        Back
+                    </md-button>
+                </div>
+            </md-card>
+        </md-content>
+    </md-tab>
+</md-tabs>
+
+
+
+
+
+

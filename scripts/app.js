@@ -12,7 +12,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
     function (angular) {
         // console.log(angular.version);
         var app = angular.module('app', ['ngMaterial', 'angular-hal', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment','material.components.expansionPanels',
-         'ngMain', 'ngDashboard','ngTasks','ngWorkflow']); //here add modules that you defined
+         'ngMain','ngData','ngDashboard','ngTasks','ngWorkflow','ngRoles']); //here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider) {
             $mdThemingProvider.definePalette('fmService', {
                 '50': '#f3e0e6',
@@ -45,6 +45,8 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                 .when('/login/signup/:token', 'login.signup')
                 .when('/dashboard', 'app.dashboard')
                 .when('/tasks', 'app.tasks')
+                .when('/roles', 'app.roles')
+                .when('/data', 'app.data')
                 .when('/workflow', 'app.workflow')
                 .when('/profile', 'app.profile')
                 .when('/console', 'app.console')
@@ -67,10 +69,20 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                     controller: 'ProfileController',
                     controllerAs: 'profCtrl'
                 })
+                .segment('data', {
+                    templateUrl: "views/app/data.html",
+                    controller: 'DataController',
+                    controllerAs: 'dataCtrl'
+                })
                 .segment('tasks', {
                     templateUrl: "views/app/tasks.html",
                     controller: 'TasksController',
                     controllerAs: 'tasksCtrl'
+                })
+                .segment('roles', {
+                    templateUrl: "views/app/roles.html",
+                    controller: 'RolesController',
+                    controllerAs: 'rolesCtrl'
                 })
                 .segment('workflow', {
                     templateUrl: "views/app/workflow.html",
@@ -106,6 +118,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
 
             $locationProvider.html5Mode(true);
             $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
+            $httpProvider.interceptors.push('authHttpInterceptor');
 
             //$qProvider.errorOnUnhandledRejections(false);
         });
