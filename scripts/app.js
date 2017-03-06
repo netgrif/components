@@ -112,6 +112,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
 
             $locationProvider.html5Mode(true);
             $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
+            $httpProvider.interceptors.push('authHttpInterceptor');
 
             //$qProvider.errorOnUnhandledRejections(false);
         });
