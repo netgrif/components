@@ -12,7 +12,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
     function (angular) {
         // console.log(angular.version);
         var app = angular.module('app', ['ngMaterial', 'angular-hal', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment','material.components.expansionPanels',
-         'ngMain', 'ngDashboard','ngTasks','ngWorkflow','ngRoles']); //here add modules that you defined
+         'ngMain','ngData','ngDashboard','ngTasks','ngWorkflow','ngRoles']); //here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider) {
             $mdThemingProvider.definePalette('fmService', {
                 '50': '#f3e0e6',
@@ -46,6 +46,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                 .when('/dashboard', 'app.dashboard')
                 .when('/tasks', 'app.tasks')
                 .when('/roles', 'app.roles')
+                .when('/data', 'app.data')
                 .when('/workflow', 'app.workflow')
                 .when('/profile', 'app.profile')
                 .when('/console', 'app.console')
@@ -67,6 +68,11 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                     templateUrl: "views/app/profile.html",
                     controller: 'ProfileController',
                     controllerAs: 'profCtrl'
+                })
+                .segment('data', {
+                    templateUrl: "views/app/data.html",
+                    controller: 'DataController',
+                    controllerAs: 'dataCtrl'
                 })
                 .segment('tasks', {
                     templateUrl: "views/app/tasks.html",
