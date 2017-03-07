@@ -4,14 +4,14 @@
 define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
     function (angular) {
         angular.module('ngRoles').controller('RolesController',
-            ['$log', '$scope', '$timeout', '$http',
-                function ($log, $scope, $timeout, $http) {
+            ['$log', '$scope', '$timeout', '$http', '$snackbar',
+                function ($log, $scope, $timeout, $http, $snackbar) {
                     var self = this;
 
 
                     self.checkboxes = [];
-                    self.net;
-                    self.userMail;
+                    self.net = undefined;
+                    self.userMail = undefined;
 
                     self.loadPetriNets = function () {
                         if (self.petriNetRefs) return;
@@ -27,7 +27,8 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                     };
 
                     self.loadRoles = function (pickedNet) {
-                        if (self.roles || self.users) return;
+                        //if (self.roles || self.users) return;
+                        self.checkboxes = [];
                         self.net = pickedNet;
                         $http.get("/res/petrinet/roles/assign/" + pickedNet).then(function (response) {
                             $log.debug(response);
@@ -43,6 +44,7 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                                 });
 
                             $log.debug(self.checkboxes);
+                            //self.loadRolesForUser(self.userMail);
 
                         }, function () {
                             $log.debug("Petri net refs get failed!");
@@ -54,8 +56,9 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                         for (j = 0; j < self.roles.length; j++)
                             self.checkboxes[j].isEnabled = false;
                         var userObj = self.users.find(x => x.email === email);
+                        $log.debug(userObj);
                         for (i = 0; i < userObj.userProcessRoles.length; i++) {
-                             $log.debug(userObj.userProcessRoles[i].roleId);
+                            $log.debug(userObj.userProcessRoles[i].roleId);
                             if (userObj.userProcessRoles <= 0)
                                 return;
                             var roleInd = self.checkboxes.findIndex(x => x.ID === userObj.userProcessRoles[i].roleId);
@@ -70,11 +73,13 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                     self.saveRole = function () {
                         var postObj = {};
                         var choosenRoles = [];
+                        var rolesArray = [];
                         postObj.email = self.userMail;
                         self.checkboxes.forEach(function (role) {
                             $log.debug(role);
                             if (role.isEnabled == true) {
                                 choosenRoles.push(role.ID)
+                                rolesArray.push({content: [], links: [], roleId: role.ID});
                             }
                         });
                         postObj.roleIds = choosenRoles;
@@ -83,11 +88,15 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                         $http.post("/res/petrinet/roles/assign/" + self.net, JSON.stringify(postObj)).then(function (response) {
                             $log.debug(response);
 
+                            self.users.find(x => x.email === self.userMail).userProcessRoles = rolesArray;
+                            $log.debug(self.users);
+                            var userObj = self.users.find(x => x.email === self.userMail);
+                            $snackbar.info("Roles for user " + userObj.name + " " + userObj.surname + " saved.");
                         }, function () {
                             $log.debug("Role was not assigned");
                         });
-                       // self.loadRoles(self.net);
-                       // self.loadRolesForUser(self.userMail);
+
+
                     };
 
 
