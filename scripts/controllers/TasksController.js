@@ -1,8 +1,8 @@
 define(['angular', '../modules/Tasks', '../modules/Main'],
     function (angular) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog',
-                function ($log, $scope, $http, $user, $snackbar, $dialog) {
+            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet',
+                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet) {
                     var self = this;
                     var statusOrder = {
                         New: 1,
@@ -185,6 +185,15 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             if(response.error) $snackbar.show(response.error);
                         }, function () {
                             $log.debug("Assigning task " + task.title + " failed");
+                        });
+                    };
+
+                    self.reassignTask = function (task) {
+                        $bottomSheet.selectAssignUser(task).then(function (user) {
+                            if(user)
+                                $log.debug("Selected user:"+user.name);
+                        }, function () {
+                            $log.debug("Bottom sheet canceled!");
                         });
                     };
 

@@ -1,6 +1,4 @@
-/**
- * Created by Milan on 1.2.2017.
- */
+
 define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
     angular.module('ngMain').factory('$snackbar', function ($mdToast, $log) {
         var delay = 3000;

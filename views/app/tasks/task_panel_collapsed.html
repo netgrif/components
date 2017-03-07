@@ -17,6 +17,9 @@
             <md-button ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
         </md-menu-item>
         <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
+            <md-button ng-click="tasksCtrl.reassignTask(task)">Reassign</md-button>
+        </md-menu-item>
+        <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
             <md-button ng-click="tasksCtrl.finishTask(task)">Finish</md-button>
         </md-menu-item>
         <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">

@@ -7,4 +7,4 @@
  */
 var path = 'scripts/services/';
 define([path+'Loading', path+'Auth', path+'Snackbar', path+'Localization', path+'FileUpload',
-    path+'Style', path+'User', path+'Dialog', path+'AuthHttpInterceptor'], function () {});
+    path+'Style', path+'User', path+'Dialog', path+'AuthHttpInterceptor', path+'BottomSheet'], function () {});

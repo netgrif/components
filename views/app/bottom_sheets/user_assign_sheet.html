@@ -1,0 +1,42 @@
+<md-bottom-sheet class="md-list" layout="column">
+    <div layout="row" layout-align="left center">
+        <p>Assign {{task.title}} to user</p>
+        <div flex></div>
+        <md-button ng-click="sheetCtrl.assignTask()">Assign</md-button>
+    </div>
+    <div layout="row" layout-align="left center">
+        <div layout="row">
+            <md-icon><i class="material-icons">search</i></md-icon>
+            <md-input-container>
+                <label>User</label>
+                <input type="text" ng-model="sheetCtrl.searched" ng-change="sheetCtrl.filterUsers()">
+            </md-input-container>
+        </div>
+        <div flex></div>
+        <div layout="row" layout-align="left center">
+            <p layout="row" layout-align="left center">
+                <i class="material-icons {{task.caseColor}}">label</i> {{task.visualId}}
+            </p>
+            <p>{{task.title}}</p>
+            <p layout="row" layout-align="left center">
+                <i ng-if="task.user" class="material-icons color-fg-fm-500">account_circle</i>
+                {{task.user.name+" "+task.user.surname}}
+            </p>
+        </div>
+    </div>
+    <md-divider flex></md-divider>
+    <div layout="row" layout-align="center center" >
+        <md-list flex>
+            <md-list-item ng-repeat="user in users" class="md-2-line"
+                          ng-click="sheetCtrl.selectedUser = $index">
+                <md-icon class="md-avatar">
+                    <i class="material-icons color-fg-fm-500">account_circle</i>
+                </md-icon>
+                <div class="md-list-item-text">
+                    <p>{{user.name}}</p>
+                    <p>{{user.email}}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </div>
+</md-bottom-sheet>
