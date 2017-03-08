@@ -729,3 +729,33 @@ body {
   padding-right: 6px;
   color: rgba(0, 0, 0, 0.38);
 }
+
+.base .file-chooser-avatar .avatar-icon {
+  font-size: 220px;
+}
+
+.base .file-chooser-avatar input {
+  position: absolute;
+  height: 0.1px;
+  width: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.base .file-chooser-avatar label {
+  display: none;
+  position: absolute;
+}
+
+.base .file-chooser-avatar label .material-icons {
+  font-size: 100px;
+}
+
+.base .file-chooser-avatar label .material-icons:hover {
+  cursor: pointer;
+}
+
+.base .file-chooser-avatar:hover label {
+  display: block;
+}
