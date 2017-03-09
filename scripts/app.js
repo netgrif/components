@@ -80,7 +80,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                     controllerAs: 'tasksCtrl'
                 })
                 .segment('roles', {
-                    templateUrl: "views/app/roles.html",
+                    templateUrl: "views/app/processroles.html",
                     controller: 'RolesController',
                     controllerAs: 'rolesCtrl'
                 })

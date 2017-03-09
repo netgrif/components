@@ -10,8 +10,12 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
 
 
                     self.checkboxes = [];
+                    self.systemCheckboxes = [];
                     self.net = undefined;
                     self.userMail = undefined;
+                    self.disButton = true;
+                    self.disSystemButton = true;
+
 
                     self.loadPetriNets = function () {
                         if (self.petriNetRefs) return;
@@ -27,7 +31,7 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                     };
 
                     self.loadRoles = function (pickedNet) {
-                        //if (self.roles || self.users) return;
+
                         self.checkboxes = [];
                         self.net = pickedNet;
                         $http.get("/res/petrinet/roles/assign/" + pickedNet).then(function (response) {
@@ -51,8 +55,38 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                         });
                     };
 
+                    self.loadSystemRoles = function () {
+
+                        self.systemCheckboxes = [];
+                        $http.get("/res/systemrole/all").then(function (response) {
+                            $log.debug(response);
+                            $log.debug(response.$request());
+                            self.systemRoles = response.roles;
+                            self.systemUsers = response.users;
+
+                            for (i = 0; i < self.systemRoles.length; i++)
+                                self.systemCheckboxes.push({
+                                    value: self.systemRoles[i].name,
+                                    isEnabled: false
+                                });
+
+                            $log.debug(self.systemCheckboxes);
+
+                        }, function () {
+                            $log.debug("Petri net refs get failed!");
+                        });
+                    };
+
+                    self.enableSave = function () {
+                        self.disButton = false;
+                    };
+                    self.enableSystemSave = function () {
+                        self.disSystemButton = false;
+                    };
+
                     self.loadRolesForUser = function (email) {
                         self.userMail = email;
+
                         for (j = 0; j < self.roles.length; j++)
                             self.checkboxes[j].isEnabled = false;
                         var userObj = self.users.find(x => x.email === email);
@@ -70,6 +104,26 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                         $log.debug(self.checkboxes);
                     };
 
+                    self.loadSystemRolesForUser = function (email) {
+                        self.userMail = email;
+
+                        for (j = 0; j < self.systemRoles.length; j++)
+                            self.systemCheckboxes[j].isEnabled = false;
+                        var userObj = self.systemUsers.find(x => x.email === email);
+                        $log.debug(userObj);
+                        for (i = 0; i < userObj.roles.length; i++) {
+                            $log.debug(userObj.roles[i].name);
+                            if (userObj.roles <= 0)
+                                return;
+                            var roleInd = self.systemCheckboxes.findIndex(x => x.value === userObj.roles[i].name);
+                            $log.debug(roleInd);
+                            if (roleInd > -1) {
+                                self.systemCheckboxes[roleInd].isEnabled = true
+                            }
+                        }
+                        $log.debug(self.systemCheckboxes);
+                    };
+
                     self.saveRole = function () {
                         var postObj = {};
                         var choosenRoles = [];
@@ -78,7 +132,7 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                         self.checkboxes.forEach(function (role) {
                             $log.debug(role);
                             if (role.isEnabled == true) {
-                                choosenRoles.push(role.ID)
+                                choosenRoles.push(role.ID);
                                 rolesArray.push({content: [], links: [], roleId: role.ID});
                             }
                         });
