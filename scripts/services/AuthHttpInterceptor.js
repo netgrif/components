@@ -5,9 +5,9 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
             loginPath: "/login",
 
             responseError: function (rejection) {
-                $log.debug("Interceptor: ");
-                $log.debug(rejection);
                 if(rejection.status == 401){
+                    $log.debug("Interceptor: ");
+                    $log.debug(rejection);
                     $location.path(this.loginPath);
                 }
                 return $q.reject(rejection);

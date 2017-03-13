@@ -249,7 +249,31 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         });
                     };
 
-                    self.loadTaskData = function (taskIndex, callback) {
+                    function findTaskByVisualId(visualId) {
+                        return self.tabs[self.activeTab].resources.findIndex(item => item.visualId == visualId);
+                    }
+
+                    function parseDataValue(value, type){
+                        if(type == 'date'){
+                            if(value) return new Date(value.year, value.monthValue-1, value.dayOfMonth);
+                            else return undefined;
+                        } else {
+                            return value;
+                        }
+                    }
+
+                    function formatDataValue(value, type) {
+                        if(!value) return null;
+                        let padding = text => text.length <= 1 ? "0"+text : text;
+                        if(type == 'date'){
+                            return value.getFullYear()+"-"+padding((value.getMonth()+1)+"")+"-"+padding(value.getDate()+"");
+                        } else {
+                            return value;
+                        }
+                    }
+
+                    self.loadTaskData = function (taskVisualId, callback) {
+                        var taskIndex = findTaskByVisualId(taskVisualId);
                         if (self.tabs[self.activeTab].resources[taskIndex].data) return;
                         $http.get(self.tabs[self.activeTab].resources[taskIndex].$href("data")).then(function (response) {
                             $log.debug(response);
@@ -259,7 +283,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                     response.$request().$get(item).then(function (resource) {
                                         self.tabs[self.activeTab].resources[taskIndex].data = self.tabs[self.activeTab].resources[taskIndex].data.concat(resource);
                                         self.tabs[self.activeTab].resources[taskIndex].data = self.tabs[self.activeTab].resources[taskIndex].data.map(function (item) {
-                                            item.newValue = item.value;
+                                            item.newValue = parseDataValue(item.value, item.type);
                                             item.changed = false;
                                             item.taskIndex = taskIndex;
                                             return item;
@@ -289,7 +313,10 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         var dataFields = {};
                         task.data.forEach(function (item) {
                             if(item.changed) {
-                                dataFields[item.objectId] = item.newValue;
+                                dataFields[item.objectId] = {
+                                    type: item.type,
+                                    value: formatDataValue(item.newValue, item.type)
+                                }
                             }
                         });
 

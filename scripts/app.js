@@ -13,7 +13,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
         // console.log(angular.version);
         var app = angular.module('app', ['ngMaterial', 'angular-hal', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment','material.components.expansionPanels',
          'ngMain','ngData','ngDashboard','ngTasks','ngWorkflow','ngRoles']); //here add modules that you defined
-        app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider) {
+        app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             $mdThemingProvider.definePalette('fmService', {
                 '50': '#f3e0e6',
                 '100': '#e0b3bf',
@@ -119,6 +119,14 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
             $locationProvider.html5Mode(true);
             $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
             $httpProvider.interceptors.push('authHttpInterceptor');
+
+            $mdDateLocaleProvider.firstDayOfWeek = 1;
+            $mdDateLocaleProvider.formatDate = date => {
+                if(date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+                else return undefined;
+            };
+
+            $compileProvider.preAssignBindingsEnabled(true);
 
             //$qProvider.errorOnUnhandledRejections(false);
         });
