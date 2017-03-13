@@ -3,6 +3,11 @@ body {
 	min-height: 100%;
 }
 
+.stop-scrolling {
+	height: 100%;
+	overflow: hidden;
+}
+
 .img-responsive {
 	width: 100%;
 	height: auto;

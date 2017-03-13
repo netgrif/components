@@ -394,6 +394,11 @@ body {
   min-height: 100%;
 }
 
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
 .img-responsive {
   width: 100%;
   height: auto;
@@ -573,7 +578,7 @@ body {
 
 .base .background-header {
   position: absolute;
-  height: 300px;
+  height: 185px;
   width: 100%;
   top: 48px;
 }
@@ -677,31 +682,36 @@ body {
   margin-right: 16px;
 }
 
-.base .search-tasks {
+.base .search-header {
   margin: 0;
   padding-left: 24px;
   padding-right: 24px;
   margin-bottom: 16px;
 }
 
-.base .search-tasks .layout-row {
+.base .search-header .layout-row {
   height: 64px;
 }
 
-.base .search-tasks .layout-row:last-child {
+.base .search-header .layout-row:last-child {
   height: 48px;
   padding-bottom: 16px;
 }
 
-.base .search-tasks .layout-row > form {
+.base .search-header .layout-row > form {
   margin: 0;
 }
 
-.base .search-tasks .layout-row > form > .md-block {
+.base .search-header .layout-row > form > .md-block {
   margin: 0;
 }
 
-.base .search-tasks .layout-row > form > .autocomplete md-input-container {
+.base .search-header .layout-row > form > .autocomplete md-input-container {
+  height: 28px;
+  margin: 0;
+}
+
+.base .search-header .layout-row > form > md-input-container {
   height: 28px;
   margin: 0;
 }
@@ -758,4 +768,31 @@ body {
 
 .base .file-chooser-avatar:hover label {
   display: block;
+}
+
+.base .assign-list md-list-item .md-avatar {
+  margin-top: 14px !important;
+  margin-bottom: 14px !important;
+}
+
+.base .assign-list md-list-item.selected-tile button {
+  background-color: #98002b;
+  z-index: -1;
+}
+
+.base .assign-list md-list-item.selected-tile .md-avatar .material-icons {
+  color: white !important;
+}
+
+.base .assign-list md-list-item.selected-tile .md-list-item-text p {
+  color: white !important;
+}
+
+.base .md-bottom-sheet-fix {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -88px;
+  padding: 8px 16px 88px;
+  z-index: 70;
 }

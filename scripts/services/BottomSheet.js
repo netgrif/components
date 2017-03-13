@@ -59,6 +59,9 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             };
 
             self.loadUsers();
+
+			angular.element('body').addClass('stop-scrolling');
+			$scope.$on('$destroy', () => angular.element('body').removeClass('stop-scrolling'));
         }]);
 });
 

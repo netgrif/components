@@ -1,6 +1,6 @@
 .search {
 
-	&-tasks {
+	&-header {
 		margin: 0;
 		padding-left: 24px;
 		padding-right: 24px;
@@ -27,6 +27,11 @@
 						height: 28px;
 						margin: 0;
 					}
+				}
+
+				> md-input-container {
+					height: 28px;
+					margin: 0;
 				}
 			}
 		}
