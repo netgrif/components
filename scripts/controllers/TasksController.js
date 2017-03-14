@@ -340,6 +340,27 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         });
                     };
 
+                    self.insertFile = function (field, rootScope) {
+                          field.newValue = rootScope[field.objectId].name;
+                          field.newFile = field.value != field.newValue;
+                          field.uploaded = false;
+
+                          let fieldIndex = self.tabs[self.activeTab].resources[field.taskIndex].data.findIndex(item => item.objectId == field.objectId);
+                          self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex] = field;
+                    };
+
+                    self.uploadFile = function (field) {
+
+                    };
+
+                    self.downloadFile = function (field) {
+                        $http.get(self.tabs[self.activeTab].resources[field.taskIndex].$href("file")+field.objectId).then(function (response) {
+                            $log.debug("File downloaded");
+                        }, function () {
+                            $snackbar("Download of file "+field.value+" failed!");
+                        })
+                    };
+
                     function endLoadAutocompleteItems(search, storage) {
                         self.global.autocomplete.pending = false;
                         return filterAutocomplete(search, self.global.autocomplete[storage]);
