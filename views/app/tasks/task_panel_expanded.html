@@ -16,17 +16,7 @@
 <md-expansion-panel-content>
 	<md-grid-list md-cols="1" md-cols-gt-xl="5" md-cols-gt-lg="4" md-cols-gt-md="3" md-cols-gt-sm="2" md-row-height="4:3" row-height-gt-xl="16:9" ng-if="task.data">
 		<md-grid-tile ng-repeat="field in task.data">
-			<md-card flex>
-				<md-card-title>
-					<md--card-title-text>
-						<span class="md-headline">{{field.name}}</span>
-						<span class="md-subhead">{{field.description}}</span>
-					</md--card-title-text>
-				</md-card-title>
-				<md-card-content layout="column" layout-align="center center">
-					<div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak></div>
-				</md-card-content>
-			</md-card>
+			<div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
 		</md-grid-tile>
 	</md-grid-list>
 	<div layout="row" layout-align="center center" ng-if="!task.data">

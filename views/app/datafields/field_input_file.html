@@ -1,40 +1,39 @@
-<div layout="row" layout-align="center center" flex>
-    <md-menu>
-        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+<md-card flex>
+    <md-card-title>
+        <md--card-title-text>
+            <span class="md-headline">{{field.name}}</span>
+            <span class="md-subhead">{{field.description}}</span>
+        </md--card-title-text>
+    </md-card-title>
+    <md-card-content layout="column" layout-align="center center">
+        <div layout="row" layout-align="center center" flex>
             <md-icon class="material-icons">insert_drive_file</md-icon>
+            <p>{{field.newValue ? field.newValue : "No File"}}</p>
+            <div layout="row" layout-align="left center" ng-if="field.newFile && !field.uploaded">
+                <md-tooltip md-direction="right">File has not been uploaded yet!</md-tooltip>
+                <md-icon class="material-icons md-warn">warning</md-icon>
+            </div>
+            <div layout="row" layout-align="left center" ng-if="field.newFile && field.uploaded">
+                <md-tooltip md-direction="right">File uploaded successfully</md-tooltip>
+                <md-icon class="material-icons">done</md-icon>
+            </div>
+        </div>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-button class="file-chooser" layout="row" layout-align="left center" ng-if="task.user.email == $user.login && field.logic.editable">
+            <input type="file" id="file" file-model="field.file" file-change-callback="fileModelChange" file-change-arg="field">
+            <label for="file" layout="row" layout-align="left center">
+                <md-icon class="material-icons">note_add</md-icon>
+                <span>New file</span>
+            </label>
         </md-button>
-        <md-menu-content width="3">
-            <md-menu-item ng-if="field.newFile && !field.uploaded">
-                <md-button ng-click="tasksCtrl.uploadFile(field)">
-                    <md-icon class="material-icons">file_upload</md-icon>
-                    Upload
-                </md-button>
-            </md-menu-item>
-            <md-menu-item ng-if="field.value && !field.newFile">
-                <md-button ng-click="tasksCtrl.downloadFile(field)">
-                    <md-icon class="material-icons">file_download</md-icon>
-                    Download
-                </md-button>
-                <a id="{{field.objectId+'-download'}}" class="hide" href="#" target="_blank"></a>
-            </md-menu-item>
-            <md-menu-item>
-                <md-button class="file-chooser" layout="row" layout-align="left center">
-                    <input type="file" id="file" file-model="field.file" file-change-callback="fileModelChange" file-change-arg="field">
-                    <label for="file" layout="row" layout-align="left center">
-                        <md-icon class="material-icons">note_add</md-icon>
-                        <span>New file</span>
-                    </label>
-                </md-button>
-            </md-menu-item>
-        </md-menu-content>
-    </md-menu>
-    <p>{{field.newValue ? field.newValue : "No File"}}</p>
-    <div layout="row" layout-align="left center" ng-if="field.newFile && !field.uploaded">
-        <md-tooltip md-direction="right">File has not been uploaded yet!</md-tooltip>
-        <md-icon class="material-icons md-warn">warning</md-icon>
-    </div>
-    <div layout="row" layout-align="left center" ng-if="field.newFile && field.uploaded">
-        <md-tooltip md-direction="right">File uploaded successfully</md-tooltip>
-        <md-icon class="material-icons">done</md-icon>
-    </div>
-</div>
+        <md-button ng-click="tasksCtrl.uploadFile(field)" ng-if="field.newFile && !field.uploaded">
+            <md-icon class="material-icons">file_upload</md-icon>
+            Upload
+        </md-button>
+        <md-button ng-click="tasksCtrl.downloadFile(field)" ng-if="field.value && !field.newFile">
+            <md-icon class="material-icons">file_download</md-icon>
+            Download
+        </md-button>
+    </md-card-actions>
+</md-card>

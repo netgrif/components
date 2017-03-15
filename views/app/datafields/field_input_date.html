@@ -1,6 +1,16 @@
-<md-input-container class="md-block" flex>
-    <label>Enter date</label>
-    <md-datepicker ng-model="field.newValue"
-                   ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
-                   ng-disabled="!(task.user.email == $user.login && field.logic.editable)" md-open-on-focus></md-datepicker>
-</md-input-container>
+<md-card flex>
+    <md-card-title>
+        <md--card-title-text>
+            <span class="md-headline">{{field.name}}</span>
+            <span class="md-subhead">{{field.description}}</span>
+        </md--card-title-text>
+    </md-card-title>
+    <md-card-content layout="column" layout-align="center center">
+        <md-input-container class="md-block" flex>
+            <label>Enter date</label>
+            <md-datepicker ng-model="field.newValue"
+                           ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
+                           ng-disabled="!(task.user.email == $user.login && field.logic.editable)" md-open-on-focus></md-datepicker>
+        </md-input-container>
+    </md-card-content>
+</md-card>

@@ -208,7 +208,12 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     }
 
                     function areFieldsValid(task) {
-                        let valid = task.data.every(item => !!item.newValue);
+                        let valid = task.data.every(item => {
+                            if (item.type == 'file') {
+                                if(!!item.newFile) return !!item.uploaded;
+                                return !!item.newValue;
+                            } else return !!item.newValue
+                        });
                         if (!valid) {
                             let error = "Not all fields have values! Finish task aborted!";
                             $log.debug(error);
@@ -351,22 +356,22 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.uploadFile = function (field) {
-                        if(!field.file) return;
+                        if (!field.file) return;
                         //TODO: 15/3/2017 check if file does not exceed allowed size
-                        $fileUpload.upload(field.file, undefined, self.tabs[self.activeTab].resources[field.taskIndex].$href('file')+field.objectId, response => {
-                             if(response){
-                                 let fieldIndex = self.tabs[self.activeTab].resources[field.taskIndex].data.findIndex(item => item.objectId == field.objectId);
-                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].uploaded = true;
-                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newFile = false;
-                                 $snackbar.info("File "+field.file.name+" successfully uploaded");
-                             } else {
-                                 $snackbar.error("File "+field.file.name+" failed to upload!");
-                             }
+                        $fileUpload.upload(field.file, undefined, self.tabs[self.activeTab].resources[field.taskIndex].$href('file') + field.objectId, response => {
+                            if (response) {
+                                let fieldIndex = self.tabs[self.activeTab].resources[field.taskIndex].data.findIndex(item => item.objectId == field.objectId);
+                                self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].uploaded = true;
+                                self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newFile = true;
+                                $snackbar.info("File " + field.file.name + " successfully uploaded");
+                            } else {
+                                $snackbar.error("File " + field.file.name + " failed to upload!");
+                            }
                         });
                     };
 
                     self.downloadFile = function (field) {
-                        let downloadWindow = window.open(self.tabs[self.activeTab].resources[field.taskIndex].$href('file')+field.objectId);
+                        let downloadWindow = window.open(self.tabs[self.activeTab].resources[field.taskIndex].$href('file') + field.objectId);
                         downloadWindow.onload = () => downloadWindow.close();
                     };
 
