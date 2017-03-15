@@ -53,12 +53,30 @@
 	<div class="tasks">
 		<md-card class="tasks-header" layout="column">
 			<md-card-content layout="row" layout-align="left center">
-				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('visualId')">ID</a>
-				<a flex="30" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">Name</a>
-				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">Priority</a>
-				<a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('user.name')">User</a>
-				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">Start date</a>
-				<a flex="10" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('status')">Status</a>
+				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('visualId')">
+					ID
+					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'visualId' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+				</a>
+				<a flex="30" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+					Name
+					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'title' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+				</a>
+				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
+					Priority
+					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'priority' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+				</a>
+				<a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('user.name')">
+					User
+					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'user.name' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+				</a>
+				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
+					Start date
+					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'startDate' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+				</a>
+				<a flex="10" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('status')">
+					Status
+					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'status' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+				</a>
 				<md-menu>
 					<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
 						<md-tooltip md-direction="top">View</md-tooltip>

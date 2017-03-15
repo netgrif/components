@@ -1,10 +1,6 @@
 <div ng-cloak layout="column" layout-align="center center" class="layout-vh-100">
 	<md-card layout-padding class="card-login" style="width: 400px;">
 		<form id="signup-form" ng-submit="loginCtrl.signup()">
-			<!--<md-input-container class="md-block">-->
-				<!--<md-icon class="material-icons">vpn_key</md-icon>-->
-				<!--<input ng-model="loginCtrl.signupUser.token" name="token" type="text" placeholder="Token" ng-required="true">-->
-			<!--</md-input-container>-->
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">email</md-icon>
 				<input ng-model="loginCtrl.signupUser.email" name="email" type="email" placeholder="Email" ng-required="true" disabled>
@@ -14,8 +10,8 @@
 				<input ng-model="loginCtrl.signupUser.password" name="password" type="password" placeholder="Password" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
-				<md-icon class="material-icons">lock</md-icon>
-				<input type="password" placeholder="Password again" ng-required="true">
+				<md-icon class="material-icons">repeat</md-icon>
+				<input type="password" placeholder="Retype password" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">perm_identity</md-icon>
@@ -26,11 +22,8 @@
 				<input ng-model="loginCtrl.signupUser.surname" name="surname" type="text" placeholder="Surname" ng-required="true">
 			</md-input-container>
 			<md-card-actions layout="row" layout-align="end center">
-				<md-button type="submit">Sign in</md-button>
+				<md-button type="submit" md-colors="{background: 'primary-500'}">Sign up</md-button>
 			</md-card-actions>
 		</form>
-	</md-card>
-	<md-card layout-padding layout-align="center center" ng-show="loginCtrl.signupMsg">
-		<p>{{loginCtrl.signupMsg}}</p>
 	</md-card>
 </div>

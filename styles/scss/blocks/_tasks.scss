@@ -7,6 +7,11 @@
 		padding-right: 24px;
 		margin-bottom: 16px;
 
+		md-card-content {
+			padding-left: 0;
+			padding-right: 0;
+		}
+
 		a {
 			color: black;
 			text-decoration: none;

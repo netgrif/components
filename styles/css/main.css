@@ -1,3 +1,15 @@
+.color-fg-success {
+  color: #4CAF50 !important;
+}
+
+.color-fg-warning {
+  color: #FFC107 !important;
+}
+
+.color-fg-error {
+  color: #F44336 !important;
+}
+
 .color-fg-fm-50 {
   color: #f3e0e6;
 }
@@ -124,6 +136,18 @@
 
 .color-fg-material-grey-text {
   color: rgba(0, 0, 0, 0.38);
+}
+
+.color-bg-success {
+  background-color: #4CAF50 !important;
+}
+
+.color-bg-warning {
+  background-color: #FFC107 !important;
+}
+
+.color-bg-error {
+  background-color: #F44336 !important;
 }
 
 .color-bg-fm-50 {
@@ -666,6 +690,11 @@ body {
   padding-left: 24px;
   padding-right: 24px;
   margin-bottom: 16px;
+}
+
+.base .tasks .tasks-header md-card-content {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .base .tasks .tasks-header a {

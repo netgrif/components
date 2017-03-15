@@ -40,11 +40,28 @@ $color-red-500:					#F44336;
 $color-indigo-500:				#3F51B5;
 $color-teal-500:				#009688;
 
+// System
+$color-success:					#4CAF50;
+$color-warning:					#FFC107;
+$color-error:					#F44336;
+
 
 .color {
 	
 	&-fg {
 		
+		&-success {
+			color: $color-success !important;
+		}
+
+		&-warning {
+			color: $color-warning !important;
+		}
+
+		&-error {
+			color: $color-error !important;
+		}
+
 		&-fm {
 			
 			&-50 {
@@ -203,6 +220,18 @@ $color-teal-500:				#009688;
 	
 	&-bg {
 		
+		&-success {
+			background-color: $color-success !important;
+		}
+
+		&-warning {
+			background-color: $color-warning !important;
+		}
+
+		&-error {
+			background-color: $color-error !important;
+		}
+
 		&-fm {
 			
 			&-50 {

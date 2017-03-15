@@ -16,10 +16,6 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             name: undefined,
             surname: undefined
         };
-        self.error = {
-            error: false
-        };
-        self.signupMsg = undefined;
 
         self.viewLoaded = function () {
             if(dataLoadingStarted)return;
@@ -35,7 +31,7 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
                     }, function () {
                         $log.debug("Email retrieval failed");
                         $loading.showLoading(false);
-                        self.signupMsg = "Failed to identify token! Try again with the right token.";
+						$snackbar.error("Failed to identify token");
                     });
             } else {
                 $log.debug("Login loaded");
@@ -47,16 +43,10 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             $auth.authenticate(self.credentials, function (authenticated) {
                 if(authenticated){
                     $log.debug("Login succeeded");
-                    self.error = {
-                        error: false
-                    };
+					$snackbar.show("Login succeeded");
                 } else {
                     $log.debug("Login failed");
-                    self.error = {
-                        error: true,
-                        msg: "Wrong user name or password"
-                    };
-                    $log.debug(self.error.msg);
+					$snackbar.error("Wrong user credentials");
                 }
             })
         };
@@ -67,10 +57,10 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             $log.debug("formData: "+jsonSignupData);
             $auth.signup(jsonSignupData,function (response) {
                 if(response){
-                    self.signupMsg = "Registration succeeded! Redirecting to login page.";
+					$snackbar.show("Registration succeded");
                     angular.element("form#signup-form").trigger("reset");
                 } else {
-                    self.signupMsg = "Registration failed!";
+					$snackbar.error("Registration failed");
                 }
             });
         };
