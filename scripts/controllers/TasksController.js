@@ -1,8 +1,8 @@
 define(['angular', '../modules/Tasks', '../modules/Main'],
     function (angular) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet',
-                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet) {
+            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet', '$fileUpload',
+                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet, $fileUpload) {
                     var self = this;
                     var statusOrder = {
                         New: 1,
@@ -95,17 +95,17 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.reloadAfterAction = function () {
                         self.tabs.forEach(function (tab, index) {
-                            if(index != self.activeTab && self.tabs[index].resources){
-                                self.tabs[index].resources.splice(0,self.tabs[index].resources.length);
+                            if (index != self.activeTab && self.tabs[index].resources) {
+                                self.tabs[index].resources.splice(0, self.tabs[index].resources.length);
                             }
                         });
                         self.loadTasks();
                     };
 
                     self.formatDate = function (date) {
-                        if(!date) return;
-                        return date.dayOfMonth+"."+date.monthValue+"."+date.year+" \n"
-                            +date.hour+":"+date.minute;
+                        if (!date) return;
+                        return date.dayOfMonth + "." + date.monthValue + "." + date.year + " \n"
+                            + date.hour + ":" + date.minute;
                     };
 
                     function loadTasksResource(url, tabIndex, searchData) {
@@ -124,8 +124,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             }, function () {
                                 //$log.debug("Resource not found in " + self.tabs[tabIndex].label);
                                 $snackbar.error("Resource not found in " + self.tabs[tabIndex].label);
-                                if(self.tabs[tabIndex].resources)
-                                    self.tabs[tabIndex].resources.splice(0,self.tabs[tabIndex].resources.length);
+                                if (self.tabs[tabIndex].resources)
+                                    self.tabs[tabIndex].resources.splice(0, self.tabs[tabIndex].resources.length);
                             });
                         }, function () {
                             $log.debug("Tasks on " + url + " failed to load");
@@ -181,8 +181,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         $log.debug("Assigning task " + task.title + " to " + $user.name);
                         $http.get(task.$href("assign")).then(function (response) {
                             $log.debug(response);
-                            if(response.success) self.reloadAfterAction();
-                            if(response.error) $snackbar.show(response.error);
+                            if (response.success) self.reloadAfterAction();
+                            if (response.error) $snackbar.show(response.error);
                         }, function () {
                             $log.debug("Assigning task " + task.title + " failed");
                         });
@@ -190,8 +190,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.reassignTask = function (task) {
                         $bottomSheet.selectAssignUser(task).then(function (user) {
-                            if(user)
-                                $log.debug("Selected user:"+user.name);
+                            if (user)
+                                $log.debug("Selected user:" + user.name);
                         }, function () {
                             $log.debug("Bottom sheet canceled!");
                         });
@@ -200,16 +200,16 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     function taskFinish(task) {
                         $http.get(task.$href("finish")).then(function (response) {
                             $log.debug(response);
-                            if(response.success) self.reloadAfterAction();
-                            if(response.error) $snackbar.show(response.error);
+                            if (response.success) self.reloadAfterAction();
+                            if (response.error) $snackbar.show(response.error);
                         }, function () {
                             $log.debug("Finishing task " + task.title + " failed");
                         });
                     }
 
-                    function areFieldsValid(task){
+                    function areFieldsValid(task) {
                         let valid = task.data.every(item => !!item.newValue);
-                        if(!valid){
+                        if (!valid) {
                             let error = "Not all fields have values! Finish task aborted!";
                             $log.debug(error);
                             $snackbar.show(error);
@@ -220,32 +220,32 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     self.finishTask = function (task) {
                         $log.debug("Finishing task " + task.title + " to " + $user.name);
 
-                        if(!task.data){
+                        if (!task.data) {
                             let taskIndex = self.tabs[self.activeTab].resources.findIndex(el => el.visualId == task.visualId);
                             self.loadTaskData(taskIndex, () => {
-                                if(!task.data){
+                                if (!task.data) {
                                     taskFinish(task);
                                 } else {
                                     areFieldsValid(task);
                                 }
                             });
                         } else {
-                            if(areFieldsValid(task)){
+                            if (areFieldsValid(task)) {
                                 self.saveData(task, function (success) {
-                                    if(success) taskFinish(task);
+                                    if (success) taskFinish(task);
                                 });
                             }
                         }
                     };
 
                     self.cancelTask = function (task) {
-                        $log.debug("Canceling task "+task.visualId);
+                        $log.debug("Canceling task " + task.visualId);
                         $http.get(task.$href("cancel")).then(function (response) {
                             $log.debug(response);
-                            if(response.success) self.reloadAfterAction();
-                            if(response.error) $snackbar.error(response.error);
-                        },function () {
-                            $snackbar.error("Canceling assignment of task "+task.title+" failed");
+                            if (response.success) self.reloadAfterAction();
+                            if (response.error) $snackbar.error(response.error);
+                        }, function () {
+                            $snackbar.error("Canceling assignment of task " + task.title + " failed");
                         });
                     };
 
@@ -253,9 +253,9 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         return self.tabs[self.activeTab].resources.findIndex(item => item.visualId == visualId);
                     }
 
-                    function parseDataValue(value, type){
-                        if(type == 'date'){
-                            if(value) return new Date(value.year, value.monthValue-1, value.dayOfMonth);
+                    function parseDataValue(value, type) {
+                        if (type == 'date') {
+                            if (value) return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
                             else return undefined;
                         } else {
                             return value;
@@ -263,10 +263,10 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     }
 
                     function formatDataValue(value, type) {
-                        if(!value) return null;
-                        let padding = text => text.length <= 1 ? "0"+text : text;
-                        if(type == 'date'){
-                            return value.getFullYear()+"-"+padding((value.getMonth()+1)+"")+"-"+padding(value.getDate()+"");
+                        if (!value) return null;
+                        let padding = text => text.length <= 1 ? "0" + text : text;
+                        if (type == 'date') {
+                            return value.getFullYear() + "-" + padding((value.getMonth() + 1) + "") + "-" + padding(value.getDate() + "");
                         } else {
                             return value;
                         }
@@ -277,7 +277,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (self.tabs[self.activeTab].resources[taskIndex].data) return;
                         $http.get(self.tabs[self.activeTab].resources[taskIndex].$href("data")).then(function (response) {
                             $log.debug(response);
-                            if(response.$response().data._embedded) {
+                            if (response.$response().data._embedded) {
                                 self.tabs[self.activeTab].resources[taskIndex].data = [];
                                 Object.keys(response.$response().data._embedded).forEach(function (item, index, array) {
                                     response.$request().$get(item).then(function (resource) {
@@ -288,13 +288,13 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                             item.taskIndex = taskIndex;
                                             return item;
                                         });
-                                        if(index == array.length-1){
+                                        if (index == array.length - 1) {
                                             callback && callback();
                                         }
                                     });
                                 });
                             } else {
-                                $log.debug("No data for task "+self.tabs[self.activeTab].resources[taskIndex].visualId);
+                                $log.debug("No data for task " + self.tabs[self.activeTab].resources[taskIndex].visualId);
                                 callback && callback();
                             }
                         }, function () {
@@ -308,11 +308,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.saveData = function (task, callback) {
-                        if(!task.data) return;
+                        if (!task.data) return;
 
                         var dataFields = {};
                         task.data.forEach(function (item) {
-                            if(item.changed) {
+                            if (item.changed) {
                                 dataFields[item.objectId] = {
                                     type: item.type,
                                     value: formatDataValue(item.newValue, item.type)
@@ -320,45 +320,54 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             }
                         });
 
-                        if(jQuery.isEmptyObject(dataFields)){
+                        if (jQuery.isEmptyObject(dataFields)) {
                             callback && callback(true);
                             return;
                         }
 
-                        $http.post(task.$href("data-edit"),JSON.stringify(dataFields)).then(function (response) {
+                        $http.post(task.$href("data-edit"), JSON.stringify(dataFields)).then(function (response) {
                             $log.debug(response);
                             task.data.forEach(function (item, index) {
-                                if(item.changed) {
+                                if (item.changed) {
                                     self.tabs[self.activeTab].resources[item.taskIndex].data[index].changed = false;
                                 }
                             });
 
                             callback && callback(true);
-                        },function () {
+                        }, function () {
                             $log.debug("Saving data fields failed!");
                             callback && callback(false);
                         });
                     };
 
-                    self.insertFile = function (field, rootScope) {
-                          field.newValue = rootScope[field.objectId].name;
-                          field.newFile = field.value != field.newValue;
-                          field.uploaded = false;
+                    $scope.fileModelChange = function (field) {
+                        if (!field.file) return;
+                        field.newValue = field.file.name;
+                        field.newFile = field.value != field.newValue;
+                        field.uploaded = false;
 
-                          let fieldIndex = self.tabs[self.activeTab].resources[field.taskIndex].data.findIndex(item => item.objectId == field.objectId);
-                          self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex] = field;
+                        let fieldIndex = self.tabs[self.activeTab].resources[field.taskIndex].data.findIndex(item => item.objectId == field.objectId);
+                        self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex] = field;
                     };
 
                     self.uploadFile = function (field) {
-
+                        if(!field.file) return;
+                        //TODO: 15/3/2017 check if file does not exceed allowed size
+                        $fileUpload.upload(field.file, undefined, self.tabs[self.activeTab].resources[field.taskIndex].$href('file')+field.objectId, response => {
+                             if(response){
+                                 let fieldIndex = self.tabs[self.activeTab].resources[field.taskIndex].data.findIndex(item => item.objectId == field.objectId);
+                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].uploaded = true;
+                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newFile = false;
+                                 $snackbar.info("File "+field.file.name+" successfully uploaded");
+                             } else {
+                                 $snackbar.error("File "+field.file.name+" failed to upload!");
+                             }
+                        });
                     };
 
                     self.downloadFile = function (field) {
-                        $http.get(self.tabs[self.activeTab].resources[field.taskIndex].$href("file")+field.objectId).then(function (response) {
-                            $log.debug("File downloaded");
-                        }, function () {
-                            $snackbar("Download of file "+field.value+" failed!");
-                        })
+                        let downloadWindow = window.open(self.tabs[self.activeTab].resources[field.taskIndex].$href('file')+field.objectId);
+                        downloadWindow.onload = () => downloadWindow.close();
                     };
 
                     function endLoadAutocompleteItems(search, storage) {
@@ -461,6 +470,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         self.tabs[self.activeTab].sort.field = field;
                     };
 
+                    //TODO: 15/3/2017 sorting for visualId
                     self.dynamicOrder = function (task) {
                         if (self.activeTab >= self.tabs.length) return;
                         var order = 0;
