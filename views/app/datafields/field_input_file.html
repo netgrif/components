@@ -5,35 +5,30 @@
         </md-button>
         <md-menu-content width="3">
             <md-menu-item ng-if="field.newFile && !field.uploaded">
-                <md-button ng-click="">
+                <md-button ng-click="tasksCtrl.uploadFile(field)">
                     <md-icon class="material-icons">file_upload</md-icon>
                     Upload
                 </md-button>
             </md-menu-item>
-            <md-menu-item ng-if="field.value">
-                <md-button ng-click="">
+            <md-menu-item ng-if="field.value && !field.newFile">
+                <md-button ng-click="tasksCtrl.downloadFile(field)">
                     <md-icon class="material-icons">file_download</md-icon>
                     Download
                 </md-button>
+                <a id="{{field.objectId+'-download'}}" class="hide" href="#" target="_blank"></a>
             </md-menu-item>
             <md-menu-item>
-                <!--<md-button class="file-chooser">-->
-                    <!--<input type="file" file-model="field.objectId"-->
-                        <!--onchange="angular.element(this).controller().insertFile(angular.element(this).scope().field, angular.element(this).scope().$root)">-->
-                    <!--<md-icon class="material-icons">note_add</md-icon>-->
-                    <!--New file-->
-                <!--</md-button>-->
                 <md-button class="file-chooser" layout="row" layout-align="left center">
-                    <input type="file" id="file" file-model="field.objectId">
+                    <input type="file" id="file" file-model="field.file" file-change-callback="fileModelChange" file-change-arg="field">
                     <label for="file" layout="row" layout-align="left center">
-                        <i class="material-icons">note_add</i>
+                        <md-icon class="material-icons">note_add</md-icon>
                         <span>New file</span>
                     </label>
                 </md-button>
             </md-menu-item>
         </md-menu-content>
     </md-menu>
-    <p>{{field.newValue || "No file" || $root[field.objectId] || $root['field.objectId'] || $root.field.objectId}}</p>
+    <p>{{field.newValue ? field.newValue : "No File"}}</p>
     <div layout="row" layout-align="left center" ng-if="field.newFile && !field.uploaded">
         <md-tooltip md-direction="right">File has not been uploaded yet!</md-tooltip>
         <md-icon class="material-icons md-warn">warning</md-icon>
