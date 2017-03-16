@@ -9,6 +9,7 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                     var self = this;
 
 
+
                     self.checkboxes = [];
                     self.systemCheckboxes = [];
                     self.net = undefined;
@@ -54,6 +55,8 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                             $log.debug("Petri net refs get failed!");
                         });
                     };
+
+                   // $window.onload = function () {
 
                     self.loadSystemRoles = function () {
 
