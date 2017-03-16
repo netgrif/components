@@ -6,7 +6,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
 
         var errorTemplate = "<md-toast><div class='md-toast-content color-bg-error'><span class='md-toast-text' flex>{{msg}}</span><md-button class='md-action' ng-click='close()'>Close</md-button></div></md-toast>";
         var infoTemplate = "<md-toast><div class='md-toast-content'><span class='md-toast-text' flex>{{msg}}</span></div></md-toast>";
-		var successTemplate = "<md-toast><div class='md-toast-content' color-bg-success><span class='md-toast-text' flex>{{msg}}</span></div></md-toast>";
+		var successTemplate = "<md-toast><div class='md-toast-content color-bg-success'><span class='md-toast-text' flex>{{msg}}</span></div></md-toast>";
 
         function buildSnackbar(msg, template, delay) {
             $mdToast.show({

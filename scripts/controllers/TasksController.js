@@ -123,11 +123,12 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 $log.debug(self.tabs[tabIndex].resources);
                             }, function () {
                                 //$log.debug("Resource not found in " + self.tabs[tabIndex].label);
-                                $snackbar.error("Resource not found in " + self.tabs[tabIndex].label);
+                                $snackbar.info("Resource not found in " + self.tabs[tabIndex].label);
                                 if (self.tabs[tabIndex].resources)
                                     self.tabs[tabIndex].resources.splice(0, self.tabs[tabIndex].resources.length);
                             });
                         }, function () {
+							$snackbar.error("Tasks on " + url + " failed to load");
                             $log.debug("Tasks on " + url + " failed to load");
                         });
                     }
