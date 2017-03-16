@@ -56,8 +56,6 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                         });
                     };
 
-                   // $window.onload = function () {
-
                     self.loadSystemRoles = function () {
 
                         self.systemCheckboxes = [];
