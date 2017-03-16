@@ -9,6 +9,7 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                     var self = this;
 
 
+
                     self.checkboxes = [];
                     self.systemCheckboxes = [];
                     self.net = undefined;
