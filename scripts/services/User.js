@@ -8,6 +8,7 @@ define(['angular', '../modules/Main'], function (angular) {
             login: undefined,
             authority: undefined,
             name: undefined,
+            roles: undefined,
 
             getProfile: function () {
                 //TODO: ajax to get user profile
@@ -17,6 +18,7 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.login = undefined;
                 user.authority = undefined;
                 user.name = undefined;
+                user.roles = undefined;
             }
         };
         return user;

@@ -29,6 +29,7 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                     $user.login = principal.username;
                     $user.authority = principal.authorities[0].authority;
                     $user.name = principal.fullName;
+                    $user.roles = principal.processRoles;
 
                     callback && callback(auth.authenticated);
                     $location.path(auth.path == auth.loginPath ? auth.appPath : auth.path);
