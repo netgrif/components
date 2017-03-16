@@ -43,7 +43,6 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             $auth.authenticate(self.credentials, function (authenticated) {
                 if(authenticated){
                     $log.debug("Login succeeded");
-					$snackbar.show("Login succeeded");
                 } else {
                     $log.debug("Login failed");
 					$snackbar.error("Wrong user credentials");
@@ -57,7 +56,6 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             $log.debug("formData: "+jsonSignupData);
             $auth.signup(jsonSignupData,function (response) {
                 if(response){
-					$snackbar.show("Registration succeded");
                     angular.element("form#signup-form").trigger("reset");
                 } else {
 					$snackbar.error("Registration failed");
@@ -65,8 +63,5 @@ define(['angular','../modules/Main','../services/Auth'], function (angular) {
             });
         };
 
-		self.showToast = function(msg) {
-            $snackbar.show(msg);
-		};
     }]);
 });

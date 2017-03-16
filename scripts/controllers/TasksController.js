@@ -475,11 +475,21 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         self.tabs[self.activeTab].sort.field = field;
                     };
 
-                    //TODO: 15/3/2017 sorting for visualId
+                    function visualIdOrder(visualId) {
+                        let idParts = visualId.split('-');
+                        let stringPartNum = 0;
+                        jQuery.each(idParts[0], (index, value) => stringPartNum += value.charCodeAt(0));
+
+                        return stringPartNum + parseInt(idParts[1]);
+                    }
+
                     self.dynamicOrder = function (task) {
                         if (self.activeTab >= self.tabs.length) return;
-                        var order = 0;
+                        let order = 0;
                         switch (self.tabs[self.activeTab].sort.field) {
+                            case 'visualId':
+                                order = visualIdOrder(task.visualId);
+                                break;
                             case 'status':
                                 order = statusOrder[task.status];
                                 break;
