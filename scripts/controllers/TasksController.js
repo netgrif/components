@@ -189,12 +189,18 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         });
                     };
 
-                    self.reassignTask = function (task) {
+                    self.delegateTask = function (task) {
                         $bottomSheet.selectAssignUser(task).then(function (user) {
-                            if (user)
-                                $log.debug("Selected user:" + user.name);
+                            if (user){
+                                $http.post(task.$href("delegate"),user.email).then(function (response) {
+                                    if(response.success) self.reloadAfterAction();
+                                    if(response.error) $snackbar.error(response.error);
+                                }, function () {
+                                    $log.debug("Delegating task "+task.visualId+" to user "+user.name+" failed!");
+                                });
+                            }
                         }, function () {
-                            $log.debug("Bottom sheet canceled!");
+                            //$log.debug("Bottom sheet canceled!");
                         });
                     };
 
@@ -479,7 +485,10 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     function visualIdOrder(visualId) {
                         let idParts = visualId.split('-');
                         let stringPartNum = 0;
-                        jQuery.each(idParts[0], (index, value) => stringPartNum += value.charCodeAt(0));
+                        for(let i=0; i<idParts[0].length; i++){
+                            stringPartNum += parseInt(idParts[0][i]);
+                        }
+                        //jQuery.each(idParts[0], (index, value) => stringPartNum += value.charCodeAt(0));
 
                         return stringPartNum + parseInt(idParts[1]);
                     }

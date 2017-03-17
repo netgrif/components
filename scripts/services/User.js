@@ -1,6 +1,4 @@
-/**
- * Created by Milan on 14.2.2017.
- */
+
 define(['angular', '../modules/Main'], function (angular) {
     angular.module('ngMain').factory('$user', function () {
         var user = {
@@ -19,6 +17,14 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.authority = undefined;
                 user.name = undefined;
                 user.roles = undefined;
+            },
+            canDelegate: function (delegateRole) {
+                if(!user.roles || !delegateRole) return;
+                return user.roles.includes(delegateRole);
+            },
+            canAssign: function (assignRole) {
+                if(!user.roles || !assignRole) return;
+                return user.roles.includes(assignRole);
             }
         };
         return user;

@@ -13,11 +13,14 @@
         <md-icon class="material-icons">more_vert</md-icon>
     </md-button>
     <md-menu-content>
-        <md-menu-item ng-if="task.status === 'New'">
+        <md-menu-item ng-if="task.status === 'New' && $user.canAssign(task.assignRole)">
             <md-button ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
         </md-menu-item>
+        <md-menu-item ng-if="task.status === 'New' && $user.canDelegate(task.delegateRole)">
+            <md-button ng-click="tasksCtrl.delegateTask(task)">Delegate</md-button>
+        </md-menu-item>
         <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
-            <md-button ng-click="tasksCtrl.reassignTask(task)">Reassign</md-button>
+            <md-button ng-click="tasksCtrl.delegateTask(task)">Reassign</md-button>
         </md-menu-item>
         <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
             <md-button ng-click="tasksCtrl.finishTask(task)">Finish</md-button>

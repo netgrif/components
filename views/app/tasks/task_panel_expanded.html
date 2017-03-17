@@ -25,8 +25,9 @@
 </md-expansion-panel-content>
 <md-expansion-panel-footer>
 	<div flex></div>
-	<md-button ng-if="task.status === 'New'" ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
-	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.reassignTask(task)">Reassign</md-button>
+	<md-button ng-if="task.status === 'New' && $user.canAssign(task.assignRole)" ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
+	<md-button ng-if="task.status === 'New' && $user.canDelegate(task.delegateRole)" ng-click="tasksCtrl.delegateTask(task)">Assign</md-button>
+	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.delegateTask(task)">Reassign</md-button>
 	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task)">Save Data</md-button>
 	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task)">Finish</md-button>
 	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.cancelTask(task)">Cancel</md-button>

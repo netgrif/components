@@ -18,8 +18,8 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
         return sheet;
     });
 
-    angular.module('ngMain').controller('BottomSheetController', ['$scope', '$mdBottomSheet', '$log', '$http', 'task',
-        function ($scope, $mdBottomSheet, $log, $http, task) {
+    angular.module('ngMain').controller('BottomSheetController', ['$scope', '$mdBottomSheet', '$log', '$http', '$snackbar', 'task',
+        function ($scope, $mdBottomSheet, $log, $http, $snackbar, task) {
             var self = this;
 
             $scope.task = task;
@@ -30,10 +30,14 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
 
             self.loadUsers = function () {
                 //TODO: 7/3/2017 $http request to users that is in processRole for this task
-                for(i=0; i<6; i++){
-                    self.users.push({name: "User "+i, email: "user"+i+"@fmworkflow.com"});
-                }
-                $scope.users = self.users;
+                $http.get("/res/petrinet//roles/users/"+task.assignRole).then(function (response) {
+                    $scope.users = response.users.map(item => {
+                        return {name: item.name+" "+item.surname,
+                                email: item.email}
+                    });
+                }, function () {
+                    $snackbar.error("Failed to load users with role +"+task.assignRole);
+                });
             };
 
             self.assignTask = function () {
@@ -45,10 +49,9 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             };
 
             self.filterUsers = function () {
-                //$log.debug("Search change: \""+self.searched+"\"");
                 if(!self.searched) return;
                 if(self.users == ""){
-                    $scope.users = self.users;
+                    $scope.users = self.users.concat($scope.users.filter(item => self.users.indexOf(item) < 0));
                     return;
                 }
                 $scope.users = self.users.filter(user => user.name.includes(self.searched) || user.email.includes(self.searched));
