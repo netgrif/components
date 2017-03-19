@@ -1,6 +1,6 @@
-/**
- * Created by Milan on 26.1.2017.
- */
+
+let localI18N = localStorage.getItem("locale") || undefined;
+
 requirejs.config({
     baseUrl: './',
     paths: {
@@ -16,6 +16,8 @@ requirejs.config({
         'angularMaterialExpansionPanels': "bower_components/angular-material-expansion-panel/dist/md-expansion-panel.min",
         'angularCharts': "bower_components/angular-charts-0.0.4.min",
         'domReady': "bower_components/requirejs/domReady",
+        'i18n': "bower_components/requirejs/i18n",
+        'nls': "scripts/nls",
         'app': "scripts/app"
     },
     shim: {
@@ -32,10 +34,15 @@ requirejs.config({
         'angularMaterial': ['angular', 'angularAnimate', 'angularAria', 'angularMessages'],
         'angularMaterialExpansionPanels': ['angular', 'angularAnimate', 'angularAria', 'angularMessages','angularMaterial'],
         'angularCharts': ['angular']
+    },
+    config: {
+        i18n: {
+            locale: localI18N
+        }
     }
 });
 
-require(['domReady!','angular','app'], function (document, angular) {
+require(['domReady!','angular','i18n','app'], function (document, angular) {
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['app']);
     });

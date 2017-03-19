@@ -1,12 +1,31 @@
-/**
- * Created by Milan on 3.2.2017.
- */
-define(['angular','../modules/Main'],function (angular) {
+
+define(['angular','i18n!nls/ui','../modules/Main'],function (angular, ui) {
     angular.module('ngMain').factory('$i18n',function () {
-        return {
-            main: {
-                tasks: "Úlohy"
-            }
+
+        // function mapLocal(obj) {
+        //     let mapped;
+        //     if(obj instanceof Object){
+        //         mapped = {};
+        //         Object.keys(obj).forEach(key => mapped[key] = mapLocal(obj[key]));
+        //
+        //     } else if(obj instanceof Array){
+        //         mapped = [];
+        //         obj.forEach(item => mapped.push(mapLocal(item)));
+        //
+        //     } else {
+        //         mapped = obj;
+        //     }
+        //     return mapped;
+        // }
+        let myi18n = {
+            change: function (locale) {
+                if(!locale || locale === localStorage.getItem('locale')) return;
+                localStorage.setItem('locale',locale);
+                location.reload();
+            },
+            current: localStorage.getItem('locale')
         };
+
+        return Object.assign(ui,myi18n);
     });
 });

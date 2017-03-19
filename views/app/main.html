@@ -22,7 +22,7 @@
 							</md-menu-item>
 							<md-menu-item>
 								<md-menu>
-									<md-button ng-click="$mdOpenMenu($event)">
+									<md-button ng-click="$mdOpenMenu()">
 										<div class="btn-menu">
 											<md-icon class="material-icons">language</md-icon>
 											<span>Language</span>
@@ -30,19 +30,10 @@
 									</md-button>
 									<md-menu-content width="2">
 										<md-menu-item>
-											<md-button href="javascript:void(0)">English</md-button>
+											<md-button ng-click="$i18n.change('en-us')" ng-class="$i18n.current === 'en-us' ? 'locale-active' : ''">English</md-button>
 										</md-menu-item>
 										<md-menu-item>
-											<md-button href="javascript:void(0)" disabled>German</md-button>
-										</md-menu-item>
-										<md-menu-item>
-											<md-button href="javascript:void(0)" disabled>Spanish</md-button>
-										</md-menu-item>
-										<md-menu-item>
-											<md-button href="javascript:void(0)" disabled>Slovak</md-button>
-										</md-menu-item>
-										<md-menu-item>
-											<md-button href="javascript:void(0)" disabled>Czech</md-button>
+											<md-button ng-click="$i18n.change('sk-sk')" ng-class="$i18n.current === 'sk-sk' ? 'locale-active' : ''">Slovak</md-button>
 										</md-menu-item>
 									</md-menu-content>
 								</md-menu>
