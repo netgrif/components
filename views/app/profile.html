@@ -1,84 +1,84 @@
 <div ng-cloak layout-xs>
-	<md-card>
-		<md-card-title>
-			<md-card-title-text>
-				<span class="md-headline">Profile</span>
-			</md-card-title-text>
-		</md-card-title>
-		<md-divider></md-divider>
-		<md-card-content>
-			<div layout="column">
-				<span>Your Profile is 38% complete</span>
-				<md-progress-linear md-mode="determinate" value="38"></md-progress-linear>
-				<span class="md-headline margin-top-2x">General Information</span>
-				<div layout="row" layout-align="left center">
-					<div flex="20"></div>
-					<div class="file-chooser-avatar" flex layout="column" layout-align="center center">
-						<i class="material-icons avatar-icon color-fg-fm-500">account_circle</i>
-						<input type="file" id="file" file-model="mFile">
-						<label for="file" layout="row" layout-align="space-around center">
-							<i class="material-icons color-fg-material-grey-text">insert_photo</i>
-						</label>
-					</div>
-					<div flex="10"></div>
-					<div flex layout="column">
-						<md-input-container class="margin-vertical-default">
-							<label>First Name</label>
-							<input type="text" ng-model="todo.name">
-						</md-input-container>
-						<md-input-container class="margin-vertical-default">
-							<label>Last Name</label>
-							<input type="text" ng-model="todo.surname">
-						</md-input-container>
-						<md-input-container class="margin-vertical-default">
-							<label>Organization</label>
-							<input type="text" ng-model="todo.org">
-						</md-input-container>
-					</div>
-					<div flex="20"></div>
-				</div>
-				<span class="md-headline">System roles</span>
-				<div layout="row" layout-align="left center">
-					<div flex="20"></div>
-					<md-chips flex>
-						<md-chip>Role 1</md-chip>
-						<md-chip>Role 2</md-chip>
-						<md-chip>Role 3</md-chip>
-					</md-chips>
-					<div flex="20"></div>
-				</div>
-				<span class="md-headline">Workflow roles</span>
-				<div layout="row" layout-align="left center">
-					<div flex="20"></div>
-					<md-chips flex>
-						<md-chip>Role 1</md-chip>
-						<md-chip>Role 2</md-chip>
-						<md-chip>Role 3</md-chip>
-						<md-chip>Role 4</md-chip>
-						<md-chip>Role 5</md-chip>
-						<md-chip>Role 6</md-chip>
-					</md-chips>
-					<div flex="20"></div>
-				</div>
-				<span class="md-headline">Contact Information</span>
-				<div layout="row" layout-align="left center">
-					<div flex="20"></div>
-					<md-input-container flex>
-						<label>Phone Number</label>
-						<input type="text" ng-model="todo.phone">
-					</md-input-container>
-					<div flex="10"></div>
-					<md-input-container flex>
-						<label>Email</label>
-						<input type="email" ng-model="todo.email">
-					</md-input-container>
-					<div flex="20"></div>
-				</div>
-			</div>
-		</md-card-content>
-		<md-card-actions layout="row" layout-align="end center">
-			<md-button>Change Password</md-button>
-			<md-button class="md-primary">Update</md-button>
-		</md-card-actions>
-	</md-card>
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{::$i18n.page.userProfile.title}}</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-divider></md-divider>
+        <md-card-content>
+            <div layout="column">
+                <span>{{::$i18n.page.userProfile.msgPart1 + "38%" + ::$i18n.page.userProfile.msgPart2}}</span>
+                <md-progress-linear md-mode="determinate" value="38"></md-progress-linear>
+                <span class="md-headline margin-top-2x">{{::$i18n.page.userProfile.generalInfo.title}}</span>
+                <div layout="row" layout-align="left center">
+                    <div flex="20"></div>
+                    <div class="file-chooser-avatar" flex layout="column" layout-align="center center">
+                        <i class="material-icons avatar-icon color-fg-fm-500">account_circle</i>
+                        <input type="file" id="file" file-model="mFile">
+                        <label for="file" layout="row" layout-align="space-around center">
+                            <i class="material-icons color-fg-material-grey-text">insert_photo</i>
+                        </label>
+                    </div>
+                    <div flex="10"></div>
+                    <div flex layout="column">
+                        <md-input-container class="margin-vertical-default">
+                            <label>{{::$i18n.page.userProfile.name}}</label>
+                            <input type="text" ng-model="todo.name">
+                        </md-input-container>
+                        <md-input-container class="margin-vertical-default">
+                            <label>{{::$i18n.page.userProfile.surname}}</label>
+                            <input type="text" ng-model="todo.surname">
+                        </md-input-container>
+                        <md-input-container class="margin-vertical-default">
+                            <label>{{::$i18n.page.userProfile.org}}</label>
+                            <input type="text" ng-model="todo.org">
+                        </md-input-container>
+                    </div>
+                    <div flex="20"></div>
+                </div>
+                <span class="md-headline">{{::$i18n.page.userProfile.systemRoles.title}}</span>
+                <div layout="row" layout-align="left center">
+                    <div flex="20"></div>
+                    <md-chips flex>
+                        <md-chip>Role 1</md-chip>
+                        <md-chip>Role 2</md-chip>
+                        <md-chip>Role 3</md-chip>
+                    </md-chips>
+                    <div flex="20"></div>
+                </div>
+                <span class="md-headline">{{::$i18n.page.userProfile.workflowRoles.title}}</span>
+                <div layout="row" layout-align="left center">
+                    <div flex="20"></div>
+                    <md-chips flex>
+                        <md-chip>Role 1</md-chip>
+                        <md-chip>Role 2</md-chip>
+                        <md-chip>Role 3</md-chip>
+                        <md-chip>Role 4</md-chip>
+                        <md-chip>Role 5</md-chip>
+                        <md-chip>Role 6</md-chip>
+                    </md-chips>
+                    <div flex="20"></div>
+                </div>
+                <span class="md-headline">{{::$i18n.page.userProfile.contactInfo.title}}</span>
+                <div layout="row" layout-align="left center">
+                    <div flex="20"></div>
+                    <md-input-container flex>
+                        <label>{{::$i18n.page.userProfile.contactInfo.phone}}</label>
+                        <input type="text" ng-model="todo.phone">
+                    </md-input-container>
+                    <div flex="10"></div>
+                    <md-input-container flex>
+                        <label>{{::$i18n.page.userProfile.contactInfo.email}}</label>
+                        <input type="email" ng-model="todo.email">
+                    </md-input-container>
+                    <div flex="20"></div>
+                </div>
+            </div>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button>{{::$i18n.page.userProfile.changePsw}}</md-button>
+            <md-button class="md-primary">{{::$i18n.page.userProfile.submit}}</md-button>
+        </md-card-actions>
+    </md-card>
 </div>

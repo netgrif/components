@@ -3,26 +3,26 @@
 		<form id="signup-form" ng-submit="loginCtrl.signup()">
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">email</md-icon>
-				<input ng-model="loginCtrl.signupUser.email" name="email" type="email" placeholder="Email" ng-required="true" disabled>
+				<input ng-model="loginCtrl.signupUser.email" name="email" type="email" placeholder="{{::$i18n.page.signUp.email}}" ng-required="true" disabled>
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">lock</md-icon>
-				<input ng-model="loginCtrl.signupUser.password" name="password" type="password" placeholder="Password" ng-required="true">
+				<input ng-model="loginCtrl.signupUser.password" name="password" type="password" placeholder="{{::$i18n.page.signUp.psw}}" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">repeat</md-icon>
-				<input ng-model="loginCtrl.retypedPassword" type="password" placeholder="Retype password" ng-required="true">
+				<input ng-model="loginCtrl.retypedPassword" type="password" placeholder="{{::$i18n.page.signUp.retypePsw}}" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">perm_identity</md-icon>
-				<input ng-model="loginCtrl.signupUser.name" name="name" type="text" placeholder="Name" ng-required="true">
+				<input ng-model="loginCtrl.signupUser.name" name="name" type="text" placeholder="{{::$i18n.page.signUp.name}}" ng-required="true">
 			</md-input-container>
 			<md-input-container class="md-block">
 				<md-icon class="material-icons">perm_identity</md-icon>
-				<input ng-model="loginCtrl.signupUser.surname" name="surname" type="text" placeholder="Surname" ng-required="true">
+				<input ng-model="loginCtrl.signupUser.surname" name="surname" type="text" placeholder="{{::$i18n.page.signUp.surname}}" ng-required="true">
 			</md-input-container>
 			<md-card-actions layout="row" layout-align="end center">
-				<md-button type="submit" md-colors="{background: 'primary-500'}">Sign up</md-button>
+				<md-button type="submit" md-colors="{background: 'primary-500'}">{{::$i18n.page.signUp.submit}}</md-button>
 			</md-card-actions>
 		</form>
 	</md-card>

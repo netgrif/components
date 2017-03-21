@@ -37,10 +37,10 @@ define({
             roles: {
                 tab: {
                     systemRoles: {
-
+                        this: "System Roles"
                     },
                     manageRoles: {
-                        this: "Manage Roles",
+                        this: "Process Roles",
                         label: "Petri Net",
                         back: "Back",
                         save: "Save"
@@ -55,7 +55,7 @@ define({
             console: {
                 title: "Invite User",
                 email: "Email",
-                send: "Send Invite"
+                submit: "Send Invite"
             },
             userProfile: {
                 title: "Profile",
@@ -88,8 +88,8 @@ define({
                 tasks: "Tasks",
                 data: "Data",
                 roles: "Roles",
-                workflow: "workflow",
-                adminConsole: "Admin Console"
+                workflow: "Workflow",
+                console: "Admin Console"
             },
             mainMenu: {
                 notifications: "Notifications",
@@ -108,7 +108,7 @@ define({
                 reset: "Reset"
             },
             taskHeader: {
-                id: "ID",
+                visualId: "ID",
                 name: "Name",
                 priority: "Priority",
                 user: "User",
@@ -127,7 +127,10 @@ define({
                 finish: "Finish",
                 cancel: "Cancel",
                 collapse: "Collapse",
-                noDataMsg: "There is no data for this task"
+                noDataMsg: "There is no data for this task",
+                process: "Process",
+                task: "Task",
+                notFound: "was not found :("
             },
             dialog: {
                 uploadNet: {

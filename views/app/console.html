@@ -2,19 +2,20 @@
     <md-card>
         <md-card-title>
             <md--card-title-text>
-                <span class="md-headline">Invite user</span>
+                <span class="md-headline">{{::$i18n.page.console.title}}</span>
             </md--card-title-text>
         </md-card-title>
         <md-divider></md-divider>
         <form id="admin-invite-form" ng-submit="adminCtrl.invite()">
             <md-card-content>
                 <md-input-container>
-                    <label>Email</label>
+                    <label>{{::$i18n.page.console.email}}</label>
                     <input name="email" type="email" ng-required="true">
                 </md-input-container>
             </md-card-content>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button type="submit"  md-colors="{background: 'primary-500'}">Send invite</md-button>
+                <md-button type="submit" md-colors="{background: 'primary-500'}">{{::$i18n.page.console.submit}}
+                </md-button>
             </md-card-actions>
         </form>
     </md-card>

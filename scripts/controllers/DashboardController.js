@@ -9,6 +9,5 @@ function (angular) {
             var self = this;
 
             self.chart = [];
-
         }]);
 });
