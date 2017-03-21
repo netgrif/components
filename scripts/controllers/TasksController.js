@@ -247,7 +247,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             if (item.type == 'file') {
                                 if(!!item.newFile) return !!item.uploaded;
                                 return !!item.newValue;
-                            } else return !!item.newValue
+                            } else return item.logic.editable ? !!item.newValue: true;
                         });
                         if (!valid) {
                             let error = "Not all fields have values! Finish task aborted!";

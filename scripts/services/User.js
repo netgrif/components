@@ -18,6 +18,16 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.name = undefined;
                 user.roles = undefined;
             },
+            /**
+             * Change users roles
+             * @param {Array} roles
+             */
+            changeRoles: function (roles){
+                if(roles instanceof Array){
+                    user.roles = roles;
+                }
+            },
+
             canDelegate: function (delegateRole) {
                 if(!user.roles || !delegateRole) return;
                 return user.roles.includes(delegateRole);

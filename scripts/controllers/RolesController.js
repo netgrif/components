@@ -4,8 +4,8 @@
 define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
     function (angular) {
         angular.module('ngRoles').controller('RolesController',
-            ['$log', '$scope', '$timeout', '$http', '$snackbar',
-                function ($log, $scope, $timeout, $http, $snackbar) {
+            ['$log', '$scope', '$timeout', '$http', '$snackbar','$user',
+                function ($log, $scope, $timeout, $http, $snackbar, $user) {
                     var self = this;
 
 
@@ -146,6 +146,7 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                             self.users.find(x => x.email === self.userMail).userProcessRoles = rolesArray;
                             $log.debug(self.users);
                             var userObj = self.users.find(x => x.email === self.userMail);
+                            if(postObj.email == $user.login) $user.changeRoles(postObj.roleIds);
                             $snackbar.info("Roles for user " + userObj.name + " " + userObj.surname + " saved.");
                         }, function () {
                             $log.debug("Role was not assigned");
@@ -154,6 +155,38 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
 
                     };
 
+                    self.saveSystemRole = function () {
+                        var postObj = {};
+                        var choosenRoles = [];
+                        var rolesArray = [];
+                        postObj.email = self.userMail;
+                        self.systemCheckboxes.forEach(function (role) {
+                            $log.debug(role);
+                            if (role.isEnabled == true) {
+                                choosenRoles.push(role.name);
+                                rolesArray.push({content: [], links: [], name: role.name});
+                            }
+                        });
+                        postObj.roleIds = choosenRoles;
+                        $log.debug(postObj);
+
+                        $http.post("/res/systemrole/assign" + self.net, JSON.stringify(postObj)).then(function (response) {
+                            $log.debug(response);
+
+                            self.users.find(x => x.email === self.userMail).roles = rolesArray;
+                            $log.debug(self.users);
+                            var userObj = self.users.find(x => x.email === self.userMail);
+                            $snackbar.info("Roles for user " + userObj.name + " " + userObj.surname + " saved.");
+                        }, function () {
+                            $log.debug("Role was not assigned");
+                        });
+
+
+                    };
 
                 }]);
     });
+
+
+//@RequestMapping(value = "/assign", method = RequestMethod.POST)
+//public @ResponseBody String assignRoleToUser(@RequestParam("email") String userEmail, @RequestParam("roleId") Long roleId) {
