@@ -146,6 +146,13 @@ define({
                     initials: "Initials",
                     submit: "Upload"
                 },
+                createCase: {
+                    title: "Create Case",
+                    petriNet: "Petri Net",
+                    name: "Name",
+                    color: "Label color",
+                    submit: "Create"
+                },
                 saveFilter: {
                     title: "Save Filter",
                     name: "Name",
@@ -158,13 +165,6 @@ define({
                     process: "Process",
                     task: "Task",
                     submit: "Save"
-                },
-                createCase: {
-                    title: "Create Case",
-                    petriNet: "Petri Net",
-                    name: "Name",
-                    color: "Label color",
-                    submit: "Create"
                 }
             },
             bottomSheet: {

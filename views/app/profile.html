@@ -8,7 +8,7 @@
         <md-divider></md-divider>
         <md-card-content>
             <div layout="column">
-                <span>{{::$i18n.page.userProfile.msgPart1 + " 38% " + ::$i18n.page.userProfile.msgPart2}}</span>
+                <span>{{::$i18n.page.userProfile.msgPart1 + " 38% " + $i18n.page.userProfile.msgPart2}}</span>
                 <md-progress-linear md-mode="determinate" value="38"></md-progress-linear>
                 <span class="md-headline margin-top-2x">{{::$i18n.page.userProfile.generalInfo.title}}</span>
                 <div layout="row" layout-align="left center">
@@ -23,15 +23,15 @@
                     <div flex="10"></div>
                     <div flex layout="column">
                         <md-input-container class="margin-vertical-default">
-                            <label>{{::$i18n.page.userProfile.name}}</label>
+                            <label>{{::$i18n.page.userProfile.generalInfo.name}}</label>
                             <input type="text" ng-model="todo.name">
                         </md-input-container>
                         <md-input-container class="margin-vertical-default">
-                            <label>{{::$i18n.page.userProfile.surname}}</label>
+                            <label>{{::$i18n.page.userProfile.generalInfo.surname}}</label>
                             <input type="text" ng-model="todo.surname">
                         </md-input-container>
                         <md-input-container class="margin-vertical-default">
-                            <label>{{::$i18n.page.userProfile.org}}</label>
+                            <label>{{::$i18n.page.userProfile.generalInfo.org}}</label>
                             <input type="text" ng-model="todo.org">
                         </md-input-container>
                     </div>
