@@ -244,9 +244,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     function areFieldsValid(task) {
                         let valid = task.data.every(item => {
-                            if (item.type == 'file') {
-                                if(!!item.newFile) return !!item.uploaded;
+                            if (item.type === 'file') {
+                                if(item.newFile) return !!item.uploaded;
                                 return !!item.newValue;
+                            } else if(item.type === 'boolean'){
+                                return true;
                             } else return item.logic.editable ? !!item.newValue: true;
                         });
                         if (!valid) {
