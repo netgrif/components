@@ -9,7 +9,7 @@
 							<span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-highlight-flags="i">{{item.title}}</span>
 						</md-item-template>
 						<md-not-found>
-							{{::$i18n.block.taskFilter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + ::$i18n.block.task.notFound}}
+							{{::$i18n.block.taskFilter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.block.task.notFound}}
 						</md-not-found>
 					</md-autocomplete>
 					<md-autocomplete class="md-block autocomplete" md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search" md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item" md-selected-item-change="tasksCtrl.transitionSearchChange(item)" md-items="item in tasksCtrl.queryTransitions()" md-item-text="item.title" md-min-length="0" md-no-cache="true" md-floating-label="{{::$i18n.block.taskFilter.task}}">
@@ -18,7 +18,7 @@
                             </span>
 						</md-item-template>
 						<md-not-found>
-							{{::$i18n.block.taskFilter.task + " " + tasksCtrl.tabs[$index].filter.selectedTransition.search + " " + ::$i18n.block.task.notFound}}
+							{{::$i18n.block.taskFilter.task + " " + tasksCtrl.tabs[$index].filter.selectedTransition.search + " " + $i18n.block.task.notFound}}
 						</md-not-found>
 					</md-autocomplete>
 				</form>

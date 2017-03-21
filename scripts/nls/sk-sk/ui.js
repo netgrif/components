@@ -147,6 +147,13 @@ define({
                 initials: "Iniciály",
                 submit: "Nahraj"
             },
+            createCase: {
+                title: "Vytvor Prípad",
+                petriNet: "Petriho Sieť",
+                name: "Názov",
+                color: "Farba značky",
+                submit: "Vytvor"
+            },
             saveFilter: {
                 title: "Ulož Filter",
                 name: "Názov",
@@ -159,13 +166,6 @@ define({
                 process: "Proces",
                 task: "Úlohy",
                 submit: "Uložiť"
-            },
-            createCase: {
-                title: "Vytvor Prípad",
-                petriNet: "Petriho Sieť",
-                name: "Názov",
-                color: "Farba značky",
-                submit: "Vytvor"
             }
         },
         bottomSheet: {

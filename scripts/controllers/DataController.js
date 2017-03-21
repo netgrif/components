@@ -6,9 +6,5 @@ define(['angular','../modules/Main','../modules/Data'],function (angular) {
         function ($log, $scope) {
             var self = this;
 
-            $scope.msg = "Tu budu data";
-
-
-
         }]);
 });
