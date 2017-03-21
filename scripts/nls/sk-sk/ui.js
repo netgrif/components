@@ -88,7 +88,7 @@ define({
             data: "Dáta",
             roles: "Role",
             workflow: "Workflow",
-            console: "Správcovská Konzola"
+            console: "Konzola"
         },
         mainMenu: {
             notifications: "Notifikácie",
