@@ -2,7 +2,7 @@
     <form name="petriNetUploadForm" ng-submit="parentCtrl.uploadPetriNet()">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>{{::$i18n.block.dialog.uploadNet.title}}</h2>
+                <h2>{{::$root.$i18n.block.dialog.uploadNet.title}}</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="closeDialog()">
                     <md-icon class="material-icons">close</md-icon>
@@ -18,25 +18,25 @@
                                file-change-callback="parentCtrl.netFileChanged" file-change-arg="parentCtrl.netFile">
                         <label for="file" layout="row" layout-align="left center">
                             <i class="material-icons">file_upload</i>
-                            <span>{{ parentCtrl.netFile ? parentCtrl.netFileName : $i18n.block.dialog.uploadNet.uploadBtn}}</span>
+                            <span>{{ parentCtrl.netFile ? parentCtrl.netFileName : $root.$i18n.block.dialog.uploadNet.uploadBtn}}</span>
                         </label>
                     </md-button>
                     <span flex></span>
                     <div layout="row" layout-align="left center">
-                        <md-tooltip md-direction="right">{{::$i18n.block.dialog.uploadNet.uploadHelp}}</md-tooltip>
+                        <md-tooltip md-direction="right">{{::$root.$i18n.block.dialog.uploadNet.uploadHelp}}</md-tooltip>
                         <i class="material-icons color-fg-material-grey-text">help</i>
                     </div>
                 </div>
                 <md-input-container>
-                    <label>{{::$i18n.block.dialog.uploadNet.name}}</label>
+                    <label>{{::$root.$i18n.block.dialog.uploadNet.name}}</label>
                     <input type="text" ng-model="parentCtrl.petriNetMeta.name" required>
                 </md-input-container>
                 <md-input-container>
-                    <label>{{::$i18n.block.dialog.uploadNet.initials}}</label>
+                    <label>{{::$root.$i18n.block.dialog.uploadNet.initials}}</label>
                     <input md-maxlength="3" type="text" name="initials" ng-model="parentCtrl.petriNetMeta.initials"
                            required>
                     <div ng-messages="petriNetUploadForm.initials.$error">
-                        <div ng-message="md-maxlength">{{::$i18n.block.dialog.uploadNet.maxchars}}</div>
+                        <div ng-message="md-maxlength">{{::$root.$i18n.block.dialog.uploadNet.maxchars}}</div>
                     </div>
                 </md-input-container>
             </div>
@@ -44,7 +44,7 @@
 
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button type="submit">{{::$i18n.block.dialog.uploadNet.submit}}</md-button>
+            <md-button type="submit">{{::$root.$i18n.block.dialog.uploadNet.submit}}</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>
