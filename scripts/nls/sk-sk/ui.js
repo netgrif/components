@@ -143,13 +143,28 @@ define({
                 uploadBtn: "Vyber Sieť",
                 uploadHelp: "Požaduje sa XML súbor",
                 name: "Názov",
+                maxchars: "Iniciály Petriho sieťe musia mať maximálne 3 písmená",
                 initials: "Iniciály",
                 submit: "Nahraj"
+            },
+            saveFilter: {
+                title: "Ulož Filter",
+                name: "Názov",
+                visibility: {
+                    label: "Prístupnosť",
+                    global: "Všeobecná",
+                    organization: "Pre organizáciu",
+                    private: "Súkromná"
+                },
+                process: "Proces",
+                task: "Úlohy",
+                submit: "Uložiť"
             },
             createCase: {
                 title: "Vytvor Prípad",
                 petriNet: "Petriho Sieť",
                 name: "Názov",
+                color: "Farba značky",
                 submit: "Vytvor"
             }
         },

@@ -142,13 +142,28 @@ define({
                     uploadBtn: "Choose a Net",
                     uploadHelp: "Requires XML file",
                     name: "Name",
+                    maxchars: "Petri Net initials must be at most 3 characters long",
                     initials: "Initials",
                     submit: "Upload"
+                },
+                saveFilter: {
+                    title: "Save Filter",
+                    name: "Name",
+                    visibility: {
+                        label: "Visibility",
+                        global: "Global",
+                        organization: "Organization",
+                        private: "Private"
+                    },
+                    process: "Process",
+                    task: "Task",
+                    submit: "Save"
                 },
                 createCase: {
                     title: "Create Case",
                     petriNet: "Petri Net",
                     name: "Name",
+                    color: "Label color",
                     submit: "Create"
                 }
             },

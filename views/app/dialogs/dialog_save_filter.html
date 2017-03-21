@@ -2,7 +2,7 @@
     <form ng-submit="parentCtrl.saveFilter()">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>Save Filter</h2>
+                <h2>{{::$i18n.block.dialog.saveFilter.title}}</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="closeDialog()">
                     <md-icon class="material-icons">close</md-icon>
@@ -13,19 +13,19 @@
         <md-dialog-content>
             <div class="md-dialog-content" layout="column">
                 <md-input-container>
-                    <label>Name</label>
+                    <label>{{::$i18n.block.dialog.saveFilter.name}}</label>
                     <input type="text" ng-model="parentCtrl.newFilter.name" required>
                 </md-input-container>
                 <md-input-container>
-                    <label>Visibility</label>
+                    <label>{{::$i18n.block.dialog.saveFilter.visibility.label}}</label>
                     <md-select ng-model="parentCtrl.newFilter.visibility" required>
-                        <md-option value="0">Global</md-option>
-                        <md-option value="1">Organization</md-option>
-                        <md-option value="2">Private</md-option>
+                        <md-option value="0">{{::$i18n.block.dialog.saveFilter.visibility.global}}</md-option>
+                        <md-option value="1">{{::$i18n.block.dialog.saveFilter.visibility.organization}}</md-option>
+                        <md-option value="2">{{::$i18n.block.dialog.saveFilter.visibility.private}}</md-option>
                     </md-select>
                 </md-input-container>
                 <div layout="column" layout-align="left">
-                    <label>Process</label>
+                    <label>{{::$i18n.block.dialog.saveFilter.process}}</label>
                     <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.processes" readonly="true" flex>
                         <md-chip-template>
                             {{$chip.title}}
@@ -33,7 +33,7 @@
                     </md-chips>
                 </div>
                 <div layout="column" layout-align="left">
-                    <label>Task</label>
+                    <label>{{::$i18n.block.dialog.saveFilter.tak}}</label>
                     <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions" readonly="true" flex>
                         <md-chip-template>
                             {{$chip.title}}
@@ -45,7 +45,7 @@
 
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button type="submit">Save</md-button>
+            <md-button type="submit">{{::$i18n.block.dialog.saveFilter.submit}}</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>
