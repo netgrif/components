@@ -1,4 +1,156 @@
 
 define({
-    test:"Toto je testovací reťazec!"
+    test: "Toto je testovací reťazec!",
+    page: {
+        signIn: {
+            email: "Email",
+            psw: "Password",
+            forgotPsw: "Forgot password",
+            submit: "Sign In"
+        },
+        signUp: {
+            email: "Email",
+            psw: "Password",
+            retypePsw: "Retype password",
+            name: "First Name",
+            surname: "Last Name",
+            submit: "Sign Up"
+        },
+        dashboard: {
+            msg: "Stránka Dashboard už čoskoro"
+        },
+        tasks: {
+            tab: {
+                allTasks: "All Tasks",
+                myTasks: "My Tasks"
+            },
+            addTab: {
+                title: "New Tab",
+                label: "Label",
+                filters: "Filters",
+                submit: "Add Tab"
+            }
+        },
+        data: {
+            msg: "Stránka Data už čoskoro"
+        },
+        roles: {
+            tab: {
+                systemRoles: {
+
+                },
+                manageRoles: {
+                    this: "Manage Roles",
+                    label: "Petri Net",
+                    back: "Back",
+                    save: "Save"
+                }
+            }
+        },
+        workflow: {
+            msg: "Stránka Workflow už čoskoro",
+            uploadNet: "Upload Net",
+            createCase: "Create Case"
+        },
+        console: {
+            title: "Invite User",
+            email: "Email",
+            send: "Send Invite"
+        },
+        userProfile: {
+            title: "Profile",
+            msgPart1: "Your profile is",
+            msgPart2: "complete",
+            generalInfo: {
+                title: "General Information",
+                name: "First Name",
+                surname: "Last Name",
+                org: "Organization"
+            },
+            systemRoles: {
+                title: "System Roles"
+            },
+            workflowRoles: {
+                title: "Workflow Roles"
+            },
+            contactInfo: {
+                title: "Contact Information",
+                phone: "Phone Number",
+                email: "Email"
+            },
+            changePsw: "Change Password",
+            submit: "Update"
+        }
+    },
+    block: {
+        mainNav: {
+            dashboard: "Dashboard",
+            tasks: "Tasks",
+            data: "Data",
+            roles: "Roles",
+            workflow: "workflow",
+            adminConsole: "Admin Console"
+        },
+        mainMenu: {
+            notifications: "Notifications",
+            profile: "Profile",
+            lang: {
+                this: "Language",
+                en: "English",
+                sk: "slovak"
+            },
+            logout: "Logout"
+        },
+        taskFilter: {
+            process: "Process",
+            task: "Task",
+            save: "Save",
+            reset: "Reset"
+        },
+        taskHeader: {
+            id: "ID",
+            name: "Name",
+            priority: "Priority",
+            user: "User",
+            startDate: "Start Date",
+            status: "Status",
+            view: {
+                this: "View",
+                list: "List",
+                table: "Table"
+            }
+        },
+        task: {
+            assign: "Assign",
+            reassign: "Reassign",
+            saveData: "Save Data",
+            finish: "Finish",
+            cancel: "Cancel",
+            collapse: "Collapse",
+            noDataMsg: "There is no data for this task"
+        },
+        dialog: {
+            uploadNet: {
+                title: "Upload Net",
+                uploadBtn: "Choose a Net",
+                uploadHelp: "Requires XML file",
+                name: "Name",
+                initials: "Initials",
+                submit: "Upload"
+            },
+            createCase: {
+                title: "Create Case",
+                petriNet: "Petri Net",
+                name: "Name",
+                submit: "Create"
+            }
+        },
+        bottomSheet: {
+            user: "User",
+            assign: "Assign"
+        },
+        fab: {
+            tooltip: "Back to top"
+        }
+    }
 });
