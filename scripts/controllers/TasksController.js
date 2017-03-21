@@ -314,7 +314,10 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.loadTaskData = function (taskVisualId, callback) {
                         var taskIndex = findTaskByVisualId(taskVisualId);
-                        if (self.tabs[self.activeTab].resources[taskIndex].data) return;
+                        if (self.tabs[self.activeTab].resources[taskIndex].data){
+                            callback && callback();
+                            return;
+                        }
                         $http.get(self.tabs[self.activeTab].resources[taskIndex].$href("data")).then(function (response) {
                             $log.debug(response);
                             if (response.$response().data._embedded) {
@@ -326,6 +329,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                             item.newValue = parseDataValue(item.value, item.type);
                                             item.changed = false;
                                             item.taskIndex = taskIndex;
+                                            callback && callback();
                                             return item;
                                         });
                                         if (index == array.length - 1) {
