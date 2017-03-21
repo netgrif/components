@@ -107,7 +107,7 @@ define({
             reset: "Reset"
         },
         taskHeader: {
-            visualId: "ID",
+            case: "Prípad",
             name: "Meno",
             priority: "Priorita",
             user: "Vykonávateľ",
@@ -122,6 +122,7 @@ define({
         task: {
             assign: "Priraď",
             reassign: "Preraď",
+            delegate: "Delegovať",
             saveData: "Ulož Dáta",
             finish: "Dokonči",
             cancel: "Zruš",

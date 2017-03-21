@@ -97,7 +97,7 @@ define({
                 lang: {
                     this: "Language",
                     en: "English",
-                    sk: "slovak"
+                    sk: "Slovak"
                 },
                 logout: "Logout"
             },
@@ -108,7 +108,7 @@ define({
                 reset: "Reset"
             },
             taskHeader: {
-                visualId: "ID",
+                case: "Case",
                 name: "Name",
                 priority: "Priority",
                 user: "User",
@@ -129,8 +129,6 @@ define({
                 cancel: "Cancel",
                 collapse: "Collapse",
                 noDataMsg: "There is no data for this task",
-                process: "Process", //TODO: 21/3/2017 remove
-                task: "Task", //TODO: 21/3/2017 remove
                 notFound: "was not found :(",
                 priority: {
                     low: "Low",

@@ -53,10 +53,10 @@
 	<div class="tasks">
 		<md-card class="tasks-header" layout="column">
 			<md-card-content layout="row" layout-align="left center">
-				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('visualId')">
-					{{::$i18n.block.taskHeader.visualId}}
-					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'visualId' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
-				</a>
+                <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
+                    {{::$i18n.block.taskHeader.case}}
+                    <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'caseTitle' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+                </a>
 				<a flex="30" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
 					{{::$i18n.block.taskHeader.name}}
 					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'title' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
