@@ -1,8 +1,8 @@
 define(['angular', '../modules/Tasks', '../modules/Main'],
     function (angular) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet', '$fileUpload', '$scroll',
-                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet, $fileUpload, $scroll) {
+            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet', '$fileUpload','$mdExpansionPanelGroup','$mdExpansionPanel','$timeout', '$scroll',
+                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet, $fileUpload, $mdExpansionPanelGroup, $mdExpansionPanel, $timeout, $scroll) {
                     var self = this;
                     var statusOrder = {
                         New: 1,
@@ -57,6 +57,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         };
                     }
 
+                    function taskController($scope, task, parentController) {
+                        $scope.task = task;
+                        $scope.tasksCtrl = parentController;
+                    }
+
                     self.addTab = function (label, url, type) {
                         if (label && url) {
                             self.tabs.push(new Tab(label, url));
@@ -88,14 +93,14 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.tabChanged = function () {
-                        if (!self.tabs[self.activeTab].resources || self.tabs[self.activeTab].resources.length == 0) {
+                        if (!self.tabs[self.activeTab].resources || self.tabs[self.activeTab].resources.length === 0) {
                             self.loadTasks();
                         }
                     };
 
                     self.reloadAfterAction = function () {
                         self.tabs.forEach(function (tab, index) {
-                            if (index != self.activeTab && self.tabs[index].resources) {
+                            if (index !== self.activeTab && self.tabs[index].resources) {
                                 self.tabs[index].resources.splice(0, self.tabs[index].resources.length);
                             }
                         });
@@ -107,6 +112,26 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         return date.dayOfMonth + "." + date.monthValue + "." + date.year + " \n"
                             + date.hour + ":" + date.minute;
                     };
+
+                    function populateTaskGroup(tabIndex) {
+                        $timeout(function () {
+                            $log.debug("Populating tasks");
+                            let groupId = 'taskGroup-'+tabIndex;
+                            $mdExpansionPanelGroup(groupId).removeAll();
+                            self.tabs[tabIndex].resources.forEach((item, index) => {
+                                $mdExpansionPanelGroup(groupId).add({
+                                    templateUrl: 'views/app/tasks/task_panel',
+                                    controller: taskController,
+                                    locals: {
+                                        task: item,
+                                        parentController: self
+                                    }
+                                }).then(function (panelCtrl) {
+                                    $log.debug(panelCtrl);
+                                })
+                            });
+                        },1000);
+                    }
 
                     function loadTasksResource(url, tabIndex, searchData) {
                         $log.debug("loading tasks");
@@ -121,11 +146,14 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             response.$request().$get("tasks").then(function (resources) {
                                 self.tabs[tabIndex].resources = resources;
                                 $log.debug(self.tabs[tabIndex].resources);
+                                //populateTaskGroup(tabIndex);
                             }, function () {
                                 //$log.debug("Resource not found in " + self.tabs[tabIndex].label);
                                 $snackbar.info("Resource not found in " + self.tabs[tabIndex].label);
-                                if (self.tabs[tabIndex].resources)
+                                if (self.tabs[tabIndex].resources) {
                                     self.tabs[tabIndex].resources.splice(0, self.tabs[tabIndex].resources.length);
+                                    //$mdExpansionPanelGroup('taskGroup-'+tabIndex).removeAll();
+                                }
                             });
                         }, function () {
 							$snackbar.error("Tasks on " + url + " failed to load");

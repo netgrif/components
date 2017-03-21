@@ -14,11 +14,10 @@
             <div class="md-dialog-content" layout="column">
                 <div layout="row" layout-align="left center">
                     <md-button class="file-chooser" layout="row" layout-align="left center">
-                        <!--TODO: 15/3/2017 fix file input for new directive-->
-                        <input type="file" id="file" file-model="mFile">
+                        <input type="file" id="file" file-model="parentCtrl.netFile" file-change-callback="parentCtrl.netFileChanged" file-change-arg="parentCtrl.netFile">
                         <label for="file" layout="row" layout-align="left center">
                             <i class="material-icons">file_upload</i>
-                            <span>{{ $root.mFile ? $root.mFile.name : "Choose a net" }}</span>
+                            <span>{{ parentCtrl.netFile ? parentCtrl.netFileName : "Choose a net" }}</span>
                         </label>
                     </md-button>
                     <span flex></span>

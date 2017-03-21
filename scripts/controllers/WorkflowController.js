@@ -6,25 +6,31 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 
 			self.petriNetMeta = {};
 			self.newCase = {};
+			self.netFileName = undefined;
 
+			self.netFileChanged = function (file) {
+				if(!file) return;
+				self.netFileName = file.name;
+				self.netFile = file;
+            };
 
 			self.uploadPetriNet = function () {
-				if(!$rootScope.mFile){
-					$snackbar.show("No file was attached!");
+				if(!self.netFile){
+					$snackbar.error("No file was attached!");
 					return;
 				}
-				if($rootScope.mFile.type != "text/xml"){
-					$snackbar.show("File must have XML format!");
+				if(self.netFile.type != "text/xml"){
+					$snackbar.error("File must have XML format!");
 					return;
 				}
-				var file = $rootScope.mFile;
-				//console.dir(file);
+
+				//console.dir(self.netFile);
 				self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
-				var meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
-				$fileUpload.upload(file, meta, "/res/petrinet/import", function (response) {
+				let meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
+				$fileUpload.upload(self.netFile, meta, "/res/petrinet/import", function (response) {
 					if(response.success) $dialog.closeCurrent();
-					else $snackbar.show("Uploading Petri Net failed!");
-					$rootScope.mFile = undefined;
+					else $snackbar.error("Uploading Petri Net failed!");
+					self.netFile = undefined;
 					self.petriNetMeta = {};
 				});
 			};
