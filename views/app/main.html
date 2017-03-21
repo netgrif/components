@@ -30,10 +30,16 @@
 									</md-button>
 									<md-menu-content width="2">
 										<md-menu-item>
-											<md-button ng-click="$i18n.change('en-us')" ng-class="$i18n.current === 'en-us' ? 'locale-active' : ''">English</md-button>
+											<md-button ng-click="$i18n.change('en-us')" layout="row" layout-align="space-bettween center">
+												<span>English</span>
+												<i ng-if="$i18n.current() === 'en-us'" class="material-icons">keyboard_arrow_left</i>
+											</md-button>
 										</md-menu-item>
 										<md-menu-item>
-											<md-button ng-click="$i18n.change('sk-sk')" ng-class="$i18n.current === 'sk-sk' ? 'locale-active' : ''">Slovak</md-button>
+											<md-button ng-click="$i18n.change('sk-sk')" layout="row" layout-align="space-bettween center">
+												Slovak
+												<i ng-if="$i18n.current() === 'sk-sk'" class="material-icons">keyboard_arrow_left</i>
+											</md-button>
 										</md-menu-item>
 									</md-menu-content>
 								</md-menu>

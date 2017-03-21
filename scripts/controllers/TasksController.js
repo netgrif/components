@@ -1,8 +1,8 @@
 define(['angular', '../modules/Tasks', '../modules/Main'],
     function (angular) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet', '$fileUpload',
-                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet, $fileUpload) {
+            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet', '$fileUpload', '$scroll',
+                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet, $fileUpload, $scroll) {
                     var self = this;
                     var statusOrder = {
                         New: 1,
@@ -586,6 +586,20 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         self.tabs[self.activeTab].filter.selectedTransition.search = "";
                         self.tabs[self.activeTab].filter.selectedTransition.item = undefined;
                     };
+
+					self.scrollToTop = function () {
+                        $scroll.toTop();
+                        // $location.hash('top');
+                        // $anchorScroll();
+                        $log.debug("Back to top striggered");
+                    };
+
+                    // jQuery(window).scroll(function () {
+                    //     if (jQuery(this).scrollTop() >= 100)
+                    //         jQuery('.btn-to-top').fadeIn(200);
+                    //     else
+                    //         jQuery('.btn-to-top').fadeOut(200);
+                    // });
 
                     self.addTab("All Tasks", "/res/task", TAB_TYPE.ALL);
                     self.addTab("My Tasks", "/res/task/my", TAB_TYPE.MY);
