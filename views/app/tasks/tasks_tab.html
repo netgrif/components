@@ -4,21 +4,21 @@
 			<div layout="row" layout-align="left end">
 				<md-icon flex="5" class="material-icons md-primary">search</md-icon>
 				<form flex layout="row" ng-submit="tasksCtrl.search()">
-					<md-autocomplete class="md-block autocomplete" md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item" md-selected-item-change="tasksCtrl.processSearchChange(item)" md-items="item in tasksCtrl.queryProcesses()" md-item-text="item.title" md-min-length="0" md-no-cache="true" md-floating-label="Process">
+					<md-autocomplete class="md-block autocomplete" md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item" md-selected-item-change="tasksCtrl.processSearchChange(item)" md-items="item in tasksCtrl.queryProcesses()" md-item-text="item.title" md-min-length="0" md-no-cache="true" md-floating-label="{{::$i18n.block.taskFilter.process}}">
 						<md-item-template>
 							<span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-highlight-flags="i">{{item.title}}</span>
 						</md-item-template>
 						<md-not-found>
-							Process {{tasksCtrl.tabs[$index].filter.selectedProcess.search}} was not found :(
+							{{::$i18n.block.taskFilter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + ::$i18n.block.task.notFound}}
 						</md-not-found>
 					</md-autocomplete>
-					<md-autocomplete class="md-block autocomplete" md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search" md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item" md-selected-item-change="tasksCtrl.transitionSearchChange(item)" md-items="item in tasksCtrl.queryTransitions()" md-item-text="item.title" md-min-length="0" md-no-cache="true" md-floating-label="Task">
+					<md-autocomplete class="md-block autocomplete" md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search" md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item" md-selected-item-change="tasksCtrl.transitionSearchChange(item)" md-items="item in tasksCtrl.queryTransitions()" md-item-text="item.title" md-min-length="0" md-no-cache="true" md-floating-label="{{::$i18n.block.taskFilter.task}}">
 						<md-item-template>
 							<span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedTransition.search" md-highlight-flags="i">{{item.title}}
                             </span>
 						</md-item-template>
 						<md-not-found>
-							Task {{tasksCtrl.tabs[$index].filter.selectedTransition.search}} was not found :(
+							{{::$i18n.block.taskFilter.task + " " + tasksCtrl.tabs[$index].filter.selectedTransition.search + " " + ::$i18n.block.task.notFound}}
 						</md-not-found>
 					</md-autocomplete>
 				</form>
@@ -40,10 +40,10 @@
 				</md-button>
 				<md-menu-content>
 					<md-menu-item>
-						<md-button ng-click="tasksCtrl.showFilterDialog()">Save</md-button>
+						<md-button ng-click="tasksCtrl.showFilterDialog()">{{::$i18n.block.taskFilter.save}}</md-button>
 					</md-menu-item>
 					<md-menu-item>
-						<md-button ng-click="tasksCtrl.clearFilter()">Reset</md-button>
+						<md-button ng-click="tasksCtrl.clearFilter()">{{::$i18n.block.taskFilter.reset}}</md-button>
 					</md-menu-item>
 				</md-menu-content>
 			</md-menu>
@@ -54,40 +54,40 @@
 		<md-card class="tasks-header" layout="column">
 			<md-card-content layout="row" layout-align="left center">
 				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('visualId')">
-					ID
+					{{::$i18n.block.taskHeader.visualId}}
 					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'visualId' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
 				</a>
 				<a flex="30" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
-					Name
+					{{::$i18n.block.taskHeader.name}}
 					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'title' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
 				</a>
 				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
-					Priority
+					{{::$i18n.block.taskHeader.priority}}
 					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'priority' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
 				</a>
 				<a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('user.name')">
-					User
+					{{::$i18n.block.taskHeader.user}}
 					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'user.name' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
 				</a>
 				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
-					Start date
+					{{::$i18n.block.taskHeader.startDate}}
 					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'startDate' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
 				</a>
 				<a flex="10" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('status')">
-					Status
+					{{::$i18n.block.taskHeader.status}}
 					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'status' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
 				</a>
 				<md-menu>
 					<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
-						<md-tooltip md-direction="top">View</md-tooltip>
+						<md-tooltip md-direction="top">{{::$i18n.block.taskHeader.view.this}}</md-tooltip>
 						<md-icon class="material-icons">view_carousel</md-icon>
 					</md-button>
 					<md-menu-content>
 						<md-menu-item>
-							<md-button ng-click="tasksCtrl.changeView('list')">List</md-button>
+							<md-button ng-click="tasksCtrl.changeView('list')">{{::$i18n.block.taskHeader.view.list}}</md-button>
 						</md-menu-item>
 						<md-menu-item>
-							<md-button ng-click="tasksCtrl.changeView('table')" disabled>Table</md-button>
+							<md-button ng-click="tasksCtrl.changeView('table')" disabled>{{::$i18n.block.taskHeader.view.table}}</md-button>
 						</md-menu-item>
 					</md-menu-content>
 				</md-menu>

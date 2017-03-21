@@ -15,19 +15,19 @@
         </md-button>
         <md-menu-content>
             <md-menu-item ng-if="task.status === 'New' && $user.canAssign(task.assignRole)">
-                <md-button ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
+                <md-button ng-click="tasksCtrl.assignTask(task)">{{::$i18n.block.task.assign}}</md-button>
             </md-menu-item>
             <md-menu-item ng-if="task.status === 'New' && $user.canDelegate(task.delegateRole)">
-                <md-button ng-click="tasksCtrl.delegateTask(task)">Delegate</md-button>
+                <md-button ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.delegate}}</md-button>
             </md-menu-item>
             <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
-                <md-button ng-click="tasksCtrl.delegateTask(task)">Reassign</md-button>
+                <md-button ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.reassign}}</md-button>
             </md-menu-item>
             <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
-                <md-button ng-click="tasksCtrl.finishTask(task)">Finish</md-button>
+                <md-button ng-click="tasksCtrl.finishTask(task)">{{::$i18n.block.task.finish}}</md-button>
             </md-menu-item>
             <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
-                <md-button ng-click="tasksCtrl.cancelTask(task)">Cancel</md-button>
+                <md-button ng-click="tasksCtrl.cancelTask(task)">{{::$i18n.block.task.cancel}}</md-button>
             </md-menu-item>
         </md-menu-content>
     </md-menu>
@@ -55,17 +55,17 @@
             </md-grid-tile>
         </md-grid-list>
         <div layout="row" layout-align="center center" ng-if="!task.data">
-            <span>There is no data for this task</span>
+            <span>{{::$i18n.block.task.noDataMsg}}</span>
         </div>
     </md-expansion-panel-content>
     <md-expansion-panel-footer>
         <div flex></div>
-        <md-button ng-if="task.status === 'New' && $user.canAssign(task.assignRole)" ng-click="tasksCtrl.assignTask(task)">Assign</md-button>
-        <md-button ng-if="task.status === 'New' && $user.canDelegate(task.delegateRole)" ng-click="tasksCtrl.delegateTask(task)">Assign</md-button>
-        <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.delegateTask(task)">Reassign</md-button>
-        <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task)">Save Data</md-button>
-        <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task)">Finish</md-button>
-        <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.cancelTask(task)">Cancel</md-button>
-        <md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+        <md-button ng-if="task.status === 'New' && $user.canAssign(task.assignRole)" ng-click="tasksCtrl.assignTask(task)">{{::$i18n.block.task.assign}}</md-button>
+        <md-button ng-if="task.status === 'New' && $user.canDelegate(task.delegateRole)" ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.delegate}}</md-button>
+        <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.reassign}}</md-button>
+        <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task)">{{::$i18n.block.task.saveData}}</md-button>
+        <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task)">{{::$i18n.block.task.finish}}</md-button>
+        <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.cancelTask(task)">{{::$i18n.block.task.cancel}}</md-button>
+        <md-button class="md-primary" ng-click="$panel.collapse()">{{::$i18n.block.task.collapse}}</md-button>
     </md-expansion-panel-footer>
 </md-expansion-panel-expanded>

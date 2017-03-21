@@ -123,6 +123,7 @@ define({
             task: {
                 assign: "Assign",
                 reassign: "Reassign",
+                delegate: "Delegovať",
                 saveData: "Save Data",
                 finish: "Finish",
                 cancel: "Cancel",
