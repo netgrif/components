@@ -1,12 +1,10 @@
-/**
- * Created by Milan on 14.2.2017.
- */
+
 define(['angular','../modules/Tasks'],function (angular) {
     angular.module('ngTasks').directive('taskPriority',
-        function ($compile, $log) {
-            var low = '<i class="material-icons color-fg-green-500">arrow_downward</i>Low';
-            var medium = '<i class="material-icons color-fg-amber-500">arrow_upward</i> Medium';
-            var high = '<i class="material-icons color-fg-red-500">arrow_upward</i> High';
+        function ($compile, $i18n) {
+            var low = '<i class="material-icons color-fg-green-500">arrow_downward</i> '+$i18n.block.task.priority.low;
+            var medium = '<i class="material-icons color-fg-amber-500">arrow_upward</i> '+$i18n.block.task.priority.medium;
+            var high = '<i class="material-icons color-fg-red-500">arrow_upward</i> '+$i18n.block.task.priority.high;
 
             var getTemplate = function(priority) {
                 switch (priority){

@@ -29,11 +29,11 @@ define(['angular', '../modules/Main'], function (angular) {
             },
 
             canDelegate: function (delegateRole) {
-                if(!user.roles || !delegateRole) return;
+                if(!user.roles || !delegateRole) return false;
                 return user.roles.includes(delegateRole);
             },
             canAssign: function (assignRole) {
-                if(!user.roles || !assignRole) return;
+                if(!user.roles || !assignRole) return false;
                 return user.roles.includes(assignRole);
             }
         };

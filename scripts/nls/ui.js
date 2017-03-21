@@ -129,9 +129,14 @@ define({
                 cancel: "Cancel",
                 collapse: "Collapse",
                 noDataMsg: "There is no data for this task",
-                process: "Process",
-                task: "Task",
-                notFound: "was not found :("
+                process: "Process", //TODO: 21/3/2017 remove
+                task: "Task", //TODO: 21/3/2017 remove
+                notFound: "was not found :(",
+                priority: {
+                    low: "Low",
+                    medium: "Medium",
+                    high: "High"
+                }
             },
             dialog: {
                 uploadNet: {
