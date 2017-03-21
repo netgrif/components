@@ -1,161 +1,163 @@
 define({
-    'root': {
-        test: "This is test string!",
-        page: {
-            signIn: {
-                email: "Email",
-                psw: "Password",
-                forgotPsw: "Forgot password",
-                submit: "Sign In"
+    test: "Toto je testovací string!",
+    page: {
+        signIn: {
+            email: "Email",
+            psw: "Heslo",
+            forgotPsw: "Zabudnuté heslo",
+            submit: "Prihlásiť sa"
+        },
+        signUp: {
+            email: "Email",
+            psw: "Heslo",
+            retypePsw: "Heslo znovu",
+            name: "Meno",
+            surname: "Priezvisko",
+            submit: "Registruj"
+        },
+        dashboard: {
+            msg: "Na stránke Dashboard sa pracuje"
+        },
+        tasks: {
+            tab: {
+                allTasks: "Všetky úlohy",
+                myTasks: "Moje úlohy"
             },
-            signUp: {
-                email: "Email",
-                psw: "Password",
-                retypePsw: "Retype password",
-                name: "First Name",
-                surname: "Last Name",
-                submit: "Sign Up"
-            },
-            dashboard: {
-                msg: "Dashboard page coming soon"
-            },
-            tasks: {
-                tab: {
-                    allTasks: "All Tasks",
-                    myTasks: "My Tasks"
-                },
-                addTab: {
-                    title: "New Tab",
-                    label: "Label",
-                    filters: "Filters",
-                    submit: "Add Tab"
-                }
-            },
-            data: {
-                msg: "Data page coming soon"
-            },
-            roles: {
-                tab: {
-                    systemRoles: {
-                        this: "System Roles"
-                    },
-                    manageRoles: {
-                        this: "Process Roles",
-                        label: "Petri Net",
-                        back: "Back",
-                        save: "Save"
-                    }
-                }
-            },
-            workflow: {
-                msg: "Workflow page coming soon",
-                uploadNet: "Upload Net",
-                createCase: "Create Case"
-            },
-            console: {
-                title: "Invite User",
-                email: "Email",
-                submit: "Send Invite"
-            },
-            userProfile: {
-                title: "Profile",
-                msgPart1: "Your profile is",
-                msgPart2: "complete",
-                generalInfo: {
-                    title: "General Information",
-                    name: "First Name",
-                    surname: "Last Name",
-                    org: "Organization"
-                },
-                systemRoles: {
-                    title: "System Roles"
-                },
-                workflowRoles: {
-                    title: "Workflow Roles"
-                },
-                contactInfo: {
-                    title: "Contact Information",
-                    phone: "Phone Number",
-                    email: "Email"
-                },
-                changePsw: "Change Password",
-                submit: "Update"
+            addTab: {
+                title: "Nová záložka",
+                label: "Názov",
+                filters: "Filtre",
+                submit: "Pridať záložku"
             }
         },
-        block: {
-            mainNav: {
-                dashboard: "Dashboard",
-                tasks: "Tasks",
-                data: "Data",
-                roles: "Roles",
-                workflow: "Workflow",
-                console: "Admin Console"
-            },
-            mainMenu: {
-                notifications: "Notifications",
-                profile: "Profile",
-                lang: {
-                    this: "Language",
-                    en: "English",
-                    sk: "slovak"
+        data: {
+            msg: "Na stránke Dáta sa pracuje"
+        },
+        roles: {
+            tab: {
+                systemRoles: {
+                    this: "Systémové Role"
                 },
-                logout: "Logout"
-            },
-            taskFilter: {
-                process: "Process",
-                task: "Task",
-                save: "Save",
-                reset: "Reset"
-            },
-            taskHeader: {
-                visualId: "ID",
-                name: "Name",
-                priority: "Priority",
-                user: "User",
-                startDate: "Start Date",
-                status: "Status",
-                view: {
-                    this: "View",
-                    list: "List",
-                    table: "Table"
+                manageRoles: {
+                    this: "Procesné Role",
+                    label: "Petriho sieť",
+                    back: "Späť",
+                    save: "Uložiť"
                 }
-            },
-            task: {
-                assign: "Assign",
-                reassign: "Reassign",
-                saveData: "Save Data",
-                finish: "Finish",
-                cancel: "Cancel",
-                collapse: "Collapse",
-                noDataMsg: "There is no data for this task",
-                process: "Process",
-                task: "Task",
-                notFound: "was not found :("
-            },
-            dialog: {
-                uploadNet: {
-                    title: "Upload Net",
-                    uploadBtn: "Choose a Net",
-                    uploadHelp: "Requires XML file",
-                    name: "Name",
-                    initials: "Initials",
-                    submit: "Upload"
-                },
-                createCase: {
-                    title: "Create Case",
-                    petriNet: "Petri Net",
-                    name: "Name",
-                    submit: "Create"
-                }
-            },
-            bottomSheet: {
-                user: "User",
-                assign: "Assign"
-            },
-            fab: {
-                tooltip: "Back to top"
             }
+        },
+        workflow: {
+            msg: "Na stránke Workflow sa pracuje",
+            uploadNet: "Nahraj Sieť",
+            createCase: "Vytvor Prípad"
+        },
+        console: {
+            title: "Pozvi Používateľa",
+            email: "Email",
+            submit: "Pošli Pozvánku"
+        },
+        userProfile: {
+            title: "Profil",
+            msgPart1: "Tvoj profil je",
+            msgPart2: "kompletný",
+            generalInfo: {
+                title: "Všeobecné Informácie",
+                name: "Meno",
+                surname: "Priezvisko",
+                org: "Organizácia"
+            },
+            systemRoles: {
+                title: "Systémové Role"
+            },
+            workflowRoles: {
+                title: "Procesné Role"
+            },
+            contactInfo: {
+                title: "Kontaktné Informácie",
+                phone: "Telefónne Číslo",
+                email: "Email"
+            },
+            changePsw: "Zmeň Heslo",
+            submit: "Ulož"
         }
     },
-    'sk-sk':true
+    block: {
+        mainNav: {
+            dashboard: "Dashboard",
+            tasks: "Úlohy",
+            data: "Dáta",
+            roles: "Role",
+            workflow: "Workflow",
+            console: "Správcovská Konzola"
+        },
+        mainMenu: {
+            notifications: "Notifikácie",
+            profile: "Profil",
+            lang: {
+                this: "Jazyk",
+                en: "English",
+                sk: "Slovenčina"
+            },
+            logout: "Odhlásiť sa"
+        },
+        taskFilter: {
+            process: "Proces",
+            task: "Úloha",
+            save: "Uložiť",
+            reset: "Reset"
+        },
+        taskHeader: {
+            visualId: "ID",
+            name: "Meno",
+            priority: "Priorita",
+            user: "Vykonávateľ",
+            startDate: "Dátum Začiatku",
+            status: "Status",
+            view: {
+                this: "Náhlaď",
+                list: "Zoznam",
+                table: "Tabuľka"
+            }
+        },
+        task: {
+            assign: "Priraď",
+            reassign: "Preraď",
+            saveData: "Ulož Dáta",
+            finish: "Dokonči",
+            cancel: "Zruš",
+            collapse: "Zbaľ",
+            noDataMsg: "Pre túto úlohu neexistujú dáta",
+            process: "Proces",
+            task: "Úloha",
+            notFound: "nebol/a nájdený/á :(",
+            priority: {
+                low: "Nízska",
+                medium: "Stredná",
+                high: "Vysoká"
+            }
+        },
+        dialog: {
+            uploadNet: {
+                title: "Nahraj Sieť",
+                uploadBtn: "Vyber Sieť",
+                uploadHelp: "Požaduje sa XML súbor",
+                name: "Názov",
+                initials: "Iniciály",
+                submit: "Nahraj"
+            },
+            createCase: {
+                title: "Vytvor Prípad",
+                petriNet: "Petriho Sieť",
+                name: "Názov",
+                submit: "Vytvor"
+            }
+        },
+        bottomSheet: {
+            user: "Používateľ",
+            assign: "Priraď"
+        },
+        fab: {
+            tooltip: "Spät nahor"
+        }
+    }
 });
