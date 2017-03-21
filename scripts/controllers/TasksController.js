@@ -261,8 +261,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         $log.debug("Finishing task " + task.title + " to " + $user.name);
 
                         if (!task.data) {
-                            let taskIndex = self.tabs[self.activeTab].resources.findIndex(el => el.visualId == task.visualId);
-                            self.loadTaskData(taskIndex, () => {
+                            self.loadTaskData(task.visualId, () => {
                                 if (!task.data) {
                                     taskFinish(task);
                                 } else {
@@ -290,7 +289,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     function findTaskByVisualId(visualId) {
-                        return self.tabs[self.activeTab].resources.findIndex(item => item.visualId == visualId);
+                        return self.tabs[self.activeTab].resources.findIndex(item => item.visualId === visualId);
                     }
 
                     function parseDataValue(value, type) {
