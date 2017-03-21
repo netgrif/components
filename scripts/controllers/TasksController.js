@@ -380,7 +380,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                             callback && callback(true);
                         }, function () {
-                            $log.debug("Saving data fields failed!");
+                            $snackbar.error("Saving data has failed!");
                             callback && callback(false);
                         });
                     };

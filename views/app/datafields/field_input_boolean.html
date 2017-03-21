@@ -10,7 +10,8 @@
             <md-switch class="md-primary"
                        ng-model="field.newValue"
                        ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
-                       ng-disabled="!(task.user.email == $user.login && field.logic.editable)">
+                       ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
+                       ng-blur="tasksCtrl.saveData(task)">
                 {{field.name}}
             </md-switch>
         </md-input-container>
