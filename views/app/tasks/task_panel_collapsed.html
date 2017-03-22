@@ -1,5 +1,5 @@
 <p flex="15" layout="row" layout-align="left center">
-    <i class="material-icons {{task.caseColor}}">label</i> {{task.visualId}}
+    <i class="material-icons {{task.caseColor}}">label</i> {{task.caseTitle}}
 </p>
 <p flex="30">{{task.title}}</p>
 <task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
@@ -8,7 +8,7 @@
 </p>
 <p flex="15">{{tasksCtrl.formatDate(task.startDate)}}</p>
 <p flex="10">{{tasksCtrl.getStatus(task); task.status}}</p>
-<md-menu>
+<md-menu ng-if="task.status !== 'Assigned'">
     <md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
         <md-icon class="material-icons">more_vert</md-icon>
     </md-button>

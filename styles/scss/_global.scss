@@ -3,6 +3,7 @@ body {
 	min-height: 100%;
 }
 
+// Custom global classes
 .stop-scrolling {
 	height: 100%;
 	overflow: hidden;
@@ -11,6 +12,64 @@ body {
 .img-responsive {
 	width: 100%;
 	height: auto;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+// Floating Action Button alignment
+.fab {
+
+	&-top {
+
+		&-left {
+			top: 40px !important;
+			bottom: auto;
+			left: 40px !important;
+			right: auto;
+		}
+
+		&-right {
+			top: 40px !important;
+			bottom: auto;
+			left: auto;
+			right: 40px !important;
+		}
+	}
+
+	&-bottom {
+
+		&-left {
+			top: auto;
+			bottom: 60px !important;
+			left: 40px !important;
+			right: auto;
+		}
+
+		&-right {
+			top: auto;
+			bottom: 60px !important;
+			left: auto;
+			right: 40px !important;
+		}
+	}
+}
+
+// Positions
+.position {
+
+	&-relative {
+		position: relative !important;
+	}
+
+	&-absolute {
+		position: absolute !important;
+	}
+
+	&-fixed {
+		position: fixed !important;
+	}
 }
 
 // Layout

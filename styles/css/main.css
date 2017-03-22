@@ -138,6 +138,10 @@
   color: rgba(0, 0, 0, 0.38);
 }
 
+.color-fg-grey-light {
+  color: rgba(0, 0, 0, 0.38);
+}
+
 .color-bg-success {
   background-color: #4CAF50 !important;
 }
@@ -275,6 +279,10 @@
 }
 
 .color-bg-material-grey-text {
+  background-color: rgba(0, 0, 0, 0.38);
+}
+
+.color-bg-grey-light {
   background-color: rgba(0, 0, 0, 0.38);
 }
 
@@ -426,6 +434,50 @@ body {
 .img-responsive {
   width: 100%;
   height: auto;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.fab-top-left {
+  top: 40px !important;
+  bottom: auto;
+  left: 40px !important;
+  right: auto;
+}
+
+.fab-top-right {
+  top: 40px !important;
+  bottom: auto;
+  left: auto;
+  right: 40px !important;
+}
+
+.fab-bottom-left {
+  top: auto;
+  bottom: 60px !important;
+  left: 40px !important;
+  right: auto;
+}
+
+.fab-bottom-right {
+  top: auto;
+  bottom: 60px !important;
+  left: auto;
+  right: 40px !important;
+}
+
+.position-relative {
+  position: relative !important;
+}
+
+.position-absolute {
+  position: absolute !important;
+}
+
+.position-fixed {
+  position: fixed !important;
 }
 
 .layout-vh-100 {

@@ -15,7 +15,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 				name: undefined,
 				surname: undefined
 			};
-			self.retypedPassword = false;
+			self.retypedPassword = "";
 
 			self.viewLoaded = function () {
 				if (dataLoadingStarted) return;

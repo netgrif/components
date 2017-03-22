@@ -30,7 +30,10 @@ $color-grey-900: 				#212121;
 $color-blue-grey-50: 			#ECEFF1;
 
 // Material text
-$color-material-grey-text:		rgba(0, 0, 0, 0.38);
+$color-material-grey-text:		rgba(0, 0, 0, .38);
+
+// Menu
+$color-grey-light:				rgba(158, 158, 158, .2);
 
 // Other
 $color-blue-grey-500:			#607D8B;
@@ -216,6 +219,10 @@ $color-error:					#F44336;
 				color: $color-material-grey-text;
 			}
 		}
+
+		&-grey-light {
+				color: $color-material-grey-text;
+		}
 	}
 	
 	&-bg {
@@ -385,6 +392,10 @@ $color-error:					#F44336;
 			&-text {
 				background-color: $color-material-grey-text;
 			}
+		}
+
+		&-grey-light {
+				background-color: $color-material-grey-text;
 		}
 
 		&-transparent {

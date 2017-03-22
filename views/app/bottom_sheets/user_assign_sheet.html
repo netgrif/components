@@ -5,13 +5,13 @@
 				<md-icon flex="5" class="material-icons md-primary">search</md-icon>
 				<form flex layout="row">
 					<md-input-container class="md-block">
-						<label>User</label>
+						<label>{{::$i18n.block.bottomSheet.user}}</label>
 						<input type="text" ng-model="sheetCtrl.searched" ng-change="sheetCtrl.filterUsers()">
 					</md-input-container>
 				</form>
 			</div>
 			<div layout="row" layout-align="left center">
-				<md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>
+				<md-icon flex="5" class="material-icons md-primary">check_box</md-icon>
 				<md-chips flex>
 					<md-chip>
 						<md-icon class="material-icons {{task.caseColor}}">label</md-icon> {{task.visualId}}
@@ -26,7 +26,7 @@
 			</div>
 		</div>
 		<div layout="column" layout-align="center center">
-			<md-button flex="10" ng-click="sheetCtrl.assignTask()">Assign</md-button>
+			<md-button flex="10" ng-click="sheetCtrl.assignTask()">{{::$i18n.block.bottomSheet.assign}}</md-button>
 		</div>
 	</div>
 	<md-divider flex></md-divider>

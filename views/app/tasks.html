@@ -1,5 +1,12 @@
 <div ng-cloak layout-xs id="bottomsheet-parent">
     <div class="background-header background-welcome"></div>
+
+    <md-button class="md-fab md-primary md-mini position-fixed fab-bottom-right btn-to-top"
+               ng-click="tasksCtrl.scrollToTop()">
+        <md-tooltip md-direction="top">{{::$i18n.block.fab.tooltip}}</md-tooltip>
+        <md-icon class="material-icons">arrow_upward</md-icon>
+    </md-button>
+
     <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="tasksCtrl.activeTab">
         <md-tab ng-repeat="tab in tasksCtrl.tabs" label="{{tab.label}}" md-on-select="tasksCtrl.tabChanged()">
             <div ng-include="'views/app/tasks/tasks_tab.html'"></div>
@@ -14,22 +21,21 @@
                         <form ng-submit="tasksCtrl.addTab()">
                             <md-card-title>
                                 <md-card-title-text>
-                                    <span class="md-headline">New tab</span>
+                                    <span class="md-headline">{{::$i18n.page.tasks.addTab.title}}</span>
                                 </md-card-title-text>
                             </md-card-title>
                             <md-card-content>
                                 <md-input-container class="md-block">
-                                    <label>Label</label>
+                                    <label>{{::$i18n.page.tasks.addTab.label}}</label>
                                     <input type="text" ng-model="tasksCtrl.newTab.label" required>
                                 </md-input-container>
                                 <md-radio-group ng-model="tasksCtrl.newTab.filter" required>
                                     <md-list flex>
-                                        <md-subheader>Filters</md-subheader>
+                                        <md-subheader>{{::$i18n.page.tasks.addTab.filters}}</md-subheader>
                                         <md-list-item class="md-3-line"
                                                       ng-repeat="filter in tasksCtrl.global.availableFilters"
                                                       ng-click="null">
-                                            <md-radio-button ng-value="filter.filter"
-                                                             class="md-primary" flex>
+                                            <md-radio-button ng-value="filter.filter" class="md-primary" flex>
                                                 <div class="md-list-item-text" layout="column">
                                                     <h3>{{filter.name}}</h3>
                                                     <h4>{{filter.access}}</h4>
@@ -51,7 +57,7 @@
                                 </md-radio-group>
                             </md-card-content>
                             <md-card-actions layout="row" layout-align="end center">
-                                <md-button type="submit">Add tab</md-button>
+                                <md-button type="submit">{{::$i18n.page.tasks.addTab.submit}}</md-button>
                             </md-card-actions>
                         </form>
                     </md-card>

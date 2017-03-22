@@ -3,7 +3,7 @@
  */
 define(['angular','../modules/Main'],function (angular) {
     angular.module('ngMain').factory('$style' , function () {
-        var el = angular.element;
+        let el = angular.element;
 
         return {
             mainView: function () {
@@ -19,6 +19,11 @@ define(['angular','../modules/Main'],function (angular) {
 					marginLeft: '-1px',
 					fontSize: '15px'
 				});
+
+                el('.btn-menu > span').css({
+                    marginLeft: '-1px',
+                    fontSize: '15px'
+                });
             }
         };
     });

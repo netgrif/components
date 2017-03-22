@@ -1,8 +1,8 @@
 define(['angular', '../modules/Tasks', '../modules/Main'],
     function (angular) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet', '$fileUpload',
-                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet, $fileUpload) {
+            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet', '$fileUpload','$mdExpansionPanelGroup','$mdExpansionPanel','$timeout', '$scroll',
+                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet, $fileUpload, $mdExpansionPanelGroup, $mdExpansionPanel, $timeout, $scroll) {
                     var self = this;
                     var statusOrder = {
                         New: 1,
@@ -57,6 +57,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         };
                     }
 
+                    function taskController($scope, task, parentController) {
+                        $scope.task = task;
+                        $scope.tasksCtrl = parentController;
+                    }
+
                     self.addTab = function (label, url, type) {
                         if (label && url) {
                             self.tabs.push(new Tab(label, url));
@@ -88,14 +93,14 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.tabChanged = function () {
-                        if (!self.tabs[self.activeTab].resources || self.tabs[self.activeTab].resources.length == 0) {
+                        if (!self.tabs[self.activeTab].resources || self.tabs[self.activeTab].resources.length === 0) {
                             self.loadTasks();
                         }
                     };
 
                     self.reloadAfterAction = function () {
                         self.tabs.forEach(function (tab, index) {
-                            if (index != self.activeTab && self.tabs[index].resources) {
+                            if (index !== self.activeTab && self.tabs[index].resources) {
                                 self.tabs[index].resources.splice(0, self.tabs[index].resources.length);
                             }
                         });
@@ -107,6 +112,26 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         return date.dayOfMonth + "." + date.monthValue + "." + date.year + " \n"
                             + date.hour + ":" + date.minute;
                     };
+
+                    function populateTaskGroup(tabIndex) {
+                        $timeout(function () {
+                            $log.debug("Populating tasks");
+                            let groupId = 'taskGroup-'+tabIndex;
+                            $mdExpansionPanelGroup(groupId).removeAll();
+                            self.tabs[tabIndex].resources.forEach((item, index) => {
+                                $mdExpansionPanelGroup(groupId).add({
+                                    templateUrl: 'views/app/tasks/task_panel',
+                                    controller: taskController,
+                                    locals: {
+                                        task: item,
+                                        parentController: self
+                                    }
+                                }).then(function (panelCtrl) {
+                                    $log.debug(panelCtrl);
+                                })
+                            });
+                        },1000);
+                    }
 
                     function loadTasksResource(url, tabIndex, searchData) {
                         $log.debug("loading tasks");
@@ -121,11 +146,14 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             response.$request().$get("tasks").then(function (resources) {
                                 self.tabs[tabIndex].resources = resources;
                                 $log.debug(self.tabs[tabIndex].resources);
+                                //populateTaskGroup(tabIndex);
                             }, function () {
                                 //$log.debug("Resource not found in " + self.tabs[tabIndex].label);
                                 $snackbar.info("Resource not found in " + self.tabs[tabIndex].label);
-                                if (self.tabs[tabIndex].resources)
+                                if (self.tabs[tabIndex].resources) {
                                     self.tabs[tabIndex].resources.splice(0, self.tabs[tabIndex].resources.length);
+                                    //$mdExpansionPanelGroup('taskGroup-'+tabIndex).removeAll();
+                                }
                             });
                         }, function () {
 							$snackbar.error("Tasks on " + url + " failed to load");
@@ -216,10 +244,12 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     function areFieldsValid(task) {
                         let valid = task.data.every(item => {
-                            if (item.type == 'file') {
-                                if(!!item.newFile) return !!item.uploaded;
+                            if (item.type === 'file') {
+                                if(item.newFile) return !!item.uploaded;
                                 return !!item.newValue;
-                            } else return !!item.newValue
+                            } else if(item.type === 'boolean'){
+                                return true;
+                            } else return item.logic.editable ? !!item.newValue: true;
                         });
                         if (!valid) {
                             let error = "Not all fields have values! Finish task aborted!";
@@ -233,8 +263,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         $log.debug("Finishing task " + task.title + " to " + $user.name);
 
                         if (!task.data) {
-                            let taskIndex = self.tabs[self.activeTab].resources.findIndex(el => el.visualId == task.visualId);
-                            self.loadTaskData(taskIndex, () => {
+                            self.loadTaskData(task.visualId, () => {
                                 if (!task.data) {
                                     taskFinish(task);
                                 } else {
@@ -262,7 +291,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     function findTaskByVisualId(visualId) {
-                        return self.tabs[self.activeTab].resources.findIndex(item => item.visualId == visualId);
+                        return self.tabs[self.activeTab].resources.findIndex(item => item.visualId === visualId);
                     }
 
                     function parseDataValue(value, type) {
@@ -286,7 +315,10 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.loadTaskData = function (taskVisualId, callback) {
                         var taskIndex = findTaskByVisualId(taskVisualId);
-                        if (self.tabs[self.activeTab].resources[taskIndex].data) return;
+                        if (self.tabs[self.activeTab].resources[taskIndex].data){
+                            callback && callback();
+                            return;
+                        }
                         $http.get(self.tabs[self.activeTab].resources[taskIndex].$href("data")).then(function (response) {
                             $log.debug(response);
                             if (response.$response().data._embedded) {
@@ -298,6 +330,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                             item.newValue = parseDataValue(item.value, item.type);
                                             item.changed = false;
                                             item.taskIndex = taskIndex;
+                                            callback && callback();
                                             return item;
                                         });
                                         if (index == array.length - 1) {
@@ -347,7 +380,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                             callback && callback(true);
                         }, function () {
-                            $log.debug("Saving data fields failed!");
+                            $snackbar.error("Saving data has failed!");
                             callback && callback(false);
                         });
                     };
@@ -586,6 +619,20 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         self.tabs[self.activeTab].filter.selectedTransition.search = "";
                         self.tabs[self.activeTab].filter.selectedTransition.item = undefined;
                     };
+
+					self.scrollToTop = function () {
+                        $scroll.toTop();
+                        // $location.hash('top');
+                        // $anchorScroll();
+                        $log.debug("Back to top striggered");
+                    };
+
+                    // jQuery(window).scroll(function () {
+                    //     if (jQuery(this).scrollTop() >= 100)
+                    //         jQuery('.btn-to-top').fadeIn(200);
+                    //     else
+                    //         jQuery('.btn-to-top').fadeOut(200);
+                    // });
 
                     self.addTab("All Tasks", "/res/task", TAB_TYPE.ALL);
                     self.addTab("My Tasks", "/res/task/my", TAB_TYPE.MY);

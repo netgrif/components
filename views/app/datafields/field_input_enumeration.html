@@ -8,7 +8,10 @@
     <md-card-content layout="column" layout-align="center center">
         <md-input-container class="md-block" flex>
             <label>{{field.name}}</label>
-            <md-select ng-model="field.newValue" ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)" ng-disabled="!(task.user.email == $user.login && field.logic.editable)">
+            <md-select ng-model="field.newValue"
+                       ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
+                       ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
+                       ng-blur="tasksCtrl.saveData(task)">
                 <md-option ng-repeat="choice in field.choices" ng-value="choice">
                     {{choice}}
                 </md-option>
