@@ -132,7 +132,7 @@ define({
             task: "Úloha",
             notFound: "nebol/a nájdený/á :(",
             priority: {
-                low: "Nízska",
+                low: "Nízka",
                 medium: "Stredná",
                 high: "Vysoká"
             }
