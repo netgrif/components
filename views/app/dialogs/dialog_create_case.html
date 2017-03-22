@@ -26,7 +26,7 @@
                 </md-input-container>
                 <md-input-container>
                     <label>Label color</label>
-                    <md-select ng-model="parentCtrl.newCase.color" required>
+                    <md-select ng-model="parentCtrl.newCase.color" ng-change="this.blur()" required>
                         <md-option value="color-fg-fm-500" selected>
 							<span>
                                 <md-icon class="material-icons color-fg-fm-500">fiber_manual_record</md-icon>
