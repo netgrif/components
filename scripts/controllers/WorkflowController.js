@@ -65,5 +65,9 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 			self.showDialog = function (template) {
 				$dialog.showByTemplate(template, self);
 			};
+
+			self.clickElement = function (elementId) {
+				//angular.element("#"+elementId).click();
+            }
     }]);
 });
