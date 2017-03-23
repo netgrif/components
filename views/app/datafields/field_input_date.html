@@ -12,7 +12,8 @@
                            ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
                            ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
                            ng-blur="tasksCtrl.saveData(task)"
-                           md-open-on-focus></md-datepicker>
+                           md-open-on-focus
+                           ng-required="field.logic.required"></md-datepicker>
         </md-input-container>
     </md-card-content>
 </md-card>

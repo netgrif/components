@@ -242,17 +242,25 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         });
                     }
 
+                    /**
+                     * Check if are required fields are valid before finish task
+                     * @param task
+                     * @returns {boolean}
+                     */
                     function areFieldsValid(task) {
                         let valid = task.data.every(item => {
-                            if (item.type === 'file') {
-                                if(item.newFile) return !!item.uploaded;
-                                return !!item.newValue;
-                            } else if(item.type === 'boolean'){
-                                return true;
-                            } else return item.logic.editable ? !!item.newValue: true;
+                            if(item.logic.required){
+                                if (item.type === 'file') {
+                                    if(item.newFile) return !!item.uploaded;
+                                    return !!item.newValue;
+                                } else if(item.type === 'boolean'){
+                                    return true;
+                                } else return !!item.newValue;
+
+                            } else return true;
                         });
                         if (!valid) {
-                            let error = "Not all fields have values! Finish task aborted!";
+                            const error = "Not all required fields have values! Required fields are marked with asterisk (*)";
                             $log.debug(error);
                             $snackbar.show(error);
                         }
@@ -355,6 +363,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     function autoPlusLogic(fieldIndex, taskIndex) {
                         const logic = self.tabs[self.activeTab].resources[taskIndex].data[fieldIndex].logic.autoPlus;
                         const refField = self.tabs[self.activeTab].resources[taskIndex].data.find(item => item.objectId === logic.ref);
+                        if(!refField.newValue) return;
 
                         let autoValue;
                         if(refField.type === 'text'){

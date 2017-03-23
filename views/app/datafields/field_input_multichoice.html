@@ -11,7 +11,8 @@
             <md-select ng-model="field.newValue" multiple
                        ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
                        ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
-                       ng-blur="tasksCtrl.saveData(task)">
+                       ng-blur="tasksCtrl.saveData(task)"
+                       ng-required="field.logic.required">
                 <md-option ng-repeat="choice in field.choices" ng-value="choice">
                     {{choice}}
                 </md-option>

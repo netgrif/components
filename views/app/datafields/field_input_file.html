@@ -21,7 +21,11 @@
     </md-card-content>
     <md-card-actions layout="row" layout-align="end center">
         <md-button class="file-chooser" layout="row" layout-align="left center" ng-if="task.user.email == $user.login && field.logic.editable">
-            <input type="file" id="file" file-model="field.file" file-change-callback="fileModelChange" file-change-arg="field">
+            <input type="file" id="file"
+                   file-model="field.file"
+                   file-change-callback="fileModelChange"
+                   file-change-arg="field"
+                   ng-required="field.logic.required">
             <label for="file" layout="row" layout-align="left center">
                 <md-icon class="material-icons">note_add</md-icon>
                 <span>New file</span>
