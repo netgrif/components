@@ -169,7 +169,8 @@ define({
             },
             bottomSheet: {
                 user: "User",
-                assign: "Assign"
+                assign: "Assign",
+                title: "Delegate task to user"
             },
             fab: {
                 tooltip: "Back to top"

@@ -170,7 +170,8 @@ define({
         },
         bottomSheet: {
             user: "Používateľ",
-            assign: "Priraď"
+            assign: "Priraď",
+            title: "Priraď úlohu používateľovi"
         },
         fab: {
             tooltip: "Spät nahor"

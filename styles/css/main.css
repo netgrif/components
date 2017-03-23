@@ -877,3 +877,21 @@ body {
   padding: 8px 16px 88px;
   z-index: 70;
 }
+
+.base md-expansion-panel md-expansion-panel-collapsed {
+  min-height: 24px !important;
+  line-height: 24px !important;
+  padding: 0 12px !important;
+}
+
+.base md-expansion-panel-header .md-expansion-panel-header-container {
+  min-height: 24px !important;
+  line-height: 24px !important;
+  padding: 0 12px !important;
+}
+
+.base md-expansion-panel-footer .md-expansion-panel-footer-container {
+  min-height: 24px !important;
+  line-height: 24px !important;
+  padding: 0 12px !important;
+}

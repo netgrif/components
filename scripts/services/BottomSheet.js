@@ -11,6 +11,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                     controller: controller,
                     controllerAs: controllerAs,
                     locals: {task: task},
+                    //TODO: 23/3/2017 bottom sheet temporary replaced with dialog
                     parent: "#bottomsheet-parent"
                 });
             }

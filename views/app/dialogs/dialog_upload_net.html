@@ -1,4 +1,4 @@
-<md-dialog aria-label="Upload Net">
+<md-dialog aria-label="{{::$root.$i18n.block.dialog.uploadNet.title}}">
     <form name="petriNetUploadForm" ng-submit="parentCtrl.uploadPetriNet()">
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -42,8 +42,7 @@
             </div>
         </md-dialog-content>
 
-        <md-dialog-actions layout="row">
-            <span flex></span>
+        <md-dialog-actions layout="row" layout-align="end center">
             <md-button type="submit">{{::$root.$i18n.block.dialog.uploadNet.submit}}</md-button>
         </md-dialog-actions>
     </form>

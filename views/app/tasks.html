@@ -1,11 +1,11 @@
 <div ng-cloak layout-xs id="bottomsheet-parent">
     <div class="background-header background-welcome"></div>
 
-    <md-button class="md-fab md-primary md-mini position-fixed fab-bottom-right btn-to-top"
-               ng-click="tasksCtrl.scrollToTop()">
-        <md-tooltip md-direction="top">{{::$i18n.block.fab.tooltip}}</md-tooltip>
-        <md-icon class="material-icons">arrow_upward</md-icon>
-    </md-button>
+    <!--<md-button class="md-fab md-primary md-mini position-fixed fab-bottom-right btn-to-top"-->
+               <!--ng-click="tasksCtrl.scrollToTop()">-->
+        <!--<md-tooltip md-direction="top">{{::$i18n.block.fab.tooltip}}</md-tooltip>-->
+        <!--<md-icon class="material-icons">arrow_upward</md-icon>-->
+    <!--</md-button>-->
 
     <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="tasksCtrl.activeTab">
         <md-tab ng-repeat="tab in tasksCtrl.tabs" label="{{tab.label}}" md-on-select="tasksCtrl.tabChanged()">
