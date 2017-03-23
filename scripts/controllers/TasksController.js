@@ -352,16 +352,63 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         self.tabs[self.activeTab].resources[taskIndex].data[fieldIndex].changed = true;
                     };
 
+                    function autoPlusLogic(fieldIndex, taskIndex) {
+                        const logic = self.tabs[self.activeTab].resources[taskIndex].data[fieldIndex].logic.autoPlus;
+                        const refField = self.tabs[self.activeTab].resources[taskIndex].data.find(item => item.objectId === logic.ref);
+
+                        let autoValue;
+                        if(refField.type === 'text'){
+                            autoValue = refField.newValue + logic.value;
+                        } else if(refField.type === 'number'){
+                            autoValue = refField.newValue + logic.value;
+                        } else if(refField.type === 'date'){
+                            const mode = logic.value.charAt(logic.value.length-1);
+                            const addValue = parseInt(logic.value.substr(0,logic.value.length-1));
+                            if(addValue == 'NaN') return;
+                            autoValue = new Date(refField.newValue.getTime());
+                            switch (mode){
+                                case 'd':
+                                    autoValue.setDate(autoValue.getDate()+addValue);
+                                    break;
+                                case 'm':
+                                    autoValue.setMonth(autoValue.getMonth()+addValue); //TODO: 23/3/2017 handle if month value overflow
+                                    break;
+                                case 'y':
+                                    autoValue.setFullYear(autoValue.getFullYear()+addValue);
+                                    break;
+                            }
+                        }
+
+                        if(autoValue){
+                            self.dataFieldChanged(taskIndex, fieldIndex);
+                            self.tabs[self.activeTab].resources[taskIndex].data[fieldIndex].newValue = autoValue;
+                        }
+                    }
+
+                    function applyFieldLogic(field, index) {
+                        if(!field.logic) return;
+                        Object.keys(field.logic).forEach(item => {
+                            switch (item){
+                                case "autoPlus":
+                                    autoPlusLogic(index,field.taskIndex);
+                                    break;
+                            }
+                        });
+                    }
+
                     self.saveData = function (task, callback) {
                         if (!task.data) return;
 
                         var dataFields = {};
-                        task.data.forEach(function (item) {
+                        task.data.forEach((item, index) => {
+                            applyFieldLogic(item, index);
+                        });
+                        task.data.forEach(function (item, index) {
                             if (item.changed) {
                                 dataFields[item.objectId] = {
                                     type: item.type,
                                     value: formatDataValue(item.newValue, item.type)
-                                }
+                                };
                             }
                         });
 
@@ -532,6 +579,10 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         switch (self.tabs[self.activeTab].sort.field) {
                             case 'visualId':
                                 order = visualIdOrder(task.visualId);
+                                break;
+                            case 'username':
+                                if (task.user)
+                                    order = task.user.name + task.user.surname;
                                 break;
                             case 'status':
                                 order = statusOrder[task.status];
