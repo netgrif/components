@@ -65,7 +65,7 @@
 					{{::$i18n.block.taskHeader.priority}}
 					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'priority' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
 				</a>
-				<a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('user.name')">
+				<a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('username')">
 					{{::$i18n.block.taskHeader.user}}
 					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'user.name' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
 				</a>

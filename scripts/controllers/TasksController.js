@@ -580,8 +580,9 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             case 'visualId':
                                 order = visualIdOrder(task.visualId);
                                 break;
-                            case 'user.name':
-                                order = task.user.name + task.user.surname;
+                            case 'username':
+                                if (task.user)
+                                    order = task.user.name + task.user.surname;
                                 break;
                             case 'status':
                                 order = statusOrder[task.status];
