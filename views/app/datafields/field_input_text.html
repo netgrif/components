@@ -1,11 +1,11 @@
 <md-card flex>
-    <md-card-title>
+    <md-card-title layout="row" layout-align="left center" class="padding-left-no padding-right-no">
         <md--card-title-text>
-            <span class="md-headline">{{field.name}}</span>
-            <span class="md-subhead">{{field.description}}</span>
+            <span>{{field.name}}</span>
+            <span>{{field.description}}</span>
         </md--card-title-text>
     </md-card-title>
-    <md-card-content layout="column" layout-align="center center">
+    <md-card-content layout="column" layout-align="center center" class="padding-no">
         <md-input-container class="md-block" flex>
             <label>{{field.name}}</label>
             <input type="text" ng-model="field.newValue"

@@ -67,5 +67,9 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 				}
 			};
 
+			self.fireInfoSnackbar = function (msg) {
+                $snackbar.info(msg);
+            }
+
     }]);
 });

@@ -306,6 +306,11 @@
   margin: 16px;
 }
 
+.margin-vertical-no {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .margin-vertical-default {
   margin-top: 8px;
   margin-bottom: 8px;
@@ -314,6 +319,11 @@
 .margin-vertical-2x {
   margin-top: 16px;
   margin-bottom: 16px;
+}
+
+.margin-horizontal-no {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .margin-horizontal-default {
@@ -326,12 +336,20 @@
   margin-right: 16px;
 }
 
+.margin-top-no {
+  margin-top: 0;
+}
+
 .margin-top-default {
   margin-top: 8px;
 }
 
 .margin-top-2x {
   margin-top: 16px;
+}
+
+.margin-bottom-no {
+  margin-bottom: 0;
 }
 
 .margin-bottom-default {
@@ -342,12 +360,20 @@
   margin-bottom: 16px;
 }
 
+.margin-left-no {
+  margin-left: 0;
+}
+
 .margin-left-default {
   margin-left: 8px;
 }
 
 .margin-left-2x {
   margin-left: 16px;
+}
+
+.margin-right-no {
+  margin-right: 0;
 }
 
 .margin-right-default {
@@ -370,6 +396,11 @@
   padding: 16px;
 }
 
+.padding-vertical-no {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .padding-vertical-default {
   padding-top: 8px;
   padding-bottom: 8px;
@@ -378,6 +409,11 @@
 .padding-vertical-2x {
   padding-top: 16px;
   padding-bottom: 16px;
+}
+
+.padding-horizontal-no {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .padding-horizontal-default {
@@ -390,12 +426,20 @@
   padding-right: 16px;
 }
 
+.padding-top-no {
+  padding-top: 0;
+}
+
 .padding-top-default {
   padding-top: 8px;
 }
 
 .padding-top-2x {
   padding-top: 16px;
+}
+
+.padding-bottom-no {
+  padding-bottom: 0;
 }
 
 .padding-bottom-default {
@@ -406,12 +450,20 @@
   padding-bottom: 16px;
 }
 
+.padding-left-no {
+  padding-left: 0;
+}
+
 .padding-left-default {
   padding-left: 8px;
 }
 
 .padding-left-2x {
   padding-left: 16px;
+}
+
+.padding-right-no {
+  padding-right: 0;
 }
 
 .padding-right-default {
@@ -654,7 +706,7 @@ body {
 
 .base .background-header {
   position: absolute;
-  height: 185px;
+  height: 175px;
   width: 100%;
   top: 48px;
 }
@@ -737,7 +789,7 @@ body {
 }
 
 .base .tasks .tasks-header {
-  min-height: 80px;
+  height: 56px;
   margin: 0;
   padding-left: 24px;
   padding-right: 24px;

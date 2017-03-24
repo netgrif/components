@@ -341,6 +341,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                             callback && callback();
                                             return item;
                                         });
+                                        //TODO: 23/3/2017 check expansion footer rendering in PROD, if no problem found remove sleep
+                                        $timeout(function () {}, 100);
                                         if (index == array.length - 1) {
                                             callback && callback();
                                         }

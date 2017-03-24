@@ -22,6 +22,11 @@ $dim-2x:						2*$dim-default;
 
 	&-vertical {
 
+		&-no {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+
 		&-default {
 			margin-top: $dim-default;
 			margin-bottom: $dim-default;
@@ -34,6 +39,11 @@ $dim-2x:						2*$dim-default;
 	}
 
 	&-horizontal {
+
+		&-no {
+			margin-left: 0;
+			margin-right: 0;
+		}
 
 		&-default {
 			margin-left: $dim-default;
@@ -48,6 +58,10 @@ $dim-2x:						2*$dim-default;
 
 	&-top {
 
+		&-no {
+			margin-top: 0;
+		}
+
 		&-default {
 			margin-top: $dim-default;
 		}
@@ -58,6 +72,10 @@ $dim-2x:						2*$dim-default;
 	}
 
 	&-bottom {
+
+		&-no {
+			margin-bottom: 0;
+		}
 
 		&-default {
 			margin-bottom: $dim-default;
@@ -70,6 +88,10 @@ $dim-2x:						2*$dim-default;
 
 	&-left {
 
+		&-no {
+			margin-left: 0;
+		}
+
 		&-default {
 			margin-left: $dim-default;
 		}
@@ -80,6 +102,10 @@ $dim-2x:						2*$dim-default;
 	}
 
 	&-right {
+
+		&-no {
+			margin-right: 0;
+		}
 
 		&-default {
 			margin-right: $dim-default;
@@ -108,6 +134,11 @@ $dim-2x:						2*$dim-default;
 
 	&-vertical {
 
+		&-no {
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
 		&-default {
 			padding-top: $dim-default;
 			padding-bottom: $dim-default;
@@ -120,6 +151,11 @@ $dim-2x:						2*$dim-default;
 	}
 
 	&-horizontal {
+
+		&-no {
+			padding-left: 0;
+			padding-right: 0;
+		}
 
 		&-default {
 			padding-left: $dim-default;
@@ -134,6 +170,10 @@ $dim-2x:						2*$dim-default;
 
 	&-top {
 
+		&-no {
+			padding-top: 0;
+		}
+
 		&-default {
 			padding-top: $dim-default;
 		}
@@ -144,6 +184,10 @@ $dim-2x:						2*$dim-default;
 	}
 
 	&-bottom {
+
+		&-no {
+			padding-bottom: 0;
+		}
 
 		&-default {
 			padding-bottom: $dim-default;
@@ -156,6 +200,10 @@ $dim-2x:						2*$dim-default;
 
 	&-left {
 
+		&-no {
+			padding-left: 0;
+		}
+
 		&-default {
 			padding-left: $dim-default;
 		}
@@ -166,6 +214,10 @@ $dim-2x:						2*$dim-default;
 	}
 
 	&-right {
+
+		&-no {
+			padding-right: 0;
+		}
 
 		&-default {
 			padding-right: $dim-default;
