@@ -67,7 +67,7 @@
 				</a>
 				<a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('username')">
 					{{::$i18n.block.taskHeader.user}}
-					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'user.name' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+					<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'username' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
 				</a>
 				<a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
 					{{::$i18n.block.taskHeader.startDate}}
