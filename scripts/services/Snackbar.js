@@ -46,7 +46,10 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
 				if (msg) {
 					buildSnackbar(msg, successTemplate, delay);
 				}
-			}
+			},
+            hide: function () {
+                $mdToast.hide();
+            }
         };
     });
 

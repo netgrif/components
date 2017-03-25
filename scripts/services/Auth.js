@@ -1,6 +1,6 @@
 
 define(['angular','angularRoute','../modules/Main'],function (angular) {
-    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user) {
+    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user, $snackbar) {
         var auth = {
             authenticated: false,
 
@@ -81,6 +81,7 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                         auth.authenticated = false;
                         $user.clear();
                     }
+                    $snackbar.hide();
                 });
             },
             isLoginPath: function () {
