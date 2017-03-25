@@ -1,8 +1,8 @@
 define(['angular', '../modules/Tasks', '../modules/Main'],
     function (angular) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$bottomSheet', '$fileUpload','$mdExpansionPanelGroup','$mdExpansionPanel','$timeout', '$scroll',
-                function ($log, $scope, $http, $user, $snackbar, $dialog, $bottomSheet, $fileUpload, $mdExpansionPanelGroup, $mdExpansionPanel, $timeout, $scroll) {
+            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$mdExpansionPanel', '$timeout', '$scroll',
+                function ($log, $scope, $http, $user, $snackbar, $dialog, $fileUpload, $mdExpansionPanelGroup, $mdExpansionPanel, $timeout, $scroll) {
                     var self = this;
                     var statusOrder = {
                         New: 1,
@@ -57,6 +57,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         };
                     }
 
+                    const paddingZero = text => {
+                        text = text.toString();
+                        return text.length <= 1 ? "0" + text : text;
+                    };
+
                     function taskController($scope, task, parentController) {
                         $scope.task = task;
                         $scope.tasksCtrl = parentController;
@@ -109,14 +114,14 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.formatDate = function (date) {
                         if (!date) return;
-                        return date.dayOfMonth + "." + date.monthValue + "." + date.year + " \n"
-                            + date.hour + ":" + date.minute;
+                        return paddingZero(date.dayOfMonth) + "." + paddingZero(date.monthValue) + "." + date.year + " \n"
+                            + paddingZero(date.hour) + ":" + paddingZero(date.minute);
                     };
 
                     function populateTaskGroup(tabIndex) {
                         $timeout(function () {
                             $log.debug("Populating tasks");
-                            let groupId = 'taskGroup-'+tabIndex;
+                            let groupId = 'taskGroup-' + tabIndex;
                             $mdExpansionPanelGroup(groupId).removeAll();
                             self.tabs[tabIndex].resources.forEach((item, index) => {
                                 $mdExpansionPanelGroup(groupId).add({
@@ -130,7 +135,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                     $log.debug(panelCtrl);
                                 })
                             });
-                        },1000);
+                        }, 1000);
                     }
 
                     function loadTasksResource(url, tabIndex, searchData) {
@@ -146,6 +151,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             response.$request().$get("tasks").then(function (resources) {
                                 self.tabs[tabIndex].resources = resources;
                                 $log.debug(self.tabs[tabIndex].resources);
+                                self.tabs[tabIndex].resources.forEach(resource => self.getStatus(resource));
                                 //populateTaskGroup(tabIndex);
                             }, function () {
                                 //$log.debug("Resource not found in " + self.tabs[tabIndex].label);
@@ -156,7 +162,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 }
                             });
                         }, function () {
-							$snackbar.error("Tasks on " + url + " failed to load");
+                            $snackbar.error("Tasks on " + url + " failed to load");
                             $log.debug("Tasks on " + url + " failed to load");
                         });
                     }
@@ -218,17 +224,16 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.delegateTask = function (task) {
-                        $bottomSheet.selectAssignUser(task).then(function (user) {
-                            if (user){
-                                $http.post(task.$href("delegate"),user.email).then(function (response) {
-                                    if(response.success) self.reloadAfterAction();
-                                    if(response.error) $snackbar.error(response.error);
-                                }, function () {
-                                    $log.debug("Delegating task "+task.visualId+" to user "+user.name+" failed!");
-                                });
-                            }
+                        $dialog.showByTemplate('assign_user', self, {task: task}).then(function (user) {
+                            if (!user) return;
+                            $http.post(task.$href("delegate"), user.email).then(function (response) {
+                                if (response.success) self.reloadAfterAction();
+                                else if (response.error) $snackbar.error(response.error);
+                            }, function () {
+                                $log.debug("Delegating task " + task.visualId + " to user " + user.name + " failed!");
+                            });
                         }, function () {
-                            //$log.debug("Bottom sheet canceled!");
+
                         });
                     };
 
@@ -249,11 +254,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                      */
                     function areFieldsValid(task) {
                         let valid = task.data.every(item => {
-                            if(item.logic.required){
+                            if (item.logic.required) {
                                 if (item.type === 'file') {
-                                    if(item.newFile) return !!item.uploaded;
+                                    if (item.newFile) return !!item.uploaded;
                                     return !!item.newValue;
-                                } else if(item.type === 'boolean'){
+                                } else if (item.type === 'boolean') {
                                     return true;
                                 } else return !!item.newValue;
 
@@ -313,9 +318,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     function formatDataValue(value, type) {
                         if (!value) return null;
-                        let padding = text => text.length <= 1 ? "0" + text : text;
                         if (type == 'date') {
-                            return value.getFullYear() + "-" + padding((value.getMonth() + 1) + "") + "-" + padding(value.getDate() + "");
+                            return value.getFullYear() + "-" + paddingZero((value.getMonth() + 1) + "") + "-" + paddingZero(value.getDate() + "");
                         } else {
                             return value;
                         }
@@ -323,7 +327,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.loadTaskData = function (taskVisualId, callback) {
                         var taskIndex = findTaskByVisualId(taskVisualId);
-                        if (self.tabs[self.activeTab].resources[taskIndex].data){
+                        if (self.tabs[self.activeTab].resources[taskIndex].data) {
                             callback && callback();
                             return;
                         }
@@ -342,7 +346,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                             return item;
                                         });
                                         //TODO: 23/3/2017 check expansion footer rendering in PROD, if no problem found remove sleep
-                                        $timeout(function () {}, 100);
+                                        $timeout(function () {
+                                        }, 100);
                                         if (index == array.length - 1) {
                                             callback && callback();
                                         }
@@ -365,43 +370,43 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     function autoPlusLogic(fieldIndex, taskIndex) {
                         const logic = self.tabs[self.activeTab].resources[taskIndex].data[fieldIndex].logic.autoPlus;
                         const refField = self.tabs[self.activeTab].resources[taskIndex].data.find(item => item.objectId === logic.ref);
-                        if(!refField.newValue) return;
+                        if (!refField.newValue) return;
 
                         let autoValue;
-                        if(refField.type === 'text'){
+                        if (refField.type === 'text') {
                             autoValue = refField.newValue + logic.value;
-                        } else if(refField.type === 'number'){
+                        } else if (refField.type === 'number') {
                             autoValue = refField.newValue + logic.value;
-                        } else if(refField.type === 'date'){
-                            const mode = logic.value.charAt(logic.value.length-1);
-                            const addValue = parseInt(logic.value.substr(0,logic.value.length-1));
-                            if(addValue == 'NaN') return;
+                        } else if (refField.type === 'date') {
+                            const mode = logic.value.charAt(logic.value.length - 1);
+                            const addValue = parseInt(logic.value.substr(0, logic.value.length - 1));
+                            if (addValue == 'NaN') return;
                             autoValue = new Date(refField.newValue.getTime());
-                            switch (mode){
+                            switch (mode) {
                                 case 'd':
-                                    autoValue.setDate(autoValue.getDate()+addValue);
+                                    autoValue.setDate(autoValue.getDate() + addValue);
                                     break;
                                 case 'm':
-                                    autoValue.setMonth(autoValue.getMonth()+addValue); //TODO: 23/3/2017 handle if month value overflow
+                                    autoValue.setMonth(autoValue.getMonth() + addValue); //TODO: 23/3/2017 handle if month value overflow
                                     break;
                                 case 'y':
-                                    autoValue.setFullYear(autoValue.getFullYear()+addValue);
+                                    autoValue.setFullYear(autoValue.getFullYear() + addValue);
                                     break;
                             }
                         }
 
-                        if(autoValue){
+                        if (autoValue) {
                             self.dataFieldChanged(taskIndex, fieldIndex);
                             self.tabs[self.activeTab].resources[taskIndex].data[fieldIndex].newValue = autoValue;
                         }
                     }
 
                     function applyFieldLogic(field, index) {
-                        if(!field.logic) return;
+                        if (!field.logic) return;
                         Object.keys(field.logic).forEach(item => {
-                            switch (item){
+                            switch (item) {
                                 case "autoPlus":
-                                    autoPlusLogic(index,field.taskIndex);
+                                    autoPlusLogic(index, field.taskIndex);
                                     break;
                             }
                         });
@@ -435,7 +440,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                     self.tabs[self.activeTab].resources[item.taskIndex].data[index].changed = false;
                                 }
                             });
-
+                            $snackbar.success("Data successfully saved");
                             callback && callback(true);
                         }, function () {
                             $snackbar.error("Saving data has failed!");
@@ -496,7 +501,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     }
 
                     function filterAutocomplete(search, storage) {
-                        // if (!search) return storage;
+                        if (!search) return storage;
                         search = search.toLowerCase();
                         return storage.filter(function (item) {
                             var text = item.title.toLowerCase();
@@ -549,6 +554,9 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             })) {
                             self.tabs[self.activeTab].filter.chips.push({type: 'transitions', title: item.title});
                             self.tabs[self.activeTab].filter.transitions.push(item);
+                            //clear input
+                            self.tabs[self.activeTab].filter.selectedTransition.search = undefined;
+                            self.tabs[self.activeTab].filter.selectedTransition.item = undefined;
                         }
                     };
 
@@ -576,7 +584,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     function visualIdOrder(visualId) {
                         let idParts = visualId.split('-');
                         let stringPartNum = 0;
-                        for(let i=0; i<idParts[0].length; i++){
+                        for (let i = 0; i < idParts[0].length; i++) {
                             stringPartNum += parseInt(idParts[0][i]);
                         }
                         //jQuery.each(idParts[0], (index, value) => stringPartNum += value.charCodeAt(0));
@@ -682,7 +690,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         self.tabs[self.activeTab].filter.selectedTransition.item = undefined;
                     };
 
-					self.scrollToTop = function () {
+                    self.scrollToTop = function () {
                         $scroll.toTop();
                         // $location.hash('top');
                         // $anchorScroll();
