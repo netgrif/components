@@ -79,7 +79,7 @@ define(['angular','angularMaterial','../modules/Main'],function (angular) {
                 }
             };
 
-			if($scope.opt.task) {
+			if($scope.opt && $scope.opt.task) {
                 self.loadUsers();
             }
 		}]);

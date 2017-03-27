@@ -622,27 +622,25 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     }
 
                     self.loadFilters = function () {
-                        if (self.global.availableFilters.length <= 0) {
-                            $http.get("/res/task/filter").then(function (response) {
-                                response.$request().$get("filters").then(function (resource) {
-                                    resource.forEach(function (item, index) {
-                                        self.global.availableFilters.push({
-                                            name: item.name,
-                                            access: resolveFilterAccess(item.organization, item.user),
-                                            filter: {
-                                                processes: item.petriNets,
-                                                transitions: item.transitions
-                                            }
-                                        });
+                        self.global.availableFilters.splice(0,self.global.availableFilters.length);
+                        $http.get("/res/task/filter").then(function (response) {
+                            response.$request().$get("filters").then(function (resource) {
+                                resource.forEach(function (item) {
+                                    self.global.availableFilters.push({
+                                        name: item.name,
+                                        access: resolveFilterAccess(item.organization, item.user),
+                                        filter: {
+                                            processes: item.petriNets,
+                                            transitions: item.transitions
+                                        }
                                     });
-
-                                }, function () {
-                                    $log.debug("Resource filters not found");
                                 });
                             }, function () {
-                                $log.debug("Cannot load filters");
+                                $log.debug("No filter resource found!");
                             });
-                        }
+                        }, function () {
+                            $snackbar.error("Cannot load filters!");
+                        });
                     };
 
                     self.showFilterDialog = function () {
