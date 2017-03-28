@@ -1,0 +1,30 @@
+<md-card flex>
+    <md-card-title layout="row" layout-align="left center" class="padding-left-no padding-right-no">
+        <md--card-title-text>
+            <span>{{field.name}}</span>
+            <span>{{field.description}}</span>
+        </md--card-title-text>
+    </md-card-title>
+    <md-card-content layout="row" layout-align="center center" class="padding-no">
+        <div ng-if="field.user" layout="row">
+            <md-icon class="md-avatar" layout="row" layout-align="center center">
+                <i class="material-icons color-fg-fm-500">account_circle</i>
+            </md-icon>
+            <div layout="column" layout-align="center center">
+                {{field.user.name}}
+                {{field.user.email}}
+            </div>
+        </div>
+        <div ng-if="!field.user">
+            <p>No user was chosen [none-i18n!]</p>
+        </div>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="end center" ng-if="task.user.email == $user.login && field.logic.editable">
+        <md-button ng-if="$user.canAssign(field.roles[0])" ng-click="tasksCtrl.userFieldChoice(field, $index, $user)">
+            Self [none-i18n!]
+        </md-button>
+        <md-button ng-click="tasksCtrl.userFieldChoice(field, $index)">
+            Choose user [none-i18n!]
+        </md-button>
+    </md-card-actions>
+</md-card>

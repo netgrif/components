@@ -307,22 +307,25 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         return self.tabs[self.activeTab].resources.findIndex(item => item.visualId === visualId);
                     }
 
-                    function parseDataValue(value, type) {
+                    function parseDataValue(value, type, item) {
                         if (type == 'date') {
                             if (value) return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
                             else return undefined;
-                        } else {
-                            return value;
                         }
+                        if (type == 'user') {
+                            //TODO: 28/3/2017 get user profile [on backend make endpoint for one user]
+                            if(value)
+                                item.user = {name: "", email: item.value};
+                        }
+                        return value;
                     }
 
                     function formatDataValue(value, type) {
                         if (!value) return null;
                         if (type == 'date') {
                             return value.getFullYear() + "-" + paddingZero((value.getMonth() + 1) + "") + "-" + paddingZero(value.getDate() + "");
-                        } else {
-                            return value;
                         }
+                        return value;
                     }
 
                     self.loadTaskData = function (taskVisualId, callback) {
@@ -339,7 +342,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                     response.$request().$get(item).then(function (resource) {
                                         self.tabs[self.activeTab].resources[taskIndex].data = self.tabs[self.activeTab].resources[taskIndex].data.concat(resource);
                                         self.tabs[self.activeTab].resources[taskIndex].data = self.tabs[self.activeTab].resources[taskIndex].data.map(function (item) {
-                                            item.newValue = parseDataValue(item.value, item.type);
+                                            item.newValue = parseDataValue(item.value, item.type, item);
                                             item.changed = false;
                                             item.taskIndex = taskIndex;
                                             callback && callback();
@@ -446,6 +449,30 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             $snackbar.error("Saving data has failed!");
                             callback && callback(false);
                         });
+                    };
+
+                    self.userFieldChoice = function (field, fieldIndex, user) {
+                        if (user) {
+                            self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].user = {
+                                name: user.name,
+                                email: user.login
+                            };
+                            self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = user.login;
+
+                            self.dataFieldChanged(field.taskIndex, fieldIndex);
+                            self.saveData(self.tabs[self.activeTab].resources[field.taskIndex]);
+                        } else {
+                            $dialog.showByTemplate('assign_user', self, {task: {assignRole: field.roles[0]}}).then(function (user) {
+                                if (!user) return;
+                                self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].user = user;
+                                self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = user.email;
+
+                                self.dataFieldChanged(field.taskIndex, fieldIndex);
+                                self.saveData(self.tabs[self.activeTab].resources[field.taskIndex]);
+                            }, function () {
+
+                            });
+                        }
                     };
 
                     $scope.fileModelChange = function (field) {
@@ -622,7 +649,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     }
 
                     self.loadFilters = function () {
-                        self.global.availableFilters.splice(0,self.global.availableFilters.length);
+                        self.global.availableFilters.splice(0, self.global.availableFilters.length);
                         $http.get("/res/task/filter").then(function (response) {
                             response.$request().$get("filters").then(function (resource) {
                                 resource.forEach(function (item) {
