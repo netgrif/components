@@ -4,7 +4,15 @@
 			<div layout="row" layout-align="left end">
 				<md-icon flex="5" class="material-icons md-primary">search</md-icon>
 				<form flex layout="row" ng-submit="tasksCtrl.search()">
-					<md-autocomplete class="md-block autocomplete" md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item" md-selected-item-change="tasksCtrl.processSearchChange(item)" md-items="item in tasksCtrl.queryProcesses()" md-item-text="item.title" md-min-length="0" md-no-cache="true" md-floating-label="{{::$i18n.block.taskFilter.process}}">
+					<md-autocomplete class="md-block autocomplete"
+									 md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search"
+									 md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item"
+									 md-selected-item-change="tasksCtrl.processSearchChange(item)"
+									 md-items="item in tasksCtrl.queryProcesses()"
+									 md-item-text="item.title"
+									 md-min-length="0"
+									 md-no-cache="true"
+									 md-floating-label="{{::$i18n.block.taskFilter.process}}">
 						<md-item-template>
 							<span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-highlight-flags="i">{{item.title}}</span>
 						</md-item-template>
@@ -12,7 +20,15 @@
 							{{::$i18n.block.taskFilter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.block.task.notFound}}
 						</md-not-found>
 					</md-autocomplete>
-					<md-autocomplete class="md-block autocomplete" md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search" md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item" md-selected-item-change="tasksCtrl.transitionSearchChange(item)" md-items="item in tasksCtrl.queryTransitions()" md-item-text="item.title" md-min-length="0" md-no-cache="true" md-floating-label="{{::$i18n.block.taskFilter.task}}">
+					<md-autocomplete class="md-block autocomplete"
+									 md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search"
+									 md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item"
+									 md-selected-item-change="tasksCtrl.transitionSearchChange(item)"
+									 md-items="item in tasksCtrl.queryTransitions()"
+									 md-item-text="item.title"
+									 md-min-length="0"
+									 md-no-cache="true"
+									 md-floating-label="{{::$i18n.block.taskFilter.task}}">
 						<md-item-template>
 							<span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedTransition.search" md-highlight-flags="i">{{item.title}}
                             </span>
@@ -21,11 +37,35 @@
 							{{::$i18n.block.taskFilter.task + " " + tasksCtrl.tabs[$index].filter.selectedTransition.search + " " + $i18n.block.task.notFound}}
 						</md-not-found>
 					</md-autocomplete>
+                    <md-autocomplete class="md-block autocomplete"
+                                     md-search-text="tasksCtrl.tabs[$index].filter.selectedField.search"
+                                     md-selected-item="tasksCtrl.tabs[$index].filter.selectedField.item"
+                                     md-selected-item-change="tasksCtrl.fieldSearchChange(item)"
+                                     md-items="item in tasksCtrl.queryFields()"
+                                     md-item-text="item.title"
+                                     md-min-length="0"
+                                     md-no-cache="true"
+                                     md-floating-label="Data Field">
+                        <md-item-template>
+							<span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedField.search" md-highlight-flags="i">{{item.title}}
+                            </span>
+                        </md-item-template>
+                        <md-not-found>
+                            {{::$i18n.block.taskFilter.task + " " + tasksCtrl.tabs[$index].filter.selectedField.search + " " + $i18n.block.task.notFound}}
+                        </md-not-found>
+                    </md-autocomplete>
+                    <md-input-container class="md-block">
+                        <label>Data Field Value</label>
+                        <input id="{{'field-value-input-'+$index}}" type="text" ng-model="tasksCtrl.tabs[$index].filter.selectedField.value"
+                                ng-keypress="$event.which === 13 ? tasksCtrl.fieldValueSelected():0">
+                    </md-input-container>
 				</form>
 			</div>
 			<div layout="row" layout-align="left center">
 				<md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>
-				<md-chips ng-model="tasksCtrl.tabs[$index].filter.chips" readonly="true" md-removable="true" md-on-remove="tasksCtrl.removeChip($chip)" id="chips-container" flex>
+				<md-chips ng-model="tasksCtrl.tabs[$index].filter.chips" readonly="true" md-removable="true"
+                          md-on-remove="tasksCtrl.removeChip($chip)"
+                          id="chips-container" flex>
 					<md-chip-template>
 						{{$chip.title}}
 						<!--<md-icon class="material-icons" ng-click="tasksCtrl.removeChip($index)">close</md-icon>-->
