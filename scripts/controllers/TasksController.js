@@ -527,6 +527,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 return endLoadAutocompleteItems(search, storage);
                             }, function () {
                                 $log.debug("Resource " + resourceName + " not found on url " + url);
+                                self.global.autocomplete[storage] = [];
                                 return endLoadAutocompleteItems(search, storage);
                             });
                         }, function (error) {
@@ -578,6 +579,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             return loadAutocompleteItems("post","/res/petrinet/transition/refs", ids, "transitionReferences", 'transitions',
                                 self.tabs[self.activeTab].filter.selectedTransition.search);
                         }
+                        if(self.tabs[self.activeTab].filter.processes.length <= 0) self.global.autocomplete.transitions = [];
                         return filterAutocomplete(self.tabs[self.activeTab].filter.selectedTransition.search, self.global.autocomplete.transitions);
                     };
 
@@ -613,6 +615,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             return loadAutocompleteItems("post","/res/petrinet/data/refs",{petriNets: netIds, transitions: transIds},"dataFieldReferences","fields",
                                 self.tabs[self.activeTab].filter.selectedField.search);
                         }
+                        if(self.tabs[self.activeTab].filter.transitions.length <= 0) self.global.autocomplete.fields = [];
                         return filterAutocomplete(self.tabs[self.activeTab].filter.selectedField.search, self.global.autocomplete.fields);
                     };
 
@@ -642,16 +645,44 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         }
                     };
 
+                    function rebuildChips(excludedIds = []) {
+                        self.tabs[self.activeTab].filter.chips = self.tabs[self.activeTab].filter.chips.filter(chip => !excludedIds.includes(chip.id));
+                    }
+
                     function removeFilterItem(chip) {
                         self.tabs[self.activeTab].filter[chip.type].some(function (item, index) {
                             if (item.entityId === chip.id) {
                                 self.tabs[self.activeTab].filter[chip.type].splice(index, 1);
                                 if (chip.type === 'processes'){
                                     self.tabs[self.activeTab].filter.processesDirty = true;
+                                    const excludes = [];
+                                    self.tabs[self.activeTab].filter.transitions = self.tabs[self.activeTab].filter.transitions.filter(trans => {
+                                        if(trans.petriNetId !== chip.id) return true;
+                                        else {
+                                            excludes.push(trans.entityId);
+                                            self.tabs[self.activeTab].filter.fields = self.tabs[self.activeTab].filter.fields.filter(field => {
+                                                if(field.transitionId !== trans.entityId) return true;
+                                                else {
+                                                    excludes.push(field.entityId);
+                                                    return false;
+                                                }
+                                            });
+                                            return false;
+                                        }
+                                    });
+                                    rebuildChips(excludes);
                                 }
                                 if (chip.type === 'transitions') {
                                     self.tabs[self.activeTab].filter.transitionsDirty = true;
-                                    self.tabs[self.activeTab].filter.fields = self.tabs[self.activeTab].filter.fields.filter(field => field.transitionId !== chip.id);
+                                    const excludes = [];
+                                    self.tabs[self.activeTab].filter.fields = self.tabs[self.activeTab].filter.fields.filter(field => {
+                                        if(field.transitionId !== chip.id) return true;
+                                        else {
+                                            excludes.push(field.entityId);
+                                            return false;
+                                        }
+                                    });
+                                    rebuildChips(excludes);
                                 }
                                 return true;
                             }
@@ -665,7 +696,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.setSortField = function (field) {
-                        self.tabs[self.activeTab].sort.reverse = self.tabs[self.activeTab].sort.field == field ? !self.tabs[self.activeTab].sort.reverse : false;
+                        self.tabs[self.activeTab].sort.reverse = self.tabs[self.activeTab].sort.field === field ? !self.tabs[self.activeTab].sort.reverse : false;
                         self.tabs[self.activeTab].sort.field = field;
                     };
 
