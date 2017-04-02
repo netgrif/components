@@ -194,21 +194,35 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             url = self.tabs[self.activeTab].baseUrl;
 
                         if (self.tabs[self.activeTab].filter.isEmpty()) {
-                            $log.debug("Search cannot start - Filter is empty");
+                            $snackbar.info("Search cannot start - Filter is empty");
                             return;
                         }
 
                         // $log.debug("Task search with filter:");
                         // $log.debug(self.tabs[self.activeTab].filter);
-                        var searchData = {
-                            petrinetIds: [],
-                            transitionIds: []
+                        let searchTier;
+                        if(self.tabs[self.activeTab].filter.processes.length > 0) searchTier = 1;
+                        if(self.tabs[self.activeTab].filter.transitions.length > 0) searchTier = 2;
+                        if(self.tabs[self.activeTab].filter.fields.length > 0) searchTier = 3;
+
+                        const searchData = {
+                            searchTier: searchTier,
+                            petriNets: []
                         };
-                        self.tabs[self.activeTab].filter.processes.forEach(function (item) {
-                            searchData.petrinetIds.push(item.entityId);
-                        });
-                        self.tabs[self.activeTab].filter.transitions.forEach(function (item) {
-                            searchData.transitionIds.push(item.entityId);
+                        self.tabs[self.activeTab].filter.processes.forEach(process => {
+                            const net = {
+                                petriNet: process.entityId,
+                                transitions: [],
+                                dataSet: {}
+                            };
+                            self.tabs[self.activeTab].filter.transitions.forEach(trans => {
+                                if(trans.petriNetId === process.entityId) net.transitions.push(trans.entityId);
+                            });
+                            self.tabs[self.activeTab].filter.fields.forEach(field => {
+                                if(field.petriNetId === process.entityId) net.dataSet[field.entityId] = field.value;
+                            });
+
+                            searchData.petriNets.push(net);
                         });
 
                         loadTasksResource(url, self.activeTab, searchData);

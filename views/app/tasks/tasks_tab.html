@@ -3,7 +3,7 @@
 		<div flex layout="column">
 			<div layout="row" layout-align="left end">
 				<md-icon flex="5" class="material-icons md-primary">search</md-icon>
-				<form flex layout="row" ng-submit="tasksCtrl.search()">
+				<form flex layout="row" ng-submit="">
 					<md-autocomplete class="md-block autocomplete"
 									 md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search"
 									 md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item"
@@ -74,19 +74,24 @@
 			</div>
 		</div>
 		<div layout="column" layout-align="center center">
-			<md-menu>
-				<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
-					<md-icon class="material-icons">more_vert</md-icon>
+			<div layout="row">
+				<md-button class="md-primary" ng-click="tasksCtrl.searchTasks()">
+				Search
 				</md-button>
-				<md-menu-content>
-					<md-menu-item>
-						<md-button ng-click="tasksCtrl.showFilterDialog()">{{::$i18n.block.taskFilter.save}}</md-button>
-					</md-menu-item>
-					<md-menu-item>
-						<md-button ng-click="tasksCtrl.clearFilter()">{{::$i18n.block.taskFilter.reset}}</md-button>
-					</md-menu-item>
-				</md-menu-content>
-			</md-menu>
+				<md-menu>
+					<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+						<md-icon class="material-icons">more_vert</md-icon>
+					</md-button>
+					<md-menu-content>
+						<md-menu-item>
+							<md-button ng-click="tasksCtrl.showFilterDialog()">{{::$i18n.block.taskFilter.save}}</md-button>
+						</md-menu-item>
+						<md-menu-item>
+							<md-button ng-click="tasksCtrl.clearFilter()">{{::$i18n.block.taskFilter.reset}}</md-button>
+						</md-menu-item>
+					</md-menu-content>
+				</md-menu>
+			</div>
 		</div>
 	</md-card>
 
