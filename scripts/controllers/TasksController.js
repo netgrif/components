@@ -23,7 +23,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         autocomplete: {
                             pending: false,
                             processes: [],
-                            transitions: []
+                            transitions: [],
+                            fields: []
                         },
                         availableFilters: []
                     };
@@ -38,6 +39,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             processes: [],
                             processesDirty: false,
                             transitions: [],
+                            transitionsDirty: false,
+                            fields: [],
                             chips: [],
                             selectedProcess: {
                                 search: "",
@@ -46,6 +49,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             selectedTransition: {
                                 search: "",
                                 item: undefined
+                            },
+                            selectedField: {
+                                search: "",
+                                item: undefined,
+                                value: undefined
                             },
                             isEmpty: function () {
                                 return this.chips.length <= 0;
@@ -186,21 +194,35 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             url = self.tabs[self.activeTab].baseUrl;
 
                         if (self.tabs[self.activeTab].filter.isEmpty()) {
-                            $log.debug("Search cannot start - Filter is empty");
+                            $snackbar.info("Search cannot start - Filter is empty");
                             return;
                         }
 
                         // $log.debug("Task search with filter:");
                         // $log.debug(self.tabs[self.activeTab].filter);
-                        var searchData = {
-                            petrinetIds: [],
-                            transitionIds: []
+                        let searchTier;
+                        if(self.tabs[self.activeTab].filter.processes.length > 0) searchTier = 1;
+                        if(self.tabs[self.activeTab].filter.transitions.length > 0) searchTier = 2;
+                        if(self.tabs[self.activeTab].filter.fields.length > 0) searchTier = 3;
+
+                        const searchData = {
+                            searchTier: searchTier,
+                            petriNets: []
                         };
-                        self.tabs[self.activeTab].filter.processes.forEach(function (item) {
-                            searchData.petrinetIds.push(item.entityId);
-                        });
-                        self.tabs[self.activeTab].filter.transitions.forEach(function (item) {
-                            searchData.transitionIds.push(item.entityId);
+                        self.tabs[self.activeTab].filter.processes.forEach(process => {
+                            const net = {
+                                petriNet: process.entityId,
+                                transitions: [],
+                                dataSet: {}
+                            };
+                            self.tabs[self.activeTab].filter.transitions.forEach(trans => {
+                                if(trans.petriNetId === process.entityId) net.transitions.push(trans.entityId);
+                            });
+                            self.tabs[self.activeTab].filter.fields.forEach(field => {
+                                if(field.petriNetId === process.entityId) net.dataSet[field.entityId] = field.value;
+                            });
+
+                            searchData.petriNets.push(net);
                         });
 
                         loadTasksResource(url, self.activeTab, searchData);
@@ -510,14 +532,16 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         return filterAutocomplete(search, self.global.autocomplete[storage]);
                     }
 
-                    function loadAutocompleteItems(url, resourceName, storage, search) {
+                    function loadAutocompleteItems(method, url, data, resourceName, storage, search) {
                         self.global.autocomplete.pending = true;
-                        return $http.get(url).then(function (response) {
+                        const httpPromise = method === 'post' ? $http.post(url,data) : $http.get(url);
+                        return httpPromise.then(function (response) {
                             return response.$request().$get(resourceName).then(function (resource) {
                                 self.global.autocomplete[storage] = resource;
                                 return endLoadAutocompleteItems(search, storage);
                             }, function () {
                                 $log.debug("Resource " + resourceName + " not found on url " + url);
+                                self.global.autocomplete[storage] = [];
                                 return endLoadAutocompleteItems(search, storage);
                             });
                         }, function (error) {
@@ -531,14 +555,14 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (!search) return storage;
                         search = search.toLowerCase();
                         return storage.filter(function (item) {
-                            var text = item.title.toLowerCase();
+                            const text = item.title.toLowerCase();
                             return text.startsWith(search);
                         });
                     }
 
                     self.queryProcesses = function () {
-                        if (!self.global.autocomplete.pending && self.global.autocomplete.processes.length == 0) {
-                            return loadAutocompleteItems("/res/petrinet/refs", "petriNetReferences", 'processes',
+                        if (!self.global.autocomplete.pending && self.global.autocomplete.processes.length === 0) {
+                            return loadAutocompleteItems("get","/res/petrinet/refs", undefined,"petriNetReferences", 'processes',
                                 self.tabs[self.activeTab].filter.selectedProcess.search);
                         }
                         return filterAutocomplete(self.tabs[self.activeTab].filter.selectedProcess.search, self.global.autocomplete.processes);
@@ -549,28 +573,27 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (!self.tabs[self.activeTab].filter.processes.some(function (el) {
                                 return el.entityId === item.entityId;
                             })) {
-                            self.tabs[self.activeTab].filter.chips.push({type: 'processes', title: item.title});
+                            self.tabs[self.activeTab].filter.chips.push({type: 'processes', title: item.title, id: item.entityId});
                             self.tabs[self.activeTab].filter.processes.push(item);
                             self.tabs[self.activeTab].filter.processesDirty = true;
                         }
                     };
 
                     function canLoadTransitions() {
-                        var p = self.tabs[self.activeTab].filter.processes.length > 0 &&
+                        const p = self.tabs[self.activeTab].filter.processes.length > 0 &&
                             self.tabs[self.activeTab].filter.processesDirty;
-                        var t = self.global.autocomplete.transitions.length <= 0;
+                        const t = self.global.autocomplete.transitions.length <= 0;
                         return (t && p) || p;
                     }
 
                     self.queryTransitions = function () {
                         if (canLoadTransitions() && !self.global.autocomplete.pending) {
-                            var ids = self.tabs[self.activeTab].filter.processes.map(function (item) {
-                                return item.entityId;
-                            }).toString();
+                            const ids = self.tabs[self.activeTab].filter.processes.map(item => item.entityId);
                             self.tabs[self.activeTab].filter.processesDirty = false;
-                            return loadAutocompleteItems("/res/petrinet/transition/refs/" + ids, "transitionReferences", 'transitions',
+                            return loadAutocompleteItems("post","/res/petrinet/transition/refs", ids, "transitionReferences", 'transitions',
                                 self.tabs[self.activeTab].filter.selectedTransition.search);
                         }
+                        if(self.tabs[self.activeTab].filter.processes.length <= 0) self.global.autocomplete.transitions = [];
                         return filterAutocomplete(self.tabs[self.activeTab].filter.selectedTransition.search, self.global.autocomplete.transitions);
                     };
 
@@ -579,19 +602,102 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (!self.tabs[self.activeTab].filter.transitions.some(function (el) {
                                 return el.entityId === item.entityId;
                             })) {
-                            self.tabs[self.activeTab].filter.chips.push({type: 'transitions', title: item.title});
+                            self.tabs[self.activeTab].filter.chips.push({type: 'transitions', title: item.title, id: item.entityId});
                             self.tabs[self.activeTab].filter.transitions.push(item);
+                            self.tabs[self.activeTab].filter.transitionsDirty = true;
                             //clear input
-                            self.tabs[self.activeTab].filter.selectedTransition.search = undefined;
+                            self.tabs[self.activeTab].filter.selectedTransition.search = "";
                             self.tabs[self.activeTab].filter.selectedTransition.item = undefined;
                         }
                     };
 
+                    function canLoadFields() {
+                        const t = self.tabs[self.activeTab].filter.transitions.length > 0 &&
+                                self.tabs[self.activeTab].filter.transitionsDirty;
+                        const f = self.global.autocomplete.fields.length <= 0;
+                        return (t && f) || t;
+                    }
+
+                    self.queryFields = function () {
+                        if(canLoadFields() && !self.global.autocomplete.pending){
+                            const netIds = [];
+                            self.tabs[self.activeTab].filter.transitions.forEach(item => {
+                                if(!netIds.includes(item.petriNetId)) netIds.push(item.petriNetId);
+                            });
+                            const transIds = self.tabs[self.activeTab].filter.transitions.map(item => item.entityId);
+                            self.tabs[self.activeTab].filter.transitionsDirty = false;
+                            return loadAutocompleteItems("post","/res/petrinet/data/refs",{petriNets: netIds, transitions: transIds},"dataFieldReferences","fields",
+                                self.tabs[self.activeTab].filter.selectedField.search);
+                        }
+                        if(self.tabs[self.activeTab].filter.transitions.length <= 0) self.global.autocomplete.fields = [];
+                        return filterAutocomplete(self.tabs[self.activeTab].filter.selectedField.search, self.global.autocomplete.fields);
+                    };
+
+                    self.fieldSearchChange = function (item) {
+                        if(!item) return;
+                        self.tabs[self.activeTab].filter.selectedField.value = undefined;
+                        angular.element("#field-value-input-"+self.activeTab).focus();
+                    };
+
+                    self.fieldValueSelected = function () {
+                        if(self.tabs[self.activeTab].filter.selectedField.value){
+                            self.tabs[self.activeTab].filter.selectedField.value.trim();
+                            if(self.tabs[self.activeTab].filter.selectedField.value.length > 0){
+
+                                const selItem = self.tabs[self.activeTab].filter.selectedField.item;
+                                const val = self.tabs[self.activeTab].filter.selectedField.value;
+
+                                if(!self.tabs[self.activeTab].filter.fields.some(el => el.entityId === selItem.entityId && el.value === val)){
+                                    self.tabs[self.activeTab].filter.chips.push({type:"fields", title: selItem.title+": "+val, id: selItem.entityId});
+                                    self.tabs[self.activeTab].filter.fields.push(Object.assign(selItem,{value: val}));
+
+                                    self.tabs[self.activeTab].filter.selectedField.search = "";
+                                    self.tabs[self.activeTab].filter.selectedField.item = undefined;
+                                    self.tabs[self.activeTab].filter.selectedField.value = undefined;
+                                }
+                            }
+                        }
+                    };
+
+                    function rebuildChips(excludedIds = []) {
+                        self.tabs[self.activeTab].filter.chips = self.tabs[self.activeTab].filter.chips.filter(chip => !excludedIds.includes(chip.id));
+                    }
+
                     function removeFilterItem(chip) {
                         self.tabs[self.activeTab].filter[chip.type].some(function (item, index) {
-                            if (item.title === chip.title) {
+                            if (item.entityId === chip.id) {
                                 self.tabs[self.activeTab].filter[chip.type].splice(index, 1);
-                                if (chip.type === 'processes') self.tabs[self.activeTab].filter.processesDirty = true;
+                                if (chip.type === 'processes'){
+                                    self.tabs[self.activeTab].filter.processesDirty = true;
+                                    const excludes = [];
+                                    self.tabs[self.activeTab].filter.transitions = self.tabs[self.activeTab].filter.transitions.filter(trans => {
+                                        if(trans.petriNetId !== chip.id) return true;
+                                        else {
+                                            excludes.push(trans.entityId);
+                                            self.tabs[self.activeTab].filter.fields = self.tabs[self.activeTab].filter.fields.filter(field => {
+                                                if(field.transitionId !== trans.entityId) return true;
+                                                else {
+                                                    excludes.push(field.entityId);
+                                                    return false;
+                                                }
+                                            });
+                                            return false;
+                                        }
+                                    });
+                                    rebuildChips(excludes);
+                                }
+                                if (chip.type === 'transitions') {
+                                    self.tabs[self.activeTab].filter.transitionsDirty = true;
+                                    const excludes = [];
+                                    self.tabs[self.activeTab].filter.fields = self.tabs[self.activeTab].filter.fields.filter(field => {
+                                        if(field.transitionId !== chip.id) return true;
+                                        else {
+                                            excludes.push(field.entityId);
+                                            return false;
+                                        }
+                                    });
+                                    rebuildChips(excludes);
+                                }
                                 return true;
                             }
                         });
@@ -604,7 +710,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.setSortField = function (field) {
-                        self.tabs[self.activeTab].sort.reverse = self.tabs[self.activeTab].sort.field == field ? !self.tabs[self.activeTab].sort.reverse : false;
+                        self.tabs[self.activeTab].sort.reverse = self.tabs[self.activeTab].sort.field === field ? !self.tabs[self.activeTab].sort.reverse : false;
                         self.tabs[self.activeTab].sort.field = field;
                     };
 
