@@ -137,6 +137,17 @@ define({
                 high: "Vysoká"
             }
         },
+        data: {
+            noUserChosen: "Žiaden zvolený používateľ",
+            self: "Self",
+            chooseUser: "Vybrať používateľa",
+            noFile: "Žiaden súbor",
+            fileNotUploaded: "Súbor ešte nebol nahraný",
+            fileUploaded: "Súbor bol úspešne nahraný",
+            newFile: "Nový súbor",
+            upload: "Nahrať",
+            download: "Stiahnuť"
+        },
         dialog: {
             uploadNet: {
                 title: "Nahraj Sieť",

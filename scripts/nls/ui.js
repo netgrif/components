@@ -136,6 +136,17 @@ define({
                     high: "High"
                 }
             },
+            data: {
+                noUserChosen: "No user was chosen",
+                self: "Self",
+                chooseUser: "Choose user",
+                noFile: "No file",
+                fileNotUploaded: "File has not been uploaded yet!",
+                fileUploaded: "File uploaded successfully",
+                newFile: "New file",
+                upload: "Upload",
+                download: "Download"
+            },
             dialog: {
                 uploadNet: {
                     title: "Upload Net",

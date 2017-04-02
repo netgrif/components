@@ -488,6 +488,10 @@ body {
   height: auto;
 }
 
+.cursor-default {
+  cursor: default;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -791,8 +795,8 @@ body {
 .base .tasks .tasks-header {
   height: 56px;
   margin: 0;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 12px;
+  padding-right: 12px;
   margin-bottom: 16px;
 }
 
@@ -817,8 +821,8 @@ body {
 
 .base .search-header {
   margin: 0;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 12px;
+  padding-right: 12px;
   margin-bottom: 16px;
 }
 
@@ -946,4 +950,8 @@ body {
   min-height: 24px !important;
   line-height: 24px !important;
   padding: 0 12px !important;
+}
+
+.base .data-item md-input-container .md-errors-spacer {
+  min-height: 0px !important;
 }

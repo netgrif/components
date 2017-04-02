@@ -1,0 +1,13 @@
+.data {
+
+    &-row {
+
+    }
+
+    &-item {
+
+        md-input-container .md-errors-spacer {
+            min-height: 0px !important;
+        }
+    }
+}
