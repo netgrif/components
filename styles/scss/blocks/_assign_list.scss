@@ -10,7 +10,7 @@
 //		&.selected-tile {
 //
 //			button {
-//				border: 2px dashed $color-fm-300;
+//				border: 2px dashed $color-primary-300;
 //			}
 //		}
 //	}
@@ -28,7 +28,7 @@
 		&.selected-tile {
 
 			button {
-				background-color: $color-fm-500;
+				background-color: $color-primary-500;
 				z-index: -1;
 			}
 

@@ -23,15 +23,15 @@
 		}
 
 		&:hover {
-			background-color: $color-fm-500;
+			background-color: $color-primary-500;
 		}
 
 		&.active {
 			background-color: $color-grey-200;
-			color: $color-fm-500;
+			color: $color-primary-500;
 
 			&:hover {
-				background-color: $color-fm-500;
+				background-color: $color-primary-500;
 				color: white;
 			}
 		}

@@ -32,7 +32,7 @@
                                 {{opt.task.title}}
                             </md-chip>
                             <md-chip>
-                                <md-icon ng-if="opt.task.user" class="material-icons color-fg-fm-500">account_circle
+                                <md-icon ng-if="opt.task.user" class="material-icons color-fg-primary-500">account_circle
                                 </md-icon>
                                 {{opt.task.user.name+" "+opt.task.user.surname}}
                             </md-chip>
@@ -50,7 +50,7 @@
                     <md-list-item flex="50" ng-repeat="user in users" class="md-2-line"
                                   ng-click="dialogCtrl.selectedUser = user.email" ng-class="getSelectedUserClass(user.email)">
                         <md-icon class="md-avatar" layout="row" layout-align="center center">
-                            <i class="material-icons color-fg-fm-500">account_circle</i>
+                            <i class="material-icons color-fg-primary-500">account_circle</i>
                         </md-icon>
                         <div class="md-list-item-text">
                             <p>{{user.name}}</p>

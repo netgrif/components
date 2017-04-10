@@ -5,7 +5,7 @@
     <p flex="30">{{task.title}}</p>
     <task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
     <p flex="20" layout="row" layout-align="left center">
-        <i ng-if="task.user" class="material-icons color-fg-fm-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
+        <i ng-if="task.user" class="material-icons color-fg-primary-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
     </p>
     <p flex="15">{{tasksCtrl.formatDate(task.startDate)}}</p>
     <p flex="10">{{tasksCtrl.getStatus(task); task.status}}</p>
@@ -40,7 +40,7 @@
         <p flex="30">{{task.title}}</p>
         <task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
         <p flex="20" layout="row" layout-align="left center">
-            <i ng-if="task.user" class="material-icons color-fg-fm-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
+            <i ng-if="task.user" class="material-icons color-fg-primary-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
         </p>
         <p flex="15">{{tasksCtrl.formatDate(task.startDate)}}</p>
         <p flex="10">{{task.status}}</p>

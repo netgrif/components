@@ -1,18 +1,18 @@
 // Primary color - FM
-$color-fm-50: 					#f3e0e6;
-$color-fm-100: 					#e0b3bf;
-$color-fm-200: 					#cc8095;
-$color-fm-300: 					#b74d6b;
-$color-fm-400: 					#a7264b;
-$color-fm-500: 					#98002b;
-$color-fm-600: 					#900026;
-$color-fm-700: 					#850020;
-$color-fm-800: 					#7b001a;
-$color-fm-900: 					#6a0010;
-$color-fm-A100: 				#ff99a1;
-$color-fm-A200: 				#ff6672;
-$color-fm-A400: 				#ff3343;
-$color-fm-A700: 				#ff1a2b;
+$color-primary-50: 					#f3e0e6;
+$color-primary-100: 				#e0b3bf;
+$color-primary-200: 				#cc8095;
+$color-primary-300: 				#b74d6b;
+$color-primary-400: 				#a7264b;
+$color-primary-500: 				#98002b;
+$color-primary-600: 				#900026;
+$color-primary-700: 				#850020;
+$color-primary-800: 				#7b001a;
+$color-primary-900: 				#6a0010;
+$color-primary-A100: 				#ff99a1;
+$color-primary-A200: 				#ff6672;
+$color-primary-A400: 				#ff3343;
+$color-primary-A700: 				#ff1a2b;
 
 // Accent color
 $color-grey-50: 				#FAFAFA;
@@ -68,62 +68,62 @@ $color-error:					#F44336;
 			color: $color-error !important;
 		}
 
-		&-fm {
+		&-primary {
 			
 			&-50 {
-				color: $color-fm-50;
+				color: $color-primary-50;
 			}
 			
 			&-100 {
-				color: $color-fm-100;
+				color: $color-primary-100;
 			}
 			
 			&-200 {
-				color: $color-fm-200;
+				color: $color-primary-200;
 			}
 			
 			&-300 {
-				color: $color-fm-300;
+				color: $color-primary-300;
 			}
 			
 			&-400 {
-				color: $color-fm-400;
+				color: $color-primary-400;
 			}
 			
 			&-500 {
-				color: $color-fm-500;
+				color: $color-primary-500;
 			}
 			
 			&-600 {
-				color: $color-fm-600;
+				color: $color-primary-600;
 			}
 			
 			&-700 {
-				color: $color-fm-700;
+				color: $color-primary-700;
 			}
 			
 			&-800 {
-				color: $color-fm-800;
+				color: $color-primary-800;
 			}
 			
 			&-900 {
-				color: $color-fm-900;
+				color: $color-primary-900;
 			}
 			
 			&-A100 {
-				color: $color-fm-A100;
+				color: $color-primary-A100;
 			}
 			
 			&-A200 {   
-				color: $color-fm-A200;
+				color: $color-primary-A200;
 			}
 			
 			&-A400 {
-				color: $color-fm-A400;
+				color: $color-primary-A400;
 			}
 			
 			&-A700 {
-				color: $color-fm-A700;
+				color: $color-primary-A700;
 			}
 		}
 		
@@ -242,62 +242,62 @@ $color-error:					#F44336;
 			background-color: $color-error !important;
 		}
 
-		&-fm {
+		&-primary {
 			
 			&-50 {
-				background-color: $color-fm-50;
+				background-color: $color-primary-50;
 			}
 			
 			&-100 {
-				background-color: $color-fm-100;
+				background-color: $color-primary-100;
 			}
 			
 			&-200 {
-				background-color: $color-fm-200;
+				background-color: $color-primary-200;
 			}
 			
 			&-300 {
-				background-color: $color-fm-300;
+				background-color: $color-primary-300;
 			}
 			
 			&-400 {
-				background-color: $color-fm-400;
+				background-color: $color-primary-400;
 			}
 			
 			&-500 {
-				background-color: $color-fm-500;
+				background-color: $color-primary-500;
 			}
 			
 			&-600 {
-				background-color: $color-fm-600;
+				background-color: $color-primary-600;
 			}
 			
 			&-700 {
-				background-color: $color-fm-700;
+				background-color: $color-primary-700;
 			}
 			
 			&-800 {
-				background-color: $color-fm-800;
+				background-color: $color-primary-800;
 			}
 			
 			&-900 {
-				background-color: $color-fm-900;
+				background-color: $color-primary-900;
 			}
 			
 			&-A100 {
-				background-color: $color-fm-A100;
+				background-color: $color-primary-A100;
 			}
 			
 			&-A200 {   
-				background-color: $color-fm-A200;
+				background-color: $color-primary-A200;
 			}
 			
 			&-A400 {
-				background-color: $color-fm-A400;
+				background-color: $color-primary-A400;
 			}
 			
 			&-A700 {
-				background-color: $color-fm-A700;
+				background-color: $color-primary-A700;
 			}
 		}
 		
@@ -408,5 +408,5 @@ $color-error:					#F44336;
 }
 
 .highlight {
-	color: $color-fm-500 !important;
+	color: $color-primary-500 !important;
 }
