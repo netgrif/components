@@ -24,6 +24,14 @@
                         <md-option value="2">{{::$root.$i18n.block.dialog.saveFilter.visibility.private}}</md-option>
                     </md-select>
                 </md-input-container>
+                <md-input-container>
+                    <label>Persist filter for roles</label>
+                    <md-select ng-model="parentCtrl.newFilter.roles" multiple>
+                        <md-option ng-repeat="role in opt.roles" ng-value="role.objectId">
+                            {{role.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
                 <div layout="column" layout-align="left">
                     <label>{{::$root.$i18n.block.dialog.saveFilter.process}}</label>
                     <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.processes" readonly="true" flex>

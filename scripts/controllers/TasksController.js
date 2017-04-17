@@ -783,15 +783,16 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             $snackbar.show("Your filter is empty! You cannot save empty filter.");
                             return;
                         }
-                        $dialog.showByTemplate('save_filter', self);
+                        $dialog.showByTemplate('save_filter', self,{filter: self.tabs[self.activeTab].filter.processes.map(net => net.entityId)});
                     };
 
                     self.saveFilter = function () {
                         if (!self.newFilter) return;
 
-                        var newFilter = {
+                        const newFilter = {
                             name: self.newFilter.name,
                             visibility: self.newFilter.visibility,
+                            roles: self.newFilter.roles,
                             petriNets: self.tabs[self.activeTab].filter.processes,
                             transitions: self.tabs[self.activeTab].filter.transitions
                         };
@@ -801,6 +802,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 $log.debug(response);
                                 self.newFilter.name = undefined;
                                 self.newFilter.visibility = undefined;
+                                self.newFilter.roles = undefined;
                                 $dialog.closeCurrent();
 
                             }, function (error) {

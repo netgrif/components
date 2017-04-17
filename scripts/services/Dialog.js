@@ -79,8 +79,24 @@ define(['angular','angularMaterial','../modules/Main'],function (angular) {
                 }
             };
 
+			self.loadRoles = function () {
+				$scope.opt.roles = [];
+				$scope.opt.filter.forEach(net => {
+                    $http.get("/res/petrinet/roles/assign/" + net).then(function (response) {
+                        $log.debug(response);
+                        $scope.opt.roles = $scope.opt.roles.concat(response.roles);
+
+                    }, function () {
+                        $snackbar.error("Failed to load roles!");
+                    });
+                });
+            };
+
 			if($scope.opt && $scope.opt.task) {
                 self.loadUsers();
             }
+            if($scope.opt && $scope.opt.filter){
+				self.loadRoles();
+			}
 		}]);
 });
