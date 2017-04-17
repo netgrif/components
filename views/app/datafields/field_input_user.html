@@ -25,7 +25,7 @@
         </div>
     </div>
     <div flex="10">
-        <md-menu flex>
+        <md-menu flex ng-if="task.user.email == $user.login && field.logic.editable">
             <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
