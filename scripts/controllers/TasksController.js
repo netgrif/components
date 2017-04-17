@@ -188,13 +188,15 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.searchTasks = function () {
-                        var url = "/res/task/search";
+                        let url = "/res/task/search";
                         if (self.tabs[self.activeTab].type === TAB_TYPE.MY ||
                             self.tabs[self.activeTab].type === TAB_TYPE.MY_FINISHED)
                             url = self.tabs[self.activeTab].baseUrl;
 
                         if (self.tabs[self.activeTab].filter.isEmpty()) {
-                            $snackbar.info("Search cannot start - Filter is empty");
+                            //$snackbar.info("Search cannot start - Filter is empty");
+                            url = url === "/res/task/search" ? "/res/task" : url;
+                            loadTasksResource(url,self.activeTab);
                             return;
                         }
 
