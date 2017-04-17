@@ -842,6 +842,26 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     self.addTab("All Tasks", "/res/task", TAB_TYPE.ALL);
                     self.addTab("My Tasks", "/res/task/my", TAB_TYPE.MY);
                     //self.addTab("My Finished Tasks", "/res/task/my/finished", TAB_TYPE.MY_FINISHED);
+                    //Load roles persist filters
+                    $http.post("/res/task/filter/roles",$user.roles).then(function (response) {
+                        response.$request().$get("filters").then(function (resource) {
+                            resource.forEach(filter => {
+                                self.newTab = {
+                                    label: filter.name,
+                                    filter: {
+                                        processes: filter.petriNets,
+                                        transitions: filter.transitions
+                                    }
+                                };
+
+                                self.addTab();
+                            });
+                        }, function () {
+                            $log.debug("No filter resource found!");
+                        });
+                    },function () {
+                        $snackbar.error("Failed to load role specific tabs!");
+                    });
 
                 }]);
     });
