@@ -123,7 +123,7 @@
 					<!--<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'status' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>-->
 				<!--</a>-->
 				<md-menu>
-					<md-button flex="10" ng-click="$mdOpenMenu($event)" md-menu-origin>
+					<md-button ng-click="$mdOpenMenu($event)" md-menu-origin>
 						<md-tooltip md-direction="top">{{::$i18n.block.taskHeader.view.this}}</md-tooltip>
 						<md-icon class="material-icons">view_carousel</md-icon>
 					</md-button>

@@ -89,7 +89,8 @@ define({
                 data: "Data",
                 roles: "Roles",
                 workflow: "Workflow",
-                console: "Admin Console"
+                console: "Admin Console",
+                version: "Version 1.0.0"
             },
             mainMenu: {
                 notifications: "Notifications",

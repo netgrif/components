@@ -31,8 +31,8 @@
                             <md-chip>
                                 {{opt.task.title}}
                             </md-chip>
-                            <md-chip>
-                                <md-icon ng-if="opt.task.user" class="material-icons color-fg-primary-500">account_circle
+                            <md-chip ng-if="opt.task.user">
+                                <md-icon class="material-icons color-fg-primary-500">account_circle
                                 </md-icon>
                                 {{opt.task.user.name+" "+opt.task.user.surname}}
                             </md-chip>

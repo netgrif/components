@@ -1,10 +1,12 @@
 <div ng-cloak class="layout-vh-100 color-bg-transparent" layout="column">
     <md-toolbar class="main-toolbar" md-whiteframe="5" layout="row" layout-align="center center">
         <div class="md-toolbar-tools">
-            <a href="/dashboard"><img alt="logo" src="assets/logo.png" class="toolbar-logo"></a>
+            <a href="/dashboard" layout="column" layout-align="center center">
+                <img alt="logo" src="assets/logo.png" class="toolbar-logo">
+            </a>
             <div flex></div>
-            <div layout="row" layout-align="center center">
-                <md-menu-bar class="toolbar-menu">
+            <div layout="row" layout-align="center center" class="layout-rh-100">
+                <md-menu-bar class="toolbar-menu" layout="row" layout-align="center center">
                     <md-menu>
                         <md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center"
                                    md-menu-origin>{{$user.name}}<i class="material-icons">account_circle</i></md-button>
@@ -62,7 +64,7 @@
     <section layout="row" flex>
         <md-sidenav class="md-sidenav-left main-sidenav" md-component-id="left" md-is-locked-open="true"
                     md-whiteframe="5">
-            <div layout="column">
+            <div layout="column" flex>
                 <md-button href="/dashboard" ng-class="{active: ('dashboard' | routeSegmentContains)}" layout="row"
                            layout-align="left center"><i class="material-icons">dashboard</i>{{::$i18n.block.mainNav.dashboard}}
                 </md-button>
@@ -82,6 +84,10 @@
                            ng-class="{active: ('console' | routeSegmentContains)}" layout="row"
                            layout-align="left center"><i class="material-icons">developer_board</i>{{::$i18n.block.mainNav.console}}
                 </md-button>
+                <div flex></div>
+                <div layout="row" layout-align="center center">
+                    <span class="btn-pseudo-sidenav color-fg-grey-200">{{::$i18n.block.mainNav.version}}</span>
+                </div>
             </div>
         </md-sidenav>
         <md-content layout-wrap flex class="color-bg-blue-grey-50">

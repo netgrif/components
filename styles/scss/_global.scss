@@ -63,6 +63,37 @@ body {
 	}
 }
 
+// Custom buttons
+.btn {
+
+	&-pseudo {
+
+		&-sidenav {
+			height: 36px;
+			line-height: 36px;
+			width: 100%;
+			font-size: 17px;
+			margin: 0;
+			padding: 5px 10px;
+			border-radius: 0;
+			vertical-align: middle;
+			text-align: center;
+		}
+	}
+}
+
+// Visibility
+.visibility {
+
+	&-visible {
+		visibility: visible;
+	}
+
+	&-hidden {
+		visibility: hidden;
+	}
+}
+
 // Positions
 .position {
 

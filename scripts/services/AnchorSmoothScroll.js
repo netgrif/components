@@ -1,6 +1,7 @@
 /**
  * Created by tomin on 20-Mar-17.
  */
+// TODO 19.4.2017 should serve back to top feature, remove if not needed
 define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
     angular.module('ngMain').factory('$anchorSmoothScroll', function () {
 

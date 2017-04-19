@@ -2,12 +2,13 @@
     <i class="material-icons {{task.caseColor}}">label</i> {{task.caseTitle}}
 </p>
 <p flex="25">{{task.title}}</p>
-<task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
+    <task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
 <p flex="20" layout="row" layout-align="left center">
     <i ng-if="task.user" class="material-icons color-fg-primary-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
 </p>
 <p flex="15">{{tasksCtrl.formatDate(task.startDate)}}</p>
-<div flex="10" ng-if="task.status !== 'Assigned' || task.user.email === $user.login">
+<!--<div ng-if="task.status !== 'Assigned' || task.user.email === $user.login">-->
+<div ng-class="task.status !== 'Assigned' || task.user.email === $user.login ? 'visibility-visible' : 'visibility-hidden'">
     <md-menu>
         <md-button ng-click="$mdOpenMenu($event)" md-menu-origin>
             <md-icon class="material-icons">more_vert</md-icon>
@@ -31,5 +32,3 @@
         </md-menu-content>
     </md-menu>
 </div>
-<!--TODO not working?-->
-<div flex="10" ng-if="task.status === 'Assigned' && task.user.email !== $user.login"></div>

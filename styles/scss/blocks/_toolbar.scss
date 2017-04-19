@@ -1,5 +1,6 @@
 .main-toolbar {
-	height: 64px;
+	height: 56px;
+	min-height: 56px;
 	background-color: $color-grey-200;
 
 	.md-toolbar-tools {
@@ -9,25 +10,28 @@
 	.toolbar {
 
 		&-logo {
-			height: 60px;
+			height: 52px;
 			width: auto;
-			padding-top: 2px;
-			padding-bottom: 2px;
-
 		}
 
 		&-menu {
+			height: 100%;
 
-			.md-button {
-				height: 100%;
-				font-size: 20px;
-				color: $color-grey-700;
-				text-transform: none;
+			.md-menu {
 
-				.material-icons {
-					font-size: 48px;
-					margin-left: 16px;
-					color: $color-primary-500;
+				.md-button {
+					height: 100%;
+					padding-top: 4px;
+					padding-bottom: 4px;
+					font-size: 20px;
+					color: $color-grey-700;
+					text-transform: none;
+
+					.material-icons {
+						font-size: 48px;
+						margin-left: 15px;
+						color: $color-primary-500;
+					}
 				}
 			}
 		}
