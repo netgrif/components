@@ -1,6 +1,4 @@
-/**
- * Created by Milan on 26.1.2017.
- */
+
 /*  Top level module
     map all application components
  */
@@ -12,7 +10,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
     function (angular) {
         // console.log(angular.version);
         var app = angular.module('app', ['ngMaterial', 'angular-hal', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment','material.components.expansionPanels',
-         'ngMain','ngData','ngDashboard','ngTasks','ngWorkflow','ngRoles']); //here add modules that you defined
+         'ngMain','ngDashboard','ngTasks','ngWorkflow','ngRoles']); //here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             $mdThemingProvider.definePalette('fmService', {
                 '50': '#f3e0e6',
@@ -46,7 +44,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                 .when('/dashboard', 'app.dashboard')
                 .when('/tasks', 'app.tasks')
                 .when('/roles', 'app.roles')
-                .when('/data', 'app.data')
+                .when('/cases', 'app.cases')
                 .when('/workflow', 'app.workflow')
                 .when('/profile', 'app.profile')
                 .when('/console', 'app.console')
@@ -69,10 +67,10 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                     controller: 'ProfileController',
                     controllerAs: 'profCtrl'
                 })
-                .segment('data', {
-                    templateUrl: "views/app/data.html",
-                    controller: 'DataController',
-                    controllerAs: 'dataCtrl'
+                .segment('cases', {
+                    templateUrl: "views/app/cases.html",
+                    controller: 'CaseController',
+                    controllerAs: 'caseCtrl'
                 })
                 .segment('tasks', {
                     templateUrl: "views/app/tasks.html",
