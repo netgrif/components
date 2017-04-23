@@ -1,0 +1,131 @@
+<div ng-cloak>
+    <div class="background-header background-welcome"></div>
+    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="caseCtrl.activeTabIndex">
+        <md-tab md-on-select="caseCtrl.loadCases()" label="All Cases">
+            <md-content class="md-padding color-bg-transparent">
+                <md-card class="search-header" layout="row">
+                    <div flex layout="column">
+                        <div layout="row" layout-align="left end">
+                            <md-icon flex="5" class="material-icons md-primary">search</md-icon>
+                            <form flex layout="row">
+                                <md-autocomplete class="md-block autocomplete"
+                                                 md-search-text="caseCtrl.filter.search"
+                                                 md-selected-item="caseCtrl.filter.selected"
+                                                 md-selected-item-change="caseCtrl.searchItemSelected(item)"
+                                                 md-items="item in caseCtrl.queryNets()"
+                                                 md-item-text="item.title"
+                                                 md-min-length="0"
+                                                 md-no-cache="true"
+                                                 md-floating-label="{{::$i18n.block.taskFilter.process}}">
+                                    <md-item-template>
+                                        <span md-highlight-text="caseCtrl.filter.search" md-highlight-flags="i">{{item.title}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        {{::$i18n.block.taskFilter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.block.task.notFound}}
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                        <div layout="row" layout-align="left center">
+                            <md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>
+                            <md-chips ng-model="caseCtrl.filter.chips" readonly="true" md-removable="true"
+                                      md-on-remove="caseCtrl.onChipRemove($chip)"
+                                      id="chips-container" flex>
+                                <md-chip-template>
+                                    {{$chip.title}}
+                                </md-chip-template>
+                            </md-chips>
+                        </div>
+                    </div>
+                    <div layout="column" layout-align="center center">
+                        <div layout="row">
+                            <md-button class="md-primary" ng-click="caseCtrl.searchCases()">
+                                Search
+                            </md-button>
+                            <!--<md-menu>-->
+                                <!--<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>-->
+                                    <!--<md-icon class="material-icons">more_vert</md-icon>-->
+                                <!--</md-button>-->
+                                <!--<md-menu-content>-->
+                                    <!--<md-menu-item>-->
+                                        <!--<md-button ng-click="showFilterDialog()">{{::$i18n.block.taskFilter.save}}</md-button>-->
+                                    <!--</md-menu-item>-->
+                                    <!--<md-menu-item>-->
+                                        <!--<md-button ng-click="clearFilter()">{{::$i18n.block.taskFilter.reset}}</md-button>-->
+                                    <!--</md-menu-item>-->
+                                <!--</md-menu-content>-->
+                            <!--</md-menu>-->
+                        </div>
+                    </div>
+                </md-card>
+                <div class="tasks">
+                    <md-card class="tasks-header" layout="column">
+                        <md-card-content layout="row" layout-align="left center">
+                            <a flex="25" href="javascript:void(0)" ng-click="caseCtrl.setSortField('')">
+                                {{::$i18n.block.taskHeader.case}}
+                                <md-icon class="material-icons">{{ caseCtrl.sort.field == '' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+                            </a>
+                            <a flex="25" href="javascript:void(0)" ng-click="caseCtrl.setSortField('')">
+                                {{::$i18n.block.taskHeader.name}}
+                                <md-icon class="material-icons">{{ caseCtrl.sort.field == '' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+                            </a>
+                            <a flex="15" href="javascript:void(0)" ng-click="caseCtrl.setSortField('')">
+                                {{::$i18n.block.taskHeader.priority}}
+                                <md-icon class="material-icons">{{ caseCtrl.sort.field == '' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+                            </a>
+                            <a flex="20" href="javascript:void(0)" ng-click="caseCtrl.setSortField('')">
+                                {{::$i18n.block.taskHeader.user}}
+                                <md-icon class="material-icons">{{ caseCtrl.sort.field == '' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+                            </a>
+                            <a flex="15" href="javascript:void(0)" ng-click="caseCtrl.setSortField('')">
+                                {{::$i18n.block.taskHeader.startDate}}
+                                <md-icon class="material-icons">{{ caseCtrl.sort.field == '' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+                            </a>
+                            <!--<a flex="10" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('status')">-->
+                            <!--{{::$i18n.block.taskHeader.status}}-->
+                            <!--<md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'status' && !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>-->
+                            <!--</a>-->
+                            <!--<md-menu>-->
+                                <!--<md-button ng-click="$mdOpenMenu($event)" md-menu-origin>-->
+                                    <!--<md-tooltip md-direction="top">{{::$i18n.block.taskHeader.view.this}}</md-tooltip>-->
+                                    <!--<md-icon class="material-icons">view_carousel</md-icon>-->
+                                <!--</md-button>-->
+                                <!--<md-menu-content>-->
+                                    <!--<md-menu-item>-->
+                                        <!--<md-button ng-click="tasksCtrl.changeView('list')">{{::$i18n.block.taskHeader.view.list}}</md-button>-->
+                                    <!--</md-menu-item>-->
+                                    <!--<md-menu-item>-->
+                                        <!--<md-button ng-click="tasksCtrl.changeView('table')" disabled>{{::$i18n.block.taskHeader.view.table}}</md-button>-->
+                                    <!--</md-menu-item>-->
+                                <!--</md-menu-content>-->
+                            <!--</md-menu>-->
+                        </md-card-content>
+                    </md-card>
+                    <md-expansion-panel class="task" ng-repeat="useCase in caseCtrl.cases | orderBy:useCase[caseCtrl.sort.field]:caseCtrl.sort.reverse">
+                        <md-expansion-panel-collapsed layout="row" layout-align="left center" ng-include="'views/app/tasks/task_panel_collapsed.html'">
+                        </md-expansion-panel-collapsed>
+                        <!--<md-expansion-panel-expanded ng-include="'views/app/tasks/task_panel_expanded.html'">-->
+                        <!--</md-expansion-panel-expanded>-->
+                    </md-expansion-panel>
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab ng-repeat="tab in caseCtrl.tabs" md-on-select="caseCtrl.tabChange()">
+            <md-tab-label>
+                {{::tab.label}}
+                <md-icon class="material-icons cursor-pointer" style="font-size:22px;"
+                         ng-click="caseCtrl.tabClose(tab.index)">close
+                </md-icon>
+            </md-tab-label>
+            <md-tab-body class="md-padding color-bg-transparent" ng-include="'views/app/cases/case_tab.html'">
+            </md-tab-body>
+        </md-tab>
+        <md-tab md-on-select="caseCtrl.createCase()">
+            <md-tab-label>
+                <md-icon class="material-icons md-highlight">add</md-icon>
+            </md-tab-label>
+            <md-tab-body>
+            </md-tab-body>
+        </md-tab>
+    </md-tabs>
+</div>

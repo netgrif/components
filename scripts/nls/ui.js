@@ -87,6 +87,7 @@ define({
                 dashboard: "Dashboard",
                 tasks: "Tasks",
                 data: "Data",
+                cases: "Cases",
                 roles: "Roles",
                 workflow: "Workflow",
                 console: "Admin Console",

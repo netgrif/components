@@ -86,6 +86,7 @@ define({
             dashboard: "Dashboard",
             tasks: "Úlohy",
             data: "Dáta",
+            cases: "Prípady",
             roles: "Role",
             workflow: "Workflow",
             console: "Konzola",
