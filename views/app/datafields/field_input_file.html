@@ -1,4 +1,4 @@
-<div class="data-item" layout="row" layout-align="space-between center">
+<div class="data-item" layout="row" layout-align="left center">
     <div flex="50">
         <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
             {{field.name}}
@@ -8,22 +8,14 @@
         </span>
     </div>
     <div flex="20"></div>
-    <div flex="40">
-        <div flex layout="row" layout-align="left center">
-            <md-icon class="material-icons">insert_drive_file</md-icon>
-            <p>{{field.newValue ? field.newValue : $i18n.block.data.noFile}}</p>
-            <div layout="row" layout-align="left center" ng-if="field.newFile && !field.uploaded">
-                <md-tooltip md-direction="right">{{::$i18n.block.data.fileNotUploaded}}</md-tooltip>
-                <md-icon class="material-icons md-warn">warning</md-icon>
-            </div>
-            <div layout="row" layout-align="left center" ng-if="field.newFile && field.uploaded">
-                <md-tooltip md-direction="right">{{::$i18n.block.data.fileUploaded}}</md-tooltip>
-                <md-icon class="material-icons color-fg-success">done</md-icon>
-            </div>
+    <div flex="60" layout="row" layout-align="space-between center">
+        <div layout="row" layout-align="left center">
+            <md-icon class="material-icons margin-right-2x" ng-if="!field.newValue">insert_drive_file</md-icon>
+            <md-icon class="material-icons margin-right-2x color-fg-warning" ng-if="field.newFile && !field.uploaded">warning</md-icon>
+            <md-icon class="material-icons margin-right-2x color-fg-success" ng-if="field.newFile && field.uploaded">done</md-icon>
+            <span class="text-overflow-dots">{{field.newValue ? field.newValue : $i18n.block.data.noFile}}</span>
         </div>
-    </div>
-    <div flex="10">
-        <md-menu flex ng-if="task.user.email == $user.login && field.logic.editable">
+        <md-menu class="width-24px" ng-if="task.user.email == $user.login && field.logic.editable">
             <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
@@ -35,9 +27,8 @@
                                file-change-callback="fileModelChange"
                                file-change-arg="field"
                                ng-required="field.logic.required">
-                        <label for="file" layout="row" layout-align="left center">
-                            <md-icon class="material-icons">note_add</md-icon>
-                            <span>{{::$i18n.block.data.newFile}}</span>
+                        <label for="file">
+                            <span class="padding-horizontal-2x">{{::$i18n.block.data.newFile}}</span>
                         </label>
                     </md-button>
                 </md-menu-item>

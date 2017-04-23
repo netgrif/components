@@ -4,6 +4,13 @@ body {
 }
 
 // Custom global classes
+.width {
+
+	&-24px {
+		width: 24px;
+	}
+}
+
 .stop-scrolling {
 	height: 100%;
 	overflow: hidden;
@@ -22,6 +29,14 @@ body {
 
 	&-pointer {
 		cursor: pointer;
+	}
+}
+
+// Text overflow
+.text-overflow {
+
+	&-dots {
+		@include textOverflowWithDots(100%);
 	}
 }
 

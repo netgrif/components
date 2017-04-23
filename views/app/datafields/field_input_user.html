@@ -1,4 +1,4 @@
-<div class="data-item" layout="row" layout-align="left center">
+<div class="data-item" layout="row" layout-align="start center">
     <div flex="50">
         <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
             {{field.name}}
@@ -8,11 +8,9 @@
         </span>
     </div>
     <div flex="20"></div>
-    <div flex="40">
-        <div flex ng-if="field.user" layout="row">
-            <md-icon class="md-avatar">
-                <i class="material-icons color-fg-primary-500">account_circle</i>
-            </md-icon>
+    <div flex="60" layout="row" layout-align="space-between center">
+        <div ng-if="field.user" layout="row" layout-align="start center">
+            <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
             <span class="cursor-pointer">
                 {{field.user.name}}
                 <md-tooltip>
@@ -20,12 +18,10 @@
                 </md-tooltip>
             </span>
         </div>
-        <div flex ng-if="!field.user">
+        <div ng-if="!field.user">
             <span>{{::$i18n.block.data.noUserChosen}}</span>
         </div>
-    </div>
-    <div flex="10">
-        <md-menu flex ng-if="task.user.email == $user.login && field.logic.editable">
+        <md-menu class="width-24px" ng-if="task.user.email == $user.login && field.logic.editable">
             <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>

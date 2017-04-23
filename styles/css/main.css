@@ -478,6 +478,10 @@ body {
   min-height: 100%;
 }
 
+.width-24px {
+  width: 24px;
+}
+
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
@@ -494,6 +498,13 @@ body {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.text-overflow-dots {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fab-top-left {
@@ -892,16 +903,6 @@ body {
   z-index: -1;
 }
 
-.base .file-chooser label .material-icons {
-  color: #98002b;
-}
-
-.base .file-chooser label span {
-  padding-left: 6px;
-  padding-right: 6px;
-  color: rgba(0, 0, 0, 0.38);
-}
-
 .base .file-chooser-avatar .avatar-icon {
   font-size: 220px;
 }
@@ -979,4 +980,8 @@ body {
 
 .base .data-item md-input-container .md-errors-spacer {
   min-height: 0px !important;
+}
+
+.base .data-field-title {
+  font-size: 17px;
 }
