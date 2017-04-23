@@ -69,7 +69,5 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 self.sort.reverse = self.sort.field === field ? !self.sort.reverse : false;
                 self.sort.field = field;
             };
-
-
         }]);
 });
