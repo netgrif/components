@@ -1,15 +1,28 @@
 define(['angular', '../modules/Main', '../modules/Workflow'], function (angular) {
     class Tab {
-        constructor(label, index) {
-            this.label = label;
+        constructor(index, useCase) {
             this.index = index;
+            this.useCase = useCase;
 
             this.tasks = [];
+            this.sort = {
+                field:'',
+                reverse: false
+            }
+        }
+
+        setSortField(field){
+            this.sort.reverse = this.sort.field === field ? !this.sort.reverse : false;
+            this.sort.field = field;
+        }
+
+        loadTaskData(visualId){
+
         }
     }
 
-    angular.module('ngWorkflow').controller('CaseController', ['$log', '$scope',
-        function ($log, $scope) {
+    angular.module('ngWorkflow').controller('CaseController', ['$log', '$scope','$http','$snackbar',
+        function ($log, $scope, $http, $snackbar) {
             var self = this;
 
             self.activeTabIndex = undefined;
@@ -29,7 +42,16 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             };
 
             self.searchCases = function () {
-
+                $http.post("/res/workflow/case/search",self.filter.filter).then(function (response) {
+                    response.$request().$get("cases").then(function (resources) {
+                        self.cases = resources;
+                    }, function () {
+                        $snackbar.error("No resource for cases was found!");
+                        self.cases.splice(0,self.cases.length);
+                    });
+                },function () {
+                    $snackbar.error("Getting cases failed!");
+                })
             };
 
             self.tabChange = function () {
@@ -37,8 +59,11 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             };
 
             self.createCase = function () {
-                const idx = self.tabs.length;
-                self.tabs.push(new Tab("Niečo dlhééééééééééééééé", idx));
+
+            };
+
+            self.openCase = function (useCase) {
+                self.tabs.push(new Tab(self.tabs.length, useCase));
             };
 
             self.tabClose = function (tabIndex) {
@@ -50,15 +75,12 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             };
 
             self.searchItemSelected = function (item) {
-
             };
 
             self.queryNets = function () {
-
             };
 
             self.onChipRemove = function (chip) {
-
             };
 
             self.setSortField = function (field) {

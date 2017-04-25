@@ -48,35 +48,37 @@
                 <div class="cases">
                     <md-card class="cases-header" layout="column">
                         <md-card-content layout="row" layout-align="start center">
-                            <a flex="25" href="javascript:void(0)" ng-click="caseCtrl.setSortField('')">
+                            <a flex="25" href="javascript:void(0)" ng-click="caseCtrl.setSortField('title')">
                                 Case
-                                <md-icon class="material-icons">{{ caseCtrl.sort.field == '' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+                                <md-icon class="material-icons">{{ caseCtrl.sort.field == 'title' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
                             </a>
-                            <a flex="25" href="javascript:void(0)" ng-click="caseCtrl.setSortField('')">
+                            <a flex="25" href="javascript:void(0)" ng-click="caseCtrl.setSortField('createDate')">
                                 Create Date
-                                <md-icon class="material-icons">{{ caseCtrl.sort.field == '' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+                                <md-icon class="material-icons">{{ caseCtrl.sort.field == 'createDate' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
                             </a>
-                            <a flex="15" href="javascript:void(0)" ng-click="caseCtrl.setSortField('')">
+                            <a flex="15" href="javascript:void(0)" ng-click="caseCtrl.setSortField('editDate')">
                                 Last Edit Date
-                                <md-icon class="material-icons">{{ caseCtrl.sort.field == '' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
+                                <md-icon class="material-icons">{{ caseCtrl.sort.field == 'editDate' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
                             </a>
                         </md-card-content>
                     </md-card>
-                    <md-card class="case-panel">
-                        <md-card-content layout="row" layout-align="start center" ng-include="'views/app/cases/case_panel_collapsed.html'">
-                        </md-card-content>
+                    <md-card class="case-panel"
+                             ng-repeat="useCase in caseCtrl.cases | orderBy:useCase[caseCtrl.sort.field]:caseCtrl.sort.reverse"
+                             ng-include="'views/app/cases/case_panel_collapsed.html'"
+                             ng-click="caseCtrl.openCase(useCase)">
                     </md-card>
                 </div>
             </md-content>
         </md-tab>
         <md-tab ng-repeat="tab in caseCtrl.tabs" md-on-select="caseCtrl.tabChange()">
             <md-tab-label>
-                {{::tab.label}}
+                {{::tab.useCase.title}}
                 <md-icon class="material-icons cursor-pointer" style="font-size:22px;"
                          ng-click="caseCtrl.tabClose(tab.index)">close
                 </md-icon>
             </md-tab-label>
-            <md-tab-body class="md-padding color-bg-transparent" ng-include="'views/app/cases/case_tab.html'">
+            <md-tab-body >
+                <md-content class="md-padding color-bg-transparent" ng-include="'views/app/cases/case_tab.html'"></md-content>
             </md-tab-body>
         </md-tab>
         <md-tab md-on-select="caseCtrl.createCase()">
