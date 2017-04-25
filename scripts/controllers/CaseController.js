@@ -28,10 +28,6 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 reverse: false
             };
 
-            self.loadCases = function () {
-                //http request for all cases
-            };
-
             self.searchCases = function () {
 
             };
