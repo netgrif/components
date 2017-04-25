@@ -57,7 +57,6 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                 })
                 .within()
                 .segment('dashboard', {
-                    default: true,
                     templateUrl: "views/app/dashboard.html",
                     controller: 'DashboardController',
                     controllerAs: 'dashCtrl'
@@ -73,6 +72,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                     controllerAs: 'caseCtrl'
                 })
                 .segment('tasks', {
+                    default: true,
                     templateUrl: "views/app/tasks.html",
                     controller: 'TasksController',
                     controllerAs: 'tasksCtrl'

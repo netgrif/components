@@ -486,7 +486,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             self.dataFieldChanged(field.taskIndex, fieldIndex);
                             self.saveData(self.tabs[self.activeTab].resources[field.taskIndex]);
                         } else {
-                            $dialog.showByTemplate('assign_user', self, {task: {assignRole: field.roles[0]}}).then(function (user) {
+                            $dialog.showByTemplate('assign_user', self, {task: Object.assign({assignRole: field.roles[0]},self.tabs[self.activeTab].resources[field.taskIndex])}).then(function (user) {
                                 if (!user) return;
                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].user = user;
                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = user.email;
