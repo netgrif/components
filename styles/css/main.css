@@ -828,7 +828,7 @@ body {
   color: white;
 }
 
-.base .tasks .tasks-header {
+.base .tasks-header {
   height: 56px;
   margin: 0;
   padding-left: 12px;
@@ -836,22 +836,64 @@ body {
   margin-bottom: 16px;
 }
 
-.base .tasks .tasks-header md-card-content {
+.base .tasks-header md-card-content {
   padding-left: 0;
   padding-right: 0;
 }
 
-.base .tasks .tasks-header a {
+.base .tasks-header a {
   color: black;
   text-decoration: none;
   font-weight: bold;
 }
 
-.base .tasks .task {
+.base .tasks .task-panel {
   cursor: pointer;
 }
 
-.base .tasks .task p > i, .base .tasks .task task-priority > i {
+.base .tasks .task-panel p > i, .base .tasks .task-panel task-priority > i {
+  margin-right: 16px;
+}
+
+.base .cases-header {
+  height: 56px;
+  margin: 0;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-bottom: 16px;
+}
+
+.base .cases-header md-card-content {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.base .cases-header a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.base .cases .case-panel {
+  cursor: pointer;
+  height: 56px;
+  margin: 0;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-bottom: 16px;
+}
+
+.base .cases .case-panel md-card-content {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.base .cases .case-panel p {
+  margin: 0;
+  -webkit-margin-after: 0;
+}
+
+.base .cases .case-panel p > i {
   margin-right: 16px;
 }
 

@@ -1,6 +1,6 @@
 .tasks {
 
-	.tasks-header {
+	&-header {
 		height: 56px;
 		margin: 0;
 		padding-left: 12px;
@@ -19,7 +19,7 @@
 		}
 	}
 
-	.task {
+	.task-panel {
 		cursor: pointer;
 
 		p, task-priority {

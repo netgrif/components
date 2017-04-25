@@ -1,0 +1,67 @@
+<md-content class="md-padding color-bg-transparent">
+    <div class="tasks">
+        <md-card class="tasks-header" layout="column">
+            <md-card-content layout="row" layout-align="left center">
+                <a flex="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
+                    {{::$i18n.block.taskHeader.case}}
+                    <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'caseTitle' &&
+                        !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                    </md-icon>
+                </a>
+                <a flex="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+                    {{::$i18n.block.taskHeader.name}}
+                    <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'title' &&
+                        !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                    </md-icon>
+                </a>
+                <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
+                    {{::$i18n.block.taskHeader.priority}}
+                    <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'priority' &&
+                        !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                    </md-icon>
+                </a>
+                <a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('username')">
+                    {{::$i18n.block.taskHeader.user}}
+                    <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'username' &&
+                        !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                    </md-icon>
+                </a>
+                <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
+                    {{::$i18n.block.taskHeader.startDate}}
+                    <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'startDate' &&
+                        !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                    </md-icon>
+                </a>
+                <md-menu>
+                    <md-button ng-click="$mdOpenMenu($event)" md-menu-origin>
+                        <md-tooltip md-direction="top">{{::$i18n.block.taskHeader.view.this}}</md-tooltip>
+                        <md-icon class="material-icons">view_carousel</md-icon>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="tasksCtrl.changeView('list')">{{::$i18n.block.taskHeader.view.list}}
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="tasksCtrl.changeView('table')" disabled>
+                                {{::$i18n.block.taskHeader.view.table}}
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </md-card-content>
+        </md-card>
+        <md-expansion-panel class="task"
+                            ng-repeat="task in tasksCtrl.tabs[$index].resources | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.tabs[$index].sort.reverse">
+            <md-expansion-panel-collapsed layout="row" layout-align="left center"
+                                          ng-click="tasksCtrl.loadTaskData(task.visualId)"
+                                          ng-include="'views/app/tasks/task_panel_collapsed.html'">
+            </md-expansion-panel-collapsed>
+            <md-expansion-panel-expanded ng-include="'views/app/tasks/task_panel_expanded.html'">
+            </md-expansion-panel-expanded>
+        </md-expansion-panel>
+        <!--Following code is task implementation with expansion panel groups. Uncomment only when 100% it works-->
+        <!--<md-expansion-panel-group md-component-id="taskGroup-{{$index}}" multiple>-->
+        <!--</md-expansion-panel-group>-->
+    </div>
+</md-content>

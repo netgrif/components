@@ -1,0 +1,44 @@
+.cases {
+
+    &-header {
+        height: 56px;
+        margin: 0;
+        padding-left: 12px;
+        padding-right: 12px;
+        margin-bottom: 16px;
+
+        md-card-content {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    }
+
+    .case-panel {
+        cursor: pointer;
+        height: 56px;
+        margin: 0;
+        padding-left: 12px;
+        padding-right: 12px;
+        margin-bottom: 16px;
+
+        md-card-content {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        p {
+            margin: 0;
+            -webkit-margin-after: 0;
+
+            > i {
+                margin-right: 16px;
+            }
+        }
+    }
+}
