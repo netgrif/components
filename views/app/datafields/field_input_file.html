@@ -1,4 +1,4 @@
-<div class="data-item" layout="row" layout-align="left center">
+<div class="data-item" layout="row" layout-align="start center">
     <div flex="50">
         <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
             {{field.name}}
@@ -9,10 +9,16 @@
     </div>
     <div flex="20"></div>
     <div flex="60" layout="row" layout-align="space-between center">
-        <div layout="row" layout-align="left center">
+        <div layout="row" layout-align="start center">
             <md-icon class="material-icons margin-right-2x" ng-if="!field.newValue">insert_drive_file</md-icon>
-            <md-icon class="material-icons margin-right-2x color-fg-warning" ng-if="field.newFile && !field.uploaded">warning</md-icon>
-            <md-icon class="material-icons margin-right-2x color-fg-success" ng-if="field.newFile && field.uploaded">done</md-icon>
+            <md-icon class="material-icons margin-right-2x color-fg-warning" ng-if="field.newFile && !field.uploaded">
+                <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileNotUploaded}}</md-tooltip>
+                warning
+            </md-icon>
+            <md-icon class="material-icons margin-right-2x color-fg-success" ng-if="field.newFile && field.uploaded">
+                <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
+                done
+            </md-icon>
             <span class="text-overflow-dots">{{field.newValue ? field.newValue : $i18n.block.data.noFile}}</span>
         </div>
         <md-menu class="width-24px" ng-if="task.user.email == $user.login && field.logic.editable">
@@ -21,7 +27,7 @@
             </md-button>
             <md-menu-content>
                 <md-menu-item>
-                    <md-button class="file-chooser" layout="row" layout-align="left center">
+                    <md-button class="file-chooser" layout="row" layout-align="start center">
                         <input type="file" id="file"
                                file-model="field.file"
                                file-change-callback="fileModelChange"

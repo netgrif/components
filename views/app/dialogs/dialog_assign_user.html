@@ -47,7 +47,7 @@
             <md-divider flex></md-divider>
             <div layout="row" layout-align="center center">
                 <md-list class="assign-list" flex layout="row" layout-wrap>
-                    <md-list-item flex="50" ng-repeat="user in users" class="md-2-line"
+                    <md-list-item flex="{{user.length > 1 ? '50' : '100'}}" ng-repeat="user in users" class="md-2-line"
                                   ng-click="dialogCtrl.selectedUser = user.email" ng-class="getSelectedUserClass(user.email)">
                         <md-icon class="md-avatar" layout="row" layout-align="center center">
                             <i class="material-icons color-fg-primary-500">account_circle</i>

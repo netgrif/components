@@ -1,6 +1,6 @@
 <md-tabs md-dynamic-height md-border-bottom>
 
-    <md-tab ng-if="$user.authority === 'admin'" ng-click="rolesCtrl.loadSystemRoles()"
+    <md-tab ng-if="$user.authority === 'admin'" md-on-select="rolesCtrl.loadSystemRoles()"
             label="{{::$i18n.page.roles.tab.systemRoles.this}}">
         <md-content class="md-padding color-bg-transparent">
             <md-card>
@@ -19,10 +19,12 @@
                         </md-checkbox>
                     </div>
                 </md-card-content>
-                <md-card-actions layout="row" layout-align="end center">
-                    <!--<md-button>Back</md-button>
-                      <md-button class="md-primary" ng-disabled="rolesCtrl.disSystemButton" ng-click="rolesCtrl.saveSystemRole()">Save</md-button>-->
-                </md-card-actions>
+                <!--<md-card-actions layout="row" layout-align="end center">-->
+                    <!--<md-button>Back</md-button>-->
+                    <!--<md-button class="md-primary" ng-disabled="rolesCtrl.disSystemButton"-->
+                               <!--ng-click="rolesCtrl.saveSystemRole()">Save-->
+                    <!--</md-button>-->
+                <!--</md-card-actions>-->
             </md-card>
         </md-content>
     </md-tab>
@@ -51,18 +53,22 @@
                         </md-radio-button>
                     </md-radio-group>
                     <div layout="column" flex="40">
+                        <!--<md-checkbox layout="row" class="md-primary roles-checkbox"-->
+                        <!--ng-repeat="box in rolesCtrl.checkboxes track by $index" ng-model="box.isEnabled"-->
+                        <!--value="{{box.value}}" ng-click="rolesCtrl.enableSave()">{{box.value}}-->
+                        <!--</md-checkbox>-->
                         <md-checkbox layout="row" class="md-primary roles-checkbox"
                                      ng-repeat="box in rolesCtrl.checkboxes track by $index" ng-model="box.isEnabled"
-                                     value="{{box.value}}" ng-click="rolesCtrl.enableSave()">{{box.value}}
+                                     value="{{box.value}}" ng-click="rolesCtrl.saveRole()">{{box.value}}
                         </md-checkbox>
                     </div>
                 </md-card-content>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button>{{::$i18n.page.roles.tab.manageRoles.back}}</md-button>
-                    <md-button class="md-primary" ng-disabled="rolesCtrl.disButton" ng-click="rolesCtrl.saveRole()">
-                        {{::$i18n.page.roles.tab.manageRoles.save}}
-                    </md-button>
-                </md-card-actions>
+                <!--<md-card-actions layout="row" layout-align="end center">-->
+                <!--<md-button>{{::$i18n.page.roles.tab.manageRoles.back}}</md-button>-->
+                <!--<md-button class="md-primary" ng-disabled="rolesCtrl.disButton" ng-click="rolesCtrl.saveRole()">-->
+                <!--{{::$i18n.page.roles.tab.manageRoles.save}}-->
+                <!--</md-button>-->
+                <!--</md-card-actions>-->
             </md-card>
         </md-content>
     </md-tab>
