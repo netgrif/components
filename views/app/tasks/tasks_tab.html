@@ -81,9 +81,9 @@
             </div>
         </div>
         <div layout="column" layout-align="center center">
-            <div class="padding-bottom-no" layout="row" layout-align="center center">
+            <div class="padding-no" layout="row" layout-align="center center">
                 <md-button class="md-primary" ng-click="tasksCtrl.searchTasks()">
-                    Search
+                    {{$i18n.block.taskFilter.search}}
                 </md-button>
                 <md-menu>
                     <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>

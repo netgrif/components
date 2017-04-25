@@ -40,7 +40,7 @@
                     <div layout="column" layout-align="center center">
                         <div layout="row">
                             <md-button class="md-primary" ng-click="caseCtrl.searchCases()">
-                                Search
+                                {{$i18n.block.taskFilter.search}}
                             </md-button>
                         </div>
                     </div>
@@ -52,20 +52,22 @@
                                 Case
                                 <md-icon class="material-icons">{{ caseCtrl.sort.field == 'title' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
                             </a>
-                            <a flex="25" href="javascript:void(0)" ng-click="caseCtrl.setSortField('createDate')">
-                                Create Date
-                                <md-icon class="material-icons">{{ caseCtrl.sort.field == 'createDate' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
-                            </a>
-                            <a flex="15" href="javascript:void(0)" ng-click="caseCtrl.setSortField('editDate')">
-                                Last Edit Date
-                                <md-icon class="material-icons">{{ caseCtrl.sort.field == 'editDate' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>
-                            </a>
+                            <!--<a flex="25" href="javascript:void(0)" ng-click="caseCtrl.setSortField('createDate')">-->
+                                <!--Create Date-->
+                                <!--<md-icon class="material-icons">{{ caseCtrl.sort.field == 'createDate' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>-->
+                            <!--</a>-->
+                            <!--<a flex="15" href="javascript:void(0)" ng-click="caseCtrl.setSortField('editDate')">-->
+                                <!--Last Edit Date-->
+                                <!--<md-icon class="material-icons">{{ caseCtrl.sort.field == 'editDate' && !caseCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}</md-icon>-->
+                            <!--</a>-->
                         </md-card-content>
                     </md-card>
                     <md-card class="case-panel"
                              ng-repeat="useCase in caseCtrl.cases | orderBy:useCase[caseCtrl.sort.field]:caseCtrl.sort.reverse"
-                             ng-include="'views/app/cases/case_panel_collapsed.html'"
+                             ng-class="!$last ? 'divider-bottom' : ''"
                              ng-click="caseCtrl.openCase(useCase)">
+                        <md-card-content layout="row" layout-align="start center" ng-include="'views/app/cases/case_panel.html'">
+                        </md-card-content>
                     </md-card>
                 </div>
             </md-content>
@@ -81,7 +83,7 @@
                 <md-content class="md-padding color-bg-transparent" ng-include="'views/app/cases/case_tab.html'"></md-content>
             </md-tab-body>
         </md-tab>
-        <md-tab md-on-select="caseCtrl.createCase()">
+        <md-tab md-on-select="caseCtrl.createNewCase()">
             <md-tab-label>
                 <md-icon class="material-icons md-highlight">add</md-icon>
             </md-tab-label>

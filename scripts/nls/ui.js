@@ -41,9 +41,7 @@ define({
                     },
                     manageRoles: {
                         this: "Process Roles",
-                        label: "Petri Net",
-                        back: "Back",
-                        save: "Save"
+                        label: "Petri Net"
                     }
                 }
             },
@@ -106,6 +104,9 @@ define({
             taskFilter: {
                 process: "Process",
                 task: "Task",
+                dataField: "Data field",
+                dataFieldVal: "Data Field Value",
+                search: "Search",
                 save: "Save",
                 reset: "Reset"
             },

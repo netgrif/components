@@ -32,6 +32,14 @@ body {
 	}
 }
 
+// Border
+.divider {
+
+	&-bottom {
+		border-bottom: 1px solid $color-divider;
+	}
+}
+
 // Text overflow
 .text-overflow {
 

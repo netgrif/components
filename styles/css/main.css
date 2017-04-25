@@ -295,7 +295,7 @@
 }
 
 .margin-no {
-  margin: 0;
+  margin: 0 !important;
 }
 
 .margin-default {
@@ -385,7 +385,7 @@
 }
 
 .padding-no {
-  padding: 0;
+  padding: 0 !important;
 }
 
 .padding-default {
@@ -498,6 +498,10 @@ body {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.divider-bottom {
+  border-bottom: 1px solid #E1E1E1;
 }
 
 .text-overflow-dots {
@@ -878,9 +882,9 @@ body {
   cursor: pointer;
   height: 56px;
   margin: 0;
+  border-radius: 0;
   padding-left: 12px;
   padding-right: 12px;
-  margin-bottom: 16px;
 }
 
 .base .cases .case-panel md-card-content {

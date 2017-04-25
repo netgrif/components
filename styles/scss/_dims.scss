@@ -9,7 +9,7 @@ $dim-2x:						2*$dim-default;
 .margin {
 
 	&-no {
-		margin: 0;
+		margin: 0 !important;
 	}
 
 	&-default {
@@ -121,7 +121,7 @@ $dim-2x:						2*$dim-default;
 .padding {
 
 	&-no {
-		padding: 0;
+		padding: 0 !important;
 	}
 
 	&-default {

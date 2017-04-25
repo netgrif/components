@@ -40,9 +40,7 @@ define({
                 },
                 manageRoles: {
                     this: "Procesné Role",
-                    label: "Petriho sieť",
-                    back: "Späť",
-                    save: "Uložiť"
+                    label: "Petriho sieť"
                 }
             }
         },
@@ -105,6 +103,9 @@ define({
         taskFilter: {
             process: "Proces",
             task: "Úloha",
+            dataField: "Datové pole",
+            dataFieldVal: "Hodnota datového pola",
+            search: "Hľadať",
             save: "Uložiť",
             reset: "Reset"
         },
