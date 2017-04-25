@@ -64,14 +64,15 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
         }
     }
 
-    angular.module('ngWorkflow').controller('CaseController', ['$log', '$scope', '$http', '$snackbar',
-        function ($log, $scope, $http, $snackbar) {
+    angular.module('ngWorkflow').controller('CaseController', ['$log', '$scope', '$http', '$snackbar', '$dialog',
+        function ($log, $scope, $http, $snackbar, $dialog) {
             var self = this;
 
             self.activeTabIndex = undefined;
             self.activeTab = undefined;
             self.cases = [];
             self.tabs = [];
+            self.newCase = {};
             self.filter = {
                 search: undefined,
                 selected: undefined,
@@ -102,8 +103,11 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 self.activeTab.loadTasks();
             };
 
-            self.createCase = function () {
-
+            self.createNewCase = function () {
+                self.loadPetriNets();
+                $dialog.showByTemplate('create_case', self).then(function () {
+                    self.activeTabIndex = 0;
+                });
             };
 
             self.openCase = function (useCase) {
@@ -131,6 +135,30 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             self.setSortField = function (field) {
                 self.sort.reverse = self.sort.field === field ? !self.sort.reverse : false;
                 self.sort.field = field;
+            };
+
+            self.createCase = function () {
+                if (!jQuery.isEmptyObject(self.newCase) || !self.newCase.netId) {
+                    $http.post("/res/workflow/case", JSON.stringify(self.newCase))
+                        .then(function (response) {
+                            if (response.success) $dialog.closeCurrent();
+                            self.newCase = {};
+                            self.searchCases();
+                        }, function () {
+                            $snackbar.error("Creating new case failed!");
+                            self.newCase = {};
+                        });
+                }
+            };
+
+            self.loadPetriNets = function () {
+                $http.get("/res/petrinet/refs").then(function (response) {
+                    response.$request().$get("petriNetReferences").then(function (resource) {
+                        self.petriNetRefs = resource;
+                    });
+                }, function () {
+                    $snackbar.error("Petri net refs get failed!");
+                });
             };
         }]);
 });
