@@ -66,7 +66,7 @@
     <md-expansion-panel class="task"
                         ng-repeat="task in caseCtrl.activeTab.tasks | orderBy:task[caseCtrl.activeTab.sort.field]:caseCtrl.activeTab.sort.reverse">
         <md-expansion-panel-collapsed layout="row" layout-align="left center"
-                                      ng-click="caseCtrl.activeTab.loadTaskData(task.visualId)"
+                                      ng-click="caseCtrl.activeTab.loadTaskData(task)"
                                       ng-include="'views/app/tasks/task_panel_collapsed.html'">
         </md-expansion-panel-collapsed>
         <md-expansion-panel-expanded ng-include="'views/app/tasks/task_panel_expanded.html'">

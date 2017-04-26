@@ -12,9 +12,9 @@
         <md-input-container class="md-block" flex>
             <md-switch class="md-primary"
                        ng-model="field.newValue"
-                       ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
+                       ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
                        ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
-                       ng-blur="tasksCtrl.saveData(task)"
+                       ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
                        ng-required="field.logic.required">
                 {{field.name}}
             </md-switch>

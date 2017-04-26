@@ -1,10 +1,11 @@
 define(['angular', '../modules/Main', '../modules/Workflow'], function (angular) {
     class Tab {
-        constructor(index, useCase, $http, $snackbar) {
+        constructor(index, useCase, $http, $snackbar, $dialog) {
             this.index = index;
             this.useCase = useCase;
             this.$http = $http;
             this.$snackbar = $snackbar;
+            this.$dialog = $dialog;
 
             this.tasks = [];
             this.sort = {
@@ -22,7 +23,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             if (task.user && task.finishDate) task.status = "Done";
             else if (task.user && !task.finishDate && task.startDate) task.status = "Assigned";
             else task.status = "New";
-        };
+        }
 
         loadTasks() {
             const self = this;
@@ -47,7 +48,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             }, function () {
                 self.$snackbar.error("Assigning task " + task.title + " failed");
             });
-        };
+        }
 
         cancelTask(task) {
             const self = this;
@@ -57,11 +58,237 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             }, function () {
                 self.$snackbar.error("Canceling assignment of task " + task.title + " failed");
             });
+        }
+
+        taskFinish(task) {
+            const self = this;
+            this.$http.get(task.$href("finish")).then(function (response) {
+                if (response.success) self.loadTasks();
+                if (response.error) self.$snackbar.show(response.error);
+            }, function () {
+                self.$snackbar.error("Finishing task " + task.title + " failed");
+            });
+        }
+
+        /**
+         * Check if are required fields are valid before finish task
+         * @param task
+         * @returns {boolean}
+         */
+        areFieldsValid(task) {
+            let valid = task.data.every(item => {
+                if (item.logic.required) {
+                    if (item.type === 'file') {
+                        if (item.newFile) return !!item.uploaded;
+                        return !!item.newValue;
+                    } else if (item.type === 'boolean') {
+                        return true;
+                    } else return !!item.newValue;
+                } else return true;
+            });
+            if (!valid) {
+                this.$snackbar.error("Not all required fields have values! Required fields are marked with asterisk (*)");
+            }
+            return valid;
+        }
+
+        finishTask(task) {
+            if (!task.data) {
+                this.loadTaskData(task, () => {
+                    if (!task.data) {
+                        this.taskFinish(task);
+                    } else {
+                        this.areFieldsValid(task);
+                    }
+                });
+            } else {
+                if (this.areFieldsValid(task)) {
+                    this.saveData(task, success => {
+                        if (success) this.taskFinish(task);
+                    });
+                }
+            }
+        }
+
+        loadTaskData(task, callback) {
+            if (task.data) {
+                callback && callback();
+                return;
+            }
+            const self = this;
+            this.$http.get(task.$href("data")).then(function (response) {
+                if (response.$response().data._embedded) {
+                    task.data = [];
+                    Object.keys(response.$response().data._embedded).forEach(function (item, index, array) {
+                        response.$request().$get(item).then(function (resource) {
+                            task.data = task.data.concat(resource);
+                            task.data = task.data.map(function (item) {
+                                item.newValue = Tab.parseDataValue(item.value, item.type, item);
+                                item.changed = false;
+                                // item.taskIndex = taskIndex;
+                                callback && callback();
+                                return item;
+                            });
+                            //TODO: 23/3/2017 check expansion footer rendering in PROD, if no problem found remove sleep
+                            // $timeout(function () {
+                            // }, 100);
+                            if (index === array.length - 1) {
+                                callback && callback();
+                            }
+                        });
+                    });
+                } else {
+                    //self.$snackbar.error("No data for task " + task.visualId);
+                    callback && callback();
+                }
+            }, function () {
+                self.$snackbar.error("Data for " + task.visualId + " failed to load!");
+                callback && callback();
+            });
+        }
+
+        autoPlusLogic(fieldIndex, task) {
+            const logic = task.data[fieldIndex].logic.autoPlus;
+            const refField = task.data.find(item => item.objectId === logic.ref);
+            if (!refField.newValue) return;
+
+            let autoValue;
+            if (refField.type === 'text') {
+                autoValue = refField.newValue + logic.value;
+            } else if (refField.type === 'number') {
+                autoValue = refField.newValue + logic.value;
+            } else if (refField.type === 'date') {
+                const mode = logic.value.charAt(logic.value.length - 1);
+                const addValue = parseInt(logic.value.substr(0, logic.value.length - 1));
+                if (addValue == 'NaN') return;
+                autoValue = new Date(refField.newValue.getTime());
+                switch (mode) {
+                    case 'd':
+                        autoValue.setDate(autoValue.getDate() + addValue);
+                        break;
+                    case 'm':
+                        autoValue.setMonth(autoValue.getMonth() + addValue); //TODO: 23/3/2017 handle if month value overflow
+                        break;
+                    case 'y':
+                        autoValue.setFullYear(autoValue.getFullYear() + addValue);
+                        break;
+                }
+            }
+
+            if (autoValue) {
+                this.dataFieldChanged(task, fieldIndex);
+                task.data[fieldIndex].newValue = autoValue;
+            }
+        }
+
+        applyFieldLogic(field, index, task) {
+            if (!field.logic) return;
+            Object.keys(field.logic).forEach(item => {
+                switch (item) {
+                    case "autoPlus":
+                        this.autoPlusLogic(index, task);
+                        break;
+                }
+            });
+        }
+
+        saveData(task, callback) {
+            if (!task.data) return;
+
+            const dataFields = {};
+            task.data.forEach((item, index) => {
+                this.applyFieldLogic(item, index, task);
+            });
+            task.data.forEach( item => {
+                if (item.changed) {
+                    dataFields[item.objectId] = {
+                        type: item.type,
+                        value: Tab.formatDataValue(item.newValue, item.type)
+                    };
+                }
+            });
+
+            if (jQuery.isEmptyObject(dataFields)) {
+                callback && callback(true);
+                return;
+            }
+
+            const self = this;
+            this.$http.post(task.$href("data-edit"), JSON.stringify(dataFields)).then(function (response) {
+                task.data.forEach(function (item, index) {
+                    if (item.changed) {
+                        task.data[index].changed = false;
+                    }
+                });
+                self.$snackbar.success("Data successfully saved");
+                callback && callback(true);
+            }, function () {
+                self.$snackbar.error("Saving data has failed!");
+                callback && callback(false);
+            });
+        }
+
+        userFieldChoice(task, field, fieldIndex, user) {
+            if (user) {
+                task.data[fieldIndex].user = {
+                    name: user.name,
+                    email: user.login
+                };
+                task.data[fieldIndex].newValue = user.login;
+
+                this.dataFieldChanged(task, fieldIndex);
+                this.saveData(task);
+            } else {
+                const self = this;
+                this.$dialog.showByTemplate('assign_user', this, {task: Object.assign({assignRole: field.roles[0]}, task)}).then(function (user) {
+                    if (!user) return;
+                    task.data[fieldIndex].user = user;
+                    task.data[fieldIndex].newValue = user.email;
+
+                    self.dataFieldChanged(task, fieldIndex);
+                    self.saveData(task);
+                }, function () {
+                });
+            }
+        }
+
+        static parseDataValue(value, type, item) {
+            if (type === 'date') {
+                if (value) return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
+                else return undefined;
+            }
+            if (type === 'user') {
+                //TODO: 28/3/2017 get user profile [on backend make endpoint for one user]
+                if (value)
+                    item.user = {name: "", email: item.value};
+            }
+            return value;
+        }
+
+        static formatDataValue(value, type) {
+            if (!value) return null;
+            if (type === 'date') {
+                return value.getFullYear() + "-" + Tab.paddingZero((value.getMonth() + 1) + "") + "-" + Tab.paddingZero(value.getDate() + "");
+            }
+            return value;
+        }
+
+        dataFieldChanged(task, fieldIndex) {
+            task.data[fieldIndex].changed = true;
         };
 
-        loadTaskData(visualId) {
-
+        formatDate(date) {
+            if (!date) return;
+            return Tab.paddingZero(date.dayOfMonth) + "." + Tab.paddingZero(date.monthValue) + "." + date.year + " \n"
+                + Tab.paddingZero(date.hour) + ":" + Tab.paddingZero(date.minute);
         }
+
+        static paddingZero(text) {
+            text = text.toString();
+            return text.length <= 1 ? "0" + text : text;
+        }
+
+
     }
 
     angular.module('ngWorkflow').controller('CaseController', ['$log', '$scope', '$http', '$snackbar', '$dialog',
@@ -112,7 +339,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
 
             self.openCase = function (useCase) {
                 if (!self.tabs.some(tab => tab.useCase.stringId === useCase.stringId))
-                    self.tabs.push(new Tab(self.tabs.length, useCase, $http, $snackbar));
+                    self.tabs.push(new Tab(self.tabs.length, useCase, $http, $snackbar, $dialog));
             };
 
             self.tabClose = function (tabIndex) {

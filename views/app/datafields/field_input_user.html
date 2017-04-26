@@ -27,12 +27,12 @@
             </md-button>
             <md-menu-content>
                 <md-menu-item ng-if="$user.canAssign(field.roles[0])">
-                    <md-button ng-click="tasksCtrl.userFieldChoice(field, $index, $user)">
+                    <md-button ng-click="tasksCtrl.userFieldChoice(field, $index, $user); caseCtrl.activeTab.userFieldChoice(task, field, $index, $user)">
                         {{::$i18n.block.data.self}}
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
-                    <md-button ng-click="tasksCtrl.userFieldChoice(field, $index)">
+                    <md-button ng-click="tasksCtrl.userFieldChoice(field, $index); caseCtrl.activeTab.userFieldChoice(task, field, $index)">
                         {{::$i18n.block.data.chooseUser}}
                     </md-button>
                 </md-menu-item>

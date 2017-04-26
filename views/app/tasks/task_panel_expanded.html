@@ -7,7 +7,7 @@
 	<p flex="20" layout="row" layout-align="left center">
 		<i ng-if="task.user" class="material-icons color-fg-primary-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
 	</p>
-	<p flex="15">{{tasksCtrl.formatDate(task.startDate)}}</p>
+	<p flex="15">{{tasksCtrl.formatDate(task.startDate); caseCtrl.activeTab.formatDate(task.startDate)}}</p>
 	<md-button ng-click="$panel.collapse()">
 		<md-icon class="material-icons">keyboard_arrow_up</md-icon>
 	</md-button>
@@ -27,8 +27,8 @@
 	<md-button ng-if="task.status === 'New' && $user.canAssign(task.assignRole)" ng-click="tasksCtrl.assignTask(task); caseCtrl.activeTab.assignTask(task)">{{::$i18n.block.task.assign}}</md-button>
 	<md-button ng-if="task.status === 'New' && $user.canDelegate(task.delegateRole)" ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.delegate}}</md-button>
 	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.reassign}}</md-button>
-	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task)">{{::$i18n.block.task.saveData}}</md-button>
-	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task)">{{::$i18n.block.task.finish}}</md-button>
+	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)">{{::$i18n.block.task.saveData}}</md-button>
+	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task); caseCtrl.activeTab.finishTask(task)">{{::$i18n.block.task.finish}}</md-button>
 	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.cancelTask(task); caseCtrl.activeTab.cancelTask(task)">{{::$i18n.block.task.cancel}}</md-button>
 	<md-button class="md-primary" ng-click="$panel.collapse()">{{::$i18n.block.task.collapse}}</md-button>
 </md-expansion-panel-footer>

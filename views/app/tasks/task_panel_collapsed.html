@@ -6,7 +6,7 @@
 <p flex="20" layout="row" layout-align="start center">
     <i ng-if="task.user" class="material-icons color-fg-primary-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
 </p>
-<p flex="15">{{tasksCtrl.formatDate(task.startDate)}}</p>
+<p flex="15">{{tasksCtrl.formatDate(task.startDate); caseCtrl.activeTab.formatDate(task.startDate)}}</p>
 <div ng-class="task.status !== 'Assigned' || task.user.email === $user.login ? 'visibility-visible' : 'visibility-hidden'">
     <md-menu>
         <md-button ng-click="$mdOpenMenu($event)" md-menu-origin>
@@ -23,7 +23,7 @@
                 <md-button ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.reassign}}</md-button>
             </md-menu-item>
             <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
-                <md-button ng-click="tasksCtrl.finishTask(task)">{{::$i18n.block.task.finish}}</md-button>
+                <md-button ng-click="tasksCtrl.finishTask(task); caseCtrl.activeTab.finishTask(task)">{{::$i18n.block.task.finish}}</md-button>
             </md-menu-item>
             <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
                 <md-button ng-click="tasksCtrl.cancelTask(task); caseCtrl.activeTab.cancelTask(task)">{{::$i18n.block.task.cancel}}</md-button>
