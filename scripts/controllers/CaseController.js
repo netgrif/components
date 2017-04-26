@@ -32,11 +32,11 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                     self.tasks = resources;
                     self.tasks.forEach(task => self.getStatus(task));
                 }, function () {
-                    self.$snackbar("Task resources was not found!");
+                    self.$snackbar.error("Task resources was not found!");
                     self.tasks.splice(0, self.tasks.length);
                 })
             }, function () {
-                self.$snackbar("Failed to tasks for case " + self.useCase.title);
+                self.$snackbar.error("Failed to tasks for case " + self.useCase.title);
             })
         }
 
@@ -83,6 +83,8 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                         return !!item.newValue;
                     } else if (item.type === 'boolean') {
                         return true;
+                    } else if( item.type === 'number') {
+                        return item.newValue !== undefined && item.newValue !== null;
                     } else return !!item.newValue;
                 } else return true;
             });

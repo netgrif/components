@@ -284,6 +284,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                     return !!item.newValue;
                                 } else if (item.type === 'boolean') {
                                     return true;
+                                } else if( item.type === 'number') {
+                                    return item.newValue !== undefined && item.newValue !== null;
                                 } else return !!item.newValue;
 
                             } else return true;
