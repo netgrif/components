@@ -10,10 +10,10 @@ define({
         signUp: {
             email: "Email",
             psw: "Heslo",
-            retypePsw: "Heslo znovu",
+            retypePsw: "Opakovať heslo",
             name: "Meno",
             surname: "Priezvisko",
-            submit: "Registruj"
+            submit: "Registrovať"
         },
         dashboard: {
             msg: "Na stránke Dashboard sa pracuje"
@@ -30,53 +30,55 @@ define({
                 submit: "Pridať záložku"
             }
         },
-        data: {
-            msg: "Na stránke Dáta sa pracuje"
+        cases: {
+            tab: {
+                allCases: "Všetky prípady"
+            }
         },
         roles: {
             tab: {
                 systemRoles: {
-                    this: "Systémové Role"
+                    this: "Systémové role"
                 },
                 manageRoles: {
-                    this: "Procesné Role",
+                    this: "Procesné role",
                     label: "Petriho sieť"
                 }
             }
         },
         workflow: {
             msg: "Na stránke Workflow sa pracuje",
-            uploadNet: "Nahraj Sieť",
-            createCase: "Vytvor Prípad"
+            uploadNet: "Nahrať sieť",
+            createCase: "Vytvoriť prípad"
         },
         console: {
-            title: "Pozvi Používateľa",
+            title: "Pozvať používateľa",
             email: "Email",
-            submit: "Pošli Pozvánku"
+            submit: "Poslať pozvánku"
         },
         userProfile: {
             title: "Profil",
-            msgPart1: "Tvoj profil je",
+            msgPart1: "Tvoj profil je na",
             msgPart2: "kompletný",
             generalInfo: {
-                title: "Všeobecné Informácie",
+                title: "Všeobecné informácie",
                 name: "Meno",
                 surname: "Priezvisko",
                 org: "Organizácia"
             },
             systemRoles: {
-                title: "Systémové Role"
+                title: "Systémové role"
             },
             workflowRoles: {
-                title: "Procesné Role"
+                title: "Procesné role"
             },
             contactInfo: {
-                title: "Kontaktné Informácie",
-                phone: "Telefónne Číslo",
+                title: "Kontaktné informácie",
+                phone: "Telefónne číslo",
                 email: "Email"
             },
-            changePsw: "Zmeň Heslo",
-            submit: "Ulož"
+            changePsw: "Zmeniť heslo",
+            submit: "Uložiť"
         }
     },
     block: {
@@ -88,7 +90,7 @@ define({
             roles: "Role",
             workflow: "Workflow",
             console: "Konzola",
-            version: "Verzia 1.0.0"
+            version: "Verzia 1.0.1"
         },
         mainMenu: {
             notifications: "Notifikácie",
@@ -107,14 +109,14 @@ define({
             dataFieldVal: "Hodnota datového pola",
             search: "Hľadať",
             save: "Uložiť",
-            reset: "Reset"
+            reset: "Resetovať"
         },
         taskHeader: {
             case: "Prípad",
             name: "Meno",
             priority: "Priorita",
             user: "Vykonávateľ",
-            startDate: "Dátum Začiatku",
+            startDate: "Dátum začiatku",
             status: "Status",
             view: {
                 this: "Náhlaď",
@@ -123,13 +125,13 @@ define({
             }
         },
         task: {
-            assign: "Priraď",
-            reassign: "Preraď",
+            assign: "Priraďiť",
+            reassign: "Preraďiť",
             delegate: "Delegovať",
-            saveData: "Ulož Dáta",
-            finish: "Dokonči",
-            cancel: "Zruš",
-            collapse: "Zbaľ",
+            saveData: "Uložiť dáta",
+            finish: "Dokončiť",
+            cancel: "Zrušiť",
+            collapse: "Zbaliť",
             noDataMsg: "Pre túto úlohu neexistujú dáta",
             process: "Proces",
             task: "Úloha",
@@ -142,7 +144,7 @@ define({
         },
         data: {
             noUserChosen: "Žiaden zvolený používateľ",
-            self: "Self",
+            self: "Sebe",
             chooseUser: "Vybrať používateľa",
             noFile: "Žiaden súbor",
             fileNotUploaded: "Súbor ešte nebol nahraný",
@@ -153,23 +155,23 @@ define({
         },
         dialog: {
             uploadNet: {
-                title: "Nahraj Sieť",
-                uploadBtn: "Vyber Sieť",
+                title: "Nahrať sieť",
+                uploadBtn: "Vybrať sieť",
                 uploadHelp: "Požaduje sa XML súbor",
                 name: "Názov",
                 maxchars: "Iniciály Petriho sieťe musia mať maximálne 3 písmená",
                 initials: "Iniciály",
-                submit: "Nahraj"
+                submit: "Nahrať"
             },
             createCase: {
-                title: "Vytvor Prípad",
+                title: "Vytvoriť prípad",
                 petriNet: "Petriho Sieť",
                 name: "Názov",
                 color: "Farba značky",
-                submit: "Vytvor"
+                submit: "Vytvoriť"
             },
             saveFilter: {
-                title: "Ulož Filter",
+                title: "Uložiť filter",
                 name: "Názov",
                 visibility: {
                     label: "Prístupnosť",
@@ -184,8 +186,8 @@ define({
         },
         bottomSheet: {
             user: "Používateľ",
-            assign: "Priraď",
-            title: "Priraď úlohu používateľovi"
+            assign: "Priraďiť",
+            title: "Priraďiť úlohu používateľovi"
         },
         fab: {
             tooltip: "Spät nahor"

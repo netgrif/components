@@ -1,8 +1,8 @@
 define(['angular', '../modules/Tasks', '../modules/Main'],
     function (angular) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$mdExpansionPanel', '$timeout', '$scroll',
-                function ($log, $scope, $http, $user, $snackbar, $dialog, $fileUpload, $mdExpansionPanelGroup, $mdExpansionPanel, $timeout, $scroll) {
+            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$mdExpansionPanel', '$timeout', '$scroll', '$i18n',
+                function ($log, $scope, $http, $user, $snackbar, $dialog, $fileUpload, $mdExpansionPanelGroup, $mdExpansionPanel, $timeout, $scroll, $i18n) {
                     var self = this;
                     var statusOrder = {
                         New: 1,
@@ -839,8 +839,8 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     //         jQuery('.btn-to-top').fadeOut(200);
                     // });
 
-                    self.addTab("All Tasks", "/res/task", TAB_TYPE.ALL);
-                    self.addTab("My Tasks", "/res/task/my", TAB_TYPE.MY);
+                    self.addTab($i18n.page.tasks.tab.allTasks, "/res/task", TAB_TYPE.ALL);
+                    self.addTab($i18n.page.tasks.tab.myTasks, "/res/task/my", TAB_TYPE.MY);
                     //self.addTab("My Finished Tasks", "/res/task/my/finished", TAB_TYPE.MY_FINISHED);
                     //Load roles persist filters
                     $http.post("/res/task/filter/roles",$user.roles).then(function (response) {

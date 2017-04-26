@@ -900,12 +900,12 @@ body {
   padding-right: 0;
 }
 
-.base .cases .case-panel p {
+.base .cases .case-panel p, .base .cases .case-panel task-priority {
   margin: 0;
   -webkit-margin-after: 0;
 }
 
-.base .cases .case-panel p > i {
+.base .cases .case-panel p > i, .base .cases .case-panel task-priority > i {
   margin-right: 16px;
 }
 

@@ -13,7 +13,7 @@
 <!--</md-card>-->
 <div class="tasks">
     <md-card class="tasks-header" layout="column">
-        <md-card-content layout="row" layout-align="left center">
+        <md-card-content layout="row" layout-align="start center">
             <a flex="25" href="javascript:void(0)" ng-click="caseCtrl.activeTab.setSortField('caseTitle')">
                 {{::$i18n.block.taskHeader.case}}
                 <md-icon class="material-icons">{{ caseCtrl.activeTab.sort.field == 'caseTitle' &&
@@ -63,9 +63,9 @@
             </md-menu>
         </md-card-content>
     </md-card>
-    <md-expansion-panel class="task"
+    <md-expansion-panel class="task-panel"
                         ng-repeat="task in caseCtrl.activeTab.tasks | orderBy:task[caseCtrl.activeTab.sort.field]:caseCtrl.activeTab.sort.reverse">
-        <md-expansion-panel-collapsed layout="row" layout-align="left center"
+        <md-expansion-panel-collapsed layout="row" layout-align="start center"
                                       ng-click="caseCtrl.activeTab.loadTaskData(task)"
                                       ng-include="'views/app/tasks/task_panel_collapsed.html'">
         </md-expansion-panel-collapsed>

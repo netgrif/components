@@ -49,7 +49,7 @@
                                      md-item-text="item.title"
                                      md-min-length="0"
                                      md-no-cache="true"
-                                     md-floating-label="Data Field">
+                                     md-floating-label="{{::$i18n.block.taskFilter.dataField}}">
                         <md-item-template>
 							<span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedField.search"
                                   md-highlight-flags="i">{{item.title}}
@@ -61,7 +61,7 @@
                         </md-not-found>
                     </md-autocomplete>
                     <md-input-container class="md-block">
-                        <label>Data Field Value</label>
+                        <label>{{::$i18n.block.taskFilter.dataFieldVal}}</label>
                         <input id="{{'field-value-input-'+$index}}" type="text"
                                ng-model="tasksCtrl.tabs[$index].filter.selectedField.value"
                                ng-keypress="$event.which === 13 ? tasksCtrl.fieldValueSelected():0">

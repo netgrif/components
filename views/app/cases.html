@@ -1,7 +1,7 @@
 <div ng-cloak>
     <div class="background-header background-welcome"></div>
     <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="caseCtrl.activeTabIndex">
-        <md-tab md-on-select="caseCtrl.searchCases()" label="All Cases">
+        <md-tab md-on-select="caseCtrl.searchCases()" label="{{$i18n.page.cases.tab.allCases}}">
             <md-content class="md-padding color-bg-transparent">
                 <md-card class="search-header" layout="row">
                     <div flex layout="column">

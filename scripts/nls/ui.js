@@ -31,8 +31,10 @@ define({
                     submit: "Add Tab"
                 }
             },
-            data: {
-                msg: "Data page coming soon"
+            cases: {
+                tab: {
+                    allCases: "All Cases"
+                }
             },
             roles: {
                 tab: {
@@ -89,7 +91,7 @@ define({
                 roles: "Roles",
                 workflow: "Workflow",
                 console: "Admin Console",
-                version: "Version 1.0.0"
+                version: "Version 1.0.1"
             },
             mainMenu: {
                 notifications: "Notifications",
