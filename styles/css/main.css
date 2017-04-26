@@ -11,59 +11,59 @@
 }
 
 .color-fg-primary-50 {
-  color: #f3e0e6;
+  color: #E0F2F1;
 }
 
 .color-fg-primary-100 {
-  color: #e0b3bf;
+  color: #B2DFDB;
 }
 
 .color-fg-primary-200 {
-  color: #cc8095;
+  color: #80CBC4;
 }
 
 .color-fg-primary-300 {
-  color: #b74d6b;
+  color: #4DB6AC;
 }
 
 .color-fg-primary-400 {
-  color: #a7264b;
+  color: #26A69A;
 }
 
 .color-fg-primary-500 {
-  color: #98002b;
+  color: #009688;
 }
 
 .color-fg-primary-600 {
-  color: #900026;
+  color: #00897B;
 }
 
 .color-fg-primary-700 {
-  color: #850020;
+  color: #00796B;
 }
 
 .color-fg-primary-800 {
-  color: #7b001a;
+  color: #00695C;
 }
 
 .color-fg-primary-900 {
-  color: #6a0010;
+  color: #004D40;
 }
 
 .color-fg-primary-A100 {
-  color: #ff99a1;
+  color: #A7FFEB;
 }
 
 .color-fg-primary-A200 {
-  color: #ff6672;
+  color: #64FFDA;
 }
 
 .color-fg-primary-A400 {
-  color: #ff3343;
+  color: #1DE9B6;
 }
 
 .color-fg-primary-A700 {
-  color: #ff1a2b;
+  color: #00BFA5;
 }
 
 .color-fg-grey-50 {
@@ -108,6 +108,10 @@
 
 .color-fg-blue-grey-50 {
   color: #ECEFF1;
+}
+
+.color-fg-blue-grey-300 {
+  color: #90A4AE;
 }
 
 .color-fg-blue-grey-500 {
@@ -155,59 +159,59 @@
 }
 
 .color-bg-primary-50 {
-  background-color: #f3e0e6;
+  background-color: #E0F2F1;
 }
 
 .color-bg-primary-100 {
-  background-color: #e0b3bf;
+  background-color: #B2DFDB;
 }
 
 .color-bg-primary-200 {
-  background-color: #cc8095;
+  background-color: #80CBC4;
 }
 
 .color-bg-primary-300 {
-  background-color: #b74d6b;
+  background-color: #4DB6AC;
 }
 
 .color-bg-primary-400 {
-  background-color: #a7264b;
+  background-color: #26A69A;
 }
 
 .color-bg-primary-500 {
-  background-color: #98002b;
+  background-color: #009688;
 }
 
 .color-bg-primary-600 {
-  background-color: #900026;
+  background-color: #00897B;
 }
 
 .color-bg-primary-700 {
-  background-color: #850020;
+  background-color: #00796B;
 }
 
 .color-bg-primary-800 {
-  background-color: #7b001a;
+  background-color: #00695C;
 }
 
 .color-bg-primary-900 {
-  background-color: #6a0010;
+  background-color: #004D40;
 }
 
 .color-bg-primary-A100 {
-  background-color: #ff99a1;
+  background-color: #A7FFEB;
 }
 
 .color-bg-primary-A200 {
-  background-color: #ff6672;
+  background-color: #64FFDA;
 }
 
 .color-bg-primary-A400 {
-  background-color: #ff3343;
+  background-color: #1DE9B6;
 }
 
 .color-bg-primary-A700 {
-  background-color: #ff1a2b;
+  background-color: #00BFA5;
 }
 
 .color-bg-grey-50 {
@@ -254,6 +258,10 @@
   background-color: #ECEFF1;
 }
 
+.color-bg-blue-grey-300 {
+  background-color: #90A4AE;
+}
+
 .color-bg-blue-grey-500 {
   background-color: #607D8B;
 }
@@ -291,7 +299,7 @@
 }
 
 .highlight {
-  color: #98002b !important;
+  color: #009688 !important;
 }
 
 .margin-no {
@@ -751,7 +759,7 @@ body {
 }
 
 .base .background-welcome {
-  background-image: url(../../../assets/welcome_background.jpg);
+  background-image: url(../../../assets/welcome_background.png);
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -789,7 +797,7 @@ body {
 .base .main-toolbar .toolbar-menu .md-menu .md-button .material-icons {
   font-size: 48px;
   margin-left: 15px;
-  color: #98002b;
+  color: #009688;
 }
 
 .base .main-sidenav {
@@ -819,16 +827,16 @@ body {
 }
 
 .base .main-sidenav .md-button:hover {
-  background-color: #98002b;
+  background-color: #009688;
 }
 
 .base .main-sidenav .md-button.active {
   background-color: #EEEEEE;
-  color: #98002b;
+  color: #009688;
 }
 
 .base .main-sidenav .md-button.active:hover {
-  background-color: #98002b;
+  background-color: #009688;
   color: white;
 }
 
@@ -985,7 +993,7 @@ body {
 }
 
 .base .assign-list md-list-item.selected-tile button {
-  background-color: #98002b;
+  background-color: #009688;
   z-index: -1;
 }
 

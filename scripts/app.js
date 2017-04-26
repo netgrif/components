@@ -12,28 +12,45 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
         var app = angular.module('app', ['ngMaterial', 'angular-hal', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment','material.components.expansionPanels',
          'ngMain','ngDashboard','ngTasks','ngWorkflow','ngRoles']); //here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
-            $mdThemingProvider.definePalette('fmService', {
-                '50': '#f3e0e6',
-                '100': '#e0b3bf',
-                '200': '#cc8095',
-                '300': '#b74d6b',
-                '400': '#a7264b',
-                '500': '#98002b',
-                '600': '#900026',
-                '700': '#850020',
-                '800': '#7b001a',
-                '900': '#6a0010',
-                'A100': '#ff99a1',
-                'A200': '#ff6672',
-                'A400': '#ff3343',
-                'A700': '#ff1a2b',
+            $mdThemingProvider.definePalette('main', {
+                // '50': '#f3e0e6',
+                // '100': '#e0b3bf',
+                // '200': '#cc8095',
+                // '300': '#b74d6b',
+                // '400': '#a7264b',
+                // '500': '#98002b',
+                // '600': '#900026',
+                // '700': '#850020',
+                // '800': '#7b001a',
+                // '900': '#6a0010',
+                // 'A100': '#ff99a1',
+                // 'A200': '#ff6672',
+                // 'A400': '#ff3343',
+                // 'A700': '#ff1a2b',
+                // 'contrastDefaultColor': 'light',
+                // 'contrastDarkColors': '50 100 200 A100 A200',
+                // 'contrastLightColors': undefined
+                '50': '#E0F2F1',
+                '100': '#B2DFDB',
+                '200': '#80CBC4',
+                '300': '#4DB6AC',
+                '400': '#26A69A',
+                '500': '#009688',
+                '600': '#00897B',
+                '700': '#00796B',
+                '800': '#00695C',
+                '900': '#004D40',
+                'A100': '#A7FFEB',
+                'A200': '#64FFDA',
+                'A400': '#1DE9B6',
+                'A700': '#00BFA5',
                 'contrastDefaultColor': 'light',
                 'contrastDarkColors': '50 100 200 A100 A200',
                 'contrastLightColors': undefined
             });
 
             $mdThemingProvider.theme('default')
-                .primaryPalette('fmService')
+                .primaryPalette('main')
                 .accentPalette('grey');
 
             $routeSegmentProvider
@@ -121,7 +138,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
             $mdDateLocaleProvider.firstDayOfWeek = 1;
             $mdDateLocaleProvider.formatDate = date => {
                 if(date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
-                else return undefined;
+                // else return undefined;
             };
 
             $compileProvider.preAssignBindingsEnabled(true);
