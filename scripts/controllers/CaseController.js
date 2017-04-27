@@ -236,7 +236,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                     name: user.name,
                     email: user.login
                 };
-                task.data[fieldIndex].newValue = user.login;
+                task.data[fieldIndex].newValue = task.data[fieldIndex].user;
 
                 this.dataFieldChanged(task, fieldIndex);
                 this.saveData(task);
@@ -245,7 +245,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 this.$dialog.showByTemplate('assign_user', this, {task: Object.assign({assignRole: field.roles[0]}, task)}).then(function (user) {
                     if (!user) return;
                     task.data[fieldIndex].user = user;
-                    task.data[fieldIndex].newValue = user.email;
+                    task.data[fieldIndex].newValue = user;
 
                     self.dataFieldChanged(task, fieldIndex);
                     self.saveData(task);
@@ -262,7 +262,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             if (type === 'user') {
                 //TODO: 28/3/2017 get user profile [on backend make endpoint for one user]
                 if (value)
-                    item.user = {name: "", email: item.value};
+                    item.user = {name: item.value[1], email: item.value[0]};
             }
             return value;
         }
@@ -271,6 +271,9 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             if (!value) return null;
             if (type === 'date') {
                 return value.getFullYear() + "-" + Tab.paddingZero((value.getMonth() + 1) + "") + "-" + Tab.paddingZero(value.getDate() + "");
+            }
+            if(type === 'user') {
+                return [value.email, value.name];
             }
             return value;
         }
