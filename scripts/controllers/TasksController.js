@@ -341,7 +341,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (type == 'user') {
                             //TODO: 28/3/2017 get user profile [on backend make endpoint for one user]
                             if(value)
-                                item.user = {name: "", email: item.value};
+                                item.user = {name: item.value[1], email: item.value[0]};
                         }
                         return value;
                     }
@@ -350,6 +350,9 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (!value) return null;
                         if (type == 'date') {
                             return value.getFullYear() + "-" + paddingZero((value.getMonth() + 1) + "") + "-" + paddingZero(value.getDate() + "");
+                        }
+                        if(type === 'user') {
+                            return [value.email, value.name];
                         }
                         return value;
                     }
@@ -483,7 +486,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 name: user.name,
                                 email: user.login
                             };
-                            self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = user.login;
+                            self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].user;
 
                             self.dataFieldChanged(field.taskIndex, fieldIndex);
                             self.saveData(self.tabs[self.activeTab].resources[field.taskIndex]);
@@ -491,7 +494,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             $dialog.showByTemplate('assign_user', self, {task: Object.assign({assignRole: field.roles[0]},self.tabs[self.activeTab].resources[field.taskIndex])}).then(function (user) {
                                 if (!user) return;
                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].user = user;
-                                self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = user.email;
+                                self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = user;
 
                                 self.dataFieldChanged(field.taskIndex, fieldIndex);
                                 self.saveData(self.tabs[self.activeTab].resources[field.taskIndex]);
