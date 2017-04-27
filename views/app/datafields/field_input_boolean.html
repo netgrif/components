@@ -9,14 +9,14 @@
     </div>
     <div flex="20"></div>
     <div flex="60">
-        <md-input-container class="md-block" flex>
+        <md-input-container class="md-block">
             <md-switch class="md-primary"
                        ng-model="field.newValue"
                        ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
                        ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
                        ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
-                       ng-required="field.logic.required">
-                &nbsp;
+                       ng-required="field.logic.required"
+                       aria-label="Switch">
             </md-switch>
         </md-input-container>
     </div>
