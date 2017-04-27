@@ -769,7 +769,7 @@ body {
 .base .main-toolbar {
   height: 56px;
   min-height: 56px;
-  background-color: #EEEEEE;
+  background-color: #1a2b2b;
 }
 
 .base .main-toolbar .md-toolbar-tools {
@@ -790,7 +790,7 @@ body {
   padding-top: 4px;
   padding-bottom: 4px;
   font-size: 20px;
-  color: #616161;
+  color: white;
   text-transform: none;
 }
 
@@ -804,7 +804,7 @@ body {
   width: 180px;
   min-width: 180px;
   max-width: 180px;
-  background-color: #424242;
+  background-color: #37474F;
 }
 
 .base .main-sidenav .md-button {

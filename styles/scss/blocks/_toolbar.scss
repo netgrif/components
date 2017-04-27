@@ -1,7 +1,8 @@
 .main-toolbar {
 	height: 56px;
 	min-height: 56px;
-	background-color: $color-grey-200;
+	// TODO 27.4.2017 set new custom color
+	background-color: #1a2b2b;
 
 	.md-toolbar-tools {
 		height: 100%;
@@ -24,7 +25,7 @@
 					padding-top: 4px;
 					padding-bottom: 4px;
 					font-size: 20px;
-					color: $color-grey-700;
+					color: white;
 					text-transform: none;
 
 					.material-icons {
