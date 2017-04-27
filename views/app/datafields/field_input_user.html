@@ -26,7 +26,7 @@
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content>
-                <md-menu-item ng-if="$user.canAssign(field.roles[0])">
+                <md-menu-item ng-if="$user.canAssign(field.roles)">
                     <md-button ng-click="tasksCtrl.userFieldChoice(field, $index, $user); caseCtrl.activeTab.userFieldChoice(task, field, $index, $user)">
                         {{::$i18n.block.data.self}}
                     </md-button>

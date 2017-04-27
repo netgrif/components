@@ -150,7 +150,9 @@ define({
                 fileUploaded: "File uploaded successfully",
                 newFile: "New file",
                 upload: "Upload",
-                download: "Download"
+                download: "Download",
+                yes: "Yes",
+                no: "No"
             },
             dialog: {
                 uploadNet: {

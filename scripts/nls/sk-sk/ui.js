@@ -151,7 +151,9 @@ define({
             fileUploaded: "Súbor bol úspešne nahraný",
             newFile: "Nový súbor",
             upload: "Nahrať",
-            download: "Stiahnuť"
+            download: "Stiahnuť",
+            yes: "Áno",
+            no: "Nie"
         },
         dialog: {
             uploadNet: {

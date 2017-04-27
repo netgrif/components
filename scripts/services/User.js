@@ -30,11 +30,19 @@ define(['angular', '../modules/Main'], function (angular) {
 
             canDelegate: function (delegateRole) {
                 if(!user.roles || !delegateRole) return false;
-                return user.roles.includes(delegateRole);
+                if(delegateRole instanceof Array){
+                    return delegateRole.some(role => user.roles.includes(delegateRole));
+                } else {
+                    return user.roles.includes(delegateRole);
+                }
             },
             canAssign: function (assignRole) {
                 if(!user.roles || !assignRole) return false;
-                return user.roles.includes(assignRole);
+                if(assignRole instanceof Array){
+                    return assignRole.some(role => user.roles.includes(role));
+                } else {
+                    return user.roles.includes(assignRole);
+                }
             }
         };
         return user;
