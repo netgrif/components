@@ -72,6 +72,9 @@
         <md-expansion-panel-expanded ng-include="'views/app/tasks/task_panel_expanded.html'">
         </md-expansion-panel-expanded>
     </md-expansion-panel>
+    <div layout="row" layout-sm="column" layout-align="center center" in-view="$inview&&caseCtrl.activeTab.loadTasks(true)" in-view-options="{ throttle: 0 }">
+        <md-progress-circular md-mode="indeterminate" ng-disabled="!caseCtrl.activeTab.loading" class="md-primary" md-diameter="60"></md-progress-circular>
+    </div>
     <!--Following code is task implementation with expansion panel groups. Uncomment only when 100% it works-->
     <!--<md-expansion-panel-group md-component-id="taskGroup-{{$index}}" multiple>-->
     <!--</md-expansion-panel-group>-->

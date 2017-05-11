@@ -159,14 +159,19 @@
                 </md-menu>
             </md-card-content>
         </md-card>
-        <md-expansion-panel class="task-panel" ng-repeat="task in tasksCtrl.tabs[$index].resources | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.tabs[$index].sort.reverse">
-            <md-expansion-panel-collapsed layout="row" layout-align="left center"
-                                          ng-click="tasksCtrl.loadTaskData(task.visualId)"
-                                          ng-include="'views/app/tasks/task_panel_collapsed.html'">
-            </md-expansion-panel-collapsed>
-            <md-expansion-panel-expanded ng-include="'views/app/tasks/task_panel_expanded.html'">
-            </md-expansion-panel-expanded>
-        </md-expansion-panel>
+        <!--<div infinite-scroll="tasksCtrl.loadTasks(true)" infinite-scroll-distance="-1" infinite-scroll-disabled='tasksCtrl.tabs[$index].loading' infinite-scroll-container="'#main-content-container'">-->
+            <md-expansion-panel class="task-panel" ng-repeat="task in tasksCtrl.tabs[$index].resources | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.tabs[$index].sort.reverse">
+                <md-expansion-panel-collapsed layout="row" layout-align="left center"
+                                              ng-click="tasksCtrl.loadTaskData(task.visualId)"
+                                              ng-include="'views/app/tasks/task_panel_collapsed.html'">
+                </md-expansion-panel-collapsed>
+                <md-expansion-panel-expanded ng-include="'views/app/tasks/task_panel_expanded.html'">
+                </md-expansion-panel-expanded>
+            </md-expansion-panel>
+            <div layout="row" layout-sm="column" layout-align="center center" in-view="$inview&&tasksCtrl.loadTasks(true)" in-view-options="{ throttle: 0 }">
+                <md-progress-circular md-mode="indeterminate" ng-disabled="!tasksCtrl.tabs[$index].loading" class="md-primary" md-diameter="60"></md-progress-circular>
+            </div>
+        <!--</div>-->
         <!--Following code is task implementation with expansion panel groups. Uncomment only when 100% it works-->
         <!--<md-expansion-panel-group md-component-id="taskGroup-{{$index}}" multiple>-->
         <!--</md-expansion-panel-group>-->

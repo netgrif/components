@@ -8,6 +8,8 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             this.$dialog = $dialog;
 
             this.tasks = [];
+            this.page = {};
+            this.loading = false;
             this.sort = {
                 field: '',
                 reverse: false
@@ -25,18 +27,35 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             else task.status = "New";
         }
 
-        loadTasks() {
+        loadTasks(next) {
+            if (this.page.totalElements === this.tasks.length || this.loading) return;
             const self = this;
-            this.$http.post("/res/task/case", [this.useCase.stringId]).then(function (response) {
+            const url = next ? this.page.next : "/res/task/case";
+            this.loading = true;
+            this.$http.post(url, [this.useCase.stringId]).then(function (response) {
+                self.page = Object.assign(self.page, response.page);
                 response.$request().$get("tasks").then(function (resources) {
-                    self.tasks = resources;
+                    if (self.page.totalPages !== 1) {
+                        self.page.last = response.$href("last");
+                        if (url !== self.page.last)
+                            self.page.next = response.$href("next");
+                    }
+                    if (next)
+                        resources.forEach(r => self.tasks.push(r));
+                    else
+                        self.tasks = resources;
                     self.tasks.forEach(task => self.getStatus(task));
+                    self.loading = false;
                 }, function () {
                     self.$snackbar.error("Task resources was not found!");
+                    self.page.last = undefined;
+                    self.page.next = undefined;
                     self.tasks.splice(0, self.tasks.length);
+                    self.loading = false;
                 })
             }, function () {
                 self.$snackbar.error("Failed to tasks for case " + self.useCase.title);
+                self.loading = false;
             })
         }
 
@@ -83,7 +102,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                         return !!item.newValue;
                     } else if (item.type === 'boolean') {
                         return true;
-                    } else if( item.type === 'number') {
+                    } else if (item.type === 'number') {
                         return item.newValue !== undefined && item.newValue !== null;
                     } else return !!item.newValue;
                 } else return true;
@@ -201,7 +220,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             task.data.forEach((item, index) => {
                 this.applyFieldLogic(item, index, task);
             });
-            task.data.forEach( item => {
+            task.data.forEach(item => {
                 if (item.changed) {
                     dataFields[item.objectId] = {
                         type: item.type,
@@ -272,7 +291,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             if (type === 'date') {
                 return value.getFullYear() + "-" + Tab.paddingZero((value.getMonth() + 1) + "") + "-" + Tab.paddingZero(value.getDate() + "");
             }
-            if(type === 'user') {
+            if (type === 'user') {
                 return [value.email, value.name];
             }
             return value;
@@ -305,6 +324,8 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             self.cases = [];
             self.tabs = [];
             self.newCase = {};
+            self.page = {};
+            self.loading = false;
             self.filter = {
                 search: undefined,
                 selected: undefined,
@@ -317,16 +338,33 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 reverse: false
             };
 
-            self.searchCases = function () {
-                $http.post("/res/workflow/case/search", self.filter.filter).then(function (response) {
+            self.searchCases = function (next) {
+                if (self.page.totalElements === self.cases.length || self.loading) return;
+                const url = next ? self.page.next : "/res/workflow/case/search";
+                self.loading = true;
+                $http.post(url, self.filter.filter).then(function (response) {
+                    self.page = Object.assign(self.page, response.page);
                     response.$request().$get("cases").then(function (resources) {
-                        self.cases = resources;
+                        if (self.page.totalPages !== 1) {
+                            self.page.last = response.$href("last");
+                            if (url !== self.page.last)
+                                self.page.next = response.$href("next");
+                        }
+                        if (next)
+                            resources.forEach(r => self.cases.push(r));
+                        else
+                            self.cases = resources;
+                        self.loading = false;
                     }, function () {
                         $snackbar.error("No resource for cases was found!");
+                        self.page.last = undefined;
+                        self.page.next = undefined;
                         self.cases.splice(0, self.cases.length);
+                        self.loading = false;
                     });
                 }, function () {
                     $snackbar.error("Getting cases failed!");
+                    self.loading = false;
                 })
             };
 

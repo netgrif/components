@@ -14,6 +14,7 @@ requirejs.config({
         'angularRouteSegment': "bower_components/angular-route-segment/build/angular-route-segment",
         'angularMaterial': "bower_components/angular-material/angular-material.min",
         'angularMaterialExpansionPanels': "bower_components/angular-material-expansion-panel/dist/md-expansion-panel.min",
+        'angularInView':"bower_components/angular-inview/angular-inview",
         'angularCharts': "bower_components/angular-charts-0.0.4.min",
         'domReady': "bower_components/requirejs/domReady",
         'i18n': "bower_components/requirejs/i18n",
@@ -33,6 +34,7 @@ requirejs.config({
         'angularRouteSegment': ['angular', 'angularRoute'],
         'angularMaterial': ['angular', 'angularAnimate', 'angularAria', 'angularMessages'],
         'angularMaterialExpansionPanels': ['angular', 'angularAnimate', 'angularAria', 'angularMessages','angularMaterial'],
+        'angularInView':['angular'],
         'angularCharts': ['angular']
     },
     config: {

@@ -19,7 +19,6 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     self.tabs = [];
                     self.activeTab = 0;
                     self.global = {
-                        links: undefined,
                         autocomplete: {
                             pending: false,
                             processes: [],
@@ -35,6 +34,9 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         this.baseUrl = url;
                         this.type = undefined;
                         this.resources = undefined;
+                        this.pageLinks = {};
+                        this.pageMeta = {};
+                        this.loading = false;
                         this.filter = {
                             processes: [],
                             processesDirty: false,
@@ -61,7 +63,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         };
                         this.sort = {
                             reverse: false,
-                            field: 'visualId'
+                            field: ''
                         };
                     }
 
@@ -146,7 +148,12 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         }, 1000);
                     }
 
-                    function loadTasksResource(url, tabIndex, searchData) {
+                    function hideLoading() {
+                        $timeout(() => self.tabs[self.activeTab].loading = false, 500);
+                    }
+
+                    function loadTasksResource(url, tabIndex, searchData, next) {
+                        if (self.tabs[self.activeTab].loading || !url) return;
                         $log.debug("loading tasks");
                         var config = {
                             method: searchData ? 'POST' : 'GET',
@@ -154,58 +161,85 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         };
                         if (searchData) config.data = searchData;
 
+                        if (self.tabs[self.activeTab].resources &&
+                            self.tabs[self.activeTab].pageMeta.totalElements === self.tabs[self.activeTab].resources.length)
+                            return;
+
+                        self.tabs[self.activeTab].loading = true;
                         $http(config).then(function (response) {
-                            self.global.links = self.activeTab == 0 ? response : self.global.links;
+                            self.tabs[self.activeTab].pageMeta = response.page;
                             response.$request().$get("tasks").then(function (resources) {
-                                self.tabs[tabIndex].resources = resources;
-                                $log.debug(self.tabs[tabIndex].resources);
+                                if (self.tabs[self.activeTab].pageMeta.totalPages !== 1) {
+                                    self.tabs[tabIndex].pageLinks.last = response.$href("last");
+                                    if (url !== self.tabs[tabIndex].pageLinks.last) {
+                                        if (searchData) self.tabs[tabIndex].pageLinks.searchNext = response.$href("next");
+                                        else self.tabs[tabIndex].pageLinks.next = response.$href("next");
+                                    }
+                                }
+                                if (next) {
+                                    //self.tabs[self.activeTab].resources = self.tabs[self.activeTab].resources.concat(resources);
+                                    resources.forEach(r => self.tabs[self.activeTab].resources.push(r));
+                                } else self.tabs[tabIndex].resources = resources;
+                                //$log.debug(self.tabs[tabIndex].resources);
                                 self.tabs[tabIndex].resources.forEach(resource => self.getStatus(resource));
                                 //populateTaskGroup(tabIndex);
+                                hideLoading();
                             }, function () {
                                 //$log.debug("Resource not found in " + self.tabs[tabIndex].label);
                                 $snackbar.info("Resource not found in " + self.tabs[tabIndex].label);
+                                self.tabs[tabIndex].pageLinks.searchNext = undefined;
+                                self.tabs[tabIndex].pageLinks.next = undefined;
                                 if (self.tabs[tabIndex].resources) {
                                     self.tabs[tabIndex].resources.splice(0, self.tabs[tabIndex].resources.length);
                                     //$mdExpansionPanelGroup('taskGroup-'+tabIndex).removeAll();
                                 }
+                                hideLoading();
                             });
                         }, function () {
                             $snackbar.error("Tasks on " + url + " failed to load");
                             $log.debug("Tasks on " + url + " failed to load");
+                            hideLoading();
                         });
                     }
 
-                    self.loadTasks = function () {
+                    self.loadTasks = function (next) {
                         if (self.tabs[self.activeTab].type != TAB_TYPE.CUSTOM) {
                             if (!self.tabs[self.activeTab].filter.isEmpty()) {
-                                self.searchTasks();
+                                if (next) self.searchTasks(next);
+                                else self.searchTasks();
                             } else {
-                                loadTasksResource(self.tabs[self.activeTab].baseUrl, self.activeTab);
+                                const url = next ? self.tabs[self.activeTab].pageLinks.next : self.tabs[self.activeTab].baseUrl;
+                                loadTasksResource(url, self.activeTab, null, next);
                             }
                         } else {
-                            self.searchTasks();
+                            if (next) self.searchTasks(next);
+                            else self.searchTasks();
                         }
                     };
 
-                    self.searchTasks = function () {
+                    self.searchTasks = function (next) {
                         let url = "/res/task/search";
-                        if (self.tabs[self.activeTab].type === TAB_TYPE.MY ||
-                            self.tabs[self.activeTab].type === TAB_TYPE.MY_FINISHED)
-                            url = self.tabs[self.activeTab].baseUrl;
+                        if (next) {
+                            url = self.tabs[self.activeTab].pageLinks.searchNext;
+                        } else {
+                            if (self.tabs[self.activeTab].type === TAB_TYPE.MY ||
+                                self.tabs[self.activeTab].type === TAB_TYPE.MY_FINISHED)
+                                url = self.tabs[self.activeTab].baseUrl;
+                        }
 
                         if (self.tabs[self.activeTab].filter.isEmpty()) {
                             //$snackbar.info("Search cannot start - Filter is empty");
                             url = url === "/res/task/search" ? "/res/task" : url;
-                            loadTasksResource(url,self.activeTab);
+                            loadTasksResource(url, self.activeTab);
                             return;
                         }
 
                         // $log.debug("Task search with filter:");
                         // $log.debug(self.tabs[self.activeTab].filter);
                         let searchTier;
-                        if(self.tabs[self.activeTab].filter.processes.length > 0) searchTier = 1;
-                        if(self.tabs[self.activeTab].filter.transitions.length > 0) searchTier = 2;
-                        if(self.tabs[self.activeTab].filter.fields.length > 0) searchTier = 3;
+                        if (self.tabs[self.activeTab].filter.processes.length > 0) searchTier = 1;
+                        if (self.tabs[self.activeTab].filter.transitions.length > 0) searchTier = 2;
+                        if (self.tabs[self.activeTab].filter.fields.length > 0) searchTier = 3;
 
                         const searchData = {
                             searchTier: searchTier,
@@ -218,16 +252,16 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 dataSet: {}
                             };
                             self.tabs[self.activeTab].filter.transitions.forEach(trans => {
-                                if(trans.petriNetId === process.entityId) net.transitions.push(trans.entityId);
+                                if (trans.petriNetId === process.entityId) net.transitions.push(trans.entityId);
                             });
                             self.tabs[self.activeTab].filter.fields.forEach(field => {
-                                if(field.petriNetId === process.entityId) net.dataSet[field.entityId] = field.value;
+                                if (field.petriNetId === process.entityId) net.dataSet[field.entityId] = field.value;
                             });
 
                             searchData.petriNets.push(net);
                         });
 
-                        loadTasksResource(url, self.activeTab, searchData);
+                        loadTasksResource(url, self.activeTab, searchData, next);
                     };
 
                     self.getStatus = function (task) {
@@ -284,7 +318,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                     return !!item.newValue;
                                 } else if (item.type === 'boolean') {
                                     return true;
-                                } else if( item.type === 'number') {
+                                } else if (item.type === 'number') {
                                     return item.newValue !== undefined && item.newValue !== null;
                                 } else return !!item.newValue;
 
@@ -340,7 +374,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         }
                         if (type == 'user') {
                             //TODO: 28/3/2017 get user profile [on backend make endpoint for one user]
-                            if(value)
+                            if (value)
                                 item.user = {name: item.value[1], email: item.value[0]};
                         }
                         return value;
@@ -351,7 +385,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (type == 'date') {
                             return value.getFullYear() + "-" + paddingZero((value.getMonth() + 1) + "") + "-" + paddingZero(value.getDate() + "");
                         }
-                        if(type === 'user') {
+                        if (type === 'user') {
                             return [value.email, value.name];
                         }
                         return value;
@@ -491,7 +525,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             self.dataFieldChanged(field.taskIndex, fieldIndex);
                             self.saveData(self.tabs[self.activeTab].resources[field.taskIndex]);
                         } else {
-                            $dialog.showByTemplate('assign_user', self, {task: Object.assign({assignRole: field.roles[0]},self.tabs[self.activeTab].resources[field.taskIndex])}).then(function (user) {
+                            $dialog.showByTemplate('assign_user', self, {task: Object.assign({assignRole: field.roles[0]}, self.tabs[self.activeTab].resources[field.taskIndex])}).then(function (user) {
                                 if (!user) return;
                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].user = user;
                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = user;
@@ -541,7 +575,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     function loadAutocompleteItems(method, url, data, resourceName, storage, search) {
                         self.global.autocomplete.pending = true;
-                        const httpPromise = method === 'post' ? $http.post(url,data) : $http.get(url);
+                        const httpPromise = method === 'post' ? $http.post(url, data) : $http.get(url);
                         return httpPromise.then(function (response) {
                             return response.$request().$get(resourceName).then(function (resource) {
                                 self.global.autocomplete[storage] = resource;
@@ -569,7 +603,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.queryProcesses = function () {
                         if (!self.global.autocomplete.pending && self.global.autocomplete.processes.length === 0) {
-                            return loadAutocompleteItems("get","/res/petrinet/refs", undefined,"petriNetReferences", 'processes',
+                            return loadAutocompleteItems("get", "/res/petrinet/refs", undefined, "petriNetReferences", 'processes',
                                 self.tabs[self.activeTab].filter.selectedProcess.search);
                         }
                         return filterAutocomplete(self.tabs[self.activeTab].filter.selectedProcess.search, self.global.autocomplete.processes);
@@ -580,7 +614,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (!self.tabs[self.activeTab].filter.processes.some(function (el) {
                                 return el.entityId === item.entityId;
                             })) {
-                            self.tabs[self.activeTab].filter.chips.push({type: 'processes', title: item.title, id: item.entityId});
+                            self.tabs[self.activeTab].filter.chips.push({
+                                type: 'processes',
+                                title: item.title,
+                                id: item.entityId
+                            });
                             self.tabs[self.activeTab].filter.processes.push(item);
                             self.tabs[self.activeTab].filter.processesDirty = true;
                         }
@@ -597,10 +635,10 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (canLoadTransitions() && !self.global.autocomplete.pending) {
                             const ids = self.tabs[self.activeTab].filter.processes.map(item => item.entityId);
                             self.tabs[self.activeTab].filter.processesDirty = false;
-                            return loadAutocompleteItems("post","/res/petrinet/transition/refs", ids, "transitionReferences", 'transitions',
+                            return loadAutocompleteItems("post", "/res/petrinet/transition/refs", ids, "transitionReferences", 'transitions',
                                 self.tabs[self.activeTab].filter.selectedTransition.search);
                         }
-                        if(self.tabs[self.activeTab].filter.processes.length <= 0) self.global.autocomplete.transitions = [];
+                        if (self.tabs[self.activeTab].filter.processes.length <= 0) self.global.autocomplete.transitions = [];
                         return filterAutocomplete(self.tabs[self.activeTab].filter.selectedTransition.search, self.global.autocomplete.transitions);
                     };
 
@@ -609,7 +647,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (!self.tabs[self.activeTab].filter.transitions.some(function (el) {
                                 return el.entityId === item.entityId;
                             })) {
-                            self.tabs[self.activeTab].filter.chips.push({type: 'transitions', title: item.title, id: item.entityId});
+                            self.tabs[self.activeTab].filter.chips.push({
+                                type: 'transitions',
+                                title: item.title,
+                                id: item.entityId
+                            });
                             self.tabs[self.activeTab].filter.transitions.push(item);
                             self.tabs[self.activeTab].filter.transitionsDirty = true;
                             //clear input
@@ -620,43 +662,50 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     function canLoadFields() {
                         const t = self.tabs[self.activeTab].filter.transitions.length > 0 &&
-                                self.tabs[self.activeTab].filter.transitionsDirty;
+                            self.tabs[self.activeTab].filter.transitionsDirty;
                         const f = self.global.autocomplete.fields.length <= 0;
                         return (t && f) || t;
                     }
 
                     self.queryFields = function () {
-                        if(canLoadFields() && !self.global.autocomplete.pending){
+                        if (canLoadFields() && !self.global.autocomplete.pending) {
                             const netIds = [];
                             self.tabs[self.activeTab].filter.transitions.forEach(item => {
-                                if(!netIds.includes(item.petriNetId)) netIds.push(item.petriNetId);
+                                if (!netIds.includes(item.petriNetId)) netIds.push(item.petriNetId);
                             });
                             const transIds = self.tabs[self.activeTab].filter.transitions.map(item => item.entityId);
                             self.tabs[self.activeTab].filter.transitionsDirty = false;
-                            return loadAutocompleteItems("post","/res/petrinet/data/refs",{petriNets: netIds, transitions: transIds},"dataFieldReferences","fields",
+                            return loadAutocompleteItems("post", "/res/petrinet/data/refs", {
+                                    petriNets: netIds,
+                                    transitions: transIds
+                                }, "dataFieldReferences", "fields",
                                 self.tabs[self.activeTab].filter.selectedField.search);
                         }
-                        if(self.tabs[self.activeTab].filter.transitions.length <= 0) self.global.autocomplete.fields = [];
+                        if (self.tabs[self.activeTab].filter.transitions.length <= 0) self.global.autocomplete.fields = [];
                         return filterAutocomplete(self.tabs[self.activeTab].filter.selectedField.search, self.global.autocomplete.fields);
                     };
 
                     self.fieldSearchChange = function (item) {
-                        if(!item) return;
+                        if (!item) return;
                         self.tabs[self.activeTab].filter.selectedField.value = undefined;
-                        angular.element("#field-value-input-"+self.activeTab).focus();
+                        angular.element("#field-value-input-" + self.activeTab).focus();
                     };
 
                     self.fieldValueSelected = function () {
-                        if(self.tabs[self.activeTab].filter.selectedField.value){
+                        if (self.tabs[self.activeTab].filter.selectedField.value) {
                             self.tabs[self.activeTab].filter.selectedField.value.trim();
-                            if(self.tabs[self.activeTab].filter.selectedField.value.length > 0){
+                            if (self.tabs[self.activeTab].filter.selectedField.value.length > 0) {
 
                                 const selItem = self.tabs[self.activeTab].filter.selectedField.item;
                                 const val = self.tabs[self.activeTab].filter.selectedField.value;
 
-                                if(!self.tabs[self.activeTab].filter.fields.some(el => el.entityId === selItem.entityId && el.value === val)){
-                                    self.tabs[self.activeTab].filter.chips.push({type:"fields", title: selItem.title+": "+val, id: selItem.entityId});
-                                    self.tabs[self.activeTab].filter.fields.push(Object.assign(selItem,{value: val}));
+                                if (!self.tabs[self.activeTab].filter.fields.some(el => el.entityId === selItem.entityId && el.value === val)) {
+                                    self.tabs[self.activeTab].filter.chips.push({
+                                        type: "fields",
+                                        title: selItem.title + ": " + val,
+                                        id: selItem.entityId
+                                    });
+                                    self.tabs[self.activeTab].filter.fields.push(Object.assign(selItem, {value: val}));
 
                                     self.tabs[self.activeTab].filter.selectedField.search = "";
                                     self.tabs[self.activeTab].filter.selectedField.item = undefined;
@@ -674,15 +723,15 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         self.tabs[self.activeTab].filter[chip.type].some(function (item, index) {
                             if (item.entityId === chip.id) {
                                 self.tabs[self.activeTab].filter[chip.type].splice(index, 1);
-                                if (chip.type === 'processes'){
+                                if (chip.type === 'processes') {
                                     self.tabs[self.activeTab].filter.processesDirty = true;
                                     const excludes = [];
                                     self.tabs[self.activeTab].filter.transitions = self.tabs[self.activeTab].filter.transitions.filter(trans => {
-                                        if(trans.petriNetId !== chip.id) return true;
+                                        if (trans.petriNetId !== chip.id) return true;
                                         else {
                                             excludes.push(trans.entityId);
                                             self.tabs[self.activeTab].filter.fields = self.tabs[self.activeTab].filter.fields.filter(field => {
-                                                if(field.transitionId !== trans.entityId) return true;
+                                                if (field.transitionId !== trans.entityId) return true;
                                                 else {
                                                     excludes.push(field.entityId);
                                                     return false;
@@ -697,7 +746,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                     self.tabs[self.activeTab].filter.transitionsDirty = true;
                                     const excludes = [];
                                     self.tabs[self.activeTab].filter.fields = self.tabs[self.activeTab].filter.fields.filter(field => {
-                                        if(field.transitionId !== chip.id) return true;
+                                        if (field.transitionId !== chip.id) return true;
                                         else {
                                             excludes.push(field.entityId);
                                             return false;
@@ -788,7 +837,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             $snackbar.show("Your filter is empty! You cannot save empty filter.");
                             return;
                         }
-                        $dialog.showByTemplate('save_filter', self,{filter: self.tabs[self.activeTab].filter.processes.map(net => net.entityId)});
+                        $dialog.showByTemplate('save_filter', self, {filter: self.tabs[self.activeTab].filter.processes.map(net => net.entityId)});
                     };
 
                     self.saveFilter = function () {
@@ -848,7 +897,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     self.addTab($i18n.page.tasks.tab.myTasks, "/res/task/my", TAB_TYPE.MY);
                     //self.addTab("My Finished Tasks", "/res/task/my/finished", TAB_TYPE.MY_FINISHED);
                     //Load roles persist filters
-                    $http.post("/res/task/filter/roles",$user.roles).then(function (response) {
+                    $http.post("/res/task/filter/roles", $user.roles).then(function (response) {
                         response.$request().$get("filters").then(function (resource) {
                             resource.forEach(filter => {
                                 self.newTab = {
@@ -864,7 +913,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         }, function () {
                             $log.debug("No filter resource found!");
                         });
-                    },function () {
+                    }, function () {
                         $snackbar.error("Failed to load role specific tabs!");
                     });
 
