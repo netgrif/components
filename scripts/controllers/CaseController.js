@@ -62,7 +62,10 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
         assignTask(task) {
             const self = this;
             this.$http.get(task.$href("assign")).then(function (response) {
-                if (response.success) self.loadTasks();
+                if (response.success){
+                    self.tasks.splice(0,self.tasks.length);
+                    self.loadTasks();
+                }
                 if (response.error) self.$snackbar.error(response.error);
             }, function () {
                 self.$snackbar.error("Assigning task " + task.title + " failed");
@@ -72,7 +75,10 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
         cancelTask(task) {
             const self = this;
             this.$http.get(task.$href("cancel")).then(function (response) {
-                if (response.success) self.loadTasks();
+                if (response.success) {
+                    self.tasks.splice(0,self.tasks.length);
+                    self.loadTasks();
+                }
                 if (response.error) self.$snackbar.error(response.error);
             }, function () {
                 self.$snackbar.error("Canceling assignment of task " + task.title + " failed");
@@ -82,7 +88,10 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
         taskFinish(task) {
             const self = this;
             this.$http.get(task.$href("finish")).then(function (response) {
-                if (response.success) self.loadTasks();
+                if (response.success) {
+                    self.tasks.splice(0,self.tasks.length);
+                    self.loadTasks();
+                }
                 if (response.error) self.$snackbar.show(response.error);
             }, function () {
                 self.$snackbar.error("Finishing task " + task.title + " failed");

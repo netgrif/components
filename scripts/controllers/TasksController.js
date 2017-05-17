@@ -33,7 +33,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         this.label = label;
                         this.baseUrl = url;
                         this.type = undefined;
-                        this.resources = undefined;
+                        this.resources = [];
                         this.pageLinks = {};
                         this.pageMeta = {};
                         this.loading = false;
@@ -115,7 +115,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.reloadAfterAction = function () {
                         self.tabs.forEach(function (tab, index) {
-                            if (index !== self.activeTab && self.tabs[index].resources) {
+                            if (self.tabs[index].resources) {
                                 self.tabs[index].resources.splice(0, self.tabs[index].resources.length);
                             }
                         });
