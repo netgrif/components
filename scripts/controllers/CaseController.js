@@ -420,9 +420,12 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 if (!jQuery.isEmptyObject(self.newCase) || !self.newCase.netId) {
                     $http.post("/res/workflow/case", JSON.stringify(self.newCase))
                         .then(function (response) {
-                            if (response.success) $dialog.closeCurrent();
-                            self.newCase = {};
-                            self.searchCases();
+                            if (response.success) {
+                                $dialog.closeCurrent();
+                                self.newCase = {};
+                                self.cases.splice(0,self.cases.length);
+                                self.searchCases();
+                            }
                         }, function () {
                             $snackbar.error("Creating new case failed!");
                             self.newCase = {};
