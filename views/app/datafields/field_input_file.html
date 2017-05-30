@@ -21,12 +21,12 @@
             </md-icon>
             <span class="text-overflow-dots">{{field.newValue ? field.newValue : $i18n.block.data.noFile}}</span>
         </div>
-        <md-menu class="width-24px" ng-if="task.user.email == $user.login && field.logic.editable">
+        <md-menu class="width-24px">
             <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content>
-                <md-menu-item>
+                <md-menu-item ng-if="task.user.email == $user.login && field.logic.editable">
                     <md-button class="file-chooser" layout="row" layout-align="start center">
                         <input type="file" id="file"
                                file-model="field.file"

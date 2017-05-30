@@ -125,8 +125,8 @@ define({
             }
         },
         task: {
-            assign: "Priraďiť",
-            reassign: "Preraďiť",
+            assign: "Priradiť",
+            reassign: "Preradiť",
             delegate: "Delegovať",
             saveData: "Uložiť dáta",
             finish: "Dokončiť",
