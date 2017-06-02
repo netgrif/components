@@ -1,8 +1,8 @@
 // Primary color - Teal
 $color-primary-50: 				#E0F2F1;
-$color-primary-100: 			#B2DFDB;
-$color-primary-200: 			#80CBC4;
-$color-primary-300: 			#4DB6AC;
+$color-primary-100: 			#80CBC4;
+$color-primary-300: 			#B2DFDB;
+$color-primary-200: 			#4DB6AC;
 $color-primary-400: 			#26A69A;
 $color-primary-500: 			#009688;
 $color-primary-600: 			#00897B;
@@ -30,6 +30,12 @@ $color-grey-700: 				#616161;
 $color-grey-800: 				#424242;
 $color-grey-900: 				#212121;
 
+// Toolbar
+$color-dark-teal-grey-500:		#37474F;
+
+// Sidenav
+$color-dark-teal-grey-800:		#1a2b2b;
+
 // Background - Blue grey
 $color-blue-grey-50: 			#ECEFF1;
 
@@ -43,18 +49,24 @@ $color-grey-light:				rgba(158, 158, 158, .2);
 $color-divider:					#E1E1E1;
 
 // Other
+$color-blue-grey-300:			#90A4AE;
 $color-blue-grey-500:			#607D8B;
 $color-amber-500:				#FFC107;
+$color-lime-500:				#cddc39;
 $color-green-500:				#4CAF50;
-$color-red-500:					#F44336;
-$color-indigo-500:				#3F51B5;
 $color-teal-500:				#009688;
-$color-blue-grey-300:			#90A4AE;
+$color-indigo-500:				#3F51B5;
+$color-deep-purple-500:			#673ab7;
+$color-deep-orange-500:			#ff5722;
+$color-red-500:					#F44336;
+$color-brown-500:				#795548;
+
+
 
 // System
-$color-success:					#4CAF50;
-$color-warning:					#FFC107;
-$color-error:					#F44336;
+$color-success:					$color-green-500;
+$color-warning:					$color-amber-500;
+$color-error:					$color-red-500;
 
 .color {
 	
@@ -221,6 +233,34 @@ $color-error:					#F44336;
 
 			&-500 {
 				color: $color-teal-500;
+			}
+		}
+
+		&-deep-purple {
+
+			&-500 {
+				color: $color-deep-purple-500;
+			}
+		}
+
+		&-brown {
+
+			&-500 {
+				color: $color-brown-500;
+			}
+		}
+
+		&-deep-orange {
+
+			&-500 {
+				color: $color-deep-orange-500;
+			}
+		}
+
+		&-lime {
+
+			&-500 {
+				color: $color-lime-500;
 			}
 		}
 
@@ -399,6 +439,34 @@ $color-error:					#F44336;
 
 			&-500 {
 				background-color: $color-teal-500;
+			}
+		}
+
+		&-deep-purple {
+
+			&-500 {
+				background-color: $color-deep-purple-500;
+			}
+		}
+
+		&-brown {
+
+			&-500 {
+				background-color: $color-brown-500;
+			}
+		}
+
+		&-deep-orange {
+
+			&-500 {
+				background-color: $color-deep-orange-500;
+			}
+		}
+
+		&-lime {
+
+			&-500 {
+				background-color: $color-lime-500;
 			}
 		}
 

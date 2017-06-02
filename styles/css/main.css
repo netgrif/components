@@ -15,15 +15,15 @@
 }
 
 .color-fg-primary-100 {
-  color: #B2DFDB;
-}
-
-.color-fg-primary-200 {
   color: #80CBC4;
 }
 
-.color-fg-primary-300 {
+.color-fg-primary-200 {
   color: #4DB6AC;
+}
+
+.color-fg-primary-300 {
+  color: #B2DFDB;
 }
 
 .color-fg-primary-400 {
@@ -138,6 +138,22 @@
   color: #009688;
 }
 
+.color-fg-deep-purple-500 {
+  color: #673ab7;
+}
+
+.color-fg-brown-500 {
+  color: #795548;
+}
+
+.color-fg-deep-orange-500 {
+  color: #ff5722;
+}
+
+.color-fg-lime-500 {
+  color: #cddc39;
+}
+
 .color-fg-material-grey-text {
   color: rgba(0, 0, 0, 0.38);
 }
@@ -163,15 +179,15 @@
 }
 
 .color-bg-primary-100 {
-  background-color: #B2DFDB;
-}
-
-.color-bg-primary-200 {
   background-color: #80CBC4;
 }
 
-.color-bg-primary-300 {
+.color-bg-primary-200 {
   background-color: #4DB6AC;
+}
+
+.color-bg-primary-300 {
+  background-color: #B2DFDB;
 }
 
 .color-bg-primary-400 {
@@ -284,6 +300,22 @@
 
 .color-bg-teal-500 {
   background-color: #009688;
+}
+
+.color-bg-deep-purple-500 {
+  background-color: #673ab7;
+}
+
+.color-bg-brown-500 {
+  background-color: #795548;
+}
+
+.color-bg-deep-orange-500 {
+  background-color: #ff5722;
+}
+
+.color-bg-lime-500 {
+  background-color: #cddc39;
 }
 
 .color-bg-material-grey-text {
@@ -733,24 +765,6 @@ body {
           animation-duration: 1s;
 }
 
-.base .card-welcome {
-  min-height: 300px;
-  width: 600px;
-}
-
-.base .card-welcome img {
-  max-height: 150px;
-  max-width: auto;
-}
-
-.base .card-welcome a {
-  text-decoration: none;
-}
-
-.base .card-welcome a:hover {
-  text-decoration: underline;
-}
-
 .base .background-header {
   position: absolute;
   height: 175px;
@@ -759,11 +773,29 @@ body {
 }
 
 .base .background-welcome {
-  background-image: url(../../../assets/welcome_background.png);
+  background-image: url(../../assets/welcome_background.png);
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+}
+
+.base .card-welcome {
+  min-height: 300px;
+  width: 600px;
+}
+
+.base .card-welcome img {
+  max-height: 150px;
+  width: auto;
+}
+
+.base .card-welcome a {
+  text-decoration: none;
+}
+
+.base .card-welcome a:hover {
+  text-decoration: underline;
 }
 
 .base .main-toolbar {
@@ -798,6 +830,10 @@ body {
   font-size: 48px;
   margin-left: 15px;
   color: #009688;
+}
+
+.base .main-toolbar md-menu-bar.md-default-theme md-menu.md-open > button, .base .main-toolbar md-menu-bar md-menu.md-open > button, .base .main-toolbar md-menu-bar.md-default-theme md-menu > button:focus, .base .main-toolbar md-menu-bar md-menu > button:focus {
+  background: rgba(238, 238, 238, 0.1) !important;
 }
 
 .base .main-sidenav {

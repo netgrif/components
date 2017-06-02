@@ -5,9 +5,9 @@
 @import 'blocks/spinner.scss';
 
 .base {
+	@import 'background';
     // Blocks & Elements
 	@import 'blocks/card.scss';
-	@import 'blocks/background.scss';
 	@import 'blocks/toolbar.scss';
 	@import 'blocks/sidenav.scss';
 	@import 'blocks/tasks.scss';
