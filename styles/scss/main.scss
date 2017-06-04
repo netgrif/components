@@ -2,21 +2,20 @@
 @import 'dims';
 @import 'functions';
 @import 'global';
-@import 'blocks/spinner.scss';
+@import 'blocks/spinner';
 
 .base {
 	@import 'background';
     // Blocks & Elements
-	@import 'blocks/card.scss';
-	@import 'blocks/toolbar.scss';
-	@import 'blocks/sidenav.scss';
-	@import 'blocks/tasks.scss';
-	@import 'blocks/cases.scss';
-	@import 'blocks/search.scss';
-	@import 'blocks/file_chooser.scss';
-	@import 'blocks/assign_list.scss';
-	@import 'blocks/bottom_sheet.scss';
-	@import 'blocks/expansion_panel.scss';
-	@import 'blocks/task_data.scss';
+	@import 'blocks/card';
+	@import 'blocks/toolbar';
+	@import 'blocks/sidenav';
+	@import 'blocks/tasks';
+	@import 'blocks/cases';
+	@import 'blocks/search';
+	@import 'blocks/file_chooser';
+	@import 'blocks/assign_list';
+	@import 'blocks/expansion_panel';
+	@import 'blocks/task_data';
 	@import 'blocks/data_field';
 }

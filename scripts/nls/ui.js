@@ -25,10 +25,10 @@ define({
                     myTasks: "My Tasks"
                 },
                 addTab: {
-                    title: "New Tab",
+                    title: "New Filter",
                     label: "Label",
                     filters: "Filters",
-                    submit: "Add Tab"
+                    submit: "Add Filter"
                 }
             },
             cases: {
@@ -64,8 +64,10 @@ define({
                 generalInfo: {
                     title: "General Information",
                     name: "First Name",
-                    surname: "Last Name",
-                    org: "Organization"
+                    surname: "Last Name"
+                },
+                organizations: {
+                    title: "Organizations"
                 },
                 systemRoles: {
                     title: "System Roles"

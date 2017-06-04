@@ -64,7 +64,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                 .segment('profile', {
                     templateUrl: "views/app/profile.html",
                     controller: 'ProfileController',
-                    controllerAs: 'profCtrl'
+                    controllerAs: 'profileCtrl'
                 })
                 .segment('cases', {
                     templateUrl: "views/app/cases.html",
@@ -128,11 +128,15 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
 
             //$qProvider.errorOnUnhandledRejections(false);
         });
-        app.run(function ($log, $auth, $rootScope, $i18n, $user) {
+        app.run(function ($log, $auth, $rootScope, $i18n, $user, $snackbar) {
             $log.debug("App is running...");
             $auth.init();
             $rootScope.$i18n = $i18n;
             $rootScope.$user = $user;
+
+            $rootScope.fireInfoSnackbar = function(msg) {
+                $snackbar.info(msg);
+            };
         });
 
         return app;

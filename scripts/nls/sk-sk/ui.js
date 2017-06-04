@@ -63,8 +63,10 @@ define({
             generalInfo: {
                 title: "Všeobecné informácie",
                 name: "Meno",
-                surname: "Priezvisko",
-                org: "Organizácia"
+                surname: "Priezvisko"
+            },
+            organizations: {
+                title: "Organizácie"
             },
             systemRoles: {
                 title: "Systémové role"

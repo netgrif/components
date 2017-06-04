@@ -32,7 +32,7 @@
                         </md-option>
                     </md-select>
                 </md-input-container>
-                <div layout="column" layout-align="left">
+                <div layout="column" layout-align="left" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.processes.length != 0">
                     <label>{{::$root.$i18n.block.dialog.saveFilter.process}}</label>
                     <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.processes" readonly="true" flex>
                         <md-chip-template>
@@ -40,8 +40,8 @@
                         </md-chip-template>
                     </md-chips>
                 </div>
-                <div layout="column" layout-align="left">
-                    <label>{{::$root.$i18n.block.dialog.saveFilter.tak}}</label>
+                <div layout="column" layout-align="left" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions.length != 0">
+                    <label>{{::$root.$i18n.block.dialog.saveFilter.task}}</label>
                     <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions" readonly="true" flex>
                         <md-chip-template>
                             {{$chip.title}}

@@ -1041,13 +1041,8 @@ body {
   color: white !important;
 }
 
-.base .md-bottom-sheet-fix {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -88px;
-  padding: 8px 16px 88px;
-  z-index: 70;
+.base .chips-no-boxshadow {
+  box-shadow: none;
 }
 
 .base md-expansion-panel md-expansion-panel-collapsed {
