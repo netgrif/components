@@ -1,0 +1,13 @@
+.list {
+
+    &-primary {
+
+        .list-item-selected {
+            background-color: $color-primary-500;
+
+            i {
+                color: white;
+            }
+        }
+    }
+}

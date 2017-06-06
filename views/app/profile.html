@@ -1,4 +1,5 @@
 <div ng-cloak layout-xs>
+    <!--<div class="background-header background-welcome"></div>-->
     <md-card>
         <md-card-title>
             <md-card-title-text>
@@ -47,7 +48,7 @@
                 <div layout="row" layout-align="left center">
                     <div flex="20"></div>
                     <md-chips flex>
-                        <md-chip ng-repeat="role in profileCtrl.user.roles">
+                        <md-chip ng-repeat="role in profileCtrl.user.authorities">
                             {{::role.name}}
                         </md-chip>
                     </md-chips>

@@ -43,7 +43,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                 .when('/login/signup/:token', 'login.signup')
                 .when('/dashboard', 'app.dashboard')
                 .when('/tasks', 'app.tasks')
-                .when('/roles', 'app.roles')
+                .when('/processRoles', 'app.processRoles')
                 .when('/cases', 'app.cases')
                 .when('/workflow', 'app.workflow')
                 .when('/profile', 'app.profile')
@@ -77,8 +77,8 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                     controller: 'TasksController',
                     controllerAs: 'tasksCtrl'
                 })
-                .segment('roles', {
-                    templateUrl: "views/app/processroles.html",
+                .segment('processRoles', {
+                    templateUrl: "views/app/process_roles.html",
                     controller: 'RolesController',
                     controllerAs: 'rolesCtrl'
                 })

@@ -11,6 +11,7 @@
 	@import 'blocks/toolbar';
 	@import 'blocks/sidenav';
 	@import 'blocks/tasks';
+	@import 'blocks/roles';
 	@import 'blocks/cases';
 	@import 'blocks/search';
 	@import 'blocks/file_chooser';
@@ -18,4 +19,5 @@
 	@import 'blocks/expansion_panel';
 	@import 'blocks/task_data';
 	@import 'blocks/data_field';
+	@import "blocks/list";
 }

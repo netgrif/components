@@ -2,6 +2,27 @@
 $dim-default:					8px;
 $dim-2x:						2*$dim-default;
 
+// Min / Max Dims
+.min {
+
+	&-height {
+
+		&-0 {
+			min-height: 0 !important;
+		}
+	}
+}
+
+.max {
+
+	&-height {
+
+		&-0 {
+			max-height: 0 !important;
+		}
+	}
+}
+
 // Font sizes
 
 
@@ -225,6 +246,22 @@ $dim-2x:						2*$dim-default;
 
 		&-2x {
 			padding-right: $dim-2x;
+		}
+	}
+}
+
+// Border
+
+.border {
+
+	&-width {
+
+		&-default {
+			border-width: $dim-default !important;
+		}
+
+		&-2x {
+			border-width: $dim-2x !important;
 		}
 	}
 }

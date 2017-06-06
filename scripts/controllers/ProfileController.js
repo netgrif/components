@@ -15,7 +15,7 @@ define(['angular', '../modules/Main'], function (angular) {
             $http.get("/res/user/me").then(function (response) {
                 self.user = response;
                 self.updateCompletion();
-                $log.debug(self.user);
+                // $log.debug(self.user);
 
             }, function () {
                 $snackbar.error("Unable to load user data");

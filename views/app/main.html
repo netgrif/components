@@ -11,7 +11,7 @@
                         <md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center"
                                    md-menu-origin>{{$user.name}}<i class="material-icons">account_circle</i></md-button>
                         <md-menu-content width="3">
-                            <md-menu-item class="toolbar-menu-item">
+                            <md-menu-item>
                                 <md-button href="/#">
                                     <md-icon class="material-icons">notifications</md-icon>
                                     {{::$i18n.block.mainMenu.notifications}}
@@ -74,7 +74,7 @@
                 <md-button href="/cases" ng-class="{active: ('cases' | routeSegmentContains)}" layout="row"
                            layout-align="left center"><i class="material-icons">storage</i>{{::$i18n.block.mainNav.cases}}
                 </md-button>
-                <md-button href="/roles" ng-class="{active: ('roles' | routeSegmentContains)}" layout="row"
+                <md-button href="/processRoles" ng-class="{active: ('processRoles' | routeSegmentContains)}" layout="row"
                            layout-align="left center"><i class="material-icons">people</i>{{::$i18n.block.mainNav.roles}}
                 </md-button>
                 <md-button href="/workflow" ng-class="{active: ('workflow' | routeSegmentContains)}" layout="row"

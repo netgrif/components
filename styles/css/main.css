@@ -1,3 +1,7 @@
+.color-fg-white {
+  color: #ffffff !important;
+}
+
 .color-fg-success {
   color: #4CAF50 !important;
 }
@@ -155,11 +159,15 @@
 }
 
 .color-fg-material-grey-text {
-  color: rgba(0, 0, 0, 0.38);
+  color: rgba(0, 0, 0, 0.38) !important;
 }
 
 .color-fg-grey-light {
-  color: rgba(0, 0, 0, 0.38);
+  color: rgba(158, 158, 158, 0.2) !important;
+}
+
+.color-bg-white {
+  background-color: #ffffff !important;
 }
 
 .color-bg-success {
@@ -319,19 +327,31 @@
 }
 
 .color-bg-material-grey-text {
-  background-color: rgba(0, 0, 0, 0.38);
+  background-color: rgba(0, 0, 0, 0.38) !important;
 }
 
 .color-bg-grey-light {
-  background-color: rgba(0, 0, 0, 0.38);
+  background-color: rgba(158, 158, 158, 0.2) !important;
 }
 
 .color-bg-transparent {
-  background-color: transparent;
+  background-color: transparent !important;
+}
+
+.color-border-transparent {
+  border-color: transparent !important;
 }
 
 .highlight {
   color: #009688 !important;
+}
+
+.min-height-0 {
+  min-height: 0 !important;
+}
+
+.max-height-0 {
+  max-height: 0 !important;
 }
 
 .margin-no {
@@ -512,6 +532,14 @@
 
 .padding-right-2x {
   padding-right: 16px;
+}
+
+.border-width-default {
+  border-width: 8px !important;
+}
+
+.border-width-2x {
+  border-width: 16px !important;
 }
 
 body {
@@ -767,9 +795,14 @@ body {
 
 .base .background-header {
   position: absolute;
-  height: 175px;
+  height: 223px;
   width: 100%;
-  top: 48px;
+  top: 0;
+}
+
+.base .background-tabs {
+  top: 48px !important;
+  height: 175px !important;
 }
 
 .base .background-welcome {
@@ -901,6 +934,10 @@ body {
 
 .base .tasks .task-panel p > i, .base .tasks .task-panel task-priority > i {
   margin-right: 16px;
+}
+
+.base .search-roles md-input-container .md-errors-spacer {
+  min-height: 0 !important;
 }
 
 .base .cases-header {
@@ -1041,10 +1078,6 @@ body {
   color: white !important;
 }
 
-.base .chips-no-boxshadow {
-  box-shadow: none;
-}
-
 .base md-expansion-panel md-expansion-panel-collapsed {
   min-height: 24px !important;
   line-height: 24px !important;
@@ -1069,4 +1102,12 @@ body {
 
 .base .data-field-title {
   font-size: 17px;
+}
+
+.base .list-primary .list-item-selected {
+  background-color: #009688;
+}
+
+.base .list-primary .list-item-selected i {
+  color: white;
 }
