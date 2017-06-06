@@ -1,51 +1,74 @@
 <div ng-cloak layout-xs>
     <!--<div class="background-header background-welcome"></div>-->
+
     <md-card>
+
         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">{{::$i18n.page.userProfile.title}}</span>
             </md-card-title-text>
         </md-card-title>
+
         <md-divider></md-divider>
+
         <md-card-content>
             <div layout="column">
+
                 <span>{{$i18n.page.userProfile.msgPart1 + " " + profileCtrl.completion + "% " + $i18n.page.userProfile.msgPart2}}</span>
                 <md-progress-linear md-mode="determinate" value="{{profileCtrl.completion}}"></md-progress-linear>
+
                 <span class="md-headline margin-top-2x">{{::$i18n.page.userProfile.generalInfo.title}}</span>
                 <div layout="row" layout-align="left center">
+
                     <div flex="20"></div>
+
                     <div class="file-chooser-avatar" flex layout="column" layout-align="center center">
                         <i class="material-icons avatar-icon color-fg-primary-500">account_circle</i>
-                        <input type="file" id="file" file-model="mFile">
-                        <label for="file" layout="row" layout-align="space-around center">
+                        <!--<input type="file" id="file" file-model="mFile">-->
+                        <!--<label for="file" layout="row" layout-align="space-around center">-->
+                            <!--<i class="material-icons color-fg-material-grey-text">insert_photo</i>-->
+                        <!--</label>-->
+                        <label layout="row" layout-align="space-around center" ng-click="fireInfoSnackbar('Operation not implemented yet')">
                             <i class="material-icons color-fg-material-grey-text">insert_photo</i>
                         </label>
                     </div>
+
                     <div flex="10"></div>
+
                     <div flex layout="column">
                         <md-input-container class="margin-vertical-default">
                             <label>{{::$i18n.page.userProfile.generalInfo.name}}</label>
                             <input type="text" ng-model="profileCtrl.user.name" disabled>
                         </md-input-container>
+
                         <md-input-container class="margin-vertical-default">
                             <label>{{::$i18n.page.userProfile.generalInfo.surname}}</label>
                             <input type="text" ng-model="profileCtrl.user.surname" disabled>
                         </md-input-container>
                     </div>
+
                     <div flex="20"></div>
+
                 </div>
+
                 <span class="md-headline">{{::$i18n.page.userProfile.organizations.title}}</span>
                 <div layout="row" layout-align="left center">
+
                     <div flex="20"></div>
+
                     <md-chips flex>
                         <md-chip ng-repeat="org in profileCtrl.user.organizations">
                             {{::org.name}}
                         </md-chip>
                     </md-chips>
+
                     <div flex="20"></div>
+
                 </div>
+
                 <span class="md-headline">{{::$i18n.page.userProfile.systemRoles.title}}</span>
                 <div layout="row" layout-align="left center">
+
                     <div flex="20"></div>
                     <md-chips flex>
                         <md-chip ng-repeat="role in profileCtrl.user.authorities">
@@ -53,35 +76,51 @@
                         </md-chip>
                     </md-chips>
                     <div flex="20"></div>
+
                 </div>
+
                 <span class="md-headline">{{::$i18n.page.userProfile.workflowRoles.title}}</span>
                 <div layout="row" layout-align="left center">
+
                     <div flex="20"></div>
+
                     <md-chips flex>
                         <md-chip ng-repeat="role in profileCtrl.user.userProcessRoles">
                             {{::role.name}}
                         </md-chip>
                     </md-chips>
+
                     <div flex="20"></div>
+
                 </div>
+
                 <span class="md-headline">{{::$i18n.page.userProfile.contactInfo.title}}</span>
                 <div layout="row" layout-align="left center">
+
                     <div flex="20"></div>
+
                     <md-input-container flex>
                         <label>{{::$i18n.page.userProfile.contactInfo.phone}}</label>
                         <input type="text" ng-model="profileCtrl.user.telNumber" disabled>
                     </md-input-container>
+
                     <div flex="10"></div>
+
                     <md-input-container flex>
                         <label>{{::$i18n.page.userProfile.contactInfo.email}}</label>
                         <input type="email" ng-model="profileCtrl.user.email" disabled>
                     </md-input-container>
+
                     <div flex="20"></div>
+
                 </div>
             </div>
         </md-card-content>
+
         <md-card-actions layout="row" layout-align="end center">
             <md-button ng-click="fireInfoSnackbar('Operation not implemented yet')">{{::$i18n.page.userProfile.changePsw}}</md-button>
         </md-card-actions>
+
     </md-card>
+
 </div>

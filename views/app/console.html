@@ -1,27 +1,3 @@
-<!--<div ng-cloak layout="column">-->
-    <!--<div class="background-header background-welcome"></div>-->
-    <!--<md-card>-->
-        <!--<md-card-title>-->
-            <!--<md&#45;&#45;card-title-text>-->
-                <!--<span class="md-headline">{{::$i18n.page.console.title}}</span>-->
-            <!--</md&#45;&#45;card-title-text>-->
-        <!--</md-card-title>-->
-        <!--<md-divider></md-divider>-->
-        <!--<form id="admin-invite-form" ng-submit="adminCtrl.invite()">-->
-            <!--<md-card-content>-->
-                <!--<md-input-container>-->
-                    <!--<label>{{::$i18n.page.console.email}}</label>-->
-                    <!--<input name="email" type="email" ng-required="true">-->
-                <!--</md-input-container>-->
-            <!--</md-card-content>-->
-            <!--<md-card-actions layout="row" layout-align="end center">-->
-                <!--<md-button type="submit" class="md-primary">{{::$i18n.page.console.submit}}-->
-                <!--</md-button>-->
-            <!--</md-card-actions>-->
-        <!--</form>-->
-    <!--</md-card>-->
-<!--</div>-->
-
 <div ng-cloak>
 
     <div class="background-header background-welcome background-tabs"></div>
@@ -31,35 +7,39 @@
         <md-tab>
 
             <md-tab-label>
-                <md-icon class="material-icons md-highlight">Dashboard</md-icon>
+                Dashboard
             </md-tab-label>
 
             <md-tab-body>
                 <md-content class="md-padding color-bg-transparent" layout="column" layout-align="center">
 
-                    <md-card>
-                        <md-card-title>
-                            <md--card-title-text>
-                                <span class="md-headline">{{::$i18n.page.console.title}}</span>
-                            </md--card-title-text>
-                        </md-card-title>
-                        <md-divider></md-divider>
-                        <form id="admin-invite-form" ng-submit="adminCtrl.invite()">
-                            <md-card-content>
-                                <md-input-container>
-                                    <label>
-                                        {{::$i18n.page.console.email}}
-                                    </label>
-                                    <input name="email" type="email" ng-required="true">
-                                </md-input-container>
-                            </md-card-content>
-                            <md-card-actions layout="row" layout-align="end center">
-                                <md-button type="submit" class="md-primary">
-                                    {{::$i18n.page.console.submit}}
-                                </md-button>
-                            </md-card-actions>
-                        </form>
-                    </md-card>
+                    <div layout="row" layout-align="center">
+
+                        <md-card flex="50">
+                            <md-card-title>
+                                <md--card-title-text>
+                                    <span class="md-headline">{{::$i18n.page.console.title}}</span>
+                                </md--card-title-text>
+                            </md-card-title>
+                            <md-divider></md-divider>
+                            <form id="admin-invite-form" ng-submit="adminCtrl.invite()">
+                                <md-card-content>
+                                    <md-input-container>
+                                        <label>
+                                            {{::$i18n.page.console.email}}
+                                        </label>
+                                        <input name="email" type="email" ng-required="true">
+                                    </md-input-container>
+                                </md-card-content>
+                                <md-card-actions layout="row" layout-align="end center">
+                                    <md-button type="submit" class="md-primary">
+                                        {{::$i18n.page.console.submit}}
+                                    </md-button>
+                                </md-card-actions>
+                            </form>
+                        </md-card>
+
+                    </div>
 
                 </md-content>
             </md-tab-body>
@@ -69,13 +49,13 @@
         <md-tab>
 
             <md-tab-label>
-                <md-icon class="material-icons md-highlight">System Roles</md-icon>
+                System Roles
             </md-tab-label>
 
             <md-tab-body>
                 <md-content class="md-padding color-bg-transparent" layout="column" layout-align="center">
 
-                    <div layout="row" class="margin-2x">
+                    <div layout="row">
 
                         <div flex>
 
