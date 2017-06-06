@@ -203,7 +203,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     }
 
                     self.loadTasks = function (next) {
-                        if (self.tabs[self.activeTab].type != TAB_TYPE.CUSTOM) {
+                        if (self.tabs[self.activeTab].type !== TAB_TYPE.CUSTOM) {
                             if (!self.tabs[self.activeTab].filter.isEmpty()) {
                                 if (next) self.searchTasks(next);
                                 else self.searchTasks();
@@ -368,31 +368,31 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     }
 
                     function parseDataValue(value, type, item) {
-                        if (type == 'date') {
+                        if (type === 'date') {
                             if (value) return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
                             else return undefined;
                         }
-                        if (type == 'user') {
+                        if (type === 'user') {
                             //TODO: 28/3/2017 get user profile [on backend make endpoint for one user]
-                            if (value)
-                                item.user = {name: item.value[1], email: item.value[0]};
+                            // if (value)
+                            //     item.user = {name: item.value[1], email: item.value[0]};
                         }
                         return value;
                     }
 
                     function formatDataValue(value, type) {
                         if (!value) return null;
-                        if (type == 'date') {
+                        if (type === 'date') {
                             return value.getFullYear() + "-" + paddingZero((value.getMonth() + 1) + "") + "-" + paddingZero(value.getDate() + "");
                         }
                         if (type === 'user') {
-                            return [value.email, value.name];
+                            //return [value.email, value.name];
                         }
                         return value;
                     }
 
                     self.loadTaskData = function (taskVisualId, callback) {
-                        var taskIndex = findTaskByVisualId(taskVisualId);
+                        let taskIndex = findTaskByVisualId(taskVisualId);
                         if (self.tabs[self.activeTab].resources[taskIndex].data) {
                             callback && callback();
                             return;
@@ -414,7 +414,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                         //TODO: 23/3/2017 check expansion footer rendering in PROD, if no problem found remove sleep
                                         $timeout(function () {
                                         }, 100);
-                                        if (index == array.length - 1) {
+                                        if (index === array.length - 1) {
                                             callback && callback();
                                         }
                                     });
@@ -446,7 +446,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         } else if (refField.type === 'date') {
                             const mode = logic.value.charAt(logic.value.length - 1);
                             const addValue = parseInt(logic.value.substr(0, logic.value.length - 1));
-                            if (addValue == 'NaN') return;
+                            if (addValue === 'NaN') return;
                             autoValue = new Date(refField.newValue.getTime());
                             switch (mode) {
                                 case 'd':
@@ -481,11 +481,11 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     self.saveData = function (task, callback) {
                         if (!task.data) return;
 
-                        var dataFields = {};
+                        const dataFields = {};
                         task.data.forEach((item, index) => {
                             applyFieldLogic(item, index);
                         });
-                        task.data.forEach(function (item, index) {
+                        task.data.forEach(function (item) {
                             if (item.changed) {
                                 dataFields[item.objectId] = {
                                     type: item.type,
@@ -516,24 +516,24 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                     self.userFieldChoice = function (field, fieldIndex, user) {
                         if (user) {
-                            self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].user = {
-                                name: user.name,
-                                email: user.login
+                            const userNames = user.name.split(' ');
+                            self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = {
+                                email: user.login,
+                                name: userNames[0],
+                                surname: userNames[1],
+                                userProcessRoles: user.roles.map(role => {roleId: role})
                             };
-                            self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].user;
 
                             self.dataFieldChanged(field.taskIndex, fieldIndex);
                             self.saveData(self.tabs[self.activeTab].resources[field.taskIndex]);
                         } else {
-                            $dialog.showByTemplate('assign_user', self, {task: Object.assign({assignRole: field.roles[0]}, self.tabs[self.activeTab].resources[field.taskIndex])}).then(function (user) {
+                            $dialog.showByTemplate('assign_user', self, {task: Object.assign({fieldRoles: field.roles}, self.tabs[self.activeTab].resources[field.taskIndex])}).then(function (user) {
                                 if (!user) return;
-                                self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].user = user;
                                 self.tabs[self.activeTab].resources[field.taskIndex].data[fieldIndex].newValue = user;
 
                                 self.dataFieldChanged(field.taskIndex, fieldIndex);
                                 self.saveData(self.tabs[self.activeTab].resources[field.taskIndex]);
                             }, function () {
-
                             });
                         }
                     };
@@ -896,7 +896,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     self.addTab($i18n.page.tasks.tab.allTasks, "/res/task", TAB_TYPE.ALL);
                     self.addTab($i18n.page.tasks.tab.myTasks, "/res/task/my", TAB_TYPE.MY);
                     //self.addTab("My Finished Tasks", "/res/task/my/finished", TAB_TYPE.MY_FINISHED);
-                    //Load roles persist filters
+                    //Load roles-persist filters
                     $http.post("/res/task/filter/roles", $user.roles).then(function (response) {
                         response.$request().$get("filters").then(function (resource) {
                             resource.forEach(filter => {

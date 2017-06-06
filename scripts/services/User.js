@@ -8,9 +8,6 @@ define(['angular', '../modules/Main'], function (angular) {
             name: undefined,
             roles: undefined,
 
-            getProfile: function () {
-                //TODO: ajax to get user profile
-            },
             clear: function () {
                 user.id = 0;
                 user.login = undefined;

@@ -22,9 +22,9 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 				dataLoadingStarted = true;
 
 				if (self.signupUser.token) {
-					$http.post("/login/token", self.signupUser.token)
+					$http.post("/signup/token", self.signupUser.token)
 						.then(function (response) {
-							$log.debug("Login loaded");
+							$log.debug("Retrieved email: "+response.success);
 							self.signupUser.email = response.success;
 							$loading.showLoading(false);
 
@@ -51,9 +51,9 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 			};
 
 			self.signup = function () {
-				if (self.signupUser.password == self.retypedPassword) {
+				if (self.signupUser.password === self.retypedPassword) {
 					self.signupUser.password = btoa(self.signupUser.password);
-					var jsonSignupData = JSON.stringify(self.signupUser);
+					let jsonSignupData = JSON.stringify(self.signupUser);
 					$log.debug("formData: " + jsonSignupData);
 					$auth.signup(jsonSignupData, function (response) {
 						if (response) {
