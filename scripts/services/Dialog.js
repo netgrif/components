@@ -49,7 +49,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                         $log.debug("Resources users was not found!");
                     });
                 }, function () {
-                    $snackbar.error("Failed to load users with role +" + task.assignRole);
+                    $snackbar.error("Failed to load users with roles in task +" + task.visualId);
                 });
             };
 

@@ -1,4 +1,3 @@
-
 define(['angular', '../modules/Main'], function (angular) {
     angular.module('ngMain').factory('$user', function () {
         const user = {
@@ -19,8 +18,8 @@ define(['angular', '../modules/Main'], function (angular) {
              * Change users roles
              * @param {Array} roles
              */
-            changeRoles: function (roles){
-                if(roles instanceof Array){
+            changeRoles: function (roles) {
+                if (roles instanceof Array) {
                     user.roles = roles;
                 }
             },
@@ -31,7 +30,7 @@ define(['angular', '../modules/Main'], function (angular) {
              * @returns {boolean}
              */
             hasAuthority: function (auth) {
-                if(!auth || !user.authority) return false;
+                if (!auth || !user.authority) return false;
                 return user.authority.some(a => a === auth);
             },
 
@@ -41,15 +40,19 @@ define(['angular', '../modules/Main'], function (angular) {
              * @returns {boolean}
              */
             hasRole: function (role) {
-                if(!role || !user.roles) return false;
+                if (!role || !user.roles) return false;
                 return user.roles.some(r => r === role);
             },
 
-            canDelegate: function (delegateRole) {
-                return user.hasRole(delegateRole);
-            },
-            canAssign: function (assignRole) {
-                return user.hasRole(assignRole);
+            /**
+             * Check if user can perform specified action
+             * @param {Object} roles
+             * @param {String} action
+             * @returns {boolean}
+             */
+            canDo: function (roles, action) {
+                if (!roles || !action || !user.roles || !(roles instanceof Object)) return false;
+                return user.roles.some(role => roles[role] ? roles[role][action] : false);
             }
         };
         return user;

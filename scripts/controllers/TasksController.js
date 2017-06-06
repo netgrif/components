@@ -386,7 +386,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                             return value.getFullYear() + "-" + paddingZero((value.getMonth() + 1) + "") + "-" + paddingZero(value.getDate() + "");
                         }
                         if (type === 'user') {
-                            //return [value.email, value.name];
+                            return value.email;
                         }
                         return value;
                     }

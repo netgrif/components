@@ -301,7 +301,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 return value.getFullYear() + "-" + Tab.paddingZero((value.getMonth() + 1) + "") + "-" + Tab.paddingZero(value.getDate() + "");
             }
             if (type === 'user') {
-                //return [value.email, value.name];
+                return value.email;
             }
             return value;
         }

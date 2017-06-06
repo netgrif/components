@@ -21,12 +21,12 @@
                             </md-input-container>
                         </form>
                     </div>
-                    <div layout="row" layout-align="left center" ng-if="opt.task.visualId">
+                    <div layout="row" layout-align="left center" ng-if="opt.task.caseTitle">
                         <md-icon flex="5" class="material-icons md-primary">check_box</md-icon>
                         <md-chips flex>
                             <md-chip>
                                 <md-icon class="material-icons {{opt.task.caseColor}}">label</md-icon>
-                                {{opt.task.visualId}}
+                                {{opt.task.caseTitle}}
                             </md-chip>
                             <md-chip>
                                 {{opt.task.title}}
@@ -53,7 +53,7 @@
                             <i class="material-icons color-fg-primary-500">account_circle</i>
                         </md-icon>
                         <div class="md-list-item-text">
-                            <p>{{user.name}}</p>
+                            <p>{{user.fullName}}</p>
                             <p>{{user.email}}</p>
                         </div>
                     </md-list-item>

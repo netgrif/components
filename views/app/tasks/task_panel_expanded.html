@@ -24,8 +24,8 @@
 </md-expansion-panel-content>
 <md-expansion-panel-footer>
 	<div flex></div>
-	<md-button ng-if="task.status === 'New' && $user.canAssign(task.assignRole)" ng-click="tasksCtrl.assignTask(task); caseCtrl.activeTab.assignTask(task)">{{::$i18n.block.task.assign}}</md-button>
-	<md-button ng-if="task.status === 'New' && $user.canDelegate(task.delegateRole)" ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.delegate}}</md-button>
+	<md-button ng-if="task.status === 'New' && $user.canDo(task.roles,'perform')" ng-click="tasksCtrl.assignTask(task); caseCtrl.activeTab.assignTask(task)">{{::$i18n.block.task.assign}}</md-button>
+	<md-button ng-if="task.status === 'New' && $user.canDo(task.roles,'delegate')" ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.delegate}}</md-button>
 	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.reassign}}</md-button>
 	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)">{{::$i18n.block.task.saveData}}</md-button>
 	<md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task); caseCtrl.activeTab.finishTask(task)">{{::$i18n.block.task.finish}}</md-button>
