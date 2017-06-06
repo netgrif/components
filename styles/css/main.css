@@ -542,6 +542,10 @@
   border-width: 16px !important;
 }
 
+.border-radius-default {
+  border-radius: 2px !important;
+}
+
 body {
   min-height: 100%;
 }

@@ -264,4 +264,11 @@ $dim-2x:						2*$dim-default;
 			border-width: $dim-2x !important;
 		}
 	}
+
+	&-radius {
+
+		&-default {
+			border-radius: 2px !important;
+		}
+	}
 }

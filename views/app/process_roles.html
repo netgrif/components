@@ -1,4 +1,4 @@
-<ng-cloak>
+<div ng-cloak>
 
     <div class="background-header background-welcome"></div>
 
@@ -6,12 +6,13 @@
 
         <div flex>
 
-            <md-toolbar class="md-accent md-hue-1 padding-top-2x search-roles">
+            <md-toolbar class="md-accent md-hue-1 padding-top-2x border-radius-default search-roles">
                 <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
                     <md-input-container>
                         <label>User</label>
                         <input type="text" ng-model="rolesCtrl.userInput">
                     </md-input-container>
+
                     <md-menu>
                         <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
                             <md-icon class="material-icons color-fg-material-grey-text">more_vert</md-icon>
@@ -23,6 +24,7 @@
                                     Name
                                 </md-checkbox>
                             </md-menu-item>
+
                             <md-menu-item class="margin-left-2x">
                                 <md-checkbox ng-model="rolesCtrl.isEmailChecked" aria-label="Email" class="md-primary">
                                     Email
@@ -32,7 +34,9 @@
                     </md-menu>
                 </div>
             </md-toolbar>
+
             <md-divider class="border-width-default color-border-transparent"></md-divider>
+
             <md-content>
                 <md-list flex class="list-primary">
                     <md-list-item ng-click="null" class="list-item-selected">
@@ -41,28 +45,36 @@
                             <span>Name Surname</span>
                         </div>
                     </md-list-item>
+
                     <md-divider></md-divider>
+
                     <md-list-item ng-click="null">
                         <div flex layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                             <span>Name Surname</span>
                         </div>
                     </md-list-item>
+
                     <md-divider></md-divider>
+
                     <md-list-item ng-click="null">
                         <div flex layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                             <span>Name Surname</span>
                         </div>
                     </md-list-item>
+
                     <md-divider></md-divider>
+
                     <md-list-item ng-click="null">
                         <div flex layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                             <span>Name Surname</span>
                         </div>
                     </md-list-item>
+
                     <md-divider></md-divider>
+
                     <md-list-item ng-click="null">
                         <div flex layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
@@ -78,7 +90,7 @@
 
         <div flex>
 
-            <md-toolbar class="md-accent md-hue-1 padding-top-2x search-roles">
+            <md-toolbar class="md-accent md-hue-1 padding-top-2x border-radius-default search-roles">
                 <div layout="row" layout-align="start center" class="md-toolbar-tools">
                     <md-input-container>
                         <label>Role</label>
@@ -86,7 +98,9 @@
                     </md-input-container>
                 </div>
             </md-toolbar>
+
             <md-divider class="border-width-default color-border-transparent"></md-divider>
+
             <md-content>
                 <md-list flex class="list-primary">
                     <md-list-item ng-click="null">
@@ -95,21 +109,27 @@
                             <span>Role 1</span>
                         </div>
                     </md-list-item>
+
                     <md-divider></md-divider>
+
                     <md-list-item ng-click="null" class="list-item-selected">
                         <div flex layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
                             <span>Role 2</span>
                         </div>
                     </md-list-item>
+
                     <md-divider></md-divider>
+
                     <md-list-item ng-click="null">
                         <div flex layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
                             <span>Role 3</span>
                         </div>
                     </md-list-item>
+
                     <md-divider></md-divider>
+
                     <md-list-item ng-click="null">
                         <div flex layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
@@ -123,4 +143,4 @@
 
     </div>
 
-</ng-cloak>
+</div>
