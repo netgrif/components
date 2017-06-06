@@ -7,7 +7,7 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
             loginPath: "/login",
             userPath: "user",
             logoutPath: "/logout",
-            signupPath: "/login/signup",
+            signupPath: "/signup",
             appPath: "/",
             path: $location.path(),
 
@@ -27,12 +27,12 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                     let principal = response.principal;
                     $user.id = principal.id;
                     $user.login = principal.username;
-                    $user.authority = principal.authorities[0].authority;
+                    $user.authority = principal.authorities.map(authority => authority.authority);
                     $user.name = principal.fullName;
                     $user.roles = principal.processRoles;
 
                     callback && callback(auth.authenticated);
-                    $location.path(auth.path == auth.loginPath ? auth.appPath : auth.path);
+                    $location.path(auth.path === auth.loginPath ? auth.appPath : auth.path);
 
                 },function (response) {
                     $log.debug(response);

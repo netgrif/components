@@ -190,7 +190,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             } else if (refField.type === 'date') {
                 const mode = logic.value.charAt(logic.value.length - 1);
                 const addValue = parseInt(logic.value.substr(0, logic.value.length - 1));
-                if (addValue == 'NaN') return;
+                if (addValue === 'NaN') return;
                 autoValue = new Date(refField.newValue.getTime());
                 switch (mode) {
                     case 'd':
@@ -260,19 +260,20 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
 
         userFieldChoice(task, field, fieldIndex, user) {
             if (user) {
-                task.data[fieldIndex].user = {
-                    name: user.name,
-                    email: user.login
+                const userNames = user.name.split(' ');
+                task.data[fieldIndex].newValue = {
+                    email: user.login,
+                    name: userNames[0],
+                    surname: userNames[1],
+                    userProcessRoles: user.roles.map(role => {roleId: role})
                 };
-                task.data[fieldIndex].newValue = task.data[fieldIndex].user;
 
                 this.dataFieldChanged(task, fieldIndex);
                 this.saveData(task);
             } else {
                 const self = this;
-                this.$dialog.showByTemplate('assign_user', this, {task: Object.assign({assignRole: field.roles[0]}, task)}).then(function (user) {
+                this.$dialog.showByTemplate('assign_user', this, {task: Object.assign({fieldRoles: field.roles}, task)}).then(function (user) {
                     if (!user) return;
-                    task.data[fieldIndex].user = user;
                     task.data[fieldIndex].newValue = user;
 
                     self.dataFieldChanged(task, fieldIndex);
@@ -288,9 +289,8 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 else return undefined;
             }
             if (type === 'user') {
-                //TODO: 28/3/2017 get user profile [on backend make endpoint for one user]
-                if (value)
-                    item.user = {name: item.value[1], email: item.value[0]};
+                // if (value)
+                //     item.user = {name: item.value[1], email: item.value[0]};
             }
             return value;
         }
@@ -301,7 +301,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 return value.getFullYear() + "-" + Tab.paddingZero((value.getMonth() + 1) + "") + "-" + Tab.paddingZero(value.getDate() + "");
             }
             if (type === 'user') {
-                return [value.email, value.name];
+                //return [value.email, value.name];
             }
             return value;
         }

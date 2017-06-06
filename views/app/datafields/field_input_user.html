@@ -9,16 +9,16 @@
     </div>
     <div flex="20"></div>
     <div flex="60" layout="row" layout-align="space-between center">
-        <div ng-if="field.user" layout="row" layout-align="start center">
+        <div ng-if="field.newValue" layout="row" layout-align="start center">
             <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
             <span class="cursor-pointer">
-                {{field.user.name}}
+                {{field.newValue.fullName}}
                 <md-tooltip>
-                    {{field.user.email}}
+                    {{field.newValue.email}}
                 </md-tooltip>
             </span>
         </div>
-        <div ng-if="!field.user">
+        <div ng-if="!field.newValue">
             <span>{{::$i18n.block.data.noUserChosen}}</span>
         </div>
         <md-menu class="width-24px" ng-if="task.user.email == $user.login && field.logic.editable">

@@ -6,19 +6,22 @@ define(['angular','../modules/Main'],function (angular) {
     function ($log, $scope, $http, $snackbar) {
         var self = this;
 
+        self.inviteLoading = false;
+
         self.invite = function () {
             var formData = angular.element("form#admin-invite-form").serialize();
             $log.debug(formData);
-            $http.post('/login/invite',formData)
+            self.inviteLoading = true;
+            $http.post('/singup/invite',formData)
             .then(function (response) {
 				// TODO 16/3/2017 add loader animation
 				$snackbar.success("Invite sent");
-                $log.debug("Invite sent");
                 $log.debug(response);
+                self.inviteLoading = false;
                 angular.element("form#admin-invite-form input").val("");
             },function () {
 				$snackbar.error("Invite failed");
-                $log.debug("Invite failed!");
+                self.inviteLoading = false;
             });
         };
 
