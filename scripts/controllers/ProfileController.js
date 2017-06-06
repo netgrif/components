@@ -26,12 +26,21 @@ define(['angular', '../modules/Main'], function (angular) {
             self.completion = parseResponse(self.user) / TOTAL_INPUTS * 100;
         };
 
+        function capitalizeFirstLetter(string) {
+            const str = string.toLowerCase();
+
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
         self.getRoleName = function(authority) {
-            return authority.substring(authority.indexOf('_') + 1);
+            const name = authority.substring(authority.indexOf('_') + 1);
+
+            return capitalizeFirstLetter(name);
         };
 
         let parseResponse = user => {
             let inputs = 0;
+
             if (!user) return;
 
             if (user.name)
