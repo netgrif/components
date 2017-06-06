@@ -80,7 +80,7 @@
                 <md-button href="/workflow" ng-class="{active: ('workflow' | routeSegmentContains)}" layout="row"
                            layout-align="left center"><i class="material-icons">multiline_chart</i>{{::$i18n.block.mainNav.workflow}}
                 </md-button>
-                <md-button ng-if="$user.authority === 'ROLE_ADMIN'" href="/console"
+                <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" href="/console"
                            ng-class="{active: ('console' | routeSegmentContains)}" layout="row"
                            layout-align="left center"><i class="material-icons">developer_board</i>{{::$i18n.block.mainNav.console}}
                 </md-button>
