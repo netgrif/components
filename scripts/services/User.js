@@ -31,8 +31,8 @@ define(['angular', '../modules/Main'], function (angular) {
              * @returns {boolean}
              */
             hasAuthority: function (auth) {
-                if(!auth || !authority) return false;
-                return authority.some(a => a === auth);
+                if(!auth || !user.authority) return false;
+                return user.authority.some(a => a === auth);
             },
 
             /**
@@ -41,8 +41,8 @@ define(['angular', '../modules/Main'], function (angular) {
              * @returns {boolean}
              */
             hasRole: function (role) {
-                if(!role || !roles) return false;
-                return roles.some(r => r === role);
+                if(!role || !user.roles) return false;
+                return user.roles.some(r => r === role);
             },
 
             canDelegate: function (delegateRole) {
