@@ -18,7 +18,7 @@
                 </md-input-container>
         -->
         <div layout="row">
-            <md-button ng-if="$user.authority === 'ROLE_ADMIN'" ng-click="flowCtrl.showDialog('upload_net')" class="md-raised color-bg-white">
+            <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" ng-click="flowCtrl.showDialog('upload_net')" class="md-raised color-bg-white">
                 {{::$i18n.page.workflow.uploadNet}}
             </md-button>
             <md-button ng-click="flowCtrl.showDialog('create_case'); flowCtrl.loadPetriNets()" class="md-raised color-bg-white">

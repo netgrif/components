@@ -1,7 +1,7 @@
 
 define(['angular', '../modules/Main'], function (angular) {
     angular.module('ngMain').factory('$user', function () {
-        var user = {
+        const user = {
             id: 0,
             login: undefined,
             authority: undefined,
@@ -25,21 +25,31 @@ define(['angular', '../modules/Main'], function (angular) {
                 }
             },
 
+            /**
+             * Check if user has specified auhority
+             * @param {String} auth
+             * @returns {boolean}
+             */
+            hasAuthority: function (auth) {
+                if(!auth || !authority) return false;
+                return authority.some(a => a === auth);
+            },
+
+            /**
+             * Check if user has specified role
+             * @param {String} role
+             * @returns {boolean}
+             */
+            hasRole: function (role) {
+                if(!role || !roles) return false;
+                return roles.some(r => r === role);
+            },
+
             canDelegate: function (delegateRole) {
-                if(!user.roles || !delegateRole) return false;
-                if(delegateRole instanceof Array){
-                    return delegateRole.some(role => user.roles.includes(delegateRole));
-                } else {
-                    return user.roles.includes(delegateRole);
-                }
+                return user.hasRole(delegateRole);
             },
             canAssign: function (assignRole) {
-                if(!user.roles || !assignRole) return false;
-                if(assignRole instanceof Array){
-                    return assignRole.some(role => user.roles.includes(role));
-                } else {
-                    return user.roles.includes(assignRole);
-                }
+                return user.hasRole(assignRole);
             }
         };
         return user;
