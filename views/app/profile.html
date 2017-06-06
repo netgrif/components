@@ -49,7 +49,7 @@
                     <div flex="20"></div>
                     <md-chips flex>
                         <md-chip ng-repeat="role in profileCtrl.user.authorities">
-                            {{::role.name}}
+                            {{::profileCtrl.getRoleName(role.authority)}}
                         </md-chip>
                     </md-chips>
                     <div flex="20"></div>

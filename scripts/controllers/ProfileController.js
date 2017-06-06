@@ -26,6 +26,10 @@ define(['angular', '../modules/Main'], function (angular) {
             self.completion = parseResponse(self.user) / TOTAL_INPUTS * 100;
         };
 
+        self.getRoleName = function(authority) {
+            return authority.substring(authority.indexOf('_') + 1);
+        };
+
         let parseResponse = user => {
             let inputs = 0;
             if (!user) return;
