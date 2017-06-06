@@ -40,7 +40,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                 .when('/', 'app')
                 .when('/login', 'login')
                 .when('/login/signin', 'login.signin')
-                .when('/login/signup/:token', 'login.signup')
+                .when('/signup/:token', 'login.signup')
                 .when('/dashboard', 'app.dashboard')
                 .when('/tasks', 'app.tasks')
                 .when('/processRoles', 'app.processRoles')
