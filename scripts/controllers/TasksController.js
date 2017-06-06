@@ -1,8 +1,8 @@
 define(['angular', '../modules/Tasks', '../modules/Main'],
     function (angular) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$mdExpansionPanel', '$timeout', '$scroll', '$i18n',
-                function ($log, $scope, $http, $user, $snackbar, $dialog, $fileUpload, $mdExpansionPanelGroup, $mdExpansionPanel, $timeout, $scroll, $i18n) {
+            ['$log', '$scope', '$http', '$user', '$snackbar', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$mdExpansionPanel', '$timeout', '$i18n',
+                function ($log, $scope, $http, $user, $snackbar, $dialog, $fileUpload, $mdExpansionPanelGroup, $mdExpansionPanel, $timeout, $i18n) {
                     var self = this;
                     var statusOrder = {
                         New: 1,
