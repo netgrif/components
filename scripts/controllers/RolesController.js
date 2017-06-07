@@ -1,19 +1,145 @@
-/**
- * Created by martin on 25.2.2017.
- */
 define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
     function (angular) {
-        angular.module('ngRoles').controller('RolesController', ['$log', '$scope', '$timeout', '$http', '$snackbar','$user',
+        angular.module('ngRoles').controller('RolesController', ['$log', '$scope', '$timeout', '$http', '$snackbar', '$user',
             function ($log, $scope, $timeout, $http, $snackbar, $user) {
-                let self = this;
+                const self = this;
 
-                self.userInput = undefined;
-                self.roleInput = undefined;
-                self.isNameChecked = true;
-                self.isEmailChecked = true;
+                self.users = [];
+                self.roles = {
+                    process: undefined,
+                    roles: []
+                };
+
+                $scope.users = [];
+                $scope.roles = [];
+                $scope.userSearch = {
+                    input: "",
+                    byEmail: true,
+                    byName: true
+                };
+                $scope.roleSearch = "";
+                $scope.processes = undefined;
+                $scope.saved = true;
 
 
+                self.loadRoles = function () {
+                    if (!self.roles.process) return;
+                    $http.get("/res/petrinet/" + self.roles.process.entityId + "/roles").then(function (response) {
+                        response.$request().$get("processRoles").then(function (resources) {
+                            self.roles.roles = resources;
+                            self.roles.roles.forEach(role => role.selected = false);
+                            $scope.roles = self.roles.roles;
+                        }, function () {
+                            $log.debug("No roles was found!");
+                        });
+                    }, function () {
+                        $snackbar.error("Failed to roles for process " + self.roles.title);
+                    });
+                };
 
-                // TODO 6.6.2017 controller content
+                self.loadUsers = function () {
+                    $http.get("/res/user/small").then(function (response) {
+                        response.$request().$get("users").then(function (resources) {
+                            self.users = resources;
+                            self.users.forEach(user => {
+                                user.roles = new Set(user.userProcessRoles.map(role => role.roleId));
+                                user.selected = false;
+                            });
+                            $scope.users = self.users;
+                        }, function () {
+                            $log.debug("No user resource was found!");
+                        });
+                    }, function () {
+                        $snackbar.error("Failed to load users!");
+                    });
+                };
+
+                self.loadNets = function () {
+                    $http.get("/res/petrinet/refs").then(function (response) {
+                        response.$request().$get("petriNetReferences").then(function (resources) {
+                            $scope.processes = resources;
+                        }, function () {
+                            $log.debug("No nets references was found!");
+                        });
+                    }, function () {
+                        $snackbar.error("Failed to load processes!");
+                    });
+                };
+
+                self.filterUsers = function () {
+                    if (!self.users) return;
+                    if (self.users.length === 0) return;
+                    $scope.userSearch.input = $scope.userSearch.input.trim();
+                    if (!$scope.userSearch.input || $scope.userSearch.input === "") $scope.users = self.users;
+                    else $scope.users = self.users.filter(user => {
+                        let include = false;
+                        if ($scope.userSearch.byName)
+                            include = include || user.fullName.includes($scope.userSearch.input);
+                        if ($scope.userSearch.byEmail)
+                            include = include || user.email.includes($scope.userSearch.input);
+                        return include;
+                    });
+                };
+
+                self.filterRoles = function () {
+                    if (!self.roles.roles) return;
+                    if (self.roles.roles.length === 0) return;
+                    $scope.roleSearch = $scope.roleSearch.trim();
+                    if (!$scope.roleSearch || $scope.roleSearch === "") $scope.roles = self.roles.roles;
+                    else $scope.roles = self.roles.roles.filter(role => role.name.includes($scope.roleSearch));
+                };
+
+                self.selectUser = function (user) {
+                    user.selected = !user.selected;
+                    let helpUser;
+                    let intersect = new Set(user.selected ? user.roles :
+                        ((helpUser = self.users.find(us => us.selected)) ? helpUser.roles : []));
+                    self.users.forEach(u =>
+                        intersect = u.selected ? new Set([...intersect].filter(i => u.roles.has(i))) : intersect);
+                    self.roles.roles.forEach(role => role.selected = intersect.has(role.objectId));
+                };
+
+                self.selectRole = function (role) {
+                    role.selected = !role.selected;
+                    let rolesChanged = false;
+                    self.users.forEach(user => {
+                        if (user.selected) {
+                            if (role.selected) user.roles.add(role.objectId);
+                            else user.roles.delete(role.objectId);
+                            rolesChanged = true;
+                            user.changedRoles = true;
+                        }
+                    });
+
+                    if (!rolesChanged)
+                        self.users.forEach(user => user.selected = user.roles.has(role.objectId) && role.selected);
+                    else
+                        $scope.saved = false;
+                };
+
+                self.saveRoles = function () {
+                    $scope.saved = true;
+                    self.users.forEach((user, index) => {
+                        if (user.changedRoles) {
+                            $http.post(user.$href("assignProcessRole"), JSON.stringify([...user.roles])).then(function (response) {
+                                if (response.success) {
+                                    user.changedRoles = false;
+                                    $scope.saved = $scope.saved && true;
+                                    $snackbar.success("Successfully assigned roles to "+user.fullName);
+                                } else {
+                                    $snackbar.error(response.error);
+                                    $scope.saved = $scope.saved && false;
+                                }
+                            }, function () {
+                                $snackbar.error("Assigning roles to user " + user.fullName + " has failed!");
+                                $scope.saved = $scope.saved && false;
+                            });
+                        }
+                    });
+                };
+
+
+                self.loadUsers();
+                self.loadNets();
             }]);
     });
