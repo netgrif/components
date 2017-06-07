@@ -39,12 +39,12 @@
                     </md-button>
                 </md-menu-item>
                 <md-menu-item ng-if="field.newFile && !field.uploaded">
-                    <md-button ng-click="tasksCtrl.uploadFile(field)">
+                    <md-button ng-click="tasksCtrl.uploadFile(field);caseCtrl.activeTab.uploadFile(field,task)">
                         {{::$i18n.block.data.upload}}
                     </md-button>
                 </md-menu-item>
                 <md-menu-item ng-if="field.value && !field.newFile">
-                    <md-button ng-click="tasksCtrl.downloadFile(field)">
+                    <md-button ng-click="tasksCtrl.downloadFile(field);caseCtrl.activeTab.downloadFile(field,task)">
                         {{::$i18n.block.data.download}}
                     </md-button>
                 </md-menu-item>

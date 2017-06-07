@@ -1,11 +1,12 @@
 define(['angular', '../modules/Main', '../modules/Workflow'], function (angular) {
     class Tab {
-        constructor(index, useCase, $http, $snackbar, $dialog) {
+        constructor(index, useCase, $http, $snackbar, $dialog, $fileUpload) {
             this.index = index;
             this.useCase = useCase;
             this.$http = $http;
             this.$snackbar = $snackbar;
             this.$dialog = $dialog;
+            this.$fileUpload = $fileUpload;
 
             this.tasks = [];
             this.page = {};
@@ -62,8 +63,8 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
         assignTask(task) {
             const self = this;
             this.$http.get(task.$href("assign")).then(function (response) {
-                if (response.success){
-                    self.tasks.splice(0,self.tasks.length);
+                if (response.success) {
+                    self.tasks.splice(0, self.tasks.length);
                     self.loadTasks();
                 }
                 if (response.error) self.$snackbar.error(response.error);
@@ -76,7 +77,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             const self = this;
             this.$http.get(task.$href("cancel")).then(function (response) {
                 if (response.success) {
-                    self.tasks.splice(0,self.tasks.length);
+                    self.tasks.splice(0, self.tasks.length);
                     self.loadTasks();
                 }
                 if (response.error) self.$snackbar.error(response.error);
@@ -89,7 +90,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             const self = this;
             this.$http.get(task.$href("finish")).then(function (response) {
                 if (response.success) {
-                    self.tasks.splice(0,self.tasks.length);
+                    self.tasks.splice(0, self.tasks.length);
                     self.loadTasks();
                 }
                 if (response.error) self.$snackbar.show(response.error);
@@ -265,7 +266,9 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                     email: user.login,
                     name: userNames[0],
                     surname: userNames[1],
-                    userProcessRoles: user.roles.map(role => {roleId: role})
+                    userProcessRoles: user.roles.map(role => {
+                        roleId: role
+                    })
                 };
 
                 this.dataFieldChanged(task, fieldIndex);
@@ -281,6 +284,32 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 }, function () {
                 });
             }
+        }
+
+        fileModelChange(field) {
+            if (!field.file) return;
+            field.newValue = field.file.name;
+            field.newFile = field.value !== field.newValue;
+            field.uploaded = false;
+        }
+
+        uploadFile(field, task) {
+            if (!field.file) return;
+            const self = this;
+            this.$fileUpload.upload(field.file, undefined, task.$href('file') + field.objectId,
+                response => {
+                    if(response) {
+                        field.uploaded = true;
+                        field.newFile = false;
+                    } else {
+                        self.$snackbar.error("File "+field.file.name+" failed to upload!");
+                    }
+                })
+        }
+
+        downloadFile(field, task) {
+            let downloadWindow = window.open(task.$href('file')+field.objectId);
+            downloadWindow.onload = () => downloadWindow.close();
         }
 
         static parseDataValue(value, type, item) {
@@ -324,8 +353,8 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
 
     }
 
-    angular.module('ngWorkflow').controller('CaseController', ['$log', '$scope', '$http', '$snackbar', '$dialog',
-        function ($log, $scope, $http, $snackbar, $dialog) {
+    angular.module('ngWorkflow').controller('CaseController', ['$log', '$scope', '$http', '$snackbar', '$dialog', '$fileUpload',
+        function ($log, $scope, $http, $snackbar, $dialog, $fileUpload) {
             var self = this;
 
             self.activeTabIndex = undefined;
@@ -379,6 +408,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
 
             self.tabChange = function () {
                 self.activeTab = self.tabs[self.activeTabIndex - 1];
+                $scope.fileModelChange = self.activeTab.fileModelChange;
                 self.activeTab.loadTasks();
             };
 
@@ -391,7 +421,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
 
             self.openCase = function (useCase) {
                 if (!self.tabs.some(tab => tab.useCase.stringId === useCase.stringId))
-                    self.tabs.push(new Tab(self.tabs.length, useCase, $http, $snackbar, $dialog));
+                    self.tabs.push(new Tab(self.tabs.length, useCase, $http, $snackbar, $dialog, $fileUpload));
             };
 
             self.tabClose = function (tabIndex) {
@@ -423,7 +453,7 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                             if (response.success) {
                                 $dialog.closeCurrent();
                                 self.newCase = {};
-                                self.cases.splice(0,self.cases.length);
+                                self.cases.splice(0, self.cases.length);
                                 self.searchCases();
                             }
                         }, function () {
