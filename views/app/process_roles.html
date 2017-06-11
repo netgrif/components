@@ -63,7 +63,7 @@
 
             <md-toolbar class="md-accent md-hue-1 padding-top-2x border-radius-default search-roles">
                 <div layout="row" layout-align="start center" class="md-toolbar-tools">
-                    <md-input-container class="md-block">
+                    <md-input-container>
                         <label>Process</label>
                         <md-select ng-model="rolesCtrl.roles.process" ng-change="rolesCtrl.loadRoles()">
                             <md-option ng-repeat="process in processes" ng-value="process">
@@ -71,11 +71,19 @@
                             </md-option>
                         </md-select>
                     </md-input-container>
+
                     <md-input-container>
                         <label>Role</label>
                         <input type="text" ng-model="roleSearch" ng-change="rolesCtrl.filterRoles()">
                     </md-input-container>
-                    <md-button class="md-primary" ng-click="rolesCtrl.saveRoles()">Save &nbsp;&nbsp;&nbsp;<i ng-hide="saved" class="material-icons md-warn">warning</i></md-button>
+
+                    <span flex></span>
+
+                    <md-button class="md-primary" ng-click="rolesCtrl.saveRoles()">
+                        Save
+                    </md-button>
+
+                    <i ng-hide="saved" class="material-icons color-fg-warning">warning</i>
                 </div>
             </md-toolbar>
 
