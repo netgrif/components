@@ -70,11 +70,13 @@
                 <div layout="row" layout-align="left center">
 
                     <div flex="20"></div>
+
                     <md-chips flex>
                         <md-chip ng-repeat="role in profileCtrl.user.authorities">
                             {{::profileCtrl.getRoleName(role.authority)}}
                         </md-chip>
                     </md-chips>
+
                     <div flex="20"></div>
 
                 </div>
@@ -85,7 +87,7 @@
                     <div flex="20"></div>
 
                     <md-chips flex>
-                        <md-chip ng-repeat="role in profileCtrl.user.userProcessRoles">
+                        <md-chip ng-repeat="role in profileCtrl.user.processRoles">
                             {{::role.name}}
                         </md-chip>
                     </md-chips>
