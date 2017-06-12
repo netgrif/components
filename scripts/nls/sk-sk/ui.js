@@ -190,8 +190,8 @@ define({
         },
         bottomSheet: {
             user: "Používateľ",
-            assign: "Priraďiť",
-            title: "Priraďiť úlohu používateľovi"
+            assign: "Priradiť",
+            title: "Priradiť úlohu používateľovi"
         },
         fab: {
             tooltip: "Spät nahor"
