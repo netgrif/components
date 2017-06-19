@@ -283,28 +283,28 @@ body {
 @-webkit-keyframes spinner-right {
   to {
     -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @keyframes spinner-right {
   to {
     -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @-webkit-keyframes spinner-left {
   to {
     -webkit-transform: rotate(-360deg);
-            transform: rotate(-360deg);
+    transform: rotate(-360deg);
   }
 }
 
 @keyframes spinner-left {
   to {
     -webkit-transform: rotate(-360deg);
-            transform: rotate(-360deg);
+    transform: rotate(-360deg);
   }
 }
 
@@ -321,9 +321,9 @@ body {
   border-style: solid;
   border-color: transparent;
   -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
+  animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
 }
 
 .orbit1 {
@@ -342,9 +342,9 @@ body {
   border-width: 5px;
   border-top-color: white;
   -webkit-animation-name: spinner-left;
-          animation-name: spinner-left;
+  animation-name: spinner-left;
   -webkit-animation-duration: .7s;
-          animation-duration: .7s;
+  animation-duration: .7s;
 }
 
 .orbit2 {
@@ -363,9 +363,9 @@ body {
   border-width: 7px;
   border-top-color: #212121;
   -webkit-animation-name: spinner-right;
-          animation-name: spinner-right;
+  animation-name: spinner-right;
   -webkit-animation-duration: .9s;
-          animation-duration: .9s;
+  animation-duration: .9s;
 }
 
 .orbit3 {
@@ -384,9 +384,9 @@ body {
   border-width: 5px;
   border-top-color: white;
   -webkit-animation-name: spinner-left;
-          animation-name: spinner-left;
+  animation-name: spinner-left;
   -webkit-animation-duration: .8s;
-          animation-duration: .8s;
+  animation-duration: .8s;
 }
 
 .orbit4 {
@@ -405,9 +405,9 @@ body {
   border-width: 7px;
   border-top-color: #212121;
   -webkit-animation-name: spinner-left;
-          animation-name: spinner-left;
+  animation-name: spinner-left;
   -webkit-animation-duration: 1s;
-          animation-duration: 1s;
+  animation-duration: 1s;
 }
 
 .base .background-header {
