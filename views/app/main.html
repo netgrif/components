@@ -1,35 +1,44 @@
 <div ng-cloak class="layout-vh-100 color-bg-transparent" layout="column">
+
     <md-toolbar class="main-toolbar" md-whiteframe="5" layout="row" layout-align="center center">
         <div class="md-toolbar-tools">
-            <a href="/offers"><img alt="logo" src="assets/logo.png" class="toolbar-logo"></a>
+
+            <a href="/offers">
+                <img alt="logo" src="assets/logo.svg" class="toolbar-logo">
+            </a>
+
             <div flex></div>
+
             <div layout="row" layout-align="center center">
                 <md-menu-bar class="toolbar-menu">
                     <md-menu>
-                        <md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center"
-                                   md-menu-origin>{{$user.name}}<i class="material-icons">account_circle</i></md-button>
+
+                        <md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center" md-menu-origin>
+                            {{$user.name}}
+                            <i class="material-icons">account_circle</i>
+                        </md-button>
+
                         <md-menu-content width="3">
-                            <md-menu-item class="toolbar-menu-item">
-                                <md-button href="/#">
-                                    <md-icon class="material-icons">notifications</md-icon>
-                                    {{::$i18n.block.mainMenu.notifications}}
-                                </md-button>
-                            </md-menu-item>
+
                             <md-menu-item>
                                 <md-button href="/profile">
                                     <md-icon class="material-icons">account_circle</md-icon>
                                     {{::$i18n.block.mainMenu.profile}}
                                 </md-button>
                             </md-menu-item>
+
                             <md-menu-item>
                                 <md-menu>
+
                                     <md-button ng-click="$mdOpenMenu()">
                                         <div class="btn-menu">
                                             <md-icon class="material-icons">language</md-icon>
                                             <span>{{::$i18n.block.mainMenu.lang.this}}</span>
                                         </div>
                                     </md-button>
+
                                     <md-menu-content width="2">
+
                                         <md-menu-item>
                                             <md-button ng-click="$i18n.change('en-us')" layout="row"
                                                        layout-align="space-bettween center">
@@ -37,6 +46,7 @@
                                                 <i ng-if="$i18n.current() === 'en-us'" class="material-icons">keyboard_arrow_left</i>
                                             </md-button>
                                         </md-menu-item>
+
                                         <md-menu-item>
                                             <md-button ng-click="$i18n.change('sk-sk')" layout="row"
                                                        layout-align="space-bettween center">
@@ -44,36 +54,68 @@
                                                 <i ng-if="$i18n.current() === 'sk-sk'" class="material-icons">keyboard_arrow_left</i>
                                             </md-button>
                                         </md-menu-item>
+
                                     </md-menu-content>
+
                                 </md-menu>
                             </md-menu-item>
+
                             <md-menu-item>
                                 <md-button ng-click="mainCtrl.logout()">
                                     <md-icon class="material-icons">exit_to_app</md-icon>
                                     {{::$i18n.block.mainMenu.logout}}
                                 </md-button>
                             </md-menu-item>
+
                         </md-menu-content>
+
                     </md-menu>
                 </md-menu-bar>
             </div>
         </div>
     </md-toolbar>
-    <section layout="row" flex>
+
+    <section layout="row" flex class="color-bg-transparent">
+
         <md-sidenav class="md-sidenav-left main-sidenav" md-component-id="left" md-is-locked-open="true"
                     md-whiteframe="5">
             <div layout="column">
+
                 <md-button href="/offers" ng-class="{active: ('offers' | routeSegmentContains)}" layout="row"
-                           layout-align="left center"><i class="material-icons">dashboard</i>{{::$i18n.block.mainNav.offers}}
+                           layout-align="left center">
+                    <i class="material-icons">content_paste</i>
+                    {{::$i18n.block.mainNav.offers}}
                 </md-button>
+
+                <md-button href="/" layout="row" layout-align="left center">
+                    <i class="material-icons">description</i>
+                    Documents
+                </md-button>
+
+                <md-button href="/" layout="row" layout-align="left center">
+                    <i class="material-icons">contacts</i>
+                    Contacts
+                </md-button>
+
+                <md-button href="/" layout="row" layout-align="left center">
+                    <i class="material-icons">assignment</i>
+                    Contracts
+                </md-button>
+
                 <md-button ng-if="$user.authority === 'admin'" href="/console"
                            ng-class="{active: ('console' | routeSegmentContains)}" layout="row"
-                           layout-align="left center"><i class="material-icons">developer_board</i>{{::$i18n.block.mainNav.console}}
+                           layout-align="left center">
+                    <i class="material-icons">developer_board</i>
+                    {{::$i18n.block.mainNav.console}}
                 </md-button>
+
             </div>
         </md-sidenav>
-        <md-content layout-wrap flex class="color-bg-blue-grey-50">
+
+        <md-content layout-wrap flex class="color-bg-transparent">
             <div app-view-segment="1" onload="mainCtrl.startLoadingData()"></div>
         </md-content>
+
     </section>
+
 </div>

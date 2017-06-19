@@ -20,18 +20,24 @@
 	<base href="/">
 </head>
 
-<body id="top" class="base">
-	<div ng-controller="MainController as mainCtrl" class="layout-rh-100 background-welcome">
+<body class="base">
+
+	<div ng-controller="MainController as mainCtrl" class="layout-rh-100 background-gradient">
+
 		<div id="loader-container">
 			<div class="spinner orbit1"></div>
 			<div class="spinner orbit2"></div>
 			<div class="spinner orbit3"></div>
 			<div class="spinner orbit4"></div>
 		</div>
+
 		<div id="view-container" app-view-segment="0"></div>
+
 	</div>
+
 	<!-- RequireJS -->
 	<script src="./bower_components/requirejs/require.js" data-main="scripts/main" async></script>
+
 </body>
 
 </html>

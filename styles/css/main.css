@@ -10,6 +10,114 @@
   color: #F44336 !important;
 }
 
+.color-fg-platinum {
+  color: #92aab4;
+}
+
+.color-fg-black-op-40 {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.color-fg-black-op-60 {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.color-fg-primary-50 {
+  color: #e3f6fa;
+}
+
+.color-fg-primary-100 {
+  color: #b8e8f2;
+}
+
+.color-fg-primary-200 {
+  color: #89d9e9;
+}
+
+.color-fg-primary-300 {
+  color: #59c9e0;
+}
+
+.color-fg-primary-400 {
+  color: #36bed9;
+}
+
+.color-fg-primary-500 {
+  color: #12b2d2;
+}
+
+.color-fg-primary-600 {
+  color: #10abcd;
+}
+
+.color-fg-primary-700 {
+  color: #0da2c7;
+}
+
+.color-fg-primary-800 {
+  color: #0a99c1;
+}
+
+.color-fg-primary-900 {
+  color: #058ab6;
+}
+
+.color-fg-primary-A100 {
+  color: #e0f6ff;
+}
+
+.color-fg-primary-A200 {
+  color: #ade8ff;
+}
+
+.color-fg-primary-A400 {
+  color: #7adaff;
+}
+
+.color-fg-primary-A700 {
+  color: #60d2ff;
+}
+
+.color-fg-accent-50 {
+  color: #FAFAFA;
+}
+
+.color-fg-accent-100 {
+  color: #F5F5F5;
+}
+
+.color-fg-accent-200 {
+  color: #EEEEEE;
+}
+
+.color-fg-accent-300 {
+  color: #E0E0E0;
+}
+
+.color-fg-accent-400 {
+  color: #BDBDBD;
+}
+
+.color-fg-accent-500 {
+  color: #9E9E9E;
+}
+
+.color-fg-accent-600 {
+  color: #757575;
+}
+
+.color-fg-accent-700 {
+  color: #616161;
+}
+
+.color-fg-accent-800 {
+  color: #424242;
+}
+
+.color-fg-accent-900 {
+  color: #212121;
+}
+
 .color-bg-success {
   background-color: #4CAF50 !important;
 }
@@ -24,6 +132,114 @@
 
 .color-bg-transparent {
   background-color: transparent;
+}
+
+.color-bg-platinum {
+  background-color: #92aab4;
+}
+
+.color-bg-black-op-40 {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.color-bg-black-op-60 {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.color-bg-primary-50 {
+  background-color: #e3f6fa;
+}
+
+.color-bg-primary-100 {
+  background-color: #b8e8f2;
+}
+
+.color-bg-primary-200 {
+  background-color: #89d9e9;
+}
+
+.color-bg-primary-300 {
+  background-color: #59c9e0;
+}
+
+.color-bg-primary-400 {
+  background-color: #36bed9;
+}
+
+.color-bg-primary-500 {
+  background-color: #12b2d2;
+}
+
+.color-bg-primary-600 {
+  background-color: #10abcd;
+}
+
+.color-bg-primary-700 {
+  background-color: #0da2c7;
+}
+
+.color-bg-primary-800 {
+  background-color: #0a99c1;
+}
+
+.color-bg-primary-900 {
+  background-color: #058ab6;
+}
+
+.color-bg-primary-A100 {
+  background-color: #e0f6ff;
+}
+
+.color-bg-primary-A200 {
+  background-color: #ade8ff;
+}
+
+.color-bg-primary-A400 {
+  background-color: #7adaff;
+}
+
+.color-bg-primary-A700 {
+  background-color: #60d2ff;
+}
+
+.color-bg-accent-50 {
+  background-color: #FAFAFA;
+}
+
+.color-bg-accent-100 {
+  color: #F5F5F5;
+}
+
+.color-bg-accent-200 {
+  color: #EEEEEE;
+}
+
+.color-bg-accent-300 {
+  color: #E0E0E0;
+}
+
+.color-bg-accent-400 {
+  color: #BDBDBD;
+}
+
+.color-bg-accent-500 {
+  color: #9E9E9E;
+}
+
+.color-bg-accent-600 {
+  color: #757575;
+}
+
+.color-bg-accent-700 {
+  color: #616161;
+}
+
+.color-bg-accent-800 {
+  color: #424242;
+}
+
+.color-bg-accent-900 {
+  color: #212121;
 }
 
 .min-height-0 {
@@ -235,13 +451,20 @@ body {
   overflow: hidden;
 }
 
-.img-responsive {
-  width: 100%;
-  height: auto;
+.cursor-default {
+  cursor: default;
 }
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.visibility-visible {
+  visibility: visible;
+}
+
+.visibility-hidden {
+  visibility: hidden;
 }
 
 .position-relative {
@@ -278,6 +501,19 @@ body {
 
 .layout-sw-300 {
   width: 300px;
+}
+
+.text-overflow-dots {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.img-responsive {
+  width: 100%;
+  height: auto;
 }
 
 @-webkit-keyframes spinner-right {
@@ -410,17 +646,10 @@ body {
   animation-duration: 1s;
 }
 
-.base .background-header {
-  position: absolute;
-  height: 175px;
-  width: 100%;
-  top: 48px;
-}
-
-.base .background-welcome {
-  background-image: url(../../assets/welcome_background.png);
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+.base .background-gradient {
+  background: #92aab4 !important;
+  background: -webkit-radial-gradient(center ellipse, #92aab4 0%, #515e64 100%) !important;
+  background: -o-radial-gradient(center ellipse, #92aab4 0%, #515e64 100%) !important;
+  background: radial-gradient(ellipse at center, #92aab4 0%, #515e64 100%) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#92aab4', endColorstr='#515e64', GradientType=1) !important;
 }

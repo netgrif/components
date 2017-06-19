@@ -2,10 +2,15 @@
 @import 'dims';
 @import 'functions';
 @import 'global';
+@import "layout";
+@import "text";
+@import "img";
 @import 'blocks/spinner';
 
 .base {
 	@import 'background';
     // Blocks & Elements
-
+	@import 'blocks/card';
+	@import "blocks/sidenav";
+	@import "blocks/toolbar";
 }

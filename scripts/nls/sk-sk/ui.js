@@ -1,4 +1,5 @@
 define({
+    // TODO 20.6.2017 Update
     test: "Toto je testovací string!",
     page: {
         signIn: {

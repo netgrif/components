@@ -9,74 +9,25 @@ body {
 	overflow: hidden;
 }
 
-.img-responsive {
-	width: 100%;
-	height: auto;
-}
+.cursor {
 
-.cursor-pointer {
-	cursor: pointer;
-}
-
-// Positions
-.position {
-
-	&-relative {
-		position: relative !important;
+	&-default {
+		cursor: default;
 	}
 
-	&-absolute {
-		position: absolute !important;
-	}
-
-	&-fixed {
-		position: fixed !important;
+	&-pointer {
+		cursor: pointer;
 	}
 }
 
-// Layout
-.layout {
+.visibility {
 
-	&-vh {					// Window dims
-
-		&-100 {
-			height: 100vh;
-		}
+	&-visible {
+		visibility: visible;
 	}
 
-	&-vw {
-
-		&-100 {
-			width: 100vw;
-		}
-	}
-
-	&-rh {					// Relative dims
-
-		&-100 {
-			height: 100%;
-		}
-	}
-
-	&-rw {
-
-		&-100 {
-			width: 100%;
-		}
-	}
-
-	&-sh {					// Static dims
-
-		&-300 {
-			height: 300px;
-		}
-	}
-
-	&-sw {
-
-		&-300 {
-			width: 300px;
-		}
+	&-hidden {
+		visibility: hidden;
 	}
 }
 

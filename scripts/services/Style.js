@@ -1,8 +1,5 @@
-/**
- * Created by Milan on 13.2.2017.
- */
 define(['angular','../modules/Main'],function (angular) {
-    angular.module('ngMain').factory('$style' , function () {
+    angular.module('ngMain').factory('$style', function () {
         let el = angular.element;
 
         return {

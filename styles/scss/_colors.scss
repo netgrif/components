@@ -1,8 +1,8 @@
-// Primary color - FM
+// Primary color
 $color-primary-50: 				#e3f6fa;
 $color-primary-100: 			#b8e8f2;
-$color-primary-300: 			#89d9e9;
-$color-primary-200: 			#59c9e0;
+$color-primary-200: 			#89d9e9;
+$color-primary-300: 			#59c9e0;
 $color-primary-400: 			#36bed9;
 $color-primary-500: 			#12b2d2;
 $color-primary-600: 			#10abcd;
@@ -27,21 +27,17 @@ $color-grey-700: 				#616161;
 $color-grey-800: 				#424242;
 $color-grey-900: 				#212121;
 
-
 // Background
+$color-platinum: 				rgb(146, 170, 180);
 
-// Material text
-$color-material-grey-text:		rgba(0, 0, 0, .38);
-
-// Menu
-
-// Other
+// Cards
+$color-black-op-40:				rgba(0, 0, 0, .40);
+$color-black-op-60:				rgba(0, 0, 0, .60);
 
 // System
 $color-success:					#4CAF50;
 $color-warning:					#FFC107;
 $color-error:					#F44336;
-
 
 .color {
 	
@@ -57,6 +53,126 @@ $color-error:					#F44336;
 
 		&-error {
 			color: $color-error !important;
+		}
+
+		&-platinum {
+			color: $color-platinum;
+		}
+
+		&-black {
+
+			&-op {
+
+				&-40 {
+					color: $color-black-op-40;
+				}
+
+				&-60 {
+					color: $color-black-op-60;
+				}
+			}
+		}
+
+		&-primary {
+
+			&-50 {
+				color: $color-primary-50;
+			}
+
+			&-100 {
+				color: $color-primary-100;
+			}
+
+			&-200 {
+				color: $color-primary-200;
+			}
+
+			&-300 {
+				color: $color-primary-300;
+			}
+
+			&-400 {
+				color: $color-primary-400;
+			}
+
+			&-500 {
+				color: $color-primary-500;
+			}
+
+			&-600 {
+				color: $color-primary-600;
+			}
+
+			&-700 {
+				color: $color-primary-700;
+			}
+
+			&-800 {
+				color: $color-primary-800;
+			}
+
+			&-900 {
+				color: $color-primary-900;
+			}
+
+			&-A100 {
+				color: $color-primary-A100;
+			}
+
+			&-A200 {
+				color: $color-primary-A200;
+			}
+
+			&-A400 {
+				color: $color-primary-A400;
+			}
+
+			&-A700 {
+				color: $color-primary-A700;
+			}
+		}
+
+		&-accent {
+
+			&-50 {
+				color: $color-grey-50;
+			}
+
+			&-100 {
+				color: $color-grey-100;
+			}
+
+			&-200 {
+				color: $color-grey-200;
+			}
+
+			&-300 {
+				color: $color-grey-300;
+			}
+
+			&-400 {
+				color: $color-grey-400;
+			}
+
+			&-500 {
+				color: $color-grey-500;
+			}
+
+			&-600 {
+				color: $color-grey-600;
+			}
+
+			&-700 {
+				color: $color-grey-700;
+			}
+
+			&-800 {
+				color: $color-grey-800;
+			}
+
+			&-900 {
+				color: $color-grey-900;
+			}
 		}
 	}
 	
@@ -76,6 +192,126 @@ $color-error:					#F44336;
 
 		&-transparent {
 			background-color: transparent;
+		}
+
+		&-platinum {
+			background-color: $color-platinum;
+		}
+
+		&-black {
+
+			&-op {
+
+				&-40 {
+					background-color: $color-black-op-40;
+				}
+
+				&-60 {
+					background-color: $color-black-op-60;
+				}
+			}
+		}
+
+		&-primary {
+
+			&-50 {
+				background-color: $color-primary-50;
+			}
+
+			&-100 {
+				background-color: $color-primary-100;
+			}
+
+			&-200 {
+				background-color: $color-primary-200;
+			}
+
+			&-300 {
+				background-color: $color-primary-300;
+			}
+
+			&-400 {
+				background-color: $color-primary-400;
+			}
+
+			&-500 {
+				background-color: $color-primary-500;
+			}
+
+			&-600 {
+				background-color: $color-primary-600;
+			}
+
+			&-700 {
+				background-color: $color-primary-700;
+			}
+
+			&-800 {
+				background-color: $color-primary-800;
+			}
+
+			&-900 {
+				background-color: $color-primary-900;
+			}
+
+			&-A100 {
+				background-color: $color-primary-A100;
+			}
+
+			&-A200 {
+				background-color: $color-primary-A200;
+			}
+
+			&-A400 {
+				background-color: $color-primary-A400;
+			}
+
+			&-A700 {
+				background-color: $color-primary-A700;
+			}
+		}
+
+		&-accent {
+
+			&-50 {
+				background-color: $color-grey-50;
+			}
+
+			&-100 {
+				color: $color-grey-100;
+			}
+
+			&-200 {
+				color: $color-grey-200;
+			}
+
+			&-300 {
+				color: $color-grey-300;
+			}
+
+			&-400 {
+				color: $color-grey-400;
+			}
+
+			&-500 {
+				color: $color-grey-500;
+			}
+
+			&-600 {
+				color: $color-grey-600;
+			}
+
+			&-700 {
+				color: $color-grey-700;
+			}
+
+			&-800 {
+				color: $color-grey-800;
+			}
+
+			&-900 {
+				color: $color-grey-900;
+			}
 		}
 	}
 }

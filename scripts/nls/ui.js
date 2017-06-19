@@ -1,5 +1,6 @@
 define({
     'root': {
+        // TODO 20.6.2017 Update
         test: "This is test string!",
         page: {
             signIn: {

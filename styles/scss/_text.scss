@@ -1,0 +1,7 @@
+// Text overflow
+.text-overflow {
+
+    &-dots {
+        @include textOverflowWithDots(100%);
+    }
+}
