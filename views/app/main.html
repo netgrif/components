@@ -1,7 +1,7 @@
 <div ng-cloak class="layout-vh-100 color-bg-transparent" layout="column">
     <md-toolbar class="main-toolbar" md-whiteframe="5" layout="row" layout-align="center center">
         <div class="md-toolbar-tools">
-            <a href="/dashboard"><img alt="logo" src="assets/logo.png" class="toolbar-logo"></a>
+            <a href="/offers"><img alt="logo" src="assets/logo.png" class="toolbar-logo"></a>
             <div flex></div>
             <div layout="row" layout-align="center center">
                 <md-menu-bar class="toolbar-menu">
@@ -63,20 +63,8 @@
         <md-sidenav class="md-sidenav-left main-sidenav" md-component-id="left" md-is-locked-open="true"
                     md-whiteframe="5">
             <div layout="column">
-                <md-button href="/dashboard" ng-class="{active: ('dashboard' | routeSegmentContains)}" layout="row"
-                           layout-align="left center"><i class="material-icons">dashboard</i>{{::$i18n.block.mainNav.dashboard}}
-                </md-button>
-                <md-button href="/tasks" ng-class="{active: ('tasks' | routeSegmentContains)}" layout="row"
-                           layout-align="left center"><i class="material-icons">check_box</i>{{::$i18n.block.mainNav.tasks}}
-                </md-button>
-                <md-button href="/data" ng-class="{active: ('data' | routeSegmentContains)}" layout="row"
-                           layout-align="left center"><i class="material-icons">storage</i>{{::$i18n.block.mainNav.data}}
-                </md-button>
-                <md-button href="/roles" ng-class="{active: ('roles' | routeSegmentContains)}" layout="row"
-                           layout-align="left center"><i class="material-icons">people</i>{{::$i18n.block.mainNav.roles}}
-                </md-button>
-                <md-button href="/workflow" ng-class="{active: ('workflow' | routeSegmentContains)}" layout="row"
-                           layout-align="left center"><i class="material-icons">multiline_chart</i>{{::$i18n.block.mainNav.workflow}}
+                <md-button href="/offers" ng-class="{active: ('offers' | routeSegmentContains)}" layout="row"
+                           layout-align="left center"><i class="material-icons">dashboard</i>{{::$i18n.block.mainNav.offers}}
                 </md-button>
                 <md-button ng-if="$user.authority === 'admin'" href="/console"
                            ng-class="{active: ('console' | routeSegmentContains)}" layout="row"

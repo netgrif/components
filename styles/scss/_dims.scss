@@ -2,14 +2,35 @@
 $dim-default:					8px;
 $dim-2x:						2*$dim-default;
 
+// Min / Max Dims
+.min {
+
+	&-height {
+
+		&-0 {
+			min-height: 0 !important;
+		}
+	}
+}
+
+.max {
+
+	&-height {
+
+		&-0 {
+			max-height: 0 !important;
+		}
+	}
+}
+
 // Font sizes
 
 
 // Margins
 .margin {
 
-	&-no {
-		margin: 0;
+	&-0 {
+		margin: 0 !important;
 	}
 
 	&-default {
@@ -22,7 +43,7 @@ $dim-2x:						2*$dim-default;
 
 	&-vertical {
 
-		&-no {
+		&-0 {
 			margin-top: 0;
 			margin-bottom: 0;
 		}
@@ -40,7 +61,7 @@ $dim-2x:						2*$dim-default;
 
 	&-horizontal {
 
-		&-no {
+		&-0 {
 			margin-left: 0;
 			margin-right: 0;
 		}
@@ -58,7 +79,7 @@ $dim-2x:						2*$dim-default;
 
 	&-top {
 
-		&-no {
+		&-0 {
 			margin-top: 0;
 		}
 
@@ -73,7 +94,7 @@ $dim-2x:						2*$dim-default;
 
 	&-bottom {
 
-		&-no {
+		&-0 {
 			margin-bottom: 0;
 		}
 
@@ -88,7 +109,7 @@ $dim-2x:						2*$dim-default;
 
 	&-left {
 
-		&-no {
+		&-0 {
 			margin-left: 0;
 		}
 
@@ -103,7 +124,7 @@ $dim-2x:						2*$dim-default;
 
 	&-right {
 
-		&-no {
+		&-0 {
 			margin-right: 0;
 		}
 
@@ -120,8 +141,8 @@ $dim-2x:						2*$dim-default;
 // Paddings
 .padding {
 
-	&-no {
-		padding: 0;
+	&-0 {
+		padding: 0 !important;
 	}
 
 	&-default {
@@ -134,7 +155,7 @@ $dim-2x:						2*$dim-default;
 
 	&-vertical {
 
-		&-no {
+		&-0 {
 			padding-top: 0;
 			padding-bottom: 0;
 		}
@@ -152,7 +173,7 @@ $dim-2x:						2*$dim-default;
 
 	&-horizontal {
 
-		&-no {
+		&-0 {
 			padding-left: 0;
 			padding-right: 0;
 		}
@@ -170,7 +191,7 @@ $dim-2x:						2*$dim-default;
 
 	&-top {
 
-		&-no {
+		&-0 {
 			padding-top: 0;
 		}
 
@@ -185,7 +206,7 @@ $dim-2x:						2*$dim-default;
 
 	&-bottom {
 
-		&-no {
+		&-0 {
 			padding-bottom: 0;
 		}
 
@@ -200,7 +221,7 @@ $dim-2x:						2*$dim-default;
 
 	&-left {
 
-		&-no {
+		&-0 {
 			padding-left: 0;
 		}
 
@@ -215,7 +236,7 @@ $dim-2x:						2*$dim-default;
 
 	&-right {
 
-		&-no {
+		&-0 {
 			padding-right: 0;
 		}
 
@@ -225,6 +246,28 @@ $dim-2x:						2*$dim-default;
 
 		&-2x {
 			padding-right: $dim-2x;
+		}
+	}
+}
+
+// Border
+.border {
+
+	&-width {
+
+		&-default {
+			border-width: $dim-default !important;
+		}
+
+		&-2x {
+			border-width: $dim-2x !important;
+		}
+	}
+
+	&-radius {
+
+		&-default {
+			border-radius: 2px !important;
 		}
 	}
 }

@@ -1,16 +1,13 @@
-/**
- * Created by Milan on 31.1.2017.
- */
-define(['angular','../modules/Main','../services/Loading','../services/Auth'],function (angular) {
-    angular.module('ngMain').controller('MainController',['$loading', '$auth','$log', '$scope', '$style','$user',
+define(['angular', '../modules/Main', '../services/Loading', '../services/Auth'],function (angular) {
+    angular.module('ngMain').controller('MainController', ['$loading', '$auth', '$log', '$scope', '$style', '$user',
     function ($loading, $auth, $log, $scope, $style, $user) {
-        var self = this;
+        const self = this;
 
         self.loaderVisible = true;
 
-        var loaderContainer = angular.element("div#loader-container");
-        var viewContainer = angular.element("div#view-container");
-        var dataLoadingStarted = false;
+        const loaderContainer = angular.element("div#loader-container");
+        const viewContainer = angular.element("div#view-container");
+        let dataLoadingStarted = false;
 
         $loading.setMainControllerCallback(setShowingLoading);
         viewContainer.hide();

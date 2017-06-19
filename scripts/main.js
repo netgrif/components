@@ -9,12 +9,9 @@ requirejs.config({
         'angularAnimate': "bower_components/angular-animate/angular-animate.min",
         'angularAria': "bower_components/angular-aria/angular-aria.min",
         'angularMessages': "bower_components/angular-messages/angular-messages.min",
-        'angularHal': "bower_components/angular-hal/dist/angular-hal.min",
         'angularRoute': "bower_components/angular-route/angular-route.min",
         'angularRouteSegment': "bower_components/angular-route-segment/build/angular-route-segment",
         'angularMaterial': "bower_components/angular-material/angular-material.min",
-        'angularMaterialExpansionPanels': "bower_components/angular-material-expansion-panel/dist/md-expansion-panel.min",
-        'angularCharts': "bower_components/angular-charts-0.0.4.min",
         'domReady': "bower_components/requirejs/domReady",
         'i18n': "bower_components/requirejs/i18n",
         'nls': "scripts/nls",
@@ -28,12 +25,9 @@ requirejs.config({
         'angularAnimate': ['angular'],
         'angularAria': ['angular'],
         'angularMessages': ['angular'],
-        'angularHal': ['angular'],
         'angularRoute': ['angular'],
         'angularRouteSegment': ['angular', 'angularRoute'],
-        'angularMaterial': ['angular', 'angularAnimate', 'angularAria', 'angularMessages'],
-        'angularMaterialExpansionPanels': ['angular', 'angularAnimate', 'angularAria', 'angularMessages','angularMaterial'],
-        'angularCharts': ['angular']
+        'angularMaterial': ['angular', 'angularAnimate', 'angularAria', 'angularMessages']
     },
     config: {
         i18n: {

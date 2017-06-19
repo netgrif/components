@@ -1,8 +1,8 @@
 define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 	angular.module('ngMain').controller('LoginController', ['$http', '$auth', '$loading', '$log', '$snackbar', '$routeSegment',
     function ($http, $auth, $loading, $log, $snackbar, $routeSegment) {
-			var self = this;
-			var dataLoadingStarted = false;
+			const self = this;
+			let dataLoadingStarted = false;
 
 			self.credentials = {
 				username: "",

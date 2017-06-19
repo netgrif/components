@@ -18,44 +18,6 @@ body {
 	cursor: pointer;
 }
 
-// Floating Action Button alignment
-.fab {
-
-	&-top {
-
-		&-left {
-			top: 40px !important;
-			bottom: auto;
-			left: 40px !important;
-			right: auto;
-		}
-
-		&-right {
-			top: 40px !important;
-			bottom: auto;
-			left: auto;
-			right: 40px !important;
-		}
-	}
-
-	&-bottom {
-
-		&-left {
-			top: auto;
-			bottom: 60px !important;
-			left: 40px !important;
-			right: auto;
-		}
-
-		&-right {
-			top: auto;
-			bottom: 60px !important;
-			left: auto;
-			right: 40px !important;
-		}
-	}
-}
-
 // Positions
 .position {
 

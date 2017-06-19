@@ -1,20 +1,17 @@
-/**
- * Created by Milan on 26.1.2017.
- */
 /*  Top level module
     map all application components
  */
-define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment', 'angularMaterialExpansionPanels',
+define('app', ['angular', 'angularMaterial', 'angularRouteSegment',
      'scripts/directives/DirectivesLoader',
      'scripts/filters/FiltersLoader',
      'scripts/services/ServicesLoader',
      'scripts/controllers/ControllersLoader'],
     function (angular) {
         // console.log(angular.version);
-        var app = angular.module('app', ['ngMaterial', 'angular-hal', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment','material.components.expansionPanels',
-         'ngMain','ngData','ngDashboard','ngTasks','ngWorkflow','ngRoles']); //here add modules that you defined
+        let app = angular.module('app', ['ngMaterial', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment',
+         'ngMain', 'ngOffers']); //here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
-            $mdThemingProvider.definePalette('fmService', {
+            $mdThemingProvider.definePalette('mainPalette', {
                 '50': '#f3e0e6',
                 '100': '#e0b3bf',
                 '200': '#cc8095',
@@ -35,22 +32,18 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
             });
 
             $mdThemingProvider.theme('default')
-                .primaryPalette('fmService')
+                .primaryPalette('mainPalette')
                 .accentPalette('grey');
 
+            // TODO 19.6.2017 define views
             $routeSegmentProvider
                 .when('/', 'app')
                 .when('/login', 'login')
                 .when('/login/signin', 'login.signin')
                 .when('/login/signup/:token', 'login.signup')
-                .when('/dashboard', 'app.dashboard')
-                .when('/tasks', 'app.tasks')
-                .when('/roles', 'app.roles')
-                .when('/data', 'app.data')
-                .when('/workflow', 'app.workflow')
+                .when('/offers', 'app.offers')
                 .when('/profile', 'app.profile')
                 .when('/console', 'app.console')
-                .when('/test', 'test')
 
             .segment('app', {
                     templateUrl: "views/app/main.html",
@@ -58,36 +51,16 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                     controllerAs: 'mainCtrl'
                 })
                 .within()
-                .segment('dashboard', {
+                .segment('offers', {
                     default: true,
-                    templateUrl: "views/app/dashboard.html",
-                    controller: 'DashboardController',
-                    controllerAs: 'dashCtrl'
+                    templateUrl: "views/app/offers.html",
+                    controller: 'OffersController',
+                    controllerAs: 'offCtrl'
                 })
                 .segment('profile', {
                     templateUrl: "views/app/profile.html",
                     controller: 'ProfileController',
                     controllerAs: 'profCtrl'
-                })
-                .segment('data', {
-                    templateUrl: "views/app/data.html",
-                    controller: 'DataController',
-                    controllerAs: 'dataCtrl'
-                })
-                .segment('tasks', {
-                    templateUrl: "views/app/tasks.html",
-                    controller: 'TasksController',
-                    controllerAs: 'tasksCtrl'
-                })
-                .segment('roles', {
-                    templateUrl: "views/app/processroles.html",
-                    controller: 'RolesController',
-                    controllerAs: 'rolesCtrl'
-                })
-                .segment('workflow', {
-                    templateUrl: "views/app/workflow.html",
-                    controller: 'WorkflowController',
-                    controllerAs: 'flowCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",
@@ -108,12 +81,6 @@ define('app', ['angular', 'angularMaterial', 'angularHal', 'angularRouteSegment'
                 .segment('signup', {
                     templateUrl: "views/login/signup_form.html",
                     dependencies: ['token']
-                })
-                .up()
-                .segment('test', {
-                    templateUrl: "views/test.html",
-                    controller: 'MainController',
-                    controllerAs: 'mainCtrl'
                 });
 
             $locationProvider.html5Mode(true);
