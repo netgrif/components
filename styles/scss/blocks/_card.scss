@@ -1,3 +1,14 @@
 .card {
-    // TODO 20.6.2017 create generic card object
+    margin: $dim-default;
+    background-color: $color-black-op-40;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+
+    &-logo {
+        padding: $dim-default;
+        margin: $dim-default;
+        background-color: $color-grey-50;
+        border-radius: $border-radius;
+        box-shadow: $shadow;
+    }
 }

@@ -3,6 +3,9 @@ body {
 	min-height: 100%;
 }
 
+// Global variables
+$shadow:                        2px 2px 5px $color-black-op-60;
+
 // Custom global classes
 .stop-scrolling {
 	height: 100%;

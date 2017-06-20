@@ -1,3 +1,14 @@
+h1 {
+    font-size: 32px;
+    font-weight: 300;
+    color: $color-grey-50;
+
+    strong {
+        font-weight: 700;
+        color: $color-primary-500;
+    }
+}
+
 // Text overflow
 .text-overflow {
 

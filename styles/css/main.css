@@ -503,6 +503,17 @@ body {
   width: 300px;
 }
 
+h1 {
+  font-size: 32px;
+  font-weight: 300;
+  color: #FAFAFA;
+}
+
+h1 strong {
+  font-weight: 700;
+  color: #12b2d2;
+}
+
 .text-overflow-dots {
   width: 100%;
   white-space: nowrap;
@@ -514,6 +525,11 @@ body {
 .img-responsive {
   width: 100%;
   height: auto;
+}
+
+.logo {
+  height: 48px;
+  width: auto;
 }
 
 @-webkit-keyframes spinner-right {
@@ -652,4 +668,94 @@ body {
   background: -o-radial-gradient(center ellipse, #92aab4 0%, #515e64 100%) !important;
   background: radial-gradient(ellipse at center, #92aab4 0%, #515e64 100%) !important;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#92aab4', endColorstr='#515e64', GradientType=1) !important;
+}
+
+.base .card {
+  margin: 8px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+.base .card-logo {
+  padding: 8px;
+  margin: 8px;
+  background-color: #FAFAFA;
+  border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+.base .sidenav {
+  width: 224.094px;
+}
+
+.base .sidenav .md-button {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  border-bottom: 0.5px solid #FAFAFA;
+}
+
+.base .sidenav .md-button .icon-wrapper {
+  height: 36px;
+  width: 36px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.base .sidenav .md-button .icon-wrapper .material-icons {
+  color: #FAFAFA;
+}
+
+.base .sidenav .md-button span {
+  color: #FAFAFA;
+  font-weight: 300;
+  text-transform: capitalize !important;
+  text-align: left;
+}
+
+.base .toolbar {
+  height: 68px;
+}
+
+.base .toolbar-menu {
+  height: 100%;
+}
+
+.base .toolbar-menu .btn-menu {
+  height: 100%;
+  margin: 0;
+  color: #FAFAFA;
+  font-size: 20px;
+  text-transform: none;
+}
+
+.base .toolbar-menu .btn-menu .material-icons {
+  font-size: 48px;
+  color: #12b2d2;
+  margin-left: 16px;
+}
+
+.base .toolbar-submenu {
+  padding: 0 !important;
+}
+
+.base .toolbar-submenu .btn-menu > .material-icons {
+  margin-right: 14px !important;
+  margin-top: 1.5px !important;
+  margin-bottom: 1.5px !important;
+  font-size: 24px !important;
+}
+
+.base .toolbar-submenu .btn-menu > span {
+  margin-left: -1px;
+  font-size: 15px;
+  text-transform: capitalize;
+  font-weight: normal;
+}
+
+.base md-menu-bar.md-default-theme md-menu.md-open > button, .base md-menu-bar md-menu.md-open > button, .base md-menu-bar.md-default-theme md-menu > button:focus, .base md-menu-bar md-menu > button:focus {
+  background: rgba(238, 238, 238, 0.1) !important;
 }
