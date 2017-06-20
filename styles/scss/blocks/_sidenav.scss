@@ -1,18 +1,18 @@
 .sidenav {
     // Width must by same as logo width + its padding
-    width: 224.094px;
+    width: 189.406px;
 
-    .md-button {
+    > .md-button {
         width: 100%;
         margin: 0;
         padding: 0;
         border-radius: 0;
-        border-bottom: 0.5px solid $color-grey-50;
 
         .icon-wrapper {
             height: 36px;
             width: 36px;
             background-color: $color-black-op-60;
+            border-bottom: 0.5px solid $color-primary-500;
 
             .material-icons {
                 color: $color-grey-50;
@@ -20,14 +20,55 @@
         }
 
         span {
+            padding-left: $dim-default;
             color: $color-grey-50;
             font-weight: 300;
             text-transform: capitalize !important;
             text-align: left;
+            border-bottom: 0.5px solid $color-grey-50;
         }
 
         &:hover {
-            // TODO transform: scale
+            height: 52px;
+            background-color: $color-black-op-60;
+
+            .icon-wrapper {
+                height: 52px;
+                width: 52px;
+                border: none;
+                background-color: $color-primary-500;
+            }
+
+            span {
+                border: none;
+                font-size: 20px;
+            }
+        }
+    }
+
+    &-add {
+        position: relative;
+
+        .left-panel {
+            position: absolute;
+            height: 100%;
+            width: 36px;
+            background-color: $color-black-op-60;
+            border-bottom-left-radius: $border-radius;
+        }
+
+        md-fab-speed-dial {
+            position: absolute;
+            top: $dim-2x;
+            left: $dim-default;
+
+            md-fab-actions {
+
+                .md-button {
+                    height: 32px;
+                    width: auto;
+                }
+            }
         }
     }
 }

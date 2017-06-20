@@ -6,7 +6,7 @@
             <img class="logo" src="../../assets/logo.svg" alt="logo">
         </a>
 
-        <md-menu-bar layout="row" layout-align="center center" class="card toolbar" flex>
+        <md-menu-bar layout="row" layout-align="center center" class="card card-op-60 toolbar" flex>
             <div flex></div>
             <h1>BROKER's <strong>PORTAL</strong></h1>
             <div flex></div>
@@ -87,37 +87,70 @@
                 </md-button>
 
                 <md-button href="/" layout="row" layout-align="start center">
-                    <i class="material-icons">contacts</i>
-                    Contacts
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">contacts</i>
+                    </div>
+                    <span flex>Contacts</span>
                 </md-button>
 
                 <md-button href="/" layout="row" layout-align="start center">
-                    <i class="material-icons">description</i>
-                    Documents
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">description</i>
+                    </div>
+                    <span flex>Documents</span>
                 </md-button>
 
                 <md-button href="/" layout="row" layout-align="start center">
-                    <i class="material-icons">assignment</i>
-                    Contracts
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <span flex>Contracts</span>
                 </md-button>
 
                 <md-button ng-if="$user.authority === 'admin'" href="/console"
                            ng-class="{active: ('console' | routeSegmentContains)}" layout="row"
                            layout-align="left center">
-                    <i class="material-icons">developer_board</i>
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">developer_board</i>
+                    </div>
                     {{::$i18n.block.mainNav.console}}
                 </md-button>
 
-                <!--<div layout="row" layout-align="start center" class="search">-->
-                    <!--<i class="material-icons">search</i>-->
+                <md-button href="/" layout="row" layout-align="start center">
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">search</i>
+                    </div>
+                    <span flex>Search</span>
+                </md-button>
 
-                    <!--<input type="text" placeholder="Search">-->
-                <!--</div>-->
+                <div class="sidenav-add" flex>
+                    <div class="left-panel"></div>
+
+                    <md-fab-speed-dial md-direction="down" class="md-fling">
+                        <md-fab-trigger>
+                            <md-button class="md-fab md-raised md-mini md-primary">
+                                <md-icon class="material-icons">add</md-icon>
+                            </md-button>
+                        </md-fab-trigger>
+
+                        <md-fab-actions>
+                            <md-button class="md-fab md-raised md-mini">
+                                <md-icon class="material-icons">description</md-icon>
+                            </md-button>
+                            <md-button class="md-fab md-raised md-mini">
+                                <md-icon class="material-icons">description</md-icon>
+                            </md-button>
+                            <md-button class="md-fab md-raised md-mini">
+                                <md-icon class="material-icons">description</md-icon>
+                            </md-button>
+                        </md-fab-actions>
+                    </md-fab-speed-dial>
+                </div>
 
             </nav>
 
             <div class="card" flex="30">
-
+                <!-- TODO statistics -->
             </div>
 
         </div>

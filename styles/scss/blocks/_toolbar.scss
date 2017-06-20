@@ -1,5 +1,5 @@
 .toolbar {
-    height: 68px;
+    height: 60px;
 
     &-menu {
         height: 100%;
@@ -12,7 +12,7 @@
             text-transform: none;
 
             .material-icons {
-                font-size: 48px;
+                font-size: 40px;
                 color: $color-primary-500;
                 margin-left: $dim-2x;
             }

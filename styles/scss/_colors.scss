@@ -32,6 +32,7 @@ $color-platinum: 				rgb(146, 170, 180);
 
 // Cards
 $color-black-op-40:				rgba(0, 0, 0, .40);
+$color-black-op-50:				rgba(0, 0, 0, .50);
 $color-black-op-60:				rgba(0, 0, 0, .60);
 
 // System
@@ -65,6 +66,10 @@ $color-error:					#F44336;
 
 				&-40 {
 					color: $color-black-op-40;
+				}
+
+				&-50 {
+					color: $color-black-op-50;
 				}
 
 				&-60 {
@@ -204,6 +209,10 @@ $color-error:					#F44336;
 
 				&-40 {
 					background-color: $color-black-op-40;
+				}
+
+				&-50 {
+					color: $color-black-op-40;
 				}
 
 				&-60 {
