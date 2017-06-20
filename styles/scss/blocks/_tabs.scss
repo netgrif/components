@@ -1,5 +1,8 @@
+// Global changes
 md-tabs-wrapper {
     background-color: $color-black-op-40;
+    box-shadow: $shadow;
+    margin: $dim-default;
 }
 
 md-tabs.md-active md-ink-bar, md-tabs md-ink-bar{

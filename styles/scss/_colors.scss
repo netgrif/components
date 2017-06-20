@@ -140,7 +140,7 @@ $color-error:					#F44336;
 		&-accent {
 
 			&-50 {
-				color: $color-grey-50;
+				color: $color-grey-50 !important;
 			}
 
 			&-100 {

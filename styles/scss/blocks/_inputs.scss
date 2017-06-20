@@ -1,0 +1,25 @@
+// Global changes
+md-input-container {
+
+    input, label {
+        color: $color-grey-50 !important;
+        font-weight: 300 !important;
+    }
+
+    &:not(.md-input-invalid) {
+
+        &.md-input-focused {
+
+
+            label {
+                color: $color-grey-50 !important;
+                font-weight: 300 !important;
+            }
+        }
+    }
+}
+
+md-switch span {
+    color: $color-grey-50;
+    font-weight: 300;
+}
