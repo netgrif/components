@@ -14,16 +14,16 @@
             <input type="text" ng-if="field.subType === 'simple'"
                    ng-model="field.newValue"
                    ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
-                   ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
+                   ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                    ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
-                   ng-required="field.logic.required">
+                   ng-required="field.behavior.required">
             <textarea ng-if="field.subType === 'area'"
                       rows="1" max-rows="10"
                       ng-model="field.newValue"
                       ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
-                      ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
+                      ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                       ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
-                      ng-required="field.logic.required"></textarea>
+                      ng-required="field.behavior.required"></textarea>
         </md-input-container>
     </div>
     <div flex="10"></div>

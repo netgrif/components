@@ -26,13 +26,13 @@
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content>
-                <md-menu-item ng-if="task.user.email == $user.login && field.logic.editable">
+                <md-menu-item ng-if="task.user.email == $user.login && field.behavior.editable">
                     <md-button class="file-chooser" layout="row" layout-align="start center">
                         <input type="file" id="file"
                                file-model="field.file"
                                file-change-callback="fileModelChange"
                                file-change-arg="field"
-                               ng-required="field.logic.required">
+                               ng-required="field.behavior.required">
                         <label for="file">
                             <span class="padding-horizontal-2x">{{::$i18n.block.data.newFile}}</span>
                         </label>

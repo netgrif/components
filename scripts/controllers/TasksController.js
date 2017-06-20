@@ -312,7 +312,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                      */
                     function areFieldsValid(task) {
                         let valid = task.data.every(item => {
-                            if (item.logic.required) {
+                            if (item.behavior.required) {
                                 if (item.type === 'file') {
                                     if (item.newFile) return !!item.uploaded;
                                     return !!item.newValue;
