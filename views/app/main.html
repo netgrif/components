@@ -6,7 +6,7 @@
             <img class="logo" src="../../assets/logo.svg" alt="logo">
         </a>
 
-        <md-menu-bar layout="row" layout-align="center center" class="card card-op-60 toolbar" flex>
+        <md-menu-bar layout="row" layout-align="center center" class="card card-op-60 margin-default toolbar" flex>
             <div flex></div>
             <h1>BROKER's <strong>PORTAL</strong></h1>
             <div flex></div>
@@ -77,7 +77,7 @@
 
         <div layout="column">
 
-            <nav layout="column" class="card sidenav" flex="70">
+            <nav layout="column" class="card margin-default sidenav" flex="70">
 
                 <md-button href="/offers" ng-class="{active: ('offers' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
@@ -86,7 +86,7 @@
                     <span flex>{{::$i18n.block.mainNav.offers}}</span>
                 </md-button>
 
-                <md-button href="/" layout="row" layout-align="start center">
+                <md-button href="/contacts" ng-class="{active: ('contacts' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">contacts</i>
                     </div>
@@ -124,9 +124,11 @@
                 </md-button>
 
                 <div class="sidenav-add" flex>
+
                     <div class="left-panel"></div>
 
                     <md-fab-speed-dial md-direction="down" class="md-scale">
+
                         <md-fab-trigger>
                             <md-button class="md-fab md-raised md-mini md-primary">
                                 <md-icon class="material-icons">add</md-icon>
@@ -135,30 +137,32 @@
 
                         <md-fab-actions>
                             <md-button class="md-fab md-raised md-mini">
+                                <md-tooltip md-direction="right">Create Offer</md-tooltip>
                                 <md-icon class="material-icons">content_paste</md-icon>
                             </md-button>
                             <md-button class="md-fab md-raised md-mini">
+                                <md-tooltip md-direction="right">Create Contact</md-tooltip>
                                 <md-icon class="material-icons">contacts</md-icon>
                             </md-button>
                             <md-button class="md-fab md-raised md-mini">
+                                <md-tooltip md-direction="right">Create Document</md-tooltip>
                                 <md-icon class="material-icons">description</md-icon>
                             </md-button>
-                            <md-button class="md-fab md-raised md-mini">
-                                <md-icon class="material-icons">assignment</md-icon>
-                            </md-button>
                         </md-fab-actions>
+
                     </md-fab-speed-dial>
+
                 </div>
 
             </nav>
 
-            <div class="card" flex="30">
+            <div class="card margin-default" flex="30">
                 <!-- TODO statistics -->
             </div>
 
         </div>
 
-        <md-content layout-wrap flex class="color-bg-transparent margin-default">
+        <md-content layout-wrap flex class="color-bg-transparent">
             <div app-view-segment="1" onload="mainCtrl.startLoadingData()"></div>
         </md-content>
 
