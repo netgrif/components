@@ -18,6 +18,10 @@
   color: rgba(0, 0, 0, 0.4);
 }
 
+.color-fg-black-op-50 {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -140,6 +144,10 @@
 
 .color-bg-black-op-40 {
   background-color: rgba(0, 0, 0, 0.4);
+}
+
+.color-bg-black-op-50 {
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .color-bg-black-op-60 {
@@ -528,7 +536,7 @@ h1 strong {
 }
 
 .logo {
-  height: 48px;
+  height: 40px;
   width: auto;
 }
 
@@ -678,6 +686,14 @@ h1 strong {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
 }
 
+.base .card-op-50 {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .card-op-60 {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
 .base .card-logo {
   padding: 8px;
   margin: 8px;
@@ -688,36 +704,78 @@ h1 strong {
 }
 
 .base .sidenav {
-  width: 224.094px;
+  width: 189.406px;
 }
 
-.base .sidenav .md-button {
+.base .sidenav > .md-button {
   width: 100%;
   margin: 0;
   padding: 0;
   border-radius: 0;
-  border-bottom: 0.5px solid #FAFAFA;
 }
 
-.base .sidenav .md-button .icon-wrapper {
+.base .sidenav > .md-button .icon-wrapper {
   height: 36px;
   width: 36px;
   background-color: rgba(0, 0, 0, 0.6);
+  border-bottom: 0.5px solid #12b2d2;
 }
 
-.base .sidenav .md-button .icon-wrapper .material-icons {
+.base .sidenav > .md-button .icon-wrapper .material-icons {
   color: #FAFAFA;
 }
 
-.base .sidenav .md-button span {
+.base .sidenav > .md-button span {
+  padding-left: 8px;
   color: #FAFAFA;
   font-weight: 300;
   text-transform: capitalize !important;
   text-align: left;
+  border-bottom: 0.5px solid #FAFAFA;
+}
+
+.base .sidenav > .md-button:hover {
+  height: 52px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.base .sidenav > .md-button:hover .icon-wrapper {
+  height: 52px;
+  width: 52px;
+  border: none;
+  background-color: #12b2d2;
+}
+
+.base .sidenav > .md-button:hover span {
+  border: none;
+  font-size: 20px;
+}
+
+.base .sidenav-add {
+  position: relative;
+}
+
+.base .sidenav-add .left-panel {
+  position: absolute;
+  height: 100%;
+  width: 36px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-bottom-left-radius: 2px;
+}
+
+.base .sidenav-add md-fab-speed-dial {
+  position: absolute;
+  top: 16px;
+  left: 8px;
+}
+
+.base .sidenav-add md-fab-speed-dial md-fab-actions .md-button {
+  height: 32px;
+  width: auto;
 }
 
 .base .toolbar {
-  height: 68px;
+  height: 60px;
 }
 
 .base .toolbar-menu {
@@ -733,7 +791,7 @@ h1 strong {
 }
 
 .base .toolbar-menu .btn-menu .material-icons {
-  font-size: 48px;
+  font-size: 40px;
   color: #12b2d2;
   margin-left: 16px;
 }
@@ -758,4 +816,21 @@ h1 strong {
 
 .base md-menu-bar.md-default-theme md-menu.md-open > button, .base md-menu-bar md-menu.md-open > button, .base md-menu-bar.md-default-theme md-menu > button:focus, .base md-menu-bar md-menu > button:focus {
   background: rgba(238, 238, 238, 0.1) !important;
+}
+
+.base md-tabs-wrapper {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.base md-tabs.md-active md-ink-bar, .base md-tabs md-ink-bar {
+  color: #12b2d2 !important;
+  background-color: #12b2d2 !important;
+}
+
+.base md-tabs.md-default-theme .md-tab, .base md-tabs .md-tab {
+  color: #FAFAFA;
+}
+
+.base md-tabs.md-default-theme .md-tab .material-icons, .base md-tabs .md-tab .material-icons {
+  color: #FAFAFA;
 }

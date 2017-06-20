@@ -1,4 +1,16 @@
-md-tabs-wrapper{
-  background-color: rgba(0, 0, 0, 0.4);
-  box-shadow: $shadow !important; //TODO: adjust shadow to show correctly on right side
+md-tabs-wrapper {
+    background-color: $color-black-op-40;
+}
+
+md-tabs.md-active md-ink-bar, md-tabs md-ink-bar{
+    color: $color-primary-500 !important;
+    background-color: $color-primary-500 !important;
+}
+
+md-tabs.md-default-theme .md-tab, md-tabs .md-tab {
+    color: $color-grey-50;
+
+    .material-icons {
+        color: $color-grey-50;
+    }
 }
