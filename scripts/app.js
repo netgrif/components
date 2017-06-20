@@ -9,7 +9,7 @@ define('app', ['angular', 'angularMaterial', 'angularRouteSegment',
     function (angular) {
         // console.log(angular.version);
         let app = angular.module('app', ['ngMaterial', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment',
-         'ngMain', 'ngOffers']); //here add modules that you defined
+         'ngMain', 'ngOffers', 'ngContacts']); //here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             $mdThemingProvider.definePalette('mainPalette', {
                 '50': '#e3f6fa',
@@ -43,6 +43,7 @@ define('app', ['angular', 'angularMaterial', 'angularRouteSegment',
                 .when('/login/signin', 'login.signin')
                 .when('/login/signup/:token', 'login.signup')
                 .when('/offers', 'app.offers')
+                .when('/contacts', 'app.contacts')
                 .when('/profile', 'app.profile')
                 .when('/console', 'app.console')
 
@@ -62,6 +63,11 @@ define('app', ['angular', 'angularMaterial', 'angularRouteSegment',
                     templateUrl: "views/app/profile.html",
                     controller: 'ProfileController',
                     controllerAs: 'profCtrl'
+                })
+                .segment('contacts', {
+                    templateUrl: "views/app/contacts.html",
+                    controller: 'ContactsController',
+                    controllerAs: 'contCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",
