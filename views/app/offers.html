@@ -2,9 +2,52 @@
 
 	<md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="offCtrl.activeTabIndex">
 
-		<md-tab md-on-select="caseCtrl.searchCases()" class="primary" label="My offers">
-			<md-content class="md-padding color-bg-transparent">
-				{{::$i18n.page.offers.msg}}
+		<md-tab md-on-select="offCtrl.searchOffers()" class="primary" label="My offers">
+			<md-content layout="column" class="color-bg-transparent">
+
+				<div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-2x" flex>
+
+					<div layout="row" layout-align="start center">
+						<i class="material-icons color-fg-accent-50">search</i>
+
+						<md-input-container class="margin-0">
+							<label>Search</label>
+							<input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+						</md-input-container>
+					</div>
+
+					<div flex></div>
+
+					<md-switch ng-model="offCtrl.isActive" class="md-primary">
+						<span>Active</span>
+					</md-switch>
+
+					<md-switch ng-model="offCtrl.isFinished" class="md-primary">
+						<span>Finished</span>
+					</md-switch>
+
+					<div flex></div>
+
+					<md-button class="md-fab md-raised md-mini md-primary">
+						<md-tooltip md-direction="left">Create Offer</md-tooltip>
+						<md-icon class="material-icons">add</md-icon>
+					</md-button>
+
+				</div>
+
+				<div layout="column" class="card margin-horizontal-default margin-default" flex>
+					<div layout="row" layout-align="start center" class="card-header padding-default">
+						<span>Type</span>
+						<span>Name</span>
+						<span>Phone number</span>
+						<span>Email</span>
+						<span>ID</span>
+						<span>Note</span>
+					</div>
+					<!-- Card Content -->
+					<span class="color-fg-accent-50 padding-default">Material icons are beautifully crafted, delightful, and easy to use in your web, Android, and iOS projects. Learn more about material design and our process for making these icons in the system icons section of the material design guidelines.</span>
+				</div>
+
 			</md-content>
 		</md-tab>
 

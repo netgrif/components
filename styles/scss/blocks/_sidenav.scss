@@ -22,13 +22,14 @@
         span {
             padding-left: $dim-default;
             color: $color-grey-50;
+            font-size: 15px;
             font-weight: 300;
             text-transform: capitalize !important;
             text-align: left;
             border-bottom: 0.5px solid $color-grey-50;
         }
 
-        &:hover {
+        &:hover, &.active {
             height: 52px;
             background-color: $color-black-op-60;
 

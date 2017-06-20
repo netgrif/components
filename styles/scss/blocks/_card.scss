@@ -1,8 +1,8 @@
 .card {
-    margin: $dim-default;
     background-color: $color-black-op-40;
     border-radius: $border-radius;
     box-shadow: $shadow;
+    overflow: hidden;
 
     &-op-50 {
         background-color: $color-black-op-50;
@@ -18,5 +18,10 @@
         background-color: $color-grey-50;
         border-radius: $border-radius;
         box-shadow: $shadow;
+    }
+
+    &-header {
+        background-color: $color-black-op-60;
+        color: $color-grey-50;
     }
 }

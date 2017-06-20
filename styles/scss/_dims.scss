@@ -96,6 +96,11 @@ $border-radius:					2px;
 
 	&-bottom {
 
+		// To fix input container alignment
+		&-negative-15px {
+			margin-bottom: -15px;
+		}
+
 		&-0 {
 			margin-bottom: 0;
 		}
