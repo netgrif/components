@@ -1,0 +1,9 @@
+{
+  "name": "angular-hal",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "main": "dist/angular-hal.min.js"
+}

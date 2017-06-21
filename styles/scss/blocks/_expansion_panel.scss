@@ -1,14 +1,17 @@
 md-expansion-panel {
-    background: rgba(0,0,0,.3) !important;
+    background: $color-black-op-30 !important;
     cursor: pointer !important;
 }
 md-expansion-panel md-expansion-panel-collapsed,
 md-expansion-panel .md-expansion-panel-footer-container,
 md-expansion-panel .md-expansion-panel-header-container {
     background: rgba(0,0,0,.1) !important;
+}
+
+md-expansion-panel md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
 
     &:hover {
-        background: rgba(0,0,0,.2) !important;
+        background: $color-black-op-30 !important;
     }
 }
 

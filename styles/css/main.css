@@ -14,6 +14,10 @@
   color: #92aab4;
 }
 
+.color-fg-black-op-30 {
+  color: rgba(0, 0, 0, 0.3);
+}
+
 .color-fg-black-op-40 {
   color: rgba(0, 0, 0, 0.4);
 }
@@ -140,6 +144,10 @@
 
 .color-bg-platinum {
   background-color: #92aab4;
+}
+
+.color-bg-black-op-30 {
+  color: rgba(0, 0, 0, 0.3);
 }
 
 .color-bg-black-op-40 {
@@ -716,10 +724,8 @@ md-expansion-panel .md-expansion-panel-header-container {
   background: rgba(0, 0, 0, 0.1) !important;
 }
 
-md-expansion-panel md-expansion-panel-collapsed:hover,
-md-expansion-panel .md-expansion-panel-footer-container:hover,
-md-expansion-panel .md-expansion-panel-header-container:hover {
-  background: rgba(0, 0, 0, 0.2) !important;
+md-expansion-panel md-expansion-panel-collapsed:hover, md-expansion-panel .md-expansion-panel-header-container:hover {
+  background: rgba(0, 0, 0, 0.3) !important;
 }
 
 md-expansion-panel {
@@ -960,12 +966,12 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 
 .base .list-item:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .base .list-item-no-pointer:hover {
   cursor: default;
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
 }
 
 .base md-menu span, .base md-menu-item span {
