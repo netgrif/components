@@ -1,0 +1,53 @@
+md-expansion-panel {
+    background: rgba(0,0,0,.3) !important;
+    cursor: pointer !important;
+}
+md-expansion-panel md-expansion-panel-collapsed,
+md-expansion-panel .md-expansion-panel-footer-container,
+md-expansion-panel .md-expansion-panel-header-container {
+    background: rgba(0,0,0,.1) !important;
+
+    &:hover {
+        background: rgba(0,0,0,.2) !important;
+    }
+}
+
+md-expansion-panel {
+    box-shadow: none !important;
+    margin-bottom: 1px;
+
+    * {
+        border: none !important;
+    }
+}
+
+md-expansion-panel-collapsed {
+    padding-left: $dim-2x !important;
+    padding-right: $dim-2x !important;
+}
+
+md-expansion-panel-content {
+    padding-left: $dim-2x !important;
+    padding-right: $dim-2x !important;
+
+    color: $color-primary-50;
+}
+
+md-expansion-panel-header {
+
+    .md-expansion-panel-header-container {
+        padding-left: $dim-2x !important;
+        padding-right: $dim-2x !important;
+    }
+}
+
+md-expansion-panel .md-expansion-panel-footer-container {
+
+    .md-button {
+        color: $color-grey-50;
+    }
+
+    .md-primary {
+        color: $color-primary-500 !important;
+    }
+}

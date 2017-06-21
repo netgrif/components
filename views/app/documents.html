@@ -12,25 +12,17 @@
 
         <div flex></div>
 
-        <md-switch ng-model="offCtrl.isActive" class="md-primary">
-            <span>Active</span>
-        </md-switch>
-
-        <md-switch ng-model="offCtrl.isFinished" class="md-primary">
-            <span>Finished</span>
-        </md-switch>
-
-        <div flex></div>
-
         <md-button class="md-fab md-raised md-mini md-primary">
-            <md-tooltip md-direction="left">Create Offer</md-tooltip>
+            <md-tooltip md-direction="left">New Document</md-tooltip>
             <md-icon class="material-icons">add</md-icon>
         </md-button>
 
     </div>
 
     <div layout="row" flex>
+
         <div layout="column" flex="60">
+
             <md-grid-list class="margin-default"
                           md-cols="8"
                           md-row-height="1:1"
@@ -144,7 +136,9 @@
                 </md-grid-tile>
 
             </md-grid-list>
+
         </div>
+
         <div layout="column" flex="40">
             <div class="card">
                 <div layout="row" class="card-header padding-default">
@@ -158,8 +152,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
 
 </div>
 

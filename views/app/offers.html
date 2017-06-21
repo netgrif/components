@@ -39,8 +39,8 @@
 						</span>
 					</div>
 
-					<div layout="row" class="color-fg-accent-50 padding-default list-item">
-						<i class="material-icons" flex="5">label</i>
+					<div layout="row" class="padding-default list-item">
+						<i flex="5" class="material-icons color-fg-accent-50">label</i>
 						<span flex="15">PI-12345678</span>
 						<span flex="20">Insurance-name</span>
 						<span flex="20">Client Name</span>
@@ -50,8 +50,8 @@
 
 					<md-divider></md-divider>
 
-					<div layout="row" class="color-fg-accent-50 padding-default list-item">
-						<i class="material-icons" flex="5">label</i>
+					<div layout="row" class="padding-default list-item">
+						<i flex="5" class="material-icons color-fg-accent-50">label</i>
 						<span flex="15">PI-12345678</span>
 						<span flex="20">Insurance-name</span>
 						<span flex="20">Client Name</span>
@@ -61,8 +61,8 @@
 
 					<md-divider></md-divider>
 
-					<div layout="row" class="color-fg-accent-50 padding-default list-item">
-						<i class="material-icons" flex="5">label</i>
+					<div layout="row" class="padding-default list-item">
+						<i flex="5" class="material-icons color-fg-accent-50">label</i>
 						<span flex="15">PI-12345678</span>
 						<span flex="20">Insurance-name</span>
 						<span flex="20">Client Name</span>
@@ -75,23 +75,74 @@
 			</md-content>
 		</md-tab>
 
-		<md-tab class="primary" label="_Dummy New Offer">
+		<md-tab class="primary">
+			<md-tab-label>
+				_Dummy New Offer
+				<md-icon class="material-icons cursor-pointer" style="font-size:22px;" ng-click="">close</md-icon>
+			</md-tab-label>
 
-			<md-content layout="column" class="color-bg-transparent">
-				<div layout="column" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default">
+			<md-tab-body>
+				<md-content layout="column" class="color-bg-transparent">
 
-					<div layout="row" layout-align="space-between center" flex>
+					<div layout="column" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default">
 
-						<span><strong>Insurance calculation</strong></span>
-						<span>Summary</span>
-						<span>Design of contract</span>
+						<div layout="row" layout-align="space-between center" flex>
+
+							<span><strong>Insurance calculation</strong></span>
+							<span>Summary</span>
+							<span>Design of contract</span>
+
+						</div>
+
+						<md-progress-linear md-mode="determinate" value="30" class="margin-top-default"></md-progress-linear>
 
 					</div>
 
-					<md-progress-linear md-mode="determinate" value="30" class="margin-top-default"></md-progress-linear>
+					<div layout="row" class="card color-bg-black-op-50 margin-default padding-2x">
+						<span flex="5">Label</span>
+						<span flex="30">Offer</span>
+						<span flex="30">Title</span>
+						<span flex="30">Start date</span>
+						<span flex="5">Status</span>
+					</div>
 
-				</div>
-			</md-content>
+					<md-expansion-panel class="margin-horizontal-default">
+
+						<md-expansion-panel-collapsed layout="row" layout-align="start center">
+							<i flex="5" class="material-icons color-fg-accent-50">label</i>
+							<span flex="30">Offer</span>
+							<span flex="30">Title</span>
+							<span flex="30">Start date</span>
+							<i flex="5" class="material-icons color-fg-primary-500">done</i>
+						</md-expansion-panel-collapsed>
+
+						<md-expansion-panel-expanded>
+
+							<md-expansion-panel-header>
+								<i flex="5" class="material-icons color-fg-accent-50">label</i>
+								<span flex="30">Offer</span>
+								<span flex="30">Title</span>
+								<span flex="30">Start date</span>
+								<i flex="5" class="material-icons color-fg-primary-500">done</i>
+							</md-expansion-panel-header>
+
+							<md-expansion-panel-content>
+								Data
+							</md-expansion-panel-content>
+
+							<md-expansion-panel-footer>
+								<div flex></div>
+								<md-button>Save</md-button>
+								<md-button>Finish</md-button>
+								<md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+							</md-expansion-panel-footer>
+
+						</md-expansion-panel-expanded>
+
+					</md-expansion-panel>
+
+				</md-content>
+			</md-tab-body>
 
 		</md-tab>
 

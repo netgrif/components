@@ -458,6 +458,11 @@ body {
   min-height: 100%;
 }
 
+.shadow {
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
@@ -694,6 +699,57 @@ span strong {
   animation-name: spinner-left;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
+}
+
+md-expansion-panel {
+  background: rgba(0, 0, 0, 0.3) !important;
+  cursor: pointer !important;
+}
+
+md-expansion-panel md-expansion-panel-collapsed,
+md-expansion-panel .md-expansion-panel-footer-container,
+md-expansion-panel .md-expansion-panel-header-container {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+md-expansion-panel md-expansion-panel-collapsed:hover,
+md-expansion-panel .md-expansion-panel-footer-container:hover,
+md-expansion-panel .md-expansion-panel-header-container:hover {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+md-expansion-panel {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  margin-bottom: 1px;
+}
+
+md-expansion-panel * {
+  border: none !important;
+}
+
+md-expansion-panel-collapsed {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+md-expansion-panel-content {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  color: #e3f6fa;
+}
+
+md-expansion-panel-header .md-expansion-panel-header-container {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+md-expansion-panel .md-expansion-panel-footer-container .md-button {
+  color: #FAFAFA;
+}
+
+md-expansion-panel .md-expansion-panel-footer-container .md-primary {
+  color: #12b2d2 !important;
 }
 
 .base .background-gradient {

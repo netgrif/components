@@ -6,6 +6,10 @@ body {
 // Global variables
 $shadow:                        2px 2px 5px $color-black-op-60;
 
+.shadow {
+	box-shadow: $shadow;
+}
+
 // Custom global classes
 .stop-scrolling {
 	height: 100%;
