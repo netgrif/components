@@ -463,6 +463,18 @@ body {
   overflow: hidden;
 }
 
+.card-welcome {
+  background-color: transparent !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  width: 600px;
+  margin-bottom: 230px;
+}
+
+.text-without-decor {
+  text-decoration: none;
+}
+
 .cursor-default {
   cursor: default;
 }
@@ -542,16 +554,6 @@ h1 strong {
 .logo {
   height: 40px;
   width: auto;
-}
-
-.pdf {
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
-
-.pdf_wrapper {
-  height: 700px;
 }
 
 @-webkit-keyframes spinner-right {
@@ -682,6 +684,11 @@ h1 strong {
   animation-name: spinner-left;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
+}
+
+.base .background-login {
+  background-image: url("../../assets/bratislava.jpg");
+  background-size: cover;
 }
 
 .base .background-gradient {
@@ -881,4 +888,14 @@ h1 strong {
   color: #FAFAFA;
   font-size: 40px;
   margin-bottom: 40px;
+}
+
+.base .pdf {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.base .pdf_wrapper {
+  height: 700px;
 }

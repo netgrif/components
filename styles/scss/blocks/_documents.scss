@@ -1,6 +1,6 @@
 .document {
 
-  :hover{
+  :hover {
     background-color: $color-primary-500-op-50; //TODO: fix to show properly
   }
 
@@ -10,4 +10,14 @@
     margin-bottom: 40px;
   }
 
+}
+
+.pdf {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.pdf_wrapper {
+  height: 700px;
 }

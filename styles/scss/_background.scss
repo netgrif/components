@@ -1,5 +1,10 @@
 .background {
 
+	&-login{
+		background-image: url("../../assets/bratislava.jpg");
+		background-size: cover;
+	}
+
 	&-gradient {
 		background: rgb(146,170,180) !important;
 		background: radial-gradient(ellipse at center, rgba(146,170,180,1) 0%, rgba(81,94,100,1) 100%) !important;

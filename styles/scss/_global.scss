@@ -1,35 +1,46 @@
 // Global HTML5 elements
 body {
-	min-height: 100%;
+  min-height: 100%;
 }
 
 // Global variables
-$shadow:                        2px 2px 5px $color-black-op-60;
+$shadow: 2px 2px 5px $color-black-op-60;
 
 // Custom global classes
 .stop-scrolling {
-	height: 100%;
-	overflow: hidden;
+  height: 100%;
+  overflow: hidden;
 }
 
+//Login card
+.card-welcome {
+  background-color: $color-login-card !important;
+  box-shadow: none !important;
+  width: 600px;
+  margin-bottom: 230px;
+}
+
+.text-without-decor {
+  text-decoration:none;
+}
 .cursor {
 
-	&-default {
-		cursor: default;
-	}
+  &-default {
+    cursor: default;
+  }
 
-	&-pointer {
-		cursor: pointer;
-	}
+  &-pointer {
+    cursor: pointer;
+  }
 }
 
 .visibility {
 
-	&-visible {
-		visibility: visible;
-	}
+  &-visible {
+    visibility: visible;
+  }
 
-	&-hidden {
-		visibility: hidden;
-	}
+  &-hidden {
+    visibility: hidden;
+  }
 }
