@@ -32,9 +32,16 @@ span {
 }
 
 // Text overflow
-.text-overflow {
+.text {
 
-    &-dots {
-        @include textOverflowWithDots(100%);
+    &-overflow {
+
+        &-dots {
+            @include textOverflowWithDots(100%);
+        }
+    }
+
+    &-no-decor {
+        text-decoration:none;
     }
 }

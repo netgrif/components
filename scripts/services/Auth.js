@@ -39,8 +39,8 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                 //     auth.authenticated = false;
                 //     callback && callback(false);
                 // });
-                // auth.authenticated = true;
-                auth.authenticated = false;
+                auth.authenticated = true;
+                // auth.authenticated = false;
                 $user.id = 1;
                 $user.login = "user@netgrif.com";
                 $user.authority = "ROLE_USER";

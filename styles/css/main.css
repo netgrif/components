@@ -561,6 +561,10 @@ span strong {
   text-overflow: ellipsis;
 }
 
+.text-no-decor {
+  text-decoration: none;
+}
+
 .img-responsive {
   width: 100%;
   height: auto;
@@ -752,6 +756,11 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   color: #12b2d2 !important;
 }
 
+.base .background-login {
+  background-image: url("../../assets/bratislava.jpg");
+  background-size: cover;
+}
+
 .base .background-gradient {
   background: #92aab4 !important;
   background: -webkit-radial-gradient(center ellipse, #92aab4 0%, #515e64 100%) !important;
@@ -788,6 +797,14 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 .base .card-header {
   background-color: rgba(0, 0, 0, 0.6);
   color: #FAFAFA;
+}
+
+.base .card-welcome {
+  background-color: transparent !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  width: 600px;
+  margin-bottom: 230px;
 }
 
 .base .sidenav {

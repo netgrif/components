@@ -24,4 +24,11 @@
         background-color: $color-black-op-60;
         color: $color-grey-50;
     }
+
+    &-welcome {
+        background-color: $color-login-card !important;
+        box-shadow: none !important;
+        width: 600px;
+        margin-bottom: 230px;
+    }
 }
