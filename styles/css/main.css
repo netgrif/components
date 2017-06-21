@@ -544,6 +544,16 @@ h1 strong {
   width: auto;
 }
 
+.pdf {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.pdf_wrapper {
+  height: 700px;
+}
+
 @-webkit-keyframes spinner-right {
   to {
     -webkit-transform: rotate(360deg);
@@ -861,4 +871,14 @@ h1 strong {
 .base md-switch span {
   color: #FAFAFA;
   font-weight: 300;
+}
+
+.base .document :hover {
+  background-color: rgba(18, 178, 210, 0.5);
+}
+
+.base .document-image {
+  color: #FAFAFA;
+  font-size: 40px;
+  margin-bottom: 40px;
 }

@@ -5,6 +5,7 @@
 @import "layout";
 @import "text";
 @import "img";
+@import "test";
 @import 'blocks/spinner';
 
 .base {
@@ -15,4 +16,5 @@
 	@import "blocks/toolbar";
 	@import "blocks/tabs";
 	@import "blocks/inputs";
+	@import "blocks/documents";
 }
