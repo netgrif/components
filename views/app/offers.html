@@ -91,3 +91,76 @@
 	</md-tabs>
 
 </div>
+
+<div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-2x" flex>
+
+	<div layout="row" layout-align="start center">
+		<i class="material-icons color-fg-accent-50">search</i>
+
+		<md-input-container class="margin-0">
+			<label>Search</label>
+			<input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+		</md-input-container>
+	</div>
+
+	<div flex></div>
+
+	<md-switch ng-model="offCtrl.isActive" class="md-primary">
+		<span>Active</span>
+	</md-switch>
+
+	<md-switch ng-model="offCtrl.isFinished" class="md-primary">
+		<span>Finished</span>
+	</md-switch>
+
+	<div flex></div>
+
+	<md-button class="md-fab md-raised md-mini md-primary">
+		<md-tooltip md-direction="left">Create Offer</md-tooltip>
+		<md-icon class="material-icons">add</md-icon>
+	</md-button>
+
+</div>
+
+<!--<div layout="column" class="card margin-horizontal-default margin-default" flex>-->
+
+	<!--<div layout="row" class="card-header padding-default">-->
+		<!--<span flex="10">Type</span>-->
+		<!--<span flex="20">Name</span>-->
+		<!--<span flex="20">Phone number</span>-->
+		<!--<span flex="20">Email</span>-->
+		<!--<span flex="20">ICO/R.C.</span>-->
+		<!--<span flex="10">Note</span>-->
+	<!--</div>-->
+
+	<!--<div layout="row" class="color-fg-accent-50 padding-default">-->
+		<!--<span flex="10">A</span>-->
+		<!--<span flex="20">Jozef Novak</span>-->
+		<!--<span flex="20">+421000000000</span>-->
+		<!--<span flex="20">info@netgrif.com</span>-->
+		<!--<span flex="20">253845/4657</span>-->
+		<!--<span flex="10">Some note</span>-->
+	<!--</div>-->
+
+	<!--<md-divider></md-divider>-->
+
+	<!--<div layout="row" class="color-fg-accent-50 padding-default">-->
+		<!--<span flex="10">A</span>-->
+		<!--<span flex="20">Jozef Novak</span>-->
+		<!--<span flex="20">+421000000000</span>-->
+		<!--<span flex="20">info@netgrif.com</span>-->
+		<!--<span flex="20">253845/4657</span>-->
+		<!--<span flex="10">Some note</span>-->
+	<!--</div>-->
+
+	<!--<md-divider></md-divider>-->
+
+	<!--<div layout="row" class="color-fg-accent-50 padding-default">-->
+		<!--<span flex="10">A</span>-->
+		<!--<span flex="20">Jozef Novak</span>-->
+		<!--<span flex="20">+421000000000</span>-->
+		<!--<span flex="20">info@netgrif.com</span>-->
+		<!--<span flex="20">253845/4657</span>-->
+		<!--<span flex="10">Some note</span>-->
+	<!--</div>-->
+<!--</div>-->
