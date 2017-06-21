@@ -1,3 +1,9 @@
-/**
- * Created by TriX_so PC on 21.6.2017.
- */
+define(['angular', '../modules/Contracts', '../modules/Main'],
+    function (angular) {
+        angular.module('ngContracts').controller('ContractsController',
+            ['$log', '$scope', '$timeout',
+                function ($log, $scope, $timeout) {
+                    const self = this;
+
+                }]);
+    });

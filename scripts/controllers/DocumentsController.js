@@ -1,3 +1,9 @@
-/**
- * Created by TriX_so PC on 21.6.2017.
- */
+define(['angular', '../modules/Documents', '../modules/Main'],
+    function (angular) {
+        angular.module('ngDocuments').controller('DocumentsController',
+            ['$log', '$scope', '$timeout',
+                function ($log, $scope, $timeout) {
+                    const self = this;
+
+                }]);
+    });

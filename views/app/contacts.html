@@ -1,9 +1,14 @@
 <div ng-cloak layout="column">
-    <md-card class="card-op-40">
+    <md-card class="card">
         <md-card-content>
            <md-list flex>
                <md-list-item ng-repeat="users in names">
-                {{users.Meno+','+ users.Telefon+','+users.Email+','+ users.RC+','+users.Poznamka}}
+                   <md-divider ></md-divider>
+                   <a class="flex-10">{{users.Meno}}</a>
+                   <a class="flex-10">{{users.Telefon}}</a>
+                   <a class="flex-25">{{users.Email}}</a>
+                   <a class="flex-10">{{users.RC}}</a>
+                   <a class="flex-20">{{users.Poznamka}}</a>
                </md-list-item>
 
            </md-list>
