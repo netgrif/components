@@ -48,6 +48,12 @@ $color-success:					#4CAF50;
 $color-warning:					#FFC107;
 $color-error:					#F44336;
 
+// Other
+$color-teal-500:				#009688;
+$color-light-blue-A700:			#0091EA;
+$color-deep-purple-600: 		#5E35B1;
+$color-brown-500:				#795548;
+
 .color {
 	
 	&-fg {
@@ -66,6 +72,22 @@ $color-error:					#F44336;
 
 		&-platinum {
 			color: $color-platinum;
+		}
+
+		&-teal {
+			color: $color-teal-500;
+		}
+
+		&-light-blue {
+			color: $color-light-blue-A700;
+		}
+
+		&-deep-purple {
+			color: $color-deep-purple-600;
+		}
+
+		&-brown {
+			color: $color-brown-500;
 		}
 
 		&-black {
@@ -213,6 +235,22 @@ $color-error:					#F44336;
 
 		&-platinum {
 			background-color: $color-platinum;
+		}
+
+		&-teal {
+			background-color: $color-teal-500;
+		}
+
+		&-light-blue {
+			background-color: $color-light-blue-A700;
+		}
+
+		&-deep-purple {
+			background-color: $color-deep-purple-600;
+		}
+
+		&-brown {
+			background-color: $color-brown-500;
 		}
 
 		&-black {

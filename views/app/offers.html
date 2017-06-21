@@ -127,7 +127,14 @@
 							</md-expansion-panel-header>
 
 							<md-expansion-panel-content>
-								Data
+								<div layout="row" layout-align="start center" layout-wrap class="cursor-default">
+									<div ng-repeat="field in task.data" flex="50" flex-sm="100">
+										<div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
+									</div>
+								</div>
+								<div layout="row" layout-align="center center" ng-if="!task.data">
+									<span>There are no data assigned to this task</span>
+								</div>
 							</md-expansion-panel-content>
 
 							<md-expansion-panel-footer>

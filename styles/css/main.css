@@ -14,6 +14,22 @@
   color: #92aab4;
 }
 
+.color-fg-teal {
+  color: #009688;
+}
+
+.color-fg-light-blue {
+  color: #0091EA;
+}
+
+.color-fg-deep-purple {
+  color: #5E35B1;
+}
+
+.color-fg-brown {
+  color: #795548;
+}
+
 .color-fg-black-op-30 {
   color: rgba(0, 0, 0, 0.3);
 }
@@ -144,6 +160,22 @@
 
 .color-bg-platinum {
   background-color: #92aab4;
+}
+
+.color-bg-teal {
+  background-color: #009688;
+}
+
+.color-bg-light-blue {
+  background-color: #0091EA;
+}
+
+.color-bg-deep-purple {
+  background-color: #5E35B1;
+}
+
+.color-bg-brown {
+  background-color: #795548;
 }
 
 .color-bg-black-op-30 {
