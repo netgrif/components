@@ -34,6 +34,7 @@ $color-platinum: 				rgb(146, 170, 180);
 $color-black-op-40:				rgba(0, 0, 0, .40);
 $color-black-op-50:				rgba(0, 0, 0, .50);
 $color-black-op-60:				rgba(0, 0, 0, .60);
+$color-black-op-87:				rgba(0, 0, 0, .87);
 
 // System
 $color-success:					#4CAF50;
@@ -73,7 +74,7 @@ $color-error:					#F44336;
 				}
 
 				&-60 {
-					color: $color-black-op-60;
+					 color: $color-black-op-60;
 				}
 			}
 		}

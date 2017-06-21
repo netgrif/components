@@ -526,6 +526,28 @@ h1 strong {
   color: #12b2d2;
 }
 
+h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 300;
+  color: #FAFAFA;
+}
+
+h2 strong {
+  font-weight: 600;
+  color: #12b2d2;
+}
+
+span {
+  color: #FAFAFA;
+  font-weight: 300;
+}
+
+span strong {
+  font-weight: 600;
+  color: #12b2d2;
+}
+
 .text-overflow-dots {
   width: 100%;
   white-space: nowrap;
@@ -861,4 +883,19 @@ h1 strong {
 .base md-switch span {
   color: #FAFAFA;
   font-weight: 300;
+}
+
+.base .list-item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.base .list-item-no-pointer:hover {
+  cursor: default;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.base md-menu span, .base md-menu-item span {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: normal !important;
 }

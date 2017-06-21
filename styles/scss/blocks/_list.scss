@@ -1,0 +1,18 @@
+.list {
+
+    &-item {
+
+        &:hover {
+            cursor: pointer;
+            background-color: $color-black-op-50 !important;
+        }
+
+        &-no-pointer {
+
+            &:hover {
+                cursor: default;
+                background-color: $color-black-op-50 !important;
+            }
+        }
+    }
+}

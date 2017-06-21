@@ -9,6 +9,28 @@ h1 {
     }
 }
 
+h2 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 300;
+    color: $color-grey-50;
+
+    strong {
+        font-weight: 600;
+        color: $color-primary-500;
+    }
+}
+
+span {
+     color: $color-grey-50;
+     font-weight: 300;
+
+     strong {
+         font-weight: 600;
+         color: $color-primary-500;
+     }
+}
+
 // Text overflow
 .text-overflow {
 

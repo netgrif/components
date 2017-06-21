@@ -1,18 +1,97 @@
 <div ng-cloak layout="column">
-    <md-card class="card">
-        <md-card-content>
-           <md-list flex>
-               <md-list-item ng-repeat="users in names">
-                   <md-divider ></md-divider>
-                   <a class="flex-10">{{users.Meno}}</a>
-                   <a class="flex-10">{{users.Telefon}}</a>
-                   <a class="flex-25">{{users.Email}}</a>
-                   <a class="flex-10">{{users.RC}}</a>
-                   <a class="flex-20">{{users.Poznamka}}</a>
-               </md-list-item>
 
-           </md-list>
-        </md-card-content>
-    </md-card>
+    <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default" flex>
+
+        <div layout="row" layout-align="start center">
+            <i class="material-icons color-fg-accent-50">search</i>
+
+            <md-input-container class="margin-0">
+                <label>Search</label>
+                <input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+            </md-input-container>
+        </div>
+
+        <div flex></div>
+
+        <md-switch ng-model="offCtrl.isActive" class="md-primary">
+            <span>Active</span>
+        </md-switch>
+
+        <md-switch ng-model="offCtrl.isFinished" class="md-primary">
+            <span>Finished</span>
+        </md-switch>
+
+        <div flex></div>
+
+        <md-button class="md-fab md-raised md-mini md-primary">
+            <md-tooltip md-direction="left">Create Contact</md-tooltip>
+            <md-icon class="material-icons">add</md-icon>
+        </md-button>
+
+    </div>
+
+    <div layout="column" class="card margin-horizontal-default margin-default" flex>
+
+        <div layout="row" class="card-header padding-default">
+            <span flex="10">Type</span>
+            <span flex="20">Name</span>
+            <span flex="20">Phone number</span>
+            <span flex="20">Email</span>
+            <span flex="20">ICO/R.C.</span>
+            <span flex="10">Note</span>
+        </div>
+
+        <div layout="row" class="color-fg-accent-50 padding-default">
+            <h2 flex>A</h2>
+        </div>
+
+        <div layout="row" class="color-fg-accent-50 padding-default list-item">
+            <i class="material-icons color-fg-primary-500" flex="10">account_circle</i>
+            <span flex="20">Jozef Adamec</span>
+            <span flex="20">+421000000000</span>
+            <span flex="20">info@netgrif.com</span>
+            <span flex="20">253845/4657</span>
+            <span flex="10">Some note</span>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div layout="row" class="color-fg-accent-50 padding-default list-item">
+            <i class="material-icons color-fg-primary-500" flex="10">account_circle</i>
+            <span flex="20">Mária Adamcová</span>
+            <span flex="20">+421000000000</span>
+            <span flex="20">info@netgrif.com</span>
+            <span flex="20">253845/4657</span>
+            <span flex="10">Some note</span>
+        </div>
+
+        <md-divider class="color-bg-primary-500"></md-divider>
+
+        <div layout="row" class="color-fg-accent-50 padding-default">
+            <h2 flex>B</h2>
+        </div>
+
+        <div layout="row" class="color-fg-accent-50 padding-default list-item">
+            <i class="material-icons color-fg-primary-500" flex="10">account_circle</i>
+            <span flex="20">Martin Buk</span>
+            <span flex="20">+421000000000</span>
+            <span flex="20">info@netgrif.com</span>
+            <span flex="20">253845/4657</span>
+            <span flex="10">Some note</span>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div layout="row" class="color-fg-accent-50 padding-default list-item">
+            <i class="material-icons color-fg-primary-500" flex="10">account_circle</i>
+            <span flex="20">Katarína Brezňanská</span>
+            <span flex="20">+421000000000</span>
+            <span flex="20">info@netgrif.com</span>
+            <span flex="20">253845/4657</span>
+            <span flex="10">Some note</span>
+        </div>
+
+    </div>
+
 </div>
 

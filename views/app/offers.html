@@ -5,7 +5,7 @@
 		<md-tab md-on-select="offCtrl.searchOffers()" class="primary" label="My offers">
 			<md-content layout="column" class="color-bg-transparent">
 
-				<div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-2x" flex>
+				<div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default" flex>
 
 					<div layout="row" layout-align="start center">
 						<i class="material-icons color-fg-accent-50">search</i>
@@ -15,16 +15,6 @@
 							<input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
 						</md-input-container>
 					</div>
-
-					<div flex></div>
-
-					<md-switch ng-model="offCtrl.isActive" class="md-primary">
-						<span>Active</span>
-					</md-switch>
-
-					<md-switch ng-model="offCtrl.isFinished" class="md-primary">
-						<span>Finished</span>
-					</md-switch>
 
 					<div flex></div>
 
@@ -38,129 +28,73 @@
 				<div layout="column" class="card margin-horizontal-default margin-default" flex>
 
 					<div layout="row" class="card-header padding-default">
-						<span flex="10">Type</span>
+						<span flex="5">Label</span>
+						<span flex="15">Visual ID</span>
 						<span flex="20">Name</span>
-						<span flex="20">Phone number</span>
-						<span flex="20">Email</span>
-						<span flex="20">ICO/R.C.</span>
-						<span flex="10">Note</span>
+						<span flex="20">Client</span>
+						<span flex="15">Date</span>
+						<span flex="10" class="cursor-pointer">
+							<md-tooltip md-direction="top">In EUR</md-tooltip>
+							Insurance
+						</span>
 					</div>
 
-					<div layout="row" class="color-fg-accent-50 padding-default">
-						<span flex="10">A</span>
-						<span flex="20">Jozef Novak</span>
-						<span flex="20">+421000000000</span>
-						<span flex="20">info@netgrif.com</span>
-						<span flex="20">253845/4657</span>
-						<span flex="10">Some note</span>
-					</div>
-
-					<md-divider></md-divider>
-
-					<div layout="row" class="color-fg-accent-50 padding-default">
-						<span flex="10">A</span>
-						<span flex="20">Jozef Novak</span>
-						<span flex="20">+421000000000</span>
-						<span flex="20">info@netgrif.com</span>
-						<span flex="20">253845/4657</span>
-						<span flex="10">Some note</span>
+					<div layout="row" class="color-fg-accent-50 padding-default list-item">
+						<i class="material-icons" flex="5">label</i>
+						<span flex="15">PI-12345678</span>
+						<span flex="20">Insurance-name</span>
+						<span flex="20">Client Name</span>
+						<span flex="15">21.6.2017</span>
+						<span flex="10">250</span>
 					</div>
 
 					<md-divider></md-divider>
 
-					<div layout="row" class="color-fg-accent-50 padding-default">
-						<span flex="10">A</span>
-						<span flex="20">Jozef Novak</span>
-						<span flex="20">+421000000000</span>
-						<span flex="20">info@netgrif.com</span>
-						<span flex="20">253845/4657</span>
-						<span flex="10">Some note</span>
+					<div layout="row" class="color-fg-accent-50 padding-default list-item">
+						<i class="material-icons" flex="5">label</i>
+						<span flex="15">PI-12345678</span>
+						<span flex="20">Insurance-name</span>
+						<span flex="20">Client Name</span>
+						<span flex="15">21.6.2017</span>
+						<span flex="10">250</span>
 					</div>
+
+					<md-divider></md-divider>
+
+					<div layout="row" class="color-fg-accent-50 padding-default list-item">
+						<i class="material-icons" flex="5">label</i>
+						<span flex="15">PI-12345678</span>
+						<span flex="20">Insurance-name</span>
+						<span flex="20">Client Name</span>
+						<span flex="15">21.6.2017</span>
+						<span flex="10">250</span>
+					</div>
+
 				</div>
 
 			</md-content>
 		</md-tab>
 
-		<md-tab md-on-select="offCtrl.createNewOffer()">
-			<md-tab-label>
-				<md-icon class="material-icons md-highlight">add</md-icon>
-			</md-tab-label>
-			<md-tab-body></md-tab-body>
+		<md-tab class="primary" label="_Dummy New Offer">
+
+			<md-content layout="column" class="color-bg-transparent">
+				<div layout="column" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default">
+
+					<div layout="row" layout-align="space-between center" flex>
+
+						<span><strong>Insurance calculation</strong></span>
+						<span>Summary</span>
+						<span>Design of contract</span>
+
+					</div>
+
+					<md-progress-linear md-mode="determinate" value="30" class="margin-top-default"></md-progress-linear>
+
+				</div>
+			</md-content>
+
 		</md-tab>
 
 	</md-tabs>
 
 </div>
-
-<div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-2x" flex>
-
-	<div layout="row" layout-align="start center">
-		<i class="material-icons color-fg-accent-50">search</i>
-
-		<md-input-container class="margin-0">
-			<label>Search</label>
-			<input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
-		</md-input-container>
-	</div>
-
-	<div flex></div>
-
-	<md-switch ng-model="offCtrl.isActive" class="md-primary">
-		<span>Active</span>
-	</md-switch>
-
-	<md-switch ng-model="offCtrl.isFinished" class="md-primary">
-		<span>Finished</span>
-	</md-switch>
-
-	<div flex></div>
-
-	<md-button class="md-fab md-raised md-mini md-primary">
-		<md-tooltip md-direction="left">Create Offer</md-tooltip>
-		<md-icon class="material-icons">add</md-icon>
-	</md-button>
-
-</div>
-
-<!--<div layout="column" class="card margin-horizontal-default margin-default" flex>-->
-
-	<!--<div layout="row" class="card-header padding-default">-->
-		<!--<span flex="10">Type</span>-->
-		<!--<span flex="20">Name</span>-->
-		<!--<span flex="20">Phone number</span>-->
-		<!--<span flex="20">Email</span>-->
-		<!--<span flex="20">ICO/R.C.</span>-->
-		<!--<span flex="10">Note</span>-->
-	<!--</div>-->
-
-	<!--<div layout="row" class="color-fg-accent-50 padding-default">-->
-		<!--<span flex="10">A</span>-->
-		<!--<span flex="20">Jozef Novak</span>-->
-		<!--<span flex="20">+421000000000</span>-->
-		<!--<span flex="20">info@netgrif.com</span>-->
-		<!--<span flex="20">253845/4657</span>-->
-		<!--<span flex="10">Some note</span>-->
-	<!--</div>-->
-
-	<!--<md-divider></md-divider>-->
-
-	<!--<div layout="row" class="color-fg-accent-50 padding-default">-->
-		<!--<span flex="10">A</span>-->
-		<!--<span flex="20">Jozef Novak</span>-->
-		<!--<span flex="20">+421000000000</span>-->
-		<!--<span flex="20">info@netgrif.com</span>-->
-		<!--<span flex="20">253845/4657</span>-->
-		<!--<span flex="10">Some note</span>-->
-	<!--</div>-->
-
-	<!--<md-divider></md-divider>-->
-
-	<!--<div layout="row" class="color-fg-accent-50 padding-default">-->
-		<!--<span flex="10">A</span>-->
-		<!--<span flex="20">Jozef Novak</span>-->
-		<!--<span flex="20">+421000000000</span>-->
-		<!--<span flex="20">info@netgrif.com</span>-->
-		<!--<span flex="20">253845/4657</span>-->
-		<!--<span flex="10">Some note</span>-->
-	<!--</div>-->
-<!--</div>-->
