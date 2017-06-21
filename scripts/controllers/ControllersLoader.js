@@ -4,4 +4,4 @@
  */
 // TODO 19.6.2017 define controllers
 var path = 'scripts/controllers/';
-define([path + 'MainController', path + 'OffersController', path + 'LoginController', path + 'ProfileController', path + 'ContactsController', path + 'AdminConsoleController'], function () {});
+define([path + 'MainController', path + 'OffersController', path + 'LoginController', path + 'ProfileController', path + 'ContactsController', path + 'DocumentsController', path + 'ContractsController', path + 'SearchController', path + 'AdminConsoleController'], function () {});

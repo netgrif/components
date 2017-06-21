@@ -93,14 +93,14 @@
                     <span flex>Contacts</span>
                 </md-button>
 
-                <md-button href="/" layout="row" layout-align="start center">
+                <md-button href="/documents" ng-class="{active: ('documents' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">description</i>
                     </div>
                     <span flex>Documents</span>
                 </md-button>
 
-                <md-button href="/" layout="row" layout-align="start center">
+                <md-button href="/contracts" ng-class="{active: ('contracts' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">assignment</i>
                     </div>
@@ -116,7 +116,7 @@
                     {{::$i18n.block.mainNav.console}}
                 </md-button>
 
-                <md-button href="/" layout="row" layout-align="start center">
+                <md-button href="/search" ng-class="{active: ('search' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">search</i>
                     </div>

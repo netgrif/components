@@ -9,7 +9,7 @@ define('app', ['angular', 'angularMaterial', 'angularRouteSegment',
     function (angular) {
         // console.log(angular.version);
         let app = angular.module('app', ['ngMaterial', 'ngMessages', 'ngRoute', 'route-segment', 'view-segment',
-         'ngMain', 'ngOffers', 'ngContacts']); //here add modules that you defined
+         'ngMain', 'ngOffers', 'ngContacts', 'ngContracts', 'ngSearch', 'ngDocuments']); //here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             $mdThemingProvider.definePalette('mainPalette', {
                 '50': '#e3f6fa',
@@ -43,6 +43,9 @@ define('app', ['angular', 'angularMaterial', 'angularRouteSegment',
                 .when('/login/signin', 'login.signin')
                 .when('/login/signup/:token', 'login.signup')
                 .when('/offers', 'app.offers')
+                .when('/documents', 'app.documents')
+                .when('/search', 'app.search')
+                .when('/contracts', 'app.contracts')
                 .when('/contacts', 'app.contacts')
                 .when('/profile', 'app.profile')
                 .when('/console', 'app.console')
@@ -68,6 +71,21 @@ define('app', ['angular', 'angularMaterial', 'angularRouteSegment',
                     templateUrl: "views/app/contacts.html",
                     controller: 'ContactsController',
                     controllerAs: 'contCtrl'
+                })
+                .segment('contracts', {
+                    templateUrl: "views/app/contracts.html",
+                    controller: 'ContractsController',
+                    controllerAs: 'contractCtrl'
+                })
+                .segment('search', {
+                    templateUrl: "views/app/search.html",
+                    controller: 'SearchController',
+                    controllerAs: 'searchCtrl'
+                })
+                .segment('documents', {
+                    templateUrl: "views/app/documents.html",
+                    controller: 'DocumentsController',
+                    controllerAs: 'docCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",
