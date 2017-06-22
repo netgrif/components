@@ -13,10 +13,10 @@
             <label>Enter date</label>
             <md-datepicker ng-model="field.newValue"
                            ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
-                           ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
+                           ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                            ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
                            md-open-on-focus
-                           ng-required="field.logic.required"></md-datepicker>
+                           ng-required="field.behavior.required"></md-datepicker>
         </md-input-container>
     </div>
     <div flex="10"></div>
