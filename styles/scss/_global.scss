@@ -3,6 +3,9 @@ body {
 	min-height: 100%;
 }
 
+// Style Google chrome scrollbars
+@include scrollbars(.5em, $color-primary-500-op-50, $color-black-op-30);
+
 // Global variables
 $shadow:                        2px 2px 5px $color-black-op-60;
 
@@ -15,8 +18,67 @@ $shadow:                        2px 2px 5px $color-black-op-60;
 	height: 100%;
 	overflow: hidden;
 }
+
+// TODO 22.6.2017 replace usage with .overflow-hidden
 .no-overflow{
 	overflow: hidden;
+}
+
+.overflow {
+
+	&-hidden {
+		overflow: hidden;
+	}
+
+	&-auto {
+		overflow: auto;
+	}
+
+	&-scroll {
+		overflow: scroll;
+	}
+
+	&-visible {
+		overflow: visible;
+	}
+
+	&-x {
+
+		&-hidden {
+			overflow-x: hidden;
+		}
+
+		&-auto {
+			overflow-x: auto;
+		}
+
+		&-scroll {
+			overflow-x: scroll;
+		}
+
+		&-visible {
+			overflow-x: visible;
+		}
+	}
+
+	&-y {
+
+		&-hidden {
+			overflow-y: hidden;
+		}
+
+		&-auto {
+			overflow-y: auto;
+		}
+
+		&-scroll {
+			overflow-y: scroll;
+		}
+
+		&-visible {
+			overflow-y: visible;
+		}
+	}
 }
 
 .cursor {

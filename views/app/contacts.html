@@ -6,7 +6,7 @@
             <i class="material-icons color-fg-accent-50">search</i>
 
             <md-input-container class="margin-0">
-                <label>Search</label>
+                <label>{{::$i18n.block.actionBar.search}}</label>
                 <input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
             </md-input-container>
         </div>
@@ -14,17 +14,17 @@
         <div flex></div>
 
         <md-switch ng-model="offCtrl.isActive" class="md-primary">
-            <span>Active</span>
+            <span>{{::$i18n.block.actionBar.active}}</span>
         </md-switch>
 
         <md-switch ng-model="offCtrl.isFinished" class="md-primary">
-            <span>Finished</span>
+            <span>{{::$i18n.block.actionBar.finished}}</span>
         </md-switch>
 
         <div flex></div>
 
         <md-button class="md-fab md-raised md-mini md-primary">
-            <md-tooltip md-direction="left">Create Contact</md-tooltip>
+            <md-tooltip md-direction="left">{{::$i18n.block.add.createContact}}</md-tooltip>
             <md-icon class="material-icons">add</md-icon>
         </md-button>
 
@@ -34,20 +34,20 @@
     <div layout="column" class="card margin-default" flex>
 
         <div layout="row" layout-align="start center" class="card-header padding-default padding-horizontal-2x">
-            <span flex="5">Type</span>
-            <span flex="20">Name</span>
-            <span flex="20">Phone number</span>
-            <span flex="20">Email</span>
-            <span flex="20">ICO/R.C.</span>
-            <span flex="10">Note</span>
+            <span flex="5">{{::$i18n.page.contacts.type}}</span>
+            <span flex="20">{{::$i18n.page.contacts.name}}</span>
+            <span flex="20">{{::$i18n.page.contacts.phone}}</span>
+            <span flex="20">{{::$i18n.page.contacts.email}}</span>
+            <span flex="20">{{::$i18n.page.contacts.id}}</span>
+            <span flex="10">{{::$i18n.page.contacts.note}}</span>
             <!-- To create alphabet spacer -->
             <span flex="5" class="visibility-hidden"></span>
-            <span class="padding-default padding-left-2x padding-right-0 visibility-hidden">W</span>
+            <span class="padding-default padding-left-2x padding-right-0 visibility-hidden">WW1</span>
         </div>
 
         <div layout="row" class="margin-default margin-top-0" flex>
 
-            <md-content layout="column" class="color-bg-transparent" flex>
+            <div layout="column" class="overflow-y-auto padding-right-default" flex>
 
                 <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default" flex="none">
                     <h2 flex>A</h2>
@@ -375,7 +375,7 @@
                     </md-menu>
                 </div>
 
-            </md-content>
+            </div>
 
             <div layout="column" layout-align="space-between center" class="padding-default padding-left-2x">
                 <span ng-repeat="char in contCtrl.alphabet" ng-class="$index < 4 ? 'active' : ''">{{char}}</span>

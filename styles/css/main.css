@@ -71,7 +71,7 @@
 }
 
 .color-fg-primary-500 {
-  color: #12b2d2;
+  color: #12b2d2 !important;
 }
 
 .color-fg-primary-600 {
@@ -219,7 +219,7 @@
 }
 
 .color-bg-primary-500 {
-  background-color: #12b2d2;
+  background-color: #12b2d2 !important;
 }
 
 .color-bg-primary-600 {
@@ -502,6 +502,24 @@ body {
   min-height: 100%;
 }
 
+::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(18, 178, 210, 0.5);
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+body {
+  scrollbar-face-color: rgba(18, 178, 210, 0.5);
+  scrollbar-track-color: rgba(0, 0, 0, 0.3);
+}
+
 .shadow {
   -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
@@ -514,6 +532,54 @@ body {
 
 .no-overflow {
   overflow: hidden;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.overflow-visible {
+  overflow: visible;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+
+.overflow-x-visible {
+  overflow-x: visible;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.overflow-y-visible {
+  overflow-y: visible;
 }
 
 .cursor-default {
@@ -1010,6 +1076,27 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   font-weight: 300;
 }
 
+.base .md-datepicker-calendar-pane span {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+label {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.base .md-datepicker-button md-icon {
+  color: #FAFAFA !important;
+}
+
+.base .md-calendar-date-selection-indicator {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.base textarea {
+  color: #FAFAFA;
+  font-weight: 300;
+}
+
 .base .list-item:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.3) !important;
@@ -1021,6 +1108,7 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 }
 
 .base .document figure:hover {
+  cursor: pointer;
   background-color: rgba(18, 178, 210, 0.5) !important;
 }
 
@@ -1039,4 +1127,60 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 .base md-menu span, .base md-menu-item span {
   color: rgba(0, 0, 0, 0.87) !important;
   font-weight: normal !important;
+}
+
+.base .data-item md-input-container .md-errors-spacer {
+  min-height: 0 !important;
+}
+
+.base .data-item md-icon {
+  color: #FAFAFA;
+}
+
+.base .data-field-title {
+  font-size: 17px;
+}
+
+.base .file-chooser {
+  margin: 0;
+  padding: 0;
+}
+
+.base .file-chooser input {
+  position: absolute;
+  height: 0.1px;
+  width: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.base .file-chooser-avatar .avatar-icon {
+  font-size: 220px;
+}
+
+.base .file-chooser-avatar input {
+  position: absolute;
+  height: 0.1px;
+  width: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.base .file-chooser-avatar label {
+  display: none;
+  position: absolute;
+}
+
+.base .file-chooser-avatar label .material-icons {
+  font-size: 100px;
+}
+
+.base .file-chooser-avatar label .material-icons:hover {
+  cursor: pointer;
+}
+
+.base .file-chooser-avatar:hover label {
+  display: block;
 }

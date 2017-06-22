@@ -139,7 +139,7 @@ $color-brown-500:				#795548;
 			}
 
 			&-500 {
-				color: $color-primary-500;
+				color: $color-primary-500 !important;
 			}
 
 			&-600 {
@@ -302,7 +302,7 @@ $color-brown-500:				#795548;
 			}
 
 			&-500 {
-				background-color: $color-primary-500;
+				background-color: $color-primary-500 !important;
 			}
 
 			&-600 {

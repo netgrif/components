@@ -22,3 +22,46 @@ md-switch span {
     color: $color-grey-50;
     font-weight: 300;
 }
+
+.md-datepicker-calendar-pane {
+
+    span {
+        color: $color-black-op-87 !important;
+    }
+
+}
+
+md-input-container {
+
+    md-datepicker .md-pane-open{
+
+        label {
+
+            @at-root label {
+                color: $color-black-op-87 !important;
+            }
+        }
+
+    }
+}
+
+.md-datepicker-button {
+
+    md-icon {
+        color: $color-grey-50 !important;
+    }
+}
+
+.md-calendar-date-selection-indicator {
+    color: $color-black-op-87 !important;
+}
+
+textarea {
+    color: $color-grey-50;
+    font-weight: 300;
+}
+
+//.md-datepicker-input-mask {
+//    margin: 0 !important;
+//    background-color: $color-black-op-40;
+//}

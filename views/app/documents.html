@@ -5,7 +5,7 @@
             <i class="material-icons color-fg-accent-50">search</i>
 
             <md-input-container class="margin-0">
-                <label>Search</label>
+                <label>{{::$i18n.block.actionBar.search}}</label>
                 <input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
             </md-input-container>
         </div>
@@ -13,13 +13,13 @@
         <div flex></div>
 
         <md-button class="md-fab md-raised md-mini md-primary">
-            <md-tooltip md-direction="left">New Document</md-tooltip>
+            <md-tooltip md-direction="left">{{::$i18n.block.add.createDocument}}</md-tooltip>
             <md-icon class="material-icons">add</md-icon>
         </md-button>
 
     </div>
 
-    <div layout="row" class="something" flex>
+    <div layout="row" flex>
 
         <div layout="column" flex="60">
 
@@ -142,7 +142,7 @@
         <div layout="column" flex="40">
             <div class="card margin-default" flex>
                 <div layout="row" class="card-header padding-default">
-                    <a>Nahlad dokumentu</a>
+                    <a>{{::$i18n.page.documents.preview}}</a>
                 </div>
                 <!--<div >-->
                     <!--&lt;!&ndash;<iframe  title="PDF in an i-Frame" src="../../assets/test.pdf#zoom=50" ></iframe>&ndash;&gt;-->

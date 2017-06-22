@@ -28,14 +28,14 @@
 				<div layout="column" class="card margin-default" flex>
 
 					<div layout="row" class="card-header padding-default padding-horizontal-2x">
-						<span flex="5">Label</span>
-						<span flex="15">Visual ID</span>
-						<span flex="20">Name</span>
-						<span flex="20">Client</span>
-						<span flex="15">Date</span>
+						<span flex="5">{{::$i18n.block.case.label}}</span>
+						<span flex="15">{{::$i18n.block.case.visualID}}</span>
+						<span flex="20">{{::$i18n.block.case.title}}</span>
+						<span flex="20">{{::$i18n.block.case.client}}</span>
+						<span flex="15">{{::$i18n.block.case.date}}</span>
 						<span flex="10" class="cursor-pointer">
-							<md-tooltip md-direction="top">In EUR</md-tooltip>
-							Insurance
+							<md-tooltip md-direction="top">{{::$i18n.block.case.inEur}}</md-tooltip>
+							{{::$i18n.block.case.insurance}}
 						</span>
 					</div>
 
@@ -86,11 +86,11 @@
 					</div>
 
 					<div layout="row" class="card color-bg-black-op-50 margin-default padding-2x">
-						<span flex="5">Label</span>
-						<span flex="30">Offer</span>
-						<span flex="30">Title</span>
-						<span flex="30">Start date</span>
-						<span flex="5">Status</span>
+						<span flex="5">{{::$i18n.block.task.label}}</span>
+						<span flex="30">{{::$i18n.block.task.offer}}</span>
+						<span flex="30">{{::$i18n.block.task.title}}</span>
+						<span flex="30">{{::$i18n.block.task.date}}</span>
+						<span flex="5">{{::$i18n.block.task.status}}</span>
 					</div>
 
 					<md-expansion-panel class="margin-horizontal-default" ng-repeat="task in tab.tasks | orderBy:task.title">

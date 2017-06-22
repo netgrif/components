@@ -18,7 +18,7 @@
                    ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
                    ng-required="field.behavior.required">
             <textarea ng-if="field.subType === 'area'"
-                      rows="1" max-rows="10"
+                      rows="1" max-rows="4"
                       ng-model="field.newValue"
                       ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
                       ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"

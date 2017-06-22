@@ -1,39 +1,96 @@
 define({
-    // TODO 20.6.2017 Update
     test: "Toto je testovací string!",
     page: {
         signIn: {
             email: "Email",
-            psw: "Password",
-            forgotPsw: "Forgot password",
-            submit: "Sign In"
+            psw: "Heslo",
+            forgotPsw: "Zabudnuté heslo",
+            submit: "Prihlásiť"
         },
         signUp: {
             email: "Email",
-            psw: "Password",
-            retypePsw: "Retype password",
-            name: "First Name",
-            surname: "Last Name",
-            submit: "Sign Up"
+            psw: "Heslo",
+            retypePsw: "Opakovať heslo",
+            name: "Meno",
+            surname: "Priezvisko",
+            submit: "Registrovať"
         },
         offers: {
-            msg: "Offers page coming soon"
+            this: "Ponuky"
+        },
+        contacts: {
+            this: "Kontakty",
+            type: "Typ",
+            name: "Meno",
+            phone: "Telefónne číslo",
+            email: "Email",
+            id: "IČO/R.Č.",
+            note: "Poznámka"
+        },
+        documents: {
+            this: "Dokumenty",
+            preview: "Náhľad"
+        },
+        contracts: {
+            this: "Zmluvy"
         }
     },
     block: {
-        mainNav: {
-            offers: "Offers",
-            console: "Admin Console",
-            version: "Version 1.0.0"
+        dialogs: {
+            createCase: {
+
+            },
+            assignUser: {
+
+            }
+        },
+        add: {
+            createOffer: "Vytvoriť ponuku",
+            createContact: "Vytvoriť kontakt",
+            createDocument: "Vytvoriť dokument"
         },
         mainMenu: {
-            profile: "Profile",
+            profile: "Profil",
             lang: {
-                this: "Language",
-                en: "English",
-                sk: "Slovak"
+                this: "Jazyk",
+                en: "Anglický",
+                sk: "Slovenský"
             },
-            logout: "Logout"
+            logout: "Odhlásiť"
+        },
+        actionBar: {
+            search: "Hľadať",
+            active: "Aktívne",
+            finished: "Ukončené"
+        },
+        case: {
+            label: "Značka",
+            visualID: "Vizuálne ID",
+            title: "Názov",
+            client: "Klient",
+            date: "Dátum",
+            insurance: "Poistné",
+            inEur: "V eurách"
+        },
+        task: {
+            label: "Značka",
+            offer: "Ponuka",
+            title: "Názov",
+            date: "Dátum začiatku",
+            status: "Stav"
+        },
+        data: {
+            noUserChosen: "Žiaden zvolený používateľ",
+            self: "Sebe",
+            chooseUser: "Vybrať používateľa",
+            noFile: "Žiaden súbor",
+            fileNotUploaded: "Súbor ešte nebol nahraný",
+            fileUploaded: "Súbor bol úspešne nahraný",
+            newFile: "Nový súbor",
+            upload: "Nahrať",
+            download: "Stiahnuť",
+            yes: "Áno",
+            no: "Nie"
         }
     }
 });
