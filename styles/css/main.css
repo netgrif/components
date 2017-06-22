@@ -1137,6 +1137,10 @@ label {
   color: #FAFAFA;
 }
 
+.base .data-item md-input-container.md-default-theme .md-input, .base .data-item md-input-container .md-input {
+  border-color: #FAFAFA;
+}
+
 .base .data-field-title {
   font-size: 17px;
 }
