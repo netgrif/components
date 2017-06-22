@@ -4,5 +4,4 @@
  */
 // TODO 19.6.2017 add directives (FileModel)
 var path = 'scripts/directives/';
-define([], function () {});
-
+define([path+'FileModelDirective'], function () {});

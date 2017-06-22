@@ -1,0 +1,43 @@
+<div class="data-item" layout="row" layout-align="start center">
+    <div flex="50">
+        <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
+            {{field.name}}
+            <md-tooltip ng-if="field.description">
+                {{field.description}}
+            </md-tooltip>
+        </span>
+    </div>
+    <div flex="20"></div>
+    <div flex="60" layout="row" layout-align="space-between center">
+        <div ng-if="field.newValue" layout="row" layout-align="start center">
+            <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
+            <span class="cursor-pointer">
+                {{field.newValue.fullName}}
+                <md-tooltip>
+                    {{field.newValue.email}}
+                </md-tooltip>
+            </span>
+        </div>
+        <div ng-if="!field.newValue">
+            <span>{{::$i18n.block.data.noUserChosen}}</span>
+        </div>
+        <md-menu class="width-24px" ng-if="task.user.email == $user.login && field.behavior.editable">
+            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                <md-icon class="material-icons">more_vert</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item ng-if="$user.canAssign(field.roles)">
+                    <md-button ng-click="tasksCtrl.userFieldChoice(field, $index, $user); caseCtrl.activeTab.userFieldChoice(task, field, $index, $user)">
+                        {{::$i18n.block.data.self}}
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="tasksCtrl.userFieldChoice(field, $index); caseCtrl.activeTab.userFieldChoice(task, field, $index)">
+                        {{::$i18n.block.data.chooseUser}}
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div flex="10"></div>
+</div>

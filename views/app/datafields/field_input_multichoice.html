@@ -1,22 +1,26 @@
-<md-card flex>
-    <md-card-title layout="row" layout-align="left center" class="padding-left-no padding-right-no">
-        <md--card-title-text>
-            <span>{{field.name}}</span>
-            <span>{{field.description}}</span>
-        </md--card-title-text>
-    </md-card-title>
-    <md-card-content layout="column" layout-align="center center" class="padding-no">
+<div class="data-item" layout="row" layout-align="start center">
+    <div flex="50">
+        <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
+            {{field.name}}
+            <md-tooltip ng-if="field.description">
+                {{field.description}}
+            </md-tooltip>
+        </span>
+    </div>
+    <div flex="20"></div>
+    <div flex="60">
         <md-input-container class="md-block" flex>
             <label>{{field.name}}</label>
             <md-select ng-model="field.newValue" multiple
-                       ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index)"
-                       ng-disabled="!(task.user.email == $user.login && field.logic.editable)"
-                       ng-blur="tasksCtrl.saveData(task)"
-                       ng-required="field.logic.required">
+                       ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
+                       ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
+                       ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
+                       ng-required="field.behavior.required">
                 <md-option ng-repeat="choice in field.choices" ng-value="choice">
                     {{choice}}
                 </md-option>
             </md-select>
         </md-input-container>
-    </md-card-content>
-</md-card>
+    </div>
+    <div flex="10"></div>
+</div>

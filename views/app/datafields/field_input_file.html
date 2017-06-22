@@ -1,43 +1,55 @@
-<md-card flex>
-    <md-card-title layout="row" layout-align="left center" class="padding-left-no padding-right-no">
-        <md--card-title-text>
-            <span>{{field.name}}</span>
-            <span>{{field.description}}</span>
-        </md--card-title-text>
-    </md-card-title>
-    <md-card-content layout="column" layout-align="center center" class="padding-no">
-        <div layout="row" layout-align="center center" flex>
-            <md-icon class="material-icons">insert_drive_file</md-icon>
-            <p>{{field.newValue ? field.newValue : "No File"}}</p>
-            <div layout="row" layout-align="left center" ng-if="field.newFile && !field.uploaded">
-                <md-tooltip md-direction="right">File has not been uploaded yet!</md-tooltip>
-                <md-icon class="material-icons md-warn">warning</md-icon>
-            </div>
-            <div layout="row" layout-align="left center" ng-if="field.newFile && field.uploaded">
-                <md-tooltip md-direction="right">File uploaded successfully</md-tooltip>
-                <md-icon class="material-icons">done</md-icon>
-            </div>
+<div class="data-item" layout="row" layout-align="start center">
+    <div flex="50">
+        <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
+            {{field.name}}
+            <md-tooltip ng-if="field.description">
+                {{field.description}}
+            </md-tooltip>
+        </span>
+    </div>
+    <div flex="20"></div>
+    <div flex="60" layout="row" layout-align="space-between center">
+        <div layout="row" layout-align="start center">
+            <md-icon class="material-icons margin-right-2x" ng-if="!field.newValue">insert_drive_file</md-icon>
+            <md-icon class="material-icons margin-right-2x color-fg-warning" ng-if="field.newFile && !field.uploaded">
+                <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileNotUploaded}}</md-tooltip>
+                warning
+            </md-icon>
+            <md-icon class="material-icons margin-right-2x color-fg-success" ng-if="field.newFile && field.uploaded">
+                <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
+                done
+            </md-icon>
+            <span class="text-overflow-dots">{{field.newValue ? field.newValue : $i18n.block.data.noFile}}</span>
         </div>
-    </md-card-content>
-    <md-card-actions layout="row" layout-align="end center">
-        <md-button class="file-chooser" layout="row" layout-align="left center" ng-if="task.user.email == $user.login && field.logic.editable">
-            <input type="file" id="file"
-                   file-model="field.file"
-                   file-change-callback="fileModelChange"
-                   file-change-arg="field"
-                   ng-required="field.logic.required">
-            <label for="file" layout="row" layout-align="left center">
-                <md-icon class="material-icons">note_add</md-icon>
-                <span>New file</span>
-            </label>
-        </md-button>
-        <md-button ng-click="tasksCtrl.uploadFile(field)" ng-if="field.newFile && !field.uploaded">
-            <md-icon class="material-icons">file_upload</md-icon>
-            Upload
-        </md-button>
-        <md-button ng-click="tasksCtrl.downloadFile(field)" ng-if="field.value && !field.newFile">
-            <md-icon class="material-icons">file_download</md-icon>
-            Download
-        </md-button>
-    </md-card-actions>
-</md-card>
+        <md-menu class="width-24px">
+            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                <md-icon class="material-icons">more_vert</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item ng-if="task.user.email == $user.login && field.behavior.editable">
+                    <md-button class="file-chooser" layout="row" layout-align="start center">
+                        <input type="file" id="file"
+                               file-model="field.file"
+                               file-change-callback="fileModelChange"
+                               file-change-arg="field"
+                               ng-required="field.behavior.required">
+                        <label for="file">
+                            <span class="padding-horizontal-2x">{{::$i18n.block.data.newFile}}</span>
+                        </label>
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item ng-if="field.newFile && !field.uploaded">
+                    <md-button ng-click="tasksCtrl.uploadFile(field);caseCtrl.activeTab.uploadFile(field,task)">
+                        {{::$i18n.block.data.upload}}
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item ng-if="field.value && !field.newFile">
+                    <md-button ng-click="tasksCtrl.downloadFile(field);caseCtrl.activeTab.downloadFile(field,task)">
+                        {{::$i18n.block.data.download}}
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div flex="10"></div>
+</div>
