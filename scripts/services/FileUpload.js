@@ -1,6 +1,6 @@
 
-define(['angular','../modules/Workflow'],function (angular) {
-    angular.module('ngWorkflow').factory('$fileUpload',function ($log, $http) {
+define(['angular','../modules/Main'],function (angular) {
+    angular.module('ngMain').factory('$fileUpload',function ($log, $http) {
         return {
             upload: function (file, meta, url, callback) {
                 $log.debug("Uploading file "+file.name);

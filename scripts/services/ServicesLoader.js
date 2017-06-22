@@ -5,4 +5,4 @@
 // TODO 19.6.2017 add services (FileUpload)
 var path = 'scripts/services/';
 define([path+'Loading', path+'Auth', path+'Snackbar', path+'Localization',
-    path+'Style', path+'User', path+'Dialog', path+'AuthHttpInterceptor'], function () {});
+    path+'Style', path+'User', path+'Dialog', path+'AuthHttpInterceptor',path+'FileUpload'], function () {});
