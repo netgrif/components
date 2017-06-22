@@ -1,14 +1,14 @@
 define(['angular', '../classes/CaseTab', '../modules/Offers', '../modules/Main',],
     function (angular, CaseTab) {
         angular.module('ngOffers').controller('OffersController',
-            ['$log', '$scope', '$timeout',
-                function ($log, $scope, $timeout) {
+            ['$log', '$scope', '$http', '$dialog',
+                function ($log, $scope, $http, $dialog) {
                     const self = this;
 
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
-                    self.caseTab = new CaseTab();
+                    self.caseTab = new CaseTab("My Offers",this,$http,$dialog);
 
                     self.tabChanged = function () {
                         self.activeTab = self.taskTabs[self.activeTabIndex - 1];

@@ -2,13 +2,11 @@ define(['angular', './Tab', '../modules/Main'], function (angular, Tab) {
     return class CaseTab extends Tab {
         cases = [];
         newCase = {};
-        page = {};
-        loading = false;
 
         //TODO filter
         //TODO sort
-        constructor(controller, $http, $dialog) {
-            super();
+        constructor(label,controller, $http, $dialog) {
+            super(label);
             this.controller = controller;
             this.$http = $http;
             this.$dialog = $dialog;
@@ -16,10 +14,10 @@ define(['angular', './Tab', '../modules/Main'], function (angular, Tab) {
 
         activate() {
             if (this.cases.length === 0)
-                this.search(false);
+                this.load(false);
         }
 
-        search(next) {
+        load(next) {
             const self = this;
             if (this.page.totalElements === this.cases.length || this.loading) return;
             const url = next ? self.page.next : "/res/workflow/case/search";
