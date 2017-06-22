@@ -1,9 +1,11 @@
 define(['angular', './Tab', '../modules/Main'], function (angular, Tab) {
-    function TaskTab(label, baseUrl, useCase) {
+    function TaskTab(label, baseUrl, useCase, $http, $snackbar) {
         Tab.call(this, label);
 
         this.baseUrl = baseUrl;
         this.useCase = useCase;
+        this.$http = $http;
+        this.$snackbar = $snackbar;
 
         this.tasks = [];
     }
@@ -23,11 +25,11 @@ define(['angular', './Tab', '../modules/Main'], function (angular, Tab) {
     TaskTab.prototype.reloadTasks = function () {
         if (this.tasks.length > 0)
             this.tasks.splice(0, this.tasks.length);
-        //TODO load tasks
+        this.load(false);
     };
 
     TaskTab.prototype.load = function (next) {
-        if(this.loading || !baseUrl) return;
+        if(this.loading || !baseUrl || (this.tasks && this.page.totalElements === this.tasks.length)) return;
 
         const self = this;
         let url = this.filter ? TaskTab.URL_SEARCH : this.baseUrl;
@@ -37,8 +39,34 @@ define(['angular', './Tab', '../modules/Main'], function (angular, Tab) {
             method: query ? 'POST' : 'GET',
             url: url,
             data: this.getSearchQuery()
-        }
-        
+        };
+
+        this.loading = true;
+        this.$http(config).then(function (response) {
+            self.page = response.page;
+            response.$request().$get("tasks").then(function (resources) {
+                if(self.page.totalPages !== 1){
+                    if(url !== response.$href("last")){
+                        self.page.next = response.$href("next");
+                    }
+                }
+                if(next) resources.forEach(r => self.tasks.push(r));
+                else self.tasks = resources;
+
+                self.loading = false;
+
+            }, function () {
+                $snackbar.info(`No tasks found in ${self.label}`);
+                self.page.next = undefined;
+                if(self.tasks) self.tasks.splice(0,self.tasks.length);
+                self.loading = false;
+            })
+
+        }, function () {
+            $snackbar.error(`Tasks on ${url} failed to load`);
+            //TODO originálne tu bol hideLoading()
+            self.loading = false;
+        });
     };
 
     TaskTab.prototype.getSearchQuery = function () {
@@ -64,7 +92,6 @@ define(['angular', './Tab', '../modules/Main'], function (angular, Tab) {
 
         return query;
     };
-
 
     return TaskTab;
 });
