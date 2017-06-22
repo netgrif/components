@@ -1,17 +1,9 @@
-define(['angular', '../modules/Main'], function (angular) {
-    return class Tab {
-        page = {};
-        loading = false;
+define([], function () {
+    function Tab(label) {
+        this.label = label;
+        this.page = {};
+        this.loading = false;
+    };
 
-        constructor(label) {
-            this._label = label;
-        }
-
-        get label() {
-            return this._label;
-        }
-
-        activate(){
-        }
-    }
+    return Tab;
 });

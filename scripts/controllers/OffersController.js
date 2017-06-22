@@ -1,4 +1,4 @@
-define(['angular', '../classes/CaseTab', '../modules/Offers', '../modules/Main',],
+define(['angular', '../classes/CaseTab', '../modules/Offers', '../modules/Main'],
     function (angular, CaseTab) {
         angular.module('ngOffers').controller('OffersController',
             ['$log', '$scope', '$http', '$dialog',
