@@ -1,6 +1,6 @@
-<div ng-cloak layout="column">
+<div ng-cloak layout="column" class="layout-rh-100">
 
-    <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default" flex>
+    <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default">
 
         <div layout="row" layout-align="start center">
             <i class="material-icons color-fg-accent-50">search</i>
@@ -30,65 +30,357 @@
 
     </div>
 
-    <div layout="column" class="card margin-horizontal-default margin-default" flex>
 
-        <div layout="row" class="card-header padding-default">
-            <span flex="10">Type</span>
+    <div layout="column" class="card margin-default" flex>
+
+        <div layout="row" layout-align="start center" class="card-header padding-default padding-horizontal-2x">
+            <span flex="5">Type</span>
             <span flex="20">Name</span>
             <span flex="20">Phone number</span>
             <span flex="20">Email</span>
             <span flex="20">ICO/R.C.</span>
             <span flex="10">Note</span>
+            <!-- To create alphabet spacer -->
+            <span flex="5" class="visibility-hidden"></span>
+            <span class="padding-default padding-left-2x padding-right-0 visibility-hidden">W</span>
         </div>
 
-        <div layout="row" class="color-fg-accent-50 padding-default">
-            <h2 flex>A</h2>
-        </div>
+        <div layout="row" class="margin-default margin-top-0" flex>
 
-        <div layout="row" class="color-fg-accent-50 padding-default list-item">
-            <i class="material-icons color-fg-primary-500" flex="10">account_circle</i>
-            <span flex="20">Jozef Adamec</span>
-            <span flex="20">+421000000000</span>
-            <span flex="20">info@netgrif.com</span>
-            <span flex="20">253845/4657</span>
-            <span flex="10">Some note</span>
-        </div>
+            <md-content layout="column" class="color-bg-transparent" flex>
 
-        <md-divider></md-divider>
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default" flex="none">
+                    <h2 flex>A</h2>
+                </div>
 
-        <div layout="row" class="color-fg-accent-50 padding-default list-item">
-            <i class="material-icons color-fg-primary-500" flex="10">account_circle</i>
-            <span flex="20">Mária Adamcová</span>
-            <span flex="20">+421000000000</span>
-            <span flex="20">info@netgrif.com</span>
-            <span flex="20">253845/4657</span>
-            <span flex="10">Some note</span>
-        </div>
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Jozef Adamec</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
 
-        <md-divider class="color-bg-primary-500"></md-divider>
+                <md-divider></md-divider>
 
-        <div layout="row" class="color-fg-accent-50 padding-default">
-            <h2 flex>B</h2>
-        </div>
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Mária Adamcová</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
 
-        <div layout="row" class="color-fg-accent-50 padding-default list-item">
-            <i class="material-icons color-fg-primary-500" flex="10">account_circle</i>
-            <span flex="20">Martin Buk</span>
-            <span flex="20">+421000000000</span>
-            <span flex="20">info@netgrif.com</span>
-            <span flex="20">253845/4657</span>
-            <span flex="10">Some note</span>
-        </div>
+                <md-divider class="color-bg-primary-500"></md-divider>
 
-        <md-divider></md-divider>
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default" flex="none">
+                    <h2 flex>B</h2>
+                </div>
 
-        <div layout="row" class="color-fg-accent-50 padding-default list-item">
-            <i class="material-icons color-fg-primary-500" flex="10">account_circle</i>
-            <span flex="20">Katarína Brezňanská</span>
-            <span flex="20">+421000000000</span>
-            <span flex="20">info@netgrif.com</span>
-            <span flex="20">253845/4657</span>
-            <span flex="10">Some note</span>
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Martin Buk</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Katarína Brezňanská</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Matej Bučány</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Peter Bedej</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider class="color-bg-primary-500"></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default" flex="none">
+                    <h2 flex>C</h2>
+                </div>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Jozef Cesnak</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Michaela Cesnaková</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider class="color-bg-primary-500"></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default" flex="none">
+                    <h2 flex>D</h2>
+                </div>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Jozef Daniel</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Martin David</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Peter David</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Pavol David</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+                <md-divider></md-divider>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default list-item-no-pointer" flex="none">
+                    <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+                    <span flex="20">Matthew Dixon</span>
+                    <span flex="20">+421000000000</span>
+                    <span flex="20">info@netgrif.com</span>
+                    <span flex="20">253845/4657</span>
+                    <span flex="10">Some note</span>
+                    <md-menu flex="5">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                            <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button>Action 1</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Action 2</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+            </md-content>
+
+            <div layout="column" layout-align="space-between center" class="padding-default padding-left-2x">
+                <span ng-repeat="char in contCtrl.alphabet" ng-class="$index < 4 ? 'active' : ''">{{char}}</span>
+            </div>
+
         </div>
 
     </div>

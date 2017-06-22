@@ -29,6 +29,12 @@ span {
          font-weight: 600;
          color: $color-primary-500;
      }
+
+    &.active {
+        font-size: 20px;
+        font-weight: 600;
+        color: $color-primary-500;
+    }
 }
 
 // Text overflow

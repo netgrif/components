@@ -10,6 +10,10 @@
   color: #F44336 !important;
 }
 
+.color-fg-transparent {
+  color: transparent;
+}
+
 .color-fg-platinum {
   color: #92aab4;
 }
@@ -589,6 +593,12 @@ span {
 }
 
 span strong {
+  font-weight: 600;
+  color: #12b2d2;
+}
+
+span.active {
+  font-size: 20px;
   font-weight: 600;
   color: #12b2d2;
 }

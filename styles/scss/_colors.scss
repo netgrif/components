@@ -70,6 +70,10 @@ $color-brown-500:				#795548;
 			color: $color-error !important;
 		}
 
+		&-transparent {
+			color: transparent;
+		}
+
 		&-platinum {
 			color: $color-platinum;
 		}
