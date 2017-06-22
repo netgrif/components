@@ -13,16 +13,16 @@
             <label>{{field.name}}</label>
             <input type="text" ng-if="field.subType === 'simple'"
                    ng-model="field.newValue"
-                   ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
+                   ng-change="field.changed = field.value !== field.newValue"
                    ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                   ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
+                   ng-blur="task.save()"
                    ng-required="field.behavior.required">
             <textarea ng-if="field.subType === 'area'"
                       rows="1" max-rows="4"
                       ng-model="field.newValue"
-                      ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
+                      ng-change="field.changed = field.value !== field.newValue"
                       ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                      ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
+                      ng-blur="task.save()"
                       ng-required="field.behavior.required"></textarea>
         </md-input-container>
     </div>

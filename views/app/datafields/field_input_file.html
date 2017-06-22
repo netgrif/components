@@ -30,7 +30,7 @@
                     <md-button class="file-chooser" layout="row" layout-align="start center">
                         <input type="file" id="file"
                                file-model="field.file"
-                               file-change-callback="fileModelChange"
+                               file-change-callback="field.fileChanged"
                                file-change-arg="field"
                                ng-required="field.behavior.required">
                         <label for="file">
@@ -39,12 +39,12 @@
                     </md-button>
                 </md-menu-item>
                 <md-menu-item ng-if="field.newFile && !field.uploaded">
-                    <md-button ng-click="tasksCtrl.uploadFile(field);caseCtrl.activeTab.uploadFile(field,task)">
+                    <md-button ng-click="field.upload()">
                         {{::$i18n.block.data.upload}}
                     </md-button>
                 </md-menu-item>
                 <md-menu-item ng-if="field.value && !field.newFile">
-                    <md-button ng-click="tasksCtrl.downloadFile(field);caseCtrl.activeTab.downloadFile(field,task)">
+                    <md-button ng-click="field.download()">
                         {{::$i18n.block.data.download}}
                     </md-button>
                 </md-menu-item>

@@ -13,9 +13,9 @@
             <!-- TODO 23.6.2017 fix label when calendar opens -->
             <label>Enter date</label>
             <md-datepicker ng-model="field.newValue"
-                           ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
+                           ng-change="field.changed = field.value !== field.newValue"
                            ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                           ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
+                           ng-blur="task.save()"
                            md-open-on-focus
                            ng-required="field.behavior.required"></md-datepicker>
         </md-input-container>

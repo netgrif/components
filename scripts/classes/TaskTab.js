@@ -55,7 +55,8 @@ define(['./Tab', './Task'], function (Tab, Task) {
     };
 
     TaskTab.prototype.load = function (next) {
-        if (this.loading || !this.baseUrl || (this.tasks && this.page.totalElements === this.tasks.length)) return;
+        if (this.loading || !this.baseUrl) return;
+        if(next && this.tasks && this.page.totalElements === this.tasks.length) return;
 
         const self = this;
         let url = this.filter ? TaskTab.URL_SEARCH : this.baseUrl;
@@ -66,19 +67,22 @@ define(['./Tab', './Task'], function (Tab, Task) {
         this.loading = true;
         this.$http(config).then(function (response) {
             self.page = response.page;
+            const rawData = response.$response().data._embedded.tasks;
             response.$request().$get("tasks").then(function (resources) {
                 if (self.page.totalPages !== 1) {
                     if (url !== response.$href("last")) {
                         self.page.next = response.$href("next");
                     }
                 }
-                const tasks = resources.map(r => new Task(self, r, {
+
+                const tasks = [];
+                resources.forEach((r, i) => tasks.push(new Task(self, r, rawData[i]._links,{
                     $http: self.$http,
                     $snackbar: self.$snackbar,
                     $dialog: self.$dialog,
                     $user: self.$user,
                     $fileUpload: self.$fileUpload
-                }));
+                })));
                 if (next) self.tasks = tasks.concat(self.tasks);
                 else self.tasks = tasks;
 

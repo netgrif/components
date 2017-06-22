@@ -13,7 +13,7 @@ define(['./HalResource'], function (HalResource) {
         this.parent = parent;
         Object.assign(this, resource, angular);
 
-        this.newValue = this.value;
+        this.newValue = this.parse(this.value, this.type);
         this.changed = false;
     }
     DataField.prototype = Object.create(HalResource.prototype);
@@ -103,7 +103,7 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.upload = function () {
         if (!this.file) return;
 
-        this.$fileUpload.upload(this.file, undefined, this.parent.$href('file') + this.objectId, response => {
+        this.$fileUpload.upload(this.file, undefined, this.parent.link('file') + this.objectId, response => {
             if (!response) {
                 this.$snackbar.error(`File ${this.file.name} has failed to upload`);
                 return;
@@ -116,7 +116,7 @@ define(['./HalResource'], function (HalResource) {
     };
 
     DataField.prototype.download = function () {
-        const downloadWindow = window.open(this.parent.$href('file') + this.objectId);
+        const downloadWindow = window.open(this.parent.link('file') + this.objectId);
         downloadWindow.onload = () => downloadWindow.close();
     };
 
