@@ -54,3 +54,7 @@ md-expansion-panel .md-expansion-panel-footer-container {
         color: $color-primary-500 !important;
     }
 }
+
+md-expansion-panel md-input-container.md-default-theme .md-input, md-input-container .md-input {
+    border-color: $color-grey-50 !important;
+}
