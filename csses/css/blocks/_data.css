@@ -1,0 +1,34 @@
+.data-item md-input-container .md-errors-spacer {
+  min-height: 0px !important; }
+
+.data-field-title {
+  font-size: 17px; }
+
+.file-chooser {
+  margin: 0;
+  padding: 0; }
+  .file-chooser input {
+    position: absolute;
+    height: 0.1px;
+    width: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1; }
+  .file-chooser-avatar .avatar-icon {
+    font-size: 220px; }
+  .file-chooser-avatar input {
+    position: absolute;
+    height: 0.1px;
+    width: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1; }
+  .file-chooser-avatar label {
+    display: none;
+    position: absolute; }
+    .file-chooser-avatar label .material-icons {
+      font-size: 100px; }
+      .file-chooser-avatar label .material-icons:hover {
+        cursor: pointer; }
+  .file-chooser-avatar:hover label {
+    display: block; }
