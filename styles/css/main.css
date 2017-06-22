@@ -512,6 +512,10 @@ body {
   overflow: hidden;
 }
 
+.no-overflow {
+  overflow: hidden;
+}
+
 .cursor-default {
   cursor: default;
 }
@@ -1014,6 +1018,22 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 .base .list-item-no-pointer:hover {
   cursor: default;
   background: rgba(0, 0, 0, 0.3) !important;
+}
+
+.base .document figure:hover {
+  background-color: rgba(18, 178, 210, 0.5) !important;
+}
+
+.base .document-image {
+  color: #FAFAFA;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.base .pdf {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 .base md-menu span, .base md-menu-item span {

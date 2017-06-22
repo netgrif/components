@@ -1,7 +1,9 @@
 .document {
 
-  :hover {
-    background-color: $color-primary-500-op-50; //TODO: fix to show properly
+  figure {
+    &:hover {
+      background-color: $color-primary-500-op-50 !important;
+    }
   }
 
   &-image {
@@ -19,5 +21,4 @@
 }
 
 .pdf_wrapper {
-  height: 700px;
 }

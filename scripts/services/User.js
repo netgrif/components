@@ -53,6 +53,19 @@ define(['angular', '../modules/Main'], function (angular) {
             canDo: function (roles, action) {
                 if (!roles || !action || !user.roles || !(roles instanceof Object)) return false;
                 return user.roles.some(role => roles[role] ? roles[role][action] : false);
+            },
+
+            getAsObject: function () {
+                return {
+                    email: user.login,
+                    fullname: user.name,
+                    name: user.name.split(" ")[0],
+                    surname: user.name.split(" ")[1],
+                    authorities: user.authority,
+                    userProcessRoles: user.roles.map(role => {
+                        roleId: role
+                    })
+            }
             }
         };
         return user;

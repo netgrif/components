@@ -51,7 +51,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 			};
 
 			self.signup = function () {
-				if (self.signupUser.password == self.retypedPassword) {
+				if (self.signupUser.password === self.retypedPassword) {
 					self.signupUser.password = btoa(self.signupUser.password);
 					var jsonSignupData = JSON.stringify(self.signupUser);
 					$log.debug("formData: " + jsonSignupData);
