@@ -1,19 +1,23 @@
-define([], function () {
+define(['./HalResource'], function (HalResource) {
     /**
      * Constructor for class DataField
      * Angular dependencies: $dialog, $user, $fileUpload, $snackbar
      * @param {Object} parent
      * @param {Object} resource
+     * @param {Object} links
      * @param {Object} angular
      * @constructor
      */
-    function DataField(parent, resource, angular) {
+    function DataField(parent, resource, links, angular) {
+        HalResource.call(this,links);
         this.parent = parent;
         Object.assign(this, resource, angular);
 
         this.newValue = this.value;
         this.changed = false;
     }
+    DataField.prototype = Object.create(HalResource.prototype);
+    DataField.prototype.constructor = DataField;
 
     DataField.prototype.format = function (value, type) {
         if (!value) return;

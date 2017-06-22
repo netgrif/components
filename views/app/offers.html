@@ -40,7 +40,7 @@
 					</div>
 
 					<div layout="row" class="padding-default padding-horizontal-2x list-item"
-						 ng-repeat="useCase in offCtrl.caseTab.cases | orderBy:useCase.stringId"
+						 ng-repeat-start="useCase in offCtrl.caseTab.cases | orderBy:useCase.stringId"
 						 ng-click="offCtrl.caseTab.openCase(useCase)">
 						<i flex="5" class="material-icons {{::useCase.color}}">label</i>
 						<span flex="15">{{::useCase.visualId}}</span>
@@ -48,8 +48,8 @@
 						<span flex="20">Client Name</span>
 						<span flex="15">21.6.2017</span>
 						<span flex="10">250</span>
-						<md-divider></md-divider>
 					</div>
+					<md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 
 				</div>
 
@@ -95,22 +95,24 @@
 
 					<md-expansion-panel class="margin-horizontal-default" ng-repeat="task in tab.tasks | orderBy:task.title">
 
-						<md-expansion-panel-collapsed layout="row" layout-align="start center">
-							<i flex="5" class="material-icons color-fg-accent-50">label</i>
-							<span flex="30">Offer</span>
-							<span flex="30">Title</span>
-							<span flex="30">Start date</span>
-							<i flex="5" class="material-icons color-fg-primary-500">done</i>
+						<md-expansion-panel-collapsed layout="row" layout-align="start center" ng-click="task.click($panel)">
+							<i ng-if="task.caseColor" flex="5" class="material-icons {{::task.caseColor}}">label</i>
+							<!--<img ng-src="task.icon">-->
+							<span flex="30">{{::task.caseTitle}}</span>
+							<span flex="30">{{::task.title}}</span>
+							<span flex="30">{{task.formatDate(task.startDate)}}</span>
+							<i ng-if="task.filled" flex="5" class="material-icons color-fg-primary-500">done</i>
 						</md-expansion-panel-collapsed>
 
 						<md-expansion-panel-expanded>
 
-							<md-expansion-panel-header>
-								<i flex="5" class="material-icons color-fg-accent-50">label</i>
-								<span flex="30">Offer</span>
-								<span flex="30">Title</span>
-								<span flex="30">Start date</span>
-								<i flex="5" class="material-icons color-fg-primary-500">done</i>
+							<md-expansion-panel-header ng-click="task.click($panel)">
+								<i ng-if="task.caseColor" flex="5" class="material-icons {{::task.caseColor}}">label</i>
+								<!--<img ng-src="task.icon">-->
+								<span flex="30">{{::task.caseTitle}}</span>
+								<span flex="30">{{::task.title}}</span>
+								<span flex="30">{{task.formatDate(task.startDate)}}</span>
+								<i ng-if="task.filled" flex="5" class="material-icons color-fg-primary-500">done</i>
 							</md-expansion-panel-header>
 
 							<md-expansion-panel-content>
@@ -126,9 +128,9 @@
 
 							<md-expansion-panel-footer>
 								<div flex></div>
-								<md-button>Save</md-button>
-								<md-button>Finish</md-button>
-								<md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+								<md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.save()">Save</md-button>
+								<md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()">Finish</md-button>
+								<md-button class="md-primary" ng-click="task.click($panel)"">Collapse</md-button>
 							</md-expansion-panel-footer>
 
 						</md-expansion-panel-expanded>

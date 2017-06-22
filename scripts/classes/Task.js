@@ -1,23 +1,34 @@
-define(['./DataField'], function (DataField) {
+define(['./DataField','./HalResource'], function (DataField, HalResource) {
     /**
      * Constructor for Task class
      * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload
      * @param {Object} parent
      * @param {Object} resource
+     * @param {Object} links
      * @param {Object} angular
      * @constructor
      */
-    function Task(parent, resource, angular) {
+    function Task(parent, resource, links, angular) {
+        HalResource.call(this,links);
         this.parent = parent;
         Object.assign(this, resource, angular);
 
         this.data = [];
+        this.expanded = false;
     }
+    Task.prototype = Object.create(HalResource.prototype);
+    Task.prototype.constructor = Task;
 
     Task.prototype.status = function () {
         if (this.user && this.finishDate) return "Done";
         if (this.user && !this.finishDate && this.startDate) return "Assigned";
         return "New";
+    };
+
+    Task.prototype.formatDate = function (date) {
+        if (!date) return;
+        return `${DataField.padding(value.dayOfMonth, 0)}.${DataField.padding(value.monthValue, 0)}.${value.year}
+            ${DataField.padding(value.hour, 0)}:${DataField.padding(value.minute, 0)}`;
     };
 
     Task.prototype.assign = function () {
@@ -84,7 +95,8 @@ define(['./DataField'], function (DataField) {
             if (response.$response().data._embedded) {
                 Object.keys(response.$response().data._embedded).forEach((item, index, array) => {
                     response.$request().$get(item).then(function (resource) {
-                        self.data = resource.map(r => new DataField(self, r, {
+
+                        self.data = resource.map(r => new DataField(self, r, response.$response().data._links,{
                             $dialog: self.$dialog,
                             $snackbar: self.$snackbar,
                             $user: self.$user,
@@ -132,6 +144,17 @@ define(['./DataField'], function (DataField) {
             self.$snackbar.error("Saving data has failed");
             callback(false);
         });
+    };
+
+    Task.prototype.click = function (panel) {
+        if(this.expanded){
+            this.cancel();
+            panel.collapse();
+        } else {
+            this.assign();
+            this.load();
+        }
+        this.expanded = !this.expanded;
     };
 
     return Task;

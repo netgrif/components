@@ -36,19 +36,32 @@ define(['./Tab', './Task'], function (Tab, Task) {
         this.load(false);
     };
 
+    TaskTab.prototype.buildRequestConfig = function (url) {
+        switch (url) {
+            case TaskTab.URL_BYCASE:
+                return {
+                    method: 'POST',
+                    url: url,
+                    data: [this.useCase.stringId]
+                };
+            default:
+                const query = this.getSearchQuery();
+                return config = {
+                    method: query ? 'POST' : 'GET',
+                    url: url,
+                    data: query
+                };
+        }
+    };
+
     TaskTab.prototype.load = function (next) {
-        if (this.loading || !baseUrl || (this.tasks && this.page.totalElements === this.tasks.length)) return;
+        if (this.loading || !this.baseUrl || (this.tasks && this.page.totalElements === this.tasks.length)) return;
 
         const self = this;
         let url = this.filter ? TaskTab.URL_SEARCH : this.baseUrl;
         if (next) url = this.page.next;
 
-        const query = this.getSearchQuery();
-        const config = {
-            method: query ? 'POST' : 'GET',
-            url: url,
-            data: query
-        };
+        const config = this.buildRequestConfig(url);
 
         this.loading = true;
         this.$http(config).then(function (response) {
