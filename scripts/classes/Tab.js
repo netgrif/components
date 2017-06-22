@@ -4,6 +4,7 @@ define([], function () {
         this.page = {};
         this.loading = false;
     };
+    Tab.prototype.activate = function () { };
 
     return Tab;
 });

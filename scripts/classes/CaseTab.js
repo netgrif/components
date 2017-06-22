@@ -1,10 +1,17 @@
 define(['./Tab'], function (Tab) {
-    function CaseTab(label, controller, $http, $dialog) {
+    /**
+     * Constructor for CaseTab class
+     * Angular dependencies: $http, $dialog, $snackbar
+     * @param {String} label
+     * @param {Object} controller
+     * @param {Object} angular
+     * @constructor
+     */
+    function CaseTab(label, controller, angular) {
         Tab.call(this, label);
 
         this.controller = controller;
-        this.$http = $http;
-        this.$dialog = $dialog;
+        Object.assign(this,angular);
 
         this.cases = [];
         this.newCase = {};
@@ -38,14 +45,14 @@ define(['./Tab'], function (Tab) {
                     self.cases = resources;
                 self.loading = false;
             }, function () {
-                $snackbar.error("No resource for cases was found!");
+                self.$snackbar.error("No resource for cases was found!");
                 self.page.last = undefined;
                 self.page.next = undefined;
                 self.cases.splice(0, self.cases.length);
                 self.loading = false;
             });
         }, function () {
-            $snackbar.error("Getting cases failed!");
+            self.$snackbar.error("Getting cases failed!");
             self.loading = false;
         })
     };
@@ -69,7 +76,7 @@ define(['./Tab'], function (Tab) {
                         self.newCase = {};
                     }
                 }, function () {
-                    $snackbar.error("Creating new case failed!");
+                    self.$snackbar.error("Creating new case failed!");
                     self.newCase = {};
                 });
         }
@@ -77,12 +84,12 @@ define(['./Tab'], function (Tab) {
 
     CaseTab.prototype.loadPetriNets = function () {
         const self = this;
-        $http.get("/res/petrinet/refs").then(function (response) {
+        this.$http.get("/res/petrinet/refs").then(function (response) {
             response.$request().$get("petriNetReferences").then(function (resource) {
                 self.petriNetRefs = resource;
             });
         }, function () {
-            $snackbar.error("Petri net refs get failed!");
+            self.$snackbar.error("Petri net refs get failed!");
         });
     };
 
