@@ -874,10 +874,6 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   color: #12b2d2 !important;
 }
 
-md-expansion-panel md-input-container.md-default-theme .md-input, md-input-container .md-input {
-  border-color: #FAFAFA !important;
-}
-
 .base .background-login {
   background-image: url("../../assets/bratislava.jpg");
   background-size: cover;
