@@ -40,7 +40,7 @@
 					</div>
 
 					<div layout="row" class="padding-default padding-horizontal-2x list-item"
-						 ng-repeat-start="useCase in offCtrl.caseTab.cases | orderBy:useCase.stringId"
+						 ng-repeat-start="useCase in offCtrl.caseTab.cases | orderBy:'strindId'"
 						 ng-click="offCtrl.caseTab.openCase(useCase)">
 						<i flex="5" class="material-icons {{::useCase.color}}">label</i>
 						<span flex="15">{{::useCase.visualId}}</span>
@@ -93,7 +93,7 @@
 						<span flex="5">{{::$i18n.block.task.status}}</span>
 					</div>
 
-					<md-expansion-panel class="margin-horizontal-default" ng-repeat="task in tab.tasks | orderBy:task.title">
+					<md-expansion-panel class="margin-horizontal-default" ng-repeat="task in tab.tasks | orderBy:'title'">
 
 						<md-expansion-panel-collapsed layout="row" layout-align="start center" ng-click="task.click($panel)">
 							<i ng-if="task.caseColor" flex="5" class="material-icons {{::task.caseColor}}">label</i>
@@ -117,11 +117,11 @@
 
 							<md-expansion-panel-content>
 								<div layout="row" layout-align="start center" layout-wrap class="cursor-default">
-									<div ng-repeat="field in task.data" flex="50" flex-sm="100">
+									<div ng-repeat="field in task.data | orderBy:'order'" flex="50" flex-sm="100">
 										<div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
 									</div>
 								</div>
-								<div layout="row" layout-align="center center" ng-if="!task.data">
+								<div layout="row" layout-align="center center" ng-if="task.data.length === 0">
 									<span>There are no data assigned to this task</span>
 								</div>
 							</md-expansion-panel-content>

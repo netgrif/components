@@ -37,8 +37,8 @@ define(['./Tab', './Task'], function (Tab, Task) {
     };
 
     TaskTab.prototype.buildRequestConfig = function (url) {
-        switch (url) {
-            case TaskTab.URL_BYCASE:
+        switch (true) {
+            case url.includes(TaskTab.URL_BYCASE):
                 return {
                     method: 'POST',
                     url: url,
@@ -56,7 +56,7 @@ define(['./Tab', './Task'], function (Tab, Task) {
 
     TaskTab.prototype.load = function (next) {
         if (this.loading || !this.baseUrl) return;
-        if(next && this.tasks && this.page.totalElements === this.tasks.length) return;
+        if (next && this.tasks && this.page.totalElements === this.tasks.length) return;
 
         const self = this;
         let url = this.filter ? TaskTab.URL_SEARCH : this.baseUrl;
@@ -76,7 +76,7 @@ define(['./Tab', './Task'], function (Tab, Task) {
                 }
 
                 const tasks = [];
-                resources.forEach((r, i) => tasks.push(new Task(self, r, rawData[i]._links,{
+                resources.forEach((r, i) => tasks.push(new Task(self, r, rawData[i]._links, {
                     $http: self.$http,
                     $snackbar: self.$snackbar,
                     $dialog: self.$dialog,
