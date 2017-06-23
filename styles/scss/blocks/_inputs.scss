@@ -1,9 +1,17 @@
 // Global changes
-md-input-container {
+md-dialog {
+
+    span {
+        color: $color-black-op-87 !important;
+    }
+
+    md-select-value {
+        color: $color-black-op-87 !important;
+    }
 
     input, label {
-        color: $color-grey-50 !important;
-        font-weight: 300 !important;
+        color: $color-black-op-87 !important;
+        font-weight: 300;
     }
 
     &:not(.md-input-invalid) {
@@ -11,8 +19,27 @@ md-input-container {
         &.md-input-focused {
 
             label {
-                color: $color-grey-50 !important;
-                font-weight: 300 !important;
+                color: $color-black-op-87 !important;
+                font-weight: 300;
+            }
+        }
+    }
+}
+
+md-input-container {
+
+    input, label {
+        color: $color-grey-50 !important;
+        font-weight: 300;
+    }
+
+    &:not(.md-input-invalid) {
+
+        &.md-input-focused {
+
+            label {
+                color: $color-grey-50;
+                font-weight: 300;
             }
         }
     }
@@ -31,20 +58,6 @@ md-switch span {
 
 }
 
-md-input-container {
-
-    md-datepicker .md-pane-open{
-
-        label {
-
-            @at-root label {
-                color: $color-black-op-87 !important;
-            }
-        }
-
-    }
-}
-
 .md-datepicker-button {
 
     md-icon {
@@ -60,8 +73,3 @@ textarea {
     color: $color-grey-50;
     font-weight: 300;
 }
-
-//.md-datepicker-input-mask {
-//    margin: 0 !important;
-//    background-color: $color-black-op-40;
-//}

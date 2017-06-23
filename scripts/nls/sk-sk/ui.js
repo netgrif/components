@@ -36,9 +36,13 @@ define({
         }
     },
     block: {
-        dialogs: {
+        dialog: {
             createCase: {
-
+                heading: "Create Offer",
+                process: "Proces",
+                title: "Názov",
+                color: "Farba",
+                submit: "Vytvoriť"
             },
             assignUser: {
 

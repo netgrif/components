@@ -40,9 +40,13 @@ define({
             }
         },
         block: {
-            dialogs: {
+            dialog: {
                 createCase: {
-                    // TODO 20.6.2017 i18n create case dialog
+                    heading: "Create Offer",
+                    process: "Process",
+                    title: "Title",
+                    color: "Color",
+                    submit: "Submit"
                 },
                 assignUser: {
                     // TODO 20.6.2017 i18n assigned user dialog

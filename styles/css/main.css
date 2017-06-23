@@ -50,6 +50,10 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+.color-fg-black-op-87 {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
 .color-fg-primary-50 {
   color: #e3f6fa;
 }
@@ -196,6 +200,10 @@
 
 .color-bg-black-op-60 {
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+.color-bg-black-op-87 {
+  background-color: rgba(0, 0, 0, 0.87) !important;
 }
 
 .color-bg-primary-50 {
@@ -1061,14 +1069,32 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   color: #FAFAFA;
 }
 
+.base md-dialog span {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.base md-dialog md-select-value {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.base md-dialog input, .base md-dialog label {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: 300;
+}
+
+.base md-dialog:not(.md-input-invalid).md-input-focused label {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: 300;
+}
+
 .base md-input-container input, .base md-input-container label {
   color: #FAFAFA !important;
-  font-weight: 300 !important;
+  font-weight: 300;
 }
 
 .base md-input-container:not(.md-input-invalid).md-input-focused label {
-  color: #FAFAFA !important;
-  font-weight: 300 !important;
+  color: #FAFAFA;
+  font-weight: 300;
 }
 
 .base md-switch span {
@@ -1077,10 +1103,6 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 }
 
 .base .md-datepicker-calendar-pane span {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-
-label {
   color: rgba(0, 0, 0, 0.87) !important;
 }
 
@@ -1183,4 +1205,9 @@ label {
 
 .base .file-chooser-avatar:hover label {
   display: block;
+}
+
+.base md-dialog input, .base md-dialog label {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: 300;
 }
