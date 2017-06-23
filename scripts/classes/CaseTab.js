@@ -1,7 +1,7 @@
 define(['./Tab'], function (Tab) {
     /**
      * Constructor for CaseTab class
-     * Angular dependencies: $http, $dialog, $snackbar
+     * Angular dependencies: $http, $dialog, $snackbar, $user
      * @param {String} label
      * @param {Object} controller
      * @param {Object} angular
@@ -11,7 +11,7 @@ define(['./Tab'], function (Tab) {
         Tab.call(this, label);
 
         this.controller = controller;
-        Object.assign(this,angular);
+        Object.assign(this, angular);
 
         this.cases = [];
         this.newCase = {};
@@ -20,18 +20,38 @@ define(['./Tab'], function (Tab) {
     CaseTab.prototype = Object.create(Tab.prototype);
     CaseTab.prototype.constructor = CaseTab;
 
+    CaseTab.URL_SEARCH = "/res/workflow/case/search";
+    CaseTab.URL_BYAUTHOR = "/res/workflow/case/author/";
+
 
     CaseTab.prototype.activate = function () {
         if (this.cases.length === 0)
             this.load(false);
     };
 
+    CaseTab.prototype.buildRequest = function (url) {
+        switch (true) {
+            case url.includes(CaseTab.URL_SEARCH):
+                return {
+                    method: "POST",
+                    url: url,
+                    data: []
+                };
+            case url.includes(CaseTab.URL_BYAUTHOR):
+                return {
+                    method: "GET",
+                    url: url
+                };
+        }
+    };
+
     CaseTab.prototype.load = function (next) {
         const self = this;
         if (this.page.totalElements === this.cases.length || this.loading) return;
-        const url = next ? self.page.next : "/res/workflow/case/search";
+        const url = next ? self.page.next : "/res/workflow/case/author/" + this.$user.id;
+        const config = this.buildRequest(url);
         self.loading = true;
-        this.$http.post(url, []).then(function (response) {
+        this.$http(config).then(function (response) {
             self.page = Object.assign(self.page, response.page);
             response.$request().$get("cases").then(function (resources) {
                 if (self.page.totalPages !== 1) {
@@ -71,9 +91,11 @@ define(['./Tab'], function (Tab) {
             const self = this;
             this.$http.post("/res/workflow/case", JSON.stringify(this.newCase))
                 .then(function (response) {
-                    if (response.success) {
+                    if (response) {
                         self.$dialog.closeCurrent();
                         self.newCase = {};
+                        self.openCase(response);
+                        self.cases.splice(0, self.cases.length);
                     }
                 }, function () {
                     self.$snackbar.error("Creating new case failed!");

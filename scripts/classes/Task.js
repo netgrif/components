@@ -28,7 +28,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.formatDate = function (date) {
         if (!date) return;
-        if(date instanceof Date) return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
+        if (date instanceof Date) return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
         return `${DataField.padding(date.dayOfMonth, 0)}.${DataField.padding(date.monthValue, 0)}.${date.year}
             ${DataField.padding(date.hour, 0)}:${DataField.padding(date.minute, 0)}`;
     };
@@ -125,7 +125,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                 });
 
             } else {
-                self.$snackbar.error(`No data for task ${self.title}`);
+                //self.$snackbar.error(`No data for task ${self.title}`);
+                console.log(`No data for task ${self.title}`);
                 callback(false);
             }
 
