@@ -1,7 +1,7 @@
 define(['./DataField', './HalResource'], function (DataField, HalResource) {
     /**
      * Constructor for Task class
-     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload
+     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout
      * @param {Object} parent
      * @param {Object} resource
      * @param {Object} links
@@ -138,7 +138,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.validData = function () {
         const validation = this.data.every(field => field.valid());
-        this.$snackbar.error("Not all required fields have values! Required fields are marked with asterisk (*)");
+        if(!validation) this.$snackbar.error("Not all required fields have values! Required fields are marked with asterisk (*)");
         return validation;
     };
 
@@ -174,7 +174,10 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             });
         } else {
             this.assign(success => {
-                if (success) this.load()
+                if (success) {
+                    this.load();
+                    this.$timeout(()=>{},200);
+                }
             });
         }
         this.expanded = !this.expanded;

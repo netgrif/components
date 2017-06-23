@@ -75,13 +75,12 @@
 
 						<div layout="row" layout-align="space-between center" flex>
 
-							<span><strong>Insurance calculation</strong></span>
-							<span>Summary</span>
-							<span>Design of contract</span>
+                            <span ng-repeat="trans in tab.transactions | orderBy:'stringId'"
+                                  ng-class=" trans.active ? 'active' : '' ">{{::trans.title}}</span>
 
 						</div>
 
-						<md-progress-linear md-mode="determinate" value="30" class="margin-top-default"></md-progress-linear>
+						<!--<md-progress-linear md-mode="determinate" ng-value="(100 / tab.transactions.length) * tab.transactionProgress + 1" class="margin-top-default"></md-progress-linear>-->
 
 					</div>
 

@@ -1,8 +1,8 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offers', '../modules/Main'],
     function (angular, CaseTab, TaskTab) {
         angular.module('ngOffers').controller('OffersController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload','$timeout',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout) {
                     const self = this;
 
                     self.activeTabIndex = 0;
@@ -26,8 +26,12 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                                 $snackbar,
                                 $dialog,
                                 $user,
-                                $fileUpload
+                                $fileUpload,
+                                $timeout
                             }));
+                        else
+                            self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
+
                     };
 
                     self.closeTab = function (useCaseId) {

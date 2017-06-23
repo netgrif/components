@@ -1,7 +1,7 @@
-define(['./Tab', './Task'], function (Tab, Task) {
+define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     /**
      * Constructor for TaskTab class
-     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload
+     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout
      * @param label
      * @param baseUrl
      * @param useCase
@@ -16,6 +16,8 @@ define(['./Tab', './Task'], function (Tab, Task) {
         Object.assign(this, angular);
 
         this.tasks = [];
+        this.transactions = [];
+        this.transactionProgress = 0;
     }
 
     TaskTab.prototype = Object.create(Tab.prototype);
@@ -27,6 +29,7 @@ define(['./Tab', './Task'], function (Tab, Task) {
     TaskTab.URL_BYCASE = "/res/task/case";
 
     TaskTab.prototype.activate = function () {
+        this.loadTransactions();
         this.load(false);
     };
 
@@ -81,12 +84,15 @@ define(['./Tab', './Task'], function (Tab, Task) {
                     $snackbar: self.$snackbar,
                     $dialog: self.$dialog,
                     $user: self.$user,
-                    $fileUpload: self.$fileUpload
+                    $fileUpload: self.$fileUpload,
+                    $timeout: self.$timeout
                 })));
                 if (next) self.tasks = tasks.concat(self.tasks);
                 else self.tasks = tasks;
 
                 self.loading = false;
+                self.transactions.forEach(trans => trans.setActive(self.tasks));
+                self.transactionProgress = self.mostForwardTransaction();
 
             }, function () {
                 self.$snackbar.info(`No tasks found in ${self.label}`);
@@ -124,6 +130,31 @@ define(['./Tab', './Task'], function (Tab, Task) {
         }));
 
         return query;
+    };
+
+    TaskTab.prototype.loadTransactions = function () {
+        if (!this.useCase) return;
+
+        const self = this;
+        this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
+            response.$request().$get("transactions").then(function (resources) {
+                self.transactions = resources.map(r => new Transaction(r,{}));
+
+            }, function () {
+                console.log(`No resource transactions for net ${self.useCase.petriNetId}`);
+            })
+
+        }, function () {
+            self.$snackbar.error(`Transactions for ${self.useCase.title} failed to load`);
+        });
+    };
+
+    TaskTab.prototype.mostForwardTransaction = function () {
+        let index = 0;
+        this.transactions.forEach((trans, i) => {
+            if(trans.active) index = i > index ? i : index;
+        });
+        return index;
     };
 
     return TaskTab;
