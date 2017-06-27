@@ -3,48 +3,48 @@
     <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="caseCtrl.activeTabIndex">
         <md-tab md-on-select="caseCtrl.searchCases()" label="{{$i18n.page.cases.tab.allCases}}">
             <md-content class="md-padding color-bg-transparent">
-                <md-card class="search-header" layout="row">
-                    <div flex layout="column">
-                        <div layout="row" layout-align="start end">
-                            <md-icon flex="5" class="material-icons md-primary">search</md-icon>
-                            <form flex layout="row">
-                                <md-autocomplete class="md-block autocomplete"
-                                                 md-search-text="caseCtrl.filter.search"
-                                                 md-selected-item="caseCtrl.filter.selected"
-                                                 md-selected-item-change="caseCtrl.searchItemSelected(item)"
-                                                 md-items="item in caseCtrl.queryNets()"
-                                                 md-item-text="item.title"
-                                                 md-min-length="0"
-                                                 md-no-cache="true"
-                                                 md-floating-label="{{::$i18n.block.taskFilter.process}}">
-                                    <md-item-template>
-                                        <span md-highlight-text="caseCtrl.filter.search" md-highlight-flags="i">{{item.title}}</span>
-                                    </md-item-template>
-                                    <md-not-found>
-                                        {{::$i18n.block.taskFilter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.block.task.notFound}}
-                                    </md-not-found>
-                                </md-autocomplete>
-                            </form>
-                        </div>
-                        <div layout="row" layout-align="start center">
-                            <md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>
-                            <md-chips ng-model="caseCtrl.filter.chips" readonly="true" md-removable="true"
-                                      md-on-remove="caseCtrl.onChipRemove($chip)"
-                                      id="chips-container" flex>
-                                <md-chip-template>
-                                    {{$chip.title}}
-                                </md-chip-template>
-                            </md-chips>
-                        </div>
-                    </div>
-                    <div layout="column" layout-align="center center">
-                        <div layout="row">
-                            <md-button class="md-primary" ng-click="caseCtrl.searchCases()">
-                                {{$i18n.block.taskFilter.search}}
-                            </md-button>
-                        </div>
-                    </div>
-                </md-card>
+                <!--<md-card class="search-header" layout="row">-->
+                    <!--<div flex layout="column">-->
+                        <!--<div layout="row" layout-align="start end">-->
+                            <!--<md-icon flex="5" class="material-icons md-primary">search</md-icon>-->
+                            <!--<form flex layout="row">-->
+                                <!--&lt;!&ndash;<md-autocomplete class="md-block autocomplete"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;md-search-text="caseCtrl.filter.search"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;md-selected-item="caseCtrl.filter.selected"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;md-selected-item-change="caseCtrl.searchItemSelected(item)"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;md-items="item in caseCtrl.queryNets()"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;md-item-text="item.title"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;md-min-length="0"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;md-no-cache="true"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;md-floating-label="{{::$i18n.block.taskFilter.process}}">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<md-item-template>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<span md-highlight-text="caseCtrl.filter.search" md-highlight-flags="i">{{item.title}}</span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</md-item-template>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<md-not-found>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;{{::$i18n.block.taskFilter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.block.task.notFound}}&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</md-not-found>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</md-autocomplete>&ndash;&gt;-->
+                            <!--</form>-->
+                        <!--</div>-->
+                        <!--<div layout="row" layout-align="start center">-->
+                            <!--<md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>-->
+                            <!--<md-chips ng-model="caseCtrl.filter.chips" readonly="true" md-removable="true"-->
+                                      <!--md-on-remove="caseCtrl.onChipRemove($chip)"-->
+                                      <!--id="chips-container" flex>-->
+                                <!--<md-chip-template>-->
+                                    <!--{{$chip.title}}-->
+                                <!--</md-chip-template>-->
+                            <!--</md-chips>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div layout="column" layout-align="center center">-->
+                        <!--<div layout="row">-->
+                            <!--<md-button class="md-primary" ng-click="caseCtrl.searchCases()">-->
+                                <!--{{$i18n.block.taskFilter.search}}-->
+                            <!--</md-button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</md-card>-->
                 <div class="cases">
                     <md-card class="cases-header" layout="column">
                         <md-card-content layout="row" layout-align="start center">

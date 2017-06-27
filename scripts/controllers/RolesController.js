@@ -29,6 +29,13 @@ define(['angular', 'angularCharts', '../modules/Roles', '../modules/Main'],
                             self.roles.roles = resources;
                             self.roles.roles.forEach(role => role.selected = false);
                             $scope.roles = self.roles.roles;
+
+                            self.users.forEach(user => {
+                                if(user.selected){
+                                    user.selected = false;
+                                    self.selectUser(user);
+                                }
+                            });
                         }, function () {
                             $log.debug("No roles was found!");
                         });

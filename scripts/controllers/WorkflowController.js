@@ -39,8 +39,7 @@ define(['angular', '../modules/Workflow', '../services/FileUpload'], function (a
 				if (!jQuery.isEmptyObject(self.newCase) || !self.newCase.netId) {
 					$http.post("/res/workflow/case", JSON.stringify(self.newCase))
 						.then(function (response) {
-							$log.debug(response);
-							if(response.success)$dialog.closeCurrent();
+							if(response.stringId)$dialog.closeCurrent();
 							self.newCase = {};
 						}, function () {
 							$log.debug("Creating new case failed!");
