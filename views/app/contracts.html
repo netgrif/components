@@ -50,4 +50,90 @@
 
     </md-expansion-panel>
 
+    <!-- test -->
+    <md-expansion-panel class="margin-horizontal-default">
+
+        <md-expansion-panel-collapsed layout="row" layout-align="start center">
+            <i flex="5" class="material-icons color-fg-accent-50">label</i>
+            <span flex="30">Offer</span>
+            <span flex="30">Title</span>
+            <span flex="30">Start date</span>
+            <i flex="5" class="material-icons color-fg-primary-500">done</i>
+        </md-expansion-panel-collapsed>
+
+        <md-expansion-panel-expanded>
+
+            <md-expansion-panel-header>
+                <i flex="5" class="material-icons color-fg-accent-50">label</i>
+                <span flex="30">Offer</span>
+                <span flex="30">Title</span>
+                <span flex="30">Start date</span>
+                <i flex="5" class="material-icons color-fg-primary-500">done</i>
+            </md-expansion-panel-header>
+
+            <md-expansion-panel-content>
+                <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
+                    <div flex="50" flex-sm="100">
+                        <div ng-cloak flex>
+                            <div class="data-item" layout="row" layout-align="start center">
+                                <div flex="50">
+                                    <span flex class="data-field-title cursor-pointer">
+                                        Type text
+                                        <md-tooltip ng-if="field.description">
+                                            Text description
+                                        </md-tooltip>
+                                    </span>
+                                </div>
+                                <div flex="20"></div>
+                                <div flex="60">
+                                    <md-input-container class="md-block" flex>
+                                        <label>Text</label>
+                                        <input type="text"
+                                               ng-model="field.newValue"
+                                               ng-required="field.behavior.required">
+                                    </md-input-container>
+                                </div>
+                                <div flex="10"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </md-expansion-panel-content>
+
+            <md-expansion-panel-footer>
+                <div flex></div>
+                <md-button>Save</md-button>
+                <md-button>Finish</md-button>
+                <md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+            </md-expansion-panel-footer>
+
+        </md-expansion-panel-expanded>
+
+    </md-expansion-panel>
+
+    <!-- test -->
+    <div ng-cloak flex>
+        <div class="data-item" layout="row" layout-align="start center">
+            <div flex="50">
+                <span flex class="data-field-title cursor-pointer">
+                    Type text
+                    <md-tooltip ng-if="field.description">
+                        Text description
+                    </md-tooltip>
+                </span>
+            </div>
+            <div flex="20"></div>
+            <div flex="60">
+                <md-input-container class="md-block" flex>
+                    <label>Text</label>
+                    <input type="text"
+                           ng-model="field.newValue"
+                           ng-required="field.behavior.required">
+                </md-input-container>
+            </div>
+            <div flex="10"></div>
+        </div>
+    </div>
+    <!-- test -->
+
 </div>

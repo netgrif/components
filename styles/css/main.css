@@ -854,7 +854,7 @@ md-expansion-panel {
   margin-bottom: 1px;
 }
 
-md-expansion-panel * {
+md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-expansion-panel-footer-container {
   border: none !important;
 }
 

@@ -1,7 +1,7 @@
 md-expansion-panel {
-    background: $color-black-op-30 !important;
-    cursor: pointer !important;
-}
+     background: $color-black-op-30 !important;
+     cursor: pointer !important;
+ }
 md-expansion-panel md-expansion-panel-collapsed,
 md-expansion-panel .md-expansion-panel-footer-container,
 md-expansion-panel .md-expansion-panel-header-container {
@@ -19,9 +19,9 @@ md-expansion-panel {
     box-shadow: none !important;
     margin-bottom: 1px;
 
-    * {
-        border: none !important;
-    }
+    .md-expansion-panel-header-container, .md-expansion-panel-footer-container {
+          border: none !important;
+      }
 }
 
 md-expansion-panel-collapsed {
