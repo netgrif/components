@@ -17,6 +17,6 @@ target/
 
 ### Work folder ###
 _issues/
-/prepros.cfg
+/prepros-6.config
 /styles/scss/prepros.cfg
 /views/test.html
