@@ -2,19 +2,22 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     /**
      * Constructor for Task class
      * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout
-     * @param {Object} parent
+     * @param {Object} tab
+     * @param {Object} panel
      * @param {Object} resource
      * @param {Object} links
      * @param {Object} angular
      * @constructor
      */
-    function Task(parent, resource, links, angular) {
+    function Task(tab, panel, resource, links, angular) {
         HalResource.call(this, links);
-        this.parent = parent;
+        this.tab = tab;
+        this.panel = panel;
         Object.assign(this, resource, angular);
 
         this.data = [];
         this.expanded = false;
+        this.loading = false;
     }
 
     Task.prototype = Object.create(HalResource.prototype);
@@ -80,7 +83,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.doFinish = function () {
         const self = this;
         this.$http.get(this.link("finish")).then(function (response) {
-            if (response.success) self.parent.reload();
+            if (response.success) self.tab.reload();
             if (response.error) self.$snackbar.error(response.error);
 
         }, function () {
@@ -110,6 +113,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         }
 
         const self = this;
+        this.loading = true;
         self.$http.get(this.link("data")).then(function (response) {
             if (response.$response().data._embedded) {
                 Object.keys(response.$response().data._embedded).forEach((item, index, array) => {
@@ -138,7 +142,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.validData = function () {
         const validation = this.data.every(field => field.valid());
-        if(!validation) this.$snackbar.error("Not all required fields have values! Required fields are marked with asterisk (*)");
+        if (!validation) this.$snackbar.error("Not all required fields have values! Required fields are marked with asterisk (*)");
         return validation;
     };
 
@@ -164,23 +168,38 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         });
     };
 
-    Task.prototype.click = function (panel) {
+    Task.prototype.click = function () {
         if (this.expanded) {
-            this.cancel(success => {
-                if (success) {
-                    panel.collapse();
-                    this.parent.reload();
-                }
-            });
+            this.collapse();
+            // this.cancel(success => {
+            //     if (success) {
+            //         panel.collapse();
+            //         this.tab.reload();
+            //     }
+            // });
         } else {
-            this.assign(success => {
-                if (success) {
-                    this.load();
-                    this.$timeout(()=>{},200);
-                }
-            });
+            this.expand();
+            // this.assign(success => {
+            //     if (success) {
+            //         this.load();
+            //         this.$timeout(()=>{},200);
+            //     }
+            // });
         }
         this.expanded = !this.expanded;
+    };
+
+    Task.prototype.expand = function () {
+        this.panel.collapse({animation: false});
+        this.load();
+        this.$timeout(() => {
+            this.loading = false;
+            this.panel.expand();
+        }, 300);
+    };
+
+    Task.prototype.collapse = function () {
+        this.panel.collapse();
     };
 
     return Task;

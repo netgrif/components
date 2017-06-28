@@ -1,8 +1,8 @@
-define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offers', '../modules/Main'],
+define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offers', '../modules/Main','angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab) {
         angular.module('ngOffers').controller('OffersController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload','$timeout',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload','$timeout','$mdExpansionPanelGroup',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup) {
                     const self = this;
 
                     self.activeTabIndex = 0;
@@ -27,7 +27,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                                 $dialog,
                                 $user,
                                 $fileUpload,
-                                $timeout
+                                $timeout,
+                                $mdExpansionPanelGroup
                             }));
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;

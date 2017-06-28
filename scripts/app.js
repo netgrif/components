@@ -109,7 +109,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
             $mdDateLocaleProvider.firstDayOfWeek = 1;
             $mdDateLocaleProvider.formatDate = date => {
                 if(date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
-                else return undefined;
+                else return null;
             };
 
             $compileProvider.preAssignBindingsEnabled(true);
