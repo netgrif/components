@@ -18,19 +18,23 @@
   color: #92aab4;
 }
 
-.color-fg-teal {
+.color-fg-teal-500 {
   color: #009688;
 }
 
-.color-fg-light-blue {
+.color-fg-light-blue-A700 {
   color: #0091EA;
 }
 
-.color-fg-deep-purple {
+.color-fg-deep-purple-600 {
   color: #5E35B1;
 }
 
-.color-fg-brown {
+.color-fg-amber-500 {
+  color: #FFC107;
+}
+
+.color-fg-brown-500 {
   color: #795548;
 }
 
@@ -170,16 +174,20 @@
   background-color: #92aab4;
 }
 
-.color-bg-teal {
+.color-bg-teal-500 {
   background-color: #009688;
 }
 
-.color-bg-light-blue {
+.color-bg-light-blue-A700 {
   background-color: #0091EA;
 }
 
-.color-bg-deep-purple {
+.color-bg-deep-purple-600 {
   background-color: #5E35B1;
+}
+
+.color-bg-amber-500 {
+  background-color: #FFC107;
 }
 
 .color-bg-brown {

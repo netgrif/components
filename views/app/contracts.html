@@ -77,20 +77,21 @@
                         <div ng-cloak flex>
                             <div class="data-item" layout="row" layout-align="start center">
                                 <div flex="50">
-                                    <span flex class="data-field-title cursor-pointer">
-                                        Type text
+                                    <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
+                                        {{field.name}}
                                         <md-tooltip ng-if="field.description">
-                                            Text description
+                                            {{field.description}}
                                         </md-tooltip>
                                     </span>
                                 </div>
                                 <div flex="20"></div>
                                 <div flex="60">
                                     <md-input-container class="md-block" flex>
-                                        <label>Text</label>
-                                        <input type="text"
-                                               ng-model="field.newValue"
-                                               ng-required="field.behavior.required">
+                                        <!-- TODO 23.6.2017 fix label when calendar opens -->
+                                        <label>Enter date</label>
+                                        <md-datepicker ng-model="field.newValue"
+                                                       md-open-on-focus
+                                                       ng-required="field.behavior.required"></md-datepicker>
                                     </md-input-container>
                                 </div>
                                 <div flex="10"></div>
@@ -111,29 +112,6 @@
 
     </md-expansion-panel>
 
-    <!-- test -->
-    <div ng-cloak flex>
-        <div class="data-item" layout="row" layout-align="start center">
-            <div flex="50">
-                <span flex class="data-field-title cursor-pointer">
-                    Type text
-                    <md-tooltip ng-if="field.description">
-                        Text description
-                    </md-tooltip>
-                </span>
-            </div>
-            <div flex="20"></div>
-            <div flex="60">
-                <md-input-container class="md-block" flex>
-                    <label>Text</label>
-                    <input type="text"
-                           ng-model="field.newValue"
-                           ng-required="field.behavior.required">
-                </md-input-container>
-            </div>
-            <div flex="10"></div>
-        </div>
-    </div>
     <!-- test -->
 
 </div>
