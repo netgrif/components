@@ -139,6 +139,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                     });
                     if (index === array.length - 1) callback(true);
                 });
+                //self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
 
             } else {
                 //self.$snackbar.error(`No data for task ${self.title}`);
@@ -173,6 +174,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         this.$http.post(this.link("data-edit"), JSON.stringify(fields)).then(function (response) {
             Object.keys(fields).forEach(id => self.data.find(f => f.objectId === id).changed = false);
             self.$snackbar.success("Data saved successfully");
+            self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
             callback(true);
         }, function () {
             self.$snackbar.error("Saving data has failed");
