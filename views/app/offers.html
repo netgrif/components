@@ -92,49 +92,8 @@
 						<span flex="5">{{::$i18n.block.task.status}}</span>
 					</div>
 
-					<md-expansion-panel class="margin-horizontal-default" ng-repeat="task in tab.tasks | orderBy:'title'">
-
-						<md-expansion-panel-collapsed layout="row" layout-align="start center" ng-click="task.click($panel)">
-							<i ng-if="task.caseColor" flex="5" class="material-icons {{::task.caseColor}}">label</i>
-							<!--<img ng-src="task.icon">-->
-							<span flex="30">{{::task.caseTitle}}</span>
-							<span flex="30">{{::task.title}}</span>
-							<span flex="30">{{task.startDate}}</span>
-							<i ng-if="task.filled" flex="5" class="material-icons color-fg-primary-500">done</i>
-						</md-expansion-panel-collapsed>
-
-						<md-expansion-panel-expanded>
-
-							<md-expansion-panel-header ng-click="task.click($panel)">
-								<i ng-if="task.caseColor" flex="5" class="material-icons {{::task.caseColor}}">label</i>
-								<!--<img ng-src="task.icon">-->
-								<span flex="30">{{::task.caseTitle}}</span>
-								<span flex="30">{{::task.title}}</span>
-								<span flex="30">{{task.startDate}}</span>
-								<i ng-if="task.filled" flex="5" class="material-icons color-fg-primary-500">done</i>
-							</md-expansion-panel-header>
-
-							<md-expansion-panel-content>
-								<div layout="row" layout-align="start center" layout-wrap class="cursor-default">
-									<div ng-repeat="field in task.data | orderBy:'order'" flex="50" flex-sm="100">
-										<div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
-									</div>
-								</div>
-								<div layout="row" layout-align="center center" ng-if="task.data.length === 0">
-									<span>There are no data assigned to this task</span>
-								</div>
-							</md-expansion-panel-content>
-
-							<md-expansion-panel-footer>
-								<div flex></div>
-								<md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.save()">Save</md-button>
-								<md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()">Finish</md-button>
-								<md-button class="md-primary" ng-click="task.click($panel)"">Collapse</md-button>
-							</md-expansion-panel-footer>
-
-						</md-expansion-panel-expanded>
-
-					</md-expansion-panel>
+					<md-expansion-panel-group md-component-id="tasksGroup" multiple>
+					</md-expansion-panel-group>
 
 				</md-content>
 			</md-tab-body>

@@ -1,7 +1,7 @@
 define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     /**
      * Constructor for TaskTab class
-     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout
+     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup
      * @param label
      * @param baseUrl
      * @param useCase
@@ -18,6 +18,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.tasks = [];
         this.transactions = [];
         this.transactionProgress = 0;
+        this.taskControllers = {};
     }
 
     TaskTab.prototype = Object.create(Tab.prototype);
@@ -29,13 +30,20 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     TaskTab.URL_BYCASE = "/res/task/case";
 
     TaskTab.prototype.activate = function () {
+        this.tasksGroup = this.$mdExpansionPanelGroup('tasksGroup');
+        this.tasksGroup.register(`taskPanel`,{
+            templateUrl: 'views/app/task_panel.html',
+            controller: 'TaskController',
+            controllerAs: 'taskCtrl',
+        });
         this.loadTransactions();
         this.load(false);
     };
 
     TaskTab.prototype.reload = function () {
-        if (this.tasks.length > 0)
-            this.tasks.splice(0, this.tasks.length);
+        if (this.tasks.length > 0){
+            this.removeAll();
+        }
         this.load(false);
     };
 
@@ -79,14 +87,13 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 }
 
                 const tasks = [];
-                resources.forEach((r, i) => tasks.push(new Task(self, r, rawData[i]._links, {
-                    $http: self.$http,
-                    $snackbar: self.$snackbar,
-                    $dialog: self.$dialog,
-                    $user: self.$user,
-                    $fileUpload: self.$fileUpload,
-                    $timeout: self.$timeout
-                })));
+                resources.forEach((r, i) => {
+                     self.tasksGroup.add(`taskPanel`,{resource: r, links: rawData[i]._links, tab: self}).then(function (panel) {
+                         if(self.taskControllers[r.stringId])
+                             tasks.push(self.taskControllers[r.stringId].createTask(panel));
+                     });
+                });
+
                 if (next) self.tasks = tasks.concat(self.tasks);
                 else self.tasks = tasks;
 
@@ -97,7 +104,9 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             }, function () {
                 self.$snackbar.info(`No tasks found in ${self.label}`);
                 self.page.next = undefined;
-                if (self.tasks) self.tasks.splice(0, self.tasks.length);
+                if (self.tasks) {
+                    self.removeAll();
+                }
                 self.loading = false;
             })
 
@@ -155,6 +164,16 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             if(trans.active) index = i > index ? i : index;
         });
         return index;
+    };
+
+    TaskTab.prototype.addTaskController = function (taskCtrl) {
+        this.taskControllers[taskCtrl.taskId] = taskCtrl;
+    };
+
+    TaskTab.prototype.removeAll = function () {
+        this.tasksGroup.removeAll();
+        this.tasks.splice(0, this.tasks.length);
+        this.taskControllers = {};
     };
 
     return TaskTab;
