@@ -17,11 +17,11 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
 
                     /**
                      * add new tab for case's tasks if not already exists, then send refresh signal
-                     * @param {Case} useCase
+                     * @param {Object} useCase
                      */
                     self.openTaskTab = function (useCase) {
                         if (!self.taskTabs.some(tab => tab.useCase.stringId === useCase.stringId))
-                            self.taskTabs.push(new TaskTab(useCase.title, TaskTab.URL_BYCASE, useCase, {
+                            self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title, TaskTab.URL_BYCASE, useCase, {
                                 $http,
                                 $snackbar,
                                 $dialog,

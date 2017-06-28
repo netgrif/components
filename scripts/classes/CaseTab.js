@@ -8,7 +8,7 @@ define(['./Tab'], function (Tab) {
      * @constructor
      */
     function CaseTab(label, controller, angular) {
-        Tab.call(this, label);
+        Tab.call(this, 0, label);
 
         this.controller = controller;
         Object.assign(this, angular);

@@ -14,10 +14,12 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         this.tab = tab;
         this.panel = panel;
         Object.assign(this, resource, angular);
+        this.formatedDate = this.formatDate(this.startDate);
 
         this.data = [];
         this.expanded = false;
         this.loading = false;
+        this.waitingForExpand = false;
     }
 
     Task.prototype = Object.create(HalResource.prototype);
@@ -30,7 +32,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.prototype.formatDate = function (date) {
-        if (!date) return;
+        if (!date) return undefined;
         if (date instanceof Date) return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
         return `${DataField.padding(date.dayOfMonth, 0)}.${DataField.padding(date.monthValue, 0)}.${date.year}
             ${DataField.padding(date.hour, 0)}:${DataField.padding(date.minute, 0)}`;
@@ -38,11 +40,16 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.assign = function (callback = () => {
     }) {
+        if(this.user) {
+            callback(false);
+            return;
+        }
+
         const self = this;
         this.$http.get(this.link("assign")).then(function (response) {
             if (response.success) {
-                self.user = self.$user.getAsObject();
-                self.startDate = self.formatDate(new Date());
+                // self.user = self.$user.getAsObject();
+                // self.startDate = self.formatDate(new Date());
                 callback(true);
             }
             if (response.error) {
@@ -62,10 +69,15 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.cancel = function (callback = () => {
     }) {
+        if(!this.user || this.user.email !== this.$user.login) {
+            callback(false);
+            return;
+        }
+
         const self = this;
         this.$http.get(this.link("cancel")).then(function (response) {
             if (response.success) {
-                self.user = undefined;
+                //self.user = undefined;
                 callback(true);
             }
             if (response.error) {
@@ -168,38 +180,52 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         });
     };
 
+    Task.prototype.changeResource = function (resource, links) {
+        Object.assign(this, resource);
+        this._links = links;
+        this.formatedDate = this.formatDate(resource.startDate);
+        this.user = resource.user;
+
+        if(this.waitingForExpand) {
+            this.expand();
+            this.waitingForExpand = false;
+        }
+    };
+
     Task.prototype.click = function () {
+        if(this.tab.loading) {
+            this.waitingForExpand = true;
+            return;
+        }
         if (this.expanded) {
             this.collapse();
-            // this.cancel(success => {
-            //     if (success) {
-            //         panel.collapse();
-            //         this.tab.reload();
-            //     }
-            // });
         } else {
             this.expand();
-            // this.assign(success => {
-            //     if (success) {
-            //         this.load();
-            //         this.$timeout(()=>{},200);
-            //     }
-            // });
         }
         this.expanded = !this.expanded;
     };
 
     Task.prototype.expand = function () {
         this.panel.collapse({animation: false});
-        this.load();
-        this.$timeout(() => {
-            this.loading = false;
-            this.panel.expand();
-        }, 300);
+        this.assign(success => {
+            if (success)
+                this.tab.load(false);
+            this.load(success => {
+                if (success)
+                    this.$timeout(() => {
+                        this.loading = false;
+                        this.panel.expand();
+                    }, 200);
+            });
+        });
     };
 
     Task.prototype.collapse = function () {
-        this.panel.collapse();
+        this.cancel(success => {
+            if (success)
+                this.tab.load(false);
+            this.panel.collapse();
+        });
     };
 
     return Task;
