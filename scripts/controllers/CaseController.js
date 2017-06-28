@@ -298,17 +298,17 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             const self = this;
             this.$fileUpload.upload(field.file, undefined, task.$href('file') + field.objectId,
                 response => {
-                    if(response) {
+                    if (response) {
                         field.uploaded = true;
                         field.newFile = false;
                     } else {
-                        self.$snackbar.error("File "+field.file.name+" failed to upload!");
+                        self.$snackbar.error("File " + field.file.name + " failed to upload!");
                     }
                 })
         }
 
         downloadFile(field, task) {
-            let downloadWindow = window.open(task.$href('file')+field.objectId);
+            let downloadWindow = window.open(task.$href('file') + field.objectId);
             downloadWindow.onload = () => downloadWindow.close();
         }
 
@@ -415,13 +415,16 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
             self.createNewCase = function () {
                 self.loadPetriNets();
                 $dialog.showByTemplate('create_case', self).then(function () {
-                    self.activeTabIndex = 0;
+                    //self.activeTabIndex = 0;
                 });
             };
 
             self.openCase = function (useCase) {
                 if (!self.tabs.some(tab => tab.useCase.stringId === useCase.stringId))
                     self.tabs.push(new Tab(self.tabs.length, useCase, $http, $snackbar, $dialog, $fileUpload));
+                else {
+                    self.activeTabIndex = self.tabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
+                }
             };
 
             self.tabClose = function (tabIndex) {
@@ -450,9 +453,12 @@ define(['angular', '../modules/Main', '../modules/Workflow'], function (angular)
                 if (!jQuery.isEmptyObject(self.newCase) || !self.newCase.netId) {
                     $http.post("/res/workflow/case", JSON.stringify(self.newCase))
                         .then(function (response) {
-                            if (response.success) {
+                            if (response.stringId) {
                                 $dialog.closeCurrent();
                                 self.newCase = {};
+                                self.openCase(response);
+                                self.activeTabIndex = self.tabs.length;
+                                self.tabChange();
                                 self.cases.splice(0, self.cases.length);
                                 self.searchCases();
                             }

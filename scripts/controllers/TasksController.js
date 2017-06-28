@@ -93,6 +93,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
 
                         var tab = new Tab(self.newTab.label);
                         tab.type = TAB_TYPE.CUSTOM;
+                        tab.baseUrl = "/res/task/search";
                         tab.filter.processes = self.newTab.filter.processes;
                         tab.filter.processes.forEach(function (item) {
                             tab.filter.chips.push({type: 'processes', title: item.title});
@@ -162,7 +163,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                         if (searchData) config.data = searchData;
 
                         if (self.tabs[self.activeTab].resources &&
-                            self.tabs[self.activeTab].pageMeta.totalElements === self.tabs[self.activeTab].resources.length)
+                            self.tabs[self.activeTab].pageMeta.totalElements === self.tabs[self.activeTab].resources.length && next)
                             return;
 
                         self.tabs[self.activeTab].loading = true;
@@ -212,6 +213,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                                 loadTasksResource(url, self.activeTab, null, next);
                             }
                         } else {
+                            next = next && self.tabs[self.activeTab].resources.length > 0;
                             if (next) self.searchTasks(next);
                             else self.searchTasks();
                         }
@@ -282,7 +284,7 @@ define(['angular', '../modules/Tasks', '../modules/Main'],
                     };
 
                     self.delegateTask = function (task) {
-                        $dialog.showByTemplate('assign_user', self, {task: task}).then(function (user) {
+                        $dialog.showByTemplate('assign_user', self, {task: Object.assign(task,{fieldRoles: Object.keys(task.roles)})}).then(function (user) {
                             if (!user) return;
                             $http.post(task.$href("delegate"), user.email).then(function (response) {
                                 if (response.success) self.reloadAfterAction();
