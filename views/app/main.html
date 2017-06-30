@@ -107,13 +107,13 @@
                     <span flex>{{::$i18n.page.contracts.this}}</span>
                 </md-button>
 
-                <md-button ng-if="$user.authority === 'admin'" href="/console"
+                <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" href="/console"
                            ng-class="{active: ('console' | routeSegmentContains)}" layout="row"
                            layout-align="left center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">developer_board</i>
                     </div>
-                    {{::$i18n.block.mainNav.console.this}}
+                    <span flex>{{::$i18n.page.console.this}}</span>
                 </md-button>
 
 
