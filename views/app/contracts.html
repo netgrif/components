@@ -1,31 +1,31 @@
 <div ng-cloak layout="column">
 
     <div layout="row" class="card color-bg-black-op-50 margin-default padding-2x">
-        <span flex="5">{{::$i18n.block.task.label}}</span>
-        <span flex="30">{{::$i18n.block.task.offer}}</span>
-        <span flex="30">{{::$i18n.block.task.title}}</span>
-        <span flex="30">{{::$i18n.block.task.date}}</span>
-        <span flex="5">{{::$i18n.block.task.status}}</span>
+        <span flex="10">{{::$i18n.block.task.label}}</span>
+        <span flex="40">{{::$i18n.block.task.offer}}</span>
+        <span flex="40">{{::$i18n.block.task.title}}</span>
+        <!--<span flex="30">{{::$i18n.block.task.date}}</span>-->
+        <span flex="10">{{::$i18n.block.task.status}}</span>
     </div>
 
     <md-expansion-panel class="margin-horizontal-default">
 
         <md-expansion-panel-collapsed layout="row" layout-align="start center">
-            <i flex="5" class="material-icons color-fg-accent-50">label</i>
-            <span flex="30">Offer</span>
-            <span flex="30">Title</span>
-            <span flex="30">Start date</span>
-            <i flex="5" class="material-icons color-fg-primary-500">done</i>
+            <i flex="10" class="material-icons color-fg-accent-50">label</i>
+            <span flex="40">Offer</span>
+            <span flex="40">Title</span>
+            <!--<span flex="30">Start date</span>-->
+            <i flex="10" class="material-icons color-fg-primary-500">done</i>
         </md-expansion-panel-collapsed>
 
         <md-expansion-panel-expanded>
 
             <md-expansion-panel-header>
-                <i flex="5" class="material-icons color-fg-accent-50">label</i>
-                <span flex="30">Offer</span>
-                <span flex="30">Title</span>
-                <span flex="30">Start date</span>
-                <i flex="5" class="material-icons color-fg-primary-500">done</i>
+                <i flex="10" class="material-icons color-fg-accent-50">label</i>
+                <span flex="40">Offer</span>
+                <span flex="40">Title</span>
+                <!--<span flex="30">Start date</span>-->
+                <i flex="10" class="material-icons color-fg-primary-500">done</i>
             </md-expansion-panel-header>
 
             <md-expansion-panel-content>
@@ -49,69 +49,5 @@
         </md-expansion-panel-expanded>
 
     </md-expansion-panel>
-
-    <!-- test -->
-    <md-expansion-panel class="margin-horizontal-default">
-
-        <md-expansion-panel-collapsed layout="row" layout-align="start center">
-            <i flex="5" class="material-icons color-fg-accent-50">label</i>
-            <span flex="30">Offer</span>
-            <span flex="30">Title</span>
-            <span flex="30">Start date</span>
-            <i flex="5" class="material-icons color-fg-primary-500">done</i>
-        </md-expansion-panel-collapsed>
-
-        <md-expansion-panel-expanded>
-
-            <md-expansion-panel-header>
-                <i flex="5" class="material-icons color-fg-accent-50">label</i>
-                <span flex="30">Offer</span>
-                <span flex="30">Title</span>
-                <span flex="30">Start date</span>
-                <i flex="5" class="material-icons color-fg-primary-500">done</i>
-            </md-expansion-panel-header>
-
-            <md-expansion-panel-content>
-                <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
-                    <div flex="50" flex-sm="100">
-                        <div ng-cloak flex>
-                            <div class="data-item" layout="row" layout-align="start center">
-                                <div flex="50">
-                                    <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
-                                        {{field.name}}
-                                        <md-tooltip ng-if="field.description">
-                                            {{field.description}}
-                                        </md-tooltip>
-                                    </span>
-                                </div>
-                                <div flex="20"></div>
-                                <div flex="60">
-                                    <md-input-container class="md-block" flex>
-                                        <!-- TODO 23.6.2017 fix label when calendar opens -->
-                                        <label>Enter date</label>
-                                        <md-datepicker ng-model="field.newValue"
-                                                       md-open-on-focus
-                                                       ng-required="field.behavior.required"></md-datepicker>
-                                    </md-input-container>
-                                </div>
-                                <div flex="10"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </md-expansion-panel-content>
-
-            <md-expansion-panel-footer>
-                <div flex></div>
-                <md-button>Save</md-button>
-                <md-button>Finish</md-button>
-                <md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
-            </md-expansion-panel-footer>
-
-        </md-expansion-panel-expanded>
-
-    </md-expansion-panel>
-
-    <!-- test -->
 
 </div>

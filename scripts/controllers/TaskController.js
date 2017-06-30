@@ -18,5 +18,10 @@ define(['angular', '../classes/Task', '../modules/Main', 'angularMaterialExpansi
                         });
                         return $scope.task;
                     };
+
+                    $scope.disableNestedClick = function($event){
+                        $event.preventDefault();
+                        $event.stopPropagation();
+                    }
                 }]);
     });
