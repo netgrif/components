@@ -194,9 +194,11 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         }
     };
 
-    Task.prototype.click = function () {
+    Task.prototype.click = function ($event) {
         if(this.tab.loading) {
             this.waitingForExpand = true;
+            $event.preventDefault();
+            $event.stopPropagation();
             return;
         }
         if (this.expanded) {
@@ -205,6 +207,9 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             this.expand();
         }
         this.expanded = !this.expanded;
+
+        $event.preventDefault();
+        $event.stopPropagation();
     };
 
     Task.prototype.expand = function () {

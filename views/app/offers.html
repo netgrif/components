@@ -27,10 +27,10 @@
 
 				<div layout="column" class="card margin-default" flex>
 
-					<div layout="row" class="card-header padding-default padding-horizontal-2x">
-						<span flex="5">{{::$i18n.block.case.label}}</span>
-						<span flex="15">{{::$i18n.block.case.visualID}}</span>
-						<span flex="20">{{::$i18n.block.case.title}}</span>
+					<div layout="row" layout-align="start center" class="card-header list-header padding-default padding-horizontal-2x">
+						<span flex="10">{{::$i18n.block.case.label}}</span>
+						<span flex="20">{{::$i18n.block.case.visualID}}</span>
+						<span flex="25">{{::$i18n.block.case.title}}</span>
 						<span flex="20">{{::$i18n.block.case.client}}</span>
 						<span flex="15">{{::$i18n.block.case.date}}</span>
 						<span flex="10" class="cursor-pointer">
@@ -39,12 +39,12 @@
 						</span>
 					</div>
 
-					<div layout="row" class="padding-default padding-horizontal-2x list-item"
+					<div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
 						 ng-repeat-start="useCase in offCtrl.caseTab.cases | orderBy:'strindId'"
 						 ng-click="offCtrl.caseTab.openCase(useCase)">
-						<i flex="5" class="material-icons {{::useCase.color}}">label</i>
-						<span flex="15">{{::useCase.visualId}}</span>
-						<span flex="20">{{::useCase.title}}</span>
+						<i flex="10" class="material-icons {{::useCase.color}}">label</i>
+						<span flex="20">{{::useCase.visualId}}</span>
+						<span flex="25">{{::useCase.title}}</span>
 						<span flex="20">Client Name</span>
 						<span flex="15">21.6.2017</span>
 						<span flex="10">250</span>
@@ -85,11 +85,11 @@
 					</div>
 
 					<div layout="row" class="card color-bg-black-op-50 margin-default padding-2x">
-						<span flex="5">{{::$i18n.block.task.label}}</span>
-						<span flex="30">{{::$i18n.block.task.offer}}</span>
-						<span flex="30">{{::$i18n.block.task.title}}</span>
-						<span flex="30">{{::$i18n.block.task.date}}</span>
-						<span flex="5">{{::$i18n.block.task.status}}</span>
+						<span flex="10">{{::$i18n.block.task.label}}</span>
+						<span flex="40">{{::$i18n.block.task.offer}}</span>
+						<span flex="40">{{::$i18n.block.task.title}}</span>
+						<!--<span flex="30">{{::$i18n.block.task.date}}</span>-->
+						<span flex="10">{{::$i18n.block.task.status}}</span>
 					</div>
 
 					<md-expansion-panel-group md-component-id="'tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple>

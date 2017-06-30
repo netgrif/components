@@ -34,7 +34,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.tasksGroup = this.$mdExpansionPanelGroup(`tasksGroup-${this.id}`);
         try {
             this.tasksGroup.register(`taskPanel`, {
-                templateUrl: 'views/app/task_panel.html',
+                templateUrl: 'views/app/panels/task_panel.html',
                 controller: 'TaskController',
                 controllerAs: 'taskCtrl',
             });

@@ -310,6 +310,13 @@
   color: #212121;
 }
 
+.color-border-transparent {
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+}
+
 .min-height-0 {
   min-height: 0 !important;
 }
@@ -841,6 +848,11 @@ span.active {
   animation-duration: 1s;
 }
 
+.click-area {
+  height: 100%;
+  width: 100%;
+}
+
 md-expansion-panel {
   background: rgba(0, 0, 0, 0.3) !important;
   cursor: pointer !important;
@@ -880,6 +892,10 @@ md-expansion-panel-content {
 md-expansion-panel-header .md-expansion-panel-header-container {
   padding-left: 16px !important;
   padding-right: 16px !important;
+}
+
+md-expansion-panel .md-expansion-panel-footer-container {
+  top: auto !important;
 }
 
 md-expansion-panel .md-expansion-panel-footer-container .md-button {
@@ -1127,14 +1143,38 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   font-weight: 300;
 }
 
+.base .list-header {
+  height: 48px;
+}
+
+.base .list-item {
+  height: 48px;
+}
+
+.base .list-item-selected {
+  background-color: #12b2d2 !important;
+}
+
+.base .list-item-selected .material-icons {
+  color: #FAFAFA !important;
+}
+
+.base .list-item-selected:hover .material-icons {
+  color: #12b2d2 !important;
+}
+
 .base .list-item:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.3) !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .base .list-item-no-pointer:hover {
   cursor: default;
-  background: rgba(0, 0, 0, 0.3) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+.base .list-item .md-button.md-default-theme:not([disabled]):hover, .base .list-item .md-button:not([disabled]):hover {
+  background-color: transparent !important;
 }
 
 .base .document figure:hover {

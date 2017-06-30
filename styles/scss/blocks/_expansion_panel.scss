@@ -1,3 +1,8 @@
+.click-area {
+    height: 100%;
+    width: 100%;
+}
+
 md-expansion-panel {
      background: $color-black-op-30 !important;
      cursor: pointer !important;
@@ -45,6 +50,7 @@ md-expansion-panel-header {
 }
 
 md-expansion-panel .md-expansion-panel-footer-container {
+    top: auto !important;
 
     .md-button {
         color: $color-grey-50;
