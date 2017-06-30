@@ -1,25 +1,28 @@
 <md-expansion-panel class="margin-horizontal-default">
 
     <md-expansion-panel-collapsed layout="row" layout-align="start center" ng-click="task.click()">
-        <i ng-if="task.caseColor" flex="5" class="material-icons {{::task.caseColor}}">label</i>
+        <i ng-if="task.caseColor" flex="5" class="material-icons {{task.caseColor}}">label</i>
         <!--<img ng-src="task.icon">-->
-        <span flex="30">{{::task.caseTitle}}</span>
-        <span flex="30">{{::task.title}}</span>
-        <span flex="30">{{task.startDate}}</span>
-        <i ng-if="task.filled" flex="5" class="material-icons color-fg-primary-500">done</i>
+        <span flex="30">{{task.caseTitle}}</span>
+        <span flex="30">{{task.title}}</span>
+        <span flex="30">{{task.formatedDate}}</span>
+        <i ng-if="task.requiredFilled && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
+        <div ng-if="task.loading" flex="5">
+            <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="35"></md-progress-circular>
+        </div>
     </md-expansion-panel-collapsed>
 
     <md-expansion-panel-expanded>
 
         <md-expansion-panel-header ng-click="task.click()">
-            <i ng-if="task.caseColor" flex="5" class="material-icons {{::task.caseColor}}">label</i>
+            <i ng-if="task.caseColor" flex="5" class="material-icons {{task.caseColor}}">label</i>
             <!--<img ng-src="task.icon">-->
-            <span flex="30">{{::task.caseTitle}}</span>
-            <span flex="30">{{::task.title}}</span>
-            <span flex="30">{{task.startDate}}</span>
-            <!--<i ng-if="task.filled" flex="5" class="material-icons color-fg-primary-500">done</i>-->
-            <div flex="5">
-                <md-progress-circular ng-if="task.loading" md-mode="indeterminate" class="md-primary" md-diameter="35"></md-progress-circular>
+            <span flex="30">{{task.caseTitle}}</span>
+            <span flex="30">{{task.title}}</span>
+            <span flex="30">{{task.formatedDate}}</span>
+            <i ng-if="task.requiredFilled && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
+            <div ng-if="task.loading" flex="5">
+                <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="35"></md-progress-circular>
             </div>
         </md-expansion-panel-header>
 

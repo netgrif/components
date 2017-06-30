@@ -92,8 +92,12 @@
 						<span flex="5">{{::$i18n.block.task.status}}</span>
 					</div>
 
-					<md-expansion-panel-group md-component-id="tasksGroup" multiple>
+					<md-expansion-panel-group md-component-id="'tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple>
 					</md-expansion-panel-group>
+
+					<div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-default">
+						<md-progress-circular md-mode="indeterminate" ng-disabled="!tab.loading" class="md-primary" md-diameter="50"></md-progress-circular>
+					</div>
 
 				</md-content>
 			</md-tab-body>

@@ -2,14 +2,15 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     /**
      * Constructor for TaskTab class
      * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup
+     * @param id
      * @param label
      * @param baseUrl
      * @param useCase
      * @param angular
      * @constructor
      */
-    function TaskTab(label, baseUrl, useCase, angular) {
-        Tab.call(this, label);
+    function TaskTab(id, label, baseUrl, useCase, angular) {
+        Tab.call(this, id, label);
 
         this.baseUrl = baseUrl;
         this.useCase = useCase;
@@ -30,18 +31,22 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     TaskTab.URL_BYCASE = "/res/task/case";
 
     TaskTab.prototype.activate = function () {
-        this.tasksGroup = this.$mdExpansionPanelGroup('tasksGroup');
-        this.tasksGroup.register(`taskPanel`,{
-            templateUrl: 'views/app/task_panel.html',
-            controller: 'TaskController',
-            controllerAs: 'taskCtrl',
-        });
+        this.tasksGroup = this.$mdExpansionPanelGroup(`tasksGroup-${this.id}`);
+        try {
+            this.tasksGroup.register(`taskPanel`, {
+                templateUrl: 'views/app/task_panel.html',
+                controller: 'TaskController',
+                controllerAs: 'taskCtrl',
+            });
+        } catch (error) {
+            //panel already registered
+        }
         this.loadTransactions();
         this.load(false);
     };
 
     TaskTab.prototype.reload = function () {
-        if (this.tasks.length > 0){
+        if (this.tasks.length > 0) {
             this.removeAll();
         }
         this.load(false);
@@ -86,16 +91,17 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                     }
                 }
 
-                const tasks = [];
-                resources.forEach((r, i) => {
-                     self.tasksGroup.add(`taskPanel`,{resource: r, links: rawData[i]._links, tab: self}).then(function (panel) {
-                         if(self.taskControllers[r.stringId])
-                             tasks.push(self.taskControllers[r.stringId].createTask(panel));
-                     });
-                });
-
-                if (next) self.tasks = tasks.concat(self.tasks);
-                else self.tasks = tasks;
+                self.parseTasks(resources, rawData, next);
+                // const tasks = [];
+                // resources.forEach((r, i) => {
+                //      self.tasksGroup.add(`taskPanel`,{resource: r, links: rawData[i]._links, tab: self}).then(function (panel) {
+                //          if(self.taskControllers[r.stringId])
+                //              tasks.push(self.taskControllers[r.stringId].createTask(panel));
+                //      });
+                // });
+                //
+                // if (next) self.tasks = tasks.concat(self.tasks);
+                // else self.tasks = tasks;
 
                 self.loading = false;
                 self.transactions.forEach(trans => trans.setActive(self.tasks));
@@ -141,13 +147,43 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         return query;
     };
 
+    //TODO 28.6.2017 ošetriť pagination
+    TaskTab.prototype.parseTasks = function (resources, rawData, next) {
+        if (!next) {
+            const tasksToDelete = []; //saved are only indexes for work later
+            this.tasks.forEach((task, i) => {
+                const index = resources.findIndex(r => r.caseId === task.caseId && r.transitionId === task.transitionId);
+                if (index === -1)
+                    tasksToDelete.push(i);
+                else {
+                    task.changeResource(resources[index], rawData[index]._links);
+                    resources.splice(index, 1);
+                    rawData.splice(index, 1);
+                }
+            });
+            tasksToDelete.sort((a, b) => b - a);
+            tasksToDelete.forEach(index => {
+                this.taskControllers[this.tasks[index].stringId] = undefined;
+                this.tasks[index].panel.remove();
+                this.tasks.splice(index, 1);
+            });
+        }
+        const self = this;
+        resources.forEach((r, i) => {
+            this.tasksGroup.add(`taskPanel`, {resource: r, links: rawData[i]._links, tab: this}).then(function (panel) {
+                if (self.taskControllers[r.stringId])
+                    self.tasks.push(self.taskControllers[r.stringId].createTask(panel));
+            });
+        });
+    };
+
     TaskTab.prototype.loadTransactions = function () {
         if (!this.useCase) return;
 
         const self = this;
         this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
             response.$request().$get("transactions").then(function (resources) {
-                self.transactions = resources.map(r => new Transaction(r,{}));
+                self.transactions = resources.map(r => new Transaction(r, {}));
 
             }, function () {
                 console.log(`No resource transactions for net ${self.useCase.petriNetId}`);
@@ -161,7 +197,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     TaskTab.prototype.mostForwardTransaction = function () {
         let index = 0;
         this.transactions.forEach((trans, i) => {
-            if(trans.active) index = i > index ? i : index;
+            if (trans.active) index = i > index ? i : index;
         });
         return index;
     };

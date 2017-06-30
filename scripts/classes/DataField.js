@@ -53,7 +53,7 @@ define(['./HalResource'], function (HalResource) {
     };
 
     DataField.prototype.parse = function (value, type) {
-        if (!value) return;
+        if (!value) return undefined;
         if (type === "date")
             return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
         return value;
