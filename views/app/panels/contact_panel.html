@@ -1,0 +1,64 @@
+<md-expansion-panel>
+
+    <md-expansion-panel-collapsed layout="row" layout-align="start center">
+        <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+        <span flex="20">{{contact.name}}</span>
+        <span flex="20">{{contact.primaryPhone}}</span>
+        <span flex="20">{{contact.email}}</span>
+        <span flex="20">{{contact.id}}</span>
+        <span flex="10">{{contact.note}}</span>
+        <md-menu flex="5">
+            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button>Action 1</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button>Action 2</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </md-expansion-panel-collapsed>
+
+    <md-expansion-panel-expanded>
+
+        <md-expansion-panel-header>
+            <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+            <span flex="20">{{contact.name}}</span>
+            <span flex="20">{{contact.primaryPhone}}</span>
+            <span flex="20">{{contact.email}}</span>
+            <span flex="20">{{contact.id}}</span>
+            <span flex="10">{{contact.note}}</span>
+            <md-menu flex="5">
+                <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                    <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button>Action 1</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button>Action 2</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-expansion-panel-header>
+
+        <md-expansion-panel-content>
+            <div layout="row" layout-align="center center">
+                <span>Contact data</span>
+            </div>
+        </md-expansion-panel-content>
+
+        <md-expansion-panel-footer>
+            <div flex></div>
+            <md-button>Action 1</md-button>
+            <md-button>Action 2</md-button>
+            <md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+        </md-expansion-panel-footer>
+
+    </md-expansion-panel-expanded>
+
+</md-expansion-panel>
