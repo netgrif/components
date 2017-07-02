@@ -83,6 +83,10 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.loading = true;
         this.$http(config).then(function (response) {
             self.page = response.page;
+            if(self.page.totalElements === 0){
+                self.$snackbar.info("Currently there are no tasks");
+                self.loading = false;
+            }
             const rawData = response.$response().data._embedded.tasks;
             response.$request().$get("tasks").then(function (resources) {
                 if (self.page.totalPages !== 1) {
@@ -104,8 +108,6 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 // else self.tasks = tasks;
 
                 self.loading = false;
-                self.transactions.forEach(trans => trans.setActive(self.tasks));
-                self.transactionProgress = self.mostForwardTransaction();
 
             }, function () {
                 self.$snackbar.info(`No tasks found in ${self.label}`);
@@ -171,10 +173,15 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         const self = this;
         resources.forEach((r, i) => {
             this.tasksGroup.add(`taskPanel`, {resource: r, links: rawData[i]._links, tab: this}).then(function (panel) {
-                if (self.taskControllers[r.stringId])
+                if (self.taskControllers[r.stringId]) {
                     self.tasks.push(self.taskControllers[r.stringId].createTask(panel));
+
+                    self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length-1]));
+                    self.transactionProgress = self.mostForwardTransaction();
+                }
             });
         });
+        self.transactions.forEach(trans => trans.setActive(self.tasks));
     };
 
     TaskTab.prototype.loadTransactions = function () {
@@ -184,6 +191,8 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
             response.$request().$get("transactions").then(function (resources) {
                 self.transactions = resources.map(r => new Transaction(r, {}));
+                if(self.tasks.length > 0)
+                    self.transactions.forEach(trans => trans.setActive(self.tasks));
 
             }, function () {
                 console.log(`No resource transactions for net ${self.useCase.petriNetId}`);

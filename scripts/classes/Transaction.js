@@ -12,7 +12,10 @@ define([], function () {
     }
 
     Transaction.prototype.setActive = function (tasks) {
-        this.active = tasks.some(task => this.transitions.includes(task.transitionId));
+        if(tasks instanceof Array)
+            this.active = tasks.some(task => this.transitions.includes(task.transitionId));
+        else
+            this.active = this.transitions.includes(tasks.transitionId);
     };
 
 

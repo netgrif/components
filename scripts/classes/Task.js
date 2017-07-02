@@ -144,7 +144,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             } else {
                 //self.$snackbar.error(`No data for task ${self.title}`);
                 console.log(`No data for task ${self.title}`);
-                callback(false);
+                callback(true);
             }
 
         }, function () {
