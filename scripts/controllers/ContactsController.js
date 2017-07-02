@@ -5,7 +5,7 @@ define(['angular', 'angularMaterialExpansionPanels', '../modules/Contacts', '../
                 function ($log, $scope, $mdExpansionPanelGroup, $timeout) {
                     const self = this;
 
-                    self.alphabet = Array.apply(null, {length: 26}).map((x,i) => String.fromCharCode(65 + i));
+                    self.alphabet = Array.apply(null, {length: 26}).map((x, i) => String.fromCharCode(65 + i));
 
                     self.alphabet.forEach(a => {
                         const group =  $mdExpansionPanelGroup('contact-group-' + a);

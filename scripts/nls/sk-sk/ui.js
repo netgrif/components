@@ -45,7 +45,9 @@ define({
                 submit: "Vytvoriť"
             },
             assignUser: {
-
+                user: "Používateľ",
+                assign: "Priradiť",
+                title: "Priradiť úlohu používateľovi"
             }
         },
         add: {

@@ -1259,3 +1259,21 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   color: rgba(0, 0, 0, 0.87) !important;
   font-weight: 300;
 }
+
+.base .assign-list md-list-item .md-avatar {
+  margin-top: 14px !important;
+  margin-bottom: 14px !important;
+}
+
+.base .assign-list md-list-item.selected-tile button {
+  background-color: #12b2d2;
+  z-index: -1;
+}
+
+.base .assign-list md-list-item.selected-tile .md-avatar .material-icons {
+  color: white !important;
+}
+
+.base .assign-list md-list-item.selected-tile .md-list-item-text p {
+  color: white !important;
+}

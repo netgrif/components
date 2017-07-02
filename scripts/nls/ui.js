@@ -49,7 +49,9 @@ define({
                     submit: "Submit"
                 },
                 assignUser: {
-                    // TODO 20.6.2017 i18n assigned user dialog
+                    user: "User",
+                    assign: "Assign",
+                    title: "Delegate task to user"
                 }
             },
             add: {

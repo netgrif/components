@@ -1,7 +1,7 @@
-<md-dialog aria-label="{{::$root.$i18n.block.bottomSheet.title}}">
+<md-dialog aria-label="{{::$root.$i18n.block.dialog.assignUser.title}}">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>{{::$root.$i18n.block.bottomSheet.title}}</h2>
+            <h2>{{::$root.$i18n.block.dialog.assignUser.title}}</h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="closeDialog()">
                 <md-icon class="material-icons">close</md-icon>
@@ -16,7 +16,7 @@
                         <md-icon flex="5" class="material-icons md-primary">search</md-icon>
                         <form flex layout="row">
                             <md-input-container class="md-block">
-                                <label>{{::$root.$i18n.block.bottomSheet.user}}</label>
+                                <label>{{::$root.$i18n.block.dialog.assignUser.user}}</label>
                                 <input type="text" ng-model="dialogCtrl.searched" ng-change="filterUsers()">
                             </md-input-container>
                         </form>
@@ -39,10 +39,6 @@
                         </md-chips>
                     </div>
                 </div>
-                <!--<div layout="column" layout-align="center center">-->
-                    <!--<md-button flex="10" ng-click="assignTask()">{{::$i18n.block.bottomSheet.assign}}-->
-                    <!--</md-button>-->
-                <!--</div>-->
             </div>
             <md-divider flex></md-divider>
             <div layout="row" layout-align="center center">
@@ -62,7 +58,6 @@
         </div>
     </md-dialog-content>
     <md-dialog-actions layout="row" layout-align="end center">
-        <md-button flex="10" class="md-primary" ng-click="assignTask()">{{::$root.$i18n.block.bottomSheet.assign}}
-        </md-button>
+        <md-button flex="10" class="md-primary" ng-click="assignTask()">{{::$root.$i18n.block.dialog.assignUser.assign}}</md-button>
     </md-dialog-actions>
 </md-dialog>
