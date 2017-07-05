@@ -13,17 +13,23 @@
             <label>{{field.name}}</label>
             <input type="text" ng-if="field.subType === 'simple'"
                    ng-model="field.newValue"
-                   ng-change="field.changed = field.value !== field.newValue"
+                   ng-change="field.changed = field.value !== field.newValue; field.validate(field.newValue);"
                    ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                    ng-blur="task.save()"
-                   ng-required="field.behavior.required">
+                   ng-required="field.behavior.required"
+                   md-maxlength="field.maxLength">
             <textarea ng-if="field.subType === 'area'"
                       rows="1" max-rows="4"
                       ng-model="field.newValue"
                       ng-change="field.changed = field.value !== field.newValue"
                       ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                       ng-blur="task.save()"
-                      ng-required="field.behavior.required"></textarea>
+                      ng-required="field.behavior.required"
+                      md-maxlength="field.maxLength"></textarea>
+            <div ng-messages="field.validationErrors" ng-show="field.newValue">
+                <div ng-message="length">{{"Text must be at the most "+field.maxLength+" characters long!"}}</div>
+                <div ng-message="regex">Text is in wrong format!</div>
+            </div>
         </md-input-container>
     </div>
     <div flex="10"></div>

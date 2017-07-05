@@ -17,7 +17,10 @@
                            ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                            ng-blur="task.save()"
                            md-open-on-focus
-                           ng-required="field.behavior.required"></md-datepicker>
+                           ng-required="field.behavior.required"
+                           md-min-date="field.minDate"
+                           md-max-date="field.maxDate"
+                           md-date-filter="field.validate"></md-datepicker>
         </md-input-container>
     </div>
     <div flex="10"></div>

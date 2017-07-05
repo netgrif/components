@@ -34,7 +34,8 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
 
             $mdThemingProvider.theme('default')
                 .primaryPalette('mainPalette')
-                .accentPalette('grey');
+                .accentPalette('grey')
+                .warnPalette('deep-orange')
 
             // TODO 19.6.2017 define views
             $routeSegmentProvider

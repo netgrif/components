@@ -9,24 +9,27 @@ define(['./HalResource'], function (HalResource) {
      * @constructor
      */
     function DataField(parent, resource, links, angular) {
-        HalResource.call(this,links);
+        HalResource.call(this, links);
         this.parent = parent;
         Object.assign(this, resource, angular);
 
-        this.newValue = this.parse(this.value, this.type);
+        this.newValue = this.parse(this.value);
+        if (this.validationJS) this.validate = new Function("value", this.validationJS);
+        else this.validate = new Function("", "return true;");
         this.changed = false;
     }
+
     DataField.prototype = Object.create(HalResource.prototype);
     DataField.prototype.constructor = DataField;
 
-    DataField.prototype.format = function (value, type) {
+    DataField.prototype.format = function (value) {
         if (!value) return;
-        if (type === "date") {
+        if (this.type === "date") {
             if (value instanceof Date) return `${value.getFullYear()}-${DataField.padding(value.getMonth() + 1, 0)}-${DataField.padding(value.getDate(), 0)}`;
             else return `${DataField.padding(value.dayOfMonth, 0)}.${DataField.padding(value.monthValue, 0)}.${value.year}
             ${DataField.padding(value.hour, 0)}:${DataField.padding(value.minute, 0)}`;
         }
-        if (type === "user") {
+        if (this.type === "user") {
             return value.email;
         }
         return value;
@@ -36,34 +39,39 @@ define(['./HalResource'], function (HalResource) {
      * Is new value in data field valid
      * @returns {boolean}
      */
-    DataField.prototype.valid = function () {
-        if (this.behavior.required) {
-            switch (this.type) {
-                case "file":
-                    return this.newFile ? !!this.uploaded : !!this.newValue;
-                case "boolean":
-                    return true;
-                case "number":
-                    return this.newValue !== undefined && this.newValue !== null;
-                default:
-                    return !!this.newValue;
-            }
-
-        } else return true;
+    DataField.prototype.isValid = function () {
+        switch (this.type) {
+            case "file":
+                return this.newFile ? !!this.uploaded : !!this.newValue;
+            case "boolean":
+                return true;
+            case "number":
+                return this.newValue && this.validate(this.newValue);
+            case "text":
+                return this.newValue && this.validate(this.newValue);
+            case "date":
+                return this.newValue && this.validate(this.newValue);
+            default:
+                return !!this.newValue;
+        }
     };
 
-    DataField.prototype.parse = function (value, type) {
+    DataField.prototype.parse = function (value) {
+        this.minDate = this.minDate ? new Date(this.minDate): undefined;
+        this.maxDate = this.maxDate ? new Date(this.maxDate): undefined;
+
         if (!value) return undefined;
-        if (type === "date")
+        if (this.type === "date"){
             return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
+        }
         return value;
     };
 
     DataField.prototype.save = function () {
-        if (this.changed)
+        if (this.changed && this.isValid())
             return {
                 type: this.type,
-                value: this.format(this.newValue, this.type)
+                value: this.format(this.newValue)
             };
         return undefined;
     };
