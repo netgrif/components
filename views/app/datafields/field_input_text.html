@@ -27,10 +27,10 @@
                       ng-required="field.behavior.required"
                       md-maxlength="field.maxLength"></textarea>
             <div ng-messages="field.validationErrors" ng-show="field.newValue">
-                <div ng-message="length">{{"The text must be at the most "+field.maxLength+" characters long!"}}</div>
-                <div ng-message="email">{{"The text must be in email format! ( "+field.formating+" )"}}</div>
-                <div ng-message="telnumber">{{"The text must be in telephone number format! ( "+field.formating+" )"}}</div>
-                <div ng-message="regex">Text is in wrong format!</div>
+                <div ng-message="length" class="color-fg-warning">{{"The text must be at the most "+field.maxLength+" characters long!"}}</div>
+                <div ng-message="email" class="color-fg-warning">{{"The text must be in email format! ( "+field.formating+" )"}}</div>
+                <div ng-message="telnumber" class="color-fg-warning">{{"The text must be in telephone number format! ( "+field.formating+" )"}}</div>
+                <div ng-message="regex" class="color-fg-warning">Text is in wrong format!</div>
             </div>
         </md-input-container>
     </div>

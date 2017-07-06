@@ -17,12 +17,12 @@
                    ng-blur="task.save()"
                    ng-required="field.behavior.required">
             <div ng-messages="field.validationErrors" ng-show="field.newValue">
-                <div ng-message="odd">Must be odd number!</div>
-                <div ng-message="even">Must be even number!</div>
-                <div ng-message="positive">Must be positive number!</div>
-                <div ng-message="negative">Must be negative number!</div>
-                <div ng-message="decimal">Must be decimal number!</div>
-                <div ng-message="inrange">{{"Must be in range from "+field.minValue+" to "+field.maxValue+" !"}}</div>
+                <div ng-message="odd" class="color-fg-warning">Must be odd number!</div>
+                <div ng-message="even" class="color-fg-warning">Must be even number!</div>
+                <div ng-message="positive" class="color-fg-warning">Must be positive number!</div>
+                <div ng-message="negative" class="color-fg-warning">Must be negative number!</div>
+                <div ng-message="decimal" class="color-fg-warning">Must be decimal number!</div>
+                <div ng-message="inrange" class="color-fg-warning">{{"Must be in range from "+field.minValue+" to "+field.maxValue+"!"}}</div>
             </div>
         </md-input-container>
     </div>
