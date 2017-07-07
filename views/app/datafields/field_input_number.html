@@ -12,10 +12,18 @@
         <md-input-container class="md-block" flex>
             <label>{{field.name}}</label>
             <input type="number" ng-model="field.newValue"
-                   ng-change="field.changed = field.value !== field.newValue"
+                   ng-change="field.changed = field.value !== field.newValue; field.validate(field.newValue);"
                    ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                    ng-blur="task.save()"
                    ng-required="field.behavior.required">
+            <div ng-messages="field.validationErrors" ng-show="field.newValue">
+                <div ng-message="odd" class="color-fg-warning">Must be odd number!</div>
+                <div ng-message="even" class="color-fg-warning">Must be even number!</div>
+                <div ng-message="positive" class="color-fg-warning">Must be positive number!</div>
+                <div ng-message="negative" class="color-fg-warning">Must be negative number!</div>
+                <div ng-message="decimal" class="color-fg-warning">Must be decimal number!</div>
+                <div ng-message="inrange" class="color-fg-warning">{{"Must be in range from "+field.minValue+" to "+field.maxValue+"!"}}</div>
+            </div>
         </md-input-container>
     </div>
     <div flex="10"></div>

@@ -108,11 +108,11 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             this.load(() => {
                 if (this.data.length <= 0) this.doFinish();
                 else {
-                    if (this.validData()) this.doFinish();
+                    if (this.validateRequiredData()) this.doFinish();
                 }
             });
         else {
-            if (this.validData())
+            if (this.validateRequiredData())
                 this.save((success) => success ? this.doFinish() : undefined);
         }
     };
@@ -153,9 +153,12 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         });
     };
 
-    Task.prototype.validData = function () {
-        const validation = this.data.every(field => field.valid());
-        if (!validation) this.$snackbar.error("Not all required fields have values! Required fields are marked with asterisk (*)");
+    Task.prototype.validateRequiredData = function () {
+        const validation = this.data.every(field => {
+            if(field.behavior.required) return field.isValid();
+            else return true;
+        });
+        if (!validation) this.$snackbar.error("Not all required fields have valid values! Required fields are marked with asterisk (*)");
         return validation;
     };
 
@@ -165,13 +168,25 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
         const fields = {};
         this.data.forEach(field => field.changed ? fields[field.objectId] = field.save() : undefined);
-        if (jQuery.isEmptyObject(fields)) {
+        if (Object.keys(fields).length === 0 || !Object.keys(fields).every(key => !!fields[key])) {
             callback(true);
             return;
         }
 
         const self = this;
         this.$http.post(this.link("data-edit"), JSON.stringify(fields)).then(function (response) {
+            self.data.forEach(d => {
+                if(response[d.objectId]){
+                    const n = response[d.objectId];
+                    if(n.value) d.newValue = n.value;
+                    if(n.behavior){
+                        if(n.behavior[self.transitionId])
+                            d.behavior = n.behavior[self.transitionId];
+                    }
+                }
+            });
+            //TODO: search other tasks for data in response
+
             Object.keys(fields).forEach(id => self.data.find(f => f.objectId === id).changed = false);
             self.$snackbar.success("Data saved successfully");
             self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
@@ -219,10 +234,10 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                 this.tab.load(false);
             this.load(success => {
                 if (success)
-                    this.$timeout(() => {
-                        this.loading = false;
-                        this.panel.expand();
-                    }, 200);
+                    this.loading = false;
+                    this.panel.expand();
+                    // this.$timeout(() => {
+                // }, 200);
             });
         });
     };
