@@ -175,6 +175,18 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
         const self = this;
         this.$http.post(this.link("data-edit"), JSON.stringify(fields)).then(function (response) {
+            self.data.forEach(d => {
+                if(response[d.objectId]){
+                    const n = response[d.objectId];
+                    if(n.value) d.newValue = n.value;
+                    if(n.behavior){
+                        if(n.behavior[self.transitionId])
+                            d.behavior = n.behavior[self.transitionId];
+                    }
+                }
+            });
+            //TODO: search other tasks for data in response
+
             Object.keys(fields).forEach(id => self.data.find(f => f.objectId === id).changed = false);
             self.$snackbar.success("Data saved successfully");
             self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
