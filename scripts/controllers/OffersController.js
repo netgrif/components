@@ -36,8 +36,11 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                     };
 
                     self.closeTab = function (useCaseId) {
-                        const index = self.taskTabs.splice(self.taskTabs.findIndex(tab => tab.useCase.stringId === useCaseId), 1);
-                        self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
+                        const index = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCaseId);
+                        if(index !== -1) {
+                            self.taskTabs.splice(index, 1);
+                            self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
+                        }
                     }
 
 

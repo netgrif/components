@@ -120,6 +120,7 @@ define(['./Tab'], function (Tab) {
         this.$http.delete("/res/workflow/case/"+useCase.stringId).then(function (response){
             if(response.success){
                 self.cases.splice(self.cases.indexOf(useCase),1);
+                self.controller.closeTab(useCase.stringId);
                 self.$snackbar.success("Case "+useCase.title+" was deleted");
             } else if(response.error){
                 self.$snackbar.error(response.error);
