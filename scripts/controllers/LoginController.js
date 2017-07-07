@@ -22,7 +22,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 				dataLoadingStarted = true;
 
 				if (self.signupUser.token) {
-					$http.post("/login/token", self.signupUser.token)
+					$http.post("/signup/token", self.signupUser.token)
 						.then(function (response) {
 							$log.debug("Login loaded");
 							self.signupUser.email = response.success;
