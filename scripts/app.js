@@ -35,7 +35,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
             $mdThemingProvider.theme('default')
                 .primaryPalette('mainPalette')
                 .accentPalette('grey')
-                .warnPalette('deep-orange')
+                .warnPalette('deep-orange');
 
             // TODO 19.6.2017 define views
             $routeSegmentProvider
@@ -47,7 +47,6 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                 .when('/documents', 'app.documents')
                 .when('/contracts', 'app.contracts')
                 .when('/contacts', 'app.contacts')
-                .when('/profile', 'app.profile')
                 .when('/console', 'app.console')
 
             .segment('app', {
@@ -61,11 +60,6 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                     templateUrl: "views/app/offers.html",
                     controller: 'OffersController',
                     controllerAs: 'offCtrl'
-                })
-                .segment('profile', {
-                    templateUrl: "views/app/profile.html",
-                    controller: 'ProfileController',
-                    controllerAs: 'profCtrl'
                 })
                 .segment('contacts', {
                     templateUrl: "views/app/contacts.html",
