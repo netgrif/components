@@ -115,6 +115,19 @@ define(['./Tab'], function (Tab) {
         });
     };
 
+    CaseTab.prototype.delete = function (useCase) {
+        const self = this;
+        this.$http.delete("/res/workflow/case/"+useCase.stringId).then(function (response){
+            if(response.success){
+                self.cases.splice(self.cases.indexOf(useCase),1);
+                self.$snackbar.success("Case "+useCase.title+" was deleted");
+            } else if(response.error){
+                self.$snackbar.error(response.error);
+            }
+        }, function () {
+            self.$snackbar.error("Case "+useCase+" failed to delete!");
+        });
+    };
 
     return CaseTab;
 });
