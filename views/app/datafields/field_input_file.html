@@ -43,7 +43,7 @@
                         {{::$i18n.block.data.upload}}
                     </md-button>
                 </md-menu-item>
-                <md-menu-item ng-if="(field.value && !field.newFile) || field.generated">
+                <md-menu-item ng-if="(field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)">
                     <md-button ng-click="field.download()">
                         {{::$i18n.block.data.download}}
                     </md-button>
