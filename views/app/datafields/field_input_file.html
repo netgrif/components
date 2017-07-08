@@ -10,7 +10,7 @@
     <div flex="20"></div>
     <div flex="60" layout="row" layout-align="space-between center">
         <div layout="row" layout-align="start center">
-            <md-icon class="material-icons margin-right-2x" ng-if="!field.newValue">insert_drive_file</md-icon>
+            <md-icon class="material-icons margin-right-2x" ng-if="!field.newValue || field.generated">insert_drive_file</md-icon>
             <md-icon class="material-icons margin-right-2x color-fg-warning" ng-if="field.newFile && !field.uploaded">
                 <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileNotUploaded}}</md-tooltip>
                 warning
@@ -19,7 +19,7 @@
                 <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
                 done
             </md-icon>
-            <span class="text-overflow-dots">{{field.newValue ? field.newValue : $i18n.block.data.noFile}}</span>
+            <span class="text-overflow-dots">{{field.newValue ? field.newValue : (field.generated ? field.defaultValue : $i18n.block.data.noFile) }}</span>
         </div>
         <md-menu class="width-24px">
             <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
@@ -43,7 +43,7 @@
                         {{::$i18n.block.data.upload}}
                     </md-button>
                 </md-menu-item>
-                <md-menu-item ng-if="field.value && !field.newFile">
+                <md-menu-item ng-if="(field.value && !field.newFile) || field.generated">
                     <md-button ng-click="field.download()">
                         {{::$i18n.block.data.download}}
                     </md-button>
