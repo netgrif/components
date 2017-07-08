@@ -691,7 +691,6 @@ span strong {
 }
 
 span.active {
-  font-size: 20px;
   font-weight: 600;
   color: #12b2d2;
 }
