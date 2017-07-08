@@ -11,7 +11,9 @@ define({
             signUp: {
                 email: "Email",
                 psw: "Password",
+                pswError: "Password must be at least 6 characters long!",
                 retypePsw: "Retype password",
+                retypePswError: "Passwords does not match!",
                 name: "First Name",
                 surname: "Last Name",
                 submit: "Sign Up"
