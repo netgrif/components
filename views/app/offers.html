@@ -37,6 +37,7 @@
 							<md-tooltip md-direction="top">{{::$i18n.block.case.inEur}}</md-tooltip>
 							{{::$i18n.block.case.insurance}}
 						</span>
+						<span flex="5"></span>
 					</div>
 
 					<div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
@@ -48,6 +49,16 @@
 						<span flex="20">Client Name</span>
 						<span flex="15">21.6.2017</span>
 						<span flex="10">250</span>
+						<md-menu flex="5">
+							<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+								<md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+							</md-button>
+							<md-menu-content>
+								<md-menu-item>
+									<md-button ng-click="offCtrl.caseTab.delete(useCase)">Delete</md-button>
+								</md-menu-item>
+							</md-menu-content>
+						</md-menu>
 					</div>
 					<md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 

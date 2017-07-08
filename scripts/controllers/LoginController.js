@@ -16,13 +16,17 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 				surname: undefined
 			};
 			self.retypedPassword = "";
+			self.signUpError = {
+				match: false
+			};
+			self.loading = false;
 
 			self.viewLoaded = function () {
 				if (dataLoadingStarted) return;
 				dataLoadingStarted = true;
 
 				if (self.signupUser.token) {
-					$http.post("/login/token", self.signupUser.token)
+					$http.post("/signup/token", self.signupUser.token)
 						.then(function (response) {
 							$log.debug("Login loaded");
 							self.signupUser.email = response.success;
@@ -51,25 +55,38 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 			};
 
 			self.signup = function () {
+				if(!self.signupUser.email){
+					$snackbar.error("User is not verified!")
+					return;
+				}
+
 				if (self.signupUser.password === self.retypedPassword) {
+					self.loading = true;
 					self.signupUser.password = btoa(self.signupUser.password);
-					var jsonSignupData = JSON.stringify(self.signupUser);
-					$log.debug("formData: " + jsonSignupData);
+					const jsonSignupData = JSON.stringify(self.signupUser);
+					//$log.debug("formData: " + jsonSignupData);
 					$auth.signup(jsonSignupData, function (response) {
 						if (response) {
 							angular.element("form#signup-form").trigger("reset");
 						} else {
 							$snackbar.error("Registration failed");
 						}
+						self.loading = false;
 					});
 				} else {
 					$snackbar.error("Password fields don't match");
+                    self.loading = false;
 				}
 			};
 
 			self.fireInfoSnackbar = function (msg) {
                 $snackbar.info(msg);
-            }
+            };
 
+			self.matchPasswords = function () {
+				self.signUpError.match = self.signupUser.password === self.retypedPassword;
+            };
+
+            self.viewLoaded();
     }]);
 });

@@ -10,7 +10,9 @@ define({
         signUp: {
             email: "Email",
             psw: "Heslo",
+            pswError: "Heslo musí byť aspoň 6 znakov dlhé!",
             retypePsw: "Opakovať heslo",
+            retypePswError: "Heslá sa nezhodujú",
             name: "Meno",
             surname: "Priezvisko",
             submit: "Registrovať"

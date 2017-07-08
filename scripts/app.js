@@ -41,8 +41,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
             $routeSegmentProvider
                 .when('/', 'app')
                 .when('/login', 'login')
-                .when('/login/signin', 'login.signin')
-                .when('/login/signup/:token', 'login.signup')
+                .when('/signup/:token', 'signup')
                 .when('/offers', 'app.offers')
                 .when('/documents', 'app.documents')
                 .when('/contracts', 'app.contracts')
@@ -87,13 +86,10 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                     controller: 'LoginController',
                     controllerAs: 'loginCtrl'
                 })
-                .within()
-                .segment('signin', {
-                    default: true,
-                    templateUrl: "views/login/signin_form.html"
-                })
                 .segment('signup', {
-                    templateUrl: "views/login/signup_form.html",
+                    templateUrl: "views/login/signup.html",
+                    controller: 'LoginController',
+                    controllerAs: 'loginCtrl',
                     dependencies: ['token']
                 });
 

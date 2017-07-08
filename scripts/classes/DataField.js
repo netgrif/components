@@ -101,11 +101,11 @@ define(['./HalResource'], function (HalResource) {
         });
     };
 
-    DataField.prototype.fileChanged = function () {
-        if (!this.file) return;
-        this.newValue = this.file.name;
-        this.newFile = this.value !== this.newValue;
-        this.uploaded = false;
+    DataField.prototype.fileChanged = function (field) {
+        if (!field.file) return;
+        field.newValue = field.file.name;
+        field.newFile = field.value !== field.newValue;
+        field.uploaded = false;
     };
 
     DataField.prototype.upload = function () {
