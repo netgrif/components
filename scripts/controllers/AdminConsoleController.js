@@ -27,7 +27,7 @@ define(['angular', '../modules/Main'], function (angular) {
             let formData = angular.element("form#admin-invite-form").serialize();
             $log.debug(formData);
             self.inviteLoading = true;
-            $http.post('/singup/invite',formData)
+            $http.post('/signup/invite',formData)
                 .then(function (response) {
                     // TODO 16/3/2017 add loader animation
                     $snackbar.success("Invite sent");
