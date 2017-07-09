@@ -22,7 +22,6 @@ define(['./DataField','./HalResource','./Task'], function (DataField, HalResourc
             });
         }
         this.data = [];
-        this.expanded = false;
         this.loading = false;
     }
 

@@ -26,7 +26,9 @@ define(['./Tab','./Case'], function (Tab, Case) {
 
     CaseTab.prototype.activate = function () {
         if (this.cases.length === 0)
-            this.load(false);
+            this.loadPetriNet("Insurance",(success)=>{
+                if(success) this.load(false);
+            });
     };
 
     CaseTab.prototype.buildRequest = function (url) {
@@ -39,16 +41,17 @@ define(['./Tab','./Case'], function (Tab, Case) {
                 };
             case url.includes(CaseTab.URL_BYAUTHOR):
                 return {
-                    method: "GET",
-                    url: url
+                    method: "POST",
+                    url: url,
+                    data: this.net.entityId
                 };
         }
     };
 
     CaseTab.prototype.load = function (next) {
         const self = this;
-        if (this.page.totalElements === this.cases.length || this.loading) return;
-        const url = next ? self.page.next : "/res/workflow/case/author/" + this.$user.id;
+        if (this.page.totalElements === this.cases.length || this.loading || !this.net) return;
+        const url = next ? (self.page.next ? self.page.next : "/res/workflow/case/author/" + this.$user.id) : "/res/workflow/case/author/" + this.$user.id;
         const config = this.buildRequest(url);
         self.loading = true;
         this.$http(config).then(function (response) {
@@ -141,6 +144,17 @@ define(['./Tab','./Case'], function (Tab, Case) {
         }, function () {
             self.$snackbar.error("Petri net refs get failed!");
         });
+    };
+
+    CaseTab.prototype.loadPetriNet = function (title, callback = ()=>{}) {
+        const self = this;
+        this.$http.post("/res/petrinet/ref",{title: title}).then(function (response) {
+            self.net = response;
+            callback(true);
+        }, function () {
+            self.$snackbar.error(`Loading ${title} has failed!`);
+            callback(false);
+        })
     };
 
     CaseTab.prototype.delete = function (useCase) {
