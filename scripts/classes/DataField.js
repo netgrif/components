@@ -128,7 +128,8 @@ define(['./HalResource'], function (HalResource) {
         downloadWindow.onload = () => downloadWindow.close();
     };
 
-    DataField.padding = (text, pad) => {
+    DataField.padding = (text, pad = '') => {
+        if(!text) return "";
         text = text.toString();
         return text.length <= 1 ? pad + text : text;
     };

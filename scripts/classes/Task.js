@@ -14,7 +14,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         this.tab = tab;
         this.panel = panel;
         Object.assign(this, resource, angular);
-        this.formatedDate = this.formatDate(this.startDate);
+        this.formatedDate = Task.formatDate(this.startDate);
 
         this.data = [];
         this.expanded = false;
@@ -31,11 +31,11 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         return "New";
     };
 
-    Task.prototype.formatDate = function (date) {
+    Task.formatDate = function (date) {
         if (!date) return undefined;
         if (date instanceof Date) return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
         return `${DataField.padding(date.dayOfMonth, 0)}.${DataField.padding(date.monthValue, 0)}.${date.year}
-            ${DataField.padding(date.hour, 0)}:${DataField.padding(date.minute, 0)}`;
+            ${DataField.padding(date.hour, 0)}${date.hour ? ':' : ''}${DataField.padding(date.minute, 0)}`;
     };
 
     Task.prototype.assign = function (callback = () => {
@@ -200,7 +200,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.changeResource = function (resource, links) {
         Object.assign(this, resource);
         this._links = links;
-        this.formatedDate = this.formatDate(resource.startDate);
+        this.formatedDate = Task.formatDate(resource.startDate);
         this.user = resource.user;
 
         if(this.waitingForExpand) {

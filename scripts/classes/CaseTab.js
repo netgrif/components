@@ -1,7 +1,7 @@
-define(['./Tab'], function (Tab) {
+define(['./Tab','./Case'], function (Tab, Case) {
     /**
      * Constructor for CaseTab class
-     * Angular dependencies: $http, $dialog, $snackbar, $user
+     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload
      * @param {String} label
      * @param {Object} controller
      * @param {Object} angular
@@ -53,16 +53,19 @@ define(['./Tab'], function (Tab) {
         self.loading = true;
         this.$http(config).then(function (response) {
             self.page = Object.assign(self.page, response.page);
+            if(self.page.totalElements === 0){
+                self.$snackbar.info("Currently there are no cases");
+                self.loading = false;
+                return;
+            }
+            const rawData = response.$response().data._embedded.cases;
             response.$request().$get("cases").then(function (resources) {
                 if (self.page.totalPages !== 1) {
                     self.page.last = response.$href("last");
                     if (url !== self.page.last)
                         self.page.next = response.$href("next");
                 }
-                if (next)
-                    resources.forEach(r => self.cases.push(r));
-                else
-                    self.cases = resources;
+                self.parseCase(resources,rawData,next);
                 self.loading = false;
             }, function () {
                 self.$snackbar.error("No resource for cases was found!");
@@ -77,8 +80,26 @@ define(['./Tab'], function (Tab) {
         })
     };
 
+    CaseTab.prototype.parseCase = function (resources, rawData, next) {
+        const cases = [];
+        resources.forEach((r,i) => cases.push(new Case(this,null,r,rawData[i]._links,{
+            $http: this.$http,
+            $dialog: this.$dialog,
+            $snackbar: this.$snackbar,
+            $user: this.$user,
+            $fileUpload: this.$fileUpload
+        })));
+
+        if(next) cases.forEach(useCase => this.cases.push(useCase));
+        else this.cases = cases;
+    };
+
     CaseTab.prototype.openCase = function (useCase) {
         this.controller.openTaskTab(useCase);
+    };
+
+    CaseTab.prototype.closeCase = function (useCase) {
+        this.controller.closeTab(useCase.stringId);
     };
 
     CaseTab.prototype.openNewCaseDialog = function () {
@@ -94,8 +115,15 @@ define(['./Tab'], function (Tab) {
                     if (response) {
                         self.$dialog.closeCurrent();
                         self.newCase = {};
-                        self.openCase(response);
+                        self.openCase(new Case(self,null,response,null,{
+                            $http: self.$http,
+                            $dialog: self.$dialog,
+                            $snackbar: self.$snackbar,
+                            $user: self.$user,
+                            $fileUpload: self.$fileUpload
+                        }));
                         self.cases.splice(0, self.cases.length);
+                        self.page = {};
                     }
                 }, function () {
                     self.$snackbar.error("Creating new case failed!");
@@ -116,18 +144,7 @@ define(['./Tab'], function (Tab) {
     };
 
     CaseTab.prototype.delete = function (useCase) {
-        const self = this;
-        this.$http.delete("/res/workflow/case/"+useCase.stringId).then(function (response){
-            if(response.success){
-                self.cases.splice(self.cases.indexOf(useCase),1);
-                self.controller.closeTab(useCase.stringId);
-                self.$snackbar.success("Case "+useCase.title+" was deleted");
-            } else if(response.error){
-                self.$snackbar.error(response.error);
-            }
-        }, function () {
-            self.$snackbar.error("Case "+useCase+" failed to delete!");
-        });
+        this.cases.splice(this.cases.indexOf(useCase),1);
     };
 
     return CaseTab;

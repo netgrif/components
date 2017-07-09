@@ -24,12 +24,14 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                     //$log.debug(response);
                     auth.authenticated = !!response.name;
 
-                    let principal = response.principal;
-                    $user.id = principal.id;
-                    $user.login = principal.username;
-                    $user.authority = principal.authorities.map(authority => authority.authority);
-                    $user.name = principal.fullName;
-                    $user.roles = principal.processRoles;
+                    if(response.principal) {
+                        let principal = response.principal;
+                        $user.id = principal.id;
+                        $user.login = principal.username;
+                        $user.authority = principal.authorities.map(authority => authority.authority);
+                        $user.name = principal.fullName;
+                        $user.roles = principal.processRoles;
+                    }
 
                     callback && callback(auth.authenticated);
                     $location.path(auth.path === auth.loginPath ? auth.appPath : auth.path);

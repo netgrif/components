@@ -86,6 +86,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             if(self.page.totalElements === 0){
                 self.$snackbar.info("Currently there are no tasks");
                 self.loading = false;
+                return;
             }
             const rawData = response.$response().data._embedded.tasks;
             response.$request().$get("tasks").then(function (resources) {
