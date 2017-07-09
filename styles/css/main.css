@@ -1110,6 +1110,11 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   font-weight: 300;
 }
 
+.base .input-container-fixed-height-padding-0 {
+  height: 30px !important;
+  padding: 0 !important;
+}
+
 .base md-input-container input, .base md-input-container label {
   color: #FAFAFA !important;
   font-weight: 300;

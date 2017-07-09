@@ -26,6 +26,11 @@ md-dialog {
     }
 }
 
+.input-container-fixed-height-padding-0 {
+    height: 30px !important;
+    padding: 0 !important;
+}
+
 md-input-container {
 
     input, label {

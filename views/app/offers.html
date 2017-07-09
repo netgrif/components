@@ -35,7 +35,8 @@
 							<md-tooltip md-direction="top">{{data.description}}</md-tooltip>
 							{{data.name}}
 						</span>
-						<span flex="5"></span>
+						<span flex></span>
+						<span flex="5" class="visibility-hidden"></span>
 					</div>
 
 					<div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
@@ -47,6 +48,7 @@
 						<span flex ng-repeat="data in useCase.immediateData | orderBy:'order'">
 							{{data.value}}
 						</span>
+						<span flex></span>
 						<md-menu flex="5">
 							<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
 								<md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>

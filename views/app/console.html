@@ -11,144 +11,24 @@
             </md-tab-label>
 
             <md-tab-body>
-                <md-content class="md-padding color-bg-transparent" layout="column" layout-align="center">
+                <md-content class="md-padding color-bg-transparent" layout="column">
 
-                    <!-- TODO 30.6.2017 dashboard content -->
-
-                </md-content>
-            </md-tab-body>
-
-        </md-tab>
-
-        <md-tab>
-
-            <md-tab-label>
-                System Roles
-            </md-tab-label>
-
-            <md-tab-body>
-                <md-content class="padding-default color-bg-transparent" layout="column" layout-align="center">
-
-                    <div layout="row">
-
-                        <div flex class="margin-bottom-default">
-
-                            <md-toolbar class="card padding-vertical-2x">
-                                <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
-                                    <md-input-container>
-                                        <label>User</label>
-                                        <input type="text" ng-model="rolesCtrl.userInput">
-                                    </md-input-container>
-                                    <md-menu>
-                                        <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
-                                            <md-icon class="material-icons color-fg-material-grey-text">more_vert</md-icon>
-                                        </md-button>
-
-                                        <md-menu-content>
-                                            <md-menu-item class="margin-left-2x">
-                                                <md-checkbox ng-model="rolesCtrl.isNameChecked" aria-label="Name" class="md-primary">
-                                                    Name
-                                                </md-checkbox>
-                                            </md-menu-item>
-                                            <md-menu-item class="margin-left-2x">
-                                                <md-checkbox ng-model="rolesCtrl.isEmailChecked" aria-label="Email" class="md-primary">
-                                                    Email
-                                                </md-checkbox>
-                                            </md-menu-item>
-                                        </md-menu-content>
-                                    </md-menu>
-                                </div>
-                            </md-toolbar>
-
-                            <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                            <md-list flex class="padding-0">
-
-                                <md-list-item ng-click="null" class="card list-item list-item-selected">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
-                                    </div>
-                                </md-list-item>
-
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                                <md-list-item ng-click="null" class="card list-item">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
-                                    </div>
-                                </md-list-item>
-
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                                <md-list-item ng-click="null" class="card list-item">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
-                                    </div>
-                                </md-list-item>
-
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                                <md-list-item ng-click="null" class="card list-item">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
-                                    </div>
-                                </md-list-item>
-
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                                <md-list-item ng-click="null" class="card list-item">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
-                                    </div>
-                                </md-list-item>
-
-                            </md-list>
-
-                        </div>
-
-                        <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                        <div flex>
-
-                            <md-toolbar class="card padding-vertical-2x">
-                                <div layout="row" layout-align="start center" class="md-toolbar-tools">
-                                    <md-input-container>
-                                        <label>Role</label>
-                                        <input type="text" ng-model="rolesCtrl.roleInput">
-                                    </md-input-container>
-                                </div>
-                            </md-toolbar>
-
-                            <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                            <md-list flex class="padding-0">
-
-                                <md-list-item ng-click="null" class="card list-item">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
-                                        <span>Admin</span>
-                                    </div>
-                                </md-list-item>
-
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                                <md-list-item ng-click="null" class="card list-item list-item-selected">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
-                                        <span>User</span>
-                                    </div>
-                                </md-list-item>
-
-                            </md-list>
-
-                        </div>
-
+                    <div flex="30" layout="row" layout-align="center center">
+                        <form flex="30" id="admin-invite-form" ng-submit="adminCtrl.invite()" class="card padding-2x">
+                            <md-input-container>
+                                <label>
+                                    Email
+                                </label>
+                                <input name="email" type="email" ng-required="true">
+                            </md-input-container>
+                            <div layout="row" layout-align="end center">
+                                <md-button type="submit" class="md-primary">
+                                    Submit
+                                </md-button>
+                            </div>
+                        </form>
                     </div>
+                    <!-- TODO 30.6.2017 console dashboard content -->
 
                 </md-content>
             </md-tab-body>
@@ -171,9 +51,9 @@
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
-                                    <md-input-container>
+                                    <md-input-container class="input-container-fixed-height-padding-0">
                                         <label>User</label>
-                                        <input type="text" ng-model="rolesCtrl.userInput">
+                                        <input type="text" ng-model="userSearch.input" ng-change="adminCtrl.filterUsers()">
                                     </md-input-container>
 
                                     <md-menu>
@@ -183,12 +63,12 @@
 
                                         <md-menu-content>
                                             <md-menu-item class="margin-left-2x">
-                                                <md-checkbox ng-model="rolesCtrl.isNameChecked" aria-label="Name" class="md-primary">
+                                                <md-checkbox ng-model="userSearch.byName" aria-label="Name" class="md-primary">
                                                     Name
                                                 </md-checkbox>
                                             </md-menu-item>
                                             <md-menu-item class="margin-left-2x">
-                                                <md-checkbox ng-model="rolesCtrl.isEmailChecked" aria-label="Email" class="md-primary">
+                                                <md-checkbox ng-model="userSearch.byEmail" aria-label="Email" class="md-primary">
                                                     Email
                                                 </md-checkbox>
                                             </md-menu-item>
@@ -202,48 +82,62 @@
 
                             <md-list flex class="padding-0">
 
-                                <md-list-item ng-click="null" class="card list-item">
+                                <md-list-item ng-repeat-start="user in users | orderBy:user.fullName" ng-click="adminCtrl.selectUser(user)" class="card list-item" ng-class="user.selected ? 'list-item-selected' : ''">
                                     <div flex layout="row" layout-align="start center">
                                         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
+                                        <span>
+                                            {{user.fullName}}
+                                            <md-tooltip>
+                                                {{user.email}}
+                                            </md-tooltip>
+                                        </span>
                                     </div>
                                 </md-list-item>
 
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
-                                <md-list-item ng-click="null" class="card list-item list-item-selected">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
-                                    </div>
-                                </md-list-item>
+                                <!--<md-list-item ng-click="null" class="card list-item">-->
+                                    <!--<div flex layout="row" layout-align="start center">-->
+                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>-->
+                                        <!--<span>Name Surname</span>-->
+                                    <!--</div>-->
+                                <!--</md-list-item>-->
 
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
+                                <!--<md-divider class="border-width-default color-border-transparent"></md-divider>-->
 
-                                <md-list-item ng-click="null" class="card list-item">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
-                                    </div>
-                                </md-list-item>
+                                <!--<md-list-item ng-click="null" class="card list-item list-item-selected">-->
+                                    <!--<div flex layout="row" layout-align="start center">-->
+                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>-->
+                                        <!--<span>Name Surname</span>-->
+                                    <!--</div>-->
+                                <!--</md-list-item>-->
 
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
+                                <!--<md-divider class="border-width-default color-border-transparent"></md-divider>-->
 
-                                <md-list-item ng-click="null" class="card list-item">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
-                                    </div>
-                                </md-list-item>
+                                <!--<md-list-item ng-click="null" class="card list-item">-->
+                                    <!--<div flex layout="row" layout-align="start center">-->
+                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>-->
+                                        <!--<span>Name Surname</span>-->
+                                    <!--</div>-->
+                                <!--</md-list-item>-->
 
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
+                                <!--<md-divider class="border-width-default color-border-transparent"></md-divider>-->
 
-                                <md-list-item ng-click="null" class="card list-item">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>Name Surname</span>
-                                    </div>
-                                </md-list-item>
+                                <!--<md-list-item ng-click="null" class="card list-item">-->
+                                    <!--<div flex layout="row" layout-align="start center">-->
+                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>-->
+                                        <!--<span>Name Surname</span>-->
+                                    <!--</div>-->
+                                <!--</md-list-item>-->
+
+                                <!--<md-divider class="border-width-default color-border-transparent"></md-divider>-->
+
+                                <!--<md-list-item ng-click="null" class="card list-item">-->
+                                    <!--<div flex layout="row" layout-align="start center">-->
+                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>-->
+                                        <!--<span>Name Surname</span>-->
+                                    <!--</div>-->
+                                <!--</md-list-item>-->
 
                             </md-list>
 
@@ -255,10 +149,29 @@
 
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="start center" class="md-toolbar-tools">
+
                                     <md-input-container>
-                                        <label>Role</label>
-                                        <input type="text" ng-model="rolesCtrl.roleInput">
+                                        <label>Process</label>
+                                        <md-select ng-model="adminCtrl.roles.process" ng-change="adminCtrl.loadRoles()">
+                                            <md-option ng-repeat="process in processes" ng-value="process">
+                                                {{process.title}}
+                                            </md-option>
+                                        </md-select>
                                     </md-input-container>
+
+                                    <md-input-container class="input-container-fixed-height-padding-0">
+                                        <label>Role</label>
+                                        <input type="text" ng-model="adminCtrl.roleInput">
+                                    </md-input-container>
+
+                                    <span flex></span>
+
+                                    <md-button class="md-primary" ng-click="adminCtrl.saveRoles()">
+                                        Save
+                                    </md-button>
+
+                                    <i ng-hide="saved" class="material-icons color-fg-warning">warning</i>
+
                                 </div>
                             </md-toolbar>
 
@@ -266,39 +179,48 @@
 
                             <md-list flex class="padding-0">
 
-                                <md-list-item ng-click="null" class="card list-item">
+                                <md-list-item ng-repeat-start="role in roles | orderBy:role.name" ng-click="adminCtrl.selectRole(role)" class="card list-item" ng-class="role.selected ? 'list-item-selected' : ''">
                                     <div flex layout="row" layout-align="start center">
                                         <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
-                                        <span>Role 1</span>
+                                        <span>{{role.name}}</span>
                                     </div>
                                 </md-list-item>
 
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
-                                <md-list-item ng-click="null" class="card list-item list-item-selected">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
-                                        <span>Role 2</span>
-                                    </div>
-                                </md-list-item>
+                                <!--<md-list-item ng-click="null" class="card list-item">-->
+                                    <!--<div flex layout="row" layout-align="start center">-->
+                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>-->
+                                        <!--<span>Role 1</span>-->
+                                    <!--</div>-->
+                                <!--</md-list-item>-->
 
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
+                                <!--<md-divider class="border-width-default color-border-transparent"></md-divider>-->
 
-                                <md-list-item ng-click="null" class="card list-item list-item-selected">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
-                                        <span>Role 3</span>
-                                    </div>
-                                </md-list-item>
+                                <!--<md-list-item ng-click="null" class="card list-item list-item-selected">-->
+                                    <!--<div flex layout="row" layout-align="start center">-->
+                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>-->
+                                        <!--<span>Role 2</span>-->
+                                    <!--</div>-->
+                                <!--</md-list-item>-->
 
-                                <md-divider class="border-width-default color-border-transparent"></md-divider>
+                                <!--<md-divider class="border-width-default color-border-transparent"></md-divider>-->
 
-                                <md-list-item ng-click="null" class="card list-item">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
-                                        <span>Role 4</span>
-                                    </div>
-                                </md-list-item>
+                                <!--<md-list-item ng-click="null" class="card list-item list-item-selected">-->
+                                    <!--<div flex layout="row" layout-align="start center">-->
+                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>-->
+                                        <!--<span>Role 3</span>-->
+                                    <!--</div>-->
+                                <!--</md-list-item>-->
+
+                                <!--<md-divider class="border-width-default color-border-transparent"></md-divider>-->
+
+                                <!--<md-list-item ng-click="null" class="card list-item">-->
+                                    <!--<div flex layout="row" layout-align="start center">-->
+                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>-->
+                                        <!--<span>Role 4</span>-->
+                                    <!--</div>-->
+                                <!--</md-list-item>-->
 
                             </md-list>
 
