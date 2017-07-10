@@ -30,7 +30,7 @@
 
         <md-expansion-panel-content>
             <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
-                <div ng-repeat="field in task.data | orderBy:'order'" flex="50" flex-sm="100">
+                <div ng-repeat="field in task.data | orderBy:'order'" flex="50" flex-sm="100" ng-if="!field.behavior.hidden">
                     <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
                 </div>
             </div>
