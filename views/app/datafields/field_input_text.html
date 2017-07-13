@@ -10,7 +10,7 @@
     <div flex="20"></div>
     <div flex="60">
         <md-input-container class="md-block" flex>
-            <label>{{field.name}}</label>
+            <label>{{field.placeholder}}</label>
             <input type="text" ng-if="field.subType === 'simple'"
                    ng-model="field.newValue"
                    ng-change="field.changed = field.value !== field.newValue; field.validate(field.newValue);"

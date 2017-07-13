@@ -10,8 +10,9 @@
     <div flex="20"></div>
     <div flex="60">
         <md-input-container class="md-block" flex>
-            <label>{{field.name}}</label>
-            <md-select ng-model="field.newValue" multiple
+            <label>{{field.placeholder}}</label>
+            <md-select ng-model="field.newValue"
+                       multiple
                        ng-change="field.changed = field.value !== field.newValue"
                        ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                        ng-blur="task.save()"
