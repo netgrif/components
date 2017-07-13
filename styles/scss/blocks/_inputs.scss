@@ -33,6 +33,10 @@ md-dialog {
 
 md-input-container {
 
+    label.placeholder {
+        color: $color-grey-400 !important;
+    }
+
     input, label {
         color: $color-grey-50 !important;
         font-weight: 300;

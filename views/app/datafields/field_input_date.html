@@ -11,7 +11,7 @@
     <div flex="60">
         <md-input-container class="md-block" flex>
             <!-- TODO 23.6.2017 fix label when calendar opens -->
-            <label>Enter date</label>
+            <label class="placeholder">Enter date</label>
             <md-datepicker ng-model="field.newValue"
                            ng-change="field.changed = field.value !== field.newValue"
                            ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"

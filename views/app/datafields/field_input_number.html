@@ -10,7 +10,7 @@
     <div flex="20"></div>
     <div flex="60">
         <md-input-container class="md-block" flex>
-            <label>{{field.name}}</label>
+            <label class="placeholder">{{field.name}}</label>
             <input type="number" ng-model="field.newValue"
                    ng-change="field.changed = field.value !== field.newValue; field.validate(field.newValue);"
                    ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
