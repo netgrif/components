@@ -185,6 +185,10 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         self.transactions.forEach(trans => trans.setActive(self.tasks));
     };
 
+    TaskTab.prototype.updateTasksData = function (updateObj) {
+        this.tasks.forEach(t => t.updateData(updateObj));
+    };
+
     TaskTab.prototype.loadTransactions = function () {
         if (!this.useCase) return;
 
