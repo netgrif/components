@@ -933,18 +933,18 @@ md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-hea
   background: rgba(18, 178, 210, 0.6) !important;
 }
 
+md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container {
+  background: rgba(18, 178, 210, 0.5) !important;
+}
+
+md-expansion-panel.highlight md-expansion-panel-collapsed:hover, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container:hover {
+  background: rgba(18, 178, 210, 0.6) !important;
+}
+
 md-expansion-panel md-expansion-panel-collapsed,
 md-expansion-panel .md-expansion-panel-footer-container,
 md-expansion-panel .md-expansion-panel-header-container {
   background: rgba(0, 0, 0, 0.1) !important;
-}
-
-md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
-  background: rgba(18, 178, 210, 0.5) !important;
-}
-
-md-expansion-panel.highlight md-expansion-panel-collapsed:hover, md-expansion-panel .md-expansion-panel-header-container:hover {
-  background: rgba(18, 178, 210, 0.6) !important;
 }
 
 md-expansion-panel md-expansion-panel-collapsed:hover, md-expansion-panel .md-expansion-panel-header-container:hover {
