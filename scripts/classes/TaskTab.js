@@ -76,6 +76,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
 
         const self = this;
         let url = this.filter ? TaskTab.URL_SEARCH : this.baseUrl;
+        url += "?sort=priority";
         if (next) url = this.page.next;
 
         const config = this.buildRequestConfig(url);
@@ -96,7 +97,9 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                     }
                 }
 
-                self.parseTasks(resources, rawData, next);
+                resources.forEach((r, i) => r.links = rawData[i]._links);
+                self.parseTasks(resources, next);
+                //self.sortByPriority(resources,next);
                 // const tasks = [];
                 // resources.forEach((r, i) => {
                 //      self.tasksGroup.add(`taskPanel`,{resource: r, links: rawData[i]._links, tab: self}).then(function (panel) {
@@ -150,8 +153,8 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         return query;
     };
 
-    //TODO 28.6.2017 ošetriť pagination
-    TaskTab.prototype.parseTasks = function (resources, rawData, next) {
+    //TODO 17.7.2017 ošetriť sortovanie podľa priority
+    TaskTab.prototype.parseTasks = function (resources, next) {
         if (!next) {
             const tasksToDelete = []; //saved are only indexes for work later
             this.tasks.forEach((task, i) => {
@@ -159,9 +162,8 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 if (index === -1)
                     tasksToDelete.push(i);
                 else {
-                    task.changeResource(resources[index], rawData[index]._links);
+                    task.changeResource(resources[index], resources[index].links);
                     resources.splice(index, 1);
-                    rawData.splice(index, 1);
                 }
             });
             tasksToDelete.sort((a, b) => b - a);
@@ -173,7 +175,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         }
         const self = this;
         resources.forEach((r, i) => {
-            this.tasksGroup.add(`taskPanel`, {resource: r, links: rawData[i]._links, tab: this}).then(function (panel) {
+            this.tasksGroup.add(`taskPanel`, {resource: r, links: r.links, tab: this}).then(function (panel) {
                 if (self.taskControllers[r.stringId]) {
                     self.tasks.push(self.taskControllers[r.stringId].createTask(panel));
 
