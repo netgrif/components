@@ -36,9 +36,11 @@ $color-black-op-40:				rgba(0, 0, 0, .40);
 $color-black-op-50:				rgba(0, 0, 0, .50);
 $color-black-op-60:				rgba(0, 0, 0, .60);
 $color-black-op-87:				rgba(0, 0, 0, .87);
-
-// Documents
-$color-primary-500-op-50: 		rgba(18, 178, 210, .50);
+$color-primary-op-30:			rgba(18, 178, 210, .30);
+$color-primary-op-40:			rgba(18, 178, 210, .40);
+$color-primary-op-50:			rgba(18, 178, 210, .50);
+$color-primary-op-60:			rgba(18, 178, 210, .60);
+$color-primary-op-87:			rgba(18, 178, 210, .87);
 
 // Login card
 $color-login-card:				rgba(0, 0, 0, 0);
@@ -53,6 +55,7 @@ $color-teal-500:				#009688;
 $color-light-blue-A700:			#0091EA;
 $color-deep-purple-600: 		#5E35B1;
 $color-amber-500:				#FFC107;
+$color-deep-orange-500:			#FF5722;
 $color-brown-500:				#795548;
 
 .color {
@@ -95,6 +98,10 @@ $color-brown-500:				#795548;
 			color: $color-amber-500;
 		}
 
+		&-deep-orange-500 {
+			color: $color-deep-orange-500;
+		}
+
 		&-brown-500 {
 			color: $color-brown-500;
 		}
@@ -126,6 +133,29 @@ $color-brown-500:				#795548;
 		}
 
 		&-primary {
+
+			&-op {
+
+				&-30 {
+					color: $color-primary-op-30;
+				}
+
+				&-40 {
+					color: $color-primary-op-40;
+				}
+
+				&-50 {
+					color: $color-primary-op-50;
+				}
+
+				&-60 {
+					color: $color-primary-op-60;
+				}
+
+				&-87 {
+					color: $color-primary-op-87 !important;
+				}
+			}
 
 			&-50 {
 				color: $color-primary-50;
@@ -266,6 +296,10 @@ $color-brown-500:				#795548;
 			background-color: $color-amber-500;
 		}
 
+		&-deep-orange-500 {
+			background-color: $color-deep-orange-500;
+		}
+
 		&-brown {
 			background-color: $color-brown-500;
 		}
@@ -275,7 +309,7 @@ $color-brown-500:				#795548;
 			&-op {
 
 				&-30 {
-					color: $color-black-op-30;
+					background-color: $color-black-op-30;
 				}
 
 				&-40 {
@@ -283,7 +317,7 @@ $color-brown-500:				#795548;
 				}
 
 				&-50 {
-					color: $color-black-op-40;
+					background-color: $color-black-op-50;
 				}
 
 				&-60 {
@@ -297,6 +331,29 @@ $color-brown-500:				#795548;
 		}
 
 		&-primary {
+
+			&-op {
+
+				&-30 {
+					background-color: $color-primary-op-30;
+				}
+
+				&-40 {
+					background-color: $color-primary-op-40;
+				}
+
+				&-50 {
+					background-color: $color-primary-op-50;
+				}
+
+				&-60 {
+					background-color: $color-primary-op-60;
+				}
+
+				&-87 {
+					background-color: $color-primary-op-87 !important;
+				}
+			}
 
 			&-50 {
 				background-color: $color-primary-50;

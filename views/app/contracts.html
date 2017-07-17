@@ -15,7 +15,7 @@
             <span flex="40">Offer</span>
             <span flex="40">Title</span>
             <!--<span flex="30">Start date</span>-->
-            <i flex="10" class="material-icons color-fg-primary-500">done</i>
+            <i flex="10" class="material-icons color-fg-accent-50">done</i>
         </md-expansion-panel-collapsed>
 
         <md-expansion-panel-expanded>
@@ -25,7 +25,49 @@
                 <span flex="40">Offer</span>
                 <span flex="40">Title</span>
                 <!--<span flex="30">Start date</span>-->
-                <i flex="10" class="material-icons color-fg-primary-500">done</i>
+                <i flex="10" class="material-icons color-fg-accent-50">done</i>
+            </md-expansion-panel-header>
+
+            <md-expansion-panel-content>
+                <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
+                    <div ng-repeat="field in task.data" flex="50" flex-sm="100">
+                        <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
+                    </div>
+                </div>
+                <div layout="row" layout-align="center center" ng-if="!task.data">
+                    <span>There are no data assigned to this task</span>
+                </div>
+            </md-expansion-panel-content>
+
+            <md-expansion-panel-footer>
+                <div flex></div>
+                <md-button>Save</md-button>
+                <md-button>Finish</md-button>
+                <md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+            </md-expansion-panel-footer>
+
+        </md-expansion-panel-expanded>
+
+    </md-expansion-panel>
+
+    <md-expansion-panel class="margin-horizontal-default highlight">
+
+        <md-expansion-panel-collapsed layout="row" layout-align="start center">
+            <i flex="10" class="material-icons color-fg-accent-50">label</i>
+            <span flex="40">Offer</span>
+            <span flex="40">Title</span>
+            <!--<span flex="30">Start date</span>-->
+            <i flex="10" class="material-icons color-fg-accent-50">done</i>
+        </md-expansion-panel-collapsed>
+
+        <md-expansion-panel-expanded>
+
+            <md-expansion-panel-header>
+                <i flex="10" class="material-icons color-fg-accent-50">label</i>
+                <span flex="40">Offer</span>
+                <span flex="40">Title</span>
+                <!--<span flex="30">Start date</span>-->
+                <i flex="10" class="material-icons color-fg-accent-50">done</i>
             </md-expansion-panel-header>
 
             <md-expansion-panel-content>

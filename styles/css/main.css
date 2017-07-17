@@ -34,6 +34,10 @@
   color: #FFC107;
 }
 
+.color-fg-deep-orange-500 {
+  color: #FF5722;
+}
+
 .color-fg-brown-500 {
   color: #795548;
 }
@@ -56,6 +60,26 @@
 
 .color-fg-black-op-87 {
   color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.color-fg-primary-op-30 {
+  color: rgba(18, 178, 210, 0.3);
+}
+
+.color-fg-primary-op-40 {
+  color: rgba(18, 178, 210, 0.4);
+}
+
+.color-fg-primary-op-50 {
+  color: rgba(18, 178, 210, 0.5);
+}
+
+.color-fg-primary-op-60 {
+  color: rgba(18, 178, 210, 0.6);
+}
+
+.color-fg-primary-op-87 {
+  color: rgba(18, 178, 210, 0.87) !important;
 }
 
 .color-fg-primary-50 {
@@ -190,12 +214,16 @@
   background-color: #FFC107;
 }
 
+.color-bg-deep-orange-500 {
+  background-color: #FF5722;
+}
+
 .color-bg-brown {
   background-color: #795548;
 }
 
 .color-bg-black-op-30 {
-  color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .color-bg-black-op-40 {
@@ -203,7 +231,7 @@
 }
 
 .color-bg-black-op-50 {
-  color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .color-bg-black-op-60 {
@@ -212,6 +240,26 @@
 
 .color-bg-black-op-87 {
   background-color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.color-bg-primary-op-30 {
+  background-color: rgba(18, 178, 210, 0.3);
+}
+
+.color-bg-primary-op-40 {
+  background-color: rgba(18, 178, 210, 0.4);
+}
+
+.color-bg-primary-op-50 {
+  background-color: rgba(18, 178, 210, 0.5);
+}
+
+.color-bg-primary-op-60 {
+  background-color: rgba(18, 178, 210, 0.6);
+}
+
+.color-bg-primary-op-87 {
+  background-color: rgba(18, 178, 210, 0.87) !important;
 }
 
 .color-bg-primary-50 {
@@ -877,14 +925,30 @@ md-expansion-panel {
   cursor: pointer !important;
 }
 
+md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container {
+  background: rgba(18, 178, 210, 0.5) !important;
+}
+
+md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container:hover {
+  background: rgba(18, 178, 210, 0.6) !important;
+}
+
 md-expansion-panel md-expansion-panel-collapsed,
 md-expansion-panel .md-expansion-panel-footer-container,
 md-expansion-panel .md-expansion-panel-header-container {
   background: rgba(0, 0, 0, 0.1) !important;
 }
 
+md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
+  background: rgba(18, 178, 210, 0.5) !important;
+}
+
+md-expansion-panel.highlight md-expansion-panel-collapsed:hover, md-expansion-panel .md-expansion-panel-header-container:hover {
+  background: rgba(18, 178, 210, 0.6) !important;
+}
+
 md-expansion-panel md-expansion-panel-collapsed:hover, md-expansion-panel .md-expansion-panel-header-container:hover {
-  background: rgba(0, 0, 0, 0.3) !important;
+  background: rgba(0, 0, 0, 0.4) !important;
 }
 
 md-expansion-panel {

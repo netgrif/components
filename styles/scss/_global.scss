@@ -4,7 +4,7 @@ body {
 }
 
 // Style Google chrome scrollbars
-@include scrollbars(.5em, $color-primary-500-op-50, $color-black-op-30);
+@include scrollbars(.5em, $color-primary-op-50, $color-black-op-30);
 
 // Global variables
 $shadow:                        2px 2px 5px $color-black-op-60;

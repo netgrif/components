@@ -1,9 +1,10 @@
 .document {
 
     figure {
+
         &:hover {
             cursor: pointer;
-            background-color: $color-primary-500-op-50 !important;
+            background-color: $color-primary-op-50 !important;
         }
     }
 
