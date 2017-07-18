@@ -95,7 +95,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.doFinish = function () {
         const self = this;
         this.$http.get(this.link("finish")).then(function (response) {
-            if (response.success) self.tab.reload();
+            if (response.success) self.tab.load(false);
             if (response.error) self.$snackbar.error(response.error);
 
         }, function () {
@@ -106,6 +106,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.finish = function () {
         if (this.data.length <= 0)
             this.load(() => {
+                this.loading = false;
+                this.panel.collapse();
                 if (this.data.length <= 0) this.doFinish();
                 else {
                     if (this.validateRequiredData()) this.doFinish();
@@ -246,9 +248,10 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             if (success)
                 this.tab.load(false);
             this.load(success => {
-                if (success)
+                if (success) {
                     this.loading = false;
                     this.panel.expand();
+                }
                     // this.$timeout(() => {
                 // }, 200);
             });

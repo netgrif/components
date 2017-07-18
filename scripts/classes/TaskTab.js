@@ -168,7 +168,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             });
             tasksToDelete.sort((a, b) => b - a);
             tasksToDelete.forEach(index => {
-                this.taskControllers[this.tasks[index].stringId] = undefined;
+                delete this.taskControllers[this.tasks[index].stringId];
                 this.tasks[index].panel.remove();
                 this.tasks.splice(index, 1);
             });
@@ -185,6 +185,10 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             });
         });
         self.transactions.forEach(trans => trans.setActive(self.tasks));
+    };
+
+    TaskTab.prototype.prioritySort = function () {
+
     };
 
     TaskTab.prototype.updateTasksData = function (updateObj) {
