@@ -9,7 +9,7 @@
     </div>
     <div flex="20"></div>
     <div flex="60">
-        <md-input-container class="md-block" flex>
+        <md-input-container class="{{field.valid ? 'md-block':'md-block md-input-invalid'}}" flex>
             <!-- TODO 23.6.2017 fix label when calendar opens -->
             <label class="placeholder">Enter date</label>
             <md-datepicker ng-model="field.newValue"

@@ -9,7 +9,8 @@
     </div>
     <div flex="20"></div>
     <div flex="60">
-        <md-input-container class="md-block" flex>
+        <!--id="'data-'+task.stringId+'-'+field.objectId" eval-attr-as-expr="id"-->
+        <md-input-container  class="{{field.valid ? 'md-block':'md-block md-input-invalid'}}" flex>
             <label class="placeholder">{{field.placeholder}}</label>
             <input type="text" ng-if="field.subType === 'simple'"
                    ng-model="field.newValue"

@@ -9,7 +9,8 @@
             <!--<span flex="30">{{task.formatedDate}}</span>-->
             <!--<i ng-if="task.requiredFilled && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>-->
             <div ng-if="task.loading" flex="10">
-                <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30"></md-progress-circular>
+                <md-progress-circular md-mode="indeterminate" class="md-primary"
+                                      md-diameter="30"></md-progress-circular>
             </div>
         </div>
     </md-expansion-panel-collapsed>
@@ -24,30 +25,37 @@
             <!--<span flex="30">{{task.formatedDate}}</span>-->
             <!--<i ng-if="task.requiredFilled && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>-->
             <div ng-if="task.loading" flex="10">
-                <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30"></md-progress-circular>
+                <md-progress-circular md-mode="indeterminate" class="md-primary"
+                                      md-diameter="30"></md-progress-circular>
             </div>
         </md-expansion-panel-header>
-
-        <md-expansion-panel-content>
-            <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
-                <div ng-repeat="field in task.data | orderBy:'order'" flex="50" flex-sm="100" ng-if="!field.behavior.hidden">
-                    <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
+            <md-expansion-panel-content>
+                <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
+                    <div ng-repeat="field in task.data | orderBy:'order'" flex="50" flex-sm="100"
+                         ng-if="!field.behavior.hidden">
+                        <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
+                    </div>
                 </div>
-            </div>
-            <div layout="row" layout-align="center center" ng-if="task.data.length === 0 && !task.loading">
-                <span>This task has no data. Finish to continue.</span>
-            </div>
-            <!--<div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-default" ng-if="task.loading">-->
+                <div layout="row" layout-align="center center" ng-if="task.data.length === 0 && !task.loading">
+                    <span>This task has no data. Finish to continue.</span>
+                </div>
+                <!--<div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-default" ng-if="task.loading">-->
                 <!--<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter=60"></md-progress-circular>-->
-            <!--</div>-->
-        </md-expansion-panel-content>
+                <!--</div>-->
+            </md-expansion-panel-content>
 
-        <md-expansion-panel-footer>
-            <div flex></div>
-            <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.save()">Save</md-button>
-            <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()">Finish</md-button>
-            <md-button class="md-primary" ng-click="task.click($event)"">Collapse</md-button>
-        </md-expansion-panel-footer>
+            <md-expansion-panel-footer>
+                <div flex></div>
+                <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.save()">
+                    Save
+                </md-button>
+                <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()">
+                    Finish
+                </md-button>
+                <md-button class="md-primary" ng-click="task.click($event)">
+                    Collapse
+                </md-button>
+            </md-expansion-panel-footer>
 
     </md-expansion-panel-expanded>
 

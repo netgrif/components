@@ -161,9 +161,9 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.prototype.validateRequiredData = function () {
-        const validation = this.data.every(field => {
-            if (field.behavior.required) return field.isValid();
-            else return true;
+        let validation = true;
+        this.data.forEach(field => {
+            if (field.behavior.required) validation = field.isValid() ? validation : false;
         });
         if (!validation) this.$snackbar.error("Not all required fields have valid values! Required fields are marked with asterisk (*)");
         return validation;

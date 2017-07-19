@@ -16,7 +16,11 @@ define(['./HalResource'], function (HalResource) {
         this.newValue = this.parse(this.value);
         if (this.validationJS) this.validate = new Function("value", this.validationJS);
         else this.validate = new Function("", "return true;");
+
+        //this.inputContainerElement = jQuery("#data-"+parent.stringId+"-"+this.objectId);
+
         this.changed = false;
+        this.valid = true;
     }
 
     DataField.prototype = Object.create(HalResource.prototype);
@@ -42,18 +46,24 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.isValid = function () {
         switch (this.type) {
             case "file":
-                return this.newFile ? !!this.uploaded : !!this.newValue;
+                this.valid = this.newFile ? !!this.uploaded : !!this.newValue;
+                break;
             case "boolean":
-                return true;
+                this.valid = true;
+                break;
             case "number":
-                return this.newValue && this.validate(this.newValue);
+                this.valid = this.newValue && this.validate(this.newValue);
+                break;
             case "text":
-                return this.newValue && this.validate(this.newValue);
+                this.valid = this.newValue && this.validate(this.newValue);
+                break;
             case "date":
-                return this.newValue && this.validate(this.newValue);
+                this.valid = this.newValue && this.validate(this.newValue);
+                break;
             default:
-                return !!this.newValue;
+                this.valid = !!this.newValue;
         }
+        return this.valid;
     };
 
     DataField.prototype.parse = function (value) {
