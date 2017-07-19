@@ -40,7 +40,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.assign = function (callback = () => {
     }) {
-        if(this.user) {
+        if (this.user) {
             callback(false);
             return;
         }
@@ -69,7 +69,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.cancel = function (callback = () => {
     }) {
-        if(!this.user || this.user.email !== this.$user.login) {
+        if (!this.user || this.user.email !== this.$user.login) {
             callback(false);
             return;
         }
@@ -91,7 +91,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         });
     };
 
-    //TODO blbá funkcia keď urpavíš tasky sprav to inak
+
     Task.prototype.doFinish = function () {
         const self = this;
         this.$http.get(this.link("finish")).then(function (response) {
@@ -115,7 +115,12 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             });
         else {
             if (this.validateRequiredData())
-                this.save((success) => success ? this.doFinish() : undefined);
+                this.save((success) => {
+                    if (success) {
+                        this.doFinish();
+                        this.panel.collapse();
+                    }
+                });
         }
     };
 
@@ -138,8 +143,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                             $user: self.$user,
                             $fileUpload: self.$fileUpload
                         })).concat(self.data);
+                        if (index === array.length - 1) callback(true);
                     });
-                    if (index === array.length - 1) callback(true);
                 });
                 //self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
 
@@ -157,7 +162,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.validateRequiredData = function () {
         const validation = this.data.every(field => {
-            if(field.behavior.required) return field.isValid();
+            if (field.behavior.required) return field.isValid();
             else return true;
         });
         if (!validation) this.$snackbar.error("Not all required fields have valid values! Required fields are marked with asterisk (*)");
@@ -200,12 +205,12 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.prototype.updateData = function (updateObj) {
-        this.data.forEach( d => {
-            if(updateObj[d.objectId]){
+        this.data.forEach(d => {
+            if (updateObj[d.objectId]) {
                 const n = updateObj[d.objectId];
-                if(n.value) d.newValue = n.value;
-                if(n.behavior){
-                    if(n.behavior[this.transitionId])
+                if (n.value) d.newValue = n.value;
+                if (n.behavior) {
+                    if (n.behavior[this.transitionId])
                         d.behavior = n.behavior[this.transitionId];
                 }
             }
@@ -218,14 +223,14 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         this.formatedDate = Task.formatDate(resource.startDate);
         this.user = resource.user;
 
-        if(this.waitingForExpand) {
+        if (this.waitingForExpand) {
             this.expand();
             this.waitingForExpand = false;
         }
     };
 
     Task.prototype.click = function ($event) {
-        if(this.tab.loading) {
+        if (this.tab.loading) {
             this.waitingForExpand = true;
             $event.preventDefault();
             $event.stopPropagation();
@@ -250,9 +255,14 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             this.load(success => {
                 if (success) {
                     this.loading = false;
-                    this.panel.expand();
+                    if (this.data.length <= 0) {
+                        this.finish();
+                        this.expanded = !this.expanded;
+                    }
+                    else
+                        this.panel.expand();
                 }
-                    // this.$timeout(() => {
+                // this.$timeout(() => {
                 // }, 200);
             });
         });
