@@ -1,4 +1,4 @@
-<md-expansion-panel class="margin-horizontal-default">
+<md-expansion-panel class="margin-horizontal-default" ng-class="task.finishDate ? '':'highlight'">
 
     <md-expansion-panel-collapsed>
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="task.click($event)">
@@ -7,10 +7,10 @@
             <span flex="40">{{task.caseTitle}}</span>
             <span flex="40">{{task.title}}</span>
             <!--<span flex="30">{{task.formatedDate}}</span>-->
-            <!--<i ng-if="task.requiredFilled && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>-->
+            <i ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
             <div ng-if="task.loading" flex="10">
-                <md-progress-circular md-mode="indeterminate" class="md-primary"
-                                      md-diameter="30"></md-progress-circular>
+                <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30">
+                </md-progress-circular>
             </div>
         </div>
     </md-expansion-panel-collapsed>
@@ -23,13 +23,14 @@
             <span flex="40">{{task.caseTitle}}</span>
             <span flex="40">{{task.title}}</span>
             <!--<span flex="30">{{task.formatedDate}}</span>-->
-            <!--<i ng-if="task.requiredFilled && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>-->
+            <i ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
             <div ng-if="task.loading" flex="10">
-                <md-progress-circular md-mode="indeterminate" class="md-primary"
-                                      md-diameter="30"></md-progress-circular>
+                <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30">
+                </md-progress-circular>
             </div>
         </md-expansion-panel-header>
             <md-expansion-panel-content>
+                
                 <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
                     <div ng-repeat="field in task.data | orderBy:'order'" flex="50" flex-sm="100"
                          ng-if="!field.behavior.hidden">
@@ -39,9 +40,7 @@
                 <div layout="row" layout-align="center center" ng-if="task.data.length === 0 && !task.loading">
                     <span>This task has no data. Finish to continue.</span>
                 </div>
-                <!--<div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-default" ng-if="task.loading">-->
-                <!--<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter=60"></md-progress-circular>-->
-                <!--</div>-->
+
             </md-expansion-panel-content>
 
             <md-expansion-panel-footer>
