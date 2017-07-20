@@ -192,7 +192,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                     }
                 }
             });*/
-            self.tab.updateTasksData(response);
+            self.tab.updateTasksData(response.changedFields);
 
             Object.keys(fields).forEach(id => self.data.find(f => f.objectId === id).changed = false);
             self.$snackbar.success("Data saved successfully");
@@ -205,14 +205,22 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.prototype.updateData = function (updateObj) {
+        if (jQuery.isEmptyObject(updateObj)) return;
         this.data.forEach(d => {
             if (updateObj[d.objectId]) {
                 const n = updateObj[d.objectId];
-                if (n.value) d.newValue = n.value;
-                if (n.behavior) {
-                    if (n.behavior[this.transitionId])
-                        d.behavior = n.behavior[this.transitionId];
-                }
+                Object.keys(n).forEach(key => {
+                    if (d[key]) {
+                        if (key === 'value')
+                            d.newValue = d.parse(n[key]);
+                        else if (key === 'behavior') {
+                            if (n.behavior[this.transitionId])
+                                d.behavior = n.behavior[this.transitionId];
+                        }
+                        else
+                            d[key] = n[key];
+                    }
+                });
             }
         });
     };
