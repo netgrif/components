@@ -210,16 +210,14 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             if (updateObj[d.objectId]) {
                 const n = updateObj[d.objectId];
                 Object.keys(n).forEach(key => {
-                    if (d[key]) {
-                        if (key === 'value')
-                            d.newValue = d.parse(n[key]);
-                        else if (key === 'behavior') {
-                            if (n.behavior[this.transitionId])
-                                d.behavior = n.behavior[this.transitionId];
-                        }
-                        else
-                            d[key] = n[key];
+                    if (key === 'value')
+                        d.newValue = d.parse(n[key]);
+                    else if (key === 'behavior') {
+                        if (n.behavior[this.transitionId])
+                            d.behavior = n.behavior[this.transitionId];
                     }
+                    else
+                        d[key] = n[key];
                 });
             }
         });
