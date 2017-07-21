@@ -108,11 +108,16 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         if (this.dataSize <= 0)
             this.load(() => {
                 this.loading = false;
-                this.panel.collapse();
-                if (this.dataSize <= 0) this.doFinish();
-                else {
-                    if (this.validateRequiredData()) this.doFinish();
+                if (this.dataSize <= 0 || this.validateRequiredData()) {
+                    this.doFinish();
+                    this.panel.collapse();
                 }
+                // else {
+                //     if (this.validateRequiredData()) {
+                //         this.doFinish();
+                //         this.panel.collapse();
+                //     }
+                // }
             });
         else {
             if (this.validateRequiredData())
@@ -208,9 +213,9 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             });*/
             self.tab.updateTasksData(response.changedFields);
 
-            Object.keys(fields).forEach(id => self.data.find(f => f.objectId === id).changed = false);
+            Object.keys(fields).forEach(id => self.getData().find(f => f.objectId === id).changed = false);
             self.$snackbar.success("Data saved successfully");
-            self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
+            // self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
             callback(true);
         }, function () {
             self.$snackbar.error("Saving data has failed");

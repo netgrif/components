@@ -106,12 +106,13 @@ define(['./Tab','./Case'], function (Tab, Case) {
     };
 
     CaseTab.prototype.openNewCaseDialog = function () {
-        this.loadPetriNets();
+        //this.loadPetriNets();
         this.$dialog.showByTemplate('create_case', this);
     };
 
     CaseTab.prototype.createCase = function () {
-        if (!jQuery.isEmptyObject(this.newCase) || !this.newCase.netId) {
+        if (!jQuery.isEmptyObject(this.newCase) || !this.net.entityId) {
+            this.newCase.netId = this.net.entityId;
             const self = this;
             this.$http.post("/res/workflow/case", JSON.stringify(this.newCase))
                 .then(function (response) {
