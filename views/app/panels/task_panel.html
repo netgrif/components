@@ -39,7 +39,7 @@
                             <span style="margin-left: 7px;margin-right: 7px;">{{group.title}}</span>
                             <div flex style="height: 3px;background-color: rgba(18, 178, 210, .50);"></div>
                         </div>
-                        <div ng-repeat="field in group.data | orderBy:'order'" flex="50" flex-sm="100"
+                        <div ng-repeat="field in group.data | orderBy:'order'" flex="{{group.stretch ? '100' : '50'}}" flex-sm="100"
                              ng-if="!field.behavior.hidden">
                             <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
                         </div>
