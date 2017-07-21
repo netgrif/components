@@ -16,7 +16,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         Object.assign(this, resource, angular);
         this.formatedDate = Task.formatDate(this.startDate);
 
-        this.data = [];
+        this.dataGroups = [];
+        this.dataSize = 0;
         this.expanded = false;
         this.loading = false;
         this.waitingForExpand = false;
@@ -104,11 +105,11 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.prototype.finish = function () {
-        if (this.data.length <= 0)
+        if (this.dataSize <= 0)
             this.load(() => {
                 this.loading = false;
                 this.panel.collapse();
-                if (this.data.length <= 0) this.doFinish();
+                if (this.dataSize <= 0) this.doFinish();
                 else {
                     if (this.validateRequiredData()) this.doFinish();
                 }
@@ -124,9 +125,13 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         }
     };
 
+    Task.prototype.getData = function () {
+        return this.dataGroups.reduce(((data, group) => data.concat(group.data)), []);
+    };
+
     Task.prototype.load = function (callback = () => {
     }) {
-        if (this.data.length > 0) {
+        if (this.dataSize > 0) {
             callback(true);
             return;
         }
@@ -134,26 +139,35 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         const self = this;
         this.loading = true;
         self.$http.get(this.link("data")).then(function (response) {
-            if (response.$response().data._embedded) {
-                Object.keys(response.$response().data._embedded).forEach((item, index, array) => {
-                    response.$request().$get(item).then(function (resources) {
-                        self.data = resources.map(r => new DataField(self, r, response.$response().data._links, {
-                            $dialog: self.$dialog,
-                            $snackbar: self.$snackbar,
-                            $user: self.$user,
-                            $fileUpload: self.$fileUpload
-                        })).concat(self.data);
+            response.$request().$get("dataGroups").then(function (groupResources) {
+                groupResources.forEach((group, index, array) => {
+                    if (group.fields._embedded) {
+                        group.data = [];
+                        Object.keys(group.fields._embedded).forEach(item => {
+                            group.data = group.fields._embedded[item].map(r => new DataField(self, r, group.fields._links, {
+                                $dialog: self.$dialog,
+                                $snackbar: self.$snackbar,
+                                $user: self.$user,
+                                $fileUpload: self.$fileUpload
+                            })).concat(group.data);
+                        });
+                        delete group.fields;
+                        self.dataGroups.push(group);
+                        self.dataSize += group.data.length;
                         if (index === array.length - 1) callback(true);
-                    });
+                        //self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
+
+                    } else {
+                        //self.$snackbar.error(`No data for task ${self.title}`);
+                        console.log(`No data for task ${self.title}`);
+                        callback(true);
+                    }
                 });
-                //self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
 
-            } else {
-                //self.$snackbar.error(`No data for task ${self.title}`);
-                console.log(`No data for task ${self.title}`);
+            }, function () {
+                console.log(`No data group for task ${self.title}`);
                 callback(true);
-            }
-
+            });
         }, function () {
             self.$snackbar.error(`Data for ${self.title} failed to load`);
             callback(false);
@@ -162,7 +176,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.validateRequiredData = function () {
         let validation = true;
-        this.data.forEach(field => {
+        this.getData().forEach(field => {
             if (field.behavior.required) validation = field.isValid() ? validation : false;
         });
         if (!validation) this.$snackbar.error("Not all required fields have valid values! Required fields are marked with asterisk (*)");
@@ -171,10 +185,10 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.save = function (callback = () => {
     }) {
-        if (this.data <= 0) return;
+        if (this.dataSize <= 0) return;
 
         const fields = {};
-        this.data.forEach(field => field.changed ? fields[field.objectId] = field.save() : undefined);
+        this.getData().forEach(field => field.changed ? fields[field.objectId] = field.save() : undefined);
         if (Object.keys(fields).length === 0 || !Object.keys(fields).every(key => !!fields[key])) {
             callback(true);
             return;
@@ -206,7 +220,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.updateData = function (updateObj) {
         if (jQuery.isEmptyObject(updateObj)) return;
-        this.data.forEach(d => {
+        this.getData().forEach(d => {
             if (updateObj[d.objectId]) {
                 const n = updateObj[d.objectId];
                 Object.keys(n).forEach(key => {
@@ -261,7 +275,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             this.load(success => {
                 if (success) {
                     this.loading = false;
-                    if (this.data.length <= 0) {
+                    if (this.dataSize <= 0) {
                         this.finish();
                         this.expanded = !this.expanded;
                     }
