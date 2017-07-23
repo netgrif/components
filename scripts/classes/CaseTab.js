@@ -21,7 +21,7 @@ define(['./Tab','./Case'], function (Tab, Case) {
     CaseTab.prototype.constructor = CaseTab;
 
     CaseTab.URL_SEARCH = "/res/workflow/case/search";
-    CaseTab.URL_BYAUTHOR = "/res/workflow/case/author/";
+    CaseTab.FIND_BY_AUTHOR = 0;
 
 
     CaseTab.prototype.activate = function () {
@@ -31,28 +31,24 @@ define(['./Tab','./Case'], function (Tab, Case) {
             });
     };
 
-    CaseTab.prototype.buildRequest = function (url) {
-        switch (true) {
-            case url.includes(CaseTab.URL_SEARCH):
-                return {
-                    method: "POST",
-                    url: url,
-                    data: []
-                };
-            case url.includes(CaseTab.URL_BYAUTHOR):
-                return {
-                    method: "POST",
-                    url: url,
-                    data: this.net.entityId
-                };
-        }
+    CaseTab.prototype.buildSearchRequest = function (url,criteria = []) {
+        const data = {};
+        criteria.forEach(c => {
+            if(c === CaseTab.FIND_BY_AUTHOR)
+                data.author = this.$user.id;
+        });
+        return {
+            method:"POST",
+            url: url,
+            data: data
+        };
     };
 
     CaseTab.prototype.load = function (next) {
         const self = this;
         if (this.page.totalElements === this.cases.length || this.loading || !this.net) return;
-        const url = next ? (self.page.next ? self.page.next : "/res/workflow/case/author/" + this.$user.id) : "/res/workflow/case/author/" + this.$user.id;
-        const config = this.buildRequest(url);
+        const url = next ? (self.page.next ? self.page.next : CaseTab.URL_SEARCH) : CaseTab.URL_SEARCH;
+        const config = this.buildSearchRequest(url,[CaseTab.FIND_BY_AUTHOR]);
         self.loading = true;
         this.$http(config).then(function (response) {
             self.page = Object.assign(self.page, response.page);

@@ -21,7 +21,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                      */
                     self.openTaskTab = function (useCase) {
                         if (!self.taskTabs.some(tab => tab.useCase.stringId === useCase.stringId))
-                            self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title, TaskTab.URL_BYCASE, useCase, {
+                            self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title, TaskTab.URL_SEARCH, [TaskTab.FIND_BY_CASE], useCase, {
                                 $http,
                                 $snackbar,
                                 $dialog,

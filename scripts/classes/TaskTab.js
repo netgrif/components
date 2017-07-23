@@ -5,14 +5,16 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
      * @param id
      * @param label
      * @param baseUrl
+     * @param baseCriteria
      * @param useCase
      * @param angular
      * @constructor
      */
-    function TaskTab(id, label, baseUrl, useCase, angular) {
+    function TaskTab(id, label, baseUrl, baseCriteria,useCase, angular) {
         Tab.call(this, id, label);
 
         this.baseUrl = baseUrl;
+        this.baseCriteria = baseCriteria;
         this.useCase = useCase;
         Object.assign(this, angular);
 
@@ -29,6 +31,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     TaskTab.URL_MY = "/res/task/my";
     TaskTab.URL_SEARCH = "/res/task/search";
     TaskTab.URL_BYCASE = "/res/task/case";
+    TaskTab.FIND_BY_CASE = 0;
 
     TaskTab.prototype.activate = function () {
         this.tasksGroup = this.$mdExpansionPanelGroup(`tasksGroup-${this.id}`);
@@ -130,27 +133,35 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     };
 
     TaskTab.prototype.getSearchQuery = function () {
-        if (!this.filter) return undefined;
-
-        let searchTier;
-        if (this.filter.processes.length > 0) searchTier = 1;
-        if (this.filter.transitions.length > 0) searchTier = 2;
-        if (this.filter.fields.length > 0) searchTier = 3;
-
-        const query = {
-            searchTier: searchTier,
-            petriNets: []
-        };
-        this.filter.processes.forEach(process => query.petriNets.push({
-            petriNet: process.entityId,
-            transitions: this.filter.transitions.filter(trans => trans.petriNetId === process.entityId),
-            dataSet: this.filter.fields.filter(field => field.petriNetId === process.entityId).reduce((acc, field) => {
-                acc[field.entityId] = field.value;
-                return acc;
-            }, {})
-        }));
+        const query = {};
+        this.baseCriteria.forEach(c => {
+            if(c === TaskTab.FIND_BY_CASE)
+                query.case = this.useCase.stringId;
+        });
 
         return query;
+
+        // if (!this.filter) return undefined;
+        //
+        // let searchTier;
+        // if (this.filter.processes.length > 0) searchTier = 1;
+        // if (this.filter.transitions.length > 0) searchTier = 2;
+        // if (this.filter.fields.length > 0) searchTier = 3;
+        //
+        // const query = {
+        //     searchTier: searchTier,
+        //     petriNets: []
+        // };
+        // this.filter.processes.forEach(process => query.petriNets.push({
+        //     petriNet: process.entityId,
+        //     transitions: this.filter.transitions.filter(trans => trans.petriNetId === process.entityId),
+        //     dataSet: this.filter.fields.filter(field => field.petriNetId === process.entityId).reduce((acc, field) => {
+        //         acc[field.entityId] = field.value;
+        //         return acc;
+        //     }, {})
+        // }));
+        //
+        // return query;
     };
 
     //TODO 17.7.2017 ošetriť sortovanie podľa priority
