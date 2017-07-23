@@ -4,4 +4,7 @@
  */
 // TODO 19.6.2017 define controllers
 var path = 'scripts/controllers/';
-define(['MainController', 'OffersController', 'LoginController', 'ContactsController', 'DocumentsController', 'ContractsController', 'AdminConsoleController', 'TaskController', 'ContactController'].map(ctrl => path+ctrl), function () {});
+define(['MainController', 'OffersController', 'LoginController', 'ContactsController', 'DocumentsController',
+    'ContractsController', 'AdminConsoleController', 'TaskController', 'ContactController','CaseDialogController',
+    'TasksDialogController']
+    .map(ctrl => path+ctrl), function () {});

@@ -1,0 +1,28 @@
+<md-dialog flex="50">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{dialogCtrl.locals.useCase.title}}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="hide()">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content flex>
+        <div class="md-dialog-content background-gradient padding-0" layout="column">
+            <div layout="row" class="card color-bg-black-op-40 margin-default padding-2x">
+                <span flex="10">{{::$root.$i18n.block.task.label}}</span>
+                <span flex="40">{{::$root.$i18n.block.task.offer}}</span>
+                <span flex="40">{{::$root.$i18n.block.task.title}}</span>
+                <!--<span flex="30">{{::$i18n.block.task.date}}</span>-->
+                <span flex="10">{{::$root.$i18n.block.task.status}}</span>
+            </div>
+
+            <md-expansion-panel-group md-component-id="tasksGroup-dialog" multiple>
+            </md-expansion-panel-group>
+        </div>
+    </md-dialog-content>
+    <!--<md-dialog-actions layout="row" layout-align="end center" style="background-color: #515e64;">-->
+        <!--<md-button class="md-primary" ng-click="choose()">Close</md-button>-->
+    <!--</md-dialog-actions>-->
+</md-dialog>

@@ -22,6 +22,10 @@
 						<md-tooltip md-direction="left">Create Offer</md-tooltip>
 						<md-icon class="material-icons">add</md-icon>
 					</md-button>
+					<md-button class="md-fab md-raised md-mini md-primary" ng-click="offCtrl.caseTab.$dialog.show('case_select',offCtrl.caseTab,'CaseDialogController',{net:offCtrl.caseTab.net})">
+						<md-tooltip md-direction="left">Open cases</md-tooltip>
+						<md-icon class="material-icons">folder</md-icon>
+					</md-button>
 
 				</div>
 

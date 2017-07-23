@@ -16,6 +16,22 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                     fullscreen: true
                 });
             },
+            show: function (template, parent, controller, locals, openFrom = undefined) {
+                return $mdDialog.show({
+                    controller:controller,
+                    controllerAs: 'dialogCtrl',
+                    templateUrl: '../../views/app/dialogs/dialog_'+template+".html",
+                    parent: angular.element(document.body),
+                    openFrom: openFrom,
+                    locals: {
+                        parent: parent,
+                        locals: locals
+                    },
+                    clickOutsideToClose: true,
+                    escapeToClose: true,
+                    fullscreen: true
+                });
+            },
             closeCurrent: function () {
                 $mdDialog.hide();
             }
