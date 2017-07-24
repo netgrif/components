@@ -1,7 +1,7 @@
-define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offers', '../modules/Main','angularMaterialExpansionPanels'],
+define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offers', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab) {
         angular.module('ngOffers').controller('OffersController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload','$timeout','$mdExpansionPanelGroup',
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup) {
                     const self = this;
 
@@ -29,7 +29,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                                 $fileUpload,
                                 $timeout,
                                 $mdExpansionPanelGroup
-                            }));
+                            }, {showTransactions: true}));
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
 
@@ -37,7 +37,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
 
                     self.closeTab = function (useCaseId) {
                         const index = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCaseId);
-                        if(index !== -1) {
+                        if (index !== -1) {
                             self.taskTabs.splice(index, 1);
                             self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
                         }

@@ -8,15 +8,16 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
      * @param baseCriteria
      * @param useCase
      * @param angular
+     * @param config - config parameters for better customizing behavior of tab
      * @constructor
      */
-    function TaskTab(id, label, baseUrl, baseCriteria,useCase, angular) {
+    function TaskTab(id, label, baseUrl, baseCriteria,useCase, angular, config = {}) {
         Tab.call(this, id, label);
 
         this.baseUrl = baseUrl;
         this.baseCriteria = baseCriteria;
         this.useCase = useCase;
-        Object.assign(this, angular);
+        Object.assign(this, angular,config);
 
         this.tasks = [];
         this.transactions = [];
@@ -44,7 +45,10 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         } catch (error) {
             //panel already registered
         }
-        this.loadTransactions();
+
+        if(this.showTransactions)
+            this.loadTransactions();
+
         this.load(false);
     };
 
@@ -89,6 +93,9 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             self.page = response.page;
             if(self.page.totalElements === 0){
                 self.$snackbar.info("Currently there are no tasks");
+                self.page.next = undefined;
+                if (self.tasks)
+                    self.removeAll();
                 self.loading = false;
                 return;
             }
@@ -121,6 +128,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 self.page.next = undefined;
                 if (self.tasks) {
                     self.removeAll();
+
                 }
                 self.loading = false;
             })
@@ -178,11 +186,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 }
             });
             tasksToDelete.sort((a, b) => b - a);
-            tasksToDelete.forEach(index => {
-                delete this.taskControllers[this.tasks[index].stringId];
-                this.tasks[index].panel.remove();
-                this.tasks.splice(index, 1);
-            });
+            tasksToDelete.forEach(index => this.deleteTaskOnIndex(index));
         }
         const self = this;
         resources.forEach((r, i) => {
@@ -196,6 +200,12 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             });
         });
         self.transactions.forEach(trans => trans.setActive(self.tasks));
+    };
+
+    TaskTab.prototype.deleteTaskOnIndex = function (index) {
+        delete this.taskControllers[this.tasks[index].stringId];
+        this.tasks[index].panel.remove();
+        this.tasks.splice(index, 1);
     };
 
     TaskTab.prototype.prioritySort = function () {

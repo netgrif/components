@@ -107,6 +107,11 @@
 						<span flex="40">{{::$i18n.block.task.title}}</span>
 						<!--<span flex="30">{{::$i18n.block.task.date}}</span>-->
 						<span flex="10">{{::$i18n.block.task.status}}</span>
+
+						<md-button class="md-fab md-raised md-mini md-primary" ng-click="offCtrl.caseTab.$dialog.show('tasks_view',offCtrl.caseTab,'TasksDialogController',{useCase:tab.useCase})">
+							<md-tooltip md-direction="left">Open cases</md-tooltip>
+							<md-icon class="material-icons">folder</md-icon>
+						</md-button>
 					</div>
 
 					<md-expansion-panel-group md-component-id="'tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple>

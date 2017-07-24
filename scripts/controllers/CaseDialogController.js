@@ -5,7 +5,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                 function ($log, $scope, $http, $mdDialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, locals) {
                     const self = this;
 
-                    Object.assign(this,locals);
+                    Object.assign(this,locals,locals.locals);
                     self.cases = [];
                     self.selectedCase = undefined;
 
@@ -53,7 +53,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                         $mdDialog.hide();
                     };
 
-                    if (self.locals.net)
-                        self.loadCases(self.locals.net.entityId);
+                    if (self.net)
+                        self.loadCases(self.net.entityId);
                 }]);
     });
