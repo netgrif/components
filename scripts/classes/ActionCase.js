@@ -3,16 +3,22 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
      * Constructor for Case class
      * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user
      * @param {Object} tab
-     * @param {Object} panel
+     * @param {Object} panelGroup
      * @param {Object} resource
      * @param {Object} links
      * @param {Object} angular
      * @param {Object} config
      * @constructor
      */
-    function ActionCase(controller, panel, resource, links, angular, config = {}) {
-        Case.call(this, null, panel, resource, links, angular, config);
+    function ActionCase(tab, panelGroup, resource, links, angular, config = {}) {
+        Case.call(this, tab, null, resource, links, angular, config);
 
+        const self = this;
+        panelGroup.add('contactPanel',{}).then(function (panel) {
+            self.panel = panel;
+        });
+
+        this.tasks = [];
         this.expanded = false;
     }
 
@@ -43,32 +49,57 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
                 callback(true);
             }
         }, function () {
-            self.$snackbar.error("Data for case "+stringId+" has failed to load!");
+            self.$snackbar.error("Data for case "+self.stringId+" has failed to load!");
+            callback(false);
+        });
+    };
+    
+    ActionCase.prototype.loadTasks = function (callback = ()=>{}) {
+        if(this.tasks.length > 0) return;
+        const self = this;
+        this.$http.get("").then(function (response) { //TODO 25.7.2017 doplniť urlku pre tasks reference
+            //tasks references
+            response.$request().$get("taskReferences").then(function (resources) {
+                self.tasks = resources;
+                self.tasks.forEach(task => {
+                    task.click = function () {
+                        self.openTaskDialog(this);
+                    };
+                });
+            },function () {
+                self.tasks.splice(0,self.tasks.length);
+                console.log("No task references was found!");
+            });
+
+        }, function () {
+            self.$snackbar.error("Loading tasks for case "+self.title+" has failed!");
         });
     };
 
     ActionCase.prototype.click = function ($event) {
         if(this.expanded){
-            //collapse
+            this.collapse();
         } else {
-            //expand
+            this.expand();
         }
         this.expanded = !this.expanded;
         $event.preventDefault();
         $event.stopPropagation();
     };
 
-    ActionCase.prototype.expand = function (task) {
-        if(!task){
-            //load case data
-        } else {
-            //load task
-        }
+    ActionCase.prototype.expand = function () {
+        this.loadData(success => {
+
+        });
         this.panel.expand();
     };
 
     ActionCase.prototype.collapse = function () {
         this.panel.collapse();
+    };
+
+    ActionCase.prototype.openTaskDialog = function (task) {
+        this.$dialog.showByElement('taskViewDialog',this,{useCase:this, requestedTask:task},'tasksDialogController');
     };
 
     return ActionCase;

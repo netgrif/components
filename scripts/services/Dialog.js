@@ -1,6 +1,10 @@
 define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
     angular.module('ngMain').factory('$dialog', function ($mdDialog, $log) {
-        return {
+        const callbacks = {};
+
+        const dialogService = {
+            cache: {},
+
             showByTemplate: function (template, parentController, optional) {
                 return $mdDialog.show({
                     controller: 'DialogController',
@@ -32,10 +36,28 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                     fullscreen: true
                 });
             },
+            showByElement: function (elementId, parent, locals, callback) {
+                dialogService.cache = locals;
+                if(callback)
+                    callbacks[callback]();
+
+                return $mdDialog.show({
+                    contentElement:'#'+elementId,
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true,
+                    escapeToClose: true,
+                    fullscreen: true
+                });
+            },
             closeCurrent: function () {
                 $mdDialog.hide();
+            },
+            addCallback: function (name, callback) {
+                callbacks[name] = callback;
+                $log.debug(`Added callback ${name}`);
             }
         };
+        return dialogService;
     });
 
     angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional',

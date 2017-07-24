@@ -34,7 +34,7 @@
                 <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
                     <div ng-repeat="group in task.dataGroups" layout="row" layout-align="{{group.alignment+' center'}}" layout-wrap flex="100">
                         <!--<data-group-divider title="{{group.title}}"></data-group-divider>-->
-                        <div layout="row" layout-align="start center" style="margin-top: 20px;margin-bottom: 10px;" flex="100" ng-if="group.title">
+                        <div layout="row" layout-align="start center" style="margin-top: 20px;margin-bottom: 10px;" flex="100" ng-if="group.title && group.data.some(d => !d.behavior.hidden)">
                             <div flex="20" style="height: 3px;background-color: rgba(18, 178, 210, .50);"></div>
                             <span style="margin-left: 7px;margin-right: 7px;">{{group.title}}</span>
                             <div flex style="height: 3px;background-color: rgba(18, 178, 210, .50);"></div>

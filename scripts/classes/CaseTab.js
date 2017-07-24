@@ -5,13 +5,14 @@ define(['./Tab','./Case'], function (Tab, Case) {
      * @param {String} label
      * @param {Object} controller
      * @param {Object} angular
+     * @param {Object} config
      * @constructor
      */
-    function CaseTab(label, controller, angular) {
+    function CaseTab(label, controller, angular, config = {}) {
         Tab.call(this, 0, label);
 
         this.controller = controller;
-        Object.assign(this, angular);
+        Object.assign(this, angular,config);
 
         this.cases = [];
         this.newCase = {};

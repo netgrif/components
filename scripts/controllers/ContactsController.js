@@ -16,7 +16,7 @@ define(['angular', 'angularMaterialExpansionPanels', '../modules/Contacts', '../
                                 controllerAs: "contactCtrl"
                             });
 
-                            const n = Math.random() * 6;
+                            const n = Math.random() * 4;
                             for (let i = 0; i < n; i++)
                                 group.add('contactPanel', {});
                         });
