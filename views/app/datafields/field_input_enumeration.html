@@ -17,6 +17,7 @@
                        ng-blur="task.save()"
                        ng-required="field.behavior.required">
                 <md-option ng-repeat="choice in field.choices" ng-value="choice">
+                           <!--ng-selected="$first && field.choices && field.choices.length > 0">-->
                     {{choice}}
                 </md-option>
             </md-select>
