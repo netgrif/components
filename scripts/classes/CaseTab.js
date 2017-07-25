@@ -24,12 +24,20 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     CaseTab.URL_SEARCH = "/res/workflow/case/search";
     CaseTab.FIND_BY_AUTHOR = 0;
     CaseTab.FIND_BY_PETRINET = 1;
+    CaseTab.FIND_BY_TRANSITION = 2;
 
 
     CaseTab.prototype.activate = function () {
         if (this.cases.length === 0)
             this.loadPetriNet(this.processName, (success) => {
-                if (success) this.load(false);
+                if (success) {
+                    if(this.transitionName)
+                        this.loadTransitions(success => {
+                            if(success) this.load(false);
+                        });
+                    else
+                        this.load(false);
+                }
             });
     };
 
@@ -40,10 +48,12 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 data.author = this.$user.id;
             if (c === CaseTab.FIND_BY_PETRINET)
                 data.petriNet = this.net.entityId;
+            if(c === CaseTab.FIND_BY_TRANSITION)
+                data.transition = this.transition.entityId;
         });
         return {
             method: "POST",
-            url: url + (this.sort ? this.sort : "?sort=_id"),
+            url: url + (this.sort ? this.sort : "?sort=_id&_id.dir=desc"),
             data: data
         };
     };
@@ -52,7 +62,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
         const self = this;
         if (this.page.totalElements === this.cases.length || this.loading || !this.net) return;
         const url = next ? (self.page.next ? self.page.next : CaseTab.URL_SEARCH) : CaseTab.URL_SEARCH;
-        const config = this.buildSearchRequest(url, [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET]);
+        const config = this.buildSearchRequest(url, this.filter);
         self.loading = true;
         this.$http(config).then(function (response) {
             self.page = Object.assign(self.page, response.page);
@@ -180,6 +190,23 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
             self.$snackbar.error(`Loading ${title} has failed!`);
             callback(false);
         })
+    };
+
+    CaseTab.prototype.loadTransitions = function (callback = ()=>{}) {
+        const self = this;
+        this.$http.post("/res/petrinet/transition/refs",[this.net.entityId]).then(function (response) {
+            response.$request().$get("transitionReferences").then(function (resources) {
+                self.transition = resources.find(r => r.title === self.transitionName);
+                self.transition ? callback(true) : callback(false);
+
+            }, function () {
+                console.log("References for transitions were not found!");
+                callback(false);
+            });
+        }, function () {
+            self.$snackbar.error("Loading data for filter has failed!");
+            callback(false);
+        });
     };
 
     CaseTab.prototype.delete = function (useCase) {

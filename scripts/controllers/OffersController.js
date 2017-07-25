@@ -8,7 +8,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
-                    self.caseTab = new CaseTab("My Offers", this, {$http, $dialog, $snackbar, $user, $fileUpload},{processName:"Insurance"});
+                    self.caseTab = new CaseTab("My Offers", this, {$http, $dialog, $snackbar, $user, $fileUpload},{
+                        processName: "Insurance",
+                        filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET]
+                    });
 
                     self.tabChanged = function () {
                         self.activeTab = self.taskTabs[self.activeTabIndex - 1];

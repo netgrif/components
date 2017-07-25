@@ -13,7 +13,11 @@ define(['angular', '../classes/CaseTab', 'angularMaterialExpansionPanels', '../m
                         $snackbar,
                         $user,
                         $fileUpload
-                    }, {processName: "Contact", actionCase: true, sort: "?sort=title"});
+                    }, {processName: "Contact",
+                        actionCase: true,
+                        sort: "?sort=title",
+                        filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET]
+                    });
 
                     self.registerPanelToGroup = function (group) {
                         group.register('contactPanel', {
