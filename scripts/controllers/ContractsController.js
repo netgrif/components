@@ -33,7 +33,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Contr
                                 $fileUpload,
                                 $timeout,
                                 $mdExpansionPanelGroup
-                            }, {showTransactions: true}));
+                            }, {
+                                showTransactions: false,
+                                allowHighlight: false,
+                            }));
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
 

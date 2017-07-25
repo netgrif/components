@@ -191,7 +191,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         }
         const self = this;
         resources.forEach((r, i) => {
-            this.tasksGroup.add(`taskPanel`, {resource: r, links: r.links, tab: this}).then(function (panel) {
+            this.tasksGroup.add(`taskPanel`, {resource: r, links: r.links, tab: this, config: {allowHighlight: this.allowHighlight}}).then(function (panel) {
                 if (self.taskControllers[r.stringId]) {
                     self.tasks.push(self.taskControllers[r.stringId].createTask(panel));
 

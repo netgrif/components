@@ -7,13 +7,14 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
      * @param {Object} resource
      * @param {Object} links
      * @param {Object} angular
+     * @param {Object} config
      * @constructor
      */
-    function Task(tab, panel, resource, links, angular) {
+    function Task(tab, panel, resource, links, angular, config) {
         HalResource.call(this, links);
         this.tab = tab;
         this.panel = panel;
-        Object.assign(this, resource, angular);
+        Object.assign(this, resource, angular, config);
         this.formatedDate = Task.formatDate(this.startDate);
 
         this.dataGroups = [];
