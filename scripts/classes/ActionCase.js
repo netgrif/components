@@ -1,4 +1,4 @@
-define(['./DataField','./HalResource','./Task','./Case'], function (DataField, HalResource, Task, Case) {
+define(['./DataField', './HalResource', './Task', './Case'], function (DataField, HalResource, Task, Case) {
     /**
      * Constructor for Case class
      * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user
@@ -14,7 +14,7 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
         Case.call(this, tab, null, resource, links, angular, config);
 
         const self = this;
-        panelGroup.add('contactPanel',{useCase: this}).then(function (panel) {
+        panelGroup.add('contactPanel', {useCase: this}).then(function (panel) {
             self.panel = panel;
         });
 
@@ -25,10 +25,11 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
     ActionCase.prototype = Object.create(Case.prototype);
     ActionCase.prototype.constructor = ActionCase;
 
-    ActionCase.prototype.loadData = function (callback = ()=>{}) {
-        if(this.loading || this.data.length > 0) return;
+    ActionCase.prototype.loadData = function (callback = () => {
+    }) {
+        if (this.loading || this.data.length > 0) return;
         const self = this;
-        this.$http.get("/res/workflow/case/"+this.stringId+"/data").then(function (response) {
+        this.$http.get("/res/workflow/case/" + this.stringId + "/data").then(function (response) {
             if (response.$response().data._embedded) {
                 Object.keys(response.$response().data._embedded).forEach((item, index, array) => {
                     response.$request().$get(item).then(function (resources) {
@@ -38,8 +39,11 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
                             $user: self.$user,
                             $fileUpload: self.$fileUpload
                         })).concat(self.data);
+                        if (index === array.length - 1) {
+                            callback(true);
+                            self.updateImmediateData();
+                        }
                     });
-                    if (index === array.length - 1) callback(true);
                 });
                 //self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
 
@@ -49,35 +53,31 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
                 callback(true);
             }
         }, function () {
-            self.$snackbar.error("Data for case "+self.stringId+" has failed to load!");
+            self.$snackbar.error("Data for case " + self.stringId + " has failed to load!");
             callback(false);
         });
     };
-    
-    ActionCase.prototype.loadTasks = function (callback = ()=>{}) {
-        if(this.tasks.length > 0) return;
+
+    ActionCase.prototype.loadTasks = function (callback = () => {
+    }) {
+        if (this.tasks.length > 0) return;
         const self = this;
-        this.$http.get("").then(function (response) { //TODO 25.7.2017 doplniť urlku pre tasks reference
+        this.$http.get("/res/task/case/" + this.stringId).then(function (response) {
             //tasks references
-            response.$request().$get("taskReferences").then(function (resources) {
-                self.tasks = resources;
-                self.tasks.forEach(task => {
-                    task.click = function () {
-                        self.openTaskDialog(this);
-                    };
-                });
-            },function () {
-                self.tasks.splice(0,self.tasks.length);
-                console.log("No task references was found!");
+            self.tasks = Object.keys(response).map(key => response[key]);
+            self.tasks.forEach(task => {
+                task.click = function () {
+                    self.openTaskDialog(this);
+                };
             });
 
         }, function () {
-            self.$snackbar.error("Loading tasks for case "+self.title+" has failed!");
+            self.$snackbar.error("Loading tasks for case " + self.title + " has failed!");
         });
     };
 
     ActionCase.prototype.click = function ($event) {
-        if(this.expanded){
+        if (this.expanded) {
             this.collapse();
         } else {
             this.expand();
@@ -102,7 +102,22 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
     };
 
     ActionCase.prototype.openTaskDialog = function (task) {
-        this.$dialog.showByElement('taskViewDialog',this,{useCase:this, requestedTask:task},'tasksDialogController');
+        const self = this;
+        this.$dialog.showByElement('taskViewDialog', this, {
+            useCase: this,
+            requestedTask: task
+        }, 'tasksDialogController').then(function () {
+            self.data.splice(0,self.data.length);
+            self.tasks.splice(0,self.tasks.length);
+            self.loadData();
+            self.loadTasks();
+        });
+    };
+
+    ActionCase.prototype.updateImmediateData = function () {
+        this.immediateData.forEach(immediate => {
+            immediate.value = this.data.find(d => d.objectId === immediate.objectId).value;
+        })
     };
 
     return ActionCase;

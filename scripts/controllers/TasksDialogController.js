@@ -11,7 +11,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                     self.activate = function () {
                         Object.assign(self, $dialog.cache);
                         self.openTaskTab();
-                        self.taskTab.activate();
+                        self.taskTab.activate((self.requestedTask ? self.requestedTask.objectId : undefined));
                     };
 
                     self.openTaskTab = function () {

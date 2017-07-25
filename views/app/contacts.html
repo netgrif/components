@@ -13,17 +13,9 @@
 
         <div flex></div>
 
-        <md-switch ng-model="offCtrl.isActive" class="md-primary">
-            <span>{{::$i18n.block.actionBar.active}}</span>
-        </md-switch>
-
-        <md-switch ng-model="offCtrl.isFinished" class="md-primary">
-            <span>{{::$i18n.block.actionBar.finished}}</span>
-        </md-switch>
-
         <div flex></div>
 
-        <md-button class="md-fab md-raised md-mini md-primary">
+        <md-button class="md-fab md-raised md-mini md-primary" ng-click="contCtrl.caseTab.openNewCaseDialog($18n.page.contacts.this)">
             <md-tooltip md-direction="left">{{::$i18n.block.add.createContact}}</md-tooltip>
             <md-icon class="material-icons">add</md-icon>
         </md-button>
@@ -38,8 +30,6 @@
             <span flex="20">{{::$i18n.page.contacts.name}}</span>
             <span flex="20">{{::$i18n.page.contacts.phone}}</span>
             <span flex="20">{{::$i18n.page.contacts.email}}</span>
-            <span flex="20">{{::$i18n.page.contacts.id}}</span>
-            <span flex="10">{{::$i18n.page.contacts.note}}</span>
             <!-- To create alphabet spacer -->
             <span flex="5" class="visibility-hidden"></span>
             <span class="padding-default padding-left-2x padding-right-0 visibility-hidden">WW</span>

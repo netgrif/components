@@ -34,7 +34,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     TaskTab.URL_BYCASE = "/res/task/case";
     TaskTab.FIND_BY_CASE = 0;
 
-    TaskTab.prototype.activate = function () {
+    TaskTab.prototype.activate = function (taskToExpand) {
         this.tasksGroup = this.$mdExpansionPanelGroup(`tasksGroup-${this.id}`);
         try {
             this.tasksGroup.register(`taskPanel`, {
@@ -49,6 +49,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         if(this.showTransactions)
             this.loadTransactions();
 
+        this.taskToExpand = taskToExpand;
         this.load(false);
     };
 
@@ -194,6 +195,9 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 if (self.taskControllers[r.stringId]) {
                     self.tasks.push(self.taskControllers[r.stringId].createTask(panel));
 
+                    if(self.taskToExpand)
+                        self.expandTask(self.taskToExpand);
+
                     self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length-1]));
                     self.transactionProgress = self.mostForwardTransaction();
                 }
@@ -251,6 +255,12 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.tasksGroup.removeAll();
         this.tasks.splice(0, this.tasks.length);
         this.taskControllers = {};
+    };
+
+    TaskTab.prototype.expandTask = function (taskId) {
+        if(this.tasks){
+            this.tasks.find(task => task.stringId === taskId).click();
+        }
     };
 
     return TaskTab;

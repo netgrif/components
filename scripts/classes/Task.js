@@ -268,8 +268,10 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         }
         this.expanded = !this.expanded;
 
-        $event.preventDefault();
-        $event.stopPropagation();
+        if($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+        }
     };
 
     Task.prototype.expand = function () {
@@ -299,6 +301,10 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                 this.tab.load(false);
             this.panel.collapse();
         });
+    };
+
+    Task.prototype.showDataGroupDivider = function (group) {
+        return group.title && group.data.some(d => !d.behavior.hidden);
     };
 
     return Task;

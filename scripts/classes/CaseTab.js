@@ -116,9 +116,9 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
         this.controller.closeTab(useCase.stringId);
     };
 
-    CaseTab.prototype.openNewCaseDialog = function () {
+    CaseTab.prototype.openNewCaseDialog = function (title) {
         //this.loadPetriNets();
-        this.$dialog.showByTemplate('create_case', this);
+        this.$dialog.showByTemplate('create_case', this,{title:title});
     };
 
     CaseTab.prototype.createCase = function () {
@@ -130,15 +130,27 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                     if (response) {
                         self.$dialog.closeCurrent();
                         self.newCase = {};
-                        self.openCase(new Case(self, null, response, null, {
-                            $http: self.$http,
-                            $dialog: self.$dialog,
-                            $snackbar: self.$snackbar,
-                            $user: self.$user,
-                            $fileUpload: self.$fileUpload
-                        }));
-                        self.cases.splice(0, self.cases.length);
-                        self.page = {};
+                        if(self.actionCase){
+                            const actionCase = new ActionCase(self,self.controller.getPanelGroup(response.title),response,null,{
+                                $http: self.$http,
+                                $dialog: self.$dialog,
+                                $snackbar: self.$snackbar,
+                                $user: self.$user,
+                                $fileUpload: self.$fileUpload
+                            });
+                            actionCase.openTaskDialog();
+                            self.cases.push(actionCase);
+                        } else {
+                            self.openCase(new Case(self, null, response, null, {
+                                $http: self.$http,
+                                $dialog: self.$dialog,
+                                $snackbar: self.$snackbar,
+                                $user: self.$user,
+                                $fileUpload: self.$fileUpload
+                            }));
+                            self.cases.splice(0, self.cases.length);
+                            self.page = {};
+                        }
                     }
                 }, function () {
                     self.$snackbar.error("Creating new case failed!");
