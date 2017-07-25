@@ -14,7 +14,7 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
         Case.call(this, tab, null, resource, links, angular, config);
 
         const self = this;
-        panelGroup.add('contactPanel',{}).then(function (panel) {
+        panelGroup.add('contactPanel',{useCase: this}).then(function (panel) {
             self.panel = panel;
         });
 
@@ -26,7 +26,7 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
     ActionCase.prototype.constructor = ActionCase;
 
     ActionCase.prototype.loadData = function (callback = ()=>{}) {
-        if(this.loading) return;
+        if(this.loading || this.data.length > 0) return;
         const self = this;
         this.$http.get("/res/workflow/case/"+this.stringId+"/data").then(function (response) {
             if (response.$response().data._embedded) {
@@ -89,6 +89,9 @@ define(['./DataField','./HalResource','./Task','./Case'], function (DataField, H
 
     ActionCase.prototype.expand = function () {
         this.loadData(success => {
+
+        });
+        this.loadTasks(success => {
 
         });
         this.panel.expand();

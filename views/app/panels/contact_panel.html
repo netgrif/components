@@ -1,22 +1,20 @@
 <md-expansion-panel>
 
-    <md-expansion-panel-collapsed layout="row" layout-align="start center">
+    <md-expansion-panel-collapsed layout="row" layout-align="start center" ng-click="contact.click($event)">
         <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
-        <span flex="20">{{contact.name}}</span>
-        <span flex="20">{{contact.primaryPhone}}</span>
-        <span flex="20">{{contact.email}}</span>
-        <span flex="20">{{contact.id}}</span>
-        <span flex="10">{{contact.note}}</span>
-        <md-menu flex="5" layout="row" layout-align="end center">
+        <span flex="20">
+            {{contact.title}}
+        </span>
+        <span flex="20" ng-repeat="field in contact.immediateData | orderBy:'order'">
+            {{field.value}}
+        </span>
+        <md-menu flex="5" layout="row" layout-align="end center" ng-if="contact.tasks.length > 0">
             <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                 <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
             </md-button>
             <md-menu-content>
-                <md-menu-item>
-                    <md-button>Action 1</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button>Action 2</md-button>
+                <md-menu-item ng-repeat="task in contact.tasks | orderBy:'stringId'">
+                    <md-button ng-click="task.click()">{{task.title}}</md-button>
                 </md-menu-item>
             </md-menu-content>
         </md-menu>
@@ -24,23 +22,21 @@
 
     <md-expansion-panel-expanded>
 
-        <md-expansion-panel-header>
+        <md-expansion-panel-header ng-click="contact.click($event)">
             <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
-            <span flex="20">{{contact.name}}</span>
-            <span flex="20">{{contact.primaryPhone}}</span>
-            <span flex="20">{{contact.email}}</span>
-            <span flex="20">{{contact.id}}</span>
-            <span flex="10">{{contact.note}}</span>
-            <md-menu flex="5" layout="row" layout-align="end center">
+            <span flex="20">
+                {{contact.title}}
+            </span>
+            <span flex="20" ng-repeat="field in contact.immediateData | orderBy:'order'">
+                {{field.value}}
+            </span>
+            <md-menu flex="5" layout="row" layout-align="end center" ng-if="contact.tasks.length > 0">
                 <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                     <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
                 </md-button>
                 <md-menu-content>
-                    <md-menu-item>
-                        <md-button>Action 1</md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <md-button>Action 2</md-button>
+                    <md-menu-item ng-repeat="task in contact.tasks | orderBy:'stringId'">
+                        <md-button ng-click="task.click()">{{task.title}}</md-button>
                     </md-menu-item>
                 </md-menu-content>
             </md-menu>
@@ -48,15 +44,22 @@
 
         <md-expansion-panel-content>
             <div layout="row" layout-align="center center">
-                <span>Contact data</span>
+                <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
+                    <div ng-repeat="field in contact.data | orderBy:'order'" flex="50"
+                         flex-sm="100"
+                         ng-if="!field.behavior.hidden">
+                        <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
+                    </div>
+                </div>
             </div>
         </md-expansion-panel-content>
 
         <md-expansion-panel-footer>
             <div flex></div>
-            <md-button>Action 1</md-button>
-            <md-button>Action 2</md-button>
-            <md-button class="md-primary" ng-click="$panel.collapse()">Collapse</md-button>
+            <md-button ng-repeat="task in contact.tasks | orderBy:'stringId'" ng-click="task.click()">
+                {{task.title}}
+            </md-button>
+            <md-button class="md-primary" ng-click="contact.click($event)">Collapse</md-button>
         </md-expansion-panel-footer>
 
     </md-expansion-panel-expanded>

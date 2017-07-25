@@ -1,18 +1,18 @@
-define(['./Tab','./Case'], function (Tab, Case) {
+define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     /**
      * Constructor for CaseTab class
      * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload
      * @param {String} label
      * @param {Object} controller
      * @param {Object} angular
-     * @param {Object} config
+     * @param {Object} config - processName(string), actionCase(boolean)
      * @constructor
      */
     function CaseTab(label, controller, angular, config = {}) {
         Tab.call(this, 0, label);
 
         this.controller = controller;
-        Object.assign(this, angular,config);
+        Object.assign(this, angular, config);
 
         this.cases = [];
         this.newCase = {};
@@ -23,24 +23,27 @@ define(['./Tab','./Case'], function (Tab, Case) {
 
     CaseTab.URL_SEARCH = "/res/workflow/case/search";
     CaseTab.FIND_BY_AUTHOR = 0;
+    CaseTab.FIND_BY_PETRINET = 1;
 
 
     CaseTab.prototype.activate = function () {
         if (this.cases.length === 0)
-            this.loadPetriNet("Insurance",(success)=>{
-                if(success) this.load(false);
+            this.loadPetriNet(this.processName, (success) => {
+                if (success) this.load(false);
             });
     };
 
-    CaseTab.prototype.buildSearchRequest = function (url,criteria = []) {
+    CaseTab.prototype.buildSearchRequest = function (url, criteria = []) {
         const data = {};
         criteria.forEach(c => {
-            if(c === CaseTab.FIND_BY_AUTHOR)
+            if (c === CaseTab.FIND_BY_AUTHOR)
                 data.author = this.$user.id;
+            if (c === CaseTab.FIND_BY_PETRINET)
+                data.petriNet = this.net.entityId;
         });
         return {
-            method:"POST",
-            url: url,
+            method: "POST",
+            url: url + (this.sort ? this.sort : "?sort=_id"),
             data: data
         };
     };
@@ -49,12 +52,13 @@ define(['./Tab','./Case'], function (Tab, Case) {
         const self = this;
         if (this.page.totalElements === this.cases.length || this.loading || !this.net) return;
         const url = next ? (self.page.next ? self.page.next : CaseTab.URL_SEARCH) : CaseTab.URL_SEARCH;
-        const config = this.buildSearchRequest(url,[CaseTab.FIND_BY_AUTHOR]);
+        const config = this.buildSearchRequest(url, [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET]);
         self.loading = true;
         this.$http(config).then(function (response) {
             self.page = Object.assign(self.page, response.page);
-            if(self.page.totalElements === 0){
+            if (self.page.totalElements === 0) {
                 self.$snackbar.info("Currently there are no cases");
+                self.cases.splice(0, self.cases.length);
                 self.loading = false;
                 return;
             }
@@ -65,7 +69,7 @@ define(['./Tab','./Case'], function (Tab, Case) {
                     if (url !== self.page.last)
                         self.page.next = response.$href("next");
                 }
-                self.parseCase(resources,rawData,next);
+                self.parseCase(resources, rawData, next);
                 self.loading = false;
             }, function () {
                 self.$snackbar.error("No resource for cases was found!");
@@ -82,15 +86,25 @@ define(['./Tab','./Case'], function (Tab, Case) {
 
     CaseTab.prototype.parseCase = function (resources, rawData, next) {
         const cases = [];
-        resources.forEach((r,i) => cases.push(new Case(this,null,r,rawData[i]._links,{
-            $http: this.$http,
-            $dialog: this.$dialog,
-            $snackbar: this.$snackbar,
-            $user: this.$user,
-            $fileUpload: this.$fileUpload
-        })));
+        if (this.actionCase) {
+            resources.forEach((r, i) => cases.push(new ActionCase(this, this.controller.getPanelGroup(r.title), r, rawData[i]._links, {
+                $http: this.$http,
+                $dialog: this.$dialog,
+                $snackbar: this.$snackbar,
+                $user: this.$user,
+                $fileUpload: this.$fileUpload
+            })));
+        } else {
+            resources.forEach((r, i) => cases.push(new Case(this, null, r, rawData[i]._links, {
+                $http: this.$http,
+                $dialog: this.$dialog,
+                $snackbar: this.$snackbar,
+                $user: this.$user,
+                $fileUpload: this.$fileUpload
+            })));
+        }
 
-        if(next) cases.forEach(useCase => this.cases.push(useCase));
+        if (next) cases.forEach(useCase => this.cases.push(useCase));
         else this.cases = cases;
     };
 
@@ -116,7 +130,7 @@ define(['./Tab','./Case'], function (Tab, Case) {
                     if (response) {
                         self.$dialog.closeCurrent();
                         self.newCase = {};
-                        self.openCase(new Case(self,null,response,null,{
+                        self.openCase(new Case(self, null, response, null, {
                             $http: self.$http,
                             $dialog: self.$dialog,
                             $snackbar: self.$snackbar,
@@ -144,9 +158,10 @@ define(['./Tab','./Case'], function (Tab, Case) {
         });
     };
 
-    CaseTab.prototype.loadPetriNet = function (title, callback = ()=>{}) {
+    CaseTab.prototype.loadPetriNet = function (title, callback = () => {
+    }) {
         const self = this;
-        this.$http.post("/res/petrinet/ref",{title: title}).then(function (response) {
+        this.$http.post("/res/petrinet/ref", {title: title}).then(function (response) {
             self.net = response;
             callback(true);
         }, function () {
@@ -156,7 +171,7 @@ define(['./Tab','./Case'], function (Tab, Case) {
     };
 
     CaseTab.prototype.delete = function (useCase) {
-        this.cases.splice(this.cases.indexOf(useCase),1);
+        this.cases.splice(this.cases.indexOf(useCase), 1);
     };
 
     return CaseTab;
