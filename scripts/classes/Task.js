@@ -183,9 +183,9 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.validateRequiredData = function () {
         let validation = true;
         this.getData().forEach(field => {
-            if (field.behavior.required) validation = field.isValid() ? validation : false;
+            if (field.behavior.required || field.newValue) validation = field.isValid() ? validation : false;
         });
-        if (!validation) this.$snackbar.error("Not all required fields have valid values! Required fields are marked with asterisk (*)");
+        if (!validation) this.$snackbar.error("Not all fields have valid values!");
         return validation;
     };
 
@@ -195,10 +195,14 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
         const fields = {};
         this.getData().forEach(field => field.changed ? fields[field.objectId] = field.save() : undefined);
-        if (Object.keys(fields).length === 0 || !Object.keys(fields).every(key => !!fields[key])) {
+        if (Object.keys(fields).length === 0 || Object.keys(fields).every(key => !fields[key])) {
             callback(true);
             return;
         }
+        Object.keys(fields).forEach(k => {
+            if(!fields[k])
+                delete fields[k];
+        });
 
         const self = this;
         this.$http.post(this.link("data-edit"), JSON.stringify(fields)).then(function (response) {
