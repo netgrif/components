@@ -7,7 +7,7 @@
 
             <md-input-container class="margin-0">
                 <label>{{::$i18n.block.actionBar.search}}</label>
-                <input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+                <input ng-model="offCtrl.search" class="margin-bottom-negative-15px">
             </md-input-container>
         </div>
 
@@ -25,15 +25,14 @@
 
     <div layout="column" class="card margin-default" flex>
 
-        <div layout="row" layout-align="start center" class="card-header padding-default padding-horizontal-2x">
+        <div layout="row" layout-align="start center" class="card-header padding-2x padding-right-66px">
             <span flex="5">{{::$i18n.page.contacts.type}}</span>
             <span flex="20">{{::$i18n.page.contacts.name}}</span>
-            <span flex="20"></span>
+            <span flex="20">{{::$i18n.page.contacts.surname}}</span>
             <span flex="20">{{::$i18n.page.contacts.phone}}</span>
             <span flex="20">{{::$i18n.page.contacts.email}}</span>
             <!-- To create alphabet spacer -->
             <span flex="5" class="visibility-hidden"></span>
-            <span class="padding-default padding-left-2x padding-right-0 visibility-hidden">WW</span>
         </div>
 
         <div layout="row" class=" margin-top-0" flex>

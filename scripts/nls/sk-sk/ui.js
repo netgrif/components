@@ -24,6 +24,7 @@ define({
             this: "Kontakty",
             type: "Typ",
             name: "Meno",
+            surname: "Priezvisko",
             phone: "Telefónne číslo",
             email: "Email",
             id: "IČO/R.Č.",

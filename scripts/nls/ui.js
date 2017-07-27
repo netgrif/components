@@ -25,6 +25,7 @@ define({
                 this: "Contacts",
                 type: "Type",
                 name: "Name",
+                surname: "Surname",
                 phone: "Phone number",
                 email: "Email",
                 id: "Business ID/Per. ID",

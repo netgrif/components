@@ -557,6 +557,10 @@
   padding-right: 16px;
 }
 
+.padding-right-66px {
+  padding-right: 66px;
+}
+
 .border-width-default {
   border-width: 8px !important;
 }
@@ -1372,4 +1376,12 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 
 .base .assign-list md-list-item.selected-tile .md-list-item-text p {
   color: white !important;
+}
+
+.base .line-3px {
+  height: 3px;
+}
+
+.base .line-3px-primary-op-50 {
+  background-color: rgba(18, 178, 210, 0.5);
 }
