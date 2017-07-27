@@ -12,7 +12,7 @@
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{field.placeholder}}</label>
             <input type="number" ng-model="field.newValue"
-                   ng-change="field.changed = field.value !== field.newValue; field.validate(field.newValue);"
+                   ng-change="field.changed = true; field.validate(field.newValue);"
                    ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                    ng-blur="task.save()"
                    ng-required="field.behavior.required">

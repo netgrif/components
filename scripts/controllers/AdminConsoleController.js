@@ -108,7 +108,7 @@ define(['angular', '../modules/Main'], function (angular) {
                 const invitation = {
                     email: self.invitedUser.email,
                     organizations: self.invitedUser.organizations.map(org => org.entityId),
-                    processRoles: jQuery.map(self.invitedUser.processRoles, (val, i) => val.roles.map(role => role.objectId))
+                    processRoles: jQuery.map(self.invitedUser.processRoles, (val, i) => val.roles.map(role => role.stringId))
                 };
 
                 self.inviteLoading = true;
@@ -207,7 +207,7 @@ define(['angular', '../modules/Main'], function (angular) {
                     ((helpUser = self.users.find(us => us.selected)) ? helpUser.roles : []));
                 self.users.forEach(u =>
                     intersect = u.selected ? new Set([...intersect].filter(i => u.roles.has(i))) : intersect);
-                self.roles.roles.forEach(role => role.selected = intersect.has(role.objectId));
+                self.roles.roles.forEach(role => role.selected = intersect.has(role.stringId));
             };
 
             self.selectRole = function (role) {
@@ -215,15 +215,15 @@ define(['angular', '../modules/Main'], function (angular) {
                 let rolesChanged = false;
                 self.users.forEach(user => {
                     if (user.selected) {
-                        if (role.selected) user.roles.add(role.objectId);
-                        else user.roles.delete(role.objectId);
+                        if (role.selected) user.roles.add(role.stringId);
+                        else user.roles.delete(role.stringId);
                         rolesChanged = true;
                         user.changedRoles = true;
                     }
                 });
 
                 if (!rolesChanged)
-                    self.users.forEach(user => user.selected = user.roles.has(role.objectId) && role.selected);
+                    self.users.forEach(user => user.selected = user.roles.has(role.stringId) && role.selected);
                 else
                     $scope.saved = false;
             };

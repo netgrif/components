@@ -116,7 +116,7 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
 
     ActionCase.prototype.updateImmediateData = function () {
         this.immediateData.forEach(immediate => {
-            immediate.value = this.data.find(d => d.objectId === immediate.objectId).value;
+            immediate.value = this.data.find(d => d.stringId === immediate.stringId).value;
         })
     };
 

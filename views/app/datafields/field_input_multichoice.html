@@ -13,7 +13,7 @@
             <label class="placeholder">{{field.placeholder}}</label>
             <md-select ng-model="field.newValue"
                        multiple
-                       ng-change="field.changed = field.value !== field.newValue"
+                       ng-change="field.changed = true"
                        ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                        ng-blur="task.save()"
                        ng-required="field.behavior.required">

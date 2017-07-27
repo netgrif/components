@@ -17,7 +17,7 @@ define(['./HalResource'], function (HalResource) {
         if (this.validationJS) this.validate = new Function("value", this.validationJS);
         else this.validate = new Function("", "return true;");
 
-        //this.inputContainerElement = jQuery("#data-"+parent.stringId+"-"+this.objectId);
+        //this.inputContainerElement = jQuery("#data-"+parent.stringId+"-"+this.stringId);
 
         this.changed = false;
         this.valid = true;
@@ -27,7 +27,8 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.constructor = DataField;
 
     DataField.prototype.format = function (value) {
-        if (!value) return;
+        if(this.type === "text" && value === null) return null;
+        if (value === undefined || value === null) return;
         if (this.type === "date") {
             if (value instanceof Date) return `${value.getFullYear()}-${DataField.padding(value.getMonth() + 1, 0)}-${DataField.padding(value.getDate(), 0)}`;
             else return `${DataField.padding(value.dayOfMonth, 0)}.${DataField.padding(value.monthValue, 0)}.${value.year}
@@ -52,10 +53,10 @@ define(['./HalResource'], function (HalResource) {
                 this.valid = true;
                 break;
             case "number":
-                this.valid = this.newValue && this.validate(this.newValue);
+                this.valid = (this.newValue !== null || this.newValue !== undefined) && this.validate(this.newValue);
                 break;
             case "text":
-                this.valid = this.newValue && this.validate(this.newValue) && this.newValue.trim() !== "";
+                this.valid = this.newValue !== undefined && this.validate(this.newValue) && ( this.behavior.required ? this.newValue.trim() !== "" : true);
                 break;
             case "date":
                 this.valid = this.newValue && this.validate(this.newValue);
@@ -123,7 +124,7 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.upload = function () {
         if (!this.file) return;
 
-        this.$fileUpload.upload(this.file, undefined, this.parent.link('file') + this.objectId, response => {
+        this.$fileUpload.upload(this.file, undefined, this.parent.link('file') + this.stringId, response => {
             if (!response) {
                 this.$snackbar.error(`File ${this.file.name} has failed to upload`);
                 return;
@@ -136,7 +137,7 @@ define(['./HalResource'], function (HalResource) {
     };
 
     DataField.prototype.download = function () {
-        const downloadWindow = window.open(this.parent.link('file') + this.objectId);
+        const downloadWindow = window.open(this.parent.link('file') + this.stringId);
         downloadWindow.onload = () => downloadWindow.close();
     };
 
