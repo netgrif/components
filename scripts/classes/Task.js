@@ -194,7 +194,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         if (this.dataSize <= 0) return;
 
         const fields = {};
-        this.getData().forEach(field => field.changed ? fields[field.objectId] = field.save() : undefined);
+        this.getData().forEach(field => field.changed ? fields[field.stringId] = field.save() : undefined);
         if (Object.keys(fields).length === 0 || Object.keys(fields).every(key => !fields[key])) {
             callback(true);
             return;
@@ -207,8 +207,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         const self = this;
         this.$http.post(this.link("data-edit"), JSON.stringify(fields)).then(function (response) {
             /*self.data.forEach(d => {
-                if(response[d.objectId]){
-                    const n = response[d.objectId];
+                if(response[d.stringId]){
+                    const n = response[d.stringId];
                     if(n.value) d.newValue = n.value;
                     if(n.behavior){
                         if(n.behavior[self.transitionId])
@@ -218,7 +218,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             });*/
             self.tab.updateTasksData(response.changedFields);
 
-            Object.keys(fields).forEach(id => self.getData().find(f => f.objectId === id).changed = false);
+            Object.keys(fields).forEach(id => self.getData().find(f => f.stringId === id).changed = false);
             self.$snackbar.success("Data saved successfully");
             // self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
             callback(true);
@@ -231,8 +231,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.updateData = function (updateObj) {
         if (jQuery.isEmptyObject(updateObj)) return;
         this.getData().forEach(d => {
-            if (updateObj[d.objectId]) {
-                const n = updateObj[d.objectId];
+            if (updateObj[d.stringId]) {
+                const n = updateObj[d.stringId];
                 Object.keys(n).forEach(key => {
                     if (key === 'value')
                         d.newValue = d.parse(n[key]);

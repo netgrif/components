@@ -17,7 +17,7 @@ define(['./HalResource'], function (HalResource) {
         if (this.validationJS) this.validate = new Function("value", this.validationJS);
         else this.validate = new Function("", "return true;");
 
-        //this.inputContainerElement = jQuery("#data-"+parent.stringId+"-"+this.objectId);
+        //this.inputContainerElement = jQuery("#data-"+parent.stringId+"-"+this.stringId);
 
         this.changed = false;
         this.valid = true;
@@ -124,7 +124,7 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.upload = function () {
         if (!this.file) return;
 
-        this.$fileUpload.upload(this.file, undefined, this.parent.link('file') + this.objectId, response => {
+        this.$fileUpload.upload(this.file, undefined, this.parent.link('file') + this.stringId, response => {
             if (!response) {
                 this.$snackbar.error(`File ${this.file.name} has failed to upload`);
                 return;
@@ -137,7 +137,7 @@ define(['./HalResource'], function (HalResource) {
     };
 
     DataField.prototype.download = function () {
-        const downloadWindow = window.open(this.parent.link('file') + this.objectId);
+        const downloadWindow = window.open(this.parent.link('file') + this.stringId);
         downloadWindow.onload = () => downloadWindow.close();
     };
 

@@ -14,7 +14,7 @@
                 <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
             </md-button>
             <md-menu-content>
-                <md-menu-item ng-repeat="task in contact.tasks | orderBy:'objectId'">
+                <md-menu-item ng-repeat="task in contact.tasks | orderBy:'stringId'">
                     <md-button ng-click="task.click()">{{task.title}}</md-button>
                 </md-menu-item>
             </md-menu-content>
@@ -37,7 +37,7 @@
                     <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
                 </md-button>
                 <md-menu-content>
-                    <md-menu-item ng-repeat="task in contact.tasks | orderBy:'objectId'">
+                    <md-menu-item ng-repeat="task in contact.tasks | orderBy:'stringId'">
                         <md-button ng-click="task.click()">{{task.title}}</md-button>
                     </md-menu-item>
                 </md-menu-content>
@@ -58,7 +58,7 @@
 
         <md-expansion-panel-footer>
             <div flex></div>
-            <md-button ng-repeat="task in contact.tasks | orderBy:'objectId'" ng-click="task.click()">
+            <md-button ng-repeat="task in contact.tasks | orderBy:'stringId'" ng-click="task.click()">
                 {{task.title}}
             </md-button>
             <md-button class="md-primary" ng-click="contact.click($event)">Collapse</md-button>
