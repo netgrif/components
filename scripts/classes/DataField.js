@@ -56,7 +56,7 @@ define(['./HalResource'], function (HalResource) {
                 this.valid = (this.newValue !== null || this.newValue !== undefined) && this.validate(this.newValue);
                 break;
             case "text":
-                this.valid = this.newValue !== undefined && this.validate(this.newValue) && ( this.behavior.required ? this.newValue.trim() !== "" : true);
+                this.valid = this.newValue !== undefined && this.validate(this.newValue) && ( this.behavior.required && this.newValue !== null ? this.newValue.trim() !== "" : true);
                 break;
             case "date":
                 this.valid = this.newValue && this.validate(this.newValue);

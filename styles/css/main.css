@@ -191,7 +191,7 @@
 }
 
 .color-bg-transparent {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .color-bg-platinum {

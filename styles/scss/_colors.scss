@@ -14,7 +14,6 @@ $color-primary-A200: 			#ade8ff;
 $color-primary-A400: 			#7adaff;
 $color-primary-A700: 			#60d2ff;
 
-
 // Accent color
 $color-grey-50: 				#FAFAFA;
 $color-grey-100: 				#F5F5F5;
@@ -273,7 +272,7 @@ $color-brown-500:				#795548;
 		}
 
 		&-transparent {
-			background-color: transparent;
+			background-color: transparent !important;
 		}
 
 		&-platinum {
