@@ -72,6 +72,13 @@
 
             <nav layout="column" class="card margin-default sidenav" flex="70">
 
+                <md-button href="/dashboard" ng-class="{active: ('dashboard' | routeSegmentContains)}" layout="row" layout-align="start center">
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">dashboard</i>
+                    </div>
+                    <span flex>Dashboard</span>
+                </md-button>
+
                 <md-button href="/offers" ng-class="{active: ('offers' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">content_paste</i>

@@ -37,11 +37,12 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                 .accentPalette('grey')
                 .warnPalette('deep-orange');
 
-            // TODO 19.6.2017 define views
+
             $routeSegmentProvider
                 .when('/', 'app')
                 .when('/login', 'login')
                 .when('/signup/:token', 'signup')
+                .when('/dashboard','app.dashboard')
                 .when('/offers', 'app.offers')
                 .when('/documents', 'app.documents')
                 .when('/contracts', 'app.contracts')
@@ -54,8 +55,13 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                     controllerAs: 'mainCtrl'
                 })
                 .within()
-                .segment('offers', {
+                .segment('dashboard', {
                     default: true,
+                    templateUrl: "views/app/dashboard.html",
+                    controller: 'DashboardController',
+                    controllerAs: 'dashCtrl'
+                })
+                .segment('offers', {
                     templateUrl: "views/app/offers.html",
                     controller: 'OffersController',
                     controllerAs: 'offCtrl'
