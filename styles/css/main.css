@@ -1381,7 +1381,3 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 .base .line-3px {
   height: 3px;
 }
-
-.base .line-3px-primary-op-50 {
-  background-color: rgba(18, 178, 210, 0.5);
-}
