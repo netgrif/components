@@ -11,7 +11,7 @@
 						<i class="material-icons color-fg-accent-50">search</i>
 
 						<md-input-container class="margin-0">
-							<label>Search</label>
+							<label>{{::$i18n.block.actionBar.search}}</label>
 							<input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
 						</md-input-container>
 					</div>
@@ -19,7 +19,7 @@
 					<div flex></div>
 
 					<md-button class="md-fab md-raised md-mini md-primary" ng-click="offCtrl.caseTab.openNewCaseDialog($i18n.page.offers.this)">
-						<md-tooltip md-direction="left">Create Offer</md-tooltip>
+						<md-tooltip md-direction="left">{{$i18n.page.offers.createOffer}}</md-tooltip>
 						<md-icon class="material-icons">add</md-icon>
 					</md-button>
 				</div>
@@ -54,7 +54,7 @@
 							</md-button>
 							<md-menu-content>
 								<md-menu-item>
-									<md-button ng-click="useCase.delete()">Delete</md-button>
+									<md-button ng-click="useCase.delete()">{{$i18n.block.case.delete}}</md-button>
 								</md-menu-item>
 							</md-menu-content>
 						</md-menu>
@@ -75,7 +75,7 @@
 		<md-tab class="primary" ng-repeat="tab in offCtrl.taskTabs" md-on-select="offCtrl.tabChanged()">
 			<md-tab-label>
 				{{::tab.useCase.title}}
-				<md-icon class="material-icons cursor-pointer" style="font-size:22px;" ng-click="offCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
+				<md-icon class="material-icons cursor-pointer font-size-22" ng-click="offCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
 			</md-tab-label>
 
 			<md-tab-body>
@@ -100,7 +100,6 @@
 						<span flex="10">{{::$i18n.block.task.label}}</span>
 						<span flex="40">{{::$i18n.block.task.offer}}</span>
 						<span flex="40">{{::$i18n.block.task.title}}</span>
-						<!--<span flex="30">{{::$i18n.block.task.date}}</span>-->
 						<span flex="10">{{::$i18n.block.task.status}}</span>
 					</div>
 

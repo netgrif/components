@@ -18,8 +18,15 @@ define({
                 surname: "Last Name",
                 submit: "Sign Up"
             },
+            dashboard: {
+                this: "Dashboard",
+                offers: "Offers",
+                contacts: "Contacts",
+                contracts: "Contracts"
+            },
             offers: {
-                this: "Offers"
+                this: "Offers",
+                createOffer: "Create Offer"
             },
             contacts: {
                 this: "Contacts",
@@ -27,19 +34,33 @@ define({
                 name: "Name",
                 surname: "Surname",
                 phone: "Phone number",
-                email: "Email",
-                id: "Business ID/Per. ID",
-                note: "Note"
+                email: "Email"
             },
             documents: {
                 this: "Documents",
                 preview: "Preview"
             },
             contracts: {
-                this: "Contracts"
+                this: "Contracts",
+                myContracts: "My contracts"
             },
             console: {
-                this: "Console"
+                this: "Console",
+                inviteUser: "Invite User",
+                newUser: "New user",
+                validationEmail: "This must be valid email address",
+                validationRequired: "This is required",
+                orgs: "Organizations",
+                roles: "Roles",
+                invite: "Invite",
+                processRolesLower: "Process roles",
+                processRoles: "Process Roles",
+                user: "User",
+                name: "Name",
+                surname: "Surname",
+                process: "Process",
+                role: "Role",
+                save: "Save"
             }
         },
         block: {
@@ -83,7 +104,8 @@ define({
                 client: "Client",
                 date: "Date",
                 insurance: "Insurance",
-                inEur: "In EUR"
+                inEur: "In EUR",
+                delete: "Delete"
             },
             task: {
                 label: "Label",

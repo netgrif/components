@@ -2,80 +2,79 @@
 
     <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="contractCtrl.activeTabIndex">
 
-        <md-tab md-on-select="contractCtrl.caseTab.activate()" class="primary" label="My offers">
-            <md-content layout="column" class="color-bg-transparent">
+        <md-tab md-on-select="contractCtrl.caseTab.activate()" class="primary">
+            <md-tab-label>
+                {{$i18n.page.contracts.myContracts}}
+            </md-tab-label>
+            <md-tab-body>
+                <md-content layout="column" class="color-bg-transparent">
 
-                <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default" flex>
+                    <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default" flex>
 
-                    <div layout="row" layout-align="start center">
-                        <i class="material-icons color-fg-accent-50">search</i>
+                        <div layout="row" layout-align="start center">
+                            <i class="material-icons color-fg-accent-50">search</i>
 
-                        <md-input-container class="margin-0">
-                            <label>Search</label>
-                            <input type="text" ng-model="contractCtrl.search" class="margin-bottom-negative-15px">
-                        </md-input-container>
+                            <md-input-container class="margin-0">
+                                <label>{{::$i18n.block.actionBar.search}}</label>
+                                <input type="text" ng-model="contractCtrl.search" class="margin-bottom-negative-15px">
+                            </md-input-container>
+                        </div>
+
                     </div>
 
-                    <div flex></div>
+                    <div layout="column" class="card margin-default" flex>
 
-                    <!--<md-button class="md-fab md-raised md-mini md-primary" ng-click="contractCtrl.caseTab.openNewCaseDialog($i18n.page.contracts.this)">-->
-                        <!--<md-tooltip md-direction="left">Create Offer</md-tooltip>-->
-                        <!--<md-icon class="material-icons">add</md-icon>-->
-                    <!--</md-button>-->
-                </div>
+                        <div layout="row" layout-align="start center" class="card-header list-header padding-default padding-horizontal-2x">
+                            <span flex="10">{{::$i18n.block.case.label}}</span>
+                            <span flex="20">{{::$i18n.block.case.visualID}}</span>
+                            <span flex="25">{{::$i18n.block.case.title}}</span>
+                            <span flex ng-repeat="data in contractCtrl.caseTab.cases[0].immediateData | orderBy:'order'">
+                                <md-tooltip md-direction="top">{{data.description}}</md-tooltip>
+                                {{data.name}}
+                            </span>
+                            <span flex></span>
+                            <span flex="5" class="visibility-hidden"></span>
+                        </div>
 
-                <div layout="column" class="card margin-default" flex>
+                        <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
+                             ng-repeat-start="useCase in contractCtrl.caseTab.cases | orderBy:'strindId'"
+                             ng-click="useCase.open()">
+                            <i flex="10" class="material-icons {{::useCase.color}}">label</i>
+                            <span flex="20">{{::useCase.visualId}}</span>
+                            <span flex="25">{{::useCase.title}}</span>
+                            <span flex ng-repeat="data in useCase.immediateData | orderBy:'order'">
+                                {{data.value}}
+                            </span>
+                            <span flex></span>
+                            <md-menu flex="5" layout="row" layout-align="start center">
+                                <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                                    <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                                </md-button>
+                                <md-menu-content>
+                                    <md-menu-item>
+                                        <md-button ng-click="useCase.delete()">{{$i18n.block.case.delete}}</md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                        <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 
-                    <div layout="row" layout-align="start center" class="card-header list-header padding-default padding-horizontal-2x">
-                        <span flex="10">{{::$i18n.block.case.label}}</span>
-                        <span flex="20">{{::$i18n.block.case.visualID}}</span>
-                        <span flex="25">{{::$i18n.block.case.title}}</span>
-                        <span flex ng-repeat="data in contractCtrl.caseTab.cases[0].immediateData | orderBy:'order'">
-							<md-tooltip md-direction="top">{{data.description}}</md-tooltip>
-							{{data.name}}
-						</span>
-                        <span flex></span>
-                        <span flex="5" class="visibility-hidden"></span>
                     </div>
 
-                    <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
-                         ng-repeat-start="useCase in contractCtrl.caseTab.cases | orderBy:'strindId'"
-                         ng-click="useCase.open()">
-                        <i flex="10" class="material-icons {{::useCase.color}}">label</i>
-                        <span flex="20">{{::useCase.visualId}}</span>
-                        <span flex="25">{{::useCase.title}}</span>
-                        <span flex ng-repeat="data in useCase.immediateData | orderBy:'order'">
-							{{data.value}}
-						</span>
-                        <span flex></span>
-                        <md-menu flex="5" layout="row" layout-align="start center">
-                            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
-                                <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
-                            </md-button>
-                            <md-menu-content>
-                                <md-menu-item>
-                                    <md-button ng-click="useCase.delete()">Delete</md-button>
-                                </md-menu-item>
-                            </md-menu-content>
-                        </md-menu>
+                    <div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-default"
+                         in-view="$inview&&contractCtrl.caseTab.load(true)"
+                         in-view-options="{ throttle: 0 }">
+                        <md-progress-circular md-mode="indeterminate" ng-disabled="!contractCtrl.caseTab.loading" class="md-primary" md-diameter="50"></md-progress-circular>
                     </div>
-                    <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 
-                </div>
-
-                <div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-default"
-                     in-view="$inview&&contractCtrl.caseTab.load(true)"
-                     in-view-options="{ throttle: 0 }">
-                    <md-progress-circular md-mode="indeterminate" ng-disabled="!contractCtrl.caseTab.loading" class="md-primary" md-diameter="50"></md-progress-circular>
-                </div>
-
-            </md-content>
+                </md-content>
+            </md-tab-body>
         </md-tab>
 
         <md-tab class="primary" ng-repeat="tab in contractCtrl.taskTabs" md-on-select="contractCtrl.tabChanged()">
             <md-tab-label>
                 {{::tab.useCase.title}}
-                <md-icon class="material-icons cursor-pointer" style="font-size:22px;" ng-click="contractCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
+                <md-icon class="material-icons cursor-pointer font-size-22" ng-click="contractCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
             </md-tab-label>
 
             <md-tab-body>
@@ -92,15 +91,12 @@
 
                         </div>
 
-                        <!--<md-progress-linear md-mode="determinate" ng-value="(100 / tab.transactions.length) * tab.transactionProgress + 1" class="margin-top-default"></md-progress-linear>-->
-
                     </div>
 
                     <div layout="row" class="card color-bg-black-op-40 margin-default padding-2x">
                         <span flex="10">{{::$i18n.block.task.label}}</span>
                         <span flex="40">{{::$i18n.block.task.offer}}</span>
                         <span flex="40">{{::$i18n.block.task.title}}</span>
-                        <!--<span flex="30">{{::$i18n.block.task.date}}</span>-->
                         <span flex="10">{{::$i18n.block.task.status}}</span>
                     </div>
 
