@@ -18,7 +18,7 @@ define(['angular', '../classes/Case', '../modules/Main'],
                     self.loadOffers = function () {
                         self.loadCases({
                             method: "POST",
-                            url: "/res/workflow/case/search?sort=_id&_id.dir=desc&size=" + self.limit,
+                            url: "/res/workflow/case/search?sort=_id,desc&size=" + self.limit,
                             data: {
                                 author: $user.id,
                                 petriNet: self.offerNet.entityId
@@ -29,7 +29,7 @@ define(['angular', '../classes/Case', '../modules/Main'],
                     self.loadContacts = function () {
                         self.loadCases({
                             method: "POST",
-                            url: "/res/workflow/case/search?sort=_id&_id.dir=desc&size=" + self.limit,
+                            url: "/res/workflow/case/search?sort=_id,desc&size=" + self.limit,
                             data: {
                                 author: $user.id,
                                 petriNet: self.contactNet.entityId
@@ -40,7 +40,7 @@ define(['angular', '../classes/Case', '../modules/Main'],
                     self.loadContracts = function () {
                         self.loadCases({
                             method: "POST",
-                            url: "/res/workflow/case/search?sort=_id&_id.dir=desc&size=" + self.limit,
+                            url: "/res/workflow/case/search?sort=_id,desc&size=" + self.limit,
                             data: {
                                 author: $user.id,
                                 petriNet: self.offerNet.entityId,
