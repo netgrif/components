@@ -28,7 +28,7 @@
                           md-row-height-gt-md="1:1" md-row-height="2:2"
                           md-gutter="16px" md-gutter-gt-sm="16px">
 
-                <md-grid-tile class="card document">
+                <md-grid-tile class="card document" ng-click="docCtrl.pdfDialog()">
                     <div layout-align="center center">
                         <i class="material-icons document-image">picture_as_pdf</i>
                     </div>
@@ -146,9 +146,10 @@
                 </div>
                 <!--<div >-->
                     <!--&lt;!&ndash;<iframe  title="PDF in an i-Frame" src="../../assets/test.pdf#zoom=50" ></iframe>&ndash;&gt;-->
-                    <object data="../../assets/test.pdf#zoom=60" type="application/pdf" style="position: relative; height: 100%; width: 100%;">
-                        <a href="../../assets/test.pdf#zoom=60">test.pdf</a>
-                    </object>
+                    <!--<object data="../../assets/test.pdf#zoom=60" type="application/pdf" style="position: relative; height: 100%; width: 100%;">-->
+                        <!--<a href="../../assets/test.pdf#zoom=60">test.pdf</a>-->
+                    <!--</object>-->
+                    <iframe src="/views/ViewerJS/index.html#../../assets/test.pdf" style="position: relative; height: 100%; width: 100%;" allowfullscreen webkitallowfullscreen></iframe>
                 <!--</div>-->
             </div>
         </div>

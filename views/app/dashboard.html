@@ -1,5 +1,6 @@
 <div ng-cloak>
 
+    <!--Ponuky-->
     <div layout="row" layout-align="start center" flex="100" class="margin-top-2x">
         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
         <span class="margin-horizontal-default md-headline">Offers</span>
@@ -45,6 +46,7 @@
 
     </div>
 
+    <!--Kontakty-->
     <div layout="row" layout-align="start center" flex="100" class="margin-top-2x">
         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
         <span class="margin-horizontal-default md-headline">Contacts</span>
@@ -66,10 +68,8 @@
         <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
              ng-repeat-start="contact in dashCtrl.contacts | orderBy:'strindId'"
              ng-click="">
-            <i flex="10" class="material-icons {{::contact.color}}">label</i>
-            <span flex="20">{{::contact.visualId}}</span>
-            <span flex="25">{{::contact.title}}</span>
-            <span flex ng-repeat="data in contact.immediateData | orderBy:'order'">
+            <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
+            <span flex="20" ng-repeat="data in contact.immediateData | orderBy:'order'">
                 {{data.value}}
             </span>
             <span flex></span>
@@ -88,6 +88,7 @@
 
     </div>
 
+    <!--Zmluvy-->
     <div layout="row" layout-align="start center" flex="100" class="margin-top-2x">
         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
         <span class="margin-horizontal-default md-headline">Contracts</span>
