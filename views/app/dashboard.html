@@ -23,7 +23,7 @@
 
         <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
              ng-repeat-start="offer in dashCtrl.offers | orderBy:'strindId'"
-             ng-click="">
+             ng-click="dashCtrl.openCase('offers',offer)">
             <i flex="10" class="material-icons {{::offer.color}}">label</i>
             <span flex="20">{{::offer.visualId}}</span>
             <span flex="25">{{::offer.title}}</span>

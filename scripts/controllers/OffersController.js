@@ -1,14 +1,14 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offers', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab) {
         angular.module('ngOffers').controller('OffersController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache) {
                     const self = this;
 
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
-                    self.caseTab = new CaseTab("My Offers", this, {$http, $dialog, $snackbar, $user, $fileUpload},{
+                    self.caseTab = new CaseTab("My Offers", this, {$http, $dialog, $snackbar, $user, $fileUpload}, {
                         processName: "Insurance",
                         filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET],
                         casType: "Offer"
@@ -35,7 +35,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                                 $mdExpansionPanelGroup
                             }, {
                                 showTransactions: true,
-                                allowHighlight:true
+                                allowHighlight: true
                             }));
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
@@ -48,8 +48,11 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                             self.taskTabs.splice(index, 1);
                             self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
                         }
+                    };
+
+                    if($cache.get("dashboard") && $cache.get("dashboard").offers) {
+                        self.caseTab.openCase($cache.get("dashboard").offers);
+                        self.activeTabIndex = self.taskTabs.length;
                     }
-
-
                 }]);
     });

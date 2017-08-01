@@ -1,8 +1,8 @@
 define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'],
     function (angular, Case, ActionCase) {
         angular.module('ngMain').controller('DashboardController',
-            ['$log', '$scope', '$user', '$snackbar', '$http', '$dialog', '$fileUpload', '$mdExpansionPanelGroup',
-                function ($log, $scope, $user, $snackbar, $http, $dialog, $fileUpload, $mdExpansionPanelGroup) {
+            ['$log', '$scope', '$user', '$snackbar', '$http', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$cache', '$location',
+                function ($log, $scope, $user, $snackbar, $http, $dialog, $fileUpload, $mdExpansionPanelGroup, $cache, $location) {
                     const self = this;
 
                     self.limit = 3;
@@ -64,7 +64,7 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
 
                     self.loadCases = function (request, target) {
                         $http(request).then(function (response) {
-                            if(!response.$response().data._embedded) return;
+                            if (!response.$response().data._embedded) return;
 
                             const rawData = response.$response().data._embedded.cases;
                             response.$request().$get("cases").then(function (resources) {
@@ -87,18 +87,18 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
 
                     self.loadActionCases = function (request, target) {
                         $http(request).then(function (response) {
-                            if(!response.$response().data._embedded) return;
+                            if (!response.$response().data._embedded) return;
 
                             self.registerPanelToGroup();
                             const rawData = response.$response().data._embedded.cases;
                             response.$request().$get("cases").then(function (resources) {
-                                resources.forEach((r, i) => self[target].push(new ActionCase(null,self.contactsPanelGroup,r,rawData[i]._links,{
+                                resources.forEach((r, i) => self[target].push(new ActionCase(null, self.contactsPanelGroup, r, rawData[i]._links, {
                                     $http: $http,
                                     $dialog: $dialog,
                                     $snackbar: $snackbar,
                                     $user: $user,
                                     $fileUpload: $fileUpload
-                                },{caseType: "Contact"})));
+                                }, {caseType: "Contact"})));
 
                             }, function () {
                                 $snackbar.error("No resource for cases was found!");
@@ -137,18 +137,25 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                         });
                     };
 
-                    self.loadPetriNet("Insurance",'offerNet',success => {
-                        if(!success) return;
+                    self.loadPetriNet("Insurance", 'offerNet', success => {
+                        if (!success) return;
 
                         self.loadOffers();
-                        self.loadTransitions("Informácie o províziach",self.offerNet.entityId,'contractTransition', success => {
-                            if(success)
+                        self.loadTransitions("Informácie o províziach", self.offerNet.entityId, 'contractTransition', success => {
+                            if (success)
                                 self.loadContracts();
                         });
                     });
-                    self.loadPetriNet("Contact",'contactNet',success => {
-                        if(success)
+                    self.loadPetriNet("Contact", 'contactNet', success => {
+                        if (success)
                             self.loadContacts();
                     });
+
+                    self.openCase = function (type, useCase) {
+                        const o = {};
+                        o[type] = useCase;
+                        $cache.put("dashboard", o);
+                        $location.path("/" + type);
+                    };
                 }]);
     });
