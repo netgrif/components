@@ -45,7 +45,7 @@
             </div>
 
             <div layout="row" layout-align="center center" ng-if="task.data.length === 0 && !task.loading">
-                <span>This task has no data. Finish to continue.</span>
+                <span>{{::$i18n.block.task.noData}}</span>
             </div>
 
         </md-expansion-panel-content>
@@ -53,13 +53,13 @@
         <md-expansion-panel-footer md-no-sticky>
             <div flex></div>
             <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.save()">
-                Save
+                {{::$i18n.block.btn.save}}
             </md-button>
             <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()">
-                Finish
+                {{::$i18n.block.btn.finish}}
             </md-button>
             <md-button class="md-primary" ng-click="task.click($event)">
-                Collapse
+                {{::$i18n.block.btn.collapse}}
             </md-button>
         </md-expansion-panel-footer>
 

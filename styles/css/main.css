@@ -779,6 +779,10 @@ span.active {
   font-size: 20px;
 }
 
+.font-size-22 {
+  font-size: 22px;
+}
+
 .img-responsive {
   width: 100%;
   height: auto;

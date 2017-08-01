@@ -1,11 +1,12 @@
 <div ng-cloak>
 
-    <!--Ponuky-->
+    <!-- Offers -->
     <div layout="row" layout-align="start center" flex="100" class="margin-top-2x">
         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
-        <span class="margin-horizontal-default md-headline">Offers</span>
+        <span class="margin-horizontal-default md-headline">{{::$i18n.page.dashboard.offers}}</span>
         <div flex class="line-3px color-bg-primary-op-50"></div>
     </div>
+
     <div layout="column" class="card margin-default margin-bottom-2x" flex>
 
         <div layout="row" layout-align="start center"
@@ -37,31 +38,32 @@
                 <!--</md-button>-->
                 <!--<md-menu-content>-->
                     <!--<md-menu-item>-->
-                        <!--<md-button ng-click="useCase.delete()">Delete</md-button>-->
+                        <!--<md-button ng-click="useCase.delete()">{{::$i18n.block.btn.delete}}</md-button>-->
                     <!--</md-menu-item>-->
                 <!--</md-menu-content>-->
             <!--</md-menu>-->
         </div>
+
         <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 
     </div>
 
-    <!--Kontakty-->
+    <!-- Contacts -->
     <div layout="row" layout-align="start center" flex="100" class="margin-top-2x">
         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
-        <span class="margin-horizontal-default md-headline">Contacts</span>
+        <span class="margin-horizontal-default md-headline">{{::$i18n.page.dashboard.contacts}}</span>
         <div flex class="line-3px color-bg-primary-op-50"></div>
     </div>
+
     <div layout="column" class="card margin-default margin-bottom-2x" flex>
 
         <div layout="row" layout-align="start center"
              class="card-header list-header padding-default padding-horizontal-2x">
-            <span flex="5">{{::$i18n.page.contacts.type}}</span>
-            <span flex="20">{{::$i18n.page.contacts.name}}</span>
-            <span flex="20">{{::$i18n.page.contacts.surname}}</span>
-            <span flex="20">{{::$i18n.page.contacts.phone}}</span>
-            <span flex="20">{{::$i18n.page.contacts.email}}</span>
-            <span flex></span>
+            <span flex="5">{{::$i18n.block.task.type}}</span>
+            <span flex="20">{{::$i18n.block.task.name}}</span>
+            <span flex="20">{{::$i18n.block.task.surname}}</span>
+            <span flex="20">{{::$i18n.block.task.phone}}</span>
+            <span flex="20">{{::$i18n.block.task.email}}</span>
             <span flex="5" class="visibility-hidden"></span>
         </div>
 
@@ -89,10 +91,10 @@
 
     </div>
 
-    <!--Zmluvy-->
+    <!-- Contracts -->
     <div layout="row" layout-align="start center" flex="100" class="margin-top-2x">
         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
-        <span class="margin-horizontal-default md-headline">Contracts</span>
+        <span class="margin-horizontal-default md-headline">{{::$i18n.page.dashboard.contracts}}</span>
         <div flex class="line-3px color-bg-primary-op-50"></div>
     </div>
     <div layout="column" class="card margin-default margin-bottom-2x" flex>
@@ -126,11 +128,12 @@
             <!--</md-button>-->
             <!--<md-menu-content>-->
             <!--<md-menu-item>-->
-            <!--<md-button ng-click="useCase.delete()">Delete</md-button>-->
+            <!--<md-button ng-click="useCase.delete()">{{::$i18n.block.btn.delete}}</md-button>-->
             <!--</md-menu-item>-->
             <!--</md-menu-content>-->
             <!--</md-menu>-->
         </div>
+
         <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 
     </div>

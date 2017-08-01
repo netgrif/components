@@ -1,4 +1,5 @@
 <md-dialog flex="50">
+
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>{{dialogCtrl.locals.net.title}}</h2>
@@ -8,16 +9,17 @@
             </md-button>
         </div>
     </md-toolbar>
+
     <md-dialog-content flex>
         <div class="md-dialog-content background-gradient padding-0" layout="column">
             <div layout="column" class="card margin-default" flex>
 
                 <div layout="row" layout-align="start center"
                      class="card-header list-header padding-default padding-horizontal-2x">
-                    <span flex="10" style="color:#fff !important;">{{::$root.$i18n.block.case.label}}</span>
-                    <span flex="20" style="color:#fff !important;">{{::$root.$i18n.block.case.visualID}}</span>
-                    <span flex="25" style="color:#fff !important;">{{::$root.$i18n.block.case.title}}</span>
-                    <span flex ng-repeat="data in dialogCtrl.cases[0].immediateData | orderBy:'order'" style="color:#fff !important;">
+                    <span flex="10" class="color-fg-accent-50">{{::$root.$i18n.block.case.label}}</span>
+                    <span flex="20" class="color-fg-accent-50">{{::$root.$i18n.block.case.visualID}}</span>
+                    <span flex="25" class="color-fg-accent-50">{{::$root.$i18n.block.case.title}}</span>
+                    <span flex ng-repeat="data in dialogCtrl.cases[0].immediateData | orderBy:'order'" class="color-fg-accent-50">
 							<md-tooltip md-direction="top">{{data.description}}</md-tooltip>
 							{{data.name}}
 						</span>
@@ -27,21 +29,24 @@
 
                 <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
                      ng-repeat-start="useCase in dialogCtrl.cases | orderBy:'strindId'"
-                     ng-click="useCase.select()" style="{{useCase.selected ? 'background: rgba(18, 178, 210, 0.5);':''}}">
+                     ng-click="useCase.select()" ng-class="useCase.selected ? 'color-bg-primary-op-50':''">
                     <i flex="10" class="material-icons {{::useCase.color}}">label</i>
-                    <span flex="20" style="color:#fff !important;">{{::useCase.visualId}}</span>
-                    <span flex="25" style="color:#fff !important;">{{::useCase.title}}</span>
-                    <span flex ng-repeat="data in useCase.immediateData | orderBy:'order'" style="color:#fff !important;">
+                    <span flex="20" class="color-fg-accent-50">{{::useCase.visualId}}</span>
+                    <span flex="25" class="color-fg-accent-50">{{::useCase.title}}</span>
+                    <span flex ng-repeat="data in useCase.immediateData | orderBy:'order'" class="color-fg-accent-50">
 							{{data.value}}
 						</span>
                     <span flex></span>
                 </div>
+
                 <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 
             </div>
         </div>
     </md-dialog-content>
-    <md-dialog-actions layout="row" layout-align="end center" style="background-color: #515e64;">
-        <md-button class="md-primary" ng-click="choose()">Choose</md-button>
+
+    <md-dialog-actions layout="row" layout-align="end center">
+        <md-button class="md-primary" ng-click="choose()">{{::$root.$i18n.block.dialog.caseSelect.choose}}</md-button>
     </md-dialog-actions>
+
 </md-dialog>
