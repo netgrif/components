@@ -27,7 +27,7 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.constructor = DataField;
 
     DataField.prototype.format = function (value) {
-        if(this.type === "text" && value === null) return null;
+        if (this.type === "text" && value === null) return null;
         if (value === undefined || value === null) return;
         if (this.type === "date") {
             if (value instanceof Date) return `${value.getFullYear()}-${DataField.padding(value.getMonth() + 1, 0)}-${DataField.padding(value.getDate(), 0)}`;
@@ -68,14 +68,17 @@ define(['./HalResource'], function (HalResource) {
     };
 
     DataField.prototype.parse = function (value) {
-        if(this.type === "date") {
+        if (this.type === "date") {
             this.minDate = this.minDate ? new Date(this.minDate) : undefined;
             this.maxDate = this.maxDate ? new Date(this.maxDate) : undefined;
         }
 
         if (!value) return undefined;
-        if (this.type === "date"){
+        if (this.type === "date") {
             return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
+        }
+        else if (this.type === "number") {
+            return DataField.roundToTwo(value);
         }
         return value;
     };
@@ -142,10 +145,12 @@ define(['./HalResource'], function (HalResource) {
     };
 
     DataField.padding = (text, pad = '') => {
-        if(!text) return "";
+        if (!text) return "";
         text = text.toString();
         return text.length <= 1 ? pad + text : text;
     };
+
+    DataField.roundToTwo = num => +(Math.round(num + "e+2") + "e-2");
 
     return DataField;
 });
