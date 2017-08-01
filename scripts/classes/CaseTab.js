@@ -103,7 +103,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 $snackbar: this.$snackbar,
                 $user: this.$user,
                 $fileUpload: this.$fileUpload
-            },{caseType: self.caseType})));
+            },{caseType: this.caseType})));
         } else {
             resources.forEach((r, i) => cases.push(new Case(this, null, r, rawData[i]._links, {
                 $http: this.$http,
