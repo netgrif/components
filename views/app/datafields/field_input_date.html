@@ -11,7 +11,7 @@
     <div flex="60">
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <!-- TODO 23.6.2017 fix label when calendar opens -->
-            <label class="placeholder">Enter date</label>
+            <label class="placeholder">{{::$i18n.block.data.enterDate}}</label>
             <md-datepicker ng-model="field.newValue"
                            <!--ng-change="field.changed = field.value !== field.newValue"-->
                            ng-change="field.changed = true"
@@ -21,7 +21,8 @@
                            ng-required="field.behavior.required"
                            md-min-date="field.minDate"
                            md-max-date="field.maxDate"
-                           md-date-filter="field.validate"></md-datepicker>
+                           md-date-filter="field.validate">
+            </md-datepicker>
         </md-input-container>
     </div>
     <div flex="10"></div>

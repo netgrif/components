@@ -1,4 +1,5 @@
 <md-dialog flex="50">
+
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>{{dialogCtrl.locals.net.title}}</h2>
@@ -8,6 +9,7 @@
             </md-button>
         </div>
     </md-toolbar>
+
     <md-dialog-content flex>
         <div class="md-dialog-content background-gradient padding-0" layout="column">
             <div layout="column" class="card margin-default" flex>
@@ -36,12 +38,15 @@
 						</span>
                     <span flex></span>
                 </div>
+
                 <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 
             </div>
         </div>
     </md-dialog-content>
+
     <md-dialog-actions layout="row" layout-align="end center">
-        <md-button class="md-primary" ng-click="choose()">Choose</md-button>
+        <md-button class="md-primary" ng-click="choose()">{{::$root.$i18n.block.dialog.caseSelect.choose}}</md-button>
     </md-dialog-actions>
+
 </md-dialog>
