@@ -119,10 +119,12 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     };
 
     CaseTab.prototype.openCase = function (useCase) {
+        if(this.actionCase) return;
         this.controller.openTaskTab(useCase);
     };
 
     CaseTab.prototype.closeCase = function (useCase) {
+        if(this.actionCase) return;
         this.controller.closeTab(useCase.stringId);
     };
 
@@ -210,6 +212,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     };
 
     CaseTab.prototype.delete = function (useCase) {
+        if(this.actionCase) useCase.removePanel();
         this.cases.splice(this.cases.indexOf(useCase), 1);
     };
 

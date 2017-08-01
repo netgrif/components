@@ -121,5 +121,9 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
         })
     };
 
+    ActionCase.prototype.removePanel = function () {
+        this.panel.remove();
+    };
+
     return ActionCase;
 });
