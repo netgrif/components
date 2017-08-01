@@ -24,7 +24,7 @@
 
         <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
              ng-repeat-start="offer in dashCtrl.offers | orderBy:'strindId'"
-             ng-click="">
+             ng-click="dashCtrl.openCase('offers',offer)">
             <i flex="10" class="material-icons {{::offer.color}}">label</i>
             <span flex="20">{{::offer.visualId}}</span>
             <span flex="25">{{::offer.title}}</span>
@@ -67,25 +67,27 @@
             <span flex="5" class="visibility-hidden"></span>
         </div>
 
-        <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
-             ng-repeat-start="contact in dashCtrl.contacts | orderBy:'strindId'" ng-click="">
-            <i class="material-icons color-fg-primary-500" flex="5">account_circle</i>
-            <span flex="20" ng-repeat="data in contact.immediateData | orderBy:'order'">
-                {{data.value}}
-            </span>
-            <!--<md-menu flex="5" layout="row" layout-align="start center">-->
-                <!--<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>-->
-                    <!--<md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>-->
-                <!--</md-button>-->
-                <!--<md-menu-content>-->
-                    <!--<md-menu-item>-->
-                        <!--<md-button ng-click="useCase.delete()">{{::$i18n.block.btn.delete}}</md-button>-->
-                    <!--</md-menu-item>-->
-                <!--</md-menu-content>-->
-            <!--</md-menu>-->
-        </div>
-
-        <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
+        <!--<div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"-->
+             <!--ng-repeat-start="contact in dashCtrl.contacts | orderBy:'strindId'"-->
+             <!--ng-click="">-->
+            <!--<i class="material-icons color-fg-primary-500" flex="5">account_circle</i>-->
+            <!--<span flex="20" ng-repeat="data in contact.immediateData | orderBy:'order'">-->
+                <!--{{data.value}}-->
+            <!--</span>-->
+            <!--<span flex></span>-->
+            <!--&lt;!&ndash;<md-menu flex="5" layout="row" layout-align="start center">&ndash;&gt;-->
+                <!--&lt;!&ndash;<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+                <!--&lt;!&ndash;<md-menu-content>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<md-menu-item>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<md-button ng-click="useCase.delete()">Delete</md-button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</md-menu-item>&ndash;&gt;-->
+                <!--&lt;!&ndash;</md-menu-content>&ndash;&gt;-->
+            <!--&lt;!&ndash;</md-menu>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>-->
+        <md-expansion-panel-group md-component-id="dashboard-contact-panel-group" multiple></md-expansion-panel-group>
 
     </div>
 

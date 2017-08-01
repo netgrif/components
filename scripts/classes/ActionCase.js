@@ -105,7 +105,8 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
         const self = this;
         this.$dialog.showByElement('taskViewDialog', this, {
             useCase: this,
-            requestedTask: task
+            requestedTask: task,
+            caseType: self.caseType
         }, 'tasksDialogController').then(function () {
             self.data.splice(0,self.data.length);
             self.tasks.splice(0,self.tasks.length);
@@ -118,6 +119,10 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
         this.immediateData.forEach(immediate => {
             immediate.value = this.data.find(d => d.stringId === immediate.stringId).value;
         })
+    };
+
+    ActionCase.prototype.removePanel = function () {
+        this.panel.remove();
     };
 
     return ActionCase;

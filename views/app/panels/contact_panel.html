@@ -19,7 +19,7 @@
                     <md-button ng-click="task.click()">{{task.title}}</md-button>
                 </md-menu-item>
                 <md-menu-item>
-                    <md-button>Delete</md-button>
+                    <md-button ng-click="contact.delete()">{{::$i18n.block.btn.delete}}</md-button>
                 </md-menu-item>
             </md-menu-content>
         </md-menu>
@@ -45,6 +45,9 @@
                 <md-menu-content>
                     <md-menu-item ng-repeat="task in contact.tasks | orderBy:'stringId'">
                         <md-button ng-click="task.click()">{{task.title}}</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="contact.delete()">{{::$i18n.block.btn.delete}}</md-button>
                     </md-menu-item>
                 </md-menu-content>
             </md-menu>
@@ -73,7 +76,7 @@
                 {{task.title}}
             </md-button>
 
-            <md-button>{{::$i18n.block.btn.delete}}</md-button>
+            <md-button ng-click="contact.delete()">{{::$i18n.block.btn.delete}}</md-button>
 
             <md-button class="md-primary" ng-click="contact.click($event)">{{::$i18n.block.btn.collapse}}</md-button>
 

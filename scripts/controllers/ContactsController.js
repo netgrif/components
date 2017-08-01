@@ -16,7 +16,8 @@ define(['angular', '../classes/CaseTab', 'angularMaterialExpansionPanels', '../m
                     }, {processName: "Contact",
                         actionCase: true,
                         sort: "?sort=title",
-                        filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET]
+                        filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET],
+                        caseType: "Contact"
                     });
 
                     self.registerPanelToGroup = function (group) {

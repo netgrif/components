@@ -38,7 +38,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             },
             showByElement: function (elementId, parent, locals, callback) {
                 dialogService.cache = locals;
-                if(callback)
+                if(callback && callbacks[callback])
                     callbacks[callback]();
 
                 return $mdDialog.show({
