@@ -22,7 +22,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                             $fileUpload,
                             $timeout,
                             $mdExpansionPanelGroup
-                        }, {showTransactions: false});
+                        }, {
+                            showTransactions: false,
+                            allowHighlight: false
+                        });
                     };
 
                     $scope.hide = function () {

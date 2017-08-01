@@ -10,7 +10,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                     self.taskTabs = [];
                     self.caseTab = new CaseTab("My Offers", this, {$http, $dialog, $snackbar, $user, $fileUpload},{
                         processName: "Insurance",
-                        filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET]
+                        filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET],
+                        casType: "Offer"
                     });
 
                     self.tabChanged = function () {

@@ -1,4 +1,4 @@
-<md-expansion-panel class="margin-horizontal-default" ng-class="task.finishDate ? '':'highlight'">
+<md-expansion-panel class="margin-horizontal-default {{!task.finishDate && task.tab.allowHighlight ? 'highlight':''}}">
 
     <md-expansion-panel-collapsed>
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="task.click($event)">

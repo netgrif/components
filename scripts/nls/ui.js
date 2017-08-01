@@ -90,7 +90,8 @@ define({
                 offer: "Offer",
                 title: "Title",
                 date: "Start date",
-                status: "Status"
+                status: "Status",
+                contract: "Contract"
             },
             data: {
                 noUserChosen: "No user was chosen",

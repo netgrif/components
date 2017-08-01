@@ -86,7 +86,8 @@ define({
             offer: "Ponuka",
             title: "Názov",
             date: "Dátum začiatku",
-            status: "Stav"
+            status: "Stav",
+            contract: "Zmluva"
         },
         data: {
             noUserChosen: "Žiaden zvolený používateľ",
