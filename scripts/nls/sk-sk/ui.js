@@ -22,7 +22,8 @@ define({
             contracts: "Zmluvy"
         },
         offers: {
-            this: "Ponuky"
+            this: "Ponuky",
+            my: "Moje ponuky"
         },
         contacts: {
             this: "Kontakty"
@@ -32,7 +33,8 @@ define({
             preview: "Náhľad"
         },
         contracts: {
-            this: "Zmluvy"
+            this: "Zmluvy",
+            my: "Moje zmluvy"
         },
         console: {
             this: "Konzola",
