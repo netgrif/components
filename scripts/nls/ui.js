@@ -18,49 +18,54 @@ define({
                 surname: "Last Name",
                 submit: "Sign Up"
             },
+            dashboard: {
+                this: "Dashboard",
+                offers: "Offers",
+                contacts: "Contacts",
+                contracts: "Contracts"
+            },
             offers: {
-                this: "Offers"
+                this: "Offers",
+                my: "My Offers"
             },
             contacts: {
-                this: "Contacts",
-                type: "Type",
-                name: "Name",
-                surname: "Surname",
-                phone: "Phone number",
-                email: "Email",
-                id: "Business ID/Per. ID",
-                note: "Note"
+                this: "Contacts"
             },
             documents: {
                 this: "Documents",
                 preview: "Preview"
             },
             contracts: {
-                this: "Contracts"
+                this: "Contracts",
+                my: "My contracts"
             },
             console: {
-                this: "Console"
+                this: "Console",
+                inviteUser: "Invite User",
+                newUser: "New user",
+                orgs: "Organizations",
+                roles: "Roles",
+                processRolesLower: "Process roles",
+                processRoles: "Process Roles"
             }
         },
         block: {
-            dialog: {
-                createCase: {
-                    heading: "Create Offer",
-                    process: "Process",
-                    title: "Title",
-                    color: "Color",
-                    submit: "Submit"
-                },
-                assignUser: {
-                    user: "User",
-                    assign: "Assign",
-                    title: "Delegate task to user"
-                }
+            input: {
+                search: "Search",
+                active: "Active",
+                finished: "Finished",
+                email: "Email",
+                user: "User",
+                name: "Name",
+                process: "Process",
+                role: "Role"
             },
-            add: {
-                createOffer: "Create Offer",
-                createContact: "Create Contact",
-                createDocument: "Create Document"
+            btn: {
+                delete: "Delete",
+                invite: "Invite",
+                save: "Save",
+                collapse: "Collapse",
+                finish: "Finish"
             },
             mainMenu: {
                 profile: "Profile",
@@ -70,11 +75,6 @@ define({
                     sk: "Slovak"
                 },
                 logout: "Logout"
-            },
-            actionBar: {
-                search: "Search",
-                active: "Active",
-                finished: "Finished"
             },
             case: {
                 label: "Label",
@@ -91,7 +91,13 @@ define({
                 title: "Title",
                 date: "Start date",
                 status: "Status",
-                contract: "Contract"
+                contact: "Contact",
+                type: "Type",
+                name: "Name",
+                surname: "Surname",
+                phone: "Phone number",
+                email: "Email",
+                noData: "This task has no data. Finish to continue."
             },
             data: {
                 noUserChosen: "No user was chosen",
@@ -104,7 +110,56 @@ define({
                 upload: "Upload",
                 download: "Download",
                 yes: "Yes",
-                no: "No"
+                no: "No",
+                enterDate: "Enter date"
+            },
+            snackbar: {
+
+            },
+            validation: {
+                email: "This must be valid email address",
+                required: "This is required",
+                oddNumber: "Must be odd number",
+                evenNumber: "Must be even number",
+                positiveNumber: "Entered number must be positive",
+                negativeNumber: "Entered number must be negative",
+                decimalNumber: "Entered number must be decimal",
+                inRange: "Entered number must be in range",
+                textMustBeAtMost: "Entered text must be at the most",
+                textInEmailFormat: "Entered test must be in email format",
+                textInTelFormat: "Entered text must be in telephone number format",
+                textInWrongFormat: "Entered text is in wrong format"
+            },
+            dialog: {
+                createCase: {
+                    heading: "Create Offer",
+                    process: "Process",
+                    title: "Title",
+                    color: "Color",
+                    submit: "Submit"
+                },
+                assignUser: {
+                    user: "User",
+                    assign: "Assign",
+                    title: "Delegate task to user"
+                },
+                caseSelect: {
+                    choose: "Choose"
+                }
+            },
+            add: {
+                createOffer: "Create Offer",
+                createContact: "Create Contact",
+                createDocument: "Create Document"
+            },
+            word: {
+                from: "from",
+                to: "to",
+                characters: "characters",
+                long: "long"
+            },
+            char: {
+
             }
         }
     },

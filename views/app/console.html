@@ -7,7 +7,7 @@
         <md-tab md-on-select="adminCtrl.loadOrganizations()">
 
             <md-tab-label>
-                Invite user
+                {{::$i18n.page.console.inviteUser}}
             </md-tab-label>
 
             <md-tab-body>
@@ -18,36 +18,34 @@
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
-                                    <span class="md-headline">New user</span>
+                                    <span class="md-headline">{{::$i18n.page.console.newUser}}</span>
 
                                     <ng-form name="invitationForm">
                                         <md-input-container class="input-container-fixed-height-padding-0">
-                                            <label>Email</label>
+                                            <label>{{::$i18n.block.invite.email}}</label>
                                             <input name="email" ng-model="adminCtrl.invitedUser.email" type="email"
                                                    required>
                                             <div ng-messages="invitationForm.email.$error">
-                                                <div ng-message="email">This must be valid email address</div>
-                                                <div ng-message="required">This is required</div>
+                                                <div ng-message="email">{{::$i18n.block.validation.email}}</div>
+                                                <div ng-message="required">{{::$i18n.block.validation.required}}</div>
                                             </div>
                                         </md-input-container>
                                     </ng-form>
 
                                 </div>
-
                             </md-toolbar>
 
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
                             <div layout="column" layout-align="center start" class="card padding-2x" flex>
-                                <span class="margin-bottom-default">Organizations</span>
+                                <span class="margin-bottom-default">{{::$i18n.page.console.orgs}}</span>
                                 <md-list flex class="padding-0 layout-rw-100">
                                     <md-list-item ng-repeat="org in adminCtrl.invitedUser.organizations"
                                                   class="list-item border-radius-default"
                                                   ng-click="null">
                                         <div layout="row" layout-align="space-between center" flex>
                                             <span>{{org.name}}</span>
-                                            <md-button class="md-icon-button"
-                                                       ng-click="org.remove()">
+                                            <md-button class="md-icon-button" ng-click="org.remove()">
                                                 <i class="material-icons color-fg-error">close</i>
                                             </md-button>
                                         </div>
@@ -58,7 +56,7 @@
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
                             <div layout="column" layout-align="center start" class="card padding-2x" flex>
-                                <span class="margin-bottom-default">Roles</span>
+                                <span class="margin-bottom-default">{{::$i18n.page.console.roles}}</span>
                                 <section class="layout-rw-100" ng-repeat="(netId, net) in adminCtrl.invitedUser.processRoles" flex>
                                     <md-subheader class="color-fg-primary-500 color-bg-transparent" flex>
                                         {{net.title}}
@@ -84,7 +82,7 @@
                             <div layout="row" layout-align="end end" class="card padding-vertical-2x" flex>
                                 <md-button class="md-primary" ng-click="adminCtrl.invite()" layout="row" layout-align="center center">
                                     <md-icon class="material-icons margin-horizontal-0 margin-right-default">person_add</md-icon>
-                                    Invite
+                                    {{::$i18n.block.btn.invite}}
                                 </md-button>
                             </div>
 
@@ -95,7 +93,7 @@
                         <div flex>
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="start center" class="md-toolbar-tools">
-                                    <span class="md-headline">Organizations</span>
+                                    <span class="md-headline">{{::$i18n.page.console.orgs}}</span>
                                 </div>
                             </md-toolbar>
 
@@ -112,8 +110,7 @@
                                     </div>
                                 </md-list-item>
 
-                                <md-divider ng-repeat-end
-                                            class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
                             </md-list>
                         </div>
 
@@ -123,7 +120,7 @@
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
-                                    <span class="md-headline">Process roles</span>
+                                    <span class="md-headline">{{::$i18n.page.console.processRolesLower}}</span>
 
                                     <md-input-container class="margin-right-default">
                                         <label>Process</label>
@@ -153,8 +150,7 @@
                                     </div>
                                 </md-list-item>
 
-                                <md-divider ng-repeat-end
-                                            class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
                             </md-list>
 
                         </div>
@@ -169,7 +165,7 @@
         <md-tab>
 
             <md-tab-label>
-                Process Roles
+                {{::$i18n.page.console.processRoles}}
             </md-tab-label>
 
             <md-tab-body>
@@ -183,7 +179,7 @@
                                 <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
                                     <md-input-container class="input-container-fixed-height-padding-0">
-                                        <label>User</label>
+                                        <label>{{::$i18n.block.input.user}}</label>
                                         <input type="text" ng-model="userSearch.input"
                                                ng-change="adminCtrl.filterUsers()">
                                     </md-input-container>
@@ -198,13 +194,13 @@
                                             <md-menu-item class="margin-left-2x">
                                                 <md-checkbox ng-model="userSearch.byName" aria-label="Name"
                                                              class="md-primary">
-                                                    Name
+                                                    {{::$i18n.block.input.name}}
                                                 </md-checkbox>
                                             </md-menu-item>
                                             <md-menu-item class="margin-left-2x">
                                                 <md-checkbox ng-model="userSearch.byEmail" aria-label="Email"
                                                              class="md-primary">
-                                                    Email
+                                                    {{::$i18n.block.input.email}}
                                                 </md-checkbox>
                                             </md-menu-item>
                                         </md-menu-content>
@@ -231,8 +227,7 @@
                                     </div>
                                 </md-list-item>
 
-                                <md-divider ng-repeat-end
-                                            class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
                             </md-list>
 
@@ -246,7 +241,7 @@
                                 <div layout="row" layout-align="start center" class="md-toolbar-tools">
 
                                     <md-input-container>
-                                        <label>Process</label>
+                                        <label>{{::$i18n.block.input.process}}</label>
                                         <md-select ng-model="adminCtrl.roles.process" ng-change="adminCtrl.loadRoles()">
                                             <md-option ng-repeat="process in processes" ng-value="process">
                                                 {{process.title}}
@@ -255,14 +250,14 @@
                                     </md-input-container>
 
                                     <md-input-container class="input-container-fixed-height-padding-0">
-                                        <label>Role</label>
+                                        <label>{{::$i18n.block.input.role}}</label>
                                         <input type="text" ng-model="adminCtrl.roleInput">
                                     </md-input-container>
 
                                     <span flex></span>
 
                                     <md-button class="md-primary" ng-click="adminCtrl.saveRoles()">
-                                        Save
+                                        {{::$i18n.block.btn.save}}
                                     </md-button>
 
                                     <i ng-hide="saved" class="material-icons color-fg-warning">warning</i>
@@ -283,8 +278,7 @@
                                     </div>
                                 </md-list-item>
 
-                                <md-divider ng-repeat-end
-                                            class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
                             </md-list>
 
