@@ -1,8 +1,8 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Contracts', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab) {
         angular.module('ngContracts').controller('ContractsController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache) {
                     const self = this;
 
                     self.activeTabIndex = 0;
@@ -49,8 +49,12 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Contr
                             self.taskTabs.splice(index, 1);
                             self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
                         }
+                    };
+
+                    if($cache.get("dashboard") && $cache.get("dashboard").contracts) {
+                        self.caseTab.openCase($cache.get("dashboard").contracts);
+                        self.activeTabIndex = self.taskTabs.length;
+                        $cache.remove("dashboard");
                     }
-
-
                 }]);
     });

@@ -53,6 +53,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                     if($cache.get("dashboard") && $cache.get("dashboard").offers) {
                         self.caseTab.openCase($cache.get("dashboard").offers);
                         self.activeTabIndex = self.taskTabs.length;
+                        $cache.remove("dashboard");
                     }
                 }]);
     });
