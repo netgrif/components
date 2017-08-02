@@ -1,5 +1,5 @@
 define({
-    test: "Toto je testovací string!",
+    test: "Toto je testovací reťazec!",
     page: {
         signIn: {
             email: "Email",
@@ -10,25 +10,22 @@ define({
         signUp: {
             email: "Email",
             psw: "Heslo",
-            pswError: "Heslo musí byť aspoň 6 znakov dlhé!",
             retypePsw: "Opakovať heslo",
-            retypePswError: "Heslá sa nezhodujú",
             name: "Meno",
             surname: "Priezvisko",
             submit: "Registrovať"
+        },
+        dashboard: {
+            this: "Dashboard",
+            offers: "Ponuky",
+            contacts: "Kontakty",
+            contracts: "Zmluvy"
         },
         offers: {
             this: "Ponuky"
         },
         contacts: {
-            this: "Kontakty",
-            type: "Typ",
-            name: "Meno",
-            surname: "Priezvisko",
-            phone: "Telefónne číslo",
-            email: "Email",
-            id: "IČO/R.Č.",
-            note: "Poznámka"
+            this: "Kontakty"
         },
         documents: {
             this: "Dokumenty",
@@ -36,27 +33,34 @@ define({
         },
         contracts: {
             this: "Zmluvy"
+        },
+        console: {
+            this: "Konzola",
+            inviteUser: "Pozvať používateľa",
+            newUser: "Nový používateľ",
+            orgs: "Organizácie",
+            roles: "Role",
+            processRolesLower: "Procesné role",
+            processRoles: "Procesné role"
         }
     },
     block: {
-        dialog: {
-            createCase: {
-                heading: "Create Offer",
-                process: "Proces",
-                title: "Názov",
-                color: "Farba",
-                submit: "Vytvoriť"
-            },
-            assignUser: {
-                user: "Používateľ",
-                assign: "Priradiť",
-                title: "Priradiť úlohu používateľovi"
-            }
+        input: {
+            search: "Hľadať",
+            active: "Aktívne",
+            finished: "Ukončené",
+            email: "Email",
+            user: "Používateľ",
+            name: "Meno",
+            process: "Proces",
+            role: "Rola"
         },
-        add: {
-            createOffer: "Vytvoriť ponuku",
-            createContact: "Vytvoriť kontakt",
-            createDocument: "Vytvoriť dokument"
+        btn: {
+            delete: "Vymazať",
+            invite: "Pozvať",
+            save: "Uložiť",
+            collapse: "Zasunúť",
+            finish: "Dokončiť"
         },
         mainMenu: {
             profile: "Profil",
@@ -66,11 +70,6 @@ define({
                 sk: "Slovenský"
             },
             logout: "Odhlásiť"
-        },
-        actionBar: {
-            search: "Hľadať",
-            active: "Aktívne",
-            finished: "Ukončené"
         },
         case: {
             label: "Značka",
@@ -87,7 +86,13 @@ define({
             title: "Názov",
             date: "Dátum začiatku",
             status: "Stav",
-            contract: "Zmluva"
+            contract: "Zmluva",
+            type: "Typ",
+            name: "Meno",
+            surname: "Prizvisko",
+            phone: "Tel. číslo",
+            email: "Email",
+            noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie."
         },
         data: {
             noUserChosen: "Žiaden zvolený používateľ",
@@ -100,7 +105,61 @@ define({
             upload: "Nahrať",
             download: "Stiahnuť",
             yes: "Áno",
-            no: "Nie"
+            no: "Nie",
+            enterDate: "Zadať dátum"
+        },
+        snackbar: {
+
+        },
+        validation: {
+            pswLength: "Heslo musí byť aspoň 6 znakov dlhé",
+            retypedPswNotMatch: "Heslá sa nezhodujú",
+            email: "Zadaná emailová adresa musí byť v správnom tvare",
+            required: "Toto pole je povinné",
+            oddNumber: "Zadané číslo musí byť nepárne",
+            evenNumber: "Zadané číslo musí byť párne",
+            positiveNumber: "Zadané číslo musí byť kladné",
+            negativeNumber: "Zadané číslo musí byť záporné",
+            decimalNumber: "Zadané číslo musí byť desatinné",
+            inRange: "Zadané číslo musí byť v rozsahu",
+            textMustBeAtMost: "Zadaný text musí byť najviac",
+            textInEmailFormat: "Zadaný text musí mať formát emailu",
+            textInTelFormat: "Zadaný text musí mať formát tel. čísla",
+            textInWrongFormat: "Zadaný text nemá správny formát"
+        },
+        dialog: {
+            createCase: {
+                heading: "Vytvoriť ponuku",
+                process: "Proces",
+                title: "Názov",
+                color: "Farba",
+                submit: "Vytvoriť"
+            },
+            assignUser: {
+                user: "Používateľ",
+                assign: "Priradiť",
+                title: "Priradiť úlohu používateľovi"
+            },
+            caseSelect: {
+                choose: "Zvoliť"
+            }
+        },
+        add: {
+            createOffer: "Vytvoriť ponuku",
+            createContact: "Vytvoriť kontakt",
+            createDocument: "Vytvoriť dokument"
+        },
+        sentencePart: {
+
+        },
+        word: {
+            from: "od",
+            to: "do",
+            characters: "znakov",
+            long: "dlhý"
+        },
+        char: {
+
         }
     }
 });
