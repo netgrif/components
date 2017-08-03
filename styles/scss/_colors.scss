@@ -30,6 +30,7 @@ $color-grey-900: 				#212121;
 $color-platinum: 				rgb(146, 170, 180);
 
 // Cards
+$color-black-op-20:				rgba(0, 0, 0, .20);
 $color-black-op-30:				rgba(0, 0, 0, .30);
 $color-black-op-40:				rgba(0, 0, 0, .40);
 $color-black-op-50:				rgba(0, 0, 0, .50);
@@ -108,6 +109,10 @@ $color-brown-500:				#795548;
 		&-black {
 
 			&-op {
+
+				&-20 {
+					color: $color-black-op-20;
+				}
 
 				&-30 {
 					color: $color-black-op-30;
@@ -306,6 +311,10 @@ $color-brown-500:				#795548;
 		&-black {
 
 			&-op {
+
+				&-20 {
+					background-color: $color-black-op-20;
+				}
 
 				&-30 {
 					background-color: $color-black-op-30;

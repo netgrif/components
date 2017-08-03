@@ -42,6 +42,10 @@
   color: #795548;
 }
 
+.color-fg-black-op-20 {
+  color: rgba(0, 0, 0, 0.2);
+}
+
 .color-fg-black-op-30 {
   color: rgba(0, 0, 0, 0.3);
 }
@@ -220,6 +224,10 @@
 
 .color-bg-brown {
   background-color: #795548;
+}
+
+.color-bg-black-op-20 {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .color-bg-black-op-30 {
@@ -929,7 +937,7 @@ span.active {
 }
 
 md-expansion-panel {
-  background: rgba(0, 0, 0, 0.3) !important;
+  background: rgba(0, 0, 0, 0.2) !important;
   cursor: pointer !important;
 }
 
