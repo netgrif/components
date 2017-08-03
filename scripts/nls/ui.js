@@ -11,9 +11,7 @@ define({
             signUp: {
                 email: "Email",
                 psw: "Password",
-                pswError: "Password must be at least 6 characters long!",
                 retypePsw: "Retype password",
-                retypePswError: "Passwords does not match!",
                 name: "First Name",
                 surname: "Last Name",
                 submit: "Sign Up"
@@ -104,7 +102,7 @@ define({
                 self: "Self",
                 chooseUser: "Choose user",
                 noFile: "No file",
-                fileNotUploaded: "File has not been uploaded yet!",
+                fileNotUploaded: "File has not been uploaded yet",
                 fileUploaded: "File uploaded successfully",
                 newFile: "New file",
                 upload: "Upload",
@@ -117,10 +115,12 @@ define({
 
             },
             validation: {
-                email: "This must be valid email address",
-                required: "This is required",
-                oddNumber: "Must be odd number",
-                evenNumber: "Must be even number",
+                pswLength: "Password must be at least 6 characters long",
+                retypedPswNotMatch: "Passwords does not match",
+                email: "Entered email address must be valid",
+                required: "This field is required",
+                oddNumber: "Entered number must be odd",
+                evenNumber: "Entered number must be even",
                 positiveNumber: "Entered number must be positive",
                 negativeNumber: "Entered number must be negative",
                 decimalNumber: "Entered number must be decimal",
@@ -151,6 +151,9 @@ define({
                 createOffer: "Create Offer",
                 createContact: "Create Contact",
                 createDocument: "Create Document"
+            },
+            sentencePart: {
+
             },
             word: {
                 from: "from",

@@ -15,7 +15,7 @@
                     <input ng-model="loginCtrl.signupUser.password" name="password" type="password"
                            placeholder="{{::$i18n.page.signUp.psw}}" ng-required="true" ng-minlength="6">
                     <div ng-messages="signupForm.password.$error">
-                        <div ng-message="minlength">{{::$i18n.page.signUp.pswError}}</div>
+                        <div ng-message="minlength">{{::$i18n.block.validation.pswLength}}</div>
                     </div>
                 </md-input-container>
 
@@ -24,7 +24,7 @@
                     <input ng-model="loginCtrl.retypedPassword" type="password" ng-blur="loginCtrl.matchPasswords()"
                            placeholder="{{::$i18n.page.signUp.retypePsw}}" ng-required="true">
                     <div ng-messages="loginCtrl.signUpError" ng-show="loginCtrl.retypedPassword">
-                        <div ng-message="match">{{::$i18n.page.signUp.retypePswError}}</div>
+                        <div ng-message="match">{{::$i18n.block.validation.retypedPswNotMatch}}</div>
                     </div>
                 </md-input-container>
 
