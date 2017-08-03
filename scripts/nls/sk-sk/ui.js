@@ -41,9 +41,9 @@ define({
             inviteUser: "Pozvať používateľa",
             newUser: "Nový používateľ",
             orgs: "Organizácie",
-            roles: "Role",
-            processRolesLower: "Procesné role",
-            processRoles: "Procesné role"
+            roles: "Roly",
+            processRolesLower: "Procesné roly",
+            processRoles: "Procesné roly"
         }
     },
     block: {
@@ -61,7 +61,7 @@ define({
             delete: "Vymazať",
             invite: "Pozvať",
             save: "Uložiť",
-            collapse: "Zasunúť",
+            collapse: "Skryť",
             finish: "Dokončiť"
         },
         mainMenu: {
@@ -91,7 +91,7 @@ define({
             contract: "Zmluva",
             type: "Typ",
             name: "Meno",
-            surname: "Prizvisko",
+            surname: "Priezvisko",
             phone: "Tel. číslo",
             email: "Email",
             noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie."
