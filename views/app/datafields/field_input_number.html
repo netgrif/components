@@ -11,11 +11,12 @@
     <div flex="60">
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{field.placeholder}}</label>
-            <input type="number" ng-model="field.newValue"
+            <input id="{{'data-'+task.stringId+'-'+field.stringId}}" type="number" ng-model="field.newValue"
                    ng-change="field.changed = true; field.validate(field.newValue);"
                    ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                    ng-blur="task.save()"
-                   ng-required="field.behavior.required">
+                   ng-required="field.behavior.required"
+                   ng-keypress="$event.which === 13 && $event.target.blur()">
             <div ng-messages="field.validationErrors" ng-show="field.newValue">
                 <div ng-message="odd" class="color-fg-warning">{{::$i18n.block.validation.oddNumber}}</div>
                 <div ng-message="even" class="color-fg-warning">{{::$i18n.block.validation.evenNumber}}</div>
@@ -27,4 +28,5 @@
         </md-input-container>
     </div>
     <div flex="10"></div>
+    {{::field.bindElement()}}
 </div>

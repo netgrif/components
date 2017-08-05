@@ -12,7 +12,7 @@
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <!-- TODO 23.6.2017 fix label when calendar opens -->
             <label class="placeholder">{{::$i18n.block.data.enterDate}}</label>
-            <md-datepicker ng-model="field.newValue"
+            <md-datepicker id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-model="field.newValue"
                            <!--ng-change="field.changed = field.value !== field.newValue"-->
                            ng-change="field.changed = true"
                            ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
@@ -26,4 +26,5 @@
         </md-input-container>
     </div>
     <div flex="10"></div>
+    {{::field.bindElement()}}
 </div>

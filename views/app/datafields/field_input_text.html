@@ -12,14 +12,15 @@
         <!--id="'data-'+task.stringId+'-'+field.stringId" eval-attr-as-expr="id"-->
         <md-input-container  class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{field.placeholder}}</label>
-            <input type="text" ng-if="field.subType === 'simple'"
+            <input id="{{'data-'+task.stringId+'-'+field.stringId}}" type="text" ng-if="field.subType === 'simple'"
                    ng-model="field.newValue"
                    ng-change="field.changed = true; field.newValue === undefined ? field.newValue=null : field.newValue; field.validate(field.newValue);"
                    ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                    ng-blur="task.save()"
                    ng-required="field.behavior.required"
-                   md-maxlength="field.maxLength">
-            <textarea ng-if="field.subType === 'area'"
+                   md-maxlength="field.maxLength"
+                   ng-keypress="$event.which === 13 && $event.target.blur()">
+            <textarea id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-if="field.subType === 'area'"
                       rows="1" max-rows="4"
                       ng-model="field.newValue"
                       ng-change="field.changed = field.value !== field.newValue"
@@ -36,4 +37,5 @@
         </md-input-container>
     </div>
     <div flex="10"></div>
+    {{::field.bindElement()}}
 </div>

@@ -22,6 +22,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         this.expanded = false;
         this.loading = false;
         this.waitingForExpand = false;
+        this.triggeredSave = false;
     }
 
     Task.prototype = Object.create(HalResource.prototype);
@@ -200,11 +201,12 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             return;
         }
         Object.keys(fields).forEach(k => {
-            if(!fields[k])
+            if (!fields[k])
                 delete fields[k];
         });
 
         const self = this;
+        this.triggeredSave = true;
         this.$http.post(this.link("data-edit"), JSON.stringify(fields)).then(function (response) {
             /*self.data.forEach(d => {
                 if(response[d.stringId]){
@@ -221,30 +223,46 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             Object.keys(fields).forEach(id => self.getData().find(f => f.stringId === id).changed = false);
             self.$snackbar.success("Data saved successfully");
             // self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
+            self.triggeredSave = false;
             callback(true);
         }, function () {
             self.$snackbar.error("Saving data has failed");
+            self.triggeredSave = false;
             callback(false);
         });
     };
 
     Task.prototype.updateData = function (updateObj) {
-        if (jQuery.isEmptyObject(updateObj)) return;
-        this.getData().forEach(d => {
-            if (updateObj[d.stringId]) {
-                const n = updateObj[d.stringId];
-                Object.keys(n).forEach(key => {
-                    if (key === 'value')
-                        d.newValue = d.parse(n[key]);
-                    else if (key === 'behavior') {
-                        if (n.behavior[this.transitionId])
-                            d.behavior = n.behavior[this.transitionId];
+        if (!jQuery.isEmptyObject(updateObj)) {
+            this.getData().forEach(d => {
+                if (updateObj[d.stringId]) {
+                    const n = updateObj[d.stringId];
+                    Object.keys(n).forEach(key => {
+                        if (key === 'value')
+                            d.newValue = d.parse(n[key]);
+                        else if (key === 'behavior') {
+                            if (n.behavior[this.transitionId])
+                                d.behavior = n.behavior[this.transitionId];
+                        }
+                        else
+                            d[key] = n[key];
+                    });
+                }
+            });
+        }
+        if (this.triggeredSave) {
+            this.getData().some(data => {
+                if (data.behavior.required && !data.newValue &&
+                    data.type !== 'boolean' && data.type !== 'file' && data.type !== 'user') {
+                    //make data element focus
+                    if (data.element) {
+                        data.element.click();
+                        data.type === 'text' || data.type === 'number' ? data.element.focus() : undefined;
                     }
-                    else
-                        d[key] = n[key];
-                });
-            }
-        });
+                    return true;
+                }
+            });
+        }
     };
 
     Task.prototype.changeResource = function (resource, links) {
@@ -273,7 +291,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         }
         this.expanded = !this.expanded;
 
-        if($event) {
+        if ($event) {
             $event.preventDefault();
             $event.stopPropagation();
         }

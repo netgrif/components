@@ -17,8 +17,7 @@ define(['./HalResource'], function (HalResource) {
         if (this.validationJS) this.validate = new Function("value", this.validationJS);
         else this.validate = new Function("", "return true;");
 
-        //this.inputContainerElement = jQuery("#data-"+parent.stringId+"-"+this.stringId);
-
+        this.element = undefined;
         this.changed = false;
         this.valid = true;
     }
@@ -142,6 +141,12 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.download = function () {
         const downloadWindow = window.open(this.parent.link('file') + this.stringId);
         downloadWindow.onload = () => downloadWindow.close();
+    };
+
+    DataField.prototype.bindElement = function () {
+        const el = jQuery(`#data-${this.parent.stringId}-${this.stringId}`);
+        if(el.length > 0) this.element = el;
+        return "";
     };
 
     DataField.padding = (text, pad = '') => {
