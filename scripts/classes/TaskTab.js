@@ -11,13 +11,13 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
      * @param config - config parameters for better customizing behavior of tab
      * @constructor
      */
-    function TaskTab(id, label, baseUrl, baseCriteria,useCase, angular, config = {}) {
+    function TaskTab(id, label, baseUrl, baseCriteria, useCase, angular, config = {}) {
         Tab.call(this, id, label);
 
         this.baseUrl = baseUrl;
         this.baseCriteria = baseCriteria;
         this.useCase = useCase;
-        Object.assign(this, angular,config);
+        Object.assign(this, angular, config);
 
         this.tasks = [];
         this.transactions = [];
@@ -46,7 +46,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             //panel already registered
         }
 
-        if(this.showTransactions)
+        if (this.showTransactions)
             this.loadTransactions();
 
         this.taskToExpand = taskToExpand;
@@ -92,7 +92,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.loading = true;
         this.$http(config).then(function (response) {
             self.page = response.page;
-            if(self.page.totalElements === 0){
+            if (self.page.totalElements === 0) {
                 self.$snackbar.info("Currently there are no tasks");
                 self.page.next = undefined;
                 if (self.tasks)
@@ -144,7 +144,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     TaskTab.prototype.getSearchQuery = function () {
         const query = {};
         this.baseCriteria.forEach(c => {
-            if(c === TaskTab.FIND_BY_CASE)
+            if (c === TaskTab.FIND_BY_CASE)
                 query.case = this.useCase.stringId;
         });
 
@@ -191,15 +191,22 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         }
         const self = this;
         resources.forEach((r, i) => {
-            this.tasksGroup.add(`taskPanel`, {resource: r, links: r.links, tab: this, config: {allowHighlight: this.allowHighlight}}).then(function (panel) {
+            this.tasksGroup.add(`taskPanel`, {
+                resource: r,
+                links: r.links,
+                tab: this,
+                config: {allowHighlight: this.allowHighlight}
+            }).then(function (panel) {
                 if (self.taskControllers[r.stringId]) {
                     self.tasks.push(self.taskControllers[r.stringId].createTask(panel));
 
-                    if(self.taskToExpand)
+                    if (self.taskToExpand)
                         self.expandTask(self.taskToExpand);
 
-                    self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length-1]));
+                    self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
                     self.transactionProgress = self.mostForwardTransaction();
+
+                    if (i === resources.length - 1) self.autoExpandTask();
                 }
             });
         });
@@ -216,6 +223,15 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
 
     };
 
+    TaskTab.prototype.autoExpandTask = function () {
+        const unfinished = this.tasks.filter(task => !task.finishDate);
+        if(unfinished.length === 1 &&
+            this.tasks.findIndex(task => task.stringId === unfinished[0].stringId) === this.tasks.length-1 &&
+            !unfinished[0].expanded){
+            unfinished[0].click();
+        }
+    };
+
     TaskTab.prototype.updateTasksData = function (updateObj) {
         this.tasks.forEach(t => t.updateData(updateObj));
     };
@@ -227,7 +243,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
             response.$request().$get("transactions").then(function (resources) {
                 self.transactions = resources.map(r => new Transaction(r, {}));
-                if(self.tasks.length > 0)
+                if (self.tasks.length > 0)
                     self.transactions.forEach(trans => trans.setActive(self.tasks));
 
             }, function () {
@@ -258,7 +274,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     };
 
     TaskTab.prototype.expandTask = function (taskId) {
-        if(this.tasks){
+        if (this.tasks) {
             this.tasks.find(task => task.stringId === taskId).click();
         }
     };
