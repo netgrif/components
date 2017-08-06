@@ -50,6 +50,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 					} else {
 						$log.debug("Login failed");
 						$snackbar.error("Wrong user credentials");
+						self.credentials.password = "";
 					}
 				})
 			};
