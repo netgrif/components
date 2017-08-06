@@ -279,5 +279,26 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         }
     };
 
+    TaskTab.prototype.reloadUseCase = function () {
+        const self = this;
+        this.$http({
+            method: "POST",
+            url: "/res/workflow/case/search",
+            data: {
+                id: this.useCase.stringId
+            }
+        }).then(function (response) {
+            response.$request().$get("cases").then(function (resources) {
+                resources.forEach(r => Object.assign(self.useCase, r));
+
+            }, function () {
+                console.log(`Case ${this.useCase.stringId} failed to update`);
+            })
+
+        },function () {
+            console.log(`Case ${this.useCase.stringId} failed to update`);
+        })
+    };
+
     return TaskTab;
 });

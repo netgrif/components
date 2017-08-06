@@ -98,7 +98,10 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.doFinish = function () {
         const self = this;
         this.$http.get(this.link("finish")).then(function (response) {
-            if (response.success) self.tab.load(false);
+            if (response.success) {
+                self.tab.load(false);
+                self.tab.reloadUseCase();
+            }
             if (response.error) self.$snackbar.error(response.error);
 
         }, function () {

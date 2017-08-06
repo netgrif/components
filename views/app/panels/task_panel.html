@@ -2,7 +2,7 @@
 
     <md-expansion-panel-collapsed>
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="task.click($event)">
-            <div ng-if="task.caseColor" class="{{task.caseColor}}" flex="10">
+            <div ng-if="task.caseColor" class="{{task.caseColor}}" flex="10" layout="row" layout-align="start center">
                 <i class="material-icons" ng-repeat="icon in task.getIcons()">{{icon}}</i>
             </div>
             <!--<i ng-if="task.caseColor" flex="10" class="material-icons {{task.caseColor}}">{{task.icon ? task.icon : task.tab.useCase.icon ? task.tab.useCase.icon : 'label'}}</i>-->
@@ -18,7 +18,7 @@
     <md-expansion-panel-expanded>
 
         <md-expansion-panel-header ng-click="task.click($event)">
-            <div ng-if="task.caseColor" class="{{task.caseColor}}" flex="10">
+            <div ng-if="task.caseColor" class="{{task.caseColor}}" flex="10" layout="row" layout-align="start center">
                 <i class="material-icons" ng-repeat="icon in task.getIcons()">{{icon}}</i>
             </div>
             <!--<i ng-if="task.caseColor" flex="10" class="material-icons {{task.caseColor}}">label</i>-->

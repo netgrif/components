@@ -75,7 +75,7 @@ define({
                 logout: "Logout"
             },
             case: {
-                label: "Label",
+                label: "Type",
                 visualID: "Visual ID",
                 title: "Title",
                 client: "Client",
@@ -84,7 +84,7 @@ define({
                 inEur: "In EUR"
             },
             task: {
-                label: "Label",
+                label: "Type",
                 offer: "Offer",
                 title: "Title",
                 date: "Start date",

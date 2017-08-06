@@ -10,7 +10,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Contr
                     self.taskTabs = [];
                     self.caseTab = new CaseTab("My Contracts", this, {$http, $dialog, $snackbar, $user, $fileUpload}, {
                         processName: "Insurance",
-                        transitionName: "Informácie o províziach",
+                        transitionNames: ["Informácie o províziach"],
                         filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET, CaseTab.FIND_BY_TRANSITION],
                         caseType: "Contract"
                     });

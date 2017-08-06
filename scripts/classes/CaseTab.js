@@ -31,7 +31,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
         if (this.cases.length === 0)
             this.loadPetriNet(this.processName, (success) => {
                 if (success) {
-                    if(this.transitionName)
+                    if(this.transitionNames)
                         this.loadTransitions(success => {
                             if(success) this.load(false);
                         });
@@ -48,12 +48,16 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 data.author = this.$user.id;
             if (c === CaseTab.FIND_BY_PETRINET)
                 data.petriNet = this.net.entityId;
-            if(c === CaseTab.FIND_BY_TRANSITION)
-                data.transition = this.transition.entityId;
+            if(c === CaseTab.FIND_BY_TRANSITION){
+                if(this.transitions.length === 1)
+                    data.transition = this.transitions[0].entityId;
+                else
+                    data.transition = this.transitions.map(t => t.entityId);
+            }
         });
         return {
             method: "POST",
-            url: url + (this.sort ? this.sort : "?sort=_id&_id.dir=desc"),
+            url: url + (this.sort ? this.sort : "?sort=_id,desc"),
             data: data
         };
     };
@@ -198,8 +202,8 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
         const self = this;
         this.$http.post("/res/petrinet/transition/refs",[this.net.entityId]).then(function (response) {
             response.$request().$get("transitionReferences").then(function (resources) {
-                self.transition = resources.find(r => r.title === self.transitionName);
-                self.transition ? callback(true) : callback(false);
+                self.transitions = resources.filter(r => self.transitionNames.includes(r.title));
+                self.transitions && self.transitions.length > 0 ? callback(true) : callback(false);
 
             }, function () {
                 console.log("References for transitions were not found!");

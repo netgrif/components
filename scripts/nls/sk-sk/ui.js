@@ -74,7 +74,7 @@ define({
             logout: "Odhlásiť"
         },
         case: {
-            label: "Značka",
+            label: "Typ",
             visualID: "Vizuálne ID",
             title: "Názov",
             client: "Klient",
@@ -83,7 +83,7 @@ define({
             inEur: "V eurách"
         },
         task: {
-            label: "Značka",
+            label: "Typ",
             offer: "Ponuka",
             title: "Názov",
             date: "Dátum začiatku",
