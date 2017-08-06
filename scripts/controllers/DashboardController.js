@@ -12,6 +12,7 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                     self.contracts = [];
 
                     self.offerNet = undefined;
+                    self.offerTransitions = undefined;
                     self.contactNet = undefined;
                     self.contractTransition = undefined;
 
@@ -34,7 +35,8 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                             url: "/res/workflow/case/search?sort=_id,desc&size=" + self.limit,
                             data: {
                                 author: $user.id,
-                                petriNet: self.offerNet.entityId
+                                petriNet: self.offerNet.entityId,
+                                transition: self.offerTransitions.map(t => t.entityId)
                             }
                         }, 'offers');
                     };
@@ -57,7 +59,7 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                             data: {
                                 author: $user.id,
                                 petriNet: self.offerNet.entityId,
-                                transition: self.contractTransition.entityId
+                                transition: self.contractTransition[0].entityId
                             }
                         }, 'contracts');
                     };
@@ -120,12 +122,12 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                         })
                     };
 
-                    self.loadTransitions = function (transition, net, target, callback = () => {
+                    self.loadTransitions = function (transitions, net, target, callback = () => {
                     }) {
                         $http.post("/res/petrinet/transition/refs", [net]).then(function (response) {
                             response.$request().$get("transitionReferences").then(function (resources) {
-                                self[target] = resources.find(r => r.title === transition);
-                                self[target] ? callback(true) : callback(false);
+                                self[target] = resources.filter(r => transitions.includes(r.title));
+                                self[target] && self[target].length > 0 ? callback(true) : callback(false);
 
                             }, function () {
                                 console.log("References for transitions were not found!");
@@ -140,8 +142,11 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                     self.loadPetriNet("Insurance", 'offerNet', success => {
                         if (!success) return;
 
-                        self.loadOffers();
-                        self.loadTransitions("Informácie o províziach", self.offerNet.entityId, 'contractTransition', success => {
+                        self.loadTransitions(["Nehnuteľnosť a domácnosť","Základné informácie","Údaje o zmluve"], self.offerNet.entityId, 'offerTransitions', success => {
+                            if(success)
+                                self.loadOffers();
+                        });
+                        self.loadTransitions(["Informácie o províziach"], self.offerNet.entityId, 'contractTransition', success => {
                             if (success)
                                 self.loadContracts();
                         });
