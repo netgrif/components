@@ -41,7 +41,7 @@
                         <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
                              ng-repeat-start="useCase in contractCtrl.caseTab.cases | orderBy:'strindId'"
                              ng-click="useCase.open()">
-                            <i flex="10" class="material-icons {{::useCase.color}}">label</i>
+                            <i flex="10" class="material-icons {{::useCase.color}}">{{useCase.icon ? useCase.icon : 'label'}}</i>
                             <span flex="20">{{::useCase.visualId}}</span>
                             <span flex="25">{{::useCase.title}}</span>
                             <span flex ng-repeat="data in useCase.immediateData | orderBy:'order'">

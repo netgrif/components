@@ -330,5 +330,13 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         return group.title && group.data.some(d => !d.behavior.hidden);
     };
 
+    Task.prototype.getIcons = function () {
+        if(this.icon) return this.icon.split(" ");
+        else {
+            if(this.tab.useCase.icon) return [this.tab.useCase.icon];
+            else return ['label'];
+        }
+    };
+
     return Task;
 });
