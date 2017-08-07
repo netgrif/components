@@ -262,18 +262,23 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             });
         }
         if (this.triggeredSave) {
-            this.getData().some(data => {
-                if (data.behavior.required && !data.newValue &&
-                    data.type !== 'boolean' && data.type !== 'file' && data.type !== 'user') {
-                    //make data element focus
-                    if (data.element) {
-                        data.element.click();
-                        data.type === 'text' || data.type === 'number' ? data.element.focus() : undefined;
-                    }
+            this.focusNearestRequiredField();
+        }
+    };
+
+    Task.prototype.focusNearestRequiredField = function () {
+        this.getData().some(data => {
+            if (data.behavior.required && !data.newValue &&
+                data.type !== 'boolean' && data.type !== 'file' && data.type !== 'user') {
+                //make data element focus
+                if (data.element) {
+                    data.element.click();
+                    // data.type === 'text' || data.type === 'number' || data.type === 'date' ? data.element.focus() : undefined;
+                    data.element.focus();
                     return true;
                 }
-            });
-        }
+            }
+        });
     };
 
     Task.prototype.changeResource = function (resource, links) {
@@ -320,8 +325,10 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                         this.finish();
                         this.expanded = !this.expanded;
                     }
-                    else
+                    else {
                         this.panel.expand();
+                        this.$timeout(()=> this.focusNearestRequiredField(), 300); //timeout with 200ms because animation time of expanding task
+                    }
                 }
                 // this.$timeout(() => {
                 // }, 200);
