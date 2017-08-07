@@ -164,7 +164,10 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                         delete group.fields;
                         self.dataGroups.push(group);
                         self.dataSize += group.data.length;
-                        if (index === array.length - 1) callback(true);
+                        if (index === array.length - 1) {
+                            self.sortData();
+                            callback(true);
+                        }
                         //self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
 
                     } else {
@@ -182,6 +185,11 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             self.$snackbar.error(`Data for ${self.title} failed to load`);
             callback(false);
         });
+    };
+
+    Task.prototype.sortData = function () {
+        this.dataGroups.forEach((group, i) =>
+            this.dataGroups[i].data = group.data.sort((a, b) => a.order - b.order));
     };
 
     Task.prototype.validateRequiredData = function () {
@@ -334,9 +342,9 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.prototype.getIcons = function () {
-        if(this.icon) return this.icon.split(" ");
+        if (this.icon) return this.icon.split(" ");
         else {
-            if(this.tab.useCase.icon) return [this.tab.useCase.icon];
+            if (this.tab.useCase.icon) return [this.tab.useCase.icon];
             else return ['label'];
         }
     };
