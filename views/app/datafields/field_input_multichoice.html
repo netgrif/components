@@ -1,6 +1,6 @@
 <div class="data-item" layout="row" layout-align="start center" ng-if="!field.behavior.hidden">
     <div flex="50">
-        <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
+        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
             {{field.name}}
             <md-tooltip ng-if="field.description">
                 {{field.description}}
@@ -16,6 +16,8 @@
                        ng-change="field.changed = true"
                        ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                        ng-blur="task.save()"
+                       md-on-open="field.active = true"
+                       md-on-close="field.active = false"
                        ng-required="field.behavior.required">
                 <md-option ng-repeat="choice in field.choices" ng-value="choice">
                     {{choice}}

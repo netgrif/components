@@ -20,6 +20,7 @@ define(['./HalResource'], function (HalResource) {
         this.element = undefined;
         this.changed = false;
         this.valid = true;
+        this.active = false;
     }
 
     DataField.prototype = Object.create(HalResource.prototype);
