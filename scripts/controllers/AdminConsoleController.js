@@ -64,7 +64,7 @@ define(['angular', '../modules/Main'], function (angular) {
                         $log.debug("No roles found in resource!");
                     });
                 }, function () {
-                    $snackbar.error("Failed to roles for process " + self.selectedNet.title);
+                    $snackbar.error($i18n.block.snackbar.failedToLoadRolesForProcess + " " + self.selectedNet.title);
                 });
             };
 
@@ -87,21 +87,21 @@ define(['angular', '../modules/Main'], function (angular) {
                         $log.debug("No resource for organizations was found!");
                     });
                 }, function () {
-                    $snackbar.error("No organization was found!");
+                    $snackbar.error($i18n.block.snackbar.noOrganizationFound);
                 });
             };
 
             self.invite = function () {
                 if (!self.invitedUser.email || self.invitedUser.email === "") {
-                    $snackbar.error("New user's email must be set!");
+                    $snackbar.error($i18n.block.snackbar.emailFieldOfNewUserIsMandatory);
                     return;
                 }
                 if (self.invitedUser.organizations.length === 0) {
-                    $snackbar.error("New user must belong at least to one organization!");
+                    $snackbar.error($i18n.block.snackbar.newUserMustBelongToOneOrMoreOrganization);
                     return;
                 }
                 if (jQuery.isEmptyObject(self.invitedUser.processRoles)) {
-                    $snackbar.error("New user must be assigned at least to one role!");
+                    $snackbar.error($i18n.block.snackbar.newUserMustHasAssignedOneOrMoreRoles);
                     return;
                 }
 
@@ -114,13 +114,13 @@ define(['angular', '../modules/Main'], function (angular) {
                 self.inviteLoading = true;
                 $http.post('/signup/invite', invitation)
                     .then(function (response) {
-                        $snackbar.success("Invite sent");
+                        $snackbar.success($i18n.block.snackbar.inviteSent);
                         self.inviteLoading = false;
                         self.invitedUser.email = undefined;
                         self.invitedUser.organizations.splice(0, self.invitedUser.organizations.length);
                         self.invitedUser.processRoles = {};
                     }, function () {
-                        $snackbar.error("Invite failed");
+                        $snackbar.error($i18n.block.snackbar.inviteFailed);
                         self.inviteLoading = false;
                     });
             };
@@ -144,7 +144,7 @@ define(['angular', '../modules/Main'], function (angular) {
                         $log.debug("No roles was found!");
                     });
                 }, function () {
-                    $snackbar.error("Failed to roles for process " + self.roles.title);
+                    $snackbar.error($i18n.block.snackbar.failedToLoadRolesForProcess + " " + self.roles.title);
                 });
             };
 
@@ -161,7 +161,7 @@ define(['angular', '../modules/Main'], function (angular) {
                         $log.debug("No user resource was found!");
                     });
                 }, function () {
-                    $snackbar.error("Failed to load users!");
+                    $snackbar.error($i18n.block.snackbar.failedToLoadUsers);
                 });
             };
 
@@ -173,7 +173,7 @@ define(['angular', '../modules/Main'], function (angular) {
                         $log.debug("No nets references was found!");
                     });
                 }, function () {
-                    $snackbar.error("Failed to load processes!");
+                    $snackbar.error($i18n.block.snackbar.failedToLoadProcesses);
                 });
             };
 
@@ -236,13 +236,13 @@ define(['angular', '../modules/Main'], function (angular) {
                             if (response.success) {
                                 user.changedRoles = false;
                                 $scope.saved = $scope.saved && true;
-                                $snackbar.success("Successfully assigned roles to " + user.fullName);
+                                $snackbar.success($i18n.block.snackbar.rolesSuccessfullyAssignedTo + " " + user.fullName);
                             } else {
                                 $snackbar.error(response.error);
                                 $scope.saved = $scope.saved && false;
                             }
                         }, function () {
-                            $snackbar.error("Assigning roles to user " + user.fullName + " has failed!");
+                            $snackbar.error($i18n.block.snackbar.assigningRolesToUser + " " + user.fullName + " " + $i18n.block.snackbar.failed);
                             $scope.saved = $scope.saved && false;
                         });
                     }

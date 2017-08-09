@@ -41,13 +41,13 @@ define(['./DataField','./HalResource','./Task'], function (DataField, HalResourc
         this.$http.delete("/res/workflow/case/"+this.stringId).then(function (response){
             if(response.success){
                 self.tab.closeCase(self);
-                self.$snackbar.success("Case "+self.title+" was deleted");
+                self.$snackbar.success($i18n.block.snackbar.case + " " + self.title + " " + $i18n.block.snackbar.wasDeleted);
                 self.tab.delete(self);
             } else if(response.error){
-                self.$snackbar.error(response.error);
+                self.$snackbar.error(response.error); //TODO 9.8.2017 @Milan i18n?
             }
         }, function () {
-            self.$snackbar.error("Case "+self.title+" failed to delete!");
+            self.$snackbar.error($i18n.block.snackbar.case + " " + self.title + " " + $i18n.block.snackbar.failedToDelete);
         });
     };
 

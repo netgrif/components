@@ -93,7 +93,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.$http(config).then(function (response) {
             self.page = response.page;
             if (self.page.totalElements === 0) {
-                self.$snackbar.info("Currently there are no tasks");
+                self.$snackbar.info($i18n.block.snackbar.noTasks);
                 self.page.next = undefined;
                 if (self.tasks)
                     self.removeAll();
@@ -125,7 +125,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 self.loading = false;
 
             }, function () {
-                self.$snackbar.info(`No tasks found in ${self.label}`);
+                self.$snackbar.info($i18n.block.snackbar.noTasksFoundIn + ` ${self.label}`);
                 self.page.next = undefined;
                 if (self.tasks) {
                     self.removeAll();
@@ -135,7 +135,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             })
 
         }, function () {
-            self.$snackbar.error(`Tasks on ${url} failed to load`);
+            self.$snackbar.error($i18n.block.snackbar.tasksOn + ` ${url} ` + $i18n.block.snackbar.failedToLoad);
             //TODO originálne tu bol hideLoading()
             self.loading = false;
         });
@@ -251,7 +251,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             })
 
         }, function () {
-            self.$snackbar.error(`Transactions for ${self.useCase.title} failed to load`);
+            self.$snackbar.error($i18n.block.snackbar.transactionsFor + ` ${self.useCase.title} ` + $i18n.block.snackbar.failedToLoad);
         });
     };
 

@@ -40,7 +40,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                                 $log.debug("No resource for cases was found!");
                             });
                         }, function () {
-                            $snackbar.error("There are no cases to choose from!");
+                            $snackbar.error($i18n.block.snackbar.noCasesToChooseFrom);
                         });
                     };
 

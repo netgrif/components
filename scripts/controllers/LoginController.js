@@ -35,7 +35,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 						}, function () {
 							$log.debug("Email retrieval failed");
 							$loading.showLoading(false);
-							$snackbar.error("Failed to identify token");
+							$snackbar.error($i18n.block.snackbar.failedToIdentifyToken);
 						});
 				} else {
 					$log.debug("Login loaded");
@@ -49,7 +49,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 						$log.debug("Login succeeded");
 					} else {
 						$log.debug("Login failed");
-						$snackbar.error("Wrong user credentials");
+						$snackbar.error($i18n.block.snackbar.wrongUserCredentials);
 						self.credentials.password = "";
 					}
 				})
@@ -57,7 +57,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 
 			self.signup = function () {
 				if(!self.signupUser.email){
-					$snackbar.error("User is not verified!")
+					$snackbar.error($i18n.block.snackbar.userIsNotVerified);
 					return;
 				}
 
@@ -70,12 +70,12 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
 						if (response) {
 							angular.element("form#signup-form").trigger("reset");
 						} else {
-							$snackbar.error("Registration failed");
+							$snackbar.error($i18n.block.snackbar.registrationFailed);
 						}
 						self.loading = false;
 					});
 				} else {
-					$snackbar.error("Password fields don't match");
+					$snackbar.error($i18n.block.snackbar.passwordFieldsDoNotMatch);
                     self.loading = false;
 				}
 			};
