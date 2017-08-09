@@ -70,41 +70,41 @@
 
         <div layout="column">
 
-            <nav layout="column" class="card margin-default sidenav" flex="70">
+            <nav layout="column" class="card margin-default sidenav" flex>
 
-                <md-button href="/dashboard" ng-class="{active: ('dashboard' | routeSegmentContains)}" layout="row" layout-align="start center">
+                <md-button href="/dashboard" layout="row" layout-align="start center" ng-class="{active: ('dashboard' | routeSegmentContains)}">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">dashboard</i>
                     </div>
-                    <span flex>{{$i18n.page.dashboard.this}}</span>
+                    <span flex hide show-gt-sm>{{$i18n.page.dashboard.this}}</span>
                 </md-button>
 
                 <md-button href="/offers" ng-class="{active: ('offers' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">content_paste</i>
                     </div>
-                    <span flex>{{::$i18n.page.offers.this}}</span>
+                    <span flex hide show-gt-sm>{{::$i18n.page.offers.this}}</span>
                 </md-button>
 
                 <md-button href="/contacts" ng-class="{active: ('contacts' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">contacts</i>
                     </div>
-                    <span flex>{{::$i18n.page.contacts.this}}</span>
+                    <span flex hide show-gt-sm>{{::$i18n.page.contacts.this}}</span>
                 </md-button>
 
                 <md-button href="/documents" ng-class="{active: ('documents' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">description</i>
                     </div>
-                    <span flex>{{::$i18n.page.documents.this}}</span>
+                    <span flex hide show-gt-sm>{{::$i18n.page.documents.this}}</span>
                 </md-button>
 
                 <md-button href="/contracts" ng-class="{active: ('contracts' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">assignment</i>
                     </div>
-                    <span flex>{{::$i18n.page.contracts.this}}</span>
+                    <span flex hide show-gt-sm>{{::$i18n.page.contracts.this}}</span>
                 </md-button>
 
                 <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" href="/console"
@@ -113,7 +113,7 @@
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">developer_board</i>
                     </div>
-                    <span flex>{{::$i18n.page.console.this}}</span>
+                    <span flex hide show-gt-sm>{{::$i18n.page.console.this}}</span>
                 </md-button>
 
 
@@ -121,38 +121,36 @@
 
                     <div class="left-panel"></div>
 
-                    <md-fab-speed-dial md-direction="down" class="md-scale">
+                    <div class="position-fixed display-block" hide show-gt-sm>
+                        <md-fab-speed-dial md-direction="down" class="md-scale">
 
-                        <md-fab-trigger>
-                            <md-button class="md-fab md-raised md-mini md-primary">
-                                <md-icon class="material-icons">add</md-icon>
-                            </md-button>
-                        </md-fab-trigger>
+                            <md-fab-trigger>
+                                <md-button class="md-fab md-raised md-mini md-primary">
+                                    <md-icon class="material-icons">add</md-icon>
+                                </md-button>
+                            </md-fab-trigger>
 
-                        <md-fab-actions>
-                            <md-button class="md-fab md-raised md-mini">
-                                <md-tooltip md-direction="right">{{::$i18n.block.add.createOffer}}</md-tooltip>
-                                <md-icon class="material-icons">content_paste</md-icon>
-                            </md-button>
-                            <md-button class="md-fab md-raised md-mini">
-                                <md-tooltip md-direction="right">{{::$i18n.block.add.createContact}}</md-tooltip>
-                                <md-icon class="material-icons">contacts</md-icon>
-                            </md-button>
-                            <md-button class="md-fab md-raised md-mini">
-                                <md-tooltip md-direction="right">{{::$i18n.block.add.createDocument}}</md-tooltip>
-                                <md-icon class="material-icons">description</md-icon>
-                            </md-button>
-                        </md-fab-actions>
+                            <md-fab-actions>
+                                <md-button class="md-fab md-raised md-mini">
+                                    <md-tooltip md-direction="right">{{::$i18n.block.add.createOffer}}</md-tooltip>
+                                    <md-icon class="material-icons">content_paste</md-icon>
+                                </md-button>
+                                <md-button class="md-fab md-raised md-mini">
+                                    <md-tooltip md-direction="right">{{::$i18n.block.add.createContact}}</md-tooltip>
+                                    <md-icon class="material-icons">contacts</md-icon>
+                                </md-button>
+                                <md-button class="md-fab md-raised md-mini">
+                                    <md-tooltip md-direction="right">{{::$i18n.block.add.createDocument}}</md-tooltip>
+                                    <md-icon class="material-icons">description</md-icon>
+                                </md-button>
+                            </md-fab-actions>
 
-                    </md-fab-speed-dial>
+                        </md-fab-speed-dial>
+                    </div>
 
                 </div>
 
             </nav>
-
-            <div class="card margin-default" flex="30">
-                <!-- TODO statistics -->
-            </div>
 
         </div>
 

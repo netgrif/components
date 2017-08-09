@@ -1,3 +1,15 @@
+// Displays
+.display {
+
+    &-block {
+        display: block;
+    }
+
+    &-none {
+        display: none;
+    }
+}
+
 // Positions
 .position {
 
