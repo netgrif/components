@@ -1,8 +1,8 @@
 define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'],
     function (angular, Case, ActionCase) {
         angular.module('ngMain').controller('DashboardController',
-            ['$log', '$scope', '$user', '$snackbar', '$http', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$cache', '$location',
-                function ($log, $scope, $user, $snackbar, $http, $dialog, $fileUpload, $mdExpansionPanelGroup, $cache, $location) {
+            ['$log', '$scope', '$user', '$snackbar', '$http', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$cache', '$location', '$timeout',
+                function ($log, $scope, $user, $snackbar, $http, $dialog, $fileUpload, $mdExpansionPanelGroup, $cache, $location, $timeout) {
                     const self = this;
 
                     self.limit = 3;
@@ -99,7 +99,8 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                                     $dialog: $dialog,
                                     $snackbar: $snackbar,
                                     $user: $user,
-                                    $fileUpload: $fileUpload
+                                    $fileUpload: $fileUpload,
+                                    $timeout: $timeout
                                 }, {caseType: "Contact"})));
 
                             }, function () {
@@ -142,8 +143,8 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                     self.loadPetriNet("Insurance", 'offerNet', success => {
                         if (!success) return;
 
-                        self.loadTransitions(["Nehnuteľnosť a domácnosť","Základné informácie","Údaje o zmluve"], self.offerNet.entityId, 'offerTransitions', success => {
-                            if(success)
+                        self.loadTransitions(["Nehnuteľnosť a domácnosť", "Základné informácie", "Údaje o zmluve"], self.offerNet.entityId, 'offerTransitions', success => {
+                            if (success)
                                 self.loadOffers();
                         });
                         self.loadTransitions(["Informácie o províziach"], self.offerNet.entityId, 'contractTransition', success => {

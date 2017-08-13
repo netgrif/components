@@ -1,7 +1,7 @@
 define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     /**
      * Constructor for CaseTab class
-     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload
+     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $timeout
      * @param {String} label
      * @param {Object} controller
      * @param {Object} angular
@@ -106,7 +106,8 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 $dialog: this.$dialog,
                 $snackbar: this.$snackbar,
                 $user: this.$user,
-                $fileUpload: this.$fileUpload
+                $fileUpload: this.$fileUpload,
+                $timeout: this.$timeout
             },{caseType: this.caseType})));
         } else {
             resources.forEach((r, i) => cases.push(new Case(this, null, r, rawData[i]._links, {
@@ -152,7 +153,8 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                                 $dialog: self.$dialog,
                                 $snackbar: self.$snackbar,
                                 $user: self.$user,
-                                $fileUpload: self.$fileUpload
+                                $fileUpload: self.$fileUpload,
+                                $timeout: self.$timeout
                             },{caseType: self.caseType});
                             actionCase.openTaskDialog();
                             self.cases.push(actionCase);

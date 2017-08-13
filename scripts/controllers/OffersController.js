@@ -8,7 +8,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
-                    self.caseTab = new CaseTab("My Offers", this, {$http, $dialog, $snackbar, $user, $fileUpload}, {
+                    self.caseTab = new CaseTab("My Offers", this, {$http, $dialog, $snackbar, $user, $fileUpload, $timeout}, {
                         processName: "Insurance",
                         filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET, CaseTab.FIND_BY_TRANSITION],
                         transitionNames: ["Nehnuteľnosť a domácnosť","Základné informácie","Údaje o zmluve"],
