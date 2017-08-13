@@ -299,7 +299,6 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         } else {
             this.expand();
         }
-        this.expanded = !this.expanded;
 
         this.preventDefault($event);
     };
@@ -321,7 +320,6 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                     this.loading = false;
                     if (this.dataSize <= 0) {
                         this.finish();
-                        this.expanded = !this.expanded;
                     }
                     else {
                         this.panelExpand(() => this.focusNearestRequiredField());
@@ -334,6 +332,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.panelExpand = function (callback = () => {}) {
         this.animating = true;
         this.panel.expand();
+        this.expanded = true;
         this.$timeout(()=>{
             this.animating = false;
             callback();
@@ -351,6 +350,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.panelCollapse = function (callback = ()=>{}) {
         this.animating = true;
         this.panel.collapse();
+        this.expanded = false;
         this.$timeout(()=>{
             this.animating = false;
             callback();
