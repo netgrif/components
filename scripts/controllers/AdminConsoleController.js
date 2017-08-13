@@ -115,10 +115,10 @@ define(['angular', '../modules/Main'], function (angular) {
                 $http.post('/signup/invite', invitation)
                     .then(function (response) {
                         $snackbar.success("Invite sent");
-                        self.inviteLoading = false;
                         self.invitedUser.email = undefined;
                         self.invitedUser.organizations.splice(0, self.invitedUser.organizations.length);
                         self.invitedUser.processRoles = {};
+                        self.inviteLoading = false;
                     }, function () {
                         $snackbar.error("Invite failed");
                         self.inviteLoading = false;
