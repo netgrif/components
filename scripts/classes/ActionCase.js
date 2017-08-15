@@ -1,7 +1,7 @@
 define(['./DataField', './HalResource', './Task', './Case'], function (DataField, HalResource, Task, Case) {
     /**
      * Constructor for Case class
-     * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user, $i18n
+     * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user, $timeout, $i18n
      * @param {Object} tab
      * @param {Object} panelGroup
      * @param {Object} resource
@@ -20,13 +20,13 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
 
         this.tasks = [];
         this.expanded = false;
+        this.animating = false;
     }
 
     ActionCase.prototype = Object.create(Case.prototype);
     ActionCase.prototype.constructor = ActionCase;
 
-    ActionCase.prototype.loadData = function (callback = () => {
-    }) {
+    ActionCase.prototype.loadData = function (callback = () => {}) {
         if (this.loading || this.data.length > 0) return;
         const self = this;
         this.$http.get("/res/workflow/case/" + this.stringId + "/data").then(function (response) {
@@ -58,8 +58,7 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
         });
     };
 
-    ActionCase.prototype.loadTasks = function (callback = () => {
-    }) {
+    ActionCase.prototype.loadTasks = function (callback = () => {}) {
         if (this.tasks.length > 0) return;
         const self = this;
         this.$http.get("/res/task/case/" + this.stringId).then(function (response) {
@@ -77,14 +76,26 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
     };
 
     ActionCase.prototype.click = function ($event) {
+        if (this.loading || this.animating) {
+            this.preventDefault($event);
+            return;
+        }
+
         if (this.expanded) {
             this.collapse();
         } else {
             this.expand();
         }
         this.expanded = !this.expanded;
-        $event.preventDefault();
-        $event.stopPropagation();
+
+        this.preventDefault($event);
+    };
+
+    ActionCase.prototype.preventDefault = function (event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
     };
 
     ActionCase.prototype.expand = function () {
@@ -94,11 +105,25 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
         this.loadTasks(success => {
 
         });
-        this.panel.expand();
+        this.panelExpand();
     };
 
-    ActionCase.prototype.collapse = function () {
+    ActionCase.prototype.panelExpand = function (callback = () => {}) {
+        this.animating = true;
+        this.panel.expand();
+        this.$timeout(() => {
+            this.animating = false;
+            callback();
+        }, 300); //timeout with 200ms because animation time of expanding task
+    };
+
+    ActionCase.prototype.collapse = function (callback = () => {}) {
+        this.animating = true;
         this.panel.collapse();
+        this.$timeout(() => {
+            this.animating = false;
+            callback();
+        }, 300);
     };
 
     ActionCase.prototype.openTaskDialog = function (task) {
@@ -108,8 +133,8 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
             requestedTask: task,
             caseType: self.caseType
         }, 'tasksDialogController').then(function () {
-            self.data.splice(0,self.data.length);
-            self.tasks.splice(0,self.tasks.length);
+            self.data.splice(0, self.data.length);
+            self.tasks.splice(0, self.tasks.length);
             self.loadData();
             self.loadTasks();
         });

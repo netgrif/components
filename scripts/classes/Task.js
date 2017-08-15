@@ -21,8 +21,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         this.dataSize = 0;
         this.expanded = false;
         this.loading = false;
-        this.waitingForExpand = false;
         this.triggeredSave = false;
+        this.animating = false;
     }
 
     Task.prototype = Object.create(HalResource.prototype);
@@ -115,7 +115,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                 this.loading = false;
                 if (this.dataSize <= 0 || this.validateRequiredData()) {
                     this.doFinish();
-                    this.panel.collapse();
+                    this.panelCollapse();
                 }
                 // else {
                 //     if (this.validateRequiredData()) {
@@ -129,7 +129,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                 this.save((success) => {
                     if (success) {
                         this.doFinish();
-                        this.panel.collapse();
+                        this.panelCollapse();
                     }
                 });
         }
@@ -287,35 +287,32 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         this._links = links;
         this.formatedDate = Task.formatDate(resource.startDate);
         this.user = resource.user;
-
-        if (this.waitingForExpand) {
-            this.expand();
-            this.waitingForExpand = false;
-        }
     };
 
     Task.prototype.click = function ($event) {
-        if (this.tab.loading) {
-            this.waitingForExpand = true;
-            $event.preventDefault();
-            $event.stopPropagation();
+        if(this.loading || this.animating){
+            this.preventDefault($event);
             return;
         }
+
         if (this.expanded) {
             this.collapse();
         } else {
             this.expand();
         }
-        this.expanded = !this.expanded;
 
-        if ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
+        this.preventDefault($event);
+    };
+
+    Task.prototype.preventDefault = function (event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
         }
     };
 
     Task.prototype.expand = function () {
-        this.panel.collapse({animation: false});
+        //this.panel.collapse({animation: false});
         this.assign(success => {
             if (success)
                 this.tab.load(false);
@@ -324,25 +321,41 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                     this.loading = false;
                     if (this.dataSize <= 0) {
                         this.finish();
-                        this.expanded = !this.expanded;
                     }
                     else {
-                        this.panel.expand();
-                        this.$timeout(()=> this.focusNearestRequiredField(), 300); //timeout with 200ms because animation time of expanding task
+                        this.panelExpand(() => this.focusNearestRequiredField());
                     }
                 }
-                // this.$timeout(() => {
-                // }, 200);
             });
         });
+    };
+
+    Task.prototype.panelExpand = function (callback = () => {}) {
+        this.animating = true;
+        this.panel.expand();
+        this.expanded = true;
+        this.$timeout(()=>{
+            this.animating = false;
+            callback();
+        },300); //timeout with 200ms because animation time of expanding task
     };
 
     Task.prototype.collapse = function () {
         this.cancel(success => {
             if (success)
                 this.tab.load(false);
-            this.panel.collapse();
+            this.panelCollapse();
         });
+    };
+
+    Task.prototype.panelCollapse = function (callback = ()=>{}) {
+        this.animating = true;
+        this.panel.collapse();
+        this.expanded = false;
+        this.$timeout(()=>{
+            this.animating = false;
+            callback();
+        },300);
     };
 
     Task.prototype.showDataGroupDivider = function (group) {

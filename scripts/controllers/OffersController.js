@@ -14,6 +14,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                         $snackbar,
                         $user,
                         $fileUpload,
+                        $timeout,
                         $i18n
                     }, {
                         processName: "Insurance",

@@ -79,7 +79,12 @@
 
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                            <div layout="row" layout-align="end end" class="card padding-vertical-2x" flex>
+                            <div layout="row" layout-align="end center" class="card padding-vertical-2x" flex>
+                                <md-progress-circular md-mode="indeterminate"
+                                                      class="md-primary margin-left-default"
+                                                      md-diameter="30"
+                                                      ng-if="adminCtrl.inviteLoading">
+                                </md-progress-circular>
                                 <md-button class="md-primary" ng-click="adminCtrl.invite()" layout="row" layout-align="center center">
                                     <md-icon class="material-icons margin-horizontal-0 margin-right-default">person_add</md-icon>
                                     {{::$i18n.block.btn.invite}}

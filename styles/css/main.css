@@ -604,6 +604,7 @@ body {
 }
 
 .shadow {
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
 }
 
@@ -678,6 +679,14 @@ body {
 
 .visibility-hidden {
   visibility: hidden;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
 }
 
 .position-relative {
@@ -758,6 +767,7 @@ span.active {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
+  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
 }
 
@@ -799,14 +809,44 @@ span.active {
   width: auto;
 }
 
+@media all and (max-width: 599px) {
+  .logo {
+    height: 40px;
+    width: 36px;
+  }
+}
+
+@media all and (min-width: 600px) and (max-width: 959px) {
+  .logo {
+    height: 40px;
+    width: 36px;
+  }
+}
+
+@-webkit-keyframes spinner-right {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes spinner-right {
   to {
+    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spinner-left {
+  to {
+    -webkit-transform: rotate(-360deg);
+    transform: rotate(-360deg);
   }
 }
 
 @keyframes spinner-left {
   to {
+    -webkit-transform: rotate(-360deg);
     transform: rotate(-360deg);
   }
 }
@@ -823,7 +863,9 @@ span.active {
   border-radius: 50%;
   border-style: solid;
   border-color: transparent;
+  -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
 }
 
@@ -842,7 +884,9 @@ span.active {
 .orbit1:not(:required):before {
   border-width: 5px;
   border-top-color: white;
+  -webkit-animation-name: spinner-left;
   animation-name: spinner-left;
+  -webkit-animation-duration: .7s;
   animation-duration: .7s;
 }
 
@@ -861,7 +905,9 @@ span.active {
 .orbit2:not(:required):before {
   border-width: 7px;
   border-top-color: #212121;
+  -webkit-animation-name: spinner-right;
   animation-name: spinner-right;
+  -webkit-animation-duration: .9s;
   animation-duration: .9s;
 }
 
@@ -880,7 +926,9 @@ span.active {
 .orbit3:not(:required):before {
   border-width: 5px;
   border-top-color: white;
+  -webkit-animation-name: spinner-left;
   animation-name: spinner-left;
+  -webkit-animation-duration: .8s;
   animation-duration: .8s;
 }
 
@@ -899,7 +947,9 @@ span.active {
 .orbit4:not(:required):before {
   border-width: 7px;
   border-top-color: #212121;
+  -webkit-animation-name: spinner-left;
   animation-name: spinner-left;
+  -webkit-animation-duration: 1s;
   animation-duration: 1s;
 }
 
@@ -940,6 +990,7 @@ md-expansion-panel md-expansion-panel-collapsed:hover, md-expansion-panel .md-ex
 }
 
 md-expansion-panel {
+  -webkit-box-shadow: none !important;
   box-shadow: none !important;
   margin-bottom: 1px;
 }
@@ -983,6 +1034,8 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 
 .base .background-gradient {
   background: #92aab4 !important;
+  background: -webkit-radial-gradient(center ellipse, #92aab4 0%, #515e64 100%) !important;
+  background: -o-radial-gradient(center ellipse, #92aab4 0%, #515e64 100%) !important;
   background: radial-gradient(ellipse at center, #92aab4 0%, #515e64 100%) !important;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#92aab4', endColorstr='#515e64', GradientType=1) !important;
 }
@@ -990,6 +1043,7 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 .base .card {
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
   overflow: hidden;
 }
@@ -1007,6 +1061,7 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   margin: 8px;
   background-color: #FAFAFA;
   border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
 }
 
@@ -1017,13 +1072,14 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 
 .base .card-welcome {
   background-color: transparent !important;
+  -webkit-box-shadow: none !important;
   box-shadow: none !important;
   width: 600px;
   margin-bottom: 230px;
 }
 
 .base .sidenav {
-  width: 189.406px;
+  width: 190px;
 }
 
 .base .sidenav > .md-button {
@@ -1094,6 +1150,18 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   width: auto;
 }
 
+@media all and (max-width: 599px) {
+  .base .sidenav {
+    width: 52px;
+  }
+}
+
+@media all and (min-width: 600px) and (max-width: 959px) {
+  .base .sidenav {
+    width: 52px;
+  }
+}
+
 .base .toolbar {
   height: 60px;
 }
@@ -1140,6 +1208,7 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 
 .base md-tabs-wrapper {
   background-color: rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
   margin: 8px;
 }

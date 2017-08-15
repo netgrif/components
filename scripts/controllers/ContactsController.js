@@ -13,6 +13,7 @@ define(['angular', '../classes/CaseTab', 'angularMaterialExpansionPanels', '../m
                         $snackbar,
                         $user,
                         $fileUpload,
+                        $timeout,
                         $i18n
                     }, {processName: "Contact",
                         actionCase: true,

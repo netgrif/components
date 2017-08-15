@@ -1,5 +1,5 @@
 <div class="data-item" layout="row" layout-align="start center">
-    <div flex="50">
+    <div flex="35">
         <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
             {{field.name}}
             <md-tooltip ng-if="field.description">
@@ -7,8 +7,8 @@
             </md-tooltip>
         </span>
     </div>
-    <div flex="20"></div>
-    <div flex="60" layout="row" layout-align="space-between center">
+    <div flex="5"></div>
+    <div flex="55" flex-sm="60" layout="row" layout-align="space-between center">
         <div layout="row" layout-align="start center">
             <md-icon class="material-icons margin-right-2x" ng-if="!field.newValue || field.generated">insert_drive_file</md-icon>
             <md-icon class="material-icons margin-right-2x color-fg-warning" ng-if="field.newFile && !field.uploaded">
@@ -32,7 +32,8 @@
                                file-model="field.file"
                                file-change-callback="field.fileChanged"
                                file-change-arg="field"
-                               ng-required="field.behavior.required">
+                               ng-required="field.behavior.required"
+                               aria-label="Choose file">
                         <label for="file" class="placeholder">
                             <span class="padding-horizontal-2x">{{::$i18n.block.data.newFile}}</span>
                         </label>
@@ -51,5 +52,4 @@
             </md-menu-content>
         </md-menu>
     </div>
-    <div flex="10"></div>
 </div>
