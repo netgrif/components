@@ -61,7 +61,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             }
 
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.assigningTask + ` ${self.title} ` + $i18n.block.snackbar.failed);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.assigningTask} ${self.title} ${$i18n.block.snackbar.failed}`);
             callback(false);
         });
     };
@@ -89,7 +89,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             }
 
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.cancelingAssignmentOfTask + ` ${self.title} ` + $i18n.block.snackbar.failed);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.cancelingAssignmentOfTask} ${self.title} ${self.$i18n.block.snackbar.failed}`);
             callback(false)
         });
     };
@@ -105,7 +105,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             if (response.error) self.$snackbar.error(response.error);
 
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.finishingTask + ` ${self.title} ` + $i18n.block.snackbar.failed);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.finishingTask} ${self.title} ${self.$i18n.block.snackbar.failed}`);
         });
     };
 
@@ -158,7 +158,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                                 $dialog: self.$dialog,
                                 $snackbar: self.$snackbar,
                                 $user: self.$user,
-                                $fileUpload: self.$fileUpload
+                                $fileUpload: self.$fileUpload,
+                                $i18n: self.$i18n
                             })).concat(group.data);
                         });
                         delete group.fields;
@@ -182,7 +183,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                 callback(true);
             });
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.dataFor + ` ${self.title} ` + $i18n.block.snackbar.failedToLoad);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.dataFor} ${self.title} ${self.$i18n.block.snackbar.failedToLoad}`);
             callback(false);
         });
     };
@@ -197,7 +198,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         this.getData().forEach(field => {
             if (field.behavior.required || field.newValue) validation = field.isValid() ? validation : false;
         });
-        if (!validation) this.$snackbar.error($i18n.block.snackbar.fieldsHaveInvalidValues);
+        if (!validation) this.$snackbar.error(self.$i18n.block.snackbar.fieldsHaveInvalidValues);
         return validation;
     };
 
@@ -232,12 +233,12 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             self.tab.updateTasksData(response.changedFields);
 
             Object.keys(fields).forEach(id => self.getData().find(f => f.stringId === id).changed = false);
-            self.$snackbar.success($i18n.block.snackbar.dataSavedSuccessfully);
+            self.$snackbar.success(self.$i18n.block.snackbar.dataSavedSuccessfully);
             // self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
             self.triggeredSave = false;
             callback(true);
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.savingDataFailed);
+            self.$snackbar.error(self.$i18n.block.snackbar.savingDataFailed);
             self.triggeredSave = false;
             callback(false);
         });

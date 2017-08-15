@@ -1,8 +1,8 @@
 define(['angular', '../classes/CaseTab', 'angularMaterialExpansionPanels', '../modules/Contacts', '../modules/Main'],
     function (angular, CaseTab) {
         angular.module('ngContacts').controller('ContactsController',
-            ['$log', '$scope', '$mdExpansionPanelGroup', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout',
-                function ($log, $scope, $mdExpansionPanelGroup, $http, $dialog, $snackbar, $user, $fileUpload, $timeout) {
+            ['$log', '$scope', '$mdExpansionPanelGroup', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$i18n',
+                function ($log, $scope, $mdExpansionPanelGroup, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n) {
                     const self = this;
 
                     self.alphabet = Array.apply(null, {length: 26}).map((x, i) => String.fromCharCode(65 + i));
@@ -12,7 +12,8 @@ define(['angular', '../classes/CaseTab', 'angularMaterialExpansionPanels', '../m
                         $dialog,
                         $snackbar,
                         $user,
-                        $fileUpload
+                        $fileUpload,
+                        $i18n
                     }, {processName: "Contact",
                         actionCase: true,
                         sort: "?sort=title",

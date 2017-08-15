@@ -21,7 +21,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                             $user,
                             $fileUpload,
                             $timeout,
-                            $mdExpansionPanelGroup
+                            $mdExpansionPanelGroup,
+                            $i18n
                         }, {
                             showTransactions: false,
                             allowHighlight: false

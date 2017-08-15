@@ -1,7 +1,7 @@
 define(['./DataField', './HalResource', './Task', './Case'], function (DataField, HalResource, Task, Case) {
     /**
      * Constructor for Case class
-     * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user
+     * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user, $i18n
      * @param {Object} tab
      * @param {Object} panelGroup
      * @param {Object} resource
@@ -37,7 +37,8 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
                             $dialog: self.$dialog,
                             $snackbar: self.$snackbar,
                             $user: self.$user,
-                            $fileUpload: self.$fileUpload
+                            $fileUpload: self.$fileUpload,
+                            $i18n: self.$i18n
                         })).concat(self.data);
                         if (index === array.length - 1) {
                             callback(true);
@@ -52,7 +53,7 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
                 callback(true);
             }
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.dataForCase + " " + self.stringId + " " + $i18n.block.snackbar.failedToLoad);
+            self.$snackbar.error(`${$i18n.block.snackbar.dataForCase} ${self.stringId} ${$i18n.block.snackbar.failedToLoad}`);
             callback(false);
         });
     };
@@ -71,7 +72,7 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
             });
 
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.loadingTasksForCase + " " + self.title + " " + $i18n.block.snackbar.failed);
+            self.$snackbar.error(`${$i18n.block.snackbar.loadingTasksForCase} ${self.title} ${$i18n.block.snackbar.failed}`);
         });
     };
 

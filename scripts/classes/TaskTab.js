@@ -1,7 +1,7 @@
 define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     /**
      * Constructor for TaskTab class
-     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup
+     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n
      * @param id
      * @param label
      * @param baseUrl
@@ -93,7 +93,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.$http(config).then(function (response) {
             self.page = response.page;
             if (self.page.totalElements === 0) {
-                self.$snackbar.info($i18n.block.snackbar.noTasks);
+                self.$snackbar.info(self.$i18n.block.snackbar.noTasks);
                 self.page.next = undefined;
                 if (self.tasks)
                     self.removeAll();
@@ -125,7 +125,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 self.loading = false;
 
             }, function () {
-                self.$snackbar.info($i18n.block.snackbar.noTasksFoundIn + ` ${self.label}`);
+                self.$snackbar.info(`${self.$i18n.block.snackbar.noTasksFoundIn} ${self.label}`);
                 self.page.next = undefined;
                 if (self.tasks) {
                     self.removeAll();
@@ -135,7 +135,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             })
 
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.tasksOn + ` ${url} ` + $i18n.block.snackbar.failedToLoad);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.tasksOn} ${url} ${self.$i18n.block.snackbar.failedToLoad}`);
             //TODO originálne tu bol hideLoading()
             self.loading = false;
         });
@@ -251,7 +251,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             })
 
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.transactionsFor + ` ${self.useCase.title} ` + $i18n.block.snackbar.failedToLoad);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.transactionsFor} ${self.useCase.title} ${self.$i18n.block.snackbar.failedToLoad}`);
         });
     };
 

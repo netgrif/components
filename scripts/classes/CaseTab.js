@@ -1,7 +1,7 @@
 define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     /**
      * Constructor for CaseTab class
-     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload
+     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $i18n
      * @param {String} label
      * @param {Object} controller
      * @param {Object} angular
@@ -71,7 +71,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
         this.$http(config).then(function (response) {
             self.page = Object.assign(self.page, response.page);
             if (self.page.totalElements === 0) {
-                self.$snackbar.info($i18n.block.snackbar.noCases);
+                self.$snackbar.info(self.$i18n.block.snackbar.noCases);
                 self.cases.splice(0, self.cases.length);
                 self.loading = false;
                 return;
@@ -86,14 +86,14 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 self.parseCase(resources, rawData, next);
                 self.loading = false;
             }, function () {
-                self.$snackbar.error($i18n.block.snackbar.noResourceForCasesFound);
+                self.$snackbar.error(self.$i18n.block.snackbar.noResourceForCasesFound);
                 self.page.last = undefined;
                 self.page.next = undefined;
                 self.cases.splice(0, self.cases.length);
                 self.loading = false;
             });
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.gettingCasesFailed);
+            self.$snackbar.error(self.$i18n.block.snackbar.gettingCasesFailed);
             self.loading = false;
         })
     };
@@ -152,7 +152,8 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                                 $dialog: self.$dialog,
                                 $snackbar: self.$snackbar,
                                 $user: self.$user,
-                                $fileUpload: self.$fileUpload
+                                $fileUpload: self.$fileUpload,
+                                $i18n: self.$i18n
                             },{caseType: self.caseType});
                             actionCase.openTaskDialog();
                             self.cases.push(actionCase);
@@ -162,14 +163,15 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                                 $dialog: self.$dialog,
                                 $snackbar: self.$snackbar,
                                 $user: self.$user,
-                                $fileUpload: self.$fileUpload
+                                $fileUpload: self.$fileUpload,
+                                $i18n: self.$i18n
                             }));
                             self.cases.splice(0, self.cases.length);
                             self.page = {};
                         }
                     }
                 }, function () {
-                    self.$snackbar.error($i18n.block.snackbar.creatingNewCaseFailed);
+                    self.$snackbar.error(self.$i18n.block.snackbar.creatingNewCaseFailed);
                     self.newCase = {};
                 });
         }
@@ -182,7 +184,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 self.petriNetRefs = resource;
             });
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.gettingPetriNetRefsFailed);
+            self.$snackbar.error(self.$i18n.block.snackbar.gettingPetriNetRefsFailed);
         });
     };
 
@@ -193,7 +195,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
             self.net = response;
             callback(true);
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.loading + ` ${title} ` + $i18n.block.snackbar.failed);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.loading}  ${title} ${self.$i18n.block.snackbar.failed}`);
             callback(false);
         })
     };
@@ -210,7 +212,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 callback(false);
             });
         }, function () {
-            self.$snackbar.error($i18n.block.snackbar.loadingDataForFilterFailed);
+            self.$snackbar.error(self.$i18n.block.snackbar.loadingDataForFilterFailed);
             callback(false);
         });
     };
