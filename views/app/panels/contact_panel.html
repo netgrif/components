@@ -10,7 +10,7 @@
 
         <span flex></span>
 
-        <md-menu flex="5" layout="row" layout-align="end center">
+        <md-menu flex="5" layout="row" layout-align="end center" ng-if="contact.removable || contact.tasks.length > 0">
             <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                 <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
             </md-button>
@@ -18,7 +18,7 @@
                 <md-menu-item ng-repeat="task in contact.tasks | orderBy:'stringId'">
                     <md-button ng-click="task.click()">{{task.title}}</md-button>
                 </md-menu-item>
-                <md-menu-item>
+                <md-menu-item ng-if="contact.removable">
                     <md-button ng-click="contact.delete()">{{::$i18n.block.btn.delete}}</md-button>
                 </md-menu-item>
             </md-menu-content>
@@ -38,7 +38,7 @@
 
             <span flex></span>
 
-            <md-menu flex="5" layout="row" layout-align="end center" ng-if="contact.tasks.length > 0">
+            <md-menu flex="5" layout="row" layout-align="end center" ng-if="contact.removable || contact.tasks.length > 0">
                 <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                     <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
                 </md-button>
@@ -46,7 +46,7 @@
                     <md-menu-item ng-repeat="task in contact.tasks | orderBy:'stringId'">
                         <md-button ng-click="task.click()">{{task.title}}</md-button>
                     </md-menu-item>
-                    <md-menu-item>
+                    <md-menu-item ng-if="contact.removable">
                         <md-button ng-click="contact.delete()">{{::$i18n.block.btn.delete}}</md-button>
                     </md-menu-item>
                 </md-menu-content>
@@ -76,7 +76,7 @@
                 {{task.title}}
             </md-button>
 
-            <md-button ng-click="contact.delete()">{{::$i18n.block.btn.delete}}</md-button>
+            <md-button ng-if="contact.removable" ng-click="contact.delete()">{{::$i18n.block.btn.delete}}</md-button>
 
             <md-button class="md-primary" ng-click="contact.click($event)">{{::$i18n.block.btn.collapse}}</md-button>
 

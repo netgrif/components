@@ -101,7 +101,10 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                                     $user: $user,
                                     $fileUpload: $fileUpload,
                                     $timeout: $timeout
-                                }, {caseType: "Contact"})));
+                                }, {
+                                    caseType: "Contact",
+                                    removable: false
+                                })));
 
                             }, function () {
                                 $snackbar.error("No resource for cases was found!");

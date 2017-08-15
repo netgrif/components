@@ -108,7 +108,10 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 $user: this.$user,
                 $fileUpload: this.$fileUpload,
                 $timeout: this.$timeout
-            },{caseType: this.caseType})));
+            },{
+                caseType: this.caseType,
+                removable: true
+            })));
         } else {
             resources.forEach((r, i) => cases.push(new Case(this, null, r, rawData[i]._links, {
                 $http: this.$http,
@@ -155,7 +158,10 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                                 $user: self.$user,
                                 $fileUpload: self.$fileUpload,
                                 $timeout: self.$timeout
-                            },{caseType: self.caseType});
+                            },{
+                                caseType: self.caseType,
+                                removable: true
+                            });
                             actionCase.openTaskDialog();
                             self.cases.push(actionCase);
                         } else {
