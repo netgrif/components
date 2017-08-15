@@ -1,4 +1,4 @@
-<div class="data-item" layout="row" layout-align="{{$even ? 'start' : 'end'}} center" layout-align-sm="start center" ng-if="!field.behavior.hidden">
+<div class="data-item" layout="row" layout-align="start center" ng-if="!field.behavior.hidden">
     <div flex="35">
         <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
             {{field.name}}
@@ -8,7 +8,7 @@
         </span>
     </div>
     <div flex="5"></div>
-    <div flex="55" flex-sm="60">
+    <div flex="55">
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{field.placeholder}}</label>
             <md-select id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-model="field.newValue"
@@ -26,5 +26,6 @@
             </md-select>
         </md-input-container>
     </div>
+    <div flex="5"></div>
     {{::field.bindElement()}}
 </div>

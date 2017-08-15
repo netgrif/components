@@ -26,15 +26,14 @@
             <span flex="40">{{task.title}}</span>
             <i ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
             <div ng-if="task.loading" flex="10">
-                <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30">
-                </md-progress-circular>
+                <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30"></md-progress-circular>
             </div>
         </md-expansion-panel-header>
 
         <md-expansion-panel-content>
 
             <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
-                <div ng-repeat="group in task.dataGroups" layout="row" layout-align="{{group.alignment+' center'}}" layout-wrap flex="100">
+                <div ng-repeat="group in task.dataGroups" layout="row" layout-align="{{group.alignment + ' center'}}" layout-wrap flex="100">
 
                     <div layout="row" layout-align="start center" flex="100" ng-if="task.showDataGroupDivider(group)">
                         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
