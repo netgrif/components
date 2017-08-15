@@ -269,13 +269,19 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.focusNearestRequiredField = function () {
         this.getData().some(data => {
+            if(data.behavior.required && data.newValue && data.element && data.element.is(":focus"))
+                data.element.blur();
+
             if (data.behavior.required && !data.newValue &&
                 data.type !== 'boolean' && data.type !== 'file' && data.type !== 'user') {
                 //make data element focus
                 if (data.element) {
-                    data.element.click();
-                    // data.type === 'text' || data.type === 'number' || data.type === 'date' ? data.element.focus() : undefined;
-                    data.element.focus();
+                    if(data.type === 'text' || data.type === 'number' || data.type === 'date')
+                        data.element.focus();
+                    else {
+                        data.element.click();
+                        data.element.focus();
+                    }
                     return true;
                 }
             }
