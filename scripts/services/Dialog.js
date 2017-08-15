@@ -84,10 +84,10 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                     self.users = response.$request().$get("users").then(function (resources) {
                         $scope.users = self.users = resources;
                     }, function () {
-                        $log.debug("Resources users was not found!");
+                        $log.debug("Resource users was not found");
                     });
                 }, function () {
-                    $snackbar.error("Failed to load users with roles in task +" + task.visualId);
+                    $snackbar.error($i18n.block.snackbar.failedToLoadUsersInTask + " " + task.visualId);
                 });
             };
 
@@ -126,7 +126,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                             $log.debug("Process roles were not found!");
                         });
                     }, function () {
-                        $snackbar.error("Failed to load roles!");
+                        $snackbar.error($i18n.block.snackbar.failedToLoadRoles);
                     });
                 });
             };

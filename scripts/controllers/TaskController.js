@@ -1,8 +1,8 @@
 define(['angular', '../classes/Task', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, Task) {
         angular.module('ngMain').controller('TaskController',
-            ['$log', '$scope', '$http', '$snackbar', '$user', '$dialog', '$fileUpload', '$timeout', '$mdExpansionPanel','resource','links','tab','config',
-                function ($log, $scope, $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanel, resource, links, tab, config) {
+            ['$log', '$scope', '$http', '$snackbar', '$user', '$dialog', '$fileUpload', '$timeout', '$mdExpansionPanel', 'resource', 'links', 'tab', 'config', '$i18n',
+                function ($log, $scope, $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanel, resource, links, tab, config, $i18n) {
                     //const self = this;
                     this.taskId = resource.stringId;
                     tab.addTaskController(this);
@@ -14,7 +14,8 @@ define(['angular', '../classes/Task', '../modules/Main', 'angularMaterialExpansi
                             $user,
                             $dialog,
                             $fileUpload,
-                            $timeout
+                            $timeout,
+                            $i18n
                         },config);
                         return $scope.task;
                     };

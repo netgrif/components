@@ -1,7 +1,7 @@
 define(['./DataField','./HalResource','./Task'], function (DataField, HalResource, Task) {
     /**
      * Constructor for Case class
-     * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user
+     * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user, $i18n
      * @param {Object} tab
      * @param {Object} panel
      * @param {Object} resource
@@ -41,13 +41,13 @@ define(['./DataField','./HalResource','./Task'], function (DataField, HalResourc
         this.$http.delete("/res/workflow/case/"+this.stringId).then(function (response){
             if(response.success){
                 self.tab.closeCase(self);
-                self.$snackbar.success("Case "+self.title+" was deleted");
+                self.$snackbar.success(`${self.$i18n.block.snackbar.case} ${self.title} ${self.$i18n.block.snackbar.wasDeleted}`);
                 self.tab.delete(self);
             } else if(response.error){
-                self.$snackbar.error(response.error);
+                self.$snackbar.error(response.error); //TODO 9.8.2017 Server i18n?
             }
         }, function () {
-            self.$snackbar.error("Case "+self.title+" failed to delete!");
+            self.$snackbar.error(`${self.$i18n.block.snackbar.case} ${self.title} ${self.$i18n.block.snackbar.failedToDelete}`);
         });
     };
 
