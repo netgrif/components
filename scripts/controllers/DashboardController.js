@@ -79,11 +79,11 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                                 }, {})));
 
                             }, function () {
-                                $snackbar.error("No resource for cases was found!");
+                                $snackbar.error($i18n.block.snackbar.noResourceForCasesFound);
                                 self[target].splice(0, self[target].length);
                             });
                         }, function () {
-                            $snackbar.error("Getting cases failed!");
+                            $snackbar.error($i18n.block.snackbar.gettingCasesFailed);
                         });
                     };
 
@@ -104,11 +104,11 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                                 }, {caseType: "Contact"})));
 
                             }, function () {
-                                $snackbar.error("No resource for cases was found!");
+                                $snackbar.error($i18n.block.snackbar.noResourceForCasesFound);
                                 self[target].splice(0, self[target].length);
                             });
                         }, function () {
-                            $snackbar.error("Getting cases failed");
+                            $snackbar.error($i18n.block.snackbar.gettingCasesFailed);
                         });
                     };
 
@@ -118,7 +118,7 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                             self[target] = response;
                             callback(true);
                         }, function () {
-                            $snackbar.error(`Loading ${title} has failed!`);
+                            $snackbar.error($i18n.block.snackbar.loading + ` ${title} ` + $i18n.block.snackbar.failed);
                             callback(false);
                         })
                     };
@@ -135,7 +135,7 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                                 callback(false);
                             });
                         }, function () {
-                            $snackbar.error("Loading data for filter has failed!");
+                            $snackbar.error($i18n.block.snackbar.loadingDataForFilterFailed);
                             callback(false);
                         });
                     };

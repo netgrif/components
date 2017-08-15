@@ -1,7 +1,7 @@
 define(['./DataField', './HalResource', './Task', './Case'], function (DataField, HalResource, Task, Case) {
     /**
      * Constructor for Case class
-     * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user, $timeout
+     * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user, $timeout, $i18n
      * @param {Object} tab
      * @param {Object} panelGroup
      * @param {Object} resource
@@ -37,7 +37,8 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
                             $dialog: self.$dialog,
                             $snackbar: self.$snackbar,
                             $user: self.$user,
-                            $fileUpload: self.$fileUpload
+                            $fileUpload: self.$fileUpload,
+                            $i18n: self.$i18n
                         })).concat(self.data);
                         if (index === array.length - 1) {
                             callback(true);
@@ -48,12 +49,11 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
                 //self.requiredFilled = self.data.every(field => !field.behavior.required || field.newValue);
 
             } else {
-                //self.$snackbar.error(`No data for task ${self.title}`);
                 console.log(`No data for task ${self.title}`);
                 callback(true);
             }
         }, function () {
-            self.$snackbar.error("Data for case " + self.stringId + " has failed to load!");
+            self.$snackbar.error(`${$i18n.block.snackbar.dataForCase} ${self.stringId} ${$i18n.block.snackbar.failedToLoad}`);
             callback(false);
         });
     };
@@ -71,7 +71,7 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
             });
 
         }, function () {
-            self.$snackbar.error("Loading tasks for case " + self.title + " has failed!");
+            self.$snackbar.error(`${$i18n.block.snackbar.loadingTasksForCase} ${self.title} ${$i18n.block.snackbar.failed}`);
         });
     };
 
