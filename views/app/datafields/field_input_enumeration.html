@@ -1,5 +1,5 @@
-<div class="data-item" layout="row" layout-align="start center">
-    <div flex="50">
+<div class="data-item" layout="row" layout-align="{{$even ? 'start' : 'end'}} center" layout-align-sm="start center">
+    <div flex="35">
         <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
             {{field.name}}
             <md-tooltip ng-if="field.description">
@@ -7,8 +7,8 @@
             </md-tooltip>
         </span>
     </div>
-    <div flex="20"></div>
-    <div flex="60">
+    <div flex="5"></div>
+    <div flex="55" flex-sm="60">
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{field.placeholder}}</label>
             <md-select id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-model="field.newValue"
@@ -17,7 +17,8 @@
                        ng-blur="task.save()"
                        md-on-open="field.active = true"
                        md-on-close="field.active = false"
-                       ng-required="field.behavior.required">
+                       ng-required="field.behavior.required"
+                       aria-label="Select choice">
                 <md-option ng-repeat="choice in field.choices" ng-value="choice">
                            <!--ng-selected="$first && field.choices && field.choices.length > 0">-->
                     {{choice}}
@@ -25,6 +26,5 @@
             </md-select>
         </md-input-container>
     </div>
-    <div flex="10"></div>
     {{::field.bindElement()}}
 </div>
