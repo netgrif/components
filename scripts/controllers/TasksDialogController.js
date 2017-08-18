@@ -1,8 +1,8 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab, Task) {
         angular.module('ngMain').controller('TasksDialogController',
-            ['$log', '$scope', '$http', '$mdDialog', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup',
-                function ($log, $scope, $http, $mdDialog, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup) {
+            ['$log', '$scope', '$http', '$mdDialog', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$i18n',
+                function ($log, $scope, $http, $mdDialog, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n) {
                     const self = this;
 
                     self.taskTab = undefined;
@@ -34,6 +34,6 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                         self.taskTab.removeAll();
                     };
 
-                    $dialog.addCallback("tasksDialogController",self.activate);
+                    $dialog.addCallback("tasksDialogController", self.activate);
                 }]);
     });

@@ -107,7 +107,8 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 $snackbar: this.$snackbar,
                 $user: this.$user,
                 $fileUpload: this.$fileUpload,
-                $timeout: this.$timeout
+                $timeout: this.$timeout,
+                $i18n: this.$i18n
             },{
                 caseType: this.caseType,
                 removable: true
@@ -118,7 +119,8 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 $dialog: this.$dialog,
                 $snackbar: this.$snackbar,
                 $user: this.$user,
-                $fileUpload: this.$fileUpload
+                $fileUpload: this.$fileUpload,
+                $i18n: this.$i18n
             })));
         }
 

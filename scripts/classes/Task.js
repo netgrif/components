@@ -198,7 +198,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         this.getData().forEach(field => {
             if (field.behavior.required || field.newValue) validation = field.isValid() ? validation : false;
         });
-        if (!validation) this.$snackbar.error(self.$i18n.block.snackbar.fieldsHaveInvalidValues);
+        if (!validation) this.$snackbar.error(this.$i18n.block.snackbar.fieldsHaveInvalidValues);
         return validation;
     };
 

@@ -1,5 +1,5 @@
 define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$dialog', function ($mdDialog, $log) {
+    angular.module('ngMain').factory('$dialog', function ($mdDialog, $log, $i18n) {
         const callbacks = {};
 
         const dialogService = {
@@ -60,8 +60,8 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
         return dialogService;
     });
 
-    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional',
-        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional) {
+    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional', '$i18n',
+        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional, $i18n) {
             var self = this;
 
             $scope.parentCtrl = parentCtrl;

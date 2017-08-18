@@ -129,13 +129,13 @@ define(['./HalResource'], function (HalResource) {
 
         this.$fileUpload.upload(this.file, undefined, this.parent.link('file') + this.stringId, response => {
             if (!response) {
-                this.$snackbar.error(`${self.$i18n.block.snackbar.file} ${this.file.name} ${self.$i18n.block.snackbar.failedToUpload}`);
+                this.$snackbar.error(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.failedToUpload}`);
                 return;
             }
 
             this.uploaded = true;
             this.newFile = true;
-            this.$snackbar.info(`${self.$i18n.block.snackbar.file} ${this.file.name} ${self.$i18n.block.snackbar.uploadedSuccessfully}`);
+            this.$snackbar.info(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.uploadedSuccessfully}`);
         });
     };
 

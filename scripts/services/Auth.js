@@ -1,6 +1,6 @@
 
 define(['angular','angularRoute','../modules/Main'],function (angular) {
-    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user, $snackbar) {
+    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user, $snackbar, $i18n) {
         var auth = {
             authenticated: false,
 

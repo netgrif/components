@@ -1,6 +1,6 @@
 define(['angular', '../modules/Main', '../services/Loading', '../services/Auth'],function (angular) {
-    angular.module('ngMain').controller('MainController', ['$loading', '$auth', '$log', '$scope', '$style', '$user',
-    function ($loading, $auth, $log, $scope, $style, $user) {
+    angular.module('ngMain').controller('MainController', ['$loading', '$auth', '$log', '$scope', '$style', '$user','$i18n',
+    function ($loading, $auth, $log, $scope, $style, $user, $i18n) {
         const self = this;
 
         self.loaderVisible = true;

@@ -53,7 +53,7 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
                 callback(true);
             }
         }, function () {
-            self.$snackbar.error(`${$i18n.block.snackbar.dataForCase} ${self.stringId} ${$i18n.block.snackbar.failedToLoad}`);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.dataForCase} ${self.stringId} ${self.$i18n.block.snackbar.failedToLoad}`);
             callback(false);
         });
     };
@@ -71,7 +71,7 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
             });
 
         }, function () {
-            self.$snackbar.error(`${$i18n.block.snackbar.loadingTasksForCase} ${self.title} ${$i18n.block.snackbar.failed}`);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.loadingTasksForCase} ${self.title} ${self.$i18n.block.snackbar.failed}`);
         });
     };
 

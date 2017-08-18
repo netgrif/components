@@ -1,8 +1,8 @@
 define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'],
     function (angular, Case, ActionCase) {
         angular.module('ngMain').controller('DashboardController',
-            ['$log', '$scope', '$user', '$snackbar', '$http', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$cache', '$location', '$timeout',
-                function ($log, $scope, $user, $snackbar, $http, $dialog, $fileUpload, $mdExpansionPanelGroup, $cache, $location, $timeout) {
+            ['$log', '$scope', '$user', '$snackbar', '$http', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$cache', '$location', '$timeout','$i18n',
+                function ($log, $scope, $user, $snackbar, $http, $dialog, $fileUpload, $mdExpansionPanelGroup, $cache, $location, $timeout, $i18n) {
                     const self = this;
 
                     self.limit = 3;
@@ -75,7 +75,8 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                                     $dialog: $dialog,
                                     $snackbar: $snackbar,
                                     $user: $user,
-                                    $fileUpload: $fileUpload
+                                    $fileUpload: $fileUpload,
+                                    $i18n: $i18n
                                 }, {})));
 
                             }, function () {
@@ -100,7 +101,8 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                                     $snackbar: $snackbar,
                                     $user: $user,
                                     $fileUpload: $fileUpload,
-                                    $timeout: $timeout
+                                    $timeout: $timeout,
+                                    $i18n: $i18n
                                 }, {
                                     caseType: "Contact",
                                     removable: false
