@@ -1240,10 +1240,6 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   font-size: 16px;
 }
 
-.base md-dialog span {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-
 .base md-dialog md-select-value {
   color: rgba(0, 0, 0, 0.87) !important;
 }
@@ -1412,7 +1408,11 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   display: block;
 }
 
-.base md-dialog input, .base md-dialog label {
+.base md-dialog md-expansion-panel-group span, .base md-dialog md-expansion-panel-group input {
+  color: #FAFAFA !important;
+}
+
+.base md-dialog md-input-container input, .base md-dialog md-input-container label {
   color: rgba(0, 0, 0, 0.87) !important;
   font-weight: 300;
 }
