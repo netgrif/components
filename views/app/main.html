@@ -132,18 +132,18 @@
                             </md-fab-trigger>
 
                             <md-fab-actions>
-                                <md-button class="md-fab md-raised md-mini">
+                                <md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('offers')">
                                     <md-tooltip md-direction="right">{{::$i18n.block.add.createOffer}}</md-tooltip>
                                     <md-icon class="material-icons">content_paste</md-icon>
                                 </md-button>
-                                <md-button class="md-fab md-raised md-mini">
+                                <md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('contacts')">
                                     <md-tooltip md-direction="right">{{::$i18n.block.add.createContact}}</md-tooltip>
                                     <md-icon class="material-icons">contacts</md-icon>
                                 </md-button>
-                                <md-button class="md-fab md-raised md-mini">
-                                    <md-tooltip md-direction="right">{{::$i18n.block.add.createDocument}}</md-tooltip>
-                                    <md-icon class="material-icons">description</md-icon>
-                                </md-button>
+                                <!--<md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('documents')">-->
+                                    <!--<md-tooltip md-direction="right">{{::$i18n.block.add.createDocument}}</md-tooltip>-->
+                                    <!--<md-icon class="material-icons">description</md-icon>-->
+                                <!--</md-button>-->
                             </md-fab-actions>
 
                         </md-fab-speed-dial>

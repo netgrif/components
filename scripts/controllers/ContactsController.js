@@ -1,8 +1,8 @@
 define(['angular', '../classes/CaseTab', 'angularMaterialExpansionPanels', '../modules/Contacts', '../modules/Main'],
     function (angular, CaseTab) {
         angular.module('ngContacts').controller('ContactsController',
-            ['$log', '$scope', '$mdExpansionPanelGroup', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$i18n',
-                function ($log, $scope, $mdExpansionPanelGroup, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n) {
+            ['$log', '$scope', '$mdExpansionPanelGroup', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$i18n','$cache','$rootScope',
+                function ($log, $scope, $mdExpansionPanelGroup, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n, $cache, $rootScope) {
                     const self = this;
 
                     self.alphabet = Array.apply(null, {length: 26}).map((x, i) => String.fromCharCode(65 + i));
@@ -46,6 +46,15 @@ define(['angular', '../classes/CaseTab', 'angularMaterialExpansionPanels', '../m
                         });
                         self.caseTab.activate();
                     },10);
+
+                    if($cache.get("create") && $cache.get("create").contacts){
+                        self.caseTab.openNewCaseDialog($i18n.page.contacts.this);
+                        $cache.remove("create");
+                    }
+                    $rootScope.$on("caseCreate", (event, type) => {
+                        if(type === "contacts")
+                            self.caseTab.openNewCaseDialog($i18n.page.contacts.this);
+                    });
                 }]);
     });
 
