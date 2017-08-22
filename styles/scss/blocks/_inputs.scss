@@ -1,17 +1,23 @@
 // Global changes
 md-dialog {
 
-    span {
-        color: $color-black-op-87 !important;
-    }
-
     md-select-value {
         color: $color-black-op-87 !important;
     }
 
-    input, label {
-        color: $color-black-op-87 !important;
-        font-weight: 300;
+    :not(md-expansion-panel-group) {
+
+        input, label {
+            color: $color-black-op-87 !important;
+            font-weight: 300;
+        }
+    }
+
+    md-expansion-panel-group {
+
+        input {
+            color: $color-grey-50 !important;
+        }
     }
 
     &:not(.md-input-invalid) {
