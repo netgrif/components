@@ -1,21 +1,9 @@
-//md-dialog md-expansion-panel-group span, md-dialog md-expansion-panel-group input {
-//    color: $color-grey-50 !important;
-//}
-
 md-dialog {
 
     md-expansion-panel-group {
 
-         span, input {
+         span {
              color: $color-grey-50 !important;
          }
-     }
-
-    md-input-container {
-
-        input, label {
-            color: $color-black-op-87 !important;
-            font-weight: 300;
-        }
     }
 }

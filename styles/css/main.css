@@ -1244,9 +1244,13 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   color: rgba(0, 0, 0, 0.87) !important;
 }
 
-.base md-dialog input, .base md-dialog label {
+.base md-dialog :not(md-expansion-panel-group) input, .base md-dialog :not(md-expansion-panel-group) label {
   color: rgba(0, 0, 0, 0.87) !important;
   font-weight: 300;
+}
+
+.base md-dialog md-expansion-panel-group input {
+  color: #FAFAFA !important;
 }
 
 .base md-dialog:not(.md-input-invalid).md-input-focused label {
@@ -1408,13 +1412,8 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   display: block;
 }
 
-.base md-dialog md-expansion-panel-group span, .base md-dialog md-expansion-panel-group input {
+.base md-dialog md-expansion-panel-group span {
   color: #FAFAFA !important;
-}
-
-.base md-dialog md-input-container input, .base md-dialog md-input-container label {
-  color: rgba(0, 0, 0, 0.87) !important;
-  font-weight: 300;
 }
 
 .base .assign-list md-list-item .md-avatar {
