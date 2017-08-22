@@ -1,8 +1,8 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offers', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab) {
         angular.module('ngOffers').controller('OffersController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n','$rootScope',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
                     const self = this;
 
                     self.activeTabIndex = 0;
@@ -65,5 +65,13 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                         self.activeTabIndex = self.taskTabs.length;
                         $cache.remove("dashboard");
                     }
+                    if($cache.get("create") && $cache.get("create").offers){
+                        self.caseTab.openNewCaseDialog($i18n.page.offers.this);
+                        $cache.remove("create");
+                    }
+                    $rootScope.$on("caseCreate", (event, type) => {
+                        if(type === "offers")
+                            self.caseTab.openNewCaseDialog($i18n.page.offers.this);
+                    });
                 }]);
     });

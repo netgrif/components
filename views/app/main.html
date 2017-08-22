@@ -94,12 +94,12 @@
                     <span flex hide show-gt-sm>{{::$i18n.page.contacts.this}}</span>
                 </md-button>
 
-                <md-button href="/documents" ng-class="{active: ('documents' | routeSegmentContains)}" layout="row" layout-align="start center">
-                    <div layout="row" layout-align="center center" class="icon-wrapper">
-                        <i class="material-icons">description</i>
-                    </div>
-                    <span flex hide show-gt-sm>{{::$i18n.page.documents.this}}</span>
-                </md-button>
+                <!--<md-button href="/documents" ng-class="{active: ('documents' | routeSegmentContains)}" layout="row" layout-align="start center">-->
+                    <!--<div layout="row" layout-align="center center" class="icon-wrapper">-->
+                        <!--<i class="material-icons">description</i>-->
+                    <!--</div>-->
+                    <!--<span flex hide show-gt-sm>{{::$i18n.page.documents.this}}</span>-->
+                <!--</md-button>-->
 
                 <md-button href="/contracts" ng-class="{active: ('contracts' | routeSegmentContains)}" layout="row" layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
@@ -132,18 +132,18 @@
                             </md-fab-trigger>
 
                             <md-fab-actions>
-                                <md-button class="md-fab md-raised md-mini">
+                                <md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('offers')">
                                     <md-tooltip md-direction="right">{{::$i18n.block.add.createOffer}}</md-tooltip>
                                     <md-icon class="material-icons">content_paste</md-icon>
                                 </md-button>
-                                <md-button class="md-fab md-raised md-mini">
+                                <md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('contacts')">
                                     <md-tooltip md-direction="right">{{::$i18n.block.add.createContact}}</md-tooltip>
                                     <md-icon class="material-icons">contacts</md-icon>
                                 </md-button>
-                                <md-button class="md-fab md-raised md-mini">
-                                    <md-tooltip md-direction="right">{{::$i18n.block.add.createDocument}}</md-tooltip>
-                                    <md-icon class="material-icons">description</md-icon>
-                                </md-button>
+                                <!--<md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('documents')">-->
+                                    <!--<md-tooltip md-direction="right">{{::$i18n.block.add.createDocument}}</md-tooltip>-->
+                                    <!--<md-icon class="material-icons">description</md-icon>-->
+                                <!--</md-button>-->
                             </md-fab-actions>
 
                         </md-fab-speed-dial>
