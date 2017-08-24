@@ -1,0 +1,39 @@
+<div ng-cloak>
+
+    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="offCtrl.activeTabIndex">
+
+        <md-tab md-on-select="offCtrl.caseTab.activate()" class="primary">
+
+            <md-tab-label>
+                {{::$i18n.page.offers.my}}
+            </md-tab-label>
+
+            <md-tab-body>
+                <md-content layout="column" class="color-bg-transparent">
+
+                    <!--TODO --> TEST
+
+                </md-content>
+            </md-tab-body>
+        </md-tab>
+
+        <md-tab class="primary" ng-repeat="tab in offCtrl.taskTabs" md-on-select="offCtrl.tabChanged()">
+
+            <md-tab-label>
+                <!--TODO --> Test
+                <md-icon class="material-icons cursor-pointer font-size-22" ng-click="offCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
+            </md-tab-label>
+
+            <md-tab-body>
+                <md-content layout="column" class="color-bg-transparent">
+
+                    <!--TODO --> TEST
+
+                </md-content>
+            </md-tab-body>
+
+        </md-tab>
+
+    </md-tabs>
+
+</div>

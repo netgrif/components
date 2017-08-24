@@ -47,6 +47,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                 .when('/documents', 'app.documents')
                 .when('/contracts', 'app.contracts')
                 .when('/contacts', 'app.contacts')
+                .when('/payments', 'app.payments')
                 .when('/console', 'app.console')
 
             .segment('app', {
@@ -80,6 +81,11 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                     templateUrl: "views/app/documents.html",
                     controller: 'DocumentsController',
                     controllerAs: 'docCtrl'
+                })
+                .segment('payments', {
+                    templateUrl: "views/app/payments.html",
+                    controller: 'PaymentsController',
+                    controllerAs: 'payCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",
