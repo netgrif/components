@@ -1,0 +1,90 @@
+<md-expansion-panel>
+
+    <md-expansion-panel-collapsed layout="row" layout-align="start center" ng-click="contact.click($event)">
+
+        <i class="material-icons color-fg-accent-50" flex="5">label</i>
+        <span flex="20">{{"INS-1503680517"}}</span>
+        <span flex="20" layout="row" layout-align="start center">
+            <i class="material-icons color-fg-primary-500">account_circle</i> {{"Name" + " " + "Surname"}}
+        </span>
+        <span flex="20">{{"18:57 25.8.2017"}}</span>
+
+        <md-menu flex="5" layout="row" layout-align="end center">
+            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button>{{::$i18n.block.btn.assign}}</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button>{{::$i18n.block.btn.finish}}</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button>{{::$i18n.block.btn.cancel}}</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+
+    </md-expansion-panel-collapsed>
+
+    <md-expansion-panel-expanded>
+
+        <md-expansion-panel-header ng-click="contact.click($event)" md-no-sticky>
+
+            <i class="material-icons color-fg-accent-50" flex="5">label</i>
+            <span flex="20">{{"INS-1503680517"}}</span>
+            <span flex="20" layout="row" layout-align="start center">
+                <i class="material-icons color-fg-primary-500">account_circle</i> {{"Name" + " " + "Surname"}}
+            </span>
+            <span flex="20">{{"18:57 25.8.2017"}}</span>
+
+
+            <md-menu flex="5" layout="row" layout-align="end center">
+                <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                    <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button>{{::$i18n.block.btn.assign}}</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button>{{::$i18n.block.btn.finish}}</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button>{{::$i18n.block.btn.cancel}}</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
+        </md-expansion-panel-header>
+
+        <md-expansion-panel-content>
+            <div layout="row" layout-align="center center">
+                <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
+
+                    <div ng-repeat="field in contact.data | orderBy:'order'" flex="50"
+                         flex-sm="100"
+                         ng-if="!field.behavior.hidden">
+                        <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
+                    </div>
+
+                </div>
+            </div>
+        </md-expansion-panel-content>
+
+        <md-expansion-panel-footer md-no-sticky>
+
+            <div flex></div>
+
+            <md-button>{{::$i18n.block.btn.assign}}</md-button>
+            <md-button>{{::$i18n.block.btn.finish}}</md-button>
+            <md-button>{{::$i18n.block.btn.cancel}}</md-button>
+
+            <md-button class="md-primary" ng-click="contact.click($event)">{{::$i18n.block.btn.collapse}}</md-button>
+
+        </md-expansion-panel-footer>
+
+    </md-expansion-panel-expanded>
+
+</md-expansion-panel>

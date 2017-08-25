@@ -5,33 +5,29 @@
         <md-tab md-on-select="offCtrl.caseTab.activate()" class="primary">
 
             <md-tab-label>
-                {{::$i18n.page.offers.my}}
+                {{::$i18n.page.payments.all}}
             </md-tab-label>
 
             <md-tab-body>
                 <md-content layout="column" class="color-bg-transparent">
 
-                    <!--TODO --> TEST
+                    <div layout="column" class="card margin-default" flex>
+
+                        <div layout="row" layout-align="start center"
+                             class="card-header list-header padding-default padding-horizontal-2x">
+                            <span flex="5">{{::$i18n.block.task.label}}</span>
+                            <span flex="20">{{::$i18n.block.case.visualID}}</span>
+                            <span flex="20">{{::$i18n.block.task.user}}</span>
+                            <span flex="20">{{::$i18n.block.task.date}}</span>
+                            <span flex="5" class="visibility-hidden"></span>
+                        </div>
+
+                        <md-expansion-panel-group md-component-id="payments-panel-group" multiple></md-expansion-panel-group>
+
+                    </div>
 
                 </md-content>
             </md-tab-body>
-        </md-tab>
-
-        <md-tab class="primary" ng-repeat="tab in offCtrl.taskTabs" md-on-select="offCtrl.tabChanged()">
-
-            <md-tab-label>
-                <!--TODO --> Test
-                <md-icon class="material-icons cursor-pointer font-size-22" ng-click="offCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
-            </md-tab-label>
-
-            <md-tab-body>
-                <md-content layout="column" class="color-bg-transparent">
-
-                    <!--TODO --> TEST
-
-                </md-content>
-            </md-tab-body>
-
         </md-tab>
 
     </md-tabs>
