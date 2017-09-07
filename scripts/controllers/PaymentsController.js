@@ -1,6 +1,6 @@
-define(['angular', '../modules/Main'],
+define(['angular', '../modules/Payments'],
     function (angular) {
-        angular.module('ngMain').controller('PaymentsController',
+        angular.module('ngPayments').controller('PaymentsController',
             ['$log', '$scope', '$timeout', '$dialog', '$i18n',
                 function ($log, $scope, $timeout, $dialog, $i18n) {
                     const self = this;
