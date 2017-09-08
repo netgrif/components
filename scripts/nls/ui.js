@@ -175,7 +175,7 @@ define({
                 transactionsFor: "Transactions for",
                 failedToLoadRolesForProcess: "Failed to load roles for process",
                 noOrganizationFound: "No organization found",
-                emailFieldOfNewUserIsMandatory: "Email field on new user is mandatory",
+                emailFieldOfNewUserIsMandatory: "Email field of new user is mandatory",
                 newUserMustBelongToOneOrMoreOrganization: "New user must belong to one or more organizations",
                 newUserMustHasAssignedOneOrMoreRoles: "New user must has assigned one or more roles",
                 inviteSent: "Invite sent",
