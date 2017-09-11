@@ -145,7 +145,7 @@ define({
         },
         snackbar: {
             case: "Prípad",
-            wasDeleted: "bol/-i/-a odstránený/-é/-á", //TODO
+            wasDeleted: "bol/-i odstránený/-é",
             failedToDelete: "sa nepodarilo odstrániť",
             dataForCase: "Údaje pre prípad",
             failedToLoad: "sa nepodarilo načítať",
@@ -174,11 +174,11 @@ define({
             transactionsFor: "Transakcie pre",
             failedToLoadRolesForProcess: "Nepodarilo sa načítať roli pre proces",
             noOrganizationFound: "Nenašla sa žiadna organizácia",
-            emailFieldOfNewUserIsMandatory: "Email field of new user is mandatory", //TODO
+            emailFieldIsMandatory: "Emailové pole je povinné",
             newUserMustBelongToOneOrMoreOrganization: "Nový používateľ musí mať priradenú aspoň jednu organizáciu",
             newUserMustHasAssignedOneOrMoreRoles: "Nový používateľ musí mať priradenú aspoň jednu rolu",
             inviteSent: "Pozvánka bola zaslaná",
-            inviteFailed: "Pozvánka sa nepodarila zaslať", //TODO
+            inviteFailed: "Pozvánku sa nepodarilo zaslať",
             failedToLoadUsers: "Nepodarilo sa načítať používateľov",
             failedToLoadProcesses: "Nepodarilo sa načítať procesy",
             rolesSuccessfullyAssignedTo: "Roli boli úspešne priradené",

@@ -93,7 +93,7 @@ define(['angular', '../modules/Main'], function (angular) {
 
             self.invite = function () {
                 if (!self.invitedUser.email || self.invitedUser.email === "") {
-                    $snackbar.error($i18n.block.snackbar.emailFieldOfNewUserIsMandatory);
+                    $snackbar.error($i18n.block.snackbar.emailFieldIsMandatory);
                     return;
                 }
                 if (self.invitedUser.organizations.length === 0) {
