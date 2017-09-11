@@ -827,6 +827,9 @@ body {
   line-height: 24px !important;
   padding: 0 12px !important; }
 
+.base md-expansion-panel .md-expansion-panel-footer-container {
+  top: auto !important; }
+
 .base .data-item md-input-container .md-errors-spacer {
   min-height: 0px !important; }
 

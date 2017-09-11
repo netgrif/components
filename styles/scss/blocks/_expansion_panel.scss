@@ -15,3 +15,7 @@ md-expansion-panel-footer .md-expansion-panel-footer-container {
     line-height: 24px !important;
     padding: 0 12px !important;
 }
+
+md-expansion-panel .md-expansion-panel-footer-container {
+    top: auto !important;
+}
