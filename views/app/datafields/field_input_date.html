@@ -9,10 +9,10 @@
     </div>
     <div flex="5"></div>
     <div flex="55" flex-sm="60">
-        <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
+        <md-input-container id="{{'data-'+task.stringId+'-'+field.stringId}}" class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <!-- TODO 23.6.2017 fix label when calendar opens -->
             <label class="placeholder">{{::$i18n.block.data.enterDate}}</label>
-            <md-datepicker id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-model="field.newValue"
+            <md-datepicker ng-model="field.newValue"
                            ng-change="field.changed = true"
                            ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
                            ng-blur="task.save();field.active = false"

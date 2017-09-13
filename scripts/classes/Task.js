@@ -268,16 +268,29 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.prototype.focusNearestRequiredField = function () {
-        this.getData().some(data => {
-            if(data.behavior.required && data.newValue && data.element && data.element.is(":focus"))
+        this.getData().forEach(data => {
+            if(data.element && data.element.is(":focus")) {
                 data.element.blur();
+                data.element.find("*").each((index, el) => {
+                    el.blur();
+                });
+            }
+        });
+        this.getData().some(data => {
+            // if(data.behavior.required && data.newValue && data.element && data.element.is(":focus"))
+            //     data.element.blur();
 
             if (data.behavior.required && !data.newValue &&
                 data.type !== 'boolean' && data.type !== 'file' && data.type !== 'user') {
                 //make data element focus
                 if (data.element) {
-                    if(data.type === 'text' || data.type === 'number' || data.type === 'date')
+                    if(data.type === 'text' || data.type === 'number')
                         data.element.focus();
+                    else if (data.type === 'date') {
+                        //TODO 13.09.2017 dôkladnejšie otestovať otváranie datepickeru
+                        // console.log(data.element.find(".md-datepicker-button"));
+                        // data.element.find(".md-datepicker-button").click();
+                    }
                     else {
                         data.element.click();
                         data.element.focus();
