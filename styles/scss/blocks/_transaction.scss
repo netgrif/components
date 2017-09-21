@@ -4,34 +4,17 @@
 }
 
 // Responsive
-// xxs
-@media all and (max-width: 399px) {
+// xs
+@media all and (max-width: 599px) {
 
     .transaction {
 
         &.active {
             display: block;
-            font-size: 18px;
-            text-align: center;
         }
 
         &:not(active) {
             display: none;
-        }
-    }
-}
-// xs
-@media all and (min-width: 400px) and (max-width: 599px) {
-
-    .transaction {
-        display: block;
-
-        &.active {
-            font-size: 18px;
-        }
-
-        &:not(active) {
-            font-size: 12px;
         }
     }
 }

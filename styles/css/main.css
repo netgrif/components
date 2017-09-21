@@ -1447,25 +1447,11 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   font-size: 18px;
 }
 
-@media all and (max-width: 399px) {
+@media all and (max-width: 599px) {
   .base .transaction.active {
     display: block;
-    font-size: 18px;
-    text-align: center;
   }
   .base .transaction:not(active) {
     display: none;
-  }
-}
-
-@media all and (min-width: 400px) and (max-width: 599px) {
-  .base .transaction {
-    display: block;
-  }
-  .base .transaction.active {
-    font-size: 18px;
-  }
-  .base .transaction:not(active) {
-    font-size: 12px;
   }
 }
