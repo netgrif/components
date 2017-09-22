@@ -1,17 +1,17 @@
 <div ng-cloak layout="column" class="layout-rh-100-min-769">
 
-    <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default">
+    <div layout="row" layout-align="start center" class="card padding-2x margin-default">
 
-        <div layout="row" layout-align="start center">
+        <div flex-gt-sm="30" flex-sm flex-xs layout="row" layout-align="start center">
             <i class="material-icons color-fg-accent-50">search</i>
 
-            <md-input-container class="margin-0">
+            <md-input-container class="margin-0 height-52px">
                 <label>{{::$i18n.block.input.search}}</label>
-                <input ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+                <input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
             </md-input-container>
         </div>
 
-        <div flex></div>
+        <div flex-gt-sm flex-sm-none flex-xs-none></div>
 
         <md-button class="md-fab md-raised md-mini md-primary" ng-click="contCtrl.caseTab.openNewCaseDialog($i18n.page.contacts.this)">
             <md-tooltip md-direction="left">{{::$i18n.block.add.createContact}}</md-tooltip>
