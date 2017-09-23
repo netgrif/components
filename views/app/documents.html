@@ -1,0 +1,160 @@
+<div ng-cloak layout="column"  class="no-overflow layout-rh-100">
+    <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default">
+
+        <div layout="row" layout-align="start center">
+            <i class="material-icons color-fg-accent-50">search</i>
+
+            <md-input-container class="margin-0">
+                <label>{{::$i18n.block.input.search}}</label>
+                <input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+            </md-input-container>
+        </div>
+
+        <div flex></div>
+
+        <md-button class="md-fab md-raised md-mini md-primary">
+            <md-tooltip md-direction="left">{{::$i18n.block.add.createDocument}}</md-tooltip>
+            <md-icon class="material-icons">add</md-icon>
+        </md-button>
+
+    </div>
+
+    <div layout="row" flex>
+
+        <div layout="column" flex="60">
+
+            <md-grid-list class="margin-default"
+                          md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+                          md-row-height-gt-md="1:1" md-row-height="2:2"
+                          md-gutter="16px" md-gutter-gt-sm="16px">
+
+                <md-grid-tile class="card document" ng-click="docCtrl.pdfDialog()">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Urokove sadzby</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Urokove sadzby</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="card document">
+                    <div layout-align="center center">
+                        <i class="material-icons document-image">picture_as_pdf</i>
+                    </div>
+                    <md-grid-tile-footer>
+                        <h3>Faktura Nay</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+            </md-grid-list>
+
+        </div>
+
+        <div layout="column" flex="40">
+            <div class="card margin-default" flex>
+                <div layout="row" class="card-header padding-default">
+                    <a>{{::$i18n.page.documents.preview}}</a>
+                </div>
+                <!--<div >-->
+                    <!--&lt;!&ndash;<iframe  title="PDF in an i-Frame" src="../../assets/test.pdf#zoom=50" ></iframe>&ndash;&gt;-->
+                    <!--<object data="../../assets/test.pdf#zoom=60" type="application/pdf" style="position: relative; height: 100%; width: 100%;">-->
+                        <!--<a href="../../assets/test.pdf#zoom=60">test.pdf</a>-->
+                    <!--</object>-->
+                    <iframe src="/views/ViewerJS/index.html#../../assets/test.pdf" style="position: relative; height: 100%; width: 100%;" allowfullscreen webkitallowfullscreen></iframe>
+                <!--</div>-->
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

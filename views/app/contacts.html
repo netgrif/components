@@ -1,0 +1,60 @@
+<div ng-cloak layout="column" class="layout-rh-100-min-769">
+
+    <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default">
+
+        <div layout="row" layout-align="start center">
+            <i class="material-icons color-fg-accent-50">search</i>
+
+            <md-input-container class="margin-0">
+                <label>{{::$i18n.block.input.search}}</label>
+                <input ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+            </md-input-container>
+        </div>
+
+        <div flex></div>
+
+        <md-button class="md-fab md-raised md-mini md-primary" ng-click="contCtrl.caseTab.openNewCaseDialog($i18n.page.contacts.this)">
+            <md-tooltip md-direction="left">{{::$i18n.block.add.createContact}}</md-tooltip>
+            <md-icon class="material-icons">add</md-icon>
+        </md-button>
+
+    </div>
+
+
+    <div layout="column" class="card margin-default" flex>
+
+        <div layout="row" layout-align="start center" class="card-header padding-2x padding-right-66px">
+            <span flex="5">{{::$i18n.block.task.type}}</span>
+            <span flex="20">{{::$i18n.block.task.name}}</span>
+            <span flex="20">{{::$i18n.block.task.surname}}</span>
+            <span flex="20">{{::$i18n.block.task.phone}}</span>
+            <span flex="20">{{::$i18n.block.task.email}}</span>
+            <!-- To create alphabet spacer -->
+            <span flex="5" class="visibility-hidden"></span>
+        </div>
+
+        <div layout="row" class=" margin-top-0" flex>
+
+            <div layout="column" class="overflow-y-auto padding-right-default" flex>
+
+                <div layout="row" layout-align="start center" class="color-fg-accent-50 padding-default padding-horizontal-2x" flex="none"
+                ng-repeat-start="groupId in contCtrl.alphabet">
+                    <h2 flex>{{groupId}}</h2>
+                </div>
+
+                <md-expansion-panel-group md-component-id="'contact-group-'+groupId" eval-attr-as-expr="mdComponentId" multiple></md-expansion-panel-group>
+
+                <md-divider class="color-bg-primary-500" ng-repeat-end></md-divider>
+
+            </div>
+
+            <div layout="column" layout-align="space-between center" class="padding-default padding-left-2x">
+                <span ng-repeat="char in contCtrl.alphabet">{{char}}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

@@ -1,0 +1,34 @@
+.card {
+    background-color: $color-black-op-40;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    overflow: hidden;
+
+    &-op-50 {
+        background-color: $color-black-op-50;
+    }
+
+    &-op-60 {
+        background-color: $color-black-op-60;
+    }
+
+    &-logo {
+        padding: $dim-default;
+        margin: $dim-default;
+        background-color: $color-grey-50;
+        border-radius: $border-radius;
+        box-shadow: $shadow;
+    }
+
+    &-header {
+        background-color: $color-black-op-60;
+        color: $color-grey-50;
+    }
+
+    &-welcome {
+        background-color: $color-login-card !important;
+        box-shadow: none !important;
+        width: 600px;
+        margin-bottom: 230px;
+    }
+}

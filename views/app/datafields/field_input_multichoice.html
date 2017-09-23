@@ -1,0 +1,31 @@
+<div class="data-item" layout="row" layout-align="start center" ng-if="!field.behavior.hidden">
+    <div flex="35">
+        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
+            {{field.name}}
+            <md-tooltip ng-if="field.description">
+                {{field.description}}
+            </md-tooltip>
+        </span>
+    </div>
+    <div flex="5"></div>
+    <div flex="55">
+        <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
+            <label class="placeholder">{{field.placeholder}}</label>
+            <md-select id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-model="field.newValue"
+                       multiple
+                       ng-change="field.changed = true"
+                       ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
+                       ng-blur="task.save()"
+                       md-on-open="field.active = true"
+                       md-on-close="field.active = false"
+                       ng-required="field.behavior.required"
+                       aria-label="Select multiple choices">
+                <md-option ng-repeat="choice in field.choices" ng-value="choice">
+                    {{choice}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div flex="5"></div>
+    {{::field.bindElement()}}
+</div>

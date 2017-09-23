@@ -1,0 +1,44 @@
+<div class="data-item" layout="row" layout-align="start center">
+    <div flex="35">
+        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
+            {{field.name}}
+            <md-tooltip ng-if="field.description">
+                {{field.description}}
+            </md-tooltip>
+        </span>
+    </div>
+    <div flex="5"></div>
+    <div flex="55">
+        <!--id="'data-'+task.stringId+'-'+field.stringId" eval-attr-as-expr="id"-->
+        <md-input-container  class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
+            <label class="placeholder">{{field.placeholder}}</label>
+            <input id="{{'data-'+task.stringId+'-'+field.stringId}}" type="text" ng-if="field.subType === 'simple'"
+                   ng-model="field.newValue"
+                   ng-change="field.changed = true; field.newValue === undefined ? field.newValue=null : field.newValue; field.validate(field.newValue);"
+                   ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
+                   ng-blur="task.save();field.active = false"
+                   ng-focus="field.active = true"
+                   ng-required="field.behavior.required"
+                   md-maxlength="field.maxLength"
+                   ng-keypress="$event.which === 13 && $event.target.blur()"
+                   aria-label="Enter text">
+            <textarea id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-if="field.subType === 'area'"
+                      rows="1" max-rows="4"
+                      ng-model="field.newValue"
+                      ng-change="field.changed = field.value !== field.newValue"
+                      ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
+                      ng-blur="task.save()"
+                      ng-required="field.behavior.required"
+                      md-maxlength="field.maxLength"
+                      aria-label="Enter text"></textarea>
+            <div ng-messages="field.validationErrors" ng-show="field.newValue">
+                <div ng-message="length" class="color-fg-warning">{{::$i18n.block.validation.textMustBeAtMost + " " + field.maxLength + " " + $i18n.block.word.characters + " " + $i18n.block.word.long}}</div>
+                <div ng-message="email" class="color-fg-warning">{{::$i18n.block.validation.textInEmailFormat + " ( "+field.formating+" )"}}</div>
+                <div ng-message="telnumber" class="color-fg-warning">{{::$i18n.block.validation.textInTelFormat + " ( " + field.formating + " )"}}</div>
+                <div ng-message="regex" class="color-fg-warning">{{::$i18n.block.validation.textInWrongFormat}}</div>
+            </div>
+        </md-input-container>
+    </div>
+    <div flex="5"></div>
+    {{::field.bindElement()}}
+</div>

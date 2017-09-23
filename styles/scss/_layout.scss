@@ -1,0 +1,100 @@
+// Displays
+.display {
+
+    &-block {
+        display: block;
+    }
+
+    &-none {
+        display: none;
+    }
+}
+
+// Positions
+.position {
+
+    &-relative {
+        position: relative !important;
+    }
+
+    &-absolute {
+        position: absolute !important;
+    }
+
+    &-fixed {
+        position: fixed !important;
+    }
+}
+
+// Layout
+.layout {
+
+    &-vh {					// Window dims
+
+        &-100 {
+            height: 100vh;
+        }
+    }
+
+    &-vw {
+
+        &-100 {
+            width: 100vw;
+        }
+    }
+
+    &-rh {					// Relative dims
+
+        &-100 {
+            height: 100%;
+
+            &-min {
+
+                &-769 {
+                    height: auto;
+                }
+            }
+        }
+    }
+
+    &-rw {
+
+        &-100 {
+            width: 100%;
+        }
+    }
+
+    &-sh {					// Static dims
+
+        &-300 {
+            height: 300px;
+        }
+    }
+
+    &-sw {
+
+        &-300 {
+            width: 300px;
+        }
+    }
+}
+
+// Responsive (By height)
+@media all and (min-height: 769px) {
+
+    .layout {
+
+        &-rh {					// Relative height
+
+            &-100 {
+
+                &-min {
+
+                    &-769 {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,128 @@
+<div ng-cloak>
+
+	<md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="offCtrl.activeTabIndex">
+
+		<md-tab md-on-select="offCtrl.caseTab.activate()" class="primary">
+
+			<md-tab-label>
+				{{::$i18n.page.offers.my}}
+			</md-tab-label>
+
+			<md-tab-body>
+				<md-content layout="column" class="color-bg-transparent">
+
+					<div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default" flex>
+
+						<div layout="row" layout-align="start center">
+							<i class="material-icons color-fg-accent-50">search</i>
+
+							<md-input-container class="margin-0">
+								<label>{{::$i18n.block.input.search}}</label>
+								<input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+							</md-input-container>
+						</div>
+
+						<div flex></div>
+
+						<md-button class="md-fab md-raised md-mini md-primary" ng-click="offCtrl.caseTab.openNewCaseDialog($i18n.page.offers.this)">
+							<md-tooltip md-direction="left">{{::$i18n.block.add.createOffer}}</md-tooltip>
+							<md-icon class="material-icons">add</md-icon>
+						</md-button>
+
+					</div>
+
+					<div layout="column" class="card margin-default" flex>
+
+						<div layout="row" layout-align="start center" class="card-header list-header padding-default padding-horizontal-2x">
+							<span flex="10">{{::$i18n.block.case.label}}</span>
+							<span flex="20">{{::$i18n.block.case.visualID}}</span>
+							<span flex="25">{{::$i18n.block.case.title}}</span>
+							<span flex ng-repeat="data in offCtrl.caseTab.cases[0].immediateData | orderBy:'order'">
+								<md-tooltip md-direction="top">{{data.description}}</md-tooltip>
+								{{data.name}}
+							</span>
+							<span flex></span>
+							<span flex="5" class="visibility-hidden"></span>
+						</div>
+
+						<div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
+							 ng-repeat-start="useCase in offCtrl.caseTab.cases | orderBy:'strindId'"
+							 ng-click="useCase.open()">
+							<i flex="10" class="material-icons {{::useCase.color}}">{{useCase.icon ? useCase.icon : 'label'}}</i>
+							<span flex="20">{{::useCase.visualId}}</span>
+							<span flex="25">{{::useCase.title}}</span>
+							<span flex ng-repeat="data in useCase.immediateData | orderBy:'order'">
+								{{data.value}}
+							</span>
+							<span flex></span>
+							<md-menu flex="5" layout="row" layout-align="start center">
+								<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+									<md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
+								</md-button>
+								<md-menu-content>
+									<md-menu-item>
+										<md-button ng-click="useCase.delete()">{{$i18n.block.btn.delete}}</md-button>
+									</md-menu-item>
+								</md-menu-content>
+							</md-menu>
+						</div>
+
+						<md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
+
+					</div>
+
+					<div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-default"
+						 in-view="$inview&&offCtrl.caseTab.load(true)"
+						 in-view-options="{ throttle: 0 }">
+						<md-progress-circular md-mode="indeterminate" ng-disabled="!offCtrl.caseTab.loading" class="md-primary" md-diameter="50"></md-progress-circular>
+					</div>
+
+				</md-content>
+			</md-tab-body>
+		</md-tab>
+
+		<md-tab class="primary" ng-repeat="tab in offCtrl.taskTabs" md-on-select="offCtrl.tabChanged()">
+
+			<md-tab-label>
+				{{::tab.useCase.title}}
+				<md-icon class="material-icons cursor-pointer font-size-22" ng-click="offCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
+			</md-tab-label>
+
+			<md-tab-body>
+				<md-content layout="column" class="color-bg-transparent">
+
+					<div layout="column" class="card padding-vertical-2x padding-horizontal-2x margin-default margin-top-default">
+
+						<div layout="row" layout-align="space-between center" flex>
+
+                            <span ng-repeat="trans in tab.transactions | orderBy:'stringId'"
+                                  ng-class=" trans.active ? 'active' : '' " class="font-size-18">
+								{{::trans.title}}
+							</span>
+
+						</div>
+
+					</div>
+
+					<div layout="row" class="card color-bg-black-op-40 margin-default padding-2x">
+						<span flex="10">{{::$i18n.block.task.label}}</span>
+						<span flex="40">{{::$i18n.block.task.offer}}</span>
+						<span flex="40">{{::$i18n.block.task.title}}</span>
+						<span flex="10">{{::$i18n.block.task.status}}</span>
+					</div>
+
+					<md-expansion-panel-group md-component-id="'tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple>
+					</md-expansion-panel-group>
+
+					<div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-2x">
+						<md-progress-circular md-mode="indeterminate" ng-disabled="!tab.loading" class="md-primary" md-diameter="50"></md-progress-circular>
+					</div>
+
+				</md-content>
+			</md-tab-body>
+
+		</md-tab>
+
+	</md-tabs>
+
+</div>

@@ -1,0 +1,90 @@
+// Global changes
+md-dialog {
+
+    md-select-value {
+        color: $color-black-op-87 !important;
+    }
+
+    :not(md-expansion-panel-group) {
+
+        input, label {
+            color: $color-black-op-87 !important;
+            font-weight: 300;
+        }
+    }
+
+    md-expansion-panel-group {
+
+        input {
+            color: $color-grey-50 !important;
+        }
+    }
+
+    &:not(.md-input-invalid) {
+
+        &.md-input-focused {
+
+            label {
+                color: $color-black-op-87 !important;
+                font-weight: 300;
+            }
+        }
+    }
+}
+
+.input-container-fixed-height-padding-0 {
+    height: 30px !important;
+    padding: 0 !important;
+}
+
+md-input-container {
+
+    label.placeholder {
+        color: $color-grey-400 !important;
+    }
+
+    input, label {
+        color: $color-grey-50 !important;
+        font-weight: 300;
+    }
+
+    &:not(.md-input-invalid) {
+
+        &.md-input-focused {
+
+            label {
+                color: $color-grey-50;
+                font-weight: 300;
+            }
+        }
+    }
+}
+
+md-switch span {
+    color: $color-grey-50;
+    font-weight: 300;
+}
+
+.md-datepicker-calendar-pane {
+
+    span {
+        color: $color-black-op-87 !important;
+    }
+
+}
+
+.md-datepicker-button {
+
+    md-icon {
+        color: $color-grey-50 !important;
+    }
+}
+
+.md-calendar-date-selection-indicator {
+    color: $color-black-op-87 !important;
+}
+
+textarea {
+    color: $color-grey-50;
+    font-weight: 300;
+}

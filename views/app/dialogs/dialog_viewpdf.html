@@ -1,0 +1,16 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{opt.title}}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeDialog()">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <object data="../../assets/test.pdf#zoom=60" type="application/pdf" style="position: relative; height: 100%; width: 100%;">
+            <a href="../../assets/test.pdf#zoom=60">test.pdf</a>
+        </object>
+    </md-dialog-content>
+</md-dialog>

@@ -1,0 +1,104 @@
+// Global HTML5 elements
+body {
+	min-height: 100%;
+}
+
+// Style Google chrome scrollbars
+@include scrollbars(.5em, $color-primary-op-50, $color-black-op-30);
+
+// Global variables
+$shadow:                        2px 2px 5px $color-black-op-60;
+
+.shadow {
+	box-shadow: $shadow;
+}
+
+// Custom global classes
+.stop-scrolling {
+	height: 100%;
+	overflow: hidden;
+}
+
+// TODO 22.6.2017 replace usage with .overflow-hidden
+.no-overflow{
+	overflow: hidden;
+}
+
+.overflow {
+
+	&-hidden {
+		overflow: hidden;
+	}
+
+	&-auto {
+		overflow: auto;
+	}
+
+	&-scroll {
+		overflow: scroll;
+	}
+
+	&-visible {
+		overflow: visible;
+	}
+
+	&-x {
+
+		&-hidden {
+			overflow-x: hidden;
+		}
+
+		&-auto {
+			overflow-x: auto;
+		}
+
+		&-scroll {
+			overflow-x: scroll;
+		}
+
+		&-visible {
+			overflow-x: visible;
+		}
+	}
+
+	&-y {
+
+		&-hidden {
+			overflow-y: hidden;
+		}
+
+		&-auto {
+			overflow-y: auto;
+		}
+
+		&-scroll {
+			overflow-y: scroll;
+		}
+
+		&-visible {
+			overflow-y: visible;
+		}
+	}
+}
+
+.cursor {
+
+	&-default {
+		cursor: default;
+	}
+
+	&-pointer {
+		cursor: pointer;
+	}
+}
+
+.visibility {
+
+	&-visible {
+		visibility: visible;
+	}
+
+	&-hidden {
+		visibility: hidden;
+	}
+}

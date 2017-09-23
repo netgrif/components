@@ -1,0 +1,106 @@
+@keyframes spinner-right {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes spinner-left {
+	to {
+		transform: rotate(-360deg);
+	}
+}
+
+.spinner {
+
+	&:before {
+		content: 'Loading';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+	}
+
+	&:not(:required):before {
+		content: '';
+		border-radius: 50%;
+		border-style: solid;
+		border-color: transparent;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+	}
+}
+
+.orbit1 {
+	height: 50px;
+	width: 50px;
+
+	&:before {
+		height: 50px;
+		width: 50px;
+		margin-top: -25px;
+		margin-left: -25px;
+	}
+
+	&:not(:required):before {
+		border-width: 5px;
+		border-top-color: white;
+		animation-name: spinner-left;
+		animation-duration: .7s;
+	}
+}
+
+.orbit2 {
+	height: 100px;
+	width: 100px;
+
+	&:before {
+		height: 100px;
+		width: 100px;
+		margin-top: -50px;
+		margin-left: -50px;
+	}
+
+	&:not(:required):before {
+		border-width: 7px;
+		border-top-color: $color-grey-900;
+		animation-name: spinner-right;
+		animation-duration: .9s;
+	}
+}
+
+.orbit3 {
+	height: 150px;
+	width: 150px;
+
+	&:before {
+		height: 150px;
+		width: 150px;
+		margin-top: -75px;
+		margin-left: -75px;
+	}
+
+	&:not(:required):before {
+		border-width: 5px;
+		border-top-color: white;
+		animation-name: spinner-left;
+		animation-duration: .8s;
+	}
+}
+
+.orbit4 {
+	height: 200px;
+	width: 200px;
+
+	&:before {
+		height: 200px;
+		width: 200px;
+		margin-top: -100px;
+		margin-left: -100px;
+	}
+
+	&:not(:required):before {
+		border-width: 7px;
+		border-top-color: $color-grey-900;
+		animation-name: spinner-left;
+		animation-duration: 1s;
+	}
+}

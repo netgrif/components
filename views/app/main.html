@@ -1,0 +1,164 @@
+<div ng-cloak class="layout-vh-100 color-bg-transparent" layout="column">
+
+    <section layout="row" layout-align="left center" class="margin-horizontal-2x margin-top-2x">
+
+        <a href="/" class="card-logo">
+            <img hide-sm hide-xs class="logo" src="../../assets/logo.svg" alt="logo">
+            <img hide show-sm show-xs class="logo" src="../../assets/logo_small.svg" alt="logo">
+        </a>
+
+        <md-menu-bar layout="row" layout-align="center center" class="card card-op-60 margin-default toolbar" flex>
+            <div flex></div>
+            <h1>BROKER's <strong>PORTAL</strong></h1>
+            <div flex></div>
+            <md-menu class="toolbar-menu">
+
+                <md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center" class="btn-menu" md-menu-origin>
+                    {{$user.name}}
+                    <i class="material-icons">account_circle</i>
+                </md-button>
+
+                <md-menu-content width="3">
+
+                    <md-menu-item>
+                        <md-menu class="toolbar-submenu">
+
+                            <md-button ng-click="$mdOpenMenu()">
+                                <div class="btn-menu">
+                                    <md-icon class="material-icons">language</md-icon>
+                                    <span>{{::$i18n.block.mainMenu.lang.this}}</span>
+                                </div>
+                            </md-button>
+
+                            <md-menu-content width="2">
+
+                                <md-menu-item>
+                                    <md-button ng-click="$i18n.change('en-us')" layout="row"
+                                               layout-align="space-bettween center">
+                                        <span>{{::$i18n.block.mainMenu.lang.en}}</span>
+                                        <i ng-if="$i18n.current() === 'en-us'" class="material-icons">keyboard_arrow_left</i>
+                                    </md-button>
+                                </md-menu-item>
+
+                                <md-menu-item>
+                                    <md-button ng-click="$i18n.change('sk-sk')" layout="row"
+                                               layout-align="space-bettween center">
+                                        <span>{{::$i18n.block.mainMenu.lang.sk}}</span>
+                                        <i ng-if="$i18n.current() === 'sk-sk'" class="material-icons">keyboard_arrow_left</i>
+                                    </md-button>
+                                </md-menu-item>
+
+                            </md-menu-content>
+
+                        </md-menu>
+                    </md-menu-item>
+
+                    <md-menu-item>
+                        <md-button ng-click="mainCtrl.logout()">
+                            <md-icon class="material-icons">exit_to_app</md-icon>
+                            {{::$i18n.block.mainMenu.logout}}
+                        </md-button>
+                    </md-menu-item>
+
+                </md-menu-content>
+
+            </md-menu>
+        </md-menu-bar>
+
+    </section>
+
+    <section layout="row" flex class="color-bg-transparent margin-horizontal-2x margin-bottom-2x">
+
+        <div layout="column">
+
+            <nav layout="column" class="card margin-default sidenav" flex>
+
+                <md-button href="/dashboard" layout="row" layout-align="start center" ng-class="{active: ('dashboard' | routeSegmentContains)}">
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">dashboard</i>
+                    </div>
+                    <span flex hide show-gt-sm>{{$i18n.page.dashboard.this}}</span>
+                </md-button>
+
+                <md-button href="/offers" ng-class="{active: ('offers' | routeSegmentContains)}" layout="row" layout-align="start center">
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">content_paste</i>
+                    </div>
+                    <span flex hide show-gt-sm>{{::$i18n.page.offers.this}}</span>
+                </md-button>
+
+                <md-button href="/contacts" ng-class="{active: ('contacts' | routeSegmentContains)}" layout="row" layout-align="start center">
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">contacts</i>
+                    </div>
+                    <span flex hide show-gt-sm>{{::$i18n.page.contacts.this}}</span>
+                </md-button>
+
+                <!--<md-button href="/documents" ng-class="{active: ('documents' | routeSegmentContains)}" layout="row" layout-align="start center">-->
+                    <!--<div layout="row" layout-align="center center" class="icon-wrapper">-->
+                        <!--<i class="material-icons">description</i>-->
+                    <!--</div>-->
+                    <!--<span flex hide show-gt-sm>{{::$i18n.page.documents.this}}</span>-->
+                <!--</md-button>-->
+
+                <md-button href="/contracts" ng-class="{active: ('contracts' | routeSegmentContains)}" layout="row" layout-align="start center">
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <span flex hide show-gt-sm>{{::$i18n.page.contracts.this}}</span>
+                </md-button>
+
+                <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" href="/console"
+                           ng-class="{active: ('console' | routeSegmentContains)}" layout="row"
+                           layout-align="left center">
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">developer_board</i>
+                    </div>
+                    <span flex hide show-gt-sm>{{::$i18n.page.console.this}}</span>
+                </md-button>
+
+
+                <div class="sidenav-add" flex>
+
+                    <div class="left-panel"></div>
+
+                    <div class="position-fixed display-block" hide show-gt-sm>
+                        <md-fab-speed-dial md-direction="down" class="md-scale">
+
+                            <md-fab-trigger>
+                                <md-button class="md-fab md-raised md-mini md-primary">
+                                    <md-icon class="material-icons">add</md-icon>
+                                </md-button>
+                            </md-fab-trigger>
+
+                            <md-fab-actions>
+                                <md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('offers')">
+                                    <md-tooltip md-direction="right">{{::$i18n.block.add.createOffer}}</md-tooltip>
+                                    <md-icon class="material-icons">content_paste</md-icon>
+                                </md-button>
+                                <md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('contacts')">
+                                    <md-tooltip md-direction="right">{{::$i18n.block.add.createContact}}</md-tooltip>
+                                    <md-icon class="material-icons">contacts</md-icon>
+                                </md-button>
+                                <!--<md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('documents')">-->
+                                    <!--<md-tooltip md-direction="right">{{::$i18n.block.add.createDocument}}</md-tooltip>-->
+                                    <!--<md-icon class="material-icons">description</md-icon>-->
+                                <!--</md-button>-->
+                            </md-fab-actions>
+
+                        </md-fab-speed-dial>
+                    </div>
+
+                </div>
+
+            </nav>
+
+        </div>
+
+        <md-content layout-wrap flex class="color-bg-transparent">
+            <div app-view-segment="1" onload="mainCtrl.startLoadingData()" class="layout-rh-100"></div>
+        </md-content>
+
+    </section>
+
+</div>

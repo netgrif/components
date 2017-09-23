@@ -1,0 +1,56 @@
+<div class="data-item" layout="row" layout-align="start center">
+    <div flex="35">
+        <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
+            {{field.name}}
+            <md-tooltip ng-if="field.description">
+                {{field.description}}
+            </md-tooltip>
+        </span>
+    </div>
+    <div flex="5"></div>
+    <div flex="55" layout="row" layout-align="space-between center">
+        <div layout="row" layout-align="start center">
+            <md-icon class="material-icons margin-right-2x" ng-if="!field.newValue || field.generated">insert_drive_file</md-icon>
+            <md-icon class="material-icons margin-right-2x color-fg-warning" ng-if="field.newFile && !field.uploaded">
+                <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileNotUploaded}}</md-tooltip>
+                warning
+            </md-icon>
+            <md-icon class="material-icons margin-right-2x color-fg-primary-500" ng-if="field.newFile && field.uploaded">
+                <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
+                done
+            </md-icon>
+            <span class="text-overflow-dots">{{field.newValue ? field.newValue : (field.generated ? field.defaultValue : $i18n.block.data.noFile) }}</span>
+        </div>
+        <md-menu class="width-24px">
+            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                <md-icon class="material-icons">more_vert</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item ng-if="task.user.email == $user.login && field.behavior.editable">
+                    <md-button class="file-chooser" layout="row" layout-align="start center">
+                        <input type="file" id="file"
+                               file-model="field.file"
+                               file-change-callback="field.fileChanged"
+                               file-change-arg="field"
+                               ng-required="field.behavior.required"
+                               aria-label="Choose file">
+                        <label for="file" class="placeholder">
+                            <span class="padding-horizontal-2x">{{::$i18n.block.data.newFile}}</span>
+                        </label>
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item ng-if="field.newFile && !field.uploaded">
+                    <md-button ng-click="field.upload()">
+                        {{::$i18n.block.data.upload}}
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item ng-if="(field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)">
+                    <md-button ng-click="field.download()">
+                        {{::$i18n.block.data.download}}
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div flex="5"></div>
+</div>

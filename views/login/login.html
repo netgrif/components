@@ -1,0 +1,36 @@
+<div class="layout-rh-100 background-login">
+	<div ng-cloak layout="column" layout-align="center center" class="layout-vh-100">
+		<md-card layout="row" layout-xs="column" layout-align="center center" layout-padding class="card-welcome">
+
+			<div flex="50">
+				<img ng-src="../../../assets/logo.svg">
+			</div>
+
+			<div flex="50">
+				<form ng-submit="loginCtrl.login()">
+
+					<md-input-container class="md-block">
+						<md-icon class="material-icons color-fg-accent-50">email</md-icon>
+						<input ng-model="loginCtrl.credentials.username" type="email"
+							   placeholder="{{::$i18n.page.signIn.email}}" ng-required="true">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<md-icon class="material-icons color-fg-accent-50">lock</md-icon>
+						<input ng-model="loginCtrl.credentials.password" type="password" placeholder="{{::$i18n.page.signIn.psw}}"
+							   ng-required="true">
+					</md-input-container>
+
+					<md-card-actions layout="row" layout-xs="column" layout-align="space-between center">
+						<a class="text-no-decor" flex-order-xs="1" href="#" md-colors="{color: 'accent-100'}"
+						   ng-click="loginCtrl.fireInfoSnackbar($i18n.block.snackbar.featureWillBeAvailableSoon)">{{::$i18n.page.signIn.forgotPsw}}</a>
+						<md-button type="submit" flex-order-xs="-1" md-colors="{background: 'primary-500'}">{{::$i18n.page.signIn.submit}}
+						</md-button>
+					</md-card-actions>
+
+				</form>
+			</div>
+
+		</md-card>
+	</div>
+</div>
