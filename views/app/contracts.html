@@ -11,12 +11,12 @@
             <md-tab-body>
                 <md-content layout="column" class="color-bg-transparent">
 
-                    <div layout="row" layout-align="start center" class="card padding-2x margin-default" flex>
+                    <div layout="row" layout-align="start center" class="card padding-horizontal-2x padding-vertical-default margin-default">
 
-                        <div flex-gt-sm="30" flex-sm flex-xs layout="row" layout-align="start center">
+                        <div flex-gt-sm="30" flex-sm flex-xs layout="row" layout-align="start center" class="height-52px">
                             <i class="material-icons color-fg-accent-50">search</i>
 
-                            <md-input-container class="margin-0 height-52px">
+                            <md-input-container class="margin-0">
                                 <label>{{::$i18n.block.input.search}}</label>
                                 <input type="text" ng-model="contractCtrl.search" class="margin-bottom-negative-15px">
                             </md-input-container>
