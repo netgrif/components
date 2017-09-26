@@ -2,14 +2,14 @@
 
     <md-expansion-panel-collapsed>
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="task.click($event)">
-            <div ng-if="task.caseColor" class="{{task.caseColor}}" flex="10" layout="row" layout-align="start center">
+            <div ng-if="task.caseColor" flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center" class="{{task.caseColor}}">
                 <i class="material-icons" ng-repeat="icon in task.getIcons()">{{icon}}</i>
             </div>
             <!--<i ng-if="task.caseColor" flex="10" class="material-icons {{task.caseColor}}">{{task.icon ? task.icon : task.tab.useCase.icon ? task.tab.useCase.icon : 'label'}}</i>-->
-            <span flex="40">{{task.caseTitle}}</span>
-            <span flex="40">{{task.title}}</span>
-            <i ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
-            <div ng-if="task.loading" flex="10">
+            <span hide show-gt-sm flex="40">{{task.caseTitle}}</span>
+            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{task.title}}</span>
+            <i hide-xs ng-if="task.finishDate && !task.loading" flex="10" class="material-icons color-fg-primary-500">done</i>
+            <div hide-xs ng-if="task.loading" flex="10">
                 <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30"></md-progress-circular>
             </div>
         </div>
@@ -18,14 +18,14 @@
     <md-expansion-panel-expanded>
 
         <md-expansion-panel-header ng-click="task.click($event)">
-            <div ng-if="task.caseColor" class="{{task.caseColor}}" flex="10" layout="row" layout-align="start center">
+            <div ng-if="task.caseColor" flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center" class="{{task.caseColor}}">
                 <i class="material-icons" ng-repeat="icon in task.getIcons()">{{icon}}</i>
             </div>
             <!--<i ng-if="task.caseColor" flex="10" class="material-icons {{task.caseColor}}">label</i>-->
-            <span flex="40">{{task.caseTitle}}</span>
-            <span flex="40">{{task.title}}</span>
-            <i ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
-            <div ng-if="task.loading" flex="10">
+            <span hide show-gt-sm flex="40">{{task.caseTitle}}</span>
+            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{task.title}}</span>
+            <i hide-xs ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
+            <div hide-xs ng-if="task.loading" flex="10">
                 <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30"></md-progress-circular>
             </div>
         </md-expansion-panel-header>
