@@ -11,28 +11,28 @@
 
         <div layout="row" layout-align="start center"
              class="card-header list-header padding-default padding-horizontal-2x">
-            <span flex="10">{{::$i18n.block.case.label}}</span>
-            <span flex="20">{{::$i18n.block.case.visualID}}</span>
-            <span flex="25">{{::$i18n.block.case.title}}</span>
+            <span flex-gt-xs="10" flex-xs="20">{{::$i18n.block.case.label}}</span>
+            <span flex="20" hide show-gt-sm>{{::$i18n.block.case.visualID}}</span>
+            <span flex-gt-sm="25" flex-sm flex-xs>{{::$i18n.block.case.title}}</span>
             <span flex ng-repeat="data in dashCtrl.offers[0].immediateData | orderBy:'order'">
                 <md-tooltip md-direction="top">{{data.description}}</md-tooltip>
                 {{data.name}}
             </span>
-            <span flex></span>
+            <span flex-gt-sm flex-sm-none flex-xs-none></span>
             <span flex="5" class="visibility-hidden"></span>
         </div>
 
         <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
              ng-repeat-start="offer in dashCtrl.offers | orderBy:'strindId'"
              ng-click="dashCtrl.openCase('offers',offer)">
-            <i flex="10" class="material-icons {{::offer.color}}">{{offer.icon ? offer.icon : 'label'}}</i>
-            <span flex="20">{{::offer.visualId}}</span>
-            <span flex="25">{{::offer.title}}</span>
+            <i flex-gt-xs="10" flex-xs="20" class="material-icons {{::offer.color}}">{{offer.icon ? offer.icon : 'label'}}</i>
+            <span flex="20" hide show-gt-sm>{{::offer.visualId}}</span>
+            <span flex-gt-sm="25" flex-sm flex-xs>{{::offer.title}}</span>
             <span flex ng-repeat="data in offer.immediateData | orderBy:'order'">
                 {{data.value}}
             </span>
-            <span flex></span>
-            <!--<md-menu flex="5" layout="row" layout-align="start center">-->
+            <span flex-gt-sm flex-sm-none flex-xs-none></span>
+            <!--<md-menu flex-gt-sm="5" flex-sm="10" flex-xs="20" layout="row" layout-align="center center">-->
                 <!--<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>-->
                     <!--<md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>-->
                 <!--</md-button>-->
@@ -75,7 +75,7 @@
                 <!--{{data.value}}-->
             <!--</span>-->
             <!--<span flex></span>-->
-            <!--&lt;!&ndash;<md-menu flex="5" layout="row" layout-align="start center">&ndash;&gt;-->
+            <!--&lt;!&ndash;<md-menu flex-gt-sm="5" flex-sm="10" flex-xs="20" layout="row" layout-align="center center">&ndash;&gt;-->
                 <!--&lt;!&ndash;<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>&ndash;&gt;-->
                     <!--&lt;!&ndash;<md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>&ndash;&gt;-->
                 <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
@@ -101,28 +101,28 @@
 
         <div layout="row" layout-align="start center"
              class="card-header list-header padding-default padding-horizontal-2x">
-            <span flex="10">{{::$i18n.block.case.label}}</span>
-            <span flex="20">{{::$i18n.block.case.visualID}}</span>
-            <span flex="25">{{::$i18n.block.case.title}}</span>
+            <span flex-gt-xs="10" flex-xs="20">{{::$i18n.block.case.label}}</span>
+            <span flex="20" hide show-gt-sm>{{::$i18n.block.case.visualID}}</span>
+            <span flex-gt-sm="25" flex-sm flex-xs>{{::$i18n.block.case.title}}</span>
             <span flex ng-repeat="data in dashCtrl.contracts[0].immediateData | orderBy:'order'">
                 <md-tooltip md-direction="top">{{data.description}}</md-tooltip>
                 {{data.name}}
             </span>
-            <span flex></span>
+            <span flex-gt-sm flex-sm-none flex-xs-none></span>
             <span flex="5" class="visibility-hidden"></span>
         </div>
 
         <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
              ng-repeat-start="contract in dashCtrl.contracts | orderBy:'strindId'"
              ng-click="dashCtrl.openCase('contracts',contract)">
-            <i flex="10" class="material-icons {{::contract.color}}">{{contract.icon ? contract.icon : 'label'}}</i>
-            <span flex="20">{{::contract.visualId}}</span>
-            <span flex="25">{{::contract.title}}</span>
+            <i flex-gt-xs="10" flex-xs="20" class="material-icons {{::contract.color}}">{{contract.icon ? contract.icon : 'label'}}</i>
+            <span flex="20" hide show-gt-sm>{{::contract.visualId}}</span>
+            <span flex-gt-sm="25" flex-sm flex-xs>{{::contract.title}}</span>
             <span flex ng-repeat="data in contract.immediateData | orderBy:'order'">
                 {{data.value}}
             </span>
-            <span flex></span>
-            <!--<md-menu flex="5" layout="row" layout-align="start center">-->
+            <span flex-gt-sm flex-sm-none flex-xs-none></span>
+            <!--<md-menu flex-gt-sm="5" flex-sm="10" flex-xs="20" layout="row" layout-align="center center">-->
             <!--<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>-->
             <!--<md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>-->
             <!--</md-button>-->

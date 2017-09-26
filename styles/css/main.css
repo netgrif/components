@@ -373,6 +373,10 @@
   border-right-color: transparent !important;
 }
 
+.height-52px {
+  height: 52px;
+}
+
 .min-height-0 {
   min-height: 0 !important;
 }
