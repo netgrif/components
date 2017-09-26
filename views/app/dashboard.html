@@ -25,6 +25,7 @@
         <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
              ng-repeat-start="offer in dashCtrl.offers | orderBy:'strindId'"
              ng-click="dashCtrl.openCase('offers',offer)">
+
             <i flex="10" class="material-icons {{::offer.color}}">{{offer.icon ? offer.icon : 'label'}}</i>
             <span flex="20">{{::offer.visualId}}</span>
             <span flex="25">{{::offer.title}}</span>
@@ -42,6 +43,7 @@
                     <!--</md-menu-item>-->
                 <!--</md-menu-content>-->
             <!--</md-menu>-->
+
         </div>
 
         <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
@@ -57,14 +59,17 @@
 
     <div layout="column" class="card margin-default margin-bottom-2x" flex>
 
-        <div layout="row" layout-align="start center"
-             class="card-header list-header padding-default padding-horizontal-2x">
-            <span flex="5">{{::$i18n.block.task.type}}</span>
-            <span flex="20">{{::$i18n.block.task.name}}</span>
-            <span flex="20">{{::$i18n.block.task.surname}}</span>
-            <span flex="20">{{::$i18n.block.task.phone}}</span>
-            <span flex="20">{{::$i18n.block.task.email}}</span>
-            <span flex="5" class="visibility-hidden"></span>
+        <div layout="row" layout-align="start center" class="card-header list-header padding-default padding-horizontal-2x">
+
+            <span flex-gt-sm="5" flex-sm="10" flex-xs="20">{{::$i18n.block.task.type}}</span>
+            <!-- immediateData header -->
+            <span hide-md hide-sm hide-xs flex-gt-md="20">{{::$i18n.block.task.name}}</span>
+            <span flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="55">{{::$i18n.block.task.surname}}</span>
+            <span hide-sm hide-xs flex-gt-md="20" flex-md="30">{{::$i18n.block.task.phone}}</span>
+            <span hide-xs flex-gt-md="20" flex-md="30" flex-sm="40">{{::$i18n.block.task.email}}</span>
+            <!-- ./immediateData header -->
+            <span flex-gt-sm="5" flex-sm="10" flex-xs="25" class="visibility-hidden"></span>
+
         </div>
 
         <!--<div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"-->
@@ -86,21 +91,26 @@
                 <!--&lt;!&ndash;</md-menu-content>&ndash;&gt;-->
             <!--&lt;!&ndash;</md-menu>&ndash;&gt;-->
         <!--</div>-->
+
         <!--<md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>-->
+
         <md-expansion-panel-group md-component-id="dashboard-contact-panel-group" multiple></md-expansion-panel-group>
 
     </div>
 
     <!-- Contracts -->
     <div layout="row" layout-align="start center" flex="100" class="margin-top-2x margin-horizontal-default">
+
         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
         <span class="margin-horizontal-default md-headline">{{::$i18n.page.dashboard.contracts}}</span>
         <div flex class="line-3px color-bg-primary-op-50"></div>
+
     </div>
+
     <div layout="column" class="card margin-default margin-bottom-2x" flex>
 
-        <div layout="row" layout-align="start center"
-             class="card-header list-header padding-default padding-horizontal-2x">
+        <div layout="row" layout-align="start center" class="card-header list-header padding-default padding-horizontal-2x">
+
             <span flex="10">{{::$i18n.block.case.label}}</span>
             <span flex="20">{{::$i18n.block.case.visualID}}</span>
             <span flex="25">{{::$i18n.block.case.title}}</span>
@@ -110,11 +120,13 @@
             </span>
             <span flex></span>
             <span flex="5" class="visibility-hidden"></span>
+
         </div>
 
         <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
              ng-repeat-start="contract in dashCtrl.contracts | orderBy:'strindId'"
              ng-click="dashCtrl.openCase('contracts',contract)">
+
             <i flex="10" class="material-icons {{::contract.color}}">{{contract.icon ? contract.icon : 'label'}}</i>
             <span flex="20">{{::contract.visualId}}</span>
             <span flex="25">{{::contract.title}}</span>
@@ -132,6 +144,7 @@
             <!--</md-menu-item>-->
             <!--</md-menu-content>-->
             <!--</md-menu>-->
+
         </div>
 
         <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
