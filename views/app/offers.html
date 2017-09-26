@@ -93,10 +93,9 @@
 
 					<div layout="column" class="card padding-vertical-2x padding-horizontal-2x margin-default margin-top-default">
 
-						<div layout="row" layout-align="space-between center" flex>
+						<div layout="row" layout-align="space-around center" flex>
 
-                            <span ng-repeat="trans in tab.transactions | orderBy:'stringId'"
-                                  ng-class=" trans.active ? 'active' : '' " class="font-size-18">
+                            <span class="transaction" ng-repeat="trans in tab.transactions | orderBy:'stringId'" ng-class="trans.active ? 'active' : ''">
 								{{::trans.title}}
 							</span>
 

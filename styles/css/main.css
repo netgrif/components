@@ -789,6 +789,10 @@ span.active {
   text-decoration: none;
 }
 
+.font-size-12 {
+  font-size: 12px;
+}
+
 .font-size-14 {
   font-size: 14px;
 }
@@ -1440,4 +1444,18 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 
 .base .line-3px {
   height: 3px;
+}
+
+.base .transaction {
+  display: block;
+  font-size: 18px;
+}
+
+@media all and (max-width: 599px) {
+  .base .transaction.active {
+    display: block;
+  }
+  .base .transaction:not(active) {
+    display: none;
+  }
 }
