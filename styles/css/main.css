@@ -373,6 +373,10 @@
   border-right-color: transparent !important;
 }
 
+.height-52px {
+  height: 52px;
+}
+
 .color-border-primary-op-30 {
   border-top-color: rgba(18, 178, 210, 0.3) !important;
   border-bottom-color: rgba(18, 178, 210, 0.3) !important;
@@ -818,6 +822,10 @@ span.active {
 
 .text-no-decor {
   text-decoration: none;
+}
+
+.font-size-12 {
+  font-size: 12px;
 }
 
 .font-size-14 {
@@ -1471,4 +1479,18 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 
 .base .line-3px {
   height: 3px;
+}
+
+.base .transaction {
+  display: block;
+  font-size: 18px;
+}
+
+@media all and (max-width: 599px) {
+  .base .transaction.active {
+    display: block;
+  }
+  .base .transaction:not(active) {
+    display: none;
+  }
 }
