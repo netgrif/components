@@ -58,19 +58,17 @@
 
         </md-expansion-panel-content>
 
-        <md-expansion-panel-footer md-no-sticky layout-xs="column"> <!-- TODO 26.9.2017 responsive expansion panel footer -->
+        <md-expansion-panel-footer md-no-sticky>
+            <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
-            <div flex></div>
-            <!--<md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.save()">-->
-                <!--{{::$i18n.block.btn.save}}-->
-            <!--</md-button>-->
-            <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()">
+            <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()" class="layout-xs-rw-100">
                 {{::$i18n.block.btn.finish}}
             </md-button>
-            <md-button class="md-primary" ng-click="task.click($event)">
+            <md-button ng-click="task.click($event)" class="md-primary layout-xs-rw-100">
                 {{::$i18n.block.btn.collapse}}
             </md-button>
 
+            </div>
         </md-expansion-panel-footer>
 
     </md-expansion-panel-expanded>
