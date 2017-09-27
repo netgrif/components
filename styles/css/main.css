@@ -373,6 +373,45 @@
   border-right-color: transparent !important;
 }
 
+.color-border-primary-op-30 {
+  border-top-color: rgba(18, 178, 210, 0.3) !important;
+  border-bottom-color: rgba(18, 178, 210, 0.3) !important;
+  border-left-color: rgba(18, 178, 210, 0.3) !important;
+  border-right-color: rgba(18, 178, 210, 0.3) !important;
+}
+
+.color-border-primary-op-40 {
+  border-top-color: rgba(18, 178, 210, 0.4) !important;
+  border-bottom-color: rgba(18, 178, 210, 0.4) !important;
+  border-left-color: rgba(18, 178, 210, 0.4) !important;
+  border-right-color: rgba(18, 178, 210, 0.4) !important;
+}
+
+.color-border-primary-op-50 {
+  border-top-color: rgba(18, 178, 210, 0.5) !important;
+  border-bottom-color: rgba(18, 178, 210, 0.5) !important;
+  border-left-color: rgba(18, 178, 210, 0.5) !important;
+  border-right-color: rgba(18, 178, 210, 0.5) !important;
+}
+
+.color-border-primary-op-60 {
+  border-top-color: rgba(18, 178, 210, 0.6) !important;
+  border-bottom-color: rgba(18, 178, 210, 0.6) !important;
+  border-left-color: rgba(18, 178, 210, 0.6) !important;
+  border-right-color: rgba(18, 178, 210, 0.6) !important;
+}
+
+.color-border-primary-op-87 {
+  border-top-color: rgba(18, 178, 210, 0.87) !important;
+  border-bottom-color: rgba(18, 178, 210, 0.87) !important;
+  border-left-color: rgba(18, 178, 210, 0.87) !important;
+  border-right-color: rgba(18, 178, 210, 0.87) !important;
+}
+
+.height-52px {
+  height: 52px;
+}
+
 .min-height-0 {
   min-height: 0 !important;
 }
@@ -729,6 +768,60 @@ body {
   width: 300px;
 }
 
+@media all and (max-width: 599px) {
+  .layout-xs-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 600px) and (max-width: 959px) {
+  .layout-sm-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 960px) and (max-width: 1279px) {
+  .layout-md-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 1280px) and (max-width: 1919px) {
+  .layout-lg-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 1920px) {
+  .layout-xl-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 600px) {
+  .layout-gt-xs-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 960px) {
+  .layout-gt-sm-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 1280px) {
+  .layout-gt-md-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 1920px) {
+  .layout-gt-lg-rw-100 {
+    width: 100%;
+  }
+}
+
 @media all and (min-height: 769px) {
   .layout-rh-100-min-769 {
     height: 100%;
@@ -783,6 +876,10 @@ span.active {
 
 .text-no-decor {
   text-decoration: none;
+}
+
+.font-size-12 {
+  font-size: 12px;
 }
 
 .font-size-14 {
@@ -1038,7 +1135,7 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 }
 
 .base .background-login {
-  background-image: url("../../assets/bratislava.jpg");
+  background-image: url("../../assets/high-tatras.jpg");
   background-size: cover;
 }
 
@@ -1436,4 +1533,18 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 
 .base .line-3px {
   height: 3px;
+}
+
+.base .transaction {
+  display: block;
+  font-size: 18px;
+}
+
+@media all and (max-width: 599px) {
+  .base .transaction.active {
+    display: block;
+  }
+  .base .transaction:not(active) {
+    display: none;
+  }
 }

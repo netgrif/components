@@ -1,5 +1,5 @@
-<div class="data-item" layout="row" layout-align="start center">
-    <div flex="35">
+<div class="data-item" layout="row" layout-align="start center" layout-wrap>
+    <div flex="45" flex-xs="100">
         <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
             {{field.name}}
             <md-tooltip ng-if="field.description">
@@ -7,8 +7,8 @@
             </md-tooltip>
         </span>
     </div>
-    <div flex="5"></div>
-    <div flex="55">
+    <div flex="5" flex-xs="0"></div>
+    <div flex="45" flex-xs="100">
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{field.placeholder}}</label>
             <input id="{{'data-'+task.stringId+'-'+field.stringId}}" type="number" ng-model="field.newValue"
@@ -31,6 +31,6 @@
             </div>
         </md-input-container>
     </div>
-    <div flex="5"></div>
+    <div flex="5" flex-xs="0"></div>
     {{::field.bindElement()}}
 </div>

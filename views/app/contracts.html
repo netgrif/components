@@ -11,9 +11,9 @@
             <md-tab-body>
                 <md-content layout="column" class="color-bg-transparent">
 
-                    <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default" flex>
+                    <div layout="row" layout-align="start center" class="card padding-horizontal-2x padding-vertical-default margin-default">
 
-                        <div layout="row" layout-align="start center">
+                        <div flex-gt-sm="30" flex-sm flex-xs layout="row" layout-align="start center" class="height-52px">
                             <i class="material-icons color-fg-accent-50">search</i>
 
                             <md-input-container class="margin-0">
@@ -27,28 +27,28 @@
                     <div layout="column" class="card margin-default" flex>
 
                         <div layout="row" layout-align="start center" class="card-header list-header padding-default padding-horizontal-2x">
-                            <span flex="10">{{::$i18n.block.case.label}}</span>
-                            <span flex="20">{{::$i18n.block.case.visualID}}</span>
-                            <span flex="25">{{::$i18n.block.case.title}}</span>
-                            <span flex ng-repeat="data in contractCtrl.caseTab.cases[0].immediateData | orderBy:'order'">
+                            <span flex-gt-xs="10" flex-xs="20">{{::$i18n.block.case.label}}</span>
+                            <span flex="20" hide show-gt-sm>{{::$i18n.block.case.visualID}}</span>
+                            <span flex-gt-sm="25" flex-sm flex-xs>{{::$i18n.block.case.title}}</span>
+                            <span flex ng-repeat="data in contractCtrl.caseTab.cases[0].immediateData | orderBy:'order'"> <!-- TODO 26.9.2017 layout for immediate data not tested -->
                                 <md-tooltip md-direction="top">{{data.description}}</md-tooltip>
                                 {{data.name}}
                             </span>
-                            <span flex></span>
+                            <span flex-gt-sm flex-sm-none flex-xs-none></span>
                             <span flex="5" class="visibility-hidden"></span>
                         </div>
 
                         <div layout="row" layout-align="start center" class="padding-default padding-horizontal-2x list-item"
                              ng-repeat-start="useCase in contractCtrl.caseTab.cases | orderBy:'strindId'"
                              ng-click="useCase.open()">
-                            <i flex="10" class="material-icons {{::useCase.color}}">{{useCase.icon ? useCase.icon : 'label'}}</i>
-                            <span flex="20">{{::useCase.visualId}}</span>
-                            <span flex="25">{{::useCase.title}}</span>
+                            <i flex-gt-xs="10" flex-xs="20" class="material-icons {{::useCase.color}}">{{useCase.icon ? useCase.icon : 'label'}}</i>
+                            <span flex="20" hide show-gt-sm>{{::useCase.visualId}}</span>
+                            <span flex-gt-sm="25" flex-sm flex-xs>{{::useCase.title}}</span>
                             <span flex ng-repeat="data in useCase.immediateData | orderBy:'order'">
                                 {{data.value}}
                             </span>
-                            <span flex></span>
-                            <md-menu flex="5" layout="row" layout-align="start center">
+                            <span flex-gt-sm flex-sm-none flex-xs-none></span>
+                            <md-menu flex-gt-sm="5" flex-sm="10" flex-xs="20" layout="row" layout-align="center center">
                                 <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                                     <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
                                 </md-button>
@@ -87,8 +87,7 @@
 
                         <div layout="row" layout-align="space-between center" flex>
 
-                            <span ng-repeat="trans in tab.transactions | orderBy:'stringId'"
-                                  ng-class=" trans.active ? 'active' : '' " class="font-size-18">
+                            <span ng-repeat="trans in tab.transactions | orderBy:'stringId'" ng-class=" trans.active ? 'active' : '' " class="transaction">
 								{{::trans.title}}
 							</span>
 
@@ -97,10 +96,10 @@
                     </div>
 
                     <div layout="row" class="card color-bg-black-op-40 margin-default padding-2x">
-                        <span flex="10">{{::$i18n.block.task.label}}</span>
-                        <span flex="40">{{::$i18n.block.task.contract}}</span>
-                        <span flex="40">{{::$i18n.block.task.title}}</span>
-                        <span flex="10">{{::$i18n.block.task.status}}</span>
+                        <span flex-gt-sm="10" flex-xs="25" flex-sm="20">{{::$i18n.block.task.label}}</span>
+                        <span hide show-gt-sm flex="40">{{::$i18n.block.task.offer}}</span>
+                        <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{::$i18n.block.task.title}}</span>
+                        <span hide-xs flex="10">{{::$i18n.block.task.status}}</span>
                     </div>
 
                     <md-expansion-panel-group md-component-id="'tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple>
