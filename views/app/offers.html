@@ -95,7 +95,7 @@
 
 						<div layout="row" layout-align="space-around center" flex>
 
-                            <span class="transaction" ng-repeat="trans in tab.transactions | orderBy:'stringId'" ng-class="trans.active ? 'active' : ''">
+                            <span ng-repeat="trans in tab.transactions | orderBy:'stringId'" ng-class="trans.active ? 'active' : ''" class="transaction">
 								{{::trans.title}}
 							</span>
 

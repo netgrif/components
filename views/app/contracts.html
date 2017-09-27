@@ -87,8 +87,7 @@
 
                         <div layout="row" layout-align="space-between center" flex>
 
-                            <span ng-repeat="trans in tab.transactions | orderBy:'stringId'"
-                                  ng-class=" trans.active ? 'active' : '' " class="font-size-18">
+                            <span ng-repeat="trans in tab.transactions | orderBy:'stringId'" ng-class=" trans.active ? 'active' : '' " class="transaction">
 								{{::trans.title}}
 							</span>
 
