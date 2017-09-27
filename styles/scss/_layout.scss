@@ -29,7 +29,8 @@
 // Layout
 .layout {
 
-    &-vh {					// Window dims
+    // TODO 27.9.2017 Test mobile app, if viewport replacement with relative attributes is OK, completely remove viewport dims
+    &-vh {					// Viewport dims
 
         &-100 {
             height: 100vh;

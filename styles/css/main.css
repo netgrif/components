@@ -373,10 +373,6 @@
   border-right-color: transparent !important;
 }
 
-.height-52px {
-  height: 52px;
-}
-
 .color-border-primary-op-30 {
   border-top-color: rgba(18, 178, 210, 0.3) !important;
   border-bottom-color: rgba(18, 178, 210, 0.3) !important;
@@ -410,6 +406,10 @@
   border-bottom-color: rgba(18, 178, 210, 0.87) !important;
   border-left-color: rgba(18, 178, 210, 0.87) !important;
   border-right-color: rgba(18, 178, 210, 0.87) !important;
+}
+
+.height-52px {
+  height: 52px;
 }
 
 .min-height-0 {
@@ -1135,7 +1135,7 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 }
 
 .base .background-login {
-  background-image: url("../../assets/bratislava.jpg");
+  background-image: url("../../assets/high-tatras.jpg");
   background-size: cover;
 }
 
