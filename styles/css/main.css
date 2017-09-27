@@ -768,6 +768,60 @@ body {
   width: 300px;
 }
 
+@media all and (max-width: 599px) {
+  .layout-xs-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 600px) and (max-width: 959px) {
+  .layout-sm-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 960px) and (max-width: 1279px) {
+  .layout-md-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 1280px) and (max-width: 1919px) {
+  .layout-lg-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 1920px) {
+  .layout-xl-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 600px) {
+  .layout-gt-xs-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 960px) {
+  .layout-gt-sm-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 1280px) {
+  .layout-gt-md-rw-100 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 1920px) {
+  .layout-gt-lg-rw-100 {
+    width: 100%;
+  }
+}
+
 @media all and (min-height: 769px) {
   .layout-rh-100-min-769 {
     height: 100%;
