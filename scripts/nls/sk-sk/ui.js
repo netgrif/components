@@ -80,7 +80,11 @@ define({
             client: "Klient",
             date: "Dátum",
             insurance: "Poistné",
-            inEur: "V eurách"
+            inEur: "V eurách",
+            newTitle: {
+                Offer: "Nové poistenie",
+                Contact: "Nový kontakt"
+            }
         },
         task: {
             label: "Typ",

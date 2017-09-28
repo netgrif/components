@@ -81,7 +81,11 @@ define({
                 client: "Client",
                 date: "Date",
                 insurance: "Insurance",
-                inEur: "In EUR"
+                inEur: "In EUR",
+                newTitle: {
+                    Offer: "New insurance",
+                    Contact: "New contact"
+                }
             },
             task: {
                 label: "Type",
