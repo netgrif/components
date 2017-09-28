@@ -22,7 +22,7 @@
             <span>{{::$i18n.block.data.noUserChosen}}</span>
         </div>
         <md-menu class="width-24px" ng-if="task.user.email == $user.login && field.behavior.editable">
-            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin aria-label="Choose user">
+            <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin aria-label="Choose user">
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content>

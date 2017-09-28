@@ -22,7 +22,7 @@
             <span class="text-overflow-dots">{{field.newValue ? field.newValue : (field.generated ? field.defaultValue : $i18n.block.data.noFile)}}</span>
         </div>
         <md-menu flex-xs="20" class="width-24px">
-            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+            <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content>
