@@ -1297,16 +1297,13 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 
 .base .toolbar-submenu .btn-menu > .material-icons {
   margin-right: 14px !important;
-  margin-top: 1.5px !important;
   margin-bottom: 1.5px !important;
-  font-size: 24px !important;
 }
 
 .base .toolbar-submenu .btn-menu > span {
-  margin-left: -1px;
-  font-size: 15px;
-  text-transform: capitalize;
-  font-weight: normal;
+  float: none !important;
+  text-transform: capitalize !important;
+  font-weight: normal !important;
 }
 
 .base md-menu-bar.md-default-theme md-menu.md-open > button, .base md-menu-bar md-menu.md-open > button, .base md-menu-bar.md-default-theme md-menu > button:focus, .base md-menu-bar md-menu > button:focus {

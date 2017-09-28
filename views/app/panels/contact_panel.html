@@ -15,7 +15,7 @@
 
         <md-menu ng-if="contact.removable || contact.tasks.length > 0" flex-gt-sm="5" flex-sm="10" flex-xs="25" layout="row" layout-align="center center">
 
-            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+            <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                 <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
             </md-button>
 
@@ -49,7 +49,7 @@
 
             <md-menu ng-if="contact.removable || contact.tasks.length > 0" flex-gt-sm="5" flex-sm="10" flex-xs="25" layout="row" layout-align="center center">
 
-                <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                     <md-icon class="material-icons color-fg-accent-50">more_vert</md-icon>
                 </md-button>
 
@@ -114,7 +114,7 @@
 
                 <md-menu ng-if="contact.removable || contact.tasks.length > 0">
 
-                    <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                    <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                         <md-icon class="material-icons color-fg-accent-50">more_horiz</md-icon>
                     </md-button>
 
