@@ -69,9 +69,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                         self.caseTab.openNewCaseDialog($i18n.page.offers.this);
                         $cache.remove("create");
                     }
-                    $rootScope.$on("caseCreate", (event, type) => {
+                    const caseCreateListener = $rootScope.$on("caseCreate", (event, type) => {
                         if(type === "offers")
                             self.caseTab.openNewCaseDialog($i18n.page.offers.this);
                     });
+                    $scope.$on('$destroy', () => caseCreateListener());
                 }]);
     });
