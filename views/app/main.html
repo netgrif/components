@@ -1,4 +1,4 @@
-<div ng-cloak class="layout-vh-100 color-bg-transparent" layout="column">
+<div ng-cloak class="layout-rh-100 color-bg-transparent" layout="column">
 
     <section layout="row" layout-align="left center" class="margin-horizontal-2x margin-top-2x">
 
@@ -9,11 +9,11 @@
 
         <md-menu-bar layout="row" layout-align="center center" class="card card-op-60 margin-default toolbar" flex>
             <div flex></div>
-            <h1>BROKER's <strong>PORTAL</strong></h1>
+            <h1 hide-sm hide-xs>BROKER's <strong>PORTAL</strong></h1>
             <div flex></div>
             <md-menu class="toolbar-menu">
 
-                <md-button ng-click="$mdOpenMenu($event)" layout="row" layout-align="left center" class="btn-menu" md-menu-origin>
+                <md-button ng-click="$mdMenu.open($event)" layout="row" layout-align="left center" class="btn-menu" md-menu-origin>
                     {{$user.name}}
                     <i class="material-icons">account_circle</i>
                 </md-button>
@@ -23,7 +23,7 @@
                     <md-menu-item>
                         <md-menu class="toolbar-submenu">
 
-                            <md-button ng-click="$mdOpenMenu()">
+                            <md-button ng-click="$mdMenu.open()">
                                 <div class="btn-menu">
                                     <md-icon class="material-icons">language</md-icon>
                                     <span>{{::$i18n.block.mainMenu.lang.this}}</span>
@@ -33,18 +33,16 @@
                             <md-menu-content width="2">
 
                                 <md-menu-item>
-                                    <md-button ng-click="$i18n.change('en-us')" layout="row"
-                                               layout-align="space-bettween center">
+                                    <md-button ng-click="$i18n.change('en-us')" layout="row" layout-align="space-between center">
                                         <span>{{::$i18n.block.mainMenu.lang.en}}</span>
-                                        <i ng-if="$i18n.current() === 'en-us'" class="material-icons">keyboard_arrow_left</i>
+                                        <md-icon ng-if="$i18n.current() === 'en-us'" class="material-icons">keyboard_arrow_left</md-icon>
                                     </md-button>
                                 </md-menu-item>
 
                                 <md-menu-item>
-                                    <md-button ng-click="$i18n.change('sk-sk')" layout="row"
-                                               layout-align="space-bettween center">
+                                    <md-button ng-click="$i18n.change('sk-sk')" layout="row" layout-align="space-between center">
                                         <span>{{::$i18n.block.mainMenu.lang.sk}}</span>
-                                        <i ng-if="$i18n.current() === 'sk-sk'" class="material-icons">keyboard_arrow_left</i>
+                                        <md-icon ng-if="$i18n.current() === 'sk-sk'" class="material-icons">keyboard_arrow_left</md-icon>
                                     </md-button>
                                 </md-menu-item>
 
@@ -67,7 +65,7 @@
 
     </section>
 
-    <section layout="row" flex class="color-bg-transparent margin-horizontal-2x margin-bottom-2x">
+    <section layout="row" flex class="color-bg-transparent margin-horizontal-2x margin-bottom-2x layout-rh-100">
 
         <div layout="column">
 
