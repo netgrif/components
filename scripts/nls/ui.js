@@ -63,7 +63,7 @@ define({
                 invite: "Invite",
                 save: "Save",
                 collapse: "Collapse",
-                finish: "Finish"
+                finish: "Next"
             },
             mainMenu: {
                 profile: "Profile",
@@ -84,7 +84,7 @@ define({
                 inEur: "In EUR",
                 newTitle: {
                     Offer: "New insurance",
-                    Contact: "New contact"
+                    Contact: "Name and surname"
                 }
             },
             task: {

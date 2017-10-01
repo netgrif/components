@@ -62,7 +62,7 @@ define({
             invite: "Pozvať",
             save: "Uložiť",
             collapse: "Skryť",
-            finish: "Dokončiť"
+            finish: "Ďalej"
         },
         mainMenu: {
             profile: "Profil",
@@ -83,7 +83,7 @@ define({
             inEur: "V eurách",
             newTitle: {
                 Offer: "Nové poistenie",
-                Contact: "Nový kontakt"
+                Contact: "Meno a priezvisko"
             }
         },
         task: {
