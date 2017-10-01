@@ -820,6 +820,12 @@ body {
   }
 }
 
+@media screen and (min-height: 490px) {
+  .layout-rh-100-min-490-ol {
+    height: 100%;
+  }
+}
+
 h1 {
   font-size: 32px;
   font-weight: 300;
@@ -1127,9 +1133,8 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 }
 
 .base .background-login {
-  background-image: url("../../assets/high-tatras.jpg");
+  background: url("../../assets/high-tatras.jpg") no-repeat center center fixed;
   background-size: cover;
-  background-attachment: fixed;
 }
 
 .base .background-gradient {

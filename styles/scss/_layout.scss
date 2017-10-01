@@ -227,14 +227,36 @@
 
     .layout {
 
-        &-rh {					// Relative height
+        &-rh { // Relative height
 
             &-100 {
 
-                &-min {
+                &-min { // Min height
 
                     &-769 {
                         height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+// Fix signup page for phone orientation-landscape
+@media screen and (min-height: 490px) {
+
+    .layout {
+
+        &-rh { // Relative height
+
+            &-100 {
+
+                &-min { // Min height
+
+                    &-490 {
+
+                        &-ol { // Orientation landscape
+                            height: 100%;
+                        }
                     }
                 }
             }
