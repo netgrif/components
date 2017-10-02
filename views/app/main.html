@@ -112,7 +112,7 @@
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">payment</i>
                     </div>
-                    <span flex hide show-gt-sm>Payments</span>
+                    <span flex hide show-gt-sm>{{::$i18n.page.payments.this}}</span>
                 </md-button>
 
                 <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" href="/console"

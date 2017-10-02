@@ -38,7 +38,11 @@ define({
         },
         payments: {
             this: "Platby",
-            all: "Všetky platby"
+            all: "Všetky platby",
+            type: "Typ",
+            contractID: "ID zmluvy",
+            insured: "Poistník",
+            beginningOfInsurance: "Začiatok poistenia"
         },
         console: {
             this: "Konzola",

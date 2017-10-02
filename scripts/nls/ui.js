@@ -39,7 +39,11 @@ define({
             },
             payments: {
                 this: "Payments",
-                all: "All Payments"
+                all: "All Payments",
+                type: "Type",
+                contractID: "Contract ID",
+                insured: "Insured",
+                beginningOfInsurance: "Beginning of insurance"
             },
             console: {
                 this: "Console",
