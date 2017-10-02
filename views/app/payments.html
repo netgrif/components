@@ -1,13 +1,11 @@
 <div ng-cloak>
 
-    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="offCtrl.activeTabIndex">
+    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="payCtrl.activeTabIndex">
 
-        <md-tab md-on-select="offCtrl.caseTab.activate()" class="primary">
-
+        <md-tab class="primary" ng-repeat="tab in payCtrl.tabs" md-on-select="payCtrl.tabChanged()">
             <md-tab-label>
-                {{::$i18n.page.payments.all}}
+                {{::tab.label}}
             </md-tab-label>
-
             <md-tab-body>
                 <md-content layout="column" class="color-bg-transparent">
 
@@ -15,14 +13,14 @@
 
                         <div layout="row" layout-align="start center"
                              class="card-header list-header padding-default padding-horizontal-2x">
-                            <span flex="5">{{::$i18n.block.task.label}}</span>
-                            <span flex="20">{{::$i18n.block.case.visualID}}</span>
-                            <span flex="20">{{::$i18n.block.task.user}}</span>
-                            <span flex="20">{{::$i18n.block.task.date}}</span>
+                            <span flex="5">Insurance</span>
+                            <span flex="20">Contract ID</span>
+                            <span flex="20">Insured</span>
+                            <span flex="20">Begin of insurance</span>
                             <span flex="5" class="visibility-hidden"></span>
                         </div>
 
-                        <md-expansion-panel-group md-component-id="payments-panel-group" multiple></md-expansion-panel-group>
+                        <md-expansion-panel-group md-component-id="'tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple></md-expansion-panel-group>
 
                     </div>
 

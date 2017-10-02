@@ -25,7 +25,7 @@ define(['angular', '../modules/Main'], function (angular) {
             },
 
             /**
-             * Check if user has specified auhority
+             * Check if user has specified authority
              * @param {String} auth
              * @returns {boolean}
              */
@@ -53,6 +53,17 @@ define(['angular', '../modules/Main'], function (angular) {
             canDo: function (roles, action) {
                 if (!roles || !action || !user.roles || !(roles instanceof Object)) return false;
                 return user.roles.some(role => roles[role] ? roles[role][action] : false);
+            },
+
+            /**
+             * Check if user has specified permission
+             * @param {String} permission
+             * @returns {boolean}
+             */
+            hasPermission: function (permission) {
+                if(!permission) return false;
+                const perm = "PERM_"+permission.toUpperCase();
+                return user.hasAuthority(perm);
             },
 
             getAsObject: function () {

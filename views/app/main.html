@@ -108,7 +108,9 @@
                     <span flex hide show-gt-sm>{{::$i18n.page.contracts.this}}</span>
                 </md-button>
 
-                <md-button href="/payments" ng-class="{active: ('payments' | routeSegmentContains)}" layout="row" layout-align="start center">
+                <md-button ng-if="$user.hasPermission('pair_payments')" href="/payments"
+                           ng-class="{active: ('payments' | routeSegmentContains)}" layout="row"
+                           layout-align="start center">
                     <div layout="row" layout-align="center center" class="icon-wrapper">
                         <i class="material-icons">payment</i>
                     </div>
