@@ -37,6 +37,10 @@ define({
                 this: "Contracts",
                 my: "My contracts"
             },
+            payments: {
+                this: "Payments",
+                all: "All Payments"
+            },
             console: {
                 this: "Console",
                 inviteUser: "Invite User",
@@ -63,7 +67,9 @@ define({
                 invite: "Invite",
                 save: "Save",
                 collapse: "Collapse",
-                finish: "Next"
+                assign: "Assign",
+                finish: "Next",
+                cancel: "Cancel"
             },
             mainMenu: {
                 profile: "Profile",
@@ -75,6 +81,7 @@ define({
                 logout: "Logout"
             },
             case: {
+                this: "Case",
                 label: "Type",
                 visualID: "Visual ID",
                 title: "Title",
@@ -88,7 +95,8 @@ define({
                 }
             },
             task: {
-                label: "Type",
+                this: "Task",
+                label: "Label",
                 offer: "Offer",
                 title: "Title",
                 date: "Start date",
@@ -99,7 +107,8 @@ define({
                 surname: "Surname",
                 phone: "Phone number",
                 email: "Email",
-                noData: "This task has no data. Finish to continue."
+                noData: "This task has no data. Finish to continue.",
+                user: "User"
             },
             data: {
                 noUserChosen: "No user was chosen",
