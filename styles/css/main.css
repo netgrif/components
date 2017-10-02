@@ -740,14 +740,6 @@ body {
   position: fixed !important;
 }
 
-.layout-vh-100 {
-  height: 100vh;
-}
-
-.layout-vw-100 {
-  width: 100vw;
-}
-
 .layout-rh-100 {
   height: 100%;
 }
@@ -824,6 +816,18 @@ body {
 
 @media all and (min-height: 769px) {
   .layout-rh-100-min-769 {
+    height: 100%;
+  }
+}
+
+@media screen and (min-height: 230px) {
+  .layout-rh-100-min-230 {
+    height: 100%;
+  }
+}
+
+@media screen and (min-height: 490px) {
+  .layout-rh-100-min-490 {
     height: 100%;
   }
 }
@@ -1135,7 +1139,7 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 }
 
 .base .background-login {
-  background-image: url("../../assets/high-tatras.jpg");
+  background: url("../../assets/high-tatras.jpg") no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -1182,7 +1186,27 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
   width: 600px;
-  margin-bottom: 230px;
+}
+
+.base .card-signup {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  width: 400px;
+}
+
+@media all and (max-width: 599px) {
+  .base .card-welcome {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }
+  .base .card-signup {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }
 }
 
 .base .sidenav {

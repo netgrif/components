@@ -1,13 +1,15 @@
-<div class="layout-rh-100 background-login">
+<div class="layout-rh-100-min-230 background-login">
 	<div ng-cloak layout="column" layout-align="center center" class="layout-rh-100">
 		<md-card layout="row" layout-xs="column" layout-align="center center" layout-padding class="card-welcome">
 
-			<div flex="50">
+			<div hide-xs flex="40">
 				<img ng-src="../../../assets/logo.svg">
 			</div>
 
-			<div flex="50">
-				<form ng-submit="loginCtrl.login()">
+			<div hide-xs flex="10"></div>
+
+			<div flex="50" layout="column" layout-align="center center">
+				<form ng-submit="loginCtrl.login()" class="layout-rw-100">
 
 					<md-input-container class="md-block">
 						<md-icon class="material-icons color-fg-accent-50">email</md-icon>
@@ -22,8 +24,10 @@
 					</md-input-container>
 
 					<md-card-actions layout="row" layout-xs="column" layout-align="space-between center">
-						<a class="text-no-decor" flex-order-xs="1" href="#" md-colors="{color: 'accent-100'}"
-						   ng-click="loginCtrl.fireInfoSnackbar($i18n.block.snackbar.featureWillBeAvailableSoon)">{{::$i18n.page.signIn.forgotPsw}}</a>
+						<a flex-order-xs="1" href="#" class="color-fg-accent-50 text-no-decor"
+						   ng-click="loginCtrl.fireInfoSnackbar($i18n.block.snackbar.featureWillBeAvailableSoon)">
+							{{::$i18n.page.signIn.forgotPsw}}
+						</a>
 						<md-button type="submit" flex-order-xs="-1" md-colors="{background: 'primary-500'}">{{::$i18n.page.signIn.submit}}
 						</md-button>
 					</md-card-actions>
