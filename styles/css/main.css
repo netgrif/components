@@ -820,8 +820,14 @@ body {
   }
 }
 
+@media screen and (min-height: 230px) {
+  .layout-rh-100-min-230 {
+    height: 100%;
+  }
+}
+
 @media screen and (min-height: 490px) {
-  .layout-rh-100-min-490-ol {
+  .layout-rh-100-min-490 {
     height: 100%;
   }
 }

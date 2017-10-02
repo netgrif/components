@@ -241,7 +241,26 @@
         }
     }
 }
-// Fix signup page for phone orientation-landscape
+// Fix sign in page for phone small height (landscape/active keyboard)
+@media screen and (min-height: 230px) {
+
+    .layout {
+
+        &-rh { // Relative height
+
+            &-100 {
+
+                &-min { // Min height
+
+                    &-230 {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+// Fix sign up page for phone small height (landscape/active keyboard)
 @media screen and (min-height: 490px) {
 
     .layout {
@@ -253,10 +272,7 @@
                 &-min { // Min height
 
                     &-490 {
-
-                        &-ol { // Orientation landscape
-                            height: 100%;
-                        }
+                        height: 100%;
                     }
                 }
             }
