@@ -106,6 +106,15 @@
                     <span flex hide show-gt-sm>{{::$i18n.page.contracts.this}}</span>
                 </md-button>
 
+                <md-button ng-if="$user.hasPermission('pair_payments')" href="/payments"
+                           ng-class="{active: ('payments' | routeSegmentContains)}" layout="row"
+                           layout-align="start center">
+                    <div layout="row" layout-align="center center" class="icon-wrapper">
+                        <i class="material-icons">payment</i>
+                    </div>
+                    <span flex hide show-gt-sm>{{::$i18n.page.payments.this}}</span>
+                </md-button>
+
                 <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" href="/console"
                            ng-class="{active: ('console' | routeSegmentContains)}" layout="row"
                            layout-align="left center">

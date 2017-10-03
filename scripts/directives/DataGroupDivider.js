@@ -17,5 +17,5 @@ define(['angular','../modules/Main'],function (angular) {
             }
         };
     });
-});
+}); // TODO 24.8.2017 To be removed?
 

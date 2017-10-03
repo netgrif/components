@@ -36,6 +36,14 @@ define({
             this: "Zmluvy",
             my: "Moje zmluvy"
         },
+        payments: {
+            this: "Platby",
+            all: "Všetky platby",
+            type: "Typ",
+            contractID: "ID zmluvy",
+            insured: "Poistník",
+            beginningOfInsurance: "Začiatok poistenia"
+        },
         console: {
             this: "Konzola",
             inviteUser: "Pozvať používateľa",
@@ -62,7 +70,9 @@ define({
             invite: "Pozvať",
             save: "Uložiť",
             collapse: "Skryť",
-            finish: "Ďalej"
+            assign: "Priradiť",
+            finish: "Ďalej",
+            cancel: "Zrušiť"
         },
         mainMenu: {
             profile: "Profil",
@@ -74,6 +84,7 @@ define({
             logout: "Odhlásiť"
         },
         case: {
+            this: "Prípad",
             label: "Typ",
             visualID: "Vizuálne ID",
             title: "Názov",
@@ -87,7 +98,8 @@ define({
             }
         },
         task: {
-            label: "Typ",
+            this: "Úloha",
+            label: "Značka",
             offer: "Ponuka",
             title: "Názov",
             date: "Dátum začiatku",
@@ -98,7 +110,8 @@ define({
             surname: "Priezvisko",
             phone: "Tel. číslo",
             email: "Email",
-            noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie."
+            noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
+            user: "Používateľ"
         },
         data: {
             noUserChosen: "Žiaden zvolený používateľ",
