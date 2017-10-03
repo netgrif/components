@@ -37,10 +37,10 @@
 							<span flex-gt-xs="10" flex-xs="20">{{::$i18n.block.case.label}}</span>
 							<span flex="20" hide show-gt-sm>{{::$i18n.block.case.visualID}}</span>
 							<span flex-gt-sm="25" flex-sm flex-xs>{{::$i18n.block.case.title}}</span>
-							<span flex ng-repeat="data in offCtrl.caseTab.cases[0].immediateData | orderBy:'order'"> <!-- TODO 26.9.2017 layout for immediate data not tested -->
-								<md-tooltip md-direction="top">{{data.description}}</md-tooltip>
-								{{data.name}}
-							</span>
+							<!--<span flex ng-repeat="data in offCtrl.caseTab.cases[0].immediateData | orderBy:'order'"> &lt;!&ndash; TODO 26.9.2017 layout for immediate data not tested &ndash;&gt;-->
+								<!--<md-tooltip md-direction="top">{{data.description}}</md-tooltip>-->
+								<!--{{data.name}}-->
+							<!--</span>-->
 							<span flex-gt-sm flex-sm-none flex-xs-none></span>
 							<span flex="5" flex-sm flex-xs class="visibility-hidden"></span>
 						</div>
@@ -103,7 +103,7 @@
 
 					</div>
 
-					<div layout="row" class="card color-bg-black-op-40 margin-default padding-2x">
+					<div layout="row" class="card card-header margin-default padding-2x">
 						<span flex-gt-sm="10" flex-xs="25" flex-sm="20">{{::$i18n.block.task.label}}</span>
 						<span hide show-gt-sm flex="40">{{::$i18n.block.task.offer}}</span>
 						<span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{::$i18n.block.task.title}}</span>
