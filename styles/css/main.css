@@ -331,39 +331,39 @@
 }
 
 .color-bg-accent-100 {
-  color: #F5F5F5;
+  background-color: #F5F5F5;
 }
 
 .color-bg-accent-200 {
-  color: #EEEEEE;
+  background-color: #EEEEEE;
 }
 
 .color-bg-accent-300 {
-  color: #E0E0E0;
+  background-color: #E0E0E0;
 }
 
 .color-bg-accent-400 {
-  color: #BDBDBD;
+  background-color: #BDBDBD;
 }
 
 .color-bg-accent-500 {
-  color: #9E9E9E;
+  background-color: #9E9E9E;
 }
 
 .color-bg-accent-600 {
-  color: #757575;
+  background-color: #757575;
 }
 
 .color-bg-accent-700 {
-  color: #616161;
+  background-color: #616161;
 }
 
 .color-bg-accent-800 {
-  color: #424242;
+  background-color: #424242;
 }
 
 .color-bg-accent-900 {
-  color: #212121;
+  background-color: #212121;
 }
 
 .color-border-transparent {
@@ -1568,4 +1568,8 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   .base .transaction:not(active) {
     display: none;
   }
+}
+
+.base md-progress-circular.progress-circular-stroke-accent-50 path {
+  stroke: #FAFAFA;
 }
