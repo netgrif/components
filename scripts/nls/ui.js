@@ -112,7 +112,9 @@ define({
                 phone: "Phone number",
                 email: "Email",
                 noData: "This task has no data. Finish to continue.",
-                user: "User"
+                user: "User",
+                infoData: "Information data",
+                paymentData: "Payment data"
             },
             data: {
                 noUserChosen: "No user was chosen",

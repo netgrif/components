@@ -31,11 +31,15 @@
                 <div ng-if="task.caseColor" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="start center" class="{{task.caseColor}}">
                     <i class="material-icons" ng-repeat="icon in task.getIcons()">{{icon}}</i>
                 </div>
+
                 <span flex-gt-xs="20" flex-xs="70">{{task.immediateData[0].value}}</span>
+
                 <span hide-xs flex="30" layout="row" layout-align="start center">
                     <i class="material-icons color-fg-primary-500 margin-right-default">account_circle</i> {{task.immediateData[1].value + " " + task.immediateData[2].value}}
                 </span>
+
                 <span hide-xs flex="30">{{task.formatDate(task.immediateData[3].value)}}</span>
+
                 <div ng-if="task.loading" flex="10">
                     <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30"></md-progress-circular>
                 </div>
@@ -46,21 +50,44 @@
         <md-expansion-panel-content>
             <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
 
-                <!-- TODO 3.10.2017 Show hidden immediate data for xs screens -->
-                <div ng-repeat="group in task.dataGroups" layout="row" layout-align="{{group.alignment + ' center'}}" layout-wrap flex="100">
 
-                    <div layout="row" layout-align="start center" flex="100" ng-if="task.showDataGroupDivider(group)">
+                <div hide show-xs flex="100" layout="row" layout-align="start center" layout-wrap>
+
+                    <div flex="100" layout="row" layout-align="start center">
+                        <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+                        <span class="margin-horizontal-default">{{::$i18n.block.task.infoData}}</span>
+                        <div flex class="line-3px color-bg-primary-op-50"></div>
+                    </div>
+
+                    <!-- TODO 5.10.2017 immediateData values -->
+                    <div ng-if="!field.behavior.hidden && $index > 0" ng-repeat="field in task.immediateData" flex-gt-sm="50" flex-sm="100" flex-xs="100">
+                        <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
+                        <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+                    </div>
+
+                    <div flex="100" layout="row" layout-align="start center">
+                        <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+                        <span class="margin-horizontal-default">{{::$i18n.block.task.paymentData}}</span>
+                        <div flex class="line-3px color-bg-primary-op-50"></div>
+                    </div>
+
+                </div>
+
+                <div ng-repeat="group in task.dataGroups" flex="100" layout="row" layout-align="{{group.alignment + ' center'}}" layout-wrap>
+
+                    <div ng-if="task.showDataGroupDivider(group)" flex="100" layout="row" layout-align="start center">
                         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
                         <span class="margin-horizontal-default">{{group.title}}</span>
                         <div flex class="line-3px color-bg-primary-op-50"></div>
                     </div>
 
-                    <div ng-repeat="field in group.data" flex="{{group.stretch ? '100' : '50'}}" flex-sm="100" flex-xs="100" ng-if="!field.behavior.hidden">
+                    <div ng-if="!field.behavior.hidden" ng-repeat="field in group.data" flex-gt-sm="{{group.stretch ? '100' : '50'}}" flex-sm="100" flex-xs="100">
                         <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
-                        <md-divider class="color-border-primary-op-50 margin-bottom-2x" hide show-xs></md-divider>
+                        <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
                     </div>
 
                 </div>
+
             </div>
 
             <div layout="row" layout-align="center center" ng-if="task.data.length === 0 && !task.loading">
