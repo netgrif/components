@@ -111,7 +111,9 @@ define({
             phone: "Tel. číslo",
             email: "Email",
             noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
-            user: "Používateľ"
+            user: "Používateľ",
+            infoData: "Informačné údaje",
+            paymentData: "Údaje o platbe"
         },
         data: {
             noUserChosen: "Žiaden zvolený používateľ",

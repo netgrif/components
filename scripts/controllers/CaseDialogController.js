@@ -9,7 +9,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                     self.cases = [];
                     self.selectedCase = undefined;
 
-                    //TODO: 23.7.2017 ošetri pagination
+                    //TODO: 23.7.2017 ošetriť pagination
                     self.loadCases = function (netId) {
                         if (!netId) return;
                         const self = this;
