@@ -48,40 +48,17 @@
         </md-expansion-panel-header>
 
         <md-expansion-panel-content>
-            <div layout="row" layout-align="start center" layout-wrap class="cursor-default" ng-if="!task.loading">
-
-
-                <div hide show-xs flex="100" layout="row" layout-align="start center" layout-wrap>
-
-                    <div flex="100" layout="row" layout-align="start center">
-                        <div flex="20" class="line-3px color-bg-primary-op-50"></div>
-                        <span class="margin-horizontal-default">{{::$i18n.block.task.infoData}}</span>
-                        <div flex class="line-3px color-bg-primary-op-50"></div>
-                    </div>
-
-                    <!-- TODO 5.10.2017 immediateData values -->
-                    <div ng-if="!field.behavior.hidden && $index > 0" ng-repeat="field in task.immediateData" flex-gt-sm="50" flex-sm="100" flex-xs="100">
-                        <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
-                        <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
-                    </div>
-
-                    <div flex="100" layout="row" layout-align="start center">
-                        <div flex="20" class="line-3px color-bg-primary-op-50"></div>
-                        <span class="margin-horizontal-default">{{::$i18n.block.task.paymentData}}</span>
-                        <div flex class="line-3px color-bg-primary-op-50"></div>
-                    </div>
-
-                </div>
+            <div ng-if="!task.loading" layout="row" layout-align="start center" layout-wrap class="cursor-default">
 
                 <div ng-repeat="group in task.dataGroups" flex="100" layout="row" layout-align="{{group.alignment + ' center'}}" layout-wrap>
 
-                    <div ng-if="task.showDataGroupDivider(group)" flex="100" layout="row" layout-align="start center">
+                    <div ng-if="task.showDataGroupDivider(group)" ng-class="{'hide show-xs' : $first}" flex="100" layout="row" layout-align="start center">
                         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
                         <span class="margin-horizontal-default">{{group.title}}</span>
                         <div flex class="line-3px color-bg-primary-op-50"></div>
                     </div>
 
-                    <div ng-if="!field.behavior.hidden" ng-repeat="field in group.data" flex-gt-sm="{{group.stretch ? '100' : '50'}}" flex-sm="100" flex-xs="100">
+                    <div ng-if="!field.behavior.hidden" ng-repeat="field in group.data" ng-class="{'hide show-xs' : $parent.$parent.$first}" flex-gt-sm="{{group.stretch ? '100' : '50'}}" flex-sm="100" flex-xs="100">
                         <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
                         <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
                     </div>
