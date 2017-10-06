@@ -37,7 +37,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
 
     TaskTab.prototype.activate = function (taskToExpand) {
         this.tasksGroup = this.$mdExpansionPanelGroup(`tasksGroup-${this.id}`);
-        const panelView = this.taskView ? "task_view_panel.html" : "case_view_panel.html";
+        const panelView = this.taskView ? "payment_panel.html" : "case_view_panel.html";
         try {
             this.tasksGroup.register(`taskPanel`, {
                 templateUrl: 'views/app/panels/'+panelView,
