@@ -1,8 +1,8 @@
 /*!
- * Angular Material Design
+ * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.1
+ * v1.1.5
  */
 (function( window, angular, undefined ){
 "use strict";
@@ -19,10 +19,10 @@
 
  ***************************************************/
 
-SelectDirective.$inject = ["$mdSelect", "$mdUtil", "$mdConstant", "$mdTheming", "$mdAria", "$compile", "$parse"];
-SelectMenuDirective.$inject = ["$parse", "$mdUtil", "$mdConstant", "$mdTheming"];
-OptionDirective.$inject = ["$mdButtonInkRipple", "$mdUtil"];
-SelectProvider.$inject = ["$$interimElementProvider"];
+SelectDirective['$inject'] = ["$mdSelect", "$mdUtil", "$mdConstant", "$mdTheming", "$mdAria", "$parse", "$sce", "$injector"];
+SelectMenuDirective['$inject'] = ["$parse", "$mdUtil", "$mdConstant", "$mdTheming"];
+OptionDirective['$inject'] = ["$mdButtonInkRipple", "$mdUtil", "$mdTheming"];
+SelectProvider['$inject'] = ["$$interimElementProvider"];
 var SELECT_EDGE_MARGIN = 8;
 var selectNextId = 0;
 var CHECKBOX_SELECTION_INDICATOR =
@@ -83,12 +83,17 @@ angular.module('material.components.select', [
  * `value="null"` will require the test `ng-if="myValue != 'null'"` rather than `ng-if="!myValue"`.
  *
  * @param {expression} ng-model The model!
- * @param {boolean=} multiple Whether it's multiple.
+ * @param {boolean=} multiple When set to true, allows for more than one option to be selected. The model is an array with the selected choices.
  * @param {expression=} md-on-close Expression to be evaluated when the select is closed.
  * @param {expression=} md-on-open Expression to be evaluated when opening the select.
  * Will hide the select options and show a spinner until the evaluated promise resolves.
  * @param {expression=} md-selected-text Expression to be evaluated that will return a string
- * to be displayed as a placeholder in the select input box when it is closed.
+ * to be displayed as a placeholder in the select input box when it is closed. The value
+ * will be treated as *text* (not html).
+ * @param {expression=} md-selected-html Expression to be evaluated that will return a string
+ * to be displayed as a placeholder in the select input box when it is closed. The value
+ * will be treated as *html*. The value must either be explicitly marked as trustedHtml or
+ * the ngSanitize module must be loaded.
  * @param {string=} placeholder Placeholder hint text.
  * @param md-no-asterisk {boolean=} When set to true, an asterisk will not be appended to the
  * floating label. **Note:** This attribute is only evaluated once; it is not watched.
@@ -187,7 +192,8 @@ angular.module('material.components.select', [
  * </div>
  * </hljs>
  */
-function SelectDirective($mdSelect, $mdUtil, $mdConstant, $mdTheming, $mdAria, $compile, $parse) {
+function SelectDirective($mdSelect, $mdUtil, $mdConstant, $mdTheming, $mdAria, $parse, $sce,
+    $injector) {
   var keyCodes = $mdConstant.KEY_CODE;
   var NAVIGATION_KEYS = [keyCodes.SPACE, keyCodes.ENTER, keyCodes.UP_ARROW, keyCodes.DOWN_ARROW];
 
@@ -209,9 +215,11 @@ function SelectDirective($mdSelect, $mdUtil, $mdConstant, $mdTheming, $mdAria, $
     }
 
     // There's got to be an md-content inside. If there's not one, let's add it.
-    if (!element.find('md-content').length) {
+    var mdContentEl = element.find('md-content');
+    if (!mdContentEl.length) {
       element.append(angular.element('<md-content>').append(element.contents()));
     }
+    mdContentEl.attr('role', 'presentation');
 
 
     // Add progress spinner for md-options-loading
@@ -250,7 +258,7 @@ function SelectDirective($mdSelect, $mdUtil, $mdConstant, $mdTheming, $mdAria, $
 
       // Adds an extra option that will hold the selected value for the
       // cases where the select is a part of a non-angular form. This can be done with a ng-model,
-      // however if the `md-option` is being `ng-repeat`-ed, Angular seems to insert a similar
+      // however if the `md-option` is being `ng-repeat`-ed, AngularJS seems to insert a similar
       // `option` node, but with a value of `? string: <value> ?` which would then get submitted.
       // This also goes around having to prepend a dot to the name attribute.
       autofillClone.append(
@@ -265,8 +273,8 @@ function SelectDirective($mdSelect, $mdUtil, $mdConstant, $mdTheming, $mdAria, $
     // Use everything that's left inside element.contents() as the contents of the menu
     var multipleContent = isMultiple ? 'multiple' : '';
     var selectTemplate = '' +
-      '<div class="md-select-menu-container" aria-hidden="true">' +
-      '<md-select-menu {0}>{1}</md-select-menu>' +
+      '<div class="md-select-menu-container" aria-hidden="true" role="presentation">' +
+      '<md-select-menu role="presentation" {0}>{1}</md-select-menu>' +
       '</div>';
 
     selectTemplate = $mdUtil.supplant(selectTemplate, [multipleContent, element.html()]);
@@ -350,17 +358,39 @@ function SelectDirective($mdSelect, $mdUtil, $mdConstant, $mdTheming, $mdAria, $
       mdSelectCtrl.setLabelText = function(text) {
         mdSelectCtrl.setIsPlaceholder(!text);
 
-        if (attr.mdSelectedText) {
-          text = $parse(attr.mdSelectedText)(scope);
-        } else {
+        // Whether the select label has been given via user content rather than the internal
+        // template of <md-option>
+        var isSelectLabelFromUser = false;
+
+        if (attr.mdSelectedText && attr.mdSelectedHtml) {
+          throw Error('md-select cannot have both `md-selected-text` and `md-selected-html`');
+        }
+
+        if (attr.mdSelectedText || attr.mdSelectedHtml) {
+          text = $parse(attr.mdSelectedText || attr.mdSelectedHtml)(scope);
+          isSelectLabelFromUser = true;
+        } else if (!text) {
           // Use placeholder attribute, otherwise fallback to the md-input-container label
           var tmpPlaceholder = attr.placeholder ||
               (containerCtrl && containerCtrl.label ? containerCtrl.label.text() : '');
-          text = text || tmpPlaceholder || '';
+
+          text = tmpPlaceholder || '';
+          isSelectLabelFromUser = true;
         }
 
         var target = valueEl.children().eq(0);
-        target.html(text);
+
+        if (attr.mdSelectedHtml) {
+            // Using getTrustedHtml will run the content through $sanitize if it is not already
+            // explicitly trusted. If the ngSanitize module is not loaded, this will
+            // *correctly* throw an sce error.
+            target.html($sce.getTrustedHtml(text));
+        } else if (isSelectLabelFromUser) {
+          target.text(text);
+        } else {
+          // If we've reached this point, the text is not user-provided.
+          target.html(text);
+        }
       };
 
       mdSelectCtrl.setIsPlaceholder = function(isPlaceholder) {
@@ -421,7 +451,7 @@ function SelectDirective($mdSelect, $mdUtil, $mdConstant, $mdTheming, $mdAria, $
       }
 
       scope.$watch(function() {
-          return selectMenuCtrl.selectedLabels();
+        return selectMenuCtrl.selectedLabels();
       }, syncLabelText);
 
       function syncLabelText() {
@@ -506,7 +536,10 @@ function SelectDirective($mdSelect, $mdUtil, $mdConstant, $mdTheming, $mdAria, $
 
       var containerId = 'select_container_' + $mdUtil.nextUid();
       selectContainer.attr('id', containerId);
-      ariaAttrs['aria-owns'] = containerId;
+      // Only add aria-owns if element ownership is NOT represented in the DOM.
+      if (!element.find('md-select-menu').length) {
+        ariaAttrs['aria-owns'] = containerId;
+      }
       element.attr(ariaAttrs);
 
       scope.$on('$destroy', function() {
@@ -552,7 +585,7 @@ function SelectDirective($mdSelect, $mdUtil, $mdConstant, $mdTheming, $mdAria, $
           e.preventDefault();
           openSelect(e);
         } else {
-          if ($mdConstant.isInputKey(e) || $mdConstant.isNumPadKey(e)) {
+          if (shouldHandleKey(e, $mdConstant)) {
             e.preventDefault();
 
             var node = selectMenuCtrl.optNodeForKeyboardSearch(e);
@@ -597,7 +630,7 @@ function SelectMenuDirective($parse, $mdUtil, $mdConstant, $mdTheming) {
   // We want the scope to be set to 'false' so an isolated scope is not created
   // which would interfere with the md-select-header's access to the
   // parent scope.
-  SelectMenuController.$inject = ["$scope", "$attrs", "$element"];
+  SelectMenuController['$inject'] = ["$scope", "$attrs", "$element"];
   return {
     restrict: 'E',
     require: ['mdSelectMenu'],
@@ -748,9 +781,11 @@ function SelectMenuDirective($parse, $mdUtil, $mdConstant, $mdTheming) {
 
       // Allow users to provide `ng-model="foo" ng-model-options="{trackBy: 'foo.id'}"` so
       // that we can properly compare objects set on the model to the available options
-      if (ngModel.$options && ngModel.$options.trackBy) {
+      var trackByOption = $mdUtil.getModelOption(ngModel, 'trackBy');
+
+      if (trackByOption) {
         var trackByLocals = {};
-        var trackByParsed = $parse(ngModel.$options.trackBy);
+        var trackByParsed = $parse(trackByOption);
         self.hashGetter = function(value, valueScope) {
           trackByLocals.$value = value;
           return trackByParsed(valueScope || $scope, trackByLocals);
@@ -804,7 +839,9 @@ function SelectMenuDirective($parse, $mdUtil, $mdConstant, $mdTheming) {
         } else if (mode == 'aria') {
           mapFn = function(el) { return el.hasAttribute('aria-label') ? el.getAttribute('aria-label') : el.textContent; };
         }
-        return selectedOptionEls.map(mapFn).join(', ');
+
+        // Ensure there are no duplicates; see https://github.com/angular/material/issues/9442
+        return $mdUtil.uniq(selectedOptionEls.map(mapFn)).join(', ');
       } else {
         return '';
       }
@@ -866,12 +903,12 @@ function SelectMenuDirective($parse, $mdUtil, $mdConstant, $mdTheming) {
           values.push(self.selected[hashKey]);
         }
       }
-      var usingTrackBy = self.ngModel.$options && self.ngModel.$options.trackBy;
+      var usingTrackBy = $mdUtil.getModelOption(self.ngModel, 'trackBy');
 
       var newVal = self.isMultiple ? values : values[0];
       var prevVal = self.ngModel.$modelValue;
 
-      if (usingTrackBy ? !angular.equals(prevVal, newVal) : prevVal != newVal) {
+      if (usingTrackBy ? !angular.equals(prevVal, newVal) : (prevVal + '') !== newVal) {
         self.ngModel.$setViewValue(newVal);
         self.ngModel.$render();
       }
@@ -903,9 +940,9 @@ function SelectMenuDirective($parse, $mdUtil, $mdConstant, $mdTheming) {
 
 }
 
-function OptionDirective($mdButtonInkRipple, $mdUtil) {
+function OptionDirective($mdButtonInkRipple, $mdUtil, $mdTheming) {
 
-  OptionController.$inject = ["$element"];
+  OptionController['$inject'] = ["$element"];
   return {
     restrict: 'E',
     require: ['mdOption', '^^mdSelectMenu'],
@@ -936,6 +973,8 @@ function OptionDirective($mdButtonInkRipple, $mdUtil) {
   function postLink(scope, element, attr, ctrls) {
     var optionCtrl = ctrls[0];
     var selectCtrl = ctrls[1];
+
+    $mdTheming(element);
 
     if (selectCtrl.isMultiple) {
       element.addClass('md-checkbox-enabled');
@@ -1056,6 +1095,7 @@ function OptgroupDirective() {
         el.prepend(labelElement);
       }
       labelElement.addClass('md-container-ignore');
+      labelElement.attr('aria-hidden', 'true');
       if (attrs.label) labelElement.text(attrs.label);
     }
   }
@@ -1068,7 +1108,7 @@ function SelectHeaderDirective() {
 }
 
 function SelectProvider($$interimElementProvider) {
-  selectDefaultOptions.$inject = ["$mdSelect", "$mdConstant", "$mdUtil", "$window", "$q", "$$rAF", "$animateCss", "$animate", "$document"];
+  selectDefaultOptions['$inject'] = ["$mdSelect", "$mdConstant", "$mdUtil", "$window", "$q", "$$rAF", "$animateCss", "$animate", "$document"];
   return $$interimElementProvider('$mdSelect')
     .setDefaults({
       methods: ['target'],
@@ -1094,6 +1134,14 @@ function SelectProvider($$interimElementProvider) {
      * Interim-element onRemove logic....
      */
     function onRemove(scope, element, opts) {
+      var animationRunner = null;
+      var destroyListener = scope.$on('$destroy', function() {
+        // Listen for the case where the element was destroyed while there was an
+        // ongoing close animation. If this happens, we need to end the animation
+        // manually.
+        animationRunner.end();
+      });
+
       opts = opts || { };
       opts.cleanupInteraction();
       opts.cleanupResizing();
@@ -1101,8 +1149,7 @@ function SelectProvider($$interimElementProvider) {
 
       // For navigation $destroy events, do a quick, non-animated removal,
       // but for normal closes (from clicks, etc) animate the removal
-
-      return  (opts.$destroy === true) ? cleanElement() : animateRemoval().then( cleanElement );
+      return (opts.$destroy === true) ? cleanElement() : animateRemoval().then(cleanElement);
 
       /**
        * For normal closes (eg clicks), animate the removal.
@@ -1110,17 +1157,21 @@ function SelectProvider($$interimElementProvider) {
        * skip the animations
        */
       function animateRemoval() {
-        return $animateCss(element, {addClass: 'md-leave'}).start();
+        animationRunner = $animateCss(element, {addClass: 'md-leave'});
+        return animationRunner.start();
       }
 
       /**
        * Restore the element to a closed state
        */
       function cleanElement() {
+        destroyListener();
 
-        element.removeClass('md-active');
-        element.attr('aria-hidden', 'true');
-        element[0].style.display = 'none';
+        element
+          .removeClass('md-active')
+          .attr('aria-hidden', 'true')
+          .css('display', 'none');
+        element.parent().find('md-select-value').removeAttr('aria-hidden');
 
         announceClosed(opts);
 
@@ -1147,6 +1198,7 @@ function SelectProvider($$interimElementProvider) {
           opts.alreadyOpen = true;
           opts.cleanupInteraction = activateInteraction();
           opts.cleanupResizing = activateResizing();
+          autoFocus(opts.focusedNode);
 
           return response;
         }, opts.hideBackdrop);
@@ -1160,6 +1212,11 @@ function SelectProvider($$interimElementProvider) {
        *  and scalings...
        */
       function showDropDown(scope, element, opts) {
+        if (opts.parent !== element.parent()) {
+          element.parent().attr('aria-owns', element.attr('id'));
+        }
+        element.parent().find('md-select-value').attr('aria-hidden', 'true');
+
         opts.parent.append(element);
 
         return $q(function(resolve, reject) {
@@ -1180,7 +1237,7 @@ function SelectProvider($$interimElementProvider) {
 
       /**
        * Initialize container and dropDown menu positions/scale, then animate
-       * to show... and autoFocus.
+       * to show.
        */
       function positionAndFocusMenu() {
         return $q(function(resolve) {
@@ -1195,7 +1252,6 @@ function SelectProvider($$interimElementProvider) {
             element.addClass('md-active');
             info.dropDown.element.css(animator.toCss({transform: ''}));
 
-            autoFocus(opts.focusedNode);
             resolve();
           });
 
@@ -1380,7 +1436,7 @@ function SelectProvider($$interimElementProvider) {
               $mdUtil.nextTick($mdSelect.hide, true);
               break;
             default:
-              if ($mdConstant.isInputKey(ev) || $mdConstant.isNumPadKey(ev)) {
+              if (shouldHandleKey(ev, $mdConstant)) {
                 var optNode = dropDown.controller('mdSelectMenu').optNodeForKeyboardSearch(ev);
                 opts.focusedNode = optNode || opts.focusedNode;
                 optNode && optNode.focus();
@@ -1657,6 +1713,15 @@ function SelectProvider($$interimElementProvider) {
     }
     return isScrollable;
   }
+
+}
+
+function shouldHandleKey(ev, $mdConstant) {
+  var char = String.fromCharCode(ev.keyCode);
+  var isNonUsefulKey = (ev.keyCode <= 31);
+
+  return (char && char.length && !isNonUsefulKey &&
+    !$mdConstant.isMetaKey(ev) && !$mdConstant.isFnLockKey(ev) && !$mdConstant.hasModifierKey(ev));
 }
 
 })(window, window.angular);

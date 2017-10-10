@@ -1,17 +1,17 @@
 <div ng-cloak layout="column" class="layout-rh-100-min-769">
 
-    <div layout="row" layout-align="start center" class="card padding-vertical-default padding-horizontal-2x margin-default margin-top-default">
+    <div layout="row" layout-align="start center" class="card padding-horizontal-2x padding-vertical-default margin-default">
 
-        <div layout="row" layout-align="start center">
+        <div flex-gt-sm="30" flex-sm flex-xs layout="row" layout-align="start center" class="height-52px">
             <i class="material-icons color-fg-accent-50">search</i>
 
             <md-input-container class="margin-0">
                 <label>{{::$i18n.block.input.search}}</label>
-                <input ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+                <input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
             </md-input-container>
         </div>
 
-        <div flex></div>
+        <div flex-gt-sm flex-sm-none flex-xs-none></div>
 
         <md-button class="md-fab md-raised md-mini md-primary" ng-click="contCtrl.caseTab.openNewCaseDialog($i18n.page.contacts.this)">
             <md-tooltip md-direction="left">{{::$i18n.block.add.createContact}}</md-tooltip>
@@ -24,13 +24,16 @@
     <div layout="column" class="card margin-default" flex>
 
         <div layout="row" layout-align="start center" class="card-header padding-2x padding-right-66px">
-            <span flex="5">{{::$i18n.block.task.type}}</span>
-            <span flex="20">{{::$i18n.block.task.name}}</span>
-            <span flex="20">{{::$i18n.block.task.surname}}</span>
-            <span flex="20">{{::$i18n.block.task.phone}}</span>
-            <span flex="20">{{::$i18n.block.task.email}}</span>
-            <!-- To create alphabet spacer -->
-            <span flex="5" class="visibility-hidden"></span>
+
+            <span flex-gt-sm="5" flex-sm="10" flex-xs="20">{{::$i18n.block.task.type}}</span>
+            <!-- immediateData header -->
+            <span hide-md hide-sm hide-xs flex-gt-md="20">{{::$i18n.block.task.name}}</span>
+            <span flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="55">{{::$i18n.block.task.surname}}</span>
+            <span hide-sm hide-xs flex-gt-md="20" flex-md="30">{{::$i18n.block.task.phone}}</span>
+            <span hide-xs flex-gt-md="20" flex-md="30" flex-sm="40">{{::$i18n.block.task.email}}</span>
+            <!-- ./immediateData header -->
+            <span flex-gt-sm="5" flex-sm="10" flex-xs="25" class="visibility-hidden"></span>
+
         </div>
 
         <div layout="row" class=" margin-top-0" flex>
@@ -48,7 +51,7 @@
 
             </div>
 
-            <div layout="column" layout-align="space-between center" class="padding-default padding-left-2x">
+            <div hide-xs layout="column" layout-align="space-between center" class="padding-default padding-left-2x">
                 <span ng-repeat="char in contCtrl.alphabet">{{char}}</span>
             </div>
 

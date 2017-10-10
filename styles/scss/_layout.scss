@@ -29,20 +29,6 @@
 // Layout
 .layout {
 
-    &-vh {					// Window dims
-
-        &-100 {
-            height: 100vh;
-        }
-    }
-
-    &-vw {
-
-        &-100 {
-            width: 100vw;
-        }
-    }
-
     &-rh {					// Relative dims
 
         &-100 {
@@ -79,18 +65,213 @@
     }
 }
 
+// Responsive layout
+
+// Responsive (By width)
+// xs
+@media all and (max-width: 599px) {
+
+    .layout {
+
+        &-xs {
+
+            &-rw { // Relative dims
+
+                &-100 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+// sm
+@media all and (min-width: 600px) and (max-width: 959px) {
+
+    .layout {
+
+        &-sm {
+
+            &-rw { // Relative dims
+
+                &-100 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+// md
+@media all and (min-width: 960px) and (max-width: 1279px) {
+
+    .layout {
+
+        &-md {
+
+            &-rw { // Relative dims
+
+                &-100 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+// lg
+@media all and (min-width: 1280px) and (max-width: 1919px) {
+
+    .layout {
+
+        &-lg {
+
+            &-rw { // Relative dims
+
+                &-100 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+// xl
+@media all and (min-width: 1920px) {
+
+    .layout {
+
+        &-xl {
+
+            &-rw { // Relative dims
+
+                &-100 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+// GTs
+// gt xs
+@media all and (min-width: 600px) {
+
+    .layout {
+
+        &-gt-xs {
+
+            &-rw { // Relative dims
+
+                &-100 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+// gt sm
+@media all and (min-width: 960px) {
+
+    .layout {
+
+        &-gt-sm {
+
+            &-rw { // Relative dims
+
+                &-100 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+// gt md
+@media all and (min-width: 1280px) {
+
+    .layout {
+
+        &-gt-md {
+
+            &-rw { // Relative dims
+
+                &-100 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+// gt lg
+@media all and (min-width: 1920px) {
+
+    .layout {
+
+        &-gt-lg {
+
+            &-rw { // Relative dims
+
+                &-100 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+
 // Responsive (By height)
 @media all and (min-height: 769px) {
 
     .layout {
 
-        &-rh {					// Relative height
+        &-rh { // Relative height
 
             &-100 {
 
-                &-min {
+                &-min { // Min height
 
                     &-769 {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+// Fix sign in page for phone small height (landscape/active keyboard)
+@media screen and (min-height: 230px) {
+
+    .layout {
+
+        &-rh { // Relative height
+
+            &-100 {
+
+                &-min { // Min height
+
+                    &-230 {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+// Fix sign up page for phone small height (landscape/active keyboard)
+@media screen and (min-height: 490px) {
+
+    .layout {
+
+        &-rh { // Relative height
+
+            &-100 {
+
+                &-min { // Min height
+
+                    &-490 {
                         height: 100%;
                     }
                 }

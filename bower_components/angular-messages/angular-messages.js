@@ -1,6 +1,6 @@
 /**
- * @license AngularJS v1.6.1
- * (c) 2010-2016 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.6
+ * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular) {'use strict';
@@ -272,6 +272,7 @@ angular.module('ngMessages', [], function initAngularHelpers() {
   isString = angular.isString;
   jqLite = angular.element;
 })
+  .info({ angularVersion: '1.6.6' })
 
   /**
    * @ngdoc directive

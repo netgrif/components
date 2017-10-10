@@ -1,6 +1,9 @@
-define(['angular', '../modules/Main'], function (angular) {
-    angular.module('ngMain').controller('AdminConsoleController', ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user','$i18n',
-        function ($log, $scope, $http, $snackbar, $timeout, $user, $i18n) {
+define(['angular', '../modules/Admin'], function (angular) {
+    angular.module('ngAdmin').controller('AdminConsoleController', ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user','$i18n','$location',
+        function ($log, $scope, $http, $snackbar, $timeout, $user, $i18n, $location) {
+            if(!$user.hasAuthority("ROLE_ADMIN"))
+                $location.path("/");
+
             const self = this;
 
             //Invitation

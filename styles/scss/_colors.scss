@@ -42,9 +42,6 @@ $color-primary-op-50:			rgba(18, 178, 210, .50);
 $color-primary-op-60:			rgba(18, 178, 210, .60);
 $color-primary-op-87:			rgba(18, 178, 210, .87);
 
-// Login card
-$color-login-card:				rgba(0, 0, 0, 0);
-
 // System
 $color-success:					#4CAF50;
 $color-warning:					#FFC107;
@@ -427,39 +424,39 @@ $color-brown-500:				#795548;
 			}
 
 			&-100 {
-				color: $color-grey-100;
+				background-color: $color-grey-100;
 			}
 
 			&-200 {
-				color: $color-grey-200;
+				background-color: $color-grey-200;
 			}
 
 			&-300 {
-				color: $color-grey-300;
+				background-color: $color-grey-300;
 			}
 
 			&-400 {
-				color: $color-grey-400;
+				background-color: $color-grey-400;
 			}
 
 			&-500 {
-				color: $color-grey-500;
+				background-color: $color-grey-500;
 			}
 
 			&-600 {
-				color: $color-grey-600;
+				background-color: $color-grey-600;
 			}
 
 			&-700 {
-				color: $color-grey-700;
+				background-color: $color-grey-700;
 			}
 
 			&-800 {
-				color: $color-grey-800;
+				background-color: $color-grey-800;
 			}
 
 			&-900 {
-				color: $color-grey-900;
+				background-color: $color-grey-900;
 			}
 		}
 	}
@@ -471,6 +468,47 @@ $color-brown-500:				#795548;
 			border-bottom-color: transparent !important;
 			border-left-color: transparent !important;
 			border-right-color: transparent !important;
+		}
+
+		&-primary {
+
+			&-op {
+
+				&-30 {
+					border-top-color: $color-primary-op-30 !important;
+					border-bottom-color: $color-primary-op-30 !important;
+					border-left-color: $color-primary-op-30 !important;
+					border-right-color: $color-primary-op-30 !important;
+				}
+
+				&-40 {
+					border-top-color: $color-primary-op-40 !important;
+					border-bottom-color: $color-primary-op-40 !important;
+					border-left-color: $color-primary-op-40 !important;
+					border-right-color: $color-primary-op-40 !important;
+				}
+
+				&-50 {
+					border-top-color: $color-primary-op-50 !important;
+					border-bottom-color: $color-primary-op-50 !important;
+					border-left-color: $color-primary-op-50 !important;
+					border-right-color: $color-primary-op-50 !important;
+				}
+
+				&-60 {
+					border-top-color: $color-primary-op-60 !important;
+					border-bottom-color: $color-primary-op-60 !important;
+					border-left-color: $color-primary-op-60 !important;
+					border-right-color: $color-primary-op-60 !important;
+				}
+
+				&-87 {
+					border-top-color: $color-primary-op-87 !important;
+					border-bottom-color: $color-primary-op-87 !important;
+					border-left-color: $color-primary-op-87 !important;
+					border-right-color: $color-primary-op-87 !important;
+				}
+			}
 		}
 	}
 }

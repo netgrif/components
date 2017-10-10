@@ -20,7 +20,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                         processName: "Insurance",
                         filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET, CaseTab.FIND_BY_TRANSITION],
                         transitionNames: ["Nehnuteľnosť a domácnosť","Základné informácie","Údaje o zmluve"],
-                        casType: "Offer"
+                        caseType: "Offer"
                     });
 
                     self.tabChanged = function () {
@@ -69,9 +69,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                         self.caseTab.openNewCaseDialog($i18n.page.offers.this);
                         $cache.remove("create");
                     }
-                    $rootScope.$on("caseCreate", (event, type) => {
+                    const caseCreateListener = $rootScope.$on("caseCreate", (event, type) => {
                         if(type === "offers")
                             self.caseTab.openNewCaseDialog($i18n.page.offers.this);
                     });
+                    $scope.$on('$destroy', () => caseCreateListener());
                 }]);
     });

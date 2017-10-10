@@ -33,12 +33,14 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     TaskTab.URL_SEARCH = "/res/task/search";
     TaskTab.URL_BYCASE = "/res/task/case";
     TaskTab.FIND_BY_CASE = 0;
+    TaskTab.FIND_BY_TITLE = 1;
 
     TaskTab.prototype.activate = function (taskToExpand) {
         this.tasksGroup = this.$mdExpansionPanelGroup(`tasksGroup-${this.id}`);
+        const panelView = this.taskView ? "payment_panel.html" : "case_view_panel.html";
         try {
             this.tasksGroup.register(`taskPanel`, {
-                templateUrl: 'views/app/panels/task_panel.html',
+                templateUrl: 'views/app/panels/'+panelView,
                 controller: 'TaskController',
                 controllerAs: 'taskCtrl',
             });
@@ -146,6 +148,9 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.baseCriteria.forEach(c => {
             if (c === TaskTab.FIND_BY_CASE)
                 query.case = this.useCase.stringId;
+
+            if (c === TaskTab.FIND_BY_TITLE && this.searchTitles)
+                query.title = this.searchTitles;
         });
 
         return query;
@@ -225,9 +230,9 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
 
     TaskTab.prototype.autoExpandTask = function () {
         const unfinished = this.tasks.filter(task => !task.finishDate);
-        if(unfinished.length === 1 &&
-            this.tasks.findIndex(task => task.stringId === unfinished[0].stringId) === this.tasks.length-1 &&
-            !unfinished[0].expanded){
+        if (unfinished.length === 1 &&
+            this.tasks.findIndex(task => task.stringId === unfinished[0].stringId) === this.tasks.length - 1 &&
+            !unfinished[0].expanded) {
             unfinished[0].click();
         }
     };
@@ -295,7 +300,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 console.log(`Case ${this.useCase.stringId} failed to update`);
             })
 
-        },function () {
+        }, function () {
             console.log(`Case ${this.useCase.stringId} failed to update`);
         })
     };

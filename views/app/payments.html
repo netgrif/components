@@ -1,0 +1,31 @@
+<div ng-cloak>
+
+    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="payCtrl.activeTabIndex">
+        <md-tab class="primary" ng-repeat="tab in payCtrl.tabs" md-on-select="payCtrl.tabChanged()">
+
+            <md-tab-label>
+                {{::tab.label}}
+            </md-tab-label>
+
+            <md-tab-body>
+                <md-content layout="column" class="color-bg-transparent">
+                    <div flex layout="column" class="card margin-default">
+
+                        <div layout="row" layout-align="start center" class="card-header list-header padding-default padding-horizontal-2x">
+                            <span flex-gt-xs="10" flex-xs="20">{{::$i18n.block.case.label}}</span>
+                            <span flex-gt-xs="20" flex-xs="70">{{::$i18n.page.payments.contractID}}</span>
+                            <span hide-xs flex="30">{{::$i18n.page.payments.insured}}</span>
+                            <span hide-xs flex="30">{{::$i18n.page.payments.beginningOfInsurance}}</span>
+                            <span flex="10" class="visibility-hidden"></span>
+                        </div>
+
+                        <md-expansion-panel-group md-component-id="'tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple></md-expansion-panel-group>
+
+                    </div>
+                </md-content>
+            </md-tab-body>
+
+        </md-tab>
+    </md-tabs>
+
+</div>

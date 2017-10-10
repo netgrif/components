@@ -2,32 +2,38 @@
 
     <md-expansion-panel-collapsed>
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="task.click($event)">
-            <div ng-if="task.caseColor" class="{{task.caseColor}}" flex="10" layout="row" layout-align="start center">
+
+            <div ng-if="task.caseColor" flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center" class="{{task.caseColor}}">
                 <i class="material-icons" ng-repeat="icon in task.getIcons()">{{icon}}</i>
             </div>
             <!--<i ng-if="task.caseColor" flex="10" class="material-icons {{task.caseColor}}">{{task.icon ? task.icon : task.tab.useCase.icon ? task.tab.useCase.icon : 'label'}}</i>-->
-            <span flex="40">{{task.caseTitle}}</span>
-            <span flex="40">{{task.title}}</span>
-            <i ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
-            <div ng-if="task.loading" flex="10">
-                <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30"></md-progress-circular>
+            <span hide show-gt-sm flex="40">{{task.caseTitle}}</span>
+            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{task.title}}</span>
+            <i hide-xs ng-if="task.finishDate && !task.loading" flex="10" class="material-icons color-fg-primary-500">done</i>
+            <div hide-xs ng-if="task.loading" flex="10">
+                <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-accent-50"></md-progress-circular>
             </div>
+
         </div>
     </md-expansion-panel-collapsed>
 
     <md-expansion-panel-expanded>
 
         <md-expansion-panel-header ng-click="task.click($event)">
-            <div ng-if="task.caseColor" class="{{task.caseColor}}" flex="10" layout="row" layout-align="start center">
+
+            <div ng-if="task.caseColor" flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center" class="{{task.caseColor}}">
                 <i class="material-icons" ng-repeat="icon in task.getIcons()">{{icon}}</i>
             </div>
-            <!--<i ng-if="task.caseColor" flex="10" class="material-icons {{task.caseColor}}">label</i>-->
-            <span flex="40">{{task.caseTitle}}</span>
-            <span flex="40">{{task.title}}</span>
-            <i ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
-            <div ng-if="task.loading" flex="10">
-                <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="30"></md-progress-circular>
+
+            <span hide show-gt-sm flex="40">{{task.caseTitle}}</span>
+
+            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{task.title}}</span>
+
+            <i hide-xs ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
+            <div hide-xs ng-if="task.loading" flex="10">
+                <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-accent-50"></md-progress-circular>
             </div>
+
         </md-expansion-panel-header>
 
         <md-expansion-panel-content>
@@ -41,9 +47,9 @@
                         <div flex class="line-3px color-bg-primary-op-50"></div>
                     </div>
 
-                    <div ng-repeat="field in group.data" flex="{{group.stretch ? '100' : '50'}}" flex-sm="100"
-                         ng-if="!field.behavior.hidden">
+                    <div ng-repeat="field in group.data" flex="{{group.stretch ? '100' : '50'}}" flex-md="100" flex-sm="100" flex-xs="100" ng-if="!field.behavior.hidden">
                         <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
+                        <md-divider class="color-border-primary-op-50 margin-bottom-2x" hide show-xs></md-divider>
                     </div>
 
                 </div>
@@ -56,16 +62,16 @@
         </md-expansion-panel-content>
 
         <md-expansion-panel-footer md-no-sticky>
-            <div flex></div>
-            <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.save()">
-                {{::$i18n.block.btn.save}}
-            </md-button>
-            <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()">
+            <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
+
+            <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()" class="layout-xs-rw-100">
                 {{::$i18n.block.btn.finish}}
             </md-button>
-            <md-button class="md-primary" ng-click="task.click($event)">
+            <md-button ng-click="task.click($event)" class="md-primary layout-xs-rw-100">
                 {{::$i18n.block.btn.collapse}}
             </md-button>
+
+            </div>
         </md-expansion-panel-footer>
 
     </md-expansion-panel-expanded>

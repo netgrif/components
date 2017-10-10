@@ -1,8 +1,8 @@
 /*!
- * Angular Material Design
+ * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.1
+ * v1.1.5
  */
 goog.provide('ngmaterial.components.toast');
 goog.require('ngmaterial.components.button');
@@ -13,8 +13,8 @@ goog.require('ngmaterial.core');
   * @description
   * Toast
   */
-MdToastDirective.$inject = ["$mdToast"];
-MdToastProvider.$inject = ["$$interimElementProvider"];
+MdToastDirective['$inject'] = ["$mdToast"];
+MdToastProvider['$inject'] = ["$$interimElementProvider"];
 angular.module('material.components.toast', [
   'material.core',
   'material.components.button'
@@ -307,7 +307,8 @@ function MdToastDirective($mdToast) {
 
 function MdToastProvider($$interimElementProvider) {
   // Differentiate promise resolves: hide timeout (value == true) and hide action clicks (value == ok).
-  toastDefaultOptions.$inject = ["$animate", "$mdToast", "$mdUtil", "$mdMedia"];
+  MdToastController['$inject'] = ["$mdToast", "$scope"];
+  toastDefaultOptions['$inject'] = ["$animate", "$mdToast", "$mdUtil", "$mdMedia"];
   var ACTION_RESOLVE = 'ok';
 
   var activeToastContent;
@@ -333,24 +334,7 @@ function MdToastProvider($$interimElementProvider) {
             '    </md-button>' +
             '  </div>' +
             '</md-toast>',
-          controller: /* ngInject */ ["$scope", function mdToastCtrl($scope) {
-            var self = this;
-
-            if (self.highlightAction) {
-              $scope.highlightClasses = [
-                'md-highlight',
-                self.highlightClass
-              ]
-            }
-
-            $scope.$watch(function() { return activeToastContent; }, function() {
-              self.content = activeToastContent;
-            });
-
-            this.resolve = function() {
-              $mdToast.hide( ACTION_RESOLVE );
-            };
-          }],
+          controller: MdToastController,
           theme: $mdTheming.defaultTheme(),
           controllerAs: 'toast',
           bindToController: true
@@ -365,6 +349,33 @@ function MdToastProvider($$interimElementProvider) {
     }
 
     return $mdToast;
+
+  /**
+   * Controller for the Toast interim elements.
+   * ngInject
+   */
+  function MdToastController($mdToast, $scope) {
+    // For compatibility with AngularJS 1.6+, we should always use the $onInit hook in
+    // interimElements. The $mdCompiler simulates the $onInit hook for all versions.
+    this.$onInit = function() {
+      var self = this;
+
+      if (self.highlightAction) {
+        $scope.highlightClasses = [
+          'md-highlight',
+          self.highlightClass
+        ]
+      }
+
+      $scope.$watch(function() { return activeToastContent; }, function() {
+        self.content = activeToastContent;
+      });
+
+      this.resolve = function() {
+        $mdToast.hide( ACTION_RESOLVE );
+      };
+    }
+  }
 
   /* ngInject */
   function toastDefaultOptions($animate, $mdToast, $mdUtil, $mdMedia) {

@@ -26,9 +26,53 @@
     }
 
     &-welcome {
-        background-color: $color-login-card !important;
+        background-color: transparent !important;
         box-shadow: none !important;
         width: 600px;
-        margin-bottom: 230px;
+    }
+
+    &-signup {
+        background-color: $color-black-op-30 !important;
+        box-shadow: none !important;
+        width: 400px;
     }
 }
+
+// Responsive
+// xs
+@media all and (max-width: 599px) {
+
+    .card {
+
+        &-welcome {
+            background-color: $color-black-op-30 !important;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+
+        &-signup {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+    }
+}
+// sm
+@media all and (min-width: 600px) and (max-width: 959px) {}
+// md
+@media all and (min-width: 960px) and (max-width: 1279px) {}
+// lg
+@media all and (min-width: 1280px) and (max-width: 1919px) {}
+// xl
+@media all and (min-width: 1920px) {}
+
+// GTs
+// gt xs
+@media all and (min-width: 600px) {}
+// gt sm
+@media all and (min-width: 960px) {}
+// gt md
+@media all and (min-width: 1280px) {}
+// gt lg
+@media all and (min-width: 1920px) {}

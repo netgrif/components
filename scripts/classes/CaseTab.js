@@ -15,7 +15,9 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
         Object.assign(this, angular, config);
 
         this.cases = [];
-        this.newCase = {};
+        this.newCase = {
+            title: this.$i18n.block.case.newTitle[this.caseType]
+        };
     }
 
     CaseTab.prototype = Object.create(Tab.prototype);
@@ -146,12 +148,15 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     CaseTab.prototype.createCase = function () {
         if (!jQuery.isEmptyObject(this.newCase) || !this.net.entityId) {
             this.newCase.netId = this.net.entityId;
+            this.newCase.color = "color-fg-accent-50";
             const self = this;
             this.$http.post("/res/workflow/case", JSON.stringify(this.newCase))
                 .then(function (response) {
                     if (response) {
                         self.$dialog.closeCurrent();
-                        self.newCase = {};
+                        self.newCase = {
+                            title: self.$i18n.block.case.newTitle
+                        };
                         if(self.actionCase){
                             const actionCase = new ActionCase(self,self.controller.getPanelGroup(response.title),response,null,{
                                 $http: self.$http,
@@ -182,7 +187,9 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                     }
                 }, function () {
                     self.$snackbar.error(self.$i18n.block.snackbar.creatingNewCaseFailed);
-                    self.newCase = {};
+                    self.newCase = {
+                        title: self.$i18n.block.case.newTitle
+                    };
                 });
         }
     };

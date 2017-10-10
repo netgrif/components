@@ -81,7 +81,7 @@
 
                             <div layout="row" layout-align="end center" class="card padding-vertical-2x" flex>
                                 <md-progress-circular md-mode="indeterminate"
-                                                      class="md-primary margin-left-default"
+                                                      class="progress-circular-stroke-accent-50 margin-left-default"
                                                       md-diameter="30"
                                                       ng-if="adminCtrl.inviteLoading">
                                 </md-progress-circular>
@@ -190,7 +190,7 @@
                                     </md-input-container>
 
                                     <md-menu>
-                                        <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
+                                        <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
                                             <md-icon class="material-icons color-fg-material-grey-text">more_vert
                                             </md-icon>
                                         </md-button>

@@ -51,10 +51,11 @@ define(['angular', '../classes/CaseTab', 'angularMaterialExpansionPanels', '../m
                         self.caseTab.openNewCaseDialog($i18n.page.contacts.this);
                         $cache.remove("create");
                     }
-                    $rootScope.$on("caseCreate", (event, type) => {
+                    const caseCreateListener = $rootScope.$on("caseCreate", (event, type) => {
                         if(type === "contacts")
                             self.caseTab.openNewCaseDialog($i18n.page.contacts.this);
                     });
+                    $scope.$on('$destroy', () => caseCreateListener());
                 }]);
     });
 
