@@ -17,7 +17,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                         $timeout,
                         $i18n
                     }, {
-                        processName: "Insurance",
+                        processName: "Insurance Portal Demo",
                         filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET, CaseTab.FIND_BY_TRANSITION],
                         transitionNames: ["Nehnuteľnosť a domácnosť","Základné informácie","Údaje o zmluve"],
                         caseType: "Offer"

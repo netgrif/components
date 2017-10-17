@@ -71,7 +71,15 @@
 // gt xs
 @media all and (min-width: 600px) {}
 // gt sm
-@media all and (min-width: 960px) {}
+@media all and (min-width: 960px) {
+
+    .card {
+
+        &-logo {
+            width: 190px;
+        }
+    }
+}
 // gt md
 @media all and (min-width: 1280px) {}
 // gt lg

@@ -3,13 +3,13 @@
     <section layout="row" layout-align="left center" class="margin-horizontal-2x margin-top-2x">
 
         <a href="/" class="card-logo">
-            <img hide-sm hide-xs class="logo" src="../../assets/logo.svg" alt="logo">
-            <img hide show-sm show-xs class="logo" src="../../assets/logo_small.svg" alt="logo">
+            <img hide-sm hide-xs class="logo" src="../../assets/netgrif_logo2.png" alt="logo">
+            <img hide show-sm show-xs class="logo" src="../../assets/netgrif_logo.png" alt="logo">
         </a>
 
         <md-menu-bar layout="row" layout-align="center center" class="card card-op-60 margin-default toolbar" flex>
             <div flex></div>
-            <h1 hide-sm hide-xs>BROKER's <strong>PORTAL</strong></h1>
+            <h1 hide-sm hide-xs>INSURANCE <strong>DEMO</strong></h1>
             <div flex></div>
             <md-menu class="toolbar-menu">
 
@@ -85,36 +85,6 @@
                     <span flex hide show-gt-sm>{{::$i18n.page.offers.this}}</span>
                 </md-button>
 
-                <md-button href="/contacts" ng-class="{active: ('contacts' | routeSegmentContains)}" layout="row" layout-align="start center">
-                    <div layout="row" layout-align="center center" class="icon-wrapper">
-                        <i class="material-icons">contacts</i>
-                    </div>
-                    <span flex hide show-gt-sm>{{::$i18n.page.contacts.this}}</span>
-                </md-button>
-
-                <!--<md-button href="/documents" ng-class="{active: ('documents' | routeSegmentContains)}" layout="row" layout-align="start center">-->
-                    <!--<div layout="row" layout-align="center center" class="icon-wrapper">-->
-                        <!--<i class="material-icons">description</i>-->
-                    <!--</div>-->
-                    <!--<span flex hide show-gt-sm>{{::$i18n.page.documents.this}}</span>-->
-                <!--</md-button>-->
-
-                <md-button href="/contracts" ng-class="{active: ('contracts' | routeSegmentContains)}" layout="row" layout-align="start center">
-                    <div layout="row" layout-align="center center" class="icon-wrapper">
-                        <i class="material-icons">assignment</i>
-                    </div>
-                    <span flex hide show-gt-sm>{{::$i18n.page.contracts.this}}</span>
-                </md-button>
-
-                <md-button ng-if="$user.hasPermission('pair_payments')" href="/payments"
-                           ng-class="{active: ('payments' | routeSegmentContains)}" layout="row"
-                           layout-align="start center">
-                    <div layout="row" layout-align="center center" class="icon-wrapper">
-                        <i class="material-icons">payment</i>
-                    </div>
-                    <span flex hide show-gt-sm>{{::$i18n.page.payments.this}}</span>
-                </md-button>
-
                 <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" href="/console"
                            ng-class="{active: ('console' | routeSegmentContains)}" layout="row"
                            layout-align="left center">
@@ -139,18 +109,17 @@
                             </md-fab-trigger>
 
                             <md-fab-actions>
+
                                 <md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('offers')">
                                     <md-tooltip md-direction="right">{{::$i18n.block.add.createOffer}}</md-tooltip>
                                     <md-icon class="material-icons">content_paste</md-icon>
                                 </md-button>
+
                                 <md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('contacts')">
                                     <md-tooltip md-direction="right">{{::$i18n.block.add.createContact}}</md-tooltip>
                                     <md-icon class="material-icons">contacts</md-icon>
                                 </md-button>
-                                <!--<md-button class="md-fab md-raised md-mini" ng-click="mainCtrl.createCase('documents')">-->
-                                    <!--<md-tooltip md-direction="right">{{::$i18n.block.add.createDocument}}</md-tooltip>-->
-                                    <!--<md-icon class="material-icons">description</md-icon>-->
-                                <!--</md-button>-->
+
                             </md-fab-actions>
 
                         </md-fab-speed-dial>

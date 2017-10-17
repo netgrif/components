@@ -9,7 +9,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
     function (angular) {
         // console.log(angular.version);
         let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment','angular-inview',
-         'ngMain', 'ngOffers', 'ngContacts', 'ngContracts',  'ngDocuments', 'ngPayments', 'ngAdmin']); //here add modules that you defined
+         'ngMain', 'ngOffers', 'ngAdmin']); // Here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             $mdThemingProvider.definePalette('mainPalette', {
                 '50': '#e3f6fa',
@@ -44,10 +44,6 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                 .when('/signup/:token', 'signup')
                 .when('/dashboard','app.dashboard')
                 .when('/offers', 'app.offers')
-                .when('/documents', 'app.documents')
-                .when('/contracts', 'app.contracts')
-                .when('/contacts', 'app.contacts')
-                .when('/payments', 'app.payments')
                 .when('/console', 'app.console')
 
             .segment('app', {
@@ -66,26 +62,6 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                     templateUrl: "views/app/offers.html",
                     controller: 'OffersController',
                     controllerAs: 'offCtrl'
-                })
-                .segment('contacts', {
-                    templateUrl: "views/app/contacts.html",
-                    controller: 'ContactsController',
-                    controllerAs: 'contCtrl'
-                })
-                .segment('contracts', {
-                    templateUrl: "views/app/contracts.html",
-                    controller: 'ContractsController',
-                    controllerAs: 'contractCtrl'
-                })
-                .segment('documents', {
-                    templateUrl: "views/app/documents.html",
-                    controller: 'DocumentsController',
-                    controllerAs: 'docCtrl'
-                })
-                .segment('payments', {
-                    templateUrl: "views/app/payments.html",
-                    controller: 'PaymentsController',
-                    controllerAs: 'payCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",
