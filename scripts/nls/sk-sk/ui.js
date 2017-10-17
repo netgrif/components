@@ -25,25 +25,6 @@ define({
             this: "Ponuky",
             my: "Moje ponuky"
         },
-        contacts: {
-            this: "Kontakty"
-        },
-        documents: {
-            this: "Dokumenty",
-            preview: "Náhľad"
-        },
-        contracts: {
-            this: "Zmluvy",
-            my: "Moje zmluvy"
-        },
-        payments: {
-            this: "Platby",
-            all: "Všetky platby",
-            type: "Typ",
-            contractID: "ID zmluvy",
-            insured: "Poistník",
-            beginningOfInsurance: "Začiatok poistenia"
-        },
         console: {
             this: "Konzola",
             inviteUser: "Pozvať používateľa",

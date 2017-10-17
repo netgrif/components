@@ -26,25 +26,6 @@ define({
                 this: "Offers",
                 my: "My Offers"
             },
-            contacts: {
-                this: "Contacts"
-            },
-            documents: {
-                this: "Documents",
-                preview: "Preview"
-            },
-            contracts: {
-                this: "Contracts",
-                my: "My contracts"
-            },
-            payments: {
-                this: "Payments",
-                all: "All Payments",
-                type: "Type",
-                contractID: "Contract ID",
-                insured: "Insured",
-                beginningOfInsurance: "Beginning of insurance"
-            },
             console: {
                 this: "Console",
                 inviteUser: "Invite User",
