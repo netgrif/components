@@ -19,11 +19,6 @@ $shadow:                        2px 2px 5px $color-black-op-60;
 	overflow: hidden;
 }
 
-// TODO 22.6.2017 replace usage with .overflow-hidden
-.no-overflow{
-	overflow: hidden;
-}
-
 .overflow {
 
 	&-hidden {

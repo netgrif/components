@@ -1,40 +1,31 @@
 .card {
-    background-color: $color-black-op-40;
-    border-radius: $border-radius;
-    box-shadow: $shadow;
-    overflow: hidden;
 
-    &-op-50 {
-        background-color: $color-black-op-50;
-    }
-
-    &-op-60 {
-        background-color: $color-black-op-60;
-    }
-
-    &-logo {
-        padding: $dim-default;
-        margin: $dim-default;
-        background-color: $color-grey-50;
-        border-radius: $border-radius;
-        box-shadow: $shadow;
-    }
-
-    &-header {
-        background-color: $color-black-op-60;
-        color: $color-grey-50;
-    }
-
-    &-welcome {
-        background-color: transparent !important;
-        box-shadow: none !important;
+    &-login {
+        min-height: 400px;
         width: 600px;
+
+        img {
+            max-height: 150px;
+            width: auto;
+        }
+
+        a {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     &-signup {
-        background-color: $color-black-op-30 !important;
-        box-shadow: none !important;
-        width: 400px;
+        width: 600px;
+        min-height: 600px;
+
+        img {
+            max-height: 150px;
+            width: auto;
+        }
     }
 }
 
@@ -44,17 +35,14 @@
 
     .card {
 
-        &-welcome {
-            background-color: $color-black-op-30 !important;
+        &-login, &-signup {
             height: 100%;
             width: 100%;
             margin: 0;
-        }
 
-        &-signup {
-            height: 100%;
-            width: 100%;
-            margin: 0;
+            img {
+                max-height: 80px;
+            }
         }
     }
 }
