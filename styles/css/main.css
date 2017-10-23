@@ -756,7 +756,11 @@ body {
   height: 100%;
 }
 
-.layout-rh-100-min-769 {
+.layout-rh-100-min-400 {
+  height: auto;
+}
+
+.layout-rh-100-min-550 {
   height: auto;
 }
 
@@ -826,20 +830,14 @@ body {
   }
 }
 
-@media all and (min-height: 769px) {
-  .layout-rh-100-min-769 {
+@media all and (min-height: 400px) {
+  .layout-rh-100-min-400 {
     height: 100%;
   }
 }
 
-@media screen and (min-height: 230px) {
-  .layout-rh-100-min-230 {
-    height: 100%;
-  }
-}
-
-@media screen and (min-height: 490px) {
-  .layout-rh-100-min-490 {
+@media all and (min-height: 550px) {
+  .layout-rh-100-min-550 {
     height: 100%;
   }
 }
