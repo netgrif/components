@@ -1,8 +1,60 @@
+//.toolbar {
+//    height: 60px;
+//
+//    &-menu {
+//        height: 100%;
+//
+//        .btn-menu {
+//            height: 100%;
+//            margin: 0;
+//            color: $color-grey-50;
+//            font-size: 20px;
+//            text-transform: none;
+//
+//            .material-icons {
+//                font-size: 40px;
+//                color: $color-primary-500;
+//                margin-left: $dim-2x;
+//            }
+//        }
+//    }
+//
+//    // Fix submenu
+//    &-submenu {
+//        padding: 0 !important;
+//
+//        .btn-menu {
+//
+//            > .material-icons {
+//                margin-right: 14px !important;
+//                margin-bottom: 1.5px !important;
+//            }
+//
+//            > span {
+//                float: none !important;
+//                //margin-left: -1px !important;
+//                text-transform: capitalize !important;
+//                font-weight: normal !important;
+//            }
+//        }
+//    }
+//}
+
 .toolbar {
-    height: 60px;
+    height: 56px;
+    min-height: 56px;
+    background-color: $color-dark-teal-grey-500;
+
+    &-logo {
+        height: 100%;
+
+        img {
+            height: 100%;
+            width: auto;
+        }
+    }
 
     &-menu {
-        height: 100%;
 
         .btn-menu {
             height: 100%;
@@ -15,6 +67,24 @@
                 font-size: 40px;
                 color: $color-primary-500;
                 margin-left: $dim-2x;
+            }
+        }
+
+        .md-menu {
+
+            .md-button, a {
+                height: 100%;
+                padding-top: 4px;
+                padding-bottom: 4px;
+                font-size: 20px;
+                color: white;
+                text-transform: none;
+
+                .material-icons {
+                    font-size: 48px;
+                    margin-left: 15px;
+                    color: $color-primary-500;
+                }
             }
         }
     }
@@ -38,9 +108,9 @@
             }
         }
     }
-}
 
-// Dim too bright white menu color on focus
-md-menu-bar.md-default-theme md-menu.md-open > button, md-menu-bar md-menu.md-open > button, md-menu-bar.md-default-theme md-menu > button:focus, md-menu-bar md-menu > button:focus {
-    background: rgba(238, 238, 238, .1) !important;
+    // Dim too bright white menu color on focus
+    md-menu-bar.md-default-theme md-menu.md-open > button, md-menu-bar md-menu.md-open > button, md-menu-bar.md-default-theme md-menu > button:focus, md-menu-bar md-menu > button:focus {
+        background: rgba(238, 238, 238, .1) !important;
+    }
 }

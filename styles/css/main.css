@@ -573,7 +573,7 @@
 }
 
 .padding-top-0 {
-  padding-top: 0;
+  padding-top: 0 !important;
 }
 
 .padding-top-default {
@@ -1286,11 +1286,18 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 }
 
 .base .toolbar {
-  height: 60px;
+  height: 56px;
+  min-height: 56px;
+  background-color: #37474F;
 }
 
-.base .toolbar-menu {
+.base .toolbar-logo {
   height: 100%;
+}
+
+.base .toolbar-logo img {
+  height: 100%;
+  width: auto;
 }
 
 .base .toolbar-menu .btn-menu {
@@ -1305,6 +1312,21 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   font-size: 40px;
   color: #009688;
   margin-left: 16px;
+}
+
+.base .toolbar-menu .md-menu .md-button, .base .toolbar-menu .md-menu a {
+  height: 100%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 20px;
+  color: white;
+  text-transform: none;
+}
+
+.base .toolbar-menu .md-menu .md-button .material-icons, .base .toolbar-menu .md-menu a .material-icons {
+  font-size: 48px;
+  margin-left: 15px;
+  color: #009688;
 }
 
 .base .toolbar-submenu {
@@ -1322,7 +1344,7 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
   font-weight: normal !important;
 }
 
-.base md-menu-bar.md-default-theme md-menu.md-open > button, .base md-menu-bar md-menu.md-open > button, .base md-menu-bar.md-default-theme md-menu > button:focus, .base md-menu-bar md-menu > button:focus {
+.base .toolbar md-menu-bar.md-default-theme md-menu.md-open > button, .base .toolbar md-menu-bar md-menu.md-open > button, .base .toolbar md-menu-bar.md-default-theme md-menu > button:focus, .base .toolbar md-menu-bar md-menu > button:focus {
   background: rgba(238, 238, 238, 0.1) !important;
 }
 

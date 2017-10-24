@@ -1,69 +1,74 @@
 <div ng-cloak class="layout-rh-100 color-bg-transparent" layout="column">
 
-    <section layout="row" layout-align="left center" class="margin-horizontal-2x margin-top-2x">
+    <md-toolbar layout="row" layout-align="center center" class="toolbar">
 
-        <a href="/" class="card-logo">
-            <img hide-sm hide-xs class="logo" src="../../assets/netgrif_logo2.png" alt="logo">
-            <img hide show-sm show-xs class="logo" src="../../assets/netgrif_logo.png" alt="logo">
-        </a>
+            <a href="/" layout-align="center center" class="toolbar-logo margin-left-2x">
+                <img src="../../assets/netgrif_logo1.png" alt="logo">
+            </a>
 
-        <md-menu-bar layout="row" layout-align="center center" class="card card-op-60 margin-default toolbar" flex>
             <div flex></div>
-            <h1 hide-sm hide-xs>INSURANCE <strong>DEMO</strong></h1>
-            <div flex></div>
-            <md-menu class="toolbar-menu">
 
-                <md-button ng-click="$mdMenu.open($event)" layout="row" layout-align="left center" class="btn-menu" md-menu-origin>
-                    {{$user.name}}
-                    <i class="material-icons">account_circle</i>
-                </md-button>
+            <md-menu-bar layout="row" layout-align="center center" class="toolbar-menu">
+                <md-menu>
 
-                <md-menu-content width="3">
+                    <md-button ng-click="$mdMenu.open($event)" layout="row" layout-align="left center" class="btn-menu" md-menu-origin>
+                        {{$user.name}}
+                        <i class="material-icons">account_circle</i>
+                    </md-button>
 
-                    <md-menu-item>
-                        <md-menu class="toolbar-submenu">
+                    <md-menu-content width="3">
 
-                            <md-button ng-click="$mdMenu.open()">
-                                <div class="btn-menu">
-                                    <md-icon class="material-icons">language</md-icon>
-                                    <span>{{::$i18n.block.mainMenu.lang.this}}</span>
-                                </div>
+                        <md-menu-item>
+                            <md-menu class="toolbar-submenu">
+
+                                <md-button ng-click="$mdMenu.open()">
+                                    <div class="btn-menu">
+                                        <md-icon class="material-icons">language</md-icon>
+                                        <span>{{::$i18n.block.mainMenu.lang.this}}</span>
+                                    </div>
+                                </md-button>
+
+                                <md-menu-content width="2">
+
+                                    <md-menu-item>
+                                        <md-button ng-click="$i18n.change('en-us')" layout="row" layout-align="space-between center">
+                                            <span>{{::$i18n.block.mainMenu.lang.en}}</span>
+                                            <md-icon ng-if="$i18n.current() === 'en-us'" class="material-icons">keyboard_arrow_left</md-icon>
+                                        </md-button>
+                                    </md-menu-item>
+
+                                    <md-menu-item>
+                                        <md-button ng-click="$i18n.change('sk-sk')" layout="row" layout-align="space-between center">
+                                            <span>{{::$i18n.block.mainMenu.lang.sk}}</span>
+                                            <md-icon ng-if="$i18n.current() === 'sk-sk'" class="material-icons">keyboard_arrow_left</md-icon>
+                                        </md-button>
+                                    </md-menu-item>
+
+                                </md-menu-content>
+
+                            </md-menu>
+                        </md-menu-item>
+
+                        <md-menu-item>
+                            <md-button href="/profile" class="padding-top-0">
+                                <md-icon class="material-icons">account_circle</md-icon>
+                                {{::$i18n.block.mainMenu.profile}}
                             </md-button>
+                        </md-menu-item>
 
-                            <md-menu-content width="2">
+                        <md-menu-item>
+                            <md-button ng-click="mainCtrl.logout()">
+                                <md-icon class="material-icons">exit_to_app</md-icon>
+                                {{::$i18n.block.mainMenu.logout}}
+                            </md-button>
+                        </md-menu-item>
 
-                                <md-menu-item>
-                                    <md-button ng-click="$i18n.change('en-us')" layout="row" layout-align="space-between center">
-                                        <span>{{::$i18n.block.mainMenu.lang.en}}</span>
-                                        <md-icon ng-if="$i18n.current() === 'en-us'" class="material-icons">keyboard_arrow_left</md-icon>
-                                    </md-button>
-                                </md-menu-item>
+                    </md-menu-content>
 
-                                <md-menu-item>
-                                    <md-button ng-click="$i18n.change('sk-sk')" layout="row" layout-align="space-between center">
-                                        <span>{{::$i18n.block.mainMenu.lang.sk}}</span>
-                                        <md-icon ng-if="$i18n.current() === 'sk-sk'" class="material-icons">keyboard_arrow_left</md-icon>
-                                    </md-button>
-                                </md-menu-item>
+                </md-menu>
+            </md-menu-bar>
 
-                            </md-menu-content>
-
-                        </md-menu>
-                    </md-menu-item>
-
-                    <md-menu-item>
-                        <md-button ng-click="mainCtrl.logout()">
-                            <md-icon class="material-icons">exit_to_app</md-icon>
-                            {{::$i18n.block.mainMenu.logout}}
-                        </md-button>
-                    </md-menu-item>
-
-                </md-menu-content>
-
-            </md-menu>
-        </md-menu-bar>
-
-    </section>
+    </md-toolbar>
 
     <section layout="row" flex class="color-bg-transparent margin-horizontal-2x margin-bottom-2x layout-rh-100">
 
