@@ -1202,87 +1202,41 @@ md-expansion-panel .md-expansion-panel-footer-container .md-primary {
 }
 
 .base .sidenav {
-  width: 190px;
+  width: 180px;
+  background-color: #1a2b2b;
 }
 
-.base .sidenav > .md-button {
+.base .sidenav .md-button {
+  height: 36px;
   width: 100%;
+  text-transform: none;
+  color: white;
+  font-size: 17px;
   margin: 0;
-  padding: 0;
+  padding: 5px 10px;
   border-radius: 0;
 }
 
-.base .sidenav > .md-button .icon-wrapper {
-  height: 36px;
-  width: 36px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-bottom: 0.5px solid #009688;
+.base .sidenav .md-button:first-child {
+  margin-top: 48px;
 }
 
-.base .sidenav > .md-button .icon-wrapper .material-icons {
-  color: #FAFAFA;
+.base .sidenav .md-button i {
+  margin-right: 10px;
 }
 
-.base .sidenav > .md-button span {
-  padding-left: 8px;
-  color: #FAFAFA;
-  font-size: 15px;
-  font-weight: 300;
-  text-transform: capitalize !important;
-  text-align: left;
-  border-bottom: 0.5px solid #FAFAFA;
-}
-
-.base .sidenav > .md-button:hover, .base .sidenav > .md-button.active {
-  height: 52px;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.base .sidenav > .md-button:hover .icon-wrapper, .base .sidenav > .md-button.active .icon-wrapper {
-  height: 52px;
-  width: 52px;
-  border: none;
+.base .sidenav .md-button:hover {
   background-color: #009688;
 }
 
-.base .sidenav > .md-button:hover span, .base .sidenav > .md-button.active span {
-  border: none;
-  font-size: 20px;
+.base .sidenav .md-button.active {
+  background-color: #EEEEEE;
+  color: #009688;
 }
 
-.base .sidenav-add {
-  position: relative;
-}
-
-.base .sidenav-add .left-panel {
-  position: absolute;
-  height: 100%;
-  width: 36px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-bottom-left-radius: 2px;
-}
-
-.base .sidenav-add md-fab-speed-dial {
-  position: absolute;
-  top: 16px;
-  left: 8px;
-}
-
-.base .sidenav-add md-fab-speed-dial md-fab-actions .md-button {
-  height: 32px;
-  width: auto;
-}
-
-@media all and (max-width: 599px) {
-  .base .sidenav {
-    width: 52px;
-  }
-}
-
-@media all and (min-width: 600px) and (max-width: 959px) {
-  .base .sidenav {
-    width: 52px;
-  }
+.base .sidenav .md-button.active:hover {
+  background-color: #009688;
+  color: white;
 }
 
 .base .toolbar {

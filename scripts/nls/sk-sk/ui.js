@@ -1,5 +1,9 @@
 define({
     test: "Toto je testovací reťazec!",
+    version: {
+        this: "Verzia",
+        id: "1.2.0"
+    },
     page: {
         signIn: {
             email: "Email",
