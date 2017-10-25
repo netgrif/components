@@ -2,6 +2,16 @@ md-progress-circular.progress-circular {
 
     &-stroke {
 
+        &-primary {
+
+            &-500 {
+
+                path {
+                    stroke: $color-primary-500;
+                }
+            }
+        }
+
         &-accent {
 
             &-50 {

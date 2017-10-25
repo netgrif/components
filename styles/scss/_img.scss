@@ -12,34 +12,17 @@
 }
 
 // Responsive
-// xs
-@media all and (max-width: 599px) {
+@include xs() {
 
     .logo {
         height: 40px;
         width: 36px;
     }
 }
-// sm
-@media all and (min-width: 600px) and (max-width: 959px) {
+@include sm() {
 
     .logo {
         height: 40px;
         width: 36px;
     }
 }
-// md
-@media all and (min-width: 960px) and (max-width: 1279px) {}
-// lg
-@media all and (min-width: 1280px) and (max-width: 1919px) {}
-// xl
-@media all and (min-width: 1920px) {}
-// GTs
-// gt xs
-@media all and (min-width: 600px) {}
-// gt sm
-@media all and (min-width: 960px) {}
-// gt md
-@media all and (min-width: 1280px) {}
-// gt lg
-@media all and (min-width: 1920px) {}

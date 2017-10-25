@@ -9,7 +9,7 @@
         color: white;
         font-size: 17px;
         margin: 0;
-        padding: 5px 10px;
+        padding: $dim-default $dim-2x;
         border-radius: 0;
 
         &:first-child {
@@ -17,7 +17,7 @@
         }
 
         i {
-            margin-right: 10px;
+            margin-right: $dim-default;
         }
 
         &:hover {
@@ -34,70 +34,4 @@
             }
         }
     }
-
-    //.md-button {
-    //    width: 100%;
-    //    margin: 0;
-    //    padding: 0;
-    //    border-radius: 0;
-    //
-    //    .icon-wrapper {
-    //        height: 36px;
-    //        width: 36px;
-    //        background-color: $color-black-op-60;
-    //        border-bottom: 0.5px solid $color-primary-500;
-    //
-    //        .material-icons {
-    //            color: $color-grey-50;
-    //        }
-    //    }
-    //
-    //    span {
-    //        padding-left: $dim-default;
-    //        color: $color-grey-50;
-    //        font-size: 15px;
-    //        font-weight: 300;
-    //        text-transform: capitalize !important;
-    //        text-align: left;
-    //        border-bottom: 0.5px solid $color-grey-50;
-    //    }
-    //
-    //    &:hover, &.active {
-    //        height: 52px;
-    //        background-color: $color-black-op-60;
-    //
-    //        .icon-wrapper {
-    //            height: 52px;
-    //            width: 52px;
-    //            border: none;
-    //            background-color: $color-primary-500;
-    //        }
-    //
-    //        span {
-    //            border: none;
-    //            font-size: 20px;
-    //        }
-    //    }
-    //}
 }
-
-// Responsive
-// xs
-@media all and (max-width: 599px) {}
-// sm
-@media all and (min-width: 600px) and (max-width: 959px) {}
-// md
-@media all and (min-width: 960px) and (max-width: 1279px) {}
-// lg
-@media all and (min-width: 1280px) and (max-width: 1919px) {}
-// xl
-@media all and (min-width: 1920px) {}
-// GTs
-// gt xs
-@media all and (min-width: 600px) {}
-// gt sm
-@media all and (min-width: 960px) {}
-// gt md
-@media all and (min-width: 1280px) {}
-// gt lg
-@media all and (min-width: 1920px) {}

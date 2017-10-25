@@ -1,6 +1,6 @@
 @import 'colors';
 @import 'dims';
-@import 'functions';
+@import 'mixins';
 @import 'global';
 @import "layout";
 @import "text";
@@ -17,7 +17,6 @@
 	@import "blocks/tabs";
 	@import "blocks/inputs";
 	@import "blocks/list";
-	@import "blocks/documents";
 	@import "blocks/menu";
 	@import "blocks/data";
 	@import "blocks/dialog";

@@ -1,13 +1,26 @@
 .background {
 
-	&-login{
+	&-default {
 		background: url("../../assets/netgrif_background.png") no-repeat center center fixed;
 		background-size: cover;
 	}
 
-	&-gradient {
-		background: rgb(146,170,180) !important;
-		background: radial-gradient(ellipse at center, rgba(146,170,180,1) 0%, rgba(81,94,100,1) 100%) !important;
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#92aab4', endColorstr='#515e64', GradientType=1) !important;
+	&-header {
+		position: absolute;
+		width: 100%;
+
+		&-default {
+			@extend .background-header;
+			//height: 223px;
+			height: 100%;
+			top: 0;
+		}
+
+		&-tabs {
+			@extend .background-header;
+			//height: 175px;
+			height: calc(100% - 48px);
+			top: 48px;
+		}
 	}
 }

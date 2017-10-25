@@ -1,4 +1,16 @@
 .card {
+    margin: 0;
+
+    md-card-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    a {
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+    }
 
     &-login {
         min-height: 400px;
@@ -27,11 +39,29 @@
             width: auto;
         }
     }
+
+    &-header {
+        @extend .card;
+        margin-bottom: $dim-2x;
+    }
+
+    &-case {
+        @extend .card;
+        height: 56px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-primary-500;
+
+            span, md-icon {
+                color: $color-grey-50;
+            }
+        }
+    }
 }
 
 // Responsive
-// xs
-@media all and (max-width: 599px) {
+@include xs() {
 
     .card {
 
@@ -46,20 +76,7 @@
         }
     }
 }
-// sm
-@media all and (min-width: 600px) and (max-width: 959px) {}
-// md
-@media all and (min-width: 960px) and (max-width: 1279px) {}
-// lg
-@media all and (min-width: 1280px) and (max-width: 1919px) {}
-// xl
-@media all and (min-width: 1920px) {}
-
-// GTs
-// gt xs
-@media all and (min-width: 600px) {}
-// gt sm
-@media all and (min-width: 960px) {
+@include gt-sm() {
 
     .card {
 
@@ -68,7 +85,3 @@
         }
     }
 }
-// gt md
-@media all and (min-width: 1280px) {}
-// gt lg
-@media all and (min-width: 1920px) {}

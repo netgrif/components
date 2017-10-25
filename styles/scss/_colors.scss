@@ -54,6 +54,7 @@ $color-amber-500:				#FFC107;
 $color-deep-orange-500:			#FF5722;
 $color-brown-500:				#795548;
 
+// Background - Blue grey
 $color-blue-grey-50: 			#ECEFF1;
 $color-blue-grey-300:			#90A4AE;
 $color-blue-grey-500:			#607D8B;
@@ -63,8 +64,6 @@ $color-dark-teal-grey-500:		#37474F;
 
 // Sidenav
 $color-dark-teal-grey-800:		#1a2b2b;
-
-// Background - Blue grey (already defined)
 
 // Material text
 $color-material-grey-text:		rgba(0, 0, 0, .38);
@@ -80,15 +79,15 @@ $color-divider:					#E1E1E1;
 	&-fg {
 		
 		&-success {
-			color: $color-success !important;
+			color: $color-success;
 		}
 
 		&-warning {
-			color: $color-warning !important;
+			color: $color-warning;
 		}
 
 		&-error {
-			color: $color-error !important;
+			color: $color-error;
 		}
 
 		&-transparent {
@@ -210,7 +209,7 @@ $color-divider:					#E1E1E1;
 			}
 
 			&-500 {
-				color: $color-primary-500 !important;
+				color: $color-primary-500;
 			}
 
 			&-600 {
@@ -293,19 +292,19 @@ $color-divider:					#E1E1E1;
 	&-bg {
 		
 		&-success {
-			background-color: $color-success !important;
+			background-color: $color-success;
 		}
 
 		&-warning {
-			background-color: $color-warning !important;
+			background-color: $color-warning;
 		}
 
 		&-error {
-			background-color: $color-error !important;
+			background-color: $color-error;
 		}
 
 		&-transparent {
-			background-color: transparent !important;
+			background-color: transparent;
 		}
 
 		&-teal-500 {

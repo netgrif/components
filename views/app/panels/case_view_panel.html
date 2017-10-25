@@ -1,4 +1,4 @@
-<md-expansion-panel class="margin-horizontal-default {{!task.finishDate && task.tab.allowHighlight ? 'highlight':''}}">
+<md-expansion-panel class="{{!task.finishDate && task.tab.allowHighlight ? 'highlight':''}}">
 
     <md-expansion-panel-collapsed>
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="task.click($event)">
@@ -11,7 +11,7 @@
             <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{task.title}}</span>
             <i hide-xs ng-if="task.finishDate && !task.loading" flex="10" class="material-icons color-fg-primary-500">done</i>
             <div hide-xs ng-if="task.loading" flex="10">
-                <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-accent-50"></md-progress-circular>
+                <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
             </div>
 
         </div>
@@ -31,7 +31,7 @@
 
             <i hide-xs ng-if="task.finishDate && !task.loading" flex="5" class="material-icons color-fg-primary-500">done</i>
             <div hide-xs ng-if="task.loading" flex="10">
-                <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-accent-50"></md-progress-circular>
+                <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
             </div>
 
         </md-expansion-panel-header>

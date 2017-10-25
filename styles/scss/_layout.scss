@@ -69,11 +69,8 @@
     }
 }
 
-// Responsive layout
-
 // Responsive (By width)
-// xs
-@media all and (max-width: 599px) {
+@include xs() {
 
     .layout {
 
@@ -88,8 +85,7 @@
         }
     }
 }
-// sm
-@media all and (min-width: 600px) and (max-width: 959px) {
+@include sm() {
 
     .layout {
 
@@ -105,8 +101,7 @@
     }
 
 }
-// md
-@media all and (min-width: 960px) and (max-width: 1279px) {
+@include md() {
 
     .layout {
 
@@ -122,8 +117,7 @@
     }
 
 }
-// lg
-@media all and (min-width: 1280px) and (max-width: 1919px) {
+@include lg() {
 
     .layout {
 
@@ -139,8 +133,7 @@
     }
 
 }
-// xl
-@media all and (min-width: 1920px) {
+@include xl() {
 
     .layout {
 
@@ -156,9 +149,7 @@
     }
 
 }
-// GTs
-// gt xs
-@media all and (min-width: 600px) {
+@include gt-xs() {
 
     .layout {
 
@@ -174,8 +165,7 @@
     }
 
 }
-// gt sm
-@media all and (min-width: 960px) {
+@include gt-sm() {
 
     .layout {
 
@@ -191,8 +181,7 @@
     }
 
 }
-// gt md
-@media all and (min-width: 1280px) {
+@include gt-md() {
 
     .layout {
 
@@ -208,8 +197,7 @@
     }
 
 }
-// gt lg
-@media all and (min-width: 1920px) {
+@include gt-lg() {
 
     .layout {
 

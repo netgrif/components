@@ -1,3 +1,51 @@
+// Responsive
+@mixin xs {
+	@media all and (max-width: 599px) {
+		@content;
+	}
+}
+@mixin sm {
+	@media all and (min-width: 600px) and (max-width: 959px) {
+		@content;
+	}
+}
+@mixin md {
+	@media all and (min-width: 960px) and (max-width: 1279px) {
+		@content;
+	}
+}
+@mixin lg {
+	@media all and (min-width: 1280px) and (max-width: 1919px) {
+		@content;
+	}
+}
+@mixin xl {
+	@media all and (min-width: 1920px) {
+		@content;
+	}
+}
+// GTs
+@mixin gt-xs {
+	@media all and (min-width: 600px) {
+		@content;
+	}
+}
+@mixin gt-sm {
+	@media all and (min-width: 960px) {
+		@content;
+	}
+}
+@mixin gt-md {
+	@media all and (min-width: 1280px) {
+		@content;
+	}
+}
+@mixin gt-lg {
+	@media all and (min-width: 1920px) {
+		@content;
+	}
+}
+
 @mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
 	// For Google Chrome
 	::-webkit-scrollbar {
