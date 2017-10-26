@@ -5,30 +5,47 @@
 
 md-expansion-panel {
     cursor: pointer !important;
+
+    md-expansion-panel-expanded .md-expansion-panel-header-container,
+    md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
+
+        &:hover {
+            background: $color-primary-500 !important;
+
+            span {
+                color: $color-grey-50;
+            }
+
+            md-progress-circular path {
+                stroke: $color-grey-50 !important;
+            }
+        }
+    }
 }
 
-// TODO 25.10.2017 Do we need highlighted ex. panel in WMS too?
-//md-expansion-panel {
-//
-//    &.highlight {
-//
-//        md-expansion-panel-expanded .md-expansion-panel-header-container {
-//            background: $color-primary-op-50 !important;
-//
-//            &:hover {
-//                background: $color-primary-op-60 !important;
-//            }
-//        }
-//
-//        md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
-//            background: $color-primary-op-50 !important;
-//
-//            &:hover {
-//                background: $color-primary-op-60 !important;
-//            }
-//        }
-//    }
-//}
+// TODO 25.10.2017 Expansion panel highlighting is currently disabled in HTML
+md-expansion-panel {
+
+    &.highlight {
+
+        md-expansion-panel-expanded .md-expansion-panel-header-container,
+        md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
+            background: $color-light-blue-A700 !important;
+
+            &:hover {
+                background: $color-primary-500 !important;
+
+                span {
+                    color: $color-grey-50;
+                }
+            }
+        }
+
+        md-progress-circular path {
+            stroke: $color-grey-50 !important;
+        }
+    }
+}
 
 //md-expansion-panel md-expansion-panel-collapsed,
 //md-expansion-panel .md-expansion-panel-footer-container,
@@ -78,12 +95,4 @@ md-expansion-panel-header {
 
 md-expansion-panel .md-expansion-panel-footer-container {
     top: auto !important;
-
-    //.md-button {
-    //    color: $color-grey-50;
-    //}
-	//
-    //.md-primary {
-    //    color: $color-primary-500 !important;
-    //}
 }
