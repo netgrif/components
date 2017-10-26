@@ -1,20 +1,13 @@
 .data {
 
-    &-item {
+    &-field {
 
         md-input-container .md-errors-spacer {
             min-height: 0 !important;
         }
 
-        md-icon {
-            color: $color-grey-50;
-        }
-    }
-
-    &-field {
-
         &-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 400;
         }
     }

@@ -1128,7 +1128,6 @@ md-expansion-panel-collapsed {
 md-expansion-panel-content {
   padding-left: 16px !important;
   padding-right: 16px !important;
-  color: #E0F2F1;
 }
 
 md-expansion-panel-header .md-expansion-panel-header-container {
@@ -1381,12 +1380,8 @@ md-expansion-panel .md-expansion-panel-footer-container {
   min-height: 0 !important;
 }
 
-.base .data-item md-icon {
-  color: #FAFAFA;
-}
-
 .base .data-field-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
 }
 
