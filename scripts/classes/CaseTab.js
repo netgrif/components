@@ -148,7 +148,6 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     CaseTab.prototype.createCase = function () {
         if (!jQuery.isEmptyObject(this.newCase) || !this.net.entityId) {
             this.newCase.netId = this.net.entityId;
-            this.newCase.color = "color-fg-accent-50";
             const self = this;
             this.$http.post("/res/workflow/case", JSON.stringify(this.newCase))
                 .then(function (response) {
