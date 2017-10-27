@@ -1,3 +1,6 @@
+$background-header-height: 195px;
+$tab-header-height: 48px;
+
 .background {
 
 	&-default {
@@ -11,16 +14,31 @@
 
 		&-default {
 			@extend .background-header;
-			//height: 223px;
+			height: $background-header-height;
+			top: 0;
+		}
+
+		&-tabs {
+			@extend .background-header;
+			height: $background-header-height - $tab-header-height;
+			top: $tab-header-height;
+		}
+	}
+
+	&-fullpage {
+		position: absolute;
+		width: 100%;
+
+		&-default {
+			@extend .background-header;
 			height: 100%;
 			top: 0;
 		}
 
 		&-tabs {
 			@extend .background-header;
-			//height: 175px;
-			height: calc(100% - 48px);
-			top: 48px;
+			height: calc(100% - #{$tab-header-height});
+			top: $tab-header-height;
 		}
 	}
 }
