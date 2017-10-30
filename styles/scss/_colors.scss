@@ -74,9 +74,16 @@ $color-grey-light:				rgba(158, 158, 158, .2);
 // Divider
 $color-divider:					#E1E1E1;
 
+// Card
+$color-white:					white;
+
 .color {
 	
 	&-fg {
+
+		&-white {
+			color: $color-white;
+		}
 		
 		&-success {
 			color: $color-success;
@@ -290,6 +297,10 @@ $color-divider:					#E1E1E1;
 	}
 	
 	&-bg {
+
+		&-white {
+			background-color: $color-white;
+		}
 		
 		&-success {
 			background-color: $color-success;

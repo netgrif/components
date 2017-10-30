@@ -2,3 +2,19 @@
 md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder, md-input-container.md-default-theme label, md-input-container label {
     //font-weight: 500;
 }
+
+.input-container-fixed-height-padding-0 {
+    height: 30px !important;
+    padding: 0 !important;
+}
+
+md-input-container {
+
+}
+
+.md-datepicker-button {
+
+    //md-icon {
+    //    color: $color-primary-500 !important;
+    //}
+}

@@ -24,14 +24,14 @@
 
         &:hover {
             cursor: pointer;
-            background-color: $color-black-op-50 !important;
+            //background-color: $color-black-op-50 !important;
         }
 
         &-no-pointer {
 
             &:hover {
                 cursor: default;
-                background: $color-black-op-50 !important;
+                //background: $color-black-op-50 !important;
             }
         }
 

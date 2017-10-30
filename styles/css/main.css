@@ -1,3 +1,7 @@
+.color-fg-white {
+  color: white;
+}
+
 .color-fg-success {
   color: #4CAF50;
 }
@@ -188,6 +192,10 @@
 
 .color-fg-accent-900 {
   color: #212121;
+}
+
+.color-bg-white {
+  background-color: white;
 }
 
 .color-bg-success {
@@ -641,8 +649,8 @@
 }
 
 .shadow {
-  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
 
 .stop-scrolling {
@@ -1176,6 +1184,11 @@ md-expansion-panel .md-expansion-panel-footer-container {
 
 .base .card, .base .card-header, .base .card-case {
   margin: 0;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: white;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
 }
 
 .base .card md-card-content, .base .card-header md-card-content, .base .card-case md-card-content {
@@ -1352,6 +1365,11 @@ md-expansion-panel .md-expansion-panel-footer-container {
   background: rgba(238, 238, 238, 0.1) !important;
 }
 
+.base .input-container-fixed-height-padding-0 {
+  height: 30px !important;
+  padding: 0 !important;
+}
+
 .base .list-header {
   height: 48px;
 }
@@ -1374,12 +1392,10 @@ md-expansion-panel .md-expansion-panel-footer-container {
 
 .base .list-item:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .base .list-item-no-pointer:hover {
   cursor: default;
-  background: rgba(0, 0, 0, 0.5) !important;
 }
 
 .base .list-item .md-button.md-default-theme:not([disabled]):hover, .base .list-item .md-button:not([disabled]):hover {
