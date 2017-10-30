@@ -154,7 +154,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                     if (response) {
                         self.$dialog.closeCurrent();
                         self.newCase = {
-                            title: self.$i18n.block.case.newTitle
+                            title: self.$i18n.block.case.newTitle[self.caseType]
                         };
                         if(self.actionCase){
                             const actionCase = new ActionCase(self,self.controller.getPanelGroup(response.title),response,null,{
@@ -187,7 +187,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 }, function () {
                     self.$snackbar.error(self.$i18n.block.snackbar.creatingNewCaseFailed);
                     self.newCase = {
-                        title: self.$i18n.block.case.newTitle
+                        title: self.$i18n.block.case.newTitle[self.caseType]
                     };
                 });
         }
