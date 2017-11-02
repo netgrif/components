@@ -18,7 +18,7 @@
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
-                                    <span class="md-headline">{{::$i18n.page.console.newUser}}</span>
+                                    <span>{{::$i18n.page.console.newUser}}</span>
 
                                     <ng-form name="invitationForm">
                                         <md-input-container class="input-container-fixed-height-padding-0">
@@ -37,13 +37,15 @@
 
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                            <div layout="column" layout-align="center start" class="card padding-2x" flex>
+                            <div flex layout="column" layout-align="center start" class="card padding-2x">
+
                                 <span class="margin-bottom-default">{{::$i18n.page.console.orgs}}</span>
+
                                 <md-list flex class="padding-0 layout-rw-100">
                                     <md-list-item ng-repeat="org in adminCtrl.invitedUser.organizations"
                                                   class="list-item border-radius-default"
                                                   ng-click="null">
-                                        <div layout="row" layout-align="space-between center" flex>
+                                        <div flex layout="row" layout-align="space-between center">
                                             <span>{{org.name}}</span>
                                             <md-button class="md-icon-button" ng-click="org.remove()">
                                                 <i class="material-icons color-fg-error">close</i>
@@ -51,25 +53,32 @@
                                         </div>
                                     </md-list-item>
                                 </md-list>
+
                             </div>
 
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                            <div layout="column" layout-align="center start" class="card padding-2x" flex>
+                            <div flex layout="column" layout-align="center start" class="card padding-2x">
+
                                 <span class="margin-bottom-default">{{::$i18n.page.console.roles}}</span>
-                                <section class="layout-rw-100" ng-repeat="(netId, net) in adminCtrl.invitedUser.processRoles" flex>
-                                    <md-subheader class="color-fg-primary-500 color-bg-transparent" flex>
+
+                                <section flex class="layout-rw-100" ng-repeat="(netId, net) in adminCtrl.invitedUser.processRoles">
+
+                                    <md-subheader flex class="color-fg-primary-500 color-bg-transparent">
                                         {{net.title}}
                                     </md-subheader>
+
                                     <md-list flex class="padding-0">
+
                                         <md-list-item ng-repeat="role in net.roles" class="list-item border-radius-default" ng-click="null">
-                                            <div layout="row" layout-align="space-between center" flex>
+                                            <div flex layout="row" layout-align="space-between center">
                                                 <span>{{role.name}}</span>
                                                 <md-button class="md-icon-button" ng-click="role.remove(netId)">
                                                     <i class="material-icons color-fg-error">close</i>
                                                 </md-button>
                                             </div>
                                         </md-list-item>
+
                                     </md-list>
 
                                     <md-divider ng-if="!$last"></md-divider>
@@ -79,7 +88,7 @@
 
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                            <div layout="row" layout-align="end center" class="card padding-vertical-2x" flex>
+                            <div flex layout="row" layout-align="end center" class="card padding-vertical-2x">
                                 <md-progress-circular md-mode="indeterminate"
                                                       class="progress-circular-stroke-accent-50 margin-left-default"
                                                       md-diameter="30"
@@ -96,17 +105,20 @@
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
                         <div flex>
+
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="start center" class="md-toolbar-tools">
-                                    <span class="md-headline">{{::$i18n.page.console.orgs}}</span>
+
+                                    <span>{{::$i18n.page.console.orgs}}</span>
+
                                 </div>
                             </md-toolbar>
 
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
                             <md-list flex class="padding-0">
-                                <md-list-item ng-repeat-start="org in adminCtrl.organizations" class="card list-item"
-                                              ng-click="org.add()">
+
+                                <md-list-item ng-repeat-start="org in adminCtrl.organizations" class="card list-item" ng-click="org.add()">
                                     <div flex layout="row" layout-align="space-between center">
                                         <span>{{org.name}}</span>
                                         <md-button class="md-icon-button" ng-click="org.add()">
@@ -116,16 +128,19 @@
                                 </md-list-item>
 
                                 <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+
                             </md-list>
+
                         </div>
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
                         <div flex>
+
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
-                                    <span class="md-headline">{{::$i18n.page.console.processRolesLower}}</span>
+                                    <span>{{::$i18n.page.console.processRolesLower}}</span>
 
                                     <md-input-container class="margin-right-default">
                                         <label>Process</label>
@@ -145,6 +160,7 @@
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
                             <md-list flex class="padding-0">
+
                                 <md-list-item ng-repeat-start="role in adminCtrl.processRoles" class="card list-item"
                                               ng-click="role.add()">
                                     <div flex layout="row" layout-align="space-between center">
@@ -156,6 +172,7 @@
                                 </md-list-item>
 
                                 <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+
                             </md-list>
 
                         </div>
@@ -191,8 +208,7 @@
 
                                     <md-menu>
                                         <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
-                                            <md-icon class="material-icons color-fg-material-grey-text">more_vert
-                                            </md-icon>
+                                            <md-icon class="material-icons color-fg-material-grey-text">more_vert</md-icon>
                                         </md-button>
 
                                         <md-menu-content>

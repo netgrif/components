@@ -16,6 +16,11 @@
         font-weight: bold;
     }
 
+    &-no-shadow {
+        @extend .card;
+        box-shadow: none;
+    }
+
     &-login {
         min-height: 400px;
         width: 600px;
@@ -50,7 +55,6 @@
     }
 
     &-case {
-        @extend .card;
         height: 56px;
         cursor: pointer;
 

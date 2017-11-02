@@ -1182,7 +1182,7 @@ md-expansion-panel .md-expansion-panel-footer-container {
   top: 48px;
 }
 
-.base .card, .base .card-header, .base .card-case {
+.base .card, .base .card-no-shadow, .base .card-header {
   margin: 0;
   color: rgba(0, 0, 0, 0.87);
   background-color: white;
@@ -1191,15 +1191,20 @@ md-expansion-panel .md-expansion-panel-footer-container {
   border-radius: 2px;
 }
 
-.base .card md-card-content, .base .card-header md-card-content, .base .card-case md-card-content {
+.base .card md-card-content, .base .card-no-shadow md-card-content, .base .card-header md-card-content {
   padding-left: 0;
   padding-right: 0;
 }
 
-.base .card a, .base .card-header a, .base .card-case a {
+.base .card a, .base .card-no-shadow a, .base .card-header a {
   color: black;
   text-decoration: none;
   font-weight: bold;
+}
+
+.base .card-no-shadow {
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 .base .card-login {
@@ -1266,10 +1271,25 @@ md-expansion-panel .md-expansion-panel-footer-container {
 
 .base .sidenav {
   width: 180px;
+  min-width: 180px;
+  max-width: 180px;
+}
+
+.base .sidenav-logo {
+  height: 56px;
+}
+
+.base .sidenav-logo img {
+  height: 100%;
+  width: auto;
+}
+
+.base .sidenav md-content {
+  height: 100%;
   background-color: #1a2b2b;
 }
 
-.base .sidenav .md-button {
+.base .sidenav md-content .md-button {
   height: 36px;
   width: 100%;
   text-transform: none;
@@ -1280,26 +1300,30 @@ md-expansion-panel .md-expansion-panel-footer-container {
   border-radius: 0;
 }
 
-.base .sidenav .md-button:first-child {
+.base .sidenav md-content .md-button:first-child {
   margin-top: 48px;
 }
 
-.base .sidenav .md-button i {
+.base .sidenav md-content .md-button i {
   margin-right: 8px;
 }
 
-.base .sidenav .md-button:hover {
+.base .sidenav md-content .md-button:hover {
   background-color: #009688;
 }
 
-.base .sidenav .md-button.active {
+.base .sidenav md-content .md-button.active {
   background-color: #EEEEEE;
   color: #009688;
 }
 
-.base .sidenav .md-button.active:hover {
+.base .sidenav md-content .md-button.active:hover {
   background-color: #009688;
   color: white;
+}
+
+.base .sidenav.md-sidenav-left, .base .sidenav md-sidenav.base .sidenav {
+  top: 56px !important;
 }
 
 .base .toolbar {
@@ -1384,10 +1408,6 @@ md-expansion-panel .md-expansion-panel-footer-container {
 
 .base .list-item-selected .material-icons {
   color: #FAFAFA !important;
-}
-
-.base .list-item-selected:hover .material-icons {
-  color: #009688 !important;
 }
 
 .base .list-item:hover {

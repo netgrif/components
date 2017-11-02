@@ -13,25 +13,16 @@
             .material-icons {
                 color: $color-grey-50 !important;
             }
-
-            &:hover {
-
-                .material-icons {
-                    color: $color-primary-500 !important;
-                }
-            }
         }
 
         &:hover {
             cursor: pointer;
-            //background-color: $color-black-op-50 !important;
         }
 
         &-no-pointer {
 
             &:hover {
                 cursor: default;
-                //background: $color-black-op-50 !important;
             }
         }
 

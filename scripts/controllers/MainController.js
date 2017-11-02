@@ -1,6 +1,6 @@
 define(['angular', '../modules/Main', '../services/Loading', '../services/Auth'], function (angular) {
-    angular.module('ngMain').controller('MainController', ['$loading', '$auth', '$log', '$scope', '$style', '$user', '$i18n', '$cache', '$location','$rootScope',
-        function ($loading, $auth, $log, $scope, $style, $user, $i18n, $cache, $location, $rootScope) {
+    angular.module('ngMain').controller('MainController', ['$loading', '$auth', '$log', '$scope', '$style', '$user', '$i18n', '$cache', '$location', '$mdSidenav', '$rootScope',
+        function ($loading, $auth, $log, $scope, $style, $user, $i18n, $cache, $location, $mdSidenav, $rootScope) {
             const self = this;
 
             self.loaderVisible = true;
@@ -47,6 +47,10 @@ define(['angular', '../modules/Main', '../services/Loading', '../services/Auth']
                     loaderContainer.hide();
                     viewContainer.show();
                 }
+            }
+
+            self.toggleSidenav = function (componentId) {
+                $mdSidenav(componentId).toggle();
             }
 
         }]);

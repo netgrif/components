@@ -1,37 +1,56 @@
 .sidenav {
     width: 180px;
-    background-color: $color-dark-teal-grey-800;
+    min-width: 180px;
+    max-width: 180px;
 
-    .md-button {
-        height: 36px;
-        width: 100%;
-        text-transform: none;
-        color: white;
-        font-size: 17px;
-        margin: 0;
-        padding: $dim-default $dim-2x;
-        border-radius: 0;
+    &-logo {
+        height: 56px;
 
-        &:first-child {
-            margin-top: 48px;
+        img {
+            height: 100%;
+            width: auto;
         }
+    }
 
-        i {
-            margin-right: $dim-default;
-        }
+    md-content {
+        height: 100%;
+        background-color: $color-dark-teal-grey-800;
 
-        &:hover {
-            background-color: $color-primary-500;
-        }
+        .md-button {
+            height: 36px;
+            width: 100%;
+            text-transform: none;
+            color: white;
+            font-size: 17px;
+            margin: 0;
+            padding: $dim-default $dim-2x;
+            border-radius: 0;
 
-        &.active {
-            background-color: $color-grey-200;
-            color: $color-primary-500;
+            &:first-child {
+                margin-top: 48px;
+            }
+
+            i {
+                margin-right: $dim-default;
+            }
 
             &:hover {
                 background-color: $color-primary-500;
-                color: white;
+            }
+
+            &.active {
+                background-color: $color-grey-200;
+                color: $color-primary-500;
+
+                &:hover {
+                    background-color: $color-primary-500;
+                    color: white;
+                }
             }
         }
+    }
+
+    &.md-sidenav-left, md-sidenav#{&} {
+        top: 56px !important; // Toolbar height
     }
 }
