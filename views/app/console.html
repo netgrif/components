@@ -11,100 +11,100 @@
             </md-tab-label>
 
             <md-tab-body>
-                <md-content class="md-padding color-bg-transparent" layout="column">
+                <md-content class="md-padding color-bg-transparent" layout="row">
 
-                    <div layout="row">
+                    <div flex="30">
 
-                        <div flex>
+                        <md-toolbar class="card padding-vertical-2x">
+                            <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
-                            <md-toolbar class="card padding-vertical-2x">
-                                <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
+                                <span>{{::$i18n.page.console.newUser}}</span>
 
-                                    <span>{{::$i18n.page.console.newUser}}</span>
-
-                                    <ng-form name="invitationForm">
-                                        <md-input-container class="input-container-fixed-height-padding-0">
-                                            <label>{{::$i18n.block.invite.email}}</label>
-                                            <input name="email" ng-model="adminCtrl.invitedUser.email" type="email"
-                                                   required>
-                                            <div ng-messages="invitationForm.email.$error">
-                                                <div ng-message="email">{{::$i18n.block.validation.email}}</div>
-                                                <div ng-message="required">{{::$i18n.block.validation.required}}</div>
-                                            </div>
-                                        </md-input-container>
-                                    </ng-form>
-
-                                </div>
-                            </md-toolbar>
-
-                            <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                            <div flex layout="column" layout-align="center start" class="card padding-2x">
-
-                                <span class="margin-bottom-default">{{::$i18n.page.console.orgs}}</span>
-
-                                <md-list flex class="padding-0 layout-rw-100">
-                                    <md-list-item ng-repeat="org in adminCtrl.invitedUser.organizations"
-                                                  class="list-item border-radius-default"
-                                                  ng-click="null">
-                                        <div flex layout="row" layout-align="space-between center">
-                                            <span>{{org.name}}</span>
-                                            <md-button class="md-icon-button" ng-click="org.remove()">
-                                                <i class="material-icons color-fg-error">close</i>
-                                            </md-button>
+                                <ng-form name="invitationForm">
+                                    <md-input-container class="input-container-fixed-height-padding-0">
+                                        <label>{{::$i18n.block.invite.email}}</label>
+                                        <input name="email" ng-model="adminCtrl.invitedUser.email" type="email"
+                                               required>
+                                        <div ng-messages="invitationForm.email.$error">
+                                            <div ng-message="email">{{::$i18n.block.validation.email}}</div>
+                                            <div ng-message="required">{{::$i18n.block.validation.required}}</div>
                                         </div>
-                                    </md-list-item>
-                                </md-list>
+                                    </md-input-container>
+                                </ng-form>
 
                             </div>
+                        </md-toolbar>
 
-                            <md-divider class="border-width-default color-border-transparent"></md-divider>
+                        <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                            <div flex layout="column" layout-align="center start" class="card padding-2x">
+                        <div flex layout="column" layout-align="center start" class="card padding-2x">
 
-                                <span class="margin-bottom-default">{{::$i18n.page.console.roles}}</span>
+                            <span class="margin-bottom-default">{{::$i18n.page.console.orgs}}</span>
 
-                                <section flex class="layout-rw-100" ng-repeat="(netId, net) in adminCtrl.invitedUser.processRoles">
-
-                                    <md-subheader flex class="color-fg-primary-500 color-bg-transparent">
-                                        {{net.title}}
-                                    </md-subheader>
-
-                                    <md-list flex class="padding-0">
-
-                                        <md-list-item ng-repeat="role in net.roles" class="list-item border-radius-default" ng-click="null">
-                                            <div flex layout="row" layout-align="space-between center">
-                                                <span>{{role.name}}</span>
-                                                <md-button class="md-icon-button" ng-click="role.remove(netId)">
-                                                    <i class="material-icons color-fg-error">close</i>
-                                                </md-button>
-                                            </div>
-                                        </md-list-item>
-
-                                    </md-list>
-
-                                    <md-divider ng-if="!$last"></md-divider>
-
-                                </section>
-                            </div>
-
-                            <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                            <div flex layout="row" layout-align="end center" class="card padding-vertical-2x">
-                                <md-progress-circular md-mode="indeterminate"
-                                                      class="progress-circular-stroke-accent-50 margin-left-default"
-                                                      md-diameter="30"
-                                                      ng-if="adminCtrl.inviteLoading">
-                                </md-progress-circular>
-                                <md-button class="md-primary" ng-click="adminCtrl.invite()" layout="row" layout-align="center center">
-                                    <md-icon class="material-icons margin-horizontal-0 margin-right-default">person_add</md-icon>
-                                    {{::$i18n.block.btn.invite}}
-                                </md-button>
-                            </div>
+                            <md-list flex class="padding-0 layout-rw-100">
+                                <md-list-item ng-repeat="org in adminCtrl.invitedUser.organizations"
+                                              class="list-item border-radius-default"
+                                              ng-click="null">
+                                    <div flex layout="row" layout-align="space-between center">
+                                        <span>{{org.name}}</span>
+                                        <md-button class="md-icon-button" ng-click="org.remove()">
+                                            <i class="material-icons color-fg-error">close</i>
+                                        </md-button>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
 
                         </div>
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+                        <div flex layout="column" layout-align="center start" class="card padding-2x">
+
+                            <span class="margin-bottom-default">{{::$i18n.page.console.roles}}</span>
+
+                            <section flex class="layout-rw-100" ng-repeat="(netId, net) in adminCtrl.invitedUser.processRoles">
+
+                                <md-subheader flex class="color-fg-primary-500 color-bg-transparent">
+                                    {{net.title}}
+                                </md-subheader>
+
+                                <md-list flex class="padding-0">
+
+                                    <md-list-item ng-repeat="role in net.roles" class="list-item border-radius-default" ng-click="null">
+                                        <div flex layout="row" layout-align="space-between center">
+                                            <span>{{role.name}}</span>
+                                            <md-button class="md-icon-button" ng-click="role.remove(netId)">
+                                                <i class="material-icons color-fg-error">close</i>
+                                            </md-button>
+                                        </div>
+                                    </md-list-item>
+
+                                </md-list>
+
+                                <md-divider ng-if="!$last"></md-divider>
+
+                            </section>
+                        </div>
+
+                        <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+                        <div flex layout="row" layout-align="end center" class="card padding-vertical-2x">
+                            <md-progress-circular md-mode="indeterminate"
+                                                  class="progress-circular-stroke-accent-50 margin-left-default"
+                                                  md-diameter="30"
+                                                  ng-if="adminCtrl.inviteLoading">
+                            </md-progress-circular>
+                            <md-button class="md-primary" ng-click="adminCtrl.invite()" layout="row" layout-align="center center">
+                                <md-icon class="material-icons margin-horizontal-0 margin-right-default">person_add</md-icon>
+                                {{::$i18n.block.btn.invite}}
+                            </md-button>
+                        </div>
+
+                    </div>
+
+                    <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+                    <div flex="70" layout="row">
 
                         <div flex>
 
@@ -178,7 +178,6 @@
                             </md-list>
 
                         </div>
-
                     </div>
 
                 </md-content>
