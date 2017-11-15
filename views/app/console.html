@@ -50,7 +50,15 @@
 
                             <md-list flex class="padding-0 layout-rw-100">
 
-                                <md-list-item ng-repeat="org in adminCtrl.invitedUser.organizations" class="list-item border-radius-default" ng-click="null">
+                                <md-list-item ng-if="adminCtrl.invitedUser.organizations.length === 0" class="list-item">
+                                    <div flex layout="row" layout-align="space-between center">
+
+                                        <span>{{::$i18n.page.console.thereIsNoOrgAssignedToThisUserYet}}</span>
+
+                                    </div>
+                                </md-list-item>
+
+                                <md-list-item ng-repeat="org in adminCtrl.invitedUser.organizations" class="list-item" ng-click="null">
                                     <div flex layout="row" layout-align="space-between center">
 
                                         <span>{{org.name}}</span>
@@ -76,6 +84,20 @@
 
                         <div flex layout="column" class="card padding-2x overflow-y-auto">
 
+                            <div ng-if="adminCtrl.invitedUser.processRoles.length === 0" flex class="layout-rw-100"> <!-- TODO 12.11.2017 Consult ng-if with @Milan -->
+
+                                <md-list flex class="padding-0">
+                                    <md-list-item class="list-item">
+                                        <div flex layout="row" layout-align="space-between center">
+
+                                            <span>{{::$i18n.page.console.thereIsNoRoleAssignedToThisUserYet}}</span>
+
+                                        </div>
+                                    </md-list-item>
+                                </md-list>
+
+                            </div>
+
                             <div flex class="layout-rw-100" ng-repeat="(netId, net) in adminCtrl.invitedUser.processRoles">
 
                                 <span flex class="color-fg-primary-500 color-bg-transparent">
@@ -84,7 +106,7 @@
 
                                 <md-list flex class="padding-0">
 
-                                    <md-list-item ng-repeat="role in net.roles" class="list-item border-radius-default" ng-click="null">
+                                    <md-list-item ng-repeat="role in net.roles" class="list-item" ng-click="null">
                                         <div flex layout="row" layout-align="space-between center">
 
                                             <span>{{role.name}}</span>
