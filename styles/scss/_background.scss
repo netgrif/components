@@ -4,8 +4,8 @@ $tab-header-height: 48px;
 .background {
 
 	&-default {
-		background: url("../../assets/netgrif_background.png") no-repeat center center fixed;
-		background-size: cover;
+		//background-size: cover;
+		background: url("../../assets/netgrif_background.png") no-repeat fixed center center;
 	}
 
 	&-header {

@@ -432,6 +432,10 @@
   border-right-color: rgba(0, 150, 136, 0.87) !important;
 }
 
+.height-48px {
+  height: 48px;
+}
+
 .height-52px {
   height: 52px;
 }
@@ -1148,8 +1152,7 @@ md-expansion-panel .md-expansion-panel-footer-container {
 }
 
 .base .background-default {
-  background: url("../../assets/netgrif_background.png") no-repeat center center fixed;
-  background-size: cover;
+  background: url("../../assets/netgrif_background.png") no-repeat fixed center center;
 }
 
 .base .background-header, .base .background-header-default, .base .background-header-tabs, .base .background-fullpage-default, .base .background-fullpage-tabs {
@@ -1387,6 +1390,21 @@ md-expansion-panel .md-expansion-panel-footer-container {
 
 .base .toolbar md-menu-bar.md-default-theme md-menu.md-open > button, .base .toolbar md-menu-bar md-menu.md-open > button, .base .toolbar md-menu-bar.md-default-theme md-menu > button:focus, .base .toolbar md-menu-bar md-menu > button:focus {
   background: rgba(238, 238, 238, 0.1) !important;
+}
+
+@media all and (min-width: 600px) {
+  .base md-tabs.tabs-h-100-gt-xs {
+    height: 100%;
+  }
+  .base md-tabs.tabs-h-100-gt-xs md-tabs-content-wrapper {
+    height: calc(100% - 64px);
+  }
+  .base md-tabs.tabs-h-100-gt-xs md-tabs-content-wrapper md-tab-content {
+    height: 100%;
+  }
+  .base md-tabs.tabs-h-100-gt-xs md-tabs-content-wrapper md-tab-content md-content {
+    height: 100%;
+  }
 }
 
 .base .input-container-fixed-height-padding-0 {
