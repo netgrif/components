@@ -22,13 +22,16 @@
 
                                 <ng-form name="invitationForm">
                                     <md-input-container class="input-container-fixed-height-padding-0">
+
                                         <label>{{::$i18n.block.invite.email}}</label>
-                                        <input name="email" ng-model="adminCtrl.invitedUser.email" type="email"
-                                               required>
+
+                                        <input name="email" ng-model="adminCtrl.invitedUser.email" type="email" required>
+
                                         <div ng-messages="invitationForm.email.$error">
                                             <div ng-message="email">{{::$i18n.block.validation.email}}</div>
                                             <div ng-message="required">{{::$i18n.block.validation.required}}</div>
                                         </div>
+
                                     </md-input-container>
                                 </ng-form>
 
@@ -49,10 +52,13 @@
 
                                 <md-list-item ng-repeat="org in adminCtrl.invitedUser.organizations" class="list-item border-radius-default" ng-click="null">
                                     <div flex layout="row" layout-align="space-between center">
+
                                         <span>{{org.name}}</span>
+
                                         <md-button class="md-icon-button" ng-click="org.remove()">
                                             <i class="material-icons color-fg-error">close</i>
                                         </md-button>
+
                                     </div>
                                 </md-list-item>
 
@@ -80,10 +86,13 @@
 
                                     <md-list-item ng-repeat="role in net.roles" class="list-item border-radius-default" ng-click="null">
                                         <div flex layout="row" layout-align="space-between center">
+
                                             <span>{{role.name}}</span>
+
                                             <md-button class="md-icon-button" ng-click="role.remove(netId)">
                                                 <i class="material-icons color-fg-error">close</i>
                                             </md-button>
+
                                         </div>
                                     </md-list-item>
 
@@ -98,15 +107,14 @@
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
                         <div layout="row" layout-align="end center" class="card padding-vertical-2x">
-                            <md-progress-circular md-mode="indeterminate"
-                                                  class="progress-circular-stroke-accent-50 margin-left-default"
-                                                  md-diameter="30"
-                                                  ng-if="adminCtrl.inviteLoading">
-                            </md-progress-circular>
+
+                            <md-progress-circular md-mode="indeterminate" class="progress-circular-stroke-accent-50 margin-left-default" md-diameter="30" ng-if="adminCtrl.inviteLoading"></md-progress-circular>
+
                             <md-button class="md-primary" ng-click="adminCtrl.invite()" layout="row" layout-align="center center">
                                 <md-icon class="material-icons margin-horizontal-0 margin-right-default">person_add</md-icon>
                                 {{::$i18n.block.btn.invite}}
                             </md-button>
+
                         </div>
 
                     </div>
@@ -115,7 +123,7 @@
 
                     <div flex-gt-xs="70" flex-xs layout-gt-sm="row" layout-sm="column" layout-xs="column">
 
-                        <div flex class="overflow-y-auto overflow-x-hidden">
+                        <div flex layout="column" class="overflow-y-auto overflow-x-hidden">
 
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="start center" class="md-toolbar-tools">
@@ -131,10 +139,13 @@
 
                                 <md-list-item ng-repeat-start="org in adminCtrl.organizations" class="card list-item" ng-click="org.add()">
                                     <div flex layout="row" layout-align="space-between center">
+
                                         <span>{{org.name}}</span>
+
                                         <md-button class="md-icon-button" ng-click="org.add()">
                                             <i class="material-icons color-fg-success">add</i>
                                         </md-button>
+
                                     </div>
                                 </md-list-item>
 
@@ -146,7 +157,7 @@
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                        <div flex class="overflow-y-auto overflow-x-hidden">
+                        <div flex layout="column" class="overflow-y-auto overflow-x-hidden">
 
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
@@ -154,15 +165,15 @@
                                     <span>{{::$i18n.page.console.processRolesLower}}</span>
 
                                     <md-input-container class="margin-right-default">
+
                                         <label>Process</label>
-                                        <md-select ng-model="adminCtrl.selectedNet"
-                                                   ng-change="adminCtrl.loadProcessRoles()">
-                                            <md-option ng-repeat="process in processes"
-                                                       ng-value="process"
-                                                       ng-selected="$first">
+
+                                        <md-select ng-model="adminCtrl.selectedNet" ng-change="adminCtrl.loadProcessRoles()">
+                                            <md-option ng-repeat="process in processes" ng-value="process" ng-selected="$first">
                                                 {{process.title}}
                                             </md-option>
                                         </md-select>
+
                                     </md-input-container>
 
                                 </div>
@@ -174,10 +185,13 @@
 
                                 <md-list-item ng-repeat-start="role in adminCtrl.processRoles" class="card list-item" ng-click="role.add()">
                                     <div flex layout="row" layout-align="space-between center">
+
                                         <span>{{role.name}}</span>
+
                                         <md-button class="md-icon-button" ng-click="role.add()">
                                             <i class="material-icons color-fg-success">add</i>
                                         </md-button>
+
                                     </div>
                                 </md-list-item>
 
@@ -211,8 +225,7 @@
 
                                     <md-input-container class="input-container-fixed-height-padding-0">
                                         <label>{{::$i18n.block.input.user}}</label>
-                                        <input type="text" ng-model="userSearch.input"
-                                               ng-change="adminCtrl.filterUsers()">
+                                        <input type="text" ng-model="userSearch.input" ng-change="adminCtrl.filterUsers()">
                                     </md-input-container>
 
                                     <md-menu>
@@ -222,14 +235,12 @@
 
                                         <md-menu-content>
                                             <md-menu-item class="margin-left-2x">
-                                                <md-checkbox ng-model="userSearch.byName" aria-label="Name"
-                                                             class="md-primary">
+                                                <md-checkbox ng-model="userSearch.byName" aria-label="Name" class="md-primary">
                                                     {{::$i18n.block.input.name}}
                                                 </md-checkbox>
                                             </md-menu-item>
                                             <md-menu-item class="margin-left-2x">
-                                                <md-checkbox ng-model="userSearch.byEmail" aria-label="Email"
-                                                             class="md-primary">
+                                                <md-checkbox ng-model="userSearch.byEmail" aria-label="Email" class="md-primary">
                                                     {{::$i18n.block.input.email}}
                                                 </md-checkbox>
                                             </md-menu-item>
@@ -241,25 +252,30 @@
 
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                            <md-list flex class="padding-0">
+                            <div flex layout="column" class="overflow-y-auto">
+                                <md-list flex class="padding-0">
 
-                                <md-list-item ng-repeat-start="user in users | orderBy:user.fullName"
-                                              ng-click="adminCtrl.selectUser(user)" class="card list-item"
-                                              ng-class="user.selected ? 'list-item-selected' : ''">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                        <span>
-                                            {{user.fullName}}
-                                            <md-tooltip>
-                                                {{user.email}}
-                                            </md-tooltip>
-                                        </span>
-                                    </div>
-                                </md-list-item>
+                                    <md-list-item ng-repeat-start="user in users | orderBy:user.fullName"
+                                                  ng-click="adminCtrl.selectUser(user)" class="card list-item"
+                                                  ng-class="user.selected ? 'list-item-selected' : ''">
+                                        <div flex layout="row" layout-align="start center">
 
-                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+                                            <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
 
-                            </md-list>
+                                            <span>
+                                                {{user.fullName}}
+                                                <md-tooltip>
+                                                    {{user.email}}
+                                                </md-tooltip>
+                                            </span>
+
+                                        </div>
+                                    </md-list-item>
+
+                                    <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+
+                                </md-list>
+                            </div>
 
                         </div>
 
@@ -271,17 +287,23 @@
                                 <div layout="row" layout-align="start center" class="md-toolbar-tools">
 
                                     <md-input-container>
+
                                         <label>{{::$i18n.block.input.process}}</label>
+
                                         <md-select ng-model="adminCtrl.roles.process" ng-change="adminCtrl.loadRoles()">
                                             <md-option ng-repeat="process in processes" ng-value="process">
                                                 {{process.title}}
                                             </md-option>
                                         </md-select>
+
                                     </md-input-container>
 
                                     <md-input-container class="input-container-fixed-height-padding-0">
+
                                         <label>{{::$i18n.block.input.role}}</label>
+
                                         <input type="text" ng-model="adminCtrl.roleInput">
+
                                     </md-input-container>
 
                                     <span flex></span>
@@ -297,20 +319,25 @@
 
                             <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                            <md-list flex class="padding-0">
+                            <div flex layout="column" class="overflow-y-auto">
+                                <md-list flex class="padding-0">
 
-                                <md-list-item ng-repeat-start="role in roles | orderBy:role.name"
-                                              ng-click="adminCtrl.selectRole(role)" class="card list-item"
-                                              ng-class="role.selected ? 'list-item-selected' : ''">
-                                    <div flex layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
-                                        <span>{{role.name}}</span>
-                                    </div>
-                                </md-list-item>
+                                    <md-list-item ng-repeat-start="role in roles | orderBy:role.name"
+                                                  ng-click="adminCtrl.selectRole(role)" class="card list-item"
+                                                  ng-class="role.selected ? 'list-item-selected' : ''">
+                                        <div flex layout="row" layout-align="start center">
 
-                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+                                            <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
 
-                            </md-list>
+                                            <span>{{role.name}}</span>
+
+                                        </div>
+                                    </md-list-item>
+
+                                    <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+
+                                </md-list>
+                            </div>
 
                         </div>
 
