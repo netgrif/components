@@ -84,7 +84,7 @@
 
                         <div flex layout="column" class="card padding-2x overflow-y-auto">
 
-                            <div ng-if="adminCtrl.invitedUser.processRoles.length === 0" flex class="layout-rw-100"> <!-- TODO 12.11.2017 Consult ng-if with @Milan -->
+                            <div ng-if="adminCtrl.isObjEmpty(adminCtrl.invitedUser.processRoles)" flex class="layout-rw-100"> <!-- TODO 12.11.2017 Consult ng-if with @Milan -->
 
                                 <md-list flex class="padding-0">
                                     <md-list-item class="list-item">
