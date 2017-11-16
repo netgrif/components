@@ -252,6 +252,10 @@ define(['angular', '../modules/Admin'], function (angular) {
                 });
             };
 
+            self.isObjEmpty = function (obj) {
+                return jQuery.isEmptyObject(obj);
+            };
+
             self.loadUsers();
             self.loadNets();
         }]);

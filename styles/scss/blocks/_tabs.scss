@@ -1,23 +1,27 @@
-//// Global changes
-//md-tabs-wrapper {
-//    background-color: $color-black-op-40;
-//    box-shadow: $shadow;
-//    margin: $dim-default;
-//}
-//
-//md-tabs.md-active md-ink-bar, md-tabs md-ink-bar{
-//    color: $color-primary-500 !important;
-//    background-color: $color-primary-500 !important;
-//}
-//
-//md-tabs.md-default-theme .md-tab, md-tabs .md-tab {
-//    color: $color-grey-50;
-//
-//    .material-icons {
-//        color: $color-grey-50;
-//    }
-//}
-//
-//.md-tab {
-//    font-size: 16px;
-//}
+md-tabs.tabs {
+
+	&-h {
+
+		&-100 {
+
+			&-gt-xs {
+
+				@include gt-xs() {
+					height: 100%;
+
+					md-tabs-content-wrapper {
+						height: calc(100% - 64px); // toolbar 64px = height + padding
+
+						md-tab-content {
+							height: 100%;
+
+							md-content {
+								height: 100%;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

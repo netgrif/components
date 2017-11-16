@@ -37,7 +37,9 @@ define({
                 orgs: "Organizations",
                 roles: "Roles",
                 processRolesLower: "Process roles",
-                processRoles: "Process Roles"
+                processRoles: "Process Roles",
+                thereIsNoOrgAssignedToThisUserYet: "There is no organisation assigned to this user yet",
+                thereIsNoRoleAssignedToThisUserYet: "There is no role assigned to this user yet"
             }
         },
         block: {
