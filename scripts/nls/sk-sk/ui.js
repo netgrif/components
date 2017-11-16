@@ -25,9 +25,9 @@ define({
             contacts: "Kontakty",
             contracts: "Zmluvy"
         },
-        offers: {
-            this: "Ponuky",
-            my: "Moje ponuky"
+        cases: {
+            this: "Prípady",
+            my: "Prípady"
         },
         console: {
             this: "Konzola",

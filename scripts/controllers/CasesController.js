@@ -1,14 +1,14 @@
-define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offers', '../modules/Main', 'angularMaterialExpansionPanels'],
+define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab) {
-        angular.module('ngOffers').controller('OffersController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n','$rootScope',
+        angular.module('ngCases').controller('CasesController',
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
                     const self = this;
 
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
-                    self.caseTab = new CaseTab("My Offers", this, {
+                    self.caseTab = new CaseTab("Cases", this, {
                         $http,
                         $dialog,
                         $snackbar,
@@ -17,10 +17,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                         $timeout,
                         $i18n
                     }, {
-                        processName: "Insurance Portal Demo",
-                        filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET, CaseTab.FIND_BY_TRANSITION],
-                        transitionNames: ["Nehnuteľnosť a domácnosť","Základné informácie","Údaje o zmluve"],
-                        caseType: "Offer"
+                        processName: "", //process name
+                        filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET],
+                        //transitionNames: ["Nehnuteľnosť a domácnosť", "Základné informácie", "Údaje o zmluve"],
+                        //caseType: "regular"
                     });
 
                     self.tabChanged = function () {
@@ -60,18 +60,18 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Offer
                         }
                     };
 
-                    if($cache.get("dashboard") && $cache.get("dashboard").offers) {
-                        self.caseTab.openCase($cache.get("dashboard").offers);
+                    if ($cache.get("dashboard") && $cache.get("dashboard").cases) {
+                        self.caseTab.openCase($cache.get("dashboard").cases);
                         self.activeTabIndex = self.taskTabs.length;
                         $cache.remove("dashboard");
                     }
-                    if($cache.get("create") && $cache.get("create").offers){
-                        self.caseTab.openNewCaseDialog($i18n.page.offers.this);
+                    if ($cache.get("create") && $cache.get("create").cases) {
+                        self.caseTab.openNewCaseDialog($i18n.page.cases.this);
                         $cache.remove("create");
                     }
                     const caseCreateListener = $rootScope.$on("caseCreate", (event, type) => {
-                        if(type === "offers")
-                            self.caseTab.openNewCaseDialog($i18n.page.offers.this);
+                        if (type === "cases")
+                            self.caseTab.openNewCaseDialog($i18n.page.cases.this);
                     });
                     $scope.$on('$destroy', () => caseCreateListener());
                 }]);

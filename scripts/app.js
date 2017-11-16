@@ -9,7 +9,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
     function (angular) {
         // console.log(angular.version);
         let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment','angular-inview',
-         'ngMain', 'ngOffers', 'ngAdmin']); // Here add modules that you defined
+         'ngMain', 'ngCases', 'ngAdmin']); // Here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             $mdThemingProvider.definePalette('mainPalette', {
                 '50': '#E0F2F1',
@@ -43,7 +43,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                 .when('/login', 'login')
                 .when('/signup/:token', 'signup')
                 .when('/dashboard','app.dashboard')
-                .when('/offers', 'app.offers')
+                .when('/cases', 'app.cases')
                 .when('/console', 'app.console')
 
             .segment('app', {
@@ -58,10 +58,10 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                     controller: 'DashboardController',
                     controllerAs: 'dashCtrl'
                 })
-                .segment('offers', {
-                    templateUrl: "views/app/offers.html",
-                    controller: 'OffersController',
-                    controllerAs: 'offCtrl'
+                .segment('cases', {
+                    templateUrl: "views/app/cases.html",
+                    controller: 'CasesController',
+                    controllerAs: 'caseCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",

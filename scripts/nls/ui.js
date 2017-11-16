@@ -26,9 +26,9 @@ define({
                 contacts: "Contacts",
                 contracts: "Contracts"
             },
-            offers: {
-                this: "Offers",
-                my: "My Offers"
+            cases: {
+                this: "Cases",
+                my: "Cases"
             },
             console: {
                 this: "Console",

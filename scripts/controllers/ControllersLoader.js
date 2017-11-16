@@ -4,5 +4,5 @@
  */
 
 var path = 'scripts/controllers/';
-define(['MainController', 'OffersController', 'LoginController', 'AdminConsoleController', 'TaskController','CaseDialogController', 'DashboardController']
+define(['MainController', 'CasesController', 'LoginController', 'AdminConsoleController', 'TaskController','CaseDialogController', 'DashboardController']
     .map(ctrl => path+ctrl), function () {});

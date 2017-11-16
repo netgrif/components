@@ -83,8 +83,8 @@
                     <i class="material-icons">dashboard</i>{{::$i18n.page.dashboard.this}}
                 </md-button>
 
-                <md-button href="/offers" layout="row" layout-align="start center" ng-class="{active: ('offers' | routeSegmentContains)}">
-                    <i class="material-icons">content_paste</i>{{::$i18n.page.offers.this}}
+                <md-button href="/cases" layout="row" layout-align="start center" ng-class="{active: ('cases' | routeSegmentContains)}">
+                    <i class="material-icons">content_paste</i>{{::$i18n.page.cases.this}}
                 </md-button>
 
                 <md-button href="/console" ng-if="$user.hasAuthority('ROLE_ADMIN')" layout="row" layout-align="start center" ng-class="{active: ('console' | routeSegmentContains)}">

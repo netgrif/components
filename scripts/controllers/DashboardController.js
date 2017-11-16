@@ -145,7 +145,7 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                         });
                     };
 
-                    self.loadPetriNet("Insurance", 'offerNet', success => {
+                    /*self.loadPetriNet("Insurance", 'offerNet', success => {
                         if (!success) return;
 
                         self.loadTransitions(["Nehnuteľnosť a domácnosť", "Základné informácie", "Údaje o zmluve"], self.offerNet.entityId, 'offerTransitions', success => {
@@ -160,7 +160,7 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../modules/Main'
                     self.loadPetriNet("Contact", 'contactNet', success => {
                         if (success)
                             self.loadContacts();
-                    });
+                    });*/
 
                     self.openCase = function (type, useCase) {
                         const o = {};

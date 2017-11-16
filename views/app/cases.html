@@ -1,11 +1,11 @@
 <div ng-cloak>
 	<div class="background-default background-header-tabs"></div>
-	<md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="offCtrl.activeTabIndex">
+	<md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="caseCtrl.activeTabIndex">
 
-		<md-tab md-on-select="offCtrl.caseTab.activate()" class="primary">
+		<md-tab md-on-select="caseCtrl.caseTab.activate()" class="primary">
 
 			<md-tab-label>
-				{{::$i18n.page.offers.my}}
+				{{::$i18n.page.cases.my}}
 			</md-tab-label>
 
 			<md-tab-body>
@@ -18,13 +18,13 @@
 
 							<md-input-container class="margin-0">
 								<label>{{::$i18n.block.input.search}}</label>
-								<input type="text" ng-model="offCtrl.search" class="margin-bottom-negative-15px">
+								<input type="text" ng-model="caseCtrl.search" class="margin-bottom-negative-15px">
 							</md-input-container>
 						</div>
 
 						<div flex-gt-sm flex-sm-none flex-xs-none></div>
 
-						<md-button class="md-fab md-raised md-mini md-primary" ng-click="offCtrl.caseTab.openNewCaseDialog($i18n.page.offers.this)">
+						<md-button class="md-fab md-raised md-mini md-primary" ng-click="caseCtrl.caseTab.openNewCaseDialog($i18n.page.cases.this)">
 							<md-tooltip md-direction="left">{{::$i18n.block.add.createOffer}}</md-tooltip>
 							<md-icon class="material-icons">add</md-icon>
 						</md-button>
@@ -43,7 +43,7 @@
 
 						<md-card layout="column" class="card">
 
-							<div layout="row" layout-align="start center" ng-repeat-start="useCase in offCtrl.caseTab.cases | orderBy:'strindId'" ng-click="useCase.open()" class="card-case padding-horizontal-2x">
+							<div layout="row" layout-align="start center" ng-repeat-start="useCase in caseCtrl.caseTab.cases | orderBy:'strindId'" ng-click="useCase.open()" class="card-case padding-horizontal-2x">
 
 								<i flex-gt-xs="10" flex-xs="20" class="material-icons {{::useCase.color}}">{{useCase.icon ? useCase.icon : 'label'}}</i>
 								<span flex="20" hide show-gt-sm>{{::useCase.visualId}}</span>
@@ -72,19 +72,19 @@
 
 					</div>
 
-					<div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&offCtrl.caseTab.load(true)" in-view-options="{ throttle: 0 }">
-						<md-progress-circular md-mode="indeterminate" ng-disabled="!offCtrl.caseTab.loading" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
+					<div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&caseCtrl.caseTab.load(true)" in-view-options="{ throttle: 0 }">
+						<md-progress-circular md-mode="indeterminate" ng-disabled="!caseCtrl.caseTab.loading" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
 					</div>
 
 				</md-content>
 			</md-tab-body>
 		</md-tab>
 
-		<md-tab class="primary" ng-repeat="tab in offCtrl.taskTabs" md-on-select="offCtrl.tabChanged()">
+		<md-tab class="primary" ng-repeat="tab in caseCtrl.taskTabs" md-on-select="caseCtrl.tabChanged()">
 
 			<md-tab-label>
 				{{::tab.useCase.title}}
-				<md-icon class="material-icons cursor-pointer font-size-22" ng-click="offCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
+				<md-icon class="material-icons cursor-pointer font-size-22" ng-click="caseCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
 			</md-tab-label>
 
 			<md-tab-body>
