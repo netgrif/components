@@ -30,6 +30,14 @@ define({
                 this: "Cases",
                 my: "Cases"
             },
+            tasks: {
+                this: "Tasks",
+                my: "Tasks"
+            },
+            workflow: {
+                this: "Workflow",
+                my: "Workflow"
+            },
             console: {
                 this: "Console",
                 inviteUser: "Invite User",

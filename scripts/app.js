@@ -9,7 +9,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
     function (angular) {
         // console.log(angular.version);
         let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment','angular-inview',
-         'ngMain', 'ngCases', 'ngAdmin']); // Here add modules that you defined
+         'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             $mdThemingProvider.definePalette('mainPalette', {
                 '50': '#E0F2F1',
@@ -45,6 +45,9 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                 .when('/dashboard','app.dashboard')
                 .when('/cases', 'app.cases')
                 .when('/console', 'app.console')
+                .when('/profile', 'app.profile')
+                .when('/tasks', 'app.tasks')
+                .when('/workflow', 'app.workflow')
 
             .segment('app', {
                     templateUrl: "views/app/main.html",
@@ -67,6 +70,21 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                     templateUrl: "views/app/console.html",
                     controller: 'AdminConsoleController',
                     controllerAs: 'adminCtrl'
+                })
+                .segment('profile', {
+                    templateUrl: 'views/app/profile.html',
+                    controller: 'ProfileController',
+                    controllerAs: 'profCtrl'
+                })
+                .segment('tasks', {
+                    templateUrl: 'views/app/tasks.html',
+                    controller: 'TasksController',
+                    controllerAs: 'taskCtrl'
+                })
+                .segment('workflow', {
+                    templateUrl: 'views/app/workflow.html',
+                    controller: 'WorkflowController',
+                    controllerAs: 'workCtrl'
                 })
                 .up()
                 .segment('login', {

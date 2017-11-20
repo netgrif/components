@@ -29,6 +29,14 @@ define({
             this: "Prípady",
             my: "Prípady"
         },
+        tasks: {
+            this: "Úlohy",
+            my: "Úlohy"
+        },
+        workflow: {
+            this: "Workflow",
+            my: "Workflow"
+        },
         console: {
             this: "Konzola",
             inviteUser: "Pozvať používateľa",

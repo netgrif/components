@@ -87,6 +87,14 @@
                     <i class="material-icons">content_paste</i>{{::$i18n.page.cases.this}}
                 </md-button>
 
+                <md-button href="/tasks" layout="row" layout-align="start center" ng-class="{active: ('tasks' | routeSegmentContains)}">
+                    <i class="material-icons">assignment</i>{{::$i18n.page.tasks.this}}
+                </md-button>
+
+                <md-button href="/workflow" layout="row" layout-align="start center" ng-class="{active: ('workflow' | routeSegmentContains)}">
+                    <i class="material-icons">linear_scale</i>{{::$i18n.page.workflow.this}}
+                </md-button>
+
                 <md-button href="/console" ng-if="$user.hasAuthority('ROLE_ADMIN')" layout="row" layout-align="start center" ng-class="{active: ('console' | routeSegmentContains)}">
                     <i class="material-icons">developer_board</i>{{::$i18n.page.console.this}}
                 </md-button>
