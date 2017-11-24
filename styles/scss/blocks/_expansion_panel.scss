@@ -91,6 +91,9 @@ md-expansion-panel-header {
     }
 }
 
-md-expansion-panel .md-expansion-panel-footer-container {
-    top: auto !important;
+md-expansion-panel {
+
+    .md-expansion-panel-header-container, .md-expansion-panel-footer-container {
+        top: auto !important;
+    }
 }

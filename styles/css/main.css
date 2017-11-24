@@ -1147,7 +1147,7 @@ md-expansion-panel-header .md-expansion-panel-header-container {
   padding-right: 16px !important;
 }
 
-md-expansion-panel .md-expansion-panel-footer-container {
+md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-expansion-panel-footer-container {
   top: auto !important;
 }
 
