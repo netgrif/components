@@ -67,7 +67,18 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.prototype.delegate = function () {
-        //TODO 22.6.2017 doimplementuj
+        const self = this;
+        this.$dialog.showByTemplate('assign_user', this, {task: Object.assign(this, {fieldRoles: Object.keys(this.roles)})}).then(user => {
+            if(!user) return;
+
+            this.$http.post(this.link('delegate'), user.email).then( response => {
+                if(response.success)
+                    self.tab.load(false);
+                else if(response.error)
+                    self.$snackbar.error(response.error);
+
+            }, ()=> self.$snackbar.error(`Delegate task ${self.visualID} to user ${user.name} has failed!`));
+        }, ()=>{});
     };
 
     Task.prototype.cancel = function (callback = () => {
@@ -269,7 +280,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
     Task.prototype.focusNearestRequiredField = function () {
         this.getData().forEach(data => {
-            if(data.element && data.element.is(":focus")) {
+            if (data.element && data.element.is(":focus")) {
                 data.element.blur();
                 data.element.find("*").each((index, el) => {
                     el.blur();
@@ -284,7 +295,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                 data.type !== 'boolean' && data.type !== 'file' && data.type !== 'user') {
                 //make data element focus
                 if (data.element) {
-                    if(data.type === 'text' || data.type === 'number')
+                    if (data.type === 'text' || data.type === 'number')
                         data.element.focus();
                     else if (data.type === 'date') {
                         //TODO 13.09.2017 dôkladnejšie otestovať otváranie datepickeru
@@ -309,7 +320,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.prototype.click = function ($event) {
-        if(this.loading || this.animating){
+        if (this.loading || this.animating) {
             this.preventDefault($event);
             return;
         }
@@ -349,14 +360,15 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         });
     };
 
-    Task.prototype.panelExpand = function (callback = () => {}) {
+    Task.prototype.panelExpand = function (callback = () => {
+    }) {
         this.animating = true;
         this.panel.expand();
         this.expanded = true;
-        this.$timeout(()=>{
+        this.$timeout(() => {
             this.animating = false;
             callback();
-        },300); //timeout with 200ms because animation time of expanding task
+        }, 300); //timeout with 200ms because animation time of expanding task
     };
 
     Task.prototype.collapse = function () {
@@ -367,14 +379,15 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         });
     };
 
-    Task.prototype.panelCollapse = function (callback = ()=>{}) {
+    Task.prototype.panelCollapse = function (callback = () => {
+    }) {
         this.animating = true;
         this.panel.collapse();
         this.expanded = false;
-        this.$timeout(()=>{
+        this.$timeout(() => {
             this.animating = false;
             callback();
-        },300);
+        }, 300);
     };
 
     Task.prototype.showDataGroupDivider = function (group) {
