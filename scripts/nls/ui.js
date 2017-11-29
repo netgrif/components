@@ -207,7 +207,7 @@ define({
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },
             add: {
-                createOffer: "Create Offer",
+                createCase: "Create Case",
                 createContact: "Create Contact",
                 createDocument: "Create Document"
             },

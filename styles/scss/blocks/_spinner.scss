@@ -52,21 +52,21 @@
 
 	&-1 {
 		//@include orbit(50px, 5px, $color-grey-800, left, .7s);
-		@include orbit(20px, 5px, $color-grey-800, left, .7s);
+		@include orbit(20px, 5px, $color-dark-teal-grey-500, left, .7s);
 	}
 
 	&-2 {
 		//@include orbit(100px, 7px, $color-grey-900, right, .9s);
-		@include orbit(40px, 6px, $color-grey-900, right, .9s);
+		@include orbit(40px, 6px, $color-dark-teal-grey-800, right, .9s);
 	}
 
 	&-3 {
 		//@include orbit(150px, 5px, $color-grey-800, left, .8s);
-		@include orbit(60px, 5px, $color-grey-800, left, .8s);
+		@include orbit(60px, 5px, $color-dark-teal-grey-500, left, .8s);
 	}
 
 	&-4 {
 		//@include orbit(200px, 7px, $color-grey-900, left, 1s);
-		@include orbit(80px, 6px, $color-grey-900, left, 1s);
+		@include orbit(80px, 6px, $color-dark-teal-grey-800, left, 1s);
 	}
 }

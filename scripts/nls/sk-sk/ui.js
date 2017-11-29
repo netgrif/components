@@ -206,7 +206,7 @@ define({
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },
         add: {
-            createOffer: "Vytvoriť ponuku",
+            createCase: "Vytvoriť prípad",
             createContact: "Vytvoriť kontakt",
             createDocument: "Vytvoriť dokument"
         },

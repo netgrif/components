@@ -1041,7 +1041,7 @@ span.active {
 
 .orbit-1:not(:required):before {
   border-width: 5px;
-  border-top-color: #424242;
+  border-top-color: #37474F;
   -webkit-animation-name: spinner-left;
   animation-name: spinner-left;
   -webkit-animation-duration: 0.7s;
@@ -1062,7 +1062,7 @@ span.active {
 
 .orbit-2:not(:required):before {
   border-width: 6px;
-  border-top-color: #212121;
+  border-top-color: #1a2b2b;
   -webkit-animation-name: spinner-right;
   animation-name: spinner-right;
   -webkit-animation-duration: 0.9s;
@@ -1083,7 +1083,7 @@ span.active {
 
 .orbit-3:not(:required):before {
   border-width: 5px;
-  border-top-color: #424242;
+  border-top-color: #37474F;
   -webkit-animation-name: spinner-left;
   animation-name: spinner-left;
   -webkit-animation-duration: 0.8s;
@@ -1104,7 +1104,7 @@ span.active {
 
 .orbit-4:not(:required):before {
   border-width: 6px;
-  border-top-color: #212121;
+  border-top-color: #1a2b2b;
   -webkit-animation-name: spinner-left;
   animation-name: spinner-left;
   -webkit-animation-duration: 1s;
