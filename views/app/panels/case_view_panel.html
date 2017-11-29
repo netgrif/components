@@ -65,6 +65,10 @@
         <md-expansion-panel-footer md-no-sticky>
             <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
+                <!--<md-button ng-click="task.delegate()" class="layout-xs-rw-100">-->
+                    <!--Delegate-->
+                <!--</md-button>-->
+
             <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()" class="layout-xs-rw-100">
                 {{::$i18n.block.btn.finish}}
             </md-button>
