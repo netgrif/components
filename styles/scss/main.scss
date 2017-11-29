@@ -5,11 +5,11 @@
 @import "layout";
 @import "text";
 @import "img";
+@import 'background';
 @import 'blocks/spinner';
 @import "blocks/expansion_panel";
 
 .base {
-	@import 'background';
     // Blocks & Elements
 	@import 'blocks/card';
 	@import "blocks/sidenav";

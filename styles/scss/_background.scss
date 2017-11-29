@@ -8,37 +8,30 @@ $tab-header-height: 48px;
 		background: url("../../assets/netgrif_background.png") no-repeat fixed center center;
 	}
 
-	&-header {
+	/*&-header {
 		position: absolute;
 		width: 100%;
-
-		&-default {
-			@extend .background-header;
-			height: $background-header-height;
-			top: 0;
-		}
+		height: $background-header-height;
+		top: 0;
 
 		&-tabs {
 			@extend .background-header;
 			height: $background-header-height - $tab-header-height;
 			top: $tab-header-height;
 		}
-	}
+	}*/
 
 	&-fullpage {
 		position: absolute;
+		height: 100%;
 		width: 100%;
+		top: 0;
+	}
 
-		&-default {
-			@extend .background-header;
-			height: 100%;
-			top: 0;
-		}
+	&-tabs {
 
-		&-tabs {
-			@extend .background-header;
-			height: calc(100% - #{$tab-header-height});
-			top: $tab-header-height;
+		md-tabs-wrapper {
+			background-color: $color-grey-200;
 		}
 	}
 }

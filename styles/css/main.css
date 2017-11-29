@@ -951,6 +951,36 @@ span.active {
   }
 }
 
+.background {
+  /*&-header {
+		position: absolute;
+		width: 100%;
+		height: $background-header-height;
+		top: 0;
+
+		&-tabs {
+			@extend .background-header;
+			height: $background-header-height - $tab-header-height;
+			top: $tab-header-height;
+		}
+	}*/
+}
+
+.background-default {
+  background: url("../../assets/netgrif_background.png") no-repeat fixed center center;
+}
+
+.background-fullpage {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+
+.background-tabs md-tabs-wrapper {
+  background-color: #EEEEEE;
+}
+
 @-webkit-keyframes spinner-right {
   to {
     -webkit-transform: rotate(360deg);
@@ -1149,40 +1179,6 @@ md-expansion-panel-header .md-expansion-panel-header-container {
 
 md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-expansion-panel-footer-container {
   top: auto !important;
-}
-
-.base .background-default {
-  background: url("../../assets/netgrif_background.png") no-repeat fixed center center;
-}
-
-.base .background-header, .base .background-header-default, .base .background-header-tabs, .base .background-fullpage-default, .base .background-fullpage-tabs {
-  position: absolute;
-  width: 100%;
-}
-
-.base .background-header-default {
-  height: 195px;
-  top: 0;
-}
-
-.base .background-header-tabs {
-  height: 147px;
-  top: 48px;
-}
-
-.base .background-fullpage {
-  position: absolute;
-  width: 100%;
-}
-
-.base .background-fullpage-default {
-  height: 100%;
-  top: 0;
-}
-
-.base .background-fullpage-tabs {
-  height: calc(100% - 48px);
-  top: 48px;
 }
 
 .base .card, .base .card-no-shadow, .base .card-header {
