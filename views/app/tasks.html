@@ -1,6 +1,6 @@
 <div ng-cloak>
 
-    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="tasksCtrl.activeTab">
+    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="tasksCtrl.activeTab" class="background-tabs">
 
         <md-tab ng-repeat="tab in tasksCtrl.tabs" label="{{tab.label}}" md-on-select="tasksCtrl.tabChanged()">
             <md-content class="md-padding color-bg-transparent">

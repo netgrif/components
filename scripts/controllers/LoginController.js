@@ -1,6 +1,6 @@
 define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
-    angular.module('ngMain').controller('LoginController', ['$http', '$auth', '$loading', '$log', '$snackbar', '$routeSegment', '$i18n',
-        function ($http, $auth, $loading, $log, $snackbar, $routeSegment, $i18n) {
+    angular.module('ngMain').controller('LoginController', ['$http', '$auth', '$loading', '$log', '$snackbar', '$routeSegment', '$i18n', '$timeout',
+        function ($http, $auth, $loading, $log, $snackbar, $routeSegment, $i18n, $timeout) {
             const self = this;
             let dataLoadingStarted = false;
 
@@ -89,5 +89,6 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
             };
 
             self.viewLoaded();
+
         }]);
 });

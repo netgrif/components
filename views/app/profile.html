@@ -1,3 +1,154 @@
-<div ng-cloak>
-    <p>{{profCtrl.message}}</p>
+<div ng-cloak flex layout="column" class="padding-2x">
+
+    <div layout="row" class="card padding-2x">
+
+        <h3>{{::$i18n.page.profile.this}}</h3>
+
+    </div>
+
+    <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+    <div layout="column" layout-align="start start" class="card padding-2x">
+
+        <span>{{$i18n.page.profile.progressPart1 + " " + profCtrl.completion + "% " + $i18n.page.profile.progressPart2}}</span>
+        <md-progress-linear md-mode="determinate" value="{{profCtrl.completion}}"></md-progress-linear>
+
+    </div>
+
+    <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+    <div layout-gt-xs="row" layout-xs="column">
+
+        <div flex layout="column" layout-align="start start" class="card padding-2x">
+
+            <h3 class="margin-bottom-2x">{{::$i18n.page.profile.personalInfo.this}}</h3>
+
+            <div flex-offset="15" layout="column">
+
+                <md-input-container>
+                    <label>{{::$i18n.page.profile.personalInfo.firstName}}</label>
+                    <input type="text" ng-model="profCtrl.user.name" disabled>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>{{::$i18n.page.profile.personalInfo.lastName}}</label>
+                    <input type="text" ng-model="profCtrl.user.surname" disabled>
+                </md-input-container>
+
+            </div>
+
+        </div>
+
+        <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+        <div flex layout="column" layout-align="start start" class="card padding-2x">
+
+            <h3 class="margin-bottom-2x">{{::$i18n.page.profile.contactInfo.this}}</h3>
+
+            <div flex-offset="15" layout="column">
+
+                <md-input-container>
+                    <label>{{::$i18n.page.profile.contactInfo.phone}}</label>
+                    <input type="text" ng-model="profCtrl.user.telNumber" disabled>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>{{::$i18n.page.profile.contactInfo.email}}</label>
+                    <input type="email" ng-model="profCtrl.user.email" disabled>
+                </md-input-container>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+    <div layout-gt-xs="row" layout-xs="column" layout-align="start center" class="card padding-2x">
+
+        <div flex layout="row" layout-align="start start" class="layout-rw-100">
+
+            <h3>{{::$i18n.page.profile.orgs.this}}</h3>
+
+        </div>
+
+        <div flex layout="row" layout-align="start center">
+
+            <md-chips flex>
+
+                <md-chip ng-repeat="org in profCtrl.user.organizations">
+                    {{::org.name}}
+                </md-chip>
+
+            </md-chips>
+
+        </div>
+
+    </div>
+
+    <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+    <div layout-gt-xs="row" layout-xs="column" layout-align="start center" class="card padding-2x">
+
+        <div flex layout="column" layout-align="start start" class="layout-rw-100">
+
+            <h3>{{::$i18n.page.profile.systemRoles.this}}</h3>
+
+        </div>
+
+        <div flex layout="row" layout-align="start center">
+
+            <md-chips flex>
+
+                <md-chip ng-repeat="role in profCtrl.user.authorities">
+                    {{::profCtrl.getRoleName(role.authority)}}
+                </md-chip>
+
+            </md-chips>
+
+        </div>
+
+    </div>
+
+    <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+    <div layout-gt-xs="row" layout-xs="column" layout-align="start center" class="card padding-2x">
+
+        <div flex layout="column" layout-align="start start" class="layout-rw-100">
+
+            <h3>{{::$i18n.page.profile.workflowRoles.this}}</h3>
+
+        </div>
+
+        <div flex layout="row" layout-align="start center">
+
+            <md-chips flex>
+
+                <md-chip ng-repeat="role in profCtrl.user.processRoles">
+                    {{::role.name}}
+                </md-chip>
+
+            </md-chips>
+
+        </div>
+
+    </div>
+
+    <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+    <div flex layout="row" layout-wrap layout-align="start center" class="card padding-2x">
+
+        <md-button class="md-primary" layout="row" layout-align="center center" ng-click="profCtrl.fireInfoSnackbar($i18n.block.snackbar.featureWillBeAvailableSoon)">
+            <md-icon class="material-icons margin-horizontal-0 margin-right-default">mode_edit</md-icon>
+            {{::$i18n.page.profile.actions.edit}}
+        </md-button>
+
+        <md-button layout="row" layout-align="center center" ng-click="profCtrl.fireInfoSnackbar($i18n.block.snackbar.featureWillBeAvailableSoon)">
+            <md-icon class="material-icons margin-horizontal-0 margin-right-default">lock_open</md-icon>
+            {{::$i18n.page.profile.actions.changePsw}}
+        </md-button>
+
+    </div>
+
 </div>

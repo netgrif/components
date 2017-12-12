@@ -48,6 +48,35 @@ define({
                 processRoles: "Process Roles",
                 thereIsNoOrgAssignedToThisUserYet: "There is no organisation assigned to this user yet",
                 thereIsNoRoleAssignedToThisUserYet: "There is no role assigned to this user yet"
+            },
+            profile: {
+                this: "Profile",
+                progressPart1: "Your profile is",
+                progressPart2: "complete",
+                personalInfo: {
+                    this: "Personal Information",
+                    firstName: "First Name",
+                    lastName: "Last Name"
+                },
+                contactInfo: {
+                    this: "Contact Information",
+                    phone: "Phone Number",
+                    email: "Email"
+                },
+                orgs: {
+                    this: "Organizations"
+                },
+                systemRoles: {
+                    this: "System Roles"
+                },
+                workflowRoles: {
+                    this: "Workflow Roles"
+                },
+                actions: {
+                    this: "Actions",
+                    edit: "Edit",
+                    changePsw: "Change Password"
+                }
             }
         },
         block: {
@@ -204,6 +233,7 @@ define({
                 passwordFieldsDoNotMatch: "Password fields do not match",
                 failedToLoadUsersInTask: "Failed to load users in task",
                 failedToLoadRoles: "Failed to load roles",
+                unableToLoadUserData: "Unable to load user data",
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },
             add: {

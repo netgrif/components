@@ -47,6 +47,35 @@ define({
             processRoles: "Procesné roly",
             thereIsNoOrgAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu organizáciu",
             thereIsNoRoleAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu rolu"
+        },
+        profile: {
+            this: "Profil",
+            progressPart1: "Váš profil je na",
+            progressPart2: "kompletný",
+            personalInfo: {
+                this: "Osobné informácie",
+                firstName: "Meno",
+                lastName: "Priezvisko"
+            },
+            contactInfo: {
+                this: "Kontaktné informácie",
+                phone: "Telefónne číslo",
+                email: "Email"
+            },
+            orgs: {
+                this: "Organizácie"
+            },
+            systemRoles: {
+                this: "Systémové roly"
+            },
+            workflowRoles: {
+                this: "Workflow roly"
+            },
+            actions: {
+                this: "Akcie",
+                edit: "Upraviť",
+                changePsw: "Zmeniť heslo"
+            }
         }
     },
     block: {
@@ -184,7 +213,7 @@ define({
             noTasksFoundIn: "Nenašli sa žiadne úlohy v",
             tasksOn: "Úlohy na",
             transactionsFor: "Transakcie pre",
-            failedToLoadRolesForProcess: "Nepodarilo sa načítať roli pre proces",
+            failedToLoadRolesForProcess: "Nepodarilo sa načítať roly pre proces",
             noOrganizationFound: "Nenašla sa žiadna organizácia",
             emailFieldIsMandatory: "Emailové pole je povinné",
             newUserMustBelongToOneOrMoreOrganization: "Nový používateľ musí mať priradenú aspoň jednu organizáciu",
@@ -193,7 +222,7 @@ define({
             inviteFailed: "Pozvánku sa nepodarilo zaslať",
             failedToLoadUsers: "Nepodarilo sa načítať používateľov",
             failedToLoadProcesses: "Nepodarilo sa načítať procesy",
-            rolesSuccessfullyAssignedTo: "Roli boli úspešne priradené",
+            rolesSuccessfullyAssignedTo: "Roly boli úspešne priradené",
             assigningRolesToUser: "Priradenie rolí používateľovi",
             noCasesToChooseFrom: "Neexistujú prípady, z ktorých je možné si zvoliť",
             failedToIdentifyToken: "Nepodarilo sa identifikovať token",
@@ -202,7 +231,8 @@ define({
             registrationFailed: "Registrácia sa nepodarila",
             passwordFieldsDoNotMatch: "Hodnoty polí s heslami sa nezhodujú",
             failedToLoadUsersInTask: "Nepodarilo sa načítať používateľov pre úlohu",
-            failedToLoadRoles: "Nepodarilo sa načítať roli",
+            failedToLoadRoles: "Nepodarilo sa načítať roly",
+            unableToLoadUserData: "Nepodarilo sa načítať dáta používateľa",
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },
         add: {

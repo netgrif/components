@@ -877,6 +877,12 @@ h2 strong {
   color: #009688;
 }
 
+h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400;
+}
+
 span strong {
   font-weight: 600;
   color: #009688;
