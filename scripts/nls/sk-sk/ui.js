@@ -34,8 +34,8 @@ define({
             my: "Úlohy"
         },
         workflow: {
-            this: "Workflow",
-            my: "Workflow"
+            this: "Workflow"
+
         },
         console: {
             this: "Konzola",

@@ -10,11 +10,11 @@ define(['./DataField','./HalResource','./Task'], function (DataField, HalResourc
      * @param {Object} config
      * @constructor
      */
-    function Case(tab, panel, resource, links, angular,config = {}) {
+    function Case(tab, panel, resource, links, angular, config = {}) {
         HalResource.call(this, links);
         this.tab = tab;
         this.panel = panel;
-        Object.assign(this,resource,angular,config);
+        Object.assign(this, resource, angular, config);
 
         if(this.immediateData){
             this.immediateData.forEach(data => {

@@ -36,7 +36,7 @@ define({
             },
             workflow: {
                 this: "Workflow",
-                my: "Workflow"
+
             },
             console: {
                 this: "Console",

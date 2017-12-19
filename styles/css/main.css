@@ -1183,6 +1183,11 @@ md-expansion-panel-header .md-expansion-panel-header-container {
   padding-right: 16px !important;
 }
 
+md-expansion-panel {
+  -webkit-box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24) !important;
+  box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24) !important;
+}
+
 md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-expansion-panel-footer-container {
   top: auto !important;
 }
@@ -1407,6 +1412,10 @@ md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-
   .base md-tabs.tabs-h-100-gt-xs md-tabs-content-wrapper md-tab-content md-content {
     height: 100%;
   }
+}
+
+.base md-tabs-wrapper {
+  border: none !important;
 }
 
 .base .input-container-fixed-height-padding-0 {
