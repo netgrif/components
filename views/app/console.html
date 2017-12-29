@@ -186,7 +186,7 @@
 
                                     <md-input-container class="margin-right-default">
 
-                                        <label>Process</label>
+                                        <label>{{::$i18n.page.console.process}}</label>
 
                                         <md-select ng-model="adminCtrl.selectedNet" ng-change="adminCtrl.loadProcessRoles()">
                                             <md-option ng-repeat="process in processes" ng-value="process" ng-selected="$first">

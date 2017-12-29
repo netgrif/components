@@ -44,6 +44,7 @@ define({
             orgs: "Organizácie",
             roles: "Roly",
             processRolesLower: "Procesné roly",
+            process: "Proces",
             processRoles: "Procesné roly",
             thereIsNoOrgAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu organizáciu",
             thereIsNoRoleAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu rolu"
