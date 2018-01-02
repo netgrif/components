@@ -36,7 +36,51 @@ define({
             },
             workflow: {
                 this: "Workflow",
-
+                uploadModel: "Upload model",
+                color: "Color",
+                modelTitle: "Model title",
+                uploadedBy: "Uploaded by",
+                status: "Status",
+                data: {
+                    group: {
+                        information: "Information",
+                        statistics: "Statistics"
+                    },
+                    item: {
+                        file: {
+                            title: "File",
+                            desc: "Petriflow model used as template"
+                        },
+                        uploaded: {
+                            title: "Uploaded",
+                            desc: "Date when this model was uploaded"
+                        },
+                        cases: {
+                            title: "Cases",
+                            desc: "Number of cases using this model"
+                        },
+                        roles: {
+                            title: "Roles",
+                            desc: "Number of roles used in this model"
+                        },
+                        tasks: {
+                            title: "Tasks",
+                            desc: "Number of tasks used in this model"
+                        },
+                        activeTasks: {
+                            title: "Active tasks",
+                            desc: "Number of active tasks using this model"
+                        },
+                        activeUsers: {
+                            title: "Active users",
+                            desc: "Number of users working with any case of this model"
+                        }
+                    },
+                    placeholder: {
+                        date: "Date",
+                        count: "Count"
+                    }
+                }
             },
             console: {
                 this: "Console",

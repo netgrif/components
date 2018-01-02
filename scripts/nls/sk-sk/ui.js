@@ -34,8 +34,52 @@ define({
             my: "Úlohy"
         },
         workflow: {
-            this: "Workflow"
-
+            this: "Workflow",
+            uploadModel: "Upload model",
+            color: "Color",
+            modelTitle: "Model title",
+            uploadedBy: "Uploaded by",
+            status: "Status",
+            data: {
+                group: {
+                    information: "Informácie",
+                    statistics: "Štatistiky"
+                },
+                item: {
+                    file: {
+                        title: "Súbor",
+                        desc: "Petriflow model použitý ako šablóna"
+                    },
+                    uploaded: {
+                        title: "Nahrané",
+                        desc: "Dátum nahrania modelu do systému"
+                    },
+                    cases: {
+                        title: "Prípady",
+                        desc: "Počet prípadov používajúcich túto šablónu"
+                    },
+                    roles: {
+                        title: "Roly",
+                        desc: "Počet rolí v tomto modeli"
+                    },
+                    tasks: {
+                        title: "Úlohy",
+                        desc: "Počet úloh v tomto modeli"
+                    },
+                    activeTasks: {
+                        title: "Aktívne úlohy",
+                        desc: "Počet aktívnych úloh používajúcich tento model"
+                    },
+                    activeUsers: {
+                        title: "Aktívni používatelia",
+                        desc: "Počet používateľov pracujúcich s ľubovoľným prípadom tohto modelu"
+                    }
+                },
+                placeholder: {
+                    date: "Dátum",
+                    count: "Počet"
+                }
+            }
         },
         console: {
             this: "Konzola",
