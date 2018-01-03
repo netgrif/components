@@ -27,8 +27,8 @@
 
             <span flex-gt-sm="10" flex-xs="25" flex-sm="20">{{::$i18n.page.workflow.color}}</span>
             <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{::$i18n.page.workflow.modelTitle}}</span>
-            <span hide show-gt-sm flex="40">{{::$i18n.page.workflow.uploadedBy}}</span>
-            <span hide-xs flex="10">{{::$i18n.page.workflow.status}}</span>
+            <span hide show-gt-sm flex="40">{{::$i18n.page.workflow.author}}</span>
+            <span hide-xs flex="10"></span> <!-- Loader -->
 
         </div>
 
@@ -43,7 +43,10 @@
 
                     <span flex-gt-sm="40" flex-xs="75" flex-sm="70">Test model</span>
 
-                    <span hide show-gt-sm flex="40">Anonymous</span>
+                    <span hide show-gt-sm flex="40" layout="row" layout-align="start center">
+                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                        Anonymous
+                    </span>
 
                     <div hide-xs flex="10">
                         <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
@@ -54,7 +57,7 @@
 
             <md-expansion-panel-expanded>
 
-                <md-expansion-panel-header ng-click="null" md-no-sticky>
+                <md-expansion-panel-header ng-click="$panel.collapse()" md-no-sticky>
 
                     <div flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center">
                         <i class="material-icons color-fg-deep-orange-500">label</i>
@@ -62,7 +65,10 @@
 
                     <span flex-gt-sm="40" flex-xs="75" flex-sm="70">Test model</span>
 
-                    <span hide show-gt-sm flex="40">Anonymous</span>
+                    <span hide show-gt-sm flex="40" layout="row" layout-align="start center">
+                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                        Anonymous
+                    </span>
 
                     <div hide-xs flex="10">
                         <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
@@ -79,7 +85,7 @@
                                 <div flex="20" class="line-3px color-bg-primary-op-50"></div>
                                 <span class="margin-horizontal-default">{{::$i18n.page.workflow.data.group.information}}</span>
                                 <div flex class="line-3px color-bg-primary-op-50"></div>
-                            </div>
+                            </div> <!-- ./Group-divider -->
 
                             <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
 
@@ -95,23 +101,18 @@
                                     <div flex="5" flex-xs="0"></div>
                                     <div flex="45" flex-xs="100" layout="row" layout-align="space-between center">
                                         <div flex layout="row" layout-align="start center">
-                                            <md-icon class="material-icons margin-right-2x" ng-if="!field.newValue || field.generated">insert_drive_file</md-icon>
-                                            <md-icon class="material-icons margin-right-2x color-fg-warning" ng-if="field.newFile && !field.uploaded">
-                                                <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileNotUploaded}}</md-tooltip>
-                                                warning
-                                            </md-icon>
-                                            <md-icon class="material-icons margin-right-2x color-fg-primary-500" ng-if="field.newFile && field.uploaded">
+                                            <md-icon class="material-icons margin-right-2x color-fg-primary-500">
                                                 <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
                                                 done
                                             </md-icon>
-                                            <span class="text-overflow-dots">{{field.newValue ? field.newValue : (field.generated ? field.defaultValue : $i18n.block.data.noFile)}}</span>
+                                            <span class="text-overflow-dots">Test file</span>
                                         </div>
                                         <md-menu flex-xs="20" class="width-24px">
                                             <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                                                 <md-icon class="material-icons">more_vert</md-icon>
                                             </md-button>
                                             <md-menu-content>
-                                                <md-menu-item ng-if="task.user.email == $user.login && field.behavior.editable">
+                                                <md-menu-item>
                                                     <md-button class="file-chooser" layout="row" layout-align="start center">
                                                         <input type="file" id="file"
                                                                file-model="field.file"
@@ -121,13 +122,13 @@
                                                         </label>
                                                     </md-button>
                                                 </md-menu-item>
-                                                <md-menu-item ng-if="field.newFile && !field.uploaded">
-                                                    <md-button ng-click="field.upload()">
+                                                <md-menu-item>
+                                                    <md-button>
                                                         {{::$i18n.block.data.upload}}
                                                     </md-button>
                                                 </md-menu-item>
-                                                <md-menu-item ng-if="(field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)">
-                                                    <md-button ng-click="field.download()">
+                                                <md-menu-item>
+                                                    <md-button>
                                                         {{::$i18n.block.data.download}}
                                                     </md-button>
                                                 </md-menu-item>
@@ -155,8 +156,8 @@
                                     <div flex="5" flex-xs="0"></div>
                                     <div flex="45" flex-xs="100">
                                         <md-input-container class="md-block" flex>
-                                            <label class="placeholder">Date</label>
-                                            <md-datepicker ng-model="field.newValue"
+                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.date}}</label>
+                                            <md-datepicker ng-model="field.uploaded"
                                                            md-open-on-focus
                                                            aria-label="Pick date">
                                             </md-datepicker>
@@ -169,11 +170,38 @@
 
                             </div> <!-- ./Data-field -->
 
+                            <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
+
+                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>
+                                    <div flex="45" flex-xs="100">
+                                        <span flex class="data-field-title cursor-pointer">
+                                            {{::$i18n.page.workflow.author}}
+                                        </span>
+                                    </div>
+                                    <div flex="5" flex-xs="0"></div>
+                                    <div flex="45" flex-xs="100" layout="row" layout-align="space-between center" class="padding-vertical-default">
+                                        <div layout="row" layout-align="start center">
+                                            <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
+                                            <span class="cursor-pointer">
+                                                Anonymous
+                                                <md-tooltip>
+                                                    test@email.com
+                                                </md-tooltip>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div flex="5" flex-xs="0"></div>
+                                </div>
+
+                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+
+                            </div> <!-- ./Data-field -->
+
                             <div layout="row" layout-align="start center" flex="100">
                                 <div flex="20" class="line-3px color-bg-primary-op-50"></div>
                                 <span class="margin-horizontal-default">Statistics</span>
                                 <div flex class="line-3px color-bg-primary-op-50"></div>
-                            </div>
+                            </div> <!-- ./Group-divider -->
 
                             <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
 
@@ -190,7 +218,7 @@
                                     <div flex="45" flex-xs="100">
                                         <md-input-container class="md-block" flex>
                                             <label class="placeholder">Count</label>
-                                            <input type="number" ng-model="field.newValue"
+                                            <input type="number" ng-model="field.cases"
                                                    aria-label="Enter number"
                                                    step="any"
                                                    novalidate>
@@ -217,8 +245,8 @@
                                     <div flex="5" flex-xs="0"></div>
                                     <div flex="45" flex-xs="100">
                                         <md-input-container class="md-block" flex>
-                                            <label class="placeholder">Count</label>
-                                            <input type="number" ng-model="field.newValue"
+                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.count}}</label>
+                                            <input type="number" ng-model="field.roles"
                                                    aria-label="Enter number"
                                                    step="any"
                                                    novalidate>
@@ -245,8 +273,8 @@
                                     <div flex="5" flex-xs="0"></div>
                                     <div flex="45" flex-xs="100">
                                         <md-input-container class="md-block" flex>
-                                            <label class="placeholder">Count</label>
-                                            <input type="number" ng-model="field.newValue"
+                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.count}}</label>
+                                            <input type="number" ng-model="field.tasks"
                                                    aria-label="Enter number"
                                                    step="any"
                                                    novalidate>
@@ -273,8 +301,8 @@
                                     <div flex="5" flex-xs="0"></div>
                                     <div flex="45" flex-xs="100">
                                         <md-input-container class="md-block" flex>
-                                            <label class="placeholder">Count</label>
-                                            <input type="number" ng-model="field.newValue"
+                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.count}}</label>
+                                            <input type="number" ng-model="field.activeTasks"
                                                    aria-label="Enter number"
                                                    step="any"
                                                    novalidate>
@@ -301,8 +329,8 @@
                                     <div flex="5" flex-xs="0"></div>
                                     <div flex="45" flex-xs="100">
                                         <md-input-container class="md-block" flex>
-                                            <label class="placeholder">Count</label>
-                                            <input type="number" ng-model="field.newValue"
+                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.count}}</label>
+                                            <input type="number" ng-model="field.activeUsers"
                                                    aria-label="Enter number"
                                                    step="any"
                                                    novalidate>

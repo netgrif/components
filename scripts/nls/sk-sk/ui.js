@@ -2,7 +2,7 @@ define({
     test: "Toto je testovací reťazec!",
     version: {
         this: "Verzia",
-        id: "1.2.0"
+        id: "2.0.0"
     },
     page: {
         signIn: {
@@ -35,11 +35,10 @@ define({
         },
         workflow: {
             this: "Workflow",
-            uploadModel: "Upload model",
-            color: "Color",
-            modelTitle: "Model title",
-            uploadedBy: "Uploaded by",
-            status: "Status",
+            uploadModel: "Nahrať model",
+            color: "Farba",
+            modelTitle: "Názov modelu",
+            author: "Autor",
             data: {
                 group: {
                     information: "Informácie",

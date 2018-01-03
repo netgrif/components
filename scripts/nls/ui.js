@@ -3,7 +3,7 @@ define({
         test: "This is test string!",
         version: {
             this: "Version",
-            id: "1.2.0"
+            id: "2.0.0"
         },
         page: {
             signIn: {
@@ -39,8 +39,7 @@ define({
                 uploadModel: "Upload model",
                 color: "Color",
                 modelTitle: "Model title",
-                uploadedBy: "Uploaded by",
-                status: "Status",
+                author: "Author",
                 data: {
                     group: {
                         information: "Information",
