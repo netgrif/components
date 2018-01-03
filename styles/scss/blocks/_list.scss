@@ -1,11 +1,14 @@
+@import '../colors';
+@import '../dims';
+
 .list {
 
     &-header {
-        height: 48px;
+        height: $dim-48px;
     }
 
     &-item {
-        height: 48px;
+        height: $dim-48px;
 
         &-selected {
             background-color: $color-primary-500 !important;

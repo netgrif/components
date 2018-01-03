@@ -1,5 +1,8 @@
+@import 'colors';
+@import 'dims';
+
 $background-header-height: 195px;
-$tab-header-height: 48px;
+$tab-header-height: $dim-48px;
 
 .background {
 

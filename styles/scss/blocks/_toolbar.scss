@@ -1,6 +1,9 @@
+@import '../colors';
+@import '../dims';
+
 .toolbar {
-    height: 56px;
-    min-height: 56px;
+    height: $dim-56px;
+    min-height: $dim-56px;
     background-color: $color-dark-teal-grey-500;
 
     &-logo {
@@ -39,7 +42,7 @@
                 text-transform: none;
 
                 .material-icons {
-                    font-size: 48px;
+                    font-size: $dim-48px;
                     margin-left: 15px;
                     color: $color-primary-500;
                 }
@@ -60,7 +63,6 @@
 
             > span {
                 float: none !important;
-                //margin-left: -1px !important;
                 text-transform: capitalize !important;
                 font-weight: normal !important;
             }
@@ -69,6 +71,6 @@
 
     // Dim too bright white menu color on focus
     md-menu-bar.md-default-theme md-menu.md-open > button, md-menu-bar md-menu.md-open > button, md-menu-bar.md-default-theme md-menu > button:focus, md-menu-bar md-menu > button:focus {
-        background: rgba(238, 238, 238, .1) !important;
+        background: rgba(238, 238, 238, 0.1) !important;
     }
 }
