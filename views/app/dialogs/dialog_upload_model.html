@@ -1,0 +1,67 @@
+<md-dialog aria-label="{{::$root.$i18n.block.dialog.uploadModel.title}}">
+
+    <form name="modelUploadForm" ng-submit="parentCtrl.uploadModel()">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+
+                <h2>{{::$root.$i18n.block.dialog.uploadModel.title}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeDialog()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div layout="column" class="md-dialog-content">
+
+                <div layout="row" layout-align="start center">
+
+                    <md-button layout="row" layout-align="start center" class="file-chooser">
+
+                        <input type="file" id="upload-model-file"
+                               file-model="parentCtrl.modelFile"
+                               file-change-callback="parentCtrl.modelChanged"
+                               file-change-arg="parentCtrl.modelFile">
+
+                        <label for="upload-model-file" layout="row" layout-align="start center">
+                            <i class="material-icons">attach_file</i>
+                            <span>{{parentCtrl.modelFile ? parentCtrl.modelName : $root.$i18n.block.dialog.uploadModel.attachModel}}</span>
+                        </label>
+
+                    </md-button>
+
+                    <span flex></span>
+
+                    <div layout="row" layout-align="left center" class="color-fg-material-grey-text cursor-pointer">
+                        <md-tooltip md-direction="bottom">{{::$root.$i18n.block.dialog.uploadModel.attachModelHelp}}</md-tooltip>
+                        <i class="material-icons color-fg-material-grey-text">help</i>
+                    </div>
+
+                </div>
+
+                <md-input-container>
+                    <label>{{::$root.$i18n.block.dialog.uploadModel.name}}</label>
+                    <input type="text" ng-model="parentCtrl.modelMeta.name" required title="{{::$root.$i18n.block.dialog.uploadModel.name}}">
+                </md-input-container>
+
+                <md-input-container>
+                    <label>{{::$root.$i18n.block.dialog.uploadModel.key}}</label>
+                    <input md-maxlength="3" type="text" name="initials" ng-model="parentCtrl.modelMeta.initials" required title="{{::$root.$i18n.block.dialog.uploadModel.key}}">
+                    <div ng-messages="modelUploadForm.initials.$error">
+                        <div ng-message="md-maxlength">{{::$root.$i18n.block.dialog.uploadModel.maxchars}}</div>
+                    </div>
+                </md-input-container>
+
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button type="submit">{{::$root.$i18n.block.dialog.uploadModel.submit}}</md-button>
+        </md-dialog-actions>
+
+    </form>
+
+</md-dialog>
