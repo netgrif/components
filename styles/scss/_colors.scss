@@ -125,6 +125,10 @@ $color-white:					white;
 			color: $color-brown-500;
 		}
 
+		&-material-grey-text {
+			color: $color-material-grey-text !important;
+		}
+
 		&-blue-grey {
 
 			&-50 {
@@ -340,6 +344,10 @@ $color-white:					white;
 
 		&-brown {
 			background-color: $color-brown-500;
+		}
+
+		&-material-grey-text {
+			background-color: $color-material-grey-text;
 		}
 
 		&-blue-grey {

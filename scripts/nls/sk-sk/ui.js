@@ -226,6 +226,15 @@ define({
             },
             caseSelect: {
                 choose: "Zvoliť"
+            },
+            uploadModel: {
+                title: "Nahrať model",
+                attachModel: "Priložiť model",
+                attachModelHelp: "Vyžadovaný formát XML",
+                name: "Názov",
+                key: "Klúč",
+                maxchars: "Kľúč musí byť maximálne 3 znaky dlhý",
+                submit: "Nahrať"
             }
         },
         snackbar: {
@@ -244,7 +253,7 @@ define({
             loading: "Načítanie",
             loadingDataForFilterFailed: "Načítanie údajov pre filter sa nepodarilo",
             file: "Súbor",
-            failedToUpload: "sa nepodarilo načítať",
+            failedToUpload: "sa nepodarilo nahrať",
             uploadedSuccessfully: "bol načítaný úspešne",
             assigningTask: "Priradenie úlohy",
             cancelingAssignmentOfTask: "Zrušenie priradenia úlohy",
@@ -277,6 +286,10 @@ define({
             failedToLoadUsersInTask: "Nepodarilo sa načítať používateľov pre úlohu",
             failedToLoadRoles: "Nepodarilo sa načítať roly",
             unableToLoadUserData: "Nepodarilo sa načítať dáta používateľa",
+            noFileWasAttached: "Nebol priložený žiaden súbor",
+            fileMustHaveXmlFormat: "Súbor musí byť vo formáte XML",
+            modelFailedToUpload: "Model sa nepodarilo nahrať",
+
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },
         add: {

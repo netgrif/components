@@ -227,6 +227,15 @@ define({
                 },
                 caseSelect: {
                     choose: "Choose"
+                },
+                uploadModel: {
+                    title: "Upload model",
+                    attachModel: "Attach model",
+                    attachModelHelp: "Required XML format",
+                    name: "Name",
+                    key: "Key",
+                    maxchars: "Key must be at most 3 characters long",
+                    submit: "Upload"
                 }
             },
             snackbar: {
@@ -278,6 +287,10 @@ define({
                 failedToLoadUsersInTask: "Failed to load users in task",
                 failedToLoadRoles: "Failed to load roles",
                 unableToLoadUserData: "Unable to load user data",
+                noFileWasAttached: "No file was attached",
+                fileMustHaveXmlFormat: "File must have XML format",
+                modelFailedToUpload: "Model failed to upload",
+
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },
             add: {
