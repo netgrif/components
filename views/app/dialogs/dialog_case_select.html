@@ -1,3 +1,4 @@
+<!-- TODO 5.1.2018 Do we need this? Case ref is not implemented yet -->
 <md-dialog flex="50">
 
     <md-toolbar>
@@ -22,7 +23,7 @@
                     <span flex ng-repeat="data in dialogCtrl.cases[0].immediateData | orderBy:'order'" class="color-fg-accent-50">
 							<md-tooltip md-direction="top">{{data.description}}</md-tooltip>
 							{{data.name}}
-						</span>
+                    </span>
                     <span flex></span>
                     <span flex="5" class="visibility-hidden"></span>
                 </div>

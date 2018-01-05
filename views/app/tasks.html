@@ -2,14 +2,14 @@
 
     <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="tasksCtrl.activeTab" class="background-tabs">
 
-        <md-tab ng-repeat="tab in tasksCtrl.tabs" label="{{tab.label}}" md-on-select="tasksCtrl.tabChanged()">
-            <md-content class="md-padding color-bg-transparent">
+        <md-tab label="{{::$i18n.page.tasks.all}}" md-on-select="true">
+            <md-content class="padding-2x color-bg-transparent">
 
-                <md-card class="search-header" layout="row">
+                <div layout="row" class="card search-header">
 
                     <div flex layout="column">
 
-                        <div layout="row" layout-align="left end">
+                        <div layout="row" layout-align="start end">
 
                             <md-icon flex="5" class="material-icons md-primary">search</md-icon>
 
@@ -83,34 +83,37 @@
 
                         <div class="padding-no" layout="row" layout-align="center center">
 
-                            <md-button class="md-primary" ng-click="tasksCtrl.searchTasks()">
-                                {{$i18n.block.taskFilter.search}}
-                            </md-button>
-
                             <md-menu>
                                 <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                                     <md-icon class="material-icons">more_vert</md-icon>
                                 </md-button>
                                 <md-menu-content>
                                     <md-menu-item>
-                                        <md-button ng-click="tasksCtrl.showFilterDialog()">{{::$i18n.block.taskFilter.save}}
+                                        <md-button ng-click="tasksCtrl.showFilterDialog()">{{::$i18n.block.btn.save}}
                                         </md-button>
                                     </md-menu-item>
                                     <md-menu-item>
-                                        <md-button ng-click="tasksCtrl.clearFilter()">{{::$i18n.block.taskFilter.reset}}</md-button>
+                                        <md-button ng-click="tasksCtrl.clearFilter()">{{::$i18n.block.btn.reset}}</md-button>
                                     </md-menu-item>
                                 </md-menu-content>
                             </md-menu>
+
+                            <md-button class="md-fab md-raised md-mini md-primary" ng-click="tasksCtrl.searchTasks()">
+                                <md-icon class="material-icons">save</md-icon>
+                                <md-tooltip md-direction="left">
+                                    {{$i18n.block.btn.search}}
+                                </md-tooltip>
+                            </md-button>
 
                         </div>
 
                     </div>
 
-                </md-card>
+                </div> <!-- ./card -->
 
                 <div class="tasks">
 
-                    <md-card class="tasks-header" layout="column">
+                    <div class="card tasks-header" layout="column">
 
                         <md-card-content layout="row" layout-align="left center">
                             <a flex="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
@@ -162,7 +165,7 @@
                             </md-menu>
                         </md-card-content>
 
-                    </md-card>
+                    </div> <!-- ./card -->
 
                     <div ng-include="'views/app/panels/task_view_panel.html'"></div>
 

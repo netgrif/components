@@ -13,18 +13,17 @@
 
 					<div layout="row" layout-align="space-between center" class="card card-header padding-2x">
 
-						<div flex-gt-sm="30" flex-sm flex-xs layout="row" layout-align="start center" class="height-52px">
-							<i class="material-icons color-fg-primary-500">search</i>
-
-							<md-input-container class="margin-0">
-								<label>{{::$i18n.block.input.search}}</label>
-								<input type="text" ng-model="caseCtrl.search" class="margin-bottom-negative-15px">
-							</md-input-container>
-						</div>
+						<md-input-container flex-gt-sm="30" flex-sm flex-xs class="md-block">
+							<md-icon class="material-icons color-fg-primary-500">search</md-icon>
+							<label>{{::$i18n.block.input.search}}</label>
+							<input type="text" ng-model="caseCtrl.search">
+						</md-input-container>
 
 						<md-button class="md-fab md-raised md-mini md-primary" ng-click="caseCtrl.caseTab.openNewCaseDialog($i18n.page.cases.this)">
-							<md-tooltip md-direction="left">{{::$i18n.block.add.createCase}}</md-tooltip>
 							<md-icon class="material-icons">add</md-icon>
+							<md-tooltip md-direction="left">
+								{{::$i18n.block.add.createCase}}
+							</md-tooltip>
 						</md-button>
 
 					</div>

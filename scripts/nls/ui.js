@@ -28,11 +28,12 @@ define({
             },
             cases: {
                 this: "Cases",
-                my: "Cases"
+                my: "My cases"
             },
             tasks: {
                 this: "Tasks",
-                my: "Tasks"
+                all: "All tasks",
+                my: "My tasks"
             },
             workflow: {
                 this: "Workflow",
@@ -141,7 +142,8 @@ define({
                 collapse: "Collapse",
                 assign: "Assign",
                 finish: "Next",
-                cancel: "Cancel"
+                cancel: "Cancel",
+                reset: "Reset"
             },
             mainMenu: {
                 profile: "Profile",

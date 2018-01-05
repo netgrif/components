@@ -27,11 +27,12 @@ define({
         },
         cases: {
             this: "Prípady",
-            my: "Prípady"
+            my: "Moje prípady"
         },
         tasks: {
             this: "Úlohy",
-            my: "Úlohy"
+            all: "Všetky úlohy",
+            my: "Moje úlohy"
         },
         workflow: {
             this: "Workflow",
@@ -140,7 +141,8 @@ define({
             collapse: "Skryť",
             assign: "Priradiť",
             finish: "Ďalej",
-            cancel: "Zrušiť"
+            cancel: "Zrušiť",
+            reset: "Reset"
         },
         mainMenu: {
             profile: "Profil",
