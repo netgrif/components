@@ -39,6 +39,14 @@ define({
                     task: "Task",
                     processNotFound: "not found", // SK ...
                     taskNotFound: "not found"
+                },
+                header: {
+                    case: "Case",
+                    name: "Name",
+                    priority: "Priority",
+                    user: "User",
+                    assignDate: "Assign Date",
+                    status: "Status"
                 }
             },
             workflow: {

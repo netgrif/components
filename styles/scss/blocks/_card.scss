@@ -53,13 +53,8 @@
         }
     }
 
-    &-header {
-        @extend .card;
-        margin-bottom: $dim-2x;
-    }
-
     &-case {
-        height: 56px;
+        height: $dim-48px;
         cursor: pointer;
 
         &:hover {

@@ -38,6 +38,14 @@ define({
                 task: "Úloha",
                 processNotFound: "nebol najdený", // SK ...
                 taskNotFound: "nebola najdená"
+            },
+            header: {
+                case: "Prípad",
+                name: "Meno",
+                priority: "Priorita",
+                user: "Vykonávateľ",
+                assignDate: "Dátum priradenia",
+                status: "Stav"
             }
         },
         workflow: {

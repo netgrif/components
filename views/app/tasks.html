@@ -92,7 +92,7 @@
                                     {{$chip.title}}
                                 </md-chip-template>
 
-                                <!-- TODO 8.1.2018 Temporary -->
+                                <!-- TODO 8.1.2018 Temporary for view tests -->
                                 <md-chip>Test</md-chip>
                                 <md-chip>Test</md-chip>
                                 <md-chip>Test</md-chip>
@@ -120,70 +120,53 @@
 
                 </div> <!-- ./card -->
 
-                <md-divider class="border-width-default color-border-transparent"></md-divider>
+                <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-                <div class="tasks">
+                <div layout="column">
 
-                    <div class="card tasks-header" layout="column">
+                    <div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
 
-                        <md-card-content layout="row" layout-align="left center">
-                            <a flex="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
-                                {{::$i18n.block.taskHeader.case}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'caseTitle' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <a flex="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
-                                {{::$i18n.block.taskHeader.name}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'title' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
-                                {{::$i18n.block.taskHeader.priority}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'priority' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('username')">
-                                {{::$i18n.block.taskHeader.user}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'username' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
-                                {{::$i18n.block.taskHeader.startDate}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'startDate' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <md-menu>
-                                <md-button ng-click="$mdOpenMenu($event)" md-menu-origin>
-                                    <md-tooltip md-direction="top">{{::$i18n.block.taskHeader.view.this}}</md-tooltip>
-                                    <md-icon class="material-icons">view_carousel</md-icon>
-                                </md-button>
-                                <md-menu-content>
-                                    <md-menu-item>
-                                        <md-button ng-click="tasksCtrl.changeView('list')">{{::$i18n.block.taskHeader.view.list}}
-                                        </md-button>
-                                    </md-menu-item>
-                                    <md-menu-item>
-                                        <md-button ng-click="tasksCtrl.changeView('table')" disabled>
-                                            {{::$i18n.block.taskHeader.view.table}}
-                                        </md-button>
-                                    </md-menu-item>
-                                </md-menu-content>
-                            </md-menu>
-                        </md-card-content>
+                        <a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
+                            {{::$i18n.page.tasks.header.case}}
+                            <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'caseTitle' &&
+                                !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                            </md-icon>
+                        </a>
+                        <a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+                            {{::$i18n.page.tasks.header.name}}
+                            <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'title' &&
+                                !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                            </md-icon>
+                        </a>
+                        <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
+                            {{::$i18n.page.tasks.header.priority}}
+                            <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'priority' &&
+                                !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                            </md-icon>
+                        </a>
+                        <a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('username')">
+                            {{::$i18n.page.tasks.header.user}}
+                            <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'username' &&
+                                !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                            </md-icon>
+                        </a>
+                        <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
+                            {{::$i18n.page.tasks.header.assignDate}}
+                            <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'startDate' &&
+                                !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
+                            </md-icon>
+                        </a>
+                        <div flex="10"></div> <!-- Loader -->
 
                     </div> <!-- ./card -->
 
                     <div ng-include="'views/app/panels/task_view_panel.html'"></div>
 
-                    <div layout="row" layout-sm="column" layout-align="center center" in-view="$inview&&tasksCtrl.loadTasks(true)" in-view-options="{ throttle: 0 }">
-                        <md-progress-circular md-mode="indeterminate" ng-disabled="!tasksCtrl.tabs[$index].loading" class="md-primary" md-diameter="60"></md-progress-circular>
+                    <div layout="row" layout-align="center center" in-view="$inview&&tasksCtrl.loadTasks(true)" in-view-options="{ throttle: 0 }" class="padding-2x margin-2x">
+                        <md-progress-circular md-mode="indeterminate" ng-disabled="false" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
                     </div>
-                </div>
+
+                </div> <!-- ./column -->
 
             </md-content>
 
@@ -212,7 +195,7 @@
 
                                 <md-input-container class="md-block">
                                     <label>{{::$i18n.page.tasks.addTab.label}}</label>
-                                    <input type="text" ng-model="tasksCtrl.newTab.label" required>
+                                    <input type="text" ng-model="tasksCtrl.newTab.label" title="Add" required>
                                 </md-input-container>
 
                                 <md-radio-group ng-model="tasksCtrl.newTab.filter" required>

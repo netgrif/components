@@ -4629,7 +4629,7 @@ md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-
   border-radius: 2px !important;
 }
 
-.base .card, .base .card-no-shadow, .base .card-header {
+.base .card, .base .card-no-shadow {
   margin: 0;
   color: rgba(0, 0, 0, 0.87);
   background-color: white;
@@ -4638,12 +4638,12 @@ md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-
   border-radius: 2px;
 }
 
-.base .card md-card-content, .base .card-no-shadow md-card-content, .base .card-header md-card-content {
+.base .card md-card-content, .base .card-no-shadow md-card-content {
   padding-left: 0;
   padding-right: 0;
 }
 
-.base .card a, .base .card-no-shadow a, .base .card-header a {
+.base .card a, .base .card-no-shadow a {
   color: black;
   text-decoration: none;
   font-weight: bold;
@@ -4682,12 +4682,8 @@ md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-
   width: auto;
 }
 
-.base .card-header {
-  margin-bottom: 16px;
-}
-
 .base .card-case {
-  height: 56px;
+  height: 48px;
   cursor: pointer;
 }
 
