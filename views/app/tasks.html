@@ -15,49 +15,52 @@
 
                             <div flex layout="row">
 
-                                <md-autocomplete class="md-block"
-                                                 md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search"
-                                                 md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item"
-                                                 md-selected-item-change="tasksCtrl.processSearchChange(item)"
-                                                 md-items="item in tasksCtrl.queryProcesses()"
-                                                 md-item-text="item.title"
-                                                 md-min-length="0"
-                                                 md-no-cache="true"
-                                                 md-floating-label="{{::$i18n.page.tasks.filter.process}}">
+                                <div layout-gt-xs="row" layout-xs="column">
 
-                                    <md-item-template>
-                                        <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-highlight-flags="i">
-                                            {{item.title}}
-                                        </span>
-                                    </md-item-template>
+                                    <md-autocomplete class="md-block"
+                                                     md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search"
+                                                     md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item"
+                                                     md-selected-item-change="tasksCtrl.processSearchChange(item)"
+                                                     md-items="item in tasksCtrl.queryProcesses()"
+                                                     md-item-text="item.title"
+                                                     md-min-length="0"
+                                                     md-no-cache="true"
+                                                     md-floating-label="{{::$i18n.page.tasks.filter.process}}">
 
-                                    <md-not-found>
-                                        {{::$i18n.page.tasks.filter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.page.tasks.filter.processNotFound}}
-                                    </md-not-found>
+                                        <md-item-template>
+                                            <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-highlight-flags="i">
+                                                {{item.title}}
+                                            </span>
+                                        </md-item-template>
 
-                                </md-autocomplete>
+                                        <md-not-found>
+                                            {{::$i18n.page.tasks.filter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.page.tasks.filter.processNotFound}}
+                                        </md-not-found>
 
-                                <md-autocomplete class="md-block"
-                                                 md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search"
-                                                 md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item"
-                                                 md-selected-item-change="tasksCtrl.transitionSearchChange(item)"
-                                                 md-items="item in tasksCtrl.queryTransitions()"
-                                                 md-item-text="item.title"
-                                                 md-min-length="0"
-                                                 md-no-cache="true"
-                                                 md-floating-label="{{::$i18n.page.tasks.filter.task}}">
+                                    </md-autocomplete>
 
-                                    <md-item-template>
-                                        <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedTransition.search" md-highlight-flags="i">
-                                            {{item.title}}
-                                        </span>
-                                    </md-item-template>
+                                    <md-autocomplete class="md-block"
+                                                     md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search"
+                                                     md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item"
+                                                     md-selected-item-change="tasksCtrl.transitionSearchChange(item)"
+                                                     md-items="item in tasksCtrl.queryTransitions()"
+                                                     md-item-text="item.title"
+                                                     md-min-length="0"
+                                                     md-no-cache="true"
+                                                     md-floating-label="{{::$i18n.page.tasks.filter.task}}">
 
-                                    <md-not-found>
-                                        {{::$i18n.page.tasks.filter.task + " " + tasksCtrl.tabs[$index].filter.selectedTransition.search + " " + $i18n.page.tasks.filter.taskNotFound}}
-                                    </md-not-found>
+                                        <md-item-template>
+                                            <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedTransition.search" md-highlight-flags="i">
+                                                {{item.title}}
+                                            </span>
+                                        </md-item-template>
 
-                                </md-autocomplete>
+                                        <md-not-found>
+                                            {{::$i18n.page.tasks.filter.task + " " + tasksCtrl.tabs[$index].filter.selectedTransition.search + " " + $i18n.page.tasks.filter.taskNotFound}}
+                                        </md-not-found>
+
+                                    </md-autocomplete>
+                                </div>
 
                                 <md-menu layout="column" layout-align="center center">
                                     <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
@@ -107,7 +110,7 @@
                     <div layout="column" layout-align="center center">
 
                         <md-button class="md-fab md-raised md-mini md-primary" ng-click="tasksCtrl.searchTasks()">
-                            <md-icon class="material-icons">save</md-icon>
+                            <md-icon class="material-icons">search</md-icon>
                             <md-tooltip md-direction="left">
                                 {{::$i18n.block.btn.search}}
                             </md-tooltip>
