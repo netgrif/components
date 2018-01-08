@@ -32,7 +32,13 @@ define({
         tasks: {
             this: "Úlohy",
             all: "Všetky úlohy",
-            my: "Moje úlohy"
+            my: "Moje úlohy",
+            filter: {
+                process: "Proces",
+                task: "Úloha",
+                processNotFound: "nebol najdený", // SK ...
+                taskNotFound: "nebola najdená"
+            }
         },
         workflow: {
             this: "Workflow",
@@ -142,7 +148,8 @@ define({
             assign: "Priradiť",
             finish: "Ďalej",
             cancel: "Zrušiť",
-            reset: "Reset"
+            reset: "Reset",
+            search: "Hľadať"
         },
         mainMenu: {
             profile: "Profil",

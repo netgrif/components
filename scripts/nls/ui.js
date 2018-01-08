@@ -33,7 +33,13 @@ define({
             tasks: {
                 this: "Tasks",
                 all: "All tasks",
-                my: "My tasks"
+                my: "My tasks",
+                filter: {
+                    process: "Process",
+                    task: "Task",
+                    processNotFound: "not found", // SK ...
+                    taskNotFound: "not found"
+                }
             },
             workflow: {
                 this: "Workflow",
@@ -143,7 +149,8 @@ define({
                 assign: "Assign",
                 finish: "Next",
                 cancel: "Cancel",
-                reset: "Reset"
+                reset: "Reset",
+                search: "Search"
             },
             mainMenu: {
                 profile: "Profile",
