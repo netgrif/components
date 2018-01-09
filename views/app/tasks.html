@@ -162,7 +162,10 @@
 
                     <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-                    <div ng-include="'views/app/panels/task_view_panel.html'"></div>
+                    <!-- TODO 9.1.2018 Temporary for view testing -->
+                    <md-expansion-panel-group>
+                        <div ng-include="'views/app/panels/task_view_panel.html'"></div>
+                    </md-expansion-panel-group>
 
                     <div layout="row" layout-align="center center" in-view="$inview&&tasksCtrl.loadTasks(true)" in-view-options="{ throttle: 0 }" class="padding-2x margin-2x">
                         <md-progress-circular md-mode="indeterminate" ng-disabled="false" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>

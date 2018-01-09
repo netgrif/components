@@ -155,7 +155,9 @@ define({
                 save: "Save",
                 collapse: "Collapse",
                 assign: "Assign",
-                finish: "Next",
+                reassign: "Reassign",
+                delegate: "Delegate",
+                finish: "Finish",
                 cancel: "Cancel",
                 reset: "Reset",
                 search: "Search"

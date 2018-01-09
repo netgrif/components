@@ -154,7 +154,9 @@ define({
             save: "Uložiť",
             collapse: "Skryť",
             assign: "Priradiť",
-            finish: "Ďalej",
+            reassign: "Preradiť",
+            delegate: "Delegovať",
+            finish: "Dokončiť",
             cancel: "Zrušiť",
             reset: "Reset",
             search: "Hľadať"
