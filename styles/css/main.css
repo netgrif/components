@@ -4756,7 +4756,7 @@ md-expansion-panel.highlight md-progress-circular path {
 }
 
 .base .card a, .base .card-no-shadow a {
-  color: rgba(0, 0, 0, 0.38);
+  color: rgba(0, 0, 0, 0.87);
   text-decoration: none;
 }
 
