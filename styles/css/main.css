@@ -3909,6 +3909,27 @@ span.active {
 
 md-expansion-panel {
   cursor: pointer !important;
+  -webkit-box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24) !important;
+  box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24) !important;
+}
+
+md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-expansion-panel-footer-container {
+  top: auto !important;
+}
+
+md-expansion-panel md-expansion-panel-collapsed {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+md-expansion-panel md-expansion-panel-content {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+md-expansion-panel md-expansion-panel-header .md-expansion-panel-header-container {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
 }
 
 md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover,
@@ -3918,6 +3939,11 @@ md-expansion-panel md-expansion-panel-collapsed:hover, md-expansion-panel md-exp
 
 md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover span,
 md-expansion-panel md-expansion-panel-collapsed:hover span, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover span {
+  color: #FAFAFA;
+}
+
+md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500,
+md-expansion-panel md-expansion-panel-collapsed:hover .material-icons.color-fg-primary-500, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500 {
   color: #FAFAFA;
 }
 
@@ -3943,42 +3969,6 @@ md-expansion-panel.highlight md-expansion-panel-collapsed:hover span, md-expansi
 
 md-expansion-panel.highlight md-progress-circular path {
   stroke: #FAFAFA !important;
-}
-
-md-expansion-panel md-expansion-panel-collapsed:hover, md-expansion-panel .md-expansion-panel-header-container:hover {
-  background: #009688 !important;
-}
-
-md-expansion-panel md-expansion-panel-collapsed:hover span, md-expansion-panel .md-expansion-panel-header-container:hover span {
-  color: #FAFAFA;
-}
-
-md-expansion-panel md-expansion-panel-collapsed:hover span .material-icons, md-expansion-panel .md-expansion-panel-header-container:hover span .material-icons {
-  color: #FAFAFA;
-}
-
-md-expansion-panel-collapsed {
-  padding-left: 16px !important;
-  padding-right: 16px !important;
-}
-
-md-expansion-panel-content {
-  padding-left: 16px !important;
-  padding-right: 16px !important;
-}
-
-md-expansion-panel-header .md-expansion-panel-header-container {
-  padding-left: 16px !important;
-  padding-right: 16px !important;
-}
-
-md-expansion-panel {
-  -webkit-box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24) !important;
-  box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24) !important;
-}
-
-md-expansion-panel .md-expansion-panel-header-container, md-expansion-panel .md-expansion-panel-footer-container {
-  top: auto !important;
 }
 
 .base .color-fg-white {

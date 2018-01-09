@@ -8,6 +8,29 @@
 
 md-expansion-panel {
     cursor: pointer !important;
+    box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24) !important;
+
+    .md-expansion-panel-header-container, .md-expansion-panel-footer-container {
+        top: auto !important;
+    }
+
+    md-expansion-panel-collapsed {
+        padding-left: $dim-2x !important;
+        padding-right: $dim-2x !important;
+    }
+
+    md-expansion-panel-content {
+        padding-left: $dim-2x !important;
+        padding-right: $dim-2x !important;
+    }
+
+    md-expansion-panel-header {
+
+        .md-expansion-panel-header-container {
+            padding-left: $dim-2x !important;
+            padding-right: $dim-2x !important;
+        }
+    }
 
     md-expansion-panel-expanded .md-expansion-panel-header-container,
     md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
@@ -16,6 +39,10 @@ md-expansion-panel {
             background: $color-primary-500 !important;
 
             span {
+                color: $color-grey-50;
+            }
+
+            .material-icons.color-fg-primary-500 {
                 color: $color-grey-50;
             }
 
@@ -47,61 +74,5 @@ md-expansion-panel {
         md-progress-circular path {
             stroke: $color-grey-50 !important;
         }
-    }
-}
-
-//md-expansion-panel md-expansion-panel-collapsed,
-//md-expansion-panel .md-expansion-panel-footer-container,
-//md-expansion-panel .md-expansion-panel-header-container {
-//    background: rgba(0, 0, 0, .1) !important;
-//}
-
-md-expansion-panel md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
-
-    &:hover {
-        background: $color-primary-500 !important;
-
-        span {
-            color: $color-grey-50;
-
-            .material-icons {
-                color: $color-grey-50;
-            }
-        }
-    }
-}
-
-//md-expansion-panel {
-//    box-shadow: none !important;
-//    margin-bottom: 1px;
-//
-//    .md-expansion-panel-header-container, .md-expansion-panel-footer-container {
-//        border: none !important;
-//    }
-//}
-
-md-expansion-panel-collapsed {
-    padding-left: $dim-2x !important;
-    padding-right: $dim-2x !important;
-}
-
-md-expansion-panel-content {
-    padding-left: $dim-2x !important;
-    padding-right: $dim-2x !important;
-}
-
-md-expansion-panel-header {
-
-    .md-expansion-panel-header-container {
-        padding-left: $dim-2x !important;
-        padding-right: $dim-2x !important;
-    }
-}
-
-md-expansion-panel {
-    box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24) !important;
-
-    .md-expansion-panel-header-container, .md-expansion-panel-footer-container {
-        top: auto !important;
     }
 }
