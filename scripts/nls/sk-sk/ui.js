@@ -41,7 +41,7 @@ define({
             },
             header: {
                 case: "Prípad",
-                name: "Meno",
+                title: "Názov",
                 priority: "Priorita",
                 user: "Vykonávateľ",
                 assignDate: "Dátum priradenia",
@@ -199,6 +199,11 @@ define({
             email: "Email",
             noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
             user: "Používateľ"
+        },
+        priority: {
+            low: "Nízka",
+            medium: "Stredná",
+            high: "Vysoká"
         },
         data: {
             noUserChosen: "Žiaden zvolený používateľ",

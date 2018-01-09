@@ -18,6 +18,10 @@
   color: transparent;
 }
 
+.color-fg-green-500 {
+  color: #4caf50;
+}
+
 .color-fg-teal-500 {
   color: #009688;
 }
@@ -36,6 +40,10 @@
 
 .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.color-fg-red-500 {
+  color: #f44336;
 }
 
 .color-fg-brown-500 {
@@ -218,6 +226,10 @@
   background-color: transparent;
 }
 
+.color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -236,6 +248,10 @@
 
 .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .color-bg-brown {
@@ -666,6 +682,10 @@
   color: transparent;
 }
 
+.color-fg-green-500 {
+  color: #4caf50;
+}
+
 .color-fg-teal-500 {
   color: #009688;
 }
@@ -684,6 +704,10 @@
 
 .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.color-fg-red-500 {
+  color: #f44336;
 }
 
 .color-fg-brown-500 {
@@ -866,6 +890,10 @@
   background-color: transparent;
 }
 
+.color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -884,6 +912,10 @@
 
 .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .color-bg-brown {
@@ -1516,6 +1548,10 @@ body {
   color: transparent;
 }
 
+.color-fg-green-500 {
+  color: #4caf50;
+}
+
 .color-fg-teal-500 {
   color: #009688;
 }
@@ -1534,6 +1570,10 @@ body {
 
 .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.color-fg-red-500 {
+  color: #f44336;
 }
 
 .color-fg-brown-500 {
@@ -1716,6 +1756,10 @@ body {
   background-color: transparent;
 }
 
+.color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -1734,6 +1778,10 @@ body {
 
 .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .color-bg-brown {
@@ -2043,6 +2091,10 @@ span.active {
   color: transparent;
 }
 
+.color-fg-green-500 {
+  color: #4caf50;
+}
+
 .color-fg-teal-500 {
   color: #009688;
 }
@@ -2061,6 +2113,10 @@ span.active {
 
 .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.color-fg-red-500 {
+  color: #f44336;
 }
 
 .color-fg-brown-500 {
@@ -2243,6 +2299,10 @@ span.active {
   background-color: transparent;
 }
 
+.color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -2261,6 +2321,10 @@ span.active {
 
 .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .color-bg-brown {
@@ -2721,6 +2785,10 @@ span.active {
   color: transparent;
 }
 
+.color-fg-green-500 {
+  color: #4caf50;
+}
+
 .color-fg-teal-500 {
   color: #009688;
 }
@@ -2739,6 +2807,10 @@ span.active {
 
 .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.color-fg-red-500 {
+  color: #f44336;
 }
 
 .color-fg-brown-500 {
@@ -2921,6 +2993,10 @@ span.active {
   background-color: transparent;
 }
 
+.color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -2939,6 +3015,10 @@ span.active {
 
 .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .color-bg-brown {
@@ -3274,6 +3354,10 @@ span.active {
   color: transparent;
 }
 
+.color-fg-green-500 {
+  color: #4caf50;
+}
+
 .color-fg-teal-500 {
   color: #009688;
 }
@@ -3292,6 +3376,10 @@ span.active {
 
 .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.color-fg-red-500 {
+  color: #f44336;
 }
 
 .color-fg-brown-500 {
@@ -3474,6 +3562,10 @@ span.active {
   background-color: transparent;
 }
 
+.color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -3492,6 +3584,10 @@ span.active {
 
 .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .color-bg-brown {
@@ -3942,6 +4038,16 @@ md-expansion-panel md-expansion-panel-collapsed:hover span, md-expansion-panel m
   color: #FAFAFA;
 }
 
+md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover task-priority .material-icons,
+md-expansion-panel md-expansion-panel-collapsed:hover task-priority .material-icons, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover task-priority .material-icons {
+  color: #FAFAFA;
+}
+
+md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover .md-button .material-icons,
+md-expansion-panel md-expansion-panel-collapsed:hover .md-button .material-icons, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover .md-button .material-icons {
+  color: #FAFAFA;
+}
+
 md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500,
 md-expansion-panel md-expansion-panel-collapsed:hover .material-icons.color-fg-primary-500, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500 {
   color: #FAFAFA;
@@ -3991,6 +4097,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: transparent;
 }
 
+.base .color-fg-green-500 {
+  color: #4caf50;
+}
+
 .base .color-fg-teal-500 {
   color: #009688;
 }
@@ -4009,6 +4119,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.base .color-fg-red-500 {
+  color: #f44336;
 }
 
 .base .color-fg-brown-500 {
@@ -4191,6 +4305,10 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: transparent;
 }
 
+.base .color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .base .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -4209,6 +4327,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.base .color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .base .color-bg-brown {
@@ -4634,9 +4756,8 @@ md-expansion-panel.highlight md-progress-circular path {
 }
 
 .base .card a, .base .card-no-shadow a {
-  color: black;
+  color: rgba(0, 0, 0, 0.38);
   text-decoration: none;
-  font-weight: bold;
 }
 
 .base .card-no-shadow {
@@ -4722,6 +4843,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: transparent;
 }
 
+.base .color-fg-green-500 {
+  color: #4caf50;
+}
+
 .base .color-fg-teal-500 {
   color: #009688;
 }
@@ -4740,6 +4865,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.base .color-fg-red-500 {
+  color: #f44336;
 }
 
 .base .color-fg-brown-500 {
@@ -4922,6 +5051,10 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: transparent;
 }
 
+.base .color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .base .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -4940,6 +5073,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.base .color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .base .color-bg-brown {
@@ -5427,6 +5564,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: transparent;
 }
 
+.base .color-fg-green-500 {
+  color: #4caf50;
+}
+
 .base .color-fg-teal-500 {
   color: #009688;
 }
@@ -5445,6 +5586,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.base .color-fg-red-500 {
+  color: #f44336;
 }
 
 .base .color-fg-brown-500 {
@@ -5627,6 +5772,10 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: transparent;
 }
 
+.base .color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .base .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -5645,6 +5794,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.base .color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .base .color-bg-brown {
@@ -6165,6 +6318,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: transparent;
 }
 
+.base .color-fg-green-500 {
+  color: #4caf50;
+}
+
 .base .color-fg-teal-500 {
   color: #009688;
 }
@@ -6183,6 +6340,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.base .color-fg-red-500 {
+  color: #f44336;
 }
 
 .base .color-fg-brown-500 {
@@ -6365,6 +6526,10 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: transparent;
 }
 
+.base .color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .base .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -6383,6 +6548,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.base .color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .base .color-bg-brown {
@@ -6841,6 +7010,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: transparent;
 }
 
+.base .color-fg-green-500 {
+  color: #4caf50;
+}
+
 .base .color-fg-teal-500 {
   color: #009688;
 }
@@ -6859,6 +7032,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.base .color-fg-red-500 {
+  color: #f44336;
 }
 
 .base .color-fg-brown-500 {
@@ -7041,6 +7218,10 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: transparent;
 }
 
+.base .color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .base .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -7059,6 +7240,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.base .color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .base .color-bg-brown {
@@ -7323,6 +7508,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: transparent;
 }
 
+.base .color-fg-green-500 {
+  color: #4caf50;
+}
+
 .base .color-fg-teal-500 {
   color: #009688;
 }
@@ -7341,6 +7530,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.base .color-fg-red-500 {
+  color: #f44336;
 }
 
 .base .color-fg-brown-500 {
@@ -7523,6 +7716,10 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: transparent;
 }
 
+.base .color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .base .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -7541,6 +7738,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.base .color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .base .color-bg-brown {
@@ -7751,6 +7952,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: transparent;
 }
 
+.base .color-fg-green-500 {
+  color: #4caf50;
+}
+
 .base .color-fg-teal-500 {
   color: #009688;
 }
@@ -7769,6 +7974,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.base .color-fg-red-500 {
+  color: #f44336;
 }
 
 .base .color-fg-brown-500 {
@@ -7951,6 +8160,10 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: transparent;
 }
 
+.base .color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .base .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -7969,6 +8182,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.base .color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .base .color-bg-brown {
@@ -8211,6 +8428,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: transparent;
 }
 
+.base .color-fg-green-500 {
+  color: #4caf50;
+}
+
 .base .color-fg-teal-500 {
   color: #009688;
 }
@@ -8229,6 +8450,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.base .color-fg-red-500 {
+  color: #f44336;
 }
 
 .base .color-fg-brown-500 {
@@ -8411,6 +8636,10 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: transparent;
 }
 
+.base .color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .base .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -8429,6 +8658,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.base .color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .base .color-bg-brown {
@@ -8643,6 +8876,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: transparent;
 }
 
+.base .color-fg-green-500 {
+  color: #4caf50;
+}
+
 .base .color-fg-teal-500 {
   color: #009688;
 }
@@ -8661,6 +8898,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-fg-deep-orange-500 {
   color: #FF5722;
+}
+
+.base .color-fg-red-500 {
+  color: #f44336;
 }
 
 .base .color-fg-brown-500 {
@@ -8843,6 +9084,10 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: transparent;
 }
 
+.base .color-bg-color-green-500 {
+  background-color: #4caf50;
+}
+
 .base .color-bg-teal-500 {
   background-color: #009688;
 }
@@ -8861,6 +9106,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-deep-orange-500 {
   background-color: #FF5722;
+}
+
+.base .color-bg-red-500 {
+  background-color: #f44336;
 }
 
 .base .color-bg-brown {

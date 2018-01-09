@@ -133,12 +133,12 @@
                             </md-icon>
                         </a>
                         <a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
-                            {{::$i18n.page.tasks.header.name}}
+                            {{::$i18n.page.tasks.header.title}}
                             <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'title' &&
                                 !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
                             </md-icon>
                         </a>
-                        <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
+                        <a flex="10" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
                             {{::$i18n.page.tasks.header.priority}}
                             <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'priority' &&
                                 !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
@@ -150,7 +150,7 @@
                                 !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
                             </md-icon>
                         </a>
-                        <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
+                        <a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
                             {{::$i18n.page.tasks.header.assignDate}}
                             <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'startDate' &&
                                 !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}

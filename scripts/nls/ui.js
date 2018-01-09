@@ -42,7 +42,7 @@ define({
                 },
                 header: {
                     case: "Case",
-                    name: "Name",
+                    title: "Title",
                     priority: "Priority",
                     user: "User",
                     assignDate: "Assign Date",
@@ -200,6 +200,11 @@ define({
                 email: "Email",
                 noData: "This task has no data. Finish to continue.",
                 user: "User"
+            },
+            priority: {
+                low: "Low",
+                medium: "Medium",
+                high: "High"
             },
             data: {
                 noUserChosen: "No user was chosen",
