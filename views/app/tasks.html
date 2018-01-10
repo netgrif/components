@@ -193,33 +193,44 @@
                                 <label>{{::$i18n.block.input.search}}</label>
                                 <input type="text" ng-model="caseCtrl.search" class="margin-bottom-negative-15px">
                             </md-input-container>
+
                             <md-menu>
+
                                 <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
                                     <md-icon class="material-icons color-fg-primary-500">public</md-icon>
                                 </md-button>
 
                                 <md-menu-content>
+
                                     <md-menu-item class="margin-left-2x">
+
                                             <md-button class="md-icon-button">
                                                 <md-icon class="material-icons color-fg-primary-500">public</md-icon>
                                                     <div>{{::$i18n.block.input.name}}</div>
-
                                             </md-button>
+
                                     </md-menu-item>
+
                                     <md-menu-item class="margin-left-2x">
+
                                         <md-button class="md-icon-button">
                                             <md-icon class="material-icons color-fg-primary-500">group</md-icon>
                                                 <div>{{::$i18n.block.input.name}}</div>
                                         </md-button>
 
                                     </md-menu-item>
+
                                     <md-menu-item class="margin-left-2x">
+
                                         <md-button class="md-icon-button">
                                             <md-icon class="material-icons color-fg-primary-500">person</md-icon>
                                                 <div>{{::$i18n.block.input.name}}</div>
                                         </md-button>
+
                                     </md-menu-item>
+
                                 </md-menu-content>
+
                             </md-menu>
                         </div>
 
@@ -230,22 +241,24 @@
                             </md-tooltip>
                         </md-button>
 
-                    </div>
+                    </div> <!--Search bar-->
 
                     <div layout="row">
-                    <div flex="50" layout="column">
 
-                        <div layout="row" layout-align="start center" class="card card-header height-56px padding-horizontal-2x">
-                            <span flex-gt-sm="5">{{::$i18n.block.filter.type}}</span>
-                            <span flex-gt-sm="35">{{::$i18n.block.filter.label}}</span>
-                            <span flex-gt-sm="30">{{::$i18n.block.filter.author}}</span>
-                            <span flex-gt-sm="20">{{::$i18n.block.filter.date}}</span>
-                            <span flex-gt-sm="10"class="visibility-hidden"></span>
-                        </div>
+                        <div flex="50" layout="column">
+
+                            <div layout="row" layout-align="start center" class="card card-header height-56px padding-horizontal-2x">
+                                <span flex-gt-sm="5">{{::$i18n.block.filter.type}}</span>
+                                <span flex-gt-sm="35">{{::$i18n.block.filter.label}}</span>
+                                <span flex-gt-sm="30">{{::$i18n.block.filter.author}}</span>
+                                <span flex-gt-sm="20">{{::$i18n.block.filter.date}}</span>
+                                <span flex-gt-sm="10"class="visibility-hidden"></span>
+                            </div> <!--Sort bar-->
 
                             <md-list flex class="padding-0">
 
                                 <md-list-item class="card list-item">
+
                                     <div flex layout="row" layout-align="start center">
 
                                         <span flex-gt-sm="5" layout="row" layout-align="start center">
@@ -254,28 +267,31 @@
                                         <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
                                         <span flex-gt-sm="30" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                                Peter pan
+                                            Peter pan
                                         </span>
                                         <span flex-gt-sm="20" layout="row" layout-align="start center">
-                                                16.05.2018 16:27
+                                            16.05.2018 16:27
                                         </span>
+
                                         <div flex-gt-sm="10" layout="row" layout-align="end center" >
 
-                                            <md-button class="md-icon-button color-fg-primary-500"">
+                                            <md-button class="md-icon-button color-fg-primary-500">
                                                 <i class="material-icons">list</i>
-                                            <md-tooltip>
-                                                Open details
-                                            </md-tooltip>
+                                                <md-tooltip>
+                                                    Open details
+                                                </md-tooltip>
                                             </md-button>
 
                                         </div>
 
                                     </div>
-                                </md-list-item>
+
+                                </md-list-item> <!--One filter-->
 
                                 <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
                                 <md-list-item class="card list-item">
+
                                     <div flex layout="row" layout-align="start center">
 
                                         <span flex-gt-sm="5" layout="row" layout-align="start center">
@@ -284,28 +300,31 @@
                                         <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
                                         <span flex-gt-sm="30" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                                Peter pan
+                                            Peter pan
                                         </span>
                                         <span flex-gt-sm="20" layout="row" layout-align="start center">
-                                                16.05.2018 16:27
+                                            16.05.2018 16:27
                                         </span>
+
                                         <div flex-gt-sm="10" layout="row" layout-align="end center" >
 
-                                            <md-button class="md-icon-button color-fg-primary-500"">
-                                            <i class="material-icons">list</i>
-                                            <md-tooltip>
-                                                Open details
-                                            </md-tooltip>
+                                            <md-button class="md-icon-button color-fg-primary-500">
+                                                <i class="material-icons">list</i>
+                                                <md-tooltip>
+                                                    Open details
+                                                </md-tooltip>
                                             </md-button>
 
                                         </div>
 
                                     </div>
-                                </md-list-item>
+
+                                </md-list-item> <!--One filter-->
 
                                 <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
                                 <md-list-item class="card list-item">
+
                                     <div flex layout="row" layout-align="start center">
 
                                         <span flex-gt-sm="5" layout="row" layout-align="start center">
@@ -314,28 +333,31 @@
                                         <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
                                         <span flex-gt-sm="30" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                                Peter pan
+                                            Peter pan
                                         </span>
                                         <span flex-gt-sm="20" layout="row" layout-align="start center">
-                                                16.05.2018 16:27
+                                            16.05.2018 16:27
                                         </span>
+
                                         <div flex-gt-sm="10" layout="row" layout-align="end center" >
 
-                                            <md-button class="md-icon-button color-fg-primary-500"">
-                                            <i class="material-icons">list</i>
-                                            <md-tooltip>
-                                                Open details
-                                            </md-tooltip>
+                                            <md-button class="md-icon-button color-fg-primary-500">
+                                                <i class="material-icons">list</i>
+                                                <md-tooltip>
+                                                    Open details
+                                                </md-tooltip>
                                             </md-button>
 
                                         </div>
 
                                     </div>
-                                </md-list-item>
+
+                                </md-list-item> <!--One filter-->
 
                                 <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
                                 <md-list-item class="card list-item">
+
                                     <div flex layout="row" layout-align="start center">
 
                                         <span flex-gt-sm="5" layout="row" layout-align="start center">
@@ -344,28 +366,31 @@
                                         <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
                                         <span flex-gt-sm="30" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                                Peter pan
+                                            Peter pan
                                         </span>
                                         <span flex-gt-sm="20" layout="row" layout-align="start center">
-                                                16.05.2018 16:27
+                                            16.05.2018 16:27
                                         </span>
+
                                         <div flex-gt-sm="10" layout="row" layout-align="end center" >
 
-                                            <md-button class="md-icon-button color-fg-primary-500"">
-                                            <i class="material-icons">list</i>
-                                            <md-tooltip>
-                                                Open details
-                                            </md-tooltip>
+                                            <md-button class="md-icon-button color-fg-primary-500">
+                                                <i class="material-icons">list</i>
+                                                <md-tooltip>
+                                                    Open details
+                                                </md-tooltip>
                                             </md-button>
 
                                         </div>
 
                                     </div>
-                                </md-list-item>
+
+                                </md-list-item> <!--One filter-->
 
                                 <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
                                 <md-list-item class="card list-item">
+
                                     <div flex layout="row" layout-align="start center">
 
                                         <span flex-gt-sm="5" layout="row" layout-align="start center">
@@ -374,704 +399,182 @@
                                         <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
                                         <span flex-gt-sm="30" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                                                Peter pan
+                                            Peter pan
                                         </span>
                                         <span flex-gt-sm="20" layout="row" layout-align="start center">
-                                                16.05.2018 16:27
+                                            16.05.2018 16:27
                                         </span>
+
                                         <div flex-gt-sm="10" layout="row" layout-align="end center" >
 
-                                            <md-button class="md-icon-button color-fg-primary-500"">
-                                            <i class="material-icons">list</i>
-                                            <md-tooltip>
-                                                Open details
-                                            </md-tooltip>
+                                            <md-button class="md-icon-button color-fg-primary-500">
+                                                <i class="material-icons">list</i>
+                                                <md-tooltip>
+                                                    Open details
+                                                </md-tooltip>
                                             </md-button>
 
                                         </div>
 
                                     </div>
-                                </md-list-item>
+
+                                </md-list-item> <!--One filter-->
 
                                 <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
-
-
 
                             </md-list>
 
-                    <!--</div>-->
-
-                    </div>
-                        <md-divider ng-repeat-end class="border-width-2x color-border-transparent"></md-divider>
-                    <div flex="50" layout="column">
-
-                        <div class="card">
-                            <div layout="row" layout-align="space-between center" class="height-56px color-bg-primary-500">
-                                <div class="padding-2x color-fg-accent-50">
-                                    <span>Filter:</span>
-                                    <span>{{::$i18n.block.filter.label}}</span>
-                                </div>
-                                <md-button class="md-icon-button">
-                                    <md-icon class="material-icons color-fg-accent-50">close</md-icon>
-                                </md-button>
-                            </div>
-                            <div flex layout-wrap layout="row" layout-align="start center" class="data-field padding-2x">
-
-                                <div flex layout="column">
-                                    <div>
-                                        <span flex class="data-field-title cursor-pointer">
-                                            Process
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.file.desc}}
-                                            </md-tooltip>
-                                        </span>
-                                        <md-chips class="padding-bottom-default">
-                                            <md-chip>
-                                                Reklamacia
-                                            </md-chip>
-                                        </md-chips>
-                                    </div>
-
-                                    <div>
-                                        <span flex class="data-field-title cursor-pointer">
-                                            Transition
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.file.desc}}
-                                            </md-tooltip>
-                                        </span>
-                                        <md-chips class="padding-bottom-default">
-                                            <md-chip>
-                                                Odvoz
-                                            </md-chip>
-                                            <md-chip>
-                                                Odovzdat kurierovi
-                                            </md-chip>
-                                            <md-chip>
-                                                Prijat od kuriera
-                                            </md-chip>
-                                        </md-chips>
-                                    </div>
-
-                                    <md-input-container class="md-block">
-                                        <label>Description</label>
-                                            <textarea ng-model="TODO.description" md-maxlength="150" rows="3" md-select-on-focus></textarea>
-                                    </md-input-container>
-
-                                    <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
-                                        <div flex="100" layout-wrap layout="row" layout-align="start center">
-
-                                            <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
-
-                                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>
-                                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.author}}
-                                        </span>
-                                                    </div>
-                                                    <div flex="5" flex-xs="0"></div>
-                                                    <div flex="45" flex-xs="100" layout="row" layout-align="space-between center" class="padding-vertical-default">
-                                                        <div layout="row" layout-align="start center">
-                                                            <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
-                                                            <span class="cursor-pointer">
-                                                Anonymous
-                                                <md-tooltip>
-                                                    test@email.com
-                                                </md-tooltip>
-                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div flex="5" flex-xs="0"></div>
-                                                </div>
-
-                                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
-
-                                            </div> <!-- ./Data-field -->
-
-                                            <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
-
-                                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>
-                                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.data.item.uploaded.title}}
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.uploaded.title}}
-                                            </md-tooltip>
-                                        </span>
-                                                    </div>
-                                                    <div flex="5" flex-xs="0"></div>
-                                                    <div flex="45" flex-xs="100">
-                                                        <md-input-container class="md-block" flex>
-                                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.date}}</label>
-                                                            <md-datepicker ng-model="field.uploaded"
-                                                                           md-open-on-focus
-                                                                           aria-label="Pick date">
-                                                            </md-datepicker>
-                                                        </md-input-container>
-                                                    </div>
-                                                    <div flex="5" flex-xs="0"></div>
-                                                </div>
-
-                                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
-
-                                            </div> <!-- ./Data-field -->
-
-
-
-                                        </div>
-                                    </div>
-
-                                    <!--<div layout="row">-->
-                                        <!--<div flex="45">-->
-                                        <!--<span flex class="data-field-title cursor-pointer"> pravy</span>-->
-                                        <!--</div>-->
-                                        <!--<div flex="5"></div>-->
-                                        <!--<div flex ="45">-->
-                                            <!--<md-input-container>-->
-                                                <!--<label class="placeholder">Created</label>-->
-                                                <!--<md-datepicker md-open-on-focus-->
-                                                <!--aria-label="Pick date">-->
-                                                <!--</md-datepicker>-->
-                                            <!--</md-input-container>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-
-                                    <!--<div layout="row" layout-align="start center" class="data-field">-->
-                                        <!--<div flex="45">-->
-                                        <!--<span flex class="data-field-title cursor-pointer">-->
-                                            <!--{{::$i18n.page.workflow.data.item.uploaded.title}}-->
-                                            <!--<md-tooltip>-->
-                                                <!--{{::$i18n.page.workflow.data.item.uploaded.title}}-->
-                                            <!--</md-tooltip>-->
-                                        <!--</span>-->
-                                        <!--</div>-->
-                                        <!--<div flex="5"></div>-->
-                                        <!--<div flex="45">-->
-                                            <!--<md-input-container class="md-block" flex>-->
-                                                <!--<label class="placeholder">{{::$i18n.page.workflow.data.placeholder.date}}</label>-->
-                                                <!--<md-datepicker md-open-on-focus-->
-                                                               <!--aria-label="Pick date">-->
-                                                <!--</md-datepicker>-->
-                                            <!--</md-input-container>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-
-
-                                    <!--<div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>-->
-                                        <!--<div flex="45">-->
-                                        <!--<span flex class="data-field-title cursor-pointer">-->
-                                            <!--{{::$i18n.page.workflow.data.item.uploaded.title}}-->
-                                            <!--<md-tooltip>-->
-                                                <!--{{::$i18n.page.workflow.data.item.uploaded.title}}-->
-                                            <!--</md-tooltip>-->
-                                        <!--</span>-->
-                                        <!--</div>-->
-                                        <!--<div flex="5"></div>-->
-                                        <!--<div flex="45">-->
-                                            <!--<div layout="row" layout-align="start center">-->
-                                                <!--<i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>-->
-                                                <!--<span class="cursor-pointer">-->
-                                                <!--Anonymous-->
-                                                <!--<md-tooltip>-->
-                                                    <!--test@email.com-->
-                                                <!--</md-tooltip>-->
-                                            <!--</span>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-
-                                    <!--<div layout="row" layout-align="start center" class="">-->
-                                        <!--<i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>-->
-                                            <!--<span class="cursor-pointer">-->
-                                                <!--Anonymous-->
-                                            <!--<md-tooltip>-->
-                                            <!--test@email.com-->
-                                            <!--</md-tooltip>-->
-                                            <!--</span>-->
-                                    <!--</div>-->
-                                    <!--<div layout="row" layout-align="start center">-->
-                                        <!--<i class="material-icons margin-right-2x color-fg-primary-500">today</i>-->
-                                        <!--<span class="cursor-pointer">-->
-                                                <!--16.05.2018 16:27-->
-                                            <!--<md-tooltip>-->
-                                            <!--cas-->
-                                            <!--</md-tooltip>-->
-                                            <!--</span>-->
-                                    <!--</div>-->
-                                </div>
-                            </div>
                         </div>
 
+                        <md-divider ng-repeat-end class="border-width-2x color-border-transparent"></md-divider>
+
+                        <div flex="50" layout="column">
+
+                            <div class="card">
+
+                                <div layout="row" layout-align="space-between center" class="height-56px color-bg-primary-500">
+
+                                    <div class="padding-2x color-fg-accent-50">
+                                        <span>Filter:</span>
+                                        <span>{{::$i18n.block.filter.label}}</span>
+                                    </div>
+
+                                    <md-button class="md-icon-button">
+                                        <md-icon class="material-icons color-fg-accent-50">close</md-icon>
+                                    </md-button>
+
+                                </div> <!--Card header first row-->
+
+                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field padding-2x">
+
+                                    <div flex layout="column">
+
+                                        <div>
+                                            <span flex class="data-field-title cursor-pointer">
+                                                Process
+                                                <md-tooltip>
+                                                    {{::$i18n.page.workflow.data.item.file.desc}}
+                                                </md-tooltip>
+                                            </span>
+
+                                            <md-chips class="padding-bottom-default">
+                                                <md-chip>
+                                                    Reklamacia
+                                                </md-chip>
+                                            </md-chips>
+                                        </div>
+
+                                        <div>
+                                            <span flex class="data-field-title cursor-pointer">
+                                                Transition
+                                                <md-tooltip>
+                                                    {{::$i18n.page.workflow.data.item.file.desc}}
+                                                </md-tooltip>
+                                            </span>
+
+                                            <md-chips class="padding-bottom-default">
+                                                <md-chip>
+                                                    Odvoz
+                                                </md-chip>
+                                                <md-chip>
+                                                    Odovzdat kurierovi
+                                                </md-chip>
+                                                <md-chip>
+                                                    Prijat od kuriera
+                                                </md-chip>
+                                            </md-chips>
+                                        </div>
+
+                                        <md-input-container class="md-block">
+                                            <label>Description</label>
+                                            <textarea ng-model="TODO.description" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                                        </md-input-container>
+
+                                        <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
+
+                                            <div flex="100" layout-wrap layout="row" layout-align="start center">
+
+                                                <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
+
+                                                    <div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>
+
+                                                        <div flex="45" flex-xs="100">
+                                                            <span flex class="data-field-title cursor-pointer">
+                                                                {{::$i18n.page.workflow.author}}
+                                                            </span>
+                                                        </div>
+
+                                                        <div flex="5" flex-xs="0"></div>
+
+                                                        <div flex="45" flex-xs="100" layout="row" layout-align="space-between center" class="padding-vertical-default">
+                                                            <div layout="row" layout-align="start center">
+                                                                <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
+                                                                <span class="cursor-pointer">
+                                                                    Anonymous
+                                                                    <md-tooltip>
+                                                                        test@email.com
+                                                                    </md-tooltip>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div flex="5" flex-xs="0"></div>
+
+                                                    </div>
+
+                                                    <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+
+                                                </div> <!-- ./Data-field -->
+
+                                                <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
+
+                                                    <div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>
+                                                        <div flex="45" flex-xs="100">
+
+                                                            <span flex class="data-field-title cursor-pointer">
+                                                                {{::$i18n.page.workflow.data.item.uploaded.title}}
+                                                                <md-tooltip>
+                                                                    {{::$i18n.page.workflow.data.item.uploaded.title}}
+                                                                </md-tooltip>
+                                                            </span>
+                                                        </div>
+
+                                                        <div flex="5" flex-xs="0"></div>
+
+                                                        <div flex="45" flex-xs="100">
+                                                            <md-input-container class="md-block" flex>
+                                                                <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.date}}</label>
+                                                                <md-datepicker ng-model="field.uploaded"
+                                                                               md-open-on-focus
+                                                                               aria-label="Pick date">
+                                                                </md-datepicker>
+                                                            </md-input-container>
+                                                        </div>
+
+                                                        <div flex="5" flex-xs="0"></div>
+
+                                                    </div>
+
+                                                    <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+
+                                                </div> <!-- ./Data-field -->
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <!--<md-expansion-panel>-->
-
-                            <!--<md-expansion-panel-collapsed>-->
-                                <!--<div flex layout="row" layout-align="start center" class="click-area">-->
-
-                                    <!--<div flex-gt-sm="10" layout="row" layout-align="start center">-->
-                                        <!--<i class="material-icons color-fg-deep-orange-500">person</i>-->
-                                    <!--</div>-->
-
-                                    <!--<span flex-gt-sm="20">Test model</span>-->
-
-                                    <!--<span  hide-md flex-gt-sm="20" layout="row" layout-align="start center">-->
-                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>-->
-                                        <!--Anonymous-->
-                                    <!--</span>-->
-
-                                    <!--<span  hide-md flex-gt-sm="20" layout="row" layout-align="start center">-->
-                                        <!--16:40 12.5.2018-->
-                                    <!--</span>-->
-
-                                    <!--<div flex-gt-sm="10">-->
-                                        <!--<md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>-->
-                                    <!--</div>-->
-
-                                    <!--<md-expansion-panel-icon></md-expansion-panel-icon>-->
-                                <!--</div>-->
-                            <!--</md-expansion-panel-collapsed>-->
-
-                            <!--<md-expansion-panel-expanded>-->
-
-                                <!--<md-expansion-panel-header ng-click="$panel.collapse()" md-no-sticky>-->
-
-                                    <!--<div flex-gt-sm="10" layout="row" layout-align="start center">-->
-                                        <!--<i class="material-icons color-fg-deep-orange-500">person</i>-->
-                                    <!--</div>-->
-
-                                    <!--<span flex-gt-sm="20">Test model</span>-->
-
-                                    <!--<span  hide-md flex-gt-sm="20" layout="row" layout-align="start center">-->
-                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>-->
-                                        <!--Anonymous-->
-                                    <!--</span>-->
-
-                                    <!--<span hide-md  flex-gt-sm="20" layout="row" layout-align="start center">-->
-                                        <!--16:40 12.5.2018-->
-                                    <!--</span>-->
-
-                                    <!--<div flex-gt-sm="10">-->
-                                        <!--<md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>-->
-                                    <!--</div>-->
-                                    <!--<md-expansion-panel-icon></md-expansion-panel-icon>-->
-                                <!--</md-expansion-panel-header>-->
-
-                                <!--<md-expansion-panel-content>-->
-
-                                    <!--<div layout="row" layout-align="start center" layout-wrap class="cursor-default">-->
-                                        <!--<div flex="100" layout-wrap layout="row" layout-align="start center">-->
-
-                                            <!--<div layout="row" layout-align="start center" flex="100">-->
-                                                <!--<div flex="20" class="line-3px color-bg-primary-op-50"></div>-->
-                                                <!--<span class="margin-horizontal-default">{{::$i18n.block.filter.filter}}</span>-->
-                                                <!--<div flex class="line-3px color-bg-primary-op-50"></div>-->
-                                            <!--</div> &lt;!&ndash; ./Group-divider &ndash;&gt;-->
-
-                                            <!--<div flex="50" flex-md="100" flex-sm="100" flex-xs="100"> &lt;!&ndash; Polka obrazovky &ndash;&gt;-->
-
-                                                <!--<div flex layout-wrap layout="row" layout-align="start center" class="data-field">-->
-
-                                                        <!--<div layout="column">-->
-                                                            <!--<div>-->
-                                                                <!--<span flex class="data-field-title cursor-pointer">-->
-                                                                    <!--&lt;!&ndash;{{::$i18n.page.workflow.data.item.file.title}}&ndash;&gt;-->
-                                                                    <!--Process-->
-                                                                <!--<md-tooltip>-->
-                                                                    <!--{{::$i18n.page.workflow.data.item.file.desc}}-->
-                                                                <!--</md-tooltip>-->
-                                                              <!--</span>-->
-                                                                <!--<md-chips class="padding-bottom-default">-->
-                                                                    <!--<md-chip>-->
-                                                                        <!--Reklamacia-->
-                                                                    <!--</md-chip>-->
-                                                                <!--</md-chips>-->
-                                                            <!--</div>-->
-                                                            <!--<div>-->
-                                                                <!--<span flex class="data-field-title cursor-pointer">-->
-                                                                    <!--&lt;!&ndash;{{::$i18n.page.workflow.data.item.file.title}}&ndash;&gt;-->
-                                                                    <!--Transition-->
-                                                                <!--<md-tooltip>-->
-                                                                    <!--{{::$i18n.page.workflow.data.item.file.desc}}-->
-                                                                <!--</md-tooltip>-->
-                                                              <!--</span>-->
-                                                            <!--<md-chips class="padding-bottom-default">-->
-                                                                <!--<md-chip>-->
-                                                                    <!--Odvoz-->
-                                                                <!--</md-chip>-->
-                                                                <!--<md-chip>-->
-                                                                    <!--Odovzdat kurierovi-->
-                                                                <!--</md-chip>-->
-                                                                <!--<md-chip>-->
-                                                                    <!--Prijat od kuriera-->
-                                                                <!--</md-chip>-->
-                                                            <!--</md-chips>-->
-                                                        <!--</div>-->
-                                                        <!--</div>-->
-                                                    <!--<div flex="5" flex-xs="0"></div>-->
-                                                <!--</div>-->
-
-                                                <!--<md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>-->
-
-                                            <!--</div> &lt;!&ndash; ./Data-field &ndash;&gt;-->
-
-                                            <!--<div flex="50" flex-md="100" flex-sm="100" flex-xs="100">-->
-
-                                                <!--<div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>-->
-                                                    <!--<div flex="45" flex-xs="100">-->
-                                        <!--<span flex class="data-field-title cursor-pointer">-->
-                                            <!--{{::$i18n.page.workflow.data.item.uploaded.title}}-->
-                                            <!--<md-tooltip>-->
-                                                <!--{{::$i18n.page.workflow.data.item.uploaded.title}}-->
-                                            <!--</md-tooltip>-->
-                                        <!--</span>-->
-                                                    <!--</div>-->
-                                                    <!--<div flex="5" flex-xs="0"></div>-->
-                                                    <!--<div flex="45" flex-xs="100">-->
-                                                        <!--<md-input-container class="md-block">-->
-                                                            <!--<label>Biography</label>-->
-                                                            <!--<textarea ng-model="user.biography" md-maxlength="150" rows="3" md-select-on-focus>skuska</textarea>-->
-                                                        <!--</md-input-container>-->
-                                                    <!--</div>-->
-                                                    <!--<div flex="5" flex-xs="0"></div>-->
-                                                <!--</div>-->
-
-                                                <!--<md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>-->
-
-                                            <!--</div> &lt;!&ndash; ./Data-field &ndash;&gt;-->
-
-                                            <!--<div hide-gt-sm layout="row" layout-align="start center" flex="100">-->
-                                                <!--<div flex="20" class="line-3px color-bg-primary-op-50"></div>-->
-                                                <!--<span class="margin-horizontal-default">Additional info</span>-->
-                                                <!--<div flex class="line-3px color-bg-primary-op-50"></div>-->
-                                            <!--</div> &lt;!&ndash; ./Group-divider &ndash;&gt;-->
-
-                                            <!--<div hide-gt-sm flex="50" flex-md="100" flex-sm="100" flex-xs="100">-->
-
-                                                <!--<div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>-->
-                                                    <!--<div flex="45" flex-xs="100">-->
-                                        <!--<span flex class="data-field-title cursor-pointer">-->
-                                            <!--{{::$i18n.page.workflow.author}}-->
-                                        <!--</span>-->
-                                                    <!--</div>-->
-                                                    <!--<div flex="5" flex-xs="0"></div>-->
-                                                    <!--<div flex="45" flex-xs="100" layout="row" layout-align="space-between center" class="padding-vertical-default">-->
-                                                        <!--<div layout="row" layout-align="start center">-->
-                                                            <!--<i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>-->
-                                                            <!--<span class="cursor-pointer">-->
-                                                <!--Anonymous-->
-                                                <!--<md-tooltip>-->
-                                                    <!--test@email.com-->
-                                                <!--</md-tooltip>-->
-                                            <!--</span>-->
-                                                        <!--</div>-->
-                                                    <!--</div>-->
-                                                    <!--<div flex="5" flex-xs="0"></div>-->
-                                                <!--</div>-->
-
-                                                <!--<md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>-->
-
-                                            <!--</div> &lt;!&ndash; ./Data-field &ndash;&gt;-->
-
-                                            <!--<div hide-gt-sm flex="50" flex-md="100" flex-sm="100" flex-xs="100">-->
-
-                                                <!--<div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>-->
-                                                    <!--<div flex="45" flex-xs="100">-->
-                                        <!--<span flex class="data-field-title cursor-pointer">-->
-                                            <!--{{::$i18n.page.workflow.author}}-->
-                                        <!--</span>-->
-                                                    <!--</div>-->
-                                                    <!--<div flex="5" flex-xs="0"></div>-->
-                                                    <!--<div flex="45" flex-xs="100" layout="row" layout-align="space-between center" class="padding-vertical-default">-->
-                                                        <!--<div layout="row" layout-align="start center">-->
-                                                            <!--<i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>-->
-                                                            <!--<span class="cursor-pointer">-->
-                                                <!--Anonymous-->
-                                                <!--<md-tooltip>-->
-                                                    <!--test@email.com-->
-                                                <!--</md-tooltip>-->
-                                            <!--</span>-->
-                                                        <!--</div>-->
-                                                    <!--</div>-->
-                                                    <!--<div flex="5" flex-xs="0"></div>-->
-                                                <!--</div>-->
-
-                                                <!--<md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>-->
-
-                                            <!--</div> &lt;!&ndash; ./Data-field &ndash;&gt;-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-
-                                <!--</md-expansion-panel-content>-->
-
-                                <!--<md-expansion-panel-footer md-no-sticky>-->
-                                    <!--<div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">-->
-                                        <!--<md-button class="md-primary layout-xs-rw-100">-->
-                                            <!--Edit-->
-                                        <!--</md-button>-->
-                                        <!--<md-button class="md-primary layout-xs-rw-100">-->
-                                            <!--Delete-->
-                                        <!--</md-button>-->
-                                        <!--<md-button ng-click="$panel.collapse()" class="md-primary layout-xs-rw-100">-->
-                                            <!--{{::$i18n.block.btn.collapse}}-->
-                                        <!--</md-button>-->
-                                    <!--</div>-->
-                                <!--</md-expansion-panel-footer>-->
-
-                            <!--</md-expansion-panel-expanded>-->
-
-                        <!--</md-expansion-panel>-->
-
-                    <!--<md-expansion-panel>-->
-
-                        <!--<md-expansion-panel-collapsed>-->
-                            <!--<div flex layout="row" layout-align="start center" class="click-area">-->
-
-                                <!--<div flex-gt-sm="10" layout="row" layout-align="start center">-->
-                                    <!--<i class="material-icons color-fg-deep-orange-500">person</i>-->
-                                <!--</div>-->
-
-                                <!--<span flex-gt-sm="20">Test model</span>-->
-
-                                <!--<span  hide-md flex-gt-sm="20" layout="row" layout-align="start center">-->
-                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>-->
-                                        <!--Anonymous-->
-                                    <!--</span>-->
-
-                                <!--<span  hide-md flex-gt-sm="20" layout="row" layout-align="start center">-->
-                                        <!--16:40 12.5.2018-->
-                                    <!--</span>-->
-
-                                <!--<div flex-gt-sm="10">-->
-                                    <!--<md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>-->
-                                <!--</div>-->
-
-                                <!--<md-expansion-panel-icon></md-expansion-panel-icon>-->
-                            <!--</div>-->
-                        <!--</md-expansion-panel-collapsed>-->
-
-                        <!--<md-expansion-panel-expanded>-->
-
-                            <!--<md-expansion-panel-header ng-click="$panel.collapse()" md-no-sticky>-->
-
-                                <!--<div flex-gt-sm="10" layout="row" layout-align="start center">-->
-                                    <!--<i class="material-icons color-fg-deep-orange-500">person</i>-->
-                                <!--</div>-->
-
-                                <!--<span flex-gt-sm="20">Test model</span>-->
-
-                                <!--<span  hide-md flex-gt-sm="20" layout="row" layout-align="start center">-->
-                                        <!--<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>-->
-                                        <!--Anonymous-->
-                                    <!--</span>-->
-
-                                <!--<span hide-md  flex-gt-sm="20" layout="row" layout-align="start center">-->
-                                        <!--16:40 12.5.2018-->
-                                    <!--</span>-->
-
-                                <!--<div flex-gt-sm="10">-->
-                                    <!--<md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>-->
-                                <!--</div>-->
-                                <!--<md-expansion-panel-icon></md-expansion-panel-icon>-->
-                            <!--</md-expansion-panel-header>-->
-
-                            <!--<md-expansion-panel-content>-->
-
-                                <!--<div layout="row" layout-align="start center" layout-wrap class="cursor-default">-->
-                                    <!--<div flex="100" layout-wrap layout="row" layout-align="start center">-->
-
-                                        <!--<div layout="row" layout-align="start center" flex="100">-->
-                                            <!--<div flex="20" class="line-3px color-bg-primary-op-50"></div>-->
-                                            <!--<span class="margin-horizontal-default">{{::$i18n.block.filter.filter}}</span>-->
-                                            <!--<div flex class="line-3px color-bg-primary-op-50"></div>-->
-                                        <!--</div> &lt;!&ndash; ./Group-divider &ndash;&gt;-->
-
-                                        <!--<div flex="50" flex-md="100" flex-sm="100" flex-xs="100"> &lt;!&ndash; Polka obrazovky &ndash;&gt;-->
-
-                                            <!--<div flex layout-wrap layout="row" layout-align="start center" class="data-field">-->
-
-                                                <!--<div layout="column">-->
-                                                    <!--<div>-->
-                                                                <!--<span flex class="data-field-title cursor-pointer">-->
-                                                                    <!--&lt;!&ndash;{{::$i18n.page.workflow.data.item.file.title}}&ndash;&gt;-->
-                                                                    <!--Process-->
-                                                                <!--<md-tooltip>-->
-                                                                    <!--{{::$i18n.page.workflow.data.item.file.desc}}-->
-                                                                <!--</md-tooltip>-->
-                                                              <!--</span>-->
-                                                        <!--<md-chips class="padding-bottom-default">-->
-                                                            <!--<md-chip>-->
-                                                                <!--Reklamacia-->
-                                                            <!--</md-chip>-->
-                                                        <!--</md-chips>-->
-                                                    <!--</div>-->
-                                                    <!--<div>-->
-                                                                <!--<span flex class="data-field-title cursor-pointer">-->
-                                                                    <!--&lt;!&ndash;{{::$i18n.page.workflow.data.item.file.title}}&ndash;&gt;-->
-                                                                    <!--Transition-->
-                                                                <!--<md-tooltip>-->
-                                                                    <!--{{::$i18n.page.workflow.data.item.file.desc}}-->
-                                                                <!--</md-tooltip>-->
-                                                              <!--</span>-->
-                                                        <!--<md-chips class="padding-bottom-default">-->
-                                                            <!--<md-chip>-->
-                                                                <!--Odvoz-->
-                                                            <!--</md-chip>-->
-                                                            <!--<md-chip>-->
-                                                                <!--Odovzdat kurierovi-->
-                                                            <!--</md-chip>-->
-                                                            <!--<md-chip>-->
-                                                                <!--Prijat od kuriera-->
-                                                            <!--</md-chip>-->
-                                                        <!--</md-chips>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                                <!--<div flex="5" flex-xs="0"></div>-->
-                                            <!--</div>-->
-
-                                            <!--<md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>-->
-
-                                        <!--</div> &lt;!&ndash; ./Data-field &ndash;&gt;-->
-
-                                        <!--<div flex="50" flex-md="100" flex-sm="100" flex-xs="100">-->
-
-                                            <!--<div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>-->
-                                                <!--<div flex="45" flex-xs="100">-->
-                                        <!--<span flex class="data-field-title cursor-pointer">-->
-                                            <!--{{::$i18n.page.workflow.data.item.uploaded.title}}-->
-                                            <!--<md-tooltip>-->
-                                                <!--{{::$i18n.page.workflow.data.item.uploaded.title}}-->
-                                            <!--</md-tooltip>-->
-                                        <!--</span>-->
-                                                <!--</div>-->
-                                                <!--<div flex="5" flex-xs="0"></div>-->
-                                                <!--<div flex="45" flex-xs="100">-->
-                                                    <!--<md-input-container class="md-block">-->
-                                                        <!--<label>Biography</label>-->
-                                                        <!--<textarea ng-model="user.biography" md-maxlength="150" rows="3" md-select-on-focus>skuska</textarea>-->
-                                                    <!--</md-input-container>-->
-                                                <!--</div>-->
-                                                <!--<div flex="5" flex-xs="0"></div>-->
-                                            <!--</div>-->
-
-                                            <!--<md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>-->
-
-                                        <!--</div> &lt;!&ndash; ./Data-field &ndash;&gt;-->
-
-                                        <!--<div hide-gt-sm layout="row" layout-align="start center" flex="100">-->
-                                            <!--<div flex="20" class="line-3px color-bg-primary-op-50"></div>-->
-                                            <!--<span class="margin-horizontal-default">Additional info</span>-->
-                                            <!--<div flex class="line-3px color-bg-primary-op-50"></div>-->
-                                        <!--</div> &lt;!&ndash; ./Group-divider &ndash;&gt;-->
-
-                                        <!--<div hide-gt-sm flex="50" flex-md="100" flex-sm="100" flex-xs="100">-->
-
-                                            <!--<div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>-->
-                                                <!--<div flex="45" flex-xs="100">-->
-                                        <!--<span flex class="data-field-title cursor-pointer">-->
-                                            <!--{{::$i18n.page.workflow.author}}-->
-                                        <!--</span>-->
-                                                <!--</div>-->
-                                                <!--<div flex="5" flex-xs="0"></div>-->
-                                                <!--<div flex="45" flex-xs="100" layout="row" layout-align="space-between center" class="padding-vertical-default">-->
-                                                    <!--<div layout="row" layout-align="start center">-->
-                                                        <!--<i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>-->
-                                                        <!--<span class="cursor-pointer">-->
-                                                <!--Anonymous-->
-                                                <!--<md-tooltip>-->
-                                                    <!--test@email.com-->
-                                                <!--</md-tooltip>-->
-                                            <!--</span>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                                <!--<div flex="5" flex-xs="0"></div>-->
-                                            <!--</div>-->
-
-                                            <!--<md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>-->
-
-                                        <!--</div> &lt;!&ndash; ./Data-field &ndash;&gt;-->
-
-                                        <!--<div hide-gt-sm flex="50" flex-md="100" flex-sm="100" flex-xs="100">-->
-
-                                            <!--<div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>-->
-                                                <!--<div flex="45" flex-xs="100">-->
-                                        <!--<span flex class="data-field-title cursor-pointer">-->
-                                            <!--{{::$i18n.page.workflow.author}}-->
-                                        <!--</span>-->
-                                                <!--</div>-->
-                                                <!--<div flex="5" flex-xs="0"></div>-->
-                                                <!--<div flex="45" flex-xs="100" layout="row" layout-align="space-between center" class="padding-vertical-default">-->
-                                                    <!--<div layout="row" layout-align="start center">-->
-                                                        <!--<i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>-->
-                                                        <!--<span class="cursor-pointer">-->
-                                                <!--Anonymous-->
-                                                <!--<md-tooltip>-->
-                                                    <!--test@email.com-->
-                                                <!--</md-tooltip>-->
-                                            <!--</span>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                                <!--<div flex="5" flex-xs="0"></div>-->
-                                            <!--</div>-->
-
-                                            <!--<md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>-->
-
-                                        <!--</div> &lt;!&ndash; ./Data-field &ndash;&gt;-->
-                                    <!--</div>-->
-                                <!--</div>-->
-
-                            <!--</md-expansion-panel-content>-->
-
-                            <!--<md-expansion-panel-footer md-no-sticky>-->
-                                <!--<div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">-->
-                                    <!--<md-button class="md-primary layout-xs-rw-100">-->
-                                        <!--Edit-->
-                                    <!--</md-button>-->
-                                    <!--<md-button class="md-primary layout-xs-rw-100">-->
-                                        <!--Delete-->
-                                    <!--</md-button>-->
-                                    <!--<md-button ng-click="$panel.collapse()" class="md-primary layout-xs-rw-100">-->
-                                        <!--{{::$i18n.block.btn.collapse}}-->
-                                    <!--</md-button>-->
-                                <!--</div>-->
-                            <!--</md-expansion-panel-footer>-->
-
-                        <!--</md-expansion-panel-expanded>-->
-
-                    <!--</md-expansion-panel>-->
 
                 </md-content>
+
             </md-tab-body>
 
         </md-tab>
