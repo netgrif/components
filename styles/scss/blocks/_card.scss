@@ -15,9 +15,8 @@
     }
 
     a {
-        color: black;
+        color: $color-black-op-87;
         text-decoration: none;
-        font-weight: bold;
     }
 
     &-no-shadow {
@@ -53,13 +52,8 @@
         }
     }
 
-    &-header {
-        @extend .card;
-        margin-bottom: $dim-2x;
-    }
-
     &-case {
-        height: 56px;
+        height: $dim-48px;
         cursor: pointer;
 
         &:hover {

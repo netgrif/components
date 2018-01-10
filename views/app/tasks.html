@@ -2,77 +2,102 @@
 
     <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="tasksCtrl.activeTab" class="background-tabs">
 
-        <md-tab ng-repeat="tab in tasksCtrl.tabs" label="{{tab.label}}" md-on-select="tasksCtrl.tabChanged()">
-            <md-content class="md-padding color-bg-transparent">
+        <md-tab label="{{::$i18n.page.tasks.all}}" md-on-select="true">
+            <md-content class="padding-2x color-bg-transparent">
 
-                <md-card class="search-header" layout="row">
+                <div layout="row" class="card padding-2x">
 
                     <div flex layout="column">
 
-                        <div layout="row" layout-align="left end">
+                        <div layout="row" layout-align="start center">
 
-                            <md-icon flex="5" class="material-icons md-primary">search</md-icon>
+                            <i class="material-icons color-fg-primary-500 margin-right-14px">search</i>
 
-                            <form flex layout="row" ng-submit="">
+                            <div flex layout="row">
 
-                                <md-autocomplete class="md-block autocomplete"
-                                                 md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search"
-                                                 md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item"
-                                                 md-selected-item-change="tasksCtrl.processSearchChange(item)"
-                                                 md-items="item in tasksCtrl.queryProcesses()"
-                                                 md-item-text="item.title"
-                                                 md-min-length="0"
-                                                 md-no-cache="true"
-                                                 md-floating-label="{{::$i18n.block.taskFilter.process}}">
+                                <div layout-gt-xs="row" layout-xs="column">
 
-                                    <md-item-template>
-                                        <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-highlight-flags="i">
-                                            {{item.title}}
-                                        </span>
-                                    </md-item-template>
+                                    <md-autocomplete class="md-block"
+                                                     md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search"
+                                                     md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item"
+                                                     md-selected-item-change="tasksCtrl.processSearchChange(item)"
+                                                     md-items="item in tasksCtrl.queryProcesses()"
+                                                     md-item-text="item.title"
+                                                     md-min-length="0"
+                                                     md-no-cache="true"
+                                                     md-floating-label="{{::$i18n.page.tasks.filter.process}}">
 
-                                    <md-not-found>
-                                        {{::$i18n.block.taskFilter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.block.task.notFound}}
-                                    </md-not-found>
+                                        <md-item-template>
+                                            <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-highlight-flags="i">
+                                                {{item.title}}
+                                            </span>
+                                        </md-item-template>
 
-                                </md-autocomplete>
+                                        <md-not-found>
+                                            {{::$i18n.page.tasks.filter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.page.tasks.filter.processNotFound}}
+                                        </md-not-found>
 
-                                <md-autocomplete class="md-block autocomplete"
-                                                 md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search"
-                                                 md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item"
-                                                 md-selected-item-change="tasksCtrl.transitionSearchChange(item)"
-                                                 md-items="item in tasksCtrl.queryTransitions()"
-                                                 md-item-text="item.title"
-                                                 md-min-length="0"
-                                                 md-no-cache="true"
-                                                 md-floating-label="{{::$i18n.block.taskFilter.task}}">
+                                    </md-autocomplete>
 
-                                    <md-item-template>
-                                        <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedTransition.search" md-highlight-flags="i">
-                                            {{item.title}}
-                                        </span>
-                                    </md-item-template>
+                                    <md-autocomplete class="md-block"
+                                                     md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search"
+                                                     md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item"
+                                                     md-selected-item-change="tasksCtrl.transitionSearchChange(item)"
+                                                     md-items="item in tasksCtrl.queryTransitions()"
+                                                     md-item-text="item.title"
+                                                     md-min-length="0"
+                                                     md-no-cache="true"
+                                                     md-floating-label="{{::$i18n.page.tasks.filter.task}}">
 
-                                    <md-not-found>
-                                        {{::$i18n.block.taskFilter.task + " " + tasksCtrl.tabs[$index].filter.selectedTransition.search + " " + $i18n.block.task.notFound}}
-                                    </md-not-found>
+                                        <md-item-template>
+                                            <span md-highlight-text="TODO.tasksCtrl.filter.selectedTransition.search" md-highlight-flags="i">
+                                                {{item.title}}
+                                            </span>
+                                        </md-item-template>
 
-                                </md-autocomplete>
+                                        <md-not-found>
+                                            {{::$i18n.page.tasks.filter.task + " " + tasksCtrl.tabs[$index].filter.selectedTransition.search + " " + $i18n.page.tasks.filter.taskNotFound}}
+                                        </md-not-found>
 
-                            </form>
+                                    </md-autocomplete>
+                                </div>
+
+                                <md-menu layout="column" layout-align="center center">
+                                    <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                                        <md-icon class="material-icons">more_vert</md-icon>
+                                    </md-button>
+                                    <md-menu-content>
+                                        <md-menu-item>
+                                            <md-button ng-click="tasksCtrl.showFilterDialog()">{{::$i18n.block.btn.save}}
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="tasksCtrl.clearFilter()">{{::$i18n.block.btn.reset}}</md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+
+                            </div>
 
                         </div>
 
-                        <div layout="row" layout-align="left center">
+                        <div layout="row" layout-align="start center">
 
-                            <md-icon flex="5" class="material-icons md-primary">filter_list</md-icon>
+                            <i class="material-icons color-fg-primary-500 margin-right-14px">filter_list</i>
 
                             <md-chips ng-model="tasksCtrl.tabs[$index].filter.chips" readonly="true" md-removable="true"
                                       md-on-remove="tasksCtrl.removeChip($chip)"
-                                      id="chips-container" flex>
+                                      id="chips-container">
                                 <md-chip-template>
                                     {{$chip.title}}
                                 </md-chip-template>
+
+                                <!-- TODO 8.1.2018 Temporary for view tests -->
+                                <md-chip>Test</md-chip>
+                                <md-chip>Test</md-chip>
+                                <md-chip>Test</md-chip>
+                                <!-- ./Temporary -->
+
                             </md-chips>
 
                         </div>
@@ -81,95 +106,69 @@
 
                     <div layout="column" layout-align="center center">
 
-                        <div class="padding-no" layout="row" layout-align="center center">
-
-                            <md-button class="md-primary" ng-click="tasksCtrl.searchTasks()">
-                                {{$i18n.block.taskFilter.search}}
-                            </md-button>
-
-                            <md-menu>
-                                <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
-                                    <md-icon class="material-icons">more_vert</md-icon>
-                                </md-button>
-                                <md-menu-content>
-                                    <md-menu-item>
-                                        <md-button ng-click="tasksCtrl.showFilterDialog()">{{::$i18n.block.taskFilter.save}}
-                                        </md-button>
-                                    </md-menu-item>
-                                    <md-menu-item>
-                                        <md-button ng-click="tasksCtrl.clearFilter()">{{::$i18n.block.taskFilter.reset}}</md-button>
-                                    </md-menu-item>
-                                </md-menu-content>
-                            </md-menu>
-
-                        </div>
+                        <md-button class="md-fab md-raised md-mini md-primary" ng-click="tasksCtrl.searchTasks()">
+                            <md-icon class="material-icons">search</md-icon>
+                            <md-tooltip md-direction="left">
+                                {{::$i18n.block.btn.search}}
+                            </md-tooltip>
+                        </md-button>
 
                     </div>
 
-                </md-card>
+                </div> <!-- ./card -->
 
-                <div class="tasks">
+                <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-                    <md-card class="tasks-header" layout="column">
+                <div layout="column">
 
-                        <md-card-content layout="row" layout-align="left center">
-                            <a flex="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
-                                {{::$i18n.block.taskHeader.case}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'caseTitle' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <a flex="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
-                                {{::$i18n.block.taskHeader.name}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'title' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
-                                {{::$i18n.block.taskHeader.priority}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'priority' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <a flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('username')">
-                                {{::$i18n.block.taskHeader.user}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'username' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <a flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
-                                {{::$i18n.block.taskHeader.startDate}}
-                                <md-icon class="material-icons">{{ tasksCtrl.tabs[$index].sort.field == 'startDate' &&
-                                    !tasksCtrl.tabs[$index].sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down' }}
-                                </md-icon>
-                            </a>
-                            <md-menu>
-                                <md-button ng-click="$mdOpenMenu($event)" md-menu-origin>
-                                    <md-tooltip md-direction="top">{{::$i18n.block.taskHeader.view.this}}</md-tooltip>
-                                    <md-icon class="material-icons">view_carousel</md-icon>
-                                </md-button>
-                                <md-menu-content>
-                                    <md-menu-item>
-                                        <md-button ng-click="tasksCtrl.changeView('list')">{{::$i18n.block.taskHeader.view.list}}
-                                        </md-button>
-                                    </md-menu-item>
-                                    <md-menu-item>
-                                        <md-button ng-click="tasksCtrl.changeView('table')" disabled>
-                                            {{::$i18n.block.taskHeader.view.table}}
-                                        </md-button>
-                                    </md-menu-item>
-                                </md-menu-content>
-                            </md-menu>
-                        </md-card-content>
+                    <div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
 
-                    </md-card>
+                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="45" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
+                            {{::$i18n.block.task.header.case}}
+                            <md-icon class="material-icons">
+                                {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                            </md-icon>
+                        </a>
+                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="45" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+                            {{::$i18n.block.task.header.title}}
+                            <md-icon class="material-icons">
+                                {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                            </md-icon>
+                        </a>
+                        <a hide show-gt-xs flex-gt-md="10" flex-gt-sm="15" flex-gt-xs="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
+                            {{::$i18n.block.task.header.priority}}
+                            <md-icon class="material-icons">
+                                {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                            </md-icon>
+                        </a>
+                        <a hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('username')">
+                            {{::$i18n.block.task.header.user}}
+                            <md-icon class="material-icons">
+                                {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                            </md-icon>
+                        </a>
+                        <a hide show-gt-md flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
+                            {{::$i18n.block.task.header.assignDate}}
+                            <md-icon class="material-icons">
+                                {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                            </md-icon>
+                        </a>
+                        <div flex="10"></div> <!-- Menu / Loader -->
 
-                    <div ng-include="'views/app/panels/task_view_panel.html'"></div>
+                    </div> <!-- ./card -->
 
-                    <div layout="row" layout-sm="column" layout-align="center center" in-view="$inview&&tasksCtrl.loadTasks(true)" in-view-options="{ throttle: 0 }">
-                        <md-progress-circular md-mode="indeterminate" ng-disabled="!tasksCtrl.tabs[$index].loading" class="md-primary" md-diameter="60"></md-progress-circular>
+                    <md-divider class="border-width-2x color-border-transparent"></md-divider>
+
+                    <!-- TODO 9.1.2018 Temporary for view testing -->
+                    <md-expansion-panel-group>
+                        <div ng-include="'views/app/panels/task_view_panel.html'"></div>
+                    </md-expansion-panel-group>
+
+                    <div layout="row" layout-align="center center" in-view="$inview&&tasksCtrl.loadTasks(true)" in-view-options="{ throttle: 0 }" class="padding-2x margin-2x">
+                        <md-progress-circular md-mode="indeterminate" ng-disabled="false" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
                     </div>
-                </div>
+
+                </div> <!-- ./column -->
 
             </md-content>
 
@@ -198,7 +197,7 @@
 
                                 <md-input-container class="md-block">
                                     <label>{{::$i18n.page.tasks.addTab.label}}</label>
-                                    <input type="text" ng-model="tasksCtrl.newTab.label" required>
+                                    <input type="text" ng-model="tasksCtrl.newTab.label" title="Add" required>
                                 </md-input-container>
 
                                 <md-radio-group ng-model="tasksCtrl.newTab.filter" required>

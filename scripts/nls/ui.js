@@ -28,11 +28,18 @@ define({
             },
             cases: {
                 this: "Cases",
-                my: "Cases"
+                my: "My cases"
             },
             tasks: {
                 this: "Tasks",
-                my: "Tasks"
+                all: "All tasks",
+                my: "My tasks",
+                filter: {
+                    process: "Process",
+                    task: "Task",
+                    processNotFound: "not found", // SK ...
+                    taskNotFound: "not found"
+                }
             },
             workflow: {
                 this: "Workflow",
@@ -140,8 +147,12 @@ define({
                 save: "Save",
                 collapse: "Collapse",
                 assign: "Assign",
-                finish: "Next",
-                cancel: "Cancel"
+                reassign: "Reassign",
+                delegate: "Delegate",
+                finish: "Finish",
+                cancel: "Cancel",
+                reset: "Reset",
+                search: "Search"
             },
             mainMenu: {
                 profile: "Profile",
@@ -179,8 +190,23 @@ define({
                 surname: "Surname",
                 phone: "Phone number",
                 email: "Email",
+                details: "Details",
+                data: "Data",
                 noData: "This task has no data. Finish to continue.",
-                user: "User"
+                user: "User",
+                header: {
+                    case: "Case",
+                    title: "Title",
+                    priority: "Priority",
+                    user: "User",
+                    assignDate: "Assign Date",
+                    status: "Status"
+                }
+            },
+            priority: {
+                low: "Low",
+                medium: "Medium",
+                high: "High"
             },
             data: {
                 noUserChosen: "No user was chosen",

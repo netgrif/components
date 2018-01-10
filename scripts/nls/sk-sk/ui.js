@@ -27,11 +27,18 @@ define({
         },
         cases: {
             this: "Prípady",
-            my: "Prípady"
+            my: "Moje prípady"
         },
         tasks: {
             this: "Úlohy",
-            my: "Úlohy"
+            all: "Všetky úlohy",
+            my: "Moje úlohy",
+            filter: {
+                process: "Proces",
+                task: "Úloha",
+                processNotFound: "nebol najdený", // SK ...
+                taskNotFound: "nebola najdená"
+            }
         },
         workflow: {
             this: "Workflow",
@@ -139,8 +146,12 @@ define({
             save: "Uložiť",
             collapse: "Skryť",
             assign: "Priradiť",
-            finish: "Ďalej",
-            cancel: "Zrušiť"
+            reassign: "Preradiť",
+            delegate: "Delegovať",
+            finish: "Dokončiť",
+            cancel: "Zrušiť",
+            reset: "Reset",
+            search: "Hľadať"
         },
         mainMenu: {
             profile: "Profil",
@@ -177,9 +188,24 @@ define({
             name: "Meno",
             surname: "Priezvisko",
             phone: "Tel. číslo",
+            details: "Detaily",
             email: "Email",
+            data: "Údaje",
             noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
-            user: "Používateľ"
+            user: "Používateľ",
+            header: {
+                case: "Prípad",
+                title: "Názov",
+                priority: "Priorita",
+                user: "Vykonávateľ",
+                assignDate: "Dátum priradenia",
+                status: "Stav"
+            }
+        },
+        priority: {
+            low: "Nízka",
+            medium: "Stredná",
+            high: "Vysoká"
         },
         data: {
             noUserChosen: "Žiaden zvolený používateľ",

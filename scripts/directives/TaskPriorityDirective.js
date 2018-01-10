@@ -1,0 +1,31 @@
+define(['angular','../modules/Tasks'],function (angular) {
+    angular.module('ngTasks').directive('taskPriority',
+        function ($compile, $i18n) {
+
+            let low = `<span flex layout="row" layout-align="start center"><i class="material-icons color-fg-green-500 margin-right-2x">arrow_downward</i>${$i18n.block.priority.low}</span>`;
+            let medium = `<span flex layout="row" layout-align="start center"><i class="material-icons color-fg-amber-500 margin-right-2x">arrow_upward</i>${$i18n.block.priority.medium}</span>`;
+            let high = `<span flex layout="row" layout-align="start center"><i class="material-icons color-fg-red-500 margin-right-2x">priority_high</i>${$i18n.block.priority.high}</span>`;
+
+            var getTemplate = function(priority) {
+                switch (priority){
+                    case "1": return low;
+                    case "2": return medium;
+                    case "3": return high;
+                }
+            };
+
+            var linker = function (scope, element, attrs) {
+                element.html(getTemplate(attrs.priority)).show();
+                $compile(element.contents())(scope);
+            };
+
+            return {
+                restrict: 'E',
+                replace: true,
+                scope: {
+                    priority: '@'
+                },
+                link: linker
+            };
+        });
+});

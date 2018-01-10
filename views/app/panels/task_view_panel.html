@@ -1,86 +1,239 @@
-<md-expansion-panel class="task-panel" ng-repeat="task in tasksCtrl.tabs[$index].resources | orderBy:tasksCtrl.dynamicOrder:tasksCtrl.tabs[$index].sort.reverse">
+<md-expansion-panel>
 
-    <md-expansion-panel-collapsed layout="row" layout-align="left center" ng-click="tasksCtrl.loadTaskData(task.visualId)">
+    <md-expansion-panel-collapsed>
+        <div flex layout="row" layout-align="start center" class="click-area" ng-click="null">
 
-        <p flex="25" layout="row" layout-align="start center">
-            <i class="material-icons {{task.caseColor}}">label</i> {{task.caseTitle}}
-        </p>
-        <p flex="25">{{task.title}}</p>
-        <task-priority flex="15" layout="row" layout-align="start center" priority="{{task.priority}}"></task-priority>
-        <p flex="20" layout="row" layout-align="start center">
-            <i ng-if="task.user" class="material-icons color-fg-primary-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
-        </p>
-        <p flex="15">{{tasksCtrl.formatDate(task.startDate); caseCtrl.activeTab.formatDate(task.startDate)}}</p>
-        <div ng-class="task.status !== 'Assigned' || task.user.email === $user.login ? 'visibility-visible' : 'visibility-hidden'">
-            <md-menu>
-                <md-button ng-click="$mdOpenMenu($event)" md-menu-origin>
+            <span flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="45" layout="row" layout-align="start center">
+                <i class="material-icons color-fg-deep-purple-600 margin-right-2x">label</i>
+                Case Title
+            </span>
+
+            <span flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="45">
+                Task Title
+            </span>
+
+            <task-priority hide show-gt-xs flex-gt-md="10" flex-gt-sm="15" flex-gt-xs="20" priority="2"></task-priority>
+
+            <span hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" layout="row" layout-align="start center">
+                <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                Name Surname
+            </span>
+
+            <span hide show-gt-md flex="20">
+                9.1.2018 14:04
+            </span>
+
+            <i hide-xs ng-if="false" flex="10" layout="row" layout-align="end center" class="material-icons color-fg-primary-500">done</i>
+
+            <md-menu ng-if="true" flex="10" layout="row" layout-align="end center">
+
+                <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
                     <md-icon class="material-icons">more_vert</md-icon>
                 </md-button>
-                <md-menu-content>
-                    <md-menu-item ng-if="task.status === 'New' && $user.canDo(task.roles,'perform')">
-                        <md-button ng-click="tasksCtrl.assignTask(task); caseCtrl.activeTab.assignTask(task)">{{::$i18n.block.task.assign}}</md-button>
-                    </md-menu-item>
-                    <md-menu-item ng-if="task.status === 'New' && $user.canDo(task.roles,'delegate')">
-                        <md-button ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.delegate}}</md-button>
-                    </md-menu-item>
-                    <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
-                        <md-button ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.reassign}}</md-button>
-                    </md-menu-item>
-                    <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
-                        <md-button ng-click="tasksCtrl.finishTask(task); caseCtrl.activeTab.finishTask(task)">{{::$i18n.block.task.finish}}</md-button>
-                    </md-menu-item>
-                    <md-menu-item ng-if="task.user.email == $user.login && task.status != 'Done'">
-                        <md-button ng-click="tasksCtrl.cancelTask(task); caseCtrl.activeTab.cancelTask(task)">{{::$i18n.block.task.cancel}}</md-button>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-        </div>
 
+                <md-menu-content>
+
+                    <md-menu-item ng-if="true">
+                        <md-button ng-if="true" ng-click="null">
+                            {{::$i18n.block.btn.assign}}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-if="true">
+                        <md-button ng-if="true" ng-click="null">
+                            {{::$i18n.block.btn.delegate}}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-if="true">
+                        <md-button ng-if="true" ng-click="null">
+                            {{::$i18n.block.btn.reassign}}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-if="true">
+                        <md-button ng-if="true" ng-click="null">
+                            {{::$i18n.block.btn.cancel}}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-if="true">
+                        <md-button ng-if="true" ng-click="null">
+                            {{::$i18n.block.btn.finish}}
+                        </md-button>
+                    </md-menu-item>
+
+                </md-menu-content>
+
+            </md-menu>
+
+            <div hide-xs ng-if="false" flex="10" layout="row" layout-align="end center">
+                <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
+            </div>
+
+        </div>
     </md-expansion-panel-collapsed>
 
     <md-expansion-panel-expanded>
 
-        <md-expansion-panel-header>
+        <md-expansion-panel-header ng-click="$panel.collapse()">
 
-            <p flex="25" layout="row" layout-align="left center">
-                <i class="material-icons {{task.caseColor}}">label</i> {{task.caseTitle}}
-            </p>
-            <p flex="25">{{task.title}}</p>
-            <task-priority flex="15" layout="row" layout-align="left center" priority="{{task.priority}}"></task-priority>
-            <p flex="20" layout="row" layout-align="left center">
-                <i ng-if="task.user" class="material-icons color-fg-primary-500">account_circle</i> {{task.user.name+" "+task.user.surname}}
-            </p>
-            <p flex="15">{{tasksCtrl.formatDate(task.startDate); caseCtrl.activeTab.formatDate(task.startDate)}}</p>
-            <md-button ng-click="$panel.collapse()">
-                <md-icon class="material-icons">keyboard_arrow_up</md-icon>
-            </md-button>
+            <span flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="45" layout="row" layout-align="start center">
+                <i class="material-icons color-fg-deep-purple-600 margin-right-2x">label</i>
+                Case Title
+            </span>
+
+            <span flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="45">
+                Task Title
+            </span>
+
+            <task-priority hide show-gt-xs flex-gt-md="10" flex-gt-sm="15" flex-gt-xs="20" priority="2"></task-priority>
+
+            <span hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" layout="row" layout-align="start center">
+                <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                Name Surname
+            </span>
+
+            <span hide show-gt-md flex="20">
+                9.1.2018 14:04
+            </span>
+
+            <i hide-xs ng-if="false" flex="10" layout="row" layout-align="end center" class="material-icons color-fg-primary-500">done</i>
+
+            <div hide-xs ng-if="true" flex="10" layout="row" layout-align="end center">
+                <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
+            </div>
 
         </md-expansion-panel-header>
 
         <md-expansion-panel-content>
 
-            <div layout="row" layout-align="left center" layout-wrap ng-if="task.data" class="cursor-default">
-                <div class="data-row" ng-repeat="field in task.data" flex="50" flex-sm="100">
-                    <div ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak flex></div>
-                </div>
+            <div ng-if="true" layout="row" layout-align="start center" layout-wrap class="cursor-default">
+
+                <div hide-gt-md flex="100" layout="row" layout-align="start center" layout-wrap>
+
+                    <div flex="100" layout="row" layout-align="start center">
+                        <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+                        <span class="margin-horizontal-default font-weight-600">{{::$i18n.block.task.details}}</span>
+                        <div flex class="line-3px color-bg-primary-op-50"></div>
+                    </div>
+
+                    <!-- Priority -->
+                    <div hide-gt-xs flex-gt-md="50" flex-gt-sm="100" flex-gt-xs="100" flex-xs="100">
+
+                        <div flex layout-wrap layout="row" layout-align="start center" class="data-field">
+                            <div flex="45" flex-xs="100">
+                                <span flex class="data-field-title">
+                                    {{::$i18n.block.task.header.priority}}
+                                </span>
+                            </div>
+                            <div flex="5" flex-xs="0"></div>
+                            <div flex="45" flex-xs="100" class="padding-vertical-default">
+                                <task-priority priority="2"></task-priority>
+                            </div>
+                            <div flex="5" flex-xs="0"></div>
+                        </div>
+
+                        <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+
+                    </div> <!-- ./Data-field-container -->
+
+                    <!-- User -->
+                    <div hide-gt-sm flex-gt-md="50" flex-gt-sm="100" flex-gt-xs="100" flex-xs="100">
+
+                        <div flex layout-wrap layout="row" layout-align="start center" class="data-field">
+                            <div flex="45" flex-xs="100">
+                                <span flex class="data-field-title">
+                                    {{::$i18n.block.task.header.user}}
+                                </span>
+                            </div>
+                            <div flex="5" flex-xs="0"></div>
+                            <div flex="45" flex-xs="100" class="padding-vertical-default">
+                                <div layout="row" layout-align="start center">
+                                    <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
+                                    <span>
+                                        Name Surname
+                                    </span>
+                                </div>
+                            </div>
+                            <div flex="5" flex-xs="0"></div>
+                        </div>
+
+                        <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+                    </div> <!-- ./Data-field-container -->
+
+                    <!-- AssignDate -->
+                    <div hide-gt-md flex-gt-md="50" flex-gt-sm="100" flex-gt-xs="100" flex-xs="100">
+
+                        <div flex layout-wrap layout="row" layout-align="start center" class="data-field">
+                            <div flex="45" flex-xs="100">
+                                <span flex class="data-field-title">
+                                    {{::$i18n.block.task.header.assignDate}}
+                                </span>
+                            </div>
+                            <div flex="5" flex-xs="0"></div>
+                            <div flex="45" flex-xs="100" class="padding-vertical-default">
+                                <span>9.1.2018 14:04</span>
+                            </div>
+                            <div flex="5" flex-xs="0"></div>
+                        </div>
+
+                        <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+                    </div> <!-- ./Data-field-container -->
+
+                    <div flex="100" layout="row" layout-align="start center">
+                        <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+                        <span class="margin-horizontal-default font-weight-600">{{::$i18n.block.task.data}}</span>
+                        <div flex class="line-3px color-bg-primary-op-50"></div>
+                    </div>
+
+                </div> <!-- ./row -->
+
+                <div flex="100" layout="row" layout-align="{{group.alignment + ' center'}}" layout-wrap ng-repeat="group in task.dataGroups">
+
+                    <div ng-if="task.showDataGroupDivider(group)" flex="100" layout="row" layout-align="start center">
+                        <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+                        <span class="margin-horizontal-default">{{group.title}}</span>
+                        <div flex class="line-3px color-bg-primary-op-50"></div>
+                    </div>
+
+                    <div ng-if="!field.behavior.hidden" flex="{{group.stretch ? '100' : '50'}}" flex-md="100" flex-sm="100" flex-xs="100" ng-repeat="field in group.data">
+                        <div flex ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak></div>
+                        <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+                    </div>
+
+                </div> <!-- ./row -->
             </div>
-            <div layout="row" layout-align="center center" ng-if="!task.data">
-                <span>{{::$i18n.block.task.noDataMsg}}</span>
+
+            <div ng-if="true" layout="row" layout-align="center center">
+                <span>{{::$i18n.block.task.noData}}</span>
             </div>
 
         </md-expansion-panel-content>
 
-        <md-expansion-panel-footer>
+        <md-expansion-panel-footer md-no-sticky>
+            <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
-            <div flex></div>
-            <md-button ng-if="task.status === 'New' && $user.canDo(task.roles,'perform')" ng-click="tasksCtrl.assignTask(task); caseCtrl.activeTab.assignTask(task)">{{::$i18n.block.task.assign}}</md-button>
-            <md-button ng-if="task.status === 'New' && $user.canDo(task.roles,'delegate')" ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.delegate}}</md-button>
-            <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.delegateTask(task)">{{::$i18n.block.task.reassign}}</md-button>
-            <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)">{{::$i18n.block.task.saveData}}</md-button>
-            <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.finishTask(task); caseCtrl.activeTab.finishTask(task)">{{::$i18n.block.task.finish}}</md-button>
-            <md-button ng-if="task.user.email == $user.login && task.status != 'Done'" ng-click="tasksCtrl.cancelTask(task); caseCtrl.activeTab.cancelTask(task)">{{::$i18n.block.task.cancel}}</md-button>
-            <md-button class="md-primary" ng-click="$panel.collapse()">{{::$i18n.block.task.collapse}}</md-button>
+                <md-button ng-if="true" ng-click="null" class="layout-xs-rw-100">
+                    {{::$i18n.block.btn.assign}}
+                </md-button>
+                <md-button ng-if="true" ng-click="null" class="layout-xs-rw-100">
+                    {{::$i18n.block.btn.delegate}}
+                </md-button>
+                <md-button ng-if="true" ng-click="null" class="layout-xs-rw-100">
+                    {{::$i18n.block.btn.reassign}}
+                </md-button>
+                <md-button ng-if="true" ng-click="null" class="layout-xs-rw-100">
+                    {{::$i18n.block.btn.cancel}}
+                </md-button>
+                <md-button ng-if="true" ng-click="null" class="layout-xs-rw-100">
+                    {{::$i18n.block.btn.finish}}
+                </md-button>
+                <md-button ng-click="$panel.collapse()" class="md-primary layout-xs-rw-100">
+                    {{::$i18n.block.btn.collapse}}
+                </md-button>
 
+            </div>
         </md-expansion-panel-footer>
 
     </md-expansion-panel-expanded>
