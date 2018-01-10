@@ -39,14 +39,6 @@ define({
                     task: "Task",
                     processNotFound: "not found", // SK ...
                     taskNotFound: "not found"
-                },
-                header: {
-                    case: "Case",
-                    title: "Title",
-                    priority: "Priority",
-                    user: "User",
-                    assignDate: "Assign Date",
-                    status: "Status"
                 }
             },
             workflow: {
@@ -198,8 +190,18 @@ define({
                 surname: "Surname",
                 phone: "Phone number",
                 email: "Email",
+                details: "Details",
+                data: "Data",
                 noData: "This task has no data. Finish to continue.",
-                user: "User"
+                user: "User",
+                header: {
+                    case: "Case",
+                    title: "Title",
+                    priority: "Priority",
+                    user: "User",
+                    assignDate: "Assign Date",
+                    status: "Status"
+                }
             },
             priority: {
                 low: "Low",

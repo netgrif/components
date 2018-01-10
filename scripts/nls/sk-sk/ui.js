@@ -38,14 +38,6 @@ define({
                 task: "Úloha",
                 processNotFound: "nebol najdený", // SK ...
                 taskNotFound: "nebola najdená"
-            },
-            header: {
-                case: "Prípad",
-                title: "Názov",
-                priority: "Priorita",
-                user: "Vykonávateľ",
-                assignDate: "Dátum priradenia",
-                status: "Stav"
             }
         },
         workflow: {
@@ -196,9 +188,19 @@ define({
             name: "Meno",
             surname: "Priezvisko",
             phone: "Tel. číslo",
+            details: "Detaily",
             email: "Email",
+            data: "Údaje",
             noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
-            user: "Používateľ"
+            user: "Používateľ",
+            header: {
+                case: "Prípad",
+                title: "Názov",
+                priority: "Priorita",
+                user: "Vykonávateľ",
+                assignDate: "Dátum priradenia",
+                status: "Stav"
+            }
         },
         priority: {
             low: "Nízka",
