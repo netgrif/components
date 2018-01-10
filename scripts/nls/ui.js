@@ -32,7 +32,10 @@ define({
             },
             tasks: {
                 this: "Tasks",
-                my: "Tasks"
+                my: "Tasks",
+                addTab: {
+                    submit: "Add to tabs"
+                },
             },
             workflow: {
                 this: "Workflow",
@@ -293,6 +296,13 @@ define({
                 to: "to",
                 characters: "characters",
                 long: "long"
+            },
+            filter:{
+                type: "Type",
+                filter: "Filter",
+                label:"Name",
+                author:"Author",
+                date:"Created"
             },
             char: {
 
