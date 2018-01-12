@@ -33,12 +33,12 @@
 
         .md-menu {
 
-            .md-button, a {
+            .md-button, .md-button>span, a {
                 height: 100%;
                 padding-top: 4px;
                 padding-bottom: 4px;
                 font-size: 20px;
-                color: white;
+                color: white !important;
                 text-transform: none;
 
                 .material-icons {
