@@ -6242,16 +6242,16 @@ md-expansion-panel.highlight md-progress-circular path {
   margin-left: 16px;
 }
 
-.base .toolbar-menu .md-menu .md-button, .base .toolbar-menu .md-menu a {
+.base .toolbar-menu .md-menu .md-button, .base .toolbar-menu .md-menu .md-button > span, .base .toolbar-menu .md-menu a {
   height: 100%;
   padding-top: 4px;
   padding-bottom: 4px;
   font-size: 20px;
-  color: white;
+  color: white !important;
   text-transform: none;
 }
 
-.base .toolbar-menu .md-menu .md-button .material-icons, .base .toolbar-menu .md-menu a .material-icons {
+.base .toolbar-menu .md-menu .md-button .material-icons, .base .toolbar-menu .md-menu .md-button > span .material-icons, .base .toolbar-menu .md-menu a .material-icons {
   font-size: 48px;
   margin-left: 15px;
   color: #009688;

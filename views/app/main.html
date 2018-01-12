@@ -10,13 +10,21 @@
             <img src="../../assets/netgrif_full_white.svg" alt="logo" class="padding-vertical-default">
         </a>
 
+        <div hide-gt-sm>
+            <span ng-if="'dashboard' | routeSegmentContains">{{::$i18n.page.dashboard.this}}</span>
+            <span ng-if="'cases' | routeSegmentContains">{{::$i18n.page.cases.this}}</span>
+            <span ng-if="'tasks' | routeSegmentContains">{{::$i18n.page.tasks.this}}</span>
+            <span ng-if="'workflow' | routeSegmentContains">{{::$i18n.page.workflow.this}}</span>
+            <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)">{{::$i18n.page.console.this}}</span>
+        </div>
+
         <div flex></div>
 
         <md-menu-bar layout="row" layout-align="center center" class="toolbar-menu">
             <md-menu>
 
-                <md-button ng-click="$mdMenu.open($event)" layout="row" layout-align="left center" class="btn-menu" md-menu-origin>
-                    {{$user.name}}
+                <md-button layout="row" layout-align="start center" class="btn-menu" ng-click="$mdMenu.open($event)" md-menu-origin>
+                    <span hide-xs>{{$user.name}}</span>
                     <i class="material-icons">account_circle</i>
                 </md-button>
 
