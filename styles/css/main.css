@@ -2755,7 +2755,8 @@ span.active {
 }
 
 .background-default {
-  background: url("../../assets/netgrif_background.png") no-repeat fixed center center;
+  background-size: cover !important;
+  background: url("../../assets/netgrif_background.png");
 }
 
 .background-fullpage {
