@@ -245,14 +245,14 @@
 
                     <div layout="row">
 
-                        <div flex="50" layout="column">
+                        <div flex layout="column">
 
                             <div layout="row" layout-align="start center" class="card card-header height-56px padding-horizontal-2x">
-                                <span flex-gt-sm="5">{{::$i18n.block.filter.type}}</span>
-                                <span flex-gt-sm="35">{{::$i18n.block.filter.label}}</span>
-                                <span flex-gt-sm="30">{{::$i18n.block.filter.author}}</span>
-                                <span flex-gt-sm="20">{{::$i18n.block.filter.date}}</span>
-                                <span flex-gt-sm="10"class="visibility-hidden"></span>
+                                <span flex-gt-sm="5"  flex-sm="10" flex-xs="15">{{::$i18n.block.filter.type}}</span>
+                                <span flex-gt-sm="35" flex-sm="40" flex-xs="70">{{::$i18n.block.filter.label}}</span>
+                                <span flex-gt-sm="30" flex-sm="40" hide-xs>{{::$i18n.block.filter.author}}</span>
+                                <span flex-gt-sm="20" hide-sm hide-xs>{{::$i18n.block.filter.date}}</span>
+                                <span flex-gt-sm="10" flex-sm="10" flex-xs="15" class="visibility-hidden"></span>
                             </div> <!--Sort bar-->
 
                             <md-list flex class="padding-0">
@@ -261,19 +261,19 @@
 
                                     <div flex layout="row" layout-align="start center">
 
-                                        <span flex-gt-sm="5" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="5" flex-sm="10" flex-xs="15" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500">group</i>
                                         </span>
-                                        <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
-                                        <span flex-gt-sm="30" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="35" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
+                                        <span flex-gt-sm="30" flex-sm="40" hide-xs layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                                             Peter pan
                                         </span>
-                                        <span flex-gt-sm="20" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="20" hide-sm hide-xs layout="row" layout-align="start center">
                                             16.05.2018 16:27
                                         </span>
 
-                                        <div flex-gt-sm="10" layout="row" layout-align="end center" >
+                                        <div flex-gt-sm="10" flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
 
                                             <md-button class="md-icon-button color-fg-primary-500">
                                                 <i class="material-icons">list</i>
@@ -288,25 +288,25 @@
 
                                 </md-list-item> <!--One filter-->
 
-                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider><!--Divider-->
 
                                 <md-list-item class="card list-item">
 
                                     <div flex layout="row" layout-align="start center">
 
-                                        <span flex-gt-sm="5" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="5" flex-sm="10" flex-xs="15" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500">group</i>
                                         </span>
-                                        <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
-                                        <span flex-gt-sm="30" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="35" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
+                                        <span flex-gt-sm="30" flex-sm="40" hide-xs layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                                             Peter pan
                                         </span>
-                                        <span flex-gt-sm="20" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="20" hide-sm hide-xs layout="row" layout-align="start center">
                                             16.05.2018 16:27
                                         </span>
 
-                                        <div flex-gt-sm="10" layout="row" layout-align="end center" >
+                                        <div flex-gt-sm="10" flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
 
                                             <md-button class="md-icon-button color-fg-primary-500">
                                                 <i class="material-icons">list</i>
@@ -321,25 +321,25 @@
 
                                 </md-list-item> <!--One filter-->
 
-                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider><!--Divider-->
 
                                 <md-list-item class="card list-item">
 
                                     <div flex layout="row" layout-align="start center">
 
-                                        <span flex-gt-sm="5" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="5" flex-sm="10" flex-xs="15" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500">group</i>
                                         </span>
-                                        <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
-                                        <span flex-gt-sm="30" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="35" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
+                                        <span flex-gt-sm="30" flex-sm="40" hide-xs layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                                             Peter pan
                                         </span>
-                                        <span flex-gt-sm="20" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="20" hide-sm hide-xs layout="row" layout-align="start center">
                                             16.05.2018 16:27
                                         </span>
 
-                                        <div flex-gt-sm="10" layout="row" layout-align="end center" >
+                                        <div flex-gt-sm="10" flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
 
                                             <md-button class="md-icon-button color-fg-primary-500">
                                                 <i class="material-icons">list</i>
@@ -354,25 +354,25 @@
 
                                 </md-list-item> <!--One filter-->
 
-                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider><!--Divider-->
 
                                 <md-list-item class="card list-item">
 
                                     <div flex layout="row" layout-align="start center">
 
-                                        <span flex-gt-sm="5" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="5" flex-sm="10" flex-xs="15" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500">group</i>
                                         </span>
-                                        <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
-                                        <span flex-gt-sm="30" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="35" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
+                                        <span flex-gt-sm="30" flex-sm="40" hide-xs layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                                             Peter pan
                                         </span>
-                                        <span flex-gt-sm="20" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="20" hide-sm hide-xs layout="row" layout-align="start center">
                                             16.05.2018 16:27
                                         </span>
 
-                                        <div flex-gt-sm="10" layout="row" layout-align="end center" >
+                                        <div flex-gt-sm="10" flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
 
                                             <md-button class="md-icon-button color-fg-primary-500">
                                                 <i class="material-icons">list</i>
@@ -387,25 +387,25 @@
 
                                 </md-list-item> <!--One filter-->
 
-                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider><!--Divider-->
 
                                 <md-list-item class="card list-item">
 
                                     <div flex layout="row" layout-align="start center">
 
-                                        <span flex-gt-sm="5" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="5" flex-sm="10" flex-xs="15" layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500">group</i>
                                         </span>
-                                        <span flex-gt-sm="35" layout="row" layout-align="start center">Dnesne tasky</span>
-                                        <span flex-gt-sm="30" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="35" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
+                                        <span flex-gt-sm="30" flex-sm="40" hide-xs layout="row" layout-align="start center">
                                             <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                                             Peter pan
                                         </span>
-                                        <span flex-gt-sm="20" layout="row" layout-align="start center">
+                                        <span flex-gt-sm="20" hide-sm hide-xs layout="row" layout-align="start center">
                                             16.05.2018 16:27
                                         </span>
 
-                                        <div flex-gt-sm="10" layout="row" layout-align="end center" >
+                                        <div flex-gt-sm="10" flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
 
                                             <md-button class="md-icon-button color-fg-primary-500">
                                                 <i class="material-icons">list</i>
@@ -419,6 +419,9 @@
                                     </div>
 
                                 </md-list-item> <!--One filter-->
+
+                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider><!--Divider-->
+
 
                                 <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
@@ -426,9 +429,9 @@
 
                         </div>
 
-                        <md-divider ng-repeat-end class="border-width-2x color-border-transparent"></md-divider>
+                        <md-divider hide hide-sm hide-xs ng-repeat-end class="border-width-2x color-border-transparent"></md-divider>
 
-                        <div flex="50" layout="column">
+                        <div hide hide-sm hide-xs flex layout="column">
 
                             <div class="card">
 
