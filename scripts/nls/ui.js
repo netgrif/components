@@ -26,6 +26,23 @@ define({
                 contacts: "Contacts",
                 contracts: "Contracts"
             },
+            filter: {
+                type: "Type",
+                filter: "Filter",
+                label: "Label",
+                author: "Author",
+                date: "Created",
+                group: "Group",
+                process: "Process",
+                detail: "Filter: ",
+                description: "Description",
+                transition: "Transition: ",
+                tooltips:{
+                    details: "Show details",
+                    transition: "Selected transition",
+                    process: "Selected process"
+                },
+            },
             cases: {
                 this: "Cases",
                 my: "Cases"
@@ -141,6 +158,7 @@ define({
                 delete: "Delete",
                 invite: "Invite",
                 save: "Save",
+                edit: "Edit",
                 collapse: "Collapse",
                 assign: "Assign",
                 finish: "Next",
@@ -296,13 +314,6 @@ define({
                 to: "to",
                 characters: "characters",
                 long: "long"
-            },
-            filter:{
-                type: "Type",
-                filter: "Filter",
-                label:"Name",
-                author:"Author",
-                date:"Created"
             },
             char: {
 

@@ -152,6 +152,14 @@ $border-radius:					2px;
 		&-2x {
 			margin-left: $dim-2x;
 		}
+
+		&-minus-default {
+			margin-left: -$dim-default;
+		}
+
+		&-minus-2x {
+			margin-left: -$dim-2x;
+		}
 	}
 
 	&-right {
