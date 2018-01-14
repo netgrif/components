@@ -33,6 +33,8 @@ define({
                 author: "Author",
                 date: "Created",
                 group: "Group",
+                global: "Global",
+                personal: "Personal",
                 process: "Process",
                 detail: "Filter: ",
                 description: "Description",
