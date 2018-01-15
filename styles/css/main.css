@@ -6228,6 +6228,20 @@ md-expansion-panel.highlight md-progress-circular path {
   width: auto;
 }
 
+.base .toolbar-btn {
+  height: 100%;
+  margin: 0;
+  color: #FAFAFA;
+  font-size: 20px;
+  text-transform: none;
+}
+
+.base .toolbar-btn .material-icons {
+  font-size: 40px;
+  color: #009688;
+  margin-left: 16px;
+}
+
 .base .toolbar md-menu-bar.md-default-theme md-menu.md-open > button, .base .toolbar md-menu-bar md-menu.md-open > button, .base .toolbar md-menu-bar.md-default-theme md-menu > button:focus, .base .toolbar md-menu-bar md-menu > button:focus {
   background: rgba(238, 238, 238, 0.1) !important;
 }
@@ -7396,21 +7410,7 @@ md-expansion-panel.highlight md-progress-circular path {
   font-weight: normal !important;
 }
 
-.base .icon-menu .btn-menu {
-  height: 100%;
-  margin: 0;
-  color: #FAFAFA;
-  font-size: 20px;
-  text-transform: none;
-}
-
-.base .icon-menu .btn-menu .material-icons {
-  font-size: 40px;
-  color: #009688;
-  margin-left: 16px;
-}
-
-.base .icon-menu .md-menu .md-button, .base .icon-menu .md-menu .md-button > span, .base .icon-menu .md-menu a {
+.base .icon-menu-bar .md-menu .md-button, .base .icon-menu-bar .md-menu .md-button > span, .base .icon-menu-bar .md-menu a {
   height: 100%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -7419,7 +7419,7 @@ md-expansion-panel.highlight md-progress-circular path {
   text-transform: none;
 }
 
-.base .icon-menu .md-menu .md-button .material-icons, .base .icon-menu .md-menu .md-button > span .material-icons, .base .icon-menu .md-menu a .material-icons {
+.base .icon-menu-bar .md-menu .md-button .material-icons, .base .icon-menu-bar .md-menu .md-button > span .material-icons, .base .icon-menu-bar .md-menu a .material-icons {
   font-size: 48px;
   margin-left: 15px;
   color: #009688;

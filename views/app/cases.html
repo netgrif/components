@@ -62,7 +62,10 @@
 									</md-button>
 									<md-menu-content>
 										<md-menu-item>
-											<md-button ng-click="useCase.delete()">{{$i18n.block.btn.delete}}</md-button>
+											<md-button ng-click="useCase.delete()">
+												<md-icon class="material-icons">delete</md-icon>
+												<span>{{$i18n.block.btn.delete}}</span>
+											</md-button>
 										</md-menu-item>
 									</md-menu-content>
 								</md-menu>

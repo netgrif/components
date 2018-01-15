@@ -7,21 +7,7 @@ md-menu span, md-menu-item span {
 
 .icon {
 
-    &-menu {
-
-        .btn-menu {
-            height: 100%;
-            margin: 0;
-            color: $color-grey-50;
-            font-size: 20px;
-            text-transform: none;
-
-            .material-icons {
-                font-size: 40px;
-                color: $color-primary-500;
-                margin-left: $dim-2x;
-            }
-        }
+    &-menu-bar {
 
         .md-menu {
 
