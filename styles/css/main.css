@@ -6228,50 +6228,6 @@ md-expansion-panel.highlight md-progress-circular path {
   width: auto;
 }
 
-.base .toolbar-menu .btn-menu {
-  height: 100%;
-  margin: 0;
-  color: #FAFAFA;
-  font-size: 20px;
-  text-transform: none;
-}
-
-.base .toolbar-menu .btn-menu .material-icons {
-  font-size: 40px;
-  color: #009688;
-  margin-left: 16px;
-}
-
-.base .toolbar-menu .md-menu .md-button, .base .toolbar-menu .md-menu .md-button > span, .base .toolbar-menu .md-menu a {
-  height: 100%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  font-size: 20px;
-  color: white !important;
-  text-transform: none;
-}
-
-.base .toolbar-menu .md-menu .md-button .material-icons, .base .toolbar-menu .md-menu .md-button > span .material-icons, .base .toolbar-menu .md-menu a .material-icons {
-  font-size: 48px;
-  margin-left: 15px;
-  color: #009688;
-}
-
-.base .toolbar-submenu {
-  padding: 0 !important;
-}
-
-.base .toolbar-submenu .btn-menu > .material-icons {
-  margin-right: 14px !important;
-  margin-bottom: 1.5px !important;
-}
-
-.base .toolbar-submenu .btn-menu > span {
-  float: none !important;
-  text-transform: capitalize !important;
-  font-weight: normal !important;
-}
-
 .base .toolbar md-menu-bar.md-default-theme md-menu.md-open > button, .base .toolbar md-menu-bar md-menu.md-open > button, .base .toolbar md-menu-bar.md-default-theme md-menu > button:focus, .base .toolbar md-menu-bar md-menu > button:focus {
   background: rgba(238, 238, 238, 0.1) !important;
 }
@@ -7437,6 +7393,50 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base md-menu span, .base md-menu-item span {
   color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: normal !important;
+}
+
+.base .icon-menu .btn-menu {
+  height: 100%;
+  margin: 0;
+  color: #FAFAFA;
+  font-size: 20px;
+  text-transform: none;
+}
+
+.base .icon-menu .btn-menu .material-icons {
+  font-size: 40px;
+  color: #009688;
+  margin-left: 16px;
+}
+
+.base .icon-menu .md-menu .md-button, .base .icon-menu .md-menu .md-button > span, .base .icon-menu .md-menu a {
+  height: 100%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 20px;
+  color: white !important;
+  text-transform: none;
+}
+
+.base .icon-menu .md-menu .md-button .material-icons, .base .icon-menu .md-menu .md-button > span .material-icons, .base .icon-menu .md-menu a .material-icons {
+  font-size: 48px;
+  margin-left: 15px;
+  color: #009688;
+}
+
+.base .icon-submenu {
+  padding: 0 !important;
+}
+
+.base .icon-submenu .btn-menu > .material-icons {
+  margin-right: 14px !important;
+  margin-bottom: 1.5px !important;
+}
+
+.base .icon-submenu .btn-menu > span {
+  float: none !important;
+  text-transform: capitalize !important;
   font-weight: normal !important;
 }
 
