@@ -164,26 +164,17 @@ define({
         },
         case: {
             this: "Prípad",
-            label: "Typ",
-            visualID: "Vizuálne ID",
-            title: "Názov",
-            client: "Klient",
-            date: "Dátum",
-            insurance: "Poistné",
-            inEur: "V eurách",
+            header: {
+                label: "Typ",
+                visualID: "Vizuálne ID",
+                title: "Názov"
+            },
             newTitle: {
                 Offer: "Nové poistenie",
                 Contact: "Meno a priezvisko"
             }
         },
         task: {
-            this: "Úloha",
-            label: "Značka",
-            offer: "Ponuka",
-            title: "Názov",
-            date: "Dátum začiatku",
-            status: "Stav",
-            contract: "Zmluva",
             type: "Typ",
             name: "Meno",
             surname: "Priezvisko",
@@ -194,6 +185,7 @@ define({
             noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
             user: "Používateľ",
             header: {
+                label: "Značka",
                 case: "Prípad",
                 title: "Názov",
                 priority: "Priorita",
