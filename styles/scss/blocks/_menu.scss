@@ -4,3 +4,46 @@ md-menu span, md-menu-item span {
     color: $color-black-op-87 !important;
     font-weight: normal !important;
 }
+
+.icon {
+
+    &-menu-bar {
+
+        .md-menu {
+
+            .md-button, .md-button>span, a {
+                height: 100%;
+                padding-top: 4px;
+                padding-bottom: 4px;
+                font-size: 20px;
+                color: white !important;
+                text-transform: none;
+
+                .material-icons {
+                    font-size: $dim-48px;
+                    margin-left: 15px;
+                    color: $color-primary-500;
+                }
+            }
+        }
+    }
+
+    // Fix submenu
+    &-submenu {
+        padding: 0 !important;
+
+        .btn-menu {
+
+            > .material-icons {
+                margin-right: 14px !important;
+                margin-bottom: 1.5px !important;
+            }
+
+            > span {
+                float: none !important;
+                text-transform: capitalize !important;
+                font-weight: normal !important;
+            }
+        }
+    }
+}

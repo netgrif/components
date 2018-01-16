@@ -68,11 +68,16 @@
                                     </md-button>
                                     <md-menu-content>
                                         <md-menu-item>
-                                            <md-button ng-click="tasksCtrl.showFilterDialog()">{{::$i18n.block.btn.save}}
+                                            <md-button ng-click="tasksCtrl.showFilterDialog()">
+                                                <md-icon class="material-icons">save</md-icon>
+                                                <span>{{::$i18n.block.btn.save}}</span>
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
-                                            <md-button ng-click="tasksCtrl.clearFilter()">{{::$i18n.block.btn.reset}}</md-button>
+                                            <md-button ng-click="tasksCtrl.clearFilter()">
+                                                <md-icon class="material-icons">clear_all</md-icon>
+                                                <span>{{::$i18n.block.btn.reset}}</span>
+                                            </md-button>
                                         </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
