@@ -16,7 +16,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
 
         this.cases = [];
         this.newCase = {
-            title: this.$i18n.block.case.newTitle[this.caseType]
+            // title: this.$i18n.block.case.newTitle[this.caseType]
         };
     }
 
@@ -141,7 +141,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     };
 
     CaseTab.prototype.openNewCaseDialog = function (title) {
-        //this.loadPetriNets();
+        this.loadPetriNets();
         this.$dialog.showByTemplate('create_case', this,{title:title});
     };
 

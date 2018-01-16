@@ -1,6 +1,6 @@
 <md-dialog aria-label="{{::$root.$i18n.block.dialog.uploadModel.title}}">
 
-    <form name="modelUploadForm" ng-submit="parentCtrl.uploadModel()">
+    <form name="petriNetUploadForm" ng-submit="parentCtrl.uploadPetriNet()">
 
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -21,14 +21,14 @@
 
                     <md-button layout="row" layout-align="start center" class="file-chooser">
 
-                        <input type="file" id="upload-model-file"
-                               file-model="parentCtrl.modelFile"
-                               file-change-callback="parentCtrl.modelChanged"
-                               file-change-arg="parentCtrl.modelFile">
+                        <input type="file" id="file"
+                               file-model="parentCtrl.netFile"
+                               file-change-callback="parentCtrl.netFileChanged"
+                               file-change-arg="parentCtrl.netFile">
 
-                        <label for="upload-model-file" layout="row" layout-align="start center">
+                        <label for="file" layout="row" layout-align="start center">
                             <i class="material-icons">attach_file</i>
-                            <span>{{parentCtrl.modelFile ? parentCtrl.modelName : $root.$i18n.block.dialog.uploadModel.attachModel}}</span>
+                            <span>{{parentCtrl.netFile ? parentCtrl.netFileName : $root.$i18n.block.dialog.uploadModel.attachModel}}</span>
                         </label>
 
                     </md-button>
@@ -44,13 +44,13 @@
 
                 <md-input-container>
                     <label>{{::$root.$i18n.block.dialog.uploadModel.name}}</label>
-                    <input type="text" ng-model="parentCtrl.modelMeta.name" required title="{{::$root.$i18n.block.dialog.uploadModel.name}}">
+                    <input type="text" ng-model="parentCtrl.petriNetMeta.name" required>
                 </md-input-container>
 
                 <md-input-container>
                     <label>{{::$root.$i18n.block.dialog.uploadModel.key}}</label>
-                    <input md-maxlength="3" type="text" name="initials" ng-model="parentCtrl.modelMeta.initials" required title="{{::$root.$i18n.block.dialog.uploadModel.key}}">
-                    <div ng-messages="modelUploadForm.initials.$error">
+                    <input md-maxlength="3" type="text" name="initials" ng-model="parentCtrl.petriNetMeta.initials" required>
+                    <div ng-messages="petriNetUploadForm.initials.$error">
                         <div ng-message="md-maxlength">{{::$root.$i18n.block.dialog.uploadModel.maxchars}}</div>
                     </div>
                 </md-input-container>
