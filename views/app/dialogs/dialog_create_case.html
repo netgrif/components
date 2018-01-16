@@ -15,14 +15,14 @@
         <md-dialog-content>
             <div class="md-dialog-content" layout="column">
 
-                <!--<md-input-container>-->
-                    <!--<label>{{::$root.$i18n.block.dialog.createCase.process}}</label>-->
-                    <!--<md-select ng-model="parentCtrl.newCase.netId" required>-->
-                        <!--<md-option ng-repeat="net in parentCtrl.petriNetRefs" value="{{net.entityId}}">-->
-                            <!--{{net.title}}-->
-                        <!--</md-option>-->
-                    <!--</md-select>-->
-                <!--</md-input-container>-->
+                <md-input-container>
+                    <label>{{::$root.$i18n.block.dialog.createCase.process}}</label>
+                    <md-select ng-model="parentCtrl.newCase.netId" required>
+                        <md-option ng-repeat="net in parentCtrl.petriNetRefs" value="{{net.entityId}}">
+                            {{net.title}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
 
                 <md-input-container>
                     <label>{{::$root.$i18n.block.dialog.createCase.title}}</label>

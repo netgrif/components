@@ -5,42 +5,42 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
                     const self = this;
 
-                    self.modelMeta = {};
-                    self.modelName = undefined;
+                    self.petriNetMeta = {};
+                    self.netFileName = undefined;
 
-                    self.modelChanged = function (file) {
+                    self.netFileChanged = function (file) {
                         if(!file) return;
-                        self.modelName = file.name;
-                        self.modelFile = file;
+                        self.netFileName = file.name;
+                        self.netFile = file;
                     };
 
-                    self.uploadModel = function () {
-                        if(!self.modelFile){
+                    self.uploadPetriNet = function () {
+                        if(!self.netFile){
                             $snackbar.error($i18n.block.snackbar.noFileWasAttached);
                             return;
                         }
-                        if(self.modelFile.type !== "text/xml"){
+                        if(self.netFile.type !== "text/xml"){
                             $snackbar.error($i18n.block.snackbar.fileMustHaveXmlFormat);
                             return;
                         }
 
-                        self.modelMeta.initials = self.modelMeta.initials.toUpperCase();
-                        let meta = jQuery.isEmptyObject(self.modelMeta) ? undefined : JSON.stringify(self.modelMeta);
-                        $fileUpload.upload(self.modelFile, meta, "/res/petrinet/import", function (response) {
+                        self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
+                        let meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
+                        $fileUpload.upload(self.netFile, meta, "/res/petrinet/import", function (response) {
                             if(response.success) $dialog.closeCurrent();
                             else $snackbar.error($i18n.block.snackbar.modelFailedToUpload);
-                            self.modelFile = undefined;
-                            self.modelMeta = {};
+                            self.netFile = undefined;
+                            self.petriNetMeta = {};
                         });
                     };
 
-                    self.loadModels = function () {
-                        if(self.modelRefs) return;
+                    self.loadPetriNets = function () {
+                        if(self.petriNetRefs) return;
                         $http.get("/res/petrinet/refs").then(function (response) {
                             $log.debug(response);
                             $log.debug(response.$request());
                             response.$request().$get("petriNetReferences").then(function (resource) {
-                                self.modelRefs = resource;
+                                self.petriNetRefs = resource;
                             });
                         }, function () {
                             $log.debug("Petri net refs get failed");
