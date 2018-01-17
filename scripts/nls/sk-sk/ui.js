@@ -167,7 +167,9 @@ define({
             header: {
                 label: "Typ",
                 visualID: "Vizuálne ID",
-                title: "Názov"
+                title: "Názov",
+                author: "Autor",
+                createDate: "Dátum vytvorenia"
             },
             newTitle: {
                 Offer: "Nové poistenie",

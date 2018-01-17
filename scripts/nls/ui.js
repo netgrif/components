@@ -168,7 +168,9 @@ define({
                 header: {
                     label: "Type",
                     visualID: "Visual ID",
-                    title: "Title"
+                    title: "Title",
+                    author: "Author",
+                    createDate: "Create Date"
                 },
                 newTitle: {
                     Offer: "New insurance",
