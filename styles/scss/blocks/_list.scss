@@ -12,6 +12,7 @@
 
         &-selected {
             background-color: $color-primary-500 !important;
+            color: $color-grey-50;
 
             .material-icons {
                 color: $color-grey-50 !important;

@@ -251,6 +251,7 @@ define({
                 caseSelect: {
                     choose: "Choose"
                 }
+
             },
             snackbar: {
                 case: "Case",

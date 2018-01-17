@@ -3,7 +3,7 @@ define(['angular', '../classes/Task', '../modules/Main', 'angularMaterialExpansi
         angular.module('ngMain').controller('TaskController',
             ['$log', '$scope', '$http', '$snackbar', '$user', '$dialog', '$fileUpload', '$timeout', '$mdExpansionPanel', 'resource', 'links', 'tab', 'config', '$i18n',
                 function ($log, $scope, $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanel, resource, links, tab, config, $i18n) {
-                    //const self = this;
+                    const self = this;
                     this.taskId = resource.stringId;
                     tab.addTaskController(this);
 
@@ -25,4 +25,5 @@ define(['angular', '../classes/Task', '../modules/Main', 'angularMaterialExpansi
                         $event.stopPropagation();
                     }
                 }]);
+
     });
