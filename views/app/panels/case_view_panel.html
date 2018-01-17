@@ -7,7 +7,6 @@
             <div ng-if="task.caseColor" flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center">
                 <i class="material-icons {{task.caseColor}}" ng-repeat="icon in task.getIcons()">{{icon}}</i>
             </div>
-            <!--<i ng-if="task.caseColor" flex="10" class="material-icons {{task.caseColor}}">{{task.icon ? task.icon : task.tab.useCase.icon ? task.tab.useCase.icon : 'label'}}</i>-->
             <span hide show-gt-sm flex="40">{{task.caseTitle}}</span>
             <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{task.title}}</span>
             <i hide-xs ng-if="task.finishDate && !task.loading" flex="10" layout="row" layout-align="end center" class="material-icons color-fg-primary-500">done</i>
