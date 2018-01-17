@@ -128,13 +128,13 @@
 
                     <div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
 
-                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="35" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
+                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="30" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
                             {{::$i18n.block.task.header.case}}
                             <md-icon class="material-icons">
                                 {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
                             </md-icon>
                         </a>
-                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="45" flex-xs="45" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="45" flex-xs="50" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
                             {{::$i18n.block.task.header.title}}
                             <md-icon class="material-icons">
                                 {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
