@@ -54,13 +54,14 @@ define({
                 item: {
                     file: {
                         title: "Súbor",
-                        desc: "Petriflow model použitý ako šablóna"
+                        desc: "Petriflow model použitý ako šablóna",
+                        download: "Stiahnuť"
                     },
                     author: {
                         title: "Autor",
                         desc: "Používateľ, ktorý nahral model"
                     },
-                    uploaded: {
+                    uploadDate: {
                         title: "Nahrané",
                         desc: "Dátum nahrania modelu do systému"
                     },
@@ -84,10 +85,6 @@ define({
                         title: "Aktívni používatelia",
                         desc: "Počet používateľov pracujúcich s ľubovoľným prípadom tohto modelu"
                     }
-                },
-                placeholder: {
-                    date: "Dátum",
-                    count: "Počet"
                 }
             }
         },
