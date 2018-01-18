@@ -49,15 +49,20 @@ define({
                 author: "Author",
                 data: {
                     group: {
-                        information: "Information",
+                        details: "Details",
                         statistics: "Statistics"
                     },
                     item: {
                         file: {
                             title: "File",
-                            desc: "Petriflow model used as template"
+                            desc: "Petriflow model used as template",
+                            download: "Download"
                         },
-                        uploaded: {
+                        author: {
+                            title: "Author",
+                            desc: "User who uploaded model"
+                        },
+                        uploadDate: {
                             title: "Uploaded",
                             desc: "Date when this model was uploaded"
                         },
@@ -81,10 +86,6 @@ define({
                             title: "Active users",
                             desc: "Number of users working with any case of this model"
                         }
-                    },
-                    placeholder: {
-                        date: "Date",
-                        count: "Count"
                     }
                 }
             },
