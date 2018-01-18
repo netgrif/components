@@ -4807,7 +4807,7 @@ md-expansion-panel.highlight md-progress-circular path {
   background-color: #009688;
 }
 
-.base .card-case:hover span, .base .card-case:hover md-icon {
+.base .card-case:hover span, .base .card-case:hover md-icon, .base .card-case:hover .material-icons.color-fg-primary-500 {
   color: #FAFAFA;
 }
 

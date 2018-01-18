@@ -137,5 +137,10 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             if ($scope.opt && $scope.opt.filter) {
                 self.loadRoles();
             }
+
+            if (parentCtrl.petriNetRefs && parentCtrl.petriNetRefs.length === 1) {
+                parentCtrl.newCase.netId = parentCtrl.petriNetRefs[0].entityId;
+            }
+
         }]);
 });

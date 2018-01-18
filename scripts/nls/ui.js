@@ -165,26 +165,19 @@ define({
             },
             case: {
                 this: "Case",
-                label: "Type",
-                visualID: "Visual ID",
-                title: "Title",
-                client: "Client",
-                date: "Date",
-                insurance: "Insurance",
-                inEur: "In EUR",
+                header: {
+                    label: "Type",
+                    visualID: "Visual ID",
+                    title: "Title",
+                    author: "Author",
+                    createDate: "Create Date"
+                },
                 newTitle: {
                     Offer: "New insurance",
                     Contact: "Name and surname"
                 }
             },
             task: {
-                this: "Task",
-                label: "Label",
-                offer: "Offer",
-                title: "Title",
-                date: "Start date",
-                status: "Status",
-                contact: "Contact",
                 type: "Type",
                 name: "Name",
                 surname: "Surname",
@@ -195,6 +188,7 @@ define({
                 noData: "This task has no data. Finish to continue.",
                 user: "User",
                 header: {
+                    label: "Label",
                     case: "Case",
                     title: "Title",
                     priority: "Priority",

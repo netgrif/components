@@ -59,7 +59,7 @@
         &:hover {
             background-color: $color-primary-500;
 
-            span, md-icon {
+            span, md-icon, .material-icons.color-fg-primary-500 {
                 color: $color-grey-50;
             }
         }
