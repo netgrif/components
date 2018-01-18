@@ -22,10 +22,11 @@
 
         <div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
 
-            <span flex-gt-sm="10" flex-xs="25" flex-sm="20">{{::$i18n.page.workflow.color}}</span>
-            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{::$i18n.page.workflow.modelTitle}}</span>
-            <span hide show-gt-sm flex="40">{{::$i18n.page.workflow.author}}</span>
-            <span hide-xs flex="10"></span> <!-- Loader -->
+            <span flex-gt-sm="10" flex-sm="20" flex-xs="25">{{::$i18n.page.workflow.color}}</span>
+            <span flex-gt-sm="30" flex-sm="40" flex-xs="55">{{::$i18n.page.workflow.modelTitle}}</span>
+            <span hide show-gt-xs flex-gt-sm="30" flex-sm="30">{{::$i18n.page.workflow.author}}</span>
+            <span hide show-gt-sm flex-gt-sm="20">Upload Date</span>
+            <span flex-gt-xs="10" flex-xs="20"></span> <!-- Menu / Loader -->
 
         </div>
 
@@ -36,20 +37,34 @@
             <md-expansion-panel-collapsed>
                 <div flex layout="row" layout-align="start center" class="click-area" ng-click="null">
 
-                    <div flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center">
+                    <div flex-gt-sm="10" flex-sm="20" flex-xs="25" layout="row" layout-align="start center">
                         <i class="material-icons color-fg-deep-orange-500">label</i>
                     </div>
 
-                    <span flex-gt-sm="40" flex-xs="75" flex-sm="70">Test model</span>
+                    <span flex-gt-sm="30" flex-sm="40" flex-xs="55">Test model</span>
 
-                    <span hide show-gt-sm flex="40" layout="row" layout-align="start center">
+                    <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
                         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                         Anonymous
                     </span>
 
-                    <div hide-xs flex="10" layout="row" layout-align="end center">
-                        <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
-                    </div>
+                    <span hide show-gt-sm flex-gt-sm="20">
+                        18.1.2018
+                    </span>
+
+                    <md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
+                        <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
+                            <md-icon class="material-icons">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button ng-click="null">
+                                    <md-icon class="material-icons">delete</md-icon>
+                                    <span>{{$i18n.block.btn.delete}}</span>
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
 
                 </div>
             </md-expansion-panel-collapsed>
@@ -58,18 +73,22 @@
 
                 <md-expansion-panel-header ng-click="$panel.collapse()" md-no-sticky>
 
-                    <div flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center">
+                    <div flex-gt-sm="10" flex-sm="20" flex-xs="25" layout="row" layout-align="start center">
                         <i class="material-icons color-fg-deep-orange-500">label</i>
                     </div>
 
-                    <span flex-gt-sm="40" flex-xs="75" flex-sm="70">Test model</span>
+                    <span flex-gt-sm="30" flex-sm="40" flex-xs="55">Test model</span>
 
-                    <span hide show-gt-sm flex="40" layout="row" layout-align="start center">
+                    <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
                         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                         Anonymous
                     </span>
 
-                    <div hide-xs flex="10" layout="row" layout-align="end center">
+                    <span hide show-gt-sm flex-gt-sm="20">
+                        18.1.2018
+                    </span>
+
+                    <div flex="10" layout="row" layout-align="end center">
                         <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
                     </div>
 
@@ -80,271 +99,127 @@
                     <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
                         <div flex="100" layout-wrap layout="row" layout-align="start center">
 
-                            <div layout="row" layout-align="start center" flex="100">
+                            <div flex="100" layout="row" layout-align="start center">
                                 <div flex="20" class="line-3px color-bg-primary-op-50"></div>
-                                <span class="margin-horizontal-default font-weight-600">{{::$i18n.page.workflow.data.group.information}}</span>
+                                <span class="margin-horizontal-default font-weight-600">{{::$i18n.page.workflow.data.group.details}}</span>
                                 <div flex class="line-3px color-bg-primary-op-50"></div>
                             </div> <!-- ./Group-divider -->
 
-                            <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
+                            <!-- Model File -->
+                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
 
-                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field">
-                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.data.item.file.title}}
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.file.desc}}
-                                            </md-tooltip>
-                                        </span>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                    <div flex="45" flex-xs="100" layout="row" layout-align="space-between center">
-                                        <div flex layout="row" layout-align="start center">
-                                            <md-icon class="material-icons margin-right-2x color-fg-primary-500">
-                                                <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
-                                                done
-                                            </md-icon>
-                                            <span class="text-overflow-dots">Test file</span>
-                                        </div>
-                                        <md-menu flex-xs="20" class="width-24px">
-                                            <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
-                                                <md-icon class="material-icons">more_vert</md-icon>
-                                            </md-button>
-                                            <md-menu-content>
-                                                <md-menu-item>
-                                                    <md-button class="file-chooser" layout="row" layout-align="start center">
-                                                        <input type="file" id="file"
-                                                               file-model="field.file"
-                                                               aria-label="Choose file">
-                                                        <label for="file" class="placeholder">
-                                                            <span class="padding-horizontal-2x">{{::$i18n.block.data.newFile}}</span>
-                                                        </label>
-                                                    </md-button>
-                                                </md-menu-item>
-                                                <md-menu-item>
-                                                    <md-button>
-                                                        {{::$i18n.block.data.upload}}
-                                                    </md-button>
-                                                </md-menu-item>
-                                                <md-menu-item>
-                                                    <md-button>
-                                                        {{::$i18n.block.data.download}}
-                                                    </md-button>
-                                                </md-menu-item>
-                                            </md-menu-content>
-                                        </md-menu>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
+                                <span hide-xs flex-gt-xs="20">
+                                    {{::$i18n.page.workflow.data.item.file.title}}
+                                </span>
+                                <div hide-xs flex-gt-xs="5"></div>
+                                <div flex-gt-xs="40" flex-xs="70" layout="row" layout-align="start center">
+                                    <i class="material-icons color-fg-primary-500 margin-right-2x">linear_scale</i>
+                                    <span>Test Net Title</span>
                                 </div>
-
-                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
-
-                            </div> <!-- ./Data-field -->
-
-                            <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
-
-                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>
-                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.data.item.uploaded.title}}
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.uploaded.title}}
-                                            </md-tooltip>
-                                        </span>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                    <div flex="45" flex-xs="100">
-                                        <md-input-container class="md-block" flex>
-                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.date}}</label>
-                                            <md-datepicker ng-model="field.uploaded"
-                                                           md-open-on-focus
-                                                           aria-label="Pick date">
-                                            </md-datepicker>
-                                        </md-input-container>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
+                                <div flex="30" layout="row" layout-align="end center">
+                                    <md-button class="md-icon-button" ng-click="null">
+                                        <md-icon class="material-icons">file_download</md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button">
+                                        <md-icon class="material-icons">info_outline</md-icon>
+                                    </md-button>
                                 </div>
+                                <div hide-xs flex-gt-xs="5"></div>
 
-                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+                            </div> <!-- ./Model File -->
 
-                            </div> <!-- ./Data-field -->
+                            <!-- Author -->
+                            <div hide-gt-xs flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
 
-                            <div hide-gt-sm flex="50" flex-md="100" flex-sm="100" flex-xs="100">
-
-                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>
-                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.author}}
-                                        </span>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                    <div flex="45" flex-xs="100" layout="row" layout-align="space-between center" class="padding-vertical-default">
-                                        <div layout="row" layout-align="start center">
-                                            <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
-                                            <span class="cursor-pointer">
-                                                Anonymous
-                                                <md-tooltip>
-                                                    test@email.com
-                                                </md-tooltip>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
+                                <span hide-xs flex-gt-xs="20">
+                                    {{::$i18n.page.workflow.data.item.author.title}}
+                                </span>
+                                <div hide-xs flex-gt-xs="5"></div>
+                                <div flex-gt-xs="40" flex-xs="70">
+                                    <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                                    <span>Anonymous</span>
                                 </div>
+                                <div flex="30" layout="row" layout-align="end center">
+                                    <md-button class="md-icon-button">
+                                        <md-icon class="material-icons">info_outline</md-icon>
+                                    </md-button>
+                                </div>
+                                <div hide-xs flex-gt-xs="5"></div>
 
-                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+                            </div> <!-- ./Author -->
 
-                            </div> <!-- ./Data-field -->
+                            <!-- Upload Date -->
+                            <div hide-gt-sm flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
 
-                            <div layout="row" layout-align="start center" flex="100">
+                                <span hide-xs flex-gt-xs="20">
+                                    {{::$i18n.page.workflow.data.item.uploaded.title}}
+                                </span>
+                                <div hide-xs flex-gt-xs="5"></div>
+                                <div flex-gt-xs="40" flex-xs="70">
+                                    <i class="material-icons color-fg-primary-500 margin-right-2x">today</i>
+                                    <span>18.1.2018</span>
+                                </div>
+                                <div flex="30" layout="row" layout-align="end center">
+                                    <md-button class="md-icon-button">
+                                        <md-icon class="material-icons">info_outline</md-icon>
+                                    </md-button>
+                                </div>
+                                <div hide-xs flex-gt-xs="5"></div>
+
+                            </div> <!-- ./Upload Date -->
+
+                            <div flex="100" layout="row" layout-align="start center">
                                 <div flex="20" class="line-3px color-bg-primary-op-50"></div>
                                 <span class="margin-horizontal-default font-weight-600">{{::$i18n.page.workflow.data.group.statistics}}</span>
                                 <div flex class="line-3px color-bg-primary-op-50"></div>
                             </div> <!-- ./Group-divider -->
 
-                            <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
+                            <!-- TODO 18.1.2018 Statistics fields -->
 
-                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field">
-                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.data.item.cases.title}}
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.cases.title}}
-                                            </md-tooltip>
-                                        </span>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                    <div flex="45" flex-xs="100">
-                                        <md-input-container class="md-block" flex>
-                                            <label class="placeholder">Count</label>
-                                            <input type="number" ng-model="field.cases"
-                                                   aria-label="Enter number"
-                                                   step="any"
-                                                   title="Number input"
-                                                   novalidate>
-                                        </md-input-container>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                </div>
-
-                                <md-divider hide show-xs
-                                            class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
-
-
-                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field">
-                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.data.item.roles.title}}
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.roles.title}}
-                                            </md-tooltip>
-                                        </span>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                    <div flex="45" flex-xs="100">
-                                        <md-input-container class="md-block" flex>
-                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.count}}</label>
-                                            <input type="number" ng-model="field.roles"
-                                                   aria-label="Enter number"
-                                                   step="any"
-                                                   title="Number input"
-                                                   novalidate>
-                                        </md-input-container>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                </div>
-
-                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
-
+                            <!-- Roly -->
+                            <div flex="100" layout-wrap layout="row" layout-align="start center">
+                                <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
+                                <span>4</span>
+                                <md-button class="md-icon-button margin-left-2x">
+                                    <md-icon class="material-icons">info_outline</md-icon>
+                                </md-button>
                             </div>
 
+                            <!-- Prípady -->
+                            <div flex="100" layout-wrap layout="row" layout-align="start center">
+                                <i class="material-icons color-fg-primary-500 margin-right-2x">storage</i>
+                                <span>83</span>
+                                <md-button class="md-icon-button margin-left-2x">
+                                    <md-icon class="material-icons">info_outline</md-icon>
+                                </md-button>
+                            </div>
 
-                            <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
+                            <!-- Úlohy -->
+                            <div flex="100" layout-wrap layout="row" layout-align="start center">
+                                <i class="material-icons color-fg-primary-500 margin-right-2x">check_box</i>
+                                <span>383</span>
+                                <md-button class="md-icon-button margin-left-2x">
+                                    <md-icon class="material-icons">info_outline</md-icon>
+                                </md-button>
+                            </div>
 
-                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field">
-                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.data.item.tasks.title}}
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.tasks.title}}
-                                            </md-tooltip>
-                                        </span>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                    <div flex="45" flex-xs="100">
-                                        <md-input-container class="md-block" flex>
-                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.count}}</label>
-                                            <input type="number" ng-model="field.tasks"
-                                                   aria-label="Enter number"
-                                                   step="any"
-                                                   title="Number input"
-                                                   novalidate>
-                                        </md-input-container>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                </div>
+                            <!-- Aktívne úlohy -->
+                            <div flex="100" layout-wrap layout="row" layout-align="start center">
+                                <i class="material-icons color-fg-primary-500 margin-right-2x">work</i>
+                                <span>383</span>
+                                <md-button class="md-icon-button margin-left-2x">
+                                    <md-icon class="material-icons">info_outline</md-icon>
+                                </md-button>
+                            </div>
 
-                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
-
-                            </div> <!-- ./Data-field -->
-
-                            <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
-
-                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field">
-                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.data.item.activeTasks.title}}
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.activeTasks.title}}
-                                            </md-tooltip>
-                                        </span>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                    <div flex="45" flex-xs="100">
-                                        <md-input-container class="md-block" flex>
-                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.count}}</label>
-                                            <input type="number" ng-model="field.activeTasks"
-                                                   aria-label="Enter number"
-                                                   step="any"
-                                                   title="Number input"
-                                                   novalidate>
-                                        </md-input-container>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                </div>
-
-                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
-
-                            </div> <!-- ./Data-field -->
-
-                            <div flex="50" flex-md="100" flex-sm="100" flex-xs="100">
-
-                                <div flex layout-wrap layout="row" layout-align="start center" class="data-field">
-                                    <div flex="45" flex-xs="100">
-                                        <span flex class="data-field-title cursor-pointer">
-                                            {{::$i18n.page.workflow.data.item.activeUsers.title}}
-                                            <md-tooltip>
-                                                {{::$i18n.page.workflow.data.item.activeUsers.title}}
-                                            </md-tooltip>
-                                        </span>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                    <div flex="45" flex-xs="100">
-                                        <md-input-container class="md-block" flex>
-                                            <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.count}}</label>
-                                            <input type="number" ng-model="field.activeUsers"
-                                                   aria-label="Enter number"
-                                                   step="any"
-                                                   title="Number input"
-                                                   novalidate>
-                                        </md-input-container>
-                                    </div>
-                                    <div flex="5" flex-xs="0"></div>
-                                </div>
-
-                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
-
-                            </div> <!-- ./Data-field -->
+                            <!-- Aktívni používatelia -->
+                            <div flex="100" layout-wrap layout="row" layout-align="start center">
+                                <i class="material-icons color-fg-primary-500 margin-right-2x">supervisor_account</i>
+                                <span>13</span>
+                                <md-button class="md-icon-button margin-left-2x">
+                                    <md-icon class="material-icons">info_outline</md-icon>
+                                </md-button>
+                            </div>
 
                         </div>
                     </div>
@@ -353,6 +228,10 @@
 
                 <md-expansion-panel-footer md-no-sticky>
                     <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
+
+                        <md-button ng-if="true" class="layout-xs-rw-100">
+                            {{$i18n.block.btn.delete}}
+                        </md-button>
 
                         <md-button ng-click="$panel.collapse()" class="md-primary layout-xs-rw-100">
                             {{::$i18n.block.btn.collapse}}

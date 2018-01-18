@@ -49,13 +49,17 @@ define({
                 author: "Author",
                 data: {
                     group: {
-                        information: "Information",
+                        details: "Details",
                         statistics: "Statistics"
                     },
                     item: {
                         file: {
                             title: "File",
                             desc: "Petriflow model used as template"
+                        },
+                        author: {
+                            title: "Author",
+                            desc: "User who uploaded model"
                         },
                         uploaded: {
                             title: "Uploaded",

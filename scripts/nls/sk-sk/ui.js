@@ -48,13 +48,17 @@ define({
             author: "Autor",
             data: {
                 group: {
-                    information: "Informácie",
+                    details: "Detaily",
                     statistics: "Štatistiky"
                 },
                 item: {
                     file: {
                         title: "Súbor",
                         desc: "Petriflow model použitý ako šablóna"
+                    },
+                    author: {
+                        title: "Autor",
+                        desc: "Používateľ, ktorý nahral model"
                     },
                     uploaded: {
                         title: "Nahrané",
