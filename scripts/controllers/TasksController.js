@@ -12,5 +12,7 @@ define(['angular', '../classes/TaskTab', '../modules/Tasks', '../modules/Main', 
                         $dialog.showByTemplate(template, self);
                     };
 
+
+
                 }]);
     });

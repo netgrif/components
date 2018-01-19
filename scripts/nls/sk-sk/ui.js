@@ -38,11 +38,12 @@ define({
             detail: "Filter: ",
             description: "Popis",
             transition: "Úlohy: ",
-            tooltips:{
+            tooltips: {
                 details: "Viac detailov",
                 transition: "Vybrané úlohy",
                 process: "Vybrané procesy"
             },
+        },
         cases: {
             this: "Prípady",
             my: "Prípady"

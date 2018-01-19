@@ -1,0 +1,99 @@
+
+    <div layout="row" layout-align="start center" class="card card-header height-56px padding-horizontal-2x">
+        <span flex-gt-md="10"  flex-md="10" flex-sm="10" flex-xs="15">{{::$i18n.page.filter.type}}</span>
+        <span flex-gt-md="20" flex-md="40" flex-sm="40" flex-xs="70">{{::$i18n.page.filter.label}}</span>
+        <span flex-gt-md="35" flex-md="40" flex-sm="40" hide-xs>{{::$i18n.page.filter.author}}</span>
+        <span flex-gt-sm="25" hide-md hide-sm hide-xs>{{::$i18n.page.filter.date}}</span>
+        <span flex-gt-md="5" flex-md="10" flex-sm="10" flex-xs="15" class="visibility-hidden"></span>
+    </div> <!--Sort bar-->
+
+    <md-list flex class="padding-0">
+
+        <md-list-item class="card list-item list-item-selected">
+
+            <div flex layout="row" layout-align="start center">
+
+                <span flex-gt-md="10" flex-md="10" flex-sm="10" flex-xs="15" layout="row" layout-align="start center">
+                    <i class="material-icons color-fg-primary-500">group</i>
+                </span>
+                <span flex-gt-md="20" flex-md="40" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
+                <span flex-gt-md="35" flex-md="40" flex-sm="40" hide-xs layout="row" layout-align="start center" class="text-overflow-dots">
+                    <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                    Ing. Veronika Mladoniczká Phd.
+                </span>
+                <span flex-gt-sm="25" hide-md hide-sm hide-xs layout="row" layout-align="start center">
+                    16.05.2018 16:27
+                </span>
+
+                <div flex-gt-md="10" flex-md="10" hide-sm hide-xs layout="row" layout-align="end center" >
+
+                    <md-button class="md-icon-button color-fg-primary-500">
+                        <i class="material-icons">list</i>
+                        <md-tooltip>
+                            {{::$i18n.page.filter.tooltips.details}}
+                        </md-tooltip>
+                    </md-button>
+
+                </div>
+
+                <div hide-gt-sm flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
+
+                    <md-button class="md-icon-button color-fg-primary-500" ng-click="taskCtrl.showDialog('filter_detail')">
+                        <i class="material-icons">list</i>
+                        <md-tooltip>
+                            {{::$i18n.page.filter.tooltips.details}}
+                        </md-tooltip>
+                    </md-button>
+
+                </div>
+
+            </div>
+
+        </md-list-item> <!--One filter-->
+
+        <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+
+        <md-list-item class="card list-item">
+
+            <div flex layout="row" layout-align="start center">
+
+                <span flex-gt-md="10" flex-md="10" flex-sm="10" flex-xs="15" layout="row" layout-align="start center">
+                    <i class="material-icons color-fg-primary-500">group</i>
+                </span>
+                <span flex-gt-md="20" flex-md="40" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
+                <span flex-gt-md="35" flex-md="40" flex-sm="40" hide-xs layout="row" layout-align="start center" class="text-overflow-dots">
+                    <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                    Ing. Veronika Mladoniczká Phd.
+                </span>
+                <span flex-gt-sm="25" hide-md hide-sm hide-xs layout="row" layout-align="start center">
+                    16.05.2018 16:27
+                </span>
+
+                <div flex-gt-md="10" flex-md="10" hide-sm hide-xs layout="row" layout-align="end center" >
+
+                    <md-button class="md-icon-button color-fg-primary-500">
+                        <i class="material-icons">list</i>
+                        <md-tooltip>
+                            {{::$i18n.page.filter.tooltips.details}}
+                        </md-tooltip>
+                    </md-button>
+
+                </div>
+
+                <div hide-gt-sm flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
+
+                    <md-button class="md-icon-button color-fg-primary-500" ng-click="taskCtrl.showDialog('filter_detail')">
+                        <i class="material-icons">list</i>
+                        <md-tooltip>
+                            {{::$i18n.page.filter.tooltips.details}}
+                        </md-tooltip>
+                    </md-button>
+
+                </div>
+
+            </div>
+
+        </md-list-item> <!--One filter-->
+
+        <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+    </md-list>

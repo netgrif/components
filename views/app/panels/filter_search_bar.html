@@ -1,0 +1,61 @@
+<div layout="row" layout-align="space-between center" class="card card-header padding-2x">
+
+    <div flex-gt-sm="30" flex-sm flex-xs layout="row" layout-align="start center" class="height-52px">
+        <i class="material-icons color-fg-primary-500">search</i>
+
+        <md-input-container class="margin-0">
+            <label>{{::$i18n.block.input.search}}</label>
+            <input type="text" ng-model="caseCtrl.search" class="margin-bottom-negative-15px">
+        </md-input-container>
+
+        <md-menu>
+
+            <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
+                <md-icon class="material-icons color-fg-primary-500">public</md-icon>
+                <md-tooltip md-direction="right">
+                    {{::$i18n.page.filter.global}}
+                </md-tooltip>
+            </md-button>
+
+            <md-menu-content>
+
+                <md-menu-item>
+
+                    <md-button>
+                        <md-icon class="material-icons">public</md-icon>
+                        <span>{{::$i18n.page.filter.global}}</span>
+                    </md-button>
+
+                </md-menu-item>
+
+                <md-menu-item>
+
+                    <md-button>
+                        <md-icon class="material-icons">group</md-icon>
+                        <span>{{::$i18n.page.filter.group}}</span>
+                    </md-button>
+
+                </md-menu-item>
+
+                <md-menu-item>
+
+                    <md-button>
+                        <md-icon class="material-icons">person</md-icon>
+                        <span>{{::$i18n.page.filter.personal}}</span>
+                    </md-button>
+
+                </md-menu-item>
+
+            </md-menu-content>
+
+        </md-menu>
+    </div>
+
+    <md-button class="md-fab md-raised md-mini md-primary" ng-click="null">
+        <md-icon class="material-icons">done</md-icon>
+        <md-tooltip md-direction="left">
+            {{::$i18n.page.tasks.addTab.submit}}
+        </md-tooltip>
+    </md-button>
+
+</div>
