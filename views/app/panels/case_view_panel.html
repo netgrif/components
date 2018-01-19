@@ -74,7 +74,7 @@
 
             </md-menu>
 
-            <div hide-xs ng-if="task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
+            <div ng-if="task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
                 <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
             </div>
 
@@ -107,13 +107,13 @@
                 9.1.2018 14:04
             </span>
 
-            <i hide-xs ng-if="task.finishDate && !task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center" class="material-icons color-fg-primary-500">done</i>
+            <i ng-if="task.finishDate && !task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center" class="material-icons color-fg-primary-500">done</i>
 
-            <div hide-xs ng-if="task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
+            <div ng-if="task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
                 <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
             </div>
 
-            <div hide-xs ng-if="!task.finishDate && !task.loading" flex-gt-xs="10" flex-xs="20"></div> <!-- Done Icon / Menu / Loader -->
+            <div ng-if="!task.finishDate && !task.loading" flex-gt-xs="10" flex-xs="20"></div> <!-- Done Icon / Menu / Loader -->
 
         </md-expansion-panel-header>
 

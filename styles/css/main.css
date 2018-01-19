@@ -82,6 +82,10 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -288,6 +292,10 @@
 
 .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .color-bg-black-op-60 {
@@ -746,6 +754,10 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -952,6 +964,10 @@
 
 .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .color-bg-black-op-60 {
@@ -1612,6 +1628,10 @@ body {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -1818,6 +1838,10 @@ body {
 
 .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .color-bg-black-op-60 {
@@ -2159,6 +2183,10 @@ span.active {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -2365,6 +2393,10 @@ span.active {
 
 .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .color-bg-black-op-60 {
@@ -2854,6 +2886,10 @@ span.active {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -3060,6 +3096,10 @@ span.active {
 
 .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .color-bg-black-op-60 {
@@ -3423,6 +3463,10 @@ span.active {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -3629,6 +3673,10 @@ span.active {
 
 .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .color-bg-black-op-60 {
@@ -4166,6 +4214,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .base .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -4372,6 +4424,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .base .color-bg-black-op-60 {
@@ -4912,6 +4968,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .base .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -5118,6 +5178,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .base .color-bg-black-op-60 {
@@ -5633,6 +5697,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .base .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -5839,6 +5907,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .base .color-bg-black-op-60 {
@@ -6357,6 +6429,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .base .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -6563,6 +6639,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .base .color-bg-black-op-60 {
@@ -7049,6 +7129,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .base .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -7255,6 +7339,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .base .color-bg-black-op-60 {
@@ -7577,6 +7665,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .base .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -7783,6 +7875,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .base .color-bg-black-op-60 {
@@ -8021,6 +8117,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .base .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -8227,6 +8327,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .base .color-bg-black-op-60 {
@@ -8497,6 +8601,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .base .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -8703,6 +8811,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .base .color-bg-black-op-60 {
@@ -8945,6 +9057,10 @@ md-expansion-panel.highlight md-progress-circular path {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .base .color-fg-black-op-60 {
   color: rgba(0, 0, 0, 0.6);
 }
@@ -9151,6 +9267,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .color-bg-black-op-50 {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54);
 }
 
 .base .color-bg-black-op-60 {
