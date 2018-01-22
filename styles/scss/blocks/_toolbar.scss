@@ -15,57 +15,17 @@
         }
     }
 
-    &-menu {
+    &-btn {
+        height: 100%;
+        margin: 0;
+        color: $color-grey-50;
+        font-size: 20px;
+        text-transform: none;
 
-        .btn-menu {
-            height: 100%;
-            margin: 0;
-            color: $color-grey-50;
-            font-size: 20px;
-            text-transform: none;
-
-            .material-icons {
-                font-size: 40px;
-                color: $color-primary-500;
-                margin-left: $dim-2x;
-            }
-        }
-
-        .md-menu {
-
-            .md-button, a {
-                height: 100%;
-                padding-top: 4px;
-                padding-bottom: 4px;
-                font-size: 20px;
-                color: white;
-                text-transform: none;
-
-                .material-icons {
-                    font-size: $dim-48px;
-                    margin-left: 15px;
-                    color: $color-primary-500;
-                }
-            }
-        }
-    }
-
-    // Fix submenu
-    &-submenu {
-        padding: 0 !important;
-
-        .btn-menu {
-
-            > .material-icons {
-                margin-right: 14px !important;
-                margin-bottom: 1.5px !important;
-            }
-
-            > span {
-                float: none !important;
-                text-transform: capitalize !important;
-                font-weight: normal !important;
-            }
+        .material-icons {
+            font-size: 40px;
+            color: $color-primary-500;
+            margin-left: $dim-2x;
         }
     }
 

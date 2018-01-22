@@ -46,11 +46,18 @@ define({
         },
         cases: {
             this: "Prípady",
-            my: "Prípady"
+            my: "Moje prípady"
         },
         tasks: {
             this: "Úlohy",
-            my: "Úlohy"
+            all: "Všetky úlohy",
+            my: "Moje úlohy",
+            filter: {
+                process: "Proces",
+                task: "Úloha",
+                processNotFound: "nebol najdený", // SK ...
+                taskNotFound: "nebola najdená"
+            }
         },
         workflow: {
             this: "Workflow",
@@ -60,15 +67,20 @@ define({
             author: "Autor",
             data: {
                 group: {
-                    information: "Informácie",
+                    details: "Detaily",
                     statistics: "Štatistiky"
                 },
                 item: {
                     file: {
                         title: "Súbor",
-                        desc: "Petriflow model použitý ako šablóna"
+                        desc: "Petriflow model použitý ako šablóna",
+                        download: "Stiahnuť"
                     },
-                    uploaded: {
+                    author: {
+                        title: "Autor",
+                        desc: "Používateľ, ktorý nahral model"
+                    },
+                    uploadDate: {
                         title: "Nahrané",
                         desc: "Dátum nahrania modelu do systému"
                     },
@@ -92,10 +104,6 @@ define({
                         title: "Aktívni používatelia",
                         desc: "Počet používateľov pracujúcich s ľubovoľným prípadom tohto modelu"
                     }
-                },
-                placeholder: {
-                    date: "Dátum",
-                    count: "Počet"
                 }
             }
         },
@@ -159,8 +167,12 @@ define({
             edit: "Upraviť",
             collapse: "Skryť",
             assign: "Priradiť",
-            finish: "Ďalej",
-            cancel: "Zrušiť"
+            reassign: "Preradiť",
+            delegate: "Delegovať",
+            finish: "Dokončiť",
+            cancel: "Zrušiť",
+            reset: "Reset",
+            search: "Hľadať"
         },
         mainMenu: {
             profile: "Profil",
@@ -173,33 +185,42 @@ define({
         },
         case: {
             this: "Prípad",
-            label: "Typ",
-            visualID: "Vizuálne ID",
-            title: "Názov",
-            client: "Klient",
-            date: "Dátum",
-            insurance: "Poistné",
-            inEur: "V eurách",
+            header: {
+                label: "Typ",
+                visualID: "Vizuálne ID",
+                title: "Názov",
+                author: "Autor",
+                createDate: "Dátum vytvorenia"
+            },
             newTitle: {
                 Offer: "Nové poistenie",
                 Contact: "Meno a priezvisko"
             }
         },
         task: {
-            this: "Úloha",
-            label: "Značka",
-            offer: "Ponuka",
-            title: "Názov",
-            date: "Dátum začiatku",
-            status: "Stav",
-            contract: "Zmluva",
             type: "Typ",
             name: "Meno",
             surname: "Priezvisko",
             phone: "Tel. číslo",
+            details: "Detaily",
             email: "Email",
+            data: "Údaje",
             noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
-            user: "Používateľ"
+            user: "Používateľ",
+            header: {
+                label: "Značka",
+                case: "Prípad",
+                title: "Názov",
+                priority: "Priorita",
+                user: "Vykonávateľ",
+                assignDate: "Dátum priradenia",
+                status: "Stav"
+            }
+        },
+        priority: {
+            low: "Nízka",
+            medium: "Stredná",
+            high: "Vysoká"
         },
         data: {
             noUserChosen: "Žiaden zvolený používateľ",
@@ -246,6 +267,15 @@ define({
             },
             caseSelect: {
                 choose: "Zvoliť"
+            },
+            uploadModel: {
+                title: "Nahrať model",
+                attachModel: "Priložiť model",
+                attachModelHelp: "Vyžadovaný formát XML",
+                name: "Názov",
+                key: "Klúč",
+                maxchars: "Kľúč musí byť maximálne 3 znaky dlhý",
+                submit: "Nahrať"
             }
         },
         snackbar: {
@@ -264,7 +294,7 @@ define({
             loading: "Načítanie",
             loadingDataForFilterFailed: "Načítanie údajov pre filter sa nepodarilo",
             file: "Súbor",
-            failedToUpload: "sa nepodarilo načítať",
+            failedToUpload: "sa nepodarilo nahrať",
             uploadedSuccessfully: "bol načítaný úspešne",
             assigningTask: "Priradenie úlohy",
             cancelingAssignmentOfTask: "Zrušenie priradenia úlohy",
@@ -297,6 +327,10 @@ define({
             failedToLoadUsersInTask: "Nepodarilo sa načítať používateľov pre úlohu",
             failedToLoadRoles: "Nepodarilo sa načítať roly",
             unableToLoadUserData: "Nepodarilo sa načítať dáta používateľa",
+            noFileWasAttached: "Nebol priložený žiaden súbor",
+            fileMustHaveXmlFormat: "Súbor musí byť vo formáte XML",
+            modelFailedToUpload: "Model sa nepodarilo nahrať",
+
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },
         add: {

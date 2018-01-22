@@ -19,24 +19,29 @@
                                 <span>{{::$i18n.page.console.newUser}}</span>
 
                                 <ng-form name="invitationForm">
-                                    <md-input-container class="input-container-fixed-height-padding-0">
+                                    <!--<div flex layout="row" layout-align="start center" class="height-52px">-->
 
-                                        <label>{{::$i18n.block.invite.email}}</label>
+                                        <md-input-container class="md-block">
 
-                                        <input name="email" ng-model="adminCtrl.invitedUser.email" type="email" required>
+                                            <md-icon class="material-icons color-fg-material-grey-text">email</md-icon>
 
-                                        <div ng-messages="invitationForm.email.$error">
-                                            <div ng-message="email">{{::$i18n.block.validation.email}}</div>
-                                            <div ng-message="required">{{::$i18n.block.validation.required}}</div>
-                                        </div>
+                                            <label>{{::$i18n.block.input.email}}</label>
+                                            <input name="email" ng-model="adminCtrl.invitedUser.email" required title="User input">
 
-                                    </md-input-container>
+                                            <div ng-messages="invitationForm.email.$error">
+                                                <div ng-message="email">{{::$i18n.block.validation.email}}</div>
+                                                <div ng-message="required">{{::$i18n.block.validation.required}}</div>
+                                            </div>
+
+                                        </md-input-container>
+
+                                    <!--</div>-->
                                 </ng-form>
 
                             </div>
                         </md-toolbar>
 
-                        <md-divider class="border-width-default color-border-transparent"></md-divider>
+                        <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                         <div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
                             <span class="font-size-20">{{::$i18n.page.console.orgs}}</span>
@@ -126,18 +131,22 @@
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                        <div layout="row" layout-align="end center" class="card padding-vertical-2x">
+                        <div layout="row" layout-align="start center" class="card padding-vertical-2x">
 
                             <md-progress-circular md-mode="indeterminate" class="progress-circular-stroke-accent-50 margin-left-default" md-diameter="30" ng-if="adminCtrl.inviteLoading"></md-progress-circular>
 
-                            <md-button class="md-primary" ng-click="adminCtrl.invite()" layout="row" layout-align="center center">
-                                <md-icon class="material-icons margin-horizontal-0 margin-right-default">person_add</md-icon>
-                                {{::$i18n.block.btn.invite}}
+                            <div flex></div>
+
+                            <md-button class="md-fab md-raised md-mini md-primary" ng-click="adminCtrl.invite()">
+                                <md-icon class="material-icons">person_add</md-icon>
+                                <md-tooltip md-direction="left">
+                                    {{::$i18n.block.btn.invite}}
+                                </md-tooltip>
                             </md-button>
 
                         </div>
 
-                    </div>
+                    </div> <!-- ./column -->
 
                     <md-divider class="border-width-default color-border-transparent"></md-divider>
 
@@ -153,7 +162,7 @@
                                 </div>
                             </md-toolbar>
 
-                            <md-divider class="border-width-default color-border-transparent"></md-divider>
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                             <md-list flex class="padding-0">
 
@@ -163,7 +172,7 @@
                                         <span>{{org.name}}</span>
 
                                         <md-button class="md-icon-button" ng-click="org.add()">
-                                            <i class="material-icons color-fg-success">add</i>
+                                            <md-icon class="material-icons color-fg-success">add</md-icon>
                                         </md-button>
 
                                     </div>
@@ -184,7 +193,7 @@
 
                                     <span>{{::$i18n.page.console.processRolesLower}}</span>
 
-                                    <md-input-container class="margin-right-default">
+                                    <md-input-container flex class="md-block margin-right-default">
 
                                         <label>{{::$i18n.page.console.process}}</label>
 
@@ -199,7 +208,7 @@
                                 </div>
                             </md-toolbar>
 
-                            <md-divider class="border-width-default color-border-transparent"></md-divider>
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                             <md-list flex class="padding-0">
 
@@ -220,7 +229,7 @@
                             </md-list>
 
                         </div>
-                    </div>
+                    </div> <!-- ./column -->
 
                 </md-content>
             </md-tab-body>
@@ -234,7 +243,7 @@
             </md-tab-label>
 
             <md-tab-body>
-                <md-content layout="column" layout-align="start" class="padding-default color-bg-transparent">
+                <md-content layout="column" layout-align="start" class="padding-2x color-bg-transparent">
 
                     <div flex layout-gt-xs="row" layout-xs="column">
 
@@ -243,9 +252,10 @@
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
-                                    <md-input-container class="input-container-fixed-height-padding-0">
+                                    <md-input-container class="md-block">
+                                        <md-icon class="material-icons color-fg-primary-500">search</md-icon>
                                         <label>{{::$i18n.block.input.user}}</label>
-                                        <input type="text" ng-model="userSearch.input" ng-change="adminCtrl.filterUsers()">
+                                        <input type="text" ng-model="userSearch.input" ng-change="adminCtrl.filterUsers()" title="Search user input">
                                     </md-input-container>
 
                                     <md-menu>
@@ -270,7 +280,7 @@
                                 </div>
                             </md-toolbar>
 
-                            <md-divider class="border-width-default color-border-transparent"></md-divider>
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                             <div layout="column">
                                 <md-list flex class="padding-0">
@@ -284,11 +294,10 @@
 
                                             <span>
                                                 {{user.fullName}}
-                                                <md-tooltip>
-                                                    {{user.email}}
-                                                </md-tooltip>
                                             </span>
-
+                                            <md-tooltip>
+                                                {{user.email}}
+                                            </md-tooltip>
                                         </div>
                                     </md-list-item>
 
@@ -297,7 +306,7 @@
                                 </md-list>
                             </div>
 
-                        </div>
+                        </div> <!-- ./column -->
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
@@ -306,7 +315,7 @@
                             <md-toolbar class="card padding-vertical-2x">
                                 <div layout="row" layout-align="start center" class="md-toolbar-tools">
 
-                                    <md-input-container>
+                                    <md-input-container flex class="md-block margin-right-default">
 
                                         <label>{{::$i18n.block.input.process}}</label>
 
@@ -318,18 +327,19 @@
 
                                     </md-input-container>
 
-                                    <md-input-container class="input-container-fixed-height-padding-0">
+                                    <md-input-container flex class="md-block">
 
                                         <label>{{::$i18n.block.input.role}}</label>
 
-                                        <input type="text" ng-model="adminCtrl.roleInput">
+                                        <input type="text" ng-model="roleSearch" ng-change="adminCtrl.filterRoles()" title="Role input">
 
                                     </md-input-container>
 
-                                    <span flex></span>
-
-                                    <md-button class="md-primary" ng-click="adminCtrl.saveRoles()">
-                                        {{::$i18n.block.btn.save}}
+                                    <md-button class="md-fab md-raised md-mini md-primary" ng-click="adminCtrl.saveRoles()">
+                                        <md-icon class="material-icons">save</md-icon>
+                                        <md-tooltip md-direction="left">
+                                            {{::$i18n.block.btn.save}}
+                                        </md-tooltip>
                                     </md-button>
 
                                     <i ng-hide="saved" class="material-icons color-fg-warning">warning</i>
@@ -337,7 +347,7 @@
                                 </div>
                             </md-toolbar>
 
-                            <md-divider class="border-width-default color-border-transparent"></md-divider>
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                             <div layout="column">
                                 <md-list flex class="padding-0">
@@ -359,7 +369,7 @@
                                 </md-list>
                             </div>
 
-                        </div>
+                        </div> <!-- ./column -->
 
                     </div>
 

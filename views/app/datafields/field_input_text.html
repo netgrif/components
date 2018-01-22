@@ -7,7 +7,7 @@
             </md-tooltip>
         </span>
     </div>
-    <div flex="5" flex-xs="0"></div>
+    <div hide-xs flex="5"></div>
     <div flex="45" flex-xs="100">
         <!--id="'data-'+task.stringId+'-'+field.stringId" eval-attr-as-expr="id"-->
         <md-input-container  class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
@@ -39,6 +39,6 @@
             </div>
         </md-input-container>
     </div>
-    <div flex="5" flex-xs="0"></div>
+    <div hide-xs flex="5"></div>
     {{::field.bindElement()}}
 </div>

@@ -31,6 +31,7 @@ $color-black-op-20:				rgba(0, 0, 0, .20);
 $color-black-op-30:				rgba(0, 0, 0, .30);
 $color-black-op-40:				rgba(0, 0, 0, .40);
 $color-black-op-50:				rgba(0, 0, 0, .50);
+$color-black-op-54:				rgba(0, 0, 0, .54);
 $color-black-op-60:				rgba(0, 0, 0, .60);
 $color-black-op-87:				rgba(0, 0, 0, .87);
 $color-primary-op-30:			rgba(0, 150, 136, .30);
@@ -49,9 +50,11 @@ $color-light-blue-A700:			#0091EA;
 $color-deep-purple-600: 		#5E35B1;
 
 // Other
+$color-green-500:				#4caf50;
 $color-teal-500:				#009688;
 $color-amber-500:				#FFC107;
 $color-deep-orange-500:			#FF5722;
+$color-red-500:					#f44336;
 $color-brown-500:				#795548;
 $color-blue-grey-50: 			#ECEFF1;
 $color-blue-grey-300:			#90A4AE;
@@ -66,7 +69,7 @@ $color-dark-teal-grey-500:		#37474F;
 $color-dark-teal-grey-800:		#1a2b2b;
 
 // Material text
-$color-material-grey-text:		rgba(0, 0, 0, .38);
+$color-material-grey-text:		rgba(0, 0, 0, .38); // TODO 19.1.2018 Refactor Material text color
 
 // Menu
 $color-grey-light:				rgba(158, 158, 158, .2);
@@ -101,6 +104,10 @@ $color-white:					white;
 			color: transparent;
 		}
 
+		&-green-500 {
+			color: $color-green-500;
+		}
+
 		&-teal-500 {
 			color: $color-teal-500;
 		}
@@ -121,8 +128,16 @@ $color-white:					white;
 			color: $color-deep-orange-500;
 		}
 
+		&-red-500 {
+			color: $color-red-500;
+		}
+
 		&-brown-500 {
 			color: $color-brown-500;
+		}
+
+		&-material-grey-text {
+			color: $color-material-grey-text;
 		}
 
 		&-blue-grey {
@@ -158,6 +173,10 @@ $color-white:					white;
 
 				&-50 {
 					color: $color-black-op-50;
+				}
+
+				&-54 {
+					color: $color-black-op-54;
 				}
 
 				&-60 {
@@ -318,6 +337,10 @@ $color-white:					white;
 			background-color: transparent;
 		}
 
+		&-color-green-500 {
+			background-color: $color-green-500;
+		}
+
 		&-teal-500 {
 			background-color: $color-teal-500;
 		}
@@ -338,8 +361,16 @@ $color-white:					white;
 			background-color: $color-deep-orange-500;
 		}
 
+		&-red-500 {
+			background-color: $color-red-500;
+		}
+
 		&-brown {
 			background-color: $color-brown-500;
+		}
+
+		&-material-grey-text {
+			background-color: $color-material-grey-text;
 		}
 
 		&-blue-grey {
@@ -375,6 +406,10 @@ $color-white:					white;
 
 				&-50 {
 					background-color: $color-black-op-50;
+				}
+
+				&-54 {
+					background-color: $color-black-op-54;
 				}
 
 				&-60 {

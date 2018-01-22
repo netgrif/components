@@ -2,6 +2,7 @@
 $dim-default:					8px;
 $dim-2x:						2*$dim-default;
 
+$dim-14px:						14px;
 $dim-48px:						48px;
 $dim-52px:						52px;
 $dim-56px:						56px;
@@ -13,14 +14,14 @@ $border-radius:					2px;
 .height {
 
 	&-48px {
-		height: $dim-48px
+		height: $dim-48px; // Expansion panel height
 	}
 
 	&-52px {
-		height: $dim-52px
+		height: $dim-52px;
 	}
 
-	&-56px { // Expansion panel height
+	&-56px {
 		height: $dim-56px;
 	}
 }
@@ -171,6 +172,10 @@ $border-radius:					2px;
 
 		&-2x {
 			margin-right: $dim-2x;
+		}
+
+		&-14px {
+			margin-right: $dim-14px;
 		}
 	}
 }

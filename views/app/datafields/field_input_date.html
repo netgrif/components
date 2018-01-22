@@ -7,10 +7,9 @@
             </md-tooltip>
         </span>
     </div>
-    <div flex="5" flex-xs="0"></div>
+    <div hide-xs flex="5"></div>
     <div flex="45" flex-xs="100">
         <md-input-container id="{{'data-'+task.stringId+'-'+field.stringId}}" class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
-            <!-- TODO 23.6.2017 fix label when calendar opens -->
             <label class="placeholder">{{::$i18n.block.data.enterDate}}</label>
             <md-datepicker ng-model="field.newValue"
                            ng-change="field.changed = true"
@@ -26,6 +25,6 @@
             </md-datepicker>
         </md-input-container>
     </div>
-    <div flex="5" flex-xs="0"></div>
+    <div hide-xs flex="5"></div>
     {{::field.bindElement()}}
 </div>

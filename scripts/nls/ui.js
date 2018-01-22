@@ -47,14 +47,18 @@ define({
             },
             cases: {
                 this: "Cases",
-                my: "Cases"
+                my: "My cases"
             },
             tasks: {
                 this: "Tasks",
-                my: "Tasks",
-                addTab: {
-                    submit: "Add to tabs"
-                },
+                all: "All tasks",
+                my: "My tasks",
+                filter: {
+                    process: "Process",
+                    task: "Task",
+                    processNotFound: "not found", // SK ...
+                    taskNotFound: "not found"
+                }
             },
             workflow: {
                 this: "Workflow",
@@ -64,15 +68,20 @@ define({
                 author: "Author",
                 data: {
                     group: {
-                        information: "Information",
+                        details: "Details",
                         statistics: "Statistics"
                     },
                     item: {
                         file: {
                             title: "File",
-                            desc: "Petriflow model used as template"
+                            desc: "Petriflow model used as template",
+                            download: "Download"
                         },
-                        uploaded: {
+                        author: {
+                            title: "Author",
+                            desc: "User who uploaded model"
+                        },
+                        uploadDate: {
                             title: "Uploaded",
                             desc: "Date when this model was uploaded"
                         },
@@ -96,10 +105,6 @@ define({
                             title: "Active users",
                             desc: "Number of users working with any case of this model"
                         }
-                    },
-                    placeholder: {
-                        date: "Date",
-                        count: "Count"
                     }
                 }
             },
@@ -163,8 +168,12 @@ define({
                 edit: "Edit",
                 collapse: "Collapse",
                 assign: "Assign",
-                finish: "Next",
-                cancel: "Cancel"
+                reassign: "Reassign",
+                delegate: "Delegate",
+                finish: "Finish",
+                cancel: "Cancel",
+                reset: "Reset",
+                search: "Search"
             },
             mainMenu: {
                 profile: "Profile",
@@ -177,33 +186,42 @@ define({
             },
             case: {
                 this: "Case",
-                label: "Type",
-                visualID: "Visual ID",
-                title: "Title",
-                client: "Client",
-                date: "Date",
-                insurance: "Insurance",
-                inEur: "In EUR",
+                header: {
+                    label: "Type",
+                    visualID: "Visual ID",
+                    title: "Title",
+                    author: "Author",
+                    createDate: "Create Date"
+                },
                 newTitle: {
                     Offer: "New insurance",
                     Contact: "Name and surname"
                 }
             },
             task: {
-                this: "Task",
-                label: "Label",
-                offer: "Offer",
-                title: "Title",
-                date: "Start date",
-                status: "Status",
-                contact: "Contact",
                 type: "Type",
                 name: "Name",
                 surname: "Surname",
                 phone: "Phone number",
                 email: "Email",
+                details: "Details",
+                data: "Data",
                 noData: "This task has no data. Finish to continue.",
-                user: "User"
+                user: "User",
+                header: {
+                    label: "Label",
+                    case: "Case",
+                    title: "Title",
+                    priority: "Priority",
+                    user: "User",
+                    assignDate: "Assign Date",
+                    status: "Status"
+                }
+            },
+            priority: {
+                low: "Low",
+                medium: "Medium",
+                high: "High"
             },
             data: {
                 noUserChosen: "No user was chosen",
@@ -250,6 +268,15 @@ define({
                 },
                 caseSelect: {
                     choose: "Choose"
+                },
+                uploadModel: {
+                    title: "Upload model",
+                    attachModel: "Attach model",
+                    attachModelHelp: "Required XML format",
+                    name: "Name",
+                    key: "Key",
+                    maxchars: "Key must be at most 3 characters long",
+                    submit: "Upload"
                 }
 
             },
@@ -302,6 +329,10 @@ define({
                 failedToLoadUsersInTask: "Failed to load users in task",
                 failedToLoadRoles: "Failed to load roles",
                 unableToLoadUserData: "Unable to load user data",
+                noFileWasAttached: "No file was attached",
+                fileMustHaveXmlFormat: "File must have XML format",
+                modelFailedToUpload: "Model failed to upload",
+
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },
             add: {

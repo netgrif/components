@@ -10,20 +10,28 @@
             <img src="../../assets/netgrif_full_white.svg" alt="logo" class="padding-vertical-default">
         </a>
 
+        <div hide-gt-sm>
+            <span ng-if="'dashboard' | routeSegmentContains">{{::$i18n.page.dashboard.this}}</span>
+            <span ng-if="'cases' | routeSegmentContains">{{::$i18n.page.cases.this}}</span>
+            <span ng-if="'tasks' | routeSegmentContains">{{::$i18n.page.tasks.this}}</span>
+            <span ng-if="'workflow' | routeSegmentContains">{{::$i18n.page.workflow.this}}</span>
+            <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)">{{::$i18n.page.console.this}}</span>
+        </div>
+
         <div flex></div>
 
-        <md-menu-bar layout="row" layout-align="center center" class="toolbar-menu">
+        <md-menu-bar layout="row" layout-align="center center" class="icon-menu-bar">
             <md-menu>
 
-                <md-button ng-click="$mdMenu.open($event)" layout="row" layout-align="left center" class="btn-menu" md-menu-origin>
-                    {{$user.name}}
+                <md-button layout="row" layout-align="start center" class="toolbar-btn" ng-click="$mdMenu.open($event)" md-menu-origin>
+                    <span hide-xs>{{$user.name}}</span>
                     <i class="material-icons">account_circle</i>
                 </md-button>
 
                 <md-menu-content width="3">
 
                     <md-menu-item>
-                        <md-menu class="toolbar-submenu">
+                        <md-menu class="icon-submenu">
 
                             <md-button ng-click="$mdMenu.open()">
                                 <div class="btn-menu">
@@ -84,11 +92,11 @@
                 </md-button>
 
                 <md-button href="/cases" layout="row" layout-align="start center" ng-class="{active: ('cases' | routeSegmentContains)}">
-                    <i class="material-icons">content_paste</i>{{::$i18n.page.cases.this}}
+                    <i class="material-icons">storage</i>{{::$i18n.page.cases.this}}
                 </md-button>
 
                 <md-button href="/tasks" layout="row" layout-align="start center" ng-class="{active: ('tasks' | routeSegmentContains)}">
-                    <i class="material-icons">assignment</i>{{::$i18n.page.tasks.this}}
+                    <i class="material-icons">check_box</i>{{::$i18n.page.tasks.this}}
                 </md-button>
 
                 <md-button href="/workflow" layout="row" layout-align="start center" ng-class="{active: ('workflow' | routeSegmentContains)}">
