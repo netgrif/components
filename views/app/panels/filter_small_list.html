@@ -1,11 +1,13 @@
 
-    <div layout="row" layout-align="start center" class="card card-header height-56px padding-horizontal-2x">
+    <div layout="row" layout-align="start center" class="card height-56px padding-horizontal-2x">
         <span flex-gt-md="10"  flex-md="10" flex-sm="10" flex-xs="15">{{::$i18n.page.filter.type}}</span>
         <span flex-gt-md="20" flex-md="40" flex-sm="40" flex-xs="70">{{::$i18n.page.filter.label}}</span>
         <span flex-gt-md="35" flex-md="40" flex-sm="40" hide-xs>{{::$i18n.page.filter.author}}</span>
         <span flex-gt-sm="25" hide-md hide-sm hide-xs>{{::$i18n.page.filter.date}}</span>
-        <span flex-gt-md="5" flex-md="10" flex-sm="10" flex-xs="15" class="visibility-hidden"></span>
-    </div> <!--Sort bar-->
+        <span flex-gt-md="5" flex-md="10" flex-sm="10" flex-xs="15"></span>
+    </div> <!--./Sort bar-->
+
+    <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
     <md-list flex class="padding-0">
 
@@ -17,11 +19,11 @@
                     <i class="material-icons color-fg-primary-500">group</i>
                 </span>
                 <span flex-gt-md="20" flex-md="40" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
-                <span flex-gt-md="35" flex-md="40" flex-sm="40" hide-xs layout="row" layout-align="start center" class="text-overflow-dots">
+                <span flex-gt-md="35" flex-md="40" flex-sm="40" hide-xs layout="row" layout-align="start center">
                     <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                     Ing. Veronika Mladoniczká Phd.
                 </span>
-                <span flex-gt-sm="25" hide-md hide-sm hide-xs layout="row" layout-align="start center">
+                <span flex-gt-sm="25" hide-md hide-sm hide-xs>
                     16.05.2018 16:27
                 </span>
 
@@ -49,7 +51,7 @@
 
             </div>
 
-        </md-list-item> <!--One filter-->
+        </md-list-item> <!--./filter-->
 
         <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
@@ -65,7 +67,7 @@
                     <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                     Ing. Veronika Mladoniczká Phd.
                 </span>
-                <span flex-gt-sm="25" hide-md hide-sm hide-xs layout="row" layout-align="start center">
+                <span flex-gt-sm="25" hide-md hide-sm hide-xs>
                     16.05.2018 16:27
                 </span>
 
@@ -93,7 +95,8 @@
 
             </div>
 
-        </md-list-item> <!--One filter-->
+        </md-list-item> <!--./filter-->
 
-        <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
     </md-list>
+
+    <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>

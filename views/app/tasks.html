@@ -187,21 +187,22 @@
 
             <md-tab-body>
 
-                <md-content class="md-padding color-bg-transparent" layout="column" layout-align="center">
+                <md-content class="margin-2x color-bg-transparent" layout="column" layout-align="center">
 
                     <div ng-include="'views/app/panels/filter_search_bar.html'"></div>
+                    <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-                    <div hide layout="row">
+                    <div layout="row">
 
                         <div flex layout="column" ng-include="'views/app/panels/filter_small_list.html'"></div>
 
-                        <md-divider hide-sm hide-xs ng-repeat-end class="border-width-2x color-border-transparent"></md-divider>
+                        <md-divider hide-sm hide-xs class="border-width-2x color-border-transparent"></md-divider>
 
                         <div hide-sm hide-xs flex-gt-sm="40" layout="column" ng-include="'views/app/panels/filter_detail.html'"></div>
 
                     </div>
 
-                    <div layout="row" ng-include="'views/app/panels/filter_full_list.html'"></div> <!--FULL SCREEN VERSION-->
+                    <div hide layout="row" ng-include="'views/app/panels/filter_full_list.html'"></div> <!--FULL SCREEN VERSION-->
 
                 </md-content>
 

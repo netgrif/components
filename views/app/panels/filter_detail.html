@@ -11,21 +11,21 @@
                 <md-icon class="material-icons color-fg-accent-50">close</md-icon>
             </md-button>
 
-        </div> <!--Card header first row-->
+        </div>
 
-        <div flex layout-wrap layout="row" layout-align="start center" class="data-field margin-left-2x margin-top-2x margin-right-2x">
+        <div flex layout-wrap layout="row" layout-align="start center" class="margin-left-2x margin-top-2x margin-right-2x">
 
             <div flex layout="column">
 
                 <div>
-                    <span flex class="data-field-title cursor-pointer">
+                    <span flex class="cursor-pointer">
                         {{::$i18n.page.filter.process}}
                         <md-tooltip>
                             {{::$i18n.page.filter.tooltips.process}}
                         </md-tooltip>
                     </span>
 
-                    <md-chips class="padding-bottom-default">
+                    <md-chips class="margin-bottom-default">
                         <md-chip>
                             Reklamacia
                         </md-chip>
@@ -33,14 +33,14 @@
                 </div>
 
                 <div class="margin-top-default">
-                    <span flex class="data-field-title cursor-pointer">
+                    <span flex class="cursor-pointer">
                         {{::$i18n.page.filter.transition}}
                         <md-tooltip>
                             {{::$i18n.page.filter.tooltips.transition}}
                         </md-tooltip>
                     </span>
 
-                    <md-chips class="padding-bottom-default">
+                    <md-chips class="margin-bottom-default">
                         <md-chip>
                             Odvoz
                         </md-chip>
@@ -53,10 +53,12 @@
                     </md-chips>
                 </div>
 
-                <md-input-container class="md-block">
+                <md-input-container>
+                    <!--<md-input-container class="md-block">-->
                     <label>{{::$i18n.page.filter.description}}</label>
                     <textarea ng-model="TODO.description" md-maxlength="150" rows="3" md-select-on-focus></textarea>
                 </md-input-container>
+
 
                 <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
 
@@ -64,10 +66,10 @@
 
                         <div flex="100">
 
-                            <div flex layout-wrap layout="row" layout-align="start center" class="data-field margin-bottom-2x" ng-cloak>
+                            <div flex layout-wrap layout="row" layout-align="start center" class="margin-bottom-2x" ng-cloak>
 
                                 <div flex="20" hide-md>
-                                    <span flex class="data-field-title cursor-pointer">
+                                    <span flex class="cursor-pointer">
                                         {{::$i18n.page.filter.type}}
                                     </span>
                                 </div>
@@ -76,7 +78,7 @@
 
                                 <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
                                     <div layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500">group</i>
+                                        <i class="material-icons color-fg-primary-500 margin-right-2x">group</i>
                                         <span class="cursor-pointer">
                                             {{::$i18n.page.filter.group}}
                                         </span>
@@ -91,10 +93,10 @@
 
                         <div flex="100">
 
-                            <div flex layout-wrap layout="row" layout-align="start center" class="data-field margin-bottom-2x" ng-cloak>
+                            <div flex layout-wrap layout="row" layout-align="start center" class="margin-bottom-2x" ng-cloak>
 
                                 <div flex="20" hide-md>
-                                    <span flex class="data-field-title cursor-pointer">
+                                    <span flex class="cursor-pointer">
                                         {{::$i18n.page.filter.author}}
                                     </span>
                                 </div>
@@ -103,7 +105,7 @@
 
                                 <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
                                     <div layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500">account_circle</i>
+                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                                         <span class="cursor-pointer">
                                             Anonymous
                                             <md-tooltip>
@@ -121,10 +123,10 @@
 
                         <div flex="100">
 
-                            <div flex layout-wrap layout="row" layout-align="start center" class="data-field" ng-cloak>
+                            <div flex layout-wrap layout="row" layout-align="start center">
 
                                 <div flex="20" hide-md>
-                                    <span flex class="data-field-title cursor-pointer">
+                                    <span flex class="cursor-pointer">
                                         {{::$i18n.page.filter.date}}
                                     </span>
                                 </div>
@@ -133,7 +135,7 @@
 
                                 <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
                                     <div layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500">today</i>
+                                        <i class="material-icons color-fg-primary-500 margin-right-2x">today</i>
                                         <span class="cursor-pointer">
                                             16.05.2018 16:27
                                         </span>
