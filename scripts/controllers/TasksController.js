@@ -6,5 +6,13 @@ define(['angular', '../classes/TaskTab', '../modules/Tasks', '../modules/Main', 
                     const self = this;
 
                     self.message = "Tasks is active";
+
+
+                    self.showDialog = function (template) {
+                        $dialog.showByTemplate(template, self);
+                    };
+
+
+
                 }]);
     });

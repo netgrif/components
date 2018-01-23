@@ -26,6 +26,25 @@ define({
                 contacts: "Contacts",
                 contracts: "Contracts"
             },
+            filter: {
+                type: "Type",
+                filter: "Filter",
+                label: "Label",
+                author: "Author",
+                date: "Created",
+                group: "Group",
+                global: "Global",
+                personal: "Personal",
+                process: "Process",
+                detail: "Filter: ",
+                description: "Description",
+                transition: "Transition: ",
+                tooltips:{
+                    details: "Show details",
+                    transition: "Selected transition",
+                    process: "Selected process"
+                },
+            },
             cases: {
                 this: "Cases",
                 my: "My cases"
@@ -146,6 +165,7 @@ define({
                 delete: "Delete",
                 invite: "Invite",
                 save: "Save",
+                edit: "Edit",
                 collapse: "Collapse",
                 assign: "Assign",
                 reassign: "Reassign",
@@ -258,6 +278,7 @@ define({
                     maxchars: "Key must be at most 3 characters long",
                     submit: "Upload"
                 }
+
             },
             snackbar: {
                 case: "Case",
