@@ -4,14 +4,15 @@
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="null">
 
             <div flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center">
-                <i class="material-icons color-fg-deep-orange-500">label</i>
+                <!--<i class="material-icons color-fg-deep-orange-500">label</i>-->
+                <span class="color-fg-deep-orange-500 font-weight-600">{{workPanelCtrl.initials}}</span>
             </div>
 
-            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">Test model</span>
+            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{workPanelCtrl.title}}</span>
 
             <span hide show-gt-sm flex="40" layout="row" layout-align="start center">
                         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                        Anonymous
+                        {{workPanelCtrl.author}}
                     </span>
 
             <div hide-xs flex="10" layout="row" layout-align="end center">
@@ -27,14 +28,15 @@
         <md-expansion-panel-header ng-click="$panel.collapse()" md-no-sticky>
 
             <div flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center">
-                <i class="material-icons color-fg-deep-orange-500">label</i>
+                <!--<i class="material-icons color-fg-deep-orange-500">label</i>-->
+                <span class="color-fg-deep-orange-500 font-weight-600">{{workPanelCtrl.initials}}</span>
             </div>
 
-            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">Test model</span>
+            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{workPanelCtrl.title}}</span>
 
             <span hide show-gt-sm flex="40" layout="row" layout-align="start center">
                         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                        Anonymous
+                        {{workPanelCtrl.author}}
                     </span>
 
             <div hide-xs flex="10" layout="row" layout-align="end center">

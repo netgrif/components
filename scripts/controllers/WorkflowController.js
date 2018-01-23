@@ -8,15 +8,16 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.petriNetMeta = {};
                     self.netFileName = undefined;
 
-                    self.expansionGroup = $mdExpansionPanelGroup('workflowExpansionGroup');
+                    self.expansionGroup = undefined;
                     self.expansionPanelName = "workflowPanel";
                     self.panels = [];
                     self.page = {
                         pageLinks: {}
                     };
-                    self.searchInput = undefined;
+                    self.searchInput = null;
                     self.searchLast = undefined;
                     self.loading = false;
+                    self.startupLock = true;
 
 
                     self.netFileChanged = function (file) {
@@ -62,17 +63,22 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         $dialog.showByTemplate(template, self);
                     };
 
-                    self.registerExpansionGroup = function () {
-                        try {
-                            self.expansionGroup.register(self.expansionPanelName, {
-                                templateUrl: 'views/app/panels/workflow_panel.html',
-                                controller: 'WorkflowPanelController',
-                                controllerAs: 'workPanelCtrl'
-                            });
-                        } catch (error) {
-                            //panel already registered in the group
-                            $log.debug(error);
-                        }
+                    self.start = function () {
+                        $timeout(() => {
+                            self.expansionGroup = $mdExpansionPanelGroup('workflowExpansionGroup');
+                            try {
+                                self.expansionGroup.register(self.expansionPanelName, {
+                                    templateUrl: 'views/app/panels/workflow_panel.html',
+                                    controller: 'WorkflowPanelController',
+                                    controllerAs: 'workPanelCtrl'
+                                });
+                            } catch (error) {
+                                //panel already registered in the group
+                                $log.debug(error);
+                            }
+                            self.startupLock = false;
+                            self.load(false);
+                        }, 200);
                     };
 
                     self.clearAll = function () {
@@ -101,13 +107,14 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     };
 
                     self.load = function (next) {
-                        if (loading) return;
+                        if (self.loading || self.startupLock) return;
                         if (next && self.panels && self.page.totalElements === self.panels.length) return;
+                        if (next && !self.page.pageLinks.next) return;
 
                         self.loading = true;
                         $http(self.buildRequest(next ? self.page.pageLinks.next : undefined)).then(response => {
                             if (self.page.totalElements === 0) {
-                                $snackbar.info("There are no models uploaded to system.");
+                                $snackbar.info("There are no models uploaded to system");
                                 self.clearAll();
                                 self.loading = false;
                                 return;
@@ -129,7 +136,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                             });
 
                         }, error => {
-                            $snackbar.error("Loading models has failed!");
+                            $snackbar.error("Loading models has failed");
                             self.loading = false;
                         });
                     };
@@ -140,6 +147,6 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     };
 
 
-                    self.registerExpansionGroup();
+                    self.start();
                 }]);
     });

@@ -6,7 +6,7 @@
                 <md-input-container flex-gt-xs="30" flex-xs class="md-block">
                     <md-icon class="material-icons color-fg-primary-500">search</md-icon>
                     <label>{{::$i18n.block.input.search}}</label>
-                    <input type="text" ng-model="workCtrl.searchInput" title="Search input">
+                    <input type="text" ng-model="workCtrl.nonExisting" title="Search input">
                 </md-input-container>
             </form>
             <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" class="md-fab md-raised md-mini md-primary"
