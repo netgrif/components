@@ -560,6 +560,10 @@
   margin-right: 16px;
 }
 
+.margin-right-12px {
+  margin-right: 12px;
+}
+
 .margin-right-14px {
   margin-right: 14px;
 }
@@ -1230,6 +1234,10 @@
 
 .margin-right-2x {
   margin-right: 16px;
+}
+
+.margin-right-12px {
+  margin-right: 12px;
 }
 
 .margin-right-14px {
@@ -2661,6 +2669,10 @@ span.active {
   margin-right: 16px;
 }
 
+.margin-right-12px {
+  margin-right: 12px;
+}
+
 .margin-right-14px {
   margin-right: 14px;
 }
@@ -3941,6 +3953,10 @@ span.active {
   margin-right: 16px;
 }
 
+.margin-right-12px {
+  margin-right: 12px;
+}
+
 .margin-right-14px {
   margin-right: 14px;
 }
@@ -4690,6 +4706,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .margin-right-2x {
   margin-right: 16px;
+}
+
+.base .margin-right-12px {
+  margin-right: 12px;
 }
 
 .base .margin-right-14px {
@@ -5446,6 +5466,10 @@ md-expansion-panel.highlight md-progress-circular path {
   margin-right: 16px;
 }
 
+.base .margin-right-12px {
+  margin-right: 12px;
+}
+
 .base .margin-right-14px {
   margin-right: 14px;
 }
@@ -6173,6 +6197,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .margin-right-2x {
   margin-right: 16px;
+}
+
+.base .margin-right-12px {
+  margin-right: 12px;
 }
 
 .base .margin-right-14px {
@@ -6905,6 +6933,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .margin-right-2x {
   margin-right: 16px;
+}
+
+.base .margin-right-12px {
+  margin-right: 12px;
 }
 
 .base .margin-right-14px {
@@ -8486,6 +8518,10 @@ md-expansion-panel.highlight md-progress-circular path {
   margin-bottom: 14px !important;
 }
 
+.base .assign-list md-list-item .md-list-item-text span {
+  line-height: 24px;
+}
+
 .base .assign-list md-list-item.selected-tile button {
   background-color: #009688;
   z-index: -1;
@@ -8495,7 +8531,7 @@ md-expansion-panel.highlight md-progress-circular path {
   color: white !important;
 }
 
-.base .assign-list md-list-item.selected-tile .md-list-item-text p {
+.base .assign-list md-list-item.selected-tile .md-list-item-text span {
   color: white !important;
 }
 

@@ -2,6 +2,7 @@
 $dim-default:					8px;
 $dim-2x:						2*$dim-default;
 
+$dim-12px:						12px;
 $dim-14px:						14px;
 $dim-48px:						48px;
 $dim-52px:						52px;
@@ -167,6 +168,10 @@ $border-radius:					2px;
 
 		&-2x {
 			margin-right: $dim-2x;
+		}
+
+		&-12px {
+			margin-right: $dim-12px;
 		}
 
 		&-14px {

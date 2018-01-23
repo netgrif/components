@@ -77,7 +77,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
                 else if(response.error)
                     self.$snackbar.error(response.error);
 
-            }, ()=> self.$snackbar.error(`Delegate task ${self.visualID} to user ${user.name} has failed!`));
+            }, ()=> self.$snackbar.error(`Delegate task ${self.visualID} to user ${user.name} has failed`));
         }, ()=>{});
     };
 

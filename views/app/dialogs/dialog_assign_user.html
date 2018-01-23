@@ -1,63 +1,74 @@
 <md-dialog aria-label="{{::$root.$i18n.block.dialog.assignUser.title}}">
+
     <md-toolbar>
-        <div class="md-toolbar-tools">
+        <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
+
             <h2>{{::$root.$i18n.block.dialog.assignUser.title}}</h2>
-            <span flex></span>
+
             <md-button class="md-icon-button" ng-click="closeDialog()">
                 <md-icon class="material-icons">close</md-icon>
             </md-button>
+
         </div>
     </md-toolbar>
+
     <md-dialog-content>
         <div class="md-dialog-content" layout="column">
-            <div class="search-header" layout="row">
-                <div flex layout="column">
-                    <div layout="row" layout-align="left end">
-                        <md-icon flex="5" class="material-icons md-primary">search</md-icon>
-                        <form flex layout="row">
-                            <md-input-container class="md-block">
-                                <label>{{::$root.$i18n.block.dialog.assignUser.user}}</label>
-                                <input type="text" ng-model="dialogCtrl.searched" ng-change="filterUsers()">
-                            </md-input-container>
-                        </form>
-                    </div>
-                    <div layout="row" layout-align="left center" ng-if="opt.task.caseTitle">
-                        <md-icon flex="5" class="material-icons md-primary">check_box</md-icon>
-                        <md-chips flex>
-                            <md-chip>
-                                <md-icon class="material-icons {{opt.task.caseColor}}">label</md-icon>
-                                {{opt.task.caseTitle}}
-                            </md-chip>
-                            <md-chip>
-                                {{opt.task.title}}
-                            </md-chip>
-                            <md-chip ng-if="opt.task.user">
-                                <md-icon class="material-icons color-fg-primary-500">account_circle
-                                </md-icon>
-                                {{opt.task.user.name + " " + opt.task.user.surname}}
-                            </md-chip>
-                        </md-chips>
-                    </div>
-                </div>
-            </div>
-            <md-divider flex></md-divider>
-            <div layout="row" layout-align="center center">
-                <md-list class="assign-list" flex layout="row" layout-wrap>
-                    <md-list-item flex="{{user.length > 1 ? '50' : '100'}}" ng-repeat="user in users" class="md-2-line"
-                                  ng-click="dialogCtrl.selectedUser = user.email" ng-class="getSelectedUserClass(user.email)">
-                        <md-icon class="md-avatar" layout="row" layout-align="center center">
-                            <i class="material-icons color-fg-primary-500">account_circle</i>
+
+            <md-input-container class="md-block">
+                <md-icon class="material-icons md-primary">search</md-icon>
+                <label>{{::$root.$i18n.block.dialog.assignUser.user}}</label>
+                <input type="text" ng-model="dialogCtrl.searched" ng-change="filterUsers()" title="Search users">
+            </md-input-container>
+
+            <div layout="row" layout-align="start center" ng-if="opt.task.caseTitle">
+
+                <md-icon class="material-icons md-primary margin-right-12px">check_box</md-icon>
+
+                <md-chips flex>
+                    <md-chip>
+                        <md-icon class="material-icons {{opt.task.caseColor}}">label</md-icon>
+                        {{opt.task.caseTitle}}
+                    </md-chip>
+                    <md-chip>
+                        {{opt.task.title}}
+                    </md-chip>
+                    <md-chip ng-if="opt.task.user">
+                        <md-icon class="material-icons color-fg-primary-500">account_circle
                         </md-icon>
-                        <div class="md-list-item-text">
-                            <p>{{user.fullName}}</p>
-                            <p>{{user.email}}</p>
-                        </div>
-                    </md-list-item>
-                </md-list>
+                        {{opt.task.user.name + " " + opt.task.user.surname}}
+                    </md-chip>
+                </md-chips>
+
             </div>
+
+            <md-list class="assign-list">
+                <md-list-item layout="row" layout-align="start center" class="md-2-line"
+                              ng-repeat="user in users"
+                              ng-click="dialogCtrl.selectedUser = user.email"
+                              ng-class="getSelectedUserClass(user.email)">
+
+                    <md-icon class="md-avatar" layout="row" layout-align="center center">
+                        <i class="material-icons color-fg-primary-500">account_circle</i>
+                    </md-icon>
+
+                    <div layout="column" class="md-list-item-text">
+                        <span>{{user.fullName}}</span>
+                        <span>{{user.email}}</span>
+                    </div>
+
+                </md-list-item>
+            </md-list>
+
         </div>
     </md-dialog-content>
+
     <md-dialog-actions layout="row" layout-align="end center">
-        <md-button flex="10" class="md-primary" ng-click="assignTask()">{{::$root.$i18n.block.dialog.assignUser.assign}}</md-button>
+
+        <md-button class="md-primary" ng-click="assignTask()">
+            <span>{{::$root.$i18n.block.dialog.assignUser.assign}}</span>
+        </md-button>
+
     </md-dialog-actions>
+
 </md-dialog>

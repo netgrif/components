@@ -19,52 +19,53 @@
             </div>
 
             <span hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" layout="row" layout-align="start center">
-                <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                Name Surname
+                <i ng-if="task.user" class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                {{task.user.fullName}}
             </span>
 
             <span hide show-gt-md flex="20">
-                9.1.2018 14:04
+                {{task.formatDate(task.startDate); caseCtrl.activeTab.formatDate(task.startDate)}}
             </span>
 
             <md-menu ng-if="!task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
 
-                <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                     <md-icon class="material-icons">more_vert</md-icon>
                 </md-button>
 
+                <!-- TODO 17.1.2018 Menu functionality -->
                 <md-menu-content>
 
-                    <md-menu-item ng-if="true">
-                        <md-button ng-if="true" ng-click="null">
+                    <md-menu-item ng-if="task.user.email !== $user.login">
+                        <md-button ng-click="task.click($event)">
                             <md-icon class="material-icons">person</md-icon>
                             <span>{{::$i18n.block.btn.assign}}</span>
                         </md-button>
                     </md-menu-item>
 
-                    <md-menu-item ng-if="true">
-                        <md-button ng-if="true" ng-click="null">
+                    <md-menu-item ng-if="$user.canDo(task.roles, 'delegate')">
+                        <md-button ng-click="task.delegate()">
                             <md-icon class="material-icons">person_outline</md-icon>
                             <span>{{::$i18n.block.btn.delegate}}</span>
                         </md-button>
                     </md-menu-item>
 
-                    <md-menu-item ng-if="true">
-                        <md-button ng-if="true" ng-click="null">
+                    <md-menu-item ng-if="task.user.email === $user.login">
+                        <md-button ng-click="task.delegate()">
                             <md-icon class="material-icons">person_add</md-icon>
                             <span>{{::$i18n.block.btn.reassign}}</span>
                         </md-button>
                     </md-menu-item>
 
-                    <md-menu-item ng-if="true">
-                        <md-button ng-if="true" ng-click="null">
+                    <md-menu-item ng-if="task.user.email === $user.login">
+                        <md-button ng-click="task.click($event)">
                             <md-icon class="material-icons">cancel</md-icon>
                             <span>{{::$i18n.block.btn.cancel}}</span>
                         </md-button>
                     </md-menu-item>
 
-                    <md-menu-item ng-if="true">
-                        <md-button ng-if="true" ng-click="null">
+                    <md-menu-item ng-if="task.user.email === $user.login && task.status !== 'Done'">
+                        <md-button ng-click="task.finish()">
                             <md-icon class="material-icons">done</md-icon>
                             <span>{{::$i18n.block.btn.finish}}</span>
                         </md-button>
@@ -99,8 +100,8 @@
             </div>
 
             <span hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" layout="row" layout-align="start center">
-                <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                Name Surname
+                <i ng-if="task.user" class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                {{task.user.fullName}}
             </span>
 
             <span hide show-gt-md flex="20">
@@ -247,28 +248,28 @@
             <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
                 <!-- TODO 17.1.2018 Menu functionality -->
-                <md-button ng-if="true" ng-click="null" class="layout-xs-rw-100">
+                <md-button ng-if="task.user.email !== $user.login" ng-click="task.click($event)" class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.assign}}</span>
                 </md-button>
 
-                <md-button ng-if="true" ng-click="null" class="layout-xs-rw-100">
+                <md-button ng-if="$user.canDo(task.roles, 'delegate')" ng-click="task.delegate()" class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.delegate}}</span>
                 </md-button>
 
-                <md-button ng-if="true" ng-click="null" class="layout-xs-rw-100">
+                <md-button ng-if="task.user.email === $user.login" ng-click="task.delegate()" class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.reassign}}</span>
                 </md-button>
 
-                <md-button ng-if="true" ng-click="null" class="layout-xs-rw-100">
+                <md-button ng-if="task.user.email === $user.login" ng-click="task.click($event)" class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.cancel}}</span>
                 </md-button>
 
                 <md-button ng-if="task.user.email === $user.login && task.status !== 'Done'" ng-click="task.finish()" class="layout-xs-rw-100">
-                    {{::$i18n.block.btn.finish}}
+                    <span>{{::$i18n.block.btn.finish}}</span>
                 </md-button>
 
                 <md-button ng-click="task.click($event)" class="md-primary layout-xs-rw-100">
-                    {{::$i18n.block.btn.collapse}}
+                    <span>{{::$i18n.block.btn.collapse}}</span>
                 </md-button>
 
             </div>
