@@ -8,18 +8,29 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.petriNetMeta = {};
                     self.netFileName = undefined;
 
+                    self.expansionGroup = $mdExpansionPanelGroup('workflowExpansionGroup');
+                    self.expansionPanelName = "workflowPanel";
+                    self.panels = [];
+                    self.page = {
+                        pageLinks: {}
+                    };
+                    self.searchInput = undefined;
+                    self.searchLast = undefined;
+                    self.loading = false;
+
+
                     self.netFileChanged = function (file) {
-                        if(!file) return;
+                        if (!file) return;
                         self.netFileName = file.name;
                         self.netFile = file;
                     };
 
                     self.uploadPetriNet = function () {
-                        if(!self.netFile){
+                        if (!self.netFile) {
                             $snackbar.error($i18n.block.snackbar.noFileWasAttached);
                             return;
                         }
-                        if(self.netFile.type !== "text/xml"){
+                        if (self.netFile.type !== "text/xml") {
                             $snackbar.error($i18n.block.snackbar.fileMustHaveXmlFormat);
                             return;
                         }
@@ -27,7 +38,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
                         let meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
                         $fileUpload.upload(self.netFile, meta, "/res/petrinet/import", function (response) {
-                            if(response.success) $dialog.closeCurrent();
+                            if (response.success) $dialog.closeCurrent();
                             else $snackbar.error($i18n.block.snackbar.modelFailedToUpload);
                             self.netFile = undefined;
                             self.petriNetMeta = {};
@@ -35,7 +46,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     };
 
                     self.loadPetriNets = function () {
-                        if(self.petriNetRefs) return;
+                        if (self.petriNetRefs) return;
                         $http.get("/res/petrinet/refs").then(function (response) {
                             $log.debug(response);
                             $log.debug(response.$request());
@@ -51,5 +62,84 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         $dialog.showByTemplate(template, self);
                     };
 
+                    self.registerExpansionGroup = function () {
+                        try {
+                            self.expansionGroup.register(self.expansionPanelName, {
+                                templateUrl: 'views/app/panels/workflow_panel.html',
+                                controller: 'WorkflowPanelController',
+                                controllerAs: 'workPanelCtrl'
+                            });
+                        } catch (error) {
+                            //panel already registered in the group
+                            $log.debug(error);
+                        }
+                    };
+
+                    self.clearAll = function () {
+                        self.page = {
+                            pageLinks: {}
+                        };
+                        self.expansionGroup.removeAll();
+                        self.panels.splice(0, self.panels.length);
+                    };
+
+                    self.buildSearchQuery = function () {
+                        if (!self.searchLast)
+                            return {};
+                        return {
+                            title: self.searchLast,
+                            initials: self.searchLast
+                        }
+                    };
+
+                    self.buildRequest = function (next) {
+                        return {
+                            method: 'POST',
+                            url: next ? next : "/res/petrinet/search",
+                            data: self.buildSearchQuery()
+                        };
+                    };
+
+                    self.load = function (next) {
+                        if (loading) return;
+                        if (next && self.panels && self.page.totalElements === self.panels.length) return;
+
+                        self.loading = true;
+                        $http(self.buildRequest(next ? self.page.pageLinks.next : undefined)).then(response => {
+                            if (self.page.totalElements === 0) {
+                                $snackbar.info("There are no models uploaded to system.");
+                                self.clearAll();
+                                self.loading = false;
+                                return;
+                            }
+                            if (!next)
+                                self.clearAll();
+                            self.page = Object.assign(self.page, response.page);
+                            self.page.pageLinks = response.$response().data._links;
+                            response.$request().$get("petriNetSmalls").then(resources => {
+                                resources.forEach((r, i) => {
+                                    self.expansionGroup.add(self.expansionPanelName, {
+                                        resource: r,
+                                        links: r._links
+                                    }).then(panel => {
+                                        self.panels.push(panel);
+                                    })
+                                });
+                                self.loading = false;
+                            });
+
+                        }, error => {
+                            $snackbar.error("Loading models has failed!");
+                            self.loading = false;
+                        });
+                    };
+
+                    self.search = function () {
+                        self.searchLast = self.searchInput.trim();
+                        self.load(false);
+                    };
+
+
+                    self.registerExpansionGroup();
                 }]);
     });

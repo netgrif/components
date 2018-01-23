@@ -42,7 +42,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             this.tasksGroup.register(`taskPanel`, {
                 templateUrl: 'views/app/panels/'+panelView,
                 controller: 'TaskController',
-                controllerAs: 'taskCtrl',
+                controllerAs: 'taskCtrl'
             });
         } catch (error) {
             //panel already registered
