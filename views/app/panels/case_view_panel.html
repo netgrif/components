@@ -3,7 +3,7 @@
 <md-expansion-panel>
 
     <md-expansion-panel-collapsed>
-        <div flex layout="row" layout-align="start center" class="click-area" ng-click="task.click($event)">
+        <div flex layout="row" layout-align="start center" class="click-area" ng-click="null">
 
             <div ng-if="task.caseColor" flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="30" layout="row" layout-align="start center">
                 <i class="material-icons {{task.caseColor}} margin-right-2x" ng-repeat="icon in task.getIcons()">{{icon}}</i>
@@ -24,7 +24,7 @@
             </span>
 
             <span hide show-gt-md flex="20">
-                {{task.formatDate(task.startDate); caseCtrl.activeTab.formatDate(task.startDate)}}
+                DD.MM.YYYY HH:MM
             </span>
 
             <md-menu ng-if="!task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
@@ -84,7 +84,7 @@
 
     <md-expansion-panel-expanded>
 
-        <md-expansion-panel-header ng-click="task.click($event)">
+        <md-expansion-panel-header ng-click="$panel.collapse()">
 
             <div ng-if="task.caseColor" flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="30" layout="row" layout-align="start center">
                 <i class="material-icons {{task.caseColor}} margin-right-2x" ng-repeat="icon in task.getIcons()">{{icon}}</i>
@@ -105,7 +105,7 @@
             </span>
 
             <span hide show-gt-md flex="20">
-                9.1.2018 14:04
+                DD.MM.YYYY HH:MM
             </span>
 
             <i ng-if="task.finishDate && !task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center" class="material-icons color-fg-primary-500">done</i>
@@ -238,7 +238,7 @@
                 </div>
             </div>
 
-            <div ng-if="task.data.length === 0 && !task.loading" layout="row" layout-align="center center">
+            <div ng-if="!task.data && !task.loading" layout="row" layout-align="center center">
                 <span>{{::$i18n.block.task.noData}}</span>
             </div>
 
