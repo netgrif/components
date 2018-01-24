@@ -2,6 +2,7 @@
 $dim-default:					8px;
 $dim-2x:						2*$dim-default;
 
+$dim-12px:						12px;
 $dim-14px:						14px;
 $dim-48px:						48px;
 $dim-52px:						52px;
@@ -153,6 +154,7 @@ $border-radius:					2px;
 		&-2x {
 			margin-left: $dim-2x;
 		}
+
 	}
 
 	&-right {
@@ -167,6 +169,10 @@ $border-radius:					2px;
 
 		&-2x {
 			margin-right: $dim-2x;
+		}
+
+		&-12px {
+			margin-right: $dim-12px;
 		}
 
 		&-14px {
@@ -309,6 +315,52 @@ $border-radius:					2px;
 
 		&-default {
 			border-radius: $border-radius !important;
+		}
+
+		&-top {
+
+			&-default {
+				border-top-left-radius: $border-radius;
+				border-top-right-radius: $border-radius;
+			}
+
+			&-left {
+
+				&-default {
+					border-top-left-radius: $border-radius;
+				}
+
+			}
+
+			&-right {
+
+				&-default {
+					border-top-right-radius: $border-radius;
+				}
+			}
+		}
+
+		&-bottom {
+
+			&-default {
+				border-bottom-left-radius: $border-radius;
+				border-bottom-right-radius: $border-radius;
+			}
+
+			&-left {
+
+				&-default {
+					border-bottom-left-radius: $border-radius;
+				}
+			}
+
+			&-right {
+
+				&-default {
+					border-bottom-right-radius: $border-radius;
+				}
+			}
+
 		}
 	}
 }

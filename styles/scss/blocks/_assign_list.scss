@@ -9,6 +9,13 @@
 			margin-bottom: 14px !important;
 		}
 
+		.md-list-item-text {
+
+			span {
+				line-height: 24px;
+			}
+		}
+
 		&.selected-tile {
 
 			button {
@@ -25,10 +32,10 @@
 
 			.md-list-item-text {
 
-				p {
-					color: white !important;
-				}
-			}
+				 span {
+					 color: white !important;
+				 }
+			 }
 		}
 	}
 }

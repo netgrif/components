@@ -63,12 +63,12 @@
                                 </div>
 
                                 <md-menu layout="column" layout-align="center center">
-                                    <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                                    <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                                         <md-icon class="material-icons">more_vert</md-icon>
                                     </md-button>
                                     <md-menu-content>
                                         <md-menu-item>
-                                            <md-button ng-click="tasksCtrl.showFilterDialog()">
+                                            <md-button ng-click="taskCtrl.showDialog('save_filter')">
                                                 <md-icon class="material-icons">save</md-icon>
                                                 <span>{{::$i18n.block.btn.save}}</span>
                                             </md-button>
@@ -128,19 +128,19 @@
 
                     <div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
 
-                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="45" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
+                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="30" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
                             {{::$i18n.block.task.header.case}}
                             <md-icon class="material-icons">
                                 {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
                             </md-icon>
                         </a>
-                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="45" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+                        <a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="45" flex-xs="50" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
                             {{::$i18n.block.task.header.title}}
                             <md-icon class="material-icons">
                                 {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
                             </md-icon>
                         </a>
-                        <a hide show-gt-xs flex-gt-md="10" flex-gt-sm="15" flex-gt-xs="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
+                        <a hide hide-xs show-gt-xs flex-gt-md="10" flex-gt-sm="15" flex-gt-xs="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
                             {{::$i18n.block.task.header.priority}}
                             <md-icon class="material-icons">
                                 {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
@@ -158,7 +158,7 @@
                                 {{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
                             </md-icon>
                         </a>
-                        <div flex="10"></div> <!-- Menu / Loader -->
+                        <div flex-gt-xs="10" flex-xs="20"></div> <!-- Menu / Loader -->
 
                     </div> <!-- ./card -->
 
@@ -186,69 +186,28 @@
             </md-tab-label>
 
             <md-tab-body>
-                <md-content class="md-padding color-bg-transparent" layout="column" layout-align="center">
-                    <md-card>
-                        <form ng-submit="tasksCtrl.addTab()">
 
-                            <md-card-title>
-                                <md-card-title-text>
+                <md-content class="padding-2x color-bg-transparent" layout="column" layout-align="center">
 
-                                    <span class="md-headline">{{::$i18n.page.tasks.addTab.title}}</span>
+                    <div ng-include="'views/app/filter/filter_search_bar.html'"></div>
+                    <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-                                </md-card-title-text>
-                            </md-card-title>
+                    <!-- Detail opened view -->
+                    <div layout="row">
 
-                            <md-card-content>
+                        <div flex layout="column" ng-include="'views/app/filter/filter_small_list.html'"></div>
 
-                                <md-input-container class="md-block">
-                                    <label>{{::$i18n.page.tasks.addTab.label}}</label>
-                                    <input type="text" ng-model="tasksCtrl.newTab.label" title="Add" required>
-                                </md-input-container>
+                        <md-divider hide-sm hide-xs class="border-width-2x color-border-transparent"></md-divider>
 
-                                <md-radio-group ng-model="tasksCtrl.newTab.filter" required>
-                                    <md-list flex>
+                        <div hide-sm hide-xs flex-gt-sm="40" layout="column" ng-include="'views/app/filter/filter_detail.html'"></div>
 
-                                        <md-subheader>{{::$i18n.page.tasks.addTab.filters}}</md-subheader>
+                    </div>
 
-                                        <md-list-item class="md-3-line" ng-repeat="filter in tasksCtrl.global.availableFilters" ng-click="null">
+                    <!-- Detail closed view -->
+                    <div hide layout="row" ng-include="'views/app/filter/filter_full_list.html'"></div>
 
-                                            <md-radio-button ng-value="filter.filter" class="md-primary" flex>
-                                                <div class="md-list-item-text" layout="column">
-
-                                                    <h3>{{filter.name}}</h3>
-                                                    <h4>{{filter.access}}</h4>
-
-                                                    <md-chips ng-model="filter.filter.processes" readonly="true" flex>
-                                                        <md-chip-template>
-                                                            {{$chip.title}}
-                                                        </md-chip-template>
-                                                    </md-chips>
-
-                                                    <md-chips ng-model="filter.filter.transitions" readonly="true" flex>
-                                                        <md-chip-template>
-                                                            {{$chip.title}}
-                                                        </md-chip-template>
-                                                    </md-chips>
-
-                                                </div>
-                                            </md-radio-button>
-
-                                            <md-divider></md-divider>
-
-                                        </md-list-item>
-
-                                    </md-list>
-                                </md-radio-group>
-
-                            </md-card-content>
-
-                            <md-card-actions layout="row" layout-align="end center">
-                                <md-button type="submit">{{::$i18n.page.tasks.addTab.submit}}</md-button>
-                            </md-card-actions>
-
-                        </form>
-                    </md-card>
                 </md-content>
+
             </md-tab-body>
 
         </md-tab>

@@ -1,0 +1,104 @@
+<div flex layout="column">
+
+    <div layout="row" layout-align="start center" class="card height-56px padding-horizontal-2x">
+        <span flex-gt-sm="5"  flex-sm="10" flex-xs="15">{{::$i18n.page.tasks.filter.type}}</span>
+        <span flex-gt-sm="35" flex-sm="40" flex-xs="70">{{::$i18n.page.tasks.filter.label}}</span>
+        <span flex-gt-sm="30" flex-sm="40" hide-xs>{{::$i18n.page.tasks.filter.author}}</span>
+        <span flex-gt-sm="20" hide-sm hide-xs>{{::$i18n.page.tasks.filter.date}}</span>
+        <span flex-gt-sm="10" flex-sm="10" flex-xs="15"></span>
+    </div> <!--./Sort bar-->
+
+    <md-divider class="border-width-2x color-border-transparent"></md-divider>
+
+    <md-list flex class="padding-0">
+
+        <md-list-item class="card list-item list-item-selected">
+
+            <div flex layout="row" layout-align="start center">
+
+                <span flex-gt-sm="5" flex-sm="10" flex-xs="15" layout="row" layout-align="start center">
+                    <i class="material-icons color-fg-primary-500">group</i>
+                </span>
+                <span flex-gt-sm="35" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
+                <span flex-gt-sm="30" flex-sm="40" hide-xs layout="row" layout-align="start center">
+                    <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                    Peter pan
+                </span>
+                <span flex-gt-sm="20" hide-sm hide-xs>
+                    dd.mm.yyyy hh:mm
+                </span>
+
+
+                <div flex-gt-md="10" flex-md="10" hide-sm hide-xs layout="row" layout-align="end center" >
+
+                    <md-button class="md-icon-button color-fg-primary-500">
+                        <i class="material-icons">list</i>
+                        <md-tooltip>
+                            {{::$i18n.page.tasks.filter.tooltips.details}}
+                        </md-tooltip>
+                    </md-button>
+
+                </div>
+
+                <div hide-gt-sm flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
+
+                    <md-button class="md-icon-button color-fg-primary-500" ng-click="taskCtrl.showDialog('filter_detail')">
+                        <i class="material-icons">list</i>
+                        <md-tooltip>
+                            {{::$i18n.page.tasks.filter.tooltips.details}}
+                        </md-tooltip>
+                    </md-button>
+
+                </div>
+
+            </div>
+
+        </md-list-item> <!--./filter-->
+
+        <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+
+        <md-list-item class="card list-item">
+
+            <div flex layout="row" layout-align="start center">
+
+                <span flex-gt-sm="5" flex-sm="10" flex-xs="15" layout="row" layout-align="start center">
+                    <i class="material-icons color-fg-primary-500">group</i>
+                </span>
+                <span flex-gt-sm="35" flex-sm="40" flex-xs="70" layout="row" layout-align="start center">Dnesne tasky</span>
+                <span flex-gt-sm="30" flex-sm="40" hide-xs layout="row" layout-align="start center">
+                    <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                    Peter pan
+                </span>
+                <span flex-gt-sm="20" hide-sm hide-xs>
+                    dd.mm.yyyy hh:mm
+                </span>
+
+                <div flex-gt-md="10" flex-md="10" hide-sm hide-xs layout="row" layout-align="end center" >
+
+                    <md-button class="md-icon-button color-fg-primary-500">
+                        <i class="material-icons">list</i>
+                        <md-tooltip>
+                            {{::$i18n.page.tasks.filter.tooltips.details}}
+                        </md-tooltip>
+                    </md-button>
+
+                </div>
+
+                <div hide-gt-sm flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
+
+                    <md-button class="md-icon-button color-fg-primary-500" ng-click="taskCtrl.showDialog('filter_detail')">
+                        <i class="material-icons">list</i>
+                        <md-tooltip>
+                            {{::$i18n.page.tasks.filter.tooltips.details}}
+                        </md-tooltip>
+                    </md-button>
+
+                </div>
+
+            </div>
+
+        </md-list-item> <!--./filter-->
+
+    </md-list>
+
+</div>

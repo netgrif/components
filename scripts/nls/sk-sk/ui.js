@@ -20,7 +20,7 @@ define({
             submit: "Registrovať"
         },
         dashboard: {
-            this: "Plocha",
+            this: "Prehľad",
             offers: "Ponuky",
             contacts: "Kontakty",
             contracts: "Zmluvy"
@@ -37,7 +37,23 @@ define({
                 process: "Proces",
                 task: "Úloha",
                 processNotFound: "nebol najdený", // SK ...
-                taskNotFound: "nebola najdená"
+                taskNotFound: "nebola najdená",
+                type: "Typ",
+                filter: "Filter",
+                label: "Názov",
+                author: "Autor",
+                date: "Vytvorenie",
+                group: "Skupinový",
+                public: "Verejný",
+                private: "Súkromný",
+                detail: "Filter: ",
+                description: "Popis",
+                transition: "Úlohy: ",
+                tooltips: {
+                    details: "Viac detailov",
+                    transition: "Vybrané úlohy",
+                    process: "Vybrané procesy"
+                }
             }
         },
         workflow: {
@@ -48,15 +64,20 @@ define({
             author: "Autor",
             data: {
                 group: {
-                    information: "Informácie",
+                    details: "Detaily",
                     statistics: "Štatistiky"
                 },
                 item: {
                     file: {
                         title: "Súbor",
-                        desc: "Petriflow model použitý ako šablóna"
+                        desc: "Petriflow model použitý ako šablóna",
+                        download: "Stiahnuť"
                     },
-                    uploaded: {
+                    author: {
+                        title: "Autor",
+                        desc: "Používateľ, ktorý nahral model"
+                    },
+                    uploadDate: {
                         title: "Nahrané",
                         desc: "Dátum nahrania modelu do systému"
                     },
@@ -80,10 +101,6 @@ define({
                         title: "Aktívni používatelia",
                         desc: "Počet používateľov pracujúcich s ľubovoľným prípadom tohto modelu"
                     }
-                },
-                placeholder: {
-                    date: "Dátum",
-                    count: "Počet"
                 }
             }
         },
@@ -144,6 +161,7 @@ define({
             delete: "Vymazať",
             invite: "Pozvať",
             save: "Uložiť",
+            edit: "Upraviť",
             collapse: "Skryť",
             assign: "Priradiť",
             reassign: "Preradiť",
@@ -151,7 +169,8 @@ define({
             finish: "Dokončiť",
             cancel: "Zrušiť",
             reset: "Reset",
-            search: "Hľadať"
+            search: "Hľadať",
+            apply: "Použiť"
         },
         mainMenu: {
             profile: "Profil",
@@ -164,26 +183,19 @@ define({
         },
         case: {
             this: "Prípad",
-            label: "Typ",
-            visualID: "Vizuálne ID",
-            title: "Názov",
-            client: "Klient",
-            date: "Dátum",
-            insurance: "Poistné",
-            inEur: "V eurách",
+            header: {
+                label: "Typ",
+                visualID: "Vizuálne ID",
+                title: "Názov",
+                author: "Autor",
+                createDate: "Dátum vytvorenia"
+            },
             newTitle: {
                 Offer: "Nové poistenie",
                 Contact: "Meno a priezvisko"
             }
         },
         task: {
-            this: "Úloha",
-            label: "Značka",
-            offer: "Ponuka",
-            title: "Názov",
-            date: "Dátum začiatku",
-            status: "Stav",
-            contract: "Zmluva",
             type: "Typ",
             name: "Meno",
             surname: "Priezvisko",
@@ -194,6 +206,7 @@ define({
             noData: "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
             user: "Používateľ",
             header: {
+                label: "Značka",
                 case: "Prípad",
                 title: "Názov",
                 priority: "Priorita",
@@ -261,6 +274,19 @@ define({
                 key: "Klúč",
                 maxchars: "Kľúč musí byť maximálne 3 znaky dlhý",
                 submit: "Nahrať"
+            },
+            saveFilter: {
+                title: "Uložiť filter",
+                name: "Názov",
+                type: {
+                    this: "Typ",
+                    public: "Verejný",
+                    group: "Skupinový",
+                    private: "Súkromný"
+                },
+                bindFilterToRoles: "Naviazať filter na roli",
+                process: "Proces",
+                task: "Úloha"
             }
         },
         snackbar: {

@@ -38,7 +38,23 @@ define({
                     process: "Process",
                     task: "Task",
                     processNotFound: "not found", // SK ...
-                    taskNotFound: "not found"
+                    taskNotFound: "not found",
+                    type: "Type",
+                    filter: "Filter",
+                    label: "Label",
+                    author: "Author",
+                    date: "Created",
+                    group: "Group",
+                    public: "Public",
+                    private: "Private",
+                    detail: "Filter: ",
+                    description: "Description",
+                    transition: "Transition: ",
+                    tooltips:{
+                        details: "Show details",
+                        transition: "Selected transition",
+                        process: "Selected process"
+                    }
                 }
             },
             workflow: {
@@ -49,15 +65,20 @@ define({
                 author: "Author",
                 data: {
                     group: {
-                        information: "Information",
+                        details: "Details",
                         statistics: "Statistics"
                     },
                     item: {
                         file: {
                             title: "File",
-                            desc: "Petriflow model used as template"
+                            desc: "Petriflow model used as template",
+                            download: "Download"
                         },
-                        uploaded: {
+                        author: {
+                            title: "Author",
+                            desc: "User who uploaded model"
+                        },
+                        uploadDate: {
                             title: "Uploaded",
                             desc: "Date when this model was uploaded"
                         },
@@ -81,10 +102,6 @@ define({
                             title: "Active users",
                             desc: "Number of users working with any case of this model"
                         }
-                    },
-                    placeholder: {
-                        date: "Date",
-                        count: "Count"
                     }
                 }
             },
@@ -145,6 +162,7 @@ define({
                 delete: "Delete",
                 invite: "Invite",
                 save: "Save",
+                edit: "Edit",
                 collapse: "Collapse",
                 assign: "Assign",
                 reassign: "Reassign",
@@ -152,7 +170,8 @@ define({
                 finish: "Finish",
                 cancel: "Cancel",
                 reset: "Reset",
-                search: "Search"
+                search: "Search",
+                apply: "Apply"
             },
             mainMenu: {
                 profile: "Profile",
@@ -165,26 +184,19 @@ define({
             },
             case: {
                 this: "Case",
-                label: "Type",
-                visualID: "Visual ID",
-                title: "Title",
-                client: "Client",
-                date: "Date",
-                insurance: "Insurance",
-                inEur: "In EUR",
+                header: {
+                    label: "Type",
+                    visualID: "Visual ID",
+                    title: "Title",
+                    author: "Author",
+                    createDate: "Create Date"
+                },
                 newTitle: {
                     Offer: "New insurance",
                     Contact: "Name and surname"
                 }
             },
             task: {
-                this: "Task",
-                label: "Label",
-                offer: "Offer",
-                title: "Title",
-                date: "Start date",
-                status: "Status",
-                contact: "Contact",
                 type: "Type",
                 name: "Name",
                 surname: "Surname",
@@ -195,6 +207,7 @@ define({
                 noData: "This task has no data. Finish to continue.",
                 user: "User",
                 header: {
+                    label: "Label",
                     case: "Case",
                     title: "Title",
                     priority: "Priority",
@@ -262,6 +275,19 @@ define({
                     key: "Key",
                     maxchars: "Key must be at most 3 characters long",
                     submit: "Upload"
+                },
+                saveFilter: {
+                    title: "Save Filter",
+                    name: "Name",
+                    type: {
+                        this: "Type",
+                        public: "Public",
+                        group: "Group",
+                        private: "Private"
+                    },
+                    bindFilterToRoles: "Bind filter to roles",
+                    process: "Process",
+                    task: "Task"
                 }
             },
             snackbar: {
