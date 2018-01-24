@@ -63,12 +63,12 @@
                                 </div>
 
                                 <md-menu layout="column" layout-align="center center">
-                                    <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" md-menu-origin>
+                                    <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                                         <md-icon class="material-icons">more_vert</md-icon>
                                     </md-button>
                                     <md-menu-content>
                                         <md-menu-item>
-                                            <md-button ng-click="tasksCtrl.showFilterDialog()">
+                                            <md-button ng-click="taskCtrl.showDialog('save_filter')">
                                                 <md-icon class="material-icons">save</md-icon>
                                                 <span>{{::$i18n.block.btn.save}}</span>
                                             </md-button>
@@ -187,22 +187,24 @@
 
             <md-tab-body>
 
-                <md-content class="margin-2x color-bg-transparent" layout="column" layout-align="center">
+                <md-content class="padding-2x color-bg-transparent" layout="column" layout-align="center">
 
-                    <div ng-include="'views/app/panels/filter_search_bar.html'"></div>
+                    <div ng-include="'views/app/filter/filter_search_bar.html'"></div>
                     <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
+                    <!-- Detail opened view -->
                     <div layout="row">
 
-                        <div flex layout="column" ng-include="'views/app/panels/filter_small_list.html'"></div>
+                        <div flex layout="column" ng-include="'views/app/filter/filter_small_list.html'"></div>
 
                         <md-divider hide-sm hide-xs class="border-width-2x color-border-transparent"></md-divider>
 
-                        <div hide-sm hide-xs flex-gt-sm="40" layout="column" ng-include="'views/app/panels/filter_detail.html'"></div>
+                        <div hide-sm hide-xs flex-gt-sm="40" layout="column" ng-include="'views/app/filter/filter_detail.html'"></div>
 
                     </div>
 
-                    <div hide layout="row" ng-include="'views/app/panels/filter_full_list.html'"></div> <!--FULL SCREEN VERSION-->
+                    <!-- Detail closed view -->
+                    <div hide layout="row" ng-include="'views/app/filter/filter_full_list.html'"></div>
 
                 </md-content>
 

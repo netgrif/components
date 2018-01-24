@@ -26,25 +26,6 @@ define({
                 contacts: "Contacts",
                 contracts: "Contracts"
             },
-            filter: {
-                type: "Type",
-                filter: "Filter",
-                label: "Label",
-                author: "Author",
-                date: "Created",
-                group: "Group",
-                global: "Global",
-                personal: "Personal",
-                process: "Process",
-                detail: "Filter: ",
-                description: "Description",
-                transition: "Transition: ",
-                tooltips:{
-                    details: "Show details",
-                    transition: "Selected transition",
-                    process: "Selected process"
-                },
-            },
             cases: {
                 this: "Cases",
                 my: "My cases"
@@ -57,7 +38,23 @@ define({
                     process: "Process",
                     task: "Task",
                     processNotFound: "not found", // SK ...
-                    taskNotFound: "not found"
+                    taskNotFound: "not found",
+                    type: "Type",
+                    filter: "Filter",
+                    label: "Label",
+                    author: "Author",
+                    date: "Created",
+                    group: "Group",
+                    public: "Public",
+                    private: "Private",
+                    detail: "Filter: ",
+                    description: "Description",
+                    transition: "Transition: ",
+                    tooltips:{
+                        details: "Show details",
+                        transition: "Selected transition",
+                        process: "Selected process"
+                    }
                 }
             },
             workflow: {
@@ -173,7 +170,8 @@ define({
                 finish: "Finish",
                 cancel: "Cancel",
                 reset: "Reset",
-                search: "Search"
+                search: "Search",
+                apply: "Apply"
             },
             mainMenu: {
                 profile: "Profile",
@@ -277,8 +275,20 @@ define({
                     key: "Key",
                     maxchars: "Key must be at most 3 characters long",
                     submit: "Upload"
+                },
+                saveFilter: {
+                    title: "Save Filter",
+                    name: "Name",
+                    type: {
+                        this: "Type",
+                        public: "Public",
+                        group: "Group",
+                        private: "Private"
+                    },
+                    bindFilterToRoles: "Bind filter to roles",
+                    process: "Process",
+                    task: "Task"
                 }
-
             },
             snackbar: {
                 case: "Case",

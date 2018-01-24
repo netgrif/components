@@ -3,7 +3,7 @@
         <div layout="row" layout-align="space-between center" class="height-56px color-bg-primary-500 border-radius-top-default">
 
             <div class="padding-2x color-fg-accent-50">
-                <span>{{::$i18n.page.filter.detail}}</span>
+                <span>{{::$i18n.page.tasks.filter.detail}}</span>
                 <span>Label of selected filter</span>
             </div>
 
@@ -19,9 +19,9 @@
 
                 <div>
                     <span flex class="cursor-pointer">
-                        {{::$i18n.page.filter.process}}
+                        {{::$i18n.page.tasks.filter.process}}
                         <md-tooltip>
-                            {{::$i18n.page.filter.tooltips.process}}
+                            {{::$i18n.page.tasks.filter.tooltips.process}}
                         </md-tooltip>
                     </span>
 
@@ -34,9 +34,9 @@
 
                 <div class="margin-top-default">
                     <span flex class="cursor-pointer">
-                        {{::$i18n.page.filter.transition}}
+                        {{::$i18n.page.tasks.filter.transition}}
                         <md-tooltip>
-                            {{::$i18n.page.filter.tooltips.transition}}
+                            {{::$i18n.page.tasks.filter.tooltips.transition}}
                         </md-tooltip>
                     </span>
 
@@ -54,9 +54,8 @@
                 </div>
 
                 <md-input-container>
-                    <!--<md-input-container class="md-block">-->
-                    <label>{{::$i18n.page.filter.description}}</label>
-                    <textarea ng-model="TODO.description" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                    <label>{{::$i18n.page.tasks.filter.description}}</label>
+                    <textarea ng-model="TODO.description" md-maxlength="150" rows="3" md-select-on-focus title="Filter description"></textarea>
                 </md-input-container>
 
 
@@ -70,7 +69,7 @@
 
                                 <div flex="20" hide-md>
                                     <span flex class="cursor-pointer">
-                                        {{::$i18n.page.filter.type}}
+                                        {{::$i18n.page.tasks.filter.type}}
                                     </span>
                                 </div>
 
@@ -80,7 +79,7 @@
                                     <div layout="row" layout-align="start center">
                                         <i class="material-icons color-fg-primary-500 margin-right-2x">group</i>
                                         <span class="cursor-pointer">
-                                            {{::$i18n.page.filter.group}}
+                                            {{::$i18n.page.tasks.filter.group}}
                                         </span>
                                     </div>
                                 </div>
@@ -97,7 +96,7 @@
 
                                 <div flex="20" hide-md>
                                     <span flex class="cursor-pointer">
-                                        {{::$i18n.page.filter.author}}
+                                        {{::$i18n.page.tasks.filter.author}}
                                     </span>
                                 </div>
 
@@ -127,7 +126,7 @@
 
                                 <div flex="20" hide-md>
                                     <span flex class="cursor-pointer">
-                                        {{::$i18n.page.filter.date}}
+                                        {{::$i18n.page.tasks.filter.date}}
                                     </span>
                                 </div>
 
@@ -137,7 +136,7 @@
                                     <div layout="row" layout-align="start center">
                                         <i class="material-icons color-fg-primary-500 margin-right-2x">today</i>
                                         <span class="cursor-pointer">
-                                            16.05.2018 16:27
+                                            dd.mm.yyyy hh:mm
                                         </span>
                                     </div>
                                 </div>

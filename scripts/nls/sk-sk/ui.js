@@ -20,29 +20,10 @@ define({
             submit: "Registrovať"
         },
         dashboard: {
-            this: "Plocha",
+            this: "Prehľad",
             offers: "Ponuky",
             contacts: "Kontakty",
             contracts: "Zmluvy"
-        },
-        filter: {
-            type: "Typ",
-            filter: "Filter",
-            label: "Názov",
-            author: "Autor",
-            date: "Vytvorenie",
-            group: "Skupina",
-            global: "Všetci",
-            personal: "Osobný",
-            process: "Proces",
-            detail: "Filter: ",
-            description: "Popis",
-            transition: "Úlohy: ",
-            tooltips: {
-                details: "Viac detailov",
-                transition: "Vybrané úlohy",
-                process: "Vybrané procesy"
-            },
         },
         cases: {
             this: "Prípady",
@@ -56,7 +37,23 @@ define({
                 process: "Proces",
                 task: "Úloha",
                 processNotFound: "nebol najdený", // SK ...
-                taskNotFound: "nebola najdená"
+                taskNotFound: "nebola najdená",
+                type: "Typ",
+                filter: "Filter",
+                label: "Názov",
+                author: "Autor",
+                date: "Vytvorenie",
+                group: "Skupinový",
+                public: "Verejný",
+                private: "Súkromný",
+                detail: "Filter: ",
+                description: "Popis",
+                transition: "Úlohy: ",
+                tooltips: {
+                    details: "Viac detailov",
+                    transition: "Vybrané úlohy",
+                    process: "Vybrané procesy"
+                }
             }
         },
         workflow: {
@@ -172,7 +169,8 @@ define({
             finish: "Dokončiť",
             cancel: "Zrušiť",
             reset: "Reset",
-            search: "Hľadať"
+            search: "Hľadať",
+            apply: "Použiť"
         },
         mainMenu: {
             profile: "Profil",
@@ -276,6 +274,19 @@ define({
                 key: "Klúč",
                 maxchars: "Kľúč musí byť maximálne 3 znaky dlhý",
                 submit: "Nahrať"
+            },
+            saveFilter: {
+                title: "Uložiť filter",
+                name: "Názov",
+                type: {
+                    this: "Typ",
+                    public: "Verejný",
+                    group: "Skupinový",
+                    private: "Súkromný"
+                },
+                bindFilterToRoles: "Naviazať filter na roli",
+                process: "Proces",
+                task: "Úloha"
             }
         },
         snackbar: {
