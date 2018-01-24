@@ -2,21 +2,25 @@
     <form ng-submit="parentCtrl.saveFilter()">
 
         <md-toolbar>
-            <div class="md-toolbar-tools">
+            <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
+
                 <h2>{{::$root.$i18n.block.dialog.saveFilter.title}}</h2>
-                <span flex></span>
+
                 <md-button class="md-icon-button" ng-click="closeDialog()">
                     <md-icon class="material-icons">close</md-icon>
                 </md-button>
+
             </div>
         </md-toolbar>
 
         <md-dialog-content>
-            <div class="md-dialog-content" layout="column">
+            <div layout="column" class="md-dialog-content">
+
                 <md-input-container>
                     <label>{{::$root.$i18n.block.dialog.saveFilter.name}}</label>
                     <input type="text" ng-model="parentCtrl.newFilter.name" required>
                 </md-input-container>
+
                 <md-input-container>
                     <label>{{::$root.$i18n.block.dialog.saveFilter.visibility.label}}</label>
                     <md-select ng-model="parentCtrl.newFilter.visibility" required>
@@ -49,6 +53,7 @@
                         </md-chip-template>
                     </md-chips>
                 </div>
+
             </div>
         </md-dialog-content>
 

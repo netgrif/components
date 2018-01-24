@@ -25,25 +25,6 @@ define({
             contacts: "Kontakty",
             contracts: "Zmluvy"
         },
-        // filter: {
-        //     type: "Typ",
-        //     filter: "Filter",
-        //     label: "Názov",
-        //     author: "Autor",
-        //     date: "Vytvorenie",
-        //     group: "Skupina",
-        //     public: "Verejný",
-        //     private: "Súkromný",
-        //     process: "Proces",
-        //     detail: "Filter: ",
-        //     description: "Popis",
-        //     transition: "Úlohy: ",
-        //     tooltips: {
-        //         details: "Viac detailov",
-        //         transition: "Vybrané úlohy",
-        //         process: "Vybrané procesy"
-        //     },
-        // },
         cases: {
             this: "Prípady",
             my: "Moje prípady"
