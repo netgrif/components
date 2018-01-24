@@ -18,17 +18,18 @@
 
                 <md-input-container>
                     <label>{{::$root.$i18n.block.dialog.saveFilter.name}}</label>
-                    <input type="text" ng-model="parentCtrl.newFilter.name" required>
+                    <input type="text" ng-model="parentCtrl.newFilter.name" required title="Filter name">
                 </md-input-container>
 
                 <md-input-container>
-                    <label>{{::$root.$i18n.block.dialog.saveFilter.visibility.label}}</label>
+                    <label>{{::$root.$i18n.block.dialog.saveFilter.type.this}}</label>
                     <md-select ng-model="parentCtrl.newFilter.visibility" required>
-                        <md-option value="0">{{::$root.$i18n.block.dialog.saveFilter.visibility.global}}</md-option>
-                        <md-option value="1">{{::$root.$i18n.block.dialog.saveFilter.visibility.organization}}</md-option>
-                        <md-option value="2">{{::$root.$i18n.block.dialog.saveFilter.visibility.private}}</md-option>
+                        <md-option value="0">{{::$root.$i18n.block.dialog.saveFilter.type.public}}</md-option>
+                        <md-option value="1">{{::$root.$i18n.block.dialog.saveFilter.type.group}}</md-option>
+                        <md-option value="2">{{::$root.$i18n.block.dialog.saveFilter.type.private}}</md-option>
                     </md-select>
                 </md-input-container>
+
                 <md-input-container>
                     <label>Persist filter for roles</label>
                     <md-select ng-model="parentCtrl.newFilter.roles" multiple>
@@ -37,6 +38,7 @@
                         </md-option>
                     </md-select>
                 </md-input-container>
+
                 <div layout="column" layout-align="left" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.processes.length != 0">
                     <label>{{::$root.$i18n.block.dialog.saveFilter.process}}</label>
                     <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.processes" readonly="true" flex>
@@ -45,6 +47,7 @@
                         </md-chip-template>
                     </md-chips>
                 </div>
+
                 <div layout="column" layout-align="left" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions.length != 0">
                     <label>{{::$root.$i18n.block.dialog.saveFilter.task}}</label>
                     <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions" readonly="true" flex>
@@ -54,13 +57,13 @@
                     </md-chips>
                 </div>
 
-            </div>
+            </div> <!-- ./column -->
         </md-dialog-content>
 
         <md-dialog-actions layout="row" layout-align="end center">
 
             <md-button type="submit">
-                {{::$root.$i18n.block.dialog.saveFilter.submit}}
+                {{::$root.$i18n.block.btn.save}}
             </md-button>
 
         </md-dialog-actions>

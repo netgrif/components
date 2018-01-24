@@ -275,8 +275,20 @@ define({
                     key: "Key",
                     maxchars: "Key must be at most 3 characters long",
                     submit: "Upload"
+                },
+                saveFilter: {
+                    title: "Save Filter",
+                    name: "Name",
+                    type: {
+                        this: "Type",
+                        public: "Public",
+                        group: "Group",
+                        private: "Private"
+                    },
+                    bindFilterToRoles: "Bind filter to roles",
+                    process: "Process",
+                    task: "Task"
                 }
-
             },
             snackbar: {
                 case: "Case",

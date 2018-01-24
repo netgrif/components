@@ -43,7 +43,7 @@ define({
                 label: "Názov",
                 author: "Autor",
                 date: "Vytvorenie",
-                group: "Skupina",
+                group: "Skupinový",
                 public: "Verejný",
                 private: "Súkromný",
                 detail: "Filter: ",
@@ -274,6 +274,19 @@ define({
                 key: "Klúč",
                 maxchars: "Kľúč musí byť maximálne 3 znaky dlhý",
                 submit: "Nahrať"
+            },
+            saveFilter: {
+                title: "Uložiť filter",
+                name: "Názov",
+                type: {
+                    this: "Typ",
+                    public: "Verejný",
+                    group: "Skupinový",
+                    private: "Súkromný"
+                },
+                bindFilterToRoles: "Naviazať filter na roli",
+                process: "Proces",
+                task: "Úloha"
             }
         },
         snackbar: {
