@@ -17,47 +17,66 @@
             <div layout="column" class="md-dialog-content">
 
                 <md-input-container>
+
                     <label>{{::$root.$i18n.block.dialog.saveFilter.name}}</label>
                     <input type="text" ng-model="parentCtrl.newFilter.name" required title="Filter name">
+
                 </md-input-container>
 
                 <md-input-container>
+
                     <label>{{::$root.$i18n.block.dialog.saveFilter.type.this}}</label>
                     <md-select ng-model="parentCtrl.newFilter.visibility" required>
-                        <md-option value="0">{{::$root.$i18n.block.dialog.saveFilter.type.public}}</md-option>
-                        <md-option value="1">{{::$root.$i18n.block.dialog.saveFilter.type.group}}</md-option>
-                        <md-option value="2">{{::$root.$i18n.block.dialog.saveFilter.type.private}}</md-option>
+                        <md-option value="0">
+                            <md-icon class="material-icons margin-right-2x">public</md-icon>
+                            <span>{{::$root.$i18n.block.dialog.saveFilter.type.public}}</span>
+                        </md-option>
+                        <md-option value="1">
+                            <md-icon class="material-icons margin-right-2x">group</md-icon>
+                            <span>{{::$root.$i18n.block.dialog.saveFilter.type.group}}</span>
+                        </md-option>
+                        <md-option value="2">
+                            <md-icon class="material-icons margin-right-2x">person</md-icon>
+                            <span>{{::$root.$i18n.block.dialog.saveFilter.type.private}}</span>
+                        </md-option>
                     </md-select>
+
                 </md-input-container>
 
                 <md-input-container>
-                    <label>Persist filter for roles</label>
+
+                    <label>{{::$root.$i18n.block.dialog.saveFilter.bindFilterToRoles}}</label>
                     <md-select ng-model="parentCtrl.newFilter.roles" multiple>
                         <md-option ng-repeat="role in opt.roles" ng-value="role.objectId">
                             {{role.name}}
                         </md-option>
                     </md-select>
+
                 </md-input-container>
 
-                <div layout="column" layout-align="left" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.processes.length != 0">
+                <div layout="column" layout-align="start" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.processes.length != 0">
+
                     <label>{{::$root.$i18n.block.dialog.saveFilter.process}}</label>
-                    <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.processes" readonly="true" flex>
+                    <md-chips flex ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.processes" readonly="true">
                         <md-chip-template>
                             {{$chip.title}}
                         </md-chip-template>
                     </md-chips>
+
                 </div>
 
-                <div layout="column" layout-align="left" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions.length != 0">
+                <div layout="column" layout-align="start" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions.length != 0">
+
                     <label>{{::$root.$i18n.block.dialog.saveFilter.task}}</label>
-                    <md-chips ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions" readonly="true" flex>
+                    <md-chips flex ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions" readonly="true">
                         <md-chip-template>
                             {{$chip.title}}
                         </md-chip-template>
                     </md-chips>
+
                 </div>
 
-            </div> <!-- ./column -->
+            </div> <!-- ./column./md-dialog-content -->
         </md-dialog-content>
 
         <md-dialog-actions layout="row" layout-align="end center">

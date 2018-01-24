@@ -20,7 +20,7 @@ define({
             submit: "Registrovať"
         },
         dashboard: {
-            this: "Plocha",
+            this: "Prehľad",
             offers: "Ponuky",
             contacts: "Kontakty",
             contracts: "Zmluvy"

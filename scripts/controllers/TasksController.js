@@ -5,14 +5,9 @@ define(['angular', '../classes/TaskTab', '../modules/Tasks', '../modules/Main', 
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
                     const self = this;
 
-                    self.message = "Tasks is active";
-
-
                     self.showDialog = function (template) {
                         $dialog.showByTemplate(template, self);
                     };
-
-
 
                 }]);
     });
