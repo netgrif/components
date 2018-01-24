@@ -90,7 +90,8 @@
                     </span>
 
                     <div flex="10" layout="row" layout-align="end center">
-                        <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
+                        <md-progress-circular md-mode="indeterminate" md-diameter="30"
+                                              class="progress-circular-stroke-primary-500"></md-progress-circular>
                     </div>
 
                 </md-expansion-panel-header>
@@ -107,7 +108,8 @@
                             </div> <!-- ./Group-divider -->
 
                             <!-- Model File -->
-                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
+                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
+                                 layout-align="start center">
 
                                 <span hide-xs flex-gt-xs="20">
                                     {{::$i18n.page.workflow.data.item.file.title}}
@@ -141,7 +143,8 @@
                             </div> <!-- ./Model File -->
 
                             <!-- Author -->
-                            <div hide-gt-xs flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
+                            <div hide-gt-xs flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
+                                 layout-align="start center">
 
                                 <span hide-xs flex-gt-xs="20">
                                     {{::$i18n.page.workflow.data.item.author.title}}
@@ -169,7 +172,8 @@
                             </div> <!-- ./Author -->
 
                             <!-- Upload Date -->
-                            <div hide-gt-sm flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
+                            <div hide-gt-sm flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
+                                 layout-align="start center">
 
                                 <span hide-xs flex-gt-xs="20">
                                     {{::$i18n.page.workflow.data.item.uploadDate.title}}
@@ -203,7 +207,8 @@
                             </div> <!-- ./Group-divider -->
 
                             <!-- Roles -->
-                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
+                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
+                                 layout-align="start center">
 
                                 <span hide-xs flex-gt-xs="20">
                                     {{::$i18n.page.workflow.data.item.roles.title}}
@@ -231,7 +236,8 @@
                             </div> <!-- ./Roles -->
 
                             <!-- Cases -->
-                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
+                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
+                                 layout-align="start center">
 
                                 <span hide-xs flex-gt-xs="20">
                                     {{::$i18n.page.workflow.data.item.cases.title}}
@@ -259,7 +265,8 @@
                             </div> <!-- Cases -->
 
                             <!-- Tasks -->
-                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
+                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
+                                 layout-align="start center">
 
                                 <span hide-xs flex-gt-xs="20">
                                     {{::$i18n.page.workflow.data.item.tasks.title}}
@@ -287,7 +294,8 @@
                             </div> <!-- ./Tasks -->
 
                             <!-- Active Tasks -->
-                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
+                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
+                                 layout-align="start center">
 
                                 <span hide-xs flex-gt-xs="20">
                                     {{::$i18n.page.workflow.data.item.activeTasks.title}}
@@ -315,7 +323,8 @@
                             </div> <!-- ./Active Tasks -->
 
                             <!-- Active Users -->
-                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center">
+                            <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
+                                 layout-align="start center">
 
                                 <span hide-xs flex-gt-xs="20">
                                     {{::$i18n.page.workflow.data.item.activeUsers.title}}
@@ -348,12 +357,8 @@
                 </md-expansion-panel-content>
 
                 <md-expansion-panel-footer md-no-sticky>
-                    <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
-        <md-expansion-panel-group md-component-id="workflowExpansionGroup" multiple></md-expansion-panel-group>
-
-        <div layout="row" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&workCtrl.load(true)">
-            <md-progress-circular md-mode="indeterminate" ng-disabled="!workCtrl.loading" class="progress-circular-stroke-accent-50"
-                                  md-diameter="50"></md-progress-circular>
+                    <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center"
+                         layout-align-xs="center center">
                         <md-button ng-if="true" class="layout-xs-rw-100">
                             {{$i18n.block.btn.delete}}
                         </md-button>
@@ -369,11 +374,14 @@
 
         </md-expansion-panel>
 
-        <div layout="row" layout-align="center center" class="padding-2x margin-2x">
-            <md-progress-circular md-mode="indeterminate" ng-disabled="false" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
+        <md-expansion-panel-group md-component-id="workflowExpansionGroup" multiple></md-expansion-panel-group>
+
+        <div layout="row" layout-align="center center" class="padding-2x margin-2x"
+             in-view="$inview&&workCtrl.load(true)">
+            <md-progress-circular md-mode="indeterminate" ng-disabled="!workCtrl.loading"
+                                  class="progress-circular-stroke-accent-50"
+                                  md-diameter="50"></md-progress-circular>
         </div>
-
-
 
     </div>
 </div>

@@ -8,12 +8,30 @@
                 <span class="color-fg-deep-orange-500 font-weight-600">{{workPanelCtrl.initials}}</span>
             </div>
 
-            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{workPanelCtrl.title}}</span>
+            <span flex-gt-sm="30" flex-xs="55" flex-sm="40">{{workPanelCtrl.title}}</span>
 
-            <span hide show-gt-sm flex="40" layout="row" layout-align="start center">
+                    <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
                         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                        {{workPanelCtrl.author}}
+                        {{workPanelCtrl.author.fullName}}
                     </span>
+
+            <span hide show-gt-sm flex-gt-sm="20">
+                        18.1.2018
+                    </span>
+
+            <md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
+                <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
+                    <md-icon class="material-icons">more_vert</md-icon>
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="null">
+                            <md-icon class="material-icons">delete</md-icon>
+                            <span>{{$i18n.block.btn.delete}}</span>
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
 
             <div hide-xs flex="10" layout="row" layout-align="end center">
                 <md-progress-circular md-mode="indeterminate" md-diameter="30"
@@ -32,15 +50,19 @@
                 <span class="color-fg-deep-orange-500 font-weight-600">{{workPanelCtrl.initials}}</span>
             </div>
 
-            <span flex-gt-sm="40" flex-xs="75" flex-sm="70">{{workPanelCtrl.title}}</span>
+                    <span flex-gt-sm="30" flex-sm="40" flex-xs="55">Test model</span>
 
-            <span hide show-gt-sm flex="40" layout="row" layout-align="start center">
+                    <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
                         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                        {{workPanelCtrl.author}}
+                        {{workPanelCtrl.author.fullName}}
                     </span>
 
-            <div hide-xs flex="10" layout="row" layout-align="end center">
-                <md-progress-circular md-mode="indeterminate" md-diameter="30"
+            <span hide show-gt-sm flex-gt-sm="20">
+                        18.1.2018
+                    </span>
+
+            <div flex="10" layout="row" layout-align="end center">
+                <md-progress-circular md-mode="indeterminate" md-diameter="30" ng-disabled="true"
                                       class="progress-circular-stroke-primary-500"></md-progress-circular>
             </div>
 
@@ -76,7 +98,7 @@
                                         </md-tooltip>
                                         done
                                     </md-icon>
-                                    <span class="text-overflow-dots">Test file</span>
+                                    <span class="text-overflow-dots">{{workPanelCtrl.title + " XML file"}}</span>
                                 </div>
                                 <md-menu flex-xs="20" class="width-24px">
                                     <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
@@ -128,7 +150,7 @@
                             <div flex="45" flex-xs="100">
                                 <md-input-container class="md-block" flex>
                                     <label class="placeholder">{{::$i18n.page.workflow.data.placeholder.date}}</label>
-                                    <md-datepicker ng-model="field.uploaded"
+                                    <md-datepicker ng-model="workPanelCtrl.uploadDate"
                                                    md-open-on-focus
                                                    aria-label="Pick date">
                                     </md-datepicker>
@@ -155,9 +177,9 @@
                                 <div layout="row" layout-align="start center">
                                     <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
                                     <span class="cursor-pointer">
-                                                Anonymous
+                                                {{workPanelCtrl.author.fullName}}
                                                 <md-tooltip>
-                                                    test@email.com
+                                                    {{workPanelCtrl.author.email}}
                                                 </md-tooltip>
                                             </span>
                                 </div>
@@ -200,8 +222,7 @@
                             <div flex="5" flex-xs="0"></div>
                         </div>
 
-                        <md-divider hide show-xs
-                                    class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+                        <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
 
 
                         <div flex layout-wrap layout="row" layout-align="start center" class="data-field">

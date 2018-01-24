@@ -7,6 +7,11 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
 
                     self.links = links;
 
+                    self.parseDate = function (isoDate) {
+                        return new Date();
+                    };
+
                     Object.assign(self, resource);
+                    self.uploadDate = self.parseDate(self.creationDate);
                 }]);
     });
