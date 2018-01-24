@@ -59,6 +59,7 @@ define({
         workflow: {
             this: "Workflow",
             uploadModel: "Nahrať model",
+            uploadDate: "Dátum nahrania",
             color: "Farba",
             modelTitle: "Názov modelu",
             author: "Autor",
@@ -100,6 +101,26 @@ define({
                     activeUsers: {
                         title: "Aktívni používatelia",
                         desc: "Počet používateľov pracujúcich s ľubovoľným prípadom tohto modelu"
+                    },
+                    places: {
+                        title: "Miesta",
+                        desc: ""
+                    },
+                    transitions: {
+                        title: "Prechody",
+                        desc: ""
+                    },
+                    arcs: {
+                        title: "Hrany",
+                        desc: ""
+                    },
+                    data: {
+                        title: "Dáta",
+                        desc: ""
+                    },
+                    actions: {
+                        title: "Akcie",
+                        desc: ""
                     }
                 }
             }

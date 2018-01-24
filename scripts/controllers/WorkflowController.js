@@ -14,7 +14,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.page = {
                         pageLinks: {}
                     };
-                    self.searchInput = null;
+                    self.searchInput = undefined;
                     self.searchLast = undefined;
                     self.loading = false;
                     self.startupLock = true;
@@ -113,8 +113,8 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
 
                         self.loading = true;
                         $http(self.buildRequest(next ? self.page.pageLinks.next : undefined)).then(response => {
-                            if (self.page.totalElements === 0) {
-                                $snackbar.info("There are no models uploaded to system");
+                            if (response.page.totalElements === 0) {
+                                $snackbar.info("There are no models uploaded into the system");
                                 self.clearAll();
                                 self.loading = false;
                                 return;

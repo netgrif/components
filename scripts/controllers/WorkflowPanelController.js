@@ -8,10 +8,70 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.links = links;
 
                     self.parseDate = function (isoDate) {
-                        return new Date();
+                        return `${isoDate.dayOfMonth}.${isoDate.monthValue}.${isoDate.year}`
                     };
 
-                    Object.assign(self, resource);
+                    //TODO model file download
+                    self.downloadModel = function () {
+
+                    };
+
+                    Object.assign(self,resource);
                     self.uploadDate = self.parseDate(self.creationDate);
+
+                    self.details = {
+                        title: {
+                            name: $i18n.page.workflow.data.item.file.title,
+                            icon: 'linear_scale',
+                            value: self.title,
+                            button: {
+                                name: 'file_download',
+                                tooltip: $i18n.page.workflow.data.item.file.download
+                            }
+                        },
+                        author: {
+                            name: $i18n.page.workflow.data.item.author.title,
+                            icon: 'account_circle',
+                            value: self.author.fullName,
+                            tooltip: self.author.email
+                        },
+                        uploadDate: {
+                            name: $i18n.page.workflow.data.item.uploadDate.title,
+                            icon: 'today',
+                            value: self.uploadDate
+                        }
+                    };
+                    self.stats = {
+                        places: {
+                            name: $i18n.page.workflow.data.item.places.title,
+                            icon: 'group_work',
+                            value: self.places
+                        },
+                        transitions: {
+                            name: $i18n.page.workflow.data.item.transitions.title,
+                            icon: 'check_box',
+                            value: self.transitions
+                        },
+                        arcs: {
+                            name: $i18n.page.workflow.data.item.arcs.title,
+                            icon: 'trending_flat',
+                            value: self.arcs
+                        },
+                        roles: {
+                            name: $i18n.page.workflow.data.item.roles.title,
+                            icon: 'perm_identity',
+                            value: self.roles
+                        },
+                        data: {
+                            name: $i18n.page.workflow.data.item.data.title,
+                            icon: 'storage',
+                            value: self.dataSet
+                        },
+                        actions: {
+                            name: $i18n.page.workflow.data.item.actions.title,
+                            icon: 'toys',
+                            value: self.actions
+                        }
+                    };
                 }]);
     });
