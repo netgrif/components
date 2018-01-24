@@ -1,19 +1,21 @@
 <md-dialog aria-label="Filter detail">
 
         <md-toolbar>
-            <div class="md-toolbar-tools">
+            <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
+
                 <h2>Filter: Label of selected filter</h2>
-                <span flex></span>
+
                 <md-button class="md-icon-button" ng-click="closeDialog()">
                     <md-icon class="material-icons">close</md-icon>
                 </md-button>
+
             </div>
         </md-toolbar>
 
         <md-dialog-content>
 
+            <!-- TODO Could we merge these layouts? -->
              <div flex layout-wrap layout="row" layout-align="start center" class="margin-2x">
-
                  <div flex layout="column">
 
                      <div class="margin-top-default">
@@ -34,6 +36,7 @@
                      </div>
 
                      <div class="margin-top-default">
+
                          <span flex class="cursor-pointer">
                              {{::$root.$i18n.page.filter.transition}}
                              <md-tooltip>
@@ -56,12 +59,16 @@
                      </div>
 
                      <md-input-container>
+
                          <label>{{::$root.$i18n.page.filter.description}}</label>
-                         <textarea ng-model="TODO.description" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                         <textarea ng-model="TODO.description" md-maxlength="150" rows="3" md-select-on-focus title="Filter description"></textarea>
+
                      </md-input-container>
 
+                     <!-- TODO Could we merge these layouts? -->
                      <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
                          <div flex="100" layout-wrap layout="row" layout-align="start center">
+
                              <div flex="100">
                                  <div flex layout-wrap layout="row" layout-align="start center" class="margin-bottom-2x" ng-cloak>
                                      <div flex="20" hide-md hide-xs>
@@ -81,6 +88,7 @@
                                      <div flex="5" flex-md="10"></div>
                                  </div>
                              </div> <!-- ./Data-field -->
+
                              <div flex="100">
                                  <div flex layout-wrap layout="row" layout-align="start center" class="margin-bottom-2x" ng-cloak>
                                      <div flex="20" hide-md hide-xs>
@@ -103,6 +111,7 @@
                                      <div flex="5" flex-md="10"></div>
                                  </div>
                              </div> <!-- ./Data-field -->
+
                              <div flex="100">
                                  <div flex layout-wrap layout="row" layout-align="start center">
                                      <div flex="20" hide-md hide-xs>
@@ -122,21 +131,31 @@
                                      <div flex="5" flex-md="10"></div>
                                  </div>
                              </div> <!-- ./Data-field -->
+
                          </div>
-                     </div>
-                 </div>
-             </div>
+                     </div> <!-- ./row -->
+
+                 </div> <!-- ./column -->
+             </div> <!-- ./row -->
 
             <md-divider class="margin-horizontal-2x"></md-divider>
 
         </md-dialog-content>
 
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button>{{::$root.$i18n.block.btn.save}}</md-button>
 
-            <md-button>{{::$root.$i18n.block.btn.edit}}</md-button>
+            <md-button>
+                {{::$root.$i18n.block.btn.save}}
+            </md-button>
 
-            <md-button>{{::$root.$i18n.block.btn.delete}}</md-button>
+            <md-button>
+                {{::$root.$i18n.block.btn.edit}}
+            </md-button>
+
+            <md-button>
+                {{::$root.$i18n.block.btn.delete}}
+            </md-button>
+
         </md-dialog-actions>
 
 </md-dialog>

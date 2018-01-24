@@ -25,25 +25,25 @@ define({
             contacts: "Kontakty",
             contracts: "Zmluvy"
         },
-        filter: {
-            type: "Typ",
-            filter: "Filter",
-            label: "Názov",
-            author: "Autor",
-            date: "Vytvorenie",
-            group: "Skupina",
-            global: "Všetci",
-            personal: "Osobný",
-            process: "Proces",
-            detail: "Filter: ",
-            description: "Popis",
-            transition: "Úlohy: ",
-            tooltips: {
-                details: "Viac detailov",
-                transition: "Vybrané úlohy",
-                process: "Vybrané procesy"
-            },
-        },
+        // filter: {
+        //     type: "Typ",
+        //     filter: "Filter",
+        //     label: "Názov",
+        //     author: "Autor",
+        //     date: "Vytvorenie",
+        //     group: "Skupina",
+        //     public: "Verejný",
+        //     private: "Súkromný",
+        //     process: "Proces",
+        //     detail: "Filter: ",
+        //     description: "Popis",
+        //     transition: "Úlohy: ",
+        //     tooltips: {
+        //         details: "Viac detailov",
+        //         transition: "Vybrané úlohy",
+        //         process: "Vybrané procesy"
+        //     },
+        // },
         cases: {
             this: "Prípady",
             my: "Moje prípady"
@@ -56,7 +56,23 @@ define({
                 process: "Proces",
                 task: "Úloha",
                 processNotFound: "nebol najdený", // SK ...
-                taskNotFound: "nebola najdená"
+                taskNotFound: "nebola najdená",
+                type: "Typ",
+                filter: "Filter",
+                label: "Názov",
+                author: "Autor",
+                date: "Vytvorenie",
+                group: "Skupina",
+                public: "Verejný",
+                private: "Súkromný",
+                detail: "Filter: ",
+                description: "Popis",
+                transition: "Úlohy: ",
+                tooltips: {
+                    details: "Viac detailov",
+                    transition: "Vybrané úlohy",
+                    process: "Vybrané procesy"
+                }
             }
         },
         workflow: {
@@ -172,7 +188,8 @@ define({
             finish: "Dokončiť",
             cancel: "Zrušiť",
             reset: "Reset",
-            search: "Hľadať"
+            search: "Hľadať",
+            apply: "Použiť"
         },
         mainMenu: {
             profile: "Profil",
