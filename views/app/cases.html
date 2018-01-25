@@ -34,11 +34,36 @@
 
 						<div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
 
-							<span flex-gt-xs="10" flex-xs="30">{{::$i18n.block.case.header.label}}</span>
-							<span flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="30" flex-xs="50">{{::$i18n.block.case.header.visualID}}</span>
-							<span hide hide-xs show-gt-xs flex-gt-md="20" flex-gt-sm="30" flex-gt-xs="50">{{::$i18n.block.case.header.title}}</span>
-							<span hide show-gt-sm flex-gt-md="20" flex-gt-sm="25">{{::$i18n.block.case.header.author}}</span>
-							<span hide show-gt-md flex="20">{{::$i18n.block.case.header.createDate}}</span>
+							<span flex-gt-sm="10" flex-sm="15" flex-xs="30">
+								{{::$i18n.block.case.header.label}}
+								<md-icon class="material-icons">
+                					{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            					</md-icon>
+							</span>
+							<span flex-gt-md="20" flex-gt-sm="25" flex-sm="30" flex-xs="50">
+								{{::$i18n.block.case.header.visualID}}
+								<md-icon class="material-icons">
+                					{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            					</md-icon>
+							</span>
+							<span hide hide-xs show-gt-xs flex-gt-md="20" flex-md="30" flex-sm="45">
+								{{::$i18n.block.case.header.title}}
+								<md-icon class="material-icons">
+                					{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            					</md-icon>
+							</span>
+							<span hide show-gt-sm flex-gt-md="20" flex-gt-sm="25">
+								{{::$i18n.block.case.header.author}}
+								<md-icon class="material-icons">
+                					{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            					</md-icon>
+							</span>
+							<span hide show-gt-md flex="20">
+								{{::$i18n.block.case.header.createDate}}
+								<md-icon class="material-icons">
+                					{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            					</md-icon>
+							</span>
 
 							<div flex-gt-xs="10" flex-xs="20"></div> <!-- Menu -->
 
@@ -50,14 +75,22 @@
 
 							<div layout="row" layout-align="start center" ng-repeat-start="useCase in caseCtrl.caseTab.cases | orderBy:'strindId'" ng-click="useCase.open()" class="card-case padding-horizontal-2x">
 
-								<i flex-gt-xs="10" flex-xs="30" class="material-icons {{::useCase.color}}">{{useCase.icon ? useCase.icon : 'label'}}</i>
-								<span flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="30" flex-xs="50">{{::useCase.visualId}}</span>
-								<span hide hide-xs show-gt-xs flex-gt-md="20" flex-gt-sm="30" flex-gt-xs="50">{{::useCase.title}}</span>
+								<i flex-gt-sm="10" flex-sm="15" flex-xs="30" class="material-icons {{::useCase.color}}">
+									{{useCase.icon ? useCase.icon : 'label'}}
+								</i>
+								<span flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="30" flex-xs="50">
+									{{::useCase.visualId}}
+								</span>
+								<span hide hide-xs show-gt-xs flex-gt-md="20" flex-md="30" flex-sm="45">
+									{{::useCase.title}}
+								</span>
 								<span hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" layout="row" layout-align="start center">
 									<i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                 					Name Surname
 								</span>
-								<span hide show-gt-md flex="20">17.1.2018 09:14</span>
+								<span hide show-gt-md flex="20">
+									dd.mm.yyyy hh:mm
+								</span>
 
 								<md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
 									<md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
@@ -114,31 +147,31 @@
 						<a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="35" flex-xs="30" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
 							{{::$i18n.block.task.header.case}}
 							<md-icon class="material-icons">
-								{{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+								{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
 							</md-icon>
 						</a>
 						<a flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="45" flex-xs="50" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
 							{{::$i18n.block.task.header.title}}
 							<md-icon class="material-icons">
-								{{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+								{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
 							</md-icon>
 						</a>
 						<a hide hide-xs show-gt-xs flex-gt-md="10" flex-gt-sm="15" flex-gt-xs="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
 							{{::$i18n.block.task.header.priority}}
 							<md-icon class="material-icons">
-								{{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+								{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
 							</md-icon>
 						</a>
 						<a hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('username')">
 							{{::$i18n.block.task.header.user}}
 							<md-icon class="material-icons">
-								{{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+								{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
 							</md-icon>
 						</a>
 						<a hide show-gt-md flex="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
 							{{::$i18n.block.task.header.assignDate}}
 							<md-icon class="material-icons">
-								{{TODO.tasksCtrl.sort.expresion == 'caseTitle' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+								{{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
 							</md-icon>
 						</a>
 						<div flex-gt-xs="10" flex-xs="20"></div> <!-- Done Icon / Menu / Loader -->
