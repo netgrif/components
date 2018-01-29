@@ -1,0 +1,29 @@
+<div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
+
+    <a flex-gt-sm="10" flex-sm="20" flex-xs="25">
+        {{::$i18n.page.workflow.color}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+    <a flex-gt-sm="30" flex-sm="40" flex-xs="55">
+        {{::$i18n.page.workflow.modelTitle}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+    <a hide show-gt-xs flex-gt-sm="30" flex-sm="30">
+        {{::$i18n.page.workflow.author}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+    <a hide show-gt-sm flex-gt-sm="20">
+        {{::$i18n.page.workflow.uploadDate}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+    <div flex-gt-xs="10" flex-xs="20"></div> <!-- Menu / Loader -->
+
+</div> <!-- ./card -->
