@@ -114,7 +114,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         self.loading = true;
                         $http(self.buildRequest(next ? self.page.pageLinks.next : undefined)).then(response => {
                             if (response.page.totalElements === 0) {
-                                $snackbar.info("There are no models uploaded into the system");
+                                $snackbar.info($i18n.block.snackbar.noWorkflowModel);
                                 self.clearAll();
                                 self.loading = false;
                                 return;
@@ -136,7 +136,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                             });
 
                         }, error => {
-                            $snackbar.error("Loading models has failed");
+                            $snackbar.error($i18n.block.snackbar.loadingWorkflowFailed);
                             self.loading = false;
                         });
                     };

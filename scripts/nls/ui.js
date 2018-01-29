@@ -364,7 +364,9 @@ define({
                 fileMustHaveXmlFormat: "File must have XML format",
                 modelFailedToUpload: "Model failed to upload",
 
-                featureWillBeAvailableSoon: "This feature will be available soon"
+                featureWillBeAvailableSoon: "This feature will be available soon",
+                noWorkflowModel: "There are no workflow models uploaded into the system",
+                loadingWorkflowFailed: "Loading workflow models has failed"
             },
             add: {
                 createCase: "Create Case",
