@@ -23,11 +23,11 @@
 
 						<div ng-include="'views/app/lists/case_list.html'"></div>
 
-					</div>
+					</div> <!-- ./column -->
 
 					<div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&caseCtrl.caseTab.load(true)" in-view-options="{ throttle: 0 }">
 						<md-progress-circular md-mode="indeterminate" ng-disabled="!caseCtrl.caseTab.loading" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
-					</div>
+					</div> <!-- ./row -->
 
 				</md-content>
 			</md-tab-body>

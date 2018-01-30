@@ -4,12 +4,14 @@
 
     <section flex layout="row" class="layout-rh-100 color-bg-transparent">
 
-        <div ng-include="'views/app/spinner/main_spinner.html'"></div>
+        <div ng-include="'views/app/sidenav/main_sidenav.html'"></div>
 
         <md-content layout-wrap flex class="color-bg-transparent">
+
             <div app-view-segment="1" onload="mainCtrl.startLoadingData()" class="layout-rh-100"></div>
+
         </md-content>
 
-    </section>
+    </section> <!-- ./row -->
 
 </div>

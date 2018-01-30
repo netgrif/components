@@ -21,7 +21,7 @@
 
                             <span class="font-size-20">{{::$i18n.page.console.orgs}}</span>
 
-                        </div>
+                        </div> <!-- ./row -->
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
@@ -29,13 +29,13 @@
 
                             <div ng-include="'views/app/lists/console_new_user_org_list.html'"></div>
 
-                        </div>
+                        </div> <!-- ./column -->
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
                         <div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
                             <span class="font-size-20">{{::$i18n.page.console.roles}}</span>
-                        </div>
+                        </div> <!-- ./row -->
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
@@ -67,7 +67,7 @@
 
                             </div>
 
-                        </div>
+                        </div> <!-- ./column -->
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
@@ -84,7 +84,7 @@
                                 </md-tooltip>
                             </md-button>
 
-                        </div>
+                        </div> <!-- ./row -->
 
                     </div> <!-- ./column -->
 
@@ -100,7 +100,7 @@
 
                             <div ng-include="'views/app/lists/console_select_org_list.html'"></div>
 
-                        </div>
+                        </div> <!-- ./column -->
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
@@ -112,7 +112,8 @@
 
                             <div ng-include="'views/app/lists/console_select_role_list.html'"></div>
 
-                        </div>
+                        </div> <!-- ./column -->
+
                     </div> <!-- ./column -->
 
                 </md-content>
