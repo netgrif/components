@@ -1,4 +1,6 @@
-<md-list-item ng-repeat="org in adminCtrl.invitedUser.organizations" class="list-item" ng-click="null">
+<md-list-item class="list-item"
+              ng-repeat="org in adminCtrl.invitedUser.organizations"
+              ng-click="null">
     <div flex layout="row" layout-align="space-between center">
 
         <span>{{org.name}}</span>

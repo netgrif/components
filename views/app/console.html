@@ -71,9 +71,11 @@
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                        <div layout="row" layout-align="space-between center" class="card padding-vertical-2x">
+                        <div layout="row" layout-align="start center" class="card padding-vertical-2x">
 
                             <md-progress-circular md-mode="indeterminate" class="progress-circular-stroke-accent-50 margin-left-default" md-diameter="30" ng-if="adminCtrl.inviteLoading"></md-progress-circular>
+
+                            <div flex></div>
 
                             <md-button class="md-fab md-raised md-mini md-primary" ng-click="adminCtrl.invite()">
                                 <md-icon class="material-icons">person_add</md-icon>
