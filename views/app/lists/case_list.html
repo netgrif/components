@@ -1,39 +1,6 @@
 <div layout="column" class="card">
 
-    <div layout="row" layout-align="start center" ng-repeat-start="useCase in caseCtrl.caseTab.cases | orderBy:'strindId'" ng-click="useCase.open()" class="card-case padding-horizontal-2x">
-
-        <i flex-gt-sm="10" flex-sm="15" flex-xs="30" class="material-icons {{::useCase.color}}">
-            {{useCase.icon ? useCase.icon : 'label'}}
-        </i>
-        <span flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="30" flex-xs="50">
-            {{::useCase.visualId}}
-        </span>
-        <span hide hide-xs show-gt-xs flex-gt-md="20" flex-md="30" flex-sm="45">
-            {{::useCase.title}}
-        </span>
-        <span hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" layout="row" layout-align="start center">
-            <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-            Name Surname
-        </span>
-        <span hide show-gt-md flex="20">
-            dd.mm.yyyy hh:mm
-        </span>
-
-        <md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
-            <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
-                <md-icon class="material-icons">more_vert</md-icon>
-            </md-button>
-            <md-menu-content>
-                <md-menu-item>
-                    <md-button ng-click="useCase.delete()">
-                        <md-icon class="material-icons">delete</md-icon>
-                        <span>{{$i18n.block.btn.delete}}</span>
-                    </md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
-
-    </div>
+    <div ng-include="'views/app/lists/list_items/case_list_item.html'"></div>
 
     <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 

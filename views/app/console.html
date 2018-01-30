@@ -18,36 +18,16 @@
                         <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                         <div layout="row" layout-align="start center" class="card height-48px padding-horizontal-2x">
+
                             <span class="font-size-20">{{::$i18n.page.console.orgs}}</span>
+
                         </div>
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
                         <div layout="column" class="card padding-2x">
 
-                            <md-list flex class="padding-0 layout-rw-100">
-
-                                <md-list-item ng-if="adminCtrl.invitedUser.organizations.length === 0" class="list-item">
-                                    <div flex layout="row" layout-align="space-between center">
-
-                                        <span>{{::$i18n.page.console.thereIsNoOrgAssignedToThisUserYet}}</span>
-
-                                    </div>
-                                </md-list-item>
-
-                                <md-list-item ng-repeat="org in adminCtrl.invitedUser.organizations" class="list-item" ng-click="null">
-                                    <div flex layout="row" layout-align="space-between center">
-
-                                        <span>{{org.name}}</span>
-
-                                        <md-button class="md-icon-button" ng-click="org.remove()">
-                                            <i class="material-icons color-fg-error">close</i>
-                                        </md-button>
-
-                                    </div>
-                                </md-list-item>
-
-                            </md-list>
+                            <div ng-include="'views/app/lists/console_new_user_org_list.html'"></div>
 
                         </div>
 
@@ -81,21 +61,7 @@
                                     {{net.title}}
                                 </span>
 
-                                <md-list flex class="padding-0">
-
-                                    <md-list-item ng-repeat="role in net.roles" class="list-item" ng-click="null">
-                                        <div flex layout="row" layout-align="space-between center">
-
-                                            <span>{{role.name}}</span>
-
-                                            <md-button class="md-icon-button" ng-click="role.remove(netId)">
-                                                <i class="material-icons color-fg-error">close</i>
-                                            </md-button>
-
-                                        </div>
-                                    </md-list-item>
-
-                                </md-list>
+                                <div ng-include="'views/app/lists/console_new_user_role_list.html'"></div>
 
                                 <md-divider ng-if="!$last" class="margin-vertical-default"></md-divider>
 
@@ -105,11 +71,9 @@
 
                         <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-                        <div layout="row" layout-align="start center" class="card padding-vertical-2x">
+                        <div layout="row" layout-align="space-between center" class="card padding-vertical-2x">
 
                             <md-progress-circular md-mode="indeterminate" class="progress-circular-stroke-accent-50 margin-left-default" md-diameter="30" ng-if="adminCtrl.inviteLoading"></md-progress-circular>
-
-                            <div flex></div>
 
                             <md-button class="md-fab md-raised md-mini md-primary" ng-click="adminCtrl.invite()">
                                 <md-icon class="material-icons">person_add</md-icon>
@@ -132,23 +96,7 @@
 
                             <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-                            <md-list flex class="padding-0">
-
-                                <md-list-item ng-repeat-start="org in adminCtrl.organizations" class="card list-item" ng-click="org.add()">
-                                    <div flex layout="row" layout-align="space-between center">
-
-                                        <span>{{org.name}}</span>
-
-                                        <md-button class="md-icon-button" ng-click="org.add()">
-                                            <md-icon class="material-icons color-fg-success">add</md-icon>
-                                        </md-button>
-
-                                    </div>
-                                </md-list-item>
-
-                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
-
-                            </md-list>
+                            <div ng-include="'views/app/lists/console_select_org_list.html'"></div>
 
                         </div>
 
@@ -160,23 +108,7 @@
 
                             <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-                            <md-list flex class="padding-0">
-
-                                <md-list-item ng-repeat-start="role in adminCtrl.processRoles" class="card list-item" ng-click="role.add()">
-                                    <div flex layout="row" layout-align="space-between center">
-
-                                        <span>{{role.name}}</span>
-
-                                        <md-button class="md-icon-button" ng-click="role.add()">
-                                            <i class="material-icons color-fg-success">add</i>
-                                        </md-button>
-
-                                    </div>
-                                </md-list-item>
-
-                                <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
-
-                            </md-list>
+                            <div ng-include="'views/app/lists/console_select_role_list.html'"></div>
 
                         </div>
                     </div> <!-- ./column -->
@@ -204,27 +136,9 @@
                             <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                             <div layout="column">
-                                <md-list flex class="padding-0">
 
-                                    <md-list-item ng-repeat-start="user in users | orderBy:user.fullName"
-                                                  ng-click="adminCtrl.selectUser(user)" class="card list-item"
-                                                  ng-class="user.selected ? 'list-item-selected' : ''">
-                                        <div flex layout="row" layout-align="start center">
+                                <div ng-include="'views/app/lists/console_manage_roles_user_list.html'"></div>
 
-                                            <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-
-                                            <span>
-                                                {{user.fullName}}
-                                            </span>
-                                            <md-tooltip>
-                                                {{user.email}}
-                                            </md-tooltip>
-                                        </div>
-                                    </md-list-item>
-
-                                    <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
-
-                                </md-list>
                             </div>
 
                         </div> <!-- ./column -->
@@ -238,23 +152,9 @@
                             <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                             <div layout="column">
-                                <md-list flex class="padding-0">
 
-                                    <md-list-item ng-repeat-start="role in roles | orderBy:role.name"
-                                                  ng-click="adminCtrl.selectRole(role)" class="card list-item"
-                                                  ng-class="role.selected ? 'list-item-selected' : ''">
-                                        <div flex layout="row" layout-align="start center">
+                                <div ng-include="'views/app/lists/console_manage_roles_role_list.html'"></div>
 
-                                            <i class="material-icons color-fg-primary-500 margin-right-2x">perm_identity</i>
-
-                                            <span>{{role.name}}</span>
-
-                                        </div>
-                                    </md-list-item>
-
-                                    <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
-
-                                </md-list>
                             </div>
 
                         </div> <!-- ./column -->

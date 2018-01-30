@@ -1,0 +1,13 @@
+<md-list flex class="padding-0 layout-rw-100">
+
+    <md-list-item ng-if="adminCtrl.invitedUser.organizations.length === 0" class="list-item">
+        <div flex layout="row" layout-align="space-between center">
+
+            <span>{{::$i18n.page.console.thereIsNoOrgAssignedToThisUserYet}}</span>
+
+        </div>
+    </md-list-item>
+
+    <div ng-include="'views/app/lists/list_items/console_new_user_org_list_item.html'"></div>
+
+</md-list>
