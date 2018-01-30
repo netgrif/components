@@ -60,6 +60,7 @@ define({
             workflow: {
                 this: "Workflow",
                 uploadModel: "Upload model",
+                uploadDate: "Upload Date",
                 color: "Color",
                 modelTitle: "Model title",
                 author: "Author",
@@ -101,6 +102,26 @@ define({
                         activeUsers: {
                             title: "Active users",
                             desc: "Number of users working with any case of this model"
+                        },
+                        places: {
+                            title: "Places",
+                            desc: "Number of places in model's Petri net"
+                        },
+                        transitions: {
+                            title: "Transitions",
+                            desc: "Number of transitions in model's Petri net"
+                        },
+                        arcs: {
+                            title: "Arcs",
+                            desc: "Number of arcs in model's Petri net"
+                        },
+                        data: {
+                            title: "Data",
+                            desc: ""
+                        },
+                        actions: {
+                            title: "Actions",
+                            desc: ""
                         }
                     }
                 }
@@ -343,7 +364,9 @@ define({
                 fileMustHaveXmlFormat: "File must have XML format",
                 modelFailedToUpload: "Model failed to upload",
 
-                featureWillBeAvailableSoon: "This feature will be available soon"
+                featureWillBeAvailableSoon: "This feature will be available soon",
+                noWorkflowModel: "There are no workflow models uploaded into the system",
+                loadingWorkflowFailed: "Loading workflow models has failed"
             },
             add: {
                 createCase: "Create Case",
