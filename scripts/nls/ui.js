@@ -64,6 +64,7 @@ define({
                 color: "Color",
                 modelTitle: "Model title",
                 author: "Author",
+                uploadDate: "Upload Date",
                 data: {
                     group: {
                         details: "Details",

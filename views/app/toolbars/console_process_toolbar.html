@@ -1,0 +1,19 @@
+<md-toolbar class="card padding-vertical-2x">
+    <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
+
+        <span>{{::$i18n.page.console.processRolesLower}}</span>
+
+        <md-input-container flex class="md-block margin-right-default">
+
+            <label>{{::$i18n.page.console.process}}</label>
+
+            <md-select ng-model="adminCtrl.selectedNet" ng-change="adminCtrl.loadProcessRoles()">
+                <md-option ng-repeat="process in processes" ng-value="process" ng-selected="$first">
+                    {{process.title}}
+                </md-option>
+            </md-select>
+
+        </md-input-container>
+
+    </div>
+</md-toolbar>

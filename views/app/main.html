@@ -1,129 +1,17 @@
-<div ng-cloak class="layout-rh-100 color-bg-transparent" layout="column">
+<div ng-cloak layout="column" class="layout-rh-100 color-bg-transparent">
 
-    <md-toolbar layout="row" layout-align="center center" md-whiteframe="5" class="toolbar">
+    <div ng-include="'views/app/toolbars/main_toolbar.html'"></div>
 
-        <md-button hide-gt-sm ng-click="mainCtrl.toggleSidenav('left-nav')" class="md-icon-button">
-            <md-icon class="material-icons">menu</md-icon>
-        </md-button>
+    <section flex layout="row" class="layout-rh-100 color-bg-transparent">
 
-        <a href="/" hide show-gt-sm layout-align="center center" class="toolbar-logo margin-left-2x">
-            <img src="../../assets/netgrif_full_white.svg" alt="logo" class="padding-vertical-default">
-        </a>
-
-        <div hide-gt-sm>
-            <span ng-if="'dashboard' | routeSegmentContains">{{::$i18n.page.dashboard.this}}</span>
-            <span ng-if="'cases' | routeSegmentContains">{{::$i18n.page.cases.this}}</span>
-            <span ng-if="'tasks' | routeSegmentContains">{{::$i18n.page.tasks.this}}</span>
-            <span ng-if="'workflow' | routeSegmentContains">{{::$i18n.page.workflow.this}}</span>
-            <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)">{{::$i18n.page.console.this}}</span>
-        </div>
-
-        <div flex></div>
-
-        <md-menu-bar layout="row" layout-align="center center" class="icon-menu-bar">
-            <md-menu>
-
-                <md-button layout="row" layout-align="start center" class="toolbar-btn" ng-click="$mdMenu.open($event)" md-menu-origin>
-                    <span hide-xs>{{$user.name}}</span>
-                    <i class="material-icons">account_circle</i>
-                </md-button>
-
-                <md-menu-content width="3">
-
-                    <md-menu-item>
-                        <md-menu class="icon-submenu">
-
-                            <md-button ng-click="$mdMenu.open()">
-                                <div class="btn-menu">
-                                    <md-icon class="material-icons">language</md-icon>
-                                    <span>{{::$i18n.block.mainMenu.lang.this}}</span>
-                                </div>
-                            </md-button>
-
-                            <md-menu-content width="2">
-
-                                <md-menu-item>
-                                    <md-button ng-click="$i18n.change('en-us')" layout="row" layout-align="space-between center">
-                                        <span>{{::$i18n.block.mainMenu.lang.en}}</span>
-                                        <md-icon ng-if="$i18n.current() === 'en-us'" class="material-icons">keyboard_arrow_left</md-icon>
-                                    </md-button>
-                                </md-menu-item>
-
-                                <md-menu-item>
-                                    <md-button ng-click="$i18n.change('sk-sk')" layout="row" layout-align="space-between center">
-                                        <span>{{::$i18n.block.mainMenu.lang.sk}}</span>
-                                        <md-icon ng-if="$i18n.current() === 'sk-sk'" class="material-icons">keyboard_arrow_left</md-icon>
-                                    </md-button>
-                                </md-menu-item>
-
-                            </md-menu-content>
-
-                        </md-menu>
-                    </md-menu-item>
-
-                    <md-menu-item>
-                        <md-button href="/profile" class="padding-top-0">
-                            <md-icon class="material-icons">account_circle</md-icon>
-                            {{::$i18n.block.mainMenu.profile}}
-                        </md-button>
-                    </md-menu-item>
-
-                    <md-menu-item>
-                        <md-button ng-click="mainCtrl.logout()">
-                            <md-icon class="material-icons">exit_to_app</md-icon>
-                            {{::$i18n.block.mainMenu.logout}}
-                        </md-button>
-                    </md-menu-item>
-
-                </md-menu-content>
-
-            </md-menu>
-        </md-menu-bar>
-
-    </md-toolbar>
-
-    <section layout="row" flex class="layout-rh-100 color-bg-transparent">
-
-        <md-sidenav md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-sm')" class="sidenav md-sidenav-left">
-            <md-content flex layout="column">
-
-                <md-button href="/dashboard" layout="row" layout-align="start center" ng-class="{active: ('dashboard' | routeSegmentContains)}">
-                    <i class="material-icons">dashboard</i>{{::$i18n.page.dashboard.this}}
-                </md-button>
-
-                <md-button href="/cases" layout="row" layout-align="start center" ng-class="{active: ('cases' | routeSegmentContains)}">
-                    <i class="material-icons">storage</i>{{::$i18n.page.cases.this}}
-                </md-button>
-
-                <md-button href="/tasks" layout="row" layout-align="start center" ng-class="{active: ('tasks' | routeSegmentContains)}">
-                    <i class="material-icons">check_box</i>{{::$i18n.page.tasks.this}}
-                </md-button>
-
-                <md-button href="/workflow" layout="row" layout-align="start center" ng-class="{active: ('workflow' | routeSegmentContains)}">
-                    <i class="material-icons">linear_scale</i>{{::$i18n.page.workflow.this}}
-                </md-button>
-
-                <md-button href="/console" ng-if="$user.hasAuthority('ROLE_ADMIN')" layout="row" layout-align="start center" ng-class="{active: ('console' | routeSegmentContains)}">
-                    <i class="material-icons">developer_board</i>{{::$i18n.page.console.this}}
-                </md-button>
-
-                <div flex></div>
-
-                <a href="/" hide-gt-sm layout="row" layout-align="center center" class="sidenav-logo padding-vertical-default">
-                    <img src="../../assets/netgrif_full_white.svg" alt="logo">
-                </a>
-
-                <div layout="row" layout-align="center center" class="margin-bottom-default">
-                    <span class="color-fg-accent-50">{{::$i18n.version.this + " " + $i18n.version.id}}</span>
-                </div>
-
-            </md-content>
-        </md-sidenav>
+        <div ng-include="'views/app/sidenav/main_sidenav.html'"></div>
 
         <md-content layout-wrap flex class="color-bg-transparent">
+
             <div app-view-segment="1" onload="mainCtrl.startLoadingData()" class="layout-rh-100"></div>
+
         </md-content>
 
-    </section>
+    </section> <!-- ./row -->
 
 </div>

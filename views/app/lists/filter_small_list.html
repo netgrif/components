@@ -1,0 +1,50 @@
+<md-list flex class="padding-0">
+
+    <!-- TODO 31.1.2018 Add ng-repeat -->
+    <div ng-include="'views/app/lists/list_items/filter_small_list_item.html'"></div>
+
+    <!-- TODO 31.1.2018 Add ng-repeat-end -->
+    <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+    <!-- TODO 30.1.2018 Remove view placeholder -->
+    <md-list-item class="card list-item list-item-selected">
+        <div flex layout="row" layout-align="start center">
+
+            <span flex-gt-md="10" flex-md="15" flex-sm="15" flex-xs="30" layout="row" layout-align="start center">
+                <i class="material-icons color-fg-primary-500">group</i>
+            </span>
+            <span flex-gt-md="20" flex-md="35" flex-sm="35" flex-xs="55" layout="row" layout-align="start center">Dnesne tasky</span>
+            <span flex-gt-md="35" flex-md="40" flex-sm="40" hide-xs layout="row" layout-align="start center" class="text-overflow-dots">
+                <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                Name Surname
+            </span>
+            <span flex-gt-sm="25" hide-md hide-sm hide-xs>
+                dd.mm.yyyy hh:mm
+            </span>
+
+            <div flex-gt-md="10" flex-md="10" hide-sm hide-xs layout="row" layout-align="end center" >
+
+                <md-button class="md-icon-button color-fg-primary-500">
+                    <i class="material-icons">list</i>
+                    <md-tooltip>
+                        {{::$i18n.page.tasks.filter.tooltips.details}}
+                    </md-tooltip>
+                </md-button>
+
+            </div>
+
+            <div hide-gt-sm flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
+
+                <md-button class="md-icon-button color-fg-primary-500" ng-click="taskCtrl.showDialog('filter_detail')">
+                    <i class="material-icons">list</i>
+                    <md-tooltip>
+                        {{::$i18n.page.tasks.filter.tooltips.details}}
+                    </md-tooltip>
+                </md-button>
+
+            </div>
+
+        </div>
+    </md-list-item>
+
+</md-list>

@@ -63,6 +63,7 @@ define({
             color: "Farba",
             modelTitle: "Názov modelu",
             author: "Autor",
+            uploadDate: "Dátum nahrania",
             data: {
                 group: {
                     details: "Detaily",
