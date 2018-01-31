@@ -3,12 +3,11 @@
     <md-expansion-panel-collapsed>
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="null">
 
-            <div flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center">
-                <!--<i class="material-icons color-fg-deep-orange-500">label</i>-->
+            <div flex-gt-sm="10" flex-sm="20" flex-xs="25" layout="row" layout-align="start center">
                 <span class="color-fg-deep-orange-500 font-weight-600">{{workPanelCtrl.initials}}</span>
             </div>
 
-            <span flex-gt-sm="30" flex-xs="55" flex-sm="40">{{workPanelCtrl.title}}</span>
+            <span flex-gt-sm="30" flex-sm="40" flex-xs="55">{{workPanelCtrl.title}}</span>
 
             <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
                 <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
@@ -33,11 +32,6 @@
                 </md-menu-content>
             </md-menu>
 
-            <!--<div hide-xs flex="10" layout="row" layout-align="end center">-->
-                <!--<md-progress-circular md-mode="indeterminate" md-diameter="30" ng-disabled="true"-->
-                                      <!--class="progress-circular-stroke-primary-500"></md-progress-circular>-->
-            <!--</div>-->
-
         </div>
     </md-expansion-panel-collapsed>
 
@@ -46,7 +40,6 @@
         <md-expansion-panel-header ng-click="$panel.collapse()" md-no-sticky>
 
             <div flex-gt-sm="10" flex-xs="25" flex-sm="20" layout="row" layout-align="start center">
-                <!--<i class="material-icons color-fg-deep-orange-500">label</i>-->
                 <span class="color-fg-deep-orange-500 font-weight-600">{{workPanelCtrl.initials}}</span>
             </div>
 
@@ -61,15 +54,9 @@
                 {{workPanelCtrl.uploadDate}}
             </span>
 
-            <!--<div flex="10" layout="row" layout-align="end center">-->
-                <!--<md-progress-circular md-mode="indeterminate" md-diameter="30" ng-disabled="true"-->
-                                      <!--class="progress-circular-stroke-primary-500"></md-progress-circular>-->
-            <!--</div>-->
-
         </md-expansion-panel-header>
 
         <md-expansion-panel-content>
-
             <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
                 <div flex="100" layout-wrap layout="row" layout-align="start center">
 
@@ -79,13 +66,15 @@
                         <div flex class="line-3px color-bg-primary-op-50"></div>
                     </div> <!-- ./Group-divider -->
 
-                    <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
-                         layout-align="start center" class="margin-top-default margin-bottom-default"
+                    <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center" class="margin-top-default margin-bottom-default"
                          ng-repeat="(key, val) in workPanelCtrl.details">
+
                         <span hide-xs flex-gt-xs="20">
                             {{::val.name}}
                         </span>
+
                         <div hide-xs flex-gt-xs="5"></div>
+
                         <div flex-gt-xs="35" flex-xs="65" layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">
                                 {{::val.icon}}
@@ -100,7 +89,9 @@
                                 </md-tooltip>
                             </span>
                         </div>
+
                         <div flex="35" layout="row" layout-align="end center">
+
                             <md-button ng-if="!!val.button" class="md-icon-button" ng-click="workPanelCtrl.downloadModel()">
                                 <md-icon class="material-icons">{{::val.button.name}}</md-icon>
                                 <md-tooltip md-direction="bottom">
@@ -114,7 +105,9 @@
                             <!--</md-tooltip>-->
                             <!--</md-button>-->
                         </div>
+
                         <div hide-xs flex-gt-xs="5"></div>
+
                     </div>
 
                     <div flex="100" layout="row" layout-align="start center">
@@ -123,13 +116,15 @@
                         <div flex class="line-3px color-bg-primary-op-50"></div>
                     </div> <!-- ./Group-divider -->
 
-                    <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row"
-                         layout-align="start center" class="margin-top-default margin-bottom-default"
+                    <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center" class="margin-top-default margin-bottom-default"
                          ng-repeat="(key, val) in workPanelCtrl.stats">
+
                         <span hide-xs flex-gt-xs="20">
                             {{::val.name}}
                         </span>
+
                         <div hide-xs flex-gt-xs="5"></div>
+
                         <div flex-gt-xs="35" flex-xs="65" layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">
                                 {{::val.icon}}
@@ -139,6 +134,7 @@
                             </i>
                             <span>{{val.value}}</span>
                         </div>
+
                         <div flex="35" layout="row" layout-align="end center">
                             <!--<md-button class="md-icon-button">-->
                                 <!--<md-icon class="material-icons">info_outline</md-icon>-->
@@ -147,17 +143,18 @@
                                 <!--</md-tooltip>-->
                             <!--</md-button>-->
                         </div>
+
                         <div hide-xs flex-gt-xs="5"></div>
+
                     </div>
 
-                </div>
-            </div>
-
+                </div> <!-- ./row -->
+            </div> <!-- ./row -->
         </md-expansion-panel-content>
 
         <md-expansion-panel-footer md-no-sticky>
-            <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center"
-                 layout-align-xs="center center">
+            <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
+
                 <md-button ng-if="true" class="layout-xs-rw-100">
                     {{$i18n.block.btn.delete}}
                 </md-button>
