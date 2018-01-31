@@ -8,6 +8,6 @@
         </div>
     </md-list-item>
 
-    <div ng-include="'views/app/lists/list_items/console_new_user_org_list_item.html'"></div>
+    <div ng-repeat="org in adminCtrl.invitedUser.organizations" ng-include="'views/app/lists/list_items/console_new_user_org_list_item.html'"></div>
 
 </md-list>

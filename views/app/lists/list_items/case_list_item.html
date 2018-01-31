@@ -1,5 +1,4 @@
-<div layout="row" layout-align="start center" class="card-case padding-horizontal-2x"
-     ng-repeat-start="useCase in caseCtrl.caseTab.cases | orderBy:'strindId'" ng-click="useCase.open()">
+<div layout="row" layout-align="start center" class="card-case padding-horizontal-2x" ng-click="useCase.open()">
 
     <i flex-gt-sm="10" flex-sm="15" flex-xs="30" class="material-icons {{::useCase.color}}">
         {{useCase.icon ? useCase.icon : 'label'}}
@@ -33,5 +32,3 @@
     </md-menu>
 
 </div>
-
-<md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>

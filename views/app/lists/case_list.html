@@ -1,5 +1,7 @@
 <div layout="column" class="card">
 
-    <div ng-include="'views/app/lists/list_items/case_list_item.html'"></div>
+    <div ng-repeat-start="useCase in caseCtrl.caseTab.cases | orderBy:'strindId'" ng-include="'views/app/lists/list_items/case_list_item.html'"></div>
+
+    <md-divider ng-class="$last ? 'hide' : ''" ng-repeat-end></md-divider>
 
 </div>

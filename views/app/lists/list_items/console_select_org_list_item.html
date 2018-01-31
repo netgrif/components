@@ -1,6 +1,4 @@
-<md-list-item class="card list-item"
-              ng-repeat-start="org in adminCtrl.organizations"
-              ng-click="org.add()">
+<md-list-item class="card list-item" ng-click="org.add()">
     <div flex layout="row" layout-align="space-between center">
 
         <span>{{org.name}}</span>
@@ -11,5 +9,3 @@
 
     </div>
 </md-list-item>
-
-<md-divider class="border-width-default color-border-transparent" ng-repeat-end></md-divider>
