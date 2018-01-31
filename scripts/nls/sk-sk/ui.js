@@ -59,6 +59,7 @@ define({
         workflow: {
             this: "Workflow",
             uploadModel: "Nahrať model",
+            uploadDate: "Dátum nahrania",
             color: "Farba",
             modelTitle: "Názov modelu",
             author: "Autor",
@@ -101,6 +102,26 @@ define({
                     activeUsers: {
                         title: "Aktívni používatelia",
                         desc: "Počet používateľov pracujúcich s ľubovoľným prípadom tohto modelu"
+                    },
+                    places: {
+                        title: "Miesta",
+                        desc: ""
+                    },
+                    transitions: {
+                        title: "Prechody",
+                        desc: ""
+                    },
+                    arcs: {
+                        title: "Hrany",
+                        desc: ""
+                    },
+                    data: {
+                        title: "Dáta",
+                        desc: ""
+                    },
+                    actions: {
+                        title: "Akcie",
+                        desc: ""
                     }
                 }
             }
@@ -343,7 +364,9 @@ define({
             fileMustHaveXmlFormat: "Súbor musí byť vo formáte XML",
             modelFailedToUpload: "Model sa nepodarilo nahrať",
 
-            featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
+            featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná",
+            noWorkflowModel: "V systéme sa nenachádzajú žiadne workflow modely",
+            loadingWorkflowFailed: "Nepodarilo sa načítať workflow modely"
         },
         add: {
             createCase: "Vytvoriť prípad",

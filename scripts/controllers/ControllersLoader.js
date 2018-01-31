@@ -5,6 +5,6 @@
 
 var path = 'scripts/controllers/';
 define(['MainController', 'CasesController', 'LoginController', 'AdminConsoleController', 'TaskController',
-    'CaseDialogController', 'DashboardController', 'ProfileController', 'TasksController', 'WorkflowController']
+    'CaseDialogController', 'DashboardController', 'ProfileController', 'TasksController', 'WorkflowController', 'WorkflowPanelController']
     .map(ctrl => path + ctrl), function () {
 });
