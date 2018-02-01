@@ -127,7 +127,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                                 resources.forEach((r, i) => {
                                     self.expansionGroup.add(self.expansionPanelName, {
                                         resource: r,
-                                        links: r._links
+                                        links: response.$response().data._embedded.petriNetSmalls[i]._links
                                     }).then(panel => {
                                         self.panels.push(panel);
                                     })

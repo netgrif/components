@@ -11,7 +11,7 @@
 
             <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
                 <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                {{workPanelCtrl.author.fullName}}
+                {{workPanelCtrl.author.fullName ? workPanelCtrl.author.fullName : workPanelCtrl.author.email}}
             </span>
 
             <span hide show-gt-sm flex-gt-sm="20">
@@ -47,7 +47,7 @@
 
             <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
                 <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                {{workPanelCtrl.author.fullName}}
+                {{workPanelCtrl.author.fullName ? workPanelCtrl.author.fullName : workPanelCtrl.author.email}}
             </span>
 
             <span hide show-gt-sm flex-gt-sm="20">

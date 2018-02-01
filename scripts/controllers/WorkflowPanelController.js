@@ -13,7 +13,8 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
 
                     //TODO model file download
                     self.downloadModel = function () {
-
+                        const downloadWindow = window.open(self.links.file.href);
+                        downloadWindow.onload = () => downloadWindow.close();
                     };
 
                     Object.assign(self,resource);
