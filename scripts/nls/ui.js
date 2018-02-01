@@ -60,7 +60,6 @@ define({
             workflow: {
                 this: "Workflow",
                 uploadModel: "Upload model",
-                uploadDate: "Upload Date",
                 color: "Color",
                 modelTitle: "Model title",
                 author: "Author",
@@ -364,10 +363,10 @@ define({
                 noFileWasAttached: "No file was attached",
                 fileMustHaveXmlFormat: "File must have XML format",
                 modelFailedToUpload: "Model failed to upload",
-
-                featureWillBeAvailableSoon: "This feature will be available soon",
                 noWorkflowModel: "There are no workflow models uploaded into the system",
-                loadingWorkflowFailed: "Loading workflow models has failed"
+                loadingWorkflowFailed: "Loading workflow models has failed",
+
+                featureWillBeAvailableSoon: "This feature will be available soon"
             },
             add: {
                 createCase: "Create Case",
