@@ -1,4 +1,5 @@
 <div class="data-field" layout="row" layout-align="start center" layout-wrap>
+
     <div flex="45" flex-xs="100">
         <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
             {{field.name}}
@@ -7,10 +8,11 @@
             </md-tooltip>
         </span>
     </div>
+
     <div hide-xs flex="5"></div>
+
     <div flex="45" flex-xs="100">
-        <!--id="'data-'+task.stringId+'-'+field.stringId" eval-attr-as-expr="id"-->
-        <md-input-container  class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
+        <md-input-container  flex class="md-block" ng-class="field.valid ? '':' md-input-invalid'">
             <label class="placeholder">{{field.placeholder}}</label>
             <input id="{{'data-'+task.stringId+'-'+field.stringId}}" type="text" ng-if="field.subType === 'simple'"
                    ng-model="field.newValue"
@@ -21,7 +23,8 @@
                    ng-required="field.behavior.required"
                    md-maxlength="field.maxLength"
                    ng-keypress="$event.which === 13 && $event.target.blur()"
-                   aria-label="Enter text">
+                   aria-label="Enter text"
+                   title="">
             <textarea id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-if="field.subType === 'area'"
                       rows="1" max-rows="4"
                       ng-model="field.newValue"
@@ -30,7 +33,9 @@
                       ng-blur="task.save()"
                       ng-required="field.behavior.required"
                       md-maxlength="field.maxLength"
-                      aria-label="Enter text"></textarea>
+                      aria-label="Enter text"
+                      title="">
+            </textarea>
             <div ng-messages="field.validationErrors" ng-show="field.newValue">
                 <div ng-message="length" class="color-fg-warning">{{::$i18n.block.validation.textMustBeAtMost + " " + field.maxLength + " " + $i18n.block.word.characters + " " + $i18n.block.word.long}}</div>
                 <div ng-message="email" class="color-fg-warning">{{::$i18n.block.validation.textInEmailFormat + " ( "+field.formating+" )"}}</div>
@@ -39,6 +44,8 @@
             </div>
         </md-input-container>
     </div>
+
     <div hide-xs flex="5"></div>
+
     {{::field.bindElement()}}
 </div>

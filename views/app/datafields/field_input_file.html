@@ -1,4 +1,5 @@
 <div class="data-field" layout="row" layout-align="start center" layout-wrap>
+
     <div flex="45" flex-xs="100">
         <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
             {{field.name}}
@@ -7,8 +8,11 @@
             </md-tooltip>
         </span>
     </div>
+
     <div hide-xs flex="5"></div>
+
     <div flex="45" flex-xs="100" layout="row" layout-align="space-between center">
+
         <div flex layout="row" layout-align="start center">
             <md-icon class="material-icons margin-right-2x" ng-if="!field.newValue || field.generated">insert_drive_file</md-icon>
             <md-icon class="material-icons margin-right-2x color-fg-warning" ng-if="field.newFile && !field.uploaded">
@@ -21,6 +25,7 @@
             </md-icon>
             <span class="text-overflow-dots">{{field.newValue ? field.newValue : (field.generated ? field.defaultValue : $i18n.block.data.noFile)}}</span>
         </div>
+
         <md-menu flex-xs="20" class="width-24px">
             <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                 <md-icon class="material-icons">more_vert</md-icon>
@@ -51,6 +56,8 @@
                 </md-menu-item>
             </md-menu-content>
         </md-menu>
+
     </div>
+
     <div hide-xs flex="5"></div>
 </div>
