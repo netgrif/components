@@ -4208,7 +4208,7 @@ md-expansion-panel md-expansion-panel-collapsed:hover, md-expansion-panel md-exp
 
 md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover span,
 md-expansion-panel md-expansion-panel-collapsed:hover span, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover span {
-  color: #FAFAFA;
+  color: #FAFAFA !important;
 }
 
 md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover task-priority .material-icons,
@@ -5796,9 +5796,6 @@ md-expansion-panel.highlight md-progress-circular path {
 @media all and (min-width: 960px) {
   .base .sidenav {
     height: 100%;
-    -webkit-transition: height 2s;
-    -o-transition: height 2s;
-    transition: height 2s;
   }
 }
 
