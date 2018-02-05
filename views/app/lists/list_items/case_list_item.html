@@ -11,11 +11,12 @@
     </span>
     <span hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" layout="row" layout-align="start center">
         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-        Name Surname
+        {{::useCase.author.fullName}}
     </span>
-    <span hide show-gt-md flex="20">
-        dd.mm.yyyy hh:mm
-    </span>
+    <!--TODO 5.2.2018 waiting for Spring auditing to provide this info-->
+    <!--<span hide show-gt-md flex="20">-->
+        <!--dd.mm.yyyy hh:mm-->
+    <!--</span>-->
 
     <md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
         <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>

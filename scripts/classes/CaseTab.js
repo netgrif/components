@@ -16,8 +16,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
 
         this.cases = [];
         this.newCase = {
-            // TODO 16.1.2018 New case title doesn't work properly
-            title: this.$i18n.block.case.newTitle[this.caseType]
+            title: this.$i18n.block.case.newTitle
         };
     }
 
@@ -32,6 +31,10 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
 
     CaseTab.prototype.activate = function () {
         if (this.cases.length === 0)
+            if(!this.processName) {
+                this.load(false);
+                return;
+            }
             this.loadPetriNet(this.processName, (success) => {
                 if (success) {
                     if(this.transitionNames)
@@ -154,7 +157,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                     if (response) {
                         self.$dialog.closeCurrent();
                         self.newCase = {
-                            title: self.$i18n.block.case.newTitle[self.caseType]
+                            title: self.$i18n.block.case.newTitle
                         };
                         if (self.actionCase){
                             const actionCase = new ActionCase(self,self.controller.getPanelGroup(response.title),response,null,{
@@ -187,7 +190,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 }, function () {
                     self.$snackbar.error(self.$i18n.block.snackbar.creatingNewCaseFailed);
                     self.newCase = {
-                        title: self.$i18n.block.case.newTitle[self.caseType]
+                        title: self.$i18n.block.case.newTitle
                     };
                 });
         }

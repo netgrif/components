@@ -24,7 +24,7 @@
             </span>
 
             <span hide show-gt-md flex="20">
-                dd.mm.yyyy hh:mm
+                {{task.formatedDate}}
             </span>
 
             <md-menu ng-if="!task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
@@ -105,7 +105,7 @@
             </span>
 
             <span hide show-gt-md flex="20">
-                dd.mm.yyyy hh:mm
+                {{task.formatedDate}}
             </span>
 
             <i ng-if="task.finishDate && !task.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center" class="material-icons color-fg-primary-500">done</i>

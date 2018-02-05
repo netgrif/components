@@ -212,10 +212,7 @@ define({
                 author: "Autor",
                 createDate: "Dátum vytvorenia"
             },
-            newTitle: {
-                Offer: "Nové poistenie",
-                Contact: "Meno a priezvisko"
-            }
+            newTitle: "Nová inštancia"
         },
         task: {
             type: "Typ",

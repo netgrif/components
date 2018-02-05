@@ -64,7 +64,6 @@ define({
                 color: "Color",
                 modelTitle: "Model title",
                 author: "Author",
-                uploadDate: "Upload Date",
                 data: {
                     group: {
                         details: "Details",
@@ -213,10 +212,7 @@ define({
                     author: "Author",
                     createDate: "Create Date"
                 },
-                newTitle: {
-                    Offer: "New insurance",
-                    Contact: "Name and surname"
-                }
+                newTitle: "New instance"
             },
             task: {
                 type: "Type",
