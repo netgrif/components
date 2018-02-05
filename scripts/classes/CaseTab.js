@@ -67,7 +67,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
 
     CaseTab.prototype.load = function (next) {
         const self = this;
-        if (this.page.totalElements === this.cases.length || this.loading || !this.net) return;
+        if (this.page.totalElements === this.cases.length || this.loading) return;
         const url = next ? (self.page.next ? self.page.next : CaseTab.URL_SEARCH) : CaseTab.URL_SEARCH;
         const config = this.buildSearchRequest(url, this.filter);
         self.loading = true;
@@ -206,6 +206,10 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
 
     CaseTab.prototype.loadPetriNet = function (title, callback = () => {
     }) {
+        if(!title) {
+            callback(false);
+            return;
+        }
         const self = this;
         this.$http.post("/res/petrinet/ref", {title: title}).then(function (response) {
             self.net = response;
