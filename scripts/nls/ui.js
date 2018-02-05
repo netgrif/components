@@ -388,5 +388,5 @@ define({
             }
         }
     },
-    'sk-sk':true
+    'sk-SK':true
 });

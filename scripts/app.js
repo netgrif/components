@@ -101,6 +101,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
 
             $locationProvider.html5Mode(true);
             $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
+            $httpProvider.defaults.headers.common['Accept-Language'] = localStorage.getItem("locale") || 'en-US';
             $httpProvider.interceptors.push('authHttpInterceptor');
 
             $mdDateLocaleProvider.firstDayOfWeek = 1;
