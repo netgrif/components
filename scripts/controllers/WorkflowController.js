@@ -39,7 +39,11 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
                         let meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
                         $fileUpload.upload(self.netFile, meta, "/res/petrinet/import", function (response) {
-                            if (response.success) $dialog.closeCurrent();
+                            if (response.success) {
+                                $dialog.closeCurrent();
+                                self.clearAll();
+                                self.load(false);
+                            }
                             else $snackbar.error($i18n.block.snackbar.modelFailedToUpload);
                             self.netFile = undefined;
                             self.petriNetMeta = {};
