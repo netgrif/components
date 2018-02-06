@@ -21,12 +21,21 @@ define(['./DataField','./HalResource','./Task'], function (DataField, HalResourc
                 if(data.type === 'date') data.value = Task.formatDate(data.value);
             });
         }
+        this.formatedDate = Case.formatDate(this.creationDate);
+
         this.data = [];
         this.loading = false;
     }
 
     Case.prototype = Object.create(HalResource.prototype);
     Case.prototype.constructor = Case;
+
+    Case.formatDate = function (date) {
+        if (!date) return undefined;
+        if (date instanceof Date) return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
+        return `${DataField.padding(date.dayOfMonth, 0)}.${DataField.padding(date.monthValue, 0)}.${date.year}
+            ${DataField.padding(date.hour, 0)}${date.hour ? ':' : ''}${DataField.padding(date.minute, 0)}`;
+    };
 
     Case.prototype.load = function (callback = ()=>{}) {
         //TODO 9.7.2017 load case data

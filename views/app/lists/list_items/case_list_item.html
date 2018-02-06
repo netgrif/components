@@ -1,8 +1,10 @@
 <div layout="row" layout-align="start center" class="card-case padding-horizontal-2x" ng-click="useCase.open()">
 
-    <i flex-gt-sm="10" flex-sm="15" flex-xs="30" class="material-icons {{::useCase.color}}">
-        {{useCase.icon ? useCase.icon : 'label'}}
-    </i>
+    <span flex-gt-sm="10" flex-sm="15" flex-xs="30" >
+        <i class="material-icons margin-right-2x {{::useCase.color}}">
+            {{useCase.icon ? useCase.icon : 'label'}}
+        </i>
+    </span>
     <span flex-gt-md="20" flex-gt-sm="25" flex-gt-xs="30" flex-xs="50">
         {{::useCase.visualId}}
     </span>
@@ -14,9 +16,9 @@
         {{::useCase.author.fullName}}
     </span>
     <!--TODO 5.2.2018 waiting for Spring auditing to provide this info-->
-    <!--<span hide show-gt-md flex="20">-->
-        <!--dd.mm.yyyy hh:mm-->
-    <!--</span>-->
+    <span hide show-gt-md flex="20">
+        {{::useCase.formatedDate}}
+    </span>
 
     <md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
         <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
