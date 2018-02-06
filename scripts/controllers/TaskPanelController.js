@@ -1,12 +1,12 @@
 define(['angular', '../classes/Task', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, Task) {
-        angular.module('ngMain').controller('TaskController',
+        angular.module('ngMain').controller('TaskPanelController',
             ['$log', '$scope', '$http', '$snackbar', '$user', '$dialog', '$fileUpload', '$timeout', '$mdExpansionPanel', 'resource', 'links', 'tab', 'config', '$i18n',
                 function ($log, $scope, $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanel, resource, links, tab, config, $i18n) {
                     const self = this;
-                    this.taskId = resource.stringId;
-                    tab.addTaskController(this);
+                    self.taskId = resource.stringId;
 
+                    //TODO Task object merge with this controller
                     this.createTask = function (panel) {
                         $scope.task = new Task(tab, panel, resource, links,{
                             $http,
