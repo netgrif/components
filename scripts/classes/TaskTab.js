@@ -22,6 +22,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.tasks = [];
         this.transactions = [];
         this.transactionProgress = 0;
+        this.taskControllers = {};
     }
 
     TaskTab.prototype = Object.create(Tab.prototype);
@@ -201,7 +202,11 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 tab: this,
                 config: {allowHighlight: this.allowHighlight}
             }).then(function (panel) {
-                self.tasks.push(panel);
+                if(self.taskControllers[r.stringId]){
+                    self.taskControllers[r.stringId].panel = panel;
+                    self.tasks.push(self.taskControllers[r.stringId]);
+                    delete self.taskControllers[r.stringId];
+                }
 
                 self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
                 self.transactionProgress = self.mostForwardTransaction();
@@ -216,8 +221,8 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.tasks.splice(index, 1);
     };
 
-    TaskTab.prototype.prioritySort = function () {
-
+    TaskTab.prototype.addTaskController = function (taskCtrl) {
+        this.taskControllers[taskCtrl.stringId] = taskCtrl;
     };
 
     // TaskTab.prototype.autoExpandTask = function () {
@@ -265,10 +270,6 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         });
         return index;
     };
-
-    // TaskTab.prototype.addTaskController = function (taskCtrl) {
-    //     this.taskControllers[taskCtrl.taskId] = taskCtrl;
-    // };
 
     TaskTab.prototype.removeAll = function () {
         this.tasksGroup.removeAll();
