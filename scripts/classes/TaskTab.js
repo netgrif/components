@@ -187,7 +187,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 if (index === -1)
                     tasksToDelete.push(i);
                 else {
-                    task.changeResource(resources[index], resources[index].links);
+                    task.update(resources[index], resources[index].links);
                     resources.splice(index, 1);
                 }
             });
@@ -241,7 +241,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     // };
 
     TaskTab.prototype.updateTasksData = function (updateObj) {
-        this.tasks.forEach(t => t.updateData(updateObj));
+        this.tasks.forEach(t => t.updateDataGroups(updateObj));
     };
 
     TaskTab.prototype.loadTransactions = function () {
