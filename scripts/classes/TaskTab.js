@@ -1,21 +1,20 @@
-define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
+define(['./Tab', './Task', './Transaction', './Filter'], function (Tab, Task, Transaction, Filter) {
     /**
      * Constructor for TaskTab class
      * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n
      * @param id
      * @param label
-     * @param baseUrl
-     * @param baseCriteria
+     * @param {Filter} baseFilter
      * @param useCase
      * @param angular
      * @param config - config parameters for better customizing behavior of tab
      * @constructor
      */
-    function TaskTab(id, label, baseUrl, baseCriteria, useCase, angular, config = {}) {
+    function TaskTab(id, label, baseFilter, useCase, angular, config = {}) {
         Tab.call(this, id, label);
 
-        this.baseUrl = baseUrl;
-        this.baseCriteria = baseCriteria;
+        this.baseUrl = TaskTab.URL_SEARCH;
+        this.baseFilter = baseFilter;
         this.useCase = useCase;
         Object.assign(this, angular, config);
 
@@ -23,6 +22,7 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.transactions = [];
         this.transactionProgress = 0;
         this.taskControllers = {};
+        this.activeFilter = this.baseFilter;
     }
 
     TaskTab.prototype = Object.create(Tab.prototype);
@@ -31,16 +31,12 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     TaskTab.URL_ALL = "/res/task";
     TaskTab.URL_MY = "/res/task/my";
     TaskTab.URL_SEARCH = "/res/task/search";
-    TaskTab.URL_BYCASE = "/res/task/case";
-    TaskTab.FIND_BY_CASE = 0;
-    TaskTab.FIND_BY_TITLE = 1;
 
-    TaskTab.prototype.activate = function (taskToExpand) {
+    TaskTab.prototype.activate = function () {
         this.tasksGroup = this.$mdExpansionPanelGroup(`tasksGroup-${this.id}`);
-        const panelView = this.taskView ? "task_panel.html" : "case_panel.html";
         try {
             this.tasksGroup.register(`taskPanel`, {
-                templateUrl: 'views/app/panels/'+panelView,
+                templateUrl: 'views/app/panels/task_panel.html',
                 controller: 'TaskPanelController',
                 controllerAs: 'taskCtrl'
             });
@@ -51,7 +47,6 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         if (this.showTransactions)
             this.loadTransactions();
 
-        this.taskToExpand = taskToExpand;
         this.load(false);
     };
 
@@ -62,72 +57,28 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
         this.load(false);
     };
 
-    TaskTab.prototype.buildRequestConfig = function (url) {
-        switch (true) {
-            case url.includes(TaskTab.URL_BYCASE):
-                return {
-                    method: 'POST',
-                    url: url,
-                    data: [this.useCase.stringId]
-                };
-            default:
-                const query = this.getSearchQuery();
-                return config = {
-                    method: query ? 'POST' : 'GET',
-                    url: url,
-                    data: query
-                };
-        }
+    TaskTab.prototype.removeAll = function () {
+        this.tasksGroup.removeAll();
+        this.tasks.splice(0, this.tasks.length);
     };
 
-    TaskTab.prototype.getSearchQuery = function () {
-        const query = {};
-        this.baseCriteria.forEach(c => {
-            if (c === TaskTab.FIND_BY_CASE)
-                query.case = this.useCase.stringId;
-
-            if (c === TaskTab.FIND_BY_TITLE && this.searchTitles)
-                query.title = this.searchTitles;
-        });
-
-        return query;
-
-        // if (!this.filter) return undefined;
-        //
-        // let searchTier;
-        // if (this.filter.processes.length > 0) searchTier = 1;
-        // if (this.filter.transitions.length > 0) searchTier = 2;
-        // if (this.filter.fields.length > 0) searchTier = 3;
-        //
-        // const query = {
-        //     searchTier: searchTier,
-        //     petriNets: []
-        // };
-        // this.filter.processes.forEach(process => query.petriNets.push({
-        //     petriNet: process.entityId,
-        //     transitions: this.filter.transitions.filter(trans => trans.petriNetId === process.entityId),
-        //     dataSet: this.filter.fields.filter(field => field.petriNetId === process.entityId).reduce((acc, field) => {
-        //         acc[field.entityId] = field.value;
-        //         return acc;
-        //     }, {})
-        // }));
-        //
-        // return query;
+    TaskTab.prototype.buildRequest = function (next) {
+        const url = next ? this.page.next : this.baseUrl + "?sort=priority";
+        return {
+            method: "POST",
+            url: url,
+            data: this.activeFilter.query
+        };
     };
 
     TaskTab.prototype.load = function (next) {
         if (this.loading || !this.baseUrl) return;
         if (next && this.tasks && this.page.totalElements === this.tasks.length) return;
+        if (!next && this.tasks.length > 0) return;
 
         const self = this;
-        let url = this.filter ? TaskTab.URL_SEARCH : this.baseUrl;
-        url += "?sort=priority";
-        if (next) url = this.page.next;
-
-        const config = this.buildRequestConfig(url);
-
         this.loading = true;
-        this.$http(config).then(function (response) {
+        this.$http(this.buildRequest(next)).then(function (response) {
             self.page = response.page;
             if (self.page.totalElements === 0) {
                 self.$snackbar.info(self.$i18n.block.snackbar.noTasks);
@@ -147,20 +98,8 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
 
                 resources.forEach((r, i) => r.links = rawData[i]._links);
                 self.parseTasks(resources, next);
-                //self.sortByPriority(resources,next);
-                // const tasks = [];
-                // resources.forEach((r, i) => {
-                //      self.tasksGroup.add(`taskPanel`,{resource: r, links: rawData[i]._links, tab: self}).then(function (panel) {
-                //          if(self.taskControllers[r.stringId])
-                //              tasks.push(self.taskControllers[r.stringId].createTask(panel));
-                //      });
-                // });
-                //
-                // if (next) self.tasks = tasks.concat(self.tasks);
-                // else self.tasks = tasks;
 
                 self.loading = false;
-
             }, function () {
                 self.$snackbar.info(`${self.$i18n.block.snackbar.noTasksFoundIn} ${self.label}`);
                 self.page.next = undefined;
@@ -173,12 +112,10 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
 
         }, function () {
             self.$snackbar.error(`${self.$i18n.block.snackbar.tasksOn} ${url} ${self.$i18n.block.snackbar.failedToLoad}`);
-            //TODO originálne tu bol hideLoading()
             self.loading = false;
         });
     };
 
-    //TODO 17.7.2017 ošetriť sortovanie podľa priority
     TaskTab.prototype.parseTasks = function (resources, next) {
         if (!next) {
             const tasksToDelete = []; //saved are only indexes for work later
@@ -202,17 +139,20 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
                 tab: this,
                 config: {allowHighlight: this.allowHighlight}
             }).then(function (panel) {
-                if(self.taskControllers[r.stringId]){
+                if (self.taskControllers[r.stringId]) {
                     self.taskControllers[r.stringId].panel = panel;
                     self.tasks.push(self.taskControllers[r.stringId]);
                     delete self.taskControllers[r.stringId];
                 }
 
-                self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
-                self.transactionProgress = self.mostForwardTransaction();
+                if (self.showTransactions) {
+                    self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
+                    self.transactionProgress = self.mostForwardTransaction();
+                }
             });
         });
-        self.transactions.forEach(trans => trans.setActive(self.tasks));
+        if (self.showTransactions)
+            self.transactions.forEach(trans => trans.setActive(self.tasks));
     };
 
     TaskTab.prototype.deleteTaskOnIndex = function (index) {
@@ -224,21 +164,6 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
     TaskTab.prototype.addTaskController = function (taskCtrl) {
         this.taskControllers[taskCtrl.stringId] = taskCtrl;
     };
-
-    // TaskTab.prototype.autoExpandTask = function () {
-    //     const unfinished = this.tasks.filter(task => !task.finishDate);
-    //     if (unfinished.length === 1 &&
-    //         this.tasks.findIndex(task => task.stringId === unfinished[0].stringId) === this.tasks.length - 1 &&
-    //         !unfinished[0].expanded) {
-    //         unfinished[0].click();
-    //     }
-    // };
-
-    // TaskTab.prototype.expandTask = function (taskId) {
-    //     if (this.tasks) {
-    //         this.tasks.find(task => task.stringId === taskId).click();
-    //     }
-    // };
 
     TaskTab.prototype.updateTasksData = function (updateObj) {
         this.tasks.forEach(t => t.updateDataGroups(updateObj));
@@ -269,12 +194,6 @@ define(['./Tab', './Task', './Transaction'], function (Tab, Task, Transaction) {
             if (trans.active) index = i > index ? i : index;
         });
         return index;
-    };
-
-    TaskTab.prototype.removeAll = function () {
-        this.tasksGroup.removeAll();
-        this.tasks.splice(0, this.tasks.length);
-        // this.taskControllers = {};
     };
 
     TaskTab.prototype.reloadUseCase = function () {

@@ -1,5 +1,5 @@
-define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, CaseTab, TaskTab) {
+define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (angular, CaseTab, TaskTab, Filter) {
         angular.module('ngCases').controller('CasesController',
             ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
@@ -34,7 +34,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Cases
                      */
                     self.openTaskTab = function (useCase) {
                         if (!self.taskTabs.some(tab => tab.useCase.stringId === useCase.stringId))
-                            self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title, TaskTab.URL_SEARCH, [TaskTab.FIND_BY_CASE], useCase, {
+                            self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title, new Filter("Default By Case", Filter.CASE_TYPE, {case: useCase.stringId}, {}), useCase, {
                                 $http,
                                 $snackbar,
                                 $dialog,
