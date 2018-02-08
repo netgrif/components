@@ -17,8 +17,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../modules/Cases
                         $timeout,
                         $i18n
                     }, {
-                        processName: "Insurance Demo", //process name
-                        filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET],
+                        // processName: "Insurance Demo", //process name
+                        // filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET],
                         //transitionNames: ["Nehnuteľnosť a domácnosť", "Základné informácie", "Údaje o zmluve"],
                         //caseType: "regular"
                     });

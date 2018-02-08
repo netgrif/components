@@ -24,7 +24,7 @@ define(['angular','i18n!nls/ui','../modules/Main'],function (angular, ui) {
                 location.reload();
             },
             current: function () {
-                return localStorage.getItem('locale') || 'en-us';
+                return localStorage.getItem('locale') || 'en-US';
             }
         };
 
