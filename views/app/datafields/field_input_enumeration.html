@@ -11,10 +11,10 @@
     <div flex="45" flex-xs="100">
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{field.placeholder}}</label>
-            <md-select id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-model="field.newValue"
+            <md-select id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" ng-model="field.newValue"
                        ng-change="field.changed = true;task.save()"
-                       ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                       ng-blur="task.save()"
+                       ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
+                       ng-blur="field.parent.save()"
                        md-on-open="field.active = true"
                        md-on-close="field.active = false"
                        ng-required="field.behavior.required"

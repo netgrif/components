@@ -128,7 +128,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                                 callCallbackWithResult(callback, false);
                             }
                         }, error => {
-                            self.$snackbar.error(`${$i18n.block.snackbar.cancelingAssignmentOfTask} ${self.title} ${$i18n.block.snackbar.failed}`);
+                            $snackbar.error(`${$i18n.block.snackbar.cancelingAssignmentOfTask} ${self.title} ${$i18n.block.snackbar.failed}`);
                             callCallbackWithResult(callback, false);
                         });
                     }
@@ -251,7 +251,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                         $http.post(self.links["data-edit"].href, JSON.stringify(fields)).then(response => {
                             self.tab.updateTasksData(response.changedFields);
                             Object.keys(fields).forEach(id => taskData.find(f => f.stringId === id).changed = false);
-                            $snackbar.success(self.$i18n.block.snackbar.dataSavedSuccessfully);
+                            $snackbar.success($i18n.block.snackbar.dataSavedSuccessfully);
                             callCallbackWithResult(callback, true);
                         }, error => {
                             $snackbar.error($i18n.block.snackbar.savingDataFailed);

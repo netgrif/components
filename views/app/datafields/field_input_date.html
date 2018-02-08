@@ -9,12 +9,12 @@
     </div>
     <div hide-xs flex="5"></div>
     <div flex="45" flex-xs="100">
-        <md-input-container id="{{'data-'+task.stringId+'-'+field.stringId}}" class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
+        <md-input-container id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{::$i18n.block.data.enterDate}}</label>
             <md-datepicker ng-model="field.newValue"
                            ng-change="field.changed = true"
-                           ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                           ng-blur="task.save();field.active = false"
+                           ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
+                           ng-blur="field.parent.save();field.active = false"
                            ng-focus="field.active = true"
                            md-open-on-focus
                            ng-required="field.behavior.required"
