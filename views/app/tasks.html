@@ -47,16 +47,16 @@
                     <!-- Detail opened view -->
                     <div layout="row">
 
-                        <div flex ng-include="'views/app/filter/filter_small.html'"></div>
+                        <div hide flex ng-include="'views/app/filter/filter_small.html'"></div>
 
-                        <md-divider hide-sm hide-xs class="border-width-2x color-border-transparent"></md-divider>
+                        <md-divider hide hide-sm hide-xs class="border-width-2x color-border-transparent"></md-divider>
 
-                        <div hide-sm hide-xs flex-gt-sm="40" layout="column" ng-include="'views/app/filter/filter_detail.html'"></div>
+                        <div hide hide-sm hide-xs flex-gt-sm="40" layout="column" ng-include="'views/app/filter/filter_detail.html'"></div>
 
                     </div>
 
                     <!-- Detail closed view -->
-                    <div hide layout="row" ng-include="'views/app/filter/filter_full.html'"></div>
+                    <div layout="row" ng-include="'views/app/filter/filter_full.html'"></div>
 
                 </md-content> <!-- ./column -->
 
