@@ -60,7 +60,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     function resolveIcons() {
                         if (self.icon)
                             return self.icon.split(" ");
-                        if (self.tab.useCase.icon)
+                        if (self.tab.useCase && self.tab.useCase.icon)
                             return [self.tab.useCase.icon];
                         return ['label'];
                     }

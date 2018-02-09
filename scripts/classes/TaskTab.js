@@ -33,7 +33,8 @@ define(['./Tab', './Task', './Transaction', './Filter'], function (Tab, Task, Tr
     TaskTab.URL_SEARCH = "/res/task/search";
 
     TaskTab.prototype.activate = function () {
-        this.tasksGroup = this.$mdExpansionPanelGroup(`tasksGroup-${this.id}`);
+        const view = this.useCase ? 'caseView' : 'taskView';
+        this.tasksGroup = this.$mdExpansionPanelGroup(`${view}-tasksGroup-${this.id}`);
         try {
             this.tasksGroup.register(`taskPanel`, {
                 templateUrl: 'views/app/panels/task_panel.html',
@@ -41,7 +42,7 @@ define(['./Tab', './Task', './Transaction', './Filter'], function (Tab, Task, Tr
                 controllerAs: 'taskCtrl'
             });
         } catch (error) {
-            //panel already registered
+            console.log(error);
         }
 
         if (this.showTransactions)
@@ -63,11 +64,11 @@ define(['./Tab', './Task', './Transaction', './Filter'], function (Tab, Task, Tr
     };
 
     TaskTab.prototype.buildRequest = function (next) {
-        const url = next ? this.page.next : this.baseUrl + "?sort=priority";
+        const url = next && this.page.next ? this.page.next : this.baseUrl + "?sort=priority";
         return {
             method: "POST",
             url: url,
-            data: this.activeFilter.query
+            data: JSON.parse(this.activeFilter.query)
         };
     };
 
@@ -111,7 +112,7 @@ define(['./Tab', './Task', './Transaction', './Filter'], function (Tab, Task, Tr
             })
 
         }, function () {
-            self.$snackbar.error(`${self.$i18n.block.snackbar.tasksOn} ${url} ${self.$i18n.block.snackbar.failedToLoad}`);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.tasksOn} ${self.url} ${self.$i18n.block.snackbar.failedToLoad}`);
             self.loading = false;
         });
     };
@@ -170,7 +171,7 @@ define(['./Tab', './Task', './Transaction', './Filter'], function (Tab, Task, Tr
     };
 
     TaskTab.prototype.loadTransactions = function () {
-        if (!this.useCase) return;
+        if (!this.useCase || this.transactions.length > 0) return;
 
         const self = this;
         this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
@@ -197,6 +198,7 @@ define(['./Tab', './Task', './Transaction', './Filter'], function (Tab, Task, Tr
     };
 
     TaskTab.prototype.reloadUseCase = function () {
+        if(!this.useCase) return;
         const self = this;
         this.$http({
             method: "POST",

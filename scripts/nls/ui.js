@@ -39,7 +39,7 @@ define({
                     task: "Task",
                     processNotFound: "not found", // SK ...
                     taskNotFound: "not found",
-                    type: "Type",
+                    visibility: "Visibility",
                     filter: "Filter",
                     label: "Label",
                     author: "Author",

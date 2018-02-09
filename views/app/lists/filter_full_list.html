@@ -1,52 +1,11 @@
 <md-list flex class="padding-0">
 
-    <!-- TODO ng-repeat -->
-    <div ng-include="'views/app/lists/list_items/filter_full_list_item.html'"></div>
+    <div ng-repeat-start="filter in tasksCtrl.filterTab.filters" ng-include="'views/app/lists/list_items/filter_full_list_item.html'"></div>
 
-    <!-- TODO add ng-repeat-end -->
-    <md-divider class="border-width-default color-border-transparent"></md-divider>
+    <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
-    <!-- TODO 30.1.2018 Remove view placeholder -->
-    <md-list-item class="card list-item list-item-selected">
-        <div flex layout="row" layout-align="start center">
-
-                <span flex-gt-lg="10" flex-lg="10" flex-md="10" flex-sm="15" flex-xs="30" layout="row" layout-align="start center">
-                    <i class="material-icons color-fg-primary-500">group</i>
-                </span>
-            <span flex-gt-lg="30" flex-lg="30" flex-md="40" flex-sm="35" flex-xs="55" layout="row" layout-align="start center">
-                    Dnesne tasky
-                </span>
-            <span flex-gt-lg="30" flex-lg="30" flex-md="40" flex-sm="40" hide-xs layout="row" layout-align="start center">
-                    <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                    Peter pan
-                </span>
-            <span flex-gt-lg="20" flex-lg="20" hide-md  hide-sm hide-xs>
-                    dd.mm.yyyy hh:mm
-                </span>
-
-            <div flex-gt-lg="10" flex-lg="10"  flex-md="10" hide-sm hide-xs layout="row" layout-align="end center">
-
-                <md-button class="md-icon-button color-fg-primary-500">
-                    <i class="material-icons">list</i>
-                    <md-tooltip>
-                        {{::$i18n.page.tasks.filter.tooltips.details}}
-                    </md-tooltip>
-                </md-button>
-
-            </div>
-
-            <div hide-gt-sm flex-sm="10" flex-xs="15" layout="row" layout-align="end center">
-
-                <md-button class="md-icon-button color-fg-primary-500" ng-click="taskCtrl.showDialog('filter_detail')">
-                    <i class="material-icons">list</i>
-                    <md-tooltip>
-                        {{::$i18n.page.tasks.filter.tooltips.details}}
-                    </md-tooltip>
-                </md-button>
-
-            </div>
-
-        </div>
-    </md-list-item>
+    <div layout="row" layout-align="center center" in-view="$inview&&tasksCtrl.filterTab.load(true,false)" class="padding-2x margin-2x">
+        <md-progress-circular md-mode="indeterminate" ng-disabled="!tasksCtrl.filterTab.loading" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
+    </div>
 
 </md-list>

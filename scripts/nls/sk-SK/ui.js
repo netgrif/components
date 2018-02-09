@@ -38,7 +38,7 @@ define({
                 task: "Úloha",
                 processNotFound: "nebol najdený", // SK ...
                 taskNotFound: "nebola najdená",
-                type: "Typ",
+                visibility: "Dostupnosť",
                 filter: "Filter",
                 label: "Názov",
                 author: "Autor",

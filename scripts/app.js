@@ -79,7 +79,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
                 .segment('tasks', {
                     templateUrl: 'views/app/tasks.html',
                     controller: 'TasksController',
-                    controllerAs: 'taskCtrl'
+                    controllerAs: 'tasksCtrl'
                 })
                 .segment('workflow', {
                     templateUrl: 'views/app/workflow.html',
