@@ -1,4 +1,4 @@
-define(['./Tab', './Task', './Transaction', './Filter'], function (Tab, Task, Transaction, Filter) {
+define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], function (Tab, Task, Transaction, Filter, TaskSearch) {
     /**
      * Constructor for TaskTab class
      * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n
@@ -23,6 +23,7 @@ define(['./Tab', './Task', './Transaction', './Filter'], function (Tab, Task, Tr
         this.transactionProgress = 0;
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
+        this.search = new TaskSearch();
     }
 
     TaskTab.prototype = Object.create(Tab.prototype);
