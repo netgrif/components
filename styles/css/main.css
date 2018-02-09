@@ -4194,6 +4194,7 @@ md-expansion-panel md-expansion-panel-collapsed {
 md-expansion-panel md-expansion-panel-content {
   padding-left: 16px !important;
   padding-right: 16px !important;
+  background-color: #FAFAFA !important;
 }
 
 md-expansion-panel md-expansion-panel-header .md-expansion-panel-header-container {
