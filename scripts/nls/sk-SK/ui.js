@@ -59,7 +59,7 @@ define({
         workflow: {
             this: "Workflow",
             uploadModel: "Nahrať model",
-            color: "Farba",
+            initials: "Iniciály",
             modelTitle: "Názov modelu",
             author: "Autor",
             uploadDate: "Dátum nahrania",

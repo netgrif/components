@@ -60,7 +60,7 @@ define({
             workflow: {
                 this: "Workflow",
                 uploadModel: "Upload model",
-                color: "Color",
+                initials: "Initials",
                 modelTitle: "Model title",
                 author: "Author",
                 uploadDate: "Upload Date",
