@@ -97,8 +97,10 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         if (!self.searchLast)
                             return {};
                         return {
-                            title: self.searchLast,
-                            initials: self.searchLast
+                            or: {
+                                title: self.searchLast,
+                                initials: self.searchLast
+                            }
                         }
                     };
 

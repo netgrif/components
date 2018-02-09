@@ -29,7 +29,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
     FilterTab.prototype.constructor = FilterTab;
 
     FilterTab.prototype.activate = function () {
-        this.load(false, false);
+        this.load(false, true);
     };
 
     FilterTab.prototype.load = function (next, force) {
