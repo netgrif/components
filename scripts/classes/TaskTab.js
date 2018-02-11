@@ -23,7 +23,11 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.transactionProgress = 0;
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
-        this.search = new TaskSearch();
+        this.search = new TaskSearch({
+            $http: this.$http,
+            $snackbar: this.$snackbar,
+            $i18n: this.$i18n
+        });
     }
 
     TaskTab.prototype = Object.create(Tab.prototype);
@@ -199,7 +203,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
     };
 
     TaskTab.prototype.reloadUseCase = function () {
-        if(!this.useCase) return;
+        if (!this.useCase) return;
         const self = this;
         this.$http({
             method: "POST",

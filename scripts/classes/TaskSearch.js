@@ -1,7 +1,7 @@
 define(['./Filter'], function (Filter) {
 
-    const searchSubjects = [
-        {
+    const searchSubjects = {
+        process: {
             title: "Process",
             value: "process",
             disable: false,
@@ -9,8 +9,9 @@ define(['./Filter'], function (Filter) {
                 method: "loadProcessReferences",
                 always: false
             }
-        },
-        {
+        }
+        ,
+        transition: {
             title: "Task",
             value: "transition",
             disable: true,
@@ -19,15 +20,28 @@ define(['./Filter'], function (Filter) {
                 method: "loadTransitionReferences",
                 always: true
             }
-        },
-        {
+        }
+        ,
+        user: {
             title: "User",
             value: "user",
-            disable: false
+            disable: false,
+            load: {
+                method: "loadUsers",
+                always: false
+            }
         }
-    ];
+    };
 
-    function TaskSearch() {
+    /**
+     * angular: $http, $snackbar, $i18n
+     * @param angular
+     * @param config
+     * @constructor
+     */
+    function TaskSearch(angular, config = {}) {
+        Object.assign(this, angular, config);
+
         this.chips = [];
         this.subjects = searchSubjects;
         this.subject = undefined;
@@ -50,7 +64,9 @@ define(['./Filter'], function (Filter) {
     };
 
     TaskSearch.prototype.getItems = function () {
-
+        if (!this.subject)
+            return [];
+        return this.loadCategory();
     };
 
     TaskSearch.prototype.getQuery = function () {
@@ -65,12 +81,43 @@ define(['./Filter'], function (Filter) {
         })
     };
 
-    TaskSearch.prototype.loadProcessReferences = function () {
+    TaskSearch.prototype.filterValues = function (data = []) {
+        if (!this.searchText || this.searchText === "")
+            return data;
+        return data.filter(item => {
+            const val = item.title.trim().toLowerCase();
+            // return val.includes(this.searchText.trim().toLowerCase());
+            return val.startsWith(this.searchText.trim().toLowerCase());
+        })
+    };
 
+    TaskSearch.prototype.loadCategory = function () {
+        if (!this.autoCompleteStorage[this.subject.value] || this.subject.load.always)
+            return this[this.subject.load.method]();
+        else
+            return this.filterValues(this.autoCompleteStorage[this.subject.value]);
+    };
+
+    TaskSearch.prototype.loadProcessReferences = function () {
+        const self = this;
+        return this.$http.get("/res/petrinet/refs").then(response => {
+            return response.$request().$get("petriNetReferences").then(resources => {
+                self.autoCompleteStorage.process = resources;
+                return self.filterValues(self.autoCompleteStorage.process);
+            }, () => {
+                console.log("No Petri net resources was found!");
+            })
+        }, error => {
+            console.log("Petri net references failed to load!");
+        });
     };
 
     TaskSearch.prototype.loadTransitionReferences = function () {
 
+    };
+
+    TaskSearch.prototype.loadUsers = function () {
+        return [];
     };
 
     return TaskSearch;
