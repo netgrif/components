@@ -29,6 +29,13 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
     FilterTab.prototype.constructor = FilterTab;
 
     FilterTab.prototype.activate = function () {
+        this.reload();
+    };
+
+    FilterTab.prototype.reload = function () {
+        this.filters.splice(0, this.filters.length);
+        this.filter = undefined;
+        this.sideViewDetail = false;
         this.load(false, true);
     };
 
