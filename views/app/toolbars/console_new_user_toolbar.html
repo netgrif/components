@@ -10,7 +10,7 @@
                 <md-icon class="material-icons color-fg-material-grey-text">email</md-icon>
 
                 <label>{{::$i18n.block.input.email}}</label>
-                <input name="email" ng-model="adminCtrl.invitedUser.email" required title="User input">
+                <input name="email" ng-model="adminCtrl.invitedUser.email" required title="">
 
                 <div ng-messages="invitationForm.email.$error">
                     <div ng-message="email">{{::$i18n.block.validation.email}}</div>

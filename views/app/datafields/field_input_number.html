@@ -1,4 +1,5 @@
 <div class="data-field" layout="row" layout-align="start center" layout-wrap>
+
     <div flex="45" flex-xs="100">
         <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
             {{field.name}}
@@ -7,7 +8,9 @@
             </md-tooltip>
         </span>
     </div>
+
     <div hide-xs flex="5"></div>
+
     <div flex="45" flex-xs="100">
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{field.placeholder}}</label>
@@ -20,7 +23,8 @@
                    ng-keypress="$event.which === 13 && $event.target.blur()"
                    aria-label="Enter number"
                    step="any"
-                   novalidate>
+                   novalidate
+                   title="">
             <div ng-messages="field.validationErrors" ng-show="field.newValue">
                 <div ng-message="odd" class="color-fg-warning">{{::$i18n.block.validation.oddNumber}}</div>
                 <div ng-message="even" class="color-fg-warning">{{::$i18n.block.validation.evenNumber}}</div>
@@ -31,6 +35,8 @@
             </div>
         </md-input-container>
     </div>
+
     <div hide-xs flex="5"></div>
+
     {{::field.bindElement()}}
 </div>

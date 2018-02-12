@@ -57,3 +57,10 @@
         top: $dim-56px !important; // Toolbar height
     }
 }
+
+@include gt-sm() {
+
+    .sidenav {
+        height: 100%;
+    }
+}

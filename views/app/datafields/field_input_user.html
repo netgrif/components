@@ -1,4 +1,5 @@
 <div layout-wrap layout="row" layout-align="start center" class="data-field">
+
     <div flex="45" flex-xs="100">
         <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
             {{field.name}}
@@ -7,8 +8,11 @@
             </md-tooltip>
         </span>
     </div>
+
     <div hide-xs flex="5"></div>
+
     <div flex="45" flex-xs="100" layout="row" layout-align="space-between center" class="padding-vertical-default">
+
         <div ng-if="field.newValue" layout="row" layout-align="start center">
             <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
             <span class="cursor-pointer">
@@ -18,6 +22,7 @@
                 </md-tooltip>
             </span>
         </div>
+
         <div ng-if="!field.newValue">
             <span>{{::$i18n.block.data.noUserChosen}}</span>
         </div>
@@ -38,6 +43,9 @@
                 </md-menu-item>
             </md-menu-content>
         </md-menu>
+
     </div>
+
     <div hide-xs flex="5"></div>
+
 </div>
