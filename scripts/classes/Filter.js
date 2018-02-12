@@ -63,13 +63,13 @@ define(['./Task'], function (Task) {
             } else if (response.error)
                 self.tab.$snackbar.error(response.error);
         }, error => {
-            self.tab.$snackbar.error("Deleting of the filter " + this.title + " has failed");
+            self.tab.$snackbar.error(`${self.$i18n.block.snackbar.deletingFilter} ${self.title} ${self.$i18n.block.snackbar.failed}`);
             console.log(error);
         })
     };
 
     function wrapWithArray(value) {
-        if(value instanceof Array) return;
+        if (value instanceof Array) return;
         return [value];
     }
 
@@ -77,7 +77,7 @@ define(['./Task'], function (Task) {
         const query = JSON.parse(this.query);
         const readable = {};
         Object.keys(query).forEach(key => {
-            if(key === 'process' || key === 'transition'){
+            if (key === 'process' || key === 'transition') {
                 const refs = wrapWithArray(query[key]);
                 readable[key.toUpperCase()] = refs.map(ref => ref.title);
             } else

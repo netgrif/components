@@ -326,6 +326,7 @@ define({
                 failedToUpload: "failed to upload",
                 uploadedSuccessfully: "uploaded successfully",
                 assigningTask: "Assigning task",
+                delegatingTask: "Delegating task",
                 cancelingAssignmentOfTask: "Canceling assignment of task",
                 finishingTask: "Finishing task",
                 dataFor: "Data for",
@@ -361,6 +362,10 @@ define({
                 modelFailedToUpload: "Model failed to upload",
                 noWorkflowModel: "There are no workflow models uploaded into the system",
                 loadingWorkflowFailed: "Loading workflow models has failed",
+                filtersFailedLoad: "Filters has failed to load",
+                noFiltersFound: "No filters has been found",
+                noSavedFilters: "There are no saved filters",
+                deletingFilter: "Deleting of the filter",
 
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },

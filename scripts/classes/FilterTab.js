@@ -53,7 +53,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         }).then(response => {
             self.page = response.page;
             if (self.page.totalElements === 0) {
-                //TODO snackbar "There are no saved filters"
+                self.$snackbar(self.$i18n.block.snackbar.noSavedFilters);
                 self.page.next = undefined;
                 if (self.filters)
                     self.filters.splice(0, self.filters.length);
@@ -66,13 +66,16 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                     self.page.next = response.$href("next");
                 }
                 resources.forEach((resource, i) => {
+                    const configObj = Object.assign({}, resource, {
+                        $i18n: self.$i18n
+                    });
                     self.filters.push(new Filter(resource.title, resource.type,
-                        resource.query, rawData[i]._links, self, resource))
+                        resource.query, rawData[i]._links, self, configObj))
                 });
 
                 self.loading = false;
             }, () => {
-                //TODO snackbar "No filters has been found"
+                self.$snackbar(self.$i18n.block.snackbar.noFiltersFound);
                 self.page.next = undefined;
                 if (self.filters)
                     self.filters.splice(0, self.filters.length);
@@ -80,7 +83,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
             })
 
         }, error => {
-            //TODO snackbar "Filters failed to load"
+            self.$snackbar(self.$i18n.block.snackbar.filtersFailedLoad);
             console.log(error);
             self.loading = false;
         })

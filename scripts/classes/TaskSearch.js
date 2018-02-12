@@ -1,54 +1,51 @@
 define(['./Filter'], function (Filter) {
 
-    const searchSubjects = {
-        process: {
-            title: "Process",
-            value: "process",
-            disable: false,
-            load: {
-                method: "loadProcessReferences",
-                always: false
-            }
-        }
-        ,
-        transition: {
-            title: "Task",
-            value: "transition",
-            disable: true,
-            dependency: ["process"],
-            load: {
-                method: "loadTransitionReferences",
-                always: true
-            }
-        }
-        ,
-        user: {
-            title: "User",
-            value: "user",
-            disable: false,
-            load: {
-                method: "loadUsers",
-                always: false
-            }
-        }
-    };
-
     /**
-     * angular: $http, $snackbar, $i18n
-     * @param angular
-     * @param config
+     * @param angular $http, $snackbar, $i18n
+     * @param config considerWholeSearchInput
      * @constructor
      */
     function TaskSearch(angular, config = {}) {
         Object.assign(this, angular, config);
 
         this.chips = [];
-        this.subjects = searchSubjects;
         this.subject = undefined;
         this.autoCompleteStorage = {};
         this.searchText = undefined;
         this.selectedItem = undefined;
         this.query = {};
+        this.subjects = {
+            process: {
+                title: this.$i18n.page.console.process,
+                value: "process",
+                disable: false,
+                load: {
+                    method: "loadProcessReferences",
+                    always: false
+                }
+            }
+            ,
+            transition: {
+                title: this.$i18n.page.tasks.this,
+                value: "transition",
+                disable: true,
+                dependency: ["process"],
+                load: {
+                    method: "loadTransitionReferences",
+                    always: true
+                }
+            }
+            ,
+            user: {
+                title: this.$i18n.block.input.user,
+                value: "user",
+                disable: false,
+                load: {
+                    method: "loadUsers",
+                    always: false
+                }
+            }
+        };
     }
 
     function Chip(title) {
@@ -74,10 +71,10 @@ define(['./Filter'], function (Filter) {
     };
 
     TaskSearch.prototype.resolveSubjects = function () {
-        searchSubjects.forEach(subject => {
-            if (!subject.dependency)
+        Object.keys(this.subjects).forEach(subject => {
+            if (!this.subjects[subject].dependency)
                 return;
-            subject.disable = subject.dependency.every(d => !!this.query[d] || this.query.or ? this.query.or[d] : false);
+            this.subjects[subject].disable = this.subjects[subject].dependency.every(d => !!this.query[d] || this.query.or ? this.query.or[d] : false);
         })
     };
 
@@ -86,7 +83,8 @@ define(['./Filter'], function (Filter) {
             return data;
         return data.filter(item => {
             const val = item.title.trim().toLowerCase();
-            // return val.includes(this.searchText.trim().toLowerCase());
+            if (this.considerWholeSearchInput)
+                return val.includes(this.searchText.trim().toLowerCase());
             return val.startsWith(this.searchText.trim().toLowerCase());
         })
     };

@@ -104,7 +104,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                                         callCallbackWithResult(callback, false);
                                     }
                                 }, () => {
-                                    $snackbar.error(`Delegate task ${self.visualID} to user ${user.name} has failed`);
+                                    $snackbar.error(`${$i18n.block.snackbar.delegatingTask} ${self.title} ${$i18n.block.snackbar.failed}`);
                                     callCallbackWithResult(callback, false);
                                 });
                             }, angular.noop);

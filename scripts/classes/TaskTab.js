@@ -27,6 +27,8 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
             $http: this.$http,
             $snackbar: this.$snackbar,
             $i18n: this.$i18n
+        }, {
+            considerWholeSearchInput: false
         });
     }
 
