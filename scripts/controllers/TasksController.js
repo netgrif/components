@@ -1,13 +1,50 @@
-define(['angular', '../classes/TaskTab', '../modules/Tasks', '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, TaskTab) {
+define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Filter', '../modules/Tasks', '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (angular, TaskTab, FilterTab, Filter) {
         angular.module('ngTasks').controller('TasksController',
             ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
                     const self = this;
 
-                    self.showDialog = function (template) {
-                        $dialog.showByTemplate(template, self);
+                    self.activeTabIndex = 0;
+                    self.activeTab = undefined;
+                    self.filterTab = new FilterTab(self, {
+                        $http,
+                        $snackbar,
+                        $dialog,
+                        $i18n
+                    }, {});
+                    self.taskTabs = [];
+
+                    self.openTaskTabs = function (filter = [], closable = true) {
+                        filter.forEach(f => {
+                            self.taskTabs.push(new TaskTab(self.taskTabs.length, f.title, f, null, {
+                                $http,
+                                $snackbar,
+                                $dialog,
+                                $user,
+                                $fileUpload,
+                                $timeout,
+                                $mdExpansionPanelGroup,
+                                $i18n
+                            }, {
+                                closable
+                            }));
+                        });
                     };
 
+                    self.tabChanged = function () {
+                        self.activeTab = self.taskTabs[self.activeTabIndex];
+                        self.activeTab.activate();
+                    };
+
+                    self.closeTaskTab = function (taskTabIndex) {
+                        self.taskTabs.splice(taskTabIndex, 1);
+                        self.activeTabIndex--;
+                    };
+
+                    self.openTaskTabs([
+                        new Filter($i18n.page.tasks.all, Filter.TASK_TYPE, "{}", null, null),
+                        new Filter($i18n.page.tasks.my, Filter.TASK_TYPE, "{\"user\":\"" + $user.login + "\"}", null, null)
+                    ], false);
                 }]);
     });

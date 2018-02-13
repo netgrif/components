@@ -31,7 +31,7 @@
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content>
-                <md-menu-item ng-if="task.user.email == $user.login && field.behavior.editable">
+                <md-menu-item ng-if="field.parent.user.email == $user.login && field.behavior.editable">
                     <md-button class="file-chooser" layout="row" layout-align="start center">
                         <input type="file" id="file"
                                file-model="field.file"

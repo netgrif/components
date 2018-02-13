@@ -10,49 +10,41 @@
 
                 <div layout-gt-xs="row" layout-xs="column">
 
+                    <md-input-container class="md-block" flex>
+                        <label class="placeholder">Category</label>
+                        <md-select ng-model="taskTab.search.subject">
+                            <md-option ng-repeat="(key, subject) in taskTab.search.subjects" ng-value="subject" ng-disabled="subject.disable">
+                                {{subject.title}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
                     <md-autocomplete class="md-block"
-                                     md-search-text="tasksCtrl.tabs[$index].filter.selectedProcess.search"
-                                     md-selected-item="tasksCtrl.tabs[$index].filter.selectedProcess.item"
-                                     md-selected-item-change="tasksCtrl.processSearchChange(item)"
-                                     md-items="item in tasksCtrl.queryProcesses()"
+                                     md-search-text="taskTab.search.searchText"
+                                     md-selected-item="taskTab.search.selectedItem"
+                                     md-selected-item-change="taskTab.search.selectedItemChanged(item)"
+                                     md-items="item in taskTab.search.getItems()"
                                      md-item-text="item.title"
                                      md-min-length="0"
                                      md-no-cache="true"
-                                     md-floating-label="{{::$i18n.page.tasks.filter.process}}">
+                                     md-clear-button="true"
+                                     md-select-on-match="true"
+                                     md-match-case-insensitive="true"
+                                     md-dropdown-items="5"
+                                     md-floating-label="Search">
 
                         <md-item-template>
-                                            <span md-highlight-text="tasksCtrl.tabs[$index].filter.selectedProcess.search" md-highlight-flags="i">
-                                                {{item.title}}
-                                            </span>
+                            <span md-highlight-text="taskTab.search.searchText" md-highlight-flags="i">
+                                {{item.title}}
+                            </span>
                         </md-item-template>
-
                         <md-not-found>
-                            {{::$i18n.page.tasks.filter.process + " " + tasksCtrl.tabs[$index].filter.selectedProcess.search + " " + $i18n.page.tasks.filter.processNotFound}}
+                            <!--{{::$i18n.page.tasks.filter.process + " " + taskTab.search.searchText + " " + $i18n.page.tasks.filter.processNotFound}}-->
+                            No results found
                         </md-not-found>
 
                     </md-autocomplete>
 
-                    <md-autocomplete class="md-block"
-                                     md-search-text="tasksCtrl.tabs[$index].filter.selectedTransition.search"
-                                     md-selected-item="tasksCtrl.tabs[$index].filter.selectedTransition.item"
-                                     md-selected-item-change="tasksCtrl.transitionSearchChange(item)"
-                                     md-items="item in tasksCtrl.queryTransitions()"
-                                     md-item-text="item.title"
-                                     md-min-length="0"
-                                     md-no-cache="true"
-                                     md-floating-label="{{::$i18n.page.tasks.filter.task}}">
-
-                        <md-item-template>
-                                            <span md-highlight-text="TODO.tasksCtrl.filter.selectedTransition.search" md-highlight-flags="i">
-                                                {{item.title}}
-                                            </span>
-                        </md-item-template>
-
-                        <md-not-found>
-                            {{::$i18n.page.tasks.filter.task + " " + tasksCtrl.tabs[$index].filter.selectedTransition.search + " " + $i18n.page.tasks.filter.taskNotFound}}
-                        </md-not-found>
-
-                    </md-autocomplete>
                 </div>
 
                 <md-menu layout="column" layout-align="center center">
@@ -89,13 +81,6 @@
                 <md-chip-template>
                     {{$chip.title}}
                 </md-chip-template>
-
-                <!-- TODO 8.1.2018 Temporary for view tests -->
-                <md-chip>Test</md-chip>
-                <md-chip>Test</md-chip>
-                <md-chip>Test</md-chip>
-                <!-- ./Temporary -->
-
             </md-chips>
 
         </div>

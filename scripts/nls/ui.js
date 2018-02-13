@@ -39,7 +39,7 @@ define({
                     task: "Task",
                     processNotFound: "not found", // SK ...
                     taskNotFound: "not found",
-                    type: "Type",
+                    visibility: "Visibility",
                     filter: "Filter",
                     label: "Label",
                     author: "Author",
@@ -63,7 +63,6 @@ define({
                 initials: "Initials",
                 modelTitle: "Model title",
                 author: "Author",
-                uploadDate: "Upload Date",
                 data: {
                     group: {
                         details: "Details",
@@ -212,10 +211,7 @@ define({
                     author: "Author",
                     createDate: "Create Date"
                 },
-                newTitle: {
-                    Offer: "New insurance",
-                    Contact: "Name and surname"
-                }
+                newTitle: "New instance"
             },
             task: {
                 type: "Type",
@@ -330,6 +326,7 @@ define({
                 failedToUpload: "failed to upload",
                 uploadedSuccessfully: "uploaded successfully",
                 assigningTask: "Assigning task",
+                delegatingTask: "Delegating task",
                 cancelingAssignmentOfTask: "Canceling assignment of task",
                 finishingTask: "Finishing task",
                 dataFor: "Data for",
@@ -365,6 +362,10 @@ define({
                 modelFailedToUpload: "Model failed to upload",
                 noWorkflowModel: "There are no workflow models uploaded into the system",
                 loadingWorkflowFailed: "Loading workflow models has failed",
+                filtersFailedLoad: "Filters has failed to load",
+                noFiltersFound: "No filters has been found",
+                noSavedFilters: "There are no saved filters",
+                deletingFilter: "Deleting of the filter",
 
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },

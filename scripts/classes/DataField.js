@@ -127,7 +127,7 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.upload = function () {
         if (!this.file) return;
 
-        this.$fileUpload.upload(this.file, undefined, this.parent.link('file') + this.stringId, response => {
+        this.$fileUpload.upload(this.file, undefined, this.parent.links.file.href + this.stringId, response => {
             if (!response) {
                 this.$snackbar.error(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.failedToUpload}`);
                 return;
@@ -140,7 +140,7 @@ define(['./HalResource'], function (HalResource) {
     };
 
     DataField.prototype.download = function () {
-        const downloadWindow = window.open(this.parent.link('file') + this.stringId);
+        const downloadWindow = window.open(this.parent.links.file.href + this.stringId);
         downloadWindow.onload = () => downloadWindow.close();
     };
 

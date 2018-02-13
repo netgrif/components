@@ -38,7 +38,7 @@ define({
                 task: "Úloha",
                 processNotFound: "nebol najdený", // SK ...
                 taskNotFound: "nebola najdená",
-                type: "Typ",
+                visibility: "Dostupnosť",
                 filter: "Filter",
                 label: "Názov",
                 author: "Autor",
@@ -211,10 +211,7 @@ define({
                 author: "Autor",
                 createDate: "Dátum vytvorenia"
             },
-            newTitle: {
-                Offer: "Nové poistenie",
-                Contact: "Meno a priezvisko"
-            }
+            newTitle: "Nová inštancia"
         },
         task: {
             type: "Typ",
@@ -329,6 +326,7 @@ define({
             failedToUpload: "sa nepodarilo nahrať",
             uploadedSuccessfully: "bol načítaný úspešne",
             assigningTask: "Priradenie úlohy",
+            delegatingTask: "Delegovanie úlohy",
             cancelingAssignmentOfTask: "Zrušenie priradenia úlohy",
             finishingTask: "Dokončenie úlohy",
             dataFor: "Údaje pre",
@@ -364,6 +362,10 @@ define({
             modelFailedToUpload: "Model sa nepodarilo nahrať",
             noWorkflowModel: "V systéme sa nenachádzajú žiadne workflow modely",
             loadingWorkflowFailed: "Nepodarilo sa načítať workflow modely",
+            filtersFailedLoad: "Filtre sa nepodarilo načítať",
+            noFiltersFound: "Neboli nájdené žiadne filtre",
+            noSavedFilters: "Doposiaľ neboli uložené žiadne filtre",
+            deletingFilter: "Vymazávanie filtra",
 
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },

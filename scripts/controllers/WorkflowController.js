@@ -39,7 +39,11 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
                         let meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
                         $fileUpload.upload(self.netFile, meta, "/res/petrinet/import", function (response) {
-                            if (response.success) $dialog.closeCurrent();
+                            if (response.success) {
+                                $dialog.closeCurrent();
+                                self.clearAll();
+                                self.load(false);
+                            }
                             else $snackbar.error($i18n.block.snackbar.modelFailedToUpload);
                             self.netFile = undefined;
                             self.petriNetMeta = {};
@@ -93,8 +97,10 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         if (!self.searchLast)
                             return {};
                         return {
-                            title: self.searchLast,
-                            initials: self.searchLast
+                            or: {
+                                title: self.searchLast,
+                                initials: self.searchLast
+                            }
                         }
                     };
 
@@ -127,7 +133,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                                 resources.forEach((r, i) => {
                                     self.expansionGroup.add(self.expansionPanelName, {
                                         resource: r,
-                                        links: r._links
+                                        links: response.$response().data._embedded.petriNetSmalls[i]._links
                                     }).then(panel => {
                                         self.panels.push(panel);
                                     })

@@ -11,26 +11,27 @@
 
             <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
                 <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                {{workPanelCtrl.author.fullName}}
+                {{workPanelCtrl.author.fullName ? workPanelCtrl.author.fullName : workPanelCtrl.author.email}}
             </span>
 
             <span hide show-gt-sm flex-gt-sm="20">
                 {{workPanelCtrl.uploadDate}}
             </span>
 
-            <md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
-                <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
-                    <md-icon class="material-icons">more_vert</md-icon>
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item>
-                        <md-button ng-click="null">
-                            <md-icon class="material-icons">delete</md-icon>
-                            <span>{{$i18n.block.btn.delete}}</span>
-                        </md-button>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
+            <!--TODO 5.2.2018 implement disable and delete for model-->
+            <!--<md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">-->
+                <!--<md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>-->
+                    <!--<md-icon class="material-icons">more_vert</md-icon>-->
+                <!--</md-button>-->
+                <!--<md-menu-content>-->
+                    <!--<md-menu-item>-->
+                        <!--<md-button ng-click="null">-->
+                            <!--<md-icon class="material-icons">delete</md-icon>-->
+                            <!--<span>{{$i18n.block.btn.delete}}</span>-->
+                        <!--</md-button>-->
+                    <!--</md-menu-item>-->
+                <!--</md-menu-content>-->
+            <!--</md-menu>-->
 
         </div>
     </md-expansion-panel-collapsed>
@@ -47,7 +48,7 @@
 
             <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
                 <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-                {{workPanelCtrl.author.fullName}}
+                {{workPanelCtrl.author.fullName ? workPanelCtrl.author.fullName : workPanelCtrl.author.email}}
             </span>
 
             <span hide show-gt-sm flex-gt-sm="20">
@@ -155,9 +156,10 @@
         <md-expansion-panel-footer md-no-sticky>
             <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
-                <md-button ng-if="true" class="layout-xs-rw-100">
-                    {{$i18n.block.btn.delete}}
-                </md-button>
+                <!--TODO 5.2.2018-->
+                <!--<md-button ng-if="true" class="layout-xs-rw-100">-->
+                    <!--{{$i18n.block.btn.delete}}-->
+                <!--</md-button>-->
 
                 <md-button ng-click="$panel.collapse()" class="md-primary layout-xs-rw-100">
                     {{::$i18n.block.btn.collapse}}

@@ -14,23 +14,22 @@
     <div flex="45" flex-xs="100">
         <md-input-container  flex class="md-block" ng-class="field.valid ? '':' md-input-invalid'">
             <label class="placeholder">{{field.placeholder}}</label>
-            <input id="{{'data-'+task.stringId+'-'+field.stringId}}" type="text" ng-if="field.subType === 'simple'"
+            <input id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" type="text" ng-if="field.subType === 'simple'"
                    ng-model="field.newValue"
                    ng-change="field.changed = true; field.newValue === undefined ? field.newValue=null : field.newValue; field.validate(field.newValue);"
-                   ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                   ng-blur="task.save();field.active = false"
+                   ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
+                   ng-blur="field.parent.save();field.active = false"
                    ng-focus="field.active = true"
                    ng-required="field.behavior.required"
                    md-maxlength="field.maxLength"
                    ng-keypress="$event.which === 13 && $event.target.blur()"
-                   aria-label="Enter text"
-                   title="">
-            <textarea id="{{'data-'+task.stringId+'-'+field.stringId}}" ng-if="field.subType === 'area'"
+                   aria-label="Enter text">
+            <textarea id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" ng-if="field.subType === 'area'"
                       rows="1" max-rows="4"
                       ng-model="field.newValue"
                       ng-change="field.changed = field.value !== field.newValue"
-                      ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                      ng-blur="task.save()"
+                      ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
+                      ng-blur="field.parent.save()"
                       ng-required="field.behavior.required"
                       md-maxlength="field.maxLength"
                       aria-label="Enter text"

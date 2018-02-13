@@ -13,7 +13,8 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
 
                     //TODO model file download
                     self.downloadModel = function () {
-
+                        const downloadWindow = window.open(self.links.file.href);
+                        downloadWindow.onload = () => downloadWindow.close();
                     };
 
                     Object.assign(self,resource);
@@ -23,11 +24,11 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         title: {
                             name: $i18n.page.workflow.data.item.file.title,
                             icon: 'linear_scale',
-                            value: self.title,
-                            button: {
-                                name: 'file_download',
-                                tooltip: $i18n.page.workflow.data.item.file.download
-                            }
+                            value: self.title
+                            // button: {
+                            //     name: 'file_download',
+                            //     tooltip: $i18n.page.workflow.data.item.file.download
+                            // }
                         },
                         author: {
                             name: $i18n.page.workflow.data.item.author.title,

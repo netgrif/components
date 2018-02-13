@@ -8,9 +8,9 @@ define(['angular','../modules/Tasks'],function (angular) {
 
             var getTemplate = function(priority) {
                 switch (priority){
-                    case "1": return low;
+                    case "3": return low;
                     case "2": return medium;
-                    case "3": return high;
+                    case "1": return high;
                 }
             };
 
