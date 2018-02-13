@@ -34,7 +34,9 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                      */
                     self.openTaskTab = function (useCase) {
                         if (!self.taskTabs.some(tab => tab.useCase.stringId === useCase.stringId))
-                            self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title, new Filter("Default By Case", Filter.CASE_TYPE, {case: useCase.stringId}, {}), useCase, {
+                            self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title,
+                                new Filter("Default By Case", Filter.CASE_TYPE, "{\"case\": \"" + useCase.stringId + "\"}"),
+                                useCase, {
                                 $http,
                                 $snackbar,
                                 $dialog,
