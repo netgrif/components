@@ -8,14 +8,14 @@
 
     <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-    <div layout="column" layout-align="start start" class="card padding-2x">
+    <div ng-hide="profCtrl.completion === 100" layout="column" layout-align="start start" class="card padding-2x">
 
         <span>{{$i18n.page.profile.progressPart1 + " " + profCtrl.completion + "% " + $i18n.page.profile.progressPart2}}</span>
         <md-progress-linear md-mode="determinate" value="{{profCtrl.completion}}"></md-progress-linear>
 
     </div>
 
-    <md-divider class="border-width-default color-border-transparent"></md-divider>
+    <md-divider ng-hide="profCtrl.completion === 100" class="border-width-default color-border-transparent"></md-divider>
 
     <div layout-gt-xs="row" layout-xs="column">
 
@@ -27,12 +27,12 @@
 
                 <md-input-container>
                     <label>{{::$i18n.page.profile.personalInfo.firstName}}</label>
-                    <input type="text" ng-model="profCtrl.user.name" disabled>
+                    <input type="text" ng-model="profCtrl.user.name" disabled title="">
                 </md-input-container>
 
                 <md-input-container>
                     <label>{{::$i18n.page.profile.personalInfo.lastName}}</label>
-                    <input type="text" ng-model="profCtrl.user.surname" disabled>
+                    <input type="text" ng-model="profCtrl.user.surname" disabled title="">
                 </md-input-container>
 
             </div>
@@ -49,12 +49,12 @@
 
                 <md-input-container>
                     <label>{{::$i18n.page.profile.contactInfo.phone}}</label>
-                    <input type="text" ng-model="profCtrl.user.telNumber" disabled>
+                    <input type="text" ng-model="profCtrl.user.telNumber" disabled title="">
                 </md-input-container>
 
                 <md-input-container>
                     <label>{{::$i18n.page.profile.contactInfo.email}}</label>
-                    <input type="email" ng-model="profCtrl.user.email" disabled>
+                    <input type="email" ng-model="profCtrl.user.email" disabled title="">
                 </md-input-container>
 
             </div>
