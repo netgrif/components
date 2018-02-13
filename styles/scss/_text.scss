@@ -98,3 +98,9 @@ span {
         }
     }
 }
+
+// Highlight class for md-autocomplete
+span.highlight {
+    color: $color-primary-500 !important;
+    font-weight: 500;
+}

@@ -2135,6 +2135,11 @@ span.active {
   font-weight: 600;
 }
 
+span.highlight {
+  color: #009688 !important;
+  font-weight: 500;
+}
+
 .img-responsive {
   width: 100%;
   height: auto;
