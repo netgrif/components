@@ -7,6 +7,7 @@ define(['angular', '../modules/Tasks'], function (angular) {
             let high = `<span flex layout="row" layout-align="start center"><i class="material-icons color-fg-red-500 margin-right-2x">priority_high</i>${$i18n.block.priority.high}</span>`;
 
             const getTemplate = function (priority) {
+                priority = parseInt(priority.toString());
                 if (priority <= 1)
                     return high;
                 else if (priority === 2)
