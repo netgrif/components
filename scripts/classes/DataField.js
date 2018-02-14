@@ -27,12 +27,16 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.constructor = DataField;
 
     DataField.prototype.format = function (value) {
-        if (this.type === "text" && value === null) return null;
-        if (value === undefined || value === null) return;
+        if (this.type === "text" && value === null)
+            return null;
+        if (value === undefined || value === null)
+            return;
         if (this.type === "date") {
-            if (value instanceof Date) return `${value.getFullYear()}-${DataField.padding(value.getMonth() + 1, 0)}-${DataField.padding(value.getDate(), 0)}`;
-            else return `${DataField.padding(value.dayOfMonth, 0)}.${DataField.padding(value.monthValue, 0)}.${value.year}
-            ${DataField.padding(value.hour, 0)}:${DataField.padding(value.minute, 0)}`;
+            if (value instanceof Date)
+                return `${value.getFullYear()}-${DataField.padding(value.getMonth() + 1, 0)}-${DataField.padding(value.getDate(), 0)}`;
+            else
+                return `${DataField.padding(value.dayOfMonth, 0)}.${DataField.padding(value.monthValue, 0)}.${value.year}
+            ${DataField.padding(value.hour, 0, 0)}:${DataField.padding(value.minute, 0, 0)}`;
         }
         if (this.type === "user") {
             return value.email;
@@ -56,7 +60,7 @@ define(['./HalResource'], function (HalResource) {
                 this.valid = (this.newValue !== null || this.newValue !== undefined) && this.validate(this.newValue);
                 break;
             case "text":
-                this.valid = this.newValue !== undefined && this.validate(this.newValue) && ( this.behavior.required && this.newValue !== null ? this.newValue.trim() !== "" : true);
+                this.valid = this.newValue !== undefined && this.validate(this.newValue) && (this.behavior.required && this.newValue !== null ? this.newValue.trim() !== "" : true);
                 break;
             case "date":
                 this.valid = this.newValue && this.validate(this.newValue);
@@ -146,13 +150,14 @@ define(['./HalResource'], function (HalResource) {
 
     DataField.prototype.bindElement = function () {
         const el = jQuery(`#data-${this.parent.stringId}-${this.stringId}`);
-        if(el.length > 0) this.element = el;
+        if (el.length > 0) this.element = el;
         return "";
     };
 
-    DataField.padding = (text, pad = '') => {
-        if (!text) return "";
-        text = text.toString();
+    DataField.padding = (value, pad = '', defaultValue = '') => {
+        if (!value)
+            return pad + defaultValue.toString();
+        const text = value.toString();
         return text.length <= 1 ? pad + text : text;
     };
 

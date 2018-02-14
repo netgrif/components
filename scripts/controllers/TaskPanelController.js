@@ -66,10 +66,13 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     }
 
                     function formatDate(date) {
-                        if (!date) return undefined;
-                        if (date instanceof Date) return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
+                        if (!date)
+                            return undefined;
+                        if (date instanceof Date)
+                            return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
+
                         return `${DataField.padding(date.dayOfMonth, 0)}.${DataField.padding(date.monthValue, 0)}.${date.year}
-                                ${DataField.padding(date.hour, 0)}${date.hour ? ':' : ''}${DataField.padding(date.minute, 0)}`;
+                                ${DataField.padding(date.hour, 0, 0)}:${DataField.padding(date.minute, 0, 0)}`;
                     }
 
                     function assignTask(callback = {}) {

@@ -35,10 +35,13 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     };
 
     Task.formatDate = function (date) {
-        if (!date) return undefined;
-        if (date instanceof Date) return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
+        if (!date)
+            return undefined;
+        if (date instanceof Date)
+            return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
+
         return `${DataField.padding(date.dayOfMonth, 0)}.${DataField.padding(date.monthValue, 0)}.${date.year}
-            ${DataField.padding(date.hour, 0)}${date.hour ? ':' : ''}${DataField.padding(date.minute, 0)}`;
+            ${DataField.padding(date.hour, 0, 0)}:${DataField.padding(date.minute, 0, 0)}`;
     };
 
     Task.prototype.assign = function (callback = () => {
@@ -69,16 +72,17 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
     Task.prototype.delegate = function () {
         const self = this;
         this.$dialog.showByTemplate('assign_user', this, {task: Object.assign(this, {fieldRoles: Object.keys(this.roles)})}).then(user => {
-            if(!user) return;
+            if (!user) return;
 
-            this.$http.post(this.link('delegate'), user.email).then( response => {
-                if(response.success)
+            this.$http.post(this.link('delegate'), user.email).then(response => {
+                if (response.success)
                     self.tab.load(false);
-                else if(response.error)
+                else if (response.error)
                     self.$snackbar.error(response.error);
 
-            }, ()=> self.$snackbar.error(`Delegate task ${self.visualID} to user ${user.name} has failed`));
-        }, ()=>{});
+            }, () => self.$snackbar.error(`Delegate task ${self.visualID} to user ${user.name} has failed`));
+        }, () => {
+        });
     };
 
     Task.prototype.cancel = function (callback = () => {
