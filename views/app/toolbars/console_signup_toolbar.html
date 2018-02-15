@@ -7,10 +7,10 @@
 
             <md-input-container>
                 <md-switch class="md-primary"
-                           ng-model="adminCtrl.config.userSignUp"
+                           ng-model="adminCtrl.changeUserSignUpPolicy"
                            aria-label="Switch">
-                    <span ng-if="adminCtrl.config.userSignUp">{{::$i18n.block.data.enable}}</span>
-                    <span ng-if="!adminCtrl.config.userSignUp">{{::$i18n.block.data.disable}}</span>
+                    <span ng-if="adminCtrl.changeUserSignUpPolicy">{{::$i18n.block.data.enable}}</span>
+                    <span ng-if="!adminCtrl.changeUserSignUpPolicy">{{::$i18n.block.data.disable}}</span>
                 </md-switch>
             </md-input-container>
 

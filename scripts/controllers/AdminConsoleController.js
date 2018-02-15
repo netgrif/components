@@ -1,6 +1,6 @@
 define(['angular', '../modules/Admin'], function (angular) {
-    angular.module('ngAdmin').controller('AdminConsoleController', ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user','$i18n','$location',
-        function ($log, $scope, $http, $snackbar, $timeout, $user, $i18n, $location) {
+    angular.module('ngAdmin').controller('AdminConsoleController', ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user','$i18n','$location', '$auth',
+        function ($log, $scope, $http, $snackbar, $timeout, $user, $i18n, $location, $auth) {
             if(!$user.hasAuthority("ROLE_ADMIN"))
                 $location.path("/");
 
@@ -36,10 +36,7 @@ define(['angular', '../modules/Admin'], function (angular) {
             $scope.processes = undefined;
             $scope.saved = true;
 
-            // Configuration
-            self.config = {
-                userSignUp: false
-            };
+            self.changeUserSignUpPolicy = $auth.userSignUp;
 
             //New user invite tab
             //to load Petri nets use self.loadNets

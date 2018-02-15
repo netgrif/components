@@ -9,7 +9,8 @@
 
 		<div flex-gt-xs="50" flex-xs="100">
 
-			<div ng-include="'views/app/forms/signin_form.html'"></div>
+			<div ng-if="!loginCtrl.displaySignUpForm" ng-include="'views/app/forms/signin_form.html'"></div>
+			<div ng-if="loginCtrl.displaySignUpForm" ng-include="'views/app/forms/signin_send_email_form.html'"></div>
 
 		</div>
 

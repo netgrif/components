@@ -21,6 +21,8 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
             };
             self.loading = false;
 
+            self.displaySignUpForm = false;
+
             self.viewLoaded = function () {
                 if (dataLoadingStarted) return;
                 dataLoadingStarted = true;
@@ -65,7 +67,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                     self.loading = true;
                     self.signupUser.password = btoa(self.signupUser.password);
                     const jsonSignupData = JSON.stringify(self.signupUser);
-                    //$log.debug("formData: " + jsonSignupData);
+
                     $auth.signup(jsonSignupData, function (response) {
                         if (response) {
                             angular.element("form#signup-form").trigger("reset");

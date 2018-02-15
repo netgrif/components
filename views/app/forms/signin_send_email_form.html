@@ -1,0 +1,21 @@
+<!-- TODO 15.2.2018 Submit user self registration form -->
+<form ng-submit="loginCtrl.TODO">
+
+    <md-input-container class="md-block">
+        <md-icon class="material-icons color-fg-blue-grey-300">email</md-icon>
+        <input ng-model="loginCtrl.signupUser.email" type="text" placeholder="{{::$i18n.page.signIn.email}}" ng-required="true">
+    </md-input-container>
+
+    <md-card-actions layout="row" layout-align="space-between center" class="margin-left-0">
+
+        <md-button class="md-icon-button margin-left-0 padding-left-0" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
+            <md-icon class="material-icons">arrow_back</md-icon>
+        </md-button>
+
+        <md-button type="submit" md-colors="{background: 'primary-500'}" class="margin-left-0">
+            {{::$i18n.page.signIn.signUp}}
+        </md-button>
+
+    </md-card-actions>
+
+</form>
