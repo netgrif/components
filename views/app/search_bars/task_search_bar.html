@@ -75,11 +75,11 @@
 
             <i class="material-icons color-fg-primary-500 margin-right-14px">filter_list</i>
 
-            <md-chips ng-model="tasksCtrl.tabs[$index].filter.chips" readonly="true" md-removable="true"
-                      md-on-remove="tasksCtrl.removeChip($chip)"
+            <md-chips ng-model="taskTab.search.chips" readonly="true" md-removable="true"
+                      md-on-remove="taskTab.search.removeChip($chip)"
                       id="chips-container">
                 <md-chip-template>
-                    {{$chip.title}}
+                    {{$chip.text}}
                 </md-chip-template>
             </md-chips>
 
@@ -89,7 +89,7 @@
 
     <div layout="column" layout-align="center center">
 
-        <md-button class="md-fab md-raised md-mini md-primary" ng-click="tasksCtrl.searchTasks()">
+        <md-button class="md-fab md-raised md-mini md-primary" ng-click="taskTab.search.getQuery()">
             <md-icon class="material-icons">search</md-icon>
             <md-tooltip md-direction="left">
                 {{::$i18n.block.btn.search}}

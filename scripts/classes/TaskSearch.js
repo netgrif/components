@@ -11,7 +11,7 @@ define(['./Filter'], function (Filter) {
         this.chips = [];
         this.subject = undefined;
         this.autoCompleteStorage = {};
-        this.searchText = undefined;
+        this.searchText = "";
         this.selectedItem = undefined;
         this.query = {};
         this.subjects = {
@@ -35,29 +35,36 @@ define(['./Filter'], function (Filter) {
                     always: true
                 }
             }
-            ,
-            user: {
-                title: this.$i18n.block.input.user,
-                value: "user",
-                disable: false,
-                load: {
-                    method: "loadUsers",
-                    always: false
-                }
-            }
         };
     }
 
-    function Chip(title) {
-        this.title = title;
+    function Chip(subject, id, search) {
+        this.subject = subject;
+        this.search = search;
+        this.id = id;
+        this.text = this.buildTitle();
     }
 
-    function AutoCompleteItem(title) {
-        this.title = title;
+    Chip.prototype.buildTitle = function () {
+        return this.subject + ": " + this.search;
+    };
+
+    function AutoCompleteItem(subject, resource) {
+        this.subject = subject;
+        Object.assign(this, resource);
+    }
+
+    function QueryObject(subject, param) {
+        this.subject = subject;
+        this.param = param;
     }
 
     TaskSearch.prototype.selectedItemChanged = function (item) {
-
+        if(!item)
+            return;
+        this.addChip(item);
+        this.searchText = "";
+        this.selectedItem = undefined;
     };
 
     TaskSearch.prototype.getItems = function () {
@@ -66,8 +73,59 @@ define(['./Filter'], function (Filter) {
         return this.loadCategory();
     };
 
-    TaskSearch.prototype.getQuery = function () {
+    TaskSearch.prototype.addQuery = function (item) {
+        const queryObj = new QueryObject(item.subject, item.entityId);
+        if (this.query[queryObj.subject]) {
+            if (this.query[queryObj.subject] instanceof Array)
+                this.query[queryObj.subject].push(queryObj);
+            else {
+                const values = [];
+                values.push(this.query[queryObj.subject]);
+                values.push(queryObj);
+                this.query[queryObj.subject] = values;
+            }
+        } else {
+            this.query[queryObj.subject] = queryObj;
+        }
+    };
 
+    TaskSearch.prototype.removeQuery = function (subject, id) {
+        if (this.query[subject] instanceof Array) {
+            const index = this.query[subject].findIndex(o => o.param === id);
+            if (index !== -1)
+                this.query[subject].splice(index, 1);
+        } else {
+            delete this.query[subject];
+        }
+
+        if (this.query[subject] && this.query[subject] instanceof Array && this.query[subject].length === 1)
+            this.query[subject] = this.query[subject][0];
+    };
+
+    TaskSearch.prototype.getQuery = function () {
+        const q = {};
+        Object.keys(this.query).forEach(key => {
+            if (this.query[key] instanceof Array)
+                q[key] = this.query[key].map(v => v.param);
+            else
+                q[key] = this.query[key].param;
+        });
+        return q;
+    };
+
+    TaskSearch.prototype.addChip = function (item) {
+        if (!this.chips.some(c => c.id === item.entityId)) {
+            this.chips.push(new Chip(item.subject, item.entityId, item.title));
+            this.addQuery(item);
+        }
+    };
+
+    TaskSearch.prototype.removeChip = function (chip) {
+        const index = this.chips.findIndex(c => c.id === chip.id);
+        if (index !== -1) {
+            this.chips.splice(index, 1);
+            this.removeQuery(chip.subject, chip.id);
+        }
     };
 
     TaskSearch.prototype.resolveSubjects = function () {
@@ -100,7 +158,7 @@ define(['./Filter'], function (Filter) {
         const self = this;
         return this.$http.get("/res/petrinet/refs").then(response => {
             return response.$request().$get("petriNetReferences").then(resources => {
-                self.autoCompleteStorage.process = resources;
+                self.autoCompleteStorage.process = resources.map(r => new AutoCompleteItem("process", r));
                 return self.filterValues(self.autoCompleteStorage.process);
             }, () => {
                 console.log("No Petri net resources was found!");
@@ -112,10 +170,6 @@ define(['./Filter'], function (Filter) {
 
     TaskSearch.prototype.loadTransitionReferences = function () {
 
-    };
-
-    TaskSearch.prototype.loadUsers = function () {
-        return [];
     };
 
     return TaskSearch;
