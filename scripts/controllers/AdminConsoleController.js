@@ -36,6 +36,11 @@ define(['angular', '../modules/Admin'], function (angular) {
             $scope.processes = undefined;
             $scope.saved = true;
 
+            // Configuration
+            self.config = {
+                userSignUp: false
+            };
+
             //New user invite tab
             //to load Petri nets use self.loadNets
             self.loadProcessRoles = function () {

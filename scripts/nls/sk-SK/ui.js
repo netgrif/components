@@ -135,7 +135,9 @@ define({
             process: "Proces",
             processRoles: "Procesné roly",
             thereIsNoOrgAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu organizáciu",
-            thereIsNoRoleAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu rolu"
+            thereIsNoRoleAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu rolu",
+            configuration: "Nastavenia",
+            userSignUp: "Povoliť registráciu používateľov"
         },
         profile: {
             this: "Profil",
@@ -250,7 +252,9 @@ define({
             download: "Stiahnuť",
             yes: "Áno",
             no: "Nie",
-            enterDate: "Zadať dátum"
+            enterDate: "Zadať dátum",
+            enable: "Povoliť",
+            disable: "Zakázať"
         },
         validation: {
             pswLength: "Heslo musí byť aspoň 6 znakov dlhé",
