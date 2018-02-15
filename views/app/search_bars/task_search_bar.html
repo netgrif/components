@@ -76,7 +76,7 @@
             <i class="material-icons color-fg-primary-500 margin-right-14px">filter_list</i>
 
             <md-chips ng-model="taskTab.search.chips" readonly="true" md-removable="true"
-                      md-on-remove="taskTab.search.removeChip($chip)"
+                      md-on-remove="taskTab.search.chipRemoved($chip)"
                       id="chips-container">
                 <md-chip-template>
                     {{$chip.text}}

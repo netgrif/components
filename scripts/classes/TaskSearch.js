@@ -32,7 +32,7 @@ define(['./Filter'], function (Filter) {
                 dependency: ["process"],
                 load: {
                     method: "loadTransitionReferences",
-                    always: true
+                    always: false
                 }
             }
         };
@@ -54,13 +54,14 @@ define(['./Filter'], function (Filter) {
         Object.assign(this, resource);
     }
 
-    function QueryObject(subject, param) {
+    function QueryObject(subject, param, dependency) {
         this.subject = subject;
         this.param = param;
+        this.dependency = dependency;
     }
 
     TaskSearch.prototype.selectedItemChanged = function (item) {
-        if(!item)
+        if (!item)
             return;
         this.addChip(item);
         this.searchText = "";
@@ -74,7 +75,7 @@ define(['./Filter'], function (Filter) {
     };
 
     TaskSearch.prototype.addQuery = function (item) {
-        const queryObj = new QueryObject(item.subject, item.entityId);
+        const queryObj = new QueryObject(item.subject, item.entityId, item.petriNetId);
         if (this.query[queryObj.subject]) {
             if (this.query[queryObj.subject] instanceof Array)
                 this.query[queryObj.subject].push(queryObj);
@@ -87,6 +88,8 @@ define(['./Filter'], function (Filter) {
         } else {
             this.query[queryObj.subject] = queryObj;
         }
+
+        this.resolveSubjects();
     };
 
     TaskSearch.prototype.removeQuery = function (subject, id) {
@@ -100,6 +103,18 @@ define(['./Filter'], function (Filter) {
 
         if (this.query[subject] && this.query[subject] instanceof Array && this.query[subject].length === 1)
             this.query[subject] = this.query[subject][0];
+
+        const affected = Object.keys(this.subjects).find(sub => this.subjects[sub].dependency ? this.subjects[sub].dependency.includes(subject) : false);
+        if (affected && this.query[affected]) {
+            const removeAffectedChip = affectedQuery => {
+                if (affectedQuery.dependency && affectedQuery.dependency === id)
+                    this.removeChip(new Chip(affected, affectedQuery.param, "whatever"));
+            };
+            if (this.query[affected] instanceof Array)
+                this.query[affected].forEach(removeAffectedChip);
+            else
+                removeAffectedChip(this.query[affected]);
+        }
     };
 
     TaskSearch.prototype.getQuery = function () {
@@ -128,11 +143,15 @@ define(['./Filter'], function (Filter) {
         }
     };
 
+    TaskSearch.prototype.chipRemoved = function (chip) {
+        this.removeQuery(chip.subject, chip.id);
+    };
+
     TaskSearch.prototype.resolveSubjects = function () {
         Object.keys(this.subjects).forEach(subject => {
             if (!this.subjects[subject].dependency)
                 return;
-            this.subjects[subject].disable = this.subjects[subject].dependency.every(d => !!this.query[d] || this.query.or ? this.query.or[d] : false);
+            this.subjects[subject].disable = !this.subjects[subject].dependency.every(d => !!this.query[d]);
         })
     };
 
@@ -162,14 +181,31 @@ define(['./Filter'], function (Filter) {
                 return self.filterValues(self.autoCompleteStorage.process);
             }, () => {
                 console.log("No Petri net resources was found!");
-            })
+            });
         }, error => {
             console.log("Petri net references failed to load!");
+            console.error(error);
         });
     };
 
     TaskSearch.prototype.loadTransitionReferences = function () {
-
+        const self = this;
+        let queryProcess = [];
+        if (this.query.process instanceof Array)
+            queryProcess = queryProcess.concat(this.query.process.map(p => p.param));
+        else
+            queryProcess.push(this.query.process.param);
+        return this.$http.post("/res/petrinet/transition/refs", queryProcess).then(response => {
+            return response.$request().$get("transitionReferences").then(resources => {
+                self.autoCompleteStorage.transition = resources.map(r => new AutoCompleteItem("transition", r));
+                return self.filterValues(self.autoCompleteStorage.transition);
+            }, () => {
+                console.log("No transition resources was found!");
+            });
+        }, error => {
+            console.log("Transition references failed to load!");
+            console.error(error);
+        });
     };
 
     return TaskSearch;
