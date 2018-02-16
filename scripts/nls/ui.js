@@ -35,12 +35,16 @@ define({
                 this: "Tasks",
                 all: "All tasks",
                 my: "My tasks",
+                search:{
+                    category: "Category",
+                    search: "Search"
+                },
                 filter: {
                     process: "Process",
+                    type:"Type",
                     task: "Task",
                     processNotFound: "not found", // SK ...
                     taskNotFound: "not found",
-                    visibility: "Visibility",
                     filter: "Filter",
                     label: "Label",
                     author: "Author",
@@ -64,6 +68,7 @@ define({
                 initials: "Initials",
                 modelTitle: "Model title",
                 author: "Author",
+                uploadDate: "Upload date",
                 data: {
                     group: {
                         details: "Details",
@@ -279,6 +284,10 @@ define({
                     process: "Process",
                     title: "Title",
                     color: "Color",
+                    purple: "Purple",
+                    yellow: "Yellow",
+                    orange: "Orange",
+                    brown: "Brown",
                     submit: "Submit"
                 },
                 assignUser: {

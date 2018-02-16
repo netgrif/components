@@ -34,12 +34,16 @@ define({
             this: "Úlohy",
             all: "Všetky úlohy",
             my: "Moje úlohy",
+            search:{
+                category: "Kategória",
+                search: "Hľadať"
+            },
             filter: {
                 process: "Proces",
+                type:"Typ",
                 task: "Úloha",
                 processNotFound: "nebol najdený", // SK ...
                 taskNotFound: "nebola najdená",
-                visibility: "Dostupnosť",
                 filter: "Filter",
                 label: "Názov",
                 author: "Autor",
@@ -279,6 +283,10 @@ define({
                 process: "Proces",
                 title: "Názov",
                 color: "Farba",
+                purple: "Fialová",
+                yellow: "Žltá",
+                orange: "Oranžová",
+                brown: "Hnedá",
                 submit: "Vytvoriť"
             },
             assignUser: {

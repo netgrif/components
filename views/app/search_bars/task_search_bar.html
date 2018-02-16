@@ -11,7 +11,7 @@
                 <div layout-gt-xs="row" layout-xs="column">
 
                     <md-input-container class="md-block" flex>
-                        <label class="placeholder">Category</label>
+                        <label class="placeholder">{{::$i18n.page.tasks.search.category}}</label>
                         <md-select ng-model="taskTab.search.subject">
                             <md-option ng-repeat="(key, subject) in taskTab.search.subjects" ng-value="subject" ng-disabled="subject.disable">
                                 {{subject.title}}
@@ -31,7 +31,7 @@
                                      md-select-on-match="true"
                                      md-match-case-insensitive="true"
                                      md-dropdown-items="5"
-                                     md-floating-label="Search">
+                                     md-floating-label="{{::$i18n.page.tasks.search.search}}">
 
                         <md-item-template>
                             <span md-highlight-text="taskTab.search.searchText" md-highlight-flags="i">
@@ -40,7 +40,7 @@
                         </md-item-template>
                         <md-not-found>
                             <!--{{::$i18n.page.tasks.filter.process + " " + taskTab.search.searchText + " " + $i18n.page.tasks.filter.processNotFound}}-->
-                            No results found
+                            {{::$i18n.page.tasks.filter.processNotFound}}
                         </md-not-found>
 
                     </md-autocomplete>
