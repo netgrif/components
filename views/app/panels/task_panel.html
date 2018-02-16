@@ -32,7 +32,6 @@
                     <md-icon class="material-icons">more_vert</md-icon>
                 </md-button>
 
-                <!-- TODO 17.1.2018 Menu functionality -->
                 <md-menu-content>
 
                     <md-menu-item ng-if="taskCtrl.user.email !== $user.login">
@@ -256,7 +255,6 @@
         <md-expansion-panel-footer md-no-sticky>
             <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
-                <!-- TODO 17.1.2018 Menu functionality -->
                 <md-button ng-if="taskCtrl.user.email !== $user.login" ng-click="taskCtrl.assign({success:taskCtrl.reload})" class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.assign}}</span>
                 </md-button>

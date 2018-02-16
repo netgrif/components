@@ -1,4 +1,4 @@
-define(['angular','../modules/Tasks'],function (angular) {
+define(['angular', '../modules/Tasks'], function (angular) {
     angular.module('ngTasks').directive('taskPriority',
         function ($compile, $i18n) {
 
@@ -6,15 +6,17 @@ define(['angular','../modules/Tasks'],function (angular) {
             let medium = `<span flex layout="row" layout-align="start center"><i class="material-icons color-fg-amber-500 margin-right-2x">arrow_upward</i>${$i18n.block.priority.medium}</span>`;
             let high = `<span flex layout="row" layout-align="start center"><i class="material-icons color-fg-red-500 margin-right-2x">priority_high</i>${$i18n.block.priority.high}</span>`;
 
-            var getTemplate = function(priority) {
-                switch (priority){
-                    case "3": return low;
-                    case "2": return medium;
-                    case "1": return high;
-                }
+            const getTemplate = function (priority) {
+                priority = parseInt(priority.toString());
+                if (priority <= 1)
+                    return high;
+                else if (priority === 2)
+                    return medium;
+                else if (priority >= 3)
+                    return low;
             };
 
-            var linker = function (scope, element, attrs) {
+            const linker = function (scope, element, attrs) {
                 element.html(getTemplate(attrs.priority)).show();
                 $compile(element.contents())(scope);
             };

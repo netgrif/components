@@ -6,6 +6,9 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     /*--- Constants --*/
                     const self = this;
                     const PANEL_ANIMATION_DURATION = 300;
+                    const STATUS_DONE = "Done";
+                    const STATUS_ASSIGNED = "Assigned";
+                    const STATUS_NEW = "New";
 
                     /*--- Variables ---*/
                     self.links = links;
@@ -20,6 +23,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     /*--- Methods definition ---*/
                     self.status = resolveStatus;
                     self.icons = resolveIcons;
+                    self.dates = resolveDate;
                     self.assign = assignTask;
                     self.delegate = delegateTask;
                     self.cancel = cancelTask;
@@ -52,9 +56,11 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     }
 
                     function resolveStatus() {
-                        if (self.user && self.finishDate) return "Done";
-                        if (self.user && !self.finishDate && self.startDate) return "Assigned";
-                        return "New";
+                        if (self.user && self.finishDate)
+                            return STATUS_DONE;
+                        if (self.user && !self.finishDate && self.startDate)
+                            return STATUS_ASSIGNED;
+                        return STATUS_NEW;
                     }
 
                     function resolveIcons() {
@@ -73,6 +79,21 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
 
                         return `${DataField.padding(date.dayOfMonth, 0)}.${DataField.padding(date.monthValue, 0)}.${date.year}
                                 ${DataField.padding(date.hour, 0, 0)}:${DataField.padding(date.minute, 0, 0)}`;
+                    }
+
+                    function resolveDate() {
+                        const status = self.status();
+                        switch (status) {
+                            case STATUS_NEW:
+                                self.formatedStartDate = undefined;
+                                break;
+                            case STATUS_ASSIGNED:
+                                self.formatedStartDate = formatDate(self.startDate);
+                                break;
+                            case STATUS_DONE:
+                                self.formatedStartDate = undefined;
+                                break;
+                        }
                     }
 
                     function assignTask(callback = {}) {
@@ -284,8 +305,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     function updateTask(resource, links) {
                         Object.assign(self, resource, config);
                         self.links = links;
-                        self.formatedStartDate = formatDate(self.startDate);
-                        self.formatedFinishDate = formatDate(self.finishDate);
+                        self.dates();
                     }
 
                     function preventEventDefault(event) {

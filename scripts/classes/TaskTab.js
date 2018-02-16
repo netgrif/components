@@ -49,7 +49,8 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                 controllerAs: 'taskCtrl'
             });
         } catch (error) {
-            console.log(error);
+            // whatever
+            // if task group is already registered do nothing
         }
 
         if (this.showTransactions)
