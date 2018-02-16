@@ -1,7 +1,7 @@
 define(['angular', '../modules/Admin'], function (angular) {
-    angular.module('ngAdmin').controller('AdminConsoleController', ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user','$i18n','$location', '$auth',
+    angular.module('ngAdmin').controller('AdminConsoleController', ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user', '$i18n', '$location', '$auth',
         function ($log, $scope, $http, $snackbar, $timeout, $user, $i18n, $location, $auth) {
-            if(!$user.hasAuthority("ROLE_ADMIN"))
+            if (!$user.hasAuthority("ROLE_ADMIN"))
                 $location.path("/");
 
             const self = this;
@@ -154,6 +154,8 @@ define(['angular', '../modules/Admin'], function (angular) {
             };
 
             self.loadUsers = function () {
+                if (self.users.length > 0)
+                    return;
                 $http.get("/res/user/small").then(function (response) {
                     response.$request().$get("users").then(function (resources) {
                         self.users = resources;
@@ -220,16 +222,18 @@ define(['angular', '../modules/Admin'], function (angular) {
                 let rolesChanged = false;
                 self.users.forEach(user => {
                     if (user.selected) {
-                        if (role.selected) user.roles.add(role.stringId);
-                        else user.roles.delete(role.stringId);
+                        if (role.selected)
+                            user.roles.add(role.stringId);
+                        else
+                            user.roles.delete(role.stringId);
+
                         rolesChanged = true;
                         user.changedRoles = true;
                     }
                 });
 
-                if (!rolesChanged)
-                    self.users.forEach(user => user.selected = user.roles.has(role.stringId) && role.selected);
-                else
+                self.users.forEach(user => user.selected = user.roles.has(role.stringId) && role.selected);
+                if (rolesChanged)
                     $scope.saved = false;
             };
 
@@ -258,7 +262,6 @@ define(['angular', '../modules/Admin'], function (angular) {
                 return jQuery.isEmptyObject(obj);
             };
 
-            self.loadUsers();
             self.loadNets();
         }]);
 });
