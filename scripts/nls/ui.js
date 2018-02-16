@@ -10,7 +10,8 @@ define({
                 email: "Email",
                 psw: "Password",
                 forgotPsw: "Forgot password",
-                submit: "Sign In"
+                signIn: "Sign In",
+                signUp: "Sign Up"
             },
             signUp: {
                 email: "Email",
@@ -135,7 +136,9 @@ define({
                 process: "Process",
                 processRoles: "Process Roles",
                 thereIsNoOrgAssignedToThisUserYet: "There is no organisation assigned to this user yet",
-                thereIsNoRoleAssignedToThisUserYet: "There is no role assigned to this user yet"
+                thereIsNoRoleAssignedToThisUserYet: "There is no role assigned to this user yet",
+                configuration: "Configuration",
+                userSignUp: "User sign up"
             },
             profile: {
                 this: "Profile",
@@ -250,7 +253,9 @@ define({
                 download: "Download",
                 yes: "Yes",
                 no: "No",
-                enterDate: "Enter date"
+                enterDate: "Enter date",
+                enable: "Enable",
+                disable: "Disable"
             },
             validation: {
                 pswLength: "Password must be at least 6 characters long",

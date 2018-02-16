@@ -10,6 +10,8 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
             signupPath: "/signup",
             appPath: "/",
             path: $location.path(),
+            // Configuration
+            userSignUp: false,
 
             authenticate: function (credentials, callback) {
                 //$log.debug(credentials);

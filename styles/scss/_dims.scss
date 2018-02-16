@@ -73,8 +73,8 @@ $border-radius:					2px;
 	&-vertical {
 
 		&-0 {
-			margin-top: 0;
-			margin-bottom: 0;
+			margin-top: 0 !important;
+			margin-bottom: 0 !important;
 		}
 
 		&-default {
@@ -91,8 +91,8 @@ $border-radius:					2px;
 	&-horizontal {
 
 		&-0 {
-			margin-left: 0;
-			margin-right: 0;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
 		}
 
 		&-default {
@@ -109,7 +109,7 @@ $border-radius:					2px;
 	&-top {
 
 		&-0 {
-			margin-top: 0;
+			margin-top: 0 !important;
 		}
 
 		&-default {
@@ -129,7 +129,7 @@ $border-radius:					2px;
 		}
 
 		&-0 {
-			margin-bottom: 0;
+			margin-bottom: 0 !important;
 		}
 
 		&-default {
@@ -144,7 +144,7 @@ $border-radius:					2px;
 	&-left {
 
 		&-0 {
-			margin-left: 0;
+			margin-left: 0 !important;
 		}
 
 		&-default {
@@ -160,7 +160,7 @@ $border-radius:					2px;
 	&-right {
 
 		&-0 {
-			margin-right: 0;
+			margin-right: 0 !important;
 		}
 
 		&-default {
@@ -199,8 +199,8 @@ $border-radius:					2px;
 	&-vertical {
 
 		&-0 {
-			padding-top: 0;
-			padding-bottom: 0;
+			padding-top: 0 !important;
+			padding-bottom: 0 !important;
 		}
 
 		&-default {
@@ -217,8 +217,8 @@ $border-radius:					2px;
 	&-horizontal {
 
 		&-0 {
-			padding-left: 0;
-			padding-right: 0;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
 		}
 
 		&-default {
@@ -250,7 +250,7 @@ $border-radius:					2px;
 	&-bottom {
 
 		&-0 {
-			padding-bottom: 0;
+			padding-bottom: 0 !important;
 		}
 
 		&-default {
@@ -265,7 +265,7 @@ $border-radius:					2px;
 	&-left {
 
 		&-0 {
-			padding-left: 0;
+			padding-left: 0 !important;
 		}
 
 		&-default {
@@ -280,7 +280,7 @@ $border-radius:					2px;
 	&-right {
 
 		&-0 {
-			padding-right: 0;
+			padding-right: 0 !important;
 		}
 
 		&-default {
