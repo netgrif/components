@@ -120,7 +120,7 @@
 
             <div ng-if="!taskCtrl.loading" layout="row" layout-align="start center" layout-wrap class="cursor-default">
 
-                <div hide-gt-md flex="100" layout="row" layout-align="start center" layout-wrap>
+                <div ng-if="taskCtrl.user" hide-gt-md flex="100" layout="row" layout-align="start center" layout-wrap>
 
                     <div flex="100" layout="row" layout-align="start center">
                         <div flex="20" class="line-3px color-bg-primary-op-50"></div>
