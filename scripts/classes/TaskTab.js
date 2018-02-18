@@ -1,0 +1,231 @@
+define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], function (Tab, Task, Transaction, Filter, TaskSearch) {
+    /**
+     * Constructor for TaskTab class
+     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n
+     * @param id
+     * @param label
+     * @param {Filter} baseFilter
+     * @param useCase
+     * @param angular
+     * @param config - config parameters for better customizing behavior of tab
+     * @constructor
+     */
+    function TaskTab(id, label, baseFilter, useCase, angular, config = {}) {
+        Tab.call(this, id, label);
+
+        this.baseUrl = TaskTab.URL_SEARCH;
+        this.baseFilter = baseFilter;
+        this.useCase = useCase;
+        Object.assign(this, angular, config);
+
+        this.tasks = [];
+        this.transactions = [];
+        this.transactionProgress = 0;
+        this.taskControllers = {};
+        this.activeFilter = this.baseFilter;
+        this.search = new TaskSearch({
+            $http: this.$http,
+            $snackbar: this.$snackbar,
+            $i18n: this.$i18n
+        }, {
+            considerWholeSearchInput: false
+        });
+    }
+
+    TaskTab.prototype = Object.create(Tab.prototype);
+    TaskTab.prototype.constructor = TaskTab;
+
+    TaskTab.URL_ALL = "/res/task";
+    TaskTab.URL_MY = "/res/task/my";
+    TaskTab.URL_SEARCH = "/res/task/search";
+
+    TaskTab.prototype.activate = function () {
+        const view = this.useCase ? 'caseView' : 'taskView';
+        this.tasksGroup = this.$mdExpansionPanelGroup(`${view}-tasksGroup-${this.id}`);
+        try {
+            this.tasksGroup.register(`taskPanel`, {
+                templateUrl: 'views/app/panels/task_panel.html',
+                controller: 'TaskPanelController',
+                controllerAs: 'taskCtrl'
+            });
+        } catch (error) {
+            // whatever
+            // if task group is already registered do nothing
+        }
+
+        if (this.showTransactions)
+            this.loadTransactions();
+
+        this.load(false);
+    };
+
+    TaskTab.prototype.reload = function () {
+        if (this.tasks.length > 0) {
+            this.removeAll();
+        }
+        this.load(false);
+    };
+
+    TaskTab.prototype.removeAll = function () {
+        this.tasksGroup.removeAll();
+        this.tasks.splice(0, this.tasks.length);
+    };
+
+    TaskTab.prototype.buildRequest = function (next) {
+        const url = next && this.page.next ? this.page.next : this.baseUrl + "?sort=priority";
+        return {
+            method: "POST",
+            url: url,
+            data: JSON.parse(this.activeFilter.query)
+        };
+    };
+
+    TaskTab.prototype.load = function (next) {
+        if (this.loading || !this.baseUrl) return;
+        if (next && this.tasks && this.page.totalElements === this.tasks.length) return;
+        if (!next && this.tasks.length > 0) return;
+
+        const self = this;
+        this.loading = true;
+        this.$http(this.buildRequest(next)).then(function (response) {
+            self.page = response.page;
+            if (self.page.totalElements === 0) {
+                self.$snackbar.info(self.$i18n.block.snackbar.noTasks);
+                self.page.next = undefined;
+                if (self.tasks)
+                    self.removeAll();
+                self.loading = false;
+                return;
+            }
+            const rawData = response.$response().data._embedded.tasks;
+            response.$request().$get("tasks").then(function (resources) {
+                if (self.page.totalPages !== 1) {
+                    if (url !== response.$href("last")) {
+                        self.page.next = response.$href("next");
+                    }
+                }
+
+                resources.forEach((r, i) => r.links = rawData[i]._links);
+                self.parseTasks(resources, next);
+
+                self.loading = false;
+            }, function () {
+                self.$snackbar.info(`${self.$i18n.block.snackbar.noTasksFoundIn} ${self.label}`);
+                self.page.next = undefined;
+                if (self.tasks) {
+                    self.removeAll();
+
+                }
+                self.loading = false;
+            })
+
+        }, function () {
+            self.$snackbar.error(`${self.$i18n.block.snackbar.tasksOn} ${self.url} ${self.$i18n.block.snackbar.failedToLoad}`);
+            self.loading = false;
+        });
+    };
+
+    TaskTab.prototype.parseTasks = function (resources, next) {
+        if (!next) {
+            const tasksToDelete = []; //saved are only indexes for work later
+            this.tasks.forEach((task, i) => {
+                const index = resources.findIndex(r => r.caseId === task.caseId && r.transitionId === task.transitionId);
+                if (index === -1)
+                    tasksToDelete.push(i);
+                else {
+                    task.update(resources[index], resources[index].links);
+                    resources.splice(index, 1);
+                }
+            });
+            tasksToDelete.sort((a, b) => b - a);
+            tasksToDelete.forEach(index => this.deleteTaskOnIndex(index));
+        }
+        const self = this;
+        resources.forEach((r, i) => {
+            this.tasksGroup.add(`taskPanel`, {
+                resource: r,
+                links: r.links,
+                tab: this,
+                config: {allowHighlight: this.allowHighlight}
+            }).then(function (panel) {
+                if (self.taskControllers[r.stringId]) {
+                    self.taskControllers[r.stringId].panel = panel;
+                    self.tasks.push(self.taskControllers[r.stringId]);
+                    delete self.taskControllers[r.stringId];
+                }
+
+                if (self.showTransactions) {
+                    self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
+                    self.transactionProgress = self.mostForwardTransaction();
+                }
+            });
+        });
+        if (self.showTransactions)
+            self.transactions.forEach(trans => trans.setActive(self.tasks));
+    };
+
+    TaskTab.prototype.deleteTaskOnIndex = function (index) {
+        // delete this.taskControllers[this.tasks[index].stringId];
+        this.tasks[index].panel.remove();
+        this.tasks.splice(index, 1);
+    };
+
+    TaskTab.prototype.addTaskController = function (taskCtrl) {
+        this.taskControllers[taskCtrl.stringId] = taskCtrl;
+    };
+
+    TaskTab.prototype.updateTasksData = function (updateObj) {
+        this.tasks.forEach(t => t.updateDataGroups(updateObj));
+    };
+
+    TaskTab.prototype.loadTransactions = function () {
+        if (!this.useCase || this.transactions.length > 0) return;
+
+        const self = this;
+        this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
+            response.$request().$get("transactions").then(function (resources) {
+                self.transactions = resources.map(r => new Transaction(r, {}));
+                if (self.tasks.length > 0)
+                    self.transactions.forEach(trans => trans.setActive(self.tasks));
+
+            }, function () {
+                console.log(`No resource transactions for net ${self.useCase.petriNetId}`);
+            })
+
+        }, function () {
+            self.$snackbar.error(`${self.$i18n.block.snackbar.transactionsFor} ${self.useCase.title} ${self.$i18n.block.snackbar.failedToLoad}`);
+        });
+    };
+
+    TaskTab.prototype.mostForwardTransaction = function () {
+        let index = 0;
+        this.transactions.forEach((trans, i) => {
+            if (trans.active) index = i > index ? i : index;
+        });
+        return index;
+    };
+
+    TaskTab.prototype.reloadUseCase = function () {
+        if (!this.useCase) return;
+        const self = this;
+        this.$http({
+            method: "POST",
+            url: "/res/workflow/case/search",
+            data: {
+                id: this.useCase.stringId
+            }
+        }).then(function (response) {
+            response.$request().$get("cases").then(function (resources) {
+                resources.forEach(r => Object.assign(self.useCase, r));
+
+            }, function () {
+                console.log(`Case ${this.useCase.stringId} failed to update`);
+            })
+
+        }, function () {
+            console.log(`Case ${this.useCase.stringId} failed to update`);
+        })
+    };
+
+    return TaskTab;
+});

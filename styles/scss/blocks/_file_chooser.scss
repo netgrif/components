@@ -10,40 +10,4 @@
 		overflow: hidden;
 		z-index: -1;
 	}
-
-	&-avatar {
-
-		.avatar-icon {
-			font-size: 220px;
-		}
-
-		input {
-			position: absolute;
-			height: 0.1px;
-			width: 0.1px;
-			opacity: 0;
-			overflow: hidden;
-			z-index: -1;
-		}
-
-		label {
-			display: none;
-			position: absolute;
-
-			.material-icons {
-				font-size: 100px;
-
-				&:hover {
-					cursor: pointer;
-				}
-			}
-		}
-
-		&:hover {
-
-			label {
-				display: block;
-			}
-		}
-	}
 }

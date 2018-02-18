@@ -1,23 +1,35 @@
-<div class="data-item" layout="row" layout-align="start center">
-    <div flex="50">
-        <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
+<div class="data-field" layout="row" layout-align="start center" layout-wrap>
+
+    <div flex="45" flex-xs="100">
+        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
             {{field.name}}
             <md-tooltip ng-if="field.description">
                 {{field.description}}
             </md-tooltip>
         </span>
     </div>
-    <div flex="20"></div>
-    <div flex="60">
-        <md-input-container class="md-block" flex>
-            <label>Enter date</label>
+
+    <div hide-xs flex="5"></div>
+
+    <div flex="45" flex-xs="100">
+        <md-input-container id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
+            <label class="placeholder">{{::$i18n.block.data.enterDate}}</label>
             <md-datepicker ng-model="field.newValue"
-                           ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
-                           ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                           ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
+                           ng-change="field.changed = true"
+                           ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
+                           ng-blur="field.parent.save();field.active = false"
+                           ng-focus="field.active = true"
                            md-open-on-focus
-                           ng-required="field.behavior.required"></md-datepicker>
+                           ng-required="field.behavior.required"
+                           md-min-date="field.minDate"
+                           md-max-date="field.maxDate"
+                           md-date-filter="field.validate"
+                           aria-label="Pick date">
+            </md-datepicker>
         </md-input-container>
     </div>
-    <div flex="10"></div>
+
+    <div hide-xs flex="5"></div>
+
+    {{::field.bindElement()}}
 </div>

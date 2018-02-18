@@ -1,0 +1,101 @@
+<div layout="row" class="card padding-2x">
+
+    <div flex layout="column">
+
+        <div layout="row" layout-align="start center">
+
+            <i class="material-icons color-fg-primary-500 margin-right-14px">search</i>
+
+            <div flex layout="row">
+
+                <div layout-gt-xs="row" layout-xs="column">
+
+                    <md-input-container class="md-block" flex>
+                        <label class="placeholder">{{::$i18n.page.tasks.search.category}}</label>
+                        <md-select ng-model="taskTab.search.subject">
+                            <md-option ng-repeat="(key, subject) in taskTab.search.subjects" ng-value="subject" ng-disabled="subject.disable">
+                                {{subject.title}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-autocomplete class="md-block"
+                                     md-search-text="taskTab.search.searchText"
+                                     md-selected-item="taskTab.search.selectedItem"
+                                     md-selected-item-change="taskTab.search.selectedItemChanged(item)"
+                                     md-items="item in taskTab.search.getItems()"
+                                     md-item-text="item.title"
+                                     md-min-length="0"
+                                     md-no-cache="true"
+                                     md-clear-button="true"
+                                     md-select-on-match="true"
+                                     md-match-case-insensitive="true"
+                                     md-dropdown-items="5"
+                                     md-floating-label="{{::$i18n.page.tasks.search.search}}">
+
+                        <md-item-template>
+                            <span md-highlight-text="taskTab.search.searchText" md-highlight-flags="i">
+                                {{item.title}}
+                            </span>
+                        </md-item-template>
+                        <md-not-found>
+                            <!--{{::$i18n.page.tasks.filter.process + " " + taskTab.search.searchText + " " + $i18n.page.tasks.filter.processNotFound}}-->
+                            {{::$i18n.page.tasks.filter.processNotFound}}
+                        </md-not-found>
+
+                    </md-autocomplete>
+
+                </div>
+
+                <md-menu layout="column" layout-align="center center">
+                    <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
+                        <md-icon class="material-icons">more_vert</md-icon>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="taskCtrl.showDialog('save_filter')">
+                                <md-icon class="material-icons">save</md-icon>
+                                <span>{{::$i18n.block.btn.save}}</span>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="tasksCtrl.clearFilter()">
+                                <md-icon class="material-icons">clear_all</md-icon>
+                                <span>{{::$i18n.block.btn.reset}}</span>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+
+            </div>
+
+        </div>
+
+        <div layout="row" layout-align="start center">
+
+            <i class="material-icons color-fg-primary-500 margin-right-14px">filter_list</i>
+
+            <md-chips ng-model="taskTab.search.chips" readonly="true" md-removable="true"
+                      md-on-remove="taskTab.search.chipRemoved($chip)"
+                      id="chips-container">
+                <md-chip-template>
+                    {{$chip.text}}
+                </md-chip-template>
+            </md-chips>
+
+        </div>
+
+    </div>
+
+    <div layout="column" layout-align="center center">
+
+        <md-button class="md-fab md-raised md-mini md-primary" ng-click="taskTab.search.getQuery()">
+            <md-icon class="material-icons">search</md-icon>
+            <md-tooltip md-direction="left">
+                {{::$i18n.block.btn.search}}
+            </md-tooltip>
+        </md-button>
+
+    </div>
+
+</div> <!-- ./card -->

@@ -1,30 +1,50 @@
-<div class="data-item" layout="row" layout-align="start center">
-    <div flex="50">
-        <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
+<div class="data-field" layout="row" layout-align="start center" layout-wrap>
+
+    <div flex="45" flex-xs="100">
+        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
             {{field.name}}
             <md-tooltip ng-if="field.description">
                 {{field.description}}
             </md-tooltip>
         </span>
     </div>
-    <div flex="20"></div>
-    <div flex="60">
-        <md-input-container class="md-block" flex>
-            <label>{{field.name}}</label>
-            <input type="text" ng-if="field.subType === 'simple'"
+
+    <div hide-xs flex="5"></div>
+
+    <div flex="45" flex-xs="100">
+        <md-input-container  flex class="md-block" ng-class="field.valid ? '':' md-input-invalid'">
+            <label class="placeholder">{{field.placeholder}}</label>
+            <input id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" type="text" ng-if="field.subType === 'simple'"
                    ng-model="field.newValue"
-                   ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
-                   ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                   ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
-                   ng-required="field.behavior.required">
-            <textarea ng-if="field.subType === 'area'"
-                      rows="1" max-rows="10"
+                   ng-change="field.changed = true; field.newValue === undefined ? field.newValue=null : field.newValue; field.validate(field.newValue);"
+                   ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
+                   ng-blur="field.parent.save();field.active = false"
+                   ng-focus="field.active = true"
+                   ng-required="field.behavior.required"
+                   md-maxlength="field.maxLength"
+                   ng-keypress="$event.which === 13 && $event.target.blur()"
+                   aria-label="Enter text">
+            <textarea id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" ng-if="field.subType === 'area'"
+                      rows="1" max-rows="4"
                       ng-model="field.newValue"
-                      ng-change="tasksCtrl.dataFieldChanged(field.taskIndex, $index); caseCtrl.activeTab.dataFieldChanged(task, $index)"
-                      ng-disabled="!(task.user.email == $user.login && field.behavior.editable)"
-                      ng-blur="tasksCtrl.saveData(task); caseCtrl.activeTab.saveData(task)"
-                      ng-required="field.behavior.required"></textarea>
+                      ng-change="field.changed = field.value !== field.newValue"
+                      ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
+                      ng-blur="field.parent.save()"
+                      ng-required="field.behavior.required"
+                      md-maxlength="field.maxLength"
+                      aria-label="Enter text"
+                      title="">
+            </textarea>
+            <div ng-messages="field.validationErrors" ng-show="field.newValue">
+                <div ng-message="length" class="color-fg-warning">{{::$i18n.block.validation.textMustBeAtMost + " " + field.maxLength + " " + $i18n.block.word.characters + " " + $i18n.block.word.long}}</div>
+                <div ng-message="email" class="color-fg-warning">{{::$i18n.block.validation.textInEmailFormat + " ( "+field.formating+" )"}}</div>
+                <div ng-message="telnumber" class="color-fg-warning">{{::$i18n.block.validation.textInTelFormat + " ( " + field.formating + " )"}}</div>
+                <div ng-message="regex" class="color-fg-warning">{{::$i18n.block.validation.textInWrongFormat}}</div>
+            </div>
         </md-input-container>
     </div>
-    <div flex="10"></div>
+
+    <div hide-xs flex="5"></div>
+
+    {{::field.bindElement()}}
 </div>

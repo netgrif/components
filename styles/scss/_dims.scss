@@ -1,6 +1,35 @@
-// Dimmensions
+// Dimensions
 $dim-default:					8px;
 $dim-2x:						2*$dim-default;
+
+$dim-12px:						12px;
+$dim-14px:						14px;
+$dim-48px:						48px;
+$dim-52px:						52px;
+$dim-56px:						56px;
+
+$border-radius:					2px;
+
+// Height
+
+.height {
+
+	&-48px {
+		height: $dim-48px; // Expansion panel height
+	}
+
+	&-52px {
+		height: $dim-52px;
+	}
+
+	&-56px {
+		height: $dim-56px;
+	}
+}
+
+.width {
+
+}
 
 // Min / Max Dims
 .min {
@@ -29,7 +58,7 @@ $dim-2x:						2*$dim-default;
 // Margins
 .margin {
 
-	&-no {
+	&-0 {
 		margin: 0 !important;
 	}
 
@@ -43,9 +72,9 @@ $dim-2x:						2*$dim-default;
 
 	&-vertical {
 
-		&-no {
-			margin-top: 0;
-			margin-bottom: 0;
+		&-0 {
+			margin-top: 0 !important;
+			margin-bottom: 0 !important;
 		}
 
 		&-default {
@@ -61,9 +90,9 @@ $dim-2x:						2*$dim-default;
 
 	&-horizontal {
 
-		&-no {
-			margin-left: 0;
-			margin-right: 0;
+		&-0 {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
 		}
 
 		&-default {
@@ -79,8 +108,8 @@ $dim-2x:						2*$dim-default;
 
 	&-top {
 
-		&-no {
-			margin-top: 0;
+		&-0 {
+			margin-top: 0 !important;
 		}
 
 		&-default {
@@ -94,8 +123,13 @@ $dim-2x:						2*$dim-default;
 
 	&-bottom {
 
-		&-no {
-			margin-bottom: 0;
+		// To fix input container alignment
+		&-negative-15px {
+			margin-bottom: -15px;
+		}
+
+		&-0 {
+			margin-bottom: 0 !important;
 		}
 
 		&-default {
@@ -109,8 +143,8 @@ $dim-2x:						2*$dim-default;
 
 	&-left {
 
-		&-no {
-			margin-left: 0;
+		&-0 {
+			margin-left: 0 !important;
 		}
 
 		&-default {
@@ -120,12 +154,13 @@ $dim-2x:						2*$dim-default;
 		&-2x {
 			margin-left: $dim-2x;
 		}
+
 	}
 
 	&-right {
 
-		&-no {
-			margin-right: 0;
+		&-0 {
+			margin-right: 0 !important;
 		}
 
 		&-default {
@@ -135,13 +170,21 @@ $dim-2x:						2*$dim-default;
 		&-2x {
 			margin-right: $dim-2x;
 		}
+
+		&-12px {
+			margin-right: $dim-12px;
+		}
+
+		&-14px {
+			margin-right: $dim-14px;
+		}
 	}
 }
 
 // Paddings
 .padding {
 
-	&-no {
+	&-0 {
 		padding: 0 !important;
 	}
 
@@ -155,9 +198,9 @@ $dim-2x:						2*$dim-default;
 
 	&-vertical {
 
-		&-no {
-			padding-top: 0;
-			padding-bottom: 0;
+		&-0 {
+			padding-top: 0 !important;
+			padding-bottom: 0 !important;
 		}
 
 		&-default {
@@ -173,9 +216,9 @@ $dim-2x:						2*$dim-default;
 
 	&-horizontal {
 
-		&-no {
-			padding-left: 0;
-			padding-right: 0;
+		&-0 {
+			padding-left: 0 !important;
+			padding-right: 0 !important;
 		}
 
 		&-default {
@@ -191,8 +234,8 @@ $dim-2x:						2*$dim-default;
 
 	&-top {
 
-		&-no {
-			padding-top: 0;
+		&-0 {
+			padding-top: 0 !important;
 		}
 
 		&-default {
@@ -206,8 +249,8 @@ $dim-2x:						2*$dim-default;
 
 	&-bottom {
 
-		&-no {
-			padding-bottom: 0;
+		&-0 {
+			padding-bottom: 0 !important;
 		}
 
 		&-default {
@@ -221,8 +264,8 @@ $dim-2x:						2*$dim-default;
 
 	&-left {
 
-		&-no {
-			padding-left: 0;
+		&-0 {
+			padding-left: 0 !important;
 		}
 
 		&-default {
@@ -236,8 +279,8 @@ $dim-2x:						2*$dim-default;
 
 	&-right {
 
-		&-no {
-			padding-right: 0;
+		&-0 {
+			padding-right: 0 !important;
 		}
 
 		&-default {
@@ -247,11 +290,14 @@ $dim-2x:						2*$dim-default;
 		&-2x {
 			padding-right: $dim-2x;
 		}
+
+		&-66px {
+			padding-right: 66px;
+		}
 	}
 }
 
 // Border
-
 .border {
 
 	&-width {
@@ -268,7 +314,53 @@ $dim-2x:						2*$dim-default;
 	&-radius {
 
 		&-default {
-			border-radius: 2px !important;
+			border-radius: $border-radius !important;
+		}
+
+		&-top {
+
+			&-default {
+				border-top-left-radius: $border-radius;
+				border-top-right-radius: $border-radius;
+			}
+
+			&-left {
+
+				&-default {
+					border-top-left-radius: $border-radius;
+				}
+
+			}
+
+			&-right {
+
+				&-default {
+					border-top-right-radius: $border-radius;
+				}
+			}
+		}
+
+		&-bottom {
+
+			&-default {
+				border-bottom-left-radius: $border-radius;
+				border-bottom-right-radius: $border-radius;
+			}
+
+			&-left {
+
+				&-default {
+					border-bottom-left-radius: $border-radius;
+				}
+			}
+
+			&-right {
+
+				&-default {
+					border-bottom-right-radius: $border-radius;
+				}
+			}
+
 		}
 	}
 }

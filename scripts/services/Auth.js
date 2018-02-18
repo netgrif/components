@@ -1,6 +1,6 @@
 
 define(['angular','angularRoute','../modules/Main'],function (angular) {
-    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user, $snackbar) {
+    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user, $snackbar, $i18n) {
         var auth = {
             authenticated: false,
 
@@ -10,32 +10,36 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
             signupPath: "/signup",
             appPath: "/",
             path: $location.path(),
+            // Configuration
+            userSignUp: false,
 
             authenticate: function (credentials, callback) {
-                $log.debug(credentials);
-                var headers = credentials && credentials.username ? {
+                //$log.debug(credentials);
+                const headers = credentials && credentials.username ? {
                     'Authorization' : "Basic " + btoa(credentials.username + ":" + credentials.password)
                 } : {};
 
-                $log.debug(headers);
+                //$log.debug(headers);
                 $http.get(auth.userPath,{
                     headers: headers
                 }).then(function (response) {
-                    $log.debug(response);
+                    //$log.debug(response);
                     auth.authenticated = !!response.name;
 
-                    let principal = response.principal;
-                    $user.id = principal.id;
-                    $user.login = principal.username;
-                    $user.authority = principal.authorities.map(authority => authority.authority);
-                    $user.name = principal.fullName;
-                    $user.roles = principal.processRoles;
+                    if(response.principal) {
+                        let principal = response.principal;
+                        $user.id = principal.id;
+                        $user.login = principal.username;
+                        $user.authority = principal.authorities.map(authority => authority.authority);
+                        $user.name = principal.fullName;
+                        $user.roles = principal.processRoles;
+                    }
 
                     callback && callback(auth.authenticated);
                     $location.path(auth.path === auth.loginPath ? auth.appPath : auth.path);
 
                 },function (response) {
-                    $log.debug(response);
+                    //$log.debug(response);
                     auth.authenticated = false;
                     callback && callback(false);
                 });
@@ -65,16 +69,14 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                 });
             },
             init: function () {
-                if($location.path() == '/test') return;
-
-                if(!auth.isLoginPath()) {
+                if(!auth.isExcluded()) {
                     this.authenticate({}, function (isLoggedIn) {
                         if (isLoggedIn) $location.path(auth.path);
                     });
                 }
 
                 $rootScope.$on('$locationChangeStart',function () {
-                    if(!auth.isLoginPath()){
+                    if(!auth.isExcluded()){
                         auth.path = $location.path();
                         if(!auth.authenticated) $location.path(auth.loginPath);
                     } else {
@@ -84,8 +86,8 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                     $snackbar.hide();
                 });
             },
-            isLoginPath: function () {
-                return $location.path().startsWith(auth.loginPath);
+            isExcluded: function () {
+                return $location.path().startsWith(auth.loginPath) || $location.path().startsWith(auth.signupPath);
             }
         };
         return auth;

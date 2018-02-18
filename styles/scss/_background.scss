@@ -1,22 +1,40 @@
+@import 'colors';
+@import 'dims';
+
+$background-header-height: 195px;
+$tab-header-height: $dim-48px;
+
 .background {
 
-	&-header {
+	&-default {
+		background-size: cover !important;
+		background: url("../../assets/netgrif_background.png");
+	}
+
+	/*&-header {
 		position: absolute;
-		height: 223px;
+		width: 100%;
+		height: $background-header-height;
+		top: 0;
+
+		&-tabs {
+			@extend .background-header;
+			height: $background-header-height - $tab-header-height;
+			top: $tab-header-height;
+		}
+	}*/
+
+	&-fullpage {
+		position: absolute;
+		height: 100%;
 		width: 100%;
 		top: 0;
 	}
 
 	&-tabs {
-		top: 48px !important;
-		height: 175px !important;
-	}
 
-	&-welcome {
-		background-image: url(../../assets/welcome_background.png);
-		background-size: cover;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
+		md-tabs-wrapper {
+			background-color: $color-grey-200;
+		}
 	}
 }

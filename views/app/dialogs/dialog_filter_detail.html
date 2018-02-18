@@ -1,0 +1,154 @@
+<md-dialog aria-label="Filter detail">
+
+        <md-toolbar>
+            <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
+
+                <h2>Filter: Label of selected filter</h2>
+
+                <md-button class="md-icon-button" ng-click="closeDialog()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+             <div layout="column" class="md-dialog-content">
+
+                 <div class="margin-top-default">
+
+                     <span flex class="cursor-pointer">
+                         {{::$root.$i18n.page.tasks.filter.process}}
+                         <md-tooltip>
+                             {{::$root.$i18n.page.tasks.filter.tooltips.process}}
+                         </md-tooltip>
+                     </span>
+
+                     <md-chips class="magrin-bottom-default">
+                         <md-chip>
+                             Reklamacia
+                         </md-chip>
+                     </md-chips>
+
+                 </div>
+
+                 <div class="margin-top-default">
+
+                     <span flex class="cursor-pointer">
+                         {{::$root.$i18n.page.tasks.filter.transition}}
+                         <md-tooltip>
+                             {{::$root.$i18n.page.tasks.filter.tooltips.transition}}
+                         </md-tooltip>
+                     </span>
+
+                     <md-chips class="margin-bottom-default">
+                         <md-chip>
+                             Odvoz
+                         </md-chip>
+                         <md-chip>
+                             Odovzdat kurierovi
+                         </md-chip>
+                         <md-chip>
+                             Prijat od kuriera
+                         </md-chip>
+                     </md-chips>
+
+                 </div>
+
+                 <md-input-container>
+
+                     <label>{{::$root.$i18n.page.tasks.filter.description}}</label>
+                     <textarea ng-model="TODO.description" md-maxlength="150" rows="3" md-select-on-focus title=""></textarea>
+
+                 </md-input-container>
+
+                 <div layout-wrap layout="row" layout-align="start center">
+
+                     <div flex="100">
+                         <div flex layout-wrap layout="row" layout-align="start center" class="margin-bottom-2x" ng-cloak>
+                             <div flex="20" hide-md hide-xs>
+                                 <span flex class="cursor-pointer">
+                                     {{::$root.$i18n.page.tasks.filter.type}}
+                                 </span>
+                             </div>
+                             <div flex="5" hide-md hide-xs></div>
+                             <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
+                                 <div layout="row" layout-align="start center">
+                                     <i class="material-icons margin-right-2x color-fg-primary-500 margin-right-2x">group</i>
+                                     <span class="cursor-pointer">
+                                         {{::$root.$i18n.page.tasks.filter.group}}
+                                     </span>
+                                 </div>
+                             </div>
+                             <div flex="5" flex-md="10"></div>
+                         </div>
+                     </div> <!-- ./Data-field -->
+
+                     <div flex="100">
+                         <div flex layout-wrap layout="row" layout-align="start center" class="margin-bottom-2x" ng-cloak>
+                             <div flex="20" hide-md hide-xs>
+                                 <span flex class="cursor-pointer">
+                                     {{::$root.$i18n.page.tasks.filter.author}}
+                                 </span>
+                             </div>
+                             <div flex="5" hide-md hide-xs></div>
+                             <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
+                                 <div layout="row" layout-align="start center">
+                                     <i class="material-icons margin-right-2x color-fg-primary-500 margin-right-2x">account_circle</i>
+                                     <span class="cursor-pointer">
+                                         Anonymous
+                                         <md-tooltip>
+                                             test@email.com
+                                         </md-tooltip>
+                                     </span>
+                                 </div>
+                             </div>
+                             <div flex="5" flex-md="10"></div>
+                         </div>
+                     </div> <!-- ./Data-field -->
+
+                     <div flex="100">
+                         <div flex layout-wrap layout="row" layout-align="start center">
+                             <div flex="20" hide-md hide-xs>
+                                 <span flex class="cursor-pointer">
+                                     {{::$root.$i18n.page.tasks.filter.date}}
+                                 </span>
+                             </div>
+                             <div flex="5" hide-md hide-xs></div>
+                             <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
+                                 <div layout="row" layout-align="start center">
+                                     <i class="material-icons margin-right-2x color-fg-primary-500 margin-right-2x">today</i>
+                                     <span class="cursor-pointer">
+                                         dd.mm.yyyy hh:mm
+                                     </span>
+                                 </div>
+                             </div>
+                             <div flex="5" flex-md="10"></div>
+                         </div>
+                     </div> <!-- ./Data-field -->
+
+                 </div> <!-- ./row -->
+
+             </div> <!-- ./column -->
+
+            <md-divider class="margin-horizontal-2x"></md-divider>
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" layout-align="end center">
+
+            <md-button>
+                {{::$root.$i18n.block.btn.save}}
+            </md-button>
+
+            <md-button>
+                {{::$root.$i18n.block.btn.edit}}
+            </md-button>
+
+            <md-button>
+                {{::$root.$i18n.block.btn.delete}}
+            </md-button>
+
+        </md-dialog-actions>
+
+</md-dialog>

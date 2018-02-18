@@ -1,0 +1,170 @@
+ <div class="card">
+
+        <div layout="row" layout-align="space-between center" class="height-56px color-bg-primary-500 border-radius-top-default">
+
+            <div class="padding-2x color-fg-accent-50">
+                <span>{{tasksCtrl.filterTab.filter.title}}</span>
+            </div>
+
+            <md-button class="md-icon-button" ng-click="tasksCtrl.filterTab.filter.closeSideDetail()">
+                <md-icon class="material-icons color-fg-accent-50">close</md-icon>
+            </md-button>
+
+        </div>
+
+        <div flex layout-wrap layout="row" layout-align="start center" class="margin-left-2x margin-top-2x margin-right-2x">
+
+            <div flex layout="column">
+
+                <div ng-repeat="(key, value) in tasksCtrl.filterTab.filter.readableQuery" class="{{$first ? '' : 'margin-top-default'}}">
+                    <span flex class="cursor-pointer">
+                        {{key}}
+                    </span>
+
+                    <md-chips ng-model="value" readonly="true" md-removable="false" class="margin-bottom-default">
+                    </md-chips>
+                </div>
+
+                <!--<div class="margin-top-default">-->
+                    <!--<span flex class="cursor-pointer">-->
+                        <!--{{::$i18n.page.tasks.filter.transition}}-->
+                        <!--<md-tooltip>-->
+                            <!--{{::$i18n.page.tasks.filter.tooltips.transition}}-->
+                        <!--</md-tooltip>-->
+                    <!--</span>-->
+
+                    <!--<md-chips class="margin-bottom-default">-->
+                        <!--<md-chip>-->
+                            <!--Odvoz-->
+                        <!--</md-chip>-->
+                        <!--<md-chip>-->
+                            <!--Odovzdat kurierovi-->
+                        <!--</md-chip>-->
+                        <!--<md-chip>-->
+                            <!--Prijat od kuriera-->
+                        <!--</md-chip>-->
+                    <!--</md-chips>-->
+                <!--</div>-->
+
+                <md-input-container>
+                    <label>{{::$i18n.page.tasks.filter.description}}</label>
+                    <textarea ng-model="tasksCtrl.filterTab.filter.description" md-maxlength="150" rows="3" md-select-on-focus title="Filter description"></textarea>
+                </md-input-container>
+
+
+                <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
+
+                    <div flex="100" layout-wrap layout="row" layout-align="start center">
+
+                        <div flex="100">
+
+                            <div flex layout-wrap layout="row" layout-align="start center" class="margin-bottom-2x" ng-cloak>
+
+                                <div flex="20" hide-md>
+                                    <span flex class="cursor-pointer">
+                                        {{::$i18n.page.tasks.filter.type}}
+                                    </span>
+                                </div>
+
+                                <div flex="5" hide-md></div>
+
+                                <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
+                                    <div layout="row" layout-align="start center">
+                                        <i class="material-icons color-fg-primary-500 margin-right-2x">{{tasksCtrl.filterTab.filter.visibilityIcon}}</i>
+                                        <span class="cursor-pointer">
+                                            {{::$i18n.page.tasks.filter[tasksCtrl.filterTab.filter.visibilityIcon]}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div flex="5" flex-md="10"></div>
+
+                            </div>
+
+                        </div> <!-- ./Data-field -->
+
+                        <div flex="100">
+
+                            <div flex layout-wrap layout="row" layout-align="start center" class="margin-bottom-2x" ng-cloak>
+
+                                <div flex="20" hide-md>
+                                    <span flex class="cursor-pointer">
+                                        {{::$i18n.page.tasks.filter.author}}
+                                    </span>
+                                </div>
+
+                                <div flex="5" hide-md></div>
+
+                                <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
+                                    <div layout="row" layout-align="start center">
+                                        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                                        <span class="cursor-pointer">
+                                            {{tasksCtrl.filterTab.filter.author.fullName}}
+                                            <md-tooltip>
+                                                {{tasksCtrl.filterTab.filter.author.email}}
+                                            </md-tooltip>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div flex="5" flex-md="10"></div>
+
+                            </div>
+
+                        </div> <!-- ./Data-field -->
+
+                        <div flex="100">
+
+                            <div flex layout-wrap layout="row" layout-align="start center">
+
+                                <div flex="20" hide-md>
+                                    <span flex class="cursor-pointer">
+                                        {{::$i18n.page.tasks.filter.date}}
+                                    </span>
+                                </div>
+
+                                <div flex="5" hide-md></div>
+
+                                <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
+                                    <div layout="row" layout-align="start center">
+                                        <i class="material-icons color-fg-primary-500 margin-right-2x">today</i>
+                                        <span class="cursor-pointer">
+                                            {{tasksCtrl.filterTab.filter.formatedCreationDate}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div flex="5" flex-md="10"></div>
+
+                            </div>
+
+                        </div> <!-- ./Data-field -->
+
+                    </div>
+
+                </div>
+
+                <md-divider></md-divider>
+
+                <div flex layout="row" layout-align="end center">
+
+                    <!--TODO 9.2.2018 Implement edit feature of filters-->
+                    <!--<md-button class="md-primary" layout-align="center center">-->
+                        <!--{{::$i18n.block.btn.save}}-->
+                    <!--</md-button>-->
+
+                    <!--<md-button class="md-primary" layout-align="center center">-->
+                        <!--{{::$i18n.block.btn.edit}}-->
+                    <!--</md-button>-->
+
+                    <md-button class="md-primary" layout-align="center center" ng-click="tasksCtrl.filterTab.filter.delete()">
+                        {{::$i18n.block.btn.delete}}
+                    </md-button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>

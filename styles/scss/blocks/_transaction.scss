@@ -1,0 +1,21 @@
+@import '../mixins';
+
+.transaction {
+    display: block;
+    font-size: 18px;
+}
+
+// Responsive
+@include xs() {
+
+    .transaction {
+
+        &.active {
+            display: block;
+        }
+
+        &:not(active) {
+            display: none;
+        }
+    }
+}

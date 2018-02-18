@@ -1,8 +1,10 @@
-
 /*
-    Register all controllers that need to be loaded
-    controller itself should be handling registration to angular app module
+ Register all controllers that need to be loaded
+ controller itself should be handling registration to angular app module
  */
+
 var path = 'scripts/controllers/';
-define([path+'MainController',path+'DashboardController',path+'LoginController',path+'ProfileController',
-        path+'TasksController',path+'RolesController',path+'CaseController',path+'AdminConsoleController', path+'WorkflowController'], function () {});
+define(['MainController', 'CasesController', 'LoginController', 'AdminConsoleController', 'TaskPanelController',
+    'CaseDialogController', 'DashboardController', 'ProfileController', 'TasksController', 'WorkflowController', 'WorkflowPanelController']
+    .map(ctrl => path + ctrl), function () {
+});

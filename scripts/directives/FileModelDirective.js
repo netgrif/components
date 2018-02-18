@@ -1,6 +1,6 @@
 
-define(['angular','../modules/Workflow'],function (angular) {
-    angular.module('ngWorkflow').directive('fileModel',['$parse',
+define(['angular','../modules/Main'],function (angular) {
+    angular.module('ngMain').directive('fileModel',['$parse',
     function ($parse) {
         return {
             restrict: 'A',

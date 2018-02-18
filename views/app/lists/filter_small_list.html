@@ -1,0 +1,11 @@
+<md-list flex class="padding-0">
+
+    <div ng-repeat-start="filter in tasksCtrl.filterTab.filters" ng-include="'views/app/lists/list_items/filter_small_list_item.html'"></div>
+
+    <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
+
+    <div layout="row" layout-align="center center" in-view="$inview&&tasksCtrl.filterTab.load(true,false)" class="padding-2x margin-2x">
+        <md-progress-circular md-mode="indeterminate" ng-disabled="!tasksCtrl.filterTab.loading" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
+    </div>
+
+</md-list>

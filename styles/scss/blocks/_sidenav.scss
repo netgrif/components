@@ -1,39 +1,66 @@
-.main-sidenav {
-	width: 180px;
-	min-width: 180px; // to prevent grow on mobile devices
-	max-width: 180px;
-	background-color: $color-dark-teal-grey-800;
+@import '../colors';
+@import '../dims';
 
-	.md-button {
-		height: 36px;
-		width: 100%;
-		text-transform: none;
-		color: white;
-		font-size: 17px;
-		margin: 0;
-		padding: 5px 10px;
-		border-radius: 0;
+.sidenav {
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
 
-		&:first-child {
-			margin-top: 30px;
-		}
+    &-logo {
+        height: $dim-56px;
 
-		i {
-			margin-right: 10px;
-		}
+        img {
+            height: 100%;
+            width: auto;
+        }
+    }
 
-		&:hover {
-			background-color: $color-primary-500;
-		}
+    md-content {
+        height: 100%;
+        background-color: $color-dark-teal-grey-800;
 
-		&.active {
-			background-color: $color-grey-200;
-			color: $color-primary-500;
+        .md-button {
+            height: 36px;
+            width: 100%;
+            text-transform: none;
+            color: white;
+            font-size: 17px;
+            margin: 0;
+            padding: $dim-default $dim-2x;
+            border-radius: 0;
 
-			&:hover {
-				background-color: $color-primary-500;
-				color: white;
-			}
-		}
-	}
+            &:first-child {
+                margin-top: $dim-48px;
+            }
+
+            i {
+                margin-right: $dim-default;
+            }
+
+            &:hover {
+                background-color: $color-primary-500;
+            }
+
+            &.active {
+                background-color: $color-grey-200;
+                color: $color-primary-500;
+
+                &:hover {
+                    background-color: $color-primary-500;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    &.md-sidenav-left, md-sidenav#{&} {
+        top: $dim-56px !important; // Toolbar height
+    }
+}
+
+@include gt-sm() {
+
+    .sidenav {
+        height: 100%;
+    }
 }

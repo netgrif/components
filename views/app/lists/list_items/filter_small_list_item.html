@@ -1,0 +1,41 @@
+<md-list-item class="card list-item {{filter.selected ? 'list-item-selected' : ''}}">
+    <div flex layout="row" layout-align="start center" ng-click="filter.click()">
+
+        <span flex-gt-lg="10" flex-lg="15" flex-md="20" flex-sm="15" flex-xs="30" layout="row" layout-align="start center" class="margin-left-default">
+            <i class="material-icons color-fg-primary-500">{{filter.visibilityIcon}}</i>
+        </span>
+        <span flex-gt-lg="25" flex-lg="35" flex-md="70" flex-sm="35" flex-xs="55" layout="row" layout-align="start center">
+            {{filter.title}}
+        </span>
+        <span flex-gt-lg="30" flex-lg="40" hide-md flex-sm="40" hide-xs layout="row" layout-align="start center" class="text-overflow-dots">
+            <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+                {{filter.author.fullName}}
+        </span>
+        <span hide show-gt-lg flex-gt-lg="25" >
+            {{filter.formatedCreationDate}}
+        </span>
+
+        <div flex-gt-lg="10" flex-lg="10" flex-md="10" hide-sm hide-xs layout="row" layout-align="end center" >
+
+            <md-button class="md-icon-button color-fg-primary-500" ng-click="filter.openSideDetail()">
+                <i class="material-icons">list</i>
+                <md-tooltip>
+                    {{::$i18n.page.tasks.filter.tooltips.details}}
+                </md-tooltip>
+            </md-button>
+
+        </div>
+
+        <div hide-gt-sm flex-sm="10" flex-xs="15" layout="row" layout-align="end center" >
+
+            <md-button class="md-icon-button color-fg-primary-500" ng-click="filter.openDialogDetail()">
+                <i class="material-icons">list</i>
+                <md-tooltip>
+                    {{::$i18n.page.tasks.filter.tooltips.details}}
+                </md-tooltip>
+            </md-button>
+
+        </div>
+
+    </div>
+</md-list-item>

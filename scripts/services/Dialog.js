@@ -1,6 +1,10 @@
 define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$dialog', function ($mdDialog, $log) {
-        return {
+    angular.module('ngMain').factory('$dialog', function ($mdDialog, $log, $i18n) {
+        const callbacks = {};
+
+        const dialogService = {
+            cache: {},
+
             showByTemplate: function (template, parentController, optional) {
                 return $mdDialog.show({
                     controller: 'DialogController',
@@ -16,14 +20,48 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                     fullscreen: true
                 });
             },
+            show: function (template, parent, controller, locals, openFrom = undefined) {
+                return $mdDialog.show({
+                    controller:controller,
+                    controllerAs: 'dialogCtrl',
+                    templateUrl: '../../views/app/dialogs/dialog_'+template+".html",
+                    parent: angular.element(document.body),
+                    openFrom: openFrom,
+                    locals: {
+                        parent: parent,
+                        locals: locals
+                    },
+                    clickOutsideToClose: true,
+                    escapeToClose: true,
+                    fullscreen: true
+                });
+            },
+            showByElement: function (elementId, parent, locals, callback) {
+                dialogService.cache = locals;
+                if(callback && callbacks[callback])
+                    callbacks[callback]();
+
+                return $mdDialog.show({
+                    contentElement:'#'+elementId,
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true,
+                    escapeToClose: true,
+                    fullscreen: true
+                });
+            },
             closeCurrent: function () {
                 $mdDialog.hide();
+            },
+            addCallback: function (name, callback) {
+                callbacks[name] = callback;
+                $log.debug(`Added callback ${name}`);
             }
         };
+        return dialogService;
     });
 
-    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional',
-        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional) {
+    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional', '$i18n',
+        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional, $i18n) {
             var self = this;
 
             $scope.parentCtrl = parentCtrl;
@@ -46,10 +84,10 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                     self.users = response.$request().$get("users").then(function (resources) {
                         $scope.users = self.users = resources;
                     }, function () {
-                        $log.debug("Resources users was not found!");
+                        $log.debug("Resource users was not found");
                     });
                 }, function () {
-                    $snackbar.error("Failed to load users with roles in task +" + task.visualId);
+                    $snackbar.error($i18n.block.snackbar.failedToLoadUsersInTask + " " + task.visualId);
                 });
             };
 
@@ -88,7 +126,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                             $log.debug("Process roles were not found!");
                         });
                     }, function () {
-                        $snackbar.error("Failed to load roles!");
+                        $snackbar.error($i18n.block.snackbar.failedToLoadRoles);
                     });
                 });
             };
@@ -99,5 +137,10 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             if ($scope.opt && $scope.opt.filter) {
                 self.loadRoles();
             }
+
+            if (parentCtrl.petriNetRefs && parentCtrl.petriNetRefs.length === 1) {
+                parentCtrl.newCase.netId = parentCtrl.petriNetRefs[0].entityId;
+            }
+
         }]);
 });

@@ -1,13 +1,38 @@
+@import '../colors';
+@import '../dims';
+
 .list {
 
-    &-primary {
+    &-header {
+        height: $dim-48px;
+    }
 
-        .list-item-selected {
-            background-color: $color-primary-500;
+    &-item {
+        height: $dim-48px;
 
-            i {
-                color: white;
+        &-selected {
+            background-color: $color-primary-500 !important;
+            color: $color-grey-50;
+
+            .material-icons {
+                color: $color-grey-50 !important;
             }
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &-no-pointer {
+
+            &:hover {
+                cursor: default;
+            }
+        }
+
+        // Prevent default md-list hover style
+        .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
+            background-color: transparent !important;
         }
     }
 }

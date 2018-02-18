@@ -1,0 +1,16 @@
+<div layout="row" layout-align="space-between center" class="card padding-horizontal-2x">
+
+    <md-input-container flex-gt-xs="30" flex-xs class="md-block">
+        <md-icon class="material-icons color-fg-primary-500">search</md-icon>
+        <label>{{::$i18n.block.input.search}}</label>
+        <input type="text" ng-model="caseCtrl.search" title="">
+    </md-input-container>
+
+    <md-button class="md-fab md-raised md-mini md-primary" ng-click="caseCtrl.caseTab.openNewCaseDialog($i18n.page.cases.this)">
+        <md-icon class="material-icons">add</md-icon>
+        <md-tooltip md-direction="left">
+            {{::$i18n.block.add.createCase}}
+        </md-tooltip>
+    </md-button>
+
+</div>

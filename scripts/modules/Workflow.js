@@ -1,4 +1,3 @@
-
-define(['angular','./Main'],function (angular) {
-    return angular.module('ngWorkflow',['ngMain']);
+define(['angular', './Main'], function (angular) {
+    return angular.module('ngWorkflow', ['ngMain']);
 });

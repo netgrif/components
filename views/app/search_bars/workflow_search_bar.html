@@ -1,0 +1,18 @@
+<div layout="row" layout-align="space-between center" class="card padding-horizontal-2x">
+
+    <form flex-gt-xs="30" flex-xs ng-submit="workCtrl.search()">
+        <md-input-container class="md-block">
+            <md-icon class="material-icons color-fg-primary-500">search</md-icon>
+            <label>{{::$i18n.block.input.search}}</label>
+            <input type="text" ng-model="workCtrl.searchInput" title="">
+        </md-input-container>
+    </form>
+
+    <md-button ng-if="$user.hasAuthority('ROLE_ADMIN')" class="md-fab md-raised md-mini md-primary" ng-click="workCtrl.showDialog('upload_net')">
+        <md-icon class="material-icons">cloud_upload</md-icon>
+        <md-tooltip md-direction="left">
+            {{::$i18n.page.workflow.uploadModel}}
+        </md-tooltip>
+    </md-button>
+
+</div>

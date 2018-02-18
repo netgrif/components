@@ -1,24 +1,73 @@
-// Global HTML5 elements
-body {
-	min-height: 100%;
+@import 'colors';
+@import 'mixins';
+@import 'dims';
+@import 'constants';
+
+.shadow {
+	box-shadow: $shadow;
 }
 
 // Custom global classes
-.width {
-
-	&-24px {
-		width: 24px;
-	}
-}
-
 .stop-scrolling {
 	height: 100%;
 	overflow: hidden;
 }
 
-.img-responsive {
-	width: 100%;
-	height: auto;
+.overflow {
+
+	&-hidden {
+		overflow: hidden;
+	}
+
+	&-auto {
+		overflow: auto;
+	}
+
+	&-scroll {
+		overflow: scroll;
+	}
+
+	&-visible {
+		overflow: visible;
+	}
+
+	&-x {
+
+		&-hidden {
+			overflow-x: hidden;
+		}
+
+		&-auto {
+			overflow-x: auto;
+		}
+
+		&-scroll {
+			overflow-x: scroll;
+		}
+
+		&-visible {
+			overflow-x: visible;
+		}
+	}
+
+	&-y {
+
+		&-hidden {
+			overflow-y: hidden;
+		}
+
+		&-auto {
+			overflow-y: auto;
+		}
+
+		&-scroll {
+			overflow-y: scroll;
+		}
+
+		&-visible {
+			overflow-y: visible;
+		}
+	}
 }
 
 .cursor {
@@ -32,80 +81,6 @@ body {
 	}
 }
 
-// Border
-.divider {
-
-	&-bottom {
-		border-bottom: 1px solid $color-divider;
-	}
-}
-
-// Text overflow
-.text-overflow {
-
-	&-dots {
-		@include textOverflowWithDots(100%);
-	}
-}
-
-// Floating Action Button alignment
-.fab {
-
-	&-top {
-
-		&-left {
-			top: 40px !important;
-			bottom: auto;
-			left: 40px !important;
-			right: auto;
-		}
-
-		&-right {
-			top: 40px !important;
-			bottom: auto;
-			left: auto;
-			right: 40px !important;
-		}
-	}
-
-	&-bottom {
-
-		&-left {
-			top: auto;
-			bottom: 60px !important;
-			left: 40px !important;
-			right: auto;
-		}
-
-		&-right {
-			top: auto;
-			bottom: 60px !important;
-			left: auto;
-			right: 40px !important;
-		}
-	}
-}
-
-// Custom buttons
-.btn {
-
-	&-pseudo {
-
-		&-sidenav {
-			height: 36px;
-			line-height: 36px;
-			width: 100%;
-			font-size: 17px;
-			margin: 0;
-			padding: 5px 10px;
-			border-radius: 0;
-			vertical-align: middle;
-			text-align: center;
-		}
-	}
-}
-
-// Visibility
 .visibility {
 
 	&-visible {
@@ -117,68 +92,5 @@ body {
 	}
 }
 
-// Positions
-.position {
-
-	&-relative {
-		position: relative !important;
-	}
-
-	&-absolute {
-		position: absolute !important;
-	}
-
-	&-fixed {
-		position: fixed !important;
-	}
-}
-
-// Layout
-.layout {
-
-	// Window dims
-	&-vh {
-
-		&-100 {
-			height: 100vh;
-		}
-	}
-
-	&-vw {
-
-		&-100 {
-			width: 100vw;
-		}
-	}
-
-	// Relative dims
-	&-rh {
-
-		&-100 {
-			height: 100%;
-		}
-	}
-
-	&-rw {
-
-		&-100 {
-			width: 100%;
-		}
-	}
-
-	// Static dims
-	&-sh {
-
-		&-300 {
-			height: 300px;
-		}
-	}
-
-	&-sw {
-
-		&-300 {
-			width: 300px;
-		}
-	}
-}
-
+// Style scrollbars
+@include scrollbars($dim-default, $color-primary-op-50, $color-black-op-30);

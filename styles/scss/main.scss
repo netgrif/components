@@ -1,23 +1,30 @@
+@import 'constants';
 @import 'colors';
+@import 'mixins';
 @import 'dims';
-@import 'functions';
 @import 'global';
+@import 'layout';
+@import 'text';
+@import 'img';
+@import 'background';
 @import 'blocks/spinner';
+@import 'blocks/expansion_panel';
 
 .base {
-	@import 'background';
     // Blocks & Elements
 	@import 'blocks/card';
-	@import 'blocks/toolbar';
 	@import 'blocks/sidenav';
-	@import 'blocks/tasks';
-	@import 'blocks/roles';
-	@import 'blocks/cases';
-	@import 'blocks/search';
-	@import 'blocks/file_chooser';
+	@import 'blocks/toolbar';
+	@import 'blocks/tabs';
+	@import 'blocks/inputs';
+	@import 'blocks/list';
+	@import 'blocks/menu';
+	@import 'blocks/data';
+	@import 'blocks/dialog';
 	@import 'blocks/assign_list';
-	@import 'blocks/expansion_panel';
-	@import 'blocks/task_data';
-	@import 'blocks/data_field';
-	@import "blocks/list";
+	@import 'blocks/line';
+	@import 'blocks/transaction';
+	@import 'blocks/progress_circular';
+	@import 'blocks/divider';
+	@import 'blocks/file_chooser';
 }

@@ -1,3 +1,3 @@
-# WMS App  - frontend
+# Premium Insurance - frontend
 
-Workflow Management System web application frontend
+Premium Insurance application frontend
