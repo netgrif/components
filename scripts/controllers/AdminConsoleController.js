@@ -42,6 +42,7 @@ define(['angular', '../modules/Admin'], function (angular) {
             //to load Petri nets use self.loadNets
             self.loadProcessRoles = function () {
                 if (!self.selectedNet) return;
+                self.processRoles = [];
                 $http.get("/res/petrinet/" + self.selectedNet.entityId + "/roles").then(function (response) {
                     response.$request().$get("processRoles").then(function (resources) {
                         self.processRoles = resources;
@@ -133,6 +134,8 @@ define(['angular', '../modules/Admin'], function (angular) {
             //Roles Setup tab
             self.loadRoles = function () {
                 if (!self.roles.process) return;
+                self.roles.roles = [];
+                $scope.roles = [];
                 $http.get("/res/petrinet/" + self.roles.process.entityId + "/roles").then(function (response) {
                     response.$request().$get("processRoles").then(function (resources) {
                         self.roles.roles = resources;
