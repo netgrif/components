@@ -23,8 +23,9 @@
                    ng-required="field.behavior.required"
                    md-maxlength="field.maxLength"
                    ng-keypress="$event.which === 13 && $event.target.blur()"
+                   title=""
                    aria-label="Enter text">
-            <textarea id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" ng-if="field.subType === 'area'"
+            <textarea id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" ng-if="field.subType !== 'simple'"
                       rows="1" max-rows="4"
                       ng-model="field.newValue"
                       ng-change="field.changed = field.value !== field.newValue"
