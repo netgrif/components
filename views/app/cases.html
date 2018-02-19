@@ -1,6 +1,6 @@
 <div ng-cloak>
 
-	<md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="caseCtrl.activeTabIndex" class="background-tabs">
+	<md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="caseCtrl.activeTabIndex" class="background-tabs" >
 
 		<md-tab md-on-select="caseCtrl.caseTab.activate()" class="primary">
 
@@ -25,7 +25,7 @@
 
 					</div> <!-- ./column -->
 
-					<div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&caseCtrl.caseTab.load(true)" in-view-options="{ throttle: 0 }">
+					<div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&caseCtrl.caseTab.load(true)">
 						<md-progress-circular md-mode="indeterminate" ng-disabled="!caseCtrl.caseTab.loading" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
 					</div> <!-- ./row -->
 

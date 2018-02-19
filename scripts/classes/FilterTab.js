@@ -46,11 +46,12 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
 
         const self = this;
         this.loading = true;
-        this.$http({
+        const requestConfig = {
             url: next ? self.page.next : FilterTab.URL_SEARCH + "?sort=visibility",
             method: "POST",
             data: self.search
-        }).then(response => {
+        };
+        this.$http(requestConfig).then(response => {
             self.page = response.page;
             if (self.page.totalElements === 0) {
                 self.$snackbar(self.$i18n.block.snackbar.noSavedFilters);
@@ -62,7 +63,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
             }
             const rawData = response.$response().data._embedded.filters;
             response.$request().$get("filters").then(resources => {
-                if (self.page.totalPages !== 1 && url !== response.$href("last")) {
+                if (self.page.totalPages !== 1 && requestConfig.url !== response.$href("last")) {
                     self.page.next = response.$href("next");
                 }
                 resources.forEach((resource, i) => {

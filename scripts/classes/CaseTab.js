@@ -47,7 +47,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
             });
     };
 
-    CaseTab.prototype.buildSearchRequest = function (url, criteria = []) {
+    CaseTab.prototype.buildSearchRequest = function (next, url, criteria = []) {
         const data = {};
         criteria.forEach(c => {
             if (c === CaseTab.FIND_BY_AUTHOR)
@@ -63,7 +63,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
         });
         return {
             method: "POST",
-            url: url + (this.sort ? this.sort : "?sort=_id,desc"),
+            url: url + ( !next && this.sort ? "?sort=_id,desc" : ""),
             data: data
         };
     };
@@ -71,8 +71,8 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     CaseTab.prototype.load = function (next) {
         const self = this;
         if (this.page.totalElements === this.cases.length || this.loading) return;
-        const url = next ? (self.page.next ? self.page.next : CaseTab.URL_SEARCH) : CaseTab.URL_SEARCH;
-        const config = this.buildSearchRequest(url, this.filter);
+        const url = next && self.page.next ? self.page.next : CaseTab.URL_SEARCH;
+        const config = this.buildSearchRequest(next, url, this.filter);
         self.loading = true;
         this.$http(config).then(function (response) {
             self.page = Object.assign(self.page, response.page);

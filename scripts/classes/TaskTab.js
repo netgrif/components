@@ -87,7 +87,8 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
 
         const self = this;
         this.loading = true;
-        this.$http(this.buildRequest(next)).then(function (response) {
+        const requestConfig = this.buildRequest(next);
+        this.$http(requestConfig).then(function (response) {
             self.page = response.page;
             if (self.page.totalElements === 0) {
                 self.$snackbar.info(self.$i18n.block.snackbar.noTasks);
@@ -100,7 +101,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
             const rawData = response.$response().data._embedded.tasks;
             response.$request().$get("tasks").then(function (resources) {
                 if (self.page.totalPages !== 1) {
-                    if (url !== response.$href("last")) {
+                    if (requestConfig.url !== response.$href("last")) {
                         self.page.next = response.$href("next");
                     }
                 }
@@ -120,7 +121,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
             })
 
         }, function () {
-            self.$snackbar.error(`${self.$i18n.block.snackbar.tasksOn} ${self.url} ${self.$i18n.block.snackbar.failedToLoad}`);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.tasksOn} ${requestConfig.url} ${self.$i18n.block.snackbar.failedToLoad}`);
             self.loading = false;
         });
     };
