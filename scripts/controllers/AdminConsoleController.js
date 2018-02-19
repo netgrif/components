@@ -25,6 +25,7 @@ define(['angular', '../modules/Admin'], function (angular) {
             self.userTab = {
                 searchedUsers: [],
                 searchedRoles: [],
+                selectedUser: undefined,
                 roles: {
                     process: undefined,
                     roles: []
@@ -41,6 +42,7 @@ define(['angular', '../modules/Admin'], function (angular) {
             self.rolesTab = {
                 searchedUsers: [],
                 searchedRoles: [],
+                selectedRole: undefined,
                 roles: {
                     process: undefined,
                     roles: []
@@ -217,7 +219,7 @@ define(['angular', '../modules/Admin'], function (angular) {
              */
             self.filterUsers = function (usersStorage, filteredUsersStorage, userSearch) {
                 if (!usersStorage || usersStorage.length === 0)
-                    return;
+                    return null;
                 userSearch.input = userSearch.input.trim();
                 if (!userSearch.input || userSearch.input === "")
                     filteredUsersStorage = usersStorage;
@@ -234,46 +236,111 @@ define(['angular', '../modules/Admin'], function (angular) {
                 return filteredUsersStorage;
             };
 
-            self.filterRoles = function () {
-                if (!self.roles.roles) return;
-                if (self.roles.roles.length === 0) return;
-                $scope.roleSearch = $scope.roleSearch.trim();
-                if (!$scope.roleSearch || $scope.roleSearch === "") $scope.roles = self.roles.roles;
-                else $scope.roles = self.roles.roles.filter(role => role.name.includes($scope.roleSearch));
+            /**
+             * Search among loaded process roles
+             * @param rolesStorage Array of loaded roles for selected process
+             * @param filteredRolesStorage Destination array of search results
+             * @param roleSearch Search input from user
+             * @returns {Array}
+             */
+            self.filterRoles = function (rolesStorage, filteredRolesStorage, roleSearch) {
+                if (!rolesStorage || rolesStorage === 0)
+                    return null;
+                roleSearch = roleSearch.trim();
+                if (!roleSearch || roleSearch === "")
+                    filteredRolesStorage = rolesStorage;
+                else
+                    filteredRolesStorage = rolesStorage.filter(role => role.name.includes(roleSearch));
+                return filteredRolesStorage;
             };
 
-            self.selectUser = function (user) {
-                user.selected = !user.selected;
-                let helpUser;
-                let intersect = new Set(user.selected ? user.roles :
-                    ((helpUser = self.users.find(us => us.selected)) ? helpUser.roles : []));
-                self.users.forEach(u =>
-                    intersect = u.selected ? new Set([...intersect].filter(i => u.roles.has(i))) : intersect);
-                self.roles.roles.forEach(role => role.selected = intersect.has(role.stringId));
+            /**
+             * Toggle selected state on user and highlight all roles from search results that user has
+             * @param user clicked user
+             * @param rolesStorage
+             * @param tabObject Object responsible for handling tab related variables
+             */
+            self.selectUser = function (user, rolesStorage, tabObject) {
+                let selectedEmail = "";
+                if (tabObject.selectedUser) {
+                    selectedEmail = tabObject.selectedUser.email;
+                    tabObject.selectedUser.selected = false;
+                    tabObject.selectedUser = undefined;
+                    rolesStorage.forEach(role => role.selected = false);
+                }
+                if (user && user.email !== selectedEmail) {
+                    user.selected = true;
+                    tabObject.selectedUser = user;
+                    rolesStorage.forEach(role => role.selected = user.roles.has(role.stringId));
+                }
+
+
+                // let helpUser;
+                // let intersect = new Set(user.selected ? user.roles :
+                //     ((helpUser = self.users.find(us => us.selected)) ? helpUser.roles : []));
+                // self.users.forEach(u =>
+                //     intersect = u.selected ? new Set([...intersect].filter(i => u.roles.has(i))) : intersect);
+                // self.roles.roles.forEach(role => role.selected = intersect.has(role.stringId));
             };
 
-            self.selectRole = function (role) {
-                role.selected = !role.selected;
-                let rolesChanged = false;
-                self.users.forEach(user => {
-                    if (user.selected) {
-                        if (role.selected)
-                            user.roles.add(role.stringId);
-                        else
-                            user.roles.delete(role.stringId);
+            /**
+             * Add or remove clicked role to selected user.
+             * Role is removed when is already assigned to user otherwise is new roles add to the role set
+             * @param user Selected user
+             * @param role Clicked role
+             * @param after Function that runs after successful operation
+             */
+            self.changeRoleToUser = function (user, role, after = angular.noop) {
+                if(user.roles.has(role.stringId))
+                    user.roles.delete(role.stringId);
+                else
+                    user.roles.add(role.stringId);
 
-                        rolesChanged = true;
-                        user.changedRoles = true;
-                    }
-                });
+                after(user);
+            };
 
-                self.users.forEach(user => user.selected = user.roles.has(role.stringId) && role.selected);
-                if (rolesChanged)
-                    $scope.saved = false;
+            /**
+             * Toggle selected state on role and highlight all users that has selected role
+             * @param role clicked role
+             * @param usersStorage
+             * @param tabObject Object responsible for handling tab related variables
+             */
+            self.selectRole = function (role, usersStorage, tabObject) {
+                let roleId = "";
+                if (tabObject.selectedRole) {
+                    roleId = tabObject.selectedRole.stringId;
+                    tabObject.selectedRole.selected = false;
+                    usersStorage.forEach(user => user.selected = false);
+                }
+                if (role && role.stringId !== roleId) {
+                    role.selected = true;
+                    tabObject.selectedRole = role;
+                    usersStorage.forEach(user => user.selected = user.roles.has(role.stringId));
+                }
+
+                // let rolesChanged = false;
+                // self.users.forEach(user => {
+                //     if (user.selected) {
+                //         if (role.selected)
+                //             user.roles.add(role.stringId);
+                //         else
+                //             user.roles.delete(role.stringId);
+                //
+                //         rolesChanged = true;
+                //         user.changedRoles = true;
+                //     }
+                // });
+                //
+                // self.users.forEach(user => user.selected = user.roles.has(role.stringId) && role.selected);
+                // if (rolesChanged)
+                //     $scope.saved = false;
+            };
+
+            self.changeUserToRole = function (role, user) {
+
             };
 
             self.saveRoles = function () {
-                $scope.saved = true;
                 self.users.forEach((user, index) => {
                     if (user.changedRoles) {
                         $http.post(user.$href("assignProcessRole"), JSON.stringify([...user.roles])).then(function (response) {
@@ -291,6 +358,21 @@ define(['angular', '../modules/Admin'], function (angular) {
                         });
                     }
                 });
+            };
+            self.saveByUser = function (user) {
+                $http.post(user.$href("assignProcessRole"), JSON.stringify([...user.roles])).then(response => {
+                    if (response.success) {
+                        $snackbar.success($i18n.block.snackbar.rolesSuccessfullyAssignedTo + " " + user.fullName);
+                    } else {
+                        $snackbar.error(response.error);
+                    }
+                }, () => {
+                    $snackbar.error($i18n.block.snackbar.assigningRolesToUser + " " + user.fullName + " " + $i18n.block.snackbar.failed);
+                });
+            };
+
+            self.saveByRole = function (role, usersStorage) {
+                //TODO save user when roles changes
             };
 
             self.isObjEmpty = function (obj) {

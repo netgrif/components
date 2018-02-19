@@ -123,10 +123,10 @@
 
         </md-tab>
 
-        <md-tab>
+        <md-tab md-on-select="adminCtrl.loadUsers(self.users, self.userTab.searchedUsers)">
 
             <md-tab-label>
-                Users <!--TODO 19.2.2018 I18N-->
+                {{::$i18n.page.console.users}}
             </md-tab-label>
 
             <md-tab-body>
@@ -136,13 +136,13 @@
 
                         <div flex layout="column">
 
-                            <div ng-include="'views/app/toolbars/console_user_toolbar.html'"></div>
+                            <div ng-include="'views/app/toolbars/console_users_user_toolbar.html'"></div>
 
                             <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                             <div layout="column">
 
-                                <div ng-include="'views/app/lists/console_manage_roles_user_list.html'"></div>
+                                <div ng-include="'views/app/lists/console_users_user_list.html'"></div>
 
                             </div>
 
@@ -172,7 +172,7 @@
         </md-tab>
 
 
-        <md-tab md-on-select="adminCtrl.loadUsers()">
+        <md-tab md-on-select="adminCtrl.loadUsers(adminCtrl.users, adminCtrl.rolesTab.searchedUsers)">
 
             <md-tab-label>
                 {{::$i18n.page.console.processRoles}}
