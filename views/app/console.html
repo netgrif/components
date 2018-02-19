@@ -123,6 +123,55 @@
 
         </md-tab>
 
+        <md-tab>
+
+            <md-tab-label>
+                Users <!--TODO 19.2.2018 I18N-->
+            </md-tab-label>
+
+            <md-tab-body>
+                <md-content layout="column" layout-align="start" class="padding-2x color-bg-transparent">
+
+                    <div flex layout-gt-xs="row" layout-xs="column">
+
+                        <div flex layout="column">
+
+                            <div ng-include="'views/app/toolbars/console_user_toolbar.html'"></div>
+
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
+
+                            <div layout="column">
+
+                                <div ng-include="'views/app/lists/console_manage_roles_user_list.html'"></div>
+
+                            </div>
+
+                        </div> <!-- ./column -->
+
+                        <md-divider class="border-width-default color-border-transparent"></md-divider>
+
+                        <div flex layout="column">
+
+                            <div ng-include="'views/app/toolbars/console_role_toolbar.html'"></div>
+
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
+
+                            <div layout="column">
+
+                                <div ng-include="'views/app/lists/console_manage_roles_role_list.html'"></div>
+
+                            </div>
+
+                        </div> <!-- ./column -->
+
+                    </div>
+
+                </md-content>
+            </md-tab-body>
+
+        </md-tab>
+
+
         <md-tab md-on-select="adminCtrl.loadUsers()">
 
             <md-tab-label>

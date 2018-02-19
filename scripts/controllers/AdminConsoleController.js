@@ -17,29 +17,49 @@ define(['angular', '../modules/Admin'], function (angular) {
             self.processRoles = [];
             self.selectedNet = undefined;
 
-
-            //Roles setup
+            //Data for users and roles tab
             self.users = [];
-            self.roles = {
-                process: undefined,
-                roles: []
+            self.processes = [];
+
+            //Users tab
+            self.userTab = {
+                searchedUsers: [],
+                searchedRoles: [],
+                roles: {
+                    process: undefined,
+                    roles: []
+                },
+                userSearch: {
+                    input: "",
+                    byEmail: true,
+                    byName: true
+                },
+                roleSearch: "",
             };
 
-            $scope.users = [];
-            $scope.roles = [];
-            $scope.userSearch = {
-                input: "",
-                byEmail: true,
-                byName: true
+            //Roles tab
+            self.rolesTab = {
+                searchedUsers: [],
+                searchedRoles: [],
+                roles: {
+                    process: undefined,
+                    roles: []
+                },
+                userSearch: {
+                    input: "",
+                    byEmail: true,
+                    byName: true
+                },
+                roleSearch: ""
             };
-            $scope.roleSearch = "";
-            $scope.processes = undefined;
-            $scope.saved = true;
 
             self.changeUserSignUpPolicy = $auth.userSignUp;
 
-            //New user invite tab
-            //to load Petri nets use self.loadNets
+            /**
+             * Load process roles for invite tab.
+             * Before calling this method, this controller must have loaded list of petri nets.
+             * To load list of petri nets use method self.loadNets
+             */
             self.loadProcessRoles = function () {
                 if (!self.selectedNet) return;
                 self.processRoles = [];
@@ -74,6 +94,9 @@ define(['angular', '../modules/Admin'], function (angular) {
                 });
             };
 
+            /**
+             * Load list of organizations for invite tab
+             */
             self.loadOrganizations = function () {
                 $http.get("/res/user/organizations").then(function (response) {
                     response.$request().$get("organizations").then(function (resources) {
@@ -97,6 +120,9 @@ define(['angular', '../modules/Admin'], function (angular) {
                 });
             };
 
+            /**
+             * Send invitation request
+             */
             self.invite = function () {
                 if (!self.invitedUser.email || self.invitedUser.email === "") {
                     $snackbar.error($i18n.block.snackbar.emailFieldIsMandatory);
@@ -131,75 +157,81 @@ define(['angular', '../modules/Admin'], function (angular) {
                     });
             };
 
-            //Roles Setup tab
-            self.loadRoles = function () {
-                if (!self.roles.process) return;
-                self.roles.roles = [];
-                $scope.roles = [];
-                $http.get("/res/petrinet/" + self.roles.process.entityId + "/roles").then(function (response) {
-                    response.$request().$get("processRoles").then(function (resources) {
-                        self.roles.roles = resources;
-                        self.roles.roles.forEach(role => role.selected = false);
-                        $scope.roles = self.roles.roles;
+            /* Roles and Users tab */
+            /**
+             * Load list of process roles of selected process
+             * @param process Selected process by user
+             * @param rolesStorage Destination array
+             * @param filteredRolesStorage Array which contains results of role search input
+             */
+            self.loadRoles = function (process, rolesStorage, filteredRolesStorage) {
+                if (process) return;
+                rolesStorage.splice(0, rolesStorage.length);
+                filteredRolesStorage.splice(0, filteredRolesStorage.length);
+                $http.get("/res/petrinet/" + process.entityId + "/roles").then(response => {
+                    response.$request().$get("processRoles").then(resources => {
+                        rolesStorage = resources;
+                        rolesStorage.forEach(role => role.selected = false);
+                        filteredRolesStorage = rolesStorage;
 
-                        self.users.forEach(user => {
-                            if (user.selected) {
-                                user.selected = false;
-                                self.selectUser(user);
-                            }
-                        });
-                    }, function () {
+                    }, () => {
                         $log.debug("No roles was found!");
                     });
-                }, function () {
+                }, () => {
                     $snackbar.error($i18n.block.snackbar.failedToLoadRolesForProcess + " " + self.roles.title);
                 });
             };
 
-            self.loadUsers = function () {
-                if (self.users.length > 0)
+            /**
+             * Load list of all active users in the system
+             * @param usersStorage Destination array
+             * @param filteredUsersStorage Array which contains results of user search input
+             */
+            self.loadUsers = function (usersStorage, filteredUsersStorage) {
+                if (usersStorage.length > 0) {
+                    filteredUsersStorage = usersStorage;
                     return;
-                $http.get("/res/user/small").then(function (response) {
-                    response.$request().$get("users").then(function (resources) {
-                        self.users = resources;
-                        self.users.forEach(user => {
+                }
+                $http.get("/res/user/small").then(response => {
+                    response.$request().$get("users").then(resources => {
+                        usersStorage = resources;
+                        usersStorage.forEach(user => {
                             user.roles = new Set(user.userProcessRoles.map(role => role.roleId));
                             user.selected = false;
                         });
-                        $scope.users = self.users;
-                    }, function () {
+                        filteredUsersStorage = usersStorage;
+                    }, () => {
                         $log.debug("No user resource was found!");
                     });
-                }, function () {
+                }, () => {
                     $snackbar.error($i18n.block.snackbar.failedToLoadUsers);
                 });
             };
 
-            self.loadNets = function () {
-                $http.get("/res/petrinet/refs").then(function (response) {
-                    response.$request().$get("petriNetReferences").then(function (resources) {
-                        $scope.processes = resources;
-                    }, function () {
-                        $log.debug("No nets references was found!");
+            /**
+             * Search among loaded users
+             * @param usersStorage Array of all loaded users
+             * @param filteredUsersStorage Destination array of search results
+             * @param userSearch Search object with input and search params
+             * @returns {Array}
+             */
+            self.filterUsers = function (usersStorage, filteredUsersStorage, userSearch) {
+                if (!usersStorage || usersStorage.length === 0)
+                    return;
+                userSearch.input = userSearch.input.trim();
+                if (!userSearch.input || userSearch.input === "")
+                    filteredUsersStorage = usersStorage;
+                else {
+                    filteredUsersStorage = usersStorage.filter(user => {
+                        let include = false;
+                        if (userSearch.byName)
+                            include = include || user.fullName.includes(userSearch.input);
+                        if (userSearch.byEmail)
+                            include = include || user.email.includes(userSearch.input);
+                        return include;
                     });
-                }, function () {
-                    $snackbar.error($i18n.block.snackbar.failedToLoadProcesses);
-                });
-            };
-
-            self.filterUsers = function () {
-                if (!self.users) return;
-                if (self.users.length === 0) return;
-                $scope.userSearch.input = $scope.userSearch.input.trim();
-                if (!$scope.userSearch.input || $scope.userSearch.input === "") $scope.users = self.users;
-                else $scope.users = self.users.filter(user => {
-                    let include = false;
-                    if ($scope.userSearch.byName)
-                        include = include || user.fullName.includes($scope.userSearch.input);
-                    if ($scope.userSearch.byEmail)
-                        include = include || user.email.includes($scope.userSearch.input);
-                    return include;
-                });
+                }
+                return filteredUsersStorage;
             };
 
             self.filterRoles = function () {
@@ -263,6 +295,18 @@ define(['angular', '../modules/Admin'], function (angular) {
 
             self.isObjEmpty = function (obj) {
                 return jQuery.isEmptyObject(obj);
+            };
+
+            self.loadNets = function () {
+                $http.get("/res/petrinet/refs").then(function (response) {
+                    response.$request().$get("petriNetReferences").then(function (resources) {
+                        $scope.processes = resources;
+                    }, function () {
+                        $log.debug("No nets references was found!");
+                    });
+                }, function () {
+                    $snackbar.error($i18n.block.snackbar.failedToLoadProcesses);
+                });
             };
 
             self.loadNets();
