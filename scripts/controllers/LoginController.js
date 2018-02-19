@@ -82,6 +82,10 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                 }
             };
 
+            self.selfSignUp = function () {
+                //TODO 19.2.2018 Submit user self registration form
+            };
+
             self.fireInfoSnackbar = function (msg) {
                 $snackbar.info(msg);
             };

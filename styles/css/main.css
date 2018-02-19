@@ -536,6 +536,10 @@
   margin-bottom: 16px;
 }
 
+.margin-left-negative-default {
+  margin-left: -8px !important;
+}
+
 .margin-left-0 {
   margin-left: 0 !important;
 }
@@ -1236,6 +1240,10 @@
 
 .margin-bottom-2x {
   margin-bottom: 16px;
+}
+
+.margin-left-negative-default {
+  margin-left: -8px !important;
 }
 
 .margin-left-0 {
@@ -2702,6 +2710,10 @@ span.highlight {
   margin-bottom: 16px;
 }
 
+.margin-left-negative-default {
+  margin-left: -8px !important;
+}
+
 .margin-left-0 {
   margin-left: 0 !important;
 }
@@ -4012,6 +4024,10 @@ span.highlight {
   margin-bottom: 16px;
 }
 
+.margin-left-negative-default {
+  margin-left: -8px !important;
+}
+
 .margin-left-0 {
   margin-left: 0 !important;
 }
@@ -4792,6 +4808,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .margin-bottom-2x {
   margin-bottom: 16px;
+}
+
+.base .margin-left-negative-default {
+  margin-left: -8px !important;
 }
 
 .base .margin-left-0 {
@@ -5578,6 +5598,10 @@ md-expansion-panel.highlight md-progress-circular path {
   margin-bottom: 16px;
 }
 
+.base .margin-left-negative-default {
+  margin-left: -8px !important;
+}
+
 .base .margin-left-0 {
   margin-left: 0 !important;
 }
@@ -6343,6 +6367,10 @@ md-expansion-panel.highlight md-progress-circular path {
   margin-bottom: 16px;
 }
 
+.base .margin-left-negative-default {
+  margin-left: -8px !important;
+}
+
 .base .margin-left-0 {
   margin-left: 0 !important;
 }
@@ -7103,6 +7131,10 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .margin-bottom-2x {
   margin-bottom: 16px;
+}
+
+.base .margin-left-negative-default {
+  margin-left: -8px !important;
 }
 
 .base .margin-left-0 {
