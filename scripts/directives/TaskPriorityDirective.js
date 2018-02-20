@@ -8,7 +8,7 @@ define(['angular', '../modules/Tasks'], function (angular) {
 
             const getTemplate = function (priority) {
                 priority = parseInt(priority.toString());
-                if (priority <= 1)
+                if (priority <= 1 || isNaN(priority) || !priority)
                     return high;
                 else if (priority === 2)
                     return medium;

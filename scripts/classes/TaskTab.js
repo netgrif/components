@@ -23,7 +23,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.transactionProgress = 0;
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
-        this.search = new TaskSearch({
+        this.searchToolbar = new TaskSearch(this, {
             $http: this.$http,
             $snackbar: this.$snackbar,
             $i18n: this.$i18n
@@ -38,6 +38,9 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
     TaskTab.URL_ALL = "/res/task";
     TaskTab.URL_MY = "/res/task/my";
     TaskTab.URL_SEARCH = "/res/task/search";
+
+    TaskTab.REPLACE_FILTER_POLICY = "replaceFilter";
+    TaskTab.MERGE_FILTER_POLICY = "mergeFilter";
 
     TaskTab.prototype.activate = function () {
         const view = this.useCase ? 'caseView' : 'taskView';
@@ -56,6 +59,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         if (this.showTransactions)
             this.loadTransactions();
 
+        this.searchToolbar.populateFromFilter(this.activeFilter);
         this.load(false);
     };
 
@@ -225,6 +229,44 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
 
         }, function () {
             console.log(`Case ${this.useCase.stringId} failed to update`);
+        })
+    };
+
+    TaskTab.prototype.search = function () {
+        const searchFilter = this.searchToolbar.getFilter();
+
+        if (this.filterPolicy === TaskTab.MERGE_FILTER_POLICY) {
+            this.activeFilter = this.activeFilter.merge(searchFilter);
+        } else if (this.filterPolicy === TaskTab.REPLACE_FILTER_POLICY) {
+            this.activeFilter = searchFilter;
+        }
+
+        this.reload();
+    };
+
+    TaskTab.prototype.openSaveFilterDialog = function () {
+        this.$dialog.showByTemplate('save_filter', this);
+    };
+
+    TaskTab.prototype.saveFilter = function () {
+        const requestBody = {
+            title: this.activeFilter.title,
+            description: this.activeFilter.description,
+            visibility: this.activeFilter.visibility,
+            type: Filter.TASK_TYPE,
+            query: this.activeFilter.query,
+            readableQuery: JSON.stringify(this.activeFilter.readableQuery)
+        };
+        this.$http.post("/res/filter", requestBody).then(response => {
+            if (response.success) {
+                this.$snackbar.info(response.success);
+            } else
+                this.$snackbar.error(response.error);
+            this.$dialog.closeCurrent();
+        }, error => {
+            console.log("Filter failed to be saved");
+            console.log(error);
+            this.$dialog.closeCurrent();
         })
     };
 

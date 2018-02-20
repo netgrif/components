@@ -12,18 +12,17 @@
 
                     <md-input-container class="md-block" flex>
                         <label class="placeholder">{{::$i18n.page.tasks.search.category}}</label>
-                        <md-select ng-model="taskTab.search.subject">
-                            <md-option ng-repeat="(key, subject) in taskTab.search.subjects" ng-value="subject" ng-disabled="subject.disable">
+                        <md-select ng-model="taskTab.searchToolbar.subject">
+                            <md-option ng-repeat="(key, subject) in taskTab.searchToolbar.subjects" ng-value="subject" ng-disabled="subject.disable">
                                 {{subject.title}}
                             </md-option>
                         </md-select>
                     </md-input-container>
 
-                    <md-autocomplete class="md-block"
-                                     md-search-text="taskTab.search.searchText"
-                                     md-selected-item="taskTab.search.selectedItem"
-                                     md-selected-item-change="taskTab.search.selectedItemChanged(item)"
-                                     md-items="item in taskTab.search.getItems()"
+                    <md-autocomplete md-search-text="taskTab.searchToolbar.searchText"
+                                     md-selected-item="taskTab.searchToolbar.selectedItem"
+                                     md-selected-item-change="taskTab.searchToolbar.selectedItemChanged(item)"
+                                     md-items="item in taskTab.searchToolbar.getItems()"
                                      md-item-text="item.title"
                                      md-min-length="0"
                                      md-no-cache="true"
@@ -34,12 +33,12 @@
                                      md-floating-label="{{::$i18n.page.tasks.search.search}}">
 
                         <md-item-template>
-                            <span md-highlight-text="taskTab.search.searchText" md-highlight-flags="i">
+                            <span md-highlight-text="taskTab.searchToolbar.searchText" md-highlight-flags="i">
                                 {{item.title}}
                             </span>
                         </md-item-template>
                         <md-not-found>
-                            <!--{{::$i18n.page.tasks.filter.process + " " + taskTab.search.searchText + " " + $i18n.page.tasks.filter.processNotFound}}-->
+                            <!--{{::$i18n.page.tasks.filter.process + " " + taskTab.searchToolbar.searchText + " " + $i18n.page.tasks.filter.processNotFound}}-->
                             {{::$i18n.page.tasks.filter.processNotFound}}
                         </md-not-found>
 
@@ -53,13 +52,13 @@
                     </md-button>
                     <md-menu-content>
                         <md-menu-item>
-                            <md-button ng-click="taskCtrl.showDialog('save_filter')">
+                            <md-button ng-click="taskTab.openSaveFilterDialog()">
                                 <md-icon class="material-icons">save</md-icon>
                                 <span>{{::$i18n.block.btn.save}}</span>
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-button ng-click="tasksCtrl.clearFilter()">
+                            <md-button ng-click="taskTab.searchToolbar.reset()">
                                 <md-icon class="material-icons">clear_all</md-icon>
                                 <span>{{::$i18n.block.btn.reset}}</span>
                             </md-button>
@@ -75,8 +74,8 @@
 
             <i class="material-icons color-fg-primary-500 margin-right-14px">filter_list</i>
 
-            <md-chips ng-model="taskTab.search.chips" readonly="true" md-removable="true"
-                      md-on-remove="taskTab.search.chipRemoved($chip)"
+            <md-chips ng-model="taskTab.searchToolbar.chips" readonly="true" md-removable="true"
+                      md-on-remove="taskTab.searchToolbar.chipRemoved($chip)"
                       id="chips-container">
                 <md-chip-template>
                     {{$chip.text}}
@@ -89,12 +88,12 @@
 
     <div layout="column" layout-align="center center">
 
-        <md-button class="md-fab md-raised md-mini md-primary" ng-click="taskTab.search.getQuery()">
-            <md-icon class="material-icons">search</md-icon>
-            <md-tooltip md-direction="left">
-                {{::$i18n.block.btn.search}}
-            </md-tooltip>
-        </md-button>
+        <!--<md-button class="md-fab md-raised md-mini md-primary" ng-click="taskTab.search()">-->
+            <!--<md-icon class="material-icons">search</md-icon>-->
+            <!--<md-tooltip md-direction="left">-->
+                <!--{{::$i18n.block.btn.search}}-->
+            <!--</md-tooltip>-->
+        <!--</md-button>-->
 
     </div>
 

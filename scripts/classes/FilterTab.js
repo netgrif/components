@@ -9,11 +9,12 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
      * @constructor
      */
     function FilterTab(parent, angular, config = {}) {
+        Tab.call(this, 99, "filter");
+
         this.parent = parent;
         Object.assign(this, angular, config);
 
         this.filters = [];
-        this.loading = false;
         this.search = {
             title: undefined,
             visibility: 2
@@ -54,7 +55,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.$http(requestConfig).then(response => {
             self.page = response.page;
             if (self.page.totalElements === 0) {
-                self.$snackbar(self.$i18n.block.snackbar.noSavedFilters);
+                self.$snackbar.info(self.$i18n.block.snackbar.noSavedFilters);
                 self.page.next = undefined;
                 if (self.filters)
                     self.filters.splice(0, self.filters.length);
@@ -70,13 +71,14 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                     const configObj = Object.assign({}, resource, {
                         $i18n: self.$i18n
                     });
+                    const readable = JSON.parse(resource.readableQuery);
                     self.filters.push(new Filter(resource.title, resource.type,
-                        resource.query, rawData[i]._links, self, configObj))
+                        resource.query, readable, rawData[i]._links, self, configObj))
                 });
 
                 self.loading = false;
             }, () => {
-                self.$snackbar(self.$i18n.block.snackbar.noFiltersFound);
+                self.$snackbar.info(self.$i18n.block.snackbar.noFiltersFound);
                 self.page.next = undefined;
                 if (self.filters)
                     self.filters.splice(0, self.filters.length);
@@ -84,7 +86,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
             })
 
         }, error => {
-            self.$snackbar(self.$i18n.block.snackbar.filtersFailedLoad);
+            self.$snackbar.error(self.$i18n.block.snackbar.filtersFailedLoad);
             console.log(error);
             self.loading = false;
         })
