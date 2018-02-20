@@ -15,11 +15,7 @@ define(['./Task'], function (Task) {
         this.tab = tab;
         this.title = title;
         this.type = type;
-        if (!(query instanceof String))
-            this.query = JSON.stringify(query);
-        else
-            this.query = query;
-        this.readableQuery = readableQuery;
+        this.query = query;
         this.links = links;
         this.visibility = 2;
         this.author = undefined;
@@ -27,6 +23,12 @@ define(['./Task'], function (Task) {
         this.description = undefined;
 
         Object.assign(this, config);
+
+        try {
+            this.readableQuery = JSON.parse(readableQuery);
+        } catch (e) {
+            this.readableQuery = readableQuery;
+        }
 
         this.selected = false;
         this.visibilityIcon = Filter.getVisibilityIcon(this.visibility);

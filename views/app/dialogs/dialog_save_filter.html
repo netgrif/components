@@ -22,13 +22,14 @@
                     <input type="text" ng-model="parentCtrl.activeFilter.title" required title="">
 
                 </md-input-container>
+                <md-input-container>
                     <label>{{::$root.$i18n.block.dialog.saveFilter.desc}}</label>
-                    <textarea rows="1" max-rows="4" ng-model="parentCtrl.activeFilter.description" title=""></textarea>
+                    <textarea rows="2" cols="15"  ng-model="parentCtrl.activeFilter.description" title=""></textarea>
                 </md-input-container>
 
                 <md-input-container>
 
-                    <label>{{::$root.$i18n.block.dialog.saveFilter.type.this}}</label>
+                    <!--<label>{{::$root.$i18n.block.dialog.saveFilter.type.this}}</label>-->
                     <md-select ng-model="parentCtrl.activeFilter.visibility" required>
                         <md-option value="2">
                             <md-icon class="material-icons margin-right-2x">public</md-icon>

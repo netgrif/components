@@ -16,7 +16,7 @@
 
             <div flex layout="column">
 
-                <div ng-repeat="(key, value) in tasksCtrl.filterTab.filter.readableQuery" class="{{$first ? '' : 'margin-top-default'}}">
+                <div ng-repeat="(key, value) in tasksCtrl.filterTab.filter.readableQuery track by $index"  class="{{$first ? '' : 'margin-top-default'}}">
                     <span flex class="cursor-pointer">
                         {{key}}
                     </span>

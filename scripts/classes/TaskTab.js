@@ -23,7 +23,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.transactionProgress = 0;
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
-        this.searchToolbar = new TaskSearch({
+        this.searchToolbar = new TaskSearch(this, {
             $http: this.$http,
             $snackbar: this.$snackbar,
             $i18n: this.$i18n
@@ -245,7 +245,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
     };
 
     TaskTab.prototype.openSaveFilterDialog = function () {
-        this.$dialog.showByTemplate('save_filter',this);
+        this.$dialog.showByTemplate('save_filter', this);
     };
 
     TaskTab.prototype.saveFilter = function () {
@@ -257,14 +257,16 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
             query: this.activeFilter.query,
             readableQuery: JSON.stringify(this.activeFilter.readableQuery)
         };
-        this.$http.post("/res/filter",requestBody).then(response => {
-            if(response.success){
+        this.$http.post("/res/filter", requestBody).then(response => {
+            if (response.success) {
                 this.$snackbar.info(response.success);
             } else
                 this.$snackbar.error(response.error);
+            this.$dialog.closeCurrent();
         }, error => {
             console.log("Filter failed to be saved");
             console.log(error);
+            this.$dialog.closeCurrent();
         })
     };
 

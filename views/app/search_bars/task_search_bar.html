@@ -19,8 +19,7 @@
                         </md-select>
                     </md-input-container>
 
-                    <md-autocomplete class="md-block"
-                                     md-search-text="taskTab.searchToolbar.searchText"
+                    <md-autocomplete md-search-text="taskTab.searchToolbar.searchText"
                                      md-selected-item="taskTab.searchToolbar.selectedItem"
                                      md-selected-item-change="taskTab.searchToolbar.selectedItemChanged(item)"
                                      md-items="item in taskTab.searchToolbar.getItems()"
@@ -89,12 +88,12 @@
 
     <div layout="column" layout-align="center center">
 
-        <md-button class="md-fab md-raised md-mini md-primary" ng-click="taskTab.search()">
-            <md-icon class="material-icons">search</md-icon>
-            <md-tooltip md-direction="left">
-                {{::$i18n.block.btn.search}}
-            </md-tooltip>
-        </md-button>
+        <!--<md-button class="md-fab md-raised md-mini md-primary" ng-click="taskTab.search()">-->
+            <!--<md-icon class="material-icons">search</md-icon>-->
+            <!--<md-tooltip md-direction="left">-->
+                <!--{{::$i18n.block.btn.search}}-->
+            <!--</md-tooltip>-->
+        <!--</md-button>-->
 
     </div>
 

@@ -32,7 +32,12 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                                 filterPolicy
                             }));
                         });
-                        self.activeTabIndex = lastIndex;
+                        if (closable) {
+                            $timeout(() => {
+                                self.activeTabIndex = lastIndex;
+                                self.tabChanged();
+                            }, 200);
+                        }
                     };
 
                     self.tabChanged = function () {
@@ -46,8 +51,8 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     };
 
 
-                    self.openTaskTabs([new Filter($i18n.page.tasks.all, Filter.TASK_TYPE, "{}",{}, null, null)], false);
-                    self.openTaskTabs([new Filter($i18n.page.tasks.my, Filter.TASK_TYPE, "{\"user\":\"" + $user.login + "\"}", {"User": [$user.name]}, null, null)], false, TaskTab.MERGE_FILTER_POLICY);
+                    self.openTaskTabs([new Filter($i18n.page.tasks.all, Filter.TASK_TYPE, "{}", "{}", null, null)], false);
+                    self.openTaskTabs([new Filter($i18n.page.tasks.my, Filter.TASK_TYPE, "{\"user\":\"" + $user.login + "\"}", "{\"User\": [\"" + $user.name + "\"]}", null, null)], false, TaskTab.MERGE_FILTER_POLICY);
                     self.activeTabIndex = 0;
                 }]);
     });

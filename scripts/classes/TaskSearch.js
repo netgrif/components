@@ -1,13 +1,15 @@
 define(['./Filter'], function (Filter) {
 
     /**
+     * @param parent Parent controller
      * @param angular $http, $snackbar, $i18n
      * @param config considerWholeSearchInput
      * @constructor
      */
-    function TaskSearch(angular, config = {}) {
+    function TaskSearch(parent, angular, config = {}) {
         Object.assign(this, angular, config);
 
+        this.parent = parent;
         this.chips = [];
         this.subject = undefined;
         this.autoCompleteStorage = {};
@@ -66,11 +68,13 @@ define(['./Filter'], function (Filter) {
      * @param {Filter} filter
      */
     TaskSearch.prototype.populateFromFilter = function (filter) {
+        if(this.chips.length > 0)
+            return;
         Object.keys(filter.readableQuery).forEach(key => {
             filter.readableQuery[key].forEach(val => this.chips.push(new Chip("", key, "", val)));
         });
         const q = JSON.parse(filter.query);
-        if(q instanceof Object) {
+        if (q instanceof Object) {
             Object.keys(q).forEach(key => {
                 if (q[key] instanceof Array) {
                     this.query[key] = q[key].map(val => new QueryObject(key, val, ""));
@@ -87,6 +91,9 @@ define(['./Filter'], function (Filter) {
         this.addChip(item);
         this.searchText = "";
         this.selectedItem = undefined;
+
+        if(this.parent)
+            this.parent.search();
     };
 
     TaskSearch.prototype.getItems = function () {
@@ -186,6 +193,7 @@ define(['./Filter'], function (Filter) {
     TaskSearch.prototype.chipRemoved = function (chip) {
         this.removeQuery(chip.subject, chip.id);
         this.resolveSubjects();
+        this.parent.search();
     };
 
     TaskSearch.prototype.resolveSubjects = function () {
@@ -206,6 +214,7 @@ define(['./Filter'], function (Filter) {
         this.query = {};
 
         this.resolveSubjects();
+        this.parent.search();
     };
 
     TaskSearch.prototype.filterValues = function (data = []) {
