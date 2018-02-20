@@ -23,7 +23,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.transactionProgress = 0;
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
-        this.search = new TaskSearch({
+        this.searchToolbar = new TaskSearch({
             $http: this.$http,
             $snackbar: this.$snackbar,
             $i18n: this.$i18n
@@ -38,6 +38,9 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
     TaskTab.URL_ALL = "/res/task";
     TaskTab.URL_MY = "/res/task/my";
     TaskTab.URL_SEARCH = "/res/task/search";
+
+    TaskTab.REPLACE_FILTER_POLICY = "replaceFilter";
+    TaskTab.MERGE_FILTER_POLICY = "mergeFilter";
 
     TaskTab.prototype.activate = function () {
         const view = this.useCase ? 'caseView' : 'taskView';
@@ -226,6 +229,18 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         }, function () {
             console.log(`Case ${this.useCase.stringId} failed to update`);
         })
+    };
+
+    TaskTab.prototype.search = function () {
+        const searchFilter = new Filter("search", Filter.TASK_TYPE, JSON.stringify(this.searchToolbar.getQuery()));
+
+        if (this.filterPolicy === TaskTab.MERGE_FILTER_POLICY) {
+            this.activeFilter = this.activeFilter.merge(searchFilter);
+        } else if (this.filterPolicy === TaskTab.REPLACE_FILTER_POLICY) {
+            this.activeFilter = searchFilter;
+        }
+
+        this.reload();
     };
 
     return TaskTab;

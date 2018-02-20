@@ -1,10 +1,23 @@
 define(['./Task'], function (Task) {
 
+    /**
+     *
+     * @param {String} title
+     * @param {String} type
+     * @param {String} query
+     * @param {Object} links
+     * @param {Object} tab
+     * @param {Object} config
+     * @constructor
+     */
     function Filter(title, type, query, links, tab, config = {}) {
         this.tab = tab;
         this.title = title;
         this.type = type;
-        this.query = query;
+        if(!(query instanceof String))
+            this.query = JSON.stringify(query);
+        else
+            this.query = query;
         this.links = links;
         this.visibility = 2;
         this.author = undefined;
@@ -84,6 +97,44 @@ define(['./Task'], function (Task) {
                 readable[key.toUpperCase()] = wrapWithArray(query[key]);
         });
         return readable;
+    };
+
+    /**
+     * Merge this filter with provided filter.
+     * Existing filter is not modified
+     * @param {Filter} filter
+     * @returns {Filter} new filter with merged query
+     */
+    Filter.prototype.merge = function (filter) {
+        const thisQuery = JSON.parse(this.query);
+        const thatQuery = JSON.parse(filter.query);
+
+        Object.keys(thatQuery).forEach(key => {
+            if (!thisQuery[key]) {
+                thisQuery[key] = thatQuery[key];
+            } else {
+                if (thisQuery[key] instanceof Array) {
+                    if (thatQuery[key] instanceof Array) {
+                        const arrayQuery = new Set(thisQuery[key]);
+                        thatQuery[key].forEach(val => arrayQuery.add(val));
+                        thisQuery[key] = [...arrayQuery];
+
+                    } else if (thatQuery[key] instanceof String) {
+                        !thisQuery[key].includes(thatQuery[key]) ? thisQuery[key].push(thatQuery[key]) : undefined;
+                    }
+
+                } else if (thisQuery[key] instanceof String) {
+                    if (thatQuery[key] instanceof Array) {
+                        !thatQuery[key].includes(thisQuery[key]) ? thatQuery[key].push(thisQuery[key]) : undefined;
+                        thisQuery[key] = thatQuery[key];
+                    } else if (thatQuery[key] instanceof String && thisQuery[key] !== thatQuery[key]) {
+                        thisQuery[key] = [thisQuery[key], thatQuery[key]];
+                    }
+                }
+            }
+        });
+
+        return new Filter(this.title, this.type, JSON.stringify(thisQuery),this.links,this.tab);
     };
 
 

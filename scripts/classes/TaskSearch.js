@@ -16,7 +16,7 @@ define(['./Filter'], function (Filter) {
         this.query = {};
         this.subjects = {
             process: {
-                title: this.$i18n.page.console.process,
+                title: this.$i18n.block.dialog.saveFilter.process,
                 value: "process",
                 disable: false,
                 load: {
@@ -26,7 +26,7 @@ define(['./Filter'], function (Filter) {
             }
             ,
             transition: {
-                title: this.$i18n.page.tasks.this,
+                title: this.$i18n.block.dialog.saveFilter.task,
                 value: "transition",
                 disable: true,
                 dependency: ["process"],
@@ -38,15 +38,15 @@ define(['./Filter'], function (Filter) {
         };
     }
 
-    function Chip(subject, id, search) {
+    function Chip(subject, subjectTitle, id, search) {
         this.subject = subject;
         this.search = search;
         this.id = id;
-        this.text = this.buildTitle();
+        this.text = this.buildTitle(subjectTitle);
     }
 
-    Chip.prototype.buildTitle = function () {
-        return this.subject + ": " + this.search;
+    Chip.prototype.buildTitle = function (subject) {
+        return subject + ": " + this.search;
     };
 
     function AutoCompleteItem(subject, resource) {
@@ -108,11 +108,14 @@ define(['./Filter'], function (Filter) {
         if (affected && this.query[affected]) {
             const removeAffectedChip = affectedQuery => {
                 if (affectedQuery.dependency && affectedQuery.dependency === id)
-                    this.removeChip(new Chip(affected, affectedQuery.param, "whatever"));
+                    this.removeChip(new Chip(affected, "whatever", affectedQuery.param, "whatever"));
             };
             if (this.query[affected] instanceof Array)
                 this.query[affected].forEach(removeAffectedChip);
             else
+                removeAffectedChip(this.query[affected]);
+
+            if(this.query[affected] && this.query[affected] instanceof Object)
                 removeAffectedChip(this.query[affected]);
         }
     };
@@ -130,7 +133,7 @@ define(['./Filter'], function (Filter) {
 
     TaskSearch.prototype.addChip = function (item) {
         if (!this.chips.some(c => c.id === item.entityId)) {
-            this.chips.push(new Chip(item.subject, item.entityId, item.title));
+            this.chips.push(new Chip(item.subject, this.subjects[item.subject].title, item.entityId, item.title));
             this.addQuery(item);
         }
     };
@@ -138,13 +141,14 @@ define(['./Filter'], function (Filter) {
     TaskSearch.prototype.removeChip = function (chip) {
         const index = this.chips.findIndex(c => c.id === chip.id);
         if (index !== -1) {
-            this.chips.splice(index, 1);
             this.removeQuery(chip.subject, chip.id);
+            this.chips.splice(index, 1);
         }
     };
 
     TaskSearch.prototype.chipRemoved = function (chip) {
         this.removeQuery(chip.subject, chip.id);
+        this.resolveSubjects();
     };
 
     TaskSearch.prototype.resolveSubjects = function () {
@@ -152,7 +156,19 @@ define(['./Filter'], function (Filter) {
             if (!this.subjects[subject].dependency)
                 return;
             this.subjects[subject].disable = !this.subjects[subject].dependency.every(d => !!this.query[d]);
-        })
+        });
+        if(this.subject.disable)
+            this.subject = this.subject.process;
+    };
+
+    TaskSearch.prototype.reset = function () {
+        this.chips = [];
+        this.subject = undefined;
+        this.searchText = "";
+        this.selectedItem = undefined;
+        this.query = {};
+
+        this.resolveSubjects();
     };
 
     TaskSearch.prototype.filterValues = function (data = []) {
