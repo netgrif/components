@@ -310,6 +310,7 @@ define({
                 saveFilter: {
                     title: "Save Filter",
                     name: "Name",
+                    desc: "Description",
                     type: {
                         this: "Type",
                         public: "Public",

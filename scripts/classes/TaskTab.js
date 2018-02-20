@@ -59,6 +59,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         if (this.showTransactions)
             this.loadTransactions();
 
+        this.searchToolbar.populateFromFilter(this.activeFilter);
         this.load(false);
     };
 
@@ -232,7 +233,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
     };
 
     TaskTab.prototype.search = function () {
-        const searchFilter = new Filter("search", Filter.TASK_TYPE, JSON.stringify(this.searchToolbar.getQuery()));
+        const searchFilter = this.searchToolbar.getFilter();
 
         if (this.filterPolicy === TaskTab.MERGE_FILTER_POLICY) {
             this.activeFilter = this.activeFilter.merge(searchFilter);
@@ -241,6 +242,30 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         }
 
         this.reload();
+    };
+
+    TaskTab.prototype.openSaveFilterDialog = function () {
+        this.$dialog.showByTemplate('save_filter',this);
+    };
+
+    TaskTab.prototype.saveFilter = function () {
+        const requestBody = {
+            title: this.activeFilter.title,
+            description: this.activeFilter.description,
+            visibility: this.activeFilter.visibility,
+            type: Filter.TASK_TYPE,
+            query: this.activeFilter.query,
+            readableQuery: JSON.stringify(this.activeFilter.readableQuery)
+        };
+        this.$http.post("/res/filter",requestBody).then(response => {
+            if(response.success){
+                this.$snackbar.info(response.success);
+            } else
+                this.$snackbar.error(response.error);
+        }, error => {
+            console.log("Filter failed to be saved");
+            console.log(error);
+        })
     };
 
     return TaskTab;

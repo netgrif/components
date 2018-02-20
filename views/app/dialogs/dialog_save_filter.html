@@ -19,15 +19,18 @@
                 <md-input-container>
 
                     <label>{{::$root.$i18n.block.dialog.saveFilter.name}}</label>
-                    <input type="text" ng-model="parentCtrl.newFilter.name" required title="">
+                    <input type="text" ng-model="parentCtrl.activeFilter.title" required title="">
 
+                </md-input-container>
+                    <label>{{::$root.$i18n.block.dialog.saveFilter.desc}}</label>
+                    <textarea rows="1" max-rows="4" ng-model="parentCtrl.activeFilter.description" title=""></textarea>
                 </md-input-container>
 
                 <md-input-container>
 
                     <label>{{::$root.$i18n.block.dialog.saveFilter.type.this}}</label>
-                    <md-select ng-model="parentCtrl.newFilter.visibility" required>
-                        <md-option value="0">
+                    <md-select ng-model="parentCtrl.activeFilter.visibility" required>
+                        <md-option value="2">
                             <md-icon class="material-icons margin-right-2x">public</md-icon>
                             <span>{{::$root.$i18n.block.dialog.saveFilter.type.public}}</span>
                         </md-option>
@@ -35,7 +38,7 @@
                             <md-icon class="material-icons margin-right-2x">group</md-icon>
                             <span>{{::$root.$i18n.block.dialog.saveFilter.type.group}}</span>
                         </md-option>
-                        <md-option value="2">
+                        <md-option value="0">
                             <md-icon class="material-icons margin-right-2x">person</md-icon>
                             <span>{{::$root.$i18n.block.dialog.saveFilter.type.private}}</span>
                         </md-option>
@@ -43,39 +46,47 @@
 
                 </md-input-container>
 
-                <md-input-container>
+                <!--<md-input-container>-->
 
-                    <label>{{::$root.$i18n.block.dialog.saveFilter.bindFilterToRoles}}</label>
-                    <md-select ng-model="parentCtrl.newFilter.roles" multiple>
-                        <md-option ng-repeat="role in opt.roles" ng-value="role.objectId">
-                            {{role.name}}
-                        </md-option>
-                    </md-select>
+                    <!--<label>{{::$root.$i18n.block.dialog.saveFilter.bindFilterToRoles}}</label>-->
+                    <!--<md-select ng-model="parentCtrl.newFilter.roles" multiple>-->
+                        <!--<md-option ng-repeat="role in opt.roles" ng-value="role.objectId">-->
+                            <!--{{role.name}}-->
+                        <!--</md-option>-->
+                    <!--</md-select>-->
 
-                </md-input-container>
+                <!--</md-input-container>-->
 
-                <div layout="column" layout-align="start" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.processes.length != 0">
+                <!--<div layout="column" layout-align="start" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.processes.length != 0">-->
 
-                    <label>{{::$root.$i18n.block.dialog.saveFilter.process}}</label>
-                    <md-chips flex ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.processes" readonly="true">
-                        <md-chip-template>
-                            {{$chip.title}}
-                        </md-chip-template>
+                    <!--<label>{{::$root.$i18n.block.dialog.saveFilter.process}}</label>-->
+                    <!--<md-chips flex ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.processes" readonly="true">-->
+                        <!--<md-chip-template>-->
+                            <!--{{$chip.title}}-->
+                        <!--</md-chip-template>-->
+                    <!--</md-chips>-->
+
+                <!--</div>-->
+
+                <!--<md-divider class="border-width-default color-border-transparent"></md-divider>-->
+
+                <!--<div layout="column" layout-align="start" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions.length != 0">-->
+
+                    <!--<label>{{::$root.$i18n.block.dialog.saveFilter.task}}</label>-->
+                    <!--<md-chips flex ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions" readonly="true">-->
+                        <!--<md-chip-template>-->
+                            <!--{{$chip.title}}-->
+                        <!--</md-chip-template>-->
+                    <!--</md-chips>-->
+
+                <!--</div>-->
+                <div ng-repeat="(key, value) in parentCtrl.activeFilter.readableQuery" class="margin-top-default">
+                    <span flex class="cursor-pointer">
+                        {{key}}
+                    </span>
+
+                    <md-chips ng-model="value" readonly="true" md-removable="false" class="margin-bottom-default">
                     </md-chips>
-
-                </div>
-
-                <md-divider class="border-width-default color-border-transparent"></md-divider>
-
-                <div layout="column" layout-align="start" ng-if="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions.length != 0">
-
-                    <label>{{::$root.$i18n.block.dialog.saveFilter.task}}</label>
-                    <md-chips flex ng-model="parentCtrl.tabs[parentCtrl.activeTab].filter.transitions" readonly="true">
-                        <md-chip-template>
-                            {{$chip.title}}
-                        </md-chip-template>
-                    </md-chips>
-
                 </div>
 
             </div> <!-- ./column./md-dialog-content -->

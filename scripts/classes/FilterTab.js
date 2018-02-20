@@ -70,8 +70,9 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                     const configObj = Object.assign({}, resource, {
                         $i18n: self.$i18n
                     });
+                    const readable = JSON.parse(resource.readableQuery);
                     self.filters.push(new Filter(resource.title, resource.type,
-                        resource.query, rawData[i]._links, self, configObj))
+                        resource.query, readable, rawData[i]._links, self, configObj))
                 });
 
                 self.loading = false;

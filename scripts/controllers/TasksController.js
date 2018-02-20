@@ -16,6 +16,7 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     self.taskTabs = [];
 
                     self.openTaskTabs = function (filter = [], closable = true, filterPolicy = TaskTab.REPLACE_FILTER_POLICY) {
+                        const lastIndex = self.taskTabs.length;
                         filter.forEach(f => {
                             self.taskTabs.push(new TaskTab(self.taskTabs.length, f.title, f, null, {
                                 $http,
@@ -31,6 +32,7 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                                 filterPolicy
                             }));
                         });
+                        self.activeTabIndex = lastIndex;
                     };
 
                     self.tabChanged = function () {
@@ -44,7 +46,8 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     };
 
 
-                    self.openTaskTabs([new Filter($i18n.page.tasks.all, Filter.TASK_TYPE, "{}", null, null)], false);
-                    self.openTaskTabs([new Filter($i18n.page.tasks.my, Filter.TASK_TYPE, "{\"user\":\"" + $user.login + "\"}", null, null)], false, TaskTab.MERGE_FILTER_POLICY);
+                    self.openTaskTabs([new Filter($i18n.page.tasks.all, Filter.TASK_TYPE, "{}",{}, null, null)], false);
+                    self.openTaskTabs([new Filter($i18n.page.tasks.my, Filter.TASK_TYPE, "{\"user\":\"" + $user.login + "\"}", {"User": [$user.name]}, null, null)], false, TaskTab.MERGE_FILTER_POLICY);
+                    self.activeTabIndex = 0;
                 }]);
     });

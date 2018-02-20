@@ -309,6 +309,7 @@ define({
             saveFilter: {
                 title: "Uložiť filter",
                 name: "Názov",
+                desc: "Popis",
                 type: {
                     this: "Typ",
                     public: "Verejný",

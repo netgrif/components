@@ -42,7 +42,8 @@ define(['./Filter'], function (Filter) {
         this.subject = subject;
         this.search = search;
         this.id = id;
-        this.text = this.buildTitle(subjectTitle);
+        this.subjectTitle = subjectTitle;
+        this.text = this.buildTitle(this.subjectTitle);
     }
 
     Chip.prototype.buildTitle = function (subject) {
@@ -59,6 +60,26 @@ define(['./Filter'], function (Filter) {
         this.param = param;
         this.dependency = dependency;
     }
+
+    /**
+     * Populate search toolbar from filter applied on task tab
+     * @param {Filter} filter
+     */
+    TaskSearch.prototype.populateFromFilter = function (filter) {
+        Object.keys(filter.readableQuery).forEach(key => {
+            filter.readableQuery[key].forEach(val => this.chips.push(new Chip("", key, "", val)));
+        });
+        const q = JSON.parse(filter.query);
+        if(q instanceof Object) {
+            Object.keys(q).forEach(key => {
+                if (q[key] instanceof Array) {
+                    this.query[key] = q[key].map(val => new QueryObject(key, val, ""));
+                } else {
+                    this.query[key] = new QueryObject(key, q[key], "");
+                }
+            });
+        }
+    };
 
     TaskSearch.prototype.selectedItemChanged = function (item) {
         if (!item)
@@ -115,7 +136,7 @@ define(['./Filter'], function (Filter) {
             else
                 removeAffectedChip(this.query[affected]);
 
-            if(this.query[affected] && this.query[affected] instanceof Object)
+            if (this.query[affected] && this.query[affected] instanceof Object)
                 removeAffectedChip(this.query[affected]);
         }
     };
@@ -129,6 +150,22 @@ define(['./Filter'], function (Filter) {
                 q[key] = this.query[key].param;
         });
         return q;
+    };
+
+    TaskSearch.prototype.getReadableQuery = function () {
+        const q = {};
+        this.chips.forEach(chip => {
+            if (!q[chip.subjectTitle]) {
+                q[chip.subjectTitle] = [chip.search];
+            } else {
+                q[chip.subjectTitle].push(chip.search);
+            }
+        });
+        return q;
+    };
+
+    TaskSearch.prototype.getFilter = function () {
+        return new Filter("", Filter.TASK_TYPE, JSON.stringify(this.getQuery()), this.getReadableQuery());
     };
 
     TaskSearch.prototype.addChip = function (item) {
@@ -157,7 +194,7 @@ define(['./Filter'], function (Filter) {
                 return;
             this.subjects[subject].disable = !this.subjects[subject].dependency.every(d => !!this.query[d]);
         });
-        if(this.subject.disable)
+        if (this.subject.disable)
             this.subject = this.subject.process;
     };
 
