@@ -37,18 +37,19 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                             self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title,
                                 new Filter("Default By Case", Filter.CASE_TYPE, "{\"case\": \"" + useCase.stringId + "\"}"),
                                 useCase, {
-                                $http,
-                                $snackbar,
-                                $dialog,
-                                $user,
-                                $fileUpload,
-                                $timeout,
-                                $mdExpansionPanelGroup,
-                                $i18n
-                            }, {
-                                showTransactions: true,
-                                allowHighlight: true
-                            }));
+                                    $http,
+                                    $snackbar,
+                                    $dialog,
+                                    $user,
+                                    $fileUpload,
+                                    $timeout,
+                                    $mdExpansionPanelGroup,
+                                    $i18n
+                                }, {
+                                    showTransactions: true,
+                                    allowHighlight: true,
+                                    searchable: false
+                                }));
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
 
