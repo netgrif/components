@@ -28,8 +28,9 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                                 $mdExpansionPanelGroup,
                                 $i18n
                             }, {
-                                closable,
-                                filterPolicy
+                                closable: closable,
+                                filterPolicy: filterPolicy,
+                                searchable: true
                             }));
                         });
                         if (closable) {

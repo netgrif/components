@@ -7,7 +7,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
      * @param {Filter} baseFilter
      * @param useCase
      * @param angular
-     * @param config - config parameters for better customizing behavior of tab
+     * @param config options: closable(if tab have close button), filterPolicy:constant, showTransactions, allowHighlight(highlight unfinished tasks), searchable
      * @constructor
      */
     function TaskTab(id, label, baseFilter, useCase, angular, config = {}) {
@@ -23,13 +23,15 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.transactionProgress = 0;
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
-        this.searchToolbar = new TaskSearch(this, {
-            $http: this.$http,
-            $snackbar: this.$snackbar,
-            $i18n: this.$i18n
-        }, {
-            considerWholeSearchInput: false
-        });
+        if (this.searchable) {
+            this.searchToolbar = new TaskSearch(this, {
+                $http: this.$http,
+                $snackbar: this.$snackbar,
+                $i18n: this.$i18n
+            }, {
+                considerWholeSearchInput: false
+            });
+        }
     }
 
     TaskTab.prototype = Object.create(Tab.prototype);
@@ -59,7 +61,9 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         if (this.showTransactions)
             this.loadTransactions();
 
-        this.searchToolbar.populateFromFilter(this.activeFilter);
+        if (this.searchToolbar)
+            this.searchToolbar.populateFromFilter(this.activeFilter);
+
         this.load(false);
     };
 

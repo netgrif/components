@@ -3,7 +3,7 @@ define(['./Filter'], function (Filter) {
     /**
      * @param parent Parent controller
      * @param angular $http, $snackbar, $i18n
-     * @param config considerWholeSearchInput
+     * @param config options: considerWholeSearchInput
      * @constructor
      */
     function TaskSearch(parent, angular, config = {}) {
@@ -68,7 +68,7 @@ define(['./Filter'], function (Filter) {
      * @param {Filter} filter
      */
     TaskSearch.prototype.populateFromFilter = function (filter) {
-        if(this.chips.length > 0)
+        if(this.chips.length > 0 || !filter.readableQuery)
             return;
         Object.keys(filter.readableQuery).forEach(key => {
             filter.readableQuery[key].forEach(val => this.chips.push(new Chip("", key, "", val)));
