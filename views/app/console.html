@@ -123,7 +123,7 @@
 
         </md-tab>
 
-        <md-tab md-on-select="adminCtrl.loadUsers(self.users, self.userTab.searchedUsers)">
+        <md-tab md-on-select="adminCtrl.usersTab.loadUsers()">
 
             <md-tab-label>
                 {{::$i18n.page.console.users}}
@@ -172,7 +172,7 @@
         </md-tab>
 
 
-        <md-tab md-on-select="adminCtrl.loadUsers(adminCtrl.users, adminCtrl.rolesTab.searchedUsers)">
+        <md-tab md-on-select="adminCtrl.rolesTab.loadUsers()">
 
             <md-tab-label>
                 {{::$i18n.page.console.processRoles}}

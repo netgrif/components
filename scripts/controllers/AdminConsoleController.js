@@ -21,40 +21,28 @@ define(['angular', '../modules/Admin'], function (angular) {
             self.users = [];
             self.processes = [];
 
+            function UserRolesTab() {
+                this.filteredUsers = [];
+                this.filteredRoles = [];
+                this.selectedRoles = undefined;
+                this.selectedUser = undefined;
+                this.roles = {
+                    process: undefined,
+                    roles: []
+                };
+                this.userSearch = {
+                    input: "",
+                    byEmail: true,
+                    byName: true
+                };
+                this.roleSearch = "";
+            }
+
             //Users tab
-            self.userTab = {
-                searchedUsers: [],
-                searchedRoles: [],
-                selectedUser: undefined,
-                roles: {
-                    process: undefined,
-                    roles: []
-                },
-                userSearch: {
-                    input: "",
-                    byEmail: true,
-                    byName: true
-                },
-                roleSearch: "",
-            };
+            self.usersTab = new UserRolesTab();
+            self.rolesTab = new UserRolesTab();
 
-            //Roles tab
-            self.rolesTab = {
-                searchedUsers: [],
-                searchedRoles: [],
-                selectedRole: undefined,
-                roles: {
-                    process: undefined,
-                    roles: []
-                },
-                userSearch: {
-                    input: "",
-                    byEmail: true,
-                    byName: true
-                },
-                roleSearch: ""
-            };
-
+            //Settings tab
             self.changeUserSignUpPolicy = $auth.userSignUp;
 
             /**
@@ -162,19 +150,16 @@ define(['angular', '../modules/Admin'], function (angular) {
             /* Roles and Users tab */
             /**
              * Load list of process roles of selected process
-             * @param process Selected process by user
-             * @param rolesStorage Destination array
-             * @param filteredRolesStorage Array which contains results of role search input
              */
-            self.loadRoles = function (process, rolesStorage, filteredRolesStorage) {
-                if (process) return;
-                rolesStorage.splice(0, rolesStorage.length);
-                filteredRolesStorage.splice(0, filteredRolesStorage.length);
-                $http.get("/res/petrinet/" + process.entityId + "/roles").then(response => {
+            UserRolesTab.prototype.loadRoles = function () {
+                if (this.roles.process) return;
+                this.roles.roles.splice(0, this.roles.roles);
+                this.filteredRoles.splice(0, this.filteredRoles.length);
+                $http.get("/res/petrinet/" + this.roles.process.entityId + "/roles").then(response => {
                     response.$request().$get("processRoles").then(resources => {
-                        rolesStorage = resources;
-                        rolesStorage.forEach(role => role.selected = false);
-                        filteredRolesStorage = rolesStorage;
+                        this.roles.roles = resources;
+                        this.roles.roles.forEach(role => role.selected = false);
+                        this.filteredRoles = this.roles.roles;
 
                     }, () => {
                         $log.debug("No roles was found!");
@@ -186,22 +171,20 @@ define(['angular', '../modules/Admin'], function (angular) {
 
             /**
              * Load list of all active users in the system
-             * @param usersStorage Destination array
-             * @param filteredUsersStorage Array which contains results of user search input
              */
-            self.loadUsers = function (usersStorage, filteredUsersStorage) {
-                if (usersStorage.length > 0) {
-                    filteredUsersStorage = usersStorage;
+            UserRolesTab.prototype.loadUsers = function () {
+                if (self.users.length > 0) {
+                    this.filteredUsers = self.users;
                     return;
                 }
                 $http.get("/res/user/small").then(response => {
                     response.$request().$get("users").then(resources => {
-                        usersStorage = resources;
-                        usersStorage.forEach(user => {
+                        self.users = resources;
+                        self.users.forEach(user => {
                             user.roles = new Set(user.userProcessRoles.map(role => role.roleId));
                             user.selected = false;
                         });
-                        filteredUsersStorage = usersStorage;
+                        this.filteredUsers = self.users;
                     }, () => {
                         $log.debug("No user resource was found!");
                     });
@@ -212,66 +195,58 @@ define(['angular', '../modules/Admin'], function (angular) {
 
             /**
              * Search among loaded users
-             * @param usersStorage Array of all loaded users
-             * @param filteredUsersStorage Destination array of search results
-             * @param userSearch Search object with input and search params
              * @returns {Array}
              */
-            self.filterUsers = function (usersStorage, filteredUsersStorage, userSearch) {
-                if (!usersStorage || usersStorage.length === 0)
+            UserRolesTab.prototype.filterUsers = function () {
+                if (!self.users || self.users.length === 0)
                     return null;
-                userSearch.input = userSearch.input.trim();
-                if (!userSearch.input || userSearch.input === "")
-                    filteredUsersStorage = usersStorage;
+                this.userSearch.input = this.userSearch.userSearch.input.trim();
+                if (!this.userSearch.input || this.userSearch.input === "")
+                    this.filteredUsers = self.users;
                 else {
-                    filteredUsersStorage = usersStorage.filter(user => {
+                    this.filteredUsers = self.users.filter(user => {
                         let include = false;
-                        if (userSearch.byName)
-                            include = include || user.fullName.includes(userSearch.input);
-                        if (userSearch.byEmail)
-                            include = include || user.email.includes(userSearch.input);
+                        if (this.userSearch.byName)
+                            include = include || user.fullName.includes(this.userSearch.input);
+                        if (this.userSearch.byEmail)
+                            include = include || user.email.includes(this.userSearch.input);
                         return include;
                     });
                 }
-                return filteredUsersStorage;
+                return this.filteredUsers;
             };
 
             /**
              * Search among loaded process roles
-             * @param rolesStorage Array of loaded roles for selected process
-             * @param filteredRolesStorage Destination array of search results
-             * @param roleSearch Search input from user
              * @returns {Array}
              */
-            self.filterRoles = function (rolesStorage, filteredRolesStorage, roleSearch) {
-                if (!rolesStorage || rolesStorage === 0)
+            UserRolesTab.prototype.filterRoles = function () {
+                if (!this.roles.roles || this.roles.roles === 0)
                     return null;
-                roleSearch = roleSearch.trim();
-                if (!roleSearch || roleSearch === "")
-                    filteredRolesStorage = rolesStorage;
+                this.roleSearch = this.roleSearch.trim();
+                if (!this.roleSearch || this.roleSearch === "")
+                    this.filteredRoles = this.roles.roles;
                 else
-                    filteredRolesStorage = rolesStorage.filter(role => role.name.includes(roleSearch));
-                return filteredRolesStorage;
+                    this.filteredRoles = this.roles.roles.filter(role => role.name.includes(this.roleSearch));
+                return this.filteredRoles;
             };
 
             /**
              * Toggle selected state on user and highlight all roles from search results that user has
              * @param user clicked user
-             * @param rolesStorage
-             * @param tabObject Object responsible for handling tab related variables
              */
-            self.selectUser = function (user, rolesStorage, tabObject) {
+            UserRolesTab.prototype.selectUser = function (user) {
                 let selectedEmail = "";
-                if (tabObject.selectedUser) {
-                    selectedEmail = tabObject.selectedUser.email;
-                    tabObject.selectedUser.selected = false;
-                    tabObject.selectedUser = undefined;
-                    rolesStorage.forEach(role => role.selected = false);
+                if (this.selectedUser) {
+                    selectedEmail = this.selectedUser.email;
+                    this.selectedUser.selected = false;
+                    this.selectedUser = undefined;
+                    this.roles.roles.forEach(role => role.selected = false);
                 }
                 if (user && user.email !== selectedEmail) {
                     user.selected = true;
-                    tabObject.selectedUser = user;
-                    rolesStorage.forEach(role => role.selected = user.roles.has(role.stringId));
+                    this.selectedUser = user;
+                    this.roles.roles.forEach(role => role.selected = user.roles.has(role.stringId));
                 }
 
 
@@ -290,7 +265,7 @@ define(['angular', '../modules/Admin'], function (angular) {
              * @param role Clicked role
              * @param after Function that runs after successful operation
              */
-            self.changeRoleToUser = function (user, role, after = angular.noop) {
+            UserRolesTab.prototype.changeRoleToUser = function (user, role, after = angular.noop) {
                 if(user.roles.has(role.stringId))
                     user.roles.delete(role.stringId);
                 else
@@ -375,6 +350,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                 //TODO save user when roles changes
             };
 
+            /* General stuff */
             self.isObjEmpty = function (obj) {
                 return jQuery.isEmptyObject(obj);
             };
