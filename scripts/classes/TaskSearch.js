@@ -70,6 +70,8 @@ define(['./Filter'], function (Filter) {
     TaskSearch.prototype.populateFromFilter = function (filter) {
         if(this.chips.length > 0)
             return;
+        if (!filter.readableQuery)
+            return;
         Object.keys(filter.readableQuery).forEach(key => {
             filter.readableQuery[key].forEach(val => this.chips.push(new Chip("", key, "", val)));
         });
