@@ -4,7 +4,7 @@
         <md-input-container class="md-block">
             <md-icon class="material-icons color-fg-primary-500">search</md-icon>
             <label>{{::$i18n.block.input.user}}</label>
-            <input type="text" ng-model="adminCtrl.usersTab.userSearch.input" ng-change="adminCtrl.filterUsers(adminCtrl.users, adminCtrl.userTab.searchedUsers, adminCtrl.userTab.userSearch)" title="">
+            <input type="text" ng-model="adminCtrl.usersTab.userSearch.input" ng-change="adminCtrl.usersTab.filterUsers()" title="">
         </md-input-container>
 
         <md-menu>
