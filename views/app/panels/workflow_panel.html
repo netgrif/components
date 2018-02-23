@@ -76,7 +76,7 @@
 
                         <div hide-xs flex-gt-xs="5"></div>
 
-                        <div flex-gt-xs="35" flex-xs="65" layout="row" layout-align="start center">
+                        <div flex-gt-xs="50" flex-xs="80" layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">
                                 {{::val.icon}}
                                 <md-tooltip hide-gt-xs md-direction="bottom">
@@ -91,7 +91,7 @@
                             </span>
                         </div>
 
-                        <div flex="35" layout="row" layout-align="end center">
+                        <div flex="20" layout="row" layout-align="end center">
 
                             <md-button ng-if="!!val.button" class="md-icon-button" ng-click="workPanelCtrl.downloadModel()">
                                 <md-icon class="material-icons">{{::val.button.name}}</md-icon>
@@ -99,12 +99,7 @@
                                     {{::val.button.tooltip}}
                                 </md-tooltip>
                             </md-button>
-                            <!--<md-button class="md-icon-button">-->
-                            <!--<md-icon class="material-icons">info_outline</md-icon>-->
-                            <!--<md-tooltip md-direction="bottom">-->
-                            <!--{{::$i18n.page.workflow.data.item.file.desc}}-->
-                            <!--</md-tooltip>-->
-                            <!--</md-button>-->
+
                         </div>
 
                         <div hide-xs flex-gt-xs="5"></div>
@@ -126,7 +121,7 @@
 
                         <div hide-xs flex-gt-xs="5"></div>
 
-                        <div flex-gt-xs="35" flex-xs="65" layout="row" layout-align="start center">
+                        <div flex-gt-xs="70" flex-xs layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">
                                 {{::val.icon}}
                                 <md-tooltip hide-gt-xs md-direction="bottom">
@@ -134,15 +129,6 @@
                                 </md-tooltip>
                             </i>
                             <span>{{val.value}}</span>
-                        </div>
-
-                        <div flex="35" layout="row" layout-align="end center">
-                            <!--<md-button class="md-icon-button">-->
-                                <!--<md-icon class="material-icons">info_outline</md-icon>-->
-                                <!--<md-tooltip md-direction="bottom">-->
-                                    <!--{{::$i18n.page.workflow.data.item.roles.desc}}-->
-                                <!--</md-tooltip>-->
-                            <!--</md-button>-->
                         </div>
 
                         <div hide-xs flex-gt-xs="5"></div>
