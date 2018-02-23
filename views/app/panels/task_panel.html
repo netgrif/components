@@ -128,6 +128,28 @@
                         <div flex class="line-3px color-bg-primary-op-50"></div>
                     </div>
 
+                    <!-- TODO 23.2.2018 New details -->
+                    <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center" class="margin-vertical-default">
+
+                        <span hide-xs flex-gt-xs="20">
+                            {{::$i18n.block.task.header.case}}
+                        </span>
+
+                        <div hide-xs flex-gt-xs="5"></div>
+
+                        <div flex-gt-xs="70" flex-xs layout="row" layout-align="start center">
+
+                            <i class="material-icons {{taskCtrl.caseColor}} margin-right-2x" ng-repeat="icon in taskCtrl.icons()">
+                                {{icon}}
+                            </i>
+                            <span>{{taskCtrl.caseTitle}}</span>
+
+                        </div>
+
+                        <div hide-xs flex-gt-xs="5"></div>
+
+                    </div>
+
                     <!-- Case -->
                     <div hide-gt-xs flex-gt-md="50" flex-gt-sm="100" flex-gt-xs="100" flex-xs="100">
 
