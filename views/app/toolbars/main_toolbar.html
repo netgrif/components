@@ -14,6 +14,7 @@
         <span ng-if="'tasks' | routeSegmentContains">{{::$i18n.page.tasks.this}}</span>
         <span ng-if="'workflow' | routeSegmentContains">{{::$i18n.page.workflow.this}}</span>
         <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)">{{::$i18n.page.console.this}}</span>
+        <span ng-if="'profile' | routeSegmentContains">{{::$i18n.page.profile.this}}</span>
     </div>
 
     <div flex></div>
