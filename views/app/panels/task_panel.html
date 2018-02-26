@@ -145,7 +145,6 @@
                                     {{::$i18n.block.task.header.case}}
                                 </md-tooltip>
                             </span>
-                            <!--<i class="material-icons {{taskCtrl.caseColor}} margin-right-2x" ng-repeat="icon in taskCtrl.icons()">{{icon}}</i>-->
                             <span>
                                 {{taskCtrl.caseTitle}}
                             </span>
@@ -167,7 +166,11 @@
 
                         <div flex-gt-xs="70" flex-xs layout="row" layout-align="start center">
 
-                            <task-priority priority="{{taskCtrl.priority}}"></task-priority>
+                            <task-priority priority="{{taskCtrl.priority}}">
+                                <md-tooltip hide-gt-xs md-direction="bottom">
+                                    {{::$i18n.block.task.header.priority}}
+                                </md-tooltip>
+                            </task-priority>
 
                         </div>
 
@@ -186,7 +189,12 @@
 
                         <div flex-gt-xs="70" flex-xs layout="row" layout-align="start center">
 
-                            <i class="material-icons margin-right-2x color-fg-primary-500">account_circle</i>
+                            <i class="material-icons margin-right-2x color-fg-primary-500">
+                                account_circle
+                                <md-tooltip hide-gt-xs md-direction="bottom">
+                                    {{::$i18n.block.task.header.user}}
+                                </md-tooltip>
+                            </i>
                             <span>
                                 {{taskCtrl.user.fullName}}
                             </span>
@@ -208,7 +216,12 @@
 
                         <div flex-gt-xs="70" flex-xs layout="row" layout-align="start center">
 
-                            <i class="material-icons margin-right-2x color-fg-primary-500">today</i>
+                            <i class="material-icons margin-right-2x color-fg-primary-500">
+                                today
+                                <md-tooltip hide-gt-xs md-direction="bottom">
+                                    {{::$i18n.block.task.header.assignDate}}
+                                </md-tooltip>
+                            </i>
                             <span>
                                 {{taskCtrl.formatedStartDate}}
                             </span>
