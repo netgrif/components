@@ -137,6 +137,7 @@ define({
                 newUser: "New user",
                 orgs: "Organizations",
                 roles: "Roles",
+                users: "Users",
                 processRolesLower: "Process roles",
                 process: "Process",
                 processRoles: "Process Roles",

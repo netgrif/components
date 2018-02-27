@@ -136,6 +136,7 @@ define({
             newUser: "Nový používateľ",
             orgs: "Organizácie",
             roles: "Roly",
+            users: "Používatelia",
             processRolesLower: "Procesné roly",
             process: "Proces",
             processRoles: "Procesné roly",
