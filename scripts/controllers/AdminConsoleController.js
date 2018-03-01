@@ -10,10 +10,10 @@ define(['angular', '../modules/Admin'], function (angular) {
             self.inviteLoading = false;
             self.invitedUser = {
                 email: undefined,
-                organizations: [],
+                groups: [],
                 processRoles: {}
             };
-            self.organizations = [];
+            self.groups = [];
             self.processRoles = [];
             self.selectedNet = undefined;
 
@@ -89,25 +89,25 @@ define(['angular', '../modules/Admin'], function (angular) {
             };
 
             /**
-             * Load list of organizations for invite tab
+             * Load list of groups for invite tab
              */
             self.loadOrganizations = function () {
-                $http.get("/res/user/organizations").then(function (response) {
-                    response.$request().$get("organizations").then(function (resources) {
-                        self.organizations = resources;
-                        self.organizations.forEach(org => {
+                $http.get("/res/group/all").then(function (response) {
+                    response.$request().$get("groups").then(function (resources) {
+                        self.groups = resources;
+                        self.groups.forEach(org => {
                             org.add = function () {
-                                if (!self.invitedUser.organizations.includes(this))
-                                    self.invitedUser.organizations.push(this);
+                                if (!self.invitedUser.groups.includes(this))
+                                    self.invitedUser.groups.push(this);
                             };
                             org.remove = function () {
-                                const i = self.invitedUser.organizations.indexOf(this);
+                                const i = self.invitedUser.groups.indexOf(this);
                                 if (i !== -1)
-                                    self.invitedUser.organizations.splice(i, 1);
+                                    self.invitedUser.groups.splice(i, 1);
                             };
                         });
                     }, function () {
-                        $log.debug("No resource for organizations was found!");
+                        $log.debug("No resource for groups was found!");
                     });
                 }, function () {
                     $snackbar.error($i18n.block.snackbar.noOrganizationFound);
@@ -122,7 +122,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                     $snackbar.error($i18n.block.snackbar.emailFieldIsMandatory);
                     return;
                 }
-                if (self.invitedUser.organizations.length === 0) {
+                if (self.invitedUser.groups.length === 0) {
                     $snackbar.error($i18n.block.snackbar.newUserMustBelongToOneOrMoreOrganization);
                     return;
                 }
@@ -133,7 +133,7 @@ define(['angular', '../modules/Admin'], function (angular) {
 
                 const invitation = {
                     email: self.invitedUser.email,
-                    organizations: self.invitedUser.organizations.map(org => org.entityId),
+                    groups: self.invitedUser.groups.map(org => org.id),
                     processRoles: jQuery.map(self.invitedUser.processRoles, (val, i) => val.roles.map(role => role.stringId))
                 };
 
@@ -142,7 +142,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                     .then(function (response) {
                         $snackbar.success($i18n.block.snackbar.inviteSent);
                         self.invitedUser.email = undefined;
-                        self.invitedUser.organizations.splice(0, self.invitedUser.organizations.length);
+                        self.invitedUser.groups.splice(0, self.invitedUser.groups.length);
                         self.invitedUser.processRoles = {};
                         self.inviteLoading = false;
                     }, function () {

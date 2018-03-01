@@ -356,7 +356,7 @@ define({
                 failedToLoadRolesForProcess: "Failed to load roles for process",
                 noOrganizationFound: "No organization found",
                 emailFieldIsMandatory: "Email field is mandatory",
-                newUserMustBelongToOneOrMoreOrganization: "New user must belong to one or more organizations",
+                newUserMustBelongToOneOrMoreOrganization: "New user must belong to one or more groups",
                 newUserMustHasAssignedOneOrMoreRoles: "New user must has assigned one or more roles",
                 inviteSent: "Invite sent",
                 inviteFailed: "Invite failed",
