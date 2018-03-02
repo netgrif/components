@@ -14,7 +14,7 @@ $color-primary-A200: 			#64FFDA;
 $color-primary-A400: 			#1DE9B6;
 $color-primary-A700: 			#00BFA5;
 
-// Accent color
+// Accent color - Grey = Grey color
 $color-grey-50: 				#FAFAFA;
 $color-grey-100: 				#F5F5F5;
 $color-grey-200: 				#EEEEEE;
@@ -56,11 +56,9 @@ $color-amber-500:				#FFC107;
 $color-deep-orange-500:			#FF5722;
 $color-red-500:					#f44336;
 $color-brown-500:				#795548;
-$color-blue-grey-50: 			#ECEFF1;
-$color-blue-grey-300:			#90A4AE;
-$color-blue-grey-500:			#607D8B;
 
-// Background - Accent 200
+// Background
+$color-blue-grey-100:			#CFD8DC;
 
 // Toolbar
 $color-dark-teal-grey-500:		#37474F;
@@ -70,9 +68,6 @@ $color-dark-teal-grey-800:		#1a2b2b;
 
 // Material text
 $color-material-grey-text:		rgba(0, 0, 0, .38); // TODO 19.1.2018 Refactor Material text color
-
-// Menu
-$color-grey-light:				rgba(158, 158, 158, .2);
 
 // Divider
 $color-divider:					#E1E1E1;
@@ -140,19 +135,8 @@ $color-white:					white;
 			color: $color-material-grey-text;
 		}
 
-		&-blue-grey {
-
-			&-50 {
-				color: $color-blue-grey-50;
-			}
-
-			&-300 {
-				color: $color-blue-grey-300;
-			}
-
-			&-500 {
-				color: $color-blue-grey-500;
-			}
+		&-blue-grey-100 {
+			color: $color-blue-grey-100;
 		}
 
 		&-black {
@@ -227,7 +211,7 @@ $color-white:					white;
 			}
 
 			&-300 {
-				color: $color-primary-300;
+				color: $color-primary-300 !important;
 			}
 
 			&-400 {
@@ -373,19 +357,8 @@ $color-white:					white;
 			background-color: $color-material-grey-text;
 		}
 
-		&-blue-grey {
-
-			&-50 {
-				background-color: $color-blue-grey-50;
-			}
-
-			&-300 {
-				background-color: $color-blue-grey-300;
-			}
-
-			&-500 {
-				background-color: $color-blue-grey-500;
-			}
+		&-blue-grey-100 {
+			background-color: $color-blue-grey-100;
 		}
 
 		&-black {
