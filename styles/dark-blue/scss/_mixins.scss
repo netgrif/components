@@ -1,0 +1,104 @@
+// Responsive
+@mixin xs {
+	@media all and (max-width: 599px) {
+		@content;
+	}
+}
+@mixin sm {
+	@media all and (min-width: 600px) and (max-width: 959px) {
+		@content;
+	}
+}
+@mixin md {
+	@media all and (min-width: 960px) and (max-width: 1279px) {
+		@content;
+	}
+}
+@mixin lg {
+	@media all and (min-width: 1280px) and (max-width: 1919px) {
+		@content;
+	}
+}
+@mixin xl {
+	@media all and (min-width: 1920px) {
+		@content;
+	}
+}
+// GTs
+@mixin gt-xs {
+	@media all and (min-width: 600px) {
+		@content;
+	}
+}
+@mixin gt-sm {
+	@media all and (min-width: 960px) {
+		@content;
+	}
+}
+@mixin gt-md {
+	@media all and (min-width: 1280px) {
+		@content;
+	}
+}
+@mixin gt-lg {
+	@media all and (min-width: 1920px) {
+		@content;
+	}
+}
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+	// For Google Chrome
+	::-webkit-scrollbar {
+		width: $size;
+		height: $size;
+	}
+	::-webkit-scrollbar-thumb {
+		background: $foreground-color;
+	}
+	::-webkit-scrollbar-track {
+		background: $background-color;
+	}
+	// For Internet Destroyer
+	body {
+		scrollbar-face-color: $foreground-color;
+		scrollbar-track-color: $background-color;
+	}
+}
+
+@mixin textOverflowWithDots($elementWidth) {
+	width: $elementWidth;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@mixin centerVertically() {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+  	-ms-transform: translateY(-50%);
+}
+
+@mixin centerHorizontally() {
+    left: 50%;
+    transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+  	-ms-transform: translateX(-50%);
+}
+
+@mixin centerFixed() {
+	position: fixed;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ 	-ms-transform: translate(-50%);
+}
+
+@mixin centerAbsolute() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ 	-ms-transform: translate(-50%);
+}

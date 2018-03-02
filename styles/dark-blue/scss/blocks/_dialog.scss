@@ -1,0 +1,11 @@
+@import '../colors';
+
+md-dialog {
+
+    md-expansion-panel-group {
+
+         span {
+             color: $color-grey-50 !important;
+         }
+    }
+}

@@ -1,0 +1,93 @@
+@import '../colors';
+@import '../dims';
+
+.click-area {
+    height: 100%;
+    width: 100%;
+}
+
+md-expansion-panel {
+    cursor: pointer !important;
+    box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24) !important;
+
+    .md-expansion-panel-header-container, .md-expansion-panel-footer-container {
+        top: auto !important;
+    }
+
+    md-expansion-panel-collapsed {
+        padding-left: $dim-2x !important;
+        padding-right: $dim-2x !important;
+    }
+
+    md-expansion-panel-content {
+        padding-left: $dim-2x !important;
+        padding-right: $dim-2x !important;
+        background-color: $color-grey-50 !important;
+    }
+
+    md-expansion-panel-header {
+
+        .md-expansion-panel-header-container {
+            padding-left: $dim-2x !important;
+            padding-right: $dim-2x !important;
+        }
+    }
+
+    md-expansion-panel-expanded .md-expansion-panel-header-container,
+    md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
+
+        &:hover {
+            background: $color-primary-500 !important;
+
+            span {
+                color: $color-grey-50 !important;
+            }
+
+            task-priority {
+
+                .material-icons {
+                    color: $color-grey-50;
+                }
+            }
+
+            .md-button {
+
+                .material-icons {
+                    color: $color-grey-50;
+                }
+            }
+
+            .material-icons.color-fg-primary-500 {
+                color: $color-grey-50;
+            }
+
+            md-progress-circular path {
+                stroke: $color-grey-50 !important;
+            }
+        }
+    }
+}
+
+// TODO 25.10.2017 Expansion panel highlighting is currently disabled in HTML
+md-expansion-panel {
+
+    &.highlight {
+
+        md-expansion-panel-expanded .md-expansion-panel-header-container,
+        md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
+            background: $color-light-blue-A700 !important;
+
+            &:hover {
+                background: $color-primary-500 !important;
+
+                span {
+                    color: $color-grey-50;
+                }
+            }
+        }
+
+        md-progress-circular path {
+            stroke: $color-grey-50 !important;
+        }
+    }
+}
