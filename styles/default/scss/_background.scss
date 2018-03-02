@@ -14,13 +14,13 @@ $tab-header-height: $dim-48px;
 
     &-default {
         background-size: cover !important;
-        background-color: $color-blue-grey-100;
+        background-color: $color-background;
     }
 
 	&-tabs {
 
 		md-tabs-wrapper {
-			background-color: $color-blue-grey-100;
+			background-color: $color-background;
 		}
 	}
 }

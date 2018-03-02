@@ -56,15 +56,18 @@ $color-amber-500:				#FFC107;
 $color-deep-orange-500:			#FF5722;
 $color-red-500:					#f44336;
 $color-brown-500:				#795548;
+$color-blue-grey-100:			#CFD8DC;
+$color-dark-teal-grey-500:		#37474F;
+$color-dark-teal-grey-800:		#1a2b2b;
 
 // Background
-$color-blue-grey-100:			#CFD8DC;
+$color-background:				$color-blue-grey-100;
 
 // Toolbar
-$color-dark-teal-grey-500:		#37474F;
+$color-toolbar:					$color-dark-teal-grey-500;
 
 // Sidenav
-$color-dark-teal-grey-800:		#1a2b2b;
+$color-sidenav:					$color-dark-teal-grey-800;
 
 // Material text
 $color-material-grey-text:		rgba(0, 0, 0, .38); // TODO 19.1.2018 Refactor Material text color
