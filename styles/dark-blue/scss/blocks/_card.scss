@@ -4,8 +4,8 @@
 
 .card {
     margin: 0;
-    color: $color-black-op-87;
-    background-color: white;
+    color: $color-card-text;
+    background-color: $color-card-background;
     box-shadow: $shadow;
     border-radius: $border-radius;
 
@@ -15,8 +15,12 @@
     }
 
     a {
-        color: $color-black-op-87;
+        color: $color-card-text;
         text-decoration: none;
+
+        .material-icons {
+            color: $color-card-text;
+        }
     }
 
     &-no-shadow {
