@@ -1,22 +1,22 @@
 <form name="signupForm" id="signup-form" ng-submit="loginCtrl.signup()">
 
     <md-input-container class="md-block">
-        <md-icon class="material-icons color-fg-blue-grey-300">email</md-icon>
+        <md-icon class="material-icons color-fg-accent-500">email</md-icon>
         <input ng-model="loginCtrl.signupUser.email" name="email" type="email" placeholder="{{::$i18n.page.signUp.email}}" ng-required="true" disabled>
     </md-input-container>
 
     <md-input-container class="md-block">
-        <md-icon class="material-icons color-fg-grey-300">perm_identity</md-icon>
+        <md-icon class="material-icons color-fg-accent-500">perm_identity</md-icon>
         <input ng-model="loginCtrl.signupUser.name" name="name" type="text" placeholder="{{::$i18n.page.signUp.name}}" ng-required="true">
     </md-input-container>
 
     <md-input-container class="md-block">
-        <md-icon class="material-icons color-fg-blue-300">perm_identity</md-icon>
+        <md-icon class="material-icons color-fg-accent-500">perm_identity</md-icon>
         <input ng-model="loginCtrl.signupUser.surname" name="surname" type="text" placeholder="{{::$i18n.page.signUp.surname}}" ng-required="true">
     </md-input-container>
 
     <md-input-container class="md-block">
-        <md-icon class="material-icons color-fg-blue-300">lock</md-icon>
+        <md-icon class="material-icons color-fg-accent-500">lock</md-icon>
         <input ng-model="loginCtrl.signupUser.password" name="password" type="password" placeholder="{{::$i18n.page.signUp.psw}}" ng-required="true" ng-minlength="6">
         <div ng-messages="signupForm.password.$error">
             <div ng-message="minlength">{{::$i18n.block.validation.pswLength}}</div>
@@ -24,7 +24,7 @@
     </md-input-container>
 
     <md-input-container class="md-block">
-        <md-icon class="material-icons color-fg-blue-300">repeat</md-icon>
+        <md-icon class="material-icons color-fg-accent-500">repeat</md-icon>
         <input ng-model="loginCtrl.retypedPassword" type="password" ng-blur="loginCtrl.matchPasswords()" placeholder="{{::$i18n.page.signUp.retypePsw}}" ng-required="true">
         <div ng-messages="loginCtrl.signUpError" ng-show="loginCtrl.retypedPassword">
             <div ng-message="match">{{::$i18n.block.validation.retypedPswNotMatch}}</div>
