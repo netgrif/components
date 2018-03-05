@@ -6,7 +6,12 @@ $shadow:                        0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0
 
 // Template specific variables
 $background-app:                radial-gradient(ellipse at center, rgba(146,170,180,1) 0%, rgba(81,94,100,1) 100%);
-$background-signin:             url("../../../assets/dark-blue/netgrif_background.png");
+//$background-signin:             url("../../../assets/dark-blue/netgrif_background.png");
+$background-signin:             url("../../../assets/dark-blue/high-tatras.jpg");
 
 // Tabs
 $tabs-bg:                       $color-tabs-bg;
+
+// Logo
+$logo-height:                   auto;
+$logo-width:                    164px;

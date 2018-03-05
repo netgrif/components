@@ -3048,7 +3048,7 @@ span.highlight {
 
 .background-auth {
   background-size: cover !important;
-  background: url("../../../assets/dark-blue/netgrif_background.png"); }
+  background: url("../../../assets/dark-blue/high-tatras.jpg"); }
 
 .background-default {
   background-size: cover !important;
@@ -5694,6 +5694,324 @@ md-expansion-panel.highlight md-progress-circular path {
 .base .border-radius-bottom-right-default {
   border-bottom-right-radius: 2px; }
 
+.base .color-fg-success {
+  color: #4CAF50; }
+
+.base .color-fg-warning {
+  color: #FFC107; }
+
+.base .color-fg-error {
+  color: #F44336; }
+
+.base .color-fg-transparent {
+  color: transparent; }
+
+.base .color-fg-green-500 {
+  color: #4caf50; }
+
+.base .color-fg-teal-500 {
+  color: #009688; }
+
+.base .color-fg-light-blue-A700 {
+  color: #0091EA; }
+
+.base .color-fg-deep-purple-600 {
+  color: #5E35B1; }
+
+.base .color-fg-amber-500 {
+  color: #FFC107; }
+
+.base .color-fg-deep-orange-500 {
+  color: #FF5722; }
+
+.base .color-fg-red-500 {
+  color: #f44336; }
+
+.base .color-fg-brown-500 {
+  color: #795548; }
+
+.base .color-fg-material-grey-text {
+  color: rgba(0, 0, 0, 0.54); }
+
+.base .color-fg-blue-grey-100 {
+  color: #CFD8DC; }
+
+.base .color-fg-black-op-20 {
+  color: rgba(0, 0, 0, 0.2); }
+
+.base .color-fg-black-op-30 {
+  color: rgba(0, 0, 0, 0.3); }
+
+.base .color-fg-black-op-40 {
+  color: rgba(0, 0, 0, 0.4); }
+
+.base .color-fg-black-op-50 {
+  color: rgba(0, 0, 0, 0.5); }
+
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54); }
+
+.base .color-fg-black-op-60 {
+  color: rgba(0, 0, 0, 0.6); }
+
+.base .color-fg-black-op-87 {
+  color: rgba(0, 0, 0, 0.87) !important; }
+
+.base .color-fg-primary-op-30 {
+  color: rgba(18, 178, 210, 0.3); }
+
+.base .color-fg-primary-op-40 {
+  color: rgba(18, 178, 210, 0.4); }
+
+.base .color-fg-primary-op-50 {
+  color: rgba(18, 178, 210, 0.5); }
+
+.base .color-fg-primary-op-60 {
+  color: rgba(18, 178, 210, 0.6); }
+
+.base .color-fg-primary-op-87 {
+  color: rgba(18, 178, 210, 0.87) !important; }
+
+.base .color-fg-primary-50 {
+  color: #e3f6fa; }
+
+.base .color-fg-primary-100 {
+  color: #b8e8f2; }
+
+.base .color-fg-primary-200 {
+  color: #89d9e9; }
+
+.base .color-fg-primary-300 {
+  color: #59c9e0; }
+
+.base .color-fg-primary-400 {
+  color: #36bed9; }
+
+.base .color-fg-primary-500 {
+  color: #12b2d2; }
+
+.base .color-fg-primary-600 {
+  color: #10abcd; }
+
+.base .color-fg-primary-700 {
+  color: #0da2c7; }
+
+.base .color-fg-primary-800 {
+  color: #0a99c1; }
+
+.base .color-fg-primary-900 {
+  color: #058ab6; }
+
+.base .color-fg-primary-A100 {
+  color: #e0f6ff; }
+
+.base .color-fg-primary-A200 {
+  color: #ade8ff; }
+
+.base .color-fg-primary-A400 {
+  color: #7adaff; }
+
+.base .color-fg-primary-A700 {
+  color: #60d2ff; }
+
+.base .color-fg-accent-50 {
+  color: #FAFAFA !important; }
+
+.base .color-fg-accent-100 {
+  color: #F5F5F5; }
+
+.base .color-fg-accent-200 {
+  color: #EEEEEE; }
+
+.base .color-fg-accent-300 {
+  color: #E0E0E0; }
+
+.base .color-fg-accent-400 {
+  color: #BDBDBD; }
+
+.base .color-fg-accent-500 {
+  color: #9E9E9E; }
+
+.base .color-fg-accent-600 {
+  color: #757575; }
+
+.base .color-fg-accent-700 {
+  color: #616161; }
+
+.base .color-fg-accent-800 {
+  color: #424242; }
+
+.base .color-fg-accent-900 {
+  color: #212121; }
+
+.base .color-bg-success {
+  background-color: #4CAF50; }
+
+.base .color-bg-warning {
+  background-color: #FFC107; }
+
+.base .color-bg-error {
+  background-color: #F44336; }
+
+.base .color-bg-transparent {
+  background-color: transparent; }
+
+.base .color-bg-color-green-500 {
+  background-color: #4caf50; }
+
+.base .color-bg-teal-500 {
+  background-color: #009688; }
+
+.base .color-bg-light-blue-A700 {
+  background-color: #0091EA; }
+
+.base .color-bg-deep-purple-600 {
+  background-color: #5E35B1; }
+
+.base .color-bg-amber-500 {
+  background-color: #FFC107; }
+
+.base .color-bg-deep-orange-500 {
+  background-color: #FF5722; }
+
+.base .color-bg-red-500 {
+  background-color: #f44336; }
+
+.base .color-bg-brown {
+  background-color: #795548; }
+
+.base .color-bg-material-grey-text {
+  background-color: rgba(0, 0, 0, 0.54); }
+
+.base .color-bg-blue-grey-100 {
+  background-color: #CFD8DC; }
+
+.base .color-bg-black-op-20 {
+  background-color: rgba(0, 0, 0, 0.2); }
+
+.base .color-bg-black-op-30 {
+  background-color: rgba(0, 0, 0, 0.3); }
+
+.base .color-bg-black-op-40 {
+  background-color: rgba(0, 0, 0, 0.4); }
+
+.base .color-bg-black-op-50 {
+  background-color: rgba(0, 0, 0, 0.5); }
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54); }
+
+.base .color-bg-black-op-60 {
+  background-color: rgba(0, 0, 0, 0.6); }
+
+.base .color-bg-black-op-87 {
+  background-color: rgba(0, 0, 0, 0.87) !important; }
+
+.base .color-bg-primary-op-30 {
+  background-color: rgba(18, 178, 210, 0.3); }
+
+.base .color-bg-primary-op-40 {
+  background-color: rgba(18, 178, 210, 0.4); }
+
+.base .color-bg-primary-op-50 {
+  background-color: rgba(18, 178, 210, 0.5); }
+
+.base .color-bg-primary-op-60 {
+  background-color: rgba(18, 178, 210, 0.6); }
+
+.base .color-bg-primary-op-87 {
+  background-color: rgba(18, 178, 210, 0.87) !important; }
+
+.base .color-bg-primary-50 {
+  background-color: #e3f6fa; }
+
+.base .color-bg-primary-100 {
+  background-color: #b8e8f2; }
+
+.base .color-bg-primary-200 {
+  background-color: #89d9e9; }
+
+.base .color-bg-primary-300 {
+  background-color: #59c9e0; }
+
+.base .color-bg-primary-400 {
+  background-color: #36bed9; }
+
+.base .color-bg-primary-500 {
+  background-color: #12b2d2 !important; }
+
+.base .color-bg-primary-600 {
+  background-color: #10abcd; }
+
+.base .color-bg-primary-700 {
+  background-color: #0da2c7; }
+
+.base .color-bg-primary-800 {
+  background-color: #0a99c1; }
+
+.base .color-bg-primary-900 {
+  background-color: #058ab6; }
+
+.base .color-bg-primary-A100 {
+  background-color: #e0f6ff; }
+
+.base .color-bg-primary-A200 {
+  background-color: #ade8ff; }
+
+.base .color-bg-primary-A400 {
+  background-color: #7adaff; }
+
+.base .color-bg-primary-A700 {
+  background-color: #60d2ff; }
+
+.base .color-bg-accent-50 {
+  background-color: #FAFAFA; }
+
+.base .color-bg-accent-100 {
+  background-color: #F5F5F5; }
+
+.base .color-bg-accent-200 {
+  background-color: #EEEEEE; }
+
+.base .color-bg-accent-300 {
+  background-color: #E0E0E0; }
+
+.base .color-bg-accent-400 {
+  background-color: #BDBDBD; }
+
+.base .color-bg-accent-500 {
+  background-color: #9E9E9E; }
+
+.base .color-bg-accent-600 {
+  background-color: #757575; }
+
+.base .color-bg-accent-700 {
+  background-color: #616161; }
+
+.base .color-bg-accent-800 {
+  background-color: #424242; }
+
+.base .color-bg-accent-900 {
+  background-color: #212121; }
+
+.base .color-border-transparent {
+  border-color: transparent !important; }
+
+.base .color-border-primary-op-30 {
+  border-color: rgba(18, 178, 210, 0.3) !important; }
+
+.base .color-border-primary-op-40 {
+  border-color: rgba(18, 178, 210, 0.4) !important; }
+
+.base .color-border-primary-op-50 {
+  border-color: rgba(18, 178, 210, 0.5) !important; }
+
+.base .color-border-primary-op-60 {
+  border-color: rgba(18, 178, 210, 0.6) !important; }
+
+.base .color-border-primary-op-87 {
+  border-color: rgba(18, 178, 210, 0.87) !important; }
+
 .base .toolbar {
   height: 56px;
   min-height: 56px;
@@ -5701,8 +6019,8 @@ md-expansion-panel.highlight md-progress-circular path {
   .base .toolbar-logo {
     height: 100%; }
     .base .toolbar-logo img {
-      height: 100%;
-      width: auto; }
+      height: auto;
+      width: 164px; }
   .base .toolbar .material-icons {
     color: #FAFAFA; }
   .base .toolbar-btn {

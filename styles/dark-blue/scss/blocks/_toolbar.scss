@@ -1,5 +1,6 @@
 @import '../colors';
 @import '../dims';
+@import '../constants';
 
 .toolbar {
     height: $dim-56px;
@@ -10,8 +11,8 @@
         height: 100%;
 
         img {
-            height: 100%;
-            width: auto;
+            height: $logo-height;
+            width: $logo-width;
         }
     }
 
