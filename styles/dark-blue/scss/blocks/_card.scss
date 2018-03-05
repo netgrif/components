@@ -5,7 +5,7 @@
 .card {
     margin: 0;
     color: $color-card-text;
-    background-color: $color-card-background;
+    background-color: $color-card-bg;
     box-shadow: $shadow;
     border-radius: $border-radius;
 
@@ -20,6 +20,13 @@
 
         .material-icons {
             color: $color-card-text;
+        }
+    }
+
+    md-menu {
+
+        .material-icons {
+            color: $color-card-icon;
         }
     }
 
@@ -61,10 +68,10 @@
         cursor: pointer;
 
         &:hover {
-            background-color: $color-primary-500;
+            background-color: $color-card-case-bg-hover;
 
             span, md-icon, .material-icons.color-fg-primary-500 {
-                color: $color-grey-50;
+                color: $color-card-case-text-hover;
             }
         }
     }

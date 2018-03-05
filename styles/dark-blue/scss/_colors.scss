@@ -59,6 +59,8 @@ $color-brown-500:				#795548;
 $color-blue-grey-100:			#CFD8DC;
 $color-dark-teal-grey-500:		#37474F;
 $color-dark-teal-grey-800:		#1a2b2b;
+// Material text
+$color-material-grey-text:		rgba(0, 0, 0, .54);
 
 // Template specific colors
 $color-dark-teal-grey-50:		#E7E9EA;
@@ -73,30 +75,57 @@ $color-dark-teal-grey-800:		#232F36;
 $color-dark-teal-grey-900:		#162026;
 
 // Background
-$color-background:				$color-blue-grey-100;
+$color-background:				rgb(146, 170, 180);
+
+// Text
+$color-text:					$color-material-grey-text; // TODO 5.3.2018 not used yet
 
 // Toolbar
 $color-toolbar:					$color-dark-teal-grey-500;
+$color-toolbar-icon:			$color-grey-50;
 
 // Sidenav
-$color-sidenav:					$color-dark-teal-grey-900;
-
-// Material text
-$color-material-grey-text:		rgba(0, 0, 0, .38); // TODO 19.1.2018 Refactor Material text color
+$color-sidenav-bg:				$color-dark-teal-grey-900;
+$color-sidenav-bg-hover:		$color-primary-500;
+$color-sidenav-text:			$color-grey-50;
+$color-sidenav-active-bg:		$color-grey-50;
+$color-sidenav-active-text:		$color-primary-500;
 
 // Divider
 $color-divider:					#E1E1E1;
 
 // Template specific variables
+// Tabs
+$color-tabs-text:				$color-grey-50;
+$color-tabs-bg:					transparent;
+$color-tabs-ink-bar:			black;
+
 // Card
-$color-card-background:         $color-dark-teal-grey-500;
+$color-card-bg:         		$color-dark-teal-grey-500;
 $color-card-text:               $color-grey-50;
+$color-card-icon:				$color-grey-50;
+// card header
+$color-card-header-bg:			$color-dark-teal-grey-600;
+$color-card-header-text:		$color-grey-50;
+// card case
+$color-card-case-bg-hover:		$color-primary-500;
+$color-card-case-text-hover:	$color-grey-50;
 
 // Expanded panel
-$color-ep-header-bg:            $color-dark-teal-grey-600;
-$color-ep-content-bg:           $color-dark-teal-grey-500;
-$color-ep-border:               $color-dark-teal-grey-500;
+$color-ep-header-bg:            $color-dark-teal-grey-500;
+$color-ep-content-bg:           $color-dark-teal-grey-400;
+$color-ep-border:               $color-dark-teal-grey-400;
 $color-ep-text:                 $color-grey-50;
+
+// Inputs - except inputs in dialogs
+$color-input-label:				$color-grey-300; // Label & placeholder
+$color-input-text:				$color-grey-50;
+
+// Spinner
+$color-spinner-orbit-1:			$color-grey-200;
+$color-spinner-orbit-2:			$color-dark-teal-grey-800;
+$color-spinner-orbit-3:			$color-grey-200;
+$color-spinner-orbit-4:			$color-dark-teal-grey-800;
 
 .color {
 
