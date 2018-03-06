@@ -1,0 +1,67 @@
+@import '../colors';
+@import '../dims';
+@import '../constants';
+
+.sidenav {
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+
+    &-logo {
+        height: $dim-56px;
+
+        img {
+            height: $logo-sidenav-height;
+            width: $logo-sidenav-width;
+        }
+    }
+
+    md-content {
+        height: 100%;
+        background-color: $color-sidenav-bg;
+
+        .md-button {
+            height: 36px;
+            width: 100%;
+            text-transform: none;
+            color: $color-sidenav-text;
+            font-size: 17px;
+            margin: 0;
+            padding: $dim-default $dim-2x;
+            border-radius: 0;
+
+            &:first-child {
+                margin-top: $dim-48px;
+            }
+
+            i {
+                margin-right: $dim-default;
+            }
+
+            &:hover {
+                background-color: $color-sidenav-bg-hover;
+            }
+
+            &.active {
+                background-color: $color-sidenav-active-bg;
+                color: $color-sidenav-active-text;
+
+                &:hover {
+                    background-color: $color-sidenav-active-text;
+                    color: $color-sidenav-active-bg;
+                }
+            }
+        }
+    }
+
+    &.md-sidenav-left, md-sidenav#{&} {
+        top: $dim-56px !important; // Toolbar height
+    }
+}
+
+@include gt-sm() {
+
+    .sidenav {
+        height: 100%;
+    }
+}

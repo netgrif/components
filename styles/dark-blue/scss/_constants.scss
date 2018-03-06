@@ -1,0 +1,34 @@
+@import "colors";
+
+// Global variables
+
+// Card shadow
+$card-shadow:                   0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+$card-auth-shadow:              none;
+
+// Template specific variables
+
+// Backgrounds
+$background-app:                radial-gradient(ellipse at center, rgba(146,170,180,1) 0%, rgba(81,94,100,1) 100%);
+$background-signin:             url("../../../assets/dark-blue/high-tatras.jpg");
+
+// Tabs
+$tabs-bg:                       $color-tabs-bg;
+
+// Logo - toolbar
+$logo-toolbar-height:           auto;
+$logo-toolbar-width:            164px;
+// Logo - sidenav
+$logo-sidenav-height:           100%;
+$logo-sidenav-width:            auto;
+// Logo - auth
+$logo-auth-height:              50px;
+$logo-auth-width:               auto;
+
+// Card sign in
+$card-signin-min-height:        400px;
+$card-signin-width:             600px;
+
+// Card sign up
+$card-signup-min-height:        600px;
+$card-signup-width:             600px;

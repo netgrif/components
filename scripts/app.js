@@ -12,20 +12,41 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
          'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             $mdThemingProvider.definePalette('mainPalette', {
-                '50': '#E0F2F1',
-                '100': '#B2DFDB',
-                '200': '#80CBC4',
-                '300': '#4DB6AC',
-                '400': '#26A69A',
-                '500': '#009688',
-                '600': '#00897B',
-                '700': '#00796B',
-                '800': '#00695C',
-                '900': '#004D40',
-                'A100': '#A7FFEB',
-                'A200': '#64FFDA',
-                'A400': '#1DE9B6',
-                'A700': '#00BFA5',
+                // Default palette
+                // '50': '#E0F2F1',
+                // '100': '#B2DFDB',
+                // '200': '#80CBC4',
+                // '300': '#4DB6AC',
+                // '400': '#26A69A',
+                // '500': '#009688',
+                // '600': '#00897B',
+                // '700': '#00796B',
+                // '800': '#00695C',
+                // '900': '#004D40',
+                // 'A100': '#A7FFEB',
+                // 'A200': '#64FFDA',
+                // 'A400': '#1DE9B6',
+                // 'A700': '#00BFA5',
+                //
+                // 'contrastDefaultColor': 'light',
+                // 'contrastDarkColors': '50 100 200 A100 A200',
+                // 'contrastLightColors': undefined
+
+                // Dark-blue palette
+                '50': '#e3f6fa',
+                '100': '#b8e8f2',
+                '200': '#89d9e9',
+                '300': '#59c9e0',
+                '400': '#36bed9',
+                '500': '#12b2d2',
+                '600': '#10abcd',
+                '700': '#0da2c7',
+                '800': '#0a99c1',
+                '900': '#058ab6',
+                'A100': '#e0f6ff',
+                'A200': '#ade8ff',
+                'A400': '#7adaff',
+                'A700': '#60d2ff',
 
                 'contrastDefaultColor': 'light',
                 'contrastDarkColors': '50 100 200 A100 A200',
@@ -33,9 +54,15 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
             });
 
             $mdThemingProvider.theme('default')
+                // Default palette
+                // .primaryPalette('mainPalette')
+                // .accentPalette('grey')
+                // .warnPalette('red');
+
+                // Dark-blue palette
                 .primaryPalette('mainPalette')
                 .accentPalette('grey')
-                .warnPalette('red');
+                .warnPalette('amber');
 
 
             $routeSegmentProvider

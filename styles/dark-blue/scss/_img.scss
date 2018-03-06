@@ -1,0 +1,30 @@
+@import 'mixins';
+
+.img {
+
+    &-responsive {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+}
+
+// Responsive
+@include xs() {
+
+    .logo {
+        height: 40px;
+        width: 36px;
+    }
+}
+@include sm() {
+
+    .logo {
+        height: 40px;
+        width: 36px;
+    }
+}
