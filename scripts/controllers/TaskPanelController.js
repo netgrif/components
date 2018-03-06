@@ -1,5 +1,5 @@
-define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, Task, DataField) {
+define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (jQuery, angular, Task, DataField) {
         angular.module('ngMain').controller('TaskPanelController',
             ['$log', '$scope', '$http', '$snackbar', '$user', '$dialog', '$fileUpload', '$timeout', '$mdExpansionPanel', 'resource', 'links', 'tab', 'config', '$i18n',
                 function ($log, $scope, $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanel, resource, links, tab, config, $i18n) {
@@ -46,6 +46,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     self.click = clickOnTaskHeader;
                     self.expand = expandTaskPanel;
                     self.collapse = collapseTaskPanel;
+                    self.focusNext = focusNearestRequiredField;
 
                     /*--- Shortcut Methods --*/
                     self.getData = () => self.dataGroups.reduce((data, group) => data.concat(group.data), []);
@@ -202,19 +203,25 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     function finishTask(callChainObject = {}) {
                         if (self.dataSize <= 0) {
                             self.load({
-                                default: () => {
-                                    if (self.dataSize <= 0 || self.validate()) {
-                                        sendFinishTaskRequest(callChainObject);
-                                        self.collapse();
-                                    }
+                                default: {
+                                    run: () => {
+                                        if (self.dataSize <= 0 || self.validate()) {
+                                            sendFinishTaskRequest(callChainObject);
+                                            self.collapse();
+                                        }
+                                    },
+                                    args: []
                                 }
                             });
                         } else {
                             if (self.validate()) {
                                 self.save({
-                                    success: () => {
-                                        sendFinishTaskRequest(callChainObject);
-                                        self.collapse();
+                                    success: {
+                                        run: () => {
+                                            sendFinishTaskRequest(callChainObject);
+                                            self.collapse();
+                                        },
+                                        args: []
                                     }
                                 });
                             }
@@ -288,6 +295,9 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
 
                         const fields = {};
                         const taskData = self.getData();
+                        if(jQuery.isEmptyObject(callChainObject)){
+                            callChainObject = self.dataFocusPolicyCallChain;
+                        }
                         taskData.forEach(field => {
                             if (field.changed) {
                                 const change = field.save();
@@ -373,8 +383,40 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                         }, PANEL_ANIMATION_DURATION);
                     }
 
+                    function focusNearestRequiredField(callChainObject = {}) {
+                        // const taskElement = $("#task-"+this.stringId);
+                        // taskElement.focus();
+                        // taskElement.blur();
+                        //window.focus();
+                        //window.blur();
+
+                        const movedToNext = self.getData().some(data => {
+                            if (data.behavior.required && data.newValue && data.element && data.element.is(":focus"))
+                                data.element.blur();
+
+                            if (data.behavior.required && !data.newValue &&
+                                data.type !== 'boolean' &&
+                                data.type !== 'file' &&
+                                data.type !== 'user' &&
+                                data.element) {
+
+                                if(data.type === 'text' || data.type === 'number'){
+                                    data.element.click();
+                                    data.element.focus();
+                                }
+                                else {
+                                    // data.element.focus();
+                                    data.element.click();
+                                }
+
+                                return true;
+                            }
+                        });
+                        resolveCallChainObject(callChainObject, movedToNext);
+                    }
+
                     function buildAssignPolicyCallChain() {
-                        chain = {};
+                        const chain = {};
                         switch (self.assignPolicy) {
                             case self.ASSIGN_POLICY.manual:
                                 chain.success = {
@@ -382,7 +424,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                                     args: [{
                                         success: {
                                             run: self.expand,
-                                            args: []
+                                            args: [self.dataFocusPolicyCallChain]
                                         }
                                     }]
                                 };
@@ -406,7 +448,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                                                 args: [{
                                                     success: {
                                                         run: self.expand,
-                                                        args: []
+                                                        args: [self.dataFocusPolicyCallChain]
                                                     }
                                                 }]
                                             }
@@ -442,11 +484,30 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                         return chain;
                     }
 
+                    function buildDataFocusPolicyCallChain() {
+                        const chain = {};
+                        switch (self.dataFocusPolicy) {
+                            case self.DATA_FOCUS_POLICY.manual:
+                                break;
+                            case self.DATA_FOCUS_POLICY.autoRequired:
+                                chain.success = {
+                                    run: self.focusNext,
+                                    args: []
+                                };
+                                break;
+                            default:
+                                break;
+                        }
+
+                        return chain;
+                    }
+
 
                     /*-- Init --*/
                     $scope.disableNestedClick = preventEventDefault;
                     self.update(resource, links);
                     self.tab.addTaskController(self);
+                    self.dataFocusPolicyCallChain = buildDataFocusPolicyCallChain();
                     self.assignPolicyCallChain = buildAssignPolicyCallChain();
                 }]);
 
