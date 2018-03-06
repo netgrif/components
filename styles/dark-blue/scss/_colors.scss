@@ -1,18 +1,18 @@
 // Primary color - Custom blue
-$color-primary-50: 				#e3f6fa;
-$color-primary-100: 			#b8e8f2;
-$color-primary-200: 			#89d9e9;
-$color-primary-300: 			#59c9e0;
-$color-primary-400: 			#36bed9;
-$color-primary-500: 			#12b2d2;
-$color-primary-600: 			#10abcd;
-$color-primary-700: 			#0da2c7;
-$color-primary-800: 			#0a99c1;
-$color-primary-900: 			#058ab6;
-$color-primary-A100: 			#e0f6ff;
-$color-primary-A200: 			#ade8ff;
-$color-primary-A400: 			#7adaff;
-$color-primary-A700: 			#60d2ff;
+$color-primary-50: 				#E0E9F7;
+$color-primary-100: 			#B3C8EA;
+$color-primary-200: 			#80A3DD;
+$color-primary-300: 			#4D7ECF;
+$color-primary-400: 			#2663C4;
+$color-primary-500: 			#4D7ECF;
+$color-primary-600: 			#0040B3;
+$color-primary-700: 			#0037AB;
+$color-primary-800: 			#002FA3;
+$color-primary-900: 			#002094;
+$color-primary-A100: 			#BFC8FF;
+$color-primary-A200: 			#8C9CFF;
+$color-primary-A400: 			#5971FF;
+$color-primary-A700: 			#405BFF;
 
 // Accent color - Grey = Grey color
 $color-grey-50: 				#FAFAFA;
@@ -34,11 +34,11 @@ $color-black-op-50:				rgba(0, 0, 0, .50);
 $color-black-op-54:				rgba(0, 0, 0, .54);
 $color-black-op-60:				rgba(0, 0, 0, .60);
 $color-black-op-87:				rgba(0, 0, 0, .87);
-$color-primary-op-30:			rgba(18, 178, 210, .30);
-$color-primary-op-40:			rgba(18, 178, 210, .40);
-$color-primary-op-50:			rgba(18, 178, 210, .50);
-$color-primary-op-60:			rgba(18, 178, 210, .60);
-$color-primary-op-87:			rgba(18, 178, 210, .87);
+$color-primary-op-30:			rgba(77, 126, 207, .30);
+$color-primary-op-40:			rgba(77, 126, 207, .40);
+$color-primary-op-50:			rgba(77, 126, 207, .50);
+$color-primary-op-60:			rgba(77, 126, 207, .60);
+$color-primary-op-87:			rgba(77, 126, 207, .87);
 
 // System
 $color-success:					#4CAF50;
@@ -63,16 +63,18 @@ $color-dark-teal-grey-800:		#1a2b2b;
 $color-material-grey-text:		rgba(0, 0, 0, .54);
 
 // Template specific colors
-$color-dark-teal-grey-50:		#E7E9EA;
-$color-dark-teal-grey-100:		#C3C8CA;
-$color-dark-teal-grey-200:		#9BA3A7;
-$color-dark-teal-grey-300:		#737E84;
-$color-dark-teal-grey-400:		#556369;
-// 500 already in default palette
-$color-dark-teal-grey-600:		#314048;
-$color-dark-teal-grey-700:		#2A373F;
-$color-dark-teal-grey-800:		#232F36;
-$color-dark-teal-grey-900:		#162026;
+$color-dark-grey-300:			#3A4C54;
+$color-dark-grey-500:			#2D404A;
+$color-dark-grey-700:			#293740;
+$color-dark-grey-800:			#262C32;
+
+// Auth
+$color-auth-icon:				$color-primary-600;
+$color-auth-btn-bg:				$color-primary-600;
+$color-auth-btn-text:			$color-grey-50;
+$color-auth-btn-bg-hover:		$color-grey-50;
+$color-auth-btn-text-hover:		$color-primary-600;
+$color-auth-href-text:			$color-grey-800;
 
 // Background
 $color-background-app:			rgb(146, 170, 180);
@@ -83,32 +85,32 @@ $color-text:					$color-material-grey-text; // TODO 5.3.2018 not used yet
 // Toolbar
 $color-toolbar-icon:			$color-grey-50;
 // Main Toolbar
-$color-toolbar:					$color-dark-teal-grey-500;
+$color-toolbar-bg:				$color-dark-grey-800;
 $color-toolbar-btn-text:		$color-grey-50;
 $color-toolbar-btn-icon:		$color-primary-500;
 $color-toolbar-btn-bg-focus:	rgba(238, 238, 238, 0.1);
 
 // Sidenav
-$color-sidenav-bg:				$color-dark-teal-grey-900;
-$color-sidenav-bg-hover:		$color-primary-500;
-$color-sidenav-text:			$color-grey-50;
-$color-sidenav-active-bg:		$color-grey-50;
-$color-sidenav-active-text:		$color-primary-500;
+$color-sidenav-bg:				$color-dark-grey-700;
+$color-sidenav-bg-hover:		$color-primary-600;
+$color-sidenav-text:			$color-grey-200;
+$color-sidenav-active-bg:		$color-primary-600;
+$color-sidenav-active-text:		$color-grey-50;
 
 // Divider
 $color-divider:					#E1E1E1;
 
 // Tabs
 $color-tabs-text:				$color-grey-50;
-$color-tabs-bg:					transparent;
-$color-tabs-ink-bar:			black;
+$color-tabs-bg:					$color-dark-grey-500;
+$color-tabs-ink-bar:			$color-primary-500;
 
 // Card
-$color-card-bg:         		$color-dark-teal-grey-500;
+$color-card-bg:         		$color-dark-grey-500;
 $color-card-text:               $color-grey-50;
 $color-card-icon:				$color-grey-50;
 // Card header
-$color-card-header-bg:			$color-dark-teal-grey-800;
+$color-card-header-bg:			$color-dark-grey-700;
 $color-card-header-text:		$color-grey-50;
 // Card case
 $color-card-case-bg-hover:		$color-primary-500;
@@ -117,9 +119,9 @@ $color-card-case-text-hover:	$color-grey-50;
 $color-card-auth-bg:			transparent;
 
 // Expanded panel
-$color-ep-header-bg:            $color-dark-teal-grey-500;
-$color-ep-content-bg:           $color-dark-teal-grey-400;
-$color-ep-border:               $color-dark-teal-grey-400;
+$color-ep-header-bg:            $color-dark-grey-500;
+$color-ep-content-bg:           $color-dark-grey-300;
+$color-ep-border:               $color-dark-grey-300;
 $color-ep-text:                 $color-grey-50;
 
 // Inputs - except inputs in dialogs
