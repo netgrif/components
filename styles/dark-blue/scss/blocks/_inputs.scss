@@ -57,6 +57,10 @@ md-dialog {
         md-select-value {
             color: $color-input-text;
         }
+
+        md-select.md-default-theme:not([disabled]):focus .md-select-value, md-select:not([disabled]):focus .md-select-value {
+            color: $color-input-text;
+        }
     }
 
     .md-datepicker-calendar-pane {

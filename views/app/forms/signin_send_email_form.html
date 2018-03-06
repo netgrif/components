@@ -1,8 +1,8 @@
 <!-- TODO 15.2.2018 Submit user self registration form -->
-<form ng-submit="loginCtrl.selfSignUp()">
+<form ng-submit="loginCtrl.selfSignUp()" class="form-self-registration">
 
     <md-input-container class="md-block">
-        <md-icon class="material-icons color-fg-accent-500">email</md-icon>
+        <md-icon class="material-icons">email</md-icon>
         <input ng-model="loginCtrl.signupUser.email" type="text" placeholder="{{::$i18n.page.signIn.email}}" ng-required="true">
     </md-input-container>
 
@@ -12,7 +12,7 @@
             <md-icon class="material-icons">arrow_back</md-icon>
         </md-button>
 
-        <md-button type="submit" md-colors="{background: 'primary-500'}" class="margin-left-0">
+        <md-button type="submit" class="margin-left-0 form-btn-submit">
             {{::$i18n.page.signIn.signUp}}
         </md-button>
 
