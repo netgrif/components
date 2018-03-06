@@ -71,7 +71,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         if (this.tasks.length > 0) {
             this.removeAll();
         }
-        this.load(false);
+        this.load(false, true);
     };
 
     TaskTab.prototype.removeAll = function () {
@@ -79,8 +79,8 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.tasks.splice(0, this.tasks.length);
     };
 
-    TaskTab.prototype.buildRequest = function (next) {
-        const url = next && this.page.next ? this.page.next : this.baseUrl + "?sort=priority";
+    TaskTab.prototype.buildRequest = function (next, all) {
+        const url = next && this.page.next ? this.page.next : this.baseUrl + "?sort=priority" + (all ? "&size="+this.tasks.length : "");
         return {
             method: "POST",
             url: url,
@@ -88,14 +88,14 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         };
     };
 
-    TaskTab.prototype.load = function (next) {
+    TaskTab.prototype.load = function (next, force) {
         if (this.loading || !this.baseUrl) return;
         if (next && this.tasks && this.page.totalElements === this.tasks.length) return;
-        if (!next && this.tasks.length > 0) return;
+        if (!next && !force && this.tasks.length > 0) return;
 
         const self = this;
         this.loading = true;
-        const requestConfig = this.buildRequest(next);
+        const requestConfig = this.buildRequest(next, force);
         this.$http(requestConfig).then(function (response) {
             self.page = response.page;
             if (self.page.totalElements === 0) {

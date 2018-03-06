@@ -10,6 +10,16 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     const STATUS_ASSIGNED = "Assigned";
                     const STATUS_NEW = "New";
 
+                    /*--- Enumeration ---*/
+                    self.ASSIGN_POLICY = {
+                        manual: "MANUAL",
+                        auto: "AUTO"
+                    };
+                    self.DATA_FOCUS_POLICY = {
+                        manual: "MANUAL",
+                        autoRequired: "AUTO_EMPTY_REQUIRED"
+                    };
+
                     /*--- Variables ---*/
                     self.links = links;
                     self.tab = tab;
@@ -44,15 +54,30 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                         self.tab.reload();
                         self.tab.reloadUseCase();
                     };
+                    self.nextChain = (callChain = {}) => resolveCallChainObject(callChain, true);
 
                     /*--- Methods implementation --*/
-                    function callCallbackWithResult(callbackObj = {}, operationResult) {
-                        if (operationResult && callbackObj.success)
-                            callbackObj.success();
-                        else if (!operationResult && callbackObj.failure)
-                            callbackObj.failure();
-                        else if (callbackObj.default)
-                            callbackObj.default();
+                    function resolveCallChainObject(callChain = {}, result) {
+                        const resolveBranch = branch => {
+                            const executeChainBlock = block => {
+                                if (block.run && block.args) {
+                                    const that = block.self ? block.self : self;
+                                    block.run.apply(that, block.args);
+                                }
+                            };
+
+                            if (branch instanceof Array)
+                                branch.forEach(block => executeChainBlock(block));
+                            else if (branch instanceof Object)
+                                executeChainBlock(branch);
+                        };
+
+                        if (result && callChain.success)
+                            resolveBranch(callChain.success);
+                        else if (!result && callChain.failure)
+                            resolveBranch(callChain.failure);
+                        else if (callChain.default)
+                            resolveBranch(callChain.default);
                     }
 
                     function resolveStatus() {
@@ -96,47 +121,50 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                         }
                     }
 
-                    function assignTask(callback = {}) {
+                    function assignTask(callChainObject = {}) {
                         if (self.user) {
-                            callCallbackWithResult(callback, false);
+                            resolveCallChainObject(callChainObject, true);
                             return;
                         }
+                        self.loading = true;
                         $http.get(self.links.assign.href).then(response => {
+                            self.loading = false;
                             if (response.success)
-                                callCallbackWithResult(callback, true);
+                                resolveCallChainObject(callChainObject, true);
                             else if (response.error) {
                                 $snackbar.error(response.error);
-                                callCallbackWithResult(callback, false);
+                                resolveCallChainObject(callChainObject, false);
                             }
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.assigningTask} ${self.title} ${$i18n.block.snackbar.failed}`);
                             $log.debug(error);
-                            callCallbackWithResult(callback, false);
+                            self.loading = false;
+                            resolveCallChainObject(callChainObject, false);
                         });
                     }
 
-                    function delegateTask(callback = {}) {
+                    function delegateTask(callChainObject = {}) {
                         $dialog.showByTemplate('assign_user', self, {task: Object.assign(self, {fieldRoles: Object.keys(self.roles)})})
                             .then(user => {
                                 if (!user)
                                     return;
                                 $http.post(self.links.delegate.href, user.email).then(response => {
                                     if (response.success) {
-                                        callCallbackWithResult(callback, true);
+                                        resolveCallChainObject(callChainObject, true);
                                     } else if (response.error) {
                                         $snackbar.error(response.error);
-                                        callCallbackWithResult(callback, false);
+                                        resolveCallChainObject(callChainObject, false);
                                     }
                                 }, () => {
                                     $snackbar.error(`${$i18n.block.snackbar.delegatingTask} ${self.title} ${$i18n.block.snackbar.failed}`);
-                                    callCallbackWithResult(callback, false);
+                                    resolveCallChainObject(callChainObject, false);
                                 });
                             }, angular.noop);
                     }
 
-                    function cancelTask(callback = {}) {
+                    function cancelTask(callChainObject = {}) {
                         if (!self.user || self.user.email !== $user.login) {
-                            callCallbackWithResult(callback, false);
+                            resolveCallChainObject(callChainObject, false);
                             return;
                         }
                         $http.get(self.links.cancel.href).then(response => {
@@ -146,37 +174,37 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                                 self.finishDate = undefined;
                                 self.formatedStartDate = undefined;
                                 self.formatedFinishDate = undefined;
-                                callCallbackWithResult(callback, true);
+                                resolveCallChainObject(callChainObject, true);
                             } else if (response.error) {
                                 $snackbar.error(response.error);
-                                callCallbackWithResult(callback, false);
+                                resolveCallChainObject(callChainObject, false);
                             }
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.cancelingAssignmentOfTask} ${self.title} ${$i18n.block.snackbar.failed}`);
-                            callCallbackWithResult(callback, false);
+                            resolveCallChainObject(callChainObject, false);
                         });
                     }
 
-                    function sendFinishTaskRequest(callback = {}) {
+                    function sendFinishTaskRequest(callChainObject = {}) {
                         $http.get(links.finish.href).then(response => {
                             if (response.success) {
-                                callCallbackWithResult(callback, true);
+                                resolveCallChainObject(callChainObject, true);
                             } else if (response.error) {
                                 $snackbar.error(response.error);
-                                callCallbackWithResult(callback, false);
+                                resolveCallChainObject(callChainObject, false);
                             }
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.finishingTask} ${self.title} ${$i18n.block.snackbar.failed}`);
-                            callCallbackWithResult(callback, false);
+                            resolveCallChainObject(callChainObject, false);
                         });
                     }
 
-                    function finishTask(callback = {}) {
+                    function finishTask(callChainObject = {}) {
                         if (self.dataSize <= 0) {
                             self.load({
                                 default: () => {
                                     if (self.dataSize <= 0 || self.validate()) {
-                                        sendFinishTaskRequest(callback);
+                                        sendFinishTaskRequest(callChainObject);
                                         self.collapse();
                                     }
                                 }
@@ -185,7 +213,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                             if (self.validate()) {
                                 self.save({
                                     success: () => {
-                                        sendFinishTaskRequest(callback);
+                                        sendFinishTaskRequest(callChainObject);
                                         self.collapse();
                                     }
                                 });
@@ -193,9 +221,9 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                         }
                     }
 
-                    function loadTaskData(callback = {}) {
+                    function loadTaskData(callChainObject = {}) {
                         if (self.dataSize > 0) {
-                            callCallbackWithResult(callback, true);
+                            resolveCallChainObject(callChainObject, true);
                             return;
                         }
                         self.loading = true;
@@ -222,24 +250,24 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                                                 group.data.sort((a, b) => a.order - b.order);
                                             });
                                             self.loading = false;
-                                            callCallbackWithResult(callback, true);
+                                            resolveCallChainObject(callChainObject, true);
                                         }
                                     } else {
                                         $log.info(`No data for task ${self.title}`);
                                         self.loading = false;
-                                        callCallbackWithResult(callback, true);
+                                        resolveCallChainObject(callChainObject, true);
                                     }
                                 });
                             }, () => {
                                 $log.info(`No data group for task ${self.title}`);
                                 self.loading = false;
-                                callCallbackWithResult(callback, true);
+                                resolveCallChainObject(callChainObject, true);
                             });
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.dataFor} ${self.title} ${$i18n.block.snackbar.failedToLoad}`);
                             $log.debug(error);
                             self.loading = false;
-                            callCallbackWithResult(callback, false);
+                            resolveCallChainObject(callChainObject, false);
                         });
                     }
 
@@ -254,7 +282,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                         return valid;
                     }
 
-                    function saveTaskData(callback = {}) {
+                    function saveTaskData(callChainObject = {}) {
                         if (self.dataSize <= 0)
                             return;
 
@@ -268,7 +296,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                             }
                         });
                         if (Object.keys(fields).length === 0) {
-                            callCallbackWithResult(callback, true);
+                            resolveCallChainObject(callChainObject, true);
                             return;
                         }
 
@@ -276,11 +304,11 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                             self.tab.updateTasksData(response.changedFields);
                             Object.keys(fields).forEach(id => taskData.find(f => f.stringId === id).changed = false);
                             $snackbar.success($i18n.block.snackbar.dataSavedSuccessfully);
-                            callCallbackWithResult(callback, true);
+                            resolveCallChainObject(callChainObject, true);
                         }, error => {
                             $snackbar.error($i18n.block.snackbar.savingDataFailed);
                             $log.debug(error);
-                            callCallbackWithResult(callback, false);
+                            resolveCallChainObject(callChainObject, false);
                         });
                     }
 
@@ -320,34 +348,98 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                             preventEventDefault(event);
                             return;
                         }
-                        self.expanded ? self.collapse() : self.expand();
+                        // self.expanded ? self.collapse() : self.expand();
+                        resolveCallChainObject(self.assignPolicyCallChain, !self.expanded);
                         preventEventDefault(event);
                     }
 
-                    function expandTaskPanel(before = angular.noop, after = angular.noop) {
-                        before();
-                        self.load({
-                            success: () => {
-                                self.animating = true;
-                                self.panel.expand();
-                                self.expanded = true;
-                                $timeout(() => {
-                                    self.animating = false;
-                                    after();
-                                }, PANEL_ANIMATION_DURATION);
-                            }
-                        });
+                    function expandTaskPanel(callChainObject = {}) {
+                        self.animating = true;
+                        self.panel.expand();
+                        self.expanded = true;
+                        $timeout(() => {
+                            self.animating = false;
+                            resolveCallChainObject(callChainObject, true)
+                        }, PANEL_ANIMATION_DURATION);
                     }
 
-                    function collapseTaskPanel(before = angular.noop, after = angular.noop) {
-                        before();
+                    function collapseTaskPanel(callChainObject = {}) {
                         self.animating = true;
                         self.panel.collapse();
                         self.expanded = false;
                         $timeout(() => {
                             self.animating = false;
-                            after();
+                            resolveCallChainObject(callChainObject, true);
                         }, PANEL_ANIMATION_DURATION);
+                    }
+
+                    function buildAssignPolicyCallChain() {
+                        chain = {};
+                        switch (self.assignPolicy) {
+                            case self.ASSIGN_POLICY.manual:
+                                chain.success = {
+                                    run: self.load,
+                                    args: [{
+                                        success: {
+                                            run: self.expand,
+                                            args: []
+                                        }
+                                    }]
+                                };
+                                chain.failure = {
+                                    run: self.collapse,
+                                    args: []
+                                };
+                                break;
+                            case self.ASSIGN_POLICY.auto:
+                                chain.success = {
+                                    run: self.assign,
+                                    args: [{
+                                        success: [
+                                            {
+                                                run: self.tab.load,
+                                                self: self.tab,
+                                                args: [false, true]
+                                            },
+                                            {
+                                                run: self.load,
+                                                args: [{
+                                                    success: {
+                                                        run: self.expand,
+                                                        args: []
+                                                    }
+                                                }]
+                                            }
+                                        ]
+                                    }]
+                                };
+                                chain.failure = {
+                                    run: self.cancel,
+                                    args: [{
+                                        success: [
+                                            {
+                                                run: self.tab.load,
+                                                self: self.tab,
+                                                args: [false, true]
+                                            },
+                                            {
+                                                run: self.nextChain,
+                                                args: [{
+                                                    default: {
+                                                        run: self.collapse,
+                                                        args: []
+                                                    }
+                                                }]
+                                            }
+                                        ]
+                                    }]
+                                };
+                                break;
+                            default:
+                                break;
+                        }
+
+                        return chain;
                     }
 
 
@@ -355,6 +447,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     $scope.disableNestedClick = preventEventDefault;
                     self.update(resource, links);
                     self.tab.addTaskController(self);
+                    self.assignPolicyCallChain = buildAssignPolicyCallChain();
                 }]);
 
     });
