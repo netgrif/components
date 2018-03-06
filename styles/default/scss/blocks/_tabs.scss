@@ -1,4 +1,23 @@
+@import '../colors';
 @import '../mixins';
+
+md-tabs {
+
+	.md-tab {
+
+		&:not(.md-active) {
+			color: $color-tabs-text !important;
+
+			md-icon {
+				color: $color-tabs-text !important;
+			}
+		}
+	}
+}
+
+md-tabs.md-active md-ink-bar, md-tabs md-ink-bar {
+	background-color: $color-tabs-ink-bar !important;
+}
 
 md-tabs.tabs {
 

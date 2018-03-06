@@ -37,8 +37,8 @@
     }
 
     &-signin {
-        min-height: 400px;
-        width: 600px;
+        min-height: $card-signin-min-height;
+        width: $card-signin-width;
         background-color: $color-card-auth-bg;
         box-shadow: $card-auth-shadow;
 
@@ -57,8 +57,8 @@
     }
 
     &-signup {
-        min-height: 600px;
-        width: 600px;
+        min-height: $card-signup-min-height;
+        width: $card-signup-width;
         background-color: $color-card-auth-bg;
         box-shadow: $card-auth-shadow;
 
@@ -102,15 +102,6 @@
             img {
                 max-height: 80px;
             }
-        }
-    }
-}
-@include gt-sm() {
-
-    .card {
-
-        &-logo {
-            width: 190px;
         }
     }
 }

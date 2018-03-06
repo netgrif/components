@@ -9,6 +9,13 @@
 md-expansion-panel {
     cursor: pointer !important;
     box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24) !important;
+    //box-shadow: 0 0 0 #e5e5e5, 0 0 2px #e5e5e5, 0 2px 4px #e5e5e5 !important;
+
+    md-expansion-panel-header .md-expansion-panel-header-container, md-expansion-panel-footer .md-expansion-panel-footer-container {
+        background-color: $color-ep-header-bg !important;
+        border-color: $color-ep-border !important;
+        color: $color-ep-text;
+    }
 
     .md-expansion-panel-header-container, .md-expansion-panel-footer-container {
         top: auto !important;
@@ -17,12 +24,25 @@ md-expansion-panel {
     md-expansion-panel-collapsed {
         padding-left: $dim-2x !important;
         padding-right: $dim-2x !important;
+        background-color: $color-ep-header-bg !important;
+
+        span {
+            color: $color-ep-text !important;
+        }
+
+        md-menu {
+
+            .material-icons {
+                color: $color-ep-text;
+            }
+        }
     }
 
     md-expansion-panel-content {
         padding-left: $dim-2x !important;
         padding-right: $dim-2x !important;
-        background-color: $color-grey-50 !important;
+        background-color: $color-ep-content-bg !important;
+        color: $color-ep-text;
     }
 
     md-expansion-panel-header {

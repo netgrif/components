@@ -4944,10 +4944,6 @@ md-expansion-panel.highlight md-progress-circular path {
     .base .card-login img, .base .card-signup img {
       max-height: 80px; } }
 
-@media all and (min-width: 960px) {
-  .base .card-logo {
-    width: 190px; } }
-
 .base .color-fg-success {
   color: #4CAF50; }
 
@@ -5812,8 +5808,8 @@ md-expansion-panel.highlight md-progress-circular path {
         background-color: #0040B3;
         color: #FAFAFA; }
         .base .sidenav md-content .md-button.active:hover {
-          background-color: #FAFAFA;
-          color: #0040B3; }
+          background-color: #0040B3;
+          color: #EEEEEE; }
   .base .sidenav.md-sidenav-left, .base .sidenav md-sidenav.base .sidenav {
     top: 56px !important; }
 
@@ -6654,31 +6650,34 @@ md-expansion-panel.highlight md-progress-circular path {
 .base .color-border-primary-op-87 {
   border-color: rgba(77, 126, 207, 0.87) !important; }
 
-.base .toolbar {
+.base .main-toolbar {
   height: 56px;
   min-height: 56px;
   background-color: #262C32; }
-  .base .toolbar-logo {
+  .base .main-toolbar md-icon {
+    color: #FAFAFA !important;
+    fill: #FAFAFA !important; }
+  .base .main-toolbar-logo {
     height: 100%; }
-    .base .toolbar-logo img {
+    .base .main-toolbar-logo img {
       height: auto;
       width: 164px; }
-  .base .toolbar .material-icons {
+  .base .main-toolbar .material-icons {
     color: #FAFAFA; }
-  .base .toolbar-btn {
+  .base .main-toolbar-btn {
     height: 100%;
     margin: 0;
     padding-top: 4px;
     padding-bottom: 4px;
     font-size: 20px;
     text-transform: none; }
-    .base .toolbar-btn span {
+    .base .main-toolbar-btn span {
       color: #FAFAFA !important; }
-    .base .toolbar-btn .material-icons {
+    .base .main-toolbar-btn .material-icons {
       font-size: 48px;
       margin-left: 16px;
       color: #4D7ECF; }
-  .base .toolbar md-menu-bar.md-default-theme md-menu.md-open > button, .base .toolbar md-menu-bar md-menu.md-open > button, .base .toolbar md-menu-bar.md-default-theme md-menu > button:focus, .base .toolbar md-menu-bar md-menu > button:focus {
+  .base .main-toolbar md-menu-bar.md-default-theme md-menu.md-open > button, .base .main-toolbar md-menu-bar md-menu.md-open > button, .base .main-toolbar md-menu-bar.md-default-theme md-menu > button:focus, .base .main-toolbar md-menu-bar md-menu > button:focus {
     background: rgba(238, 238, 238, 0.1) !important; }
 
 .base .color-fg-success {

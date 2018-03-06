@@ -1,5 +1,6 @@
 @import '../colors';
 @import '../dims';
+@import '../constants';
 
 .sidenav {
     width: 180px;
@@ -10,20 +11,20 @@
         height: $dim-56px;
 
         img {
-            height: 100%;
-            width: auto;
+            height: $logo-sidenav-height;
+            width: $logo-sidenav-width;
         }
     }
 
     md-content {
         height: 100%;
-        background-color: $color-sidenav;
+        background-color: $color-sidenav-bg;
 
         .md-button {
             height: 36px;
             width: 100%;
             text-transform: none;
-            color: white;
+            color: $color-sidenav-text;
             font-size: 17px;
             margin: 0;
             padding: $dim-default $dim-2x;
@@ -38,16 +39,16 @@
             }
 
             &:hover {
-                background-color: $color-primary-500;
+                background-color: $color-sidenav-bg-hover;
             }
 
             &.active {
-                background-color: $color-grey-200;
-                color: $color-primary-500;
+                background-color: $color-sidenav-active-bg;
+                color: $color-sidenav-active-text;
 
                 &:hover {
-                    background-color: $color-primary-500;
-                    color: white;
+                    background-color: $color-sidenav-bg-hover;
+                    color: $color-sidenav-text;
                 }
             }
         }

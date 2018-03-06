@@ -1,0 +1,31 @@
+@import '../colors';
+
+.form {
+
+    &-signin, &-signup, &-self-registration {
+
+        md-input-container {
+
+            .material-icons {
+                color: $color-auth-icon;
+            }
+        }
+    }
+
+    &-href {
+        color: $color-auth-href-text !important;
+    }
+
+    &-btn {
+
+        &-submit {
+            color: $color-auth-btn-text;
+            background-color: $color-auth-btn-bg;
+
+            &:hover {
+                color: $color-auth-btn-text-hover;
+                background-color: $color-auth-btn-bg-hover;
+            }
+        }
+    }
+}
