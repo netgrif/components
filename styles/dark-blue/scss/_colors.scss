@@ -75,14 +75,18 @@ $color-dark-teal-grey-800:		#232F36;
 $color-dark-teal-grey-900:		#162026;
 
 // Background
-$color-background:				rgb(146, 170, 180);
+$color-background-app:			rgb(146, 170, 180);
 
 // Text
 $color-text:					$color-material-grey-text; // TODO 5.3.2018 not used yet
 
 // Toolbar
-$color-toolbar:					$color-dark-teal-grey-500;
 $color-toolbar-icon:			$color-grey-50;
+// Main Toolbar
+$color-toolbar:					$color-dark-teal-grey-500;
+$color-toolbar-btn-text:		$color-grey-50;
+$color-toolbar-btn-icon:		$color-primary-500;
+$color-toolbar-btn-bg-focus:	rgba(238, 238, 238, 0.1);
 
 // Sidenav
 $color-sidenav-bg:				$color-dark-teal-grey-900;
@@ -94,7 +98,6 @@ $color-sidenav-active-text:		$color-primary-500;
 // Divider
 $color-divider:					#E1E1E1;
 
-// Template specific variables
 // Tabs
 $color-tabs-text:				$color-grey-50;
 $color-tabs-bg:					transparent;
@@ -104,12 +107,14 @@ $color-tabs-ink-bar:			black;
 $color-card-bg:         		$color-dark-teal-grey-500;
 $color-card-text:               $color-grey-50;
 $color-card-icon:				$color-grey-50;
-// card header
-$color-card-header-bg:			$color-dark-teal-grey-600;
+// Card header
+$color-card-header-bg:			$color-dark-teal-grey-800;
 $color-card-header-text:		$color-grey-50;
-// card case
+// Card case
 $color-card-case-bg-hover:		$color-primary-500;
 $color-card-case-text-hover:	$color-grey-50;
+// Card auth (sign in & sign up)
+$color-card-auth-bg:			transparent;
 
 // Expanded panel
 $color-ep-header-bg:            $color-dark-teal-grey-500;

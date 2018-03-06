@@ -1,5 +1,6 @@
 @import '../colors';
 @import '../dims';
+@import '../constants';
 
 .sidenav {
     width: 180px;
@@ -10,8 +11,8 @@
         height: $dim-56px;
 
         img {
-            height: 100%;
-            width: auto;
+            height: $logo-sidenav-height;
+            width: $logo-sidenav-width;
         }
     }
 

@@ -1664,10 +1664,6 @@
 .color-border-primary-op-87 {
   border-color: rgba(18, 178, 210, 0.87) !important; }
 
-.shadow {
-  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12); }
-
 .stop-scrolling {
   height: 100%;
   overflow: hidden; }
@@ -3057,7 +3053,7 @@ span.highlight {
   background: radial-gradient(ellipse at center, #92aab4 0%, #515e64 100%); }
 
 .background-tabs md-tabs-wrapper {
-  background-color: transparent; }
+  background: transparent; }
 
 .color-fg-success {
   color: #4CAF50; }
@@ -4568,42 +4564,370 @@ md-expansion-panel.highlight md-progress-circular path {
 .base .border-radius-bottom-right-default {
   border-bottom-right-radius: 2px; }
 
-.base .card, .base .card-no-shadow {
+.base .color-fg-success {
+  color: #4CAF50; }
+
+.base .color-fg-warning {
+  color: #FFC107; }
+
+.base .color-fg-error {
+  color: #F44336; }
+
+.base .color-fg-transparent {
+  color: transparent; }
+
+.base .color-fg-green-500 {
+  color: #4caf50; }
+
+.base .color-fg-teal-500 {
+  color: #009688; }
+
+.base .color-fg-light-blue-A700 {
+  color: #0091EA; }
+
+.base .color-fg-deep-purple-600 {
+  color: #5E35B1; }
+
+.base .color-fg-amber-500 {
+  color: #FFC107; }
+
+.base .color-fg-deep-orange-500 {
+  color: #FF5722; }
+
+.base .color-fg-red-500 {
+  color: #f44336; }
+
+.base .color-fg-brown-500 {
+  color: #795548; }
+
+.base .color-fg-material-grey-text {
+  color: rgba(0, 0, 0, 0.54); }
+
+.base .color-fg-blue-grey-100 {
+  color: #CFD8DC; }
+
+.base .color-fg-black-op-20 {
+  color: rgba(0, 0, 0, 0.2); }
+
+.base .color-fg-black-op-30 {
+  color: rgba(0, 0, 0, 0.3); }
+
+.base .color-fg-black-op-40 {
+  color: rgba(0, 0, 0, 0.4); }
+
+.base .color-fg-black-op-50 {
+  color: rgba(0, 0, 0, 0.5); }
+
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54); }
+
+.base .color-fg-black-op-60 {
+  color: rgba(0, 0, 0, 0.6); }
+
+.base .color-fg-black-op-87 {
+  color: rgba(0, 0, 0, 0.87) !important; }
+
+.base .color-fg-primary-op-30 {
+  color: rgba(18, 178, 210, 0.3); }
+
+.base .color-fg-primary-op-40 {
+  color: rgba(18, 178, 210, 0.4); }
+
+.base .color-fg-primary-op-50 {
+  color: rgba(18, 178, 210, 0.5); }
+
+.base .color-fg-primary-op-60 {
+  color: rgba(18, 178, 210, 0.6); }
+
+.base .color-fg-primary-op-87 {
+  color: rgba(18, 178, 210, 0.87) !important; }
+
+.base .color-fg-primary-50 {
+  color: #e3f6fa; }
+
+.base .color-fg-primary-100 {
+  color: #b8e8f2; }
+
+.base .color-fg-primary-200 {
+  color: #89d9e9; }
+
+.base .color-fg-primary-300 {
+  color: #59c9e0; }
+
+.base .color-fg-primary-400 {
+  color: #36bed9; }
+
+.base .color-fg-primary-500 {
+  color: #12b2d2; }
+
+.base .color-fg-primary-600 {
+  color: #10abcd; }
+
+.base .color-fg-primary-700 {
+  color: #0da2c7; }
+
+.base .color-fg-primary-800 {
+  color: #0a99c1; }
+
+.base .color-fg-primary-900 {
+  color: #058ab6; }
+
+.base .color-fg-primary-A100 {
+  color: #e0f6ff; }
+
+.base .color-fg-primary-A200 {
+  color: #ade8ff; }
+
+.base .color-fg-primary-A400 {
+  color: #7adaff; }
+
+.base .color-fg-primary-A700 {
+  color: #60d2ff; }
+
+.base .color-fg-accent-50 {
+  color: #FAFAFA !important; }
+
+.base .color-fg-accent-100 {
+  color: #F5F5F5; }
+
+.base .color-fg-accent-200 {
+  color: #EEEEEE; }
+
+.base .color-fg-accent-300 {
+  color: #E0E0E0; }
+
+.base .color-fg-accent-400 {
+  color: #BDBDBD; }
+
+.base .color-fg-accent-500 {
+  color: #9E9E9E; }
+
+.base .color-fg-accent-600 {
+  color: #757575; }
+
+.base .color-fg-accent-700 {
+  color: #616161; }
+
+.base .color-fg-accent-800 {
+  color: #424242; }
+
+.base .color-fg-accent-900 {
+  color: #212121; }
+
+.base .color-bg-success {
+  background-color: #4CAF50; }
+
+.base .color-bg-warning {
+  background-color: #FFC107; }
+
+.base .color-bg-error {
+  background-color: #F44336; }
+
+.base .color-bg-transparent {
+  background-color: transparent; }
+
+.base .color-bg-color-green-500 {
+  background-color: #4caf50; }
+
+.base .color-bg-teal-500 {
+  background-color: #009688; }
+
+.base .color-bg-light-blue-A700 {
+  background-color: #0091EA; }
+
+.base .color-bg-deep-purple-600 {
+  background-color: #5E35B1; }
+
+.base .color-bg-amber-500 {
+  background-color: #FFC107; }
+
+.base .color-bg-deep-orange-500 {
+  background-color: #FF5722; }
+
+.base .color-bg-red-500 {
+  background-color: #f44336; }
+
+.base .color-bg-brown {
+  background-color: #795548; }
+
+.base .color-bg-material-grey-text {
+  background-color: rgba(0, 0, 0, 0.54); }
+
+.base .color-bg-blue-grey-100 {
+  background-color: #CFD8DC; }
+
+.base .color-bg-black-op-20 {
+  background-color: rgba(0, 0, 0, 0.2); }
+
+.base .color-bg-black-op-30 {
+  background-color: rgba(0, 0, 0, 0.3); }
+
+.base .color-bg-black-op-40 {
+  background-color: rgba(0, 0, 0, 0.4); }
+
+.base .color-bg-black-op-50 {
+  background-color: rgba(0, 0, 0, 0.5); }
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54); }
+
+.base .color-bg-black-op-60 {
+  background-color: rgba(0, 0, 0, 0.6); }
+
+.base .color-bg-black-op-87 {
+  background-color: rgba(0, 0, 0, 0.87) !important; }
+
+.base .color-bg-primary-op-30 {
+  background-color: rgba(18, 178, 210, 0.3); }
+
+.base .color-bg-primary-op-40 {
+  background-color: rgba(18, 178, 210, 0.4); }
+
+.base .color-bg-primary-op-50 {
+  background-color: rgba(18, 178, 210, 0.5); }
+
+.base .color-bg-primary-op-60 {
+  background-color: rgba(18, 178, 210, 0.6); }
+
+.base .color-bg-primary-op-87 {
+  background-color: rgba(18, 178, 210, 0.87) !important; }
+
+.base .color-bg-primary-50 {
+  background-color: #e3f6fa; }
+
+.base .color-bg-primary-100 {
+  background-color: #b8e8f2; }
+
+.base .color-bg-primary-200 {
+  background-color: #89d9e9; }
+
+.base .color-bg-primary-300 {
+  background-color: #59c9e0; }
+
+.base .color-bg-primary-400 {
+  background-color: #36bed9; }
+
+.base .color-bg-primary-500 {
+  background-color: #12b2d2 !important; }
+
+.base .color-bg-primary-600 {
+  background-color: #10abcd; }
+
+.base .color-bg-primary-700 {
+  background-color: #0da2c7; }
+
+.base .color-bg-primary-800 {
+  background-color: #0a99c1; }
+
+.base .color-bg-primary-900 {
+  background-color: #058ab6; }
+
+.base .color-bg-primary-A100 {
+  background-color: #e0f6ff; }
+
+.base .color-bg-primary-A200 {
+  background-color: #ade8ff; }
+
+.base .color-bg-primary-A400 {
+  background-color: #7adaff; }
+
+.base .color-bg-primary-A700 {
+  background-color: #60d2ff; }
+
+.base .color-bg-accent-50 {
+  background-color: #FAFAFA; }
+
+.base .color-bg-accent-100 {
+  background-color: #F5F5F5; }
+
+.base .color-bg-accent-200 {
+  background-color: #EEEEEE; }
+
+.base .color-bg-accent-300 {
+  background-color: #E0E0E0; }
+
+.base .color-bg-accent-400 {
+  background-color: #BDBDBD; }
+
+.base .color-bg-accent-500 {
+  background-color: #9E9E9E; }
+
+.base .color-bg-accent-600 {
+  background-color: #757575; }
+
+.base .color-bg-accent-700 {
+  background-color: #616161; }
+
+.base .color-bg-accent-800 {
+  background-color: #424242; }
+
+.base .color-bg-accent-900 {
+  background-color: #212121; }
+
+.base .color-border-transparent {
+  border-color: transparent !important; }
+
+.base .color-border-primary-op-30 {
+  border-color: rgba(18, 178, 210, 0.3) !important; }
+
+.base .color-border-primary-op-40 {
+  border-color: rgba(18, 178, 210, 0.4) !important; }
+
+.base .color-border-primary-op-50 {
+  border-color: rgba(18, 178, 210, 0.5) !important; }
+
+.base .color-border-primary-op-60 {
+  border-color: rgba(18, 178, 210, 0.6) !important; }
+
+.base .color-border-primary-op-87 {
+  border-color: rgba(18, 178, 210, 0.87) !important; }
+
+.base .card, .base .card-no-shadow, .base .card-header {
   margin: 0;
   color: #FAFAFA;
   background-color: #37474F;
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
   border-radius: 2px; }
-  .base .card md-card-content, .base .card-no-shadow md-card-content {
+  .base .card md-card-content, .base .card-no-shadow md-card-content, .base .card-header md-card-content {
     padding-left: 0;
     padding-right: 0; }
-  .base .card a, .base .card-no-shadow a {
+  .base .card a, .base .card-no-shadow a, .base .card-header a {
     color: #FAFAFA;
     text-decoration: none; }
-    .base .card a .material-icons, .base .card-no-shadow a .material-icons {
+    .base .card a .material-icons, .base .card-no-shadow a .material-icons, .base .card-header a .material-icons {
       color: #FAFAFA; }
-  .base .card md-menu .material-icons, .base .card-no-shadow md-menu .material-icons {
+  .base .card md-menu .material-icons, .base .card-no-shadow md-menu .material-icons, .base .card-header md-menu .material-icons {
     color: #FAFAFA; }
   .base .card-no-shadow {
     -webkit-box-shadow: none;
     box-shadow: none; }
-  .base .card-login {
+  .base .card-signin {
     min-height: 400px;
-    width: 600px; }
-    .base .card-login img {
-      max-height: 150px;
+    width: 600px;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none; }
+    .base .card-signin img {
+      height: 50px;
       width: auto; }
-    .base .card-login a {
+    .base .card-signin a {
       text-decoration: none; }
-      .base .card-login a:hover {
+      .base .card-signin a:hover {
         text-decoration: underline; }
   .base .card-signup {
+    min-height: 600px;
     width: 600px;
-    min-height: 600px; }
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none; }
     .base .card-signup img {
-      max-height: 150px;
+      height: 50px;
       width: auto; }
+  .base .card-header {
+    height: 48px;
+    color: #FAFAFA;
+    background-color: #232F36; }
   .base .card-case {
     height: 48px;
     cursor: pointer; }
@@ -5138,6 +5462,324 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .border-radius-bottom-right-default {
   border-bottom-right-radius: 2px; }
+
+.base .color-fg-success {
+  color: #4CAF50; }
+
+.base .color-fg-warning {
+  color: #FFC107; }
+
+.base .color-fg-error {
+  color: #F44336; }
+
+.base .color-fg-transparent {
+  color: transparent; }
+
+.base .color-fg-green-500 {
+  color: #4caf50; }
+
+.base .color-fg-teal-500 {
+  color: #009688; }
+
+.base .color-fg-light-blue-A700 {
+  color: #0091EA; }
+
+.base .color-fg-deep-purple-600 {
+  color: #5E35B1; }
+
+.base .color-fg-amber-500 {
+  color: #FFC107; }
+
+.base .color-fg-deep-orange-500 {
+  color: #FF5722; }
+
+.base .color-fg-red-500 {
+  color: #f44336; }
+
+.base .color-fg-brown-500 {
+  color: #795548; }
+
+.base .color-fg-material-grey-text {
+  color: rgba(0, 0, 0, 0.54); }
+
+.base .color-fg-blue-grey-100 {
+  color: #CFD8DC; }
+
+.base .color-fg-black-op-20 {
+  color: rgba(0, 0, 0, 0.2); }
+
+.base .color-fg-black-op-30 {
+  color: rgba(0, 0, 0, 0.3); }
+
+.base .color-fg-black-op-40 {
+  color: rgba(0, 0, 0, 0.4); }
+
+.base .color-fg-black-op-50 {
+  color: rgba(0, 0, 0, 0.5); }
+
+.base .color-fg-black-op-54 {
+  color: rgba(0, 0, 0, 0.54); }
+
+.base .color-fg-black-op-60 {
+  color: rgba(0, 0, 0, 0.6); }
+
+.base .color-fg-black-op-87 {
+  color: rgba(0, 0, 0, 0.87) !important; }
+
+.base .color-fg-primary-op-30 {
+  color: rgba(18, 178, 210, 0.3); }
+
+.base .color-fg-primary-op-40 {
+  color: rgba(18, 178, 210, 0.4); }
+
+.base .color-fg-primary-op-50 {
+  color: rgba(18, 178, 210, 0.5); }
+
+.base .color-fg-primary-op-60 {
+  color: rgba(18, 178, 210, 0.6); }
+
+.base .color-fg-primary-op-87 {
+  color: rgba(18, 178, 210, 0.87) !important; }
+
+.base .color-fg-primary-50 {
+  color: #e3f6fa; }
+
+.base .color-fg-primary-100 {
+  color: #b8e8f2; }
+
+.base .color-fg-primary-200 {
+  color: #89d9e9; }
+
+.base .color-fg-primary-300 {
+  color: #59c9e0; }
+
+.base .color-fg-primary-400 {
+  color: #36bed9; }
+
+.base .color-fg-primary-500 {
+  color: #12b2d2; }
+
+.base .color-fg-primary-600 {
+  color: #10abcd; }
+
+.base .color-fg-primary-700 {
+  color: #0da2c7; }
+
+.base .color-fg-primary-800 {
+  color: #0a99c1; }
+
+.base .color-fg-primary-900 {
+  color: #058ab6; }
+
+.base .color-fg-primary-A100 {
+  color: #e0f6ff; }
+
+.base .color-fg-primary-A200 {
+  color: #ade8ff; }
+
+.base .color-fg-primary-A400 {
+  color: #7adaff; }
+
+.base .color-fg-primary-A700 {
+  color: #60d2ff; }
+
+.base .color-fg-accent-50 {
+  color: #FAFAFA !important; }
+
+.base .color-fg-accent-100 {
+  color: #F5F5F5; }
+
+.base .color-fg-accent-200 {
+  color: #EEEEEE; }
+
+.base .color-fg-accent-300 {
+  color: #E0E0E0; }
+
+.base .color-fg-accent-400 {
+  color: #BDBDBD; }
+
+.base .color-fg-accent-500 {
+  color: #9E9E9E; }
+
+.base .color-fg-accent-600 {
+  color: #757575; }
+
+.base .color-fg-accent-700 {
+  color: #616161; }
+
+.base .color-fg-accent-800 {
+  color: #424242; }
+
+.base .color-fg-accent-900 {
+  color: #212121; }
+
+.base .color-bg-success {
+  background-color: #4CAF50; }
+
+.base .color-bg-warning {
+  background-color: #FFC107; }
+
+.base .color-bg-error {
+  background-color: #F44336; }
+
+.base .color-bg-transparent {
+  background-color: transparent; }
+
+.base .color-bg-color-green-500 {
+  background-color: #4caf50; }
+
+.base .color-bg-teal-500 {
+  background-color: #009688; }
+
+.base .color-bg-light-blue-A700 {
+  background-color: #0091EA; }
+
+.base .color-bg-deep-purple-600 {
+  background-color: #5E35B1; }
+
+.base .color-bg-amber-500 {
+  background-color: #FFC107; }
+
+.base .color-bg-deep-orange-500 {
+  background-color: #FF5722; }
+
+.base .color-bg-red-500 {
+  background-color: #f44336; }
+
+.base .color-bg-brown {
+  background-color: #795548; }
+
+.base .color-bg-material-grey-text {
+  background-color: rgba(0, 0, 0, 0.54); }
+
+.base .color-bg-blue-grey-100 {
+  background-color: #CFD8DC; }
+
+.base .color-bg-black-op-20 {
+  background-color: rgba(0, 0, 0, 0.2); }
+
+.base .color-bg-black-op-30 {
+  background-color: rgba(0, 0, 0, 0.3); }
+
+.base .color-bg-black-op-40 {
+  background-color: rgba(0, 0, 0, 0.4); }
+
+.base .color-bg-black-op-50 {
+  background-color: rgba(0, 0, 0, 0.5); }
+
+.base .color-bg-black-op-54 {
+  background-color: rgba(0, 0, 0, 0.54); }
+
+.base .color-bg-black-op-60 {
+  background-color: rgba(0, 0, 0, 0.6); }
+
+.base .color-bg-black-op-87 {
+  background-color: rgba(0, 0, 0, 0.87) !important; }
+
+.base .color-bg-primary-op-30 {
+  background-color: rgba(18, 178, 210, 0.3); }
+
+.base .color-bg-primary-op-40 {
+  background-color: rgba(18, 178, 210, 0.4); }
+
+.base .color-bg-primary-op-50 {
+  background-color: rgba(18, 178, 210, 0.5); }
+
+.base .color-bg-primary-op-60 {
+  background-color: rgba(18, 178, 210, 0.6); }
+
+.base .color-bg-primary-op-87 {
+  background-color: rgba(18, 178, 210, 0.87) !important; }
+
+.base .color-bg-primary-50 {
+  background-color: #e3f6fa; }
+
+.base .color-bg-primary-100 {
+  background-color: #b8e8f2; }
+
+.base .color-bg-primary-200 {
+  background-color: #89d9e9; }
+
+.base .color-bg-primary-300 {
+  background-color: #59c9e0; }
+
+.base .color-bg-primary-400 {
+  background-color: #36bed9; }
+
+.base .color-bg-primary-500 {
+  background-color: #12b2d2 !important; }
+
+.base .color-bg-primary-600 {
+  background-color: #10abcd; }
+
+.base .color-bg-primary-700 {
+  background-color: #0da2c7; }
+
+.base .color-bg-primary-800 {
+  background-color: #0a99c1; }
+
+.base .color-bg-primary-900 {
+  background-color: #058ab6; }
+
+.base .color-bg-primary-A100 {
+  background-color: #e0f6ff; }
+
+.base .color-bg-primary-A200 {
+  background-color: #ade8ff; }
+
+.base .color-bg-primary-A400 {
+  background-color: #7adaff; }
+
+.base .color-bg-primary-A700 {
+  background-color: #60d2ff; }
+
+.base .color-bg-accent-50 {
+  background-color: #FAFAFA; }
+
+.base .color-bg-accent-100 {
+  background-color: #F5F5F5; }
+
+.base .color-bg-accent-200 {
+  background-color: #EEEEEE; }
+
+.base .color-bg-accent-300 {
+  background-color: #E0E0E0; }
+
+.base .color-bg-accent-400 {
+  background-color: #BDBDBD; }
+
+.base .color-bg-accent-500 {
+  background-color: #9E9E9E; }
+
+.base .color-bg-accent-600 {
+  background-color: #757575; }
+
+.base .color-bg-accent-700 {
+  background-color: #616161; }
+
+.base .color-bg-accent-800 {
+  background-color: #424242; }
+
+.base .color-bg-accent-900 {
+  background-color: #212121; }
+
+.base .color-border-transparent {
+  border-color: transparent !important; }
+
+.base .color-border-primary-op-30 {
+  border-color: rgba(18, 178, 210, 0.3) !important; }
+
+.base .color-border-primary-op-40 {
+  border-color: rgba(18, 178, 210, 0.4) !important; }
+
+.base .color-border-primary-op-50 {
+  border-color: rgba(18, 178, 210, 0.5) !important; }
+
+.base .color-border-primary-op-60 {
+  border-color: rgba(18, 178, 210, 0.6) !important; }
+
+.base .color-border-primary-op-87 {
+  border-color: rgba(18, 178, 210, 0.87) !important; }
 
 .base .sidenav {
   width: 180px;
@@ -6026,13 +6668,16 @@ md-expansion-panel.highlight md-progress-circular path {
   .base .toolbar-btn {
     height: 100%;
     margin: 0;
-    color: #FAFAFA;
+    padding-top: 4px;
+    padding-bottom: 4px;
     font-size: 20px;
     text-transform: none; }
+    .base .toolbar-btn span {
+      color: #FAFAFA !important; }
     .base .toolbar-btn .material-icons {
-      font-size: 40px;
-      color: #12b2d2;
-      margin-left: 16px; }
+      font-size: 48px;
+      margin-left: 16px;
+      color: #12b2d2; }
   .base .toolbar md-menu-bar.md-default-theme md-menu.md-open > button, .base .toolbar md-menu-bar md-menu.md-open > button, .base .toolbar md-menu-bar.md-default-theme md-menu > button:focus, .base .toolbar md-menu-bar md-menu > button:focus {
     background: rgba(238, 238, 238, 0.1) !important; }
 
@@ -6702,31 +7347,31 @@ md-expansion-panel.highlight md-progress-circular path {
 .base md-dialog:not(.md-input-invalid).md-input-focused label {
   color: rgba(0, 0, 0, 0.87) !important; }
 
-.base .card md-input-container label.placeholder, .base .card-no-shadow md-input-container label.placeholder, .base md-expansion-panel md-input-container label.placeholder {
+.base .card md-input-container label.placeholder, .base .card-no-shadow md-input-container label.placeholder, .base .card-header md-input-container label.placeholder, .base md-expansion-panel md-input-container label.placeholder {
   color: #E0E0E0 !important; }
 
-.base .card md-input-container label, .base .card-no-shadow md-input-container label, .base md-expansion-panel md-input-container label {
+.base .card md-input-container label, .base .card-no-shadow md-input-container label, .base .card-header md-input-container label, .base md-expansion-panel md-input-container label {
   color: #E0E0E0 !important; }
 
-.base .card md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-no-shadow md-input-container:not(.md-input-invalid).md-input-focused label, .base md-expansion-panel md-input-container:not(.md-input-invalid).md-input-focused label {
+.base .card md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-no-shadow md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-header md-input-container:not(.md-input-invalid).md-input-focused label, .base md-expansion-panel md-input-container:not(.md-input-invalid).md-input-focused label {
   color: #E0E0E0 !important; }
 
-.base .card md-input-container input, .base .card-no-shadow md-input-container input, .base md-expansion-panel md-input-container input {
+.base .card md-input-container input, .base .card-no-shadow md-input-container input, .base .card-header md-input-container input, .base md-expansion-panel md-input-container input {
   color: #FAFAFA; }
 
-.base .card md-input-container textarea, .base .card-no-shadow md-input-container textarea, .base md-expansion-panel md-input-container textarea {
+.base .card md-input-container textarea, .base .card-no-shadow md-input-container textarea, .base .card-header md-input-container textarea, .base md-expansion-panel md-input-container textarea {
   color: #FAFAFA; }
 
-.base .card md-input-container md-select-value, .base .card-no-shadow md-input-container md-select-value, .base md-expansion-panel md-input-container md-select-value {
+.base .card md-input-container md-select-value, .base .card-no-shadow md-input-container md-select-value, .base .card-header md-input-container md-select-value, .base md-expansion-panel md-input-container md-select-value {
   color: #FAFAFA; }
 
-.base .card .md-datepicker-calendar-pane span, .base .card-no-shadow .md-datepicker-calendar-pane span, .base md-expansion-panel .md-datepicker-calendar-pane span {
+.base .card .md-datepicker-calendar-pane span, .base .card-no-shadow .md-datepicker-calendar-pane span, .base .card-header .md-datepicker-calendar-pane span, .base md-expansion-panel .md-datepicker-calendar-pane span {
   color: rgba(0, 0, 0, 0.87) !important; }
 
-.base .card .md-datepicker-button md-icon, .base .card-no-shadow .md-datepicker-button md-icon, .base md-expansion-panel .md-datepicker-button md-icon {
+.base .card .md-datepicker-button md-icon, .base .card-no-shadow .md-datepicker-button md-icon, .base .card-header .md-datepicker-button md-icon, .base md-expansion-panel .md-datepicker-button md-icon {
   color: #FAFAFA !important; }
 
-.base .card .md-calendar-date-selection-indicator, .base .card-no-shadow .md-calendar-date-selection-indicator, .base md-expansion-panel .md-calendar-date-selection-indicator {
+.base .card .md-calendar-date-selection-indicator, .base .card-no-shadow .md-calendar-date-selection-indicator, .base .card-header .md-calendar-date-selection-indicator, .base md-expansion-panel .md-calendar-date-selection-indicator {
   color: rgba(0, 0, 0, 0.87) !important; }
 
 .base md-input-container.md-block {
@@ -7588,18 +8233,6 @@ md-expansion-panel.highlight md-progress-circular path {
 .base md-menu span, .base md-menu-item span {
   color: rgba(0, 0, 0, 0.87) !important;
   font-weight: normal !important; }
-
-.base .icon-menu-bar .md-menu .md-button, .base .icon-menu-bar .md-menu .md-button > span, .base .icon-menu-bar .md-menu a {
-  height: 100%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  font-size: 20px;
-  color: white !important;
-  text-transform: none; }
-  .base .icon-menu-bar .md-menu .md-button .material-icons, .base .icon-menu-bar .md-menu .md-button > span .material-icons, .base .icon-menu-bar .md-menu a .material-icons {
-    font-size: 48px;
-    margin-left: 15px;
-    color: #12b2d2; }
 
 .base .icon-submenu {
   padding: 0 !important; }

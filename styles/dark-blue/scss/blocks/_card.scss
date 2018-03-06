@@ -1,12 +1,13 @@
 @import '../colors';
-@import '../mixins';
 @import '../dims';
+@import '../mixins';
+@import '../constants';
 
 .card {
     margin: 0;
     color: $color-card-text;
     background-color: $color-card-bg;
-    box-shadow: $shadow;
+    box-shadow: $card-shadow;
     border-radius: $border-radius;
 
     md-card-content {
@@ -35,13 +36,15 @@
         box-shadow: none;
     }
 
-    &-login {
+    &-signin {
         min-height: 400px;
         width: 600px;
+        background-color: $color-card-auth-bg;
+        box-shadow: $card-auth-shadow;
 
         img {
-            max-height: 150px;
-            width: auto;
+            height: $logo-auth-height;
+            width: $logo-auth-width;
         }
 
         a {
@@ -54,16 +57,23 @@
     }
 
     &-signup {
-        width: 600px;
         min-height: 600px;
+        width: 600px;
+        background-color: $color-card-auth-bg;
+        box-shadow: $card-auth-shadow;
 
         img {
-            max-height: 150px;
-            width: auto;
+            height: $logo-auth-height;
+            width: $logo-auth-width;
         }
     }
 
-    // TODO 5.3.2018 Create configurable case-header style and use in header views
+    &-header {
+        @extend .card;
+        height: $dim-48px;
+        color: $color-card-header-text;
+        background-color: $color-card-header-bg;
+    }
 
     &-case {
         height: $dim-48px;
