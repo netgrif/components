@@ -2,10 +2,15 @@
 @import '../dims';
 @import '../constants';
 
-.toolbar {
+.main-toolbar {
     height: $dim-56px;
     min-height: $dim-56px;
     background-color: $color-toolbar-bg;
+
+    md-icon {
+        color: $color-toolbar-hamburger !important;
+        fill: $color-toolbar-hamburger !important;
+    }
 
     &-logo {
         height: 100%;

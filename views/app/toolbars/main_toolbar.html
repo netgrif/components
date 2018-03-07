@@ -1,11 +1,11 @@
-<md-toolbar layout="row" layout-align="center center" md-whiteframe="5" class="toolbar">
+<md-toolbar layout="row" layout-align="center center" md-whiteframe="5" class="main-toolbar">
 
     <md-button hide-gt-sm ng-click="mainCtrl.toggleSidenav('left-nav')" class="md-icon-button">
         <md-icon class="material-icons">menu</md-icon>
     </md-button>
 
-    <a href="/" hide show-gt-sm layout-align="center center" class="toolbar-logo margin-left-2x">
-        <img src="../../assets/dark-blue/logo_premium_white.svg" alt="logo" class="padding-vertical-default">
+    <a href="/" hide show-gt-sm layout-align="center center" class="main-toolbar-logo margin-left-2x">
+        <img src="../../assets/default/netgrif_full_white.svg" alt="logo" class="padding-vertical-default">
     </a>
 
     <div hide-gt-sm>
@@ -22,7 +22,7 @@
     <md-menu-bar layout="row" layout-align="center center" class="icon-menu-bar">
         <md-menu>
 
-            <md-button layout="row" layout-align="start center" class="toolbar-btn" ng-click="$mdMenu.open($event)" md-menu-origin>
+            <md-button layout="row" layout-align="start center" class="main-toolbar-btn" ng-click="$mdMenu.open($event)" md-menu-origin>
                 <span hide-xs>{{$user.name}}</span>
                 <i class="material-icons">account_circle</i>
             </md-button>

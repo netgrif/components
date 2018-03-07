@@ -52,18 +52,18 @@
 .orbit {
 
 	&-1 {
-		@include orbit(20px, 5px, $color-dark-teal-grey-500, left, 0.7s);
+		@include orbit(20px, 5px, $color-spinner-orbit-1, left, 0.7s);
 	}
 
 	&-2 {
-		@include orbit(40px, 6px, $color-dark-teal-grey-800, right, 0.9s);
+		@include orbit(40px, 6px, $color-spinner-orbit-2, right, 0.9s);
 	}
 
 	&-3 {
-		@include orbit(60px, 5px, $color-dark-teal-grey-500, left, 0.8s);
+		@include orbit(60px, 5px, $color-spinner-orbit-3, left, 0.8s);
 	}
 
 	&-4 {
-		@include orbit(80px, 6px, $color-dark-teal-grey-800, left, 1s);
+		@include orbit(80px, 6px, $color-spinner-orbit-4, left, 1s);
 	}
 }
