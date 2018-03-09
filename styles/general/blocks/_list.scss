@@ -1,0 +1,38 @@
+//@import '../../templates/default/scss/config';
+@import '../dims';
+
+.list {
+
+    &-header {
+        height: $dim-48px;
+    }
+
+    &-item {
+        height: $dim-48px;
+
+        &-selected {
+            background-color: $color-primary-500 !important;
+            color: $color-grey-50;
+
+            .material-icons {
+                color: $color-grey-50 !important;
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &-no-pointer {
+
+            &:hover {
+                cursor: default;
+            }
+        }
+
+        // Prevent default md-list hover style
+        .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
+            background-color: transparent !important;
+        }
+    }
+}

@@ -1,0 +1,52 @@
+//@import '../../templates/default/scss/config';
+@import '../mixins';
+
+md-tabs {
+
+	.md-tab {
+
+		&:not(.md-active) {
+			color: $color-tabs-text !important;
+
+			md-icon {
+				color: $color-tabs-text !important;
+			}
+		}
+	}
+}
+
+md-tabs.md-active md-ink-bar, md-tabs md-ink-bar {
+	background-color: $color-tabs-ink-bar !important;
+}
+
+md-tabs.tabs {
+
+	&-h {
+
+		&-100 {
+
+			&-gt-xs {
+
+				@include gt-xs() {
+					height: 100%;
+
+					md-tabs-content-wrapper {
+						height: calc(100% - 64px); // toolbar 64px = height + padding
+
+						md-tab-content {
+							height: 100%;
+
+							md-content {
+								height: 100%;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+md-tabs-wrapper {
+	border: none !important;
+}

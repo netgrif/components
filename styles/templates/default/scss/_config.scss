@@ -1,0 +1,174 @@
+/*
+    Colors
+*/
+// Primary color - Custom blue
+$color-primary-50: 				#E0F2F1;
+$color-primary-100: 			#80CBC4;
+$color-primary-300: 			#B2DFDB;
+$color-primary-200: 			#4DB6AC;
+$color-primary-400: 			#26A69A;
+$color-primary-600: 			#00897B;
+$color-primary-500: 			#009688;
+$color-primary-700: 			#00796B;
+$color-primary-800: 			#00695C;
+$color-primary-900: 			#004D40;
+$color-primary-A100: 			#A7FFEB;
+$color-primary-A200: 			#64FFDA;
+$color-primary-A400: 			#1DE9B6;
+$color-primary-A700: 			#00BFA5;
+
+// Primary - opacity
+$color-primary-op-30:			rgba(0, 150, 136, .30);
+$color-primary-op-40:			rgba(0, 150, 136, .40);
+$color-primary-op-50:			rgba(0, 150, 136, .50);
+$color-primary-op-60:			rgba(0, 150, 136, .60);
+$color-primary-op-87:			rgba(0, 150, 136, .87);
+
+// Accent color - Grey = Grey color (should remain intact)
+$color-grey-50: 				#FAFAFA;
+$color-grey-100: 				#F5F5F5;
+$color-grey-200: 				#EEEEEE;
+$color-grey-300: 				#E0E0E0;
+$color-grey-400: 				#BDBDBD;
+$color-grey-500: 				#9E9E9E;
+$color-grey-600: 				#757575;
+$color-grey-700: 				#616161;
+$color-grey-800: 				#424242;
+$color-grey-900: 				#212121;
+
+// Black - opacity
+$color-black-op-20:				rgba(0, 0, 0, .20);
+$color-black-op-30:				rgba(0, 0, 0, .30);
+$color-black-op-40:				rgba(0, 0, 0, .40);
+$color-black-op-50:				rgba(0, 0, 0, .50);
+$color-black-op-54:				rgba(0, 0, 0, .54);
+$color-black-op-60:				rgba(0, 0, 0, .60);
+$color-black-op-87:				rgba(0, 0, 0, .87);
+
+// System
+$color-success:					#4CAF50;
+$color-warning:					#FFC107;
+$color-error:					#F44336;
+
+// Primary colors - other
+$color-light-blue-A700:			#0091EA;
+$color-deep-purple-600: 		#5E35B1;
+
+// Other
+$color-green-500:				#4caf50;
+$color-teal-500:				#009688;
+$color-amber-500:				#FFC107;
+$color-deep-orange-500:			#FF5722;
+$color-red-500:					#f44336;
+$color-brown-500:				#795548;
+$color-blue-grey-100:			#CFD8DC;
+$color-dark-teal-grey-500:		#37474F;
+$color-dark-teal-grey-800:		#1a2b2b;
+// Material text
+$color-material-grey-text:		rgba(0, 0, 0, .54);
+
+// Auth - Sign in & up pages
+$color-auth-icon:				$color-primary-500;
+$color-auth-btn-bg:				$color-primary-500;
+$color-auth-btn-text:			$color-grey-50;
+$color-auth-btn-bg-hover:		$color-primary-500;
+$color-auth-btn-text-hover:		$color-grey-50;
+$color-auth-href-text:			$color-grey-500;
+
+// Background
+$color-background-app:			$color-blue-grey-100;
+
+// Text
+$color-text:					$color-material-grey-text; // TODO 5.3.2018 not used yet
+
+// Toolbar
+$color-toolbar-icon:			$color-material-grey-text;
+// Main Toolbar
+$color-toolbar-bg:				$color-dark-teal-grey-500;
+$color-toolbar-btn-text:		$color-grey-50;
+$color-toolbar-hamburger:		$color-grey-50;
+$color-toolbar-btn-icon:		$color-primary-500;
+$color-toolbar-btn-bg-focus:	rgba(238, 238, 238, 0.1);
+
+// Sidenav
+$color-sidenav-bg:				$color-dark-teal-grey-800;
+$color-sidenav-bg-hover:		$color-primary-500;
+$color-sidenav-text:			$color-grey-50;
+$color-sidenav-active-bg:		$color-grey-50;
+$color-sidenav-active-text:		$color-primary-500;
+
+// Divider
+$color-divider:					#E1E1E1;
+
+// Tabs
+$color-tabs-text:				$color-material-grey-text;
+$color-tabs-bg:					transparent;
+$color-tabs-ink-bar:			black;
+
+// Card
+$color-card-bg:         		$color-grey-50;
+$color-card-text:               $color-black-op-87;
+$color-card-icon:				$color-material-grey-text;
+// Card header
+$color-card-header-bg:			$color-grey-50;
+$color-card-header-text:		$color-black-op-87;
+// Card case
+$color-card-case-bg-hover:		$color-primary-500;
+$color-card-case-text-hover:	$color-grey-50;
+// Card auth (sign in & sign up)
+$color-card-auth-bg:			$color-grey-50;
+
+// Expanded panel
+$color-ep-header-bg:            $color-grey-50;
+$color-ep-content-bg:           $color-grey-50;
+$color-ep-border:               $color-grey-200;
+$color-ep-text:                 $color-black-op-87;
+
+// Inputs - except inputs in dialogs
+$color-input-label:				$color-material-grey-text; // Label & placeholder
+$color-input-text:				$color-black-op-87;
+$color-input-text-disabled:		$color-material-grey-text;
+
+// Spinner
+$color-spinner-orbit-1:			$color-dark-teal-grey-500;
+$color-spinner-orbit-2:			$color-dark-teal-grey-800;
+$color-spinner-orbit-3:			$color-dark-teal-grey-500;
+$color-spinner-orbit-4:			$color-dark-teal-grey-800;
+
+/*
+    Shadow
+*/
+// Card shadow
+$card-shadow:                   0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+$card-auth-shadow:              $card-shadow;
+
+
+/*
+    Backgrounds
+*/
+$background-app:                $color-background-app;
+$background-signin:             url("../../../../assets/default/netgrif_background.png");
+
+// Tabs
+$tabs-bg:                       $color-tabs-bg;
+
+/*
+    Dims
+*/
+// Logo - toolbar
+$logo-toolbar-height:           100%;
+$logo-toolbar-width:            auto;
+// Logo - sidenav
+$logo-sidenav-height:           100%;
+$logo-sidenav-width:            auto;
+// Logo - auth
+$logo-auth-height:              100px;
+$logo-auth-width:               auto;
+
+// Card sign in
+$card-signin-min-height:        400px;
+$card-signin-width:             600px;
+
+// Card sign up
+$card-signup-min-height:        600px;
+$card-signup-width:             600px;

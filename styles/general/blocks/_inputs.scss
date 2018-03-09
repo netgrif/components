@@ -1,0 +1,120 @@
+//@import '../../templates/default/scss/config';
+
+md-dialog {
+
+    md-select-value {
+        color: $color-black-op-87 !important;
+    }
+
+    :not(md-expansion-panel-group) {
+
+        input, label {
+            color: $color-black-op-87 !important;
+        }
+    }
+
+    &:not(.md-input-invalid) {
+
+        &.md-input-focused {
+
+            label {
+                color: $color-black-op-87 !important;
+            }
+        }
+    }
+}
+
+.card, md-expansion-panel {
+
+    md-input-container {
+
+        label.placeholder {
+            color: $color-input-label !important;
+        }
+
+        label {
+            color: $color-input-label !important;
+        }
+
+        &:not(.md-input-invalid) {
+
+            &.md-input-focused {
+
+                label {
+                    color: $color-input-label !important;
+                }
+            }
+        }
+
+        md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder {
+            color: $color-input-label !important;
+        }
+
+        input {
+            color: $color-input-text !important;
+
+            &[disabled] {
+                color: $color-input-text-disabled !important;
+            }
+        }
+
+        textarea {
+            color: $color-input-text !important;
+
+            &[disabled] {
+                color: $color-input-text-disabled !important;
+            }
+        }
+
+        md-select-value {
+            color: $color-input-text !important;
+
+            &[disabled] {
+                color: $color-input-text-disabled !important;
+            }
+        }
+
+        md-menu {
+
+            .material-icons {
+                color: $color-input-text;
+            }
+        }
+
+        md-select.md-default-theme:not([disabled]):focus .md-select-value, md-select:not([disabled]):focus .md-select-value {
+            color: $color-input-text !important;
+        }
+    }
+
+    .md-datepicker-calendar-pane {
+
+        span {
+            color: $color-black-op-87 !important;
+        }
+
+    }
+
+    .md-datepicker-button {
+
+        md-icon {
+            color: $color-input-text !important;
+        }
+    }
+
+    .md-calendar-date-selection-indicator {
+        color: $color-black-op-87 !important;
+    }
+
+}
+
+// Default
+md-input-container.md-block {
+    height: 39px !important;
+}
+
+md-autocomplete.md-block {
+
+    md-input-container {
+        height: 39px !important;
+    }
+}
