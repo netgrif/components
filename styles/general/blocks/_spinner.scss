@@ -1,0 +1,69 @@
+//@import '../../templates/default/scss/config';
+
+@keyframes spinner-right {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes spinner-left {
+	to {
+		transform: rotate(-360deg);
+	}
+}
+
+@mixin orbit($radius, $border-width, $color, $rotation, $speed) {
+	height: $radius;
+	width: $radius;
+
+	&:before {
+		height: $radius;
+		width: $radius;
+		margin-top: - ($radius / 2);
+		margin-left: - ($radius / 2);
+	}
+
+	&:not(:required):before {
+		border-width: $border-width;
+		border-top-color: $color;
+		animation-name: spinner- + $rotation;
+		animation-duration: $speed;
+	}
+}
+
+.spinner {
+
+	&:before {
+		content: 'Loading';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+	}
+
+	&:not(:required):before {
+		content: '';
+		border-radius: 50%;
+		border: solid transparent;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+	}
+}
+
+.orbit {
+
+	&-1 {
+		@include orbit(20px, 5px, $color-spinner-orbit-1, left, 0.7s);
+	}
+
+	&-2 {
+		@include orbit(40px, 6px, $color-spinner-orbit-2, right, 0.9s);
+	}
+
+	&-3 {
+		@include orbit(60px, 5px, $color-spinner-orbit-3, left, 0.8s);
+	}
+
+	&-4 {
+		@include orbit(80px, 6px, $color-spinner-orbit-4, left, 1s);
+	}
+}

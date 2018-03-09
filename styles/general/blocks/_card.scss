@@ -1,0 +1,106 @@
+//@import '../../templates/default/scss/config';
+@import '../dims';
+@import '../mixins';
+
+.card {
+    margin: 0;
+    color: $color-card-text;
+    background-color: $color-card-bg;
+    box-shadow: $card-shadow;
+    border-radius: $border-radius;
+
+    md-card-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    a {
+        color: $color-card-text;
+        text-decoration: none;
+
+        .material-icons {
+            color: $color-card-text;
+        }
+    }
+
+    md-menu {
+
+        .material-icons {
+            color: $color-card-icon;
+        }
+    }
+
+    &-no-shadow {
+        @extend .card;
+        box-shadow: none;
+    }
+
+    &-signin {
+        min-height: $card-signin-min-height;
+        width: $card-signin-width;
+        background-color: $color-card-auth-bg;
+        box-shadow: $card-auth-shadow;
+
+        img {
+            height: $logo-auth-height;
+            width: $logo-auth-width;
+        }
+
+        a {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &-signup {
+        min-height: $card-signup-min-height;
+        width: $card-signup-width;
+        background-color: $color-card-auth-bg;
+        box-shadow: $card-auth-shadow;
+
+        img {
+            height: $logo-auth-height;
+            width: $logo-auth-width;
+        }
+    }
+
+    &-header {
+        @extend .card;
+        height: $dim-48px;
+        color: $color-card-header-text;
+        background-color: $color-card-header-bg;
+    }
+
+    &-case {
+        height: $dim-48px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-card-case-bg-hover;
+
+            span, md-icon, .material-icons.color-fg-primary-500 {
+                color: $color-card-case-text-hover;
+            }
+        }
+    }
+}
+
+// Responsive
+@include xs() {
+
+    .card {
+
+        &-signin, &-signup {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+
+            img {
+                max-height: 80px;
+            }
+        }
+    }
+}

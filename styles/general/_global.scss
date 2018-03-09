@@ -1,0 +1,91 @@
+//@import '../templates/default/scss/config';
+@import 'mixins';
+@import 'dims';
+
+// Custom global classes
+.stop-scrolling {
+	height: 100%;
+	overflow: hidden;
+}
+
+.overflow {
+
+	&-hidden {
+		overflow: hidden;
+	}
+
+	&-auto {
+		overflow: auto;
+	}
+
+	&-scroll {
+		overflow: scroll;
+	}
+
+	&-visible {
+		overflow: visible;
+	}
+
+	&-x {
+
+		&-hidden {
+			overflow-x: hidden;
+		}
+
+		&-auto {
+			overflow-x: auto;
+		}
+
+		&-scroll {
+			overflow-x: scroll;
+		}
+
+		&-visible {
+			overflow-x: visible;
+		}
+	}
+
+	&-y {
+
+		&-hidden {
+			overflow-y: hidden;
+		}
+
+		&-auto {
+			overflow-y: auto;
+		}
+
+		&-scroll {
+			overflow-y: scroll;
+		}
+
+		&-visible {
+			overflow-y: visible;
+		}
+	}
+}
+
+.cursor {
+
+	&-default {
+		cursor: default;
+	}
+
+	&-pointer {
+		cursor: pointer;
+	}
+}
+
+.visibility {
+
+	&-visible {
+		visibility: visible;
+	}
+
+	&-hidden {
+		visibility: hidden;
+	}
+}
+
+// Style scrollbars
+@include scrollbars($dim-default, $color-primary-op-50, $color-black-op-30);
