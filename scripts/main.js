@@ -18,6 +18,7 @@ requirejs.config({
         'domReady': "bower_components/requirejs/domReady",
         'i18n': "bower_components/requirejs/i18n",
         'nls': "scripts/nls",
+        'config': "scripts/config",
         'app': "scripts/app"
     },
     shim: {
@@ -42,7 +43,7 @@ requirejs.config({
     }
 });
 
-require(['domReady!','angular','i18n','app'], function (document, angular) {
+require(['domReady!', 'angular', 'config', 'i18n', 'app'], function (document, angular) {
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['app']);
     });

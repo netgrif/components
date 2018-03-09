@@ -1,86 +1,58 @@
 /*  Top level module
     map all application components
  */
-define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment', 'angularMaterialExpansionPanels','angularInView',
-     'scripts/directives/DirectivesLoader',
-     'scripts/filters/FiltersLoader',
-     'scripts/services/ServicesLoader',
-     'scripts/controllers/ControllersLoader'],
-    function (angular) {
+define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularRouteSegment', 'angularMaterialExpansionPanels','angularInView',
+         'scripts/directives/DirectivesLoader',
+         'scripts/filters/FiltersLoader',
+         'scripts/services/ServicesLoader',
+         'scripts/controllers/ControllersLoader'],
+    function (angular, config) {
         // console.log(angular.version);
         let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment','angular-inview',
-         'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
+            'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
-            $mdThemingProvider.definePalette('mainPalette', {
-                // Default palette
-                '50': '#E0F2F1',
-                '100': '#B2DFDB',
-                '200': '#80CBC4',
-                '300': '#4DB6AC',
-                '400': '#26A69A',
-                '500': '#009688',
-                '600': '#00897B',
-                '700': '#00796B',
-                '800': '#00695C',
-                '900': '#004D40',
-                'A100': '#A7FFEB',
-                'A200': '#64FFDA',
-                'A400': '#1DE9B6',
-                'A700': '#00BFA5',
 
-                'contrastDefaultColor': 'light',
-                'contrastDarkColors': '50 100 200 A100 A200',
-                'contrastLightColors': undefined
+            const theme = config.themes[config.theme];
 
-                // Dark-blue palette
-                // '50': 	        '#E0E9F7',
-                // '100': 		    '#B3C8EA',
-                // '200': 		    '#80A3DD',
-                // '300': 		    '#4D7ECF',
-                // '400': 		    '#2663C4',
-                // '500': 		    '#4D7ECF',
-                // '600': 		    '#0040B3',
-                // '700': 		    '#0037AB',
-                // '800': 		    '#002FA3',
-                // '900': 		    '#002094',
-                // 'A100': 	    '#BFC8FF',
-                // 'A200': 	    '#8C9CFF',
-                // 'A400': 	    '#5971FF',
-                // 'A700':         '#405BFF',
-                //
-                // 'contrastDefaultColor': 'light',
-                // 'contrastDarkColors': '50 100 200 A100 A200',
-                // 'contrastLightColors': undefined
-            });
+            if(theme.primary instanceof Object)
+                $mdThemingProvider.definePalette('mainPalette', theme.primary);
+            if(theme.accent instanceof Object)
+                $mdThemingProvider.definePalette('accentPalette', theme.accent);
+            if(theme.warn instanceof Object)
+                $mdThemingProvider.definePalette('warnPalette', theme.warn);
 
-            $mdThemingProvider.theme('default')
-                // Default palette
-                // .primaryPalette('mainPalette')
-                // .accentPalette('grey')
-                // .warnPalette('red');
+            const theming = $mdThemingProvider.theme('default');
+            if(typeof theme.primary === "string")
+                theming.primaryPalette(theme.primary);
+            else
+                theming.primaryPalette('mainPalette');
 
-                // Dark-blue palette
-                .primaryPalette('mainPalette')
-                .accentPalette('grey')
-                .warnPalette('amber');
+            if(typeof theme.accent === "string")
+                theming.accentPalette(theme.accent);
+            else
+                theming.accentPalette('accentPalette');
 
+            if(typeof theme.warn === "string")
+                theming.warnPalette(theme.warn);
+            else
+                theming.warnPalette('warnPalette');
 
             $routeSegmentProvider
                 .when('/', 'app')
                 .when('/login', 'login')
                 .when('/signup/:token', 'signup')
-                .when('/dashboard','app.dashboard')
+                .when('/dashboard', 'app.dashboard')
                 .when('/cases', 'app.cases')
                 .when('/console', 'app.console')
                 .when('/profile', 'app.profile')
                 .when('/tasks', 'app.tasks')
                 .when('/workflow', 'app.workflow')
 
-            .segment('app', {
-                    templateUrl: "views/app/main.html",
-                    controller: 'MainController',
-                    controllerAs: 'mainCtrl'
-                })
+                .segment('app', {
+                        templateUrl: "views/app/main.html",
+                        controller: 'MainController',
+                        controllerAs: 'mainCtrl'
+                    })
                 .within()
                 .segment('dashboard', {
                     default: true,
@@ -133,7 +105,7 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
 
             $mdDateLocaleProvider.firstDayOfWeek = 1;
             $mdDateLocaleProvider.formatDate = date => {
-                if(date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+                if(date) return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
                 else return null;
             };
 
@@ -141,11 +113,12 @@ define('app', ['angular', 'angularMaterial', 'angularHal','angularRouteSegment',
 
             //$qProvider.errorOnUnhandledRejections(false);
         });
-        app.run(function ($log, $auth, $rootScope, $i18n, $user) {
+        app.run(function ($log, $auth, $rootScope, $i18n, $user, $config) {
             $log.debug("App is running...");
             $auth.init();
             $rootScope.$i18n = $i18n;
             $rootScope.$user = $user;
+            $rootScope.$config = $config;
         });
 
         return app;
