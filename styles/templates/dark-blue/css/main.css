@@ -1148,11 +1148,13 @@ span.highlight {
 
 .background-auth {
   background-size: cover !important;
-  background: url("../../../../assets/default/netgrif_background.png"); }
+  background: url("../../../../assets/dark-blue/high-tatras.jpg"); }
 
 .background-default {
   background-size: cover !important;
-  background: #92aab4; }
+  background: -webkit-radial-gradient(center, ellipse, #92aab4 0%, #515e64 100%);
+  background: -o-radial-gradient(center, ellipse, #92aab4 0%, #515e64 100%);
+  background: radial-gradient(ellipse at center, #92aab4 0%, #515e64 100%); }
 
 .background-tabs md-tabs-wrapper {
   background: #2D404A; }
@@ -1739,7 +1741,7 @@ md-expansion-panel.highlight md-progress-circular path {
     -webkit-box-shadow: none;
     box-shadow: none; }
     .base .card-signin img {
-      height: 100px;
+      height: 50px;
       width: auto; }
     .base .card-signin a {
       text-decoration: none; }
@@ -1752,7 +1754,7 @@ md-expansion-panel.highlight md-progress-circular path {
     -webkit-box-shadow: none;
     box-shadow: none; }
     .base .card-signup img {
-      height: 100px;
+      height: 50px;
       width: auto; }
   .base .card-header {
     height: 48px;
@@ -2219,7 +2221,7 @@ md-expansion-panel.highlight md-progress-circular path {
     height: 100%; }
     .base .main-toolbar-logo img {
       height: 100%;
-      width: auto; }
+      width: 164px; }
   .base .main-toolbar .material-icons {
     color: #FAFAFA; }
   .base .main-toolbar-btn {

@@ -151,8 +151,8 @@ $card-auth-shadow:              none;
 /*
     Backgrounds
 */
-$background-app:                $color-background-app;
-$background-signin:             url("../../../../assets/default/netgrif_background.png");
+$background-app:                radial-gradient(ellipse at center, rgba(146,170,180,1) 0%, rgba(81,94,100,1) 100%);
+$background-signin:             url("../../../../assets/dark-blue/high-tatras.jpg");
 
 // Tabs
 $tabs-bg:                       $color-tabs-bg;
@@ -162,12 +162,12 @@ $tabs-bg:                       $color-tabs-bg;
 */
 // Logo - toolbar
 $logo-toolbar-height:           100%;
-$logo-toolbar-width:            auto;
+$logo-toolbar-width:            164px;
 // Logo - sidenav
 $logo-sidenav-height:           100%;
 $logo-sidenav-width:            auto;
 // Logo - auth
-$logo-auth-height:              100px;
+$logo-auth-height:              50px;
 $logo-auth-width:               auto;
 
 // Card sign in
