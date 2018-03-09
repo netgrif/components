@@ -171,6 +171,13 @@ define(['angular', '../modules/Admin'], function (angular) {
                         });
                         this.filteredRoles = this.roles.roles;
 
+                        if(this.preference === UserRolesTab.USER_PREFERENCE && this.selectedUser){
+                            const previouslySelectedUser = this.selectedUser;
+                            this.selectedUser = undefined;
+                            this.selectUser(previouslySelectedUser);
+
+                        }
+
                     }, () => {
                         $log.debug("No roles was found!");
                     });
