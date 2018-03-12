@@ -6,6 +6,13 @@
     min-height: $dim-56px;
     background-color: $color-toolbar-bg;
 
+    md-menu-bar {
+
+        md-menu {
+            margin: 0;
+        }
+    }
+
     md-icon {
         color: $color-toolbar-hamburger !important;
         fill: $color-toolbar-hamburger !important;
