@@ -24,7 +24,7 @@
             width: 100%;
             text-transform: none;
             color: $color-sidenav-text;
-            font-size: 17px;
+            font-size: $dim-2x;
             margin: 0;
             padding: $dim-default $dim-2x;
             border-radius: 0;
@@ -55,6 +55,14 @@
 
     &.md-sidenav-left, md-sidenav#{&} {
         top: $dim-56px !important; // Toolbar height
+    }
+
+    &-copyright {
+
+        span {
+            color: $color-sidenav-copyright-text;
+            font-size: $dim-12px;
+        }
     }
 }
 

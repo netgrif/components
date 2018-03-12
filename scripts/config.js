@@ -57,6 +57,9 @@ define([], function () {
             },
             mainToolbar: "../../assets/default/netgrif_full_white.svg",
             sidenav: "../../assets/default/netgrif.svg"
+        },
+        show: {
+            priority: true
         }
     };
 });

@@ -1990,7 +1990,7 @@ md-expansion-panel.highlight md-progress-circular path {
       width: 100%;
       text-transform: none;
       color: #EEEEEE;
-      font-size: 17px;
+      font-size: 16px;
       margin: 0;
       padding: 8px 16px;
       border-radius: 0; }
@@ -1999,15 +1999,18 @@ md-expansion-panel.highlight md-progress-circular path {
       .base .sidenav md-content .md-button i {
         margin-right: 8px; }
       .base .sidenav md-content .md-button:hover {
-        background-color: #0040B3; }
+        background-color: #4D7ECF; }
       .base .sidenav md-content .md-button.active {
         background-color: #FAFAFA;
-        color: #0040B3; }
+        color: #4D7ECF; }
         .base .sidenav md-content .md-button.active:hover {
-          background-color: #0040B3;
+          background-color: #4D7ECF;
           color: #EEEEEE; }
   .base .sidenav.md-sidenav-left, .base .sidenav md-sidenav.base .sidenav {
     top: 56px !important; }
+  .base .sidenav-copyright span {
+    color: #FAFAFA;
+    font-size: 12px; }
 
 @media all and (min-width: 960px) {
   .base .sidenav {
