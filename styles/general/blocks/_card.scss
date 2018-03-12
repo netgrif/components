@@ -14,6 +14,13 @@
         padding-right: 0;
     }
 
+    md-button:not(.md-primary) {
+
+        md-icon {
+            color: $color-card-icon !important;
+        }
+    }
+
     a {
         color: $color-card-text;
         text-decoration: none;

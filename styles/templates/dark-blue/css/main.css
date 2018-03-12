@@ -1724,6 +1724,8 @@ md-expansion-panel.highlight md-progress-circular path {
   .base .card md-card-content, .base .card-no-shadow md-card-content, .base .card-header md-card-content {
     padding-left: 0;
     padding-right: 0; }
+  .base .card md-button:not(.md-primary) md-icon, .base .card-no-shadow md-button:not(.md-primary) md-icon, .base .card-header md-button:not(.md-primary) md-icon {
+    color: #FAFAFA !important; }
   .base .card a, .base .card-no-shadow a, .base .card-header a {
     color: #FAFAFA;
     text-decoration: none; }
@@ -2225,7 +2227,7 @@ md-expansion-panel.highlight md-progress-circular path {
   .base .main-toolbar-logo {
     height: 100%; }
     .base .main-toolbar-logo img {
-      height: 100%;
+      height: auto;
       width: 164px; }
   .base .main-toolbar .material-icons {
     color: #FAFAFA; }
