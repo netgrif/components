@@ -2212,6 +2212,8 @@ md-expansion-panel.highlight md-progress-circular path {
   height: 56px;
   min-height: 56px;
   background-color: #37474F; }
+  .base .main-toolbar md-menu-bar md-menu {
+    margin: 0; }
   .base .main-toolbar md-icon {
     color: #FAFAFA !important;
     fill: #FAFAFA !important; }
@@ -2550,6 +2552,9 @@ md-expansion-panel.highlight md-progress-circular path {
 .base .data-field-title {
   font-size: 16px;
   font-weight: 400; }
+
+.base .data-field md-menu .md-icon-button {
+  color: rgba(0, 0, 0, 0.54); }
 
 .base .file-chooser {
   margin: 0;

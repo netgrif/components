@@ -4,7 +4,7 @@
         <md-icon class="material-icons">menu</md-icon>
     </md-button>
 
-    <a href="/" hide show-gt-sm layout-align="center center" class="main-toolbar-logo margin-left-2x">
+    <a href="/" hide show-gt-sm flex-gt-sm="30" layout-align="center center" class="main-toolbar-logo margin-left-2x">
         <img src="{{::$config.imageSrc.mainToolbar}}" alt="logo" class="padding-vertical-default">
     </a>
 
@@ -17,9 +17,11 @@
         <span ng-if="'profile' | routeSegmentContains">{{::$i18n.page.profile.this}}</span>
     </div>
 
-    <div flex></div>
+    <div flex layout="row" layout-align="center center">
+        <span hide show-gt-sm>{{::$config.appName}}</span>
+    </div>
 
-    <md-menu-bar layout="row" layout-align="center center" class="icon-menu-bar">
+    <md-menu-bar flex-gt-sm="30" layout="row" layout-align="end center" class="icon-menu-bar">
         <md-menu>
 
             <md-button layout="row" layout-align="start center" class="main-toolbar-btn" ng-click="$mdMenu.open($event)" md-menu-origin>
