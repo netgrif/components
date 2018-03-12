@@ -13,8 +13,8 @@
 
         md-menu {
 
-            .md-icon-button {
-                color: $color-text;
+            md-icon {
+                color: $color-data-file-menu-icon !important;
             }
         }
     }

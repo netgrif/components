@@ -6,13 +6,6 @@ md-dialog {
         color: $color-black-op-87 !important;
     }
 
-    :not(md-expansion-panel-group) {
-
-        input, label {
-            color: $color-black-op-87 !important;
-        }
-    }
-
     &:not(.md-input-invalid) {
 
         &.md-input-focused {

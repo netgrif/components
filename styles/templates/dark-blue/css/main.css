@@ -2266,9 +2266,6 @@ md-expansion-panel.highlight md-progress-circular path {
 .base md-dialog md-select-value {
   color: rgba(0, 0, 0, 0.87) !important; }
 
-.base md-dialog :not(md-expansion-panel-group) input, .base md-dialog :not(md-expansion-panel-group) label {
-  color: rgba(0, 0, 0, 0.87) !important; }
-
 .base md-dialog:not(.md-input-invalid).md-input-focused label {
   color: rgba(0, 0, 0, 0.87) !important; }
 
@@ -2555,8 +2552,8 @@ md-expansion-panel.highlight md-progress-circular path {
   font-size: 16px;
   font-weight: 400; }
 
-.base .data-field md-menu .md-icon-button {
-  color: rgba(0, 0, 0, 0.54); }
+.base .data-field md-menu md-icon {
+  color: #FAFAFA !important; }
 
 .base .file-chooser {
   margin: 0;
