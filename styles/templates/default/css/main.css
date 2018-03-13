@@ -1472,7 +1472,7 @@ md-expansion-panel {
     padding-right: 16px !important;
     background-color: #FAFAFA !important; }
     md-expansion-panel md-expansion-panel-collapsed span {
-      color: rgba(0, 0, 0, 0.87) !important; }
+      color: rgba(0, 0, 0, 0.87); }
     md-expansion-panel md-expansion-panel-collapsed md-menu .material-icons {
       color: rgba(0, 0, 0, 0.87); }
   md-expansion-panel md-expansion-panel-content {
@@ -1488,19 +1488,19 @@ md-expansion-panel {
     background: #009688 !important; }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover span,
     md-expansion-panel md-expansion-panel-collapsed:hover span, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover span {
-      color: #FAFAFA !important; }
+      color: rgba(0, 0, 0, 0.87) !important; }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover task-priority .material-icons,
     md-expansion-panel md-expansion-panel-collapsed:hover task-priority .material-icons, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover task-priority .material-icons {
-      color: #FAFAFA; }
+      color: rgba(0, 0, 0, 0.87); }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover .md-button .material-icons,
     md-expansion-panel md-expansion-panel-collapsed:hover .md-button .material-icons, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover .md-button .material-icons {
-      color: #FAFAFA; }
+      color: rgba(0, 0, 0, 0.87); }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500,
     md-expansion-panel md-expansion-panel-collapsed:hover .material-icons.color-fg-primary-500, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500 {
-      color: #FAFAFA; }
+      color: rgba(0, 0, 0, 0.87); }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover md-progress-circular path,
     md-expansion-panel md-expansion-panel-collapsed:hover md-progress-circular path, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover md-progress-circular path {
-      stroke: #FAFAFA !important; }
+      stroke: rgba(0, 0, 0, 0.87) !important; }
 
 md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container,
 md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container {

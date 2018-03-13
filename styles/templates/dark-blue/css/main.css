@@ -1474,7 +1474,7 @@ md-expansion-panel {
     padding-right: 16px !important;
     background-color: #2D404A !important; }
     md-expansion-panel md-expansion-panel-collapsed span {
-      color: #FAFAFA !important; }
+      color: #FAFAFA; }
     md-expansion-panel md-expansion-panel-collapsed md-menu .material-icons {
       color: #FAFAFA; }
   md-expansion-panel md-expansion-panel-content {
