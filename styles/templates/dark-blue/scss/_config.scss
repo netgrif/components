@@ -73,13 +73,19 @@ $color-dark-grey-500:			#2D404A;
 $color-dark-grey-700:			#293740;
 $color-dark-grey-800:			#262C32;
 
-// Auth - Sign in & up pages
+// Auth
 $color-auth-icon:				$color-primary-600;
-$color-auth-btn-bg:				$color-primary-600;
-$color-auth-btn-text:			$color-grey-50;
-$color-auth-btn-bg-hover:		$color-grey-50;
-$color-auth-btn-text-hover:		$color-primary-600;
-$color-auth-href-text:			$color-grey-800;
+// Sign in
+$color-signin-btn-bg:			$color-primary-600;
+$color-signin-btn-text:			$color-grey-50;
+$color-signin-btn-bg-hover:		$color-grey-50;
+$color-signin-btn-text-hover:	$color-primary-600;
+
+// Sign up
+$color-signup-btn-bg:			transparent;
+$color-signup-btn-text:			$color-primary-600;
+$color-signup-btn-bg-hover:		$color-grey-50;
+$color-signup-btn-text-hover:	$color-primary-600;
 
 // Background
 $color-background-app:			rgb(146, 170, 180);

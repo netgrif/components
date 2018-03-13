@@ -12,8 +12,8 @@
             <md-icon class="material-icons">arrow_back</md-icon>
         </md-button>
 
-        <md-button type="submit" class="margin-left-0 form-btn-submit">
-            {{::$i18n.page.signIn.signUp}}
+        <md-button type="submit" class="margin-left-0 form-btn-submit" ng-click="$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
+            {{::$i18n.block.btn.submit}}
         </md-button>
 
     </md-card-actions>

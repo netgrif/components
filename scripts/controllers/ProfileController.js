@@ -54,10 +54,6 @@ define(['angular', '../modules/Main'],
                         return inputs;
                     };
 
-                    self.fireInfoSnackbar = function (msg) {
-                        $snackbar.info(msg);
-                    };
-
                     self.loadProfile();
 
                 }]);

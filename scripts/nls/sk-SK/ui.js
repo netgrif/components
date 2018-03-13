@@ -8,7 +8,6 @@ define({
         signIn: {
             email: "Email",
             psw: "Heslo",
-            forgotPsw: "Zabudnuté heslo",
             signIn: "Prihlásiť",
             signUp: "Registrovať"
         },
@@ -17,8 +16,7 @@ define({
             psw: "Heslo",
             retypePsw: "Opakovať heslo",
             name: "Meno",
-            surname: "Priezvisko",
-            submit: "Registrovať"
+            surname: "Priezvisko"
         },
         dashboard: {
             this: "Prehľad",
@@ -199,7 +197,8 @@ define({
             cancel: "Zrušiť",
             reset: "Reset",
             search: "Hľadať",
-            apply: "Použiť"
+            apply: "Použiť",
+            submit: "Potvrdiť"
         },
         mainMenu: {
             profile: "Profil",

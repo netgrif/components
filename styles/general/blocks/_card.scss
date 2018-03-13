@@ -14,11 +14,8 @@
         padding-right: 0;
     }
 
-    md-button:not(.md-primary) {
-
-        md-icon {
-            color: $color-card-icon !important;
-        }
+    *:not(.md-primary) &-icon {
+        color: $color-card-icon !important;
     }
 
     a {
@@ -51,14 +48,6 @@
         img {
             height: $logo-auth-height;
             width: $logo-auth-width;
-        }
-
-        a {
-            text-decoration: none;
-
-            &:hover {
-                text-decoration: underline;
-            }
         }
     }
 

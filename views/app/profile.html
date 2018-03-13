@@ -139,13 +139,13 @@
 
     <div flex layout="row" layout-wrap layout-align="start center" class="card padding-2x">
 
-        <md-button class="md-primary" layout="row" layout-align="center center" ng-click="profCtrl.fireInfoSnackbar($i18n.block.snackbar.featureWillBeAvailableSoon)">
+        <md-button class="md-primary" layout="row" layout-align="center center" ng-click="$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
             <md-icon class="material-icons margin-horizontal-0 margin-right-default">mode_edit</md-icon>
             {{::$i18n.page.profile.actions.edit}}
         </md-button>
 
-        <md-button layout="row" layout-align="center center" ng-click="profCtrl.fireInfoSnackbar($i18n.block.snackbar.featureWillBeAvailableSoon)">
-            <md-icon class="material-icons margin-horizontal-0 margin-right-default">lock_open</md-icon>
+        <md-button layout="row" layout-align="center center" ng-click="$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
+            <md-icon class="material-icons card-icon margin-horizontal-0 margin-right-default">lock_open</md-icon>
             {{::$i18n.page.profile.actions.changePsw}}
         </md-button>
 

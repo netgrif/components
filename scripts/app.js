@@ -113,12 +113,13 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularRout
 
             //$qProvider.errorOnUnhandledRejections(false);
         });
-        app.run(function ($log, $auth, $rootScope, $i18n, $user, $config) {
+        app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar) {
             $log.debug("App is running...");
             $auth.init();
             $rootScope.$i18n = $i18n;
             $rootScope.$user = $user;
             $rootScope.$config = $config;
+            $rootScope.$snackbar = $snackbar;
         });
 
         return app;

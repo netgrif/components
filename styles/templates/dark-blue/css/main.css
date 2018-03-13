@@ -1724,7 +1724,7 @@ md-expansion-panel.highlight md-progress-circular path {
   .base .card md-card-content, .base .card-no-shadow md-card-content, .base .card-header md-card-content {
     padding-left: 0;
     padding-right: 0; }
-  .base .card md-button:not(.md-primary) md-icon, .base .card-no-shadow md-button:not(.md-primary) md-icon, .base .card-header md-button:not(.md-primary) md-icon {
+  *:not(.md-primary) .base .card-icon {
     color: #FAFAFA !important; }
   .base .card a, .base .card-no-shadow a, .base .card-header a {
     color: #FAFAFA;
@@ -1745,10 +1745,6 @@ md-expansion-panel.highlight md-progress-circular path {
     .base .card-signin img {
       height: 50px;
       width: auto; }
-    .base .card-signin a {
-      text-decoration: none; }
-      .base .card-signin a:hover {
-        text-decoration: underline; }
   .base .card-signup {
     min-height: 600px;
     width: 600px;
@@ -2645,12 +2641,16 @@ md-expansion-panel.highlight md-progress-circular path {
 .base .form-signin md-input-container .material-icons, .base .form-signup md-input-container .material-icons, .base .form-self-registration md-input-container .material-icons {
   color: #0040B3; }
 
-.base .form-href {
-  color: #424242 !important; }
-
 .base .form-btn-submit {
   color: #FAFAFA;
   background-color: #0040B3; }
   .base .form-btn-submit:hover {
+    color: #0040B3;
+    background-color: #FAFAFA; }
+
+.base .form-btn-signup {
+  color: #0040B3;
+  background-color: transparent; }
+  .base .form-btn-signup:hover {
     color: #0040B3;
     background-color: #FAFAFA; }

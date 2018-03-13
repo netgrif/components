@@ -12,9 +12,9 @@
 
     <md-card-actions layout="row" layout-xs="column" layout-align="space-between center">
 
-        <a flex-order-xs="1" href="#" class="text-no-decor form-href" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
+        <md-button flex-order-xs="1" href="#" class="form-btn-signup" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
             {{::$i18n.page.signIn.signUp}}
-        </a>
+        </md-button>
 
         <md-button type="submit" flex-order-xs="-1" class="form-btn-submit">
             {{::$i18n.page.signIn.signIn}}

@@ -9,7 +9,6 @@ define({
             signIn: {
                 email: "Email",
                 psw: "Password",
-                forgotPsw: "Forgot password",
                 signIn: "Sign In",
                 signUp: "Sign Up"
             },
@@ -18,8 +17,7 @@ define({
                 psw: "Password",
                 retypePsw: "Retype password",
                 name: "First Name",
-                surname: "Last Name",
-                submit: "Sign Up"
+                surname: "Last Name"
             },
             dashboard: {
                 this: "Dashboard",
@@ -200,7 +198,8 @@ define({
                 cancel: "Cancel",
                 reset: "Reset",
                 search: "Search",
-                apply: "Apply"
+                apply: "Apply",
+                submit: "Submit"
             },
             mainMenu: {
                 profile: "Profile",
