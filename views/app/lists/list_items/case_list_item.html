@@ -20,7 +20,7 @@
         {{::useCase.formatedDate}}
     </span>
 
-    <md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
+    <md-menu ng-if="$user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
         <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
             <md-icon class="material-icons">more_vert</md-icon>
         </md-button>
@@ -33,5 +33,6 @@
             </md-menu-item>
         </md-menu-content>
     </md-menu>
+    <div ng-if="!$user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20"></div>
 
 </div>
