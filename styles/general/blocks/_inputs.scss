@@ -27,6 +27,11 @@ md-dialog {
 
         label {
             color: $color-input-label !important;
+
+            &:not(.md-container-ignore).md-required:after {
+                color: $color-data-required-label !important;
+                font-size: 20px !important;
+            }
         }
 
         &:not(.md-input-invalid) {

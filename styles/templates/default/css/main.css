@@ -2273,6 +2273,9 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .card md-input-container label, .base .card-no-shadow md-input-container label, .base .card-header md-input-container label, .base md-expansion-panel md-input-container label {
   color: rgba(0, 0, 0, 0.54) !important; }
+  .base .card md-input-container label:not(.md-container-ignore).md-required:after, .base .card-no-shadow md-input-container label:not(.md-container-ignore).md-required:after, .base .card-header md-input-container label:not(.md-container-ignore).md-required:after, .base md-expansion-panel md-input-container label:not(.md-container-ignore).md-required:after {
+    color: #f44336 !important;
+    font-size: 20px !important; }
 
 .base .card md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-no-shadow md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-header md-input-container:not(.md-input-invalid).md-input-focused label, .base md-expansion-panel md-input-container:not(.md-input-invalid).md-input-focused label {
   color: rgba(0, 0, 0, 0.54) !important; }
