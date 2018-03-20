@@ -1739,18 +1739,18 @@ md-expansion-panel.highlight md-progress-circular path {
   .base .card-signin {
     min-height: 400px;
     width: 600px;
-    background-color: transparent;
-    -webkit-box-shadow: none;
-    box-shadow: none; }
+    background-color: #f6f6f6a6;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12); }
     .base .card-signin img {
       height: 50px;
       width: auto; }
   .base .card-signup {
     min-height: 600px;
     width: 600px;
-    background-color: transparent;
-    -webkit-box-shadow: none;
-    box-shadow: none; }
+    background-color: #f6f6f6a6;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12); }
     .base .card-signup img {
       height: 50px;
       width: auto; }
@@ -2275,6 +2275,9 @@ md-expansion-panel.highlight md-progress-circular path {
 
 .base .card md-input-container label, .base .card-no-shadow md-input-container label, .base .card-header md-input-container label, .base md-expansion-panel md-input-container label {
   color: #E0E0E0 !important; }
+  .base .card md-input-container label:not(.md-container-ignore).md-required:after, .base .card-no-shadow md-input-container label:not(.md-container-ignore).md-required:after, .base .card-header md-input-container label:not(.md-container-ignore).md-required:after, .base md-expansion-panel md-input-container label:not(.md-container-ignore).md-required:after {
+    color: #FFC107 !important;
+    font-size: 20px !important; }
 
 .base .card md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-no-shadow md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-header md-input-container:not(.md-input-invalid).md-input-focused label, .base md-expansion-panel md-input-container:not(.md-input-invalid).md-input-focused label {
   color: #E0E0E0 !important; }
