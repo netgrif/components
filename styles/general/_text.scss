@@ -1,34 +1,34 @@
 //@import '../templates/default/scss/config';
 @import 'mixins';
 
-h1 {
-    font-size: 32px;
-    font-weight: 300;
-    color: $color-grey-50;
-
-    strong {
-        font-weight: 700;
-        color: $color-primary-500;
-    }
-}
-
-h2 {
-    margin: 0;
-    font-size: 32px;
-    font-weight: 300;
-    color: $color-grey-50;
-
-    strong {
-        font-weight: 600;
-        color: $color-primary-500;
-    }
-}
-
-h3 {
-    margin: 0;
-    font-size: 24px;
-    font-weight: 400;
-}
+//h1 {
+//    font-size: 32px;
+//    font-weight: 300;
+//    color: $color-grey-50;
+//
+//    strong {
+//        font-weight: 700;
+//        color: $color-primary-500;
+//    }
+//}
+//
+//h2 {
+//    margin: 0;
+//    font-size: 32px;
+//    font-weight: 300;
+//    color: $color-grey-50;
+//
+//    strong {
+//        font-weight: 600;
+//        color: $color-primary-500;
+//    }
+//}
+//
+//h3 {
+//    margin: 0;
+//    font-size: 24px;
+//    font-weight: 400;
+//}
 
 span {
 
@@ -101,6 +101,6 @@ span {
 
 // Highlight class for md-autocomplete
 span.highlight {
-    color: $color-primary-500 !important;
+    color: $color-text-highlight !important;
     font-weight: 500;
 }

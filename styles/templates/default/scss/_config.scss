@@ -85,7 +85,7 @@ $color-signup-btn-text-hover:	$color-primary-500;
 $color-background-app:			$color-blue-grey-100;
 
 // Text
-$color-text:					$color-material-grey-text; // TODO 5.3.2018 not used yet
+$color-text-highlight:          $color-light-blue-A700;
 
 // Toolbar
 $color-toolbar-icon:			$color-material-grey-text;
@@ -127,6 +127,13 @@ $color-card-auth-bg:			$color-grey-50;
 
 // Expanded panel
 $color-ep-header-bg:            $color-grey-50;
+$color-ep-header-bg-hover:      $color-primary-500;
+$color-ep-header-text-hover:    $color-grey-50;
+
+$color-ep-highlight-bg:         $color-light-blue-A700;
+$color-ep-highlight-text:       $color-grey-50;
+$color-ep-highlight-user:       $color-grey-50;
+
 $color-ep-content-bg:           $color-grey-50;
 $color-ep-border:               $color-grey-200;
 $color-ep-text:                 $color-black-op-87;

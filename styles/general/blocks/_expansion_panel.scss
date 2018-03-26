@@ -56,57 +56,93 @@ md-expansion-panel {
     md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
 
         &:hover {
-            background: $color-primary-500 !important;
+            background: $color-ep-header-bg-hover !important;
 
             span {
-                color: $color-ep-text !important;
+                color: $color-ep-header-text-hover !important;
             }
 
             task-priority {
 
                 .material-icons {
-                    color: $color-ep-text;
+                    color: $color-ep-header-text-hover;
                 }
             }
 
             .md-button {
 
                 .material-icons {
-                    color: $color-ep-text;
+                    color: $color-ep-header-text-hover;
                 }
             }
 
             .material-icons.color-fg-primary-500 {
-                color: $color-ep-text;
+                color: $color-ep-header-text-hover;
             }
 
             md-progress-circular path {
-                stroke: $color-ep-text !important;
+                stroke: $color-ep-header-text-hover !important;
             }
         }
     }
 }
 
-// TODO 25.10.2017 Expansion panel highlighting is currently disabled in HTML
 md-expansion-panel {
 
     &.highlight {
 
         md-expansion-panel-expanded .md-expansion-panel-header-container,
         md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
-            background: $color-light-blue-A700 !important;
+            background: $color-ep-highlight-bg !important;
 
-            &:hover {
-                background: $color-primary-500 !important;
+            span {
+                color: $color-ep-highlight-text;
+            }
 
-                span {
-                    color: $color-grey-50;
+            md-menu {
+
+                .material-icons {
+                    color: $color-ep-highlight-text;
                 }
             }
-        }
 
-        md-progress-circular path {
-            stroke: $color-grey-50 !important;
+            .material-icons.color-fg-primary-500 {
+                color: $color-ep-highlight-user;
+            }
+
+            md-progress-circular path {
+                stroke: $color-ep-highlight-text !important;
+            }
+
+            &:hover {
+                background: $color-ep-header-bg-hover !important;
+
+                span {
+                    color: $color-ep-header-text-hover !important;
+                }
+
+                task-priority {
+
+                    .material-icons {
+                        color: $color-ep-header-text-hover;
+                    }
+                }
+
+                .md-button {
+
+                    .material-icons {
+                        color: $color-ep-header-text-hover;
+                    }
+                }
+
+                .material-icons.color-fg-primary-500 {
+                    color: $color-ep-header-text-hover;
+                }
+
+                md-progress-circular path {
+                    stroke: $color-ep-header-text-hover !important;
+                }
+            }
         }
     }
 }

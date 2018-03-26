@@ -863,28 +863,6 @@ body {
   .layout-rh-100-min-550 {
     height: 100%; } }
 
-h1 {
-  font-size: 32px;
-  font-weight: 300;
-  color: #FAFAFA; }
-  h1 strong {
-    font-weight: 700;
-    color: #009688; }
-
-h2 {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 300;
-  color: #FAFAFA; }
-  h2 strong {
-    font-weight: 600;
-    color: #009688; }
-
-h3 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 400; }
-
 span strong {
   font-weight: 600;
   color: #009688; }
@@ -928,7 +906,7 @@ span.active {
   font-weight: 600; }
 
 span.highlight {
-  color: #009688 !important;
+  color: #0091EA !important;
   font-weight: 500; }
 
 .img-responsive {
@@ -1488,32 +1466,53 @@ md-expansion-panel {
     background: #009688 !important; }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover span,
     md-expansion-panel md-expansion-panel-collapsed:hover span, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover span {
-      color: rgba(0, 0, 0, 0.87) !important; }
+      color: #FAFAFA !important; }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover task-priority .material-icons,
     md-expansion-panel md-expansion-panel-collapsed:hover task-priority .material-icons, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover task-priority .material-icons {
-      color: rgba(0, 0, 0, 0.87); }
+      color: #FAFAFA; }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover .md-button .material-icons,
     md-expansion-panel md-expansion-panel-collapsed:hover .md-button .material-icons, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover .md-button .material-icons {
-      color: rgba(0, 0, 0, 0.87); }
+      color: #FAFAFA; }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500,
     md-expansion-panel md-expansion-panel-collapsed:hover .material-icons.color-fg-primary-500, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500 {
-      color: rgba(0, 0, 0, 0.87); }
+      color: #FAFAFA; }
     md-expansion-panel md-expansion-panel-expanded .md-expansion-panel-header-container:hover md-progress-circular path,
     md-expansion-panel md-expansion-panel-collapsed:hover md-progress-circular path, md-expansion-panel md-expansion-panel .md-expansion-panel-header-container:hover md-progress-circular path {
-      stroke: rgba(0, 0, 0, 0.87) !important; }
+      stroke: #FAFAFA !important; }
 
 md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container,
 md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container {
   background: #0091EA !important; }
+  md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container span,
+  md-expansion-panel.highlight md-expansion-panel-collapsed span, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container span {
+    color: #FAFAFA; }
+  md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container md-menu .material-icons,
+  md-expansion-panel.highlight md-expansion-panel-collapsed md-menu .material-icons, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container md-menu .material-icons {
+    color: #FAFAFA; }
+  md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container .material-icons.color-fg-primary-500,
+  md-expansion-panel.highlight md-expansion-panel-collapsed .material-icons.color-fg-primary-500, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container .material-icons.color-fg-primary-500 {
+    color: #FAFAFA; }
+  md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container md-progress-circular path,
+  md-expansion-panel.highlight md-expansion-panel-collapsed md-progress-circular path, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container md-progress-circular path {
+    stroke: #FAFAFA !important; }
   md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container:hover,
   md-expansion-panel.highlight md-expansion-panel-collapsed:hover, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container:hover {
     background: #009688 !important; }
     md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container:hover span,
     md-expansion-panel.highlight md-expansion-panel-collapsed:hover span, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container:hover span {
+      color: #FAFAFA !important; }
+    md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container:hover task-priority .material-icons,
+    md-expansion-panel.highlight md-expansion-panel-collapsed:hover task-priority .material-icons, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container:hover task-priority .material-icons {
       color: #FAFAFA; }
-
-md-expansion-panel.highlight md-progress-circular path {
-  stroke: #FAFAFA !important; }
+    md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container:hover .md-button .material-icons,
+    md-expansion-panel.highlight md-expansion-panel-collapsed:hover .md-button .material-icons, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container:hover .md-button .material-icons {
+      color: #FAFAFA; }
+    md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500,
+    md-expansion-panel.highlight md-expansion-panel-collapsed:hover .material-icons.color-fg-primary-500, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container:hover .material-icons.color-fg-primary-500 {
+      color: #FAFAFA; }
+    md-expansion-panel.highlight md-expansion-panel-expanded .md-expansion-panel-header-container:hover md-progress-circular path,
+    md-expansion-panel.highlight md-expansion-panel-collapsed:hover md-progress-circular path, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container:hover md-progress-circular path {
+      stroke: #FAFAFA !important; }
 
 .base .height-48px {
   height: 48px; }
