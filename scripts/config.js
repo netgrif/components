@@ -47,6 +47,29 @@ define([], function () {
                 },
                 accent: "grey",
                 warn: "amber"
+            },
+            lightBlue: {
+                primary: {
+                    '50': '#E0E9F7',
+                    '100': '#B3C8EA',
+                    '200': '#80A3DD',
+                    '300': '#4D7ECF',
+                    '400': '#2663C4',
+                    '500': '#0047BA',
+                    '600': '#0040B3',
+                    '700': '#0037AB',
+                    '800': '#002FA3',
+                    '900': '#002094',
+                    'A100': '#BFC8FF',
+                    'A200': '#8C9CFF',
+                    'A400': '#5971FF',
+                    'A700': '#405BFF',
+                    'contrastDefaultColor': 'light',
+                    'contrastDarkColors': '50 100 200 A100 A200',
+                    'contrastLightColors': undefined
+                },
+                accent: "grey",
+                warn: "red"
             }
         },
         theme: "default",
