@@ -1,6 +1,4 @@
-<!-- TODO 26.10.2017 Temporary disabled -->
-<!--<md-expansion-panel class="{{!task.finishDate && task.tab.allowHighlight ? 'highlight':''}}">-->
-<md-expansion-panel>
+<md-expansion-panel class="{{!task.finishDate && task.tab.allowHighlight ? 'highlight':''}}">
     <md-expansion-panel-collapsed>
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="taskCtrl.click($event)">
 
@@ -80,7 +78,7 @@
             </div>
 
             <div ng-if="taskCtrl.loading" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
-                <md-progress-circular md-mode="indeterminate" md-diameter="30" class="progress-circular-stroke-primary-500"></md-progress-circular>
+                <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
             </div>
 
         </div>
