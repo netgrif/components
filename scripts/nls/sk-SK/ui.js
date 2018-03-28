@@ -139,9 +139,7 @@ define({
             process: "Proces",
             processRoles: "Procesné roly",
             thereIsNoOrgAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu organizáciu",
-            thereIsNoRoleAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu rolu",
-            configuration: "Nastavenia",
-            userSignUp: "Povoliť registráciu používateľov"
+            thereIsNoRoleAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu rolu"
         },
         profile: {
             this: "Profil",
@@ -171,6 +169,11 @@ define({
                 edit: "Upraviť",
                 changePsw: "Zmeniť heslo"
             }
+        },
+        settings: {
+            this: "Nastavenia",
+            signUp: "Registrácia",
+            enableUserSignUp: "Povoliť registráciu používateľov"
         }
     },
     block: {
@@ -201,12 +204,13 @@ define({
             submit: "Potvrdiť"
         },
         mainMenu: {
-            profile: "Profil",
             lang: {
                 this: "Jazyk",
                 en: "Anglický",
                 sk: "Slovenský"
             },
+            profile: "Profil",
+            settings: "Nastavenia",
             logout: "Odhlásiť"
         },
         case: {

@@ -140,9 +140,7 @@ define({
                 process: "Process",
                 processRoles: "Process Roles",
                 thereIsNoOrgAssignedToThisUserYet: "There is no organisation assigned to this user yet",
-                thereIsNoRoleAssignedToThisUserYet: "There is no role assigned to this user yet",
-                configuration: "Configuration",
-                userSignUp: "User sign up"
+                thereIsNoRoleAssignedToThisUserYet: "There is no role assigned to this user yet"
             },
             profile: {
                 this: "Profile",
@@ -172,6 +170,11 @@ define({
                     edit: "Edit",
                     changePsw: "Change Password"
                 }
+            },
+            settings: {
+                this: "Settings",
+                signUp: "Sign up",
+                enableUserSignUp: "Enable user sign up"
             }
         },
         block: {
@@ -202,12 +205,13 @@ define({
                 submit: "Submit"
             },
             mainMenu: {
-                profile: "Profile",
                 lang: {
                     this: "Language",
                     en: "English",
                     sk: "Slovak"
                 },
+                profile: "Profile",
+                settings: "Settings",
                 logout: "Logout"
             },
             case: {

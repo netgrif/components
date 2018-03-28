@@ -15,6 +15,7 @@
         <span ng-if="'workflow' | routeSegmentContains">{{::$i18n.page.workflow.this}}</span>
         <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)">{{::$i18n.page.console.this}}</span>
         <span ng-if="'profile' | routeSegmentContains">{{::$i18n.page.profile.this}}</span>
+        <span ng-if="'settings' | routeSegmentContains">{{::$i18n.page.settings.this}}</span>
     </div>
 
     <div flex layout="row" layout-align="center center">
@@ -66,6 +67,13 @@
                     <md-button href="/profile" class="padding-top-0">
                         <md-icon class="material-icons">account_circle</md-icon>
                         {{::$i18n.block.mainMenu.profile}}
+                    </md-button>
+                </md-menu-item>
+
+                <md-menu-item>
+                    <md-button href="/settings" class="padding-top-0">
+                        <md-icon class="material-icons">settings</md-icon>
+                        {{::$i18n.block.mainMenu.settings}}
                     </md-button>
                 </md-menu-item>
 
