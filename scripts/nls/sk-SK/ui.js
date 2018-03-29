@@ -173,7 +173,8 @@ define({
         settings: {
             this: "Nastavenia",
             signUp: "Registrácia",
-            enableUserSignUp: "Povoliť registráciu používateľov"
+            enableUserSignUp: "Povoliť registráciu používateľov",
+            model: "Model"
         }
     },
     block: {

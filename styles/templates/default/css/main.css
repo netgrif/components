@@ -863,6 +863,28 @@ body {
   .layout-rh-100-min-550 {
     height: 100%; } }
 
+h1 {
+  font-size: 32px;
+  font-weight: 300;
+  color: #FAFAFA; }
+  h1 strong {
+    font-weight: 700;
+    color: #009688; }
+
+h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 300;
+  color: #FAFAFA; }
+  h2 strong {
+    font-weight: 600;
+    color: #009688; }
+
+h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400; }
+
 span strong {
   font-weight: 600;
   color: #009688; }

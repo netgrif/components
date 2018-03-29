@@ -174,7 +174,8 @@ define({
             settings: {
                 this: "Settings",
                 signUp: "Sign up",
-                enableUserSignUp: "Enable user sign up"
+                enableUserSignUp: "Enable user sign up",
+                model: "Model"
             }
         },
         block: {
