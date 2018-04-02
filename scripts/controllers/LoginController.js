@@ -87,7 +87,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
             };
 
             self.matchPasswords = function () {
-                self.signUpError.match = self.signupUser.password === self.retypedPassword;
+                self.signUpError.match = self.signupUser.password !== self.retypedPassword;
             };
 
             self.viewLoaded();

@@ -43,7 +43,7 @@ requirejs.config({
     }
 });
 
-require(['domReady!', 'angular', 'config', 'i18n', 'app'], function (document, angular) {
+require(['domReady!','angular', 'config', 'i18n','app'], function (document, angular) {
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['app']);
     });

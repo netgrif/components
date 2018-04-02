@@ -1,26 +1,25 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab, Filter) {
         angular.module('ngCases').controller('CasesController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process) {
                     const self = this;
 
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
-                    self.caseTab = new CaseTab("Cases", this, {
+                    self.caseTab = new CaseTab("Cases", this, new Filter("Base case filter", Filter.CASE_TYPE, "{}"), {
                         $http,
                         $dialog,
                         $snackbar,
                         $user,
                         $fileUpload,
                         $timeout,
-                        $i18n
+                        $i18n,
+                        $process
                     }, {
-                        // processName: "Insurance Demo", //process name
-                        // filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET],
-                        //transitionNames: ["Nehnuteľnosť a domácnosť", "Základné informácie", "Údaje o zmluve"],
-                        //caseType: "regular"
+                        authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
+                        allowedNets: $process.nets
                     });
 
                     self.tabChanged = function () {
@@ -48,7 +47,9 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                 }, {
                                     showTransactions: true,
                                     allowHighlight: true,
-                                    searchable: false
+                                    autoOpenUnfinished: false,
+                                    searchable: false,
+                                    fullReload: false
                                 }));
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
@@ -68,14 +69,11 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         self.activeTabIndex = self.taskTabs.length;
                         $cache.remove("dashboard");
                     }
-                    if ($cache.get("create") && $cache.get("create").cases) {
-                        self.caseTab.openNewCaseDialog($i18n.page.cases.this);
-                        $cache.remove("create");
-                    }
-                    const caseCreateListener = $rootScope.$on("caseCreate", (event, type) => {
-                        if (type === "cases")
-                            self.caseTab.openNewCaseDialog($i18n.page.cases.this);
-                    });
-                    $scope.$on('$destroy', () => caseCreateListener());
+
+                    // const caseCreateListener = $rootScope.$on("caseCreate", (event, type) => {
+                    //     if (type === "cases")
+                    //         self.caseTab.openNewCaseDialog($i18n.page.cases.this);
+                    // });
+                    // $scope.$on('$destroy', () => caseCreateListener());
                 }]);
     });

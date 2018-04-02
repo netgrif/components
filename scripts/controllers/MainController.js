@@ -20,7 +20,6 @@ define(['angular', '../modules/Main', '../services/Loading', '../services/Auth']
                 $log.debug($user);
                 $style.mainView();
                 $loading.showLoading(false);
-
             };
 
             self.logout = function () {
@@ -28,8 +27,8 @@ define(['angular', '../modules/Main', '../services/Loading', '../services/Auth']
             };
 
             self.createCase = function (type) {
-                if($location.path().includes(type)){
-                    $rootScope.$emit("caseCreate",type);
+                if ($location.path().includes(type)) {
+                    $rootScope.$emit("caseCreate", type);
                 } else {
                     const o = {};
                     o[type] = true;
@@ -51,6 +50,10 @@ define(['angular', '../modules/Main', '../services/Loading', '../services/Auth']
 
             self.toggleSidenav = function (componentId) {
                 $mdSidenav(componentId).toggle();
+            };
+
+            self.closeSidenav = function (componentId) {
+                $mdSidenav(componentId).close();
             }
 
         }]);

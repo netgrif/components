@@ -38,8 +38,8 @@
             </textarea>
             <div ng-messages="field.validationErrors" ng-show="field.newValue">
                 <div ng-message="length" class="color-fg-warning">{{::$i18n.block.validation.textMustBeAtMost + " " + field.maxLength + " " + $i18n.block.word.characters + " " + $i18n.block.word.long}}</div>
-                <div ng-message="email" class="color-fg-warning">{{::$i18n.block.validation.textInEmailFormat + " ( "+field.formatting+" )"}}</div>
-                <div ng-message="telnumber" class="color-fg-warning">{{::$i18n.block.validation.textInTelFormat + " ( " + field.formatting + " )"}}</div>
+                <div ng-message="email" class="color-fg-warning">{{::$i18n.block.validation.textInEmailFormat + " ( "+field.formating+" )"}}</div>
+                <div ng-message="telnumber" class="color-fg-warning">{{::$i18n.block.validation.textInTelFormat + " ( " + field.formating + " )"}}</div>
                 <div ng-message="regex" class="color-fg-warning">{{::$i18n.block.validation.textInWrongFormat}}</div>
             </div>
         </md-input-container>

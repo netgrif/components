@@ -3,6 +3,8 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
         angular.module('ngMain').controller('TaskPanelController',
             ['$log', '$scope', '$http', '$snackbar', '$user', '$dialog', '$fileUpload', '$timeout', '$mdExpansionPanel', 'resource', 'links', 'tab', 'config', '$i18n',
                 function ($log, $scope, $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanel, resource, links, tab, config, $i18n) {
+                    //Config - fullReload, allowHighlight
+
                     /*--- Constants --*/
                     const self = this;
                     const PANEL_ANIMATION_DURATION = 300;
@@ -14,6 +16,10 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                     self.ASSIGN_POLICY = {
                         manual: "MANUAL",
                         auto: "AUTO"
+                    };
+                    self.FINISH_POLICY = {
+                        manual: "MANUAL",
+                        autoNoData: "AUTO_NO_DATA"
                     };
                     self.DATA_FOCUS_POLICY = {
                         manual: "MANUAL",
@@ -55,32 +61,34 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                         self.tab.reload();
                         self.tab.reloadUseCase();
                     };
-                    self.nextChain = (callChain = {}) => resolveCallChainObject(callChain, true);
+                    self.createReloadChain = () => {
+                        return new Chain([
+                            () => {
+                                if (self.fullReload)
+                                    self.reload();
+                                else
+                                    self.tab.load(false, true);
+                                self.tab.reloadUseCase();
+                            }
+                        ])
+                    };
 
-                    /*--- Methods implementation --*/
-                    function resolveCallChainObject(callChain = {}, result) {
-                        const resolveBranch = branch => {
-                            const executeChainBlock = block => {
-                                if (block.run && block.args) {
-                                    const that = block.self ? block.self : self;
-                                    block.run.apply(that, block.args);
-                                }
-                            };
-
-                            if (branch instanceof Array)
-                                branch.forEach(block => executeChainBlock(block));
-                            else if (branch instanceof Object)
-                                executeChainBlock(branch);
-                        };
-
-                        if (result && callChain.success)
-                            resolveBranch(callChain.success);
-                        else if (!result && callChain.failure)
-                            resolveBranch(callChain.failure);
-                        else if (callChain.default)
-                            resolveBranch(callChain.default);
+                    /*--- Inner objects ---*/
+                    function Chain(success = [], failure = [], always = []) {
+                        this.success = success;
+                        this.failure = failure;
+                        this.always = always;
                     }
 
+                    Chain.prototype.run = function (success) {
+                        if (success)
+                            this.success.forEach(c => c(true));
+                        else
+                            this.failure.forEach(c => c(false));
+                        this.always.forEach(c => c());
+                    };
+
+                    /*--- Methods implementation --*/
                     function resolveStatus() {
                         if (self.user && self.finishDate)
                             return STATUS_DONE;
@@ -111,126 +119,138 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                         const status = self.status();
                         switch (status) {
                             case STATUS_NEW:
-                                self.formatedStartDate = undefined;
+                                // self.formatedStartDate = undefined;
                                 break;
                             case STATUS_ASSIGNED:
                                 self.formatedStartDate = formatDate(self.startDate);
                                 break;
                             case STATUS_DONE:
-                                self.formatedStartDate = undefined;
+                                self.formatedStartDate = formatDate(self.startDate);
+                                self.formatedFinishDate = formatDate(self.finishDate);
                                 break;
                         }
                     }
 
-                    function assignTask(callChainObject = {}) {
+                    function removeStateData() {
+                        self.user = undefined;
+                        self.startDate = undefined;
+                        self.formatedStartDate = undefined;
+                        self.finishDate = undefined;
+                        self.formatedFinishDate = undefined;
+                    }
+
+                    function assignTask(callChain = new Chain()) {
                         if (self.user) {
-                            resolveCallChainObject(callChainObject, true);
+                            callChain.run(true);
                             return;
                         }
                         self.loading = true;
                         $http.get(self.links.assign.href).then(response => {
                             self.loading = false;
-                            if (response.success)
-                                resolveCallChainObject(callChainObject, true);
+                            if (response.success) {
+                                removeStateData();
+                                callChain.run(true);
+                            }
                             else if (response.error) {
                                 $snackbar.error(response.error);
-                                resolveCallChainObject(callChainObject, false);
+                                callChain.run(false);
                             }
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.assigningTask} ${self.title} ${$i18n.block.snackbar.failed}`);
                             $log.debug(error);
                             self.loading = false;
-                            resolveCallChainObject(callChainObject, false);
+                            callChain.run(false);
                         });
                     }
 
-                    function delegateTask(callChainObject = {}) {
+                    function delegateTask(callChain = new Chain()) {
                         $dialog.showByTemplate('assign_user', self, {task: Object.assign(self, {fieldRoles: Object.keys(self.roles)})})
                             .then(user => {
                                 if (!user)
                                     return;
+                                self.loading = true;
                                 $http.post(self.links.delegate.href, user.email).then(response => {
+                                    self.loading = false;
                                     if (response.success) {
-                                        resolveCallChainObject(callChainObject, true);
+                                        removeStateData();
+                                        callChain.run(true);
                                     } else if (response.error) {
                                         $snackbar.error(response.error);
-                                        resolveCallChainObject(callChainObject, false);
+                                        callChain.run(false);
                                     }
                                 }, () => {
                                     $snackbar.error(`${$i18n.block.snackbar.delegatingTask} ${self.title} ${$i18n.block.snackbar.failed}`);
-                                    resolveCallChainObject(callChainObject, false);
+                                    self.loading = false;
+                                    callChain.run(false);
                                 });
                             }, angular.noop);
                     }
 
-                    function cancelTask(callChainObject = {}) {
+                    function cancelTask(callChain = new Chain()) {
                         if (!self.user || self.user.email !== $user.login) {
-                            resolveCallChainObject(callChainObject, false);
+                            callChain.run(false);
                             return;
                         }
+                        self.loading = true;
                         $http.get(self.links.cancel.href).then(response => {
+                            self.loading = false;
                             if (response.success) {
-                                self.user = undefined;
-                                self.startDate = undefined;
-                                self.finishDate = undefined;
-                                self.formatedStartDate = undefined;
-                                self.formatedFinishDate = undefined;
-                                resolveCallChainObject(callChainObject, true);
+                                removeStateData();
+                                callChain.run(true);
                             } else if (response.error) {
                                 $snackbar.error(response.error);
-                                resolveCallChainObject(callChainObject, false);
+                                callChain.run(false);
                             }
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.cancelingAssignmentOfTask} ${self.title} ${$i18n.block.snackbar.failed}`);
-                            resolveCallChainObject(callChainObject, false);
+                            self.loading = false;
+                            callChain.run(false);
                         });
                     }
 
-                    function sendFinishTaskRequest(callChainObject = {}) {
+                    function sendFinishTaskRequest(callChain = new Chain()) {
+                        self.loading = true;
                         $http.get(links.finish.href).then(response => {
+                            self.loading = false;
                             if (response.success) {
-                                resolveCallChainObject(callChainObject, true);
+                                removeStateData();
+                                callChain.run(true);
                             } else if (response.error) {
                                 $snackbar.error(response.error);
-                                resolveCallChainObject(callChainObject, false);
+                                callChain.run(false);
                             }
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.finishingTask} ${self.title} ${$i18n.block.snackbar.failed}`);
-                            resolveCallChainObject(callChainObject, false);
+                            self.loading = false;
+                            callChain.run(false);
                         });
                     }
 
-                    function finishTask(callChainObject = {}) {
+                    function finishTask(callChain = new Chain()) {
                         if (self.dataSize <= 0) {
-                            self.load({
-                                default: {
-                                    run: () => {
-                                        if (self.dataSize <= 0 || self.validate()) {
-                                            sendFinishTaskRequest(callChainObject);
-                                            self.collapse();
-                                        }
-                                    },
-                                    args: []
+                            self.load(new Chain([], [], [
+                                () => {
+                                    if (self.dataSize <= 0 || self.validate()) {
+                                        sendFinishTaskRequest(callChain);
+                                        self.collapse();
+                                    }
                                 }
-                            });
+                            ]));
                         } else {
                             if (self.validate()) {
-                                self.save({
-                                    success: {
-                                        run: () => {
-                                            sendFinishTaskRequest(callChainObject);
-                                            self.collapse();
-                                        },
-                                        args: []
+                                self.save(new Chain([
+                                    () => {
+                                        sendFinishTaskRequest(callChain);
+                                        self.collapse();
                                     }
-                                });
+                                ]));
                             }
                         }
                     }
 
-                    function loadTaskData(callChainObject = {}) {
+                    function loadTaskData(callChain = new Chain()) {
                         if (self.dataSize > 0) {
-                            resolveCallChainObject(callChainObject, true);
+                            callChain.run(true);
                             return;
                         }
                         self.loading = true;
@@ -242,11 +262,12 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                                         Object.keys(group.fields._embedded).forEach(item => {
                                             group.data = group.fields._embedded[item]
                                                 .map(r => new DataField(self, r, group.fields._links, {
-                                                    $dialog: $dialog,
-                                                    $snackbar: $snackbar,
-                                                    $user: $user,
-                                                    $fileUpload: $fileUpload,
-                                                    $i18n: $i18n
+                                                    $dialog,
+                                                    $snackbar,
+                                                    $user,
+                                                    $fileUpload,
+                                                    $i18n,
+                                                    $timeout
                                                 })).concat(group.data);
                                         });
                                         delete group.fields;
@@ -257,24 +278,24 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                                                 group.data.sort((a, b) => a.order - b.order);
                                             });
                                             self.loading = false;
-                                            resolveCallChainObject(callChainObject, true);
+                                            callChain.run(true);
                                         }
                                     } else {
                                         $log.info(`No data for task ${self.title}`);
                                         self.loading = false;
-                                        resolveCallChainObject(callChainObject, true);
+                                        callChain.run(true);
                                     }
                                 });
                             }, () => {
                                 $log.info(`No data group for task ${self.title}`);
                                 self.loading = false;
-                                resolveCallChainObject(callChainObject, true);
+                                callChain.run(true);
                             });
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.dataFor} ${self.title} ${$i18n.block.snackbar.failedToLoad}`);
                             $log.debug(error);
                             self.loading = false;
-                            resolveCallChainObject(callChainObject, false);
+                            callChain.run(false);
                         });
                     }
 
@@ -289,15 +310,17 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                         return valid;
                     }
 
-                    function saveTaskData(callChainObject = {}) {
+                    function saveTaskData(callChain = new Chain()) {
                         if (self.dataSize <= 0)
                             return;
 
                         const fields = {};
                         const taskData = self.getData();
-                        if(jQuery.isEmptyObject(callChainObject)){
-                            callChainObject = self.dataFocusPolicyCallChain;
-                        }
+                        if (callChain.success.length === 0)
+                            callChain.success = buildDataFocusPolicyCallChain(true);
+                        if (callChain.failure.length === 0)
+                            callChain.failure = buildDataFocusPolicyCallChain(false);
+
                         taskData.forEach(field => {
                             if (field.changed) {
                                 const change = field.save();
@@ -306,19 +329,22 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                             }
                         });
                         if (Object.keys(fields).length === 0) {
-                            resolveCallChainObject(callChainObject, true);
+                            callChain.run(true);
                             return;
                         }
 
+                        self.loading = true;
                         $http.post(self.links["data-edit"].href, JSON.stringify(fields)).then(response => {
                             self.tab.updateTasksData(response.changedFields);
                             Object.keys(fields).forEach(id => taskData.find(f => f.stringId === id).changed = false);
                             $snackbar.success($i18n.block.snackbar.dataSavedSuccessfully);
-                            resolveCallChainObject(callChainObject, true);
+                            self.loading = false;
+                            callChain.run(true);
                         }, error => {
                             $snackbar.error($i18n.block.snackbar.savingDataFailed);
                             $log.debug(error);
-                            resolveCallChainObject(callChainObject, false);
+                            self.loading = false;
+                            callChain.run(false);
                         });
                     }
 
@@ -358,37 +384,39 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                             preventEventDefault(event);
                             return;
                         }
-                        // self.expanded ? self.collapse() : self.expand();
-                        resolveCallChainObject(self.assignPolicyCallChain, !self.expanded);
+
+                        self.callChain.run(!self.expanded);
                         preventEventDefault(event);
                     }
 
-                    function expandTaskPanel(callChainObject = {}) {
+                    function expandTaskPanel(callChain = new Chain()) {
                         self.animating = true;
                         self.panel.expand();
                         self.expanded = true;
                         $timeout(() => {
                             self.animating = false;
-                            resolveCallChainObject(callChainObject, true)
+                            callChain.run(true);
                         }, PANEL_ANIMATION_DURATION);
                     }
 
-                    function collapseTaskPanel(callChainObject = {}) {
+                    function collapseTaskPanel(callChain = new Chain()) {
                         self.animating = true;
                         self.panel.collapse();
                         self.expanded = false;
                         $timeout(() => {
                             self.animating = false;
-                            resolveCallChainObject(callChainObject, true);
+                            callChain.run(true);
                         }, PANEL_ANIMATION_DURATION);
                     }
 
-                    function focusNearestRequiredField(callChainObject = {}) {
+                    function focusNearestRequiredField(callChain = new Chain()) {
                         // const taskElement = $("#task-"+this.stringId);
                         // taskElement.focus();
                         // taskElement.blur();
-                        //window.focus();
-                        //window.blur();
+                        return; //temp disabled
+
+                        window.focus();
+                        window.blur();
 
                         const movedToNext = self.getData().some(data => {
                             if (data.behavior.required && data.newValue && data.element && data.element.is(":focus"))
@@ -400,11 +428,12 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                                 data.type !== 'user' &&
                                 data.element) {
 
-                                if(data.type === 'text' || data.type === 'number'){
+                                if (data.type === 'text' || data.type === 'number') {
                                     data.element.click();
                                     data.element.focus();
-                                }
-                                else {
+                                } else if (data.type === 'enumeration' || data.type === 'multichoice' || data.type === 'date') {
+                                    data.element.focus();
+                                } else {
                                     // data.element.focus();
                                     data.element.click();
                                 }
@@ -412,94 +441,128 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                                 return true;
                             }
                         });
-                        resolveCallChainObject(callChainObject, movedToNext);
+
+                        callChain.run(movedToNext);
                     }
 
-                    function buildAssignPolicyCallChain() {
-                        const chain = {};
+                    function manualAssignPolicy(success) {
+                        if (success) {
+                            return [() => {
+                                self.load(new Chain(buildFinishPolicyCallChain(true)));
+                            }];
+                        } else {
+                            return [() => {
+                                self.collapse();
+                            }];
+                        }
+                    }
+
+                    function autoAssignPolicy(success) {
+                        if (success) {
+                            return [() => {
+                                self.assign(new Chain([
+                                    () => {
+                                        self.tab.load(false, true);
+                                    },
+                                    () => {
+                                        self.load(new Chain(buildFinishPolicyCallChain(true)));
+                                    }
+                                ]));
+                            }];
+                        } else {
+                            return [() => {
+                                self.cancel(new Chain([
+                                    () => {
+                                        self.tab.load(false, true);
+                                    },
+                                    () => {
+                                        self.collapse();
+                                    }
+                                ]))
+                            }];
+                        }
+                    }
+
+                    function buildAssignPolicyCallChain(success) {
                         switch (self.assignPolicy) {
                             case self.ASSIGN_POLICY.manual:
-                                chain.success = {
-                                    run: self.load,
-                                    args: [{
-                                        success: {
-                                            run: self.expand,
-                                            args: [self.dataFocusPolicyCallChain]
-                                        }
-                                    }]
-                                };
-                                chain.failure = {
-                                    run: self.collapse,
-                                    args: []
-                                };
-                                break;
+                                return manualAssignPolicy(success);
                             case self.ASSIGN_POLICY.auto:
-                                chain.success = {
-                                    run: self.assign,
-                                    args: [{
-                                        success: [
-                                            {
-                                                run: self.tab.load,
-                                                self: self.tab,
-                                                args: [false, true]
-                                            },
-                                            {
-                                                run: self.load,
-                                                args: [{
-                                                    success: {
-                                                        run: self.expand,
-                                                        args: [self.dataFocusPolicyCallChain]
-                                                    }
-                                                }]
-                                            }
-                                        ]
-                                    }]
-                                };
-                                chain.failure = {
-                                    run: self.cancel,
-                                    args: [{
-                                        success: [
-                                            {
-                                                run: self.tab.load,
-                                                self: self.tab,
-                                                args: [false, true]
-                                            },
-                                            {
-                                                run: self.nextChain,
-                                                args: [{
-                                                    default: {
-                                                        run: self.collapse,
-                                                        args: []
-                                                    }
-                                                }]
-                                            }
-                                        ]
-                                    }]
-                                };
-                                break;
+                                return autoAssignPolicy(success);
                             default:
-                                break;
+                                return manualAssignPolicy(success);
                         }
-
-                        return chain;
                     }
 
-                    function buildDataFocusPolicyCallChain() {
-                        const chain = {};
+                    function manualFinishPolicy(success) {
+                        if (success) {
+                            return [
+                                () => {
+                                    self.expand(new Chain(buildDataFocusPolicyCallChain(true)));
+                                }
+                            ];
+                        } else {
+                            return [
+                                () => {
+                                    self.load();
+                                }
+                            ];
+                        }
+                    }
+
+                    function autoNoDataFinishPolicy(success) {
+                        if (success) {
+                            return [
+                                () => {
+                                    if (self.dataSize <= 0) {
+                                        sendFinishTaskRequest(self.createReloadChain());
+                                        self.collapse();
+                                    } else {
+                                        self.expand(new Chain(buildDataFocusPolicyCallChain(true)));
+                                    }
+                                }
+                            ];
+                        } else {
+                            return [];
+                        }
+                    }
+
+                    function buildFinishPolicyCallChain(success) {
+                        switch (self.finishPolicy) {
+                            case self.FINISH_POLICY.manual:
+                                return manualFinishPolicy(success);
+                            case self.FINISH_POLICY.autoNoData:
+                                return autoNoDataFinishPolicy(success);
+                            default:
+                                return manualFinishPolicy(success);
+                        }
+                    }
+
+                    function manualDataDocusPolicy(success) {
+                        return [];
+                    }
+
+                    function autoRequiredDataFocusPolicy(success) {
+                        if (success) {
+                            return [
+                                () => {
+                                    self.focusNext();
+                                }
+                            ];
+                        } else {
+                            return [];
+                        }
+                    }
+
+                    function buildDataFocusPolicyCallChain(success) {
                         switch (self.dataFocusPolicy) {
                             case self.DATA_FOCUS_POLICY.manual:
-                                break;
+                                return manualDataDocusPolicy(success);
                             case self.DATA_FOCUS_POLICY.autoRequired:
-                                chain.success = {
-                                    run: self.focusNext,
-                                    args: []
-                                };
-                                break;
+                                return autoRequiredDataFocusPolicy(success);
                             default:
-                                break;
+                                return manualDataDocusPolicy(success);
                         }
-
-                        return chain;
                     }
 
 
@@ -507,8 +570,7 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                     $scope.disableNestedClick = preventEventDefault;
                     self.update(resource, links);
                     self.tab.addTaskController(self);
-                    self.dataFocusPolicyCallChain = buildDataFocusPolicyCallChain();
-                    self.assignPolicyCallChain = buildAssignPolicyCallChain();
+                    self.callChain = new Chain(buildAssignPolicyCallChain(true), buildAssignPolicyCallChain(false))
                 }]);
 
     });

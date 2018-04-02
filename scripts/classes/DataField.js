@@ -154,6 +154,12 @@ define(['./HalResource'], function (HalResource) {
         return "";
     };
 
+    DataField.prototype.setFieldActiveWithDelay = function (delay) {
+        this.$timeout(() => {
+            this.active = true
+        }, delay);
+    };
+
     DataField.padding = (value, pad = '', defaultValue = '') => {
         if (!value)
             return pad + defaultValue.toString();

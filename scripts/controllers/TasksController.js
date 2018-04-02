@@ -30,7 +30,11 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                             }, {
                                 closable: closable,
                                 filterPolicy: filterPolicy,
-                                searchable: true
+                                searchable: true,
+                                allowHighlight: false,
+                                showTransactions: false,
+                                autoOpenUnfinished: false,
+                                fullReload: true
                             }));
                         });
                         if (closable) {

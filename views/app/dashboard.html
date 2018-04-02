@@ -1,4 +1,26 @@
 <div ng-cloak>
-    <!-- TODO 25.10.2017 last N cases -->
-    <!-- TODO 25.10.2017 last N tasks -->
+
+    <div layout="column" class="color-bg-transparent padding-2x margin-top-2x" ng-repeat="(key, tab) in dashCtrl.tabs">
+
+        <div flex="100" layout="row" layout-align="start center">
+            <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+            <span class="margin-horizontal-default font-size-22">{{::tab.title}}</span>
+            <div flex class="line-3px color-bg-primary-op-50"></div>
+        </div>
+
+        <div flex layout="column">
+
+            <div ng-include="'views/app/headers/case_header.html'"></div>
+
+            <md-divider class="border-width-2x color-border-transparent"></md-divider>
+
+            <div ng-include="'views/app/lists/case_list.html'"></div>
+
+            <div ng-if="tab.loading" layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x">
+                <md-progress-circular md-mode="indeterminate" ng-disabled="!tab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
+            </div>
+
+        </div> <!-- ./column -->
+
+    </div>
 </div>

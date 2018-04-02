@@ -6,7 +6,7 @@
         <input type="text" ng-model="caseCtrl.search" title="">
     </md-input-container>
 
-    <md-button class="md-fab md-raised md-mini md-primary" ng-click="caseCtrl.caseTab.openNewCaseDialog($i18n.page.cases.this)">
+    <md-button ng-if="$user.hasAuthority(tab.authorityToCreate)" class="md-fab md-raised md-mini md-primary" ng-click="tab.openNewCaseDialog()">
         <md-icon class="material-icons">add</md-icon>
         <md-tooltip md-direction="left">
             {{::$i18n.block.add.createCase}}

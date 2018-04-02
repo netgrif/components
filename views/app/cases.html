@@ -11,7 +11,7 @@
 			<md-tab-body>
 				<md-content layout="column" class="color-bg-transparent padding-2x">
 
-					<div ng-include="'views/app/search_bars/case_search_bar.html'"></div>
+					<div ng-init="tab=caseCtrl.caseTab" ng-include="'views/app/search_bars/case_search_bar.html'"></div>
 
 					<md-divider class="border-width-2x color-border-transparent"></md-divider>
 
@@ -21,7 +21,7 @@
 
 						<md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-						<div ng-include="'views/app/lists/case_list.html'"></div>
+						<div ng-init="tab=caseCtrl.caseTab" ng-include="'views/app/lists/case_list.html'"></div>
 
 					</div> <!-- ./column -->
 
@@ -43,7 +43,7 @@
 			<md-tab-body>
 				<md-content layout="column" class="color-bg-transparent padding-2x">
 
-					<div ng-if="tab.transactions.length > 0" flex layout="row" layout-align="space-around center" class="card height-48px padding-horizontal-2x">
+					<div flex layout="row" layout-align="space-around center" class="card height-48px">
 
 						<span ng-repeat="trans in tab.transactions | orderBy:'stringId'" ng-class="trans.active ? 'active' : ''" class="transaction">
 							{{::trans.title}}
