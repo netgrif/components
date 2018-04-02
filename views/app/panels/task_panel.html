@@ -283,7 +283,7 @@
                     <span>{{::$i18n.block.btn.delegate}}</span>
                 </md-button>
 
-                <md-button ng-if="taskCtrl.user.email === $user.login" ng-click="(taskCtrl.user.email === $user.login) && ($user.canDo(taskCtrl.roles, 'delegate'))" class="layout-xs-rw-100">
+                <md-button ng-if="(taskCtrl.user.email === $user.login) && ($user.canDo(taskCtrl.roles, 'delegate'))" ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.reassign}}</span>
                 </md-button>
 
