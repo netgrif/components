@@ -173,9 +173,9 @@ define({
             },
             settings: {
                 this: "Settings",
-                signUp: "Sign up",
+                userSignUp: "User sign up",
                 enableUserSignUp: "Enable user sign up",
-                model: "Model"
+                processRolesForSignedUpUser: "Process roles for signed up user"
             }
         },
         block: {

@@ -12,7 +12,7 @@
 
         <div flex="100" layout="row" layout-align="start center" class="layout-rw-100">
             <div flex="20" class="line-3px color-bg-primary-op-50"></div>
-            <span class="margin-horizontal-default font-size-22">User sign up</span>
+            <span class="margin-horizontal-default font-size-22">{{::$i18n.page.settings.userSignUp}}</span>
             <div flex class="line-3px color-bg-primary-op-50"></div>
         </div>
 
@@ -23,12 +23,11 @@
             <ng-form name="userSignUpPolicy">
 
                 <md-input-container>
-                    <md-switch class="md-primary"
-                               ng-model="settCtrl.changeUserSignUpPolicy"
-                               aria-label="Switch">
+                    <md-switch ng-model="settCtrl.changeUserSignUpPolicy"
+                               aria-label="Switch" disabled>
                         <span ng-if="settCtrl.changeUserSignUpPolicy">{{::$i18n.block.data.enable}}</span>
                         <span ng-if="!settCtrl.changeUserSignUpPolicy">{{::$i18n.block.data.disable}}</span>
-                    </md-switch>
+                    </md-switch >
                 </md-input-container>
 
             </ng-form>
@@ -41,18 +40,18 @@
             <div flex class="line-3px color-bg-primary-op-50"></div>
         </div>
 
-        <div layout="row" layout-align="space-between center" class="layout-rw-100">
+        <div layout="row" layout-align="space-between center" class="layout-rw-100" ng-repeat="(id, process) in settCtrl.processes">
 
             <div flex="40" layout="row" layout-align="start center">
 
                 <span flex-gt-xs="20" flex-xs class="color-fg-primary-500 font-weight-600">
-                    INC
+                    {{process.initials}}
                     <md-tooltip hide-gt-xs md-direction="bottom">
-                        Poistenie HHI
+                        {{process.name}}
                     </md-tooltip>
                 </span>
 
-                <span hide-xs flex-gt-xs="80" class="font-weight-600">Poistenie HHI</span>
+                <span hide-xs flex-gt-xs="80" class="font-weight-600">{{process.name}}</span>
 
             </div>
 
@@ -60,51 +59,9 @@
 
                 <md-input-container class="md-block">
                     <label>Selected roles</label>
-                    <md-select ng-model="settCtrl.process" multiple>
-                        <md-option ng-value="'Option 1'">
-                            Option 1
-                        </md-option>
-                        <md-option ng-value="'Option 2'">
-                            Option 2
-                        </md-option>
-                        <md-option ng-value="'Option 3'">
-                            Option 3
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-
-            </ng-form>
-
-        </div>
-
-        <div layout="row" layout-align="space-between center" class="layout-rw-100">
-
-            <div flex="40" layout="row" layout-align="start center">
-
-                <span flex-gt-xs="20" flex-xs class="color-fg-primary-500 font-weight-600">
-                    INC
-                    <md-tooltip hide-gt-xs md-direction="bottom">
-                        Poistenie HHI
-                    </md-tooltip>
-                </span>
-
-                <span hide-xs flex-gt-xs="80" class="font-weight-600">Poistenie HHI</span>
-
-            </div>
-
-            <ng-form flex="60" layout="row" layout-align="end ceneter" name="processRoles">
-
-                <md-input-container class="md-block">
-                    <label>Selected roles</label>
-                    <md-select ng-model="settCtrl.process" multiple>
-                        <md-option ng-value="'Option 1'">
-                            Option 1
-                        </md-option>
-                        <md-option ng-value="'Option 2'">
-                            Option 2
-                        </md-option>
-                        <md-option ng-value="'Option 3'">
-                            Option 3
+                    <md-select ng-model="process.selected" ng-model-options="{trackBy: '$value.roleId'}" multiple>
+                        <md-option ng-value="role" ng-repeat="role in process.roles">
+                            {{role.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>

@@ -172,9 +172,9 @@ define({
         },
         settings: {
             this: "Nastavenia",
-            signUp: "Registrácia",
+            userSignUp: "Registrácia používateľov",
             enableUserSignUp: "Povoliť registráciu používateľov",
-            model: "Model"
+            processRolesForSignedUpUser: "Procesné roli zaregistrovaného používateľa"
         }
     },
     block: {
