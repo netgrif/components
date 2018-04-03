@@ -104,7 +104,7 @@
   color: #26A69A; }
 
 .color-fg-primary-500 {
-  color: #009688; }
+  color: #009688 !important; }
 
 .color-fg-primary-600 {
   color: #00897B; }
@@ -2301,8 +2301,12 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .card md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-no-shadow md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-header md-input-container:not(.md-input-invalid).md-input-focused label, .base md-expansion-panel md-input-container:not(.md-input-invalid).md-input-focused label {
   color: rgba(0, 0, 0, 0.54) !important; }
 
-.base .card md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card md-input-container md-select .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select .md-select-value.md-select-placeholder {
+.base .card md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card md-input-container md-select md-select .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select md-select .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select md-select .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select md-select .md-select-value.md-select-placeholder {
   color: rgba(0, 0, 0, 0.54) !important; }
+
+.base .card md-input-container md-select .md-select-value span:first-child:after, .base .card-no-shadow md-input-container md-select .md-select-value span:first-child:after, .base .card-header md-input-container md-select .md-select-value span:first-child:after, .base md-expansion-panel md-input-container md-select .md-select-value span:first-child:after {
+  color: #f44336 !important;
+  font-size: 20px !important; }
 
 .base .card md-input-container input, .base .card-no-shadow md-input-container input, .base .card-header md-input-container input, .base md-expansion-panel md-input-container input {
   color: rgba(0, 0, 0, 0.87) !important; }

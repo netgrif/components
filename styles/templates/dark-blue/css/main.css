@@ -89,46 +89,46 @@
   color: rgba(77, 126, 207, 0.87) !important; }
 
 .color-fg-primary-50 {
-  color: #E0E9F7; }
+  color: #EAF0F9; }
 
 .color-fg-primary-100 {
-  color: #B3C8EA; }
+  color: #CAD8F1; }
 
 .color-fg-primary-200 {
-  color: #80A3DD; }
+  color: #A6BFE7; }
 
 .color-fg-primary-300 {
-  color: #4D7ECF; }
+  color: #82A5DD; }
 
 .color-fg-primary-400 {
-  color: #2663C4; }
+  color: #6891D6; }
 
 .color-fg-primary-500 {
-  color: #4D7ECF; }
+  color: #4D7ECF !important; }
 
 .color-fg-primary-600 {
-  color: #0040B3; }
+  color: #4676CA; }
 
 .color-fg-primary-700 {
-  color: #0037AB; }
+  color: #3D6BC3; }
 
 .color-fg-primary-800 {
-  color: #002FA3; }
+  color: #3461BD; }
 
 .color-fg-primary-900 {
-  color: #002094; }
+  color: #254EB2; }
 
 .color-fg-primary-A100 {
-  color: #BFC8FF; }
+  color: #EFF3FF; }
 
 .color-fg-primary-A200 {
-  color: #8C9CFF; }
+  color: #BCCEFF; }
 
 .color-fg-primary-A400 {
-  color: #5971FF; }
+  color: #89A9FF; }
 
 .color-fg-primary-A700 {
-  color: #405BFF; }
+  color: #6F96FF; }
 
 .color-fg-accent-50 {
   color: #FAFAFA !important; }
@@ -239,46 +239,46 @@
   background-color: rgba(77, 126, 207, 0.87) !important; }
 
 .color-bg-primary-50 {
-  background-color: #E0E9F7; }
+  background-color: #EAF0F9; }
 
 .color-bg-primary-100 {
-  background-color: #B3C8EA; }
+  background-color: #CAD8F1; }
 
 .color-bg-primary-200 {
-  background-color: #80A3DD; }
+  background-color: #A6BFE7; }
 
 .color-bg-primary-300 {
-  background-color: #4D7ECF; }
+  background-color: #82A5DD; }
 
 .color-bg-primary-400 {
-  background-color: #2663C4; }
+  background-color: #6891D6; }
 
 .color-bg-primary-500 {
   background-color: #4D7ECF !important; }
 
 .color-bg-primary-600 {
-  background-color: #0040B3; }
+  background-color: #4676CA; }
 
 .color-bg-primary-700 {
-  background-color: #0037AB; }
+  background-color: #3D6BC3; }
 
 .color-bg-primary-800 {
-  background-color: #002FA3; }
+  background-color: #3461BD; }
 
 .color-bg-primary-900 {
-  background-color: #002094; }
+  background-color: #254EB2; }
 
 .color-bg-primary-A100 {
-  background-color: #BFC8FF; }
+  background-color: #EFF3FF; }
 
 .color-bg-primary-A200 {
-  background-color: #8C9CFF; }
+  background-color: #BCCEFF; }
 
 .color-bg-primary-A400 {
-  background-color: #5971FF; }
+  background-color: #89A9FF; }
 
 .color-bg-primary-A700 {
-  background-color: #405BFF; }
+  background-color: #6F96FF; }
 
 .color-bg-accent-50 {
   background-color: #FAFAFA; }
@@ -2303,8 +2303,12 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .card md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-no-shadow md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-header md-input-container:not(.md-input-invalid).md-input-focused label, .base md-expansion-panel md-input-container:not(.md-input-invalid).md-input-focused label {
   color: #E0E0E0 !important; }
 
-.base .card md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card md-input-container md-select .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select .md-select-value.md-select-placeholder {
+.base .card md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card md-input-container md-select md-select .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select md-select .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select md-select .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select md-select .md-select-value.md-select-placeholder {
   color: #E0E0E0 !important; }
+
+.base .card md-input-container md-select .md-select-value span:first-child:after, .base .card-no-shadow md-input-container md-select .md-select-value span:first-child:after, .base .card-header md-input-container md-select .md-select-value span:first-child:after, .base md-expansion-panel md-input-container md-select .md-select-value span:first-child:after {
+  color: #FFC107 !important;
+  font-size: 20px !important; }
 
 .base .card md-input-container input, .base .card-no-shadow md-input-container input, .base .card-header md-input-container input, .base md-expansion-panel md-input-container input {
   color: #FAFAFA !important; }
@@ -2663,18 +2667,18 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     z-index: -1; }
 
 .base .form-signin md-input-container .material-icons, .base .form-signup md-input-container .material-icons, .base .form-self-registration md-input-container .material-icons {
-  color: #0040B3; }
+  color: #4676CA; }
 
 .base .form-btn-submit {
   color: #FAFAFA;
-  background-color: #0040B3; }
+  background-color: #4676CA; }
   .base .form-btn-submit:hover {
-    color: #0040B3;
+    color: #4676CA;
     background-color: #FAFAFA; }
 
 .base .form-btn-signup {
-  color: #0040B3;
+  color: #4676CA;
   background-color: transparent; }
   .base .form-btn-signup:hover {
-    color: #0040B3;
+    color: #4676CA;
     background-color: #FAFAFA; }
