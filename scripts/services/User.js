@@ -26,12 +26,15 @@ define(['angular', '../modules/Main'], function (angular) {
 
             /**
              * Check if user has specified authority
-             * @param {String} auth
+             * @param {Array / String} auth
              * @returns {boolean}
              */
             hasAuthority: function (auth) {
                 if (!auth || !user.authority) return false;
-                return user.authority.some(a => a === auth);
+                if (auth instanceof Array) {
+                    return auth.some(a => user.authority.some(u => u === a));
+                } else
+                    return user.authority.some(a => a === auth);
             },
 
             /**
@@ -61,8 +64,8 @@ define(['angular', '../modules/Main'], function (angular) {
              * @returns {boolean}
              */
             hasPermission: function (permission) {
-                if(!permission) return false;
-                const perm = "PERM_"+permission.toUpperCase();
+                if (!permission) return false;
+                const perm = "PERM_" + permission.toUpperCase();
                 return user.hasAuthority(perm);
             },
 
@@ -76,7 +79,7 @@ define(['angular', '../modules/Main'], function (angular) {
                     userProcessRoles: user.roles.map(role => {
                         roleId: role
                     })
-            }
+                }
             }
         };
         return user;

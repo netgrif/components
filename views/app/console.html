@@ -27,7 +27,7 @@
 
                         <div layout="column" class="card padding-2x">
 
-                            <div ng-include="'views/app/lists/console_new_user_org_list.html'"></div>
+                            <div ng-init="invitedUserGroups=adminCtrl.invitedUser.groups" ng-include="'views/app/lists/console_new_user_org_list.html'"></div>
 
                         </div> <!-- ./column -->
 
@@ -99,6 +99,7 @@
 
                             <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
+                            <!--todo: ng-init-->
                             <div ng-include="'views/app/lists/console_select_org_list.html'"></div>
 
                         </div> <!-- ./column -->
@@ -112,6 +113,7 @@
 
                             <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
+                            <!--todo: ng-init-->
                             <div ng-include="'views/app/lists/console_select_role_list.html'"></div>
 
                         </div> <!-- ./column -->
@@ -142,7 +144,7 @@
 
                             <div layout="column">
 
-                                <div ng-include="'views/app/lists/console_users_user_list.html'"></div>
+                                <div ng-init="usersUserListTab=adminCtrl.usersTab" ng-include="'views/app/lists/console_users_user_list.html'"></div>
 
                             </div>
 
@@ -158,7 +160,7 @@
 
                             <div layout="column">
 
-                                <div ng-include="'views/app/lists/console_users_role_list.html'"></div>
+                                <div ng-init="usersRoleListTab=adminCtrl.usersTab" ng-include="'views/app/lists/console_users_role_list.html'"></div>
 
                             </div>
 
@@ -191,7 +193,7 @@
 
                             <div layout="column">
 
-                                <div ng-include="'views/app/lists/console_roles_role_list.html'"></div>
+                                <div ng-init="rolesTab=adminCtrl.rolesTab" ng-include="'views/app/lists/console_roles_role_list.html'"></div>
 
                             </div>
 
@@ -207,7 +209,7 @@
 
                             <div layout="column">
 
-                                <div ng-include="'views/app/lists/console_roles_user_list.html'"></div>
+                                <div ng-init="rolesTab=adminCtrl.rolesTab" ng-include="'views/app/lists/console_roles_user_list.html'"></div>
 
                             </div>
 

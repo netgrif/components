@@ -2,14 +2,14 @@ define({
     test: "Toto je testovací reťazec!",
     version: {
         this: "Verzia",
-        id: "2.0.0"
+        id: "2.0.1"
     },
     page: {
         signIn: {
             email: "Email",
             psw: "Heslo",
             signIn: "Prihlásiť",
-            signUp: "Registrovať"
+            signUp: "Zabudnuté heslo"
         },
         signUp: {
             email: "Email",
@@ -19,10 +19,7 @@ define({
             surname: "Priezvisko"
         },
         dashboard: {
-            this: "Prehľad",
-            offers: "Ponuky",
-            contacts: "Kontakty",
-            contracts: "Zmluvy"
+            this: "Prehľad"
         },
         cases: {
             this: "Prípady",
@@ -58,6 +55,9 @@ define({
                     process: "Vybrané procesy"
                 }
             }
+        },
+        documents: {
+            this: "Dokumenty"
         },
         workflow: {
             this: "Workflow",
@@ -186,6 +186,7 @@ define({
         },
         btn: {
             delete: "Vymazať",
+            download: "Stiahnuť",
             invite: "Pozvať",
             save: "Uložiť",
             edit: "Upraviť",

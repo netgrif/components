@@ -7,13 +7,14 @@ define(['./DataField', './HalResource', './Task'], function (DataField, HalResou
      * @param {Object} resource
      * @param {Object} links
      * @param {Object} angular
-     * @param {Object} config
+     * @param {Object} config: represents (string, context variable, used in dashboard)
      * @constructor
      */
     function Case(tab, panel, resource, links, angular, config = {}) {
         HalResource.call(this, links);
         this.tab = tab;
         this.panel = panel;
+        this.represents = "cases";
         Object.assign(this, resource, angular, config);
 
         if (this.immediateData) {

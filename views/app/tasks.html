@@ -51,12 +51,12 @@
                     <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                     <!-- Detail closed view -->
-                    <div layout="row" ng-if="!tasksCtrl.filterTab.sideViewDetail" ng-include="'views/app/filter/filter_full.html'"></div>
+                    <div layout="row" ng-if="!tasksCtrl.filterTab.sideViewDetail" ng-init="filters=tasksCtrl.filterTab.filters" ng-include="'views/app/filter/filter_full.html'"></div>
 
                     <!-- Detail opened view -->
                     <div layout="row" ng-if="tasksCtrl.filterTab.sideViewDetail">
 
-                        <div flex ng-include="'views/app/filter/filter_small.html'"></div>
+                        <div flex ng-init="filters=tasksCtrl.filterTab.filters" ng-include="'views/app/filter/filter_small.html'"></div>
 
                         <md-divider hide-sm hide-xs class="border-width-2x color-border-transparent"></md-divider>
 

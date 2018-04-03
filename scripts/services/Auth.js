@@ -1,6 +1,6 @@
 
 define(['angular','angularRoute','../modules/Main'],function (angular) {
-    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user, $snackbar, $i18n) {
+    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user, $snackbar, $i18n, $process) {
         var auth = {
             authenticated: false,
 
@@ -35,8 +35,12 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                         $user.roles = principal.processRoles;
                     }
 
-                    callback && callback(auth.authenticated);
-                    $location.path(auth.path === auth.loginPath ? auth.appPath : auth.path);
+                    if(auth.authenticated){
+                        $process.init().then(()=>{
+                            callback && callback(auth.authenticated);
+                            $location.path(auth.path === auth.loginPath ? auth.appPath : auth.path);
+                        });
+                    }
 
                 },function (response) {
                     //$log.debug(response);

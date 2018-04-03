@@ -1,19 +1,17 @@
 /*  Top level module
     map all application components
  */
-define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularRouteSegment', 'angularMaterialExpansionPanels','angularInView',
-         'scripts/directives/DirectivesLoader',
-         'scripts/filters/FiltersLoader',
-         'scripts/services/ServicesLoader',
-         'scripts/controllers/ControllersLoader'],
+define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRouteSegment', 'angularMaterialExpansionPanels', 'angularInView',
+        'scripts/directives/DirectivesLoader',
+        'scripts/filters/FiltersLoader',
+        'scripts/services/ServicesLoader',
+        'scripts/controllers/ControllersLoader'],
     function (angular, config) {
         // console.log(angular.version);
         let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment','angular-inview',
-            'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
+         'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
-
             const theme = config.themes[config.theme];
-
             if(theme.primary instanceof Object)
                 $mdThemingProvider.definePalette('mainPalette', theme.primary);
             if(theme.accent instanceof Object)
@@ -49,10 +47,10 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularRout
                 .when('/workflow', 'app.workflow')
 
                 .segment('app', {
-                        templateUrl: "views/app/main.html",
-                        controller: 'MainController',
-                        controllerAs: 'mainCtrl'
-                    })
+                    templateUrl: "views/app/main.html",
+                    controller: 'MainController',
+                    controllerAs: 'mainCtrl'
+                })
                 .within()
                 .segment('dashboard', {
                     default: true,
@@ -105,8 +103,17 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularRout
 
             $mdDateLocaleProvider.firstDayOfWeek = 1;
             $mdDateLocaleProvider.formatDate = date => {
-                if(date) return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+                if (date) return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
                 else return null;
+            };
+            $mdDateLocaleProvider.parseDate = date => {
+                if(date instanceof String || typeof date === 'string'){
+                    const parts = date.split(/\./);
+                    if(parts.length === 3){
+                        return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+                    }
+                }
+                return new Date(NaN);
             };
 
             $compileProvider.preAssignBindingsEnabled(true);

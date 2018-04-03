@@ -3,14 +3,14 @@ define({
         test: "This is test string!",
         version: {
             this: "Version",
-            id: "2.0.0"
+            id: "2.0.1"
         },
         page: {
             signIn: {
                 email: "Email",
                 psw: "Password",
                 signIn: "Sign In",
-                signUp: "Sign Up"
+                signUp: "Forgot password"
             },
             signUp: {
                 email: "Email",
@@ -20,10 +20,7 @@ define({
                 surname: "Last Name"
             },
             dashboard: {
-                this: "Dashboard",
-                offers: "Offers",
-                contacts: "Contacts",
-                contracts: "Contracts"
+                this: "Dashboard"
             },
             cases: {
                 this: "Cases",
@@ -187,6 +184,7 @@ define({
             },
             btn: {
                 delete: "Delete",
+                download: "Download",
                 invite: "Invite",
                 save: "Save",
                 edit: "Edit",
@@ -280,7 +278,7 @@ define({
             },
             dialog: {
                 createCase: {
-                    heading: "Create Offer",
+                    heading: "Create new instance",
                     process: "Process",
                     title: "Title",
                     color: "Color",

@@ -1,78 +1,70 @@
-define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
+define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, ActionCase, Filter) {
     /**
      * Constructor for CaseTab class
-     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n
+     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n, $process
      * @param {String} label
      * @param {Object} controller
+     * @param {Filter} baseFilter
      * @param {Object} angular
-     * @param {Object} config - processName(string), actionCase(boolean)
+     * @param {Object} config - processName(string), actionCase(boolean), authorityToCreate(string), allowedNets(array of Net objects)
      * @constructor
      */
-    function CaseTab(label, controller, angular, config = {}) {
+    function CaseTab(label, controller, baseFilter, angular, config = {}) {
         Tab.call(this, 0, label);
 
         this.controller = controller;
+        this.baseFilter = baseFilter;
+        this.authorityToCreate = "ROLE_USER";
+        this.allowedNets = [];
         Object.assign(this, angular, config);
 
         this.cases = [];
         this.newCase = {
             title: this.$i18n.block.case.newTitle
         };
+
+        this.activeFilter = baseFilter;
     }
 
     CaseTab.prototype = Object.create(Tab.prototype);
     CaseTab.prototype.constructor = CaseTab;
 
     CaseTab.URL_SEARCH = "/res/workflow/case/search";
-    CaseTab.FIND_BY_AUTHOR = 0;
-    CaseTab.FIND_BY_PETRINET = 1;
-    CaseTab.FIND_BY_TRANSITION = 2;
-
 
     CaseTab.prototype.activate = function () {
         if (this.cases.length === 0)
-            if(!this.processName) {
+            if (!this.processName) {
                 this.load(false);
                 return;
             }
-            this.loadPetriNet(this.processName, (success) => {
-                if (success) {
-                    if(this.transitionNames)
-                        this.loadTransitions(success => {
-                            if(success) this.load(false);
-                        });
-                    else
-                        this.load(false);
-                }
-            });
-    };
-
-    CaseTab.prototype.buildSearchRequest = function (next, url, criteria = []) {
-        const data = {};
-        criteria.forEach(c => {
-            if (c === CaseTab.FIND_BY_AUTHOR)
-                data.author = this.$user.id;
-            if (c === CaseTab.FIND_BY_PETRINET)
-                data.petriNet = this.net.entityId;
-            if(c === CaseTab.FIND_BY_TRANSITION){
-                if(this.transitions.length === 1)
-                    data.transition = this.transitions[0].entityId;
+        this.loadPetriNet(this.processName, (success) => {
+            if (success) {
+                if (this.transitionNames)
+                    this.loadTransitions(success => {
+                        if (success) this.load(false);
+                    });
                 else
-                    data.transition = this.transitions.map(t => t.entityId);
+                    this.load(false);
             }
         });
+    };
+
+    CaseTab.prototype.buildSearchRequest = function (next) {
+        const url = next && this.page.next ? this.page.next : CaseTab.URL_SEARCH;
         return {
             method: "POST",
-            url: url + ( !next && this.sort ? "?sort=_id,desc" : ""),
-            data: data
+            url: url,
+            data: JSON.parse(this.activeFilter.query)
         };
     };
 
     CaseTab.prototype.load = function (next) {
+        if (this.loading || !this.activeFilter) return;
+        if (next && this.page.totalElements === this.cases.length) return;
+
         const self = this;
-        if (this.page.totalElements === this.cases.length || this.loading) return;
-        const url = next && self.page.next ? self.page.next : CaseTab.URL_SEARCH;
-        const config = this.buildSearchRequest(next, url, this.filter);
+        const config = this.buildSearchRequest(next);
+
         self.loading = true;
         this.$http(config).then(function (response) {
             self.page = Object.assign(self.page, response.page);
@@ -115,7 +107,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
                 $fileUpload: this.$fileUpload,
                 $timeout: this.$timeout,
                 $i18n: this.$i18n
-            },{
+            }, {
                 caseType: this.caseType,
                 removable: true
             })));
@@ -145,55 +137,68 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
     };
 
     CaseTab.prototype.openNewCaseDialog = function (title) {
-        this.loadPetriNets();
-        this.$dialog.showByTemplate('create_case', this,{title:title});
+        if(this.allowedNets.length === 0)
+            return;
+        if(!title)
+            title = this.label;
+        this.$dialog.showByTemplate('create_case', this, {title: title});
     };
 
     CaseTab.prototype.createCase = function () {
-        if (!jQuery.isEmptyObject(this.newCase) || !this.newCase.netId) {
-            const self = this;
-            this.$http.post("/res/workflow/case", JSON.stringify(this.newCase))
-                .then(function (response) {
-                    if (response) {
-                        self.$dialog.closeCurrent();
-                        self.newCase = {
-                            title: self.$i18n.block.case.newTitle
-                        };
-                        if (self.actionCase){
-                            const actionCase = new ActionCase(self,self.controller.getPanelGroup(response.title),response,null,{
-                                $http: self.$http,
-                                $dialog: self.$dialog,
-                                $snackbar: self.$snackbar,
-                                $user: self.$user,
-                                $fileUpload: self.$fileUpload,
-                                $timeout: self.$timeout,
-                                $i18n: self.$i18n
-                            },{
-                                caseType: self.caseType,
-                                removable: true
-                            });
-                            actionCase.openTaskDialog();
-                            self.cases.push(actionCase);
-                        } else {
-                            self.openCase(new Case(self, null, response, null, {
-                                $http: self.$http,
-                                $dialog: self.$dialog,
-                                $snackbar: self.$snackbar,
-                                $user: self.$user,
-                                $fileUpload: self.$fileUpload,
-                                $i18n: self.$i18n
-                            }));
-                            self.cases.splice(0, self.cases.length);
-                            self.page = {};
-                        }
-                    }
-                }, function () {
-                    self.$snackbar.error(self.$i18n.block.snackbar.creatingNewCaseFailed);
+        if (this.allowedNets.length === 0 || jQuery.isEmptyObject(this.newCase)) {
+            this.$dialog.closeCurrent();
+            return;
+        }
+
+        const self = this;
+        if(this.allowedNets.length === 1)
+            this.newCase.netId = this.allowedNets[0].id;
+        if(!this.newCase.netId){
+            this.$dialog.closeCurrent();
+            return;
+        }
+
+        this.$http.post("/res/workflow/case", JSON.stringify(this.newCase))
+            .then(function (response) {
+                if (response) {
+                    self.$dialog.closeCurrent();
                     self.newCase = {
                         title: self.$i18n.block.case.newTitle
                     };
-                });
-        }
+                    if (self.actionCase) {
+                        const actionCase = new ActionCase(self, self.controller.getPanelGroup(response.title), response, null, {
+                            $http: self.$http,
+                            $dialog: self.$dialog,
+                            $snackbar: self.$snackbar,
+                            $user: self.$user,
+                            $fileUpload: self.$fileUpload,
+                            $timeout: self.$timeout,
+                            $i18n: self.$i18n
+                        }, {
+                            caseType: self.caseType,
+                            removable: true
+                        });
+                        actionCase.openTaskDialog();
+                        self.cases.push(actionCase);
+                    } else {
+                        self.openCase(new Case(self, null, response, null, {
+                            $http: self.$http,
+                            $dialog: self.$dialog,
+                            $snackbar: self.$snackbar,
+                            $user: self.$user,
+                            $fileUpload: self.$fileUpload,
+                            $i18n: self.$i18n
+                        }));
+                        self.cases.splice(0, self.cases.length);
+                        self.page = {};
+                    }
+                }
+            }, function () {
+                self.$snackbar.error(self.$i18n.block.snackbar.creatingNewCaseFailed);
+                self.newCase = {
+                    title: self.$i18n.block.case.newTitle
+                };
+            });
     };
 
     CaseTab.prototype.loadPetriNets = function () {
@@ -209,7 +214,7 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
 
     CaseTab.prototype.loadPetriNet = function (title, callback = () => {
     }) {
-        if(!title) {
+        if (!title) {
             callback(false);
             return;
         }
@@ -223,9 +228,10 @@ define(['./Tab', './Case', './ActionCase'], function (Tab, Case, ActionCase) {
         })
     };
 
-    CaseTab.prototype.loadTransitions = function (callback = ()=>{}) {
+    CaseTab.prototype.loadTransitions = function (callback = () => {
+    }) {
         const self = this;
-        this.$http.post("/res/petrinet/transition/refs",[this.net.entityId]).then(function (response) {
+        this.$http.post("/res/petrinet/transition/refs", [this.net.entityId]).then(function (response) {
             response.$request().$get("transitionReferences").then(function (resources) {
                 self.transitions = resources.filter(r => self.transitionNames.includes(r.title));
                 self.transitions && self.transitions.length > 0 ? callback(true) : callback(false);

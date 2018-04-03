@@ -7,7 +7,8 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
      * @param {Filter} baseFilter
      * @param useCase
      * @param angular
-     * @param config options: closable(if tab have close button), filterPolicy:constant, showTransactions, allowHighlight(highlight unfinished tasks), searchable
+     * @param config options: closable(if tab have close button), filterPolicy:constant, showTransactions,
+     * allowHighlight(highlight unfinished tasks), searchable, autoOpenUnfinished, fullReload
      * @constructor
      */
     function TaskTab(id, label, baseFilter, useCase, angular, config = {}) {
@@ -68,7 +69,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
     };
 
     TaskTab.prototype.reload = function () {
-        if (this.tasks.length > 0) {
+        if (this.isNotEmpty()) {
             this.removeAll();
         }
         this.load(false, true);
@@ -79,8 +80,12 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.tasks.splice(0, this.tasks.length);
     };
 
+    TaskTab.prototype.isNotEmpty = function() {
+        return this.tasks && this.tasks.length > 0;
+    };
+
     TaskTab.prototype.buildRequest = function (next, all) {
-        const url = next && this.page.next ? this.page.next : this.baseUrl + "?sort=priority" + (all ? "&size="+this.tasks.length : "");
+        const url = next && this.page.next ? this.page.next : this.baseUrl + "?sort=priority"; //+ (all ? "&size="+this.tasks.length : "");
         return {
             method: "POST",
             url: url,
@@ -101,7 +106,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
             if (self.page.totalElements === 0) {
                 self.$snackbar.info(self.$i18n.block.snackbar.noTasks);
                 self.page.next = undefined;
-                if (self.tasks)
+                if (self.isNotEmpty())
                     self.removeAll();
                 self.loading = false;
                 return;
@@ -121,7 +126,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
             }, function () {
                 self.$snackbar.info(`${self.$i18n.block.snackbar.noTasksFoundIn} ${self.label}`);
                 self.page.next = undefined;
-                if (self.tasks) {
+                if (self.isNotEmpty()) {
                     self.removeAll();
 
                 }
@@ -155,7 +160,10 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                 resource: r,
                 links: r.links,
                 tab: this,
-                config: {allowHighlight: this.allowHighlight}
+                config: {
+                    allowHighlight: this.allowHighlight,
+                    fullReload: this.fullReload
+                }
             }).then(function (panel) {
                 if (self.taskControllers[r.stringId]) {
                     self.taskControllers[r.stringId].panel = panel;
@@ -163,9 +171,13 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                     delete self.taskControllers[r.stringId];
                 }
 
-                if (self.showTransactions) {
-                    self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
-                    self.transactionProgress = self.mostForwardTransaction();
+                if(Object.keys(self.taskControllers).length === 0){
+                    if (self.showTransactions) {
+                        self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
+                        self.transactionProgress = self.mostForwardTransaction();
+                    }
+
+                    self.openUnfinishedTask();
                 }
             });
         });
@@ -185,6 +197,14 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
 
     TaskTab.prototype.updateTasksData = function (updateObj) {
         this.tasks.forEach(t => t.updateDataGroups(updateObj));
+    };
+
+    TaskTab.prototype.openUnfinishedTask = function () {
+        if(!this.autoOpenUnfinished)
+            return;
+        const unfinished = this.tasks.filter(t => !t.finishDate);
+        if(unfinished.length === 1)
+            unfinished[0].click();
     };
 
     TaskTab.prototype.loadTransactions = function () {
