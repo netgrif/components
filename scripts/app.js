@@ -45,6 +45,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 .when('/profile', 'app.profile')
                 .when('/tasks', 'app.tasks')
                 .when('/workflow', 'app.workflow')
+                .when('/settings', 'app.settings')
 
                 .segment('app', {
                     templateUrl: "views/app/main.html",
@@ -82,6 +83,11 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     templateUrl: 'views/app/workflow.html',
                     controller: 'WorkflowController',
                     controllerAs: 'workCtrl'
+                })
+                .segment('settings', {
+                    templateUrl: 'views/app/settings.html',
+                    controller: 'SettingsController',
+                    controllerAs: 'settCtrl'
                 })
                 .up()
                 .segment('login', {

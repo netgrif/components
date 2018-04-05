@@ -44,8 +44,16 @@ md-dialog {
             }
         }
 
-        md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder {
-            color: $color-input-label !important;
+        md-select {
+
+            &.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder {
+                color: $color-input-label !important;
+            }
+
+            .md-select-value span:first-child:after {
+                color: $color-data-required-label !important;
+                font-size: 20px !important;
+            }
         }
 
         input {

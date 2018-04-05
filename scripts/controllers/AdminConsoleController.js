@@ -46,9 +46,6 @@ define(['angular', '../modules/Admin'], function (angular) {
             self.usersTab = new UserRolesTab(UserRolesTab.USER_PREFERENCE);
             self.rolesTab = new UserRolesTab(UserRolesTab.ROLE_PREFERENCE);
 
-            //Settings tab
-            self.changeUserSignUpPolicy = $auth.userSignUp;
-
             /**
              * Load process roles for invite tab.
              * Before calling this method, this controller must have loaded list of petri nets.

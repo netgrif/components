@@ -863,6 +863,28 @@ body {
   .layout-rh-100-min-550 {
     height: 100%; } }
 
+h1 {
+  font-size: 32px;
+  font-weight: 300;
+  color: #FAFAFA; }
+  h1 strong {
+    font-weight: 700;
+    color: #0047BA; }
+
+h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 300;
+  color: #FAFAFA; }
+  h2 strong {
+    font-weight: 600;
+    color: #0047BA; }
+
+h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400; }
+
 span strong {
   font-weight: 600;
   color: #0047BA; }
@@ -1126,7 +1148,7 @@ span.highlight {
 
 .background-auth {
   background-size: cover !important;
-  background: url("../../../../assets/dark-blue/high-tatras.jpg"); }
+  background: url("../../../../assets/default/netgrif_background.png"); }
 
 .background-default {
   background-size: cover !important;
@@ -2279,8 +2301,12 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .card md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-no-shadow md-input-container:not(.md-input-invalid).md-input-focused label, .base .card-header md-input-container:not(.md-input-invalid).md-input-focused label, .base md-expansion-panel md-input-container:not(.md-input-invalid).md-input-focused label {
   color: rgba(0, 0, 0, 0.54) !important; }
 
-.base .card md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card md-input-container md-select .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select .md-select-value.md-select-placeholder {
+.base .card md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base .card md-input-container md-select md-select .md-select-value.md-select-placeholder, .base .card-no-shadow md-input-container md-select md-select .md-select-value.md-select-placeholder, .base .card-header md-input-container md-select md-select .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select.md-default-theme .md-select-value.md-select-placeholder, .base md-expansion-panel md-input-container md-select md-select .md-select-value.md-select-placeholder {
   color: rgba(0, 0, 0, 0.54) !important; }
+
+.base .card md-input-container md-select .md-select-value span:first-child:after, .base .card-no-shadow md-input-container md-select .md-select-value span:first-child:after, .base .card-header md-input-container md-select .md-select-value span:first-child:after, .base md-expansion-panel md-input-container md-select .md-select-value span:first-child:after {
+  color: #f44336 !important;
+  font-size: 20px !important; }
 
 .base .card md-input-container input, .base .card-no-shadow md-input-container input, .base .card-header md-input-container input, .base md-expansion-panel md-input-container input {
   color: rgba(0, 0, 0, 0.87) !important; }

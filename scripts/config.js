@@ -83,6 +83,9 @@ define([], function () {
         },
         show: {
             priority: true
+        },
+        enable: {
+            userSignUp: true
         }
     };
 });

@@ -15,7 +15,7 @@
         <md-input-container flex>
             <md-switch class="md-primary"
                        ng-model="field.newValue"
-                       ng-change="field.changed = true;field.parent.save()"
+                       ng-change="field.changed = true;field.parent.save();field.active = false"
                        ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
                        ng-focus="field.active = true"
                        ng-required="field.logic.required"
