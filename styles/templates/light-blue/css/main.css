@@ -104,7 +104,7 @@
   color: #2663C4; }
 
 .color-fg-primary-500 {
-  color: #0047BA !important; }
+  color: #0047BA; }
 
 .color-fg-primary-600 {
   color: #0040B3; }
@@ -1148,7 +1148,7 @@ span.highlight {
 
 .background-auth {
   background-size: cover !important;
-  background: url("../../../../assets/dark-blue/high-tatras.jpg"); }
+  background: url("../../../../assets/default/netgrif_background.png"); }
 
 .background-default {
   background-size: cover !important;
