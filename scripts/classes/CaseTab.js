@@ -6,7 +6,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
      * @param {Object} controller
      * @param {Filter} baseFilter
      * @param {Object} angular
-     * @param {Object} config - processName(string), actionCase(boolean), authorityToCreate(string), allowedNets(array of Net objects)
+     * @param {Object} config - actionCase(boolean), authorityToCreate(string), allowedNets(array of Net objects)
      * @constructor
      */
     function CaseTab(label, controller, baseFilter, angular, config = {}) {
@@ -33,20 +33,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
 
     CaseTab.prototype.activate = function () {
         if (this.cases.length === 0)
-            if (!this.processName) {
-                this.load(false);
-                return;
-            }
-        this.loadPetriNet(this.processName, (success) => {
-            if (success) {
-                if (this.transitionNames)
-                    this.loadTransitions(success => {
-                        if (success) this.load(false);
-                    });
-                else
-                    this.load(false);
-            }
-        });
+            this.load(false);
     };
 
     CaseTab.prototype.buildSearchRequest = function (next) {
@@ -137,9 +124,9 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     };
 
     CaseTab.prototype.openNewCaseDialog = function (title) {
-        if(this.allowedNets.length === 0)
+        if (this.allowedNets.length === 0)
             return;
-        if(!title)
+        if (!title)
             title = this.label;
         this.$dialog.showByTemplate('create_case', this, {title: title});
     };
@@ -151,9 +138,9 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
         }
 
         const self = this;
-        if(this.allowedNets.length === 1)
+        if (this.allowedNets.length === 1)
             this.newCase.netId = this.allowedNets[0].id;
-        if(!this.newCase.netId){
+        if (!this.newCase.netId) {
             this.$dialog.closeCurrent();
             return;
         }
@@ -199,51 +186,6 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                     title: self.$i18n.block.case.newTitle
                 };
             });
-    };
-
-    CaseTab.prototype.loadPetriNets = function () {
-        const self = this;
-        this.$http.get("/res/petrinet/refs").then(function (response) {
-            response.$request().$get("petriNetReferences").then(function (resource) {
-                self.petriNetRefs = resource;
-            });
-        }, function () {
-            self.$snackbar.error(self.$i18n.block.snackbar.gettingPetriNetRefsFailed);
-        });
-    };
-
-    CaseTab.prototype.loadPetriNet = function (title, callback = () => {
-    }) {
-        if (!title) {
-            callback(false);
-            return;
-        }
-        const self = this;
-        this.$http.post("/res/petrinet/ref", {title: title}).then(function (response) {
-            self.net = response;
-            callback(true);
-        }, function () {
-            self.$snackbar.error(`${self.$i18n.block.snackbar.loading}  ${title} ${self.$i18n.block.snackbar.failed}`);
-            callback(false);
-        })
-    };
-
-    CaseTab.prototype.loadTransitions = function (callback = () => {
-    }) {
-        const self = this;
-        this.$http.post("/res/petrinet/transition/refs", [this.net.entityId]).then(function (response) {
-            response.$request().$get("transitionReferences").then(function (resources) {
-                self.transitions = resources.filter(r => self.transitionNames.includes(r.title));
-                self.transitions && self.transitions.length > 0 ? callback(true) : callback(false);
-
-            }, function () {
-                console.log("References for transitions were not found!");
-                callback(false);
-            });
-        }, function () {
-            self.$snackbar.error(self.$i18n.block.snackbar.loadingDataForFilterFailed);
-            callback(false);
-        });
     };
 
     CaseTab.prototype.delete = function (useCase) {

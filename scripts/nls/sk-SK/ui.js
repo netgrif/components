@@ -309,7 +309,16 @@ define({
                 attachModelHelp: "Vyžadovaný formát XML",
                 name: "Názov",
                 key: "Klúč",
-                maxchars: "Kľúč musí byť maximálne 3 znaky dlhý",
+                maxchars: "Kľúč musí byť maximálne 5 znaky dlhý",
+                identifier: "Identifier",
+                release: {
+                    this: "Release",
+                    type: {
+                        major: "Major",
+                        minor: "Minor",
+                        patch: "Patch"
+                    }
+                },
                 submit: "Nahrať"
             },
             saveFilter: {
