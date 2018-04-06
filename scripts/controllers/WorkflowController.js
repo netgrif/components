@@ -1,11 +1,13 @@
 define(['angular', '../modules/Workflow', '../modules/Main'],
     function (angular) {
         angular.module('ngWorkflow').controller('WorkflowController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope','$process',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process) {
                     const self = this;
 
-                    self.petriNetMeta = {};
+                    self.petriNetMeta = {
+                        releaseType: "patch"
+                    };
                     self.netFileName = undefined;
 
                     self.expansionGroup = undefined;
@@ -50,19 +52,6 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         });
                     };
 
-                    self.loadPetriNets = function () {
-                        if (self.petriNetRefs) return;
-                        $http.get("/res/petrinet/refs").then(function (response) {
-                            $log.debug(response);
-                            $log.debug(response.$request());
-                            response.$request().$get("petriNetReferences").then(function (resource) {
-                                self.petriNetRefs = resource;
-                            });
-                        }, function () {
-                            $log.debug("Petri net refs get failed");
-                        });
-                    };
-
                     self.showDialog = function (template) {
                         $dialog.showByTemplate(template, self);
                     };
@@ -98,6 +87,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                             return {};
                         return {
                             or: {
+                                identifier: self.searchLast,
                                 title: self.searchLast,
                                 initials: self.searchLast
                             }
@@ -129,11 +119,11 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                                 self.clearAll();
                             self.page = Object.assign(self.page, response.page);
                             self.page.pageLinks = response.$response().data._links;
-                            response.$request().$get("petriNetSmalls").then(resources => {
+                            response.$request().$get("petriNetReferences").then(resources => {
                                 resources.forEach((r, i) => {
                                     self.expansionGroup.add(self.expansionPanelName, {
                                         resource: r,
-                                        links: response.$response().data._embedded.petriNetSmalls[i]._links
+                                        links: response.$response().data._embedded.petriNetReferences[i]._links
                                     }).then(panel => {
                                         self.panels.push(panel);
                                     })

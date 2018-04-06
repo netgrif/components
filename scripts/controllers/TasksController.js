@@ -1,8 +1,8 @@
 define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Filter', '../modules/Tasks', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, TaskTab, FilterTab, Filter) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process) {
                     const self = this;
 
                     self.activeTabIndex = 0;
@@ -26,7 +26,8 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                                 $fileUpload,
                                 $timeout,
                                 $mdExpansionPanelGroup,
-                                $i18n
+                                $i18n,
+                                $process
                             }, {
                                 closable: closable,
                                 filterPolicy: filterPolicy,

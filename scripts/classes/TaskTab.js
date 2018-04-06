@@ -1,7 +1,7 @@
 define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], function (Tab, Task, Transaction, Filter, TaskSearch) {
     /**
      * Constructor for TaskTab class
-     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n
+     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n, $process
      * @param id
      * @param label
      * @param {Filter} baseFilter
@@ -28,7 +28,8 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
             this.searchToolbar = new TaskSearch(this, {
                 $http: this.$http,
                 $snackbar: this.$snackbar,
-                $i18n: this.$i18n
+                $i18n: this.$i18n,
+                $process: this.$process
             }, {
                 considerWholeSearchInput: false
             });
@@ -210,20 +211,25 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
     TaskTab.prototype.loadTransactions = function () {
         if (!this.useCase || this.transactions.length > 0) return;
 
-        const self = this;
-        this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
-            response.$request().$get("transactions").then(function (resources) {
-                self.transactions = resources.map(r => new Transaction(r, {}));
-                if (self.tasks.length > 0)
-                    self.transactions.forEach(trans => trans.setActive(self.tasks));
+        this.transactions = this.$process.get(this.useCase.processIdentifier).transactions;
+        if(this.tasks.length > 0){
+            this.transactions.forEach(trans => trans.setActive(this.tasks));
+        }
 
-            }, function () {
-                console.log(`No resource transactions for net ${self.useCase.petriNetId}`);
-            })
-
-        }, function () {
-            self.$snackbar.error(`${self.$i18n.block.snackbar.transactionsFor} ${self.useCase.title} ${self.$i18n.block.snackbar.failedToLoad}`);
-        });
+        // const self = this;
+        // this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
+        //     response.$request().$get("transactions").then(function (resources) {
+        //         self.transactions = resources.map(r => new Transaction(r, {}));
+        //         if (self.tasks.length > 0)
+        //             self.transactions.forEach(trans => trans.setActive(self.tasks));
+        //
+        //     }, function () {
+        //         console.log(`No resource transactions for net ${self.useCase.petriNetId}`);
+        //     })
+        //
+        // }, function () {
+        //     self.$snackbar.error(`${self.$i18n.block.snackbar.transactionsFor} ${self.useCase.title} ${self.$i18n.block.snackbar.failedToLoad}`);
+        // });
     };
 
     TaskTab.prototype.mostForwardTransaction = function () {

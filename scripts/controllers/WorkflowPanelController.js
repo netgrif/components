@@ -18,7 +18,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     };
 
                     Object.assign(self,resource);
-                    self.uploadDate = self.parseDate(self.creationDate);
+                    self.uploadDate = self.parseDate(self.createdDate);
 
                     self.details = {
                         title: {
@@ -42,37 +42,37 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                             value: self.uploadDate
                         }
                     };
-                    self.stats = {
-                        places: {
-                            name: $i18n.page.workflow.data.item.places.title,
-                            icon: 'group_work',
-                            value: self.places
-                        },
-                        transitions: {
-                            name: $i18n.page.workflow.data.item.transitions.title,
-                            icon: 'check_box',
-                            value: self.transitions
-                        },
-                        arcs: {
-                            name: $i18n.page.workflow.data.item.arcs.title,
-                            icon: 'trending_flat',
-                            value: self.arcs
-                        },
-                        roles: {
-                            name: $i18n.page.workflow.data.item.roles.title,
-                            icon: 'perm_identity',
-                            value: self.roles
-                        },
-                        data: {
-                            name: $i18n.page.workflow.data.item.data.title,
-                            icon: 'storage',
-                            value: self.dataSet
-                        },
-                        actions: {
-                            name: $i18n.page.workflow.data.item.actions.title,
-                            icon: 'toys',
-                            value: self.actions
-                        }
-                    };
+                    // self.stats = {
+                    //     places: {
+                    //         name: $i18n.page.workflow.data.item.places.title,
+                    //         icon: 'group_work',
+                    //         value: self.places
+                    //     },
+                    //     transitions: {
+                    //         name: $i18n.page.workflow.data.item.transitions.title,
+                    //         icon: 'check_box',
+                    //         value: self.transitions
+                    //     },
+                    //     arcs: {
+                    //         name: $i18n.page.workflow.data.item.arcs.title,
+                    //         icon: 'trending_flat',
+                    //         value: self.arcs
+                    //     },
+                    //     roles: {
+                    //         name: $i18n.page.workflow.data.item.roles.title,
+                    //         icon: 'perm_identity',
+                    //         value: self.roles
+                    //     },
+                    //     data: {
+                    //         name: $i18n.page.workflow.data.item.data.title,
+                    //         icon: 'storage',
+                    //         value: self.dataSet
+                    //     },
+                    //     actions: {
+                    //         name: $i18n.page.workflow.data.item.actions.title,
+                    //         icon: 'toys',
+                    //         value: self.actions
+                    //     }
+                    // };
                 }]);
     });

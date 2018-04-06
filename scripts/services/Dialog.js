@@ -22,9 +22,9 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             },
             show: function (template, parent, controller, locals, openFrom = undefined) {
                 return $mdDialog.show({
-                    controller:controller,
+                    controller: controller,
                     controllerAs: 'dialogCtrl',
-                    templateUrl: '../../views/app/dialogs/dialog_'+template+".html",
+                    templateUrl: '../../views/app/dialogs/dialog_' + template + ".html",
                     parent: angular.element(document.body),
                     openFrom: openFrom,
                     locals: {
@@ -38,11 +38,11 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             },
             showByElement: function (elementId, parent, locals, callback) {
                 dialogService.cache = locals;
-                if(callback && callbacks[callback])
+                if (callback && callbacks[callback])
                     callbacks[callback]();
 
                 return $mdDialog.show({
-                    contentElement:'#'+elementId,
+                    contentElement: '#' + elementId,
                     parent: angular.element(document.body),
                     clickOutsideToClose: true,
                     escapeToClose: true,
@@ -60,8 +60,8 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
         return dialogService;
     });
 
-    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional', '$i18n',
-        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional, $i18n) {
+    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional', '$i18n', '$process',
+        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional, $i18n, $process) {
             var self = this;
 
             $scope.parentCtrl = parentCtrl;
@@ -118,16 +118,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             self.loadRoles = function () {
                 $scope.opt.roles = [];
                 $scope.opt.filter.forEach(net => {
-                    $http.get("/res/petrinet/"+net+"/roles").then(function (response) {
-                        $log.debug(response);
-                        response.$request().$get("processRoles").then(function (resources) {
-                            $scope.opt.roles = $scope.opt.roles.concat(resources);
-                        }, function () {
-                            $log.debug("Process roles were not found!");
-                        });
-                    }, function () {
-                        $snackbar.error($i18n.block.snackbar.failedToLoadRoles);
-                    });
+                    $scope.opt.roles = $scope.opt.roles.concat($process.get(net).roles);
                 });
             };
 

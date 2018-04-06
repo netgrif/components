@@ -2,7 +2,7 @@ define(['./Filter'], function (Filter) {
 
     /**
      * @param parent Parent controller
-     * @param angular $http, $snackbar, $i18n
+     * @param angular $http, $snackbar, $i18n, $process
      * @param config options: considerWholeSearchInput
      * @constructor
      */
@@ -237,17 +237,20 @@ define(['./Filter'], function (Filter) {
 
     TaskSearch.prototype.loadProcessReferences = function () {
         const self = this;
-        return this.$http.get("/res/petrinet/refs").then(response => {
-            return response.$request().$get("petriNetReferences").then(resources => {
-                self.autoCompleteStorage.process = resources.map(r => new AutoCompleteItem("process", r));
-                return self.filterValues(self.autoCompleteStorage.process);
-            }, () => {
-                console.log("No Petri net resources was found!");
-            });
-        }, error => {
-            console.log("Petri net references failed to load!");
-            console.error(error);
-        });
+        this.autoCompleteStorage.process = this.$process.nets.map(n => new AutoCompleteItem("process", n));
+        return this.filterValues(this.autoCompleteStorage.process);
+
+        // return this.$http.get("/res/petrinet/refs").then(response => {
+        //     return response.$request().$get("petriNetReferences").then(resources => {
+        //         self.autoCompleteStorage.process = resources.map(r => new AutoCompleteItem("process", r));
+        //         return self.filterValues(self.autoCompleteStorage.process);
+        //     }, () => {
+        //         console.log("No Petri net resources was found!");
+        //     });
+        // }, error => {
+        //     console.log("Petri net references failed to load!");
+        //     console.error(error);
+        // });
     };
 
     TaskSearch.prototype.loadTransitionReferences = function () {
@@ -257,7 +260,7 @@ define(['./Filter'], function (Filter) {
             queryProcess = queryProcess.concat(this.query.process.map(p => p.param));
         else
             queryProcess.push(this.query.process.param);
-        return this.$http.post("/res/petrinet/transition/refs", queryProcess).then(response => {
+        return this.$http.get("/res/petrinet/transitions", {params: {ids: queryProcess}}).then(response => {
             return response.$request().$get("transitionReferences").then(resources => {
                 self.autoCompleteStorage.transition = resources.map(r => new AutoCompleteItem("transition", r));
                 return self.filterValues(self.autoCompleteStorage.transition);

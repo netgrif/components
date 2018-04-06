@@ -43,7 +43,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                     $fileUpload,
                                     $timeout,
                                     $mdExpansionPanelGroup,
-                                    $i18n
+                                    $i18n,
+                                    $process
                                 }, {
                                     showTransactions: true,
                                     allowHighlight: true,

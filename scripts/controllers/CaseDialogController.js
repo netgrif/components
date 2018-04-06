@@ -1,11 +1,11 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab, Task) {
         angular.module('ngMain').controller('CaseDialogController',
-            ['$log', '$scope', '$http', '$mdDialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', 'locals','$i18n',
+            ['$log', '$scope', '$http', '$mdDialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', 'locals', '$i18n',
                 function ($log, $scope, $http, $mdDialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, locals, $i18n) {
                     const self = this;
 
-                    Object.assign(this,locals,locals.locals);
+                    Object.assign(this, locals, locals.locals);
                     self.cases = [];
                     self.selectedCase = undefined;
 
@@ -13,7 +13,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                     self.loadCases = function (netId) {
                         if (!netId) return;
                         const self = this;
-                        $http.post("/res/workflow/case/search", {petriNet: netId}).then(function (response) {
+                        $http.post("/res/workflow/case/search", {petriNet: {id: netId}}).then(function (response) {
                             response.$request().$get("cases").then(function (resources) {
                                 self.cases = resources;
                                 self.cases.forEach(c => {

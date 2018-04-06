@@ -307,7 +307,16 @@ define({
                     attachModelHelp: "Required XML format",
                     name: "Name",
                     key: "Key",
-                    maxchars: "Key must be at most 3 characters long",
+                    maxchars: "Key must be at most 5 characters long",
+                    identifier: "Identifier",
+                    release: {
+                        this: "Release",
+                        type: {
+                            major: "Major",
+                            minor: "Minor",
+                            patch: "Patch"
+                        }
+                    },
                     submit: "Upload"
                 },
                 saveFilter: {
