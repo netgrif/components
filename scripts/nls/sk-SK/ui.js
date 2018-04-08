@@ -2,7 +2,7 @@ define({
     test: "Toto je testovací reťazec!",
     version: {
         this: "Verzia",
-        id: "2.0.1"
+        id: "2.0.9"
     },
     page: {
         signIn: {
@@ -309,7 +309,7 @@ define({
                 attachModelHelp: "Vyžadovaný formát XML",
                 name: "Názov",
                 key: "Klúč",
-                maxchars: "Kľúč musí byť maximálne 5 znaky dlhý",
+                maxchars: "Kľúč musí byť maximálne 3 znaky dlhý",
                 identifier: "Identifier",
                 release: {
                     this: "Release",

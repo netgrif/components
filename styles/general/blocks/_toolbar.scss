@@ -1,6 +1,17 @@
 //@import '../../templates/default/scss/config';
 @import '../dims';
 
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+
+    md-icon {
+        color: $color-toolbar-icon;
+
+        &.color-fg-primary-500 {
+            color: $color-primary-500;
+        }
+    }
+}
+
 .main-toolbar {
     height: $dim-56px;
     min-height: $dim-56px;

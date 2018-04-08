@@ -14,7 +14,7 @@
         padding-right: 0;
     }
 
-    *:not(.md-primary) &-icon {
+    *:not(.md-primary):not(.color-fg-primary-500) &-icon {
         color: $color-card-icon !important;
     }
 

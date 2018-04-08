@@ -3,7 +3,7 @@ define({
         test: "This is test string!",
         version: {
             this: "Version",
-            id: "2.0.1"
+            id: "2.0.9"
         },
         page: {
             signIn: {
@@ -307,7 +307,7 @@ define({
                     attachModelHelp: "Required XML format",
                     name: "Name",
                     key: "Key",
-                    maxchars: "Key must be at most 5 characters long",
+                    maxchars: "Key must be at most 3 characters long",
                     identifier: "Identifier",
                     release: {
                         this: "Release",

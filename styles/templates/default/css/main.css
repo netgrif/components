@@ -1743,7 +1743,7 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   .base .card md-card-content, .base .card-no-shadow md-card-content, .base .card-header md-card-content {
     padding-left: 0;
     padding-right: 0; }
-  *:not(.md-primary) .base .card-icon {
+  *:not(.md-primary):not(.color-fg-primary-500) .base .card-icon {
     color: rgba(0, 0, 0, 0.54) !important; }
   .base .card a, .base .card-no-shadow a, .base .card-header a {
     color: rgba(0, 0, 0, 0.87);
@@ -2229,6 +2229,11 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 
 .base .border-radius-bottom-right-default {
   border-bottom-right-radius: 2px; }
+
+.base md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon, .base md-toolbar:not(.md-menu-toolbar) md-icon {
+  color: rgba(0, 0, 0, 0.54); }
+  .base md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon.color-fg-primary-500, .base md-toolbar:not(.md-menu-toolbar) md-icon.color-fg-primary-500 {
+    color: #009688; }
 
 .base .main-toolbar {
   height: 56px;

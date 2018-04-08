@@ -48,7 +48,7 @@
 
                 <md-input-container>
                     <label>{{::$root.$i18n.block.dialog.uploadModel.key}}</label>
-                    <input md-maxlength="5" type="text" name="initials" ng-model="parentCtrl.petriNetMeta.initials" required>
+                    <input md-maxlength="3" type="text" name="initials" ng-model="parentCtrl.petriNetMeta.initials" required>
                     <div ng-messages="petriNetUploadForm.initials.$error">
                         <div ng-message="md-maxlength">{{::$root.$i18n.block.dialog.uploadModel.maxchars}}</div>
                     </div>
