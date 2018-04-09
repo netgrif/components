@@ -82,8 +82,8 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                 }
             };
 
-            self.selfSignUp = function () {
-                //TODO 19.2.2018 Submit user self registration form
+            self.requestSignUp = function () {
+                // TODO 9.4.2018 Sent user email for self registration or forgot psw
             };
 
             self.matchPasswords = function () {

@@ -9,7 +9,8 @@ define({
             email: "Email",
             psw: "Heslo",
             signIn: "Prihlásiť",
-            signUp: "Zabudnuté heslo"
+            signUp: "Registrovať",
+            forgotPsw: "Zabudnuté heslo"
         },
         signUp: {
             email: "Email",

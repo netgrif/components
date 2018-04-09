@@ -2680,8 +2680,15 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     background-color: #009688; }
 
 .base .form-btn-signup {
+  color: #FAFAFA;
+  background-color: #009688; }
+  .base .form-btn-signup:hover {
+    color: #FAFAFA;
+    background-color: #009688; }
+
+.base .form-btn-forgotPsw {
   color: rgba(0, 0, 0, 0.54);
   background-color: transparent; }
-  .base .form-btn-signup:hover {
+  .base .form-btn-forgotPsw:hover {
     color: #009688;
     background-color: transparent; }

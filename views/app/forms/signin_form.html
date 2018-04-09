@@ -1,25 +1,35 @@
 <form ng-submit="loginCtrl.login()" class="form-signin">
 
-    <md-input-container class="md-block">
+    <md-input-container class="md-block margin-right-default">
         <md-icon class="material-icons">email</md-icon>
         <input ng-model="loginCtrl.credentials.username" type="text" placeholder="{{::$i18n.page.signIn.email}}" ng-required="true">
     </md-input-container>
 
-    <md-input-container class="md-block">
+    <md-input-container class="md-block margin-right-default">
         <md-icon class="material-icons">lock</md-icon>
         <input ng-model="loginCtrl.credentials.password" type="password" placeholder="{{::$i18n.page.signIn.psw}}" ng-required="true">
     </md-input-container>
 
-    <md-card-actions layout="row" layout-xs="column" layout-align="space-between center">
+    <div layout="column" layout-align="start center">
 
-        <md-button flex-order-xs="1" href="#" class="form-btn-signup" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
-            {{::$i18n.page.signIn.signUp}}
+        <div layout="row" layout-xs="column" layout-align="space-between center" class="layout-rw-100">
+
+            <md-button ng-if="$config.enable.userSignUp" flex flex-order-xs="1" class="form-btn-signup layout-xs-rw-100" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
+                {{::$i18n.page.signIn.signUp}}
+            </md-button>
+
+            <md-divider ng-if="$config.enable.userSignUp" class="color-border-transparent border-width-default"></md-divider>
+
+            <md-button flex type="submit" flex-order-xs="-1" class="form-btn-submit layout-xs-rw-100">
+                {{::$i18n.page.signIn.signIn}}
+            </md-button>
+
+        </div>
+
+        <md-button class="form-btn-forgotPsw layout-rw-100" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
+            {{::$i18n.page.signIn.forgotPsw}}
         </md-button>
 
-        <md-button type="submit" flex-order-xs="-1" class="form-btn-submit">
-            {{::$i18n.page.signIn.signIn}}
-        </md-button>
-
-    </md-card-actions>
+    </div>
 
 </form>

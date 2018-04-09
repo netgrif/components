@@ -74,18 +74,24 @@ $color-dark-grey-700:			#293740;
 $color-dark-grey-800:			#262C32;
 
 // Auth
-$color-auth-icon:				$color-primary-600;
+$color-auth-icon:				$color-primary-500;
 // Sign in
-$color-signin-btn-bg:			$color-primary-600;
+$color-signin-btn-bg:			$color-primary-500;
 $color-signin-btn-text:			$color-grey-50;
 $color-signin-btn-bg-hover:		$color-grey-50;
-$color-signin-btn-text-hover:	$color-primary-600;
+$color-signin-btn-text-hover:	$color-primary-500;
 
 // Sign up
-$color-signup-btn-bg:			transparent;
-$color-signup-btn-text:			$color-primary-600;
+$color-signup-btn-bg:			$color-primary-500;
+$color-signup-btn-text:			$color-grey-50;
 $color-signup-btn-bg-hover:		$color-grey-50;
-$color-signup-btn-text-hover:	$color-primary-600;
+$color-signup-btn-text-hover:	$color-primary-500;
+
+// Forgot psw
+$color-forgotPsw-btn-bg:		transparent;
+$color-forgotPsw-btn-text:		$color-material-grey-text;
+$color-forgotPsw-btn-bg-hover:	transparent;
+$color-forgotPsw-btn-text-hover:$color-primary-500;
 
 // Background
 $color-background-app:			rgb(146, 170, 180);

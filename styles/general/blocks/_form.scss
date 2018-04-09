@@ -33,5 +33,15 @@
                 background-color: $color-signup-btn-bg-hover;
             }
         }
+
+        &-forgotPsw {
+            color: $color-forgotPsw-btn-text;
+            background-color: $color-forgotPsw-btn-bg;
+
+            &:hover {
+                color: $color-forgotPsw-btn-text-hover;
+                background-color: $color-forgotPsw-btn-bg-hover;
+            }
+        }
     }
 }
