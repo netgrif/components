@@ -1,6 +1,7 @@
 define([], function () {
     return {
         appName: "Application Engine",
+        version: "2.0.9",
         themes: {
             default: {
                 primary: {

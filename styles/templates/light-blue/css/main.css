@@ -2670,14 +2670,14 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     z-index: -1; }
 
 .base .form-signin md-input-container .material-icons, .base .form-signup md-input-container .material-icons, .base .form-self-registration md-input-container .material-icons {
-  color: #0040B3; }
+  color: #0047BA; }
 
 .base .form-btn-submit {
   color: #FAFAFA;
-  background-color: #0040B3; }
+  background-color: #0047BA; }
   .base .form-btn-submit:hover {
-    color: #0040B3;
-    background-color: #FAFAFA; }
+    color: #FAFAFA;
+    background-color: #2663C4; }
 
 .base .form-btn-signup {
   color: #FAFAFA;

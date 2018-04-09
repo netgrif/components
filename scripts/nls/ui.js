@@ -2,8 +2,7 @@ define({
     'root': {
         test: "This is test string!",
         version: {
-            this: "Version",
-            id: "2.0.9"
+            this: "Version"
         },
         page: {
             signIn: {

@@ -1,8 +1,7 @@
 define({
     test: "Toto je testovací reťazec!",
     version: {
-        this: "Verzia",
-        id: "2.0.9"
+        this: "Verzia"
     },
     page: {
         signIn: {
