@@ -26,7 +26,16 @@
             <span class="text-overflow-dots">{{field.newValue ? field.newValue : (field.generated ? field.defaultValue : $i18n.block.data.noFile)}}</span>
         </div>
 
-        <md-menu flex-xs="20" class="width-24px">
+        <md-button ng-if="((field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)) && !(field.parent.user.email == $user.login && field.behavior.editable) && !(field.newFile && !field.uploaded)"
+                   flex-xs="20" class="md-icon-button width-24px" ng-click="field.download()">
+            <md-icon class="material-icons">file_download</md-icon>
+            <md-tooltip md-direction="bottom">
+                {{::$i18n.block.btn.download}}
+            </md-tooltip>
+        </md-button>
+
+        <md-menu ng-if="!((field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)) && (field.parent.user.email == $user.login && field.behavior.editable) && (field.newFile && !field.uploaded)"
+                 flex-xs="20" class="width-24px">
             <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
