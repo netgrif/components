@@ -85,7 +85,7 @@ define([], function () {
             priority: true
         },
         enable: {
-            userSignUp: false
+            userSignUp: true
         }
     };
 });
