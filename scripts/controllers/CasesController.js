@@ -1,8 +1,8 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab, Filter) {
         angular.module('ngCases').controller('CasesController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config) {
                     const self = this;
 
                     self.activeTabIndex = 0;
@@ -47,7 +47,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                     $process
                                 }, {
                                     showTransactions: true,
-                                    allowHighlight: true,
+                                    allowHighlight: $config.allow.taskHighlight,
                                     autoOpenUnfinished: false,
                                     searchable: false,
                                     fullReload: false
