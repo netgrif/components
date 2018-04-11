@@ -21,6 +21,11 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.uploadDate = self.parseDate(self.createdDate);
 
                     self.details = {
+                        identifier: {
+                            name: $i18n.page.workflow.data.item.identifier.title,
+                            icon: 'label',
+                            value: self.identifier
+                        },
                         title: {
                             name: $i18n.page.workflow.data.item.file.title,
                             icon: 'linear_scale',
@@ -29,6 +34,11 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                             //     name: 'file_download',
                             //     tooltip: $i18n.page.workflow.data.item.file.download
                             // }
+                        },
+                        version: {
+                            name: $i18n.page.workflow.data.item.version.title,
+                            icon: 'folder',
+                            value: self.version
                         },
                         author: {
                             name: $i18n.page.workflow.data.item.author.title,

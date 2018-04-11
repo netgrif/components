@@ -64,6 +64,7 @@ define({
             uploadModel: "Nahrať model",
             initials: "Iniciály",
             modelTitle: "Názov modelu",
+            version: "Verzia",
             author: "Autor",
             uploadDate: "Dátum nahrania",
             data: {
@@ -72,10 +73,18 @@ define({
                     statistics: "Štatistiky"
                 },
                 item: {
+                    identifier: {
+                        title: "Identifikátor",
+                        desc: "Jedinečný identifikátor modelu",
+                    },
                     file: {
                         title: "Súbor",
                         desc: "Petriflow model použitý ako šablóna",
                         download: "Stiahnuť"
+                    },
+                    version: {
+                        title: "Verzia",
+                        desc: "Verzia modelu"
                     },
                     author: {
                         title: "Autor",
