@@ -35,7 +35,7 @@
         </md-button>
 
         <md-menu ng-if="!((field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)) && (field.parent.user.email == $user.login && field.behavior.editable) && (field.newFile && !field.uploaded)"
-                 flex-xs="20" class="width-24px">
+                flex-xs="20" class="width-24px">
             <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>

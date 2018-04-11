@@ -1,0 +1,20 @@
+<md-toolbar class="card padding-vertical-2x">
+    <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
+
+        <span>{{::$i18n.page.console.userSignUp}}</span>
+
+        <ng-form name="invitationForm">
+
+            <md-input-container>
+                <md-switch class="md-primary"
+                           ng-model="adminCtrl.changeUserSignUpPolicy"
+                           aria-label="Switch">
+                    <span ng-if="adminCtrl.changeUserSignUpPolicy">{{::$i18n.block.data.enable}}</span>
+                    <span ng-if="!adminCtrl.changeUserSignUpPolicy">{{::$i18n.block.data.disable}}</span>
+                </md-switch>
+            </md-input-container>
+
+        </ng-form>
+
+    </div>
+</md-toolbar>

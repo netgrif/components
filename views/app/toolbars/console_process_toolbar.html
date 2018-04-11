@@ -9,7 +9,7 @@
 
             <md-select ng-model="adminCtrl.selectedNet" ng-change="adminCtrl.loadProcessRoles()">
                 <md-option ng-repeat="process in adminCtrl.processes" ng-value="process" ng-selected="$first">
-                    {{process.title}}
+                    {{process.title+"  v"+process.version}}
                 </md-option>
             </md-select>
 
