@@ -24,6 +24,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
         };
 
         this.activeFilter = baseFilter;
+        this.createDialogTitle = this.allowedNets.length === 1 ? this.allowedNets[0].defaultCaseName : label;
     }
 
     CaseTab.prototype = Object.create(Tab.prototype);
@@ -32,6 +33,8 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     CaseTab.URL_SEARCH = "/res/workflow/case/search";
 
     CaseTab.prototype.activate = function () {
+        this.newCase.title = this.getDefaultCaseTitle();
+
         if (this.cases.length === 0)
             this.load(false);
     };
@@ -126,9 +129,18 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     CaseTab.prototype.openNewCaseDialog = function (title) {
         if (this.allowedNets.length === 0)
             return;
-        if (!title)
-            title = this.label;
-        this.$dialog.showByTemplate('create_case', this, {title: title});
+
+        this.$dialog.showByTemplate('create_case', this, {title: this.createDialogTitle});
+    };
+
+    CaseTab.prototype.getDefaultCaseTitle = function(){
+        return this.allowedNets.length > 0 && this.allowedNets[0].defaultCaseName ? this.allowedNets[0].defaultCaseName : this.$i18n.block.case.newTitle;
+    };
+
+    CaseTab.prototype.changeNewCaseTitle = function () {
+        this.newCase.title = this.allowedNets.find(net => net.id === this.newCase.netId).defaultCaseName;
+        if(!this.newCase.title)
+            this.newCase.title = this.getDefaultCaseTitle();
     };
 
     CaseTab.prototype.createCase = function () {
@@ -150,7 +162,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                 if (response) {
                     self.$dialog.closeCurrent();
                     self.newCase = {
-                        title: self.$i18n.block.case.newTitle
+                        title: self.getDefaultCaseTitle()
                     };
                     if (self.actionCase) {
                         const actionCase = new ActionCase(self, self.controller.getPanelGroup(response.title), response, null, {
@@ -183,7 +195,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
             }, function () {
                 self.$snackbar.error(self.$i18n.block.snackbar.creatingNewCaseFailed);
                 self.newCase = {
-                    title: self.$i18n.block.case.newTitle
+                    title: self.getDefaultCaseTitle()
                 };
             });
     };

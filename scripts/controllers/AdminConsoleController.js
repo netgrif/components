@@ -54,18 +54,18 @@ define(['angular', '../modules/Admin'], function (angular) {
             self.loadProcessRoles = function () {
                 if (!self.selectedNet) return;
                 self.processRoles = [];
-                $http.get("/res/petrinet/" + self.selectedNet.entityId + "/roles").then(function (response) {
+                $http.get("/res/petrinet/" + self.selectedNet.stringId + "/roles").then(function (response) {
                     response.$request().$get("processRoles").then(function (resources) {
                         self.processRoles = resources;
                         self.processRoles.forEach(role => {
                             role.add = function () {
-                                if (self.invitedUser.processRoles[self.selectedNet.entityId]) {
-                                    if (!self.invitedUser.processRoles[self.selectedNet.entityId].roles.includes(this))
-                                        self.invitedUser.processRoles[self.selectedNet.entityId].roles.push(this);
+                                if (self.invitedUser.processRoles[self.selectedNet.stringId]) {
+                                    if (!self.invitedUser.processRoles[self.selectedNet.stringId].roles.includes(this))
+                                        self.invitedUser.processRoles[self.selectedNet.stringId].roles.push(this);
                                 } else {
-                                    self.invitedUser.processRoles[self.selectedNet.entityId] = {roles: []};
-                                    Object.assign(self.invitedUser.processRoles[self.selectedNet.entityId], self.selectedNet);
-                                    self.invitedUser.processRoles[self.selectedNet.entityId].roles.push(this);
+                                    self.invitedUser.processRoles[self.selectedNet.stringId] = {roles: []};
+                                    Object.assign(self.invitedUser.processRoles[self.selectedNet.stringId], self.selectedNet);
+                                    self.invitedUser.processRoles[self.selectedNet.stringId].roles.push(this);
                                 }
                             };
                             role.remove = function (net) {
@@ -157,7 +157,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                     return;
                 this.roles.roles.splice(0, this.roles.roles);
                 this.filteredRoles.splice(0, this.filteredRoles.length);
-                $http.get("/res/petrinet/" + this.roles.process.entityId + "/roles").then(response => {
+                $http.get("/res/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
                     response.$request().$get("processRoles").then(resources => {
                         this.roles.roles = resources;
                         this.roles.roles.forEach(role => {
@@ -166,6 +166,11 @@ define(['angular', '../modules/Admin'], function (angular) {
                                 role.users = new Set(self.users.filter(user => user.roles.has(role.stringId)));
                             }
                         });
+                        if(this.selectedUser){
+                            const user = this.selectedUser;
+                            this.selectedUser = undefined;
+                            this.selectUser(user);
+                        }
                         this.filteredRoles = this.roles.roles;
 
                     }, () => {
@@ -360,7 +365,7 @@ define(['angular', '../modules/Admin'], function (angular) {
             };
 
             self.loadNets = function () {
-                $http.get("/res/petrinet/refs").then(function (response) {
+                $http.get("/res/petrinet").then(function (response) {
                     response.$request().$get("petriNetReferences").then(function (resources) {
                         self.processes = resources;
                     }, function () {
