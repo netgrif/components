@@ -123,7 +123,8 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                                 resources.forEach((r, i) => {
                                     self.expansionGroup.add(self.expansionPanelName, {
                                         resource: r,
-                                        links: response.$response().data._embedded.petriNetReferences[i]._links
+                                        links: response.$response().data._embedded.petriNetReferences[i]._links,
+                                        parent: self
                                     }).then(panel => {
                                         self.panels.push(panel);
                                     })
@@ -141,7 +142,6 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         self.searchLast = self.searchInput.trim();
                         self.load(false);
                     };
-
 
                     self.start();
                 }]);

@@ -1,8 +1,8 @@
 define(['angular', '../modules/Workflow', '../modules/Main'],
     function (angular) {
         angular.module('ngWorkflow').controller('WorkflowPanelController',
-            ['$log', '$scope', '$http', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', 'resource', 'links',
-                function ($log, $scope, $http, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, resource, links) {
+            ['$log', '$scope', '$http', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', 'resource', 'links', 'parent',
+                function ($log, $scope, $http, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, resource, links, parent) {
                     const self = this;
 
                     self.links = links;
@@ -84,5 +84,16 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     //         value: self.actions
                     //     }
                     // };
+
+                    self.delete = function() {
+                        $http.delete("/res/petrinet/" + self.id).then(function (response) {
+                            $snackbar.info(`${$i18n.block.snackbar.model} ${self.title}  v${self.version} ${$i18n.block.snackbar.wasDeleted}`);
+                            parent.load(false);
+
+                        }, function () {
+                            $snackbar.error(`${$i18n.block.snackbar.model} ${self.title}  v${self.version} ${$i18n.block.snackbar.failedToDelete}`);
+                        });
+                    };
+
                 }]);
     });
