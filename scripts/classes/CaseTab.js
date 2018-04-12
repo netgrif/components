@@ -24,7 +24,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
         };
 
         this.activeFilter = baseFilter;
-        this.createDialogTitle = this.allowedNets.length === 1 ? this.allowedNets[0].defaultCaseName : label;
+        this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
     }
 
     CaseTab.prototype = Object.create(Tab.prototype);
@@ -133,13 +133,13 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
         this.$dialog.showByTemplate('create_case', this, {title: this.createDialogTitle});
     };
 
-    CaseTab.prototype.getDefaultCaseTitle = function(){
+    CaseTab.prototype.getDefaultCaseTitle = function () {
         return this.allowedNets.length > 0 && this.allowedNets[0].defaultCaseName ? this.allowedNets[0].defaultCaseName : this.$i18n.block.case.newTitle;
     };
 
     CaseTab.prototype.changeNewCaseTitle = function () {
         this.newCase.title = this.allowedNets.find(net => net.id === this.newCase.netId).defaultCaseName;
-        if(!this.newCase.title)
+        if (!this.newCase.title)
             this.newCase.title = this.getDefaultCaseTitle();
     };
 

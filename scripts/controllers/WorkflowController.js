@@ -45,6 +45,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                                 $dialog.closeCurrent();
                                 self.clearAll();
                                 self.load(false);
+                                $process.init();
                             }
                             else $snackbar.error($i18n.block.snackbar.modelFailedToUpload);
                             self.netFile = undefined;
