@@ -62,6 +62,7 @@ define({
                 uploadModel: "Upload model",
                 initials: "Initials",
                 modelTitle: "Model title",
+                version: "Version",
                 author: "Author",
                 uploadDate: "Upload date",
                 data: {
@@ -70,10 +71,18 @@ define({
                         statistics: "Statistics"
                     },
                     item: {
+                        identifier: {
+                            title: "Identifier",
+                            desc: "Unique model identifier",
+                        },
                         file: {
                             title: "File",
                             desc: "Petriflow model used as template",
                             download: "Download"
+                        },
+                        version: {
+                            title: "Version",
+                            desc: "Model version"
                         },
                         author: {
                             title: "Author",

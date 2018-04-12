@@ -38,8 +38,7 @@
                             </span>
                         </md-item-template>
                         <md-not-found>
-                            <!--{{::$i18n.page.tasks.filter.process + " " + taskTab.searchToolbar.searchText + " " + $i18n.page.tasks.filter.processNotFound}}-->
-                            {{::$i18n.page.tasks.filter.processNotFound}}
+                            {{taskTab.searchToolbar.searchText + " " + $i18n.page.tasks.filter.processNotFound}}
                         </md-not-found>
 
                     </md-autocomplete>
@@ -83,17 +82,6 @@
             </md-chips>
 
         </div>
-
-    </div>
-
-    <div layout="column" layout-align="center center">
-
-        <!--<md-button class="md-fab md-raised md-mini md-primary" ng-click="taskTab.search()">-->
-            <!--<md-icon class="material-icons">search</md-icon>-->
-            <!--<md-tooltip md-direction="left">-->
-                <!--{{::$i18n.block.btn.search}}-->
-            <!--</md-tooltip>-->
-        <!--</md-button>-->
 
     </div>
 
