@@ -25,9 +25,9 @@
                 <md-input-container class="md-block">
                     <md-icon class="material-icons">lock</md-icon>
                     <label>{{::$root.$i18n.block.dialog.changePsw.newPsw}}</label>
-                    <input type="password" name="newPsw" ng-model="parentCtrl.newPsw" required minlength="6" novalidate title="">
+                    <input type="password" name="newPsw" ng-model="parentCtrl.newPsw" required ng-minlength="6" title="">
                     <!-- TODO FRIDAY 13.4.2018 Fix validation msgs -->
-                    <div ng-messages="changePswForm.newPsw.$error" ng-show="changePswForm.newPsw.$dirty">
+                    <div ng-messages="changePswForm.newPsw.$error">
                         <div ng-message="minlength" class="color-fg-warning">{{::$i18n.block.validation.pswLength}}</div>
                     </div>
                 </md-input-container>
