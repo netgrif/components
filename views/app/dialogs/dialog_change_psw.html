@@ -1,0 +1,53 @@
+<md-dialog aria-label="{{::$root.$i18n.block.dialog.changePsw.title}}">
+    <form name="changePswForm" ng-submit="parentCtrl.changePsw()">
+
+        <md-toolbar>
+            <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
+
+                <h2>{{::$root.$i18n.block.dialog.changePsw.title}}</h2>
+
+                <md-button class="md-icon-button" ng-click="closeDialog()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div layout="column" class="md-dialog-content">
+
+                <md-input-container class="md-block">
+                    <md-icon class="material-icons">lock</md-icon>
+                    <label>{{::$root.$i18n.block.dialog.changePsw.currentPsw}}</label>
+                    <input type="password" name="currentPsw" ng-model="parentCtrl.currentPsw" required title="">
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <md-icon class="material-icons">lock</md-icon>
+                    <label>{{::$root.$i18n.block.dialog.changePsw.newPsw}}</label>
+                    <input type="password" name="newPsw" ng-model="parentCtrl.newPsw" required minlength="6" novalidate title="">
+                    <!-- TODO FRIDAY 13.4.2018 Fix validation msgs -->
+                    <div ng-messages="changePswForm.newPsw.$error" ng-show="changePswForm.newPsw.$dirty">
+                        <div ng-message="minlength" class="color-fg-warning">{{::$i18n.block.validation.pswLength}}</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <md-icon class="material-icons">lock</md-icon>
+                    <label>{{::$root.$i18n.block.dialog.changePsw.repeatNewPsw}}</label>
+                    <input type="password" name="repeatNewPsw" ng-model="parentCtrl.repeatNewPsw" required title="">
+                </md-input-container>
+
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" layout-align="end center">
+
+            <md-button type="submit">
+                {{::$root.$i18n.block.dialog.changePsw.submit}}
+            </md-button>
+
+        </md-dialog-actions>
+
+    </form>
+</md-dialog>

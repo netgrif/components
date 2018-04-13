@@ -343,6 +343,13 @@ define({
                 bindFilterToRoles: "Naviazať filter na roli",
                 process: "Proces",
                 task: "Úloha"
+            },
+            changePsw: {
+                title: "Zmeniť heslo",
+                currentPsw: "Súčasné heslo",
+                newPsw: "Nové heslo",
+                repeatNewPsw: "Opakovať nové heslo",
+                submit: "Potvrdiť"
             }
         },
         snackbar: {

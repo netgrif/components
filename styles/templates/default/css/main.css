@@ -2616,8 +2616,16 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   .base .file-chooser-avatar:hover label {
     display: block; }
 
+.base md-dialog md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon, .base md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
+  color: #FAFAFA; }
+  .base md-dialog md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon.color-fg-primary-500, .base md-dialog md-toolbar:not(.md-menu-toolbar) md-icon.color-fg-primary-500 {
+    color: #009688; }
+
 .base md-dialog md-expansion-panel-group span {
   color: #FAFAFA !important; }
+
+.base md-dialog .material-icons {
+  color: rgba(0, 0, 0, 0.54); }
 
 .base .assign-list md-list-item .md-avatar {
   margin-top: 14px !important;

@@ -1,8 +1,8 @@
 define(['angular', '../modules/Main'],
     function (angular) {
         angular.module('ngMain').controller('ProfileController',
-            ['$http', '$log', '$scope', '$snackbar', '$user', '$i18n', '$rootScope',
-                function ($http, $log, $scope, $snackbar, $user, $i18n, $rootScope) {
+            ['$http', '$log', '$scope', '$snackbar', '$user', '$i18n', '$rootScope', '$dialog',
+                function ($http, $log, $scope, $snackbar, $user, $i18n, $rootScope, $dialog) {
                     const self = this;
 
                     const TOTAL_INPUTS = 4;
@@ -52,6 +52,14 @@ define(['angular', '../modules/Main'],
                             inputs++;
 
                         return inputs;
+                    };
+
+                    self.openChangePswDialog = function () {
+                        $dialog.showByTemplate('change_psw', this);
+                    };
+
+                    self.changePsw = function () {
+                        // TODO 13.4.2018 Summit change password form
                     };
 
                     self.loadProfile();
