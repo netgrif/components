@@ -144,7 +144,7 @@
             {{::$i18n.page.profile.actions.edit}}
         </md-button>
 
-        <md-button layout="row" layout-align="center center" ng-click="$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
+        <md-button layout="row" layout-align="center center" ng-click="profCtrl.openChangePswDialog();$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
             <md-icon class="material-icons card-icon margin-horizontal-0 margin-right-default">lock_open</md-icon>
             {{::$i18n.page.profile.actions.changePsw}}
         </md-button>

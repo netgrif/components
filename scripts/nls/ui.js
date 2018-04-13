@@ -341,6 +341,13 @@ define({
                     bindFilterToRoles: "Bind filter to roles",
                     process: "Process",
                     task: "Task"
+                },
+                changePsw: {
+                    title: "Change Password",
+                    currentPsw: "Current password",
+                    newPsw: "New password",
+                    repeatNewPsw: "Repeat new password",
+                    submit: "Confirm"
                 }
             },
             snackbar: {

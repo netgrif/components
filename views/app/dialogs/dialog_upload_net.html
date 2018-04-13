@@ -2,10 +2,10 @@
     <form name="petriNetUploadForm" ng-submit="parentCtrl.uploadPetriNet()">
 
         <md-toolbar>
-            <div class="md-toolbar-tools">
+            <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
                 <h2>{{::$root.$i18n.block.dialog.uploadModel.title}}</h2>
-                <span flex></span>
+
                 <md-button class="md-icon-button" ng-click="closeDialog()">
                     <md-icon class="material-icons">close</md-icon>
                 </md-button>
