@@ -73,8 +73,16 @@ define(['./HalResource'], function (HalResource) {
 
     DataField.prototype.parse = function (value) {
         if (this.type === "date") {
-            this.minDate = this.minDate ? new Date(new Date(this.minDate).setDate(new Date(this.minDate).getDate() - 1)) : undefined;
-            this.maxDate = this.maxDate ? new Date(new Date(this.maxDate).setDate(new Date(this.maxDate).getDate() + 1)) : undefined;
+            if (this.minDate) {
+                const min = new Date(this.minDate);
+                min.setDate(min.getDate() - 1);
+                this.formatedMinDate = min;
+            }
+            if (this.maxDate) {
+                const max = new Date(this.maxDate);
+                max.setDate(max.getDate() + 1);
+                this.formatedMaxDate = max;
+            }
         }
 
         if (!value) return undefined;
