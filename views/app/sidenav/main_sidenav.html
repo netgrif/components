@@ -2,23 +2,33 @@
 <md-sidenav md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-sm')" class="sidenav md-sidenav-left">
     <md-content layout="column">
 
-        <md-button href="/dashboard" layout="row" layout-align="start center" ng-class="{active: ('dashboard' | routeSegmentContains)}" ng-click="mainCtrl.closeSidenav('left-nav')">
+        <md-button href="/dashboard" layout="row" layout-align="start center"
+                   ng-class="{active: ('dashboard' | routeSegmentContains)}"
+                   ng-click="mainCtrl.closeSidenav('left-nav')">
             <i class="material-icons">dashboard</i>{{::$i18n.page.dashboard.this}}
         </md-button>
 
-        <md-button href="/cases" layout="row" layout-align="start center" ng-class="{active: ('cases' | routeSegmentContains)}">
+        <md-button href="/cases" layout="row" layout-align="start center"
+                   ng-class="{active: ('cases' | routeSegmentContains)}"
+                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('cases')">
             <i class="material-icons">storage</i>{{::$i18n.page.cases.this}}
         </md-button>
 
-        <md-button href="/tasks" layout="row" layout-align="start center" ng-class="{active: ('tasks' | routeSegmentContains)}">
+        <md-button href="/tasks" layout="row" layout-align="start center"
+                   ng-class="{active: ('tasks' | routeSegmentContains)}"
+                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('tasks')">
             <i class="material-icons">check_box</i>{{::$i18n.page.tasks.this}}
         </md-button>
 
-        <md-button href="/workflow" layout="row" layout-align="start center" ng-class="{active: ('workflow' | routeSegmentContains)}">
+        <md-button href="/workflow" layout="row" layout-align="start center"
+                   ng-class="{active: ('workflow' | routeSegmentContains)}"
+                   ng-click="mainCtrl.closeSidenav('left-nav')">
             <i class="material-icons">linear_scale</i>{{::$i18n.page.workflow.this}}
         </md-button>
 
-        <md-button href="/console" ng-if="$user.hasAuthority('ROLE_ADMIN')" layout="row" layout-align="start center" ng-class="{active: ('console' | routeSegmentContains)}" ng-click="mainCtrl.closeSidenav('left-nav')">
+        <md-button href="/console" ng-if="$user.hasAuthority('ROLE_ADMIN')" layout="row" layout-align="start center"
+                   ng-class="{active: ('console' | routeSegmentContains)}"
+                   ng-click="mainCtrl.closeSidenav('left-nav')">
             <i class="material-icons">developer_board</i>{{::$i18n.page.console.this}}
         </md-button>
 

@@ -56,6 +56,11 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                         self.activeTabIndex--;
                     };
 
+                    const navClickListener = $rootScope.$on("navClick", (event, data) => {
+                        if (data.item === 'tasks')
+                            self.activeTabIndex = 0;
+                    });
+                    $scope.$on('$destroy', navClickListener);
 
                     self.openTaskTabs([new Filter($i18n.page.tasks.all, Filter.TASK_TYPE, "{}", "{}", null, null)], false);
                     self.openTaskTabs([new Filter($i18n.page.tasks.my, Filter.TASK_TYPE, "{\"user\":\"" + $user.login + "\"}", "{\"User\": [\"" + $user.name + "\"]}", null, null)], false, TaskTab.MERGE_FILTER_POLICY);

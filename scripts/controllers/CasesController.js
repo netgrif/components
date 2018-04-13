@@ -71,10 +71,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         $cache.remove("dashboard");
                     }
 
-                    // const caseCreateListener = $rootScope.$on("caseCreate", (event, type) => {
-                    //     if (type === "cases")
-                    //         self.caseTab.openNewCaseDialog($i18n.page.cases.this);
-                    // });
-                    // $scope.$on('$destroy', () => caseCreateListener());
+                    const navClickListener = $rootScope.$on("navClick", (event, data) => {
+                        if (data.item === "cases")
+                            self.activeTabIndex = 0;
+                    });
+                    $scope.$on('$destroy', navClickListener);
                 }]);
     });

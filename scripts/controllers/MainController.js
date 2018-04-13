@@ -54,7 +54,13 @@ define(['angular', '../modules/Main', '../services/Loading', '../services/Auth']
 
             self.closeSidenav = function (componentId) {
                 $mdSidenav(componentId).close();
-            }
+            };
+            
+            self.navigationClick = function (navigationItem) {
+                $rootScope.$emit("navClick",{
+                    item: navigationItem
+                });
+            };
 
         }]);
 });
