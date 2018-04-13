@@ -47,7 +47,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                     $process
                                 }, {
                                     showTransactions: true,
-                                    allowHighlight: $config.allow.taskHighlight,
+                                    allowHighlight: $config.enable.taskHighlight,
                                     autoOpenUnfinished: false,
                                     searchable: false,
                                     fullReload: false
