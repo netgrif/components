@@ -361,6 +361,7 @@ define({
             loading: "Načítanie",
             loadingDataForFilterFailed: "Načítanie údajov pre filter sa nepodarilo",
             file: "Súbor",
+            model: "Model",
             failedToUpload: "sa nepodarilo nahrať",
             uploadedSuccessfully: "bol načítaný úspešne",
             assigningTask: "Priradenie úlohy",

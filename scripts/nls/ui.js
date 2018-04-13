@@ -359,6 +359,7 @@ define({
                 loading: "Loading",
                 loadingDataForFilterFailed: "Loading data for filter failed",
                 file: "File",
+                model: "Model",
                 failedToUpload: "failed to upload",
                 uploadedSuccessfully: "uploaded successfully",
                 assigningTask: "Assigning task",
