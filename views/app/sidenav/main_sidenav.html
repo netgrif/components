@@ -28,7 +28,7 @@
 
         <md-button href="/console" ng-if="$user.hasAuthority('ROLE_ADMIN')" layout="row" layout-align="start center"
                    ng-class="{active: ('console' | routeSegmentContains)}"
-                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('console')">
+                   ng-click="mainCtrl.closeSidenav('left-nav')">
             <i class="material-icons">developer_board</i>{{::$i18n.page.console.this}}
         </md-button>
 
