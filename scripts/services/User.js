@@ -14,6 +14,13 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.name = undefined;
                 user.roles = undefined;
             },
+            fromPrincipal: function(principal){
+                user.id = principal.id;
+                user.login = principal.username;
+                user.authority = principal.authorities.map(authority => authority.authority);
+                user.name = principal.fullName;
+                user.roles = principal.processRoles;
+            },
             /**
              * Change users roles
              * @param {Array} roles
