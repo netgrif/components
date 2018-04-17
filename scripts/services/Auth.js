@@ -28,11 +28,7 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
 
                     if(response.principal) {
                         let principal = response.principal;
-                        $user.id = principal.id;
-                        $user.login = principal.username;
-                        $user.authority = principal.authorities.map(authority => authority.authority);
-                        $user.name = principal.fullName;
-                        $user.roles = principal.processRoles;
+                        $user.fromPrincipal(principal);
                     }
 
                     if(auth.authenticated){
