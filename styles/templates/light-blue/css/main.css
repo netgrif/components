@@ -2617,14 +2617,14 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     display: block; }
 
 .base md-dialog md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon, .base md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
-  color: #FAFAFA; }
+  color: #FAFAFA !important; }
   .base md-dialog md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon.color-fg-primary-500, .base md-dialog md-toolbar:not(.md-menu-toolbar) md-icon.color-fg-primary-500 {
     color: #0047BA; }
 
 .base md-dialog md-expansion-panel-group span {
   color: #FAFAFA !important; }
 
-.base md-dialog .material-icons {
+.base md-dialog .material-icons:not([class*="color-fg"]) {
   color: rgba(0, 0, 0, 0.54); }
 
 .base .assign-list md-list-item .md-avatar {

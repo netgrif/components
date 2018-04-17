@@ -5,7 +5,7 @@ md-dialog {
     md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
 
         md-icon {
-            color: $color-grey-50;
+            color: $color-grey-50 !important;
 
             &.color-fg-primary-500 {
                 color: $color-primary-500;
@@ -20,7 +20,7 @@ md-dialog {
          }
     }
 
-    .material-icons {
+    .material-icons:not([class*="color-fg"]) {
         color: $color-material-grey-text;
     }
 }

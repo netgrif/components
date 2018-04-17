@@ -16,14 +16,14 @@
         <div layout="column" class="md-dialog-content">
 
             <md-input-container class="md-block">
-                <md-icon class="material-icons md-primary">search</md-icon>
+                <md-icon class="material-icons color-fg-primary-500">search</md-icon>
                 <label>{{::$root.$i18n.block.dialog.assignUser.user}}</label>
                 <input type="text" ng-model="dialogCtrl.searched" ng-change="filterUsers()" title="">
             </md-input-container>
 
             <div layout="row" layout-align="start center" ng-if="opt.task.caseTitle">
 
-                <md-icon class="material-icons md-primary margin-right-12px">check_box</md-icon>
+                <md-icon class="material-icons color-fg-primary-500 margin-right-12px">check_box</md-icon>
 
                 <md-chips flex>
                     <md-chip>
