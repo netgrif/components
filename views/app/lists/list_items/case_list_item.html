@@ -20,21 +20,19 @@
         {{::useCase.formatedDate}}
     </span>
 
-    <!-- TODO 13.3.2018 Uncomment when Case delete = NAE-139 is Done -->
-    <!--<md-menu ng-if="$user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">-->
-        <!--<md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>-->
-            <!--<md-icon class="material-icons">more_vert</md-icon>-->
-        <!--</md-button>-->
-        <!--<md-menu-content>-->
-            <!--<md-menu-item>-->
-                <!--<md-button ng-click="useCase.delete()">-->
-                    <!--<md-icon class="material-icons">delete</md-icon>-->
-                    <!--<span>{{$i18n.block.btn.delete}}</span>-->
-                <!--</md-button>-->
-            <!--</md-menu-item>-->
-        <!--</md-menu-content>-->
-    <!--</md-menu>-->
-    <!--<div ng-if="!$user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20"></div>-->
-    <div flex-gt-xs="10" flex-xs="20"></div>
+    <md-menu ng-if="$config.enable.caseDelete && $user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
+        <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
+            <md-icon class="material-icons">more_vert</md-icon>
+        </md-button>
+        <md-menu-content>
+            <md-menu-item>
+                <md-button ng-click="useCase.delete()">
+                    <md-icon class="material-icons">delete</md-icon>
+                    <span>{{$i18n.block.btn.delete}}</span>
+                </md-button>
+            </md-menu-item>
+        </md-menu-content>
+    </md-menu>
+    <div ng-if="!$config.enable.caseDelete || !$user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20"></div>
 
 </div>

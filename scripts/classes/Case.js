@@ -57,7 +57,8 @@ define(['./DataField', './HalResource', './Task'], function (DataField, HalResou
                 self.$snackbar.success(`${self.$i18n.block.snackbar.case} ${self.title} ${self.$i18n.block.snackbar.wasDeleted}`);
                 self.tab.delete(self);
             } else if (response.error) {
-                self.$snackbar.error(response.error); //TODO 9.8.2017 Server i18n?
+                $log.debug(response.error);
+                self.$snackbar.error(`${self.$i18n.block.snackbar.case} ${this.title} ${self.$i18n.block.snackbar.failedToDelete}`);
             }
         }, function () {
             self.$snackbar.error(`${self.$i18n.block.snackbar.case} ${self.title} ${self.$i18n.block.snackbar.failedToDelete}`);
