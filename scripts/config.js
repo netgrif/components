@@ -88,7 +88,8 @@ define([], function () {
         enable: {
             userSignUp: true,
             taskHighlight: false,
-            modelDelete: true
+            modelDelete: true,
+            caseDelete: true
         }
     };
 });
