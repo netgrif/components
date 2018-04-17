@@ -145,7 +145,7 @@
         <md-expansion-panel-footer md-no-sticky>
             <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
-                <md-button ng-if="$config.enable.modelDelete" class="md-warn layout-xs-rw-100" ng-click="workPanelCtrl.delete()">
+                <md-button ng-if="$config.enable.modelDelete && $user.hasAuthority('ROLE_ADMIN')" class="md-warn layout-xs-rw-100" ng-click="workPanelCtrl.delete()">
                     {{::$i18n.block.btn.delete}}
                 </md-button>
 
