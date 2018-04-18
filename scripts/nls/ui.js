@@ -292,7 +292,7 @@ define({
             },
             dialog: {
                 createCase: {
-                    heading: "Create new instance",
+                    heading: "New instance",
                     process: "Process",
                     title: "Title",
                     color: "Color",

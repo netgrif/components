@@ -294,7 +294,7 @@ define({
         },
         dialog: {
             createCase: {
-                heading: "Vytvoriť ponuku",
+                heading: "Nová inštancia",
                 process: "Proces",
                 title: "Názov",
                 color: "Farba",
