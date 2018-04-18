@@ -79,7 +79,6 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
 
             self.autoFocus = function (selector) {
                 jQuery(selector).first().focus();
-                console.log(jQuery(selector).first().html());
             };
 
             // Delegate task methods
