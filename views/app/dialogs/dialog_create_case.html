@@ -26,16 +26,16 @@
                     </md-select>
                 </md-input-container>
 
-                <md-input-container>
+                <md-input-container class="on-open-auto-focus">
                     <label>{{::$root.$i18n.block.dialog.createCase.title}}</label>
-                    <input type="text" ng-model="parentCtrl.newCase.title" required>
+                    <input type="text" ng-model="parentCtrl.newCase.title" required title="">
                 </md-input-container>
 
                 <md-input-container>
 
                     <label>{{::$root.$i18n.block.dialog.createCase.color}}</label>
 
-                    <md-select id="case-color-select" ng-model="parentCtrl.newCase.color" md-on-close="parentCtrl.clickElement('case-color-blur-assistant')" required>
+                    <md-select id="case-color-select" ng-model="parentCtrl.newCase.color" required>
 
                         <md-option value="color-fg-deep-purple-600" selected>
 							<span class="color-fg-accent-900">

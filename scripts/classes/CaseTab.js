@@ -130,7 +130,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
         if (this.allowedNets.length === 0)
             return;
 
-        this.$dialog.showByTemplate('create_case', this, {title: this.createDialogTitle});
+        this.$dialog.showByTemplate('create_case', this, {title: this.createDialogTitle, onOpenAutoFocus: true});
     };
 
     CaseTab.prototype.getDefaultCaseTitle = function () {
