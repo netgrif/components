@@ -1,4 +1,4 @@
-<md-dialog aria-label="Quote title">
+<md-dialog aria-label="Dialog title">
 
     <form ng-submit="parentCtrl.createCase()">
 
@@ -17,7 +17,7 @@
         <md-dialog-content>
             <div class="md-dialog-content" layout="column">
 
-                <md-input-container ng-if="parentCtrl.allowedNets.length > 1">
+                <md-input-container ng-if="parentCtrl.allowedNets.length > 1 || parentCtrl.allowedNets.length === 0">
                     <label>{{::$root.$i18n.block.dialog.createCase.process}}</label>
                     <md-select ng-model="parentCtrl.newCase.netId" ng-change="parentCtrl.changeNewCaseTitle()" required>
                         <md-option ng-repeat="net in parentCtrl.allowedNets" value="{{net.id}}">

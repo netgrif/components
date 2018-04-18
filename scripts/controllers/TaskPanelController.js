@@ -345,6 +345,7 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                             $log.debug(error);
                             self.loading = false;
                             callChain.run(false);
+                            self.reload();
                         });
                     }
 
