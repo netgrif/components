@@ -88,6 +88,7 @@ define([], function () {
         enable: {
             userSignUp: true,
             taskHighlight: false,
+            autoOpenUnfinished: false,
             modelDelete: true,
             caseDelete: true
         }

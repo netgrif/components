@@ -48,7 +48,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                 }, {
                                     showTransactions: true,
                                     allowHighlight: $config.enable.taskHighlight,
-                                    autoOpenUnfinished: false,
+                                    autoOpenUnfinished: $config.enable.autoOpenUnfinished,
                                     searchable: false,
                                     fullReload: false
                                 }));
