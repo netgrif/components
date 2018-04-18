@@ -68,7 +68,7 @@ define(['./Filter'], function (Filter) {
      * @param {Filter} filter
      */
     TaskSearch.prototype.populateFromFilter = function (filter) {
-        if(this.chips.length > 0 || !filter.readableQuery)
+        if (this.chips.length > 0 || !filter.readableQuery)
             return;
         Object.keys(filter.readableQuery).forEach(key => {
             filter.readableQuery[key].forEach(val => this.chips.push(new Chip("", key, "", val)));
@@ -92,7 +92,7 @@ define(['./Filter'], function (Filter) {
         this.searchText = "";
         this.selectedItem = undefined;
 
-        if(this.parent)
+        if (this.parent)
             this.parent.search();
     };
 
@@ -103,7 +103,7 @@ define(['./Filter'], function (Filter) {
     };
 
     TaskSearch.prototype.addQuery = function (item) {
-        const queryObj = new QueryObject(item.subject, item.entityId, item.petriNetId);
+        const queryObj = new QueryObject(item.subject, item.id, item.petriNetId);
         if (this.query[queryObj.subject]) {
             if (this.query[queryObj.subject] instanceof Array)
                 this.query[queryObj.subject].push(queryObj);
@@ -176,8 +176,8 @@ define(['./Filter'], function (Filter) {
     };
 
     TaskSearch.prototype.addChip = function (item) {
-        if (!this.chips.some(c => c.id === item.entityId)) {
-            this.chips.push(new Chip(item.subject, this.subjects[item.subject].title, item.entityId, item.title));
+        if (!this.chips.some(c => c.id === item.id)) {
+            this.chips.push(new Chip(item.subject, this.subjects[item.subject].title, item.id, item.title));
             this.addQuery(item);
         }
     };
@@ -255,22 +255,32 @@ define(['./Filter'], function (Filter) {
 
     TaskSearch.prototype.loadTransitionReferences = function () {
         const self = this;
+
         let queryProcess = [];
         if (this.query.process instanceof Array)
             queryProcess = queryProcess.concat(this.query.process.map(p => p.param));
         else
             queryProcess.push(this.query.process.param);
-        return this.$http.get("/res/petrinet/transitions", {params: {ids: queryProcess}}).then(response => {
-            return response.$request().$get("transitionReferences").then(resources => {
-                self.autoCompleteStorage.transition = resources.map(r => new AutoCompleteItem("transition", r));
-                return self.filterValues(self.autoCompleteStorage.transition);
-            }, () => {
-                console.log("No transition resources was found!");
-            });
-        }, error => {
-            console.log("Transition references failed to load!");
-            console.error(error);
+        this.autoCompleteStorage.transition = [];
+        queryProcess.forEach(p => {
+            const net = this.$process.get(p);
+            if (net)
+                this.autoCompleteStorage.transition = this.autoCompleteStorage.transition.concat(net.transitions.map(t => new AutoCompleteItem("transition", t)));
         });
+        return this.filterValues(this.autoCompleteStorage.transition);
+
+
+        // return this.$http.get("/res/petrinet/transitions", {params: {ids: queryProcess}}).then(response => {
+        //     return response.$request().$get("transitionReferences").then(resources => {
+        //         self.autoCompleteStorage.transition = resources.map(r => new AutoCompleteItem("transition", r));
+        //         return self.filterValues(self.autoCompleteStorage.transition);
+        //     }, () => {
+        //         console.log("No transition resources was found!");
+        //     });
+        // }, error => {
+        //     console.log("Transition references failed to load!");
+        //     console.error(error);
+        // });
     };
 
     return TaskSearch;
