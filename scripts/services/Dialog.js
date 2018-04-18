@@ -60,14 +60,14 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
         return dialogService;
     });
 
-    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional', '$i18n', '$process',
-        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional, $i18n, $process) {
+    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional', '$i18n', '$process', '$timeout',
+        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional, $i18n, $process, $timeout) {
             var self = this;
 
             $scope.parentCtrl = parentCtrl;
             $scope.opt = optional;
 
-            //Variables for dialog_assign_user
+            // Variables for dialog_assign_user
             $scope.users = undefined;
             self.users = undefined;
             self.searched = undefined;
@@ -77,7 +77,12 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                 $mdDialog.hide();
             };
 
-            //Delegate task methods
+            self.autoFocus = function (selector) {
+                jQuery(selector).first().focus();
+                console.log(jQuery(selector).first().html());
+            };
+
+            // Delegate task methods
             self.loadUsers = function () {
                 if (!$scope.opt.task) return;
                 $http.post("/res/user/role/small", $scope.opt.task.fieldRoles).then(function (response) {
@@ -132,6 +137,11 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             if (parentCtrl.petriNetRefs && parentCtrl.petriNetRefs.length === 1) {
                 parentCtrl.newCase.netId = parentCtrl.petriNetRefs[0].entityId;
             }
+
+            if ($scope.opt && $scope.opt.onOpenAutoFocus)
+                $timeout(function() {
+                    self.autoFocus('.on-open-auto-focus input');
+                }, 500);
 
         }]);
 });
