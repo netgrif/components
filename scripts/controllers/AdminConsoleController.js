@@ -191,7 +191,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                         self.users.forEach(user => user.selected = false);
                         return;
                     }
-                    $http.get("/api/user/small").then(response => {
+                    $http.get("/api/user?small=true").then(response => {
                         response.$request().$get("users").then(resources => {
                             self.users = resources;
                             self.users.forEach(user => {
@@ -367,9 +367,8 @@ define(['angular', '../modules/Admin'], function (angular) {
                         return;
 
                     $user.clear();
-                    $http.get("/user").then(response => {
-                        if (response.principal)
-                            $user.fromPrincipal(response.principal);
+                    $http.get("/api/user/me?small=true").then(response => {
+                        $user.fromResource(response);
                     }, error => {
                         $log.error("Failed to reload user's data!");
                         $log.error(error);

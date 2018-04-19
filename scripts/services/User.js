@@ -6,6 +6,7 @@ define(['angular', '../modules/Main'], function (angular) {
             authority: undefined,
             name: undefined,
             roles: undefined,
+            groups: undefined,
 
             clear: function () {
                 user.id = 0;
@@ -14,12 +15,13 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.name = undefined;
                 user.roles = undefined;
             },
-            fromPrincipal: function(principal){
-                user.id = principal.id;
-                user.login = principal.username;
-                user.authority = principal.authorities.map(authority => authority.authority);
-                user.name = principal.fullName;
-                user.roles = principal.processRoles;
+            fromResource: function(resource){
+                user.id = resource.id;
+                user.login = resource.email;
+                user.authority = resource.authorities.map(authority => authority.authority);
+                user.name = resource.fullName;
+                user.roles = resource.processRoles.map(role => role.stringId);
+                user.groups = resource.groups;
             },
             /**
              * Change users roles

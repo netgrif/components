@@ -1,84 +1,111 @@
+define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
+    angular.module('ngMain').factory('$auth', function ($http, $location, $rootScope, $log, $timeout, $user, $snackbar, $i18n, $process, $config) {
 
-define(['angular','angularRoute','../modules/Main'],function (angular) {
-    angular.module('ngMain').factory('$auth',function ($http, $location, $rootScope ,$log, $timeout, $user, $snackbar, $i18n, $process) {
-        var auth = {
+        const appPath = "/";
+        const loginPath = "/login";
+        const signupPath = "/signup";
+
+        const serverLoginUrl = "/api/auth/login";
+        const logoutUrl = "/api/auth/logout";
+        const signupUrl = "/api/auth/signup";
+        const tokenVerificationUrl = "/api/auth/token/verify";
+        const invitationUrl = "/api/auth/invite";
+
+        const auth = {
             authenticated: false,
 
-            loginPath: "/login",
-            userPath: "user",
-            logoutPath: "/logout",
-            signupPath: "/signup",
-            appPath: "/",
             path: $location.path(),
             // Configuration
-            userSignUp: false,
+            userSignUp: $config.enable.userSignUp,
 
-            authenticate: function (credentials, callback) {
-                //$log.debug(credentials);
+            authenticate: function (credentials, callback = angular.noop) {
                 const headers = credentials && credentials.username ? {
-                    'Authorization' : "Basic " + btoa(credentials.username + ":" + credentials.password)
+                    'Authorization': "Basic " + btoa(credentials.username + ":" + credentials.password)
                 } : {};
 
-                //$log.debug(headers);
-                $http.get(auth.userPath,{
+                $http.get(serverLoginUrl, {
                     headers: headers
                 }).then(function (response) {
-                    //$log.debug(response);
-                    auth.authenticated = !!response.name;
+                    auth.authenticated = !!response.email;
+                    $user.fromResource(response);
 
-                    if(response.principal) {
-                        let principal = response.principal;
-                        $user.fromPrincipal(principal);
-                    }
-
-                    if(auth.authenticated){
-                        $process.init().then(()=>{
+                    if (auth.authenticated) {
+                        $process.init().then(() => {
                             callback && callback(auth.authenticated);
-                            $location.path(auth.path === auth.loginPath ? auth.appPath : auth.path);
+                            $location.path(auth.path === loginPath ? appPath : auth.path);
                         });
                     }
 
-                },function (response) {
-                    //$log.debug(response);
+                }, function (response) {
                     auth.authenticated = false;
                     callback && callback(false);
                 });
             },
             logout: function () {
-                $http.post(auth.logoutPath,{}).then(function () {
+                $http.post(logoutUrl, {}).then(function () {
                     $log.debug("Logout successful");
                     auth.authenticated = false;
                     $user.clear();
-                    $location.path(auth.loginPath);
+                    $location.path(loginPath);
                 }, function () {
                     $log.debug("Logout failed");
                 });
             },
-            signup: function (formData, callback) {
-                $http.post(auth.signupPath, formData)
-                .then(function (response) {
-                    $log.debug(response);
-                    callback(response);
-                    $timeout(function () {
-                        auth.path = auth.loginPath;
-                        $location.path(auth.loginPath);
-                    },2000);
-                }, function () {
-                    $log.debug("Sign up failed!");
+            signup: function (formData, callback = angular.noop) {
+                formData.password = btoa(formData.password);
+                $http.post(signupUrl, formData)
+                    .then(function (response) {
+                        $log.debug(response);
+                        if (response.success) {
+                            callback(response);
+                            auth.path = loginPath;
+                        } else if (response.error) {
+                            callback(false);
+                        }
+                    }, function () {
+                        $log.debug("Sign up failed!");
+                        callback(false);
+                    });
+            },
+            verifyToken: function (token, callback = angular.noop) {
+                $http.post(tokenVerificationUrl, token).then(response => {
+                    if (response.success)
+                        callback(response.success);
+                    else if (response.error) {
+                        $log.error(response.error);
+                        callback(undefined);
+                    }
+                }, error => {
+                    $log.error("Token failed to verify");
+                    $log.error(error);
                     callback(false);
+                })
+            },
+            invite: function (email, callback = angular.noop) {
+                $http.post(invitationUrl, {email: email, groups: [], processRoles: []}).then(response => {
+                    if (response.success)
+                        callback(true);
+                    else if (response.error) {
+                        $log.error(response.error);
+                        callback(false, response.error);
+                    }
+                }, error => {
+                    $log.error("Sending invitation has failed");
+                    $log.error(error);
+                    callback(false, "");
                 });
             },
             init: function () {
-                if(!auth.isExcluded()) {
+                if (!auth.isExcluded()) {
                     this.authenticate({}, function (isLoggedIn) {
                         if (isLoggedIn) $location.path(auth.path);
                     });
                 }
 
-                $rootScope.$on('$locationChangeStart',function () {
-                    if(!auth.isExcluded()){
+                $rootScope.$on('$locationChangeStart', function () {
+                    if (!auth.isExcluded()) {
                         auth.path = $location.path();
-                        if(!auth.authenticated) $location.path(auth.loginPath);
+                        if (!auth.authenticated) $location.path(loginPath);
                     } else {
                         auth.authenticated = false;
                         $user.clear();
@@ -87,7 +114,7 @@ define(['angular','angularRoute','../modules/Main'],function (angular) {
                 });
             },
             isExcluded: function () {
-                return $location.path().startsWith(auth.loginPath) || $location.path().startsWith(auth.signupPath);
+                return $location.path().startsWith(loginPath) || $location.path().startsWith(signupPath);
             }
         };
         return auth;
