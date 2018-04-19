@@ -24,7 +24,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.sideViewDetail = false;
     }
 
-    FilterTab.URL_SEARCH = "/res/filter/search";
+    FilterTab.URL_SEARCH = "/api/filter/search";
 
     FilterTab.prototype = Object.create(Tab.prototype);
     FilterTab.prototype.constructor = FilterTab;

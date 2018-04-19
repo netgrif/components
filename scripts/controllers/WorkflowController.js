@@ -40,7 +40,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
 
                         self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
                         let meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
-                        $fileUpload.upload(self.netFile, meta, "/res/petrinet/import", function (response) {
+                        $fileUpload.upload(self.netFile, meta, "/api/petrinet/import", function (response) {
                             if (response.success) {
                                 $dialog.closeCurrent();
                                 self.clearAll();
@@ -98,7 +98,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.buildRequest = function (next) {
                         return {
                             method: 'POST',
-                            url: next ? next : "/res/petrinet/search",
+                            url: next ? next : "/api/petrinet/search",
                             data: self.buildSearchQuery()
                         };
                     };

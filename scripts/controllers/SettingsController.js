@@ -61,7 +61,7 @@ define(['angular', '../modules/Main'],
 
                     // self.loadProcesses = function () {
                     //     self.processes = $process.processes.forEach(p => {
-                    //         $http.get(`/res/petrinet/${p.id}/roles`).then(response => {
+                    //         $http.get(`/api/petrinet/${p.id}/roles`).then(response => {
                     //             response.$request().$get('roles').then(resources => {
                     //                 resources.forEach(r => {
                     //                     self.processes[p.id] = p;

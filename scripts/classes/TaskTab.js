@@ -39,9 +39,9 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
     TaskTab.prototype = Object.create(Tab.prototype);
     TaskTab.prototype.constructor = TaskTab;
 
-    TaskTab.URL_ALL = "/res/task";
-    TaskTab.URL_MY = "/res/task/my";
-    TaskTab.URL_SEARCH = "/res/task/search";
+    TaskTab.URL_ALL = "/api/task";
+    TaskTab.URL_MY = "/api/task/my";
+    TaskTab.URL_SEARCH = "/api/task/search";
 
     TaskTab.REPLACE_FILTER_POLICY = "replaceFilter";
     TaskTab.MERGE_FILTER_POLICY = "mergeFilter";
@@ -245,7 +245,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         const self = this;
         this.$http({
             method: "POST",
-            url: "/res/workflow/case/search",
+            url: "/api/workflow/case/search",
             data: {
                 id: this.useCase.stringId
             }
@@ -287,7 +287,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
             query: this.activeFilter.query,
             readableQuery: JSON.stringify(this.activeFilter.readableQuery)
         };
-        this.$http.post("/res/filter", requestBody).then(response => {
+        this.$http.post("/api/filter", requestBody).then(response => {
             if (response.success) {
                 this.$snackbar.info(response.success);
             } else

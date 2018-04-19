@@ -30,7 +30,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     CaseTab.prototype = Object.create(Tab.prototype);
     CaseTab.prototype.constructor = CaseTab;
 
-    CaseTab.URL_SEARCH = "/res/workflow/case/search";
+    CaseTab.URL_SEARCH = "/api/workflow/case/search";
 
     CaseTab.prototype.activate = function () {
         this.newCase.title = this.getDefaultCaseTitle();
@@ -157,7 +157,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
             return;
         }
 
-        this.$http.post("/res/workflow/case", JSON.stringify(this.newCase))
+        this.$http.post("/api/workflow/case", JSON.stringify(this.newCase))
             .then(function (response) {
                 if (response) {
                     self.$dialog.closeCurrent();

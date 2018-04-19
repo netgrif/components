@@ -32,7 +32,7 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../classes/Filte
                     // self.load = function (filter, tab, type) {
                     //     const request = {
                     //         method: "POST",
-                    //         url: `/res/workflow/case/search?sort=${self.sort.attribute},${self.sort.direction}&size=${self.limit}`,
+                    //         url: `/api/workflow/case/search?sort=${self.sort.attribute},${self.sort.direction}&size=${self.limit}`,
                     //         data: filter.query
                     //     };
                     //     tab.loading = true;

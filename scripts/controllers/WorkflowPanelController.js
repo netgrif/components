@@ -86,7 +86,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     // };
 
                     self.delete = function() {
-                        $http.delete("/res/petrinet/" + self.id).then(function (response) {
+                        $http.delete("/api/petrinet/" + self.id).then(function (response) {
                             $snackbar.info(`${$i18n.block.snackbar.model} ${self.title}  v${self.version} ${$i18n.block.snackbar.wasDeleted}`);
                             parent.load(false);
 

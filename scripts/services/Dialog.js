@@ -84,7 +84,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             // Delegate task methods
             self.loadUsers = function () {
                 if (!$scope.opt.task) return;
-                $http.post("/res/user/role/small", $scope.opt.task.fieldRoles).then(function (response) {
+                $http.post("/api/user/role/small", $scope.opt.task.fieldRoles).then(function (response) {
                     self.users = response.$request().$get("users").then(function (resources) {
                         $scope.users = self.users = resources;
                     }, function () {

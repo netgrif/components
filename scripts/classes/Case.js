@@ -51,7 +51,7 @@ define(['./DataField', './HalResource', './Task'], function (DataField, HalResou
 
     Case.prototype.delete = function () {
         const self = this;
-        this.$http.delete("/res/workflow/case/" + this.stringId).then(function (response) {
+        this.$http.delete("/api/workflow/case/" + this.stringId).then(function (response) {
             if (response.success) {
                 self.tab.closeCase(self);
                 self.$snackbar.success(`${self.$i18n.block.snackbar.case} ${self.title} ${self.$i18n.block.snackbar.wasDeleted}`);

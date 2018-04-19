@@ -55,7 +55,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                 self.loadProcessRoles = function () {
                     if (!self.selectedNet) return;
                     self.processRoles = [];
-                    $http.get("/res/petrinet/" + self.selectedNet.stringId + "/roles").then(function (response) {
+                    $http.get("/api/petrinet/" + self.selectedNet.stringId + "/roles").then(function (response) {
                         response.$request().$get("processRoles").then(function (resources) {
                             self.processRoles = resources;
                             self.processRoles.forEach(role => {
@@ -90,7 +90,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                  * Load list of groups for invite tab
                  */
                 self.loadOrganizations = function () {
-                    $http.get("/res/group/all").then(function (response) {
+                    $http.get("/api/group/all").then(function (response) {
                         response.$request().$get("groups").then(function (resources) {
                             self.groups = resources;
                             self.groups.forEach(org => {
@@ -158,7 +158,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                         return;
                     this.roles.roles.splice(0, this.roles.roles);
                     this.filteredRoles.splice(0, this.filteredRoles.length);
-                    $http.get("/res/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
+                    $http.get("/api/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
                         response.$request().$get("processRoles").then(resources => {
                             this.roles.roles = resources;
                             this.roles.roles.forEach(role => {
@@ -191,7 +191,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                         self.users.forEach(user => user.selected = false);
                         return;
                     }
-                    $http.get("/res/user/small").then(response => {
+                    $http.get("/api/user/small").then(response => {
                         response.$request().$get("users").then(resources => {
                             self.users = resources;
                             self.users.forEach(user => {
@@ -382,7 +382,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                 };
 
                 self.loadNets = function () {
-                    $http.get("/res/petrinet").then(function (response) {
+                    $http.get("/api/petrinet").then(function (response) {
                         response.$request().$get("petriNetReferences").then(function (resources) {
                             self.processes = resources;
                         }, function () {

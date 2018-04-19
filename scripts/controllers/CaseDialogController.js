@@ -13,7 +13,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                     self.loadCases = function (netId) {
                         if (!netId) return;
                         const self = this;
-                        $http.post("/res/workflow/case/search", {petriNet: {id: netId}}).then(function (response) {
+                        $http.post("/api/workflow/case/search", {petriNet: {id: netId}}).then(function (response) {
                             response.$request().$get("cases").then(function (resources) {
                                 self.cases = resources;
                                 self.cases.forEach(c => {
