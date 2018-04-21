@@ -14,7 +14,7 @@
 
         <div layout="row" layout-xs="column" layout-align="space-between center" class="layout-rw-100">
 
-            <md-button ng-if="$config.enable.userSignUp" flex flex-order-xs="1" class="form-btn-signup layout-xs-rw-100" ng-click="loginCtrl.displaySelfInvitation(true)">
+            <md-button ng-if="$config.enable.userSignUp" flex flex-order-xs="1" class="form-btn-signup layout-xs-rw-100" ng-click="loginCtrl.displayEmailField('invite')">
                 {{::$i18n.page.signIn.signUp}}
             </md-button>
 
@@ -26,8 +26,7 @@
 
         </div>
 
-        <!--TODO-->
-        <md-button class="form-btn-forgotPsw layout-rw-100" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
+        <md-button class="form-btn-forgotPsw layout-rw-100" ng-click="loginCtrl.displayEmailField('reset')">
             {{::$i18n.page.signIn.forgotPsw}}
         </md-button>
 

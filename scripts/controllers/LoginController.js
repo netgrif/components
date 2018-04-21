@@ -44,8 +44,12 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                 $auth.verifyToken(this.token, email => {
                     if (email)
                         this.email = email;
-                    else
+                    else {
                         $snackbar.error($i18n.block.snackbar.failedToIdentifyToken);
+                        $timeout(() => {
+                            $location.path("/login");
+                        }, 500);
+                    }
                     $loading.showLoading(false);
                 })
             };
@@ -85,20 +89,82 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
             };
 
 
-            function Invitation() {
-                this.name = "invite";
+            function EmailField(name) {
+                this.name = name;
                 this.email = undefined;
             }
 
-            Invitation.prototype.invite = function () {
-                if(!this.email)
+            EmailField.prototype.send = function () {
+                if (!this.email)
                     return;
                 self.loading = true;
-                $auth.invite(this.email, (success, message) => {
-                    if(success){
-                        $snackbar.info("Invitation was successfully sent");
+                if (this.name === 'invite') {
+                    $auth.invite({email: this.email}, (success, message) => {
+                        if (success) {
+                            $snackbar.info("Invitation was successfully sent");
+                            $timeout(() => {
+                                self.displayEmailField(false);
+                            }, 500);
+                        } else {
+                            $snackbar.error(message);
+                        }
+                        self.loading = false;
+                    });
+                } else if (this.name === 'reset') {
+                    $auth.sendResetPassword(this.email, (success, message) => {
+                        if (success) {
+                            $snackbar.info("Email with password reset link was sent to your email address");
+                            $timeout(() => {
+                                self.displayEmailField(false);
+                            }, 500);
+                        } else {
+                            $snackbar.error(message);
+                        }
+                        self.loading = false;
+                    });
+                }
+            };
+
+            function Recovery(token) {
+                this.name = "recovery";
+                this.token = token;
+                this.password = undefined;
+                this.retypedPassword = undefined;
+                this.recoveryError = {
+                    passwordMatch: false
+                }
+            }
+
+            Recovery.prototype.matchPasswords = function () {
+                this.recoveryError.passwordMatch = this.password !== this.retypedPassword;
+            };
+
+            Recovery.prototype.verifyToken = function () {
+                $auth.verifyToken(this.token, email => {
+                    if (email)
+                        this.email = email;
+                    else {
+                        $snackbar.error($i18n.block.snackbar.failedToIdentifyToken);
                         $timeout(() => {
-                            self.displaySelfInvitation(false);
+                            $location.path("/login");
+                        }, 500);
+                    }
+                    $loading.showLoading(false);
+                })
+            };
+
+            Recovery.prototype.recover = function () {
+                if (this.password !== this.retypedPassword) {
+                    $snackbar.error($i18n.block.snackbar.passwordFieldsDoNotMatch);
+                    return;
+                }
+                self.loading = true;
+                $auth.setNewPassword(this.token, this.password, (success, message) => {
+                    if (success) {
+                        angular.element("form#recovery-form").trigger("reset");
+                        $snackbar.info("You new password was set successfully. You can now login.");
+                        $timeout(() => {
+                            $location.path("/login");
                         }, 500);
                     } else {
                         $snackbar.error(message);
@@ -111,8 +177,11 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                 if (dataLoadingStarted) return;
                 dataLoadingStarted = true;
 
-                if ($routeSegment.$routeParams.token) {
+                if ($routeSegment.$routeParams.token && $location.path().includes("/signup")) {
                     self.activeView = new SignUp($routeSegment.$routeParams.token);
+                    self.activeView.verifyToken();
+                } else if ($routeSegment.$routeParams.token && $location.path().includes("/recover")) {
+                    self.activeView = new Recovery($routeSegment.$routeParams.token);
                     self.activeView.verifyToken();
                 } else {
                     self.activeView = new Login();
@@ -120,9 +189,9 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                 }
             };
 
-            self.displaySelfInvitation = function (show) {
-                if(show)
-                    self.activeView = new Invitation();
+            self.displayEmailField = function (show) {
+                if (show)
+                    self.activeView = new EmailField(show);
                 else
                     self.activeView = new Login();
             };

@@ -4,12 +4,15 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
         const appPath = "/";
         const loginPath = "/login";
         const signupPath = "/signup";
+        const recoverPath = "/recover";
 
         const serverLoginUrl = "/api/auth/login";
         const logoutUrl = "/api/auth/logout";
         const signupUrl = "/api/auth/signup";
         const tokenVerificationUrl = "/api/auth/token/verify";
         const invitationUrl = "/api/auth/invite";
+        const resetPasswordUrl = "/api/auth/reset";
+        const newPasswordUrl = "/api/auth/recover";
 
         const auth = {
             authenticated: false,
@@ -32,7 +35,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     if (auth.authenticated) {
                         $process.init().then(() => {
                             callback && callback(auth.authenticated);
-                            $location.path(auth.path === loginPath ? appPath : auth.path);
+                            $location.path(auth.isExcluded(auth.path) ? appPath : auth.path);
                         });
                     }
 
@@ -81,16 +84,48 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     callback(false);
                 })
             },
-            invite: function (email, callback = angular.noop) {
-                $http.post(invitationUrl, {email: email, groups: [], processRoles: []}).then(response => {
+            invite: function (invitation, callback = angular.noop) {
+                if (!invitation.groups)
+                    invitation.groups = [];
+                if (!invitation.processRoles)
+                    invitation.processRoles = [];
+                $http.post(invitationUrl, invitation).then(response => {
                     if (response.success)
-                        callback(true);
+                        callback(true, response.success);
                     else if (response.error) {
                         $log.error(response.error);
                         callback(false, response.error);
                     }
                 }, error => {
                     $log.error("Sending invitation has failed");
+                    $log.error(error);
+                    callback(false, "");
+                });
+            },
+            sendResetPassword: function (email, callback = angular.noop) {
+                $http.post(resetPasswordUrl, email).then(response => {
+                    if (response.success)
+                        callback(true, response.success);
+                    else if (response.error) {
+                        $log.error(response.error);
+                        callback(false, response.error);
+                    }
+                }, error => {
+                    $log.error("Sending password reset email has failed");
+                    $log.error(error);
+                    callback(false, "");
+                });
+            },
+            setNewPassword: function(token, password, callback = angular.noop){
+                $http.post(newPasswordUrl, {token: token, password: btoa(password), email: "", name: "", surname: ""}).then(response => {
+                    if (response.success)
+                        callback(true, response.success);
+                    else if (response.error) {
+                        $log.error(response.error);
+                        callback(false, response.error);
+                    }
+                }, error => {
+                    $log.error("Setting new password has failed");
                     $log.error(error);
                     callback(false, "");
                 });
@@ -113,8 +148,11 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     $snackbar.hide();
                 });
             },
-            isExcluded: function () {
-                return $location.path().startsWith(loginPath) || $location.path().startsWith(signupPath);
+            isExcluded: function (location) {
+                if(!location)
+                    location = $location.path();
+                const excluded = [loginPath, signupPath, recoverPath];
+                return excluded.some(path => location.startsWith(path));
             }
         };
         return auth;

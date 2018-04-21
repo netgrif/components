@@ -116,7 +116,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                  * Send invitation request
                  */
                 self.invite = function () {
-                    if (!self.invitedUser.email || self.invitedUser.email === "") {
+                    if (!self.invitedUser.email || self.invitedUser.email.trim() === "") {
                         $snackbar.error($i18n.block.snackbar.emailFieldIsMandatory);
                         return;
                     }
@@ -136,17 +136,17 @@ define(['angular', '../modules/Admin'], function (angular) {
                     };
 
                     self.inviteLoading = true;
-                    $http.post('/signup/invite', invitation)
-                        .then(function (response) {
+                    $auth.invite(invitation, (success, message) => {
+                        if(success){
                             $snackbar.success($i18n.block.snackbar.inviteSent);
                             self.invitedUser.email = undefined;
                             self.invitedUser.groups.splice(0, self.invitedUser.groups.length);
                             self.invitedUser.processRoles = {};
-                            self.inviteLoading = false;
-                        }, function () {
+                        } else {
                             $snackbar.error($i18n.block.snackbar.inviteFailed);
-                            self.inviteLoading = false;
-                        });
+                        }
+                        self.inviteLoading = false;
+                    });
                 };
 
                 /* Roles and Users tab */

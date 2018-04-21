@@ -39,6 +39,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 .when('/', 'app')
                 .when('/login', 'login')
                 .when('/signup/:token', 'signup')
+                .when('/recover/:token', 'recover')
                 .when('/dashboard', 'app.dashboard')
                 .when('/cases', 'app.cases')
                 .when('/console', 'app.console')
@@ -97,6 +98,12 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 })
                 .segment('signup', {
                     templateUrl: "views/login/signup.html",
+                    controller: 'LoginController',
+                    controllerAs: 'loginCtrl',
+                    dependencies: ['token']
+                })
+                .segment('recover', {
+                    templateUrl: "views/login/recover.html",
                     controller: 'LoginController',
                     controllerAs: 'loginCtrl',
                     dependencies: ['token']
