@@ -1,20 +1,20 @@
-<form ng-submit="loginCtrl.login()" class="form-signin">
+<form ng-submit="loginCtrl.activeView.login()" class="form-signin">
 
     <md-input-container class="md-block margin-right-default">
         <md-icon class="material-icons">email</md-icon>
-        <input ng-model="loginCtrl.credentials.username" type="text" placeholder="{{::$i18n.page.signIn.email}}" ng-required="true">
+        <input ng-model="loginCtrl.activeView.username" name="username" type="text" placeholder="{{::$i18n.page.signIn.email}}" ng-required="true" autocomplete="username">
     </md-input-container>
 
     <md-input-container class="md-block margin-right-default">
         <md-icon class="material-icons">lock</md-icon>
-        <input ng-model="loginCtrl.credentials.password" type="password" placeholder="{{::$i18n.page.signIn.psw}}" ng-required="true">
+        <input ng-model="loginCtrl.activeView.password" name="password" type="password" placeholder="{{::$i18n.page.signIn.psw}}" ng-required="true" autocomplete="current-password">
     </md-input-container>
 
     <div layout="column" layout-align="start center">
 
         <div layout="row" layout-xs="column" layout-align="space-between center" class="layout-rw-100">
 
-            <md-button ng-if="$config.enable.userSignUp" flex flex-order-xs="1" class="form-btn-signup layout-xs-rw-100" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
+            <md-button ng-if="$config.enable.userSignUp" flex flex-order-xs="1" class="form-btn-signup layout-xs-rw-100" ng-click="loginCtrl.displayEmailField('invite')">
                 {{::$i18n.page.signIn.signUp}}
             </md-button>
 
@@ -26,7 +26,7 @@
 
         </div>
 
-        <md-button class="form-btn-forgotPsw layout-rw-100" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
+        <md-button class="form-btn-forgotPsw layout-rw-100" ng-click="loginCtrl.displayEmailField('reset')">
             {{::$i18n.page.signIn.forgotPsw}}
         </md-button>
 

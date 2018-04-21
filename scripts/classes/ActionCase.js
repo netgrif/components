@@ -29,7 +29,7 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
     ActionCase.prototype.loadData = function (callback = () => {}) {
         if (this.loading || this.data.length > 0) return;
         const self = this;
-        this.$http.get("/res/workflow/case/" + this.stringId + "/data").then(function (response) {
+        this.$http.get("/api/workflow/case/" + this.stringId + "/data").then(function (response) {
             if (response.$response().data._embedded) {
                 Object.keys(response.$response().data._embedded).forEach((item, index, array) => {
                     response.$request().$get(item).then(function (resources) {
@@ -61,7 +61,7 @@ define(['./DataField', './HalResource', './Task', './Case'], function (DataField
     ActionCase.prototype.loadTasks = function (callback = () => {}) {
         if (this.tasks.length > 0) return;
         const self = this;
-        this.$http.get("/res/task/case/" + this.stringId).then(function (response) {
+        this.$http.get("/api/task/case/" + this.stringId).then(function (response) {
             //tasks references
             self.tasks = Object.keys(response).map(key => response[key]);
             self.tasks.forEach(task => {

@@ -1,21 +1,24 @@
-<!-- TODO 15.2.2018 Submit user self registration form -->
-<form ng-submit="loginCtrl.requestSignUp()" class="form-self-registration">
+<form ng-submit="loginCtrl.activeView.send()" class="form-self-registration">
 
     <md-input-container class="md-block">
         <md-icon class="material-icons">email</md-icon>
-        <input ng-model="loginCtrl.signupUser.email" type="text" placeholder="{{::$i18n.page.signIn.email}}" ng-required="true">
+        <input ng-model="loginCtrl.activeView.email" name="email" type="email" placeholder="{{::$i18n.page.signIn.email}}" ng-required="true">
     </md-input-container>
 
     <div layout="row" layout-align="space-between center" class="margin-left-0">
 
-        <md-button class="md-icon-button margin-left-negative-default" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
+        <md-button class="md-icon-button margin-left-negative-default" ng-click="loginCtrl.displayEmailField(false)">
             <md-icon class="material-icons">arrow_back</md-icon>
         </md-button>
 
-        <md-button type="submit" class="margin-left-0 form-btn-submit" ng-click="$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
+        <md-button type="submit" class="margin-left-0 form-btn-submit">
             {{::$i18n.block.btn.submit}}
         </md-button>
 
+    </div>
+
+    <div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-default" ng-show="loginCtrl.loading">
+        <md-progress-circular md-mode="indeterminate" ng-disabled="!loginCtrl.loading" class="md-primary" md-diameter="50"></md-progress-circular>
     </div>
 
 </form>

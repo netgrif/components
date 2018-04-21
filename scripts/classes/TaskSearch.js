@@ -240,7 +240,7 @@ define(['./Filter'], function (Filter) {
         this.autoCompleteStorage.process = this.$process.nets.map(n => new AutoCompleteItem("process", n));
         return this.filterValues(this.autoCompleteStorage.process);
 
-        // return this.$http.get("/res/petrinet/refs").then(response => {
+        // return this.$http.get("/api/petrinet/refs").then(response => {
         //     return response.$request().$get("petriNetReferences").then(resources => {
         //         self.autoCompleteStorage.process = resources.map(r => new AutoCompleteItem("process", r));
         //         return self.filterValues(self.autoCompleteStorage.process);
@@ -270,7 +270,7 @@ define(['./Filter'], function (Filter) {
         return this.filterValues(this.autoCompleteStorage.transition);
 
 
-        // return this.$http.get("/res/petrinet/transitions", {params: {ids: queryProcess}}).then(response => {
+        // return this.$http.get("/api/petrinet/transitions", {params: {ids: queryProcess}}).then(response => {
         //     return response.$request().$get("transitionReferences").then(resources => {
         //         self.autoCompleteStorage.transition = resources.map(r => new AutoCompleteItem("transition", r));
         //         return self.filterValues(self.autoCompleteStorage.transition);

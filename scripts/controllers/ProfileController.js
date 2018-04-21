@@ -11,7 +11,7 @@ define(['angular', '../modules/Main'],
                     self.completion = 0;
 
                     self.loadProfile = function () {
-                        $http.get("/res/user/me").then(function (response) {
+                        $http.get("/api/user/me").then(function (response) {
                             self.user = response;
                             self.updateCompletion();
                             $log.debug(self.user);

@@ -14,7 +14,7 @@ define(['angular', '../classes/Transaction', '../modules/Main'], function (angul
 
         Net.prototype.loadTransitions = function () {
             const self = this;
-            return $http.get("/res/petrinet/transitions", {params: {ids: [self.id]}}).then(response => {
+            return $http.get("/api/petrinet/transitions", {params: {ids: [self.id]}}).then(response => {
                 return response.$request().$get("transitionReferences").then(resources => {
                     self.transitions = resources.map(r => {
                         return {id: r.stringId, title: r.title, netId: r.petriNetId}
@@ -34,7 +34,7 @@ define(['angular', '../classes/Transaction', '../modules/Main'], function (angul
 
         Net.prototype.loadTransactions = function () {
             const self = this;
-            return $http.get("/res/petrinet/" + self.id + "/transactions").then(response => {
+            return $http.get("/api/petrinet/" + self.id + "/transactions").then(response => {
                 return response.$request().$get("transactions").then(resources => {
                     self.transactions = resources.map(r => new Transaction(r, {}));
                     // console.log("Transactions of " + self.title + " has been loaded");
@@ -52,7 +52,7 @@ define(['angular', '../classes/Transaction', '../modules/Main'], function (angul
 
         Net.prototype.loadRoles = function () {
             const self = this;
-            return $http.get("/res/petrinet/" + self.id + "/roles").then(response => {
+            return $http.get("/api/petrinet/" + self.id + "/roles").then(response => {
                 return response.$request().$get("processRoles").then(resources => {
                     self.roles = resources.map(r => {
                         return {id: r.stringId, name: r.name, desc: r.description}
@@ -103,7 +103,7 @@ define(['angular', '../classes/Transaction', '../modules/Main'], function (angul
                     return deferred.promise;
                 }
 
-                return $http.get("/res/petrinet", {params: {"version": "^"}}).then(response => {
+                return $http.get("/api/petrinet", {params: {"version": "^"}}).then(response => {
                     return response.$request().$get("petriNetReferences").then(resources => {
                         process.nets = resources.map(r => new Net(r.stringId, r.identifier, r));
                         const loaders = [];

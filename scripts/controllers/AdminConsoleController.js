@@ -55,7 +55,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                 self.loadProcessRoles = function () {
                     if (!self.selectedNet) return;
                     self.processRoles = [];
-                    $http.get("/res/petrinet/" + self.selectedNet.stringId + "/roles").then(function (response) {
+                    $http.get("/api/petrinet/" + self.selectedNet.stringId + "/roles").then(function (response) {
                         response.$request().$get("processRoles").then(function (resources) {
                             self.processRoles = resources;
                             self.processRoles.forEach(role => {
@@ -90,7 +90,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                  * Load list of groups for invite tab
                  */
                 self.loadOrganizations = function () {
-                    $http.get("/res/group/all").then(function (response) {
+                    $http.get("/api/group/all").then(function (response) {
                         response.$request().$get("groups").then(function (resources) {
                             self.groups = resources;
                             self.groups.forEach(org => {
@@ -116,7 +116,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                  * Send invitation request
                  */
                 self.invite = function () {
-                    if (!self.invitedUser.email || self.invitedUser.email === "") {
+                    if (!self.invitedUser.email || self.invitedUser.email.trim() === "") {
                         $snackbar.error($i18n.block.snackbar.emailFieldIsMandatory);
                         return;
                     }
@@ -136,17 +136,17 @@ define(['angular', '../modules/Admin'], function (angular) {
                     };
 
                     self.inviteLoading = true;
-                    $http.post('/signup/invite', invitation)
-                        .then(function (response) {
+                    $auth.invite(invitation, (success, message) => {
+                        if(success){
                             $snackbar.success($i18n.block.snackbar.inviteSent);
                             self.invitedUser.email = undefined;
                             self.invitedUser.groups.splice(0, self.invitedUser.groups.length);
                             self.invitedUser.processRoles = {};
-                            self.inviteLoading = false;
-                        }, function () {
+                        } else {
                             $snackbar.error($i18n.block.snackbar.inviteFailed);
-                            self.inviteLoading = false;
-                        });
+                        }
+                        self.inviteLoading = false;
+                    });
                 };
 
                 /* Roles and Users tab */
@@ -158,7 +158,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                         return;
                     this.roles.roles.splice(0, this.roles.roles);
                     this.filteredRoles.splice(0, this.filteredRoles.length);
-                    $http.get("/res/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
+                    $http.get("/api/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
                         response.$request().$get("processRoles").then(resources => {
                             this.roles.roles = resources;
                             this.roles.roles.forEach(role => {
@@ -191,7 +191,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                         self.users.forEach(user => user.selected = false);
                         return;
                     }
-                    $http.get("/res/user/small").then(response => {
+                    $http.get("/api/user?small=true").then(response => {
                         response.$request().$get("users").then(resources => {
                             self.users = resources;
                             self.users.forEach(user => {
@@ -367,9 +367,8 @@ define(['angular', '../modules/Admin'], function (angular) {
                         return;
 
                     $user.clear();
-                    $http.get("/user").then(response => {
-                        if (response.principal)
-                            $user.fromPrincipal(response.principal);
+                    $http.get("/api/user/me?small=true").then(response => {
+                        $user.fromResource(response);
                     }, error => {
                         $log.error("Failed to reload user's data!");
                         $log.error(error);
@@ -382,7 +381,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                 };
 
                 self.loadNets = function () {
-                    $http.get("/res/petrinet").then(function (response) {
+                    $http.get("/api/petrinet").then(function (response) {
                         response.$request().$get("petriNetReferences").then(function (resources) {
                             self.processes = resources;
                         }, function () {
