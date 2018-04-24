@@ -68,7 +68,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
             response.$request().$get("cases").then(function (resources) {
                 if (self.page.totalPages !== 1) {
                     self.page.last = response.$href("last");
-                    if (url !== self.page.last)
+                    if (config.url !== self.page.last)
                         self.page.next = response.$href("next");
                 }
                 self.parseCase(resources, rawData, next);
