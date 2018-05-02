@@ -21,6 +21,7 @@ define(['./HalResource'], function (HalResource) {
         this.changed = false;
         this.valid = true;
         this.active = false;
+        this.uploadProgress = 0;
     }
 
     DataField.prototype = Object.create(HalResource.prototype);
@@ -139,7 +140,13 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.upload = function () {
         if (!this.file) return;
 
-        this.$fileUpload.upload(this.file, undefined, this.parent.links.file.href + this.stringId, response => {
+        this.$fileUpload.upload(this.file, undefined, this.parent.links.file.href + this.stringId, uploadEvent => {
+            if (uploadEvent.lengthComputable) {
+                this.uploadProgress = (uploadEvent.loaded / uploadEvent.total) * 100;
+                console.log("Upload progress " + this.uploadProgress);
+            }
+        }, response => {
+            this.uploadProgress = 0;
             if (!response) {
                 this.$snackbar.error(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.failedToUpload}`);
                 return;
