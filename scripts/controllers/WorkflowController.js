@@ -19,6 +19,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.searchInput = undefined;
                     self.searchLast = undefined;
                     self.loading = false;
+                    self.uploadProgress = 0;
                     self.startupLock = true;
 
 
@@ -40,7 +41,12 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
 
                         self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
                         let meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
-                        $fileUpload.upload(self.netFile, meta, "/api/petrinet/import", function (response) {
+                        $fileUpload.upload(self.netFile, meta, "/api/petrinet/import", uploadEvent => {
+                            if (uploadEvent.lengthComputable) {
+                                self.uploadProgress = (uploadEvent.loaded / uploadEvent.total) * 100;
+                            }
+                        }, function (response) {
+                            self.uploadProgress = 0;
                             if (response.success) {
                                 $dialog.closeCurrent();
                                 self.clearAll();

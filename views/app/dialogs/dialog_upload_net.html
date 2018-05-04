@@ -62,11 +62,21 @@
                 <md-input-container>
                     <label>{{::$root.$i18n.block.dialog.uploadModel.release.this}}</label>
                     <md-select ng-model="parentCtrl.petriNetMeta.releaseType">
-                        <md-option value="major">{{::$root.$i18n.block.dialog.uploadModel.release.type.major}}</md-option>
-                        <md-option value="minor">{{::$root.$i18n.block.dialog.uploadModel.release.type.minor}}</md-option>
-                        <md-option value="patch">{{::$root.$i18n.block.dialog.uploadModel.release.type.patch}}</md-option>
+                        <md-option value="major">
+                            {{::$root.$i18n.block.dialog.uploadModel.release.type.major}}
+                        </md-option>
+                        <md-option value="minor">
+                            {{::$root.$i18n.block.dialog.uploadModel.release.type.minor}}
+                        </md-option>
+                        <md-option value="patch">
+                            {{::$root.$i18n.block.dialog.uploadModel.release.type.patch}}
+                        </md-option>
                     </md-select>
                 </md-input-container>
+
+                <div ng-if="parentCtrl.uploadProgress !== 0" flex class="margin-top-default">
+                    <md-progress-linear md-mode="determinate" value="{{parentCtrl.uploadProgress}}"></md-progress-linear>
+                </div>
 
             </div>
         </md-dialog-content>

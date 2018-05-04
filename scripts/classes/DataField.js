@@ -143,7 +143,6 @@ define(['./HalResource'], function (HalResource) {
         this.$fileUpload.upload(this.file, undefined, this.parent.links.file.href + this.stringId, uploadEvent => {
             if (uploadEvent.lengthComputable) {
                 this.uploadProgress = (uploadEvent.loaded / uploadEvent.total) * 100;
-                console.log("Upload progress " + this.uploadProgress);
             }
         }, response => {
             this.uploadProgress = 0;
