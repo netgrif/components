@@ -1536,6 +1536,112 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     md-expansion-panel.highlight md-expansion-panel-collapsed:hover md-progress-circular path, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container:hover md-progress-circular path {
       stroke: #FAFAFA !important; }
 
+#browser-support-msg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  background-color: #FAFAFA;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12); }
+  #browser-support-msg span {
+    display: table;
+    margin: 0 auto;
+    font-size: 22px;
+    color: rgba(0, 0, 0, 0.87); }
+    #browser-support-msg span a {
+      text-decoration: none;
+      color: #009688; }
+      #browser-support-msg span a:hover {
+        text-decoration: underline; }
+
+.buorg {
+  position: fixed;
+  z-index: 111111;
+  width: 100%;
+  top: 0;
+  left: 0;
+  border-bottom: none !important;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.87) !important;
+  background-color: #FAFAFA !important;
+  font: 22px Roboto, "Helvetica Neue", sans-serif !important;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12) !important;
+  -webkit-animation: none !important;
+  animation: none !important; }
+  .buorg a {
+    text-decoration: none;
+    color: #009688; }
+    .buorg a:hover {
+      text-decoration: underline; }
+
+.buorg-pad {
+  padding: 16px !important;
+  line-height: 1.7em; }
+
+.buorg-buttons {
+  display: block;
+  text-align: center; }
+
+#buorgig, #buorgul, #buorgpermanent {
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+  padding: 1px 10px;
+  border-radius: 4px;
+  font-weight: normal;
+  background: #5ab400;
+  white-space: nowrap;
+  margin: 0 2px;
+  display: inline-block; }
+
+#buorgig {
+  background-color: #edbc68; }
+
+@media only screen and (max-width: 700px) {
+  .buorg div {
+    padding: 5px 12px 5px 9px;
+    line-height: 1.3em; } }
+
+@-webkit-keyframes buorgfly {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(-50px);
+    transform: translateY(-50px); }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px); } }
+
+@keyframes buorgfly {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(-50px);
+    transform: translateY(-50px); }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px); } }
+
+.buorg-fadeout {
+  -webkit-transition: visibility 0s 8.5s, opacity 8s ease-out .5s;
+  -o-transition: visibility 0s 8.5s, opacity 8s ease-out .5s;
+  transition: visibility 0s 8.5s, opacity 8s ease-out .5s; }
+
+.buorg-icon {
+  width: 22px;
+  height: 16px;
+  vertical-align: middle;
+  position: relative;
+  top: -0.05em;
+  display: inline-block;
+  background: no-repeat 0 center; }
+
 .base .height-48px {
   height: 48px; }
 

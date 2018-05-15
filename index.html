@@ -19,9 +19,62 @@
 	<link rel="stylesheet" type="text/css" href="/styles/templates/default/css/main.css">
 	<!-- RequireJS loaded scripts -->
 	<base href="/">
+
+	<script>
+        var $buoop = {
+            notify: {
+                i: 0,
+                e: 0,
+                f: 0,
+                o: 0,
+                s: 0,
+                c: -3
+            },
+            required: {
+                i: 0,
+                e: 0,
+                f: 0,
+                o: 0,
+                s: 0,
+                c: -3
+            },
+            vs: {
+                i: 0,
+                e: 0,
+                f: 0,
+                o: 0,
+                s: 0,
+                c: -3
+            },
+            test: false,
+            l: false,
+            text: '<span>You are using outdated browser. For correct usage please update your <a href="https://www.google.com/chrome/">Google Chrome</a></span>',
+            insecure: true,
+            unsupported: true,
+            reminderClosed: 3,
+            api: 5
+        };
+
+        function $buo_f() {
+            var e = document.createElement("script");
+            e.src = "//browser-update.org/update.min.js";
+            document.body.appendChild(e);
+        }
+
+        try {
+            document.addEventListener("DOMContentLoaded", $buo_f, false)
+        }
+        catch (e) {
+            window.attachEvent("onload", $buo_f)
+        }
+	</script>
 </head>
 
 <body class="base background-default">
+
+	<div id="browser-support-msg" class="hide">
+		<span>You are using outdated browser. For correct usage please update your <a href="https://www.google.com/chrome/">Google Chrome</a></span>
+	</div>
 
 	<div ng-controller="MainController as mainCtrl" class="layout-rh-100">
 
@@ -38,6 +91,31 @@
 
 	<!-- RequireJS -->
 	<script src="./bower_components/requirejs/require.js" data-main="scripts/main" async></script>
+
+	<script>
+        var isChromium = window.chrome;
+        var winNav = window.navigator;
+        var vendorName = winNav.vendor;
+        var isOpera = typeof window.opr !== "undefined";
+        var isIEedge = winNav.userAgent.indexOf("Edge") > -1;
+        var isIOSChrome = winNav.userAgent.match("CriOS");
+
+        if (isIOSChrome || (
+            isChromium !== null &&
+            typeof isChromium !== "undefined" &&
+            vendorName === "Google Inc." &&
+            isOpera === false &&
+            isIEedge === false
+        )) {
+            // is Google Chrome or is Google Chrome on IOS
+            console.log('Using Google Chrome');
+        } else {
+            // not Google Chrome
+            console.log("Using unsupported browser");
+            var element = document.getElementById("browser-support-msg");
+            element.classList.remove("hide");
+        }
+	</script>
 
 </body>
 
