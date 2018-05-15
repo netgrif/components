@@ -479,6 +479,10 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                                     () => {
                                         self.collapse();
                                     }
+                                ], [
+                                    () => {
+                                        self.collapse();
+                                    }
                                 ]))
                             }];
                         }
