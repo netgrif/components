@@ -40,7 +40,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     };
 
     CaseTab.prototype.buildSearchRequest = function (next) {
-        const url = next && this.page.next ? this.page.next : CaseTab.URL_SEARCH;
+        const url = next && this.page.next ? this.page.next : CaseTab.URL_SEARCH+"?sort=_id,desc";
         return {
             method: "POST",
             url: url,
@@ -109,6 +109,8 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                 $user: this.$user,
                 $fileUpload: this.$fileUpload,
                 $i18n: this.$i18n
+            }, {
+                caseDelete: this.caseDelete
             })));
         }
 

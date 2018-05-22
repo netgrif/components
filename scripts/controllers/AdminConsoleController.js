@@ -1,7 +1,7 @@
 define(['angular', '../modules/Admin'], function (angular) {
     angular.module('ngAdmin').controller('AdminConsoleController',
-        ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user', '$i18n', '$location', '$auth',
-            function ($log, $scope, $http, $snackbar, $timeout, $user, $i18n, $location, $auth) {
+        ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user', '$i18n', '$location', '$auth', '$config',
+            function ($log, $scope, $http, $snackbar, $timeout, $user, $i18n, $location, $auth, $config) {
                 if (!$user.hasAuthority("ROLE_ADMIN"))
                     $location.path("/");
 
@@ -124,7 +124,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                         $snackbar.error($i18n.block.snackbar.newUserMustBelongToOneOrMoreOrganization);
                         return;
                     }
-                    if (jQuery.isEmptyObject(self.invitedUser.processRoles)) {
+                    if (!$config.enable.inviteUserWithNoProcessRoles && jQuery.isEmptyObject(self.invitedUser.processRoles)) {
                         $snackbar.error($i18n.block.snackbar.newUserMustHasAssignedOneOrMoreRoles);
                         return;
                     }
