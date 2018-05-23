@@ -1,8 +1,8 @@
 define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Filter', '../modules/Tasks', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, TaskTab, FilterTab, Filter) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config) {
                     const self = this;
 
                     self.activeTabIndex = 0;
@@ -31,11 +31,14 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                             }, {
                                 closable: closable,
                                 filterPolicy: filterPolicy,
-                                searchable: true,
-                                allowHighlight: false,
-                                showTransactions: false,
-                                autoOpenUnfinished: false,
-                                fullReload: true
+                                searchable: $config.show.tasks.taskSearch,
+                                allowHighlight: $config.enable.tasks.allowHighlight,
+                                autoOpenUnfinished: $config.enable.tasks.autoOpenUnfinished,
+                                fullReload: $config.enable.tasks.fullReload,
+
+                                showTransactions: $config.show.tasks.transactions,
+                                taskPriority: $config.show.tasks.taskPriority,
+                                taskCaseTitle: $config.show.tasks.taskCaseTitle
                             }));
                         });
                         if (closable) {

@@ -18,6 +18,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         $i18n,
                         $process
                     }, {
+                        caseDelete: $config.enable.cases.caseDelete,
+
                         authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
                         allowedNets: $process.nets
                     });
@@ -46,11 +48,14 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                     $i18n,
                                     $process
                                 }, {
-                                    showTransactions: true,
-                                    allowHighlight: $config.enable.taskHighlight,
-                                    autoOpenUnfinished: $config.enable.autoOpenUnfinished,
-                                    searchable: false,
-                                    fullReload: false
+                                    allowHighlight: $config.enable.cases.allowHighlight,
+                                    autoOpenUnfinished: $config.enable.cases.autoOpenUnfinished,
+                                    searchable: $config.show.cases.taskSearch,
+                                    fullReload: $config.enable.cases.fullReload,
+
+                                    showTransactions: $config.show.cases.transactions,
+                                    taskPriority: $config.show.cases.taskPriority,
+                                    taskCaseTitle: $config.show.cases.taskCaseTitle
                                 }));
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;

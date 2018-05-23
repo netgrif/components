@@ -462,13 +462,18 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                         if (success) {
                             return [() => {
                                 self.assign(new Chain([
-                                    () => {
-                                        self.tab.load(false, true);
-                                    },
-                                    () => {
-                                        self.load(new Chain(buildFinishPolicyCallChain(true)));
-                                    }
-                                ]));
+                                        () => {
+                                            self.tab.load(false, true);
+                                        },
+                                        () => {
+                                            self.load(new Chain(buildFinishPolicyCallChain(true)));
+                                        }
+                                    ],
+                                    [
+                                        () => {
+                                            self.tab.load(false, true);
+                                        }
+                                    ]));
                             }];
                         } else {
                             return [() => {
@@ -480,6 +485,9 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                                         self.collapse();
                                     }
                                 ], [
+                                    () => {
+                                        self.tab.load(false, true);
+                                    },
                                     () => {
                                         self.collapse();
                                     }

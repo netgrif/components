@@ -83,14 +83,36 @@ define([], function () {
             sidenav: "../../assets/default/netgrif.svg"
         },
         show: {
-            priority: true
+            cases: {
+                transactions: true,
+
+                taskSearch: false,
+                taskPriority: true,
+                taskCaseTitle: true
+            },
+            tasks: {
+                taskSearch: true,
+                taskPriority: true,
+                taskCaseTitle: true
+            }
         },
         enable: {
             userSignUp: true,
-            taskHighlight: false,
-            autoOpenUnfinished: false,
             modelDelete: true,
-            caseDelete: true
+            inviteUserWithNoProcessRoles: true,
+
+            cases: {
+                caseDelete: true,
+
+                allowHighlight: false,
+                autoOpenUnfinished: false,
+                fullReload: false
+            },
+            tasks: {
+                allowHighlight: false,
+                autoOpenUnfinished: false,
+                fullReload: false
+            }
         }
     };
 });

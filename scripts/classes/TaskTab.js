@@ -163,7 +163,9 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                 tab: this,
                 config: {
                     allowHighlight: this.allowHighlight,
-                    fullReload: this.fullReload
+                    fullReload: this.fullReload,
+                    taskPriority: this.taskPriority,
+                    taskCaseTitle: this.taskCaseTitle
                 }
             }).then(function (panel) {
                 if (self.taskControllers[r.stringId]) {
