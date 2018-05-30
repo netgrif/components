@@ -43,7 +43,7 @@
 			<md-tab-body>
 				<md-content layout="column" class="color-bg-transparent padding-2x">
 
-					<div ng-if="$config.show.cases.transactions" flex layout="row" layout-align="space-around center" class="card height-48px">
+					<div ng-if="$config.show.cases.transactions && tab.transactions.length > 0" flex layout="row" layout-align="space-around center" class="card height-48px">
 
 						<span ng-repeat="trans in tab.transactions | orderBy:'stringId'" ng-class="trans.active ? 'active' : ''" class="transaction">
 							{{::trans.title}}
@@ -51,7 +51,7 @@
 
 					</div>
 
-					<md-divider class="border-width-2x color-border-transparent"></md-divider>
+					<md-divider ng-if="$config.show.cases.transactions && tab.transactions.length > 0" class="border-width-2x color-border-transparent"></md-divider>
 
 					<div ng-include="'views/app/headers/cases_task_header.html'"></div>
 
