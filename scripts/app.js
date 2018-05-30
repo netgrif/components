@@ -42,6 +42,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 .when('/recover/:token', 'recover')
                 .when('/dashboard', 'app.dashboard')
                 .when('/cases', 'app.cases')
+                .when('/newCases', 'app.newCases')
                 .when('/console', 'app.console')
                 .when('/profile', 'app.profile')
                 .when('/tasks', 'app.tasks')
@@ -64,6 +65,11 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     templateUrl: "views/app/cases.html",
                     controller: 'CasesController',
                     controllerAs: 'caseCtrl'
+                })
+                .segment('newCases', {
+                    templateUrl: "views/app/cases_new.html",
+                    controller: 'NewCasesController',
+                    controllerAs: 'newCaseCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",

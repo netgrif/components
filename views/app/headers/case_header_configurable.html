@@ -1,0 +1,51 @@
+<div layout="row" layout-align="start center" class="card-header padding-horizontal-2x">
+
+    <a flex-gt-sm="10" flex-sm="15" flex-xs="30">
+        {{::$i18n.block.case.header.label}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <a flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="50">
+        <div>
+            {{::$i18n.block.case.header.visualID}}
+            <md-icon class="material-icons">
+                {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            </md-icon>
+        </div>
+        <!--<md-input-container ng-if="!newCaseCtrl.selectedHeader">-->
+            <!--<md-select>-->
+
+            <!--</md-select>-->
+        <!--</md-input-container>-->
+    </a>
+    <a hide-xs flex-gt-md="20" flex-md="25" flex-sm="35">
+        {{::$i18n.block.case.header.title}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+    <a hide-xs hide-sm flex-gt-md="20" flex-md="25">
+        {{::$i18n.block.case.header.author}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+    <a hide show-gt-md flex-gt-md="20">
+        {{::$i18n.block.case.header.createDate}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <div flex-gt-xs="10" flex-xs="20">
+        <md-button ng-if="!newCaseCtrl.headerConfigEnabled" class="md-icon-button">
+            <md-icon class="material-icons">edit</md-icon>
+        </md-button>
+        <md-button ng-if="newCaseCtrl.headerConfigEnabled" class="md-icon-button">
+            <md-icon class="material-icons">done</md-icon>
+        </md-button>
+    </div> <!-- Menu spacer -->
+
+</div> <!-- ./card -->
