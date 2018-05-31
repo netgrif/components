@@ -23,7 +23,15 @@ define({
         },
         cases: {
             this: "Prípady",
-            my: "Moje prípady"
+            my: "Moje prípady",
+            all: "Všetky prípady"
+        },
+        casesData: {
+            this: "Dátové prípady",
+            my: "Moje prípady",
+            all: "Všetky prípady",
+            enableEditMode: "Povoliť úpravy",
+            confirmChanges: "Potvrdiť úpravy"
         },
         tasks: {
             this: "Úlohy",
@@ -227,6 +235,8 @@ define({
         case: {
             this: "Prípad",
             header: {
+                metaData: "meta data",
+                fields: "fields",
                 label: "Typ",
                 visualID: "Vizuálne ID",
                 title: "Názov",

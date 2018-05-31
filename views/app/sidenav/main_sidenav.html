@@ -14,10 +14,10 @@
             <i class="material-icons">storage</i>{{::$i18n.page.cases.this}}
         </md-button>
 
-        <md-button href="/newCases" layout="row" layout-align="start center"
-                   ng-class="{active: ('newCases' | routeSegmentContains)}"
-                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('newCases')">
-            <i class="material-icons">storage</i>New Cases
+        <md-button href="/casesData" layout="row" layout-align="start center"
+                   ng-class="{active: ('casesData' | routeSegmentContains)}"
+                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('casesData')">
+            <i class="material-icons">storage</i>{{::$i18n.page.casesData.this}}
         </md-button>
 
         <md-button href="/tasks" layout="row" layout-align="start center"

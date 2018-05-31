@@ -24,7 +24,15 @@ define({
             },
             cases: {
                 this: "Cases",
-                my: "My cases"
+                my: "My cases",
+                all: "All cases"
+            },
+            casesData: {
+                this: "Data cases",
+                my: "My cases",
+                all: "All cases",
+                enableEditMode: "Enable edit mode",
+                confirmChanges: "Confirm changes"
             },
             tasks: {
                 this: "Tasks",
@@ -225,6 +233,8 @@ define({
             case: {
                 this: "Case",
                 header: {
+                    metaData: "meta data",
+                    fields: "fields",
                     label: "Type",
                     visualID: "Visual ID",
                     title: "Title",

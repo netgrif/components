@@ -379,6 +379,9 @@
 .margin-top-0 {
   margin-top: 0 !important; }
 
+.margin-top-2px {
+  margin-top: 2px; }
+
 .margin-top-default {
   margin-top: 8px; }
 
@@ -575,6 +578,9 @@
 
 .margin-top-0 {
   margin-top: 0 !important; }
+
+.margin-top-2px {
+  margin-top: 2px; }
 
 .margin-top-default {
   margin-top: 8px; }
@@ -1000,6 +1006,9 @@ span.highlight {
 .margin-top-0 {
   margin-top: 0 !important; }
 
+.margin-top-2px {
+  margin-top: 2px; }
+
 .margin-top-default {
   margin-top: 8px; }
 
@@ -1308,6 +1317,9 @@ span.highlight {
 
 .margin-top-0 {
   margin-top: 0 !important; }
+
+.margin-top-2px {
+  margin-top: 2px; }
 
 .margin-top-default {
   margin-top: 8px; }
@@ -1695,6 +1707,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .margin-top-0 {
   margin-top: 0 !important; }
 
+.base .margin-top-2px {
+  margin-top: 2px; }
+
 .base .margin-top-default {
   margin-top: 8px; }
 
@@ -1952,6 +1967,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .margin-top-0 {
   margin-top: 0 !important; }
 
+.base .margin-top-2px {
+  margin-top: 2px; }
+
 .base .margin-top-default {
   margin-top: 8px; }
 
@@ -2191,6 +2209,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 
 .base .margin-top-0 {
   margin-top: 0 !important; }
+
+.base .margin-top-2px {
+  margin-top: 2px; }
 
 .base .margin-top-default {
   margin-top: 8px; }
@@ -2507,6 +2528,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 
 .base .margin-top-0 {
   margin-top: 0 !important; }
+
+.base .margin-top-2px {
+  margin-top: 2px; }
 
 .base .margin-top-default {
   margin-top: 8px; }

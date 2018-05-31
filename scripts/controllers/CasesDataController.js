@@ -1,11 +1,18 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab, Filter) {
-        angular.module('ngCases').controller('NewCasesController',
+        angular.module('ngCases').controller('CasesDataController',
             ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config) {
                     const self = this;
 
-                    self.field = $i18n.block.case.header.visualID;
+                    self.headerFields = [
+                        $i18n.block.case.header.visualID,
+                        $i18n.block.case.header.title,
+                        $i18n.block.case.header.author,
+                        $i18n.block.case.header.createDate
+                    ];
+
+                    // For UI test purpose only
                     self.testCaseMetaData = [
                         $i18n.block.case.header.visualID,
                         $i18n.block.case.header.title,

@@ -1,0 +1,22 @@
+<div ng-if="!caseDataCtrl.headerConfigEnabled">
+    {{caseDataCtrl.headerFields[headerId]}}
+    <md-icon class="material-icons">
+        arrow_drop_down
+    </md-icon>
+</div>
+
+<md-input-container ng-if="caseDataCtrl.headerConfigEnabled" class="md-block margin-0">
+    <md-select ng-model="caseDataCtrl.headerFields[headerId]" class="margin-top-2px" aria-label="Select field">
+        <md-optgroup label="{{::$i18n.block.case.header.metaData}}">
+            <md-option ng-repeat="field in caseDataCtrl.testCaseMetaData" value="{{field}}">
+                {{field}}
+            </md-option>
+        </md-optgroup>
+        <!-- TODO 31.5.2018 replace process string constant with process name -->
+        <md-optgroup label="{{::'Process ' + $i18n.block.case.header.fields}}">
+            <md-option ng-repeat="field in caseDataCtrl.testFields" value="{{field}}">
+                {{field}}
+            </md-option>
+        </md-optgroup>
+    </md-select>
+</md-input-container>

@@ -1,43 +1,43 @@
 <div ng-cloak>
 
-    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="newCaseCtrl.activeTabIndex" class="background-tabs">
+    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="CaseDataCtrl.activeTabIndex" class="background-tabs">
 
-        <md-tab md-on-select="newCaseCtrl.caseTab.activate()" class="primary">
+        <md-tab md-on-select="CaseDataCtrl.caseTab.activate()" class="primary">
 
             <md-tab-label>
-                {{::$i18n.page.cases.my}}
+                {{::$i18n.page.casesData.this}}
             </md-tab-label>
 
             <md-tab-body>
                 <md-content layout="column" class="color-bg-transparent padding-2x">
 
-                    <div ng-init="tab=newCaseCtrl.caseTab" ng-include="'views/app/search_bars/case_search_bar.html'"></div>
+                    <div ng-init="tab=CaseDataCtrl.caseTab" ng-include="'views/app/search_bars/case_search_bar.html'"></div>
 
                     <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                     <div flex layout="column">
 
-                        <div ng-include="'views/app/headers/case_header_configurable.html'"></div>
+                        <div ng-include="'views/app/headers/case_data_header.html'"></div>
 
                         <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-                        <div ng-init="tab=newCaseCtrl.caseTab" ng-include="'views/app/lists/case_list.html'"></div>
+                        <div ng-init="tab=CaseDataCtrl.caseTab" ng-include="'views/app/lists/case_list.html'"></div>
 
                     </div> <!-- ./column -->
 
-                    <div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&newCaseCtrl.caseTab.load(true)">
-                        <md-progress-circular md-mode="indeterminate" ng-disabled="!newCaseCtrl.caseTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
+                    <div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&CaseDataCtrl.caseTab.load(true)">
+                        <md-progress-circular md-mode="indeterminate" ng-disabled="!CaseDataCtrl.caseTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
                     </div> <!-- ./row -->
 
                 </md-content>
             </md-tab-body>
         </md-tab>
 
-        <md-tab class="primary" ng-repeat="tab in newCaseCtrl.taskTabs" md-on-select="newCaseCtrl.tabChanged()">
+        <md-tab class="primary" ng-repeat="tab in CaseDataCtrl.taskTabs" md-on-select="CaseDataCtrl.tabChanged()">
 
             <md-tab-label>
                 {{::tab.useCase.title}}
-                <md-icon class="material-icons cursor-pointer font-size-22" ng-click="newCaseCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
+                <md-icon class="material-icons cursor-pointer font-size-22" ng-click="CaseDataCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
             </md-tab-label>
 
             <md-tab-body>
