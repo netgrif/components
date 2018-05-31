@@ -8,8 +8,8 @@ define({
             signIn: {
                 email: "Email",
                 psw: "Password",
-                signIn: "Sign In",
-                signUp: "Sign Up",
+                signIn: "Login",
+                signUp: "Create account",
                 forgotPsw: "Forgot password"
             },
             signUp: {
