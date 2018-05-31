@@ -5,6 +5,20 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config) {
                     const self = this;
 
+                    self.field = $i18n.block.case.header.visualID;
+                    self.testCaseMetaData = [
+                        $i18n.block.case.header.visualID,
+                        $i18n.block.case.header.title,
+                        $i18n.block.case.header.author,
+                        $i18n.block.case.header.createDate
+                    ];
+                    self.testFields = [
+                        "Field 1",
+                        "Field 2",
+                        "Field 3",
+                        "Field 4"
+                    ];
+
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
