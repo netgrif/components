@@ -98,7 +98,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     }
 
                     const navClickListener = $rootScope.$on("navClick", (event, data) => {
-                        if (data.item === "newCases")
+                        if (data.item === "casesData")
                             self.activeTabIndex = 0;
                     });
                     $scope.$on('$destroy', navClickListener);
