@@ -20,12 +20,6 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
         }
 
         return {
-            show: function (msg) { //Legacy method //TODO: 6/3/2017 remove when no use
-                msg && $mdToast.show($mdToast.simple()
-                    .textContent(msg)
-                    .position(position)
-                    .hideDelay(delay));
-            },
             simple: function (msg) {
                 msg && $mdToast.show($mdToast.simple()
                     .textContent(msg)
