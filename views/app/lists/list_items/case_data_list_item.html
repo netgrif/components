@@ -7,17 +7,17 @@
     </span>
 
     <span flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="50">
-        {{::useCase.visualId}}
+        <span>{{::useCase.visualId}}</span>
     </span>
     <span hide-xs flex-gt-md="20" flex-md="25" flex-sm="35">
-        {{::useCase.title}}
+        <span>{{::useCase.title}}</span>
     </span>
     <span hide-xs hide-sm flex-gt-md="20" flex-md="25" layout="row" layout-align="start center">
         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-        {{::useCase.author.fullName}}
+        <span>{{::useCase.author.fullName}}</span>
     </span>
     <span hide show-gt-md flex-gt-md="20">
-        {{::useCase.formatedDate}}
+        <span>{{::useCase.formatedDate}}</span>
     </span>
 
     <md-menu ng-if="useCase.caseDelete && $user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
