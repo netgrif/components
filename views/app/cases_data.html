@@ -1,8 +1,8 @@
 <div ng-cloak>
 
-    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="CaseDataCtrl.activeTabIndex" class="background-tabs">
+    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="caseDataCtrl.activeTabIndex" class="background-tabs">
 
-        <md-tab md-on-select="CaseDataCtrl.caseTab.activate()" class="primary">
+        <md-tab md-on-select="caseDataCtrl.caseTab.activate()" class="primary">
 
             <md-tab-label>
                 {{::$i18n.page.casesData.this}}
@@ -25,19 +25,19 @@
 
                     </div> <!-- ./column -->
 
-                    <div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&CaseDataCtrl.caseTab.load(true)">
-                        <md-progress-circular md-mode="indeterminate" ng-disabled="!CaseDataCtrl.caseTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
+                    <div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&caseDataCtrl.caseTab.load(true)">
+                        <md-progress-circular md-mode="indeterminate" ng-disabled="!caseDataCtrl.caseTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
                     </div> <!-- ./row -->
 
                 </md-content>
             </md-tab-body>
         </md-tab>
 
-        <md-tab class="primary" ng-repeat="tab in CaseDataCtrl.taskTabs" md-on-select="CaseDataCtrl.tabChanged()">
+        <md-tab class="primary" ng-repeat="tab in caseDataCtrl.taskTabs" md-on-select="caseDataCtrl.tabChanged()">
 
             <md-tab-label>
                 {{::tab.useCase.title}}
-                <md-icon class="material-icons cursor-pointer font-size-22" ng-click="CaseDataCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
+                <md-icon class="material-icons cursor-pointer font-size-22" ng-click="caseDataCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
             </md-tab-label>
 
             <md-tab-body>

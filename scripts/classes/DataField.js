@@ -153,7 +153,7 @@ define(['./HalResource'], function (HalResource) {
 
             this.uploaded = true;
             this.newFile = true;
-            this.$snackbar.info(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.uploadedSuccessfully}`);
+            this.$snackbar.success(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.uploadedSuccessfully}`);
         });
     };
 

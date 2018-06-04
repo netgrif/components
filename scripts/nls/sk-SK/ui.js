@@ -423,6 +423,10 @@ define({
             noSavedFilters: "Doposiaľ neboli uložené žiadne filtre",
             deletingFilter: "Vymazávanie filtra",
             noRequiredNetUploaded: "Nie je nahraná žiadna sieť vyžadovaná týmto zobrazením",
+            accountCreated: "Účet bol vytvorený",
+            invitationEmailSent: "Pozvánka na vytvorenie účtu bola zaslaná",
+            pswRecoveryEmailSentTo: "Email na obnovu hesla bol odoslaný na ",
+            newPswSet: "Vaše nové heslo bolo nastavené",
 
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },

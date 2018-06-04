@@ -291,7 +291,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         };
         this.$http.post("/api/filter", requestBody).then(response => {
             if (response.success) {
-                this.$snackbar.info(response.success);
+                this.$snackbar.success(response.success);
             } else
                 this.$snackbar.error(response.error);
             this.$dialog.closeCurrent();

@@ -421,6 +421,10 @@ define({
                 noSavedFilters: "There are no saved filters",
                 deletingFilter: "Deleting of the filter",
                 noRequiredNetUploaded: "There isn't uploaded any net required for this view",
+                accountCreated: "Account created",
+                invitationEmailSent: "Invitation email has been sent",
+                pswRecoveryEmailSentTo: "Password recovery email has been sent to",
+                newPswSet: "Your new password has been set",
 
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },
