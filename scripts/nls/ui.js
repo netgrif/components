@@ -420,6 +420,7 @@ define({
                 noFiltersFound: "No filters has been found",
                 noSavedFilters: "There are no saved filters",
                 deletingFilter: "Deleting of the filter",
+                noRequiredNetUploaded: "There isn't uploaded any net required for this view",
 
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },

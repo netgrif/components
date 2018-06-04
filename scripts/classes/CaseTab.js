@@ -129,8 +129,10 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     };
 
     CaseTab.prototype.openNewCaseDialog = function (title) {
-        if (this.allowedNets.length === 0)
+        if (this.allowedNets.length === 0) {
+            this.$snackbar.warning(this.$i18n.block.snackbar.noRequiredNetUploaded);
             return;
+        }
 
         this.$dialog.showByTemplate('create_case', this, {title: this.createDialogTitle, onOpenAutoFocus: true});
     };

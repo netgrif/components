@@ -422,6 +422,7 @@ define({
             noFiltersFound: "Neboli nájdené žiadne filtre",
             noSavedFilters: "Doposiaľ neboli uložené žiadne filtre",
             deletingFilter: "Vymazávanie filtra",
+            noRequiredNetUploaded: "Nie je nahraná žiadna sieť vyžadovaná týmto zobrazením",
 
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },
