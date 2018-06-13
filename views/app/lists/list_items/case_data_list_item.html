@@ -6,19 +6,33 @@
         </i>
     </span>
 
-    <span flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="50">
-        <span>{{::useCase.visualId}}</span>
-    </span>
-    <span hide-xs flex-gt-md="20" flex-md="25" flex-sm="35">
-        <span>{{::useCase.title}}</span>
-    </span>
-    <span hide-xs hide-sm flex-gt-md="20" flex-md="25" layout="row" layout-align="start center">
-        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-        <span>{{::useCase.author.fullName}}</span>
-    </span>
-    <span hide show-gt-md flex-gt-md="20">
-        <span>{{::useCase.formatedDate}}</span>
-    </span>
+    <!-- META -->
+    <div flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="50">
+        <div ng-if="true" ng-init="value=useCase.visualId" ng-include="'views/app/datafields/values/value_text.html'"></div>
+    </div>
+    <div hide-xs flex-gt-md="20" flex-md="25" flex-sm="35">
+        <div ng-if="true" ng-init="value=useCase.title" ng-include="'views/app/datafields/values/value_text.html'"></div>
+    </div>
+    <div hide-xs hide-sm flex-gt-md="20" flex-md="25">
+        <div ng-if="true" ng-init="value=useCase.author.fullName" ng-include="'views/app/datafields/values/value_user.html'"></div>
+    </div>
+    <div hide show-gt-md flex-gt-md="20">
+        <div ng-if="true" ng-init="value=useCase.formatedDate" ng-include="'views/app/datafields/values/value_date.html'"></div>
+    </div>
+
+    <!-- Fields -->
+    <!--<div flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="50">-->
+        <!--<div ng-if="true" ng-init="value=false" ng-include="'views/app/datafields/values/value_boolean.html'"></div>-->
+    <!--</div>-->
+    <!--<div hide-xs flex-gt-md="20" flex-md="25" flex-sm="35">-->
+        <!--<div ng-if="true" ng-init="value='File name'" ng-include="'views/app/datafields/values/value_file.html'"></div>-->
+    <!--</div>-->
+    <!--<div hide-xs hide-sm flex-gt-md="20" flex-md="25">-->
+        <!--<div ng-if="true" ng-init="value='Enumeration text'" ng-include="'views/app/datafields/values/value_enumeration.html'"></div>-->
+    <!--</div>-->
+    <!--<div hide show-gt-md flex-gt-md="20">-->
+        <!--<div ng-if="true" ng-init="values=['value 1', 'value 2', 'value 2']" ng-include="'views/app/datafields/values/value_multichoice.html'"></div>-->
+    <!--</div>-->
 
     <md-menu ng-if="useCase.caseDelete && $user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
         <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>

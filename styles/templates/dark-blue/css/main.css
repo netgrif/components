@@ -1901,12 +1901,21 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     color: #FAFAFA;
     background-color: #293740; }
   .base .card-case {
-    height: 48px;
+    min-height: 48px;
     cursor: pointer; }
     .base .card-case:hover {
       background-color: #4D7ECF; }
       .base .card-case:hover span, .base .card-case:hover md-icon, .base .card-case:hover .material-icons.color-fg-primary-500 {
         color: #FAFAFA; }
+      .base .card-case:hover md-switch .md-label {
+        color: #FAFAFA; }
+      .base .card-case:hover md-switch .md-bar {
+        background-color: rgba(250, 250, 250, 0.5);
+        -webkit-transition-delay: 0s;
+        -o-transition-delay: 0s;
+        transition-delay: 0s; }
+      .base .card-case:hover md-switch .md-thumb {
+        background-color: #FAFAFA; }
 
 @media all and (max-width: 599px) {
   .base .card-signin, .base .card-signup {
