@@ -199,7 +199,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                 self.newCase = {
                     title: self.getDefaultCaseTitle()
                 };
-                $process.init().then(() => self.allowedNets = $process.nets);
+                self.$process.loadNets(true).then(() => self.allowedNets = self.$process.nets);
             });
     };
 
