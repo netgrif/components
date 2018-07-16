@@ -241,7 +241,8 @@ define({
                 visualID: "Vizuálne ID",
                 title: "Názov",
                 author: "Autor",
-                createDate: "Dátum vytvorenia"
+                createDate: "Dátum vytvorenia",
+                optional: "Voliteľné pole"
             },
             newTitle: "Nová inštancia"
         },

@@ -1,5 +1,5 @@
 <div ng-if="!caseDataCtrl.headerConfigEnabled">
-    {{caseDataCtrl.headerFields[headerId]}}
+    {{(caseDataCtrl.headerFields[headerId] === undefined || caseDataCtrl.headerFields[headerId] === null) ?  $i18n.block.case.header.optional : caseDataCtrl.headerFields[headerId]}}
     <md-icon class="material-icons">
         arrow_drop_down
     </md-icon>
@@ -13,7 +13,7 @@
             </md-option>
         </md-optgroup>
         <!-- TODO 31.5.2018 replace process string constant with process name -->
-        <md-optgroup label="{{::'Process ' + $i18n.block.case.header.fields}}">
+        <md-optgroup label="{{::'Process' + ' ' + $i18n.block.case.header.fields}}">
             <md-option ng-repeat="field in caseDataCtrl.testFields" value="{{field}}">
                 {{field}}
             </md-option>

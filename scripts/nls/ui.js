@@ -239,7 +239,8 @@ define({
                     visualID: "Visual ID",
                     title: "Title",
                     author: "Author",
-                    createDate: "Create Date"
+                    createDate: "Create Date",
+                    optional: "Optional field"
                 },
                 newTitle: "New instance"
             },
