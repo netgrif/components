@@ -53,7 +53,7 @@
 
 					<md-divider ng-if="$config.show.cases.transactions && tab.transactions.length > 0" class="border-width-2x color-border-transparent"></md-divider>
 
-					<div ng-include="'views/app/headers/cases_task_header.html'"></div>
+					<div ng-init="caseView=$config.show.cases;taskView=$config.show.tasks" ng-include="'views/app/headers/cases_task_header.html'"></div>
 
 					<md-divider class="border-width-2x color-border-transparent"></md-divider>
 
