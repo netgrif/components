@@ -42,6 +42,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 .when('/recover/:token', 'recover')
                 .when('/dashboard', 'app.dashboard')
                 .when('/cases', 'app.cases')
+                .when('/casesData', 'app.casesData')
                 .when('/console', 'app.console')
                 .when('/profile', 'app.profile')
                 .when('/tasks', 'app.tasks')
@@ -64,6 +65,11 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     templateUrl: "views/app/cases.html",
                     controller: 'CasesController',
                     controllerAs: 'caseCtrl'
+                })
+                .segment('casesData', {
+                    templateUrl: "views/app/cases_data.html",
+                    controller: 'CasesDataController',
+                    controllerAs: 'caseDataCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",
@@ -131,7 +137,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
 
             $compileProvider.preAssignBindingsEnabled(true);
 
-            //$qProvider.errorOnUnhandledRejections(false);
+            // $qProvider.errorOnUnhandledRejections(false);
         });
         app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar) {
             $log.debug("App is running...");

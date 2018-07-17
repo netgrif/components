@@ -71,7 +71,7 @@
     }
 
     &-case {
-        height: $dim-48px;
+        min-height: $dim-48px;
         cursor: pointer;
 
         &:hover {
@@ -79,6 +79,22 @@
 
             span, md-icon, .material-icons.color-fg-primary-500 {
                 color: $color-card-case-text-hover;
+            }
+
+            md-switch {
+
+                .md-label {
+                    color: $color-grey-50;
+                }
+
+                .md-bar {
+                    background-color: rgba($color-grey-50, 0.5);
+                    transition-delay: 0s;
+                }
+
+                .md-thumb {
+                    background-color: $color-grey-50;
+                }
             }
         }
     }

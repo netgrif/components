@@ -55,7 +55,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.$http(requestConfig).then(response => {
             self.page = response.page;
             if (self.page.totalElements === 0) {
-                self.$snackbar.info(self.$i18n.block.snackbar.noSavedFilters);
+                self.$snackbar.warning(self.$i18n.block.snackbar.noSavedFilters);
                 self.page.next = undefined;
                 if (self.filters)
                     self.filters.splice(0, self.filters.length);
@@ -78,7 +78,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
 
                 self.loading = false;
             }, () => {
-                self.$snackbar.info(self.$i18n.block.snackbar.noFiltersFound);
+                self.$snackbar.warning(self.$i18n.block.snackbar.noFiltersFound);
                 self.page.next = undefined;
                 if (self.filters)
                     self.filters.splice(0, self.filters.length);
