@@ -1,26 +1,63 @@
 <div ng-cloak>
+    <md-content class="padding-2x color-bg-transparent">
 
-    <div layout="column" class="color-bg-transparent padding-2x margin-top-2x" ng-repeat="(key, tab) in dashCtrl.tabs">
+        <md-expansion-panel>
 
-        <div flex="100" layout="row" layout-align="start center">
-            <div flex="20" class="line-3px color-bg-primary-op-50"></div>
-            <span class="margin-horizontal-default font-size-22">{{::tab.title}}</span>
-            <div flex class="line-3px color-bg-primary-op-50"></div>
-        </div>
+            <md-expansion-panel-collapsed>
+                <div flex layout="row" layout-align="start center" class="click-area" ng-click="null">
+                    <div flex="15" layout="row" layout-align="start center">
+                        <i class="material-icons color-fg-primary margin-right-2x">label</i>
+                        <span hide-xs>Test task panel</span>
+                    </div>
+                </div>
+            </md-expansion-panel-collapsed>
 
-        <div flex layout="column">
+            <md-expansion-panel-expanded>
 
-            <div ng-include="'views/app/headers/case_header.html'"></div>
+                <md-expansion-panel-header ng-click="taskCtrl.click($event)">
+                    <div flex layout="row" layout-align="start center" class="click-area" ng-click="null">
+                        <div flex="15" layout="row" layout-align="start center">
+                            <i class="material-icons color-fg-primary margin-right-2x">label</i>
+                            <span hide-xs>Test task panel</span>
+                        </div>
+                    </div>
+                </md-expansion-panel-header>
 
-            <md-divider class="border-width-2x color-border-transparent"></md-divider>
+                <md-expansion-panel-content>
 
-            <div ng-include="'views/app/lists/case_list.html'"></div>
+                    <div layout="row" layout-align="start center" layout-wrap class="cursor-default">
 
-            <div ng-if="tab.loading" layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x">
-                <md-progress-circular md-mode="indeterminate" ng-disabled="!tab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
-            </div>
+                        <div flex="100" layout="row" layout-align="{{'left' + ' center'}}" layout-wrap>
 
-        </div> <!-- ./column -->
+                            <div flex="100" layout="row" layout-align="start center">
+                                <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+                                <span class="margin-horizontal-default">Test Group Title</span>
+                                <div flex class="line-3px color-bg-primary-op-50"></div>
+                            </div>
 
-    </div>
+                            <div flex="{{false ? '100' : '50'}}" flex-md="100" flex-sm="100" flex-xs="100" ng-repeat="id in dashCtrl.testArray">
+                                <div flex ng-init="type=id;field.description=false;field.active=false" ng-include="'views/app/datafields/field_'+'button'+'.html'" ng-cloak></div> <!-- TODO 17.7.2018 Discuss button field name (field_input -> field_) -->
+                                <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </md-expansion-panel-content>
+
+                <md-expansion-panel-footer md-no-sticky>
+                    <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
+
+                        <md-button class="md-primary layout-xs-rw-100" ng-click="$panel.collapse()">
+                            {{::$i18n.block.btn.collapse}}
+                        </md-button>
+
+                    </div>
+                </md-expansion-panel-footer>
+
+            </md-expansion-panel-expanded>
+
+        </md-expansion-panel>
+
+    </md-content>
 </div>
