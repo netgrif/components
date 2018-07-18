@@ -1,21 +1,21 @@
-<div ng-if="!caseDataCtrl.headerConfigEnabled">
-    {{(caseDataCtrl.headerFields[headerId] === undefined || caseDataCtrl.headerFields[headerId] === null) ?  $i18n.block.case.header.optional : caseDataCtrl.headerFields[headerId]}}
+<div ng-if="!tab.headers.editable">
+    {{tab.headers.selected[headerId] ?  tab.headers.selected[headerId].title : $i18n.block.case.header.optional}}
     <md-icon class="material-icons">
         arrow_drop_down
     </md-icon>
 </div>
 
-<md-input-container ng-if="caseDataCtrl.headerConfigEnabled" class="md-block margin-0">
-    <md-select ng-model="caseDataCtrl.headerFields[headerId]" class="margin-top-2px" aria-label="Select field">
+<md-input-container ng-if="tab.headers.editable" class="md-block margin-0">
+    <md-select ng-model="tab.headers.selected[headerId]" ng-change="tab.onHeaderChange(headerId)" class="margin-top-2px" aria-label="Select field">
         <md-optgroup label="{{::$i18n.block.case.header.metaData}}">
-            <md-option ng-repeat="field in caseDataCtrl.testCaseMetaData" value="{{field}}">
-                {{field}}
+            <md-option ng-repeat="field in tab.headers.metaData" ng-value="field">
+                {{field.title}}
             </md-option>
         </md-optgroup>
         <!-- TODO 31.5.2018 replace process string constant with process name -->
-        <md-optgroup label="{{::'Process' + ' ' + $i18n.block.case.header.fields}}">
-            <md-option ng-repeat="field in caseDataCtrl.testFields" value="{{field}}">
-                {{field}}
+        <md-optgroup ng-repeat="process in tab.headers.processData" label="{{::process.title + ' ' + $i18n.block.case.header.fields}}">
+            <md-option ng-repeat="field in process.immediateData track by $index" ng-value="field">
+                {{field.title}}
             </md-option>
         </md-optgroup>
     </md-select>

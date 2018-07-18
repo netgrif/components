@@ -1,4 +1,9 @@
 <div flex layout="row" layout-align="start center">
     <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
-    <span>{{value}}</span>
+    <span class="cursor-pointer">
+        {{useCase.selectedData[selectedDataId].value.fullName}}
+        <md-tooltip>
+            {{useCase.selectedData[selectedDataId].value.email}}
+        </md-tooltip>
+    </span>
 </div>
