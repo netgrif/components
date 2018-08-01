@@ -22,6 +22,14 @@ define(['./HalResource'], function (HalResource) {
         this.valid = true;
         this.active = false;
         this.uploadProgress = 0;
+
+        this.buttonTypesToClasses = {
+            'text': 'max-width-100 text-overflow-dots',
+            'text raised': 'max-width-100 text-overflow-dots md-raised',
+            'icon': 'md-icon-button',
+            'fab': 'md-fab md-mini'
+        }
+
     }
 
     DataField.prototype = Object.create(HalResource.prototype);

@@ -35,8 +35,8 @@
                                 <div flex class="line-3px color-bg-primary-op-50"></div>
                             </div>
 
-                            <div flex="{{false ? '100' : '50'}}" flex-md="100" flex-sm="100" flex-xs="100" ng-repeat="id in dashCtrl.testArray">
-                                <div flex ng-init="type=id;field.description=false;field.active=false" ng-include="'views/app/datafields/field_'+'button'+'.html'" ng-cloak></div> <!-- TODO 17.7.2018 Discuss button field name (field_input -> field_) -->
+                            <div flex="{{false ? '100' : '50'}}" flex-md="100" flex-sm="100" flex-xs="100" ng-repeat="dataField in dashCtrl.datafields">
+                                <div flex ng-if="true" ng-init="field=dataField" ng-include="'views/app/datafields/field_'+'button'+'.html'" ng-cloak></div>
                                 <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
                             </div>
 

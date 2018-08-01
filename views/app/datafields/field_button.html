@@ -1,8 +1,8 @@
-<div ng-if="type === 1" class="data-field" layout="row" layout-align="start center" layout-wrap>
+<div class="data-field" layout="row" layout-align="start center" layout-wrap>
 
     <div flex="45" flex-xs="100">
         <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
-            {{field.name + ' ' + type}}
+            {{field.name}}
             <md-tooltip ng-if="field.description">
                 {{field.description}}
             </md-tooltip>
@@ -11,101 +11,20 @@
 
     <div hide-xs flex="5"></div>
 
-    <div flex="45" flex-xs="100"> <!-- TODO 17.7.2018 button data-field properties -->
-        <md-button class="md-primary">
-            Primary Button
+    <div flex="45" flex-xs="100">
+        <md-button ng-if="field.value" class="{{field.buttonTypesToClasses[field.type]}} {{field.primary ? 'md-primary' : ''}}" href="{{field.value}}" target="_blank" ng-disabled="field.disabled">
+            <md-icon ng-if="field.type === 'icon' || field.type === 'fab'" class="material-icons">{{field.placeholder}}</md-icon>
+            <span ng-if="field.type === 'text' || field.type === 'text raised'">{{field.placeholder}}</span>
+            <md-tooltip ng-if="field.tooltip" md-direction="{{field.tooltip.direction}}">
+                {{field.tooltip.placeholder}}
+            </md-tooltip>
         </md-button>
-    </div>
-
-    <div hide-xs flex="5"></div>
-
-</div>
-
-<div ng-if="type === 2" class="data-field" layout="row" layout-align="start center" layout-wrap>
-
-    <div flex="45" flex-xs="100">
-        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
-            {{field.name + ' ' + type}}
-            <md-tooltip ng-if="field.description">
-                {{field.description}}
+        <md-button ng-if="!field.value" class="{{field.buttonTypesToClasses[field.type]}} {{field.primary ? 'md-primary' : ''}}" ng-disabled="field.disabled">
+            <md-icon ng-if="field.type === 'icon' || field.type === 'fab'" class="material-icons">{{field.placeholder}}</md-icon>
+            <span ng-if="field.type === 'text' || field.type === 'text raised'">{{field.placeholder}}</span>
+            <md-tooltip ng-if="field.tooltip" md-direction="{{field.tooltip.direction}}">
+                {{field.tooltip.placeholder}}
             </md-tooltip>
-        </span>
-    </div>
-
-    <div hide-xs flex="5"></div>
-
-    <div flex="45" flex-xs="100"> <!-- TODO 17.7.2018 button data-field properties -->
-        <md-button class="md-raised">
-            Raised Button
-        </md-button>
-    </div>
-
-    <div hide-xs flex="5"></div>
-
-</div>
-
-<div ng-if="type === 3" class="data-field" layout="row" layout-align="start center" layout-wrap>
-
-    <div flex="45" flex-xs="100">
-        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
-            {{field.name + ' ' + type}}
-            <md-tooltip ng-if="field.description">
-                {{field.description}}
-            </md-tooltip>
-        </span>
-    </div>
-
-    <div hide-xs flex="5"></div>
-
-    <div flex="45" flex-xs="100"> <!-- TODO 17.7.2018 button data-field properties -->
-        <md-button ng-disabled="true">
-            Disabled Button
-        </md-button>
-    </div>
-
-    <div hide-xs flex="5"></div>
-
-</div>
-
-<div ng-if="type === 4" class="data-field" layout="row" layout-align="start center" layout-wrap>
-
-    <div flex="45" flex-xs="100">
-        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
-            {{field.name + ' ' + type}}
-            <md-tooltip ng-if="field.description">
-                {{field.description}}
-            </md-tooltip>
-        </span>
-    </div>
-
-    <div hide-xs flex="5"></div>
-
-    <div flex="45" flex-xs="100"> <!-- TODO 17.7.2018 button data-field properties -->
-        <md-button class="md-fab md-primary">
-            <md-icon class="material-icons">cake</md-icon>
-        </md-button>
-    </div>
-
-    <div hide-xs flex="5"></div>
-
-</div>
-
-<div ng-if="type === 5" class="data-field" layout="row" layout-align="start center" layout-wrap>
-
-    <div flex="45" flex-xs="100">
-        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
-            {{field.name + ' ' + type}}
-            <md-tooltip ng-if="field.description">
-                {{field.description}}
-            </md-tooltip>
-        </span>
-    </div>
-
-    <div hide-xs flex="5"></div>
-
-    <div flex="45" flex-xs="100"> <!-- TODO 17.7.2018 button data-field properties -->
-        <md-button class="md-fab md-mini md-primary">
-            <md-icon class="material-icons">cake</md-icon>
         </md-button>
     </div>
 

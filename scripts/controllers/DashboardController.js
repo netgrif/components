@@ -1,5 +1,5 @@
-define(['angular', '../classes/Case', '../classes/ActionCase', '../classes/Filter', '../modules/Main'],
-    function (angular, Case, ActionCase, Filter) {
+define(['angular', '../classes/Case', '../classes/ActionCase', '../classes/Filter', '../classes/DataField', '../modules/Main'],
+    function (angular, Case, ActionCase, Filter, DataField) {
         angular.module('ngMain').controller('DashboardController',
             ['$log', '$scope', '$user', '$snackbar', '$http', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$cache', '$location', '$timeout', '$i18n', '$process',
                 function ($log, $scope, $user, $snackbar, $http, $dialog, $fileUpload, $mdExpansionPanelGroup, $cache, $location, $timeout, $i18n, $process) {
@@ -11,9 +11,86 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../classes/Filte
                         direction: "desc"
                     };
 
-                    self.testArray = [];
-                    for (let i = 1; i <= 5; i++) {
-                        self.testArray.push(i);
-                    }
+                    // TODO 1.8.2018 remove when button field implementation is finished
+                    self.datafields = [
+                        new DataField(this, {
+                            name: 'Button type text',
+                            description: false,
+                            type: 'text',
+                            primary: false,
+                            placeholder: 'Button text',
+                            // no tooltip
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type text raised',
+                            description: false,
+                            type: 'text raised',
+                            primary: true,
+                            placeholder: 'Button text raised',
+                            // no tooltip
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type icon',
+                            description: false,
+                            type: 'icon',
+                            primary: false,
+                            placeholder: 'cake',
+                            tooltip: {
+                                direction: 'right',
+                                placeholder: 'Test tooltip text'
+                            },
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type FAB',
+                            description: false,
+                            type: 'fab',
+                            primary: false,
+                            placeholder: 'bug_report',
+                            tooltip: {
+                                direction: 'right',
+                                placeholder: 'Test tooltip text'
+                            },
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type FAB',
+                            description: false,
+                            type: 'fab',
+                            primary: true,
+                            placeholder: 'bug_report',
+                            // no tooltip
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type long text',
+                            description: false,
+                            type: 'text',
+                            primary: true,
+                            placeholder: 'Button with looooooooooooooooooooooooooong text',
+                            // no tooltip
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type text with href',
+                            description: false,
+                            type: 'text',
+                            primary: true,
+                            placeholder: 'Link text',
+                            // no tooltip
+                            value: "https://google.com",
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n})
+                    ];
+
                 }]);
     });
