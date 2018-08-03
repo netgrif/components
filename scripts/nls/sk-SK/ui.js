@@ -227,11 +227,13 @@ define({
         case: {
             this: "Prípad",
             header: {
+                metaData: "meta dáta",
                 label: "Typ",
                 visualID: "Vizuálne ID",
                 title: "Názov",
                 author: "Autor",
                 createDate: "Dátum vytvorenia",
+                optional: "Voliteľné pole",
                 enableEditMode: "Prepnúť na editačný mód",
                 confirmChanges: "Uložiť zmeny"
             },

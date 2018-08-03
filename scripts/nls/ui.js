@@ -225,11 +225,13 @@ define({
             case: {
                 this: "Case",
                 header: {
+                    metaData: "meta data",
                     label: "Type",
                     visualID: "Visual ID",
                     title: "Title",
                     author: "Author",
                     createDate: "Create Date",
+                    optional: "Optional field",
                     enableEditMode: "Enable Edit mode",
                     confirmChanges: "Confirm Changes"
                 },
