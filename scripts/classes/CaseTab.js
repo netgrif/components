@@ -25,6 +25,20 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
 
         this.activeFilter = baseFilter;
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
+
+        this.headers = {
+            editable: false,
+            metaData: [],
+            processData: [],
+            selected: {
+                column0: undefined,
+                column1: undefined,
+                column2: undefined,
+                column3: undefined,
+                column4: undefined
+            }
+        };
+        this.buildHeaders();
     }
 
     CaseTab.prototype = Object.create(Tab.prototype);
@@ -39,8 +53,61 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
             this.load(false);
     };
 
+    function getMetaDataReference(id, title, type) {
+        return {
+            stringId: "meta-" + id,
+            title: title,
+            type: type
+        };
+    }
+
+    CaseTab.prototype.buildHeaders = function () {
+        this.headers.metaData = [
+            getMetaDataReference("title", "Title", "text"),
+            getMetaDataReference("creationDate", "Create date", "date"),
+            getMetaDataReference("author", "Author", "user"),
+            getMetaDataReference("visualId", "Visual ID", "text"),
+        ];
+        this.allowedNets.forEach(net =>
+            this.headers.processData.push({
+                title: net.title,
+                identifier: net.identifier,
+                immediateData: net.immediateData.map(data => {
+                    data['process'] = net.identifier;
+                    return data;
+                })
+            }));
+
+        if (this.preselectedHeaders && this.preselectedHeaders.length <= 5) {
+            this.preselectedHeaders.forEach((fieldId, index) => {
+                if (fieldId.startsWith("meta-")) {
+                    this.headers.selected['column' + index] = this.headers.metaData.find(field => field.stringId === fieldId);
+                } else {
+                    const fieldProcess = fieldId.substring(0, fieldId.indexOf("-"));
+                    const process = this.headers.processData.find(process => process.identifier === fieldProcess);
+                    if (process) {
+                        const fieldStringId = fieldId.substring(fieldId.indexOf("-") + 1);
+                        this.headers.selected['column' + index] = process.immediateData.find(field => field.stringId === fieldStringId);
+                    }
+                }
+            });
+        }
+    };
+
+    CaseTab.prototype.onHeaderChange = function (headerId) {
+        this.cases.forEach(useCase => useCase.changeSelectedData(headerId, this.headers.selected[headerId]));
+    };
+
+    CaseTab.prototype.saveHeaders = function () {
+        this.$user.savePreference("caseHeaders", Object.values(this.headers.selected).map(header => {
+            if (header.process)
+                return header.process + "-" + header.stringId;
+            return header.stringId;
+        }));
+    };
+
     CaseTab.prototype.buildSearchRequest = function (next) {
-        const url = next && this.page.next ? this.page.next : CaseTab.URL_SEARCH+"?sort=_id,desc";
+        const url = next && this.page.next ? this.page.next : CaseTab.URL_SEARCH + "?sort=_id,desc";
         return {
             method: "POST",
             url: url,
@@ -110,7 +177,8 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                 $fileUpload: this.$fileUpload,
                 $i18n: this.$i18n
             }, {
-                caseDelete: this.caseDelete
+                caseDelete: this.caseDelete,
+                preselectedData: Object.values(this.headers.selected)
             })));
         }
 

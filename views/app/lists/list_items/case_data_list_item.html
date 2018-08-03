@@ -8,16 +8,19 @@
 
     <!-- META -->
     <div flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="50">
-        <div ng-if="true" ng-init="value=useCase.visualId" ng-include="'views/app/datafields/values/value_text.html'"></div>
+        <div ng-if="useCase.selectedData['column0']" ng-init="selectedDataId='column0'" ng-include="'views/app/datafields/values/value_'+useCase.selectedData['column0'].type+'.html'"></div>
     </div>
     <div hide-xs flex-gt-md="20" flex-md="25" flex-sm="35">
-        <div ng-if="true" ng-init="value=useCase.title" ng-include="'views/app/datafields/values/value_text.html'"></div>
+        <div ng-if="useCase.selectedData['column1']" ng-init="selectedDataId='column1'" ng-include="'views/app/datafields/values/value_'+useCase.selectedData['column1'].type+'.html'"></div>
     </div>
     <div hide-xs hide-sm flex-gt-md="20" flex-md="25">
-        <div ng-if="true" ng-init="value=useCase.author.fullName" ng-include="'views/app/datafields/values/value_user.html'"></div>
+        <div ng-if="useCase.selectedData['column2']" ng-init="selectedDataId='column2'" ng-include="'views/app/datafields/values/value_'+useCase.selectedData['column2'].type+'.html'"></div>
     </div>
     <div hide show-gt-md flex-gt-md="20">
-        <div ng-if="true" ng-init="value=useCase.formatedDate" ng-include="'views/app/datafields/values/value_date.html'"></div>
+        <div ng-if="useCase.selectedData['column3']" ng-init="selectedDataId='column3'" ng-include="'views/app/datafields/values/value_'+useCase.selectedData['column3'].type+'.html'"></div>
+    </div>
+    <div hide show-xl flex-xl="20">
+        <div ng-if="useCase.selectedData['column4']" ng-init="selectedDataId='column4'" ng-include="'views/app/datafields/values/value_'+useCase.selectedData['column4'].type+'.html'"></div>
     </div>
 
     <!-- Fields -->

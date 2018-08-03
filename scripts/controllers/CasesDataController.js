@@ -5,29 +5,9 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config) {
                     const self = this;
 
-                    self.headerFields = [
-                        $i18n.block.case.header.visualID,
-                        $i18n.block.case.header.title,
-                        $i18n.block.case.header.author,
-                        $i18n.block.case.header.createDate
-                    ];
-
-                    // For UI test purpose only
-                    self.testCaseMetaData = [
-                        $i18n.block.case.header.visualID,
-                        $i18n.block.case.header.title,
-                        $i18n.block.case.header.author,
-                        $i18n.block.case.header.createDate
-                    ];
-                    self.testFields = [
-                        "Field 1",
-                        "Field 2",
-                        "Field 3",
-                        "Field 4"
-                    ];
-
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
+                    self.caseHeaders = $user.getPreference("caseHeaders");
                     self.taskTabs = [];
                     self.caseTab = new CaseTab("Cases", this, new Filter("Base case filter", Filter.CASE_TYPE, "{}"), {
                         $http,
@@ -42,7 +22,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         caseDelete: $config.enable.cases.caseDelete,
 
                         authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
-                        allowedNets: $process.nets
+                        allowedNets: $process.nets,
+                        preselectedHeaders: self.caseHeaders ? self.caseHeaders : ["meta-visualId", "meta-title", "meta-author", "meta-creationDate"]
                     });
 
                     self.tabChanged = function () {

@@ -21,7 +21,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         caseDelete: $config.enable.cases.caseDelete,
 
                         authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
-                        allowedNets: $process.nets
+                        allowedNets: $process.nets,
+                        preselectedHeaders: ["meta-visualId", "meta-title", "meta-author", "meta-creationDate"]
                     });
 
                     self.tabChanged = function () {
