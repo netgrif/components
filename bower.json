@@ -1,19 +1,21 @@
 {
-  "name": "Workflow Management System",
+  "name": "netgrif-application-engine",
   "authors": [
-    "Milan Mladoniczky <milan.befinger@gmail.com>",
-    "Juraj Mažári <mazari.juraj@gmail.com>",
-    "Tomáš Gažo <tominog38@gmail.com>",
-    "Martin Makáň <martin.makan@gmail.com>"
+    "Milan Mladoniczky <mladoniczky@netgrif.com>",
+    "Juraj Mažári <mazari@netgrif.com.com>",
+    "Tomáš Gažo <gazo@netgrif.com>",
+    "Martin Makáň <makan@netgrif.com>"
   ],
-  "description": "Client for worflow management system",
+  "description": "Frontend application part of complex Netgrif application engine",
   "main": "",
   "keywords": [
     "wms",
-    "workflow"
+    "workflow",
+    "Petri net",
+    "Netgrif",
+    "NAE"
   ],
-  "license": "MIT",
-  "homepage": "",
+  "homepage": "https://netgrif.com",
   "private": true,
   "ignore": [
     "**/.*",

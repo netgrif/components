@@ -77,7 +77,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                 }, response => {
                     if (response) {
                         angular.element("form#signup-form").trigger("reset");
-                        $snackbar.info("Registration successful");
+                        $snackbar.success($i18n.block.snackbar.accountCreated);
                         $timeout(() => {
                             $location.path("/login");
                         }, 500);
@@ -101,7 +101,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                 if (this.name === 'invite') {
                     $auth.invite({email: this.email}, (success, message) => {
                         if (success) {
-                            $snackbar.info("Invitation was successfully sent");
+                            $snackbar.success($i18n.block.snackbar.invitationEmailSent);
                             $timeout(() => {
                                 self.displayEmailField(false);
                             }, 500);
@@ -113,7 +113,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                 } else if (this.name === 'reset') {
                     $auth.sendResetPassword(this.email, (success, message) => {
                         if (success) {
-                            $snackbar.info("Email with password reset link was sent to your email address");
+                            $snackbar.success($i18n.block.snackbar.pswRecoveryEmailSentTo + " " + this.email);
                             $timeout(() => {
                                 self.displayEmailField(false);
                             }, 500);
@@ -162,7 +162,7 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
                 $auth.setNewPassword(this.token, this.password, (success, message) => {
                     if (success) {
                         angular.element("form#recovery-form").trigger("reset");
-                        $snackbar.info("You new password was set successfully. You can now login.");
+                        $snackbar.success($i18n.block.snackbar.newPswSet);
                         $timeout(() => {
                             $location.path("/login");
                         }, 500);
