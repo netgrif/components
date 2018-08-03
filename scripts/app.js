@@ -5,6 +5,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
         'scripts/directives/DirectivesLoader',
         'scripts/filters/FiltersLoader',
         'scripts/services/ServicesLoader',
+        'scripts/components/ComponentsLoader',
         'scripts/controllers/ControllersLoader'],
     function (angular, config) {
         // console.log(angular.version);
@@ -139,13 +140,14 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
 
             // $qProvider.errorOnUnhandledRejections(false);
         });
-        app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar) {
+        app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar, $process) {
             $log.debug("App is running...");
             $auth.init();
             $rootScope.$i18n = $i18n;
             $rootScope.$user = $user;
             $rootScope.$config = $config;
             $rootScope.$snackbar = $snackbar;
+            $rootScope.$process = $process;
         });
 
         return app;

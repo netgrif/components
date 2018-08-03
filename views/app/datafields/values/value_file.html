@@ -1,7 +1,6 @@
 <div flex layout="row" layout-align="space-between center">
-    <span>{{useCase.selectedData[selectedDataId].value}}</span>
-    <!-- TODO 13.6.2018 download file link on-click -->
-    <md-button class="md-icon-button width-24px margin-left-2x" ng-click="$snackbar.info('Feature has not been implemented yet.')">
+    <span>{{$ctrl.field.value}}</span>
+    <md-button class="md-icon-button width-24px margin-left-2x" ng-click="$ctrl.downloadFile($event)">
         <md-icon class="material-icons color-fg-primary-500">file_download</md-icon>
     </md-button>
 </div>

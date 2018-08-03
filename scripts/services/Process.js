@@ -96,8 +96,14 @@ define(['angular', '../classes/Transaction', '../modules/Main'], function (angul
                 return process.nets.find(n => n.identifier === identifier || n.id === identifier);
             },
 
-            loadNets: function () {
-                if (process.nets.length > 0) {
+            /**
+             * Complete load of all processes, transitions, transactions, and roles.
+             * All load functions are asynchronous and promise is returned for every load function.
+             * @param {boolean} [force] - force reload of all process and it's parts
+             * @returns {Promise | Array} - promise that is resolved when all process are done loading
+             */
+            loadNets: function (force = false) {
+                if (!force && process.nets.length > 0) {
                     const deferred = $q.defer();
                     deferred.resolve(true);
                     return deferred.promise;

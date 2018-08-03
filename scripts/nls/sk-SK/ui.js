@@ -242,7 +242,9 @@ define({
                 title: "Názov",
                 author: "Autor",
                 createDate: "Dátum vytvorenia",
-                optional: "Voliteľné pole"
+                optional: "Voliteľné pole",
+                enableEditMode: "Prepnúť na editačný mód",
+                confirmChanges: "Uložiť zmeny"
             },
             newTitle: "Nová inštancia"
         },

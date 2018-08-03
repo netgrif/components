@@ -1,3 +1,3 @@
-<span ng-repeat="value in useCase.selectedData[selectedDataId].value track by $index">
+<span ng-repeat="value in $ctrl.field.value track by $index">
     {{value.defaultValue}} {{$last ? '' : ', '}}
 </span>

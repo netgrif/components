@@ -79,19 +79,16 @@ define(['./DataField', './HalResource', './Task'], function (DataField, HalResou
 
     Case.prototype.changeSelectedData = function (index, field) {
         if (!index || !field) return;
+        this.selectedData[index] = Object.create(field);
         if (field.stringId.startsWith("meta-")) {
-            this.selectedData[index] = field;
             let metaDataValue = this[field.stringId.substring(field.stringId.indexOf("-") + 1)];
-            if(field.type === 'date')
+            if (field.type === 'date')
                 metaDataValue = Case.formatDate(metaDataValue);
             this.selectedData[index].value = metaDataValue;
             return;
-        } else {
-            if (field.process !== this.processIdentifier) {
-                this.selectedData[index] = undefined;
-                return;
-            }
-            this.selectedData[index] = field;
+        } else if (field.process !== this.processIdentifier) {
+            this.selectedData[index] = undefined;
+            return;
         }
 
         const immediateField = this.immediateData.find(data => data.stringId === this.selectedData[index].stringId);

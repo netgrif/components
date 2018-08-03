@@ -47,13 +47,13 @@
                 <md-menu-content>
                     <md-menu-item ng-if="field.parent.user.email == $user.login && field.behavior.editable">
                         <md-button class="file-chooser" layout="row" layout-align="start center">
-                            <input type="file" id="file"
+                            <input type="file" id="{{'file-'+field.stringId}}"
                                    file-model="field.file"
                                    file-change-callback="field.fileChanged"
                                    file-change-arg="field"
                                    ng-required="field.behavior.required"
                                    aria-label="Choose file">
-                            <label for="file" class="placeholder">
+                            <label for="{{'file-'+field.stringId}}" class="placeholder">
                                 <span class="padding-horizontal-2x">{{::$i18n.block.data.newFile}}</span>
                             </label>
                         </md-button>

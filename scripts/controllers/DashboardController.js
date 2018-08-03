@@ -1,5 +1,5 @@
-define(['angular', '../classes/Case', '../classes/ActionCase', '../classes/Filter', '../modules/Main'],
-    function (angular, Case, ActionCase, Filter) {
+define(['angular', '../classes/Case', '../classes/ActionCase', '../classes/Filter', '../classes/DataField', '../modules/Main'],
+    function (angular, Case, ActionCase, Filter, DataField) {
         angular.module('ngMain').controller('DashboardController',
             ['$log', '$scope', '$user', '$snackbar', '$http', '$dialog', '$fileUpload', '$mdExpansionPanelGroup', '$cache', '$location', '$timeout', '$i18n', '$process',
                 function ($log, $scope, $user, $snackbar, $http, $dialog, $fileUpload, $mdExpansionPanelGroup, $cache, $location, $timeout, $i18n, $process) {
@@ -11,80 +11,86 @@ define(['angular', '../classes/Case', '../classes/ActionCase', '../classes/Filte
                         direction: "desc"
                     };
 
-                    // self.tabs = {
-                    //     quotes: {
-                    //         cases: [],
-                    //         loading: false,
-                    //         title: $i18n.page.dashboard.quotes
-                    //     },
-                    //     policies: {
-                    //         cases: [],
-                    //         loading: false,
-                    //         title: $i18n.page.dashboard.policies
-                    //     },
-                    //     contacts: {
-                    //         cases: [],
-                    //         loading: false,
-                    //         title: $i18n.page.dashboard.contacts
-                    //     }
-                    // };
-                    //
-                    // self.load = function (filter, tab, type) {
-                    //     const request = {
-                    //         method: "POST",
-                    //         url: `/api/workflow/case/search?sort=${self.sort.attribute},${self.sort.direction}&size=${self.limit}`,
-                    //         data: filter.query
-                    //     };
-                    //     tab.loading = true;
-                    //     $http(request).then(response => {
-                    //         if (!response.$response().data._embedded) {
-                    //             tab.loading = false;
-                    //             return;
-                    //         }
-                    //         const rawData = response.$response().data._embedded.cases;
-                    //         response.$request().$get("cases").then(resources => {
-                    //             resources.forEach((r, i) => tab.cases.push(new Case(self, null, r, rawData[i]._links, {
-                    //                 $http,
-                    //                 $dialog,
-                    //                 $snackbar,
-                    //                 $user,
-                    //                 $fileUpload,
-                    //                 $i18n
-                    //             }, {
-                    //                 represents: type
-                    //             })));
-                    //             tab.loading = false;
-                    //
-                    //         }, () => {
-                    //             $snackbar.error($i18n.block.snackbar.noResourceForCasesFound);
-                    //             tab.splice(0, tab.cases.length);
-                    //             tab.loading = false;
-                    //         });
-                    //     }, error => {
-                    //         $snackbar.error($i18n.block.snackbar.gettingCasesFailed);
-                    //         $log.error(error);
-                    //         tab.loading = false;
-                    //     });
-                    // };
-                    //
-                    // self.openCase = function (useCase) {
-                    //     const o = {
-                    //         cases: useCase
-                    //     };
-                    //     $cache.put("dashboard", o);
-                    //     $location.path("/"+useCase.represents);
-                    // };
-                    //
-                    // self.load(new Filter("Quotes", Filter.CASE_TYPE,
-                    //     `{"author":"${$user.login}","transition":["${$process.get("Insurance").transition("Iba nehnuteľnosť").id}", "${$process.get("Insurance").transition("Všeobecné informácie").id}"]}`,
-                    //     "{}", null, null), self.tabs.quotes, "quotes");
-                    //
-                    // self.load(new Filter("Policies", Filter.CASE_TYPE,
-                    //     `{"author":"${$user.login}","transition":"${$process.get("Insurance").transition("Sekcia - Všeobecné informácie").id}"}`,
-                    //     "{}", null, null), self.tabs.policies, "policies");
-                    //
-                    // self.load(new Filter("Contacts", Filter.CASE_TYPE,
-                    //     `{"author":"${$user.login}","petriNet":"${$process.get("Contact").id}"}`,
-                    //     "{}", null, null), self.tabs.contacts, "contacts");
+                    // TODO 1.8.2018 remove when button field implementation is finished
+                    self.datafields = [
+                        new DataField(this, {
+                            name: 'Button type text',
+                            description: false,
+                            type: 'text',
+                            primary: false,
+                            placeholder: 'Button text',
+                            // no tooltip
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type text raised',
+                            description: false,
+                            type: 'text raised',
+                            primary: true,
+                            placeholder: 'Button text raised',
+                            // no tooltip
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type icon',
+                            description: false,
+                            type: 'icon',
+                            primary: false,
+                            placeholder: 'cake',
+                            tooltip: {
+                                direction: 'right',
+                                placeholder: 'Test tooltip text'
+                            },
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type FAB',
+                            description: false,
+                            type: 'fab',
+                            primary: false,
+                            placeholder: 'bug_report',
+                            tooltip: {
+                                direction: 'right',
+                                placeholder: 'Test tooltip text'
+                            },
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type FAB',
+                            description: false,
+                            type: 'fab',
+                            primary: true,
+                            placeholder: 'bug_report',
+                            // no tooltip
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type long text',
+                            description: false,
+                            type: 'text',
+                            primary: true,
+                            placeholder: 'Button with looooooooooooooooooooooooooong text',
+                            // no tooltip
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n}),
+                        new DataField(this, {
+                            name: 'Button type text with href',
+                            description: false,
+                            type: 'text',
+                            primary: true,
+                            placeholder: 'Link text',
+                            // no tooltip
+                            value: "https://google.com",
+                            disabled: false,
+                            active: false
+                        }, {}, {$dialog, $user, $snackbar, $fileUpload, $i18n})
+                    ];
+
                 }]);
     });

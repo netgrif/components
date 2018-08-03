@@ -45,6 +45,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     CaseTab.prototype.constructor = CaseTab;
 
     CaseTab.URL_SEARCH = "/api/workflow/case/search";
+    CaseTab.HEADERS_PREFERENCE_KEY = "caseHeaders";
 
     CaseTab.prototype.activate = function () {
         this.newCase.title = this.getDefaultCaseTitle();
@@ -68,7 +69,9 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
             getMetaDataReference("author", "Author", "user"),
             getMetaDataReference("visualId", "Visual ID", "text"),
         ];
-        this.allowedNets.forEach(net =>
+        this.allowedNets.forEach(net => {
+            if (!net.immediateData)
+                return;
             this.headers.processData.push({
                 title: net.title,
                 identifier: net.identifier,
@@ -76,7 +79,8 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                     data['process'] = net.identifier;
                     return data;
                 })
-            }));
+            })
+        });
 
         if (this.preselectedHeaders && this.preselectedHeaders.length <= 5) {
             this.preselectedHeaders.forEach((fieldId, index) => {
@@ -99,7 +103,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     };
 
     CaseTab.prototype.saveHeaders = function () {
-        this.$user.savePreference("caseHeaders", Object.values(this.headers.selected).map(header => {
+        this.$user.savePreference(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, Object.values(this.headers.selected).map(header => {
             if (header.process)
                 return header.process + "-" + header.stringId;
             return header.stringId;
@@ -269,7 +273,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                 self.newCase = {
                     title: self.getDefaultCaseTitle()
                 };
-                $process.init().then(() => self.allowedNets = $process.nets);
+                self.$process.loadNets(true).then(() => self.allowedNets = self.$process.nets);
             });
     };
 

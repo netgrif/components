@@ -4,17 +4,16 @@ define(['angular','../modules/Main'],function (angular) {
     function ($parse) {
         return {
             restrict: 'A',
+            scope: {
+                fileModel:"@",
+                fileChangeCallback:"@",
+                fileChangeArg:"@"
+            },
             link: function(scope, element, attrs){
-                var model = $parse(attrs.fileModel);
-                var callback = $parse(attrs.fileChangeCallback);
-                var callbackArg = $parse(attrs.fileChangeArg);
-                var modelSetter = model.assign;
-                var parentScope = scope.$parent;
-
                 element.bind('change',function () {
-                    parentScope.$apply(function () {
-                        modelSetter(parentScope, element[0].files[0]);
-                        callback(parentScope)(callbackArg(parentScope));
+                    scope.$parent.$apply(function () {
+                        $parse(scope.fileModel).assign(scope.$parent, element[0].files[0]);
+                        $parse(scope.fileChangeCallback)(scope.$parent)($parse(scope.fileChangeArg)(scope.$parent));
                     });
                 });
             }

@@ -12,11 +12,12 @@
                 {{field.title}}
             </md-option>
         </md-optgroup>
-        <!-- TODO 31.5.2018 replace process string constant with process name -->
-        <md-optgroup ng-repeat="process in tab.headers.processData" label="{{::process.title + ' ' + $i18n.block.case.header.fields}}">
+
+        <md-optgroup ng-repeat="process in tab.headers.processData" label="{{::process.title}}">
             <md-option ng-repeat="field in process.immediateData track by $index" ng-value="field">
                 {{field.title}}
             </md-option>
         </md-optgroup>
+
     </md-select>
 </md-input-container>

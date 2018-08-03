@@ -10,12 +10,20 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
             color: $color-primary-500;
         }
     }
+
+    span {
+        color: $color-toolbar-text;
+    }
 }
 
 .main-toolbar {
     height: $dim-56px;
     min-height: $dim-56px;
     background-color: $color-toolbar-bg;
+
+    .app-name {
+        color: $color-toolbar-app-name;
+    }
 
     md-menu-bar {
 

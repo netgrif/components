@@ -28,13 +28,13 @@
         <md-button ng-if="!tab.headers.editable" ng-click="tab.headers.editable = !tab.headers.editable" class="md-icon-button md-primary">
             <md-icon class="material-icons">edit</md-icon>
             <md-tooltip md-direction="bottom">
-                {{::$i18n.page.casesData.enableEditMode}}
+                {{::$i18n.block.case.header.enableEditMode}}
             </md-tooltip>
         </md-button>
         <md-button ng-if="tab.headers.editable" ng-click="tab.headers.editable = !tab.headers.editable;tab.saveHeaders()" class="md-icon-button md-primary">
             <md-icon class="material-icons">done</md-icon>
             <md-tooltip md-direction="bottom">
-                {{::$i18n.page.casesData.confirmChanges}}
+                {{::$i18n.block.case.header.confirmChanges}}
             </md-tooltip>
         </md-button>
     </div> <!-- Menu spacer -->

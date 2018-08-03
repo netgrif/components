@@ -240,7 +240,9 @@ define({
                     title: "Title",
                     author: "Author",
                     createDate: "Create Date",
-                    optional: "Optional field"
+                    optional: "Optional field",
+                    enableEditMode: "Enable Edit mode",
+                    confirmChanges: "Confirm Changes"
                 },
                 newTitle: "New instance"
             },
