@@ -15,7 +15,7 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.name = undefined;
                 user.roles = undefined;
             },
-            fromResource: function(resource){
+            fromResource: function (resource) {
                 user.id = resource.id;
                 user.login = resource.email;
                 user.authority = resource.authorities.map(authority => authority.authority);
@@ -89,6 +89,19 @@ define(['angular', '../modules/Main'], function (angular) {
                         roleId: role
                     })
                 }
+            },
+
+            savePreference: function (key, value) {
+                localStorage.setItem("userPreference-" + key, JSON.stringify(value));
+            },
+            getPreference: function (key) {
+                const value = localStorage.getItem("userPreference-" + key);
+                if (value)
+                    return JSON.parse(value);
+                return undefined;
+            },
+            removePreference: function (key) {
+                localStorage.removeItem("userPreference-" + key);
             }
         };
         return user;

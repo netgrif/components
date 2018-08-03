@@ -19,13 +19,24 @@ define(['./DataField', './HalResource', './Task'], function (DataField, HalResou
 
         if (this.immediateData) {
             this.immediateData.forEach(data => {
-                if (data.type === 'date') data.value = Task.formatDate(data.value);
+                if (data.type === 'date') data.value = Case.formatDate(data.value);
             });
         }
         this.formatedDate = Case.formatDate(this.creationDate);
 
         this.data = [];
-        this.loading = false;
+        this.loading = false
+        this.selectedData = {
+            column0: undefined,
+            column1: undefined,
+            column2: undefined,
+            column3: undefined,
+            column4: undefined
+        };
+
+        if (this.preselectedData) {
+            this.preselectedData.forEach((data, index) => this.changeSelectedData("column" + index, data));
+        }
     }
 
     Case.prototype = Object.create(HalResource.prototype);
@@ -63,6 +74,31 @@ define(['./DataField', './HalResource', './Task'], function (DataField, HalResou
         }, function () {
             self.$snackbar.error(`${self.$i18n.block.snackbar.case} ${self.title} ${self.$i18n.block.snackbar.failedToDelete}`);
         });
+    };
+
+    Case.prototype.changeSelectedData = function (index, field) {
+        if (!index || !field) return;
+        this.selectedData[index] = Object.create(field);
+        if (field.stringId.startsWith("meta-")) {
+            let metaDataValue = this[field.stringId.substring(field.stringId.indexOf("-") + 1)];
+            if (field.type === 'date')
+                metaDataValue = Case.formatDate(metaDataValue);
+            this.selectedData[index].value = metaDataValue;
+            return;
+        } else if (field.process !== this.processIdentifier) {
+            this.selectedData[index] = undefined;
+            return;
+        }
+
+        const immediateField = this.immediateData.find(data => data.stringId === this.selectedData[index].stringId);
+        if (immediateField) {
+            if (immediateField.type === 'date')
+                this.selectedData[index].value = Case.formatDate(immediateField.value);
+            else
+                this.selectedData[index].value = immediateField.value;
+        } else {
+            this.selectedData[index] = undefined;
+        }
     };
 
     return Case;

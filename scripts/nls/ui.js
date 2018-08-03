@@ -229,7 +229,9 @@ define({
                     visualID: "Visual ID",
                     title: "Title",
                     author: "Author",
-                    createDate: "Create Date"
+                    createDate: "Create Date",
+                    enableEditMode: "Enable Edit mode",
+                    confirmChanges: "Confirm Changes"
                 },
                 newTitle: "New instance"
             },

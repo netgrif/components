@@ -231,7 +231,9 @@ define({
                 visualID: "Vizuálne ID",
                 title: "Názov",
                 author: "Autor",
-                createDate: "Dátum vytvorenia"
+                createDate: "Dátum vytvorenia",
+                enableEditMode: "Prepnúť na editačný mód",
+                confirmChanges: "Uložiť zmeny"
             },
             newTitle: "Nová inštancia"
         },

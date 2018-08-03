@@ -5,9 +5,11 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config) {
                     const self = this;
 
+                    self.viewId = "cases";
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
+                    self.caseHeaders = $user.getPreference(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
                     self.caseTab = new CaseTab("Cases", this, new Filter("Base case filter", Filter.CASE_TYPE, "{}"), {
                         $http,
                         $dialog,
@@ -19,9 +21,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         $process
                     }, {
                         caseDelete: $config.enable.cases.caseDelete,
-
+                        viewId: self.viewId,
                         authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
-                        allowedNets: $process.nets
+                        allowedNets: $process.nets,
+                        preselectedHeaders: self.caseHeaders ? self.caseHeaders : ["meta-visualId", "meta-title", "meta-author", "meta-creationDate"]
                     });
 
                     self.tabChanged = function () {

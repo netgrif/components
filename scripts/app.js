@@ -5,6 +5,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
         'scripts/directives/DirectivesLoader',
         'scripts/filters/FiltersLoader',
         'scripts/services/ServicesLoader',
+        'scripts/components/ComponentsLoader',
         'scripts/controllers/ControllersLoader'],
     function (angular, config) {
         // console.log(angular.version);
