@@ -136,7 +136,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 return new Date(NaN);
             };
 
-            $compileProvider.preAssignBindingsEnabled(true);
+            $compileProvider.preAssignBindingsEnabled(false);
 
             // $qProvider.errorOnUnhandledRejections(false);
         });
