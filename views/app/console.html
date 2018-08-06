@@ -2,7 +2,7 @@
 
     <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom class="background-tabs">
 
-        <md-tab md-on-select="adminCtrl.loadOrganizations()">
+        <md-tab md-on-select="adminCtrl.loadOrganizations();adminCtrl.applyDefaultProcessRoles()">
 
             <md-tab-label>
                 {{::$i18n.page.console.inviteUser}}
@@ -93,6 +93,7 @@
 
                     <div flex-gt-xs="60" flex-xs layout-gt-sm="row" layout-sm="column" layout-xs="column">
 
+                        <!--Organization picker-->
                         <div flex layout="column">
 
                             <div ng-include="'views/app/toolbars/console_org_toolbar.html'"></div>
@@ -107,6 +108,7 @@
                         <md-divider hide-xs class="border-width-default color-border-transparent"></md-divider>
                         <md-divider hide-gt-xs class="border-width-2x color-border-transparent"></md-divider>
 
+                        <!--Process roles-->
                         <div flex layout="column">
 
                             <div ng-include="'views/app/toolbars/console_process_toolbar.html'"></div>

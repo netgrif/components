@@ -82,6 +82,21 @@ define([], function () {
             mainToolbar: "../../assets/default/netgrif_full_white.svg",
             sidenav: "../../assets/default/netgrif.svg"
         },
+        defaults: {
+            invitedUser: {
+                // groups: ["Org name"],
+                // processRoles: [
+                //     {
+                //         net: "Net name",
+                //         roles: ["Role name"]
+                //     },
+                //     {
+                //         net: "Net name",
+                //         roles: ["Agent"]
+                //     }
+                // ]
+            }
+        },
         show: {
             cases: {
                 transactions: true,

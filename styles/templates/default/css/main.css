@@ -2467,7 +2467,7 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     color: #009688; }
 
 .base md-toolbar.md-default-theme:not(.md-menu-toolbar) span, .base md-toolbar:not(.md-menu-toolbar) span {
-  color: rgba(0, 150, 136, 0.87); }
+  color: rgba(0, 0, 0, 0.87); }
 
 .base .main-toolbar {
   height: 56px;
