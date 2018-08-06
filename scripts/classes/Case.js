@@ -52,7 +52,8 @@ define(['./DataField', './HalResource', './Task'], function (DataField, HalResou
             ${DataField.padding(date.hour, 0, 0)}:${DataField.padding(date.minute, 0, 0)}`;
     };
 
-    Case.prototype.load = function (callback = () => {}) {
+    Case.prototype.load = function (callback = () => {
+    }) {
         //TODO 9.7.2017 load case data
     };
 

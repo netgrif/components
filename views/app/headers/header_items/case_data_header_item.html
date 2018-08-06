@@ -7,7 +7,6 @@
 
 <md-input-container ng-if="tab.headers.editable" class="md-block margin-0">
     <md-select ng-model="tab.headers.selected[headerId]" ng-change="tab.onHeaderChange(headerId)" class="margin-top-2px" aria-label="Select field">
-
         <md-optgroup label="{{::$i18n.block.case.header.metaData}}">
             <md-option ng-repeat="field in tab.headers.metaData" ng-value="field">
                 {{field.title}}
