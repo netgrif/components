@@ -65,19 +65,12 @@
 	}
 }
 
-@mixin textOverflowWithDots() {
+@mixin textOverflowWithDots($elementWidth) {
+	width: $elementWidth;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-
-// TODO 1.8.2018 deprecated in no bugs found remove
-//@mixin textOverflowWithDots($elementWidth) {
-//	width: $elementWidth;
-//	white-space: nowrap;
-//	overflow: hidden;
-//	text-overflow: ellipsis;
-//}
 
 @mixin centerVertically() {
     position: absolute;
