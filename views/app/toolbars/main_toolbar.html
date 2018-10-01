@@ -51,14 +51,18 @@
                             <md-menu-item>
                                 <md-button ng-click="$i18n.change('en-US')" layout="row" layout-align="space-between center">
                                     <span>{{::$i18n.block.mainMenu.lang.en}}</span>
-                                    <md-icon ng-if="$i18n.current() === 'en-US'" class="material-icons">keyboard_arrow_left</md-icon>
+                                    <md-icon ng-if="$i18n.current() === 'en-US'" class="material-icons">
+                                        keyboard_arrow_left
+                                    </md-icon>
                                 </md-button>
                             </md-menu-item>
 
                             <md-menu-item>
                                 <md-button ng-click="$i18n.change('sk-SK')" layout="row" layout-align="space-between center">
                                     <span>{{::$i18n.block.mainMenu.lang.sk}}</span>
-                                    <md-icon ng-if="$i18n.current() === 'sk-SK'" class="material-icons">keyboard_arrow_left</md-icon>
+                                    <md-icon ng-if="$i18n.current() === 'sk-SK'" class="material-icons">
+                                        keyboard_arrow_left
+                                    </md-icon>
                                 </md-button>
                             </md-menu-item>
 
@@ -74,12 +78,12 @@
                     </md-button>
                 </md-menu-item>
 
-                <md-menu-item ng-if="$user.hasAuthority('ROLE_ADMIN')">
-                    <md-button href="/settings" class="padding-top-0">
-                        <md-icon class="material-icons">settings</md-icon>
-                        {{::$i18n.block.mainMenu.settings}}
-                    </md-button>
-                </md-menu-item>
+                <!--<md-menu-item ng-if="$user.hasAuthority('ROLE_ADMIN')">-->
+                    <!--<md-button href="/settings" class="padding-top-0">-->
+                        <!--<md-icon class="material-icons">settings</md-icon>-->
+                        <!--{{::$i18n.block.mainMenu.settings}}-->
+                    <!--</md-button>-->
+                <!--</md-menu-item>-->
 
                 <md-menu-item>
                     <md-button ng-click="mainCtrl.logout()">

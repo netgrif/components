@@ -12,13 +12,13 @@
         </div>
     </md-toolbar>
 
-    <md-dialog-content>
+    <md-dialog-content in-view-container>
         <div layout="column" class="md-dialog-content">
 
             <md-input-container class="md-block">
                 <md-icon class="material-icons color-fg-primary-500">search</md-icon>
                 <label>{{::$root.$i18n.block.dialog.assignUser.user}}</label>
-                <input type="text" ng-model="dialogCtrl.searched" ng-change="filterUsers()" title="">
+                <input type="text" ng-model="dialogCtrl.searched" ng-change="dialogCtrl.filterUsers()" title="">
             </md-input-container>
 
             <div layout="row" layout-align="start center" ng-if="opt.task.caseTitle">
@@ -45,8 +45,8 @@
             <md-list class="assign-list">
                 <md-list-item layout="row" layout-align="start center" class="md-2-line"
                               ng-repeat="user in users"
-                              ng-click="dialogCtrl.selectedUser = user.email"
-                              ng-class="getSelectedUserClass(user.email)">
+                              ng-click="dialogCtrl.selectedUser = user.id"
+                              ng-class="getSelectedUserClass(user.id)">
 
                     <md-icon class="md-avatar" layout="row" layout-align="center center">
                         <i class="material-icons color-fg-primary-500">account_circle</i>
@@ -61,6 +61,11 @@
             </md-list>
 
         </div>
+
+        <div layout="row" layout-align="center center" in-view="$inview && dialogCtrl.loadUsers(true)">
+            <md-progress-circular md-mode="indeterminate" ng-disabled="!dialogCtrl.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
+        </div>
+
     </md-dialog-content>
 
     <md-dialog-actions layout="row" layout-align="end center">

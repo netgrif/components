@@ -12,6 +12,9 @@
                    ng-class="{active: ('cases' | routeSegmentContains)}"
                    ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('cases')">
             <i class="material-icons">storage</i>{{::$i18n.page.cases.this}}
+            <span ng-if="mainCtrl.counters.cases">
+                &nbsp;({{mainCtrl.counters.cases.display}})
+            </span>
         </md-button>
 
         <md-button href="/casesData" layout="row" layout-align="start center"
@@ -24,6 +27,9 @@
                    ng-class="{active: ('tasks' | routeSegmentContains)}"
                    ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('tasks')">
             <i class="material-icons">check_box</i>{{::$i18n.page.tasks.this}}
+            <span ng-if="mainCtrl.counters.tasks">
+                &nbsp;({{mainCtrl.counters.tasks.display}})
+            </span>
         </md-button>
 
         <md-button href="/workflow" layout="row" layout-align="start center"

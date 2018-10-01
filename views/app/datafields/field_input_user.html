@@ -24,21 +24,36 @@
         </div>
 
         <div ng-if="!field.newValue">
-            <span>{{::$i18n.block.data.noUserChosen}}</span>
+            <span ng-if="field.placeholder">{{field.placeholder}}</span>
+            <span ng-if="!field.placeholder">{{::$i18n.block.data.noUserChosen}}</span>
         </div>
-        <md-menu class="width-24px" ng-if="field.parent.user.email == $user.login && field.behavior.editable">
+        <md-button class="md-icon-button" ng-if="field.parent.user.email == $user.login && field.behavior.editable && (!field.newValue && !$user.canDo(field.roles, 'perform'))" ng-click="field.chooseUser()">
+            <md-icon class="material-icons">person</md-icon>
+            <md-tooltip md-direction="bottom">
+                {{::$i18n.block.data.selectUser}}
+            </md-tooltip>
+        </md-button>
+        <md-menu class="width-24px" ng-if="field.parent.user.email == $user.login && field.behavior.editable && (field.newValue || $user.canDo(field.roles, 'perform'))">
             <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin aria-label="Choose user">
                 <md-icon class="material-icons">more_vert</md-icon>
             </md-button>
             <md-menu-content>
-                <md-menu-item ng-if="$user.canAssign(field.roles)">
+                <md-menu-item ng-if="$user.canDo(field.roles, 'perform')"> <!-- TODO 14.8.2018 Add assign to me feature-->
                     <md-button ng-click="field.chooseUser($user)">
+                        <md-icon class="material-icons">person_outline</md-icon>
                         {{::$i18n.block.data.self}}
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
                     <md-button ng-click="field.chooseUser()">
-                        {{::$i18n.block.data.chooseUser}}
+                        <md-icon class="material-icons">person</md-icon>
+                        {{::$i18n.block.data.selectUser}}
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item ng-if="field.newValue">
+                    <md-button ng-click="field.removeUser()">
+                        <md-icon class="material-icons">remove</md-icon>
+                        {{::$i18n.block.data.removeUser}}
                     </md-button>
                 </md-menu-item>
             </md-menu-content>
