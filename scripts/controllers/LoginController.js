@@ -15,12 +15,18 @@ define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
             }
 
             Login.prototype.login = function () {
-                $auth.authenticate({username: this.username, password: this.password}, authenticated => {
-                    if (authenticated) {
+                $auth.authenticate({username: this.username, password: this.password}, authResponse => {
+                    if (authResponse.authenticated) {
                         $log.debug("Login succeeded");
                     } else {
                         $log.debug("Login failed");
-                        $snackbar.error($i18n.block.snackbar.wrongUserCredentials);
+                        if (authResponse.response && authResponse.response.data) {
+                            $log.error(authResponse.response.data);
+                            if (authResponse.response.data.message)
+                                $snackbar.error(authResponse.response.data.message);
+                        } else {
+                            $snackbar.error($i18n.block.snackbar.wrongUserCredentials);
+                        }
                         this.password = "";
                     }
                 });

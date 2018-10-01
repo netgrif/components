@@ -1,4 +1,4 @@
-define(['./Task'], function (Task) {
+define(['./Case'], function (Case) {
 
     /**
      *
@@ -32,7 +32,7 @@ define(['./Task'], function (Task) {
 
         this.selected = false;
         this.visibilityIcon = Filter.getVisibilityIcon(this.visibility);
-        this.formatedCreationDate = Task.formatDate(this.created);
+        this.formatedCreationDate = Case.formatDate(this.created);
         // this.readableQuery = this.getReadableQuery();
     }
 
@@ -141,6 +141,17 @@ define(['./Task'], function (Task) {
         return new Filter(this.title, this.type, JSON.stringify(thisQuery), this.readableQuery, this.links, this.tab);
     };
 
+    Filter.prototype.set = function (attribute, value) {
+        const thisQuery = JSON.parse(this.query);
+        thisQuery[attribute] = value;
+        this.query = JSON.stringify(thisQuery);
+    };
+
+    Filter.prototype.remove = function (attribute) {
+        const thisQuery = JSON.parse(this.query);
+        delete thisQuery[attribute];
+        this.query = JSON.stringify(thisQuery);
+    };
 
     return Filter;
 });

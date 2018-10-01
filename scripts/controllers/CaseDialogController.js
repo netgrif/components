@@ -1,5 +1,5 @@
-define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task', '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, CaseTab, TaskTab, Task) {
+define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Case', '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (angular, CaseTab, TaskTab, Case) {
         angular.module('ngMain').controller('CaseDialogController',
             ['$log', '$scope', '$http', '$mdDialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', 'locals', '$i18n',
                 function ($log, $scope, $http, $mdDialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, locals, $i18n) {
@@ -19,7 +19,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Task'
                                 self.cases.forEach(c => {
                                     if (this.immediateData) {
                                         this.immediateData.forEach(data => {
-                                            if (data.type === 'date') data.value = Task.formatDate(data.value);
+                                            if (data.type === 'date') data.value = Case.formatDate(data.value);
                                         });
                                     }
 

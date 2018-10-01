@@ -1,5 +1,5 @@
-define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (jQuery, angular, Task, DataField) {
+define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (jQuery, angular, DataField) {
         angular.module('ngMain').controller('TaskPanelController',
             ['$log', '$scope', '$http', '$snackbar', '$user', '$dialog', '$fileUpload', '$timeout', '$mdExpansionPanel', 'resource', 'links', 'tab', 'config', '$i18n',
                 function ($log, $scope, $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanel, resource, links, tab, config, $i18n) {
@@ -169,7 +169,7 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                                 if (!user)
                                     return;
                                 self.loading = true;
-                                $http.post(self.links.delegate.href, user.email).then(response => {
+                                $http.post(self.links.delegate.href, user.id).then(response => {
                                     self.loading = false;
                                     if (response.success) {
                                         removeStateData();

@@ -241,8 +241,8 @@ define({
                     author: "Author",
                     createDate: "Create Date",
                     optional: "Optional field",
-                    enableEditMode: "Enable Edit mode",
-                    confirmChanges: "Confirm Changes"
+                    enableEditMode: "Enable edit mode",
+                    confirmChanges: "Confirm changes"
                 },
                 newTitle: "New instance"
             },
@@ -274,7 +274,8 @@ define({
             data: {
                 noUserChosen: "No user was chosen",
                 self: "Self",
-                chooseUser: "Choose user",
+                selectUser: "Select user",
+                removeUser: "Remove user",
                 noFile: "No file",
                 fileNotUploaded: "File has not been uploaded yet",
                 fileUploaded: "File uploaded successfully",
@@ -446,6 +447,9 @@ define({
                 long: "long"
             },
             char: {
+
+            },
+            custom: {
 
             }
         }

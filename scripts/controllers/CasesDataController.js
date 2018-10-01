@@ -1,15 +1,17 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab, Filter) {
         angular.module('ngCases').controller('CasesDataController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config', '$filterRepository',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
                     const self = this;
 
+                    self.viewId = "casesData";
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.caseHeaders = $user.getPreference("caseHeaders");
                     self.taskTabs = [];
-                    self.caseTab = new CaseTab("Cases", this, new Filter("Base case filter", Filter.CASE_TYPE, "{}"), {
+                    self.caseHeaders = $user.getPreference(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
+                    self.caseTab = new CaseTab("Cases", this, $filterRepository.get(self.viewId), {
                         $http,
                         $dialog,
                         $snackbar,
@@ -20,7 +22,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         $process
                     }, {
                         caseDelete: $config.enable.cases.caseDelete,
-
+                        viewId: self.viewId,
                         authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
                         allowedNets: $process.nets,
                         preselectedHeaders: self.caseHeaders ? self.caseHeaders : ["meta-visualId", "meta-title", "meta-author", "meta-creationDate"]

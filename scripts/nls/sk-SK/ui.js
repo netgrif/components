@@ -235,16 +235,15 @@ define({
         case: {
             this: "Prípad",
             header: {
-                metaData: "meta data",
-                fields: "fields",
+                metaData: "meta dáta",
                 label: "Typ",
                 visualID: "Vizuálne ID",
                 title: "Názov",
                 author: "Autor",
                 createDate: "Dátum vytvorenia",
                 optional: "Voliteľné pole",
-                enableEditMode: "Prepnúť na editačný mód",
-                confirmChanges: "Uložiť zmeny"
+                enableEditMode: "Povoliť úpravy",
+                confirmChanges: "Potvrdiť úpravy"
             },
             newTitle: "Nová inštancia"
         },
@@ -276,7 +275,8 @@ define({
         data: {
             noUserChosen: "Žiaden zvolený používateľ",
             self: "Sebe",
-            chooseUser: "Vybrať používateľa",
+            selectUser: "Zvoliť používateľa",
+            removeUser: "Odstrániť používateľa",
             noFile: "Žiaden súbor",
             fileNotUploaded: "Súbor ešte nebol nahraný",
             fileUploaded: "Súbor bol úspešne nahraný",
@@ -448,6 +448,9 @@ define({
             long: "dlhý"
         },
         char: {
+
+        },
+        custom: {
 
         }
     }

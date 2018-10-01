@@ -24,6 +24,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
         };
 
         this.activeFilter = baseFilter;
+        this.searchInput = undefined;
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
 
         this.headers = {
@@ -45,7 +46,10 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     CaseTab.prototype.constructor = CaseTab;
 
     CaseTab.URL_SEARCH = "/api/workflow/case/search";
+
     CaseTab.HEADERS_PREFERENCE_KEY = "caseHeaders";
+    CaseTab.HEADERS_SORT_DIR_ASC = "asc";
+    CaseTab.HEADERS_SORT_DIR_DESC = "desc";
 
     CaseTab.prototype.activate = function () {
         this.newCase.title = this.getDefaultCaseTitle();
@@ -58,16 +62,20 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
         return {
             stringId: "meta-" + id,
             title: title,
-            type: type
+            type: type,
+            sort: {
+                enable: false,
+                dir: CaseTab.HEADERS_SORT_DIR_ASC
+            }
         };
     }
 
     CaseTab.prototype.buildHeaders = function () {
         this.headers.metaData = [
-            getMetaDataReference("title", "Title", "text"),
-            getMetaDataReference("creationDate", "Create date", "date"),
-            getMetaDataReference("author", "Author", "user"),
-            getMetaDataReference("visualId", "Visual ID", "text"),
+            getMetaDataReference("title", this.$i18n.block.case.header.title, "text"),
+            getMetaDataReference("creationDate", this.$i18n.block.case.header.createDate, "date"),
+            getMetaDataReference("author", this.$i18n.block.case.header.author, "user"),
+            getMetaDataReference("visualId", this.$i18n.block.case.header.visualID, "text"),
         ];
         this.allowedNets.forEach(net => {
             if (!net.immediateData)
@@ -77,12 +85,16 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                 identifier: net.identifier,
                 immediateData: net.immediateData.map(data => {
                     data['process'] = net.identifier;
+                    data['sort'] = {
+                        enable: false,
+                        dir: CaseTab.HEADERS_SORT_DIR_ASC
+                    };
                     return data;
                 })
             })
         });
 
-        if (this.preselectedHeaders && this.preselectedHeaders.length <= 5) {
+        if (this.preselectedHeaders) {
             this.preselectedHeaders.forEach((fieldId, index) => {
                 if (fieldId.startsWith("meta-")) {
                     this.headers.selected['column' + index] = this.headers.metaData.find(field => field.stringId === fieldId);
@@ -110,13 +122,71 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
         }));
     };
 
+    CaseTab.prototype.flipDirection = function (dir) {
+        if (dir === CaseTab.HEADERS_SORT_DIR_ASC)
+            return CaseTab.HEADERS_SORT_DIR_DESC;
+        else if (dir === CaseTab.HEADERS_SORT_DIR_DESC)
+            return CaseTab.HEADERS_SORT_DIR_ASC;
+        return dir;
+    };
+
+    CaseTab.prototype.changeSorting = function (header) {
+        if (header.sort.enable) {
+            header.sort.dir = this.flipDirection(header.sort.dir);
+            this.search();
+        } else {
+            Object.values(this.headers.selected).some(h => {
+                if (h.sort.enable) {
+                    h.sort.enable = false;
+                    return true;
+                }
+                return false;
+            });
+            header.sort.enable = true;
+            this.search();
+        }
+    };
+
+    CaseTab.prototype.getSortParam = function () {
+        const sortHeader = Object.values(this.headers.selected).find(h => {
+            if (!h) return false;
+            return h.sort.enable;
+        });
+        if (!sortHeader)
+            return "_id,desc";
+
+        const fieldId = sortHeader.stringId.substring(sortHeader.stringId.indexOf("-") + 1);
+        if (sortHeader.stringId.startsWith("meta-"))
+            return fieldId + "," + sortHeader.sort.dir;
+        else
+            return "dataSet." + fieldId + ".value," + sortHeader.sort.dir;
+    };
+
     CaseTab.prototype.buildSearchRequest = function (next) {
-        const url = next && this.page.next ? this.page.next : CaseTab.URL_SEARCH + "?sort=_id,desc";
-        return {
+        if (this.searchInput && this.searchInput.trim() !== "")
+            this.activeFilter.set("fullText", this.searchInput.trim());
+        else
+            this.activeFilter.remove("fullText");
+
+        const request = {
             method: "POST",
-            url: url,
+            url: next && this.page.next ? this.page.next : CaseTab.URL_SEARCH,
             data: JSON.parse(this.activeFilter.query)
         };
+
+        if (!next) {
+            request.params = {
+                sort: this.getSortParam()
+            }
+        }
+
+        return request;
+    };
+
+    CaseTab.prototype.search = function () {
+        if (this.cases.length === 0)
+            this.cases.splice(0, this.cases.length);
+        this.load(false);
     };
 
     CaseTab.prototype.load = function (next) {
@@ -133,6 +203,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                 self.$snackbar.info(self.$i18n.block.snackbar.noCases);
                 self.cases.splice(0, self.cases.length);
                 self.loading = false;
+                self.emitNumberOfCases();
                 return;
             }
             const rawData = response.$response().data._embedded.cases;
@@ -144,12 +215,14 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                 }
                 self.parseCase(resources, rawData, next);
                 self.loading = false;
+                self.emitNumberOfCases();
             }, function () {
                 self.$snackbar.error(self.$i18n.block.snackbar.noResourceForCasesFound);
                 self.page.last = undefined;
                 self.page.next = undefined;
                 self.cases.splice(0, self.cases.length);
                 self.loading = false;
+                self.emitNumberOfCases();
             });
         }, function () {
             self.$snackbar.error(self.$i18n.block.snackbar.gettingCasesFailed);
@@ -188,6 +261,16 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
 
         if (next) cases.forEach(useCase => this.cases.push(useCase));
         else this.cases = cases;
+    };
+
+    CaseTab.prototype.emitNumberOfCases = function () {
+        if (!this.$rootScope)
+            return;
+        this.$rootScope.$emit('tabContentLoad', {
+            count: this.page.totalElements,
+            viewId: this.viewId,
+            reloadAll: true
+        });
     };
 
     CaseTab.prototype.openCase = function (useCase) {
@@ -273,7 +356,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                 self.newCase = {
                     title: self.getDefaultCaseTitle()
                 };
-                self.$process.loadNets(true).then(() => self.allowedNets = self.$process.nets);
+                $process.init().then(() => self.allowedNets = $process.nets);
             });
     };
 
