@@ -46,7 +46,8 @@
                 </md-button>
                 <md-menu-content>
                     <md-menu-item ng-if="field.parent.user.email == $user.login && field.behavior.editable">
-                        <md-button class="file-chooser" layout="row" layout-align="start center">
+                        <md-button layout="row" layout-align="start center" class="file-chooser padding-horizontal-2x">
+                            <md-icon class="material-icons">insert_drive_file</md-icon>
                             <input type="file" id="{{'file-'+field.stringId}}"
                                    file-model="field.file"
                                    file-change-callback="field.fileChanged"
@@ -54,19 +55,21 @@
                                    ng-required="field.behavior.required"
                                    aria-label="Choose file">
                             <label for="{{'file-'+field.stringId}}" class="placeholder">
-                                <span class="padding-horizontal-2x">{{::$i18n.block.data.newFile}}</span>
+                                <span>{{::$i18n.block.data.newFile}}</span>
                             </label>
                         </md-button>
                     </md-menu-item>
                     <md-menu-item ng-if="field.newFile && !field.uploaded">
                         <md-button ng-click="field.upload()">
-                            {{::$i18n.block.data.upload}}
+                            <md-icon class="material-icons">cloud_upload</md-icon>
+                            <span>{{::$i18n.block.data.upload}}</span>
                         </md-button>
                     </md-menu-item>
                     <md-menu-item
                             ng-if="(field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)">
                         <md-button ng-click="field.download()">
-                            {{::$i18n.block.data.download}}
+                            <md-icon class="material-icons">file_download</md-icon>
+                            <span>{{::$i18n.block.data.download}}</span>
                         </md-button>
                     </md-menu-item>
                 </md-menu-content>

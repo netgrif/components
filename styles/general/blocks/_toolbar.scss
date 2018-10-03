@@ -21,6 +21,10 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
     min-height: $dim-56px;
     background-color: $color-toolbar-bg;
 
+    .toolbar-text {
+        color: $color-toolbar-hamburger;
+    }
+
     .app-name {
         color: $color-toolbar-app-name;
     }

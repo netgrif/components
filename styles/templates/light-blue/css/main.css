@@ -2519,6 +2519,8 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   height: 56px;
   min-height: 56px;
   background-color: #0047BA; }
+  .base .main-toolbar .toolbar-text {
+    color: #FAFAFA; }
   .base .main-toolbar .app-name {
     color: #FAFAFA; }
   .base .main-toolbar md-menu-bar md-menu {
@@ -2970,8 +2972,7 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   border-bottom: 1px solid #E1E1E1; }
 
 .base .file-chooser {
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
   .base .file-chooser input {
     position: absolute;
     height: 0.1px;
