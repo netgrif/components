@@ -113,7 +113,7 @@ define([], function () {
         },
         enable: {
             userSignUp: true,
-            modelDelete: true,
+            modelDelete: false,
             inviteUserWithNoProcessRoles: true,
 
             cases: {
