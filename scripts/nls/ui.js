@@ -25,7 +25,9 @@ define({
             cases: {
                 this: "Cases",
                 my: "My cases",
-                all: "All cases"
+                all: "All cases",
+                noCasesAvailableForThisView: "There are any cases available for this view",
+                noTasksForThisCaseAvailable: "There are any more tasks for you in this case"
             },
             casesData: {
                 this: "Data cases",
@@ -42,6 +44,7 @@ define({
                     category: "Category",
                     search: "Search"
                 },
+                noTasksSatisfyingThisFilter: "There are any tasks satisfying this filter",
                 filter: {
                     process: "Process",
                     type:"Type",

@@ -25,9 +25,12 @@
 
 					</div> <!-- ./column -->
 
-					<div ng-if="!caseCtrl.caseTab.loading && caseCtrl.caseTab.cases.length === 0" layout="column" layout-align="center center" class="margin-2x font-size-20 color-fg-material-grey-text">
+					<div ng-if="!caseCtrl.caseTab.loading && caseCtrl.caseTab.cases.length === 0" layout="column" layout-align="center center" class="color-fg-material-grey-text">
+						<md-divider class="border-width-default color-border-transparent"></md-divider>
 						<md-icon class="material-icons">storage</md-icon>
-						<span>Žiadne inštancie už nie sú k dispozícii.</span>
+						<md-divider class="border-width-2x color-border-transparent"></md-divider>
+						<span class="font-size-20">{{::$i18n.page.cases.noCasesAvailableForThisView}}</span>
+						<md-divider class="border-width-2x color-border-transparent"></md-divider>
 					</div>
 
 					<div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&caseCtrl.caseTab.load(true)">
@@ -64,9 +67,12 @@
 
 					<md-expansion-panel-group md-component-id="'caseView-tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple></md-expansion-panel-group>
 
-					<div ng-if="!tab.loading && tab.tasks.length === 0" layout="column" layout-align="center center" class="margin-2x font-size-20 color-fg-material-grey-text">
+					<div ng-if="!tab.loading && tab.tasks.length === 0" layout="column" layout-align="center center" class="color-fg-material-grey-text">
+						<md-divider class="border-width-default color-border-transparent"></md-divider>
 						<md-icon class="material-icons">check_box</md-icon>
-						<span>V tejto inštancii už pre teba nie sú žiadne úlohy.</span>
+						<md-divider class="border-width-2x color-border-transparent"></md-divider>
+						<span class="font-size-20">{{::$i18n.page.cases.noTasksForThisCaseAvailable}}</span>
+						<md-divider class="border-width-default color-border-transparent"></md-divider>
 						<md-button class="md-button" ng-click="caseCtrl.closeTab(tab.useCase.stringId)">Zavrieť kartu</md-button>
 					</div>
 

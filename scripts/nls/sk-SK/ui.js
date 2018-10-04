@@ -24,7 +24,9 @@ define({
         cases: {
             this: "Prípady",
             my: "Moje prípady",
-            all: "Všetky prípady"
+            all: "Všetky prípady",
+            noCasesAvailableForThisView: "Pre toto zobrazenie neexistujú žiadne prípady",
+            noTasksForThisCaseAvailable: "V tomto prípade už pre Vás nie sú žiadne úlohy"
         },
         casesData: {
             this: "Dátové prípady",
@@ -41,6 +43,7 @@ define({
                 category: "Kategória",
                 search: "Hľadať"
             },
+            noTasksSatisfyingThisFilter: "Pre tento filter nie sú vyhovujúce žiadne úlohy",
             filter: {
                 process: "Proces",
                 type:"Typ",
