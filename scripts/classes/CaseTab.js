@@ -64,10 +64,10 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
 
     CaseTab.prototype.buildHeaders = function () {
         this.headers.metaData = [
-            getMetaDataReference("title", "Title", "text"),
-            getMetaDataReference("creationDate", "Create date", "date"),
-            getMetaDataReference("author", "Author", "user"),
-            getMetaDataReference("visualId", "Visual ID", "text"),
+            getMetaDataReference("title", this.$i18n.block.case.header.title, "text"),
+            getMetaDataReference("creationDate", this.$i18n.block.case.header.createDate, "date"),
+            getMetaDataReference("author", this.$i18n.block.case.header.author, "user"),
+            getMetaDataReference("visualId", this.$i18n.block.case.header.visualID, "text"),
         ];
         this.allowedNets.forEach(net => {
             if (!net.immediateData)

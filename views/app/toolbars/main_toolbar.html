@@ -13,6 +13,9 @@
         <span ng-if="'cases' | routeSegmentContains">{{::$i18n.page.cases.this}}</span>
         <span ng-if="'tasks' | routeSegmentContains">{{::$i18n.page.tasks.this}}</span>
         <span ng-if="'workflow' | routeSegmentContains">{{::$i18n.page.workflow.this}}</span>
+        <span ng-if="'documents' | routeSegmentContains">{{::$i18n.page.documents.this}}</span>
+        <span ng-if="'contacts' | routeSegmentContains">{{::$i18n.page.contacts.this}}</span>
+        <span ng-if="'organizations' | routeSegmentContains">{{::$i18n.page.organizations.this}}</span>
         <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)">{{::$i18n.page.console.this}}</span>
         <span ng-if="'profile' | routeSegmentContains">{{::$i18n.page.profile.this}}</span>
         <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('settings' | routeSegmentContains)">{{::$i18n.page.settings.this}}</span>

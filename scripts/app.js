@@ -49,6 +49,8 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 .when('/tasks', 'app.tasks')
                 .when('/workflow', 'app.workflow')
                 .when('/settings', 'app.settings')
+                .when('/documents', 'app.documents')
+                .when('/contacts', 'app.contacts')
 
                 .segment('app', {
                     templateUrl: "views/app/main.html",
@@ -66,6 +68,11 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     templateUrl: "views/app/cases.html",
                     controller: 'CasesController',
                     controllerAs: 'caseCtrl'
+                })
+                .segment('organizations', {
+                    templateUrl: "views/app/organizations.html",
+                    controller: 'CasesController',
+                    controllerAs: 'orgCtrl'
                 })
                 .segment('casesData', {
                     templateUrl: "views/app/cases_data.html",
@@ -97,6 +104,16 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     controller: 'SettingsController',
                     controllerAs: 'settCtrl'
                 })
+                .segment('documents', {
+                    templateUrl: 'views/app/documents.html',
+                    controller: 'DocumentsController',
+                    controllerAs: 'docsCtrl'
+                })
+                .segment('contacts', {
+                    templateUrl: 'views/app/contacts.html',
+                    controller: 'ContactsController',
+                    controllerAs: 'ctcCtrl'
+                })
                 .up()
                 .segment('login', {
                     templateUrl: "views/login/login.html",
@@ -114,7 +131,8 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     controller: 'LoginController',
                     controllerAs: 'loginCtrl',
                     dependencies: ['token']
-                });
+                })
+
 
             $locationProvider.html5Mode(true);
             $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";

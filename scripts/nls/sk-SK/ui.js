@@ -65,7 +65,10 @@ define({
             }
         },
         documents: {
-            this: "Dokumenty"
+            this: "Organizácie"
+        },
+        contacts: {
+            this: "Kontakty"
         },
         workflow: {
             this: "Workflow",
@@ -436,7 +439,8 @@ define({
         add: {
             createCase: "Vytvoriť prípad",
             createContact: "Vytvoriť kontakt",
-            createDocument: "Vytvoriť dokument"
+            createDocument: "Vytvoriť dokument",
+            createContact: "Vytvoriť kontakt"
         },
         sentencePart: {
 
