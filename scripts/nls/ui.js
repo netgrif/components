@@ -221,7 +221,8 @@ define({
                 reset: "Reset",
                 search: "Search",
                 apply: "Apply",
-                submit: "Submit"
+                submit: "Submit",
+                closeTab: "Close tab"
             },
             mainMenu: {
                 lang: {

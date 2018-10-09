@@ -223,7 +223,8 @@ define({
             reset: "Reset",
             search: "Hľadať",
             apply: "Použiť",
-            submit: "Potvrdiť"
+            submit: "Potvrdiť",
+            closeTab: "Zavrieť kartu"
         },
         mainMenu: {
             lang: {
