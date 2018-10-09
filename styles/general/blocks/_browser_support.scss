@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: $dim-2x;
+    padding: $dim-default;
     background-color: $color-grey-50;
     border-radius: $border-radius;
     box-shadow: $card-shadow;
@@ -11,7 +11,7 @@
     span {
         display: table;
         margin: 0 auto;
-        font-size: 22px;
+        font-size: 17px;
         color: $color-card-text;
 
         a {

@@ -1625,7 +1625,7 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   top: 0;
   left: 0;
   width: 100%;
-  padding: 16px;
+  padding: 8px;
   background-color: #FAFAFA;
   border-radius: 2px;
   -webkit-box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
@@ -1633,7 +1633,7 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   #browser-support-msg span {
     display: table;
     margin: 0 auto;
-    font-size: 22px;
+    font-size: 17px;
     color: rgba(0, 0, 0, 0.87); }
     #browser-support-msg span a {
       text-decoration: none;
