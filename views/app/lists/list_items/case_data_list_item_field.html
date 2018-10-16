@@ -1,1 +1,1 @@
-<div ng-include="'views/app/datafields/values/value_'+$ctrl.field.type+'.html'" class="cas-data-list-item-field"></div>
+<div ng-if="$ctrl.field" ng-include="'views/app/datafields/values/value_'+$ctrl.field.type+'.html'" class="case-data-item-field"></div>

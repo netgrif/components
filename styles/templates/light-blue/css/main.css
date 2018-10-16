@@ -1989,19 +1989,23 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     color: rgba(0, 0, 0, 0.87);
     background-color: #FAFAFA; }
     .base .card-header .case-data-header-item {
-      outline: none;
+      padding: 0 8px;
       cursor: pointer; }
+      .base .card-header .case-data-header-item-text {
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis; }
   .base .card-case {
     min-height: 48px;
     cursor: pointer; }
-    .base .card-case case-data span {
-      word-break: break-all; }
-    .base .card-case case-data .cas-data-list-item-field {
-      padding-left: 1px;
-      padding-right: 1px; }
+    .base .card-case case-data span, .base .card-case case-data div {
+      word-break: break-all;
+      word-wrap: break-word; }
+    .base .card-case case-data .case-data-item-field {
+      padding: 0 8px; }
     .base .card-case:hover {
       background-color: #0047BA; }
-      .base .card-case:hover span, .base .card-case:hover md-icon, .base .card-case:hover .material-icons.color-fg-primary-500 {
+      .base .card-case:hover span, .base .card-case:hover div, .base .card-case:hover md-icon, .base .card-case:hover .material-icons.color-fg-primary-500 {
         color: #FAFAFA; }
       .base .card-case:hover md-switch .md-label {
         color: #FAFAFA; }

@@ -1,6 +1,7 @@
 <div layout="row" layout-align="start center" class="card-header padding-horizontal-2x">
-    <a flex-gt-sm="10" flex-sm="15" flex-xs="30">
-        {{::$i18n.block.case.header.label}}
+
+    <a flex-gt-sm="10" flex-sm="15" flex-xs="30" layout="row" layout-align="start center">
+        <span flex>{{::$i18n.block.case.header.label}}</span>
     </a>
 
     <!-- ng-if="true" is required hack to extend controller scope so headerId var is isolated for all included scopes -->

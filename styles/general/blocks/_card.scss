@@ -70,8 +70,13 @@
         background-color: $color-card-header-bg;
 
         .case-data-header-item {
-            outline: none;
+            padding: 0 $dim-default;
             cursor: pointer;
+
+            &-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
     }
 
@@ -81,20 +86,20 @@
 
         case-data {
 
-            span {
+            span, div {
                 word-break: break-all;
+                word-wrap: break-word;
             }
 
-            .cas-data-list-item-field {
-                padding-left: 1px;
-                padding-right: 1px;
+            .case-data-item-field {
+                padding: 0 $dim-default;
             }
         }
 
         &:hover {
             background-color: $color-card-case-bg-hover;
 
-            span, md-icon, .material-icons.color-fg-primary-500 {
+            span, div, md-icon, .material-icons.color-fg-primary-500 {
                 color: $color-card-case-text-hover;
             }
 
