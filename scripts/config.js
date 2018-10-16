@@ -109,6 +109,20 @@ define([], function () {
                 taskSearch: true,
                 taskPriority: true,
                 taskCaseTitle: true
+            },
+            documents: {
+                transactions: false,
+
+                taskSearch: false,
+                taskPriority: false,
+                taskCaseTitle: false
+            },
+            contacts: {
+                transactions: false,
+
+                taskSearch: false,
+                taskPriority: false,
+                taskCaseTitle: false
             }
         },
         enable: {
@@ -124,6 +138,20 @@ define([], function () {
                 fullReload: false
             },
             tasks: {
+                allowHighlight: false,
+                autoOpenUnfinished: false,
+                fullReload: false
+            },
+            documents: {
+                caseDelete: true,
+
+                allowHighlight: false,
+                autoOpenUnfinished: false,
+                fullReload: false
+            },
+            contacts: {
+                caseDelete: true,
+
                 allowHighlight: false,
                 autoOpenUnfinished: false,
                 fullReload: false

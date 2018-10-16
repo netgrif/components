@@ -132,7 +132,6 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
 
             $compileProvider.preAssignBindingsEnabled(true);
 
-            // $qProvider.errorOnUnhandledRejections(false);
         });
         app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar, $process) {
             $log.debug("App is running...");

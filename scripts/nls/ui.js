@@ -22,6 +22,16 @@ define({
             dashboard: {
                 this: "Dashboard"
             },
+            oraganization: {
+                this: "Organization",
+                my: "My cases",
+                all: "All cases"
+            },
+            bank: {
+                this: "Bank",
+                my: "My cases",
+                all: "All cases"
+            },
             cases: {
                 this: "Cases",
                 my: "My cases",
@@ -67,6 +77,12 @@ define({
                         process: "Selected process"
                     }
                 }
+            },
+            documents:{
+                this: "Organization"
+            },
+            contacts:{
+                this: "Contact"
             },
             workflow: {
                 this: "Workflow",
@@ -439,7 +455,8 @@ define({
             add: {
                 createCase: "Create Case",
                 createContact: "Create Contact",
-                createDocument: "Create Document"
+                createDocument: "Create Organization",
+                createContact: "Create Contact"
             },
             sentencePart: {
 
