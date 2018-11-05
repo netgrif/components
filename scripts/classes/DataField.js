@@ -158,8 +158,10 @@ define(['./HalResource'], function (HalResource) {
 
     DataField.prototype.fileChanged = function (field) {
         if (!field.file) return;
-        field.newValue = field.file.name;
-        field.newFile = field.value !== field.newValue;
+        field.newValue = {
+            name: field.file.name
+        };
+        field.newFile = !field.value || field.value.name !== field.newValue.name;
         field.uploaded = false;
     };
 
