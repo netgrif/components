@@ -1,4 +1,4 @@
-define(['./HalResource'], function (HalResource) {
+define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
     /**
      * Constructor for class DataField
      * Angular dependencies: $dialog, $user, $fileUpload, $snackbar, $i18n
@@ -188,6 +188,14 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.download = function () {
         const downloadWindow = window.open(this.parent.links.file.href + this.stringId);
         downloadWindow.onload = () => downloadWindow.close();
+    };
+
+    DataField.prototype.openFileChooser = function () {
+        const fileInput = jQuery("#file-" + this.stringId);
+        if (fileInput)
+            fileInput.trigger("click");
+        else
+            this.$snackbar.warning("No file input was found!");
     };
 
     DataField.prototype.bindElement = function () {
