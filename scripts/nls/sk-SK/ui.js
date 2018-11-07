@@ -437,7 +437,7 @@ define({
             invitationEmailSent: "Pozvánka na vytvorenie účtu bola zaslaná",
             pswRecoveryEmailSentTo: "Email na obnovu hesla bol odoslaný na ",
             newPswSet: "Vaše nové heslo bolo nastavené",
-
+            noFileInput: "Nebol nájdený žiaden vstup pre súbory",
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },
         add: {

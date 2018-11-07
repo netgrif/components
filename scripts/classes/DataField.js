@@ -195,7 +195,7 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         if (fileInput)
             fileInput.trigger("click");
         else
-            this.$snackbar.warning("No file input was found!");
+            this.$snackbar.warning(this.$i18n.block.snackbar.noFileInput);
     };
 
     DataField.prototype.bindElement = function () {
