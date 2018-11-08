@@ -2,9 +2,9 @@
 @import '../dims';
 
 .sidenav {
-    width: 180px;
-    min-width: 180px;
-    max-width: 180px;
+    width: $sidenav-width;
+    min-width: $sidenav-width;
+    max-width: $sidenav-width;
 
     &-logo {
         height: $dim-56px;

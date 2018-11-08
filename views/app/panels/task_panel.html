@@ -281,7 +281,7 @@
                         <div flex class="line-3px color-bg-primary-op-50"></div>
                     </div>
 
-                    <div ng-repeat="field in group.data" ng-if="!field.behavior.hidden" flex="{{group.stretch ? '100' : '50'}}" flex-md="100" flex-sm="100" flex-xs="100">
+                    <div ng-repeat="field in group.data" ng-if="!field.behavior.hidden && !field.behavior.forbidden" flex="{{group.stretch ? '100' : '50'}}" flex-md="100" flex-sm="100" flex-xs="100">
                         <div flex ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak></div>
                         <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
                     </div>
@@ -309,7 +309,7 @@
                     <span>{{::$i18n.block.btn.delegate}}</span>
                 </md-button>
 
-                <md-button ng-if="(taskCtrl.user.email === $user.login) && ($user.canDo(taskCtrl.roles, 'delegate'))" ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
+                <md-button ng-if="(taskCtrl.user.email === $user.login)" ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.reassign}}</span>
                 </md-button>
 

@@ -43,14 +43,11 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 .when('/recover/:token', 'recover')
                 .when('/dashboard', 'app.dashboard')
                 .when('/cases', 'app.cases')
-                .when('/casesData', 'app.casesData')
                 .when('/console', 'app.console')
                 .when('/profile', 'app.profile')
                 .when('/tasks', 'app.tasks')
                 .when('/workflow', 'app.workflow')
                 .when('/settings', 'app.settings')
-                .when('/documents', 'app.documents')
-                .when('/contacts', 'app.contacts')
 
                 .segment('app', {
                     templateUrl: "views/app/main.html",
@@ -68,16 +65,6 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     templateUrl: "views/app/cases.html",
                     controller: 'CasesController',
                     controllerAs: 'caseCtrl'
-                })
-                .segment('organizations', {
-                    templateUrl: "views/app/organizations.html",
-                    controller: 'CasesController',
-                    controllerAs: 'orgCtrl'
-                })
-                .segment('casesData', {
-                    templateUrl: "views/app/cases_data.html",
-                    controller: 'CasesDataController',
-                    controllerAs: 'caseDataCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",
@@ -104,16 +91,6 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     controller: 'SettingsController',
                     controllerAs: 'settCtrl'
                 })
-                .segment('documents', {
-                    templateUrl: 'views/app/documents.html',
-                    controller: 'DocumentsController',
-                    controllerAs: 'docsCtrl'
-                })
-                .segment('contacts', {
-                    templateUrl: 'views/app/contacts.html',
-                    controller: 'ContactsController',
-                    controllerAs: 'ctcCtrl'
-                })
                 .up()
                 .segment('login', {
                     templateUrl: "views/login/login.html",
@@ -131,8 +108,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     controller: 'LoginController',
                     controllerAs: 'loginCtrl',
                     dependencies: ['token']
-                })
-
+                });
 
             $locationProvider.html5Mode(true);
             $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
@@ -154,9 +130,8 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 return new Date(NaN);
             };
 
-            $compileProvider.preAssignBindingsEnabled(false);
+            $compileProvider.preAssignBindingsEnabled(true);
 
-            // $qProvider.errorOnUnhandledRejections(false);
         });
         app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar, $process) {
             $log.debug("App is running...");

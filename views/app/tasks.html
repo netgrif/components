@@ -25,6 +25,14 @@
                         <md-expansion-panel-group md-component-id="'taskView-tasksGroup-'+taskTab.id" eval-attr-as-expr="mdComponentId" multiple>
                         </md-expansion-panel-group>
 
+                        <div ng-if="!taskTab.loading && taskTab.tasks.length === 0" layout="column" layout-align="center center" class="font-size-20 color-fg-material-grey-text">
+                            <md-divider class="border-width-default color-border-transparent"></md-divider>
+                            <md-icon class="material-icons">check_box</md-icon>
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
+                            <span class="font-size-20">{{::$i18n.page.tasks.noTasksSatisfyingThisFilter}}</span>
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
+                        </div>
+
                         <div layout="row" layout-align="center center" in-view="$inview && taskTab.load(true)" class="padding-2x margin-2x">
                             <md-progress-circular md-mode="indeterminate" ng-disabled="!taskTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
                         </div>

@@ -148,6 +148,10 @@
 
                                 <div ng-init="usersUserListTab=adminCtrl.usersTab" ng-include="'views/app/lists/console_users_user_list.html'"></div>
 
+                                <div layout="row" layout-align="center center" in-view="$inview&&adminCtrl.usersTab.loadUsers(true)">
+                                    <md-progress-circular md-mode="indeterminate" ng-disabled="!adminCtrl.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
+                                </div>
+
                             </div>
 
                         </div> <!-- ./column -->
@@ -176,7 +180,7 @@
         </md-tab>
 
 
-        <md-tab md-on-select="adminCtrl.rolesTab.loadUsers()">
+        <md-tab md-on-select="adminCtrl.clearAll(); adminCtrl.rolesTab.loadUsers()">
 
             <md-tab-label>
                 {{::$i18n.page.console.processRoles}}
@@ -212,6 +216,10 @@
                             <div layout="column">
 
                                 <div ng-init="rolesTab=adminCtrl.rolesTab" ng-include="'views/app/lists/console_roles_user_list.html'"></div>
+
+                                <div layout="row" layout-align="center center" in-view="$inview&&adminCtrl.rolesTab.loadUsers(true)">
+                                    <md-progress-circular md-mode="indeterminate" ng-disabled="!adminCtrl.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
+                                </div>
 
                             </div>
 

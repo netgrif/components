@@ -936,6 +936,7 @@ span.active {
   color: #4D7ECF; }
 
 .text-overflow-dots {
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   -o-text-overflow: ellipsis;
@@ -1989,12 +1990,24 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     height: 48px;
     color: #FAFAFA;
     background-color: #293740; }
+    .base .card-header .case-data-header-item {
+      padding: 0 8px;
+      cursor: pointer; }
+      .base .card-header .case-data-header-item-text {
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis; }
   .base .card-case {
     min-height: 48px;
     cursor: pointer; }
+    .base .card-case case-data span, .base .card-case case-data div {
+      word-break: break-all;
+      word-wrap: break-word; }
+    .base .card-case case-data .case-data-item-field {
+      padding: 0 8px; }
     .base .card-case:hover {
       background-color: #4D7ECF; }
-      .base .card-case:hover span, .base .card-case:hover md-icon, .base .card-case:hover .material-icons.color-fg-primary-500 {
+      .base .card-case:hover span, .base .card-case:hover div, .base .card-case:hover md-icon, .base .card-case:hover .material-icons.color-fg-primary-500 {
         color: #FAFAFA; }
       .base .card-case:hover md-switch .md-label {
         color: #FAFAFA; }
@@ -2013,6 +2026,13 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     margin: 0; }
     .base .card-signin img, .base .card-signup img {
       max-height: 80px; } }
+
+.base md-tooltip.value-text-tooltip {
+  max-width: 50%;
+  max-height: 20%;
+  height: auto;
+  word-break: break-word;
+  white-space: unset; }
 
 .base .height-48px {
   height: 48px; }
@@ -2505,6 +2525,8 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   height: 56px;
   min-height: 56px;
   background-color: #262C32; }
+  .base .main-toolbar .toolbar-text {
+    color: #FAFAFA; }
   .base .main-toolbar .app-name {
     color: #FAFAFA; }
   .base .main-toolbar md-menu-bar md-menu {
@@ -2956,8 +2978,7 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   border-bottom: 1px solid #E1E1E1; }
 
 .base .file-chooser {
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
   .base .file-chooser input {
     position: absolute;
     height: 0.1px;

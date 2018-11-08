@@ -1,4 +1,4 @@
-define(['./DataField', './HalResource', './Task'], function (DataField, HalResource, Task) {
+define(['./DataField', './HalResource'], function (DataField, HalResource) {
     /**
      * Constructor for Case class
      * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user, $i18n
@@ -19,13 +19,13 @@ define(['./DataField', './HalResource', './Task'], function (DataField, HalResou
 
         if (this.immediateData) {
             this.immediateData.forEach(data => {
-                if (data.type === 'date') data.value = Case.formatDate(data.value);
+                if (data.type === 'date' || data.type === 'dateTime') data.value = Case.formatDate(data.value);
             });
         }
         this.formatedDate = Case.formatDate(this.creationDate);
 
         this.data = [];
-        this.loading = false
+        this.loading = false;
         this.selectedData = {
             column0: undefined,
             column1: undefined,
@@ -93,10 +93,7 @@ define(['./DataField', './HalResource', './Task'], function (DataField, HalResou
 
         const immediateField = this.immediateData.find(data => data.stringId === this.selectedData[index].stringId);
         if (immediateField) {
-            if (immediateField.type === 'date')
-                this.selectedData[index].value = Case.formatDate(immediateField.value);
-            else
-                this.selectedData[index].value = immediateField.value;
+            this.selectedData[index].value = immediateField.value; //TODO 7.8.2018 Update NAE
         } else {
             this.selectedData[index] = undefined;
         }

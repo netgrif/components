@@ -24,7 +24,9 @@ define({
         cases: {
             this: "Prípady",
             my: "Moje prípady",
-            all: "Všetky prípady"
+            all: "Všetky prípady",
+            noCasesAvailableForThisView: "Pre toto zobrazenie neexistujú žiadne prípady",
+            noTasksForThisCaseAvailable: "V tomto prípade už pre Vás nie sú žiadne úlohy"
         },
         casesData: {
             this: "Dátové prípady",
@@ -41,6 +43,7 @@ define({
                 category: "Kategória",
                 search: "Hľadať"
             },
+            noTasksSatisfyingThisFilter: "Pre tento filter nie sú vyhovujúce žiadne úlohy",
             filter: {
                 process: "Proces",
                 type:"Typ",
@@ -223,7 +226,8 @@ define({
             reset: "Reset",
             search: "Hľadať",
             apply: "Použiť",
-            submit: "Potvrdiť"
+            submit: "Potvrdiť",
+            closeTab: "Zavrieť kartu"
         },
         mainMenu: {
             lang: {
@@ -238,16 +242,15 @@ define({
         case: {
             this: "Prípad",
             header: {
-                metaData: "meta data",
-                fields: "fields",
+                metaData: "meta dáta",
                 label: "Typ",
                 visualID: "Vizuálne ID",
                 title: "Názov",
                 author: "Autor",
                 createDate: "Dátum vytvorenia",
                 optional: "Voliteľné pole",
-                enableEditMode: "Prepnúť na editačný mód",
-                confirmChanges: "Uložiť zmeny"
+                enableEditMode: "Povoliť úpravy",
+                confirmChanges: "Potvrdiť úpravy"
             },
             newTitle: "Nová inštancia"
         },
@@ -279,7 +282,8 @@ define({
         data: {
             noUserChosen: "Žiaden zvolený používateľ",
             self: "Sebe",
-            chooseUser: "Vybrať používateľa",
+            selectUser: "Zvoliť používateľa",
+            removeUser: "Odstrániť používateľa",
             noFile: "Žiaden súbor",
             fileNotUploaded: "Súbor ešte nebol nahraný",
             fileUploaded: "Súbor bol úspešne nahraný",
@@ -452,6 +456,9 @@ define({
             long: "dlhý"
         },
         char: {
+
+        },
+        custom: {
 
         }
     }

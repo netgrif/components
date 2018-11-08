@@ -35,7 +35,9 @@ define({
             cases: {
                 this: "Cases",
                 my: "My cases",
-                all: "All cases"
+                all: "All cases",
+                noCasesAvailableForThisView: "There are any cases available for this view",
+                noTasksForThisCaseAvailable: "There are any more tasks for you in this case"
             },
             casesData: {
                 this: "Data cases",
@@ -52,6 +54,7 @@ define({
                     category: "Category",
                     search: "Search"
                 },
+                noTasksSatisfyingThisFilter: "There are any tasks satisfying this filter",
                 filter: {
                     process: "Process",
                     type:"Type",
@@ -234,7 +237,8 @@ define({
                 reset: "Reset",
                 search: "Search",
                 apply: "Apply",
-                submit: "Submit"
+                submit: "Submit",
+                closeTab: "Close tab"
             },
             mainMenu: {
                 lang: {
@@ -257,8 +261,8 @@ define({
                     author: "Author",
                     createDate: "Create Date",
                     optional: "Optional field",
-                    enableEditMode: "Enable Edit mode",
-                    confirmChanges: "Confirm Changes"
+                    enableEditMode: "Enable edit mode",
+                    confirmChanges: "Confirm changes"
                 },
                 newTitle: "New instance"
             },
@@ -290,7 +294,8 @@ define({
             data: {
                 noUserChosen: "No user was chosen",
                 self: "Self",
-                chooseUser: "Choose user",
+                selectUser: "Select user",
+                removeUser: "Remove user",
                 noFile: "No file",
                 fileNotUploaded: "File has not been uploaded yet",
                 fileUploaded: "File uploaded successfully",
@@ -463,6 +468,9 @@ define({
                 long: "long"
             },
             char: {
+
+            },
+            custom: {
 
             }
         }

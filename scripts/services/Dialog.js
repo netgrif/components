@@ -69,9 +69,15 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
 
             // Variables for dialog_assign_user
             $scope.users = undefined;
-            self.users = undefined;
+            self.users = [];
             self.searched = undefined;
             self.selectedUser = undefined;
+            self.page = {
+                pageLinks: {}
+            };
+            self.loading = false;
+            self.searchLast = undefined;
+            self.counter = 0;
 
             $scope.closeDialog = function () {
                 $mdDialog.hide();
@@ -82,17 +88,67 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             };
 
             // Delegate task methods
-            self.loadUsers = function () {
+            self.loadUsers = function (next) {
                 if (!$scope.opt.task) return;
-                $http.post("/api/user/role?small=true", $scope.opt.task.fieldRoles).then(function (response) {
-                    self.users = response.$request().$get("users").then(function (resources) {
-                        $scope.users = self.users = resources;
-                    }, function () {
+                if (self.loading) return;
+                if (next && !self.page.pageLinks.next) return;
+
+                self.loading = true;
+                let request = self.buildRequest(next ? self.page.pageLinks.next.href : undefined);
+                $http(request).then(response => {
+                    if (!next)
+                        self.clearAll();
+                    self.page = Object.assign(self.page, response.page);
+                    self.page.pageLinks = response.$response().data._links;
+                    response.$request().$get("users").then(resources => {
+                        $scope.users = self.users = self.users.concat(resources);
+                        self.loading = false;
+                    }, () => {
                         $log.debug("Resource users was not found");
+                        self.loading = false;
                     });
-                }, function () {
-                    $snackbar.error($i18n.block.snackbar.failedToLoadUsersInTask + " " + task.visualId);
+                }, () => {
+                    $snackbar.error($i18n.block.snackbar.failedToLoadUsersInTask);
                 });
+            };
+
+            self.filterUsers = function () {
+                self.counter += 1;
+                $timeout(() => {
+                    self.counter -= 1;
+                    if (self.counter !== 0) {
+                        return;
+                    }
+                    self.searched = self.searched.trim();
+                    self.searchLast = self.searched;
+                    self.loadUsers(false);
+                }, 500);
+            };
+
+            self.clearAll = function () {
+                self.page = {
+                    pageLinks: {}
+                };
+                self.users = [];
+            };
+
+            self.buildRequest = function(next) {
+                return {
+                    method: 'POST',
+                    url: next ? next : "/api/user/search?small=true",
+                    params: {
+                        size: 10,
+                        sort: "dn,asc"
+                    },
+                    data: self.buildSearchQuery()
+                }
+            };
+
+            self.buildSearchQuery = function() {
+                return {
+                    fulltext: !self.searchLast ? "" : self.searchLast,
+                    roles: $scope.opt.task.fieldRoles
+                }
             };
 
             $scope.filterUsers = function () {
@@ -106,8 +162,8 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                 }
             };
 
-            $scope.getSelectedUserClass = function (email) {
-                if (email === self.selectedUser) return 'selected-tile';
+            $scope.getSelectedUserClass = function (id) {
+                if (id === self.selectedUser) return 'selected-tile';
             };
 
             $scope.assignTask = function () {
@@ -115,7 +171,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                 if (!self.selectedUser) {
                     $mdDialog.hide();
                 } else {
-                    $mdDialog.hide(self.users.find(user => user.email === self.selectedUser));
+                    $mdDialog.hide(self.users.find(user => user.id === self.selectedUser));
                 }
             };
 

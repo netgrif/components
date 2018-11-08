@@ -48,7 +48,14 @@ define(['./HalResource'], function (HalResource) {
             ${DataField.padding(value.hour, 0, 0)}:${DataField.padding(value.minute, 0, 0)}`;
         }
         if (this.type === "user") {
-            return value.email;
+            return value.id;
+        }
+        if (this.type === "dateTime") {
+            if (value instanceof Date)
+                return `${value.getFullYear()}-${DataField.padding(value.getMonth() + 1, 0)}-${DataField.padding(value.getDate(), 0)}`;
+            else
+                return `${DataField.padding(value.dayOfMonth, 0)}.${DataField.padding(value.monthValue, 0)}.${value.year}
+            ${DataField.padding(value.hour, 0, 0)}:${DataField.padding(value.minute, 0, 0)}`;
         }
         return value;
     };
@@ -73,6 +80,9 @@ define(['./HalResource'], function (HalResource) {
                 break;
             case "date":
                 this.valid = this.newValue && this.validate(this.newValue);
+                break;
+            case "user":
+                this.valid = true;
                 break;
             default:
                 this.valid = !!this.newValue;
@@ -136,6 +146,14 @@ define(['./HalResource'], function (HalResource) {
             self.parent.save();
         }, function () {
         });
+    };
+
+    DataField.prototype.removeUser = function () {
+        if (!this.newValue)
+            return;
+        this.newValue = null;
+        this.changed = true;
+        this.parent.save();
     };
 
     DataField.prototype.fileChanged = function (field) {

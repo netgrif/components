@@ -1,7 +1,7 @@
-define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], function (Tab, Task, Transaction, Filter, TaskSearch) {
+define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Transaction, Filter, TaskSearch) {
     /**
      * Constructor for TaskTab class
-     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n, $process
+     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n, $process, $rootScope
      * @param id
      * @param label
      * @param {Filter} baseFilter
@@ -81,7 +81,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.tasks.splice(0, this.tasks.length);
     };
 
-    TaskTab.prototype.isNotEmpty = function() {
+    TaskTab.prototype.isNotEmpty = function () {
         return this.tasks && this.tasks.length > 0;
     };
 
@@ -110,6 +110,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                 if (self.isNotEmpty())
                     self.removeAll();
                 self.loading = false;
+                self.emitNumberOfTasks();
                 return;
             }
             const rawData = response.$response().data._embedded.tasks;
@@ -124,6 +125,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                 self.parseTasks(resources, next);
 
                 self.loading = false;
+                self.emitNumberOfTasks();
             }, function () {
                 self.$snackbar.info(`${self.$i18n.block.snackbar.noTasksFoundIn} ${self.label}`);
                 self.page.next = undefined;
@@ -132,6 +134,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
 
                 }
                 self.loading = false;
+                self.emitNumberOfTasks();
             })
 
         }, function () {
@@ -174,7 +177,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                     delete self.taskControllers[r.stringId];
                 }
 
-                if(Object.keys(self.taskControllers).length === 0){
+                if (Object.keys(self.taskControllers).length === 0) {
                     if (self.showTransactions) {
                         self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
                         self.transactionProgress = self.mostForwardTransaction();
@@ -186,6 +189,15 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         });
         if (self.showTransactions)
             self.transactions.forEach(trans => trans.setActive(self.tasks));
+    };
+
+    TaskTab.prototype.emitNumberOfTasks = function(){
+        if(!this.$rootScope)
+            return;
+        this.$rootScope.$emit('tabContentLoad',{
+            count: this.page.totalElements,
+            viewId: this.viewId
+        });
     };
 
     TaskTab.prototype.deleteTaskOnIndex = function (index) {
@@ -203,10 +215,10 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
     };
 
     TaskTab.prototype.openUnfinishedTask = function () {
-        if(!this.autoOpenUnfinished)
+        if (!this.autoOpenUnfinished)
             return;
         const unfinished = this.tasks.filter(t => !t.finishDate);
-        if(unfinished.length === 1)
+        if (unfinished.length === 1)
             unfinished[0].click();
     };
 
@@ -214,7 +226,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         if (!this.useCase || this.transactions.length > 0) return;
 
         this.transactions = this.$process.get(this.useCase.processIdentifier).transactions;
-        if(this.tasks.length > 0){
+        if (this.tasks.length > 0) {
             this.transactions.forEach(trans => trans.setActive(this.tasks));
         }
 

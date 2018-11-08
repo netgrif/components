@@ -25,6 +25,14 @@
 
 					</div> <!-- ./column -->
 
+					<div ng-if="!caseCtrl.caseTab.loading && caseCtrl.caseTab.cases.length === 0" layout="column" layout-align="center center" class="color-fg-material-grey-text">
+						<md-divider class="border-width-default color-border-transparent"></md-divider>
+						<md-icon class="material-icons">storage</md-icon>
+						<md-divider class="border-width-2x color-border-transparent"></md-divider>
+						<span class="font-size-20">{{::$i18n.page.cases.noCasesAvailableForThisView}}</span>
+						<md-divider class="border-width-2x color-border-transparent"></md-divider>
+					</div>
+
 					<div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&caseCtrl.caseTab.load(true)">
 						<md-progress-circular md-mode="indeterminate" ng-disabled="!caseCtrl.caseTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
 					</div> <!-- ./row -->
@@ -58,6 +66,15 @@
 					<md-divider class="border-width-2x color-border-transparent"></md-divider>
 
 					<md-expansion-panel-group md-component-id="'caseView-tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple></md-expansion-panel-group>
+
+					<div ng-if="!tab.loading && tab.tasks.length === 0" layout="column" layout-align="center center" class="color-fg-material-grey-text">
+						<md-divider class="border-width-default color-border-transparent"></md-divider>
+						<md-icon class="material-icons">check_box</md-icon>
+						<md-divider class="border-width-2x color-border-transparent"></md-divider>
+						<span class="font-size-20">{{::$i18n.page.cases.noTasksForThisCaseAvailable}}</span>
+						<md-divider class="border-width-default color-border-transparent"></md-divider>
+						<md-button class="md-button" ng-click="caseCtrl.closeTab(tab.useCase.stringId)">{{::$i18n.block.btn.closeTab}}</md-button>
+					</div>
 
 					<div layout="row" layout-align="center center" class="padding-2x margin-2x">
 						<md-progress-circular md-mode="indeterminate" ng-disabled="!tab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>

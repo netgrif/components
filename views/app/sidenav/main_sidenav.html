@@ -2,43 +2,31 @@
 <md-sidenav md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-sm')" class="sidenav md-sidenav-left">
     <md-content layout="column">
 
+        <md-button href="/dashboard" layout="row" layout-align="start center"
+                   ng-class="{active: ('dashboard' | routeSegmentContains)}"
+                   ng-click="mainCtrl.closeSidenav('left-nav')">
+            <i class="material-icons">dashboard</i>{{::$i18n.page.dashboard.this}}
+        </md-button>
 
-<!--    <md-button href="/cases" layout="row" layout-align="start center"
+        <md-button href="/cases" layout="row" layout-align="start center"
                    ng-class="{active: ('cases' | routeSegmentContains)}"
                    ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('cases')">
-            <i class="material-icons">storage</i>{{::$i18n.page.oraganization.this}}
-    </md-button>-->
-<!--<md-button href="/cases" layout="row" layout-align="start center"
-                           ng-class="{active: ('cases' | routeSegmentContains)}"
-                           ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('cases')">
-                    <i class="material-icons">storage</i>{{::$i18n.page.bank.this}}
-                </md-button>
-
-                <md-button href="/tasks" layout="row" layout-align="start center"
-                           ng-class="{active: ('tasks' | routeSegmentContains)}"
-                           ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('tasks')">
-                    <i class="material-icons">check_box</i>{{::$i18n.page.tasks.this}}
-                </md-button>-->
-
-<!--        <md-button href="/organizations" layout="row" layout-align="start center"
-                   ng-class="{active: ('organizations' | routeSegmentContains)}"
-                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('organizations')">
-            <i class="material-icons">folder</i>{{::$i18n.page.oraganization.this}}
-        </md-button>-->
-
-        <md-button href="/documents" layout="row" layout-align="start center"
-                   ng-class="{active: ('documents' | routeSegmentContains)}"
-                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('documents')">
-            <i class="material-icons">folder</i>{{::$i18n.page.documents.this}}
+            <i class="material-icons">storage</i>{{::$i18n.page.cases.this}}
+            <span ng-if="mainCtrl.counters.cases">
+                &nbsp;({{mainCtrl.counters.cases.display}})
+            </span>
         </md-button>
 
-        <md-button href="/contacts" layout="row" layout-align="start center"
-                   ng-class="{active: ('contacts' | routeSegmentContains)}"
-                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('contacts')">
-            <i class="material-icons">contacts</i>{{::$i18n.page.contacts.this}}
+        <md-button href="/tasks" layout="row" layout-align="start center"
+                   ng-class="{active: ('tasks' | routeSegmentContains)}"
+                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('tasks')">
+            <i class="material-icons">check_box</i>{{::$i18n.page.tasks.this}}
+            <span ng-if="mainCtrl.counters.tasks">
+                &nbsp;({{mainCtrl.counters.tasks.display}})
+            </span>
         </md-button>
 
-        <md-button href="/workflow" S layout="row" layout-align="start center"
+        <md-button href="/workflow" layout="row" layout-align="start center"
                    ng-class="{active: ('workflow' | routeSegmentContains)}"
                    ng-click="mainCtrl.closeSidenav('left-nav')">
             <i class="material-icons">linear_scale</i>{{::$i18n.page.workflow.this}}

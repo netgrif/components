@@ -1,8 +1,8 @@
 define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Filter', '../modules/Tasks', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, TaskTab, FilterTab, Filter) {
         angular.module('ngTasks').controller('TasksController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config', '$filterRepository',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
                     const self = this;
 
                     self.activeTabIndex = 0;
@@ -65,8 +65,8 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     });
                     $scope.$on('$destroy', navClickListener);
 
-                    self.openTaskTabs([new Filter($i18n.page.tasks.all, Filter.TASK_TYPE, "{}", "{}", null, null)], false);
-                    self.openTaskTabs([new Filter($i18n.page.tasks.my, Filter.TASK_TYPE, "{\"user\":\"" + $user.login + "\"}", "{\"User\": [\"" + $user.name + "\"]}", null, null)], false, TaskTab.MERGE_FILTER_POLICY);
+                    self.openTaskTabs([$filterRepository.get("tasks")], false);
+                    self.openTaskTabs([$filterRepository.get("tasks-my")], false, TaskTab.MERGE_FILTER_POLICY);
                     self.activeTabIndex = 0;
                 }]);
     });
