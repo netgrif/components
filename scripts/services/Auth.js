@@ -1,5 +1,5 @@
 define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$auth', function ($http, $location, $rootScope, $log, $timeout, $user, $snackbar, $i18n, $process, $config) {
+    angular.module('ngMain').factory('$auth', function ($http, $location, $rootScope, $log, $timeout, $user, $snackbar, $i18n, $process, $config, $filterRepository) {
 
         const appPath = "/";
         const loginPath = "/login";
@@ -34,14 +34,20 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
 
                     if (auth.authenticated) {
                         $process.init().then(() => {
-                            callback && callback(auth.authenticated);
+                            $filterRepository.createDefaults();
+                            callback && callback({
+                                authenticated: auth.authenticated
+                            });
                             $location.path(auth.isExcluded(auth.path) ? appPath : auth.path);
                         });
                     }
 
                 }, function (response) {
                     auth.authenticated = false;
-                    callback && callback(false);
+                    callback && callback({
+                        authenticated: auth.authenticated,
+                        response: response
+                    });
                 });
             },
             logout: function () {
@@ -116,8 +122,14 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     callback(false, "");
                 });
             },
-            setNewPassword: function(token, password, callback = angular.noop){
-                $http.post(newPasswordUrl, {token: token, password: btoa(password), email: "", name: "", surname: ""}).then(response => {
+            setNewPassword: function (token, password, callback = angular.noop) {
+                $http.post(newPasswordUrl, {
+                    token: token,
+                    password: btoa(password),
+                    email: "",
+                    name: "",
+                    surname: ""
+                }).then(response => {
                     if (response.success)
                         callback(true, response.success);
                     else if (response.error) {
@@ -133,7 +145,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
             init: function () {
                 if (!auth.isExcluded()) {
                     this.authenticate({}, function (isLoggedIn) {
-                        if (isLoggedIn) $location.path(auth.path);
+                        if (isLoggedIn.authenticated) $location.path(auth.path);
                     });
                 }
 
@@ -149,7 +161,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                 });
             },
             isExcluded: function (location) {
-                if(!location)
+                if (!location)
                     location = $location.path();
                 const excluded = [loginPath, signupPath, recoverPath];
                 return excluded.some(path => location.startsWith(path));

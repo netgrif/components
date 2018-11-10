@@ -19,7 +19,8 @@ requirejs.config({
         'i18n': "bower_components/requirejs/i18n",
         'nls': "scripts/nls",
         'config': "scripts/config",
-        'app': "scripts/app"
+        'app': "scripts/app",
+        'version': "scripts/version"
     },
     shim: {
         'angular': {

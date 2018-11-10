@@ -19,10 +19,13 @@
                        ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
                        ng-focus="field.active = true"
                        ng-required="field.logic.required"
+                       ng-if="!field.behavior.visible"
                        aria-label="Switch">
                 <span ng-if="field.newValue">{{::$i18n.block.data.yes}}</span>
                 <span ng-if="!field.newValue">{{::$i18n.block.data.no}}</span>
             </md-switch>
+            <span ng-if="field.behavior.visible && field.newValue">{{::$i18n.block.data.yes}}</span>
+            <span ng-if="field.behavior.visible && !field.newValue">{{::$i18n.block.data.no}}</span>
         </md-input-container>
     </div>
 

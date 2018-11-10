@@ -68,16 +68,40 @@
         height: $dim-48px;
         color: $color-card-header-text;
         background-color: $color-card-header-bg;
+
+        .case-data-header-item {
+            padding: 0 $dim-default;
+            cursor: pointer;
+            outline: none;
+
+            &-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
     }
 
     &-case {
         min-height: $dim-48px;
         cursor: pointer;
 
+        case-data {
+
+            span, div {
+                //word-break: break-all;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .case-data-item-field {
+                padding: 0 $dim-default;
+            }
+        }
+
         &:hover {
             background-color: $color-card-case-bg-hover;
 
-            span, md-icon, .material-icons.color-fg-primary-500 {
+            span, div, md-icon, .material-icons.color-fg-primary-500 {
                 color: $color-card-case-text-hover;
             }
 
@@ -115,4 +139,17 @@
             }
         }
     }
+}
+
+md-tooltip.value-text-tooltip {
+    max-width: 50%;
+    max-height: 20%;
+    height: auto;
+    word-break: break-word;
+    white-space: unset;
+}
+
+.cas-data-list-item-field {
+    padding-right: 5px;
+    padding-left: 5px;
 }

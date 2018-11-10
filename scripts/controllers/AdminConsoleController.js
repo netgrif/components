@@ -20,6 +20,14 @@ define(['angular', '../modules/Admin'], function (angular) {
             //Data for users and roles tab
             self.users = [];
             self.processes = [];
+                self.page = {
+                    pageLinks: {}
+                };
+                self.loading = false;
+                self.searchInput = undefined;
+                self.searchLast = undefined;
+                self.selectedTab = undefined;
+                self.counter = 0;
 
             function UserRolesTab(preference) {
                 this.preference = preference;
@@ -75,19 +83,39 @@ define(['angular', '../modules/Admin'], function (angular) {
              */
             self.loadProcessRoles = function () {
                 if (!self.selectedNet) return;
-                self.processRoles = [];
-                $http.get("/api/petrinet/" + self.selectedNet.stringId + "/roles").then(function (response) {
-                    response.$request().$get("processRoles").then(function (resources) {
-                        self.processRoles = resources;
-                        self.processRoles.forEach(role => {
-                            buildRole(role);
+                    self.processRoles = [];
+                    $http.get("/api/petrinet/" + self.selectedNet.stringId + "/roles").then(function (response) {
+                        response.$request().$get("processRoles").then(function (resources) {
+                            self.processRoles = resources;
+                            self.processRoles.sort((r1, r2) => {
+                                return r1.name > r2.name;
+                            });
+                            self.processRoles.forEach(role => {
+                                role.add = function () {
+                                    if (self.invitedUser.processRoles[self.selectedNet.stringId]) {
+                                        if (!self.invitedUser.processRoles[self.selectedNet.stringId].roles.includes(this))
+                                            self.invitedUser.processRoles[self.selectedNet.stringId].roles.push(this);
+                                    } else {
+                                        self.invitedUser.processRoles[self.selectedNet.stringId] = {roles: []};
+                                        Object.assign(self.invitedUser.processRoles[self.selectedNet.stringId], self.selectedNet);
+                                        self.invitedUser.processRoles[self.selectedNet.stringId].roles.push(this);
+                                    }
+                                };
+                                role.remove = function (net) {
+                                    const i = self.invitedUser.processRoles[net].roles.indexOf(this);
+                                    if (i !== -1) {
+                                        self.invitedUser.processRoles[net].roles.splice(i, 1);
+                                        if (self.invitedUser.processRoles[net].roles.length === 0)
+                                            delete self.invitedUser.processRoles[net];
+                                    }
+                                };
+                            });
+                        }, function () {
+                            $log.debug("No roles found in resource!");
                         });
                     }, function () {
-                        $log.debug("No roles found in resource!");
+                        $snackbar.error($i18n.block.snackbar.failedToLoadRolesForProcess + " " + self.selectedNet.title);
                     });
-                }, function () {
-                    $snackbar.error($i18n.block.snackbar.failedToLoadRolesForProcess + " " + self.selectedNet.title);
-                });
             };
 
             self.applyDefaultProcessRoles = function () {
@@ -210,7 +238,13 @@ define(['angular', '../modules/Admin'], function (angular) {
                 this.filteredRoles.splice(0, this.filteredRoles.length);
                 $http.get("/api/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
                     response.$request().$get("processRoles").then(resources => {
-                        this.roles.roles = resources;
+                            this.roles.roles = resources.sort((r1, r2) => {
+                                if (r1.name > r2.name)
+                                    return 1;
+                                if (r1.name < r2.name)
+                                    return -1;
+                                return 0;
+                            });
                         this.roles.roles.forEach(role => {
                             role.selected = false;
                             if (this.preference === UserRolesTab.ROLE_PREFERENCE) {
@@ -232,53 +266,100 @@ define(['angular', '../modules/Admin'], function (angular) {
                 });
             };
 
+                UserRolesTab.prototype.clearAll = function () {
+                    this.filteredUsers = [];
+                    this.filteredRoles = [];
+                    this.selectedRoles = undefined;
+                    this.selectedUser = undefined;
+                    this.roles = {
+                        process: undefined,
+                        roles: []
+                    };
+                    if (!self.loading) {
+                        this.userSearch = {
+                            input: "",
+                            byEmail: true,
+                            byName: true
+                        };
+                        this.roleSearch = "";
+                    }
+                };
+
             /**
              * Load list of all active users in the system
              */
-            UserRolesTab.prototype.loadUsers = function () {
-                if (self.users.length > 0) {
-                    this.filteredUsers = self.users;
-                    self.users.forEach(user => user.selected = false);
-                    return;
-                }
-                $http.get("/api/user?small=true").then(response => {
+                UserRolesTab.prototype.loadUsers = function (next) {
+                    if (self.loading) return;
+                    if (next && !self.page.pageLinks.next) return;
+
+                    self.loading = true;
+                    let request = self.buildRequest(next ? self.page.pageLinks.next.href : undefined);
+                    $http(request).then(response => {
+                        if (!next)
+                            self.clearAll();
+                        self.page = Object.assign(self.page, response.page);
+                        self.page.pageLinks = response.$response().data._links;
                     response.$request().$get("users").then(resources => {
-                        self.users = resources;
-                        self.users.forEach(user => {
+                            resources.forEach(user => {
                             user.roles = new Set(user.userProcessRoles.map(role => role.roleId));
                             user.selected = false;
                             user.changed = false;
                         });
+                            self.users = self.users.concat(resources);
                         this.filteredUsers = self.users;
+                            self.loading = false;
                     }, () => {
                         $log.debug("No user resource was found!");
+                            self.loading = false;
                     });
                 }, () => {
                     $snackbar.error($i18n.block.snackbar.failedToLoadUsers);
                 });
             };
 
+                self.buildRequest = function(next) {
+                    return {
+                        method: 'POST',
+                        url: next ? next : "/api/user/search?small=true",
+                        data: self.buildSearchQuery()
+                    }
+                };
+
+                self.buildSearchQuery = function() {
+                    return {
+                        fulltext: !self.searchLast ? "" : self.searchLast
+                    }
+                };
+
+                self.clearAll = function () {
+                    self.page = {
+                        pageLinks: {}
+                    };
+                    self.users = [];
+                    self.selectedNet = undefined;
+                    if (!self.loading) {
+                        self.searchLast = undefined;
+                    }
+                    self.usersTab.clearAll();
+                    self.rolesTab.clearAll();
+                };
+
             /**
              * Search among loaded users
              * @returns {Array}
              */
             UserRolesTab.prototype.filterUsers = function () {
-                if (!self.users || self.users.length === 0)
-                    return null;
-                this.userSearch.input = this.userSearch.input.trim();
-                if (!this.userSearch.input || this.userSearch.input === "")
-                    this.filteredUsers = self.users;
-                else {
-                    this.filteredUsers = self.users.filter(user => {
-                        let include = false;
-                        if (this.userSearch.byName)
-                            include = include || user.fullName.includes(this.userSearch.input);
-                        if (this.userSearch.byEmail)
-                            include = include || user.email.includes(this.userSearch.input);
-                        return include;
-                    });
-                }
-                return this.filteredUsers;
+                self.counter += 1;
+                $timeout(() => {
+                    self.counter -= 1;
+                    if (self.counter !== 0) {
+                        return;
+                    }
+
+                    this.userSearch.input = this.userSearch.input.trim();
+                    self.searchLast = this.userSearch.input;
+                    this.loadUsers(false);
+                }, 500);
             };
 
             /**

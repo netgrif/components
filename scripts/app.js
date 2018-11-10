@@ -43,7 +43,6 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 .when('/recover/:token', 'recover')
                 .when('/dashboard', 'app.dashboard')
                 .when('/cases', 'app.cases')
-                .when('/casesData', 'app.casesData')
                 .when('/console', 'app.console')
                 .when('/profile', 'app.profile')
                 .when('/tasks', 'app.tasks')
@@ -66,11 +65,6 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                     templateUrl: "views/app/cases.html",
                     controller: 'CasesController',
                     controllerAs: 'caseCtrl'
-                })
-                .segment('casesData', {
-                    templateUrl: "views/app/cases_data.html",
-                    controller: 'CasesDataController',
-                    controllerAs: 'caseDataCtrl'
                 })
                 .segment('console', {
                     templateUrl: "views/app/console.html",
@@ -118,7 +112,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
 
             $locationProvider.html5Mode(true);
             $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
-            $httpProvider.defaults.headers.common['Accept-Language'] = localStorage.getItem("locale") || 'en-US';
+            $httpProvider.defaults.headers.common['Accept-Language'] = localStorage.getItem("locale") || config.defaults.locale;
             $httpProvider.interceptors.push('authHttpInterceptor');
 
             $mdDateLocaleProvider.firstDayOfWeek = 1;
@@ -136,6 +130,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 return new Date(NaN);
             };
 
+            // Angular v1.6.6, from 1.7 does not exists
             $compileProvider.preAssignBindingsEnabled(false);
 
             // $qProvider.errorOnUnhandledRejections(false);

@@ -83,6 +83,7 @@ define([], function () {
             sidenav: "../../assets/default/netgrif.svg"
         },
         defaults: {
+            locale: 'en-US',
             invitedUser: {
                 // groups: ["Org name"],
                 // processRoles: [
@@ -99,6 +100,8 @@ define([], function () {
         },
         show: {
             cases: {
+                viewId: "cases",
+                countBadge: true,
                 transactions: true,
 
                 taskSearch: false,
@@ -106,6 +109,8 @@ define([], function () {
                 taskCaseTitle: true
             },
             tasks: {
+                viewId: "tasks",
+                countBadge: true,
                 taskSearch: true,
                 taskPriority: true,
                 taskCaseTitle: true
@@ -118,7 +123,6 @@ define([], function () {
 
             cases: {
                 caseDelete: true,
-
                 allowHighlight: false,
                 autoOpenUnfinished: false,
                 fullReload: false

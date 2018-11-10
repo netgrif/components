@@ -1,5 +1,5 @@
-define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (jQuery, angular, Task, DataField) {
+define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (jQuery, angular, DataField) {
         angular.module('ngMain').controller('TaskPanelController',
             ['$log', '$scope', '$http', '$snackbar', '$user', '$dialog', '$fileUpload', '$timeout', '$mdExpansionPanel', 'resource', 'links', 'tab', 'config', '$i18n',
                 function ($log, $scope, $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanel, resource, links, tab, config, $i18n) {
@@ -35,6 +35,7 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                     self.expanded = false;
                     self.loading = false;
                     self.animating = false;
+                    self.valid = true;
 
                     /*--- Methods definition ---*/
                     self.status = resolveStatus;
@@ -169,7 +170,7 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                                 if (!user)
                                     return;
                                 self.loading = true;
-                                $http.post(self.links.delegate.href, user.email).then(response => {
+                                $http.post(self.links.delegate.href, user.id).then(response => {
                                     self.loading = false;
                                     if (response.success) {
                                         removeStateData();
@@ -273,19 +274,18 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                                         delete group.fields;
                                         self.dataGroups.push(group);
                                         self.dataSize += group.data.length;
-                                        if (index === array.length - 1) {
-                                            self.dataGroups.forEach(group => {
-                                                group.data.sort((a, b) => a.order - b.order);
-                                            });
-                                            self.loading = false;
-                                            callChain.run(true);
-                                        }
                                     } else {
                                         $log.info(`No data for task ${self.title}`);
                                         self.loading = false;
                                         callChain.run(true);
                                     }
                                 });
+                                self.dataGroups.forEach(group => {
+                                    group.data.sort((a, b) => a.order - b.order);
+                                });
+                                self.loading = false;
+                                callChain.run(true);
+                                preValidate();
                             }, () => {
                                 $log.info(`No data group for task ${self.title}`);
                                 self.loading = false;
@@ -299,12 +299,18 @@ define(['jquery', 'angular', '../classes/Task', "../classes/DataField", '../modu
                         });
                     }
 
-                    function validateTaskData() {
+                    function preValidate() {
                         let valid = true;
                         self.getData().forEach(field => {
                             if (field.behavior.required || field.newValue)
                                 valid = field.isValid() ? valid : false;
                         });
+                        // self.valid = valid;
+                        return valid;
+                    }
+
+                    function validateTaskData() {
+                        let valid = preValidate();
                         if (!valid)
                             $snackbar.error($i18n.block.snackbar.fieldsHaveInvalidValues);
                         return valid;

@@ -27,13 +27,6 @@ define({
                 my: "My cases",
                 all: "All cases"
             },
-            casesData: {
-                this: "Data cases",
-                my: "My cases",
-                all: "All cases",
-                enableEditMode: "Enable edit mode",
-                confirmChanges: "Confirm changes"
-            },
             tasks: {
                 this: "Tasks",
                 all: "All tasks",
@@ -274,7 +267,8 @@ define({
             data: {
                 noUserChosen: "No user was chosen",
                 self: "Self",
-                chooseUser: "Choose user",
+                selectUser: "Select user",
+                removeUser: "Remove user",
                 noFile: "No file",
                 fileNotUploaded: "File has not been uploaded yet",
                 fileUploaded: "File uploaded successfully",
@@ -428,6 +422,7 @@ define({
                 invitationEmailSent: "Invitation email has been sent",
                 pswRecoveryEmailSentTo: "Password recovery email has been sent to",
                 newPswSet: "Your new password has been set",
+                expiredSession: "This session has been expired (possibly due to multiple concurrent logins).",
 
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },

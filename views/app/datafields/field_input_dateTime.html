@@ -1,0 +1,22 @@
+<div class="data-field" layout="row" layout-align="start center" layout-wrap>
+
+    <div flex="45" flex-xs="100">
+        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
+            {{field.name}}
+            <md-tooltip ng-if="field.description">
+                {{field.description}}
+            </md-tooltip>
+        </span>
+    </div>
+
+    <div hide-xs flex="5"></div>
+
+    <div flex="45" flex-xs="100" layout="row" layout-align="start">
+        <i class="material-icons color-fg-primary-500 margin-right-2x">today</i>
+        <span>{{field.newValue | date : "dd.MM.yyyy HH:mm"}}</span>
+    </div>
+
+    <div hide-xs flex="5"></div>
+
+    {{::field.bindElement()}}
+</div>

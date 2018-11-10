@@ -1,9 +1,11 @@
-define(['angular', '../modules/Main', '../services/Loading', '../services/Auth'], function (angular) {
-    angular.module('ngMain').controller('MainController', ['$loading', '$auth', '$log', '$scope', '$style', '$user', '$i18n', '$cache', '$location', '$mdSidenav', '$rootScope',
-        function ($loading, $auth, $log, $scope, $style, $user, $i18n, $cache, $location, $mdSidenav, $rootScope) {
+define(['angular', '../classes/Filter', '../modules/Main', '../services/Loading', '../services/Auth', '../services/ConfigService'], function (angular, Filter) {
+    angular.module('ngMain').controller('MainController', ['$loading', '$auth', '$log', '$scope', '$user', '$i18n', '$cache', '$location', '$mdSidenav', '$rootScope', '$http', '$config', '$filterRepository', '$q',
+        function ($loading, $auth, $log, $scope, $user, $i18n, $cache, $location, $mdSidenav, $rootScope, $http, $config, $filterRepository, $q) {
             const self = this;
 
             self.loaderVisible = true;
+            self.counterFilters = [];
+            self.counters = {};
 
             const loaderContainer = angular.element("div#loader-container");
             const viewContainer = angular.element("div#view-container");
@@ -18,7 +20,6 @@ define(['angular', '../modules/Main', '../services/Loading', '../services/Auth']
                 //load necessary data on beginning
                 $log.debug("Data loaded");
                 $log.debug($user);
-                $style.mainView();
                 $loading.showLoading(false);
             };
 
@@ -57,10 +58,58 @@ define(['angular', '../modules/Main', '../services/Loading', '../services/Auth']
             };
             
             self.navigationClick = function (navigationItem) {
-                $rootScope.$emit("navClick",{
+                $rootScope.$emit("navClick", {
                     item: navigationItem
+                });
+                self.reloadCounters();
+            };
+
+            function formatCounter(value) {
+                if (value > 9999)
+                    return "9999+";
+                else
+                    return "" + value;
+            }
+
+            self.reloadCounters = function () {
+                if (!self.counterFilters || self.counterFilters.length === 0)
+                    return;
+                self.counterFilters.forEach(counter => {
+                    const filter = $filterRepository.get(counter);
+                    if (!filter || !filter.query)
+                        return;
+                    const request = {
+                        method: "POST",
+                        url: filter.type === Filter.CASE_TYPE ? "/api/workflow/case/count" : "/api/task/count",
+                        data: JSON.parse(filter.query)
+                    };
+                    $http(request).then(response => {
+                        if (response && response.data) {
+                            self.setCounter(counter, response.data.count)
+                        }
+                    });
                 });
             };
 
+            self.setCounter = function (counter, count) {
+                if (!self.counters[counter]) {
+                    self.counters[counter] = {
+                        count: 0,
+                        display: ""
+                    };
+                }
+                self.counters[counter].count = count ? count : 0;
+                self.counters[counter].display = formatCounter(self.counters[counter].count);
+            };
+
+            self.counterFilters = Object.entries($config.show).filter(attrs => attrs[1].countBadge).map(attrs => attrs[0]);
+            self.reloadCounters();
+
+            const tabContentLoadListener = $rootScope.$on('tabContentLoad', (event, data) => {
+                if (data.reloadAll)
+                    self.reloadCounters();
+                // self.setCounter(data.viewId, data.count);
+            });
+            $scope.$on('$destroy', tabContentLoadListener);
         }]);
 });

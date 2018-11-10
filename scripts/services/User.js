@@ -15,6 +15,7 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.name = undefined;
                 user.roles = undefined;
             },
+
             fromResource: function (resource) {
                 user.id = resource.id;
                 user.login = resource.email;
@@ -23,6 +24,7 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.roles = resource.processRoles.map(role => role.stringId);
                 user.groups = resource.groups;
             },
+
             /**
              * Change users roles
              * @param {Array} roles
@@ -80,6 +82,7 @@ define(['angular', '../modules/Main'], function (angular) {
 
             getAsObject: function () {
                 return {
+                    id: user.id,
                     email: user.login,
                     fullname: user.name,
                     name: user.name.split(" ")[0],

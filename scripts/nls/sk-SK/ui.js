@@ -26,13 +26,6 @@ define({
             my: "Moje prípady",
             all: "Všetky prípady"
         },
-        casesData: {
-            this: "Dátové prípady",
-            my: "Moje prípady",
-            all: "Všetky prípady",
-            enableEditMode: "Povoliť úpravy",
-            confirmChanges: "Potvrdiť úpravy"
-        },
         tasks: {
             this: "Úlohy",
             all: "Všetky úlohy",
@@ -276,7 +269,8 @@ define({
         data: {
             noUserChosen: "Žiaden zvolený používateľ",
             self: "Sebe",
-            chooseUser: "Vybrať používateľa",
+            selectUser: "Zvoliť používateľa",
+            removeUser: "Odstrániť používateľa",
             noFile: "Žiaden súbor",
             fileNotUploaded: "Súbor ešte nebol nahraný",
             fileUploaded: "Súbor bol úspešne nahraný",
@@ -430,6 +424,7 @@ define({
             invitationEmailSent: "Pozvánka na vytvorenie účtu bola zaslaná",
             pswRecoveryEmailSentTo: "Email na obnovu hesla bol odoslaný na ",
             newPswSet: "Vaše nové heslo bolo nastavené",
+            expiredSession: "Platnosť tejto relácie uplynula (pravdepodobne kvôli viacerým súbežným prihláseniam).",
 
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },
