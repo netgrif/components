@@ -449,7 +449,7 @@ define({
                 invitationEmailSent: "Invitation email has been sent",
                 pswRecoveryEmailSentTo: "Password recovery email has been sent to",
                 newPswSet: "Your new password has been set",
-
+                noFileInput: "No file input was found",
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },
             add: {

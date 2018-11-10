@@ -1,4 +1,4 @@
-define(['./HalResource'], function (HalResource) {
+define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
     /**
      * Constructor for class DataField
      * Angular dependencies: $dialog, $user, $fileUpload, $snackbar, $i18n
@@ -158,8 +158,10 @@ define(['./HalResource'], function (HalResource) {
 
     DataField.prototype.fileChanged = function (field) {
         if (!field.file) return;
-        field.newValue = field.file.name;
-        field.newFile = field.value !== field.newValue;
+        field.newValue = {
+            name: field.file.name
+        };
+        field.newFile = !field.value || field.value.name !== field.newValue.name;
         field.uploaded = false;
     };
 
@@ -186,6 +188,14 @@ define(['./HalResource'], function (HalResource) {
     DataField.prototype.download = function () {
         const downloadWindow = window.open(this.parent.links.file.href + this.stringId);
         downloadWindow.onload = () => downloadWindow.close();
+    };
+
+    DataField.prototype.openFileChooser = function () {
+        const fileInput = jQuery("#file-" + this.stringId);
+        if (fileInput)
+            fileInput.trigger("click");
+        else
+            this.$snackbar.warning(this.$i18n.block.snackbar.noFileInput);
     };
 
     DataField.prototype.bindElement = function () {
