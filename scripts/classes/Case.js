@@ -1,4 +1,4 @@
-define(['./DataField', './HalResource'], function (DataField, HalResource) {
+define(['./DataField', './HalResource', './Task'], function (DataField, HalResource, Task) {
     /**
      * Constructor for Case class
      * Angular dependency: $http, $snackbar, $dialog, $fileUpload, $user, $i18n

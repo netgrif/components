@@ -9,31 +9,31 @@
     </a>
 
     <div hide-gt-sm>
-        <span ng-if="'dashboard' | routeSegmentContains">
+        <span ng-if="'dashboard' | routeSegmentContains" class="toolbar-text">
             {{::$i18n.page.dashboard.this}}
         </span>
-        <span ng-if="'cases' | routeSegmentContains">
+        <span ng-if="'cases' | routeSegmentContains" class="toolbar-text">
             {{::$i18n.page.cases.this}}
             <span ng-if="mainCtrl.counters.cases">
                 &nbsp;({{mainCtrl.counters.cases.display}})
             </span>
         </span>
-        <span ng-if="'tasks' | routeSegmentContains">
+        <span ng-if="'tasks' | routeSegmentContains" class="toolbar-text">
             {{::$i18n.page.tasks.this}}
             <span ng-if="mainCtrl.counters.tasks">
                 &nbsp;({{mainCtrl.counters.tasks.display}})
             </span>
         </span>
-        <span ng-if="'workflow' | routeSegmentContains">
+        <span ng-if="'workflow' | routeSegmentContains" class="toolbar-text">
             {{::$i18n.page.workflow.this}}
         </span>
-        <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)">
+        <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)" class="toolbar-text">
             {{::$i18n.page.console.this}}
         </span>
-        <span ng-if="'profile' | routeSegmentContains">
+        <span ng-if="'profile' | routeSegmentContains" class="toolbar-text">
             {{::$i18n.page.profile.this}}
         </span>
-        <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('settings' | routeSegmentContains)">
+        <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('settings' | routeSegmentContains)" class="toolbar-text">
             {{::$i18n.page.settings.this}}
         </span>
     </div>
@@ -71,14 +71,18 @@
                             <md-menu-item>
                                 <md-button ng-click="$i18n.change('en-US')" layout="row" layout-align="space-between center">
                                     <span>{{::$i18n.block.mainMenu.lang.en}}</span>
-                                    <md-icon ng-if="$i18n.current() === 'en-US'" class="material-icons">keyboard_arrow_left</md-icon>
+                                    <md-icon ng-if="$i18n.current() === 'en-US'" class="material-icons">
+                                        keyboard_arrow_left
+                                    </md-icon>
                                 </md-button>
                             </md-menu-item>
 
                             <md-menu-item>
                                 <md-button ng-click="$i18n.change('sk-SK')" layout="row" layout-align="space-between center">
                                     <span>{{::$i18n.block.mainMenu.lang.sk}}</span>
-                                    <md-icon ng-if="$i18n.current() === 'sk-SK'" class="material-icons">keyboard_arrow_left</md-icon>
+                                    <md-icon ng-if="$i18n.current() === 'sk-SK'" class="material-icons">
+                                        keyboard_arrow_left
+                                    </md-icon>
                                 </md-button>
                             </md-menu-item>
 
@@ -94,12 +98,12 @@
                     </md-button>
                 </md-menu-item>
 
-                <md-menu-item ng-if="$user.hasAuthority('ROLE_ADMIN')">
-                    <md-button href="/settings" class="padding-top-0">
-                        <md-icon class="material-icons">settings</md-icon>
-                        {{::$i18n.block.mainMenu.settings}}
-                    </md-button>
-                </md-menu-item>
+                <!--<md-menu-item ng-if="$user.hasAuthority('ROLE_ADMIN')">-->
+                    <!--<md-button href="/settings" class="padding-top-0">-->
+                        <!--<md-icon class="material-icons">settings</md-icon>-->
+                        <!--{{::$i18n.block.mainMenu.settings}}-->
+                    <!--</md-button>-->
+                <!--</md-menu-item>-->
 
                 <md-menu-item>
                     <md-button ng-click="mainCtrl.logout()">

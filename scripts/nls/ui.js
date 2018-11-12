@@ -22,10 +22,22 @@ define({
             dashboard: {
                 this: "Dashboard"
             },
+            oraganization: {
+                this: "Organization",
+                my: "My cases",
+                all: "All cases"
+            },
+            bank: {
+                this: "Bank",
+                my: "My cases",
+                all: "All cases"
+            },
             cases: {
                 this: "Cases",
                 my: "My cases",
-                all: "All cases"
+                all: "All cases",
+                noCasesAvailableForThisView: "There are no cases available for this view",
+                noTasksForThisCaseAvailable: "There are no tasks for you in this case"
             },
             tasks: {
                 this: "Tasks",
@@ -35,6 +47,7 @@ define({
                     category: "Category",
                     search: "Search"
                 },
+                noTasksSatisfyingThisFilter: "There are any tasks satisfying this filter",
                 filter: {
                     process: "Process",
                     type:"Type",
@@ -57,6 +70,12 @@ define({
                         process: "Selected process"
                     }
                 }
+            },
+            documents:{
+                this: "Organization"
+            },
+            contacts:{
+                this: "Contact"
             },
             workflow: {
                 this: "Workflow",
@@ -211,7 +230,8 @@ define({
                 reset: "Reset",
                 search: "Search",
                 apply: "Apply",
-                submit: "Submit"
+                submit: "Submit",
+                closeTab: "Close tab"
             },
             mainMenu: {
                 lang: {
@@ -234,8 +254,8 @@ define({
                     author: "Author",
                     createDate: "Create Date",
                     optional: "Optional field",
-                    enableEditMode: "Enable Edit mode",
-                    confirmChanges: "Confirm Changes"
+                    enableEditMode: "Enable edit mode",
+                    confirmChanges: "Confirm changes"
                 },
                 newTitle: "New instance"
             },
@@ -423,13 +443,14 @@ define({
                 pswRecoveryEmailSentTo: "Password recovery email has been sent to",
                 newPswSet: "Your new password has been set",
                 expiredSession: "This session has been expired (possibly due to multiple concurrent logins).",
-
+                noFileInput: "No file input was found",
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },
             add: {
                 createCase: "Create Case",
                 createContact: "Create Contact",
-                createDocument: "Create Document"
+                createDocument: "Create Organization",
+                createContact: "Create Contact"
             },
             sentencePart: {
 
@@ -441,6 +462,9 @@ define({
                 long: "long"
             },
             char: {
+
+            },
+            custom: {
 
             }
         }

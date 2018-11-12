@@ -132,8 +132,6 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
 
             // Angular v1.6.6, from 1.7 does not exists
             $compileProvider.preAssignBindingsEnabled(false);
-
-            // $qProvider.errorOnUnhandledRejections(false);
         });
         app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar, $process) {
             $log.debug("App is running...");

@@ -24,7 +24,9 @@ define({
         cases: {
             this: "Prípady",
             my: "Moje prípady",
-            all: "Všetky prípady"
+            all: "Všetky prípady",
+            noCasesAvailableForThisView: "Pre toto zobrazenie neexistujú žiadne prípady",
+            noTasksForThisCaseAvailable: "V tomto prípade už pre Vás nie sú žiadne úlohy"
         },
         tasks: {
             this: "Úlohy",
@@ -34,6 +36,7 @@ define({
                 category: "Kategória",
                 search: "Hľadať"
             },
+            noTasksSatisfyingThisFilter: "Pre tento filter nie sú vyhovujúce žiadne úlohy",
             filter: {
                 process: "Proces",
                 type:"Typ",
@@ -58,7 +61,10 @@ define({
             }
         },
         documents: {
-            this: "Dokumenty"
+            this: "Organizácie"
+        },
+        contacts: {
+            this: "Kontakty"
         },
         workflow: {
             this: "Workflow",
@@ -213,7 +219,8 @@ define({
             reset: "Reset",
             search: "Hľadať",
             apply: "Použiť",
-            submit: "Potvrdiť"
+            submit: "Potvrdiť",
+            closeTab: "Zavrieť kartu"
         },
         mainMenu: {
             lang: {
@@ -228,16 +235,15 @@ define({
         case: {
             this: "Prípad",
             header: {
-                metaData: "meta data",
-                fields: "fields",
+                metaData: "meta dáta",
                 label: "Typ",
                 visualID: "Vizuálne ID",
                 title: "Názov",
                 author: "Autor",
                 createDate: "Dátum vytvorenia",
                 optional: "Voliteľné pole",
-                enableEditMode: "Prepnúť na editačný mód",
-                confirmChanges: "Uložiť zmeny"
+                enableEditMode: "Povoliť úpravy",
+                confirmChanges: "Potvrdiť úpravy"
             },
             newTitle: "Nová inštancia"
         },
@@ -425,13 +431,14 @@ define({
             pswRecoveryEmailSentTo: "Email na obnovu hesla bol odoslaný na ",
             newPswSet: "Vaše nové heslo bolo nastavené",
             expiredSession: "Platnosť tejto relácie uplynula (pravdepodobne kvôli viacerým súbežným prihláseniam).",
-
+            noFileInput: "Nebol nájdený žiaden vstup pre súbory",
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },
         add: {
             createCase: "Vytvoriť prípad",
             createContact: "Vytvoriť kontakt",
-            createDocument: "Vytvoriť dokument"
+            createDocument: "Vytvoriť dokument",
+            createContact: "Vytvoriť kontakt"
         },
         sentencePart: {
 
@@ -443,6 +450,9 @@ define({
             long: "dlhý"
         },
         char: {
+
+        },
+        custom: {
 
         }
     }

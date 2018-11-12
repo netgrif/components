@@ -28,10 +28,11 @@
                     <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
                     done
                 </md-icon>
-                <span class="text-overflow-dots">{{field.newValue ? field.newValue : (field.generated ? field.defaultValue : $i18n.block.data.noFile)}}</span>
+                <span class="text-overflow-dots">{{field.newValue ? field.newValue.name : (field.generated ? field.defaultValue.name : $i18n.block.data.noFile)}}</span>
             </div>
 
-            <md-button ng-if="((field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)) && !(field.parent.user.email == $user.login && field.behavior.editable) && !(field.newFile && !field.uploaded)"
+            <md-button
+                    ng-if="((field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)) && !(field.parent.user.email == $user.login && field.behavior.editable) && !(field.newFile && !field.uploaded)"
                     flex-xs="20" class="md-icon-button width-24px" ng-click="field.download()">
                 <md-icon class="material-icons">file_download</md-icon>
                 <md-tooltip md-direction="bottom">
@@ -39,34 +40,37 @@
                 </md-tooltip>
             </md-button>
 
-            <md-menu ng-if="(field.parent.user.email == $user.login && field.behavior.editable) || (field.newFile && !field.uploaded)"
+            <md-menu
+                    ng-if="(field.parent.user.email == $user.login && field.behavior.editable) || (field.newFile && !field.uploaded)"
                     flex-xs="20" class="width-24px">
                 <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
                     <md-icon class="material-icons">more_vert</md-icon>
                 </md-button>
                 <md-menu-content>
                     <md-menu-item ng-if="field.parent.user.email == $user.login && field.behavior.editable">
-                        <md-button class="file-chooser" layout="row" layout-align="start center">
-                            <input type="file" id="{{'file-'+field.stringId}}"
-                                   file-model="field.file"
-                                   file-change-callback="field.fileChanged"
-                                   file-change-arg="field"
-                                   ng-required="field.behavior.required"
-                                   aria-label="Choose file">
-                            <label for="{{'file-'+field.stringId}}" class="placeholder">
-                                <span class="padding-horizontal-2x">{{::$i18n.block.data.newFile}}</span>
-                            </label>
+                        <md-button ng-click="field.openFileChooser()">
+                            <md-icon class="material-icons">insert_drive_file</md-icon>
+                            <span>{{::$i18n.block.data.newFile}}</span>
                         </md-button>
+                        <input type="file" id="{{'file-'+field.stringId}}"
+                               file-model="field.file"
+                               file-change-callback="field.fileChanged"
+                               file-change-arg="field"
+                               ng-required="field.behavior.required"
+                               aria-label="Choose file"
+                               style="position:absolute;height:0.1px;width:0.1px;opacity:0;overflow:hidden;z-index:-1;">
                     </md-menu-item>
                     <md-menu-item ng-if="field.newFile && !field.uploaded">
                         <md-button ng-click="field.upload()">
-                            {{::$i18n.block.data.upload}}
+                            <md-icon class="material-icons">cloud_upload</md-icon>
+                            <span>{{::$i18n.block.data.upload}}</span>
                         </md-button>
                     </md-menu-item>
                     <md-menu-item
                             ng-if="(field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)">
                         <md-button ng-click="field.download()">
-                            {{::$i18n.block.data.download}}
+                            <md-icon class="material-icons">file_download</md-icon>
+                            <span>{{::$i18n.block.data.download}}</span>
                         </md-button>
                     </md-menu-item>
                 </md-menu-content>
@@ -74,7 +78,8 @@
 
         </div>
 
-        <md-progress-linear ng-if="field.uploadProgress !== 0" md-mode="determinate" value="{{field.uploadProgress}}"></md-progress-linear>
+        <md-progress-linear ng-if="field.uploadProgress !== 0" md-mode="determinate"
+                            value="{{field.uploadProgress}}"></md-progress-linear>
     </div>
 
     <div hide-xs flex="5"></div>

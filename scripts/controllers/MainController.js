@@ -56,7 +56,7 @@ define(['angular', '../classes/Filter', '../modules/Main', '../services/Loading'
             self.closeSidenav = function (componentId) {
                 $mdSidenav(componentId).close();
             };
-            
+
             self.navigationClick = function (navigationItem) {
                 $rootScope.$emit("navClick", {
                     item: navigationItem

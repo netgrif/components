@@ -1,4 +1,4 @@
-define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, ActionCase, Filter) {
+define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     /**
      * Constructor for CaseTab class
      * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n, $process
@@ -6,7 +6,7 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
      * @param {Object} controller
      * @param {Filter} baseFilter
      * @param {Object} angular
-     * @param {Object} config - actionCase(boolean), authorityToCreate(string), allowedNets(array of Net objects)
+     * @param {Object} config - authorityToCreate(string), allowedNets(array of Net objects)
      * @constructor
      */
     function CaseTab(label, controller, baseFilter, angular, config = {}) {
@@ -233,32 +233,18 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
 
     CaseTab.prototype.parseCase = function (resources, rawData, next) {
         const cases = [];
-        if (this.actionCase) {
-            resources.forEach((r, i) => cases.push(new ActionCase(this, this.controller.getPanelGroup(r.title), r, rawData[i]._links, {
-                $http: this.$http,
-                $dialog: this.$dialog,
-                $snackbar: this.$snackbar,
-                $user: this.$user,
-                $fileUpload: this.$fileUpload,
-                $timeout: this.$timeout,
-                $i18n: this.$i18n
-            }, {
-                caseType: this.caseType,
-                removable: true
-            })));
-        } else {
-            resources.forEach((r, i) => cases.push(new Case(this, null, r, rawData[i]._links, {
-                $http: this.$http,
-                $dialog: this.$dialog,
-                $snackbar: this.$snackbar,
-                $user: this.$user,
-                $fileUpload: this.$fileUpload,
-                $i18n: this.$i18n
-            }, {
-                caseDelete: this.caseDelete,
-                preselectedData: Object.values(this.headers.selected)
-            })));
-        }
+
+        resources.forEach((r, i) => cases.push(new Case(this, null, r, rawData[i]._links, {
+            $http: this.$http,
+            $dialog: this.$dialog,
+            $snackbar: this.$snackbar,
+            $user: this.$user,
+            $fileUpload: this.$fileUpload,
+            $i18n: this.$i18n
+        }, {
+            caseDelete: this.caseDelete,
+            preselectedData: Object.values(this.headers.selected)
+        })));
 
         if (next) cases.forEach(useCase => this.cases.push(useCase));
         else this.cases = cases;
@@ -275,12 +261,10 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     };
 
     CaseTab.prototype.openCase = function (useCase) {
-        if (this.actionCase) return;
         this.controller.openTaskTab(useCase);
     };
 
     CaseTab.prototype.closeCase = function (useCase) {
-        if (this.actionCase) return;
         this.controller.closeTab(useCase.stringId);
     };
 
@@ -324,33 +308,17 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
                     self.newCase = {
                         title: self.getDefaultCaseTitle()
                     };
-                    if (self.actionCase) {
-                        const actionCase = new ActionCase(self, self.controller.getPanelGroup(response.title), response, null, {
-                            $http: self.$http,
-                            $dialog: self.$dialog,
-                            $snackbar: self.$snackbar,
-                            $user: self.$user,
-                            $fileUpload: self.$fileUpload,
-                            $timeout: self.$timeout,
-                            $i18n: self.$i18n
-                        }, {
-                            caseType: self.caseType,
-                            removable: true
-                        });
-                        actionCase.openTaskDialog();
-                        self.cases.push(actionCase);
-                    } else {
-                        self.openCase(new Case(self, null, response, null, {
-                            $http: self.$http,
-                            $dialog: self.$dialog,
-                            $snackbar: self.$snackbar,
-                            $user: self.$user,
-                            $fileUpload: self.$fileUpload,
-                            $i18n: self.$i18n
-                        }));
-                        self.cases.splice(0, self.cases.length);
-                        self.page = {};
-                    }
+
+                    self.openCase(new Case(self, null, response, null, {
+                        $http: self.$http,
+                        $dialog: self.$dialog,
+                        $snackbar: self.$snackbar,
+                        $user: self.$user,
+                        $fileUpload: self.$fileUpload,
+                        $i18n: self.$i18n
+                    }));
+                    self.cases.splice(0, self.cases.length);
+                    self.page = {};
                 }
             }, function () {
                 self.$snackbar.error(self.$i18n.block.snackbar.creatingNewCaseFailed);
@@ -362,7 +330,6 @@ define(['./Tab', './Case', './ActionCase', './Filter'], function (Tab, Case, Act
     };
 
     CaseTab.prototype.delete = function (useCase) {
-        if (this.actionCase) useCase.removePanel();
         this.cases.splice(this.cases.indexOf(useCase), 1);
     };
 
