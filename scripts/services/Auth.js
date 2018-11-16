@@ -41,9 +41,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                             $location.path(auth.isExcluded(auth.path) ? appPath : auth.path);
                         });
 
-                        let element = document.getElementById("browser-support-msg");
-                        if (!element.classList.contains("hide"))
-                            element.classList.add("hide");
+                        auth.resolveBrowserSupportMsgDisplay();
                     }
 
                 }, function (response) {
@@ -61,9 +59,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     $user.clear();
                     $location.path(loginPath);
 
-                    let element = document.getElementById("browser-support-msg");
-                    if (element.classList.contains("hide"))
-                        element.classList.remove("hide");
+                    auth.resolveBrowserSupportMsgDisplay();
                 }, function () {
                     $log.debug("Logout failed");
                 });
@@ -83,6 +79,58 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                         $log.debug("Sign up failed!");
                         callback(false);
                     });
+            },
+            hideBrowserSupportMsg: function() {
+                let customBrowserSupportMsg = document.getElementById("browser-support-msg");
+                let buorg = document.getElementById("buorg");
+
+                if (!customBrowserSupportMsg.classList.contains("hide"))
+                    customBrowserSupportMsg.classList.add("hide");
+                if (buorg)
+                    if (!buorg.classList.contains("hide"))
+                        buorg.classList.add("hide");
+            },
+            showBrowserSupportMsg: function() {
+                let customBrowserSupportMsg = document.getElementById("browser-support-msg");
+
+                if (customBrowserSupportMsg.classList.contains("hide"))
+                    customBrowserSupportMsg.classList.remove("hide");
+            },
+            verifyBrowser: function() {
+                const isChromium = window.chrome;
+                const winNav = window.navigator;
+                const vendorName = winNav.vendor;
+                const isOpera = typeof window.opr !== "undefined";
+                const isIEedge = winNav.userAgent.indexOf("Edge") > -1;
+                const isIOSChrome = winNav.userAgent.match("CriOS");
+
+                if (isIOSChrome || (
+                    isChromium !== null &&
+                    typeof isChromium !== "undefined" &&
+                    vendorName === "Google Inc." &&
+                    isOpera === false &&
+                    isIEedge === false
+                )) {
+                    // is Google Chrome or is Google Chrome on IOS
+                    console.log('Using Google Chrome');
+
+                    return true;
+                } else {
+                    // not Google Chrome
+                    console.log("Using unsupported browser");
+
+                    return false;
+                }
+            },
+            resolveBrowserSupportMsgDisplay: function () {
+                if (auth.authenticated) {
+                    auth.hideBrowserSupportMsg();
+                } else {
+                    if (auth.verifyBrowser())
+                        auth.hideBrowserSupportMsg();
+                    else
+                        auth.showBrowserSupportMsg();
+                }
             },
             verifyToken: function (token, callback = angular.noop) {
                 $http.post(tokenVerificationUrl, token).then(response => {
