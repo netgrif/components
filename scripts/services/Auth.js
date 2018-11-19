@@ -123,7 +123,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                 }
             },
             resolveBrowserSupportMsgDisplay: function () {
-                if (auth.authenticated) {
+                if (auth.authenticated || !$config.enable.browserSupportNotification) {
                     auth.hideBrowserSupportMsg();
                 } else {
                     if (auth.verifyBrowser())
