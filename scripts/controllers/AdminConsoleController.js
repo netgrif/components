@@ -55,13 +55,35 @@ define(['angular', '../modules/Admin'], function (angular) {
                 self.usersTab = new UserRolesTab(UserRolesTab.USER_PREFERENCE);
                 self.rolesTab = new UserRolesTab(UserRolesTab.ROLE_PREFERENCE);
 
-                /**
-                 * Load process roles for invite tab.
-                 * Before calling this method, this controller must have loaded list of petri nets.
-                 * To load list of petri nets use method self.loadNets
-                 */
-                self.loadProcessRoles = function () {
-                    if (!self.selectedNet) return;
+            function buildRole(role) {
+                role.add = function () {
+                    if (self.invitedUser.processRoles[self.selectedNet.stringId]) {
+                        if (!self.invitedUser.processRoles[self.selectedNet.stringId].roles.find(r => r.name === this.name))
+                            self.invitedUser.processRoles[self.selectedNet.stringId].roles.push(this);
+                    } else {
+                        self.invitedUser.processRoles[self.selectedNet.stringId] = {roles: []};
+                        Object.assign(self.invitedUser.processRoles[self.selectedNet.stringId], self.selectedNet);
+                        self.invitedUser.processRoles[self.selectedNet.stringId].roles.push(this);
+                    }
+                };
+                role.remove = function (net) {
+                    const i = self.invitedUser.processRoles[net].roles.indexOf(this);
+                    if (i !== -1) {
+                        self.invitedUser.processRoles[net].roles.splice(i, 1);
+                        if (self.invitedUser.processRoles[net].roles.length === 0)
+                            delete self.invitedUser.processRoles[net];
+                    }
+                };
+                return role;
+            }
+
+            /**
+             * Load process roles for invite tab.
+             * Before calling this method, this controller must have loaded list of petri nets.
+             * To load list of petri nets use method self.loadNets
+             */
+            self.loadProcessRoles = function () {
+                if (!self.selectedNet) return;
                     self.processRoles = [];
                     $http.get("/api/petrinet/" + self.selectedNet.stringId + "/roles").then(function (response) {
                         response.$request().$get("processRoles").then(function (resources) {
@@ -95,7 +117,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                     }, function () {
                         $snackbar.error($i18n.block.snackbar.failedToLoadRolesForProcess + " " + self.selectedNet.title);
                     });
-                };
+            };
 
                 /**
                  * Load list of groups for invite tab
@@ -160,17 +182,17 @@ define(['angular', '../modules/Admin'], function (angular) {
                     });
                 };
 
-                /* Roles and Users tab */
-                /**
-                 * Load list of process roles of selected process
-                 */
-                UserRolesTab.prototype.loadRoles = function () {
-                    if (!this.roles.process)
-                        return;
-                    this.roles.roles.splice(0, this.roles.roles);
-                    this.filteredRoles.splice(0, this.filteredRoles.length);
-                    $http.get("/api/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
-                        response.$request().$get("processRoles").then(resources => {
+            /* Roles and Users tab */
+            /**
+             * Load list of process roles of selected process
+             */
+            UserRolesTab.prototype.loadRoles = function () {
+                if (!this.roles.process)
+                    return;
+                this.roles.roles.splice(0, this.roles.roles);
+                this.filteredRoles.splice(0, this.filteredRoles.length);
+                $http.get("/api/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
+                    response.$request().$get("processRoles").then(resources => {
                             this.roles.roles = resources.sort((r1, r2) => {
                                 if (r1.name > r2.name)
                                     return 1;
@@ -178,18 +200,18 @@ define(['angular', '../modules/Admin'], function (angular) {
                                     return -1;
                                 return 0;
                             });
-                            this.roles.roles.forEach(role => {
-                                role.selected = false;
-                                if (this.preference === UserRolesTab.ROLE_PREFERENCE) {
-                                    role.users = new Set(self.users.filter(user => user.roles.has(role.stringId)));
-                                }
-                            });
-                            if (this.selectedUser) {
-                                const user = this.selectedUser;
-                                this.selectedUser = undefined;
-                                this.selectUser(user);
+                        this.roles.roles.forEach(role => {
+                            role.selected = false;
+                            if (this.preference === UserRolesTab.ROLE_PREFERENCE) {
+                                role.users = new Set(self.users.filter(user => user.roles.has(role.stringId)));
                             }
-                            this.filteredRoles = this.roles.roles;
+                        });
+                        if (this.selectedUser) {
+                            const user = this.selectedUser;
+                            this.selectedUser = undefined;
+                            this.selectUser(user);
+                        }
+                        this.filteredRoles = this.roles.roles;
 
                         }, () => {
                             $log.debug("No roles was found!");
@@ -218,9 +240,9 @@ define(['angular', '../modules/Admin'], function (angular) {
                     }
                 };
 
-                /**
-                 * Load list of all active users in the system
-                 */
+            /**
+             * Load list of all active users in the system
+             */
                 UserRolesTab.prototype.loadUsers = function (next) {
                     if (self.loading) return;
                     if (next && !self.page.pageLinks.next) return;
@@ -232,23 +254,23 @@ define(['angular', '../modules/Admin'], function (angular) {
                             self.clearAll();
                         self.page = Object.assign(self.page, response.page);
                         self.page.pageLinks = response.$response().data._links;
-                        response.$request().$get("users").then(resources => {
+                    response.$request().$get("users").then(resources => {
                             resources.forEach(user => {
-                                user.roles = new Set(user.userProcessRoles.map(role => role.roleId));
-                                user.selected = false;
-                                user.changed = false;
-                            });
-                            self.users = self.users.concat(resources);
-                            this.filteredUsers = self.users;
-                            self.loading = false;
-                        }, () => {
-                            $log.debug("No user resource was found!");
-                            self.loading = false;
+                            user.roles = new Set(user.userProcessRoles.map(role => role.roleId));
+                            user.selected = false;
+                            user.changed = false;
                         });
+                            self.users = self.users.concat(resources);
+                        this.filteredUsers = self.users;
+                            self.loading = false;
                     }, () => {
-                        $snackbar.error($i18n.block.snackbar.failedToLoadUsers);
+                        $log.debug("No user resource was found!");
+                            self.loading = false;
                     });
-                };
+                }, () => {
+                    $snackbar.error($i18n.block.snackbar.failedToLoadUsers);
+                });
+            };
 
                 self.buildRequest = function(next) {
                     return {
@@ -277,22 +299,23 @@ define(['angular', '../modules/Admin'], function (angular) {
                     self.rolesTab.clearAll();
                 };
 
-                /**
-                 * Search among loaded users
-                 */
-                UserRolesTab.prototype.filterUsers = function () {
-                    self.counter += 1;
-                    $timeout(() => {
-                        self.counter -= 1;
-                        if (self.counter !== 0) {
-                            return;
-                        }
+            /**
+             * Search among loaded users
+             * @returns {Array}
+             */
+            UserRolesTab.prototype.filterUsers = function () {
+                self.counter += 1;
+                $timeout(() => {
+                    self.counter -= 1;
+                    if (self.counter !== 0) {
+                        return;
+                    }
 
-                        this.userSearch.input = this.userSearch.input.trim();
-                        self.searchLast = this.userSearch.input;
-                        this.loadUsers(false);
-                    }, 500);
-                };
+                    this.userSearch.input = this.userSearch.input.trim();
+                    self.searchLast = this.userSearch.input;
+                    this.loadUsers(false);
+                }, 500);
+            };
 
                 /**
                  * Search among loaded process roles

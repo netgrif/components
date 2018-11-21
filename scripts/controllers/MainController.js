@@ -1,6 +1,6 @@
 define(['angular', '../classes/Filter', '../modules/Main', '../services/Loading', '../services/Auth', '../services/ConfigService'], function (angular, Filter) {
-    angular.module('ngMain').controller('MainController', ['$loading', '$auth', '$log', '$scope', '$style', '$user', '$i18n', '$cache', '$location', '$mdSidenav', '$rootScope', '$http', '$config', '$filterRepository', '$q',
-        function ($loading, $auth, $log, $scope, $style, $user, $i18n, $cache, $location, $mdSidenav, $rootScope, $http, $config, $filterRepository, $q) {
+    angular.module('ngMain').controller('MainController', ['$loading', '$auth', '$log', '$scope', '$user', '$i18n', '$cache', '$location', '$mdSidenav', '$rootScope', '$http', '$config', '$filterRepository', '$q',
+        function ($loading, $auth, $log, $scope, $user, $i18n, $cache, $location, $mdSidenav, $rootScope, $http, $config, $filterRepository, $q) {
             const self = this;
 
             self.loaderVisible = true;
@@ -20,7 +20,6 @@ define(['angular', '../classes/Filter', '../modules/Main', '../services/Loading'
                 //load necessary data on beginning
                 $log.debug("Data loaded");
                 $log.debug($user);
-                $style.mainView();
                 $loading.showLoading(false);
             };
 

@@ -28,13 +28,6 @@ define({
             noCasesAvailableForThisView: "Pre toto zobrazenie neexistujú žiadne prípady",
             noTasksForThisCaseAvailable: "V tomto prípade už pre Vás nie sú žiadne úlohy"
         },
-        casesData: {
-            this: "Dátové prípady",
-            my: "Moje prípady",
-            all: "Všetky prípady",
-            enableEditMode: "Povoliť úpravy",
-            confirmChanges: "Potvrdiť úpravy"
-        },
         tasks: {
             this: "Úlohy",
             all: "Všetky úlohy",
@@ -437,6 +430,7 @@ define({
             invitationEmailSent: "Pozvánka na vytvorenie účtu bola zaslaná",
             pswRecoveryEmailSentTo: "Email na obnovu hesla bol odoslaný na ",
             newPswSet: "Vaše nové heslo bolo nastavené",
+            expiredSession: "Platnosť tejto relácie uplynula (pravdepodobne kvôli viacerým súbežným prihláseniam).",
             noFileInput: "Nebol nájdený žiaden vstup pre súbory",
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },

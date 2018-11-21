@@ -31,7 +31,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
             column1: undefined,
             column2: undefined,
             column3: undefined,
-            column4: undefined
+            column4: undefined,
+            column5: undefined
         };
 
         if (this.preselectedData) {
@@ -93,7 +94,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
         const immediateField = this.immediateData.find(data => data.stringId === this.selectedData[index].stringId);
         if (immediateField) {
-            this.selectedData[index].value = immediateField.value; //TODO 7.8.2018 Update NAE
+            this.selectedData[index].value = immediateField.value;
         } else {
             this.selectedData[index] = undefined;
         }

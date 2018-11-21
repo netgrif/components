@@ -14,9 +14,15 @@
         </span>
         <span ng-if="'cases' | routeSegmentContains" class="toolbar-text">
             {{::$i18n.page.cases.this}}
+            <span ng-if="mainCtrl.counters.cases">
+                &nbsp;({{mainCtrl.counters.cases.display}})
+            </span>
         </span>
         <span ng-if="'tasks' | routeSegmentContains" class="toolbar-text">
             {{::$i18n.page.tasks.this}}
+            <span ng-if="mainCtrl.counters.tasks">
+                &nbsp;({{mainCtrl.counters.tasks.display}})
+            </span>
         </span>
         <span ng-if="'workflow' | routeSegmentContains" class="toolbar-text">
             {{::$i18n.page.workflow.this}}

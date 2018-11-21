@@ -36,15 +36,8 @@ define({
                 this: "Cases",
                 my: "My cases",
                 all: "All cases",
-                noCasesAvailableForThisView: "There are any cases available for this view",
-                noTasksForThisCaseAvailable: "There are any more tasks for you in this case"
-            },
-            casesData: {
-                this: "Data cases",
-                my: "My cases",
-                all: "All cases",
-                enableEditMode: "Enable edit mode",
-                confirmChanges: "Confirm changes"
+                noCasesAvailableForThisView: "There are no cases available for this view",
+                noTasksForThisCaseAvailable: "There are no tasks for you in this case"
             },
             tasks: {
                 this: "Tasks",
@@ -449,6 +442,7 @@ define({
                 invitationEmailSent: "Invitation email has been sent",
                 pswRecoveryEmailSentTo: "Password recovery email has been sent to",
                 newPswSet: "Your new password has been set",
+                expiredSession: "This session has been expired (possibly due to multiple concurrent logins).",
                 noFileInput: "No file input was found",
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },

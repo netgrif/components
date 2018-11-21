@@ -3,9 +3,10 @@
         <div flex class="case-data-header-item-text">
             <span>{{tab.headers.selected[headerId] ? tab.headers.selected[headerId].title : $i18n.block.case.header.optional}}</span>
         </div>
-        <md-icon class="material-icons">
+        <md-icon class="material-icons" ng-if="!tab.loading">
             {{tab.headers.selected[headerId].sort.dir === "asc" ? "arrow_drop_up" : "arrow_drop_down"}}
         </md-icon>
+        <md-progress-circular md-mode="indeterminate" ng-if="tab.headers.sortItem === tab.headers.selected[headerId]" ng-disabled="!tab.loading" class="progress-circular-stroke-primary-500" md-diameter="20" style="display: unset; margin-left: 5px;"></md-progress-circular>
     </div>
 </div>
 

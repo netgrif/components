@@ -112,7 +112,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
 
             $locationProvider.html5Mode(true);
             $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
-            $httpProvider.defaults.headers.common['Accept-Language'] = localStorage.getItem("locale") || 'en-US';
+            $httpProvider.defaults.headers.common['Accept-Language'] = localStorage.getItem("locale") || config.defaults.locale;
             $httpProvider.interceptors.push('authHttpInterceptor');
 
             $mdDateLocaleProvider.firstDayOfWeek = 1;
@@ -130,8 +130,8 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
                 return new Date(NaN);
             };
 
-            $compileProvider.preAssignBindingsEnabled(true);
-
+            // Angular v1.6.6, from 1.7 does not exists
+            $compileProvider.preAssignBindingsEnabled(false);
         });
         app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar, $process) {
             $log.debug("App is running...");

@@ -1,13 +1,15 @@
 <form ng-submit="loginCtrl.activeView.login()" class="form-signin">
 
-    <md-input-container class="md-block margin-right-default">
+    <md-input-container md-no-float class="md-block margin-right-default">
         <md-icon class="material-icons">email</md-icon>
-        <input ng-model="loginCtrl.activeView.username" name="username" type="text" placeholder="{{::$i18n.page.signIn.email}}" ng-required="true" autocomplete="username">
+        <input id="form-signin-username" ng-model="loginCtrl.activeView.username" name="username" placeholder="" type="text" ng-required="true" autocomplete="username">
+        <label for="form-signin-username">{{::$i18n.page.signIn.email}}</label>
     </md-input-container>
 
-    <md-input-container class="md-block margin-right-default">
+    <md-input-container md-no-float class="md-block margin-right-default">
         <md-icon class="material-icons">lock</md-icon>
-        <input ng-model="loginCtrl.activeView.password" name="password" type="password" placeholder="{{::$i18n.page.signIn.psw}}" ng-required="true" autocomplete="current-password">
+        <input id="form-signin-password" ng-model="loginCtrl.activeView.password" name="password" type="password" placeholder="" ng-required="true">
+        <label for="form-signin-password">{{::$i18n.page.signIn.psw}}</label>
     </md-input-container>
 
     <div layout="column" layout-align="start center">

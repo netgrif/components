@@ -12,7 +12,8 @@
         </md-button>
     </div>
 
-    <md-button ng-if="$user.hasAuthority(tab.authorityToCreate)" class="md-fab md-raised md-mini md-primary" ng-click="tab.openNewCaseDialog()">
+    <md-button ng-if="$user.hasAuthority(tab.authorityToCreate)" class="md-fab md-raised md-mini md-primary"
+               ng-click="tab.openNewCaseDialog()">
         <md-icon class="material-icons">add</md-icon>
         <md-tooltip md-direction="left">
             {{::$i18n.block.add.create + tab.createDialogTitle}}

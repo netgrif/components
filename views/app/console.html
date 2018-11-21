@@ -127,7 +127,7 @@
 
         </md-tab>
 
-        <md-tab md-on-select="adminCtrl.usersTab.loadUsers()">
+        <md-tab md-on-select="adminCtrl.clearAll(); adminCtrl.usersTab.loadUsers()">
 
             <md-tab-label>
                 {{::$i18n.page.console.users}}
