@@ -1,0 +1,28 @@
+{
+  "name": "angular-currency-format",
+  "description": "AngularJS service (factory) that retrieves currency information (name, symbol, fraction and formating) according to ISO 4217 currency codes. And a filter to print formatted currency.",
+  "license": "MIT",
+  "homepage": "http://xsolla.com",
+  "authors": [
+    "Aleksey Pikhtovnikov <a.pihtovnikov@xsolla.com>"
+  ],
+  "main": "dist/currency-format.js",
+  "keywords": [
+    "angular",
+    "currency",
+    "grapheme",
+    "symbols",
+    "iso",
+    "4217",
+    "format"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "^1.4.3"
+  },
+  "moduleType": []
+}
