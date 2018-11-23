@@ -15,7 +15,7 @@
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{field.placeholder}}</label>
             <input id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" type="{{ field.active ? 'number' : 'text'}}" ng-model="field.newValue"
-                   value="{{field.active ? field.newValue : (field.newValue | currencyFormat:'EUR').length }}"
+                   ng-value="field.active ? field.newValue : (!field.formatFilter ? field.newValue : (field.newValue | currencyFormat:field.formatFilter.code:field.formatFilter.fractionSize:true:field.formatFilter.locale))"
                    ng-change="field.changed = true; field.validate(field.newValue);"
                    ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
                    ng-blur="field.parent.save();field.active = false"
