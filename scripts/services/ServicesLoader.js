@@ -5,5 +5,6 @@
 var path = 'scripts/services/';
 define([path + 'Loading', path + 'Auth', path + 'Snackbar', path + 'Localization',
     path + 'User', path + 'Dialog', path + 'AuthHttpInterceptor', path + 'FileUpload',
-    path + 'CacheService', path + 'Process', path + 'ConfigService', path + 'FilterRepository'], function () {
+    path + 'CacheService', path + 'Process', path + 'ConfigService', path + 'FilterRepository',
+    path + 'BrowserSupportNotification'], function () {
 });

@@ -76,7 +76,7 @@
             },
             test: false,
             l: false,
-            text: '<span>You are using outdated browser. For correct usage please update your <a href="https://www.google.com/chrome/">Google Chrome</a></span>',
+            text: '<span>You are using outdated browser. For correct usage please update your browser</span>',
             insecure: true,
             unsupported: true,
             reminderClosed: 3,
@@ -120,6 +120,7 @@
 	<!-- RequireJS -->
 	<script src="./bower_components/requirejs/require.js" data-main="scripts/main" async></script>
 
+	<!-- Delete / Comment script if $config.enable.browserSupportNotification == false -->
 	<script>
         var isChromium = window.chrome;
         var winNav = window.navigator;

@@ -134,6 +134,7 @@ define([], function () {
             userSignUp: true,
             modelDelete: false,
             inviteUserWithNoProcessRoles: true,
+            browserSupportNotification: true,
 
             cases: {
                 caseDelete: true,
