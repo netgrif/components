@@ -216,7 +216,7 @@ define(['angular', '../modules/Admin'], function (angular) {
 
                     self.inviteLoading = true;
                     $auth.invite(invitation, (success, message) => {
-                        if(success){
+                        if (success) {
                             $snackbar.success($i18n.block.snackbar.inviteSent);
                             self.invitedUser.email = undefined;
                             self.invitedUser.groups.splice(0, self.invitedUser.groups.length);
@@ -239,13 +239,8 @@ define(['angular', '../modules/Admin'], function (angular) {
                     this.filteredRoles.splice(0, this.filteredRoles.length);
                     $http.get("/api/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
                         response.$request().$get("processRoles").then(resources => {
-                            this.roles.roles = resources.sort((r1, r2) => {
-                                if (r1.name > r2.name)
-                                    return 1;
-                                if (r1.name < r2.name)
-                                    return -1;
-                                return 0;
-                            });
+                            this.roles.roles = resources;
+                            this.sortRoles();
                             this.roles.roles.forEach(role => {
                                 role.selected = false;
                                 if (this.preference === UserRolesTab.ROLE_PREFERENCE) {
@@ -265,6 +260,17 @@ define(['angular', '../modules/Admin'], function (angular) {
                     }, () => {
                         $snackbar.error($i18n.block.snackbar.failedToLoadRolesForProcess + " " + self.roles.title);
                     });
+                };
+
+                UserRolesTab.prototype.sortRoles = function () {
+                    this.roles.roles = this.roles.roles.sort((r1, r2) => {
+                        if (r1.name > r2.name)
+                            return 1;
+                        if (r1.name < r2.name)
+                            return -1;
+                        return 0;
+                    });
+
                 };
 
                 UserRolesTab.prototype.clearAll = function () {
@@ -307,6 +313,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                                 user.changed = false;
                             });
                             self.users = self.users.concat(resources);
+                            this.sortUsers();
                             this.filteredUsers = self.users;
                             self.loading = false;
                         }, () => {
@@ -318,7 +325,17 @@ define(['angular', '../modules/Admin'], function (angular) {
                     });
                 };
 
-                self.buildRequest = function(next) {
+                UserRolesTab.prototype.sortUsers = function () {
+                    self.users = self.users.sort((u1, u2) => {
+                        if (u1.surname > u2.surname)
+                            return 1;
+                        if (u1.surname < u2.surname)
+                            return -1;
+                        return 0;
+                    });
+                };
+
+                self.buildRequest = function (next) {
                     return {
                         method: 'POST',
                         url: next ? next : "/api/user/search?small=true",
@@ -326,7 +343,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                     }
                 };
 
-                self.buildSearchQuery = function() {
+                self.buildSearchQuery = function () {
                     return {
                         fulltext: !self.searchLast ? "" : self.searchLast
                     }
@@ -351,7 +368,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                  */
                 UserRolesTab.prototype.filterUsers = function () {
                     self.counter += 1;
-                    $timeout(() => {
+                    $timeout(() => {
                         self.counter -= 1;
                         if (self.counter !== 0) {
                             return;
@@ -374,7 +391,9 @@ define(['angular', '../modules/Admin'], function (angular) {
                     if (!this.roleSearch || this.roleSearch === "")
                         this.filteredRoles = this.roles.roles;
                     else
-                        this.filteredRoles = this.roles.roles.filter(role => role.name.includes(this.roleSearch));
+                        this.filteredRoles = this.roles.roles.filter(
+                            role => role.name.toLowerCase().includes(this.roleSearch.toLowerCase())
+                        );
                     return this.filteredRoles;
                 };
 
