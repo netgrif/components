@@ -1,7 +1,7 @@
 define(['angular', '../modules/Admin'], function (angular) {
     angular.module('ngAdmin').controller('AdminConsoleController',
-        ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user', '$i18n', '$location', '$auth', '$config',
-            function ($log, $scope, $http, $snackbar, $timeout, $user, $i18n, $location, $auth, $config) {
+        ['$log', '$scope', '$http', '$snackbar', '$timeout', '$user', '$i18n', '$location', '$auth', '$config', '$process',
+            function ($log, $scope, $http, $snackbar, $timeout, $user, $i18n, $location, $auth, $config, $process) {
                 if (!$user.hasAuthority("ROLE_ADMIN"))
                     $location.path("/");
 
@@ -119,6 +119,51 @@ define(['angular', '../modules/Admin'], function (angular) {
                     });
                 };
 
+                self.applyDefaultProcessRoles = function () {
+                    if (!$config.defaults.invitedUser.processRoles || $config.defaults.invitedUser.processRoles.length === 0)
+                        return;
+
+                    $config.defaults.invitedUser.processRoles.forEach(defaults => {
+                        if (!defaults.roles || defaults.roles.length === 0)
+                            return;
+                        const net = $process.get(defaults.net);
+                        if (net) {
+                            defaults.roles.forEach(dRole => {
+                                const role = net.role(dRole);
+                                if (role) {
+                                    role.stringId = role.id;
+                                    buildRole(role);
+                                    if (self.invitedUser.processRoles[net.id]) {
+                                        if (!self.invitedUser.processRoles[net.id].roles.find(r => r.name === role.name))
+                                            self.invitedUser.processRoles[net.id].roles.push(role);
+                                    } else {
+                                        self.invitedUser.processRoles[net.id] = {};
+                                        Object.assign(self.invitedUser.processRoles[net.id], net);
+                                        self.invitedUser.processRoles[net.id].roles = [];
+                                        self.invitedUser.processRoles[net.id].transitions = [];
+                                        self.invitedUser.processRoles[net.id].roles.push(role);
+                                    }
+                                } else
+                                    $log.warn("Process role " + dRole + " in process " + net + " was not found!");
+                            });
+                        } else
+                            $log.warn("Net " + defaults.net + " was not found!");
+                    });
+                };
+
+                function applyDefaultGroups() {
+                    if (!$config.defaults.invitedUser.groups || $config.defaults.invitedUser.groups.length === 0)
+                        return;
+
+                    $config.defaults.invitedUser.groups.forEach(dGroup => {
+                        const group = self.groups.find(group => group.name === dGroup);
+                        if (group)
+                            group.add();
+                        else
+                            $log.warn("Group " + dGroup + " was not found!");
+                    });
+                }
+
                 /**
                  * Load list of groups for invite tab
                  */
@@ -137,6 +182,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                                         self.invitedUser.groups.splice(i, 1);
                                 };
                             });
+                            applyDefaultGroups();
                         }, function () {
                             $log.debug("No resource for groups was found!");
                         });
@@ -498,5 +544,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                 };
 
                 self.loadNets();
-            }]);
+            }
+        ]
+    );
 });
