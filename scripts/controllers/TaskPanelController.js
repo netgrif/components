@@ -98,6 +98,7 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                     self.expanded = false;
                     self.loading = false;
                     self.animating = false;
+                    self.valid = true;
 
                     /*--- Methods definition ---*/
                     self.status = resolveStatus;
@@ -336,19 +337,18 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                                         delete group.fields;
                                         self.dataGroups.push(group);
                                         self.dataSize += group.data.length;
-                                        if (index === array.length - 1) {
-                                            self.dataGroups.forEach(group => {
-                                                group.data.sort((a, b) => a.order - b.order);
-                                            });
-                                            self.loading = false;
-                                            callChain.run(true);
-                                        }
                                     } else {
                                         $log.info(`No data for task ${self.title}`);
                                         self.loading = false;
                                         callChain.run(true);
                                     }
                                 });
+                                self.dataGroups.forEach(group => {
+                                    group.data.sort((a, b) => a.order - b.order);
+                                });
+                                self.loading = false;
+                                callChain.run(true);
+                                preValidate();
                             }, () => {
                                 $log.info(`No data group for task ${self.title}`);
                                 self.loading = false;
@@ -362,12 +362,18 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                         });
                     }
 
-                    function validateTaskData() {
+                    function preValidate() {
                         let valid = true;
                         self.getData().forEach(field => {
                             if (field.behavior.required || field.newValue)
                                 valid = field.isValid() ? valid : false;
                         });
+                        // self.valid = valid;
+                        return valid;
+                    }
+
+                    function validateTaskData() {
+                        let valid = preValidate();
                         if (!valid)
                             $snackbar.error($i18n.block.snackbar.fieldsHaveInvalidValues);
                         return valid;

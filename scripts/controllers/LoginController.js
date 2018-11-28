@@ -1,12 +1,11 @@
 define(['angular', '../modules/Main', '../services/Auth'], function (angular) {
-    angular.module('ngMain').controller('LoginController', ['$http', '$auth', '$loading', '$log', '$snackbar', '$routeSegment', '$i18n', '$timeout', '$location',
-        function ($http, $auth, $loading, $log, $snackbar, $routeSegment, $i18n, $timeout, $location) {
+    angular.module('ngMain').controller('LoginController', ['$http', '$auth', '$loading', '$log', '$snackbar', '$routeSegment', '$i18n', '$timeout', '$location', '$cache',
+        function ($http, $auth, $loading, $log, $snackbar, $routeSegment, $i18n, $timeout, $location, $cache) {
             const self = this;
             let dataLoadingStarted = false;
 
             self.loading = false;
             self.activeView = undefined;
-
 
             function Login() {
                 this.name = "login";

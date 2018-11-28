@@ -72,6 +72,7 @@
         .case-data-header-item {
             padding: 0 $dim-default;
             cursor: pointer;
+            outline: none;
 
             &-text {
                 overflow: hidden;
@@ -87,8 +88,9 @@
         case-data {
 
             span, div {
-                word-break: break-all;
+                //word-break: break-all;
                 word-wrap: break-word;
+                overflow-wrap: break-word;
             }
 
             .case-data-item-field {
@@ -145,4 +147,17 @@ md-tooltip.value-text-tooltip {
     height: auto;
     word-break: break-word;
     white-space: unset;
+}
+
+md-tooltip.value-text-tooltip {
+    max-width: 50%;
+    max-height: 20%;
+    height: auto;
+    word-break: break-word;
+    white-space: unset;
+}
+
+.cas-data-list-item-field {
+    padding-right: 5px;
+    padding-left: 5px;
 }

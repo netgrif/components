@@ -18,7 +18,7 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
 
         this.element = undefined;
         this.changed = false;
-        this.valid = true;
+        this.valid = this.isValid();
         this.active = false;
         this.uploadProgress = 0;
 
@@ -28,7 +28,6 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
             'icon': 'md-icon-button',
             'fab': 'md-fab md-mini'
         }
-
     }
 
     DataField.prototype = Object.create(HalResource.prototype);
@@ -75,7 +74,7 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
                 this.valid = (this.newValue !== null || this.newValue !== undefined) && this.validate(this.newValue);
                 break;
             case "text":
-                this.valid = this.newValue !== undefined && this.validate(this.newValue) && (this.behavior.required && this.newValue !== null ? this.newValue.trim() !== "" : true);
+                this.valid = this.newValue !== undefined && this.validate(this.newValue) && (this.behavior.required && this.newValue !== null ? this.newValue.trim() !== "" : true) && !(this.behavior.required && this.newValue == null);
                 break;
             case "date":
                 this.valid = this.newValue && this.validate(this.newValue);
@@ -107,6 +106,9 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         if (this.type === "date") {
             return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
         }
+        else if (this.type === "dateTime") {
+            return new Date(value.year, value.monthValue - 1, value.dayOfMonth, value.hour, value.minute, value.second);
+        }
         else if (this.type === "number") {
             return DataField.roundToTwo(value);
         }
@@ -136,7 +138,7 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
 
         const self = this;
         this.$dialog.showByTemplate("assign_user", this, {
-            task: Object.assign({fieldRoles: this.roles}, this.parent)
+            task: Object.assign({fieldRoles: this.choices ? this.choices: this.roles}, this.parent)
         }).then(function (user) {
             if (!user) return;
             self.newValue = user;

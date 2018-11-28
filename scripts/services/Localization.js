@@ -1,6 +1,6 @@
 
 define(['angular','i18n!nls/ui','../modules/Main'],function (angular, ui) {
-    angular.module('ngMain').factory('$i18n',function () {
+    angular.module('ngMain').factory('$i18n',function ($config) {
 
         // function mapLocal(obj) {
         //     let mapped;
@@ -24,7 +24,7 @@ define(['angular','i18n!nls/ui','../modules/Main'],function (angular, ui) {
                 location.reload();
             },
             current: function () {
-                return localStorage.getItem('locale') || 'en-US';
+                return localStorage.getItem('locale') || $config.defaults.locale;
             }
         };
 

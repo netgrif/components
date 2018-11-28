@@ -13,7 +13,6 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
         Tab.call(this, 0, label);
 
         this.controller = controller;
-        this.baseFilter = baseFilter;
         this.authorityToCreate = "ROLE_USER";
         this.allowedNets = [];
         Object.assign(this, angular, config);
@@ -28,6 +27,7 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
 
         this.headers = {
+            sortItem: undefined,
             editable: false,
             metaData: [],
             processData: [],
@@ -131,12 +131,13 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     };
 
     CaseTab.prototype.changeSorting = function (header) {
+        this.headers.sortItem = header;
         if (header.sort.enable) {
             header.sort.dir = this.flipDirection(header.sort.dir);
             this.search();
         } else {
             Object.values(this.headers.selected).some(h => {
-                if (h.sort.enable) {
+                if (h !== undefined && h.sort.enable) {
                     h.sort.enable = false;
                     return true;
                 }

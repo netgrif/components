@@ -5,7 +5,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
                     const self = this;
 
-                    self.viewId = "cases";
+                    self.viewId = $config.show.cases.viewId;
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
@@ -71,6 +71,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                             self.taskTabs.splice(index, 1);
                             self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
                         }
+                        self.caseTab.load(false);
                     };
 
                     if ($cache.get("dashboard") && $cache.get("dashboard").cases) {
@@ -80,7 +81,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     }
 
                     const navClickListener = $rootScope.$on("navClick", (event, data) => {
-                        if (data.item === "cases")
+                        if (data.item === self.viewId)
                             self.activeTabIndex = 0;
                     });
                     $scope.$on('$destroy', navClickListener);

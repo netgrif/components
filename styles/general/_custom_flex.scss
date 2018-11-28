@@ -1,0 +1,78 @@
+@mixin generate_flex($layout) {
+  @for $i from 1 through 100 {
+    .flex-#{$layout}-#{$i} {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1 1 100%;
+      flex: 1 1 100%;
+      max-width: round(percentage($i/100));
+      max-height: 100%;
+      box-sizing: border-box;
+    }
+    .layout-row > .flex-#{$layout}-#{$i} {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1 1 100%;
+      flex: 1 1 100%;
+      max-width: round(percentage($i/100));
+      max-height: 100%;
+      box-sizing: border-box;
+    }
+    .layout-column > .flex-#{$layout}-#{$i} {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1 1 100%;
+      flex: 1 1 100%;
+      max-width: 100%;
+      max-height: round(percentage($i/100));
+      box-sizing: border-box;
+    }
+    .layout-#{$layout}-row > .flex-#{$layout}-#{$i} {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1 1 100%;
+      flex: 1 1 100%;
+      max-width: round(percentage($i/100));
+      max-height: 100%;
+      box-sizing: border-box;
+    }
+    .layout-#{$layout}-column > .flex-#{$layout}-#{$i} {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1 1 100%;
+      flex: 1 1 100%;
+      max-width: 100%;
+      max-height: round(percentage($i/100));
+      box-sizing: border-box;
+    }
+  }
+}
+
+// xs
+@media (max-width: 599px) {
+  @include generate_flex(xs);
+}
+// gt xs
+@media (min-width: 600px) {
+  @include generate_flex(gt-xs);
+}
+// sm
+@media (min-width: 600px) and (max-width: 959px) {
+  @include generate_flex(sm);
+}
+// gt sm
+@media (min-width: 960px) {
+  @include generate_flex(gt-sm);
+}
+// md
+@media (min-width: 960px) and (max-width: 1279px) {
+  @include generate_flex(md);
+}
+// gt md
+@media (min-width: 1280px) {
+  @include generate_flex(gt-md);
+}
+// lg
+@media (min-width: 1280px) and (max-width: 1919px) {
+  @include generate_flex(lg);
+}
+// gt lg, xl
+@media (min-width: 1920px) {
+  @include generate_flex(gt-lg);
+  @include generate_flex(xl);
+}

@@ -138,7 +138,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                     url: next ? next : "/api/user/search?small=true",
                     params: {
                         size: 10,
-                        sort: "id,asc"
+                        sort: "name,asc"
                     },
                     data: self.buildSearchQuery()
                 }

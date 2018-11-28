@@ -25,6 +25,7 @@
                    ng-keypress="$event.which === 13 && $event.target.blur()"
                    title=""
                    aria-label="Enter text">
+            <!--TODO: check if md-maxlength works -->
             <textarea id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" ng-if="field.subType === 'area'"
                       rows="1" max-rows="4"
                       ng-model="field.newValue"
