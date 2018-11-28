@@ -19,6 +19,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
 
         if (this.immediateData) {
             this.immediateData.forEach(data => {
+                data.formatFilter = data.format;
                 if (data.type === 'date' || data.type === 'dateTime') data.value = Case.formatDate(data.value);
             });
         }
@@ -95,6 +96,7 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         const immediateField = this.immediateData.find(data => data.stringId === this.selectedData[index].stringId);
         if (immediateField) {
             this.selectedData[index].value = immediateField.value;
+            this.selectedData[index].formatFilter = immediateField.formatFilter;
         } else {
             this.selectedData[index] = undefined;
         }

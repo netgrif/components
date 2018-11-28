@@ -1,7 +1,7 @@
 /*  Top level module
     map all application components
  */
-define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRouteSegment', 'angularMaterialExpansionPanels', 'angularInView',
+define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularCurrencyFormat', 'angularRouteSegment', 'angularMaterialExpansionPanels', 'angularInView',
         'scripts/directives/DirectivesLoader',
         'scripts/filters/FiltersLoader',
         'scripts/services/ServicesLoader',
@@ -9,7 +9,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularRou
         'scripts/controllers/ControllersLoader'],
     function (angular, config) {
         // console.log(angular.version);
-        let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment','angular-inview',
+        let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'currencyFormat', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment','angular-inview',
          'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             const theme = config.themes[config.theme];
