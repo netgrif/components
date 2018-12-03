@@ -58,8 +58,13 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     };
 
                     self.closeTaskTab = function (taskTabIndex) {
+                        let closedTab = self.taskTabs[taskTabIndex];
                         self.taskTabs.splice(taskTabIndex, 1);
                         self.activeTabIndex--;
+                        if (closedTab.baseFilter.stringId) {
+                            let saved = $user.getPreference(`filters_${self.viewId}`);
+                            $user.savePreference("filters_"+self.viewId, saved.filter(f => f !== closedTab.baseFilter.stringId));
+                        }
                     };
 
                     const navClickListener = $rootScope.$on("navClick", (event, data) => {
@@ -74,7 +79,7 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     self.filterTab.reload(false);
 
                     $timeout(() => {
-                        self.openTaskTabs(self.filterTab.getSelectedFilters(), false, TaskTab.REPLACE_FILTER_POLICY, true);
+                        self.openTaskTabs(self.filterTab.getSelectedFilters(), true, TaskTab.REPLACE_FILTER_POLICY, true);
                     }, 200);
                 }]);
     });

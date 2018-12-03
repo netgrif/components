@@ -100,7 +100,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
 
     FilterTab.prototype._showSnackbar = function(show) {
         if (show) {
-            self.$snackbar.warning(self.$i18n.block.snackbar.noFiltersFound);
+            this.$snackbar.warning(this.$i18n.block.snackbar.noFiltersFound);
         }
     };
 
@@ -113,6 +113,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
     FilterTab.prototype.saveFilters = function () {
         const selected = this.getSelectedFilters();
         this.$user.savePreference("filters_"+this.parent.viewId, selected.map(f => f.stringId));
+        this.filters.forEach(f => f.selected = false);
         return selected;
     };
 
