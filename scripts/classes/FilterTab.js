@@ -96,7 +96,6 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
             console.log(error);
             self.loading = false;
         });
-        self.$rootScope.$emit(self.parent.viewId, {});
     };
 
     FilterTab.prototype._showSnackbar = function(show) {

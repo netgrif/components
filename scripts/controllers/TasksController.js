@@ -73,10 +73,8 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     self.activeTabIndex = 0;
                     self.filterTab.reload(false);
 
-                    $rootScope.$on(self.viewId, () => {
-
-                        self.openTaskTabs(self.filterTab.getSelectedFilters(), false);
-
-                    });
+                    $timeout(() => {
+                        self.openTaskTabs(self.filterTab.getSelectedFilters(), false, TaskTab.REPLACE_FILTER_POLICY, true);
+                    }, 200);
                 }]);
     });
