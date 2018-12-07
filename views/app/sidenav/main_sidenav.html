@@ -28,7 +28,7 @@
 
         <md-button href="/workflow" layout="row" layout-align="start center"
                    ng-class="{active: ('workflow' | routeSegmentContains)}"
-                   ng-click="mainCtrl.closeSidenav('left-nav')">
+                   ng-click="mainCtrl.closeSidenav('left-nav');mainCtrl.navigationClick('workflow')">
             <i class="material-icons">linear_scale</i>{{::$i18n.page.workflow.this}}
         </md-button>
 
