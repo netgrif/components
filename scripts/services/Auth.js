@@ -41,6 +41,8 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                             $location.path(auth.isExcluded(auth.path) ? appPath : auth.path);
                         });
 
+                        $user.loadPreferences();
+
                         let element = document.getElementById("browser-support-msg");
                         if (!element.classList.contains("hide"))
                             element.classList.add("hide");

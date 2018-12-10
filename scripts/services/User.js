@@ -1,5 +1,5 @@
 define(['angular', '../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$user', function () {
+    angular.module('ngMain').factory('$user', function ($log, $http) {
         const user = {
             id: 0,
             login: undefined,
@@ -7,6 +7,7 @@ define(['angular', '../modules/Main'], function (angular) {
             name: undefined,
             roles: undefined,
             groups: undefined,
+            preferences: undefined,
 
             clear: function () {
                 user.id = 0;
@@ -14,6 +15,7 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.authority = undefined;
                 user.name = undefined;
                 user.roles = undefined;
+                user.preferences = undefined;
             },
 
             fromResource: function (resource) {
@@ -105,6 +107,21 @@ define(['angular', '../modules/Main'], function (angular) {
             },
             removePreference: function (key) {
                 localStorage.removeItem("userPreference-" + key);
+            },
+
+            loadPreferences: function () {
+                $http.get("/api/user/preferences").then(response => {
+                    if (response.locale) {
+                        this.savePreference("locale", response.locale);
+                    }
+                    if (response.taskFilters) {
+                        Object.keys(response.taskFilters).forEach(viewId => {
+                            this.savePreference("filters_" + viewId, response.taskFilters[viewId]);
+                        });
+                    }
+                }, error => {
+                    $log.debug(error);
+                })
             }
         };
         return user;
