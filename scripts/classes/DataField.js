@@ -195,11 +195,11 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         let fileInfo = {
             hasBeenDownloaded: hasBeenDownloaded
         };
-        localStorage.setItem(this.stringId, JSON.stringify(fileInfo));
+        localStorage.setItem(this.parent.caseId + "_" + this.stringId + "_download_data", JSON.stringify(fileInfo));
     };
 
     DataField.prototype.hasBeenDownloaded = function() {
-        let loaded = localStorage.getItem(this.stringId);
+        let loaded = localStorage.getItem(this.parent.caseId + "_" + this.stringId + "_download_data");
         if (loaded) {
             let fileInfo = JSON.parse(loaded);
             return fileInfo.hasBeenDownloaded;

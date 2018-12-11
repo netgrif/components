@@ -2,8 +2,7 @@
 
     <div flex="45" flex-xs="100">
     <span flex class="data-field-title
-        {{field.description ? 'cursor-pointer' : ''}}
-        {{field.hasBeenDownloaded() ? 'has-been-downloaded' : 'has-not-been-downloaded'}}">
+        {{field.description ? 'cursor-pointer' : ''}}">
         {{field.name}}
         <md-tooltip ng-if="field.description">
             {{field.description}}
@@ -30,7 +29,9 @@
                     <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
                     done
                 </md-icon>
-                <span class="text-overflow-dots">{{field.newValue ? field.newValue.name : (field.generated ? field.defaultValue.name : $i18n.block.data.noFile)}}</span>
+                <span class="text-overflow-dots
+                      {{field.hasBeenDownloaded() ? 'has-been-downloaded' : 'has-not-been-downloaded'}}">
+                    {{field.newValue ? field.newValue.name : (field.generated ? field.defaultValue.name : $i18n.block.data.noFile)}}</span>
             </div>
 
             <md-button
