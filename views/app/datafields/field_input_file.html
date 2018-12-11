@@ -29,9 +29,9 @@
                     <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
                     done
                 </md-icon>
-                <span class="text-overflow-dots
-                      {{field.hasBeenDownloaded() ? 'file-name-highlight' : ''}}">
-                    {{field.newValue ? field.newValue.name : (field.generated ? field.defaultValue.name : $i18n.block.data.noFile)}}</span>
+                <span class="text-overflow-dots {{($root.$config.enable.downloadHighlight && field.hasBeenDownloaded()) ? 'file-name-highlight' : ''}}">
+                    {{field.newValue ? field.newValue.name : (field.generated ? field.defaultValue.name : $i18n.block.data.noFile)}}
+                </span>
             </div>
 
             <md-button
