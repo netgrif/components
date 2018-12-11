@@ -1,7 +1,8 @@
 <div class="data-field" layout="row" layout-align="start center" layout-wrap>
 
     <div flex="45" flex-xs="100">
-    <span flex class="data-field-title {{field.description ? 'cursor-pointer' : ''}}">
+    <span flex class="data-field-title
+        {{field.description ? 'cursor-pointer' : ''}}">
         {{field.name}}
         <md-tooltip ng-if="field.description">
             {{field.description}}
@@ -28,12 +29,14 @@
                     <md-tooltip md-direction="top">{{::$root.$i18n.block.data.fileUploaded}}</md-tooltip>
                     done
                 </md-icon>
-                <span class="text-overflow-dots">{{field.newValue ? field.newValue.name : (field.generated ? field.defaultValue.name : $i18n.block.data.noFile)}}</span>
+                <span class="text-overflow-dots
+                      {{field.hasBeenDownloaded() ? 'has-been-downloaded' : 'has-not-been-downloaded'}}">
+                    {{field.newValue ? field.newValue.name : (field.generated ? field.defaultValue.name : $i18n.block.data.noFile)}}</span>
             </div>
 
             <md-button
                     ng-if="((field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)) && !(field.parent.user.email == $user.login && field.behavior.editable) && !(field.newFile && !field.uploaded)"
-                    flex-xs="20" class="md-icon-button width-24px" ng-click="field.download()">
+                    flex-xs="20" class="md-icon-button width-24px" ng-click="field.download();field.setHasBeenDownloaded(true)">
                 <md-icon class="material-icons">file_download</md-icon>
                 <md-tooltip md-direction="bottom">
                     {{::$i18n.block.btn.download}}
@@ -68,7 +71,7 @@
                     </md-menu-item>
                     <md-menu-item
                             ng-if="(field.value && !field.newFile) || field.generated || (field.uploaded && field.newFile)">
-                        <md-button ng-click="field.download()">
+                        <md-button ng-click="field.download();field.setHasBeenDownloaded(true)">
                             <md-icon class="material-icons">file_download</md-icon>
                             <span>{{::$i18n.block.data.download}}</span>
                         </md-button>
