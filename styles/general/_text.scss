@@ -49,7 +49,7 @@ span {
     &-overflow {
 
         &-dots {
-            @include textOverflowWithDots(100%);
+            @include textOverflowWithDots(auto);
         }
     }
 
