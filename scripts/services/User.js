@@ -7,7 +7,10 @@ define(['angular', '../modules/Main'], function (angular) {
             name: undefined,
             roles: undefined,
             groups: undefined,
-            preferences: undefined,
+            preference: {
+                taskFilters: {},
+                caseViewHeaders: {}
+            },
 
             clear: function () {
                 user.id = 0;
@@ -138,6 +141,7 @@ define(['angular', '../modules/Main'], function (angular) {
 
             savePreference: function () {
                 $http.post("/api/user/preferences", this.preferences).then(response => {
+                    $log.info(response);
                 }, error => {
                     $log.debug(error);
                 });
