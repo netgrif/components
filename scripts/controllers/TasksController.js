@@ -5,6 +5,7 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
                     const self = this;
 
+                    self.viewId = $config.show.tasks.viewId;
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.filterTab = new FilterTab(self, {
@@ -60,8 +61,11 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     };
 
                     const navClickListener = $rootScope.$on("navClick", (event, data) => {
-                        if (data.item === 'tasks')
+                        if (data.item === self.viewId) {
                             self.activeTabIndex = 0;
+                            self.activeTab = self.taskTabs[self.activeTabIndex];
+                            self.activeTab.reload();
+                        }
                     });
                     $scope.$on('$destroy', navClickListener);
 
