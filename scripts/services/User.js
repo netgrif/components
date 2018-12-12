@@ -98,6 +98,7 @@ define(['angular', '../modules/Main'], function (angular) {
 
             savePreferenceLocale: function(value) {
                 this.preferences.locale = value;
+                localStorage.setItem("locale", value);
                 this.savePreference();
             },
 
