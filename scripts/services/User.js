@@ -1,5 +1,5 @@
 define(['angular', '../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$user', function ($log, $http) {
+    angular.module('ngMain').factory('$user', function ($log, $http, $snackbar) {
         const user = {
             id: 0,
             login: undefined,
@@ -96,32 +96,62 @@ define(['angular', '../modules/Main'], function (angular) {
                 }
             },
 
-            savePreference: function (key, value) {
-                localStorage.setItem("userPreference-" + key, JSON.stringify(value));
+            savePreferenceLocale: function(value) {
+                this.preferences.locale = value;
+                this.savePreference();
             },
-            getPreference: function (key) {
-                const value = localStorage.getItem("userPreference-" + key);
-                if (value)
-                    return JSON.parse(value);
-                return undefined;
+
+            getPreferenceLocale: function () {
+                return this.preferences.locale;
             },
-            removePreference: function (key) {
-                localStorage.removeItem("userPreference-" + key);
+
+            /**
+             * @param key - task view viewId
+             * @param value - list of filters stringIds
+             */
+            savePreferenceTaskFilters: function(key, value) {
+                this.preferences.taskFilters[key] = value;
+                this.savePreference();
+            },
+
+            /**
+             * @param key - task view viewId
+             * @returns list of filters stringIds
+             */
+            getPreferenceTaskFilters: function(key) {
+                return this.preferences.taskFilters[key];
+            },
+
+            /**
+             * @param key - case view viewId
+             * @param value - list of headers
+             */
+            savePreferenceCaseHeaders: function(key, value) {
+                this.preferences.caseViewHeaders[key] = value;
+                this.savePreference();
+            },
+
+            getPreferenceCaseHeaders: function(key) {
+                return this.preferences.caseViewHeaders[key];
+            },
+
+            savePreference: function () {
+                $http.post("/api/user/preferences", this.preferences).then(response => {
+                    $snackbar.success("success");
+                }, error => {
+                    $log.debug(error);
+                    $snackbar.error("error");
+                });
             },
 
             loadPreferences: function () {
                 $http.get("/api/user/preferences").then(response => {
-                    if (response.locale) {
-                        this.savePreference("locale", response.locale);
-                    }
-                    if (response.taskFilters) {
-                        Object.keys(response.taskFilters).forEach(viewId => {
-                            this.savePreference("filters_" + viewId, response.taskFilters[viewId]);
-                        });
-                    }
+                    this.preferences = response;
+                    $snackbar.success("success");
                 }, error => {
                     $log.debug(error);
-                })
+                    $snackbar.error("error");
+                });
             }
         };
         return user;

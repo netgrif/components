@@ -22,7 +22,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.searchVisibilityIcon = "public";
         this.filter = undefined;
         this.sideViewDetail = false;
-        this.selectedFilters = angular.$user.getPreference("filters_"+this.parent.viewId);
+        this.selectedFilters = angular.$user.getPreferenceTaskFilters(this.parent.viewId);
     }
 
     FilterTab.URL_SEARCH = "/api/filter/search";
@@ -112,7 +112,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
 
     FilterTab.prototype.saveFilters = function () {
         const selected = this.getSelectedFilters();
-        this.$user.savePreference("filters_"+this.parent.viewId, selected.map(f => f.stringId));
+        this.$user.savePreferenceTaskFilters(this.parent.viewId, selected.map(f => f.stringId));
         this.filters.forEach(f => f.selected = false);
         return selected;
     };

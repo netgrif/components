@@ -9,7 +9,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
-                    self.caseHeaders = $user.getPreference(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
+                    self.caseHeaders = $user.getPreferenceCaseHeaders(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
                     self.caseTab = new CaseTab("Cases", this, $filterRepository.get(self.viewId), {
                         $http,
                         $dialog,

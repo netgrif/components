@@ -62,8 +62,8 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                         self.taskTabs.splice(taskTabIndex, 1);
                         self.activeTabIndex--;
                         if (closedTab.baseFilter.stringId) {
-                            let saved = $user.getPreference(`filters_${self.viewId}`);
-                            $user.savePreference("filters_"+self.viewId, saved.filter(f => f !== closedTab.baseFilter.stringId));
+                            let saved = $user.getPreferenceTaskFilters(self.viewId);
+                            $user.savePreferenceTaskFilters(self.viewId, saved.filter(f => f !== closedTab.baseFilter.stringId));
                         }
                     };
 

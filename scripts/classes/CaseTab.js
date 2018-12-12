@@ -115,7 +115,7 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     };
 
     CaseTab.prototype.saveHeaders = function () {
-        this.$user.savePreference(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, Object.values(this.headers.selected).map(header => {
+        this.$user.savePreferenceCaseHeaders(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, Object.values(this.headers.selected).map(header => {
             if (header.process)
                 return header.process + "-" + header.stringId;
             return header.stringId;
