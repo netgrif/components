@@ -138,20 +138,16 @@ define(['angular', '../modules/Main'], function (angular) {
 
             savePreference: function () {
                 $http.post("/api/user/preferences", this.preferences).then(response => {
-                    $snackbar.success("success");
                 }, error => {
                     $log.debug(error);
-                    $snackbar.error("error");
                 });
             },
 
             loadPreferences: function () {
                 $http.get("/api/user/preferences").then(response => {
                     this.preferences = response;
-                    $snackbar.success("success");
                 }, error => {
                     $log.debug(error);
-                    $snackbar.error("error");
                 });
             }
         };
