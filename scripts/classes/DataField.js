@@ -12,7 +12,6 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         HalResource.call(this, links);
         this.parent = parent;
         Object.assign(this, resource, angular);
-
         this.newValue = this.parse(this.value);
         if (this.validationJS) this.validate = new Function("value", this.validationJS);
         else this.validate = new Function("", "return true;");

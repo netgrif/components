@@ -1,5 +1,5 @@
 define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$auth', function ($http, $location, $rootScope, $log, $timeout, $user, $snackbar, $i18n, $process, $config, $filterRepository) {
+    angular.module('ngMain').factory('$auth', function ($http, $location, $rootScope, $log, $timeout, $user, $snackbar, $i18n, $process, $config, $filterRepository, $BrowserSupportNotification) {
 
         const appPath = "/";
         const loginPath = "/login";
@@ -42,10 +42,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                         });
 
                         $user.loadPreferences();
-
-                        let element = document.getElementById("browser-support-msg");
-                        if (!element.classList.contains("hide"))
-                            element.classList.add("hide");
+                        $BrowserSupportNotification.resolve(auth.authenticated);
                     }
 
                 }, function (response) {
@@ -63,9 +60,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     $user.clear();
                     $location.path(loginPath);
 
-                    let element = document.getElementById("browser-support-msg");
-                    if (element.classList.contains("hide"))
-                        element.classList.remove("hide");
+                    $BrowserSupportNotification.resolve(auth.authenticated);
                 }, function () {
                     $log.debug("Logout failed");
                 });

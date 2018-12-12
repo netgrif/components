@@ -81,8 +81,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     }
 
                     const navClickListener = $rootScope.$on("navClick", (event, data) => {
-                        if (data.item === self.viewId)
+                        if (data.item === self.viewId) {
                             self.activeTabIndex = 0;
+                            self.caseTab.load(false);
+                        }
                     });
                     $scope.$on('$destroy', navClickListener);
                 }]);

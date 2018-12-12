@@ -115,6 +115,9 @@ define([], function () {
                 taskPriority: true,
                 taskCaseTitle: true
             },
+            workflow: {
+              viewId: "workflow"
+            },
             documents: {
                 transactions: false,
 
@@ -134,6 +137,7 @@ define([], function () {
             userSignUp: true,
             modelDelete: false,
             inviteUserWithNoProcessRoles: true,
+            browserSupportNotification: true,
 
             cases: {
                 caseDelete: true,
