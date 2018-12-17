@@ -196,19 +196,19 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         downloadWindow.onload = () => downloadWindow.close();
     };
 
-    function generateFileDownloadStorageKey(caseId, fieldId) {
-        return "data-" + caseId + "-" + fieldId;
+    function generateFileDownloadStorageKey(caseId, fieldId, userId) {
+        return "data-" + caseId + "-" + fieldId + "-" + userId;
     }
 
     DataField.prototype.setHasBeenDownloaded = function(hasBeenDownloaded) {
         let fileInfo = {
             hasBeenDownloaded: hasBeenDownloaded
         };
-        localStorage.setItem(generateFileDownloadStorageKey(this.parent.caseId, this.stringId), JSON.stringify(fileInfo));
+        localStorage.setItem(generateFileDownloadStorageKey(this.parent.caseId, this.stringId, this.$user.id), JSON.stringify(fileInfo));
     };
 
     DataField.prototype.hasBeenDownloaded = function() {
-        let loaded = localStorage.getItem(generateFileDownloadStorageKey(this.parent.caseId, this.stringId));
+        let loaded = localStorage.getItem(generateFileDownloadStorageKey(this.parent.caseId, this.stringId, this.$user.id));
         if (loaded) {
             let fileInfo = JSON.parse(loaded);
             return fileInfo.hasBeenDownloaded;
