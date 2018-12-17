@@ -1,0 +1,53 @@
+<div class="data-field" layout="row" layout-align="start center" layout-wrap>
+
+    <div flex="45" flex-xs="100">
+        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
+            {{field.name}}
+        </span>
+    </div>
+
+    <div hide-xs flex="5"></div>
+
+    <!-- TODO 12.12.2018 Uncomment when button feature fully implemented -> see example in DashboardController -->
+    <!--<div flex="45" flex-xs="100">-->
+        <!--<md-button ng-if="field.value" class="{{field.buttonTypesToClasses[field.type]}} md-primary" href="{{field.value}}" target="_blank" ng-disabled="field.disabled" aria-label="button">-->
+            <!--<md-icon ng-if="field.type === 'icon' || field.type === 'fab'" class="material-icons">{{field.placeholder}}</md-icon>-->
+            <!--<span ng-if="field.type === 'button' || field.type === 'button raised'">{{field.placeholder}}</span>-->
+            <!--<md-tooltip ng-if="field.tooltip" md-direction="{{field.tooltip.direction}}">-->
+                <!--{{field.tooltip.placeholder}}-->
+            <!--</md-tooltip>-->
+        <!--</md-button>-->
+        <!--<md-button ng-if="!field.value" class="{{field.buttonTypesToClasses[field.type]}} md-primary" ng-disabled="field.disabled" aria-label="button" ng-click="field.changed = true;field.parent.save();">-->
+            <!--<md-icon ng-if="field.type === 'icon' || field.type === 'fab'" class="material-icons">{{field.placeholder}}</md-icon>-->
+            <!--<span ng-if="field.type === 'button' || field.type === 'button raised'">{{field.placeholder}}</span>-->
+            <!--<md-tooltip ng-if="field.tooltip" md-direction="{{field.tooltip.direction}}">-->
+                <!--{{field.tooltip.placeholder}}-->
+            <!--</md-tooltip>-->
+        <!--</md-button>-->
+    <!--</div>-->
+
+    <!-- TODO button field body for early usage -->
+    <div flex="45" flex-xs="100" layout="row" layout-align="start center">
+        <md-button ng-if="field.value" class="{{field.buttonTypesToClasses[field.type]}} md-primary" href="{{field.value}}" target="_blank"
+                   ng-disabled="!field.behavior.editable" aria-label="button"
+                   ng-click="field.changed = true;field.parent.save();">
+            <md-icon ng-if="field.type === 'icon' || field.type === 'fab'" class="material-icons">{{field.placeholder}}</md-icon>
+            <span ng-if="field.type === 'button' || field.type === 'button raised'">{{field.placeholder}}</span>
+            <md-tooltip ng-if="field.description" md-direction="bottom">
+                {{field.description}}
+            </md-tooltip>
+        </md-button>
+        <md-button ng-if="!field.value" class="{{field.buttonTypesToClasses[field.type]}} md-primary"
+                   ng-disabled="!field.behavior.editable" aria-label="button"
+                   ng-click="field.changed = true;field.parent.save();">
+            <md-icon ng-if="field.type === 'icon' || field.type === 'fab'" class="material-icons">{{field.placeholder}}</md-icon>
+            <span ng-if="field.type === 'button' || field.type === 'button raised'">{{field.placeholder}}</span>
+            <md-tooltip ng-if="field.description" md-direction="bottom">
+                {{field.description}}
+            </md-tooltip>
+        </md-button>
+    </div>
+
+    <div hide-xs flex="5"></div>
+
+</div>
