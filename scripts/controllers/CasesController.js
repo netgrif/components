@@ -86,6 +86,13 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                             self.caseTab.load(false);
                         }
                     });
+
                     $scope.$on('$destroy', navClickListener);
+                    $scope.$on('$destroy', function() {
+                        self.caseTab.searchInput=undefined;
+                        self.caseTab.search();
+                        $scope.$emit('reloadCounters');
+                    });
+
                 }]);
     });
