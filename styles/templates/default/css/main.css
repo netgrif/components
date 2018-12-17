@@ -41452,7 +41452,7 @@ span.active {
   color: #009688; }
 
 .text-overflow-dots {
-  width: 100%;
+  width: auto;
   white-space: nowrap;
   overflow: hidden;
   -o-text-overflow: ellipsis;

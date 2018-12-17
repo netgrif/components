@@ -251,7 +251,7 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                     }
 
                     function cancelTask(callChain = new Chain()) {
-                        if (!self.user || self.user.email !== $user.login) {
+                        if (!self.user || ((self.user.email !== $user.login) && !$user.canDo(self.roles, 'cancel')) ) {
                             callChain.run(false);
                             return;
                         }

@@ -115,6 +115,9 @@ define([], function () {
                 taskPriority: true,
                 taskCaseTitle: true
             },
+            workflow: {
+              viewId: "workflow"
+            },
             documents: {
                 transactions: false,
 

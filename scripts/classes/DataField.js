@@ -23,8 +23,10 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         this.uploadProgress = 0;
 
         this.buttonTypesToClasses = {
-            'text': 'max-width-100 text-overflow-dots',
-            'text raised': 'max-width-100 text-overflow-dots md-raised',
+            // TODO 12.12.2018 Uncomment 'button' when button feature fully implemented -> see example in DashboardController
+            // 'button': 'max-width-100 text-overflow-dots',
+            'button': 'text-overflow-dots md-raised',
+            'button raised': 'max-width-100 text-overflow-dots md-raised',
             'icon': 'md-icon-button',
             'fab': 'md-fab md-mini'
         }
@@ -64,6 +66,9 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
      */
     DataField.prototype.isValid = function () {
         switch (this.type) {
+            case "button":
+                this.valid = true;
+                break;
             case "file":
                 this.valid = this.newFile ? !!this.uploaded : !!this.newValue;
                 break;
