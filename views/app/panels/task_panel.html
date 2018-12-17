@@ -68,7 +68,7 @@
                         </md-button>
                     </md-menu-item>
 
-                    <md-menu-item ng-if="taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && (taskCtrl.user.email === $user.login || $user.canDo(taskCtrl.roles, 'cancel'))">
+                    <md-menu-item ng-if="(taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && taskCtrl.user.email === $user.login) || (taskCtrl.user && $user.canDo(taskCtrl.roles, 'cancel'))">
                         <md-button ng-click="taskCtrl.cancel(taskCtrl.createReloadChain())">
                             <md-icon class="material-icons">cancel</md-icon>
                             <span>{{::$i18n.block.btn.cancel}}</span>
@@ -313,7 +313,7 @@
                     <span>{{::$i18n.block.btn.reassign}}</span>
                 </md-button>
 
-                <md-button ng-if="taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && (taskCtrl.user.email === $user.login || $user.canDo(taskCtrl.roles, 'cancel'))" ng-click="taskCtrl.cancel(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
+                <md-button ng-if="(taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && taskCtrl.user.email === $user.login) || (taskCtrl.user && $user.canDo(taskCtrl.roles, 'cancel'))" ng-click="taskCtrl.cancel(taskCtrl.createReloadChain());taskCtrl.collapse()" class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.cancel}}</span>
                 </md-button>
 
