@@ -1,7 +1,7 @@
 define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Transaction, Filter, TaskSearch) {
     /**
      * Constructor for TaskTab class
-     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n, $process, $rootScope
+     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n, $process, $rootScope, $config
      * @param id
      * @param label
      * @param {Filter} baseFilter
@@ -105,11 +105,16 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
         this.$http(requestConfig).then(function (response) {
             self.page = response.page;
             if (self.page.totalElements === 0) {
-                self.$snackbar.info(self.$i18n.block.snackbar.noTasks);
                 self.page.next = undefined;
                 if (self.isNotEmpty())
                     self.removeAll();
                 self.loading = false;
+                if (self.$config.enable.closeTaskTabOnNoTasks) {
+                    self.$snackbar.warning(`${self.$i18n.block.snackbar.noTasksFoundIn} ${self.label}`);
+                    self.emitNoTasks();
+                } else {
+                    self.$snackbar.info(self.$i18n.block.snackbar.noTasks);
+                }
                 self.emitNumberOfTasks();
                 return;
             }
@@ -189,6 +194,12 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
         });
         if (self.showTransactions)
             self.transactions.forEach(trans => trans.setActive(self.tasks));
+    };
+
+    TaskTab.prototype.emitNoTasks = function () {
+        if (!this.$rootScope)
+            return;
+        this.$rootScope.$emit('noTasks');
     };
 
     TaskTab.prototype.emitNumberOfTasks = function(){
