@@ -90,11 +90,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     });
 
                     const noTasksListener = $rootScope.$on("noTasks", (event) => {
-                        // if (self.taskTabs && self.taskTabs.length > 0)
-                        //     self.closeTab(this.activeTab.useCase.stringId);
-                        if (self.taskTabs)
-                            if (self.taskTabs.length > 0)
-                                self.closeTab(this.activeTab.useCase.stringId);
+                        if (self.taskTabs && self.taskTabs.length > 0)
+                            self.closeTab(this.activeTab.useCase.stringId);
                     });
 
                     $scope.$on('$destroy', navClickListener);
