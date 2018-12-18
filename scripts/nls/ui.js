@@ -424,6 +424,8 @@ define({
                 wrongUserCredentials: "Wrong user credentials",
                 userIsNotVerified: "User is not verified",
                 registrationFailed: "Registration failed",
+                changePasswordFailed: "Password change failed",
+                changePasswordSuccessful: "Password has been successfully changed",
                 passwordFieldsDoNotMatch: "Password fields do not match",
                 failedToLoadUsersInTask: "Failed to load users in task",
                 failedToLoadRoles: "Failed to load roles",

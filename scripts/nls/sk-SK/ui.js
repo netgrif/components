@@ -412,6 +412,8 @@ define({
             wrongUserCredentials: "Nesprávne používateľské autentizačné údaje",
             userIsNotVerified: "Používateľ nie je overený",
             registrationFailed: "Registrácia sa nepodarila",
+            changePasswordFailed: "Zmena hesla sa nepodarila",
+            changePasswordSuccessful: "Heslo bolo úspešne zmenené",
             passwordFieldsDoNotMatch: "Hodnoty polí s heslami sa nezhodujú",
             failedToLoadUsersInTask: "Nepodarilo sa načítať používateľov pre úlohu",
             failedToLoadRoles: "Nepodarilo sa načítať roly",

@@ -1,8 +1,8 @@
 define(['angular', '../modules/Main'],
     function (angular) {
         angular.module('ngMain').controller('ProfileController',
-            ['$http', '$log', '$scope', '$snackbar', '$user', '$i18n', '$rootScope', '$dialog',
-                function ($http, $log, $scope, $snackbar, $user, $i18n, $rootScope, $dialog) {
+            ['$http', '$log', '$scope', '$snackbar', '$auth', '$user', '$i18n', '$rootScope', '$dialog',
+                function ($http, $log, $scope, $snackbar, $auth, $user, $i18n, $rootScope, $dialog) {
                     const self = this;
 
                     const TOTAL_INPUTS = 4;
@@ -59,7 +59,32 @@ define(['angular', '../modules/Main'],
                     };
 
                     self.changePsw = function () {
-                        // TODO 13.4.2018 Summit change password form
+                        if (!self.currentPsw || !self.newPsw || !self.repeatNewPsw)
+                            return;
+
+                        if (self.newPsw === self.repeatNewPsw) {
+                            let data = {
+                                currentPsw: self.currentPsw,
+                                newPsw: self.newPsw,
+                                repeatNewPsw: self.repeatNewPsw
+                            };
+                            $auth.changePassword(data, function (isSuccessful, message) {
+                                console.log(isSuccessful);
+                                console.log(message);
+                                if (isSuccessful) {
+                                    $snackbar.success($i18n.block.snackbar.changePasswordSuccessful);
+                                } else {
+                                    $snackbar.error($i18n.block.snackbar.changePasswordFailed);
+                                }
+                            });
+                            $dialog.closeCurrent();
+                            self.currentPsw = "";
+                            self.newPsw = "";
+                            self.repeatNewPsw = "";
+                        } else {
+                            $snackbar.error($i18n.block.snackbar.passwordFieldsDoNotMatch)
+                        }
+
                     };
 
                     self.loadProfile();
