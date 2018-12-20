@@ -27,12 +27,12 @@
 
                 <md-input-container>
                     <label>{{::$i18n.page.profile.personalInfo.firstName}}</label>
-                    <input type="text" ng-model="profCtrl.user.name" disabled title="">
+                    <input type="text" ng-model="profCtrl.user.name" ng-disabled="!profCtrl.isInEditMode" title="">
                 </md-input-container>
 
                 <md-input-container>
                     <label>{{::$i18n.page.profile.personalInfo.lastName}}</label>
-                    <input type="text" ng-model="profCtrl.user.surname" disabled title="">
+                    <input type="text" ng-model="profCtrl.user.surname" ng-disabled="!profCtrl.isInEditMode" title="">
                 </md-input-container>
 
             </div>
@@ -75,11 +75,11 @@
 
         <div flex layout="row" layout-align="start center">
 
-            <md-chips flex>
+            <md-chips flex ng-model="profCtrl.userGroupResources._embedded.groups" readonly="isReadOnly">
 
-                <md-chip ng-repeat="org in profCtrl.user.groups">
-                    {{::org.name}}
-                </md-chip>
+                <md-chip-template>
+                    <span>{{$chip.name}}</span>
+                </md-chip-template>
 
             </md-chips>
 
@@ -101,8 +101,8 @@
 
             <md-chips flex>
 
-                <md-chip ng-repeat="role in profCtrl.user.authorities">
-                    {{::profCtrl.getRoleName(role.authority)}}
+                <md-chip ng-repeat="role in $user.authority">
+                    {{profCtrl.getRoleName(role)}}
                 </md-chip>
 
             </md-chips>
@@ -121,15 +121,22 @@
 
         </div>
 
-        <div flex layout="row" layout-align="start center">
+        <div flex layout="row" layout-align="start center" ng-repeat="process in profCtrl.userProcessRoles">
 
-            <md-chips flex>
+            <span>{{process.name}} {{process.version}}</span>
 
-                <md-chip ng-repeat="role in profCtrl.user.processRoles">
-                    {{::role.name}}
-                </md-chip>
+            <span ng-repeat="role in process.roles">
+                {{role.name}}
+            </span>
 
-            </md-chips>
+            <!--<md-chips flex>-->
+                <!--<md-chip ng-repeat="role in process.roles">-->
+                    <!--{{role.name}}-->
+                <!--</md-chip>-->
+
+            <!--</md-chips>-->
+
+
 
         </div>
 
@@ -139,13 +146,23 @@
 
     <div flex layout="row" layout-wrap layout-align="start center" class="card padding-2x">
 
-        <md-button class="md-primary" layout="row" layout-align="center center" ng-click="$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
-            <md-icon class="material-icons margin-horizontal-0 margin-right-default">mode_edit</md-icon>
+        <md-button ng-if="!profCtrl.isInEditMode"  class="md-primary" layout="row" layout-align="center center" ng-click="profCtrl.enableEdit();">
+            <md-icon class="material-icons margin-left-0 margin-right-default">mode_edit</md-icon>
             {{::$i18n.page.profile.actions.edit}}
         </md-button>
 
-        <md-button layout="row" layout-align="center center" ng-click="profCtrl.openChangePswDialog();$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
-            <md-icon class="material-icons card-icon margin-horizontal-0 margin-right-default">lock_open</md-icon>
+        <md-button ng-if="profCtrl.isInEditMode" class="md-primary" layout="row" layout-align="center center" ng-click="profCtrl.cancelEdit();">
+            <md-icon class="material-icons margin-left-0 margin-right-default">cancel</md-icon>
+            {{::$i18n.page.profile.actions.cancel}}
+        </md-button>
+
+        <md-button ng-if="profCtrl.isInEditMode" class="md-primary" layout="row" layout-align="center center" ng-click="profCtrl.updateUser();">
+            <md-icon class="material-icons margin-left-0 margin-right-default">done</md-icon>
+            {{::$i18n.page.profile.actions.submit}}
+        </md-button>
+
+        <md-button layout="row" layout-align="center center" ng-click="profCtrl.openChangePswDialog();">
+            <md-icon class="material-icons card-icon margin-left-0 margin-right-default">lock_open</md-icon>
             {{::$i18n.page.profile.actions.changePsw}}
         </md-button>
 

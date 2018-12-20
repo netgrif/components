@@ -15,6 +15,8 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
         const newPasswordUrl = "/api/auth/recover";
         const changePasswordUrl = "/api/auth/changePassword";
 
+        const updateUserUrl = "/api/user";
+
         const auth = {
             authenticated: false,
 
@@ -164,6 +166,19 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     $log.error(error);
                     callback(false, "");
                 });
+            },
+            updateUser: function (updates, callback = angular.noop) {
+                $http.post(updateUserUrl + "/" + $user.id, updates)
+                    .then(function (resource) {
+                        $user.fromResource(resource);
+
+                        callback && callback(true, resource);
+                    }, error => {
+                        $log.error("Updating user has failed");
+                        $log.error(error);
+
+                        callback && callback(false, error);
+                    });
             },
             init: function () {
                 if (!auth.isExcluded()) {
