@@ -5,7 +5,7 @@ define(['angular', '../modules/Main'],
                 function ($http, $log, $scope, $snackbar, $auth, $user, $process, $i18n, $rootScope, $dialog, $orgs) {
                     const self = this;
 
-                    const TOTAL_INPUTS = 4;
+                    const TOTAL_INPUTS = 3;
 
                     const profileUrl = "/api/user/me?small=false";
 
@@ -17,17 +17,29 @@ define(['angular', '../modules/Main'],
 
                     self.loadProfile = function () {
                         $http.get(profileUrl).then(function (response) {
-                            self.user = response;
+                            // self.user = response;
+                            self.user.name = response.name;
                             self.updateCompletion();
-                            $log.debug(self.user);
+                            makeProfileFromResource(response);
                             self.loadProcessRolesOfUser();
                         }, function () {
                             $snackbar.error($i18n.block.snackbar.unableToLoadUserData);
                         });
                     };
 
+                    let makeProfileFromResource = resource => {
+                        self.user.email = resource.email;
+                        self.user.name = resource.name;
+                        self.user.surname = resource.surname;
+                        self.user.telNumber = resource.telNumber;
+                        self.user.avatar = resource.avatar;
+                        self.user.processRoles = resource.processRoles;
+                        self.user.authorities = resource.authorities;
+                        self.user.groups = resource.groups;
+                    };
+
                     self.updateCompletion = function () {
-                        self.completion = parseResponse(self.user) / TOTAL_INPUTS * 100;
+                        self.completion = parseFloat(parseResponse(self.user) / TOTAL_INPUTS * 100).toFixed(2);
                     };
 
                     function capitalizeFirstLetter(string) {
