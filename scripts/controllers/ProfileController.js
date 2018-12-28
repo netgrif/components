@@ -1,21 +1,18 @@
 define(['angular', '../modules/Main'],
     function (angular) {
         angular.module('ngMain').controller('ProfileController',
-            ['$http', '$log', '$scope', '$snackbar', '$auth', '$user', '$process', '$i18n', '$rootScope', '$dialog',
-                function ($http, $log, $scope, $snackbar, $auth, $user, $process, $i18n, $rootScope, $dialog) {
+            ['$http', '$log', '$scope', '$snackbar', '$auth', '$user', '$process', '$i18n', '$rootScope', '$dialog', '$orgs',
+                function ($http, $log, $scope, $snackbar, $auth, $user, $process, $i18n, $rootScope, $dialog, $orgs) {
                     const self = this;
 
                     const TOTAL_INPUTS = 4;
 
-                    const profileUrl = "/api/user/me?small=true";
-                    const groupsUrl = "/api/group/my";
+                    const profileUrl = "/api/user/me?small=false";
 
                     self.isInEditMode = false;
 
                     self.stored = {};
                     self.user = {};
-                    self.userProcessRoles = [];
-                    self.userGroupResources = [];
                     self.completion = 0;
 
                     self.loadProfile = function () {
@@ -23,7 +20,7 @@ define(['angular', '../modules/Main'],
                             self.user = response;
                             self.updateCompletion();
                             $log.debug(self.user);
-                            console.log(self.user);   // todo delete
+                            self.loadProcessRolesOfUser();
                         }, function () {
                             $snackbar.error($i18n.block.snackbar.unableToLoadUserData);
                         });
@@ -109,28 +106,27 @@ define(['angular', '../modules/Main'],
                     };
 
                     self.loadProcessRolesOfUser = function () {
-                        self.userProcessRoles = [];
+                        self.user.categorizedUserProcessRoles = [];
+                        let processRolesIds = self.user.processRoles.map(role => role.stringId);
                         $process.nets.forEach(function (net) {
-                            let roles = net.roles.filter(role => $user.roles.includes(role.id));
-                            self.userProcessRoles.push({
+                            let roles = net.roles.filter(role => processRolesIds.includes(role.id));
+                            self.user.categorizedUserProcessRoles.push({
                                 name: net.title,
                                 identifier: net.identifier,
                                 version: net.version,
                                 roles: roles
                             });
                         });
-                        console.log(self.userProcessRoles);   // todo delete
                     };
 
                     self.loadGroupsOfUser = function () {
-                        $http.get(groupsUrl)
-                            .then(response => {
-                                self.userGroupResources = response.$response().data;
-                                console.log(self.userGroupResources);  // todo delete
-                            }, error => {
-                                $log.error(error);
+                        $orgs.loadGroupsOfUser(function (isSuccessful, data) {
+                            if (isSuccessful) {
+                                self.user.userGroupResources = data;
+                            } else {
                                 $snackbar.error($i18n.block.snackbar.unableToLoadUserGroups);
-                            });
+                            }
+                        });
                     };
 
                     self.updateUser = function () {
@@ -143,8 +139,9 @@ define(['angular', '../modules/Main'],
                         $auth.updateUser(updates, function (isSuccessful, response) {
                             if (isSuccessful) {
                                 $snackbar.success($i18n.block.snackbar.profileUpdated);
+                                self.isInEditMode = false;
                             } else {
-                                $snackbar.success($i18n.block.snackbar.profileFailedToUpdate);
+                                $snackbar.error($i18n.block.snackbar.profileFailedToUpdate);
                             }
                         });
                     };
@@ -175,7 +172,6 @@ define(['angular', '../modules/Main'],
                     };
 
                     self.loadProfile();
-                    self.loadProcessRolesOfUser();
                     self.loadGroupsOfUser();
                 }]);
     });

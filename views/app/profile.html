@@ -75,7 +75,7 @@
 
         <div flex layout="row" layout-align="start center">
 
-            <md-chips flex ng-model="profCtrl.userGroupResources._embedded.groups" readonly="isReadOnly">
+            <md-chips flex ng-model="profCtrl.user.userGroupResources" readonly="isReadOnly" md-removable="false">
 
                 <md-chip-template>
                     <span>{{$chip.name}}</span>
@@ -99,11 +99,11 @@
 
         <div flex layout="row" layout-align="start center">
 
-            <md-chips flex>
+            <md-chips flex ng-model="profCtrl.user.authorities" readonly="isReadOnly" md-removable="false">
 
-                <md-chip ng-repeat="role in $user.authority">
-                    {{profCtrl.getRoleName(role)}}
-                </md-chip>
+                <md-chip-template>
+                    <span>{{profCtrl.getRoleName($chip.authority)}}</span>
+                </md-chip-template>
 
             </md-chips>
 
@@ -121,20 +121,21 @@
 
         </div>
 
-        <div flex layout="row" layout-align="start center" ng-repeat="process in profCtrl.userProcessRoles">
+        <div flex layout="row" layout-align="start center" ng-repeat="process in profCtrl.user.categorizedUserProcessRoles">
 
             <span>{{process.name}} {{process.version}}</span>
 
-            <span ng-repeat="role in process.roles">
-                {{role.name}}
-            </span>
+            <div flex layout="row" layout-align="start center">
 
-            <!--<md-chips flex>-->
-                <!--<md-chip ng-repeat="role in process.roles">-->
-                    <!--{{role.name}}-->
-                <!--</md-chip>-->
+                <md-chips flex ng-model="process.roles" readonly="isReadOnly" md-removable="false">
 
-            <!--</md-chips>-->
+                    <md-chip-template>
+                        <span>{{$chip.name}}</span>
+                    </md-chip-template>
+
+                </md-chips>
+
+            </div>
 
 
 
