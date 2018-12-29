@@ -1,16 +1,20 @@
 define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
     angular.module('ngMain').factory('$orgs', function ($http, $location, $rootScope, $log) {
 
-        const groupsUrl = "/api/group/my";
+        const loggedUserGroupsUrl = "/api/group/my";
 
         const orgs = {
+
+            loggedUserGroups: undefined,
+
             loadGroupsOfUser: function (callback = angular.noop) {
-                $http.get(groupsUrl)
+                $http.get(loggedUserGroupsUrl)
                     .then(response => {
-                        callback(true, response.$response().data._embedded.groups);
+                        orgs.loggedUserGroups = response.$response().data._embedded.groups;
+                        callback(true, orgs.loggedUserGroups);
                     }, error => {
                         $log.error(error);
-                        callback(false, {});
+                        callback(false, undefined);
                     });
             },
         };

@@ -17,8 +17,8 @@ define(['angular', '../modules/Main'],
 
                     self.loadProfile = function () {
                         $http.get(profileUrl).then(function (response) {
-                            self.updateCompletion();
                             makeProfileFromResource(response);
+                            self.updateCompletion();
                             self.loadProcessRolesOfUser();
                         }, function () {
                             $snackbar.error($i18n.block.snackbar.unableToLoadUserData);
