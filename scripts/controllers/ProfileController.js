@@ -17,8 +17,6 @@ define(['angular', '../modules/Main'],
 
                     self.loadProfile = function () {
                         $http.get(profileUrl).then(function (response) {
-                            // self.user = response;
-                            self.user.name = response.name;
                             self.updateCompletion();
                             makeProfileFromResource(response);
                             self.loadProcessRolesOfUser();
