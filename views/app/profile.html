@@ -121,23 +121,23 @@
 
         </div>
 
-        <div flex layout="row" layout-align="start center" ng-repeat="process in profCtrl.user.categorizedUserProcessRoles">
+        <div flex layout="column" layout-align="start start">
+            <div layout="row" layout-align="start center" ng-repeat="process in profCtrl.user.categorizedUserProcessRoles" class="layout-rw-100">
 
-            <span>{{process.name}} {{process.version}}</span>
+                <h4 class="margin-right-2x">{{process.name}} {{process.version}}</h4>
 
-            <div flex layout="row" layout-align="start center">
+                <div flex layout="row" layout-align="start center">
 
-                <md-chips flex ng-model="process.roles" readonly="true" md-removable="false">
+                    <md-chips flex ng-model="process.roles" readonly="true" md-removable="false">
 
-                    <md-chip-template>
-                        <span>{{$chip.name}}</span>
-                    </md-chip-template>
+                        <md-chip-template>
+                            <span>{{$chip.name}}</span>
+                        </md-chip-template>
 
-                </md-chips>
+                    </md-chips>
 
+                </div>
             </div>
-
-
 
         </div>
 
@@ -145,24 +145,28 @@
 
     <md-divider class="border-width-default color-border-transparent"></md-divider>
 
-    <div flex layout="row" layout-wrap layout-align="start center" class="card padding-2x">
+    <div flex layout="row" layout-align="space-between center" layout-xs="column" layout-align-xs="start center" layout-wrap class="card padding-2x layout-xs-rw-100">
 
-        <md-button ng-if="!profCtrl.isInEditMode"  class="md-primary" layout="row" layout-align="center center" ng-click="profCtrl.enableEdit();">
-            <md-icon class="material-icons margin-left-0 margin-right-default">mode_edit</md-icon>
-            {{::$i18n.page.profile.actions.edit}}
-        </md-button>
+        <div layout="row" layout-xs="column" layout-align="start center" layout-wrap class="layout-xs-rw-100">
 
-        <md-button ng-if="profCtrl.isInEditMode" class="md-primary" layout="row" layout-align="center center" ng-click="profCtrl.cancelEdit();">
-            <md-icon class="material-icons margin-left-0 margin-right-default">cancel</md-icon>
-            {{::$i18n.page.profile.actions.cancel}}
-        </md-button>
+            <md-button ng-if="!profCtrl.isInEditMode" layout="row" layout-align="center center" class="md-primary layout-xs-rw-100" ng-click="profCtrl.enableEdit();">
+                <md-icon class="material-icons margin-left-0 margin-right-default">mode_edit</md-icon>
+                {{::$i18n.page.profile.actions.edit}}
+            </md-button>
 
-        <md-button ng-if="profCtrl.isInEditMode" class="md-primary" layout="row" layout-align="center center" ng-click="profCtrl.updateUser();">
-            <md-icon class="material-icons margin-left-0 margin-right-default">done</md-icon>
-            {{::$i18n.page.profile.actions.submit}}
-        </md-button>
+            <md-button ng-if="profCtrl.isInEditMode" layout="row" layout-align="center center" class="md-warn layout-xs-rw-100" ng-click="profCtrl.cancelEdit();">
+                <md-icon class="material-icons margin-left-0 margin-right-default">cancel</md-icon>
+                {{::$i18n.page.profile.actions.cancel}}
+            </md-button>
 
-        <md-button layout="row" layout-align="center center" ng-click="profCtrl.openChangePswDialog();">
+            <md-button ng-if="profCtrl.isInEditMode" layout="row" layout-align="center center" class="md-primary layout-xs-rw-100" ng-click="profCtrl.updateUser();">
+                <md-icon class="material-icons margin-left-0 margin-right-default">done</md-icon>
+                {{::$i18n.page.profile.actions.submit}}
+            </md-button>
+
+        </div>
+
+        <md-button layout="row" layout-align="center center" class="layout-xs-rw-100" ng-click="profCtrl.openChangePswDialog();">
             <md-icon class="material-icons card-icon margin-left-0 margin-right-default">lock_open</md-icon>
             {{::$i18n.page.profile.actions.changePsw}}
         </md-button>
