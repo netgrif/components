@@ -138,6 +138,7 @@ define([], function () {
             modelDelete: false,
             inviteUserWithNoProcessRoles: true,
             browserSupportNotification: true,
+            editProfile: true,
 
             cases: {
                 caseDelete: true,

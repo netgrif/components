@@ -149,17 +149,17 @@
 
         <div layout="row" layout-xs="column" layout-align="start center" layout-wrap class="layout-xs-rw-100">
 
-            <md-button ng-if="!profCtrl.isInEditMode" layout="row" layout-align="center center" class="md-primary layout-xs-rw-100" ng-click="profCtrl.enableEdit();">
+            <md-button ng-if="!profCtrl.isInEditMode && $config.enable.editProfile" layout="row" layout-align="center center" class="md-primary layout-xs-rw-100" ng-click="profCtrl.enableEdit();">
                 <md-icon class="material-icons margin-left-0 margin-right-default">mode_edit</md-icon>
                 {{::$i18n.page.profile.actions.edit}}
             </md-button>
 
-            <md-button ng-if="profCtrl.isInEditMode" layout="row" layout-align="center center" class="md-warn layout-xs-rw-100" ng-click="profCtrl.cancelEdit();">
+            <md-button ng-if="profCtrl.isInEditMode && $config.enable.editProfile" layout="row" layout-align="center center" class="md-warn layout-xs-rw-100" ng-click="profCtrl.cancelEdit();">
                 <md-icon class="material-icons margin-left-0 margin-right-default">cancel</md-icon>
                 {{::$i18n.page.profile.actions.cancel}}
             </md-button>
 
-            <md-button ng-if="profCtrl.isInEditMode" layout="row" layout-align="center center" class="md-primary layout-xs-rw-100" ng-click="profCtrl.updateUser();">
+            <md-button ng-if="profCtrl.isInEditMode && $config.enable.editProfile" layout="row" layout-align="center center" class="md-primary layout-xs-rw-100" ng-click="profCtrl.updateUser();">
                 <md-icon class="material-icons margin-left-0 margin-right-default">done</md-icon>
                 {{::$i18n.page.profile.actions.submit}}
             </md-button>

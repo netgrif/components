@@ -1,8 +1,8 @@
 define(['angular', '../modules/Main'],
     function (angular) {
         angular.module('ngMain').controller('ProfileController',
-            ['$http', '$log', '$scope', '$snackbar', '$auth', '$user', '$process', '$i18n', '$rootScope', '$dialog', '$orgs',
-                function ($http, $log, $scope, $snackbar, $auth, $user, $process, $i18n, $rootScope, $dialog, $orgs) {
+            ['$http', '$log', '$scope', '$snackbar', '$auth', '$user', '$process', '$i18n', '$rootScope', '$dialog', '$orgs', '$config',
+                function ($http, $log, $scope, $snackbar, $auth, $user, $process, $i18n, $rootScope, $dialog, $orgs, $config) {
                     const self = this;
 
                     const TOTAL_INPUTS = 3;
@@ -140,6 +140,9 @@ define(['angular', '../modules/Main'],
                     };
 
                     self.updateUser = function () {
+                        if (!$config.enable.editProfile)
+                            return;
+
                         let updates = {
                             avatar: self.user.avatar,
                             telNumber: self.user.telNumber,
