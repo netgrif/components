@@ -115,11 +115,14 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     };
 
     CaseTab.prototype.saveHeaders = function () {
-        this.$user.savePreferenceCaseHeaders(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, Object.values(this.headers.selected).map(header => {
-            if (header.process)
-                return header.process + "-" + header.stringId;
-            return header.stringId;
-        }));
+        let headers = Object.values(this.headers.selected)
+            .filter(header => { return !!header })
+            .map(header => {
+                if (header.process)
+                    return header.process + "-" + header.stringId;
+                return header.stringId;
+            });
+        this.$user.savePreferenceCaseHeaders(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, headers);
     };
 
     CaseTab.prototype.flipDirection = function (dir) {

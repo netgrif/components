@@ -139,19 +139,23 @@ define(['angular', '../modules/Main'], function (angular) {
                 return this.preferences.caseViewHeaders[key];
             },
 
-            savePreference: function () {
+            savePreference: function (callback = angular.noop) {
                 $http.post("/api/user/preferences", this.preferences).then(response => {
                     $log.info(response);
+                    callback && callback(true);
                 }, error => {
                     $log.debug(error);
+                    callback && callback(false);
                 });
             },
 
-            loadPreferences: function () {
+            loadPreferences: function (callback = angular.noop) {
                 $http.get("/api/user/preferences").then(response => {
                     this.preferences = response;
+                    callback && callback(true);
                 }, error => {
                     $log.debug(error);
+                    callback && callback(false);
                 });
             }
         };
