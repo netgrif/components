@@ -49,7 +49,9 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                     $timeout,
                                     $mdExpansionPanelGroup,
                                     $i18n,
-                                    $process
+                                    $process,
+                                    $rootScope,
+                                    $config
                                 }, {
                                     allowHighlight: $config.enable.cases.allowHighlight,
                                     autoOpenUnfinished: $config.enable.cases.autoOpenUnfinished,
@@ -86,6 +88,14 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                             self.caseTab.load(false);
                         }
                     });
+
+                    const noTasksListener = $rootScope.$on("noTasks", (event) => {
+                        if (self.taskTabs && self.taskTabs.length > 0)
+                            self.closeTab(this.activeTab.useCase.stringId);
+                    });
+
                     $scope.$on('$destroy', navClickListener);
+                    $scope.$on('$destroy', noTasksListener);
+
                 }]);
     });
