@@ -96,6 +96,11 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
 
                     $scope.$on('$destroy', navClickListener);
                     $scope.$on('$destroy', noTasksListener);
+                    $scope.$on('$destroy', function() {
+                        self.caseTab.searchInput=undefined;
+                        self.caseTab.search();
+                        $scope.$emit('reloadCounters');
+                    });
 
                 }]);
     });

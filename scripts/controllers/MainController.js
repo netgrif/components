@@ -110,6 +110,13 @@ define(['angular', '../classes/Filter', '../modules/Main', '../services/Loading'
                     self.reloadCounters();
                 // self.setCounter(data.viewId, data.count);
             });
+
+            const reloadCountersListener = $rootScope.$on("reloadCounters", (event) => {
+                self.reloadCounters();
+            });
+
             $scope.$on('$destroy', tabContentLoadListener);
+            $scope.$on('$destroy', reloadCountersListener);
+
         }]);
 });

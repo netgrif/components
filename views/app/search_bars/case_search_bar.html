@@ -4,10 +4,10 @@
         <md-input-container flex-gt-xs="30" flex-xs class="md-block">
             <md-icon class="material-icons color-fg-primary-500">search</md-icon>
             <label>{{::$i18n.block.input.search}}</label>
-            <input type="search" ng-model="tab.searchInput" title="" ng-keypress="$event.which === 13 && tab.search()">
+            <input type="search" ng-model="tab.searchInput" title="" ng-keypress="$event.which === 13 && tab.search();mainCtrl.reloadCounters()">
         </md-input-container>
         <md-button ng-if="tab.searchInput" class="md-icon-button color-fg-material-grey-text" aria-label="clear_search"
-                   ng-click="tab.searchInput=undefined;tab.search()">
+                   ng-click="tab.searchInput=undefined;tab.search();mainCtrl.reloadCounters()">
             <md-icon class="material-icons">clear</md-icon>
         </md-button>
     </div>
