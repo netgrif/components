@@ -139,6 +139,7 @@ define([], function () {
             inviteUserWithNoProcessRoles: true,
             browserSupportNotification: true,
             closeTaskTabOnNoTasks: false,
+            downloadHighlight: true,
 
             cases: {
                 caseDelete: true,

@@ -41489,6 +41489,9 @@ span.highlight {
   color: #0047BA !important;
   font-weight: 500; }
 
+.file-name-highlight {
+  color: #5E35B1 !important; }
+
 .img-responsive {
   width: 100%;
   height: auto; }
