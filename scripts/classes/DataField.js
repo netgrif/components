@@ -35,6 +35,14 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
     DataField.prototype = Object.create(HalResource.prototype);
     DataField.prototype.constructor = DataField;
 
+    DataField.prototype.getTemplate = function() {
+        if (!this.view) {
+            return this.type;
+        }
+
+        return this.type + "_" + this.view.value;
+    };
+
     DataField.prototype.format = function (value) {
         if (this.type === "text" && value === null)
             return null;
