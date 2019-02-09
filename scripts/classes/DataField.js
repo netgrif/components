@@ -137,6 +137,16 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         return undefined;
     };
 
+    DataField.prototype.saveMultichoiceList = function(choice) {
+        if (this.value.includes(choice)) {
+            this.value = this.value.filter(item => item !== choice);
+        } else {
+            this.value.push(choice);
+        }
+        this.newValue = this.value;
+        this.parent.save();
+    };
+
     /**
      * Function for UserField
      * @param {Object} user - $user service is injected if user has chosen 'Self' option
