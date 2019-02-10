@@ -43420,6 +43420,16 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .data-field md-input-container .md-errors-spacer {
   min-height: 0 !important; }
 
+.base .data-field md-input-container md-radio-group md-radio-button.md-checked {
+  color: #009688; }
+  .base .data-field md-input-container md-radio-group md-radio-button.md-checked div.md-container.md-ink-ripple > div.md-on {
+    background-color: #009688; }
+  .base .data-field md-input-container md-radio-group md-radio-button.md-checked div.md-container.md-ink-ripple > div.md-off {
+    border-color: #009688; }
+
+.base .data-field md-input-container md-checkbox.md-checked .md-icon {
+  background: #009688; }
+
 .base .data-field-title {
   font-size: 16px;
   font-weight: 400; }

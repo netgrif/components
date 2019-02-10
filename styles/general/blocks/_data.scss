@@ -6,6 +6,28 @@
             min-height: 0 !important;
         }
 
+        md-input-container {
+
+            md-radio-group md-radio-button.md-checked {
+                color: $color-primary-500;
+
+                div.md-container.md-ink-ripple > div.md-on {
+                    background-color: $color-primary-500;
+                }
+
+                div.md-container.md-ink-ripple > div.md-off {
+                    border-color: $color-primary-500;
+                }
+            }
+
+            md-checkbox.md-checked {
+
+                .md-icon {
+                    background: $color-primary-500;
+                }
+            }
+        }
+
         &-title {
             font-size: 16px;
             font-weight: 400;
