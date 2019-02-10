@@ -12,7 +12,7 @@
     <div hide-xs flex="5"></div>
 
     <div flex="45" flex-xs="100">
-        <md-input-container flex="100" class="md-block" ng-class="field.valid ? '':' md-input-invalid'" style="min-height: fit-content">
+        <md-input-container flex="100" class="md-block" ng-class="{'md-input-invalid': field.valid, 'dyn-height': true}">
             <md-radio-group flex="100" id="{{'data-'+field.parent.stringId+'-'+field.stringId}}"
                             ng-model="field.newValue"
                             ng-change="field.changed = true;field.parent.save()"

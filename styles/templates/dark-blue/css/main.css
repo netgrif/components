@@ -43426,6 +43426,11 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   font-size: 16px;
   font-weight: 400; }
 
+.base .data-field .dyn-height {
+  min-height: -webkit-fit-content;
+  min-height: -moz-fit-content;
+  min-height: fit-content; }
+
 .base .data-field md-menu md-icon {
   color: #FAFAFA !important; }
 
