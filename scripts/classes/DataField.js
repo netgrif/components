@@ -12,9 +12,6 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         HalResource.call(this, links);
         this.parent = parent;
         Object.assign(this, resource, angular);
-        if (this.type === "multichoice" && this.view && this.view.value === "list") {
-            this.multiNewValue = {};
-        }
         this.newValue = this.parse(this.value);
         if (this.validationJS) this.validate = new Function("value", this.validationJS);
         else this.validate = new Function("", "return true;");
@@ -129,6 +126,7 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
             return DataField.roundToTwo(value);
         }
         if (this.type === "multichoice" && this.view && this.view.value === "list" && value) {
+            this.multiNewValue = {};
             value.forEach(v => {
                 if (v.defaultValue) {
                     this.multiNewValue[v.defaultValue] = true;
