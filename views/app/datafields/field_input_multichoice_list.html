@@ -12,14 +12,15 @@
     <div hide-xs flex="5"></div>
 
     <div flex="45" flex-xs="100">
-        <md-input-container flex="100" class="md-block" ng-class="{'md-input-invalid': field.valid, 'dyn-height': true}">
-            <md-list flex="100" id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" style="min-height: fit-content"
+        <md-input-container flex="100" class="md-block fill-content" ng-class="{'md-input-invalid': field.valid, 'min-height-fit-content': true}">
+            <md-list flex="100" id="{{'data-'+field.parent.stringId+'-'+field.stringId}}"
                      ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)">
 
-                <md-list-item flex="100" ng-repeat="choice in field.choices"
+                <md-list-item flex="100" ng-repeat="choice in field.choices" class="word-break-all"
                               ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
                               aria-label="Select Choice">
-                    <p> {{ choice }} </p>
+                    <!--<span ng-class="!(field.parent.user.email == $user.login && field.behavior.editable) ? 'color-fg-black-op-38' : ''">{{ choice }}</span>-->
+                    <span ng-class="{'color-fg-black-op-38': !(field.parent.user.email == $user.login && field.behavior.editable)}">{{ choice }}</span>
                     <md-checkbox class="md-secondary"
                                  ng-model="field.multiNewValue[choice]"
                                  ng-change="field.changed = true;field.saveMultichoiceList(choice)"
