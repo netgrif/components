@@ -7,8 +7,8 @@ define(['angular', '../modules/Main'], function (angular) {
                     element.ready(function () {
                         $timeout(function () {
                             const childElementType = attrs['dynamicList'];
-                            // const numberOfItems = attrs['items'];
-                            const numberOfItems = 2;
+                            const numberOfItems = attrs['items'];
+
                             if (!childElementType || !numberOfItems) {
                                 console.log("!childElementType || !numberOfItems");
                                 return;
