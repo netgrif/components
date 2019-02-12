@@ -114,7 +114,7 @@ md-dialog {
 }
 
 // Default
-md-input-container.md-block {
+md-input-container.md-block:not(.fill-content) {
     height: 39px !important;
 }
 

@@ -282,7 +282,7 @@
                     </div>
 
                     <div ng-repeat="field in group.data" ng-if="!field.behavior.hidden && !field.behavior.forbidden" flex="{{group.stretch ? '100' : '50'}}" flex-md="100" flex-sm="100" flex-xs="100">
-                        <div flex ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak></div>
+                        <div flex ng-include="'views/app/datafields/field_input_'+field.getTemplate()+'.html'" ng-cloak></div>
                         <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
                     </div>
 

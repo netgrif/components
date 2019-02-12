@@ -35,6 +35,14 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
     DataField.prototype = Object.create(HalResource.prototype);
     DataField.prototype.constructor = DataField;
 
+    DataField.prototype.getTemplate = function() {
+        if (!this.view) {
+            return this.type;
+        }
+
+        return this.type + "_" + this.view.value;
+    };
+
     DataField.prototype.format = function (value) {
         if (this.type === "text" && value === null)
             return null;
@@ -117,6 +125,16 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         else if (this.type === "number") {
             return DataField.roundToTwo(value);
         }
+        if (this.type === "multichoice" && this.view && this.view.value === "list" && value) {
+            this.multiNewValue = {};
+            value.forEach(v => {
+                if (v.defaultValue) {
+                    this.multiNewValue[v.defaultValue] = true;
+                } else {
+                    this.multiNewValue[v] = true;
+                }
+            });
+        }
         return value;
     };
 
@@ -127,6 +145,16 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
                 value: this.format(this.newValue)
             };
         return undefined;
+    };
+
+    DataField.prototype.saveMultichoiceList = function(choice) {
+        if (this.value.includes(choice)) {
+            this.value = this.value.filter(item => item !== choice);
+        } else {
+            this.value.push(choice);
+        }
+        this.newValue = this.value;
+        this.parent.save();
     };
 
     /**
