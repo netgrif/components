@@ -137,6 +137,27 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                         ])
                     };
 
+                    self.getAssignTitle = function () {
+                        if (self.assignTitle)
+                            return self.assignTitle;
+                        return $i18n.block.btn.assign;
+                    };
+                    self.getFinishTitle = function () {
+                        if (self.finishTitle)
+                            return self.finishTitle;
+                        return $i18n.block.btn.finish;
+                    };
+                    self.getCancelTitle = function () {
+                        if (self.cancelTitle)
+                            return self.cancelTitle;
+                        return $i18n.block.btn.cancel;
+                    };
+                    self.getDelegateTitle = function () {
+                        if (self.delegateTitle)
+                            return self.delegateTitle;
+                        return $i18n.block.btn.delegate;
+                    };
+
                     /*--- Inner objects ---*/
                     function Chain(success = [], failure = [], always = []) {
                         this.success = success;
