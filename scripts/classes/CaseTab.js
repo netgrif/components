@@ -290,6 +290,22 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
             this.newCase.title = this.getDefaultCaseTitle();
     };
 
+    /**
+     * Check if all the space in md-content is taken by md-tab (if inview is not in view) and load next page if needed
+     */
+    CaseTab.prototype.checkSize = function() {
+        let self = this;
+        if (self.page.next) {
+            this.$timeout(() => {
+                let tab = angular.element("md-tabs")[0].offsetHeight;
+                let content = angular.element("md-content")[0].offsetHeight;
+                if (content / tab > 0.9) {
+                    self.load(true);
+                }
+            }, 0);
+        }
+    };
+
     CaseTab.prototype.createCase = function () {
         if (this.allowedNets.length === 0 || jQuery.isEmptyObject(this.newCase)) {
             this.$dialog.closeCurrent();
