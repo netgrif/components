@@ -1,4 +1,4 @@
-<div ng-cloak layout="column" layout-align="center center" class="layout-rh-100-min-550">
+<div ng-cloak layout="column" layout-align="center center" class="layout-rh-100-min-550 background-auth">
     <md-card layout-gt-xs="row" layout-xs="column" layout-align="center center" layout-padding class="card-signup">
 
         <div flex-gt-xs="50" flex-xs="100" layout="column" layout-align="center center">
@@ -11,10 +11,6 @@
 
             <div ng-include="'views/app/forms/signup_form.html'"></div>
 
-        </div>
-
-        <div layout="row" layout-sm="column" layout-align="center center" class="padding-default margin-horizontal-default" ng-show="loginCtrl.loading">
-            <md-progress-circular md-mode="indeterminate" ng-disabled="!loginCtrl.loading" class="md-primary" md-diameter="50"></md-progress-circular>
         </div>
 
     </md-card>

@@ -1,0 +1,9 @@
+<div flex layout="row" layout-align="start center">
+    <i ng-if="$ctrl.field.value" class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+    <div class="cursor-pointer">
+        {{$ctrl.field.value.fullName}}
+        <md-tooltip>
+            {{$ctrl.field.value.email}}
+        </md-tooltip>
+    </div>
+</div>

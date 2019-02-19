@@ -1,0 +1,61 @@
+<div layout="row" layout-align="start center" class="card-header padding-horizontal-2x">
+
+    <a ng-if="taskView.taskCaseTitle" flex-gt-md="20" flex-md="25" flex-sm="35" flex-xs="30" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('caseTitle')">
+        {{::$i18n.block.task.header.case}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <a ng-if="taskView.taskCaseTitle && taskView.taskPriority" flex-gt-sm="25" flex-sm="35" flex-xs="50" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+        {{::$i18n.block.task.header.title}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <a ng-if="!taskView.taskCaseTitle && taskView.taskPriority" flex-gt-md="45" flex-md="50" flex-sm="70" flex-xs="80" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+        {{::$i18n.block.task.header.title}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <a ng-if="taskView.taskCaseTitle && !taskView.taskPriority" flex-gt-md="35" flex-md="40" flex-sm="65" flex-xs="50" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+        {{::$i18n.block.task.header.title}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <a ng-if="!taskView.taskCaseTitle && !taskView.taskPriority" flex-gt-md="55" flex-md="65" flex-sm="90" flex-xs="80" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('title')">
+        {{::$i18n.block.task.header.title}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <a ng-if="taskView.taskPriority" hide hide-xs show-gt-xs flex-gt-md="10" flex-gt-sm="15" flex-gt-xs="20" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('priority')">
+        {{::$i18n.block.task.header.priority}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <a hide show-gt-sm flex-gt-md="20" flex-gt-sm="25" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('username')">
+        {{::$i18n.block.task.header.user}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <a hide show-gt-md flex="15" href="javascript:void(0)" ng-click="tasksCtrl.setSortField('startDate')">
+        {{::$i18n.block.task.header.assignDate}}
+        <md-icon class="material-icons">
+            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+        </md-icon>
+    </a>
+
+    <div flex-gt-xs="10" flex-xs="20"></div> <!-- Menu / Loader -->
+
+</div> <!-- ./card -->

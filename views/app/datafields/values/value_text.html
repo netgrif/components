@@ -1,0 +1,7 @@
+<div>
+    {{($ctrl.field.value | limitTo:100)}}{{(($ctrl.field.value && $ctrl.field.value.length > 100 )? '...' : '')}}
+    <!--TODO: turn of on mobile phones-->
+    <md-tooltip ng-if="$ctrl.field.value && $ctrl.field.value.length > 100" class="value-text-tooltip">
+        {{ $ctrl.field.value }}
+    </md-tooltip>
+</div>

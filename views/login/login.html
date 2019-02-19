@@ -1,5 +1,5 @@
-<div ng-cloak layout="column" layout-align="center center" class="layout-rh-100-min-400">
-	<md-card layout-gt-xs="row" layout-xs="column" layout-align="center center" layout-padding class="card-login">
+<div ng-cloak layout="column" layout-align="center center" class="layout-rh-100-min-400 background-auth">
+	<md-card layout-gt-xs="row" layout-xs="column" layout-align="center center" layout-padding class="card-signin">
 
 		<div flex-gt-xs="50" flex-xs="100" layout="column" layout-align="center center">
 
@@ -9,8 +9,8 @@
 
 		<div flex-gt-xs="50" flex-xs="100">
 
-			<div ng-if="!loginCtrl.displaySignUpForm" ng-include="'views/app/forms/signin_form.html'"></div>
-			<div ng-if="loginCtrl.displaySignUpForm" ng-include="'views/app/forms/signin_send_email_form.html'"></div>
+			<div ng-if="loginCtrl.activeView.name === 'login'" ng-include="'views/app/forms/signin_form.html'"></div>
+			<div ng-if="loginCtrl.activeView.name === 'invite' || loginCtrl.activeView.name === 'reset'" ng-include="'views/app/forms/signin_send_email_form.html'"></div>
 
 		</div>
 

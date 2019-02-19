@@ -1,0 +1,6 @@
+<md-input-container class="md-block margin-0">
+    <md-switch ng-model="value" ng-disabled="true" class="md-primary margin-0 layout-rh-100">
+        <span ng-if="$ctrl.field.value">{{::$i18n.block.data.yes}}</span>
+        <span ng-if="!$ctrl.field.value">{{::$i18n.block.data.no}}</span>
+    </md-switch>
+</md-input-container>

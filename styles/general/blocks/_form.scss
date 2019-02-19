@@ -1,0 +1,47 @@
+//@import '../../templates/default/scss/config';
+
+.form {
+
+    &-signin, &-signup, &-self-registration {
+
+        md-input-container {
+
+            .material-icons {
+                color: $color-auth-icon;
+            }
+        }
+    }
+
+    &-btn {
+
+        &-submit {
+            color: $color-signin-btn-text;
+            background-color: $color-signin-btn-bg;
+
+            &:hover {
+                color: $color-signin-btn-text-hover;
+                background-color: $color-signin-btn-bg-hover;
+            }
+        }
+
+        &-signup {
+            color: $color-signup-btn-text;
+            background-color: $color-signup-btn-bg;
+
+            &:hover {
+                color: $color-signup-btn-text-hover;
+                background-color: $color-signup-btn-bg-hover;
+            }
+        }
+
+        &-forgotPsw {
+            color: $color-forgotPsw-btn-text;
+            background-color: $color-forgotPsw-btn-bg;
+
+            &:hover {
+                color: $color-forgotPsw-btn-text-hover;
+                background-color: $color-forgotPsw-btn-bg-hover;
+            }
+        }
+    }
+}

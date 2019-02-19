@@ -1,0 +1,80 @@
+//@import '../../templates/default/scss/config';
+@import '../dims';
+
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+
+    md-icon {
+        color: $color-toolbar-icon;
+
+        &.color-fg-primary-500 {
+            color: $color-primary-500;
+        }
+    }
+
+    span {
+        color: $color-toolbar-text;
+    }
+}
+
+.main-toolbar {
+    height: $dim-56px;
+    min-height: $dim-56px;
+    background-color: $color-toolbar-bg;
+
+    .toolbar-text {
+        color: $color-toolbar-hamburger;
+    }
+
+    .app-name {
+        color: $color-toolbar-app-name;
+    }
+
+    md-menu-bar {
+
+        md-menu {
+            margin: 0;
+        }
+    }
+
+    md-icon {
+        color: $color-toolbar-hamburger !important;
+        fill: $color-toolbar-hamburger !important;
+    }
+
+    &-logo {
+        height: 100%;
+
+        img {
+            height: $logo-toolbar-height;
+            width: $logo-toolbar-width;
+        }
+    }
+
+    .material-icons {
+        color: $color-toolbar-icon;
+    }
+
+    &-btn {
+        height: 100%;
+        margin: 0;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 20px;
+        text-transform: none;
+
+        span {
+            color: $color-toolbar-btn-text !important;
+        }
+
+        .material-icons {
+            font-size: $dim-48px;
+            margin-left: $dim-2x;
+            color: $color-toolbar-btn-icon;
+        }
+    }
+
+    // Dim too bright white menu color on focus
+    md-menu-bar.md-default-theme md-menu.md-open > button, md-menu-bar md-menu.md-open > button, md-menu-bar.md-default-theme md-menu > button:focus, md-menu-bar md-menu > button:focus {
+        background: $color-toolbar-btn-bg-focus !important;
+    }
+}

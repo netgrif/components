@@ -1,26 +1,30 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab, Filter) {
         angular.module('ngCases').controller('CasesController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config', '$filterRepository',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
                     const self = this;
 
+                    self.viewId = $config.show.cases.viewId;
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
-                    self.caseTab = new CaseTab("Cases", this, {
+                    self.caseHeaders = $user.getPreference(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
+                    self.caseTab = new CaseTab("Cases", this, $filterRepository.get(self.viewId), {
                         $http,
                         $dialog,
                         $snackbar,
                         $user,
                         $fileUpload,
                         $timeout,
-                        $i18n
+                        $i18n,
+                        $process
                     }, {
-                        // processName: "Insurance Demo", //process name
-                        // filter: [CaseTab.FIND_BY_AUTHOR, CaseTab.FIND_BY_PETRINET],
-                        //transitionNames: ["Nehnuteľnosť a domácnosť", "Základné informácie", "Údaje o zmluve"],
-                        //caseType: "regular"
+                        caseDelete: $config.enable.cases.caseDelete,
+                        viewId: self.viewId,
+                        authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
+                        allowedNets: $process.nets,
+                        preselectedHeaders: self.caseHeaders ? self.caseHeaders : ["meta-visualId", "meta-title", "meta-author", "meta-creationDate"]
                     });
 
                     self.tabChanged = function () {
@@ -37,18 +41,25 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                             self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title,
                                 new Filter("Default By Case", Filter.CASE_TYPE, "{\"case\": \"" + useCase.stringId + "\"}"),
                                 useCase, {
-                                $http,
-                                $snackbar,
-                                $dialog,
-                                $user,
-                                $fileUpload,
-                                $timeout,
-                                $mdExpansionPanelGroup,
-                                $i18n
-                            }, {
-                                showTransactions: true,
-                                allowHighlight: true
-                            }));
+                                    $http,
+                                    $snackbar,
+                                    $dialog,
+                                    $user,
+                                    $fileUpload,
+                                    $timeout,
+                                    $mdExpansionPanelGroup,
+                                    $i18n,
+                                    $process
+                                }, {
+                                    allowHighlight: $config.enable.cases.allowHighlight,
+                                    autoOpenUnfinished: $config.enable.cases.autoOpenUnfinished,
+                                    searchable: $config.show.cases.taskSearch,
+                                    fullReload: $config.enable.cases.fullReload,
+
+                                    showTransactions: $config.show.cases.transactions,
+                                    taskPriority: $config.show.cases.taskPriority,
+                                    taskCaseTitle: $config.show.cases.taskCaseTitle
+                                }));
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
 
@@ -60,6 +71,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                             self.taskTabs.splice(index, 1);
                             self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
                         }
+                        self.caseTab.load(false);
                     };
 
                     if ($cache.get("dashboard") && $cache.get("dashboard").cases) {
@@ -67,14 +79,11 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         self.activeTabIndex = self.taskTabs.length;
                         $cache.remove("dashboard");
                     }
-                    if ($cache.get("create") && $cache.get("create").cases) {
-                        self.caseTab.openNewCaseDialog($i18n.page.cases.this);
-                        $cache.remove("create");
-                    }
-                    const caseCreateListener = $rootScope.$on("caseCreate", (event, type) => {
-                        if (type === "cases")
-                            self.caseTab.openNewCaseDialog($i18n.page.cases.this);
+
+                    const navClickListener = $rootScope.$on("navClick", (event, data) => {
+                        if (data.item === self.viewId)
+                            self.activeTabIndex = 0;
                     });
-                    $scope.$on('$destroy', () => caseCreateListener());
+                    $scope.$on('$destroy', navClickListener);
                 }]);
     });

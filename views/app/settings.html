@@ -1,0 +1,75 @@
+<div ng-cloak flex layout="column" class="padding-2x">
+
+    <div hide show-gt-sm flex="100" layout="row" layout-align="start center" class="margin-top-2x">
+        <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+        <span class="margin-horizontal-default font-size-22">{{::$i18n.page.settings.this}}</span>
+        <div flex class="line-3px color-bg-primary-op-50"></div>
+    </div>
+
+    <md-divider hide show-gt-sm class="border-width-2x color-border-transparent"></md-divider>
+
+    <div layout="column" layout-align="start start" class="card padding-2x">
+
+        <div flex="100" layout="row" layout-align="start center" class="layout-rw-100">
+            <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+            <span class="margin-horizontal-default font-size-22">{{::$i18n.page.settings.userSignUp}}</span>
+            <div flex class="line-3px color-bg-primary-op-50"></div>
+        </div>
+
+        <div layout="row" layout-align="space-between center" class="layout-rw-100">
+
+            <span>{{::$i18n.page.settings.enableUserSignUp}}</span>
+
+            <ng-form name="userSignUpPolicy">
+
+                <md-input-container>
+                    <md-switch ng-model="settCtrl.changeUserSignUpPolicy"
+                               aria-label="Switch" disabled>
+                        <span ng-if="settCtrl.changeUserSignUpPolicy">{{::$i18n.block.data.enable}}</span>
+                        <span ng-if="!settCtrl.changeUserSignUpPolicy">{{::$i18n.block.data.disable}}</span>
+                    </md-switch >
+                </md-input-container>
+
+            </ng-form>
+
+        </div>
+
+        <div flex="100" layout="row" layout-align="start center" class="layout-rw-100 margin-bottom-2x">
+            <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+            <span class="margin-horizontal-default font-size-22">{{::$i18n.page.settings.processRolesForSignedUpUser}}</span>
+            <div flex class="line-3px color-bg-primary-op-50"></div>
+        </div>
+
+        <div layout="row" layout-align="space-between center" class="layout-rw-100" ng-repeat="(id, process) in settCtrl.processes">
+
+            <div flex="40" layout="row" layout-align="start center">
+
+                <span flex-gt-xs="20" flex-xs class="color-fg-primary-500 font-weight-600">
+                    {{process.initials}}
+                    <md-tooltip hide-gt-xs md-direction="bottom">
+                        {{process.name}}
+                    </md-tooltip>
+                </span>
+
+                <span hide-xs flex-gt-xs="80" class="font-weight-600">{{process.name}}</span>
+
+            </div>
+
+            <ng-form flex="60" layout="row" layout-align="end ceneter" name="processRoles">
+
+                <md-input-container class="md-block">
+                    <label>Selected roles</label>
+                    <md-select ng-model="process.selected" ng-model-options="{trackBy: '$value.roleId'}" multiple>
+                        <md-option ng-value="role" ng-repeat="role in process.roles">
+                            {{role.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+            </ng-form>
+
+        </div>
+
+    </div>
+
+</div>

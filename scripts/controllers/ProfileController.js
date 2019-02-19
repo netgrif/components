@@ -1,8 +1,8 @@
 define(['angular', '../modules/Main'],
     function (angular) {
         angular.module('ngMain').controller('ProfileController',
-            ['$http', '$log', '$scope', '$snackbar', '$user', '$i18n', '$rootScope',
-                function ($http, $log, $scope, $snackbar, $user, $i18n, $rootScope) {
+            ['$http', '$log', '$scope', '$snackbar', '$user', '$i18n', '$rootScope', '$dialog',
+                function ($http, $log, $scope, $snackbar, $user, $i18n, $rootScope, $dialog) {
                     const self = this;
 
                     const TOTAL_INPUTS = 4;
@@ -11,7 +11,7 @@ define(['angular', '../modules/Main'],
                     self.completion = 0;
 
                     self.loadProfile = function () {
-                        $http.get("/res/user/me").then(function (response) {
+                        $http.get("/api/user/me").then(function (response) {
                             self.user = response;
                             self.updateCompletion();
                             $log.debug(self.user);
@@ -54,8 +54,12 @@ define(['angular', '../modules/Main'],
                         return inputs;
                     };
 
-                    self.fireInfoSnackbar = function (msg) {
-                        $snackbar.info(msg);
+                    self.openChangePswDialog = function () {
+                        $dialog.showByTemplate('change_psw', this);
+                    };
+
+                    self.changePsw = function () {
+                        // TODO 13.4.2018 Summit change password form
                     };
 
                     self.loadProfile();

@@ -1,0 +1,41 @@
+//@import '../../templates/default/scss/config';
+
+.assign-list {
+
+	md-list-item {
+
+		.md-avatar {
+			margin-top: 14px !important;
+			margin-bottom: 14px !important;
+		}
+
+		.md-list-item-text {
+
+			span {
+				line-height: 24px;
+			}
+		}
+
+		&.selected-tile {
+
+			button {
+				background-color: $color-primary-500;
+				z-index: -1;
+			}
+
+			.md-avatar {
+
+				.material-icons {
+					color: white !important;
+				}
+			}
+
+			.md-list-item-text {
+
+				 span {
+					 color: white !important;
+				 }
+			 }
+		}
+	}
+}

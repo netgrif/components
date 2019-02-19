@@ -1,0 +1,13 @@
+<md-list-item class="card list-item" ng-click="rolesTab.changeUserToRole(user, 'saveByRole')" ng-class="user.selected ? 'list-item-selected' : ''">
+    <div flex layout="row" layout-align="start center">
+
+        <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
+
+        <span>{{user.fullName}}</span>
+
+        <md-tooltip>
+            {{user.email}}
+        </md-tooltip>
+
+    </div>
+</md-list-item>

@@ -5,28 +5,36 @@
 		<md-tab md-on-select="caseCtrl.caseTab.activate()" class="primary">
 
 			<md-tab-label>
-				{{::$i18n.page.cases.my}}
+				{{::$i18n.page.cases.this}}
 			</md-tab-label>
 
 			<md-tab-body>
 				<md-content layout="column" class="color-bg-transparent padding-2x">
 
-					<div ng-include="'views/app/search_bars/case_search_bar.html'"></div>
+					<div ng-init="tab=caseCtrl.caseTab" ng-include="'views/app/search_bars/case_search_bar.html'"></div>
 
 					<md-divider class="border-width-2x color-border-transparent"></md-divider>
 
 					<div flex layout="column">
 
-						<div ng-include="'views/app/headers/case_header.html'"></div>
+						<div ng-init="tab=caseCtrl.caseTab" ng-include="'views/app/headers/case_data_header.html'"></div>
 
 						<md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-						<div ng-include="'views/app/lists/case_list.html'"></div>
+						<div ng-init="tab=caseCtrl.caseTab" ng-include="'views/app/lists/case_data_list.html'"></div>
 
 					</div> <!-- ./column -->
 
-					<div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&caseCtrl.caseTab.load(true)" in-view-options="{ throttle: 0 }">
-						<md-progress-circular md-mode="indeterminate" ng-disabled="!caseCtrl.caseTab.loading" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
+					<div ng-if="!caseCtrl.caseTab.loading && caseCtrl.caseTab.cases.length === 0" layout="column" layout-align="center center" class="color-fg-material-grey-text">
+						<md-divider class="border-width-default color-border-transparent"></md-divider>
+						<md-icon class="material-icons">storage</md-icon>
+						<md-divider class="border-width-2x color-border-transparent"></md-divider>
+						<span class="font-size-20">{{::$i18n.page.cases.noCasesAvailableForThisView}}</span>
+						<md-divider class="border-width-2x color-border-transparent"></md-divider>
+					</div>
+
+					<div layout="row" layout-sm="column" layout-align="center center" class="padding-2x margin-2x" in-view="$inview&&caseCtrl.caseTab.load(true)">
+						<md-progress-circular md-mode="indeterminate" ng-disabled="!caseCtrl.caseTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
 					</div> <!-- ./row -->
 
 				</md-content>
@@ -43,7 +51,7 @@
 			<md-tab-body>
 				<md-content layout="column" class="color-bg-transparent padding-2x">
 
-					<div flex layout="row" layout-align="space-around center" class="card height-48px padding-horizontal-2x">
+					<div ng-if="$config.show.cases.transactions && tab.transactions.length > 0" flex layout="row" layout-align="space-around center" class="card height-48px">
 
 						<span ng-repeat="trans in tab.transactions | orderBy:'stringId'" ng-class="trans.active ? 'active' : ''" class="transaction">
 							{{::trans.title}}
@@ -51,16 +59,25 @@
 
 					</div>
 
-					<md-divider class="border-width-2x color-border-transparent"></md-divider>
+					<md-divider ng-if="$config.show.cases.transactions && tab.transactions.length > 0" class="border-width-2x color-border-transparent"></md-divider>
 
-					<div ng-include="'views/app/headers/task_header.html'"></div>
+					<div ng-init="caseView=$config.show.cases;taskView=$config.show.tasks" ng-include="'views/app/headers/cases_task_header.html'"></div>
 
 					<md-divider class="border-width-2x color-border-transparent"></md-divider>
 
 					<md-expansion-panel-group md-component-id="'caseView-tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple></md-expansion-panel-group>
 
+					<div ng-if="!tab.loading && tab.tasks.length === 0" layout="column" layout-align="center center" class="color-fg-material-grey-text">
+						<md-divider class="border-width-default color-border-transparent"></md-divider>
+						<md-icon class="material-icons">check_box</md-icon>
+						<md-divider class="border-width-2x color-border-transparent"></md-divider>
+						<span class="font-size-20">{{::$i18n.page.cases.noTasksForThisCaseAvailable}}</span>
+						<md-divider class="border-width-default color-border-transparent"></md-divider>
+						<md-button class="md-button" ng-click="caseCtrl.closeTab(tab.useCase.stringId)">{{::$i18n.block.btn.closeTab}}</md-button>
+					</div>
+
 					<div layout="row" layout-align="center center" class="padding-2x margin-2x">
-						<md-progress-circular md-mode="indeterminate" ng-disabled="!tab.loading" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
+						<md-progress-circular md-mode="indeterminate" ng-disabled="!tab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
 					</div>
 
 				</md-content>

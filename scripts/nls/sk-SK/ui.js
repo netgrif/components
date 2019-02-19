@@ -1,34 +1,32 @@
 define({
     test: "Toto je testovací reťazec!",
     version: {
-        this: "Verzia",
-        id: "2.0.0"
+        this: "Verzia"
     },
     page: {
         signIn: {
             email: "Email",
             psw: "Heslo",
-            forgotPsw: "Zabudnuté heslo",
             signIn: "Prihlásiť",
-            signUp: "Registrovať"
+            signUp: "Vytvoriť účet",
+            forgotPsw: "Zabudnuté heslo"
         },
         signUp: {
             email: "Email",
             psw: "Heslo",
             retypePsw: "Opakovať heslo",
             name: "Meno",
-            surname: "Priezvisko",
-            submit: "Registrovať"
+            surname: "Priezvisko"
         },
         dashboard: {
-            this: "Prehľad",
-            offers: "Ponuky",
-            contacts: "Kontakty",
-            contracts: "Zmluvy"
+            this: "Prehľad"
         },
         cases: {
             this: "Prípady",
-            my: "Moje prípady"
+            my: "Moje prípady",
+            all: "Všetky prípady",
+            noCasesAvailableForThisView: "Pre toto zobrazenie neexistujú žiadne prípady",
+            noTasksForThisCaseAvailable: "V tomto prípade už pre Vás nie sú žiadne úlohy"
         },
         tasks: {
             this: "Úlohy",
@@ -38,6 +36,7 @@ define({
                 category: "Kategória",
                 search: "Hľadať"
             },
+            noTasksSatisfyingThisFilter: "Pre tento filter nie sú vyhovujúce žiadne úlohy",
             filter: {
                 process: "Proces",
                 type:"Typ",
@@ -61,11 +60,18 @@ define({
                 }
             }
         },
+        documents: {
+            this: "Organizácie"
+        },
+        contacts: {
+            this: "Kontakty"
+        },
         workflow: {
             this: "Workflow",
             uploadModel: "Nahrať model",
             initials: "Iniciály",
             modelTitle: "Názov modelu",
+            version: "Verzia",
             author: "Autor",
             uploadDate: "Dátum nahrania",
             data: {
@@ -74,10 +80,18 @@ define({
                     statistics: "Štatistiky"
                 },
                 item: {
+                    identifier: {
+                        title: "Identifikátor",
+                        desc: "Jedinečný identifikátor modelu",
+                    },
                     file: {
                         title: "Súbor",
                         desc: "Petriflow model použitý ako šablóna",
                         download: "Stiahnuť"
+                    },
+                    version: {
+                        title: "Verzia",
+                        desc: "Verzia modelu"
                     },
                     author: {
                         title: "Autor",
@@ -136,13 +150,12 @@ define({
             newUser: "Nový používateľ",
             orgs: "Organizácie",
             roles: "Roly",
+            users: "Používatelia",
             processRolesLower: "Procesné roly",
             process: "Proces",
             processRoles: "Procesné roly",
             thereIsNoOrgAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu organizáciu",
-            thereIsNoRoleAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu rolu",
-            configuration: "Nastavenia",
-            userSignUp: "Povoliť registráciu používateľov"
+            thereIsNoRoleAssignedToThisUserYet: "Tento používateľ ešte nemá priradenú žiadnu rolu"
         },
         profile: {
             this: "Profil",
@@ -172,6 +185,12 @@ define({
                 edit: "Upraviť",
                 changePsw: "Zmeniť heslo"
             }
+        },
+        settings: {
+            this: "Nastavenia",
+            userSignUp: "Registrácia používateľov",
+            enableUserSignUp: "Povoliť registráciu používateľov",
+            processRolesForSignedUpUser: "Procesné roli zaregistrovaného používateľa"
         }
     },
     block: {
@@ -187,6 +206,7 @@ define({
         },
         btn: {
             delete: "Vymazať",
+            download: "Stiahnuť",
             invite: "Pozvať",
             save: "Uložiť",
             edit: "Upraviť",
@@ -198,25 +218,32 @@ define({
             cancel: "Zrušiť",
             reset: "Reset",
             search: "Hľadať",
-            apply: "Použiť"
+            apply: "Použiť",
+            submit: "Potvrdiť",
+            closeTab: "Zavrieť kartu"
         },
         mainMenu: {
-            profile: "Profil",
             lang: {
                 this: "Jazyk",
                 en: "Anglický",
                 sk: "Slovenský"
             },
+            profile: "Profil",
+            settings: "Nastavenia",
             logout: "Odhlásiť"
         },
         case: {
             this: "Prípad",
             header: {
+                metaData: "meta dáta",
                 label: "Typ",
                 visualID: "Vizuálne ID",
                 title: "Názov",
                 author: "Autor",
-                createDate: "Dátum vytvorenia"
+                createDate: "Dátum vytvorenia",
+                optional: "Voliteľné pole",
+                enableEditMode: "Povoliť úpravy",
+                confirmChanges: "Potvrdiť úpravy"
             },
             newTitle: "Nová inštancia"
         },
@@ -248,7 +275,8 @@ define({
         data: {
             noUserChosen: "Žiaden zvolený používateľ",
             self: "Sebe",
-            chooseUser: "Vybrať používateľa",
+            selectUser: "Zvoliť používateľa",
+            removeUser: "Odstrániť používateľa",
             noFile: "Žiaden súbor",
             fileNotUploaded: "Súbor ešte nebol nahraný",
             fileUploaded: "Súbor bol úspešne nahraný",
@@ -279,7 +307,7 @@ define({
         },
         dialog: {
             createCase: {
-                heading: "Vytvoriť ponuku",
+                heading: "Nová inštancia",
                 process: "Proces",
                 title: "Názov",
                 color: "Farba",
@@ -304,11 +332,21 @@ define({
                 name: "Názov",
                 key: "Klúč",
                 maxchars: "Kľúč musí byť maximálne 3 znaky dlhý",
+                identifier: "Identifier",
+                release: {
+                    this: "Release",
+                    type: {
+                        major: "Major",
+                        minor: "Minor",
+                        patch: "Patch"
+                    }
+                },
                 submit: "Nahrať"
             },
             saveFilter: {
                 title: "Uložiť filter",
                 name: "Názov",
+                desc: "Popis",
                 type: {
                     this: "Typ",
                     public: "Verejný",
@@ -318,6 +356,13 @@ define({
                 bindFilterToRoles: "Naviazať filter na roli",
                 process: "Proces",
                 task: "Úloha"
+            },
+            changePsw: {
+                title: "Zmeniť heslo",
+                currentPsw: "Súčasné heslo",
+                newPsw: "Nové heslo",
+                repeatNewPsw: "Opakovať nové heslo",
+                submit: "Potvrdiť"
             }
         },
         snackbar: {
@@ -336,6 +381,7 @@ define({
             loading: "Načítanie",
             loadingDataForFilterFailed: "Načítanie údajov pre filter sa nepodarilo",
             file: "Súbor",
+            model: "Model",
             failedToUpload: "sa nepodarilo nahrať",
             uploadedSuccessfully: "bol načítaný úspešne",
             assigningTask: "Priradenie úlohy",
@@ -379,13 +425,20 @@ define({
             noFiltersFound: "Neboli nájdené žiadne filtre",
             noSavedFilters: "Doposiaľ neboli uložené žiadne filtre",
             deletingFilter: "Vymazávanie filtra",
-
+            noRequiredNetUploaded: "Nie je nahraná žiadna sieť vyžadovaná týmto zobrazením",
+            accountCreated: "Účet bol vytvorený",
+            invitationEmailSent: "Pozvánka na vytvorenie účtu bola zaslaná",
+            pswRecoveryEmailSentTo: "Email na obnovu hesla bol odoslaný na ",
+            newPswSet: "Vaše nové heslo bolo nastavené",
+            expiredSession: "Platnosť tejto relácie uplynula (pravdepodobne kvôli viacerým súbežným prihláseniam).",
+            noFileInput: "Nebol nájdený žiaden vstup pre súbory",
             featureWillBeAvailableSoon: "Táto funckia bude čoskoro dostupná"
         },
         add: {
             createCase: "Vytvoriť prípad",
             createContact: "Vytvoriť kontakt",
-            createDocument: "Vytvoriť dokument"
+            createDocument: "Vytvoriť dokument",
+            createContact: "Vytvoriť kontakt"
         },
         sentencePart: {
 
@@ -397,6 +450,9 @@ define({
             long: "dlhý"
         },
         char: {
+
+        },
+        custom: {
 
         }
     }

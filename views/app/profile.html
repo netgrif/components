@@ -1,12 +1,12 @@
 <div ng-cloak flex layout="column" class="padding-2x">
 
-    <div layout="row" class="card padding-2x">
-
-        <h3>{{::$i18n.page.profile.this}}</h3>
-
+    <div hide show-gt-sm flex="100" layout="row" layout-align="start center" class="margin-top-2x">
+        <div flex="20" class="line-3px color-bg-primary-op-50"></div>
+        <span class="margin-horizontal-default font-size-22">{{::$i18n.page.profile.this}}</span>
+        <div flex class="line-3px color-bg-primary-op-50"></div>
     </div>
 
-    <md-divider class="border-width-default color-border-transparent"></md-divider>
+    <md-divider hide show-gt-sm class="border-width-2x color-border-transparent"></md-divider>
 
     <div ng-hide="profCtrl.completion === 100" layout="column" layout-align="start start" class="card padding-2x">
 
@@ -47,10 +47,10 @@
 
             <div flex-offset="15" layout="column">
 
-                <md-input-container>
-                    <label>{{::$i18n.page.profile.contactInfo.phone}}</label>
-                    <input type="text" ng-model="profCtrl.user.telNumber" disabled title="">
-                </md-input-container>
+                <!--<md-input-container>-->
+                    <!--<label>{{::$i18n.page.profile.contactInfo.phone}}</label>-->
+                    <!--<input type="text" ng-model="profCtrl.user.telNumber" disabled title="">-->
+                <!--</md-input-container>-->
 
                 <md-input-container>
                     <label>{{::$i18n.page.profile.contactInfo.email}}</label>
@@ -77,7 +77,7 @@
 
             <md-chips flex>
 
-                <md-chip ng-repeat="org in profCtrl.user.organizations">
+                <md-chip ng-repeat="org in profCtrl.user.groups">
                     {{::org.name}}
                 </md-chip>
 
@@ -139,13 +139,13 @@
 
     <div flex layout="row" layout-wrap layout-align="start center" class="card padding-2x">
 
-        <md-button class="md-primary" layout="row" layout-align="center center" ng-click="profCtrl.fireInfoSnackbar($i18n.block.snackbar.featureWillBeAvailableSoon)">
+        <md-button class="md-primary" layout="row" layout-align="center center" ng-click="$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
             <md-icon class="material-icons margin-horizontal-0 margin-right-default">mode_edit</md-icon>
             {{::$i18n.page.profile.actions.edit}}
         </md-button>
 
-        <md-button layout="row" layout-align="center center" ng-click="profCtrl.fireInfoSnackbar($i18n.block.snackbar.featureWillBeAvailableSoon)">
-            <md-icon class="material-icons margin-horizontal-0 margin-right-default">lock_open</md-icon>
+        <md-button layout="row" layout-align="center center" ng-click="profCtrl.openChangePswDialog();$snackbar.info($i18n.block.snackbar.featureWillBeAvailableSoon)">
+            <md-icon class="material-icons card-icon margin-horizontal-0 margin-right-default">lock_open</md-icon>
             {{::$i18n.page.profile.actions.changePsw}}
         </md-button>
 

@@ -1,0 +1,26 @@
+//@import '../templates/default/scss/config';
+@import 'dims';
+
+// Dims for header background
+$background-header-height: 		195px;
+$tab-header-height: 			$dim-48px;
+
+.background {
+
+	&-auth {
+		background-size: cover !important;
+		background: $background-signin;
+	}
+
+    &-default {
+        background-size: cover !important;
+        background: $background-app;
+    }
+
+	&-tabs {
+
+		md-tabs-wrapper {
+			background: $tabs-bg;
+		}
+	}
+}

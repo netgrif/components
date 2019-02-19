@@ -1,0 +1,112 @@
+#browser-support-msg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: $dim-2x;
+    background-color: $color-grey-50;
+    border-radius: $border-radius;
+    box-shadow: $card-shadow;
+
+    span {
+        display: table;
+        margin: 0 auto;
+        font-size: 22px;
+        color: $color-card-text;
+
+        a {
+            text-decoration: none;
+            color: $color-primary-500;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+// Browser update plugin
+.buorg {
+    position: fixed;
+    z-index: 111111;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-bottom: none !important;
+    text-align: center;
+    color: $color-card-text !important;
+    background-color: $color-grey-50 !important;
+    font: 22px Roboto, "Helvetica Neue", sans-serif !important;
+    box-shadow: $card-shadow !important;
+    animation: none !important;
+
+    a {
+        text-decoration: none;
+        color: $color-primary-500;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.buorg-pad {
+    padding: $dim-2x !important;
+    line-height: 1.7em;
+}
+
+.buorg-buttons {
+    display: block;
+    text-align: center;
+}
+
+#buorgig, #buorgul, #buorgpermanent {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    padding: 1px 10px;
+    border-radius: 4px;
+    font-weight: normal;
+    background: #5ab400;
+    white-space: nowrap;
+    margin: 0 2px;
+    display: inline-block;
+}
+
+#buorgig {
+    background-color: #edbc68;
+}
+
+@media only screen and (max-width: 700px) {
+    .buorg div {
+        padding: 5px 12px 5px 9px;
+        line-height: 1.3em;
+    }
+}
+
+@keyframes buorgfly {
+    from {
+        opacity: 0;
+        transform: translateY(-50px)
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px)
+    }
+}
+
+.buorg-fadeout {
+    transition: visibility 0s 8.5s, opacity 8s ease-out .5s;
+}
+
+.buorg-icon {
+    width: 22px;
+    height: 16px;
+    vertical-align: middle;
+    position: relative;
+    top: -0.05em;
+    display: inline-block;
+    background: no-repeat 0 center;
+}
+// ./Browser update plugin

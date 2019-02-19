@@ -8,8 +8,8 @@
             <label>{{::$i18n.page.console.process}}</label>
 
             <md-select ng-model="adminCtrl.selectedNet" ng-change="adminCtrl.loadProcessRoles()">
-                <md-option ng-repeat="process in processes" ng-value="process" ng-selected="$first">
-                    {{process.title}}
+                <md-option ng-repeat="process in adminCtrl.processes" ng-value="process" ng-selected="$first">
+                    {{process.title+"  v"+process.version}}
                 </md-option>
             </md-select>
 

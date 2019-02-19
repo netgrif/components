@@ -1,0 +1,34 @@
+<md-toolbar class="card padding-vertical-2x">
+    <div layout="row" layout-align="start center" class="md-toolbar-tools">
+
+        <md-input-container flex class="md-block margin-right-default">
+
+            <label>{{::$i18n.block.input.process}}</label>
+
+            <md-select ng-model="adminCtrl.rolesTab.roles.process" ng-change="adminCtrl.rolesTab.loadRoles()">
+                <md-option ng-repeat="process in adminCtrl.processes" ng-value="process">
+                    {{process.title+"  v"+process.version}}
+                </md-option>
+            </md-select>
+
+        </md-input-container>
+
+        <md-input-container flex class="md-block">
+
+            <label>{{::$i18n.block.input.role}}</label>
+
+            <input type="text" ng-model="adminCtrl.rolesTab.roleSearch" ng-change="adminCtrl.rolesTab.filterRoles()" title="">
+
+        </md-input-container>
+
+        <!--<md-button class="md-fab md-raised md-mini md-primary" ng-click="adminCtrl.saveRoles()">-->
+            <!--<md-icon class="material-icons">save</md-icon>-->
+            <!--<md-tooltip md-direction="left">-->
+                <!--{{::$i18n.block.btn.save}}-->
+            <!--</md-tooltip>-->
+        <!--</md-button>-->
+
+        <!--<i ng-hide="saved" class="material-icons color-fg-warning">warning</i>-->
+
+    </div>
+</md-toolbar>

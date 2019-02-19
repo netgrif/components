@@ -1,0 +1,148 @@
+//@import '../../templates/default/scss/config';
+@import '../dims';
+
+.click-area {
+    height: 100%;
+    width: 100%;
+}
+
+md-expansion-panel {
+    cursor: pointer !important;
+    box-shadow: 0 0 0 #e5e5e5, 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24) !important;
+
+    md-expansion-panel-header .md-expansion-panel-header-container, md-expansion-panel-footer .md-expansion-panel-footer-container {
+        background-color: $color-ep-header-bg !important;
+        border-color: $color-ep-border !important;
+        color: $color-ep-text;
+    }
+
+    .md-expansion-panel-header-container, .md-expansion-panel-footer-container {
+        top: auto !important;
+    }
+
+    md-expansion-panel-collapsed {
+        padding-left: $dim-2x !important;
+        padding-right: $dim-2x !important;
+        background-color: $color-ep-header-bg !important;
+
+        span {
+            color: $color-ep-text;
+        }
+
+        md-menu {
+
+            .material-icons {
+                color: $color-ep-text;
+            }
+        }
+    }
+
+    md-expansion-panel-content {
+        padding-left: $dim-2x !important;
+        padding-right: $dim-2x !important;
+        background-color: $color-ep-content-bg !important;
+        color: $color-ep-text;
+    }
+
+    md-expansion-panel-header {
+
+        .md-expansion-panel-header-container {
+            padding-left: $dim-2x !important;
+            padding-right: $dim-2x !important;
+        }
+    }
+
+    md-expansion-panel-expanded .md-expansion-panel-header-container,
+    md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
+
+        &:hover {
+            background: $color-ep-header-bg-hover !important;
+
+            span {
+                color: $color-ep-header-text-hover !important;
+            }
+
+            task-priority {
+
+                .material-icons {
+                    color: $color-ep-header-text-hover;
+                }
+            }
+
+            .md-button {
+
+                .material-icons {
+                    color: $color-ep-header-text-hover;
+                }
+            }
+
+            .material-icons.color-fg-primary-500 {
+                color: $color-ep-header-text-hover;
+            }
+
+            md-progress-circular path {
+                stroke: $color-ep-header-text-hover !important;
+            }
+        }
+    }
+}
+
+md-expansion-panel {
+
+    &.highlight {
+
+        md-expansion-panel-expanded .md-expansion-panel-header-container,
+        md-expansion-panel-collapsed, md-expansion-panel .md-expansion-panel-header-container {
+            background: $color-ep-highlight-bg !important;
+
+            span {
+                color: $color-ep-highlight-text;
+            }
+
+            md-menu {
+
+                .material-icons {
+                    color: $color-ep-highlight-text;
+                }
+            }
+
+            .material-icons.color-fg-primary-500 {
+                color: $color-ep-highlight-user;
+            }
+
+            md-progress-circular path {
+                stroke: $color-ep-highlight-text !important;
+            }
+
+            &:hover {
+                background: $color-ep-header-bg-hover !important;
+
+                span {
+                    color: $color-ep-header-text-hover !important;
+                }
+
+                task-priority {
+
+                    .material-icons {
+                        color: $color-ep-header-text-hover;
+                    }
+                }
+
+                .md-button {
+
+                    .material-icons {
+                        color: $color-ep-header-text-hover;
+                    }
+                }
+
+                .material-icons.color-fg-primary-500 {
+                    color: $color-ep-header-text-hover;
+                }
+
+                md-progress-circular path {
+                    stroke: $color-ep-header-text-hover !important;
+                }
+            }
+        }
+    }
+}

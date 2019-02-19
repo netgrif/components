@@ -12,20 +12,26 @@
     <div hide-xs flex="5"></div>
 
     <div flex="45" flex-xs="100">
-        <md-input-container id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
+        <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
             <label class="placeholder">{{::$i18n.block.data.enterDate}}</label>
-            <md-datepicker ng-model="field.newValue"
+            <md-datepicker id="{{'data-'+field.parent.stringId+'-'+field.stringId}}"
+                           ng-model="field.newValue"
                            ng-change="field.changed = true"
                            ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
                            ng-blur="field.parent.save();field.active = false"
-                           ng-focus="field.active = true"
-                           md-open-on-focus
                            ng-required="field.behavior.required"
-                           md-min-date="field.minDate"
-                           md-max-date="field.maxDate"
+                           md-is-open="field.active"
+                           md-min-date="field.formatedMinDate"
+                           md-max-date="field.formatedMaxDate"
                            md-date-filter="field.validate"
-                           aria-label="Pick date">
+                           aria-label="Pick date"
+                           md-open-on-focus >
             </md-datepicker>
+            <!--<md-button id="{{'data-'+field.parent.stringId+'-'+field.stringId}}"-->
+                       <!--hide-->
+                       <!--ng-click="field.setFieldActiveWithDelay(100)" >-->
+                <!--Open datepicker-->
+            <!--</md-button>-->
         </md-input-container>
     </div>
 

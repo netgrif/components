@@ -1,13 +1,14 @@
-define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], function (Tab, Task, Transaction, Filter, TaskSearch) {
+define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Transaction, Filter, TaskSearch) {
     /**
      * Constructor for TaskTab class
-     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n
+     * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n, $process, $rootScope
      * @param id
      * @param label
      * @param {Filter} baseFilter
      * @param useCase
      * @param angular
-     * @param config - config parameters for better customizing behavior of tab
+     * @param config options: closable(if tab have close button), filterPolicy:constant, showTransactions,
+     * allowHighlight(highlight unfinished tasks), searchable, autoOpenUnfinished, fullReload
      * @constructor
      */
     function TaskTab(id, label, baseFilter, useCase, angular, config = {}) {
@@ -23,21 +24,27 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.transactionProgress = 0;
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
-        this.search = new TaskSearch({
-            $http: this.$http,
-            $snackbar: this.$snackbar,
-            $i18n: this.$i18n
-        }, {
-            considerWholeSearchInput: false
-        });
+        if (this.searchable) {
+            this.searchToolbar = new TaskSearch(this, {
+                $http: this.$http,
+                $snackbar: this.$snackbar,
+                $i18n: this.$i18n,
+                $process: this.$process
+            }, {
+                considerWholeSearchInput: false
+            });
+        }
     }
 
     TaskTab.prototype = Object.create(Tab.prototype);
     TaskTab.prototype.constructor = TaskTab;
 
-    TaskTab.URL_ALL = "/res/task";
-    TaskTab.URL_MY = "/res/task/my";
-    TaskTab.URL_SEARCH = "/res/task/search";
+    TaskTab.URL_ALL = "/api/task";
+    TaskTab.URL_MY = "/api/task/my";
+    TaskTab.URL_SEARCH = "/api/task/search";
+
+    TaskTab.REPLACE_FILTER_POLICY = "replaceFilter";
+    TaskTab.MERGE_FILTER_POLICY = "mergeFilter";
 
     TaskTab.prototype.activate = function () {
         const view = this.useCase ? 'caseView' : 'taskView';
@@ -56,14 +63,17 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         if (this.showTransactions)
             this.loadTransactions();
 
+        if (this.searchToolbar)
+            this.searchToolbar.populateFromFilter(this.activeFilter);
+
         this.load(false);
     };
 
     TaskTab.prototype.reload = function () {
-        if (this.tasks.length > 0) {
+        if (this.isNotEmpty()) {
             this.removeAll();
         }
-        this.load(false);
+        this.load(false, true);
     };
 
     TaskTab.prototype.removeAll = function () {
@@ -71,8 +81,12 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.tasks.splice(0, this.tasks.length);
     };
 
-    TaskTab.prototype.buildRequest = function (next) {
-        const url = next && this.page.next ? this.page.next : this.baseUrl + "?sort=priority";
+    TaskTab.prototype.isNotEmpty = function () {
+        return this.tasks && this.tasks.length > 0;
+    };
+
+    TaskTab.prototype.buildRequest = function (next, all) {
+        const url = next && this.page.next ? this.page.next : this.baseUrl + "?sort=priority"; //+ (all ? "&size="+this.tasks.length : "");
         return {
             method: "POST",
             url: url,
@@ -80,27 +94,29 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         };
     };
 
-    TaskTab.prototype.load = function (next) {
+    TaskTab.prototype.load = function (next, force) {
         if (this.loading || !this.baseUrl) return;
         if (next && this.tasks && this.page.totalElements === this.tasks.length) return;
-        if (!next && this.tasks.length > 0) return;
+        if (!next && !force && this.tasks.length > 0) return;
 
         const self = this;
         this.loading = true;
-        this.$http(this.buildRequest(next)).then(function (response) {
+        const requestConfig = this.buildRequest(next, force);
+        this.$http(requestConfig).then(function (response) {
             self.page = response.page;
             if (self.page.totalElements === 0) {
                 self.$snackbar.info(self.$i18n.block.snackbar.noTasks);
                 self.page.next = undefined;
-                if (self.tasks)
+                if (self.isNotEmpty())
                     self.removeAll();
                 self.loading = false;
+                self.emitNumberOfTasks();
                 return;
             }
             const rawData = response.$response().data._embedded.tasks;
             response.$request().$get("tasks").then(function (resources) {
                 if (self.page.totalPages !== 1) {
-                    if (url !== response.$href("last")) {
+                    if (requestConfig.url !== response.$href("last")) {
                         self.page.next = response.$href("next");
                     }
                 }
@@ -109,18 +125,20 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                 self.parseTasks(resources, next);
 
                 self.loading = false;
+                self.emitNumberOfTasks();
             }, function () {
                 self.$snackbar.info(`${self.$i18n.block.snackbar.noTasksFoundIn} ${self.label}`);
                 self.page.next = undefined;
-                if (self.tasks) {
+                if (self.isNotEmpty()) {
                     self.removeAll();
 
                 }
                 self.loading = false;
+                self.emitNumberOfTasks();
             })
 
         }, function () {
-            self.$snackbar.error(`${self.$i18n.block.snackbar.tasksOn} ${self.url} ${self.$i18n.block.snackbar.failedToLoad}`);
+            self.$snackbar.error(`${self.$i18n.block.snackbar.tasksOn} ${requestConfig.url} ${self.$i18n.block.snackbar.failedToLoad}`);
             self.loading = false;
         });
     };
@@ -146,7 +164,12 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                 resource: r,
                 links: r.links,
                 tab: this,
-                config: {allowHighlight: this.allowHighlight}
+                config: {
+                    allowHighlight: this.allowHighlight,
+                    fullReload: this.fullReload,
+                    taskPriority: this.taskPriority,
+                    taskCaseTitle: this.taskCaseTitle
+                }
             }).then(function (panel) {
                 if (self.taskControllers[r.stringId]) {
                     self.taskControllers[r.stringId].panel = panel;
@@ -154,14 +177,27 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
                     delete self.taskControllers[r.stringId];
                 }
 
-                if (self.showTransactions) {
-                    self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
-                    self.transactionProgress = self.mostForwardTransaction();
+                if (Object.keys(self.taskControllers).length === 0) {
+                    if (self.showTransactions) {
+                        self.transactions.forEach(trans => trans.setActive(self.tasks[self.tasks.length - 1]));
+                        self.transactionProgress = self.mostForwardTransaction();
+                    }
+
+                    self.openUnfinishedTask();
                 }
             });
         });
         if (self.showTransactions)
             self.transactions.forEach(trans => trans.setActive(self.tasks));
+    };
+
+    TaskTab.prototype.emitNumberOfTasks = function(){
+        if(!this.$rootScope)
+            return;
+        this.$rootScope.$emit('tabContentLoad',{
+            count: this.page.totalElements,
+            viewId: this.viewId
+        });
     };
 
     TaskTab.prototype.deleteTaskOnIndex = function (index) {
@@ -178,23 +214,36 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         this.tasks.forEach(t => t.updateDataGroups(updateObj));
     };
 
+    TaskTab.prototype.openUnfinishedTask = function () {
+        if (!this.autoOpenUnfinished)
+            return;
+        const unfinished = this.tasks.filter(t => !t.finishDate);
+        if (unfinished.length === 1)
+            unfinished[0].click();
+    };
+
     TaskTab.prototype.loadTransactions = function () {
         if (!this.useCase || this.transactions.length > 0) return;
 
-        const self = this;
-        this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
-            response.$request().$get("transactions").then(function (resources) {
-                self.transactions = resources.map(r => new Transaction(r, {}));
-                if (self.tasks.length > 0)
-                    self.transactions.forEach(trans => trans.setActive(self.tasks));
+        this.transactions = this.$process.get(this.useCase.processIdentifier).transactions;
+        if (this.tasks.length > 0) {
+            this.transactions.forEach(trans => trans.setActive(this.tasks));
+        }
 
-            }, function () {
-                console.log(`No resource transactions for net ${self.useCase.petriNetId}`);
-            })
-
-        }, function () {
-            self.$snackbar.error(`${self.$i18n.block.snackbar.transactionsFor} ${self.useCase.title} ${self.$i18n.block.snackbar.failedToLoad}`);
-        });
+        // const self = this;
+        // this.$http.get(`/res/petrinet/${this.useCase.petriNetId}/transactions`).then(function (response) {
+        //     response.$request().$get("transactions").then(function (resources) {
+        //         self.transactions = resources.map(r => new Transaction(r, {}));
+        //         if (self.tasks.length > 0)
+        //             self.transactions.forEach(trans => trans.setActive(self.tasks));
+        //
+        //     }, function () {
+        //         console.log(`No resource transactions for net ${self.useCase.petriNetId}`);
+        //     })
+        //
+        // }, function () {
+        //     self.$snackbar.error(`${self.$i18n.block.snackbar.transactionsFor} ${self.useCase.title} ${self.$i18n.block.snackbar.failedToLoad}`);
+        // });
     };
 
     TaskTab.prototype.mostForwardTransaction = function () {
@@ -210,7 +259,7 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
         const self = this;
         this.$http({
             method: "POST",
-            url: "/res/workflow/case/search",
+            url: "/api/workflow/case/search",
             data: {
                 id: this.useCase.stringId
             }
@@ -224,6 +273,44 @@ define(['./Tab', './Task', './Transaction', './Filter', './TaskSearch'], functio
 
         }, function () {
             console.log(`Case ${this.useCase.stringId} failed to update`);
+        })
+    };
+
+    TaskTab.prototype.search = function () {
+        const searchFilter = this.searchToolbar.getFilter();
+
+        if (this.filterPolicy === TaskTab.MERGE_FILTER_POLICY) {
+            this.activeFilter = this.activeFilter.merge(searchFilter);
+        } else if (this.filterPolicy === TaskTab.REPLACE_FILTER_POLICY) {
+            this.activeFilter = searchFilter;
+        }
+
+        this.reload();
+    };
+
+    TaskTab.prototype.openSaveFilterDialog = function () {
+        this.$dialog.showByTemplate('save_filter', this);
+    };
+
+    TaskTab.prototype.saveFilter = function () {
+        const requestBody = {
+            title: this.activeFilter.title,
+            description: this.activeFilter.description,
+            visibility: this.activeFilter.visibility,
+            type: Filter.TASK_TYPE,
+            query: this.activeFilter.query,
+            readableQuery: JSON.stringify(this.activeFilter.readableQuery)
+        };
+        this.$http.post("/api/filter", requestBody).then(response => {
+            if (response.success) {
+                this.$snackbar.success(response.success);
+            } else
+                this.$snackbar.error(response.error);
+            this.$dialog.closeCurrent();
+        }, error => {
+            console.log("Filter failed to be saved");
+            console.log(error);
+            this.$dialog.closeCurrent();
         })
     };
 

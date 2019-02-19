@@ -1,0 +1,2 @@
+<div ng-if="$ctrl.field.formatFilter">{{ $ctrl.field.value | currencyFormat:$ctrl.field.formatFilter.code:$ctrl.field.formatFilter.fractionSize:true:$ctrl.field.formatFilter.locale }}</div>
+<div ng-if="!$ctrl.field.formatFilter">{{ $ctrl.field.value }}</div>

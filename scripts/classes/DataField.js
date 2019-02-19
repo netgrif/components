@@ -1,4 +1,4 @@
-define(['./HalResource'], function (HalResource) {
+define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
     /**
      * Constructor for class DataField
      * Angular dependencies: $dialog, $user, $fileUpload, $snackbar, $i18n
@@ -12,15 +12,22 @@ define(['./HalResource'], function (HalResource) {
         HalResource.call(this, links);
         this.parent = parent;
         Object.assign(this, resource, angular);
-
         this.newValue = this.parse(this.value);
         if (this.validationJS) this.validate = new Function("value", this.validationJS);
         else this.validate = new Function("", "return true;");
 
         this.element = undefined;
         this.changed = false;
-        this.valid = true;
+        this.valid = this.isValid();
         this.active = false;
+        this.uploadProgress = 0;
+
+        this.buttonTypesToClasses = {
+            'text': 'max-width-100 text-overflow-dots',
+            'text raised': 'max-width-100 text-overflow-dots md-raised',
+            'icon': 'md-icon-button',
+            'fab': 'md-fab md-mini'
+        }
     }
 
     DataField.prototype = Object.create(HalResource.prototype);
@@ -39,7 +46,14 @@ define(['./HalResource'], function (HalResource) {
             ${DataField.padding(value.hour, 0, 0)}:${DataField.padding(value.minute, 0, 0)}`;
         }
         if (this.type === "user") {
-            return value.email;
+            return value.id;
+        }
+        if (this.type === "dateTime") {
+            if (value instanceof Date)
+                return `${value.getFullYear()}-${DataField.padding(value.getMonth() + 1, 0)}-${DataField.padding(value.getDate(), 0)}`;
+            else
+                return `${DataField.padding(value.dayOfMonth, 0)}.${DataField.padding(value.monthValue, 0)}.${value.year}
+            ${DataField.padding(value.hour, 0, 0)}:${DataField.padding(value.minute, 0, 0)}`;
         }
         return value;
     };
@@ -60,10 +74,13 @@ define(['./HalResource'], function (HalResource) {
                 this.valid = (this.newValue !== null || this.newValue !== undefined) && this.validate(this.newValue);
                 break;
             case "text":
-                this.valid = this.newValue !== undefined && this.validate(this.newValue) && (this.behavior.required && this.newValue !== null ? this.newValue.trim() !== "" : true);
+                this.valid = this.newValue !== undefined && this.validate(this.newValue) && (this.behavior.required && this.newValue !== null ? this.newValue.trim() !== "" : true) && !(this.behavior.required && this.newValue == null);
                 break;
             case "date":
                 this.valid = this.newValue && this.validate(this.newValue);
+                break;
+            case "user":
+                this.valid = true;
                 break;
             default:
                 this.valid = !!this.newValue;
@@ -73,13 +90,24 @@ define(['./HalResource'], function (HalResource) {
 
     DataField.prototype.parse = function (value) {
         if (this.type === "date") {
-            this.minDate = this.minDate ? new Date(this.minDate) : undefined;
-            this.maxDate = this.maxDate ? new Date(this.maxDate) : undefined;
+            if (this.minDate) {
+                const min = new Date(this.minDate);
+                min.setDate(min.getDate() - 1);
+                this.formatedMinDate = min;
+            }
+            if (this.maxDate) {
+                const max = new Date(this.maxDate);
+                max.setDate(max.getDate() + 1);
+                this.formatedMaxDate = max;
+            }
         }
 
         if (!value) return undefined;
         if (this.type === "date") {
             return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
+        }
+        else if (this.type === "dateTime") {
+            return new Date(value.year, value.monthValue - 1, value.dayOfMonth, value.hour, value.minute, value.second);
         }
         else if (this.type === "number") {
             return DataField.roundToTwo(value);
@@ -110,7 +138,7 @@ define(['./HalResource'], function (HalResource) {
 
         const self = this;
         this.$dialog.showByTemplate("assign_user", this, {
-            task: Object.assign({fieldRoles: this.roles}, this.parent)
+            task: Object.assign({fieldRoles: this.choices ? this.choices: this.roles}, this.parent)
         }).then(function (user) {
             if (!user) return;
             self.newValue = user;
@@ -121,17 +149,32 @@ define(['./HalResource'], function (HalResource) {
         });
     };
 
+    DataField.prototype.removeUser = function () {
+        if (!this.newValue)
+            return;
+        this.newValue = null;
+        this.changed = true;
+        this.parent.save();
+    };
+
     DataField.prototype.fileChanged = function (field) {
         if (!field.file) return;
-        field.newValue = field.file.name;
-        field.newFile = field.value !== field.newValue;
+        field.newValue = {
+            name: field.file.name
+        };
+        field.newFile = !field.value || field.value.name !== field.newValue.name;
         field.uploaded = false;
     };
 
     DataField.prototype.upload = function () {
         if (!this.file) return;
 
-        this.$fileUpload.upload(this.file, undefined, this.parent.links.file.href + this.stringId, response => {
+        this.$fileUpload.upload(this.file, undefined, this.parent.links.file.href + this.stringId, uploadEvent => {
+            if (uploadEvent.lengthComputable) {
+                this.uploadProgress = (uploadEvent.loaded / uploadEvent.total) * 100;
+            }
+        }, response => {
+            this.uploadProgress = 0;
             if (!response) {
                 this.$snackbar.error(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.failedToUpload}`);
                 return;
@@ -139,7 +182,7 @@ define(['./HalResource'], function (HalResource) {
 
             this.uploaded = true;
             this.newFile = true;
-            this.$snackbar.info(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.uploadedSuccessfully}`);
+            this.$snackbar.success(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.uploadedSuccessfully}`);
         });
     };
 
@@ -148,10 +191,24 @@ define(['./HalResource'], function (HalResource) {
         downloadWindow.onload = () => downloadWindow.close();
     };
 
+    DataField.prototype.openFileChooser = function () {
+        const fileInput = jQuery("#file-" + this.stringId);
+        if (fileInput)
+            fileInput.trigger("click");
+        else
+            this.$snackbar.warning(this.$i18n.block.snackbar.noFileInput);
+    };
+
     DataField.prototype.bindElement = function () {
         const el = jQuery(`#data-${this.parent.stringId}-${this.stringId}`);
         if (el.length > 0) this.element = el;
         return "";
+    };
+
+    DataField.prototype.setFieldActiveWithDelay = function (delay) {
+        this.$timeout(() => {
+            this.active = true
+        }, delay);
     };
 
     DataField.padding = (value, pad = '', defaultValue = '') => {

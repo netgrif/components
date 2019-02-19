@@ -2,34 +2,42 @@ define({
     'root': {
         test: "This is test string!",
         version: {
-            this: "Version",
-            id: "2.0.0"
+            this: "Version"
         },
         page: {
             signIn: {
                 email: "Email",
                 psw: "Password",
-                forgotPsw: "Forgot password",
-                signIn: "Sign In",
-                signUp: "Sign Up"
+                signIn: "Login",
+                signUp: "Create account",
+                forgotPsw: "Forgot password"
             },
             signUp: {
                 email: "Email",
                 psw: "Password",
                 retypePsw: "Retype password",
                 name: "First Name",
-                surname: "Last Name",
-                submit: "Sign Up"
+                surname: "Last Name"
             },
             dashboard: {
-                this: "Dashboard",
-                offers: "Offers",
-                contacts: "Contacts",
-                contracts: "Contracts"
+                this: "Dashboard"
+            },
+            oraganization: {
+                this: "Organization",
+                my: "My cases",
+                all: "All cases"
+            },
+            bank: {
+                this: "Bank",
+                my: "My cases",
+                all: "All cases"
             },
             cases: {
                 this: "Cases",
-                my: "My cases"
+                my: "My cases",
+                all: "All cases",
+                noCasesAvailableForThisView: "There are no cases available for this view",
+                noTasksForThisCaseAvailable: "There are no tasks for you in this case"
             },
             tasks: {
                 this: "Tasks",
@@ -39,6 +47,7 @@ define({
                     category: "Category",
                     search: "Search"
                 },
+                noTasksSatisfyingThisFilter: "There are any tasks satisfying this filter",
                 filter: {
                     process: "Process",
                     type:"Type",
@@ -62,11 +71,18 @@ define({
                     }
                 }
             },
+            documents:{
+                this: "Organization"
+            },
+            contacts:{
+                this: "Contact"
+            },
             workflow: {
                 this: "Workflow",
                 uploadModel: "Upload model",
                 initials: "Initials",
                 modelTitle: "Model title",
+                version: "Version",
                 author: "Author",
                 uploadDate: "Upload date",
                 data: {
@@ -75,10 +91,18 @@ define({
                         statistics: "Statistics"
                     },
                     item: {
+                        identifier: {
+                            title: "Identifier",
+                            desc: "Unique model identifier",
+                        },
                         file: {
                             title: "File",
                             desc: "Petriflow model used as template",
                             download: "Download"
+                        },
+                        version: {
+                            title: "Version",
+                            desc: "Model version"
                         },
                         author: {
                             title: "Author",
@@ -137,13 +161,12 @@ define({
                 newUser: "New user",
                 orgs: "Organizations",
                 roles: "Roles",
+                users: "Users",
                 processRolesLower: "Process roles",
                 process: "Process",
                 processRoles: "Process Roles",
                 thereIsNoOrgAssignedToThisUserYet: "There is no organisation assigned to this user yet",
-                thereIsNoRoleAssignedToThisUserYet: "There is no role assigned to this user yet",
-                configuration: "Configuration",
-                userSignUp: "User sign up"
+                thereIsNoRoleAssignedToThisUserYet: "There is no role assigned to this user yet"
             },
             profile: {
                 this: "Profile",
@@ -173,6 +196,12 @@ define({
                     edit: "Edit",
                     changePsw: "Change Password"
                 }
+            },
+            settings: {
+                this: "Settings",
+                userSignUp: "User sign up",
+                enableUserSignUp: "Enable user sign up",
+                processRolesForSignedUpUser: "Process roles for signed up user"
             }
         },
         block: {
@@ -188,6 +217,7 @@ define({
             },
             btn: {
                 delete: "Delete",
+                download: "Download",
                 invite: "Invite",
                 save: "Save",
                 edit: "Edit",
@@ -199,25 +229,33 @@ define({
                 cancel: "Cancel",
                 reset: "Reset",
                 search: "Search",
-                apply: "Apply"
+                apply: "Apply",
+                submit: "Submit",
+                closeTab: "Close tab"
             },
             mainMenu: {
-                profile: "Profile",
                 lang: {
                     this: "Language",
                     en: "English",
                     sk: "Slovak"
                 },
+                profile: "Profile",
+                settings: "Settings",
                 logout: "Logout"
             },
             case: {
                 this: "Case",
                 header: {
+                    metaData: "meta data",
+                    fields: "fields",
                     label: "Type",
                     visualID: "Visual ID",
                     title: "Title",
                     author: "Author",
-                    createDate: "Create Date"
+                    createDate: "Create Date",
+                    optional: "Optional field",
+                    enableEditMode: "Enable edit mode",
+                    confirmChanges: "Confirm changes"
                 },
                 newTitle: "New instance"
             },
@@ -249,7 +287,8 @@ define({
             data: {
                 noUserChosen: "No user was chosen",
                 self: "Self",
-                chooseUser: "Choose user",
+                selectUser: "Select user",
+                removeUser: "Remove user",
                 noFile: "No file",
                 fileNotUploaded: "File has not been uploaded yet",
                 fileUploaded: "File uploaded successfully",
@@ -280,7 +319,7 @@ define({
             },
             dialog: {
                 createCase: {
-                    heading: "Create Offer",
+                    heading: "New instance",
                     process: "Process",
                     title: "Title",
                     color: "Color",
@@ -305,11 +344,21 @@ define({
                     name: "Name",
                     key: "Key",
                     maxchars: "Key must be at most 3 characters long",
+                    identifier: "Identifier",
+                    release: {
+                        this: "Release",
+                        type: {
+                            major: "Major",
+                            minor: "Minor",
+                            patch: "Patch"
+                        }
+                    },
                     submit: "Upload"
                 },
                 saveFilter: {
                     title: "Save Filter",
                     name: "Name",
+                    desc: "Description",
                     type: {
                         this: "Type",
                         public: "Public",
@@ -319,6 +368,13 @@ define({
                     bindFilterToRoles: "Bind filter to roles",
                     process: "Process",
                     task: "Task"
+                },
+                changePsw: {
+                    title: "Change Password",
+                    currentPsw: "Current password",
+                    newPsw: "New password",
+                    repeatNewPsw: "Repeat new password",
+                    submit: "Confirm"
                 }
             },
             snackbar: {
@@ -337,6 +393,7 @@ define({
                 loading: "Loading",
                 loadingDataForFilterFailed: "Loading data for filter failed",
                 file: "File",
+                model: "Model",
                 failedToUpload: "failed to upload",
                 uploadedSuccessfully: "uploaded successfully",
                 assigningTask: "Assigning task",
@@ -354,7 +411,7 @@ define({
                 failedToLoadRolesForProcess: "Failed to load roles for process",
                 noOrganizationFound: "No organization found",
                 emailFieldIsMandatory: "Email field is mandatory",
-                newUserMustBelongToOneOrMoreOrganization: "New user must belong to one or more organizations",
+                newUserMustBelongToOneOrMoreOrganization: "New user must belong to one or more groups",
                 newUserMustHasAssignedOneOrMoreRoles: "New user must has assigned one or more roles",
                 inviteSent: "Invite sent",
                 inviteFailed: "Invite failed",
@@ -380,13 +437,20 @@ define({
                 noFiltersFound: "No filters has been found",
                 noSavedFilters: "There are no saved filters",
                 deletingFilter: "Deleting of the filter",
-
+                noRequiredNetUploaded: "There isn't uploaded any net required for this view",
+                accountCreated: "Account created",
+                invitationEmailSent: "Invitation email has been sent",
+                pswRecoveryEmailSentTo: "Password recovery email has been sent to",
+                newPswSet: "Your new password has been set",
+                expiredSession: "This session has been expired (possibly due to multiple concurrent logins).",
+                noFileInput: "No file input was found",
                 featureWillBeAvailableSoon: "This feature will be available soon"
             },
             add: {
                 createCase: "Create Case",
                 createContact: "Create Contact",
-                createDocument: "Create Document"
+                createDocument: "Create Organization",
+                createContact: "Create Contact"
             },
             sentencePart: {
 
@@ -398,6 +462,9 @@ define({
                 long: "long"
             },
             char: {
+
+            },
+            custom: {
 
             }
         }

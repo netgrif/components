@@ -1,0 +1,28 @@
+//@import '../../templates/default/scss/config';
+
+md-menu span, md-menu-item span {
+    color: $color-black-op-87 !important;
+    font-weight: normal !important;
+}
+
+.icon {
+
+    // Fix submenu
+    &-submenu {
+        padding: 0 !important;
+
+        .btn-menu {
+
+            > .material-icons {
+                margin-right: 14px !important;
+                margin-bottom: 1.5px !important;
+            }
+
+            > span {
+                float: none !important;
+                text-transform: capitalize !important;
+                font-weight: normal !important;
+            }
+        }
+    }
+}

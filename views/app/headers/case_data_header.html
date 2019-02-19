@@ -1,0 +1,85 @@
+<div ng-if="tab.caseDelete" layout="row" layout-align="start center" class="card-header padding-horizontal-2x">
+
+    <a flex-gt-sm="10" flex-sm="15" flex-xs="30" layout="row" layout-align="start center">
+        <span flex>{{::$i18n.block.case.header.label}}</span>
+    </a>
+
+    <!-- ng-if="true" is required hack to extend controller scope so headerId var is isolated for all included scopes -->
+    <a flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="50" ng-if="true" ng-init="headerId='column0'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+    <a hide-xs flex-gt-md="20" flex-md="25" flex-sm="35" ng-if="true" ng-init="headerId='column1'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+    <a hide-xs hide-sm flex-gt-md="20" flex-md="25" ng-if="true" ng-init="headerId='column2'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+    <a hide show-gt-md flex-gt-md="20" ng-if="true" ng-init="headerId='column3'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+    <a hide show-xl flex-xl="20" ng-if="true" ng-init="headerId='column4'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+
+    <div flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">
+        <md-button ng-if="!tab.headers.editable" ng-click="tab.headers.editable = !tab.headers.editable"
+                   class="md-icon-button md-primary">
+            <md-icon class="material-icons">edit</md-icon>
+            <md-tooltip md-direction="bottom">
+                {{::$i18n.block.case.header.enableEditMode}}
+            </md-tooltip>
+        </md-button>
+        <md-button ng-if="tab.headers.editable"
+                   ng-click="tab.headers.editable = !tab.headers.editable;tab.saveHeaders()"
+                   class="md-icon-button md-primary">
+            <md-icon class="material-icons">done</md-icon>
+            <md-tooltip md-direction="bottom">
+                {{::$i18n.block.case.header.confirmChanges}}
+            </md-tooltip>
+        </md-button>
+    </div> <!-- Menu spacer -->
+</div>
+<div ng-if="!tab.caseDelete" layout="row" layout-align="start center" class="card-header padding-horizontal-2x">
+
+    <a flex-xl="4" flex-lg="5" flex-md="8" flex-sm="10" flex-xs="10">
+        {{::$i18n.block.case.header.label}}
+    </a>
+
+    <!-- ng-if="true" is required hack to extend controller scope so headerId var is isolated for all included scopes -->
+    <a flex-xl="16" flex-lg="19" flex-md="23" flex-sm="30" flex-xs="45" ng-if="true" ng-init="headerId='column0'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+    <a flex-xl="16" flex-lg="19" flex-md="23" flex-sm="30" flex-xs="40" ng-if="true" ng-init="headerId='column1'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+    <a hide-xs flex-xl="16" flex-lg="19" flex-md="23" flex-sm="25" ng-if="true" ng-init="headerId='column2'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+    <a hide show-gt-sm flex-xl="16" flex-lg="19" flex-md="18" ng-if="true" ng-init="headerId='column3'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+    <a hide show-gt-md flex-xl="16" flex-lg="14" ng-if="true" ng-init="headerId='column4'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+    <a hide show-gt-lg flex-xl="11" ng-if="true" ng-init="headerId='column5'"
+       ng-include="'views/app/headers/header_items/case_data_header_item.html'">
+    </a>
+
+    <div flex-gt-xs="5" flex-xs="5" layout="row" layout-align="end center">
+        <md-button ng-if="!tab.headers.editable" ng-click="tab.headers.editable = !tab.headers.editable"
+                   class="md-icon-button md-primary">
+            <md-icon class="material-icons">edit</md-icon>
+            <md-tooltip md-direction="bottom">
+                {{::$i18n.block.case.header.enableEditMode}}
+            </md-tooltip>
+        </md-button>
+        <md-button ng-if="tab.headers.editable"
+                   ng-click="tab.headers.editable = !tab.headers.editable;tab.saveHeaders()"
+                   class="md-icon-button md-primary">
+            <md-icon class="material-icons">done</md-icon>
+            <md-tooltip md-direction="bottom">
+                {{::$i18n.block.case.header.confirmChanges}}
+            </md-tooltip>
+        </md-button>
+    </div> <!-- Menu spacer -->
+</div>

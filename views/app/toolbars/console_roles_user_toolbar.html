@@ -1,0 +1,30 @@
+<md-toolbar class="card padding-vertical-2x">
+    <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
+
+        <md-input-container class="md-block">
+            <md-icon class="material-icons color-fg-primary-500">search</md-icon>
+            <label>{{::$i18n.block.input.user}}</label>
+            <input type="text" ng-model="adminCtrl.rolesTab.userSearch.input" ng-change="adminCtrl.rolesTab.filterUsers()" title="">
+        </md-input-container>
+
+        <md-menu>
+            <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
+                <md-icon class="material-icons">more_vert</md-icon>
+            </md-button>
+
+            <md-menu-content>
+                <md-menu-item class="margin-left-2x">
+                    <md-checkbox ng-model="adminCtrl.rolesTab.userSearch.byName" aria-label="Name" class="md-primary">
+                        {{::$i18n.block.input.name}}
+                    </md-checkbox>
+                </md-menu-item>
+                <md-menu-item class="margin-left-2x">
+                    <md-checkbox ng-model="adminCtrl.rolesTab.userSearch.byEmail" aria-label="Email" class="md-primary">
+                        {{::$i18n.block.input.email}}
+                    </md-checkbox>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+
+    </div>
+</md-toolbar>

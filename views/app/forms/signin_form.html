@@ -1,25 +1,41 @@
-<form ng-submit="loginCtrl.login()">
+<form ng-submit="loginCtrl.activeView.login()" class="form-signin">
 
-    <md-input-container class="md-block">
-        <md-icon class="material-icons color-fg-blue-grey-300">email</md-icon>
-        <input ng-model="loginCtrl.credentials.username" type="text" placeholder="{{::$i18n.page.signIn.email}}" ng-required="true">
+    <md-input-container md-no-float class="md-block margin-right-default">
+        <md-icon class="material-icons">email</md-icon>
+        <input id="form-signin-username" ng-model="loginCtrl.activeView.username" name="username" placeholder="" type="text" ng-required="true" autocomplete="username">
+        <label for="form-signin-username">{{::$i18n.page.signIn.email}}</label>
     </md-input-container>
 
-    <md-input-container class="md-block">
-        <md-icon class="material-icons color-fg-blue-grey-300">lock</md-icon>
-        <input ng-model="loginCtrl.credentials.password" type="password" placeholder="{{::$i18n.page.signIn.psw}}" ng-required="true">
+    <md-input-container md-no-float class="md-block margin-right-default">
+        <md-icon class="material-icons">lock</md-icon>
+        <input id="form-signin-password" ng-model="loginCtrl.activeView.password" name="password" type="password" placeholder="" ng-required="true">
+        <label for="form-signin-password">{{::$i18n.page.signIn.psw}}</label>
     </md-input-container>
 
-    <md-card-actions layout="row" layout-xs="column" layout-align="space-between center">
+    <div layout="column" layout-align="start center">
 
-        <a flex-order-xs="1" href="#" class="color-fg-accent-500 text-no-decor" ng-click="loginCtrl.displaySignUpForm = !loginCtrl.displaySignUpForm">
-            {{::$i18n.page.signIn.signUp}}
-        </a>
+        <div layout="row" layout-xs="column" layout-align="space-between center" class="layout-rw-100">
 
-        <md-button type="submit" flex-order-xs="-1" md-colors="{background: 'primary-500'}">
-            {{::$i18n.page.signIn.signIn}}
+            <md-button ng-if="$config.enable.userSignUp" flex flex-order-xs="1" class="form-btn-signup layout-xs-rw-100" ng-click="loginCtrl.displayEmailField('invite')">
+                {{::$i18n.page.signIn.signUp}}
+            </md-button>
+
+            <md-divider ng-if="$config.enable.userSignUp" class="color-border-transparent border-width-default"></md-divider>
+
+            <md-button ng-if="$config.enable.userSignUp" flex-xs type="submit" flex-order-xs="-1" class="form-btn-submit layout-xs-rw-100">
+                {{::$i18n.page.signIn.signIn}}
+            </md-button>
+
+            <md-button ng-if="!$config.enable.userSignUp" flex type="submit" flex-order-xs="-1" class="form-btn-submit layout-xs-rw-100">
+                {{::$i18n.page.signIn.signIn}}
+            </md-button>
+
+        </div>
+
+        <md-button class="form-btn-forgotPsw layout-rw-100" ng-click="loginCtrl.displayEmailField('reset')">
+            {{::$i18n.page.signIn.forgotPsw}}
         </md-button>
 
-    </md-card-actions>
+    </div>
 
 </form>

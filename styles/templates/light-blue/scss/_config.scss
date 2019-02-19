@@ -1,0 +1,204 @@
+/*
+    Colors
+*/
+// Primary color - Custom blue
+$color-primary-50: 				#E0E9F7;
+$color-primary-100: 			#B3C8EA;
+$color-primary-200: 			#80A3DD;
+$color-primary-300: 			#4D7ECF;
+$color-primary-400: 			#2663C4;
+$color-primary-500: 			#0047BA;
+$color-primary-600: 			#0040B3;
+$color-primary-700: 			#0037AB;
+$color-primary-800: 			#002FA3;
+$color-primary-900: 			#002094;
+$color-primary-A100: 			#BFC8FF;
+$color-primary-A200: 			#8C9CFF;
+$color-primary-A400: 			#5971FF;
+$color-primary-A700: 			#405BFF;
+
+// Primary - opacity
+$color-primary-op-30:			rgba(0, 71, 186, .30);
+$color-primary-op-40:			rgba(0, 71, 186, .40);
+$color-primary-op-50:			rgba(0, 71, 186, .50);
+$color-primary-op-60:			rgba(0, 71, 186, .60);
+$color-primary-op-87:			rgba(0, 71, 186, .87);
+
+// Accent color - Grey = Grey color (should remain intact)
+$color-grey-50: 				#FAFAFA;
+$color-grey-100: 				#F5F5F5;
+$color-grey-200: 				#EEEEEE;
+$color-grey-300: 				#E0E0E0;
+$color-grey-400: 				#BDBDBD;
+$color-grey-500: 				#9E9E9E;
+$color-grey-600: 				#757575;
+$color-grey-700: 				#616161;
+$color-grey-800: 				#424242;
+$color-grey-900: 				#212121;
+
+// Black - opacity
+$color-black-op-20:				rgba(0, 0, 0, .20);
+$color-black-op-30:				rgba(0, 0, 0, .30);
+$color-black-op-40:				rgba(0, 0, 0, .40);
+$color-black-op-50:				rgba(0, 0, 0, .50);
+$color-black-op-54:				rgba(0, 0, 0, .54);
+$color-black-op-60:				rgba(0, 0, 0, .60);
+$color-black-op-87:				rgba(0, 0, 0, .87);
+
+// System
+$color-success:					#4CAF50;
+$color-warning:					#FFC107;
+$color-error:					#F44336;
+
+// Primary colors - other
+$color-light-blue-A700:			#0091EA;
+$color-deep-purple-600: 		#5E35B1;
+
+// Other
+$color-green-500:				#4caf50;
+$color-teal-500:				#009688;
+$color-amber-500:				#FFC107;
+$color-deep-orange-500:			#FF5722;
+$color-red-500:					#f44336;
+$color-brown-500:				#795548;
+$color-blue-grey-100:			#CFD8DC;
+$color-dark-teal-grey-500:		#37474F;
+$color-dark-teal-grey-800:		#1a2b2b;
+// Material text
+$color-material-grey-text:		rgba(0, 0, 0, .54);
+
+// Template specific colors
+$color-dark-blue:               #15284B;
+
+// Auth
+$color-auth-icon:				$color-primary-500;
+// Sign in
+$color-signin-btn-bg:			$color-primary-500;
+$color-signin-btn-text:			$color-grey-50;
+$color-signin-btn-bg-hover:		$color-primary-400;
+$color-signin-btn-text-hover:	$color-grey-50;
+
+// Sign up
+$color-signup-btn-bg:			$color-primary-500;
+$color-signup-btn-text:			$color-grey-50;
+$color-signup-btn-bg-hover:		$color-grey-50;
+$color-signup-btn-text-hover:	$color-primary-500;
+
+// Forgot psw
+$color-forgotPsw-btn-bg:		transparent;
+$color-forgotPsw-btn-text:		$color-material-grey-text;
+$color-forgotPsw-btn-bg-hover:	transparent;
+$color-forgotPsw-btn-text-hover:$color-primary-500;
+
+// Background
+$color-background-app:			$color-grey-300;
+
+// Text
+$color-text-highlight:          $color-primary-500;
+
+// Toolbar
+$color-toolbar-app-name:        $color-grey-50;
+$color-toolbar-text:            $color-black-op-87;
+$color-toolbar-icon:			$color-material-grey-text;
+// Main Toolbar
+$color-toolbar-bg:				$color-primary-500;
+$color-toolbar-btn-text:		$color-grey-50;
+$color-toolbar-hamburger:		$color-grey-50;
+$color-toolbar-btn-icon:		$color-primary-200;
+$color-toolbar-btn-bg-focus:	rgba(238, 238, 238, 0.1);
+
+// Sidenav
+$color-sidenav-bg:				$color-dark-blue;
+$color-sidenav-bg-hover:		$color-primary-500;
+$color-sidenav-text:			$color-grey-200;
+$color-sidenav-active-bg:		$color-grey-50;
+$color-sidenav-active-text:		$color-primary-500;
+$color-sidenav-copyright-text:  $color-grey-50;
+
+// Divider
+$color-divider:					#E1E1E1;
+
+// Tabs
+$color-tabs-text:				$color-material-grey-text;
+$color-tabs-bg:					transparent;
+$color-tabs-ink-bar:			black;
+
+// Card
+$color-card-bg:         		$color-grey-50;
+$color-card-text:               $color-black-op-87;
+$color-card-icon:				$color-material-grey-text;
+// Card header
+$color-card-header-bg:			$color-grey-50;
+$color-card-header-text:		$color-black-op-87;
+// Card case
+$color-card-case-bg-hover:		$color-primary-500;
+$color-card-case-text-hover:	$color-grey-50;
+// Card auth (sign in & sign up)
+$color-card-auth-bg:			#f6f6f6a6;
+
+// Expanded panel
+$color-ep-header-bg:            $color-grey-50;
+$color-ep-header-bg-hover:      $color-primary-500;
+$color-ep-header-text-hover:    $color-grey-50;
+
+$color-ep-highlight-bg:         $color-light-blue-A700;
+$color-ep-highlight-text:       $color-grey-50;
+$color-ep-highlight-user:       $color-grey-50;
+
+$color-ep-content-bg:           $color-grey-50;
+$color-ep-border:               $color-grey-200;
+$color-ep-text:                 $color-black-op-87;
+
+// Inputs - except inputs in dialogs
+$color-input-label:				$color-material-grey-text; // Label & placeholder
+$color-input-text:				$color-black-op-87;
+$color-input-text-disabled:		$color-material-grey-text;
+
+// Data
+$color-data-file-menu-icon:     $color-material-grey-text;
+$color-data-required-label:     $color-red-500;
+
+// Spinner
+$color-spinner-orbit-1:			$color-primary-500;
+$color-spinner-orbit-2:			$color-dark-blue;
+$color-spinner-orbit-3:			$color-primary-500;
+$color-spinner-orbit-4:			$color-dark-blue;
+
+/*
+    Shadow
+*/
+// Card shadow
+$card-shadow:                   0 0 0 #e5e5e5, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+$card-auth-shadow:              $card-shadow;
+
+/*
+    Backgrounds
+*/
+$background-app:                $color-background-app;
+$background-signin:             url("../../../../assets/default/netgrif_background.png");
+
+// Tabs
+$tabs-bg:                       $color-tabs-bg;
+
+/*
+    Dims
+*/
+// Sidenav
+$sidenav-width:                 180px; // Recommended width is 180px
+// Logo - toolbar
+$logo-toolbar-height:           auto;
+$logo-toolbar-width:            164px;
+// Logo - sidenav
+$logo-sidenav-height:           100%;
+$logo-sidenav-width:            auto;
+// Logo - auth
+$logo-auth-height:              50px;
+$logo-auth-width:               auto;
+
+// Card sign in
+$card-signin-min-height:        400px;
+$card-signin-width:             600px;
+
+// Card sign up
+$card-signup-min-height:        600px;
+$card-signup-width:             600px;

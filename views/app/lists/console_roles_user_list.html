@@ -1,0 +1,7 @@
+<md-list flex class="padding-0">
+
+    <div ng-repeat-start="user in rolesTab.filteredUsers" ng-include="'views/app/lists/list_items/console_roles_user_list_item.html'"></div>
+
+    <md-divider ng-class="$last ? 'hide' : 'border-width-default color-border-transparent'" ng-repeat-end></md-divider>
+
+</md-list>

@@ -10,6 +10,7 @@ requirejs.config({
         'angularAria': "bower_components/angular-aria/angular-aria.min",
         'angularMessages': "bower_components/angular-messages/angular-messages.min",
         'angularHal':"bower_components/angular-hal/dist/angular-hal.min",
+        'angularCurrencyFormat':"bower_components/angular-currency-format/dist/currency-format.min",
         'angularInView':"bower_components/angular-inview/angular-inview",
         'angularRoute': "bower_components/angular-route/angular-route.min",
         'angularRouteSegment': "bower_components/angular-route-segment/build/angular-route-segment",
@@ -18,7 +19,9 @@ requirejs.config({
         'domReady': "bower_components/requirejs/domReady",
         'i18n': "bower_components/requirejs/i18n",
         'nls': "scripts/nls",
-        'app': "scripts/app"
+        'config': "scripts/config",
+        'app': "scripts/app",
+        'version': "scripts/version"
     },
     shim: {
         'angular': {
@@ -29,6 +32,7 @@ requirejs.config({
         'angularAria': ['angular'],
         'angularMessages': ['angular'],
         'angularHal': ['angular'],
+        'angularCurrencyFormat': ['angular'],
         'angularInView': ['angular'],
         'angularRoute': ['angular'],
         'angularRouteSegment': ['angular', 'angularRoute'],
@@ -42,7 +46,7 @@ requirejs.config({
     }
 });
 
-require(['domReady!','angular','i18n','app'], function (document, angular) {
+require(['domReady!','angular', 'config', 'i18n','app'], function (document, angular) {
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['app']);
     });

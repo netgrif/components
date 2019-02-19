@@ -3,35 +3,28 @@
     <md-expansion-panel-collapsed>
         <div flex layout="row" layout-align="start center" class="click-area" ng-click="null">
 
-            <div flex-gt-sm="15" flex-sm="15" flex-xs="30" layout="row" layout-align="start center">
-                <span class="color-fg-primary-500 font-weight-600">{{workPanelCtrl.initials}}</span>
+            <div flex-gt-sm="15" flex-sm="15" flex-xs="35" layout="row" layout-align="start center">
+                <span class="color-fg-primary-500 font-weight-600">
+                    {{workPanelCtrl.initials}}
+                </span>
             </div>
 
-            <span flex-gt-sm="35" flex-sm="40" flex-xs="50">{{workPanelCtrl.title}}</span>
+            <span hide-xs flex-gt-md="25" flex-md="35" flex-sm="60" class="text-overflow-dots">
+                {{workPanelCtrl.title}}
+            </span>
 
-            <span hide show-gt-xs flex-gt-sm="30" flex-sm="35" layout="row" layout-align="start center">
+            <span flex-gt-sm="20" flex-sm="25" flex-xs="75">
+                {{workPanelCtrl.version}}
+            </span>
+
+            <span hide-xs hide-sm flex-md="30" flex-gt-md="20" layout="row" layout-align="start center" class="text-overflow-dots">
                 <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                 {{workPanelCtrl.author.fullName ? workPanelCtrl.author.fullName : workPanelCtrl.author.email}}
             </span>
 
-            <span hide show-gt-sm flex-gt-sm="10">
+            <span hide show-gt-md flex-gt-md="20">
                 {{workPanelCtrl.uploadDate}}
             </span>
-
-            <!--TODO 5.2.2018 implement disable and delete for model-->
-            <!--<md-menu flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center">-->
-                <!--<md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>-->
-                    <!--<md-icon class="material-icons">more_vert</md-icon>-->
-                <!--</md-button>-->
-                <!--<md-menu-content>-->
-                    <!--<md-menu-item>-->
-                        <!--<md-button ng-click="null">-->
-                            <!--<md-icon class="material-icons">delete</md-icon>-->
-                            <!--<span>{{$i18n.block.btn.delete}}</span>-->
-                        <!--</md-button>-->
-                    <!--</md-menu-item>-->
-                <!--</md-menu-content>-->
-            <!--</md-menu>-->
 
         </div>
     </md-expansion-panel-collapsed>
@@ -40,18 +33,26 @@
 
         <md-expansion-panel-header ng-click="$panel.collapse()" md-no-sticky>
 
-            <div flex-gt-sm="15" flex-sm="15" flex-xs="30" layout="row" layout-align="start center">
-                <span class="color-fg-primary-500 font-weight-600">{{workPanelCtrl.initials}}</span>
+            <div flex-gt-sm="15" flex-sm="15" flex-xs="35" layout="row" layout-align="start center">
+                <span class="color-fg-primary-500 font-weight-600">
+                    {{workPanelCtrl.initials}}
+                </span>
             </div>
 
-            <span flex-gt-sm="35" flex-sm="40" flex-xs="50">{{workPanelCtrl.title}}</span>
+            <span hide-xs flex-gt-md="25" flex-md="35" flex-sm="60" class="text-overflow-dots">
+                {{workPanelCtrl.title}}
+            </span>
 
-            <span hide show-gt-xs flex-gt-sm="30" flex-sm="30" layout="row" layout-align="start center">
+            <span flex-gt-sm="20" flex-sm="25" flex-xs="75">
+                {{workPanelCtrl.version}}
+            </span>
+
+            <span hide-xs hide-sm flex-md="30" flex-gt-md="20" layout="row" layout-align="start center" class="text-overflow-dots">
                 <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                 {{workPanelCtrl.author.fullName ? workPanelCtrl.author.fullName : workPanelCtrl.author.email}}
             </span>
 
-            <span hide show-gt-sm flex-gt-sm="10">
+            <span hide show-gt-md flex-gt-md="20">
                 {{workPanelCtrl.uploadDate}}
             </span>
 
@@ -67,7 +68,7 @@
                         <div flex class="line-3px color-bg-primary-op-50"></div>
                     </div> <!-- ./Group-divider -->
 
-                    <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center" class="margin-top-default margin-bottom-default"
+                    <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center" class="margin-vertical-default"
                          ng-repeat="(key, val) in workPanelCtrl.details">
 
                         <span hide-xs flex-gt-xs="20">
@@ -76,7 +77,7 @@
 
                         <div hide-xs flex-gt-xs="5"></div>
 
-                        <div flex-gt-xs="35" flex-xs="65" layout="row" layout-align="start center">
+                        <div flex-gt-xs="50" flex-xs="80" layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">
                                 {{::val.icon}}
                                 <md-tooltip hide-gt-xs md-direction="bottom">
@@ -91,7 +92,7 @@
                             </span>
                         </div>
 
-                        <div flex="35" layout="row" layout-align="end center">
+                        <div flex="20" layout="row" layout-align="end center">
 
                             <md-button ng-if="!!val.button" class="md-icon-button" ng-click="workPanelCtrl.downloadModel()">
                                 <md-icon class="material-icons">{{::val.button.name}}</md-icon>
@@ -99,12 +100,7 @@
                                     {{::val.button.tooltip}}
                                 </md-tooltip>
                             </md-button>
-                            <!--<md-button class="md-icon-button">-->
-                            <!--<md-icon class="material-icons">info_outline</md-icon>-->
-                            <!--<md-tooltip md-direction="bottom">-->
-                            <!--{{::$i18n.page.workflow.data.item.file.desc}}-->
-                            <!--</md-tooltip>-->
-                            <!--</md-button>-->
+
                         </div>
 
                         <div hide-xs flex-gt-xs="5"></div>
@@ -117,7 +113,7 @@
                         <div flex class="line-3px color-bg-primary-op-50"></div>
                     </div> <!-- ./Group-divider -->
 
-                    <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center" class="margin-top-default margin-bottom-default"
+                    <div flex-gt-sm="50" flex-sm="100" flex-xs="100" layout-wrap layout="row" layout-align="start center" class="margin-vertical-default"
                          ng-repeat="(key, val) in workPanelCtrl.stats">
 
                         <span hide-xs flex-gt-xs="20">
@@ -126,23 +122,16 @@
 
                         <div hide-xs flex-gt-xs="5"></div>
 
-                        <div flex-gt-xs="35" flex-xs="65" layout="row" layout-align="start center">
+                        <div flex-gt-xs="70" flex-xs layout="row" layout-align="start center">
                             <i class="material-icons color-fg-primary-500 margin-right-2x">
                                 {{::val.icon}}
                                 <md-tooltip hide-gt-xs md-direction="bottom">
                                     {{::val.name}}
                                 </md-tooltip>
                             </i>
-                            <span>{{val.value}}</span>
-                        </div>
-
-                        <div flex="35" layout="row" layout-align="end center">
-                            <!--<md-button class="md-icon-button">-->
-                                <!--<md-icon class="material-icons">info_outline</md-icon>-->
-                                <!--<md-tooltip md-direction="bottom">-->
-                                    <!--{{::$i18n.page.workflow.data.item.roles.desc}}-->
-                                <!--</md-tooltip>-->
-                            <!--</md-button>-->
+                            <span>
+                                {{val.value}}
+                            </span>
                         </div>
 
                         <div hide-xs flex-gt-xs="5"></div>
@@ -156,12 +145,11 @@
         <md-expansion-panel-footer md-no-sticky>
             <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
-                <!--TODO 5.2.2018-->
-                <!--<md-button ng-if="true" class="layout-xs-rw-100">-->
-                    <!--{{$i18n.block.btn.delete}}-->
-                <!--</md-button>-->
+                <md-button ng-if="$config.enable.modelDelete && $user.hasAuthority('ROLE_ADMIN')" class="md-warn layout-xs-rw-100" ng-click="workPanelCtrl.delete()">
+                    {{::$i18n.block.btn.delete}}
+                </md-button>
 
-                <md-button ng-click="$panel.collapse()" class="md-primary layout-xs-rw-100">
+                <md-button class="md-primary layout-xs-rw-100" ng-click="$panel.collapse()">
                     {{::$i18n.block.btn.collapse}}
                 </md-button>
 

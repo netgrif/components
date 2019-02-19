@@ -1,32 +1,60 @@
-<md-toolbar layout="row" layout-align="center center" md-whiteframe="5" class="toolbar">
+<md-toolbar layout="row" layout-align="center center" md-whiteframe="5" class="main-toolbar">
 
     <md-button hide-gt-sm ng-click="mainCtrl.toggleSidenav('left-nav')" class="md-icon-button">
         <md-icon class="material-icons">menu</md-icon>
     </md-button>
 
-    <a href="/" hide show-gt-sm layout-align="center center" class="toolbar-logo margin-left-2x">
-        <img src="../../assets/netgrif_full_white.svg" alt="logo" class="padding-vertical-default">
+    <a href="/" hide show-gt-sm flex-gt-sm="30" layout-align="center center" class="main-toolbar-logo margin-left-2x">
+        <img src="{{::$config.imageSrc.mainToolbar}}" alt="logo" class="padding-vertical-default">
     </a>
 
     <div hide-gt-sm>
-        <span ng-if="'dashboard' | routeSegmentContains">{{::$i18n.page.dashboard.this}}</span>
-        <span ng-if="'cases' | routeSegmentContains">{{::$i18n.page.cases.this}}</span>
-        <span ng-if="'tasks' | routeSegmentContains">{{::$i18n.page.tasks.this}}</span>
-        <span ng-if="'workflow' | routeSegmentContains">{{::$i18n.page.workflow.this}}</span>
-        <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)">{{::$i18n.page.console.this}}</span>
+        <span ng-if="'dashboard' | routeSegmentContains" class="toolbar-text">
+            {{::$i18n.page.dashboard.this}}
+        </span>
+        <span ng-if="'cases' | routeSegmentContains" class="toolbar-text">
+            {{::$i18n.page.cases.this}}
+            <span ng-if="mainCtrl.counters.cases">
+                &nbsp;({{mainCtrl.counters.cases.display}})
+            </span>
+        </span>
+        <span ng-if="'tasks' | routeSegmentContains" class="toolbar-text">
+            {{::$i18n.page.tasks.this}}
+            <span ng-if="mainCtrl.counters.tasks">
+                &nbsp;({{mainCtrl.counters.tasks.display}})
+            </span>
+        </span>
+        <span ng-if="'workflow' | routeSegmentContains" class="toolbar-text">
+            {{::$i18n.page.workflow.this}}
+        </span>
+        <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('console' | routeSegmentContains)" class="toolbar-text">
+            {{::$i18n.page.console.this}}
+        </span>
+        <span ng-if="'profile' | routeSegmentContains" class="toolbar-text">
+            {{::$i18n.page.profile.this}}
+        </span>
+        <span ng-if="$user.hasAuthority('ROLE_ADMIN') && ('settings' | routeSegmentContains)" class="toolbar-text">
+            {{::$i18n.page.settings.this}}
+        </span>
     </div>
 
-    <div flex></div>
+    <div flex layout="row" layout-align="center center">
+        <span hide show-gt-sm class="app-name">{{::$config.appName}}</span>
+    </div>
 
-    <md-menu-bar layout="row" layout-align="center center" class="icon-menu-bar">
+    <md-menu-bar flex-gt-sm="30" layout="row" layout-align="end center" class="icon-menu-bar">
         <md-menu>
 
-            <md-button layout="row" layout-align="start center" class="toolbar-btn" ng-click="$mdMenu.open($event)" md-menu-origin>
+            <md-button layout="row" layout-align="start center" class="main-toolbar-btn" ng-click="$mdMenu.open($event)" md-menu-origin>
                 <span hide-xs>{{$user.name}}</span>
                 <i class="material-icons">account_circle</i>
             </md-button>
 
             <md-menu-content width="3">
+
+                <md-menu-item hide-gt-xs>
+                    <span class="font-size-16">{{$user.name}}</span>
+                </md-menu-item>
 
                 <md-menu-item>
                     <md-menu class="icon-submenu">
@@ -43,14 +71,18 @@
                             <md-menu-item>
                                 <md-button ng-click="$i18n.change('en-US')" layout="row" layout-align="space-between center">
                                     <span>{{::$i18n.block.mainMenu.lang.en}}</span>
-                                    <md-icon ng-if="$i18n.current() === 'en-US'" class="material-icons">keyboard_arrow_left</md-icon>
+                                    <md-icon ng-if="$i18n.current() === 'en-US'" class="material-icons">
+                                        keyboard_arrow_left
+                                    </md-icon>
                                 </md-button>
                             </md-menu-item>
 
                             <md-menu-item>
                                 <md-button ng-click="$i18n.change('sk-SK')" layout="row" layout-align="space-between center">
                                     <span>{{::$i18n.block.mainMenu.lang.sk}}</span>
-                                    <md-icon ng-if="$i18n.current() === 'sk-SK'" class="material-icons">keyboard_arrow_left</md-icon>
+                                    <md-icon ng-if="$i18n.current() === 'sk-SK'" class="material-icons">
+                                        keyboard_arrow_left
+                                    </md-icon>
                                 </md-button>
                             </md-menu-item>
 
@@ -65,6 +97,13 @@
                         {{::$i18n.block.mainMenu.profile}}
                     </md-button>
                 </md-menu-item>
+
+                <!--<md-menu-item ng-if="$user.hasAuthority('ROLE_ADMIN')">-->
+                    <!--<md-button href="/settings" class="padding-top-0">-->
+                        <!--<md-icon class="material-icons">settings</md-icon>-->
+                        <!--{{::$i18n.block.mainMenu.settings}}-->
+                    <!--</md-button>-->
+                <!--</md-menu-item>-->
 
                 <md-menu-item>
                     <md-button ng-click="mainCtrl.logout()">

@@ -1,0 +1,400 @@
+// Dimensions
+$dim-default:					8px;
+$dim-2x:						2*$dim-default;
+
+$dim-2px:						2px;
+$dim-12px:						12px;
+$dim-14px:						14px;
+$dim-48px:						48px;
+$dim-52px:						52px;
+$dim-56px:						56px;
+
+$border-radius:					2px;
+
+// Height
+
+.height {
+
+	&-48px {
+		height: $dim-48px; // Expansion panel height
+	}
+
+	&-52px {
+		height: $dim-52px;
+	}
+
+	&-56px {
+		height: $dim-56px;
+	}
+}
+
+.width {
+
+}
+
+// Min / Max Dims
+.min {
+
+	&-height {
+
+		&-0 {
+			min-height: 0 !important;
+		}
+		&-100 {
+			min-height: 100% !important;
+		}
+	}
+	&-width {
+		&-0 {
+			min-width: 0 !important;
+		}
+		&-100 {
+			min-width: 100% !important;
+		}
+	}
+}
+
+.max {
+
+	&-height {
+
+		&-0 {
+			max-height: 0 !important;
+		}
+		&-100 {
+			max-height: 100% !important;
+		}
+	}
+	&-width {
+		&-0 {
+			max-width: 0 !important;
+		}
+		&-100 {
+			max-width: 100% !important;
+		}
+	}
+}
+
+// Font sizes
+
+
+// Margins
+.margin {
+
+	&-0 {
+		margin: 0 !important;
+	}
+
+	&-default {
+		margin: $dim-default;
+	}
+
+	&-2x {
+		margin: $dim-2x;
+	}
+
+	&-vertical {
+
+		&-0 {
+			margin-top: 0 !important;
+			margin-bottom: 0 !important;
+		}
+
+		&-default {
+			margin-top: $dim-default;
+			margin-bottom: $dim-default;
+		}
+
+		&-2x {
+			margin-top: $dim-2x;
+			margin-bottom: $dim-2x;
+		}
+	}
+
+	&-horizontal {
+
+		&-0 {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+		}
+
+		&-default {
+			margin-left: $dim-default;
+			margin-right: $dim-default;
+		}
+
+		&-2x {
+			margin-left: $dim-2x;
+			margin-right: $dim-2x;
+		}
+	}
+
+	&-top {
+
+		&-0 {
+			margin-top: 0 !important;
+		}
+
+		&-2px {
+			margin-top: 2px;
+		}
+
+		&-default {
+			margin-top: $dim-default;
+		}
+
+		&-2x {
+			margin-top: $dim-2x;
+		}
+	}
+
+	&-bottom {
+
+		// To fix input container alignment
+		&-negative-15px {
+			margin-bottom: -15px;
+		}
+
+		&-0 {
+			margin-bottom: 0 !important;
+		}
+
+		&-default {
+			margin-bottom: $dim-default;
+		}
+
+		&-2x {
+			margin-bottom: $dim-2x;
+		}
+	}
+
+	&-left {
+
+		&-negative {
+
+			&-default {
+				margin-left: -1 * $dim-default !important;
+			}
+		}
+
+		&-0 {
+			margin-left: 0 !important;
+		}
+
+		&-default {
+			margin-left: $dim-default;
+		}
+
+		&-2x {
+			margin-left: $dim-2x;
+		}
+
+	}
+
+	&-right {
+
+		&-0 {
+			margin-right: 0 !important;
+		}
+
+		&-default {
+			margin-right: $dim-default;
+		}
+
+		&-2x {
+			margin-right: $dim-2x;
+		}
+
+		&-12px {
+			margin-right: $dim-12px;
+		}
+
+		&-14px {
+			margin-right: $dim-14px;
+		}
+	}
+}
+
+// Paddings
+.padding {
+
+	&-0 {
+		padding: 0 !important;
+	}
+
+	&-default {
+		padding: $dim-default;
+	}
+
+	&-2x {
+		padding: $dim-2x;
+	}
+
+	&-vertical {
+
+		&-0 {
+			padding-top: 0 !important;
+			padding-bottom: 0 !important;
+		}
+
+		&-default {
+			padding-top: $dim-default;
+			padding-bottom: $dim-default;
+		}
+
+		&-2x {
+			padding-top: $dim-2x;
+			padding-bottom: $dim-2x;
+		}
+	}
+
+	&-horizontal {
+
+		&-0 {
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+
+		&-default {
+			padding-left: $dim-default;
+			padding-right: $dim-default;
+		}
+
+		&-2x {
+			padding-left: $dim-2x;
+			padding-right: $dim-2x;
+		}
+	}
+
+	&-top {
+
+		&-0 {
+			padding-top: 0 !important;
+		}
+
+		&-default {
+			padding-top: $dim-default;
+		}
+
+		&-2x {
+			padding-top: $dim-2x;
+		}
+	}
+
+	&-bottom {
+
+		&-0 {
+			padding-bottom: 0 !important;
+		}
+
+		&-default {
+			padding-bottom: $dim-default;
+		}
+
+		&-2x {
+			padding-bottom: $dim-2x;
+		}
+	}
+
+	&-left {
+
+		&-0 {
+			padding-left: 0 !important;
+		}
+
+		&-default {
+			padding-left: $dim-default;
+		}
+
+		&-2x {
+			padding-left: $dim-2x;
+		}
+	}
+
+	&-right {
+
+		&-0 {
+			padding-right: 0 !important;
+		}
+
+		&-default {
+			padding-right: $dim-default;
+		}
+
+		&-2x {
+			padding-right: $dim-2x;
+		}
+
+		&-66px {
+			padding-right: 66px;
+		}
+	}
+}
+
+// Border
+.border {
+
+	&-width {
+
+		&-default {
+			border-width: $dim-default !important;
+		}
+
+		&-2x {
+			border-width: $dim-2x !important;
+		}
+	}
+
+	&-radius {
+
+		&-default {
+			border-radius: $border-radius !important;
+		}
+
+		&-top {
+
+			&-default {
+				border-top-left-radius: $border-radius;
+				border-top-right-radius: $border-radius;
+			}
+
+			&-left {
+
+				&-default {
+					border-top-left-radius: $border-radius;
+				}
+
+			}
+
+			&-right {
+
+				&-default {
+					border-top-right-radius: $border-radius;
+				}
+			}
+		}
+
+		&-bottom {
+
+			&-default {
+				border-bottom-left-radius: $border-radius;
+				border-bottom-right-radius: $border-radius;
+			}
+
+			&-left {
+
+				&-default {
+					border-bottom-left-radius: $border-radius;
+				}
+			}
+
+			&-right {
+
+				&-default {
+					border-bottom-right-radius: $border-radius;
+				}
+			}
+
+		}
+	}
+}

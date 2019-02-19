@@ -2,10 +2,10 @@
     <form name="petriNetUploadForm" ng-submit="parentCtrl.uploadPetriNet()">
 
         <md-toolbar>
-            <div class="md-toolbar-tools">
+            <div layout="row" layout-align="space-between center" class="md-toolbar-tools">
 
                 <h2>{{::$root.$i18n.block.dialog.uploadModel.title}}</h2>
-                <span flex></span>
+
                 <md-button class="md-icon-button" ng-click="closeDialog()">
                     <md-icon class="material-icons">close</md-icon>
                 </md-button>
@@ -34,9 +34,9 @@
 
                     <span flex></span>
 
-                    <div layout="row" layout-align="left center" class="color-fg-material-grey-text cursor-pointer">
+                    <div layout="row" layout-align="start center" class="cursor-pointer">
                         <md-tooltip md-direction="bottom">{{::$root.$i18n.block.dialog.uploadModel.attachModelHelp}}</md-tooltip>
-                        <i class="material-icons color-fg-material-grey-text">help</i>
+                        <i class="material-icons">help</i>
                     </div>
 
                 </div>
@@ -53,6 +53,30 @@
                         <div ng-message="md-maxlength">{{::$root.$i18n.block.dialog.uploadModel.maxchars}}</div>
                     </div>
                 </md-input-container>
+
+                <md-input-container>
+                    <label>{{::$root.$i18n.block.dialog.uploadModel.identifier}}</label>
+                    <input type="text" ng-model="parentCtrl.petriNetMeta.identifier" required>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>{{::$root.$i18n.block.dialog.uploadModel.release.this}}</label>
+                    <md-select ng-model="parentCtrl.petriNetMeta.releaseType">
+                        <md-option value="major">
+                            {{::$root.$i18n.block.dialog.uploadModel.release.type.major}}
+                        </md-option>
+                        <md-option value="minor">
+                            {{::$root.$i18n.block.dialog.uploadModel.release.type.minor}}
+                        </md-option>
+                        <md-option value="patch">
+                            {{::$root.$i18n.block.dialog.uploadModel.release.type.patch}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <div ng-if="parentCtrl.uploadProgress !== 0" flex class="margin-top-default">
+                    <md-progress-linear md-mode="determinate" value="{{parentCtrl.uploadProgress}}"></md-progress-linear>
+                </div>
 
             </div>
         </md-dialog-content>

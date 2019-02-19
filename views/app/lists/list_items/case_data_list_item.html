@@ -1,0 +1,48 @@
+<!-- 5 columns -->
+<div ng-if="useCase.caseDelete" layout="row" layout-align="start center" class="card-case padding-horizontal-2x" ng-click="useCase.open()">
+    <span flex-gt-sm="10" flex-sm="15" flex-xs="30" layout="row" layout-align="start center">
+        <i class="material-icons margin-right-2x {{::useCase.color}}">
+            {{useCase.icon ? useCase.icon : 'label'}}
+        </i>
+    </span>
+
+    <!-- META -->
+    <case-data flex-gt-md="20" flex-md="30" flex-sm="40" flex-xs="50" field="useCase.selectedData['column0']" case-id="useCase.stringId"></case-data>
+    <case-data hide-xs flex-gt-md="20" flex-md="25" flex-sm="35" field="useCase.selectedData['column1']" case-id="useCase.stringId"></case-data>
+    <case-data hide-xs hide-sm flex-gt-md="20" flex-md="25" field="useCase.selectedData['column2']" case-id="useCase.stringId"></case-data>
+    <case-data hide show-gt-md flex-gt-md="20" field="useCase.selectedData['column3']" case-id="useCase.stringId"></case-data>
+    <case-data hide show-xl flex-xl="20" field="useCase.selectedData['column4']" case-id="useCase.stringId"></case-data>
+
+    <md-menu ng-if="useCase.caseDelete && $user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20" layout="row"
+             layout-align="end center">
+        <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
+            <md-icon class="material-icons">more_vert</md-icon>
+        </md-button>
+        <md-menu-content>
+            <md-menu-item>
+                <md-button ng-click="useCase.delete()">
+                    <md-icon class="material-icons">delete</md-icon>
+                    <span>{{$i18n.block.btn.delete}}</span>
+                </md-button>
+            </md-menu-item>
+        </md-menu-content>
+    </md-menu>
+    <div ng-if="!useCase.caseDelete || !$user.hasAuthority('ROLE_ADMIN')" flex-gt-xs="10" flex-xs="20"></div>
+</div>
+
+<!-- 6 columns -->
+<div ng-if="!useCase.caseDelete" layout="row" layout-align="start center" class="card-case padding-horizontal-2x" ng-click="useCase.open()">
+    <span flex-xl="4" flex-lg="5" flex-md="8" flex-sm="10" flex-xs="10" layout="row" layout-align="start center">
+        <i class="material-icons margin-right-2x {{::useCase.color}}">
+            {{useCase.icon ? useCase.icon : 'label'}}
+        </i>
+    </span>
+
+    <!-- META -->
+    <case-data                 flex-xl="16" flex-lg="19" flex-md="23" flex-sm="30" flex-xs="45" field="useCase.selectedData['column0']" case-id="useCase.stringId"></case-data>
+    <case-data                 flex-xl="16" flex-lg="19" flex-md="23" flex-sm="30" flex-xs="45" field="useCase.selectedData['column1']" case-id="useCase.stringId"></case-data>
+    <case-data hide-xs         flex-xl="16" flex-lg="19" flex-md="23" flex-sm="30" field="useCase.selectedData['column2']" case-id="useCase.stringId"></case-data>
+    <case-data hide show-gt-sm flex-xl="16" flex-lg="19" flex-md="23" field="useCase.selectedData['column3']" case-id="useCase.stringId"></case-data>
+    <case-data hide show-gt-md flex-xl="16" flex-lg="19" field="useCase.selectedData['column4']" case-id="useCase.stringId"></case-data>
+    <case-data hide show-gt-lg flex-xl="16" field="useCase.selectedData['column5']" case-id="useCase.stringId"></case-data>
+</div>

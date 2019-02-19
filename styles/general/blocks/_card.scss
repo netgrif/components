@@ -1,0 +1,163 @@
+//@import '../../templates/default/scss/config';
+@import '../dims';
+@import '../mixins';
+
+.card {
+    margin: 0;
+    color: $color-card-text;
+    background-color: $color-card-bg;
+    box-shadow: $card-shadow;
+    border-radius: $border-radius;
+
+    md-card-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    *:not(.md-primary):not(.color-fg-primary-500) &-icon {
+        color: $color-card-icon !important;
+    }
+
+    a {
+        color: $color-card-text;
+        text-decoration: none;
+
+        .material-icons {
+            color: $color-card-text;
+        }
+    }
+
+    md-menu {
+
+        .material-icons {
+            color: $color-card-icon;
+        }
+    }
+
+    &-no-shadow {
+        @extend .card;
+        box-shadow: none;
+    }
+
+    &-signin {
+        min-height: $card-signin-min-height;
+        width: $card-signin-width;
+        background-color: $color-card-auth-bg;
+        box-shadow: $card-auth-shadow;
+
+        img {
+            height: $logo-auth-height;
+            width: $logo-auth-width;
+        }
+    }
+
+    &-signup {
+        min-height: $card-signup-min-height;
+        width: $card-signup-width;
+        background-color: $color-card-auth-bg;
+        box-shadow: $card-auth-shadow;
+
+        img {
+            height: $logo-auth-height;
+            width: $logo-auth-width;
+        }
+    }
+
+    &-header {
+        @extend .card;
+        height: $dim-48px;
+        color: $color-card-header-text;
+        background-color: $color-card-header-bg;
+
+        .case-data-header-item {
+            padding: 0 $dim-default;
+            cursor: pointer;
+            outline: none;
+
+            &-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    &-case {
+        min-height: $dim-48px;
+        cursor: pointer;
+
+        case-data {
+
+            span, div {
+                //word-break: break-all;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .case-data-item-field {
+                padding: 0 $dim-default;
+            }
+        }
+
+        &:hover {
+            background-color: $color-card-case-bg-hover;
+
+            span, div, md-icon, .material-icons.color-fg-primary-500 {
+                color: $color-card-case-text-hover;
+            }
+
+            md-switch {
+
+                .md-label {
+                    color: $color-grey-50;
+                }
+
+                .md-bar {
+                    background-color: rgba($color-grey-50, 0.5);
+                    transition-delay: 0s;
+                }
+
+                .md-thumb {
+                    background-color: $color-grey-50;
+                }
+            }
+        }
+    }
+}
+
+// Responsive
+@include xs() {
+
+    .card {
+
+        &-signin, &-signup {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+
+            img {
+                max-height: 80px;
+            }
+        }
+    }
+}
+
+md-tooltip.value-text-tooltip {
+    max-width: 50%;
+    max-height: 20%;
+    height: auto;
+    word-break: break-word;
+    white-space: unset;
+}
+
+md-tooltip.value-text-tooltip {
+    max-width: 50%;
+    max-height: 20%;
+    height: auto;
+    word-break: break-word;
+    white-space: unset;
+}
+
+.cas-data-list-item-field {
+    padding-right: 5px;
+    padding-left: 5px;
+}

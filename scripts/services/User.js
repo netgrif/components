@@ -6,6 +6,7 @@ define(['angular', '../modules/Main'], function (angular) {
             authority: undefined,
             name: undefined,
             roles: undefined,
+            groups: undefined,
 
             clear: function () {
                 user.id = 0;
@@ -14,6 +15,16 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.name = undefined;
                 user.roles = undefined;
             },
+
+            fromResource: function (resource) {
+                user.id = resource.id;
+                user.login = resource.email;
+                user.authority = resource.authorities.map(authority => authority.authority);
+                user.name = resource.fullName;
+                user.roles = resource.processRoles.map(role => role.stringId);
+                user.groups = resource.groups;
+            },
+
             /**
              * Change users roles
              * @param {Array} roles
@@ -26,12 +37,15 @@ define(['angular', '../modules/Main'], function (angular) {
 
             /**
              * Check if user has specified authority
-             * @param {String} auth
+             * @param {Array / String} auth
              * @returns {boolean}
              */
             hasAuthority: function (auth) {
                 if (!auth || !user.authority) return false;
-                return user.authority.some(a => a === auth);
+                if (auth instanceof Array) {
+                    return auth.some(a => user.authority.some(u => u === a));
+                } else
+                    return user.authority.some(a => a === auth);
             },
 
             /**
@@ -61,13 +75,14 @@ define(['angular', '../modules/Main'], function (angular) {
              * @returns {boolean}
              */
             hasPermission: function (permission) {
-                if(!permission) return false;
-                const perm = "PERM_"+permission.toUpperCase();
+                if (!permission) return false;
+                const perm = "PERM_" + permission.toUpperCase();
                 return user.hasAuthority(perm);
             },
 
             getAsObject: function () {
                 return {
+                    id: user.id,
                     email: user.login,
                     fullname: user.name,
                     name: user.name.split(" ")[0],
@@ -76,7 +91,20 @@ define(['angular', '../modules/Main'], function (angular) {
                     userProcessRoles: user.roles.map(role => {
                         roleId: role
                     })
-            }
+                }
+            },
+
+            savePreference: function (key, value) {
+                localStorage.setItem("userPreference-" + key, JSON.stringify(value));
+            },
+            getPreference: function (key) {
+                const value = localStorage.getItem("userPreference-" + key);
+                if (value)
+                    return JSON.parse(value);
+                return undefined;
+            },
+            removePreference: function (key) {
+                localStorage.removeItem("userPreference-" + key);
             }
         };
         return user;

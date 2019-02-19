@@ -1,0 +1,12 @@
+.file-chooser {
+	margin: 0;
+
+	input {
+		position: absolute;
+		height: 0.1px;
+		width: 0.1px;
+		opacity: 0;
+		overflow: hidden;
+		z-index: -1;
+	}
+}

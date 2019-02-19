@@ -1,11 +1,13 @@
 define(['angular', '../modules/Workflow', '../modules/Main'],
     function (angular) {
         angular.module('ngWorkflow').controller('WorkflowController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope','$process',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process) {
                     const self = this;
 
-                    self.petriNetMeta = {};
+                    self.petriNetMeta = {
+                        releaseType: "patch"
+                    };
                     self.netFileName = undefined;
 
                     self.expansionGroup = undefined;
@@ -17,6 +19,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.searchInput = undefined;
                     self.searchLast = undefined;
                     self.loading = false;
+                    self.uploadProgress = 0;
                     self.startupLock = true;
 
 
@@ -38,28 +41,21 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
 
                         self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
                         let meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
-                        $fileUpload.upload(self.netFile, meta, "/res/petrinet/import", function (response) {
+                        $fileUpload.upload(self.netFile, meta, "/api/petrinet/import", uploadEvent => {
+                            if (uploadEvent.lengthComputable) {
+                                self.uploadProgress = (uploadEvent.loaded / uploadEvent.total) * 100;
+                            }
+                        }, function (response) {
+                            self.uploadProgress = 0;
                             if (response.success) {
                                 $dialog.closeCurrent();
                                 self.clearAll();
                                 self.load(false);
+                                $process.loadNets(true);
                             }
                             else $snackbar.error($i18n.block.snackbar.modelFailedToUpload);
                             self.netFile = undefined;
                             self.petriNetMeta = {};
-                        });
-                    };
-
-                    self.loadPetriNets = function () {
-                        if (self.petriNetRefs) return;
-                        $http.get("/res/petrinet/refs").then(function (response) {
-                            $log.debug(response);
-                            $log.debug(response.$request());
-                            response.$request().$get("petriNetReferences").then(function (resource) {
-                                self.petriNetRefs = resource;
-                            });
-                        }, function () {
-                            $log.debug("Petri net refs get failed");
                         });
                     };
 
@@ -98,6 +94,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                             return {};
                         return {
                             or: {
+                                identifier: self.searchLast,
                                 title: self.searchLast,
                                 initials: self.searchLast
                             }
@@ -107,7 +104,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.buildRequest = function (next) {
                         return {
                             method: 'POST',
-                            url: next ? next : "/res/petrinet/search",
+                            url: next ? next : "/api/petrinet/search",
                             data: self.buildSearchQuery()
                         };
                     };
@@ -129,11 +126,12 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                                 self.clearAll();
                             self.page = Object.assign(self.page, response.page);
                             self.page.pageLinks = response.$response().data._links;
-                            response.$request().$get("petriNetSmalls").then(resources => {
+                            response.$request().$get("petriNetReferences").then(resources => {
                                 resources.forEach((r, i) => {
                                     self.expansionGroup.add(self.expansionPanelName, {
                                         resource: r,
-                                        links: response.$response().data._embedded.petriNetSmalls[i]._links
+                                        links: response.$response().data._embedded.petriNetReferences[i]._links,
+                                        parent: self
                                     }).then(panel => {
                                         self.panels.push(panel);
                                     })
@@ -151,7 +149,6 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         self.searchLast = self.searchInput.trim();
                         self.load(false);
                     };
-
 
                     self.start();
                 }]);

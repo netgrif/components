@@ -14,7 +14,7 @@
     <div flex="45" flex-xs="100">
         <md-input-container  flex class="md-block" ng-class="field.valid ? '':' md-input-invalid'">
             <label class="placeholder">{{field.placeholder}}</label>
-            <input id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" type="text" ng-if="field.subType === 'simple'"
+            <input id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" type="text" ng-if="field.subType !== 'area'"
                    ng-model="field.newValue"
                    ng-change="field.changed = true; field.newValue === undefined ? field.newValue=null : field.newValue; field.validate(field.newValue);"
                    ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
@@ -23,7 +23,9 @@
                    ng-required="field.behavior.required"
                    md-maxlength="field.maxLength"
                    ng-keypress="$event.which === 13 && $event.target.blur()"
+                   title=""
                    aria-label="Enter text">
+            <!--TODO: check if md-maxlength works -->
             <textarea id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" ng-if="field.subType === 'area'"
                       rows="1" max-rows="4"
                       ng-model="field.newValue"

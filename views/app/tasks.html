@@ -1,6 +1,6 @@
 <div ng-cloak>
 
-    <md-tabs md-dynamic-height md-autoselect="true" md-border-bottom md-selected="tasksCtrl.activeTabIndex" class="background-tabs">
+    <md-tabs md-dynamic-height md-border-bottom md-selected="tasksCtrl.activeTabIndex" class="background-tabs">
 
         <md-tab ng-repeat="taskTab in tasksCtrl.taskTabs" md-on-select="tasksCtrl.tabChanged()">
 
@@ -18,15 +18,23 @@
 
                     <div layout="column">
 
-                        <div ng-include="'views/app/headers/task_header.html'"></div>
+                        <div ng-init="taskView=$config.show.tasks" ng-include="'views/app/headers/tasks_task_header.html'"></div>
 
                         <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                         <md-expansion-panel-group md-component-id="'taskView-tasksGroup-'+taskTab.id" eval-attr-as-expr="mdComponentId" multiple>
                         </md-expansion-panel-group>
 
-                        <div layout="row" layout-align="center center" in-view="$inview&&taskTab.load(true)" class="padding-2x margin-2x">
-                            <md-progress-circular md-mode="indeterminate" ng-disabled="!taskTab.loading" class="progress-circular-stroke-accent-50" md-diameter="50"></md-progress-circular>
+                        <div ng-if="!taskTab.loading && taskTab.tasks.length === 0" layout="column" layout-align="center center" class="font-size-20 color-fg-material-grey-text">
+                            <md-divider class="border-width-default color-border-transparent"></md-divider>
+                            <md-icon class="material-icons">check_box</md-icon>
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
+                            <span class="font-size-20">{{::$i18n.page.tasks.noTasksSatisfyingThisFilter}}</span>
+                            <md-divider class="border-width-2x color-border-transparent"></md-divider>
+                        </div>
+
+                        <div layout="row" layout-align="center center" in-view="$inview && taskTab.load(true)" class="padding-2x margin-2x">
+                            <md-progress-circular md-mode="indeterminate" ng-disabled="!taskTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
                         </div>
 
                     </div> <!-- ./column -->
@@ -51,12 +59,12 @@
                     <md-divider class="border-width-2x color-border-transparent"></md-divider>
 
                     <!-- Detail closed view -->
-                    <div layout="row" ng-if="!tasksCtrl.filterTab.sideViewDetail" ng-include="'views/app/filter/filter_full.html'"></div>
+                    <div layout="row" ng-if="!tasksCtrl.filterTab.sideViewDetail" ng-init="filters=tasksCtrl.filterTab.filters" ng-include="'views/app/filter/filter_full.html'"></div>
 
                     <!-- Detail opened view -->
                     <div layout="row" ng-if="tasksCtrl.filterTab.sideViewDetail">
 
-                        <div flex ng-include="'views/app/filter/filter_small.html'"></div>
+                        <div flex ng-init="filters=tasksCtrl.filterTab.filters" ng-include="'views/app/filter/filter_small.html'"></div>
 
                         <md-divider hide-sm hide-xs class="border-width-2x color-border-transparent"></md-divider>
 

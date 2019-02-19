@@ -1,0 +1,29 @@
+<div ng-if="!tab.headers.editable" ng-click="tab.changeSorting(tab.headers.selected[headerId])" class="case-data-header-item">
+    <div layout="row" layout-align="start center">
+        <div flex class="case-data-header-item-text">
+            <span>{{tab.headers.selected[headerId] ? tab.headers.selected[headerId].title : $i18n.block.case.header.optional}}</span>
+        </div>
+        <md-icon class="material-icons" ng-if="!tab.loading">
+            {{tab.headers.selected[headerId].sort.dir === "asc" ? "arrow_drop_up" : "arrow_drop_down"}}
+        </md-icon>
+        <md-progress-circular md-mode="indeterminate" ng-if="tab.headers.sortItem === tab.headers.selected[headerId]" ng-disabled="!tab.loading" class="progress-circular-stroke-primary-500" md-diameter="20" style="display: unset; margin-left: 5px;"></md-progress-circular>
+    </div>
+</div>
+
+<md-input-container ng-if="tab.headers.editable" class="md-block margin-0">
+    <md-select ng-model="tab.headers.selected[headerId]" ng-change="tab.onHeaderChange(headerId)" class="margin-top-2px" aria-label="Select field">
+
+        <md-optgroup label="{{::$i18n.block.case.header.metaData}}">
+            <md-option ng-repeat="field in tab.headers.metaData" ng-value="field">
+                {{field.title}}
+            </md-option>
+        </md-optgroup>
+
+        <md-optgroup ng-repeat="process in tab.headers.processData" label="{{::process.title}}">
+            <md-option ng-repeat="field in process.immediateData track by $index" ng-value="field">
+                {{field.title}}
+            </md-option>
+        </md-optgroup>
+
+    </md-select>
+</md-input-container>

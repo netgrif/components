@@ -1,14 +1,93 @@
-define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, Task, DataField) {
-        angular.module('ngMain').controller('TaskPanelController',
+define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (jQuery, angular, DataField) {
+        angular.module('ngMain')
+            .filter('currencyFormat', ['$rootScope', '$filter', 'currencyFormatService', function ($rootScope, $filter, currencyFormatService) {
+
+                /**
+                 * Transforms an amount into the right format and currency according to a passed currency code (3 chars).
+                 *
+                 * @param float amount
+                 * @param string currencyCode e.g. EUR, USD
+                 * @param number fractionSize User specified fraction size that overwrites default value
+                 * @param boolean useUniqSymbol use unique currency symbol
+                 * @param string localeId e.g. ru_RU, default en_US
+                 * @param boolean onlyAmount Retrieve amount only
+                 * @return string
+                 */
+                return function (amount, currencyCode, fractionSize = null, useUniqSymbol = true, localeId = null, onlyAmount = false) {
+                    if (!currencyCode || Number(amount) != amount) {
+                        return;
+                    }
+
+                    var formattedCurrency,
+                        currency = currencyFormatService.getByCode(currencyCode),
+                        formatedAmount = Math.abs(amount),
+                        signAmount = amount < 0 ? '-' : '',
+                        rtl = false;
+
+                    // Fraction size
+
+                    var currentFractionSize = currency.fractionSize;
+                    if (fractionSize !== null) {
+                        currentFractionSize = fractionSize;
+                    }
+
+                    formatedAmount = formatedAmount.toFixed(currentFractionSize);
+
+                    // Format numeral by locale ID
+
+                    localeId = localeId ? localeId : ($rootScope.currencyLanguage || 'en_US');
+                    var languageOptions = currencyFormatService.getLanguageByCode(localeId);
+
+                    formatedAmount = formatedAmount.split('.').join(languageOptions.decimal);
+                    formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languageOptions.thousands);
+
+                    // Format currency
+
+                    if (onlyAmount) {
+                        formattedCurrency = signAmount + formatedAmount;
+                    } else if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
+                        formattedCurrency = currency.symbol.template.replace('1', formatedAmount);
+                        formattedCurrency = formattedCurrency.replace('$', currency.symbol.grapheme);
+                        formattedCurrency = signAmount + formattedCurrency;
+                    }
+                    else if (!!currency && !!useUniqSymbol && !!currency.uniqSymbol && !!currency.uniqSymbol.template) {
+                        formattedCurrency = currency.uniqSymbol.template.replace('1', formatedAmount);
+                        formattedCurrency = formattedCurrency.replace('$', currency.uniqSymbol.grapheme);
+                        formattedCurrency = signAmount + formattedCurrency;
+                    }
+                    else {
+                        formattedCurrency = signAmount + formatedAmount + ' ' + currencyCode;
+                    }
+
+                    return formattedCurrency;
+                };
+            }])
+            .controller('TaskPanelController',
             ['$log', '$scope', '$http', '$snackbar', '$user', '$dialog', '$fileUpload', '$timeout', '$mdExpansionPanel', 'resource', 'links', 'tab', 'config', '$i18n',
                 function ($log, $scope, $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanel, resource, links, tab, config, $i18n) {
+                    //Config - fullReload, allowHighlight
+
                     /*--- Constants --*/
                     const self = this;
                     const PANEL_ANIMATION_DURATION = 300;
                     const STATUS_DONE = "Done";
                     const STATUS_ASSIGNED = "Assigned";
                     const STATUS_NEW = "New";
+
+                    /*--- Enumeration ---*/
+                    self.ASSIGN_POLICY = {
+                        manual: "MANUAL",
+                        auto: "AUTO"
+                    };
+                    self.FINISH_POLICY = {
+                        manual: "MANUAL",
+                        autoNoData: "AUTO_NO_DATA"
+                    };
+                    self.DATA_FOCUS_POLICY = {
+                        manual: "MANUAL",
+                        autoRequired: "AUTO_EMPTY_REQUIRED"
+                    };
 
                     /*--- Variables ---*/
                     self.links = links;
@@ -19,6 +98,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     self.expanded = false;
                     self.loading = false;
                     self.animating = false;
+                    self.valid = true;
 
                     /*--- Methods definition ---*/
                     self.status = resolveStatus;
@@ -36,6 +116,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     self.click = clickOnTaskHeader;
                     self.expand = expandTaskPanel;
                     self.collapse = collapseTaskPanel;
+                    self.focusNext = focusNearestRequiredField;
 
                     /*--- Shortcut Methods --*/
                     self.getData = () => self.dataGroups.reduce((data, group) => data.concat(group.data), []);
@@ -44,17 +125,34 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                         self.tab.reload();
                         self.tab.reloadUseCase();
                     };
+                    self.createReloadChain = () => {
+                        return new Chain([
+                            () => {
+                                if (self.fullReload)
+                                    self.reload();
+                                else
+                                    self.tab.load(false, true);
+                                self.tab.reloadUseCase();
+                            }
+                        ])
+                    };
 
-                    /*--- Methods implementation --*/
-                    function callCallbackWithResult(callbackObj = {}, operationResult) {
-                        if (operationResult && callbackObj.success)
-                            callbackObj.success();
-                        else if (!operationResult && callbackObj.failure)
-                            callbackObj.failure();
-                        else if (callbackObj.default)
-                            callbackObj.default();
+                    /*--- Inner objects ---*/
+                    function Chain(success = [], failure = [], always = []) {
+                        this.success = success;
+                        this.failure = failure;
+                        this.always = always;
                     }
 
+                    Chain.prototype.run = function (success) {
+                        if (success)
+                            this.success.forEach(c => c(true));
+                        else
+                            this.failure.forEach(c => c(false));
+                        this.always.forEach(c => c());
+                    };
+
+                    /*--- Methods implementation --*/
                     function resolveStatus() {
                         if (self.user && self.finishDate)
                             return STATUS_DONE;
@@ -85,117 +183,138 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                         const status = self.status();
                         switch (status) {
                             case STATUS_NEW:
-                                self.formatedStartDate = undefined;
+                                // self.formatedStartDate = undefined;
                                 break;
                             case STATUS_ASSIGNED:
                                 self.formatedStartDate = formatDate(self.startDate);
                                 break;
                             case STATUS_DONE:
-                                self.formatedStartDate = undefined;
+                                self.formatedStartDate = formatDate(self.startDate);
+                                self.formatedFinishDate = formatDate(self.finishDate);
                                 break;
                         }
                     }
 
-                    function assignTask(callback = {}) {
+                    function removeStateData() {
+                        self.user = undefined;
+                        self.startDate = undefined;
+                        self.formatedStartDate = undefined;
+                        self.finishDate = undefined;
+                        self.formatedFinishDate = undefined;
+                    }
+
+                    function assignTask(callChain = new Chain()) {
                         if (self.user) {
-                            callCallbackWithResult(callback, false);
+                            callChain.run(true);
                             return;
                         }
+                        self.loading = true;
                         $http.get(self.links.assign.href).then(response => {
-                            if (response.success)
-                                callCallbackWithResult(callback, true);
+                            self.loading = false;
+                            if (response.success) {
+                                removeStateData();
+                                callChain.run(true);
+                            }
                             else if (response.error) {
                                 $snackbar.error(response.error);
-                                callCallbackWithResult(callback, false);
+                                callChain.run(false);
                             }
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.assigningTask} ${self.title} ${$i18n.block.snackbar.failed}`);
                             $log.debug(error);
-                            callCallbackWithResult(callback, false);
+                            self.loading = false;
+                            callChain.run(false);
                         });
                     }
 
-                    function delegateTask(callback = {}) {
+                    function delegateTask(callChain = new Chain()) {
                         $dialog.showByTemplate('assign_user', self, {task: Object.assign(self, {fieldRoles: Object.keys(self.roles)})})
                             .then(user => {
                                 if (!user)
                                     return;
-                                $http.post(self.links.delegate.href, user.email).then(response => {
+                                self.loading = true;
+                                $http.post(self.links.delegate.href, user.id).then(response => {
+                                    self.loading = false;
                                     if (response.success) {
-                                        callCallbackWithResult(callback, true);
+                                        removeStateData();
+                                        callChain.run(true);
                                     } else if (response.error) {
                                         $snackbar.error(response.error);
-                                        callCallbackWithResult(callback, false);
+                                        callChain.run(false);
                                     }
                                 }, () => {
                                     $snackbar.error(`${$i18n.block.snackbar.delegatingTask} ${self.title} ${$i18n.block.snackbar.failed}`);
-                                    callCallbackWithResult(callback, false);
+                                    self.loading = false;
+                                    callChain.run(false);
                                 });
                             }, angular.noop);
                     }
 
-                    function cancelTask(callback = {}) {
+                    function cancelTask(callChain = new Chain()) {
                         if (!self.user || self.user.email !== $user.login) {
-                            callCallbackWithResult(callback, false);
+                            callChain.run(false);
                             return;
                         }
+                        self.loading = true;
                         $http.get(self.links.cancel.href).then(response => {
+                            self.loading = false;
                             if (response.success) {
-                                self.user = undefined;
-                                self.startDate = undefined;
-                                self.finishDate = undefined;
-                                self.formatedStartDate = undefined;
-                                self.formatedFinishDate = undefined;
-                                callCallbackWithResult(callback, true);
+                                removeStateData();
+                                callChain.run(true);
                             } else if (response.error) {
                                 $snackbar.error(response.error);
-                                callCallbackWithResult(callback, false);
+                                callChain.run(false);
                             }
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.cancelingAssignmentOfTask} ${self.title} ${$i18n.block.snackbar.failed}`);
-                            callCallbackWithResult(callback, false);
+                            self.loading = false;
+                            callChain.run(false);
                         });
                     }
 
-                    function sendFinishTaskRequest(callback = {}) {
+                    function sendFinishTaskRequest(callChain = new Chain()) {
+                        self.loading = true;
                         $http.get(links.finish.href).then(response => {
+                            self.loading = false;
                             if (response.success) {
-                                callCallbackWithResult(callback, true);
+                                removeStateData();
+                                callChain.run(true);
                             } else if (response.error) {
                                 $snackbar.error(response.error);
-                                callCallbackWithResult(callback, false);
+                                callChain.run(false);
                             }
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.finishingTask} ${self.title} ${$i18n.block.snackbar.failed}`);
-                            callCallbackWithResult(callback, false);
+                            self.loading = false;
+                            callChain.run(false);
                         });
                     }
 
-                    function finishTask(callback = {}) {
+                    function finishTask(callChain = new Chain()) {
                         if (self.dataSize <= 0) {
-                            self.load({
-                                default: () => {
+                            self.load(new Chain([], [], [
+                                () => {
                                     if (self.dataSize <= 0 || self.validate()) {
-                                        sendFinishTaskRequest(callback);
+                                        sendFinishTaskRequest(callChain);
                                         self.collapse();
                                     }
                                 }
-                            });
+                            ]));
                         } else {
                             if (self.validate()) {
-                                self.save({
-                                    success: () => {
-                                        sendFinishTaskRequest(callback);
+                                self.save(new Chain([
+                                    () => {
+                                        sendFinishTaskRequest(callChain);
                                         self.collapse();
                                     }
-                                });
+                                ]));
                             }
                         }
                     }
 
-                    function loadTaskData(callback = {}) {
+                    function loadTaskData(callChain = new Chain()) {
                         if (self.dataSize > 0) {
-                            callCallbackWithResult(callback, true);
+                            callChain.run(true);
                             return;
                         }
                         self.loading = true;
@@ -207,59 +326,70 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                                         Object.keys(group.fields._embedded).forEach(item => {
                                             group.data = group.fields._embedded[item]
                                                 .map(r => new DataField(self, r, group.fields._links, {
-                                                    $dialog: $dialog,
-                                                    $snackbar: $snackbar,
-                                                    $user: $user,
-                                                    $fileUpload: $fileUpload,
-                                                    $i18n: $i18n
+                                                    $dialog,
+                                                    $snackbar,
+                                                    $user,
+                                                    $fileUpload,
+                                                    $i18n,
+                                                    $timeout
                                                 })).concat(group.data);
                                         });
                                         delete group.fields;
                                         self.dataGroups.push(group);
                                         self.dataSize += group.data.length;
-                                        if (index === array.length - 1) {
-                                            self.dataGroups.forEach(group => {
-                                                group.data.sort((a, b) => a.order - b.order);
-                                            });
-                                            self.loading = false;
-                                            callCallbackWithResult(callback, true);
-                                        }
                                     } else {
                                         $log.info(`No data for task ${self.title}`);
                                         self.loading = false;
-                                        callCallbackWithResult(callback, true);
+                                        callChain.run(true);
                                     }
                                 });
+                                self.dataGroups.forEach(group => {
+                                    group.data.sort((a, b) => a.order - b.order);
+                                });
+                                self.loading = false;
+                                callChain.run(true);
+                                preValidate();
                             }, () => {
                                 $log.info(`No data group for task ${self.title}`);
                                 self.loading = false;
-                                callCallbackWithResult(callback, true);
+                                callChain.run(true);
                             });
                         }, error => {
                             $snackbar.error(`${$i18n.block.snackbar.dataFor} ${self.title} ${$i18n.block.snackbar.failedToLoad}`);
                             $log.debug(error);
                             self.loading = false;
-                            callCallbackWithResult(callback, false);
+                            callChain.run(false);
                         });
                     }
 
-                    function validateTaskData() {
+                    function preValidate() {
                         let valid = true;
                         self.getData().forEach(field => {
                             if (field.behavior.required || field.newValue)
                                 valid = field.isValid() ? valid : false;
                         });
+                        // self.valid = valid;
+                        return valid;
+                    }
+
+                    function validateTaskData() {
+                        let valid = preValidate();
                         if (!valid)
                             $snackbar.error($i18n.block.snackbar.fieldsHaveInvalidValues);
                         return valid;
                     }
 
-                    function saveTaskData(callback = {}) {
+                    function saveTaskData(callChain = new Chain()) {
                         if (self.dataSize <= 0)
                             return;
 
                         const fields = {};
                         const taskData = self.getData();
+                        if (callChain.success.length === 0)
+                            callChain.success = buildDataFocusPolicyCallChain(true);
+                        if (callChain.failure.length === 0)
+                            callChain.failure = buildDataFocusPolicyCallChain(false);
+
                         taskData.forEach(field => {
                             if (field.changed) {
                                 const change = field.save();
@@ -268,19 +398,23 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                             }
                         });
                         if (Object.keys(fields).length === 0) {
-                            callCallbackWithResult(callback, true);
+                            callChain.run(true);
                             return;
                         }
 
+                        self.loading = true;
                         $http.post(self.links["data-edit"].href, JSON.stringify(fields)).then(response => {
                             self.tab.updateTasksData(response.changedFields);
                             Object.keys(fields).forEach(id => taskData.find(f => f.stringId === id).changed = false);
                             $snackbar.success($i18n.block.snackbar.dataSavedSuccessfully);
-                            callCallbackWithResult(callback, true);
+                            self.loading = false;
+                            callChain.run(true);
                         }, error => {
                             $snackbar.error($i18n.block.snackbar.savingDataFailed);
                             $log.debug(error);
-                            callCallbackWithResult(callback, false);
+                            self.loading = false;
+                            callChain.run(false);
+                            self.reload();
                         });
                     }
 
@@ -320,34 +454,197 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                             preventEventDefault(event);
                             return;
                         }
-                        self.expanded ? self.collapse() : self.expand();
+
+                        self.callChain.run(!self.expanded);
                         preventEventDefault(event);
                     }
 
-                    function expandTaskPanel(before = angular.noop, after = angular.noop) {
-                        before();
-                        self.load({
-                            success: () => {
-                                self.animating = true;
-                                self.panel.expand();
-                                self.expanded = true;
-                                $timeout(() => {
-                                    self.animating = false;
-                                    after();
-                                }, PANEL_ANIMATION_DURATION);
-                            }
-                        });
+                    function expandTaskPanel(callChain = new Chain()) {
+                        self.animating = true;
+                        self.panel.expand();
+                        self.expanded = true;
+                        $timeout(() => {
+                            self.animating = false;
+                            callChain.run(true);
+                        }, PANEL_ANIMATION_DURATION);
                     }
 
-                    function collapseTaskPanel(before = angular.noop, after = angular.noop) {
-                        before();
+                    function collapseTaskPanel(callChain = new Chain()) {
                         self.animating = true;
                         self.panel.collapse();
                         self.expanded = false;
                         $timeout(() => {
                             self.animating = false;
-                            after();
+                            callChain.run(true);
                         }, PANEL_ANIMATION_DURATION);
+                    }
+
+                    function focusNearestRequiredField(callChain = new Chain()) {
+                        // const taskElement = $("#task-"+this.stringId);
+                        // taskElement.focus();
+                        // taskElement.blur();
+                        return; //temp disabled
+
+                        window.focus();
+                        window.blur();
+
+                        const movedToNext = self.getData().some(data => {
+                            if (data.behavior.required && data.newValue && data.element && data.element.is(":focus"))
+                                data.element.blur();
+
+                            if (data.behavior.required && !data.newValue &&
+                                data.type !== 'boolean' &&
+                                data.type !== 'file' &&
+                                data.type !== 'user' &&
+                                data.element) {
+
+                                if (data.type === 'text' || data.type === 'number') {
+                                    data.element.click();
+                                    data.element.focus();
+                                } else if (data.type === 'enumeration' || data.type === 'multichoice' || data.type === 'date') {
+                                    data.element.focus();
+                                } else {
+                                    // data.element.focus();
+                                    data.element.click();
+                                }
+
+                                return true;
+                            }
+                        });
+
+                        callChain.run(movedToNext);
+                    }
+
+                    function manualAssignPolicy(success) {
+                        if (success) {
+                            return [() => {
+                                self.load(new Chain(buildFinishPolicyCallChain(true)));
+                            }];
+                        } else {
+                            return [() => {
+                                self.collapse();
+                            }];
+                        }
+                    }
+
+                    function autoAssignPolicy(success) {
+                        if (success) {
+                            return [() => {
+                                self.assign(new Chain([
+                                        () => {
+                                            self.tab.load(false, true);
+                                        },
+                                        () => {
+                                            self.load(new Chain(buildFinishPolicyCallChain(true)));
+                                        }
+                                    ],
+                                    [
+                                        () => {
+                                            self.tab.load(false, true);
+                                        }
+                                    ]));
+                            }];
+                        } else {
+                            return [() => {
+                                self.cancel(new Chain([
+                                    () => {
+                                        self.tab.load(false, true);
+                                    },
+                                    () => {
+                                        self.collapse();
+                                    }
+                                ], [
+                                    () => {
+                                        self.tab.load(false, true);
+                                    },
+                                    () => {
+                                        self.collapse();
+                                    }
+                                ]))
+                            }];
+                        }
+                    }
+
+                    function buildAssignPolicyCallChain(success) {
+                        switch (self.assignPolicy) {
+                            case self.ASSIGN_POLICY.manual:
+                                return manualAssignPolicy(success);
+                            case self.ASSIGN_POLICY.auto:
+                                return autoAssignPolicy(success);
+                            default:
+                                return manualAssignPolicy(success);
+                        }
+                    }
+
+                    function manualFinishPolicy(success) {
+                        if (success) {
+                            return [
+                                () => {
+                                    self.expand(new Chain(buildDataFocusPolicyCallChain(true)));
+                                }
+                            ];
+                        } else {
+                            return [
+                                () => {
+                                    self.load();
+                                }
+                            ];
+                        }
+                    }
+
+                    function autoNoDataFinishPolicy(success) {
+                        if (success) {
+                            return [
+                                () => {
+                                    if (self.dataSize <= 0) {
+                                        sendFinishTaskRequest(self.createReloadChain());
+                                        self.collapse();
+                                    } else {
+                                        self.expand(new Chain(buildDataFocusPolicyCallChain(true)));
+                                    }
+                                }
+                            ];
+                        } else {
+                            return [];
+                        }
+                    }
+
+                    function buildFinishPolicyCallChain(success) {
+                        switch (self.finishPolicy) {
+                            case self.FINISH_POLICY.manual:
+                                return manualFinishPolicy(success);
+                            case self.FINISH_POLICY.autoNoData:
+                                return autoNoDataFinishPolicy(success);
+                            default:
+                                return manualFinishPolicy(success);
+                        }
+                    }
+
+                    function manualDataDocusPolicy(success) {
+                        return [];
+                    }
+
+                    function autoRequiredDataFocusPolicy(success) {
+                        if (success) {
+                            return [
+                                () => {
+                                    self.focusNext();
+                                }
+                            ];
+                        } else {
+                            return [];
+                        }
+                    }
+
+                    function buildDataFocusPolicyCallChain(success) {
+                        switch (self.dataFocusPolicy) {
+                            case self.DATA_FOCUS_POLICY.manual:
+                                return manualDataDocusPolicy(success);
+                            case self.DATA_FOCUS_POLICY.autoRequired:
+                                return autoRequiredDataFocusPolicy(success);
+                            default:
+                                return manualDataDocusPolicy(success);
+                        }
                     }
 
 
@@ -355,6 +652,7 @@ define(['angular', '../classes/Task', "../classes/DataField", '../modules/Main',
                     $scope.disableNestedClick = preventEventDefault;
                     self.update(resource, links);
                     self.tab.addTaskController(self);
+                    self.callChain = new Chain(buildAssignPolicyCallChain(true), buildAssignPolicyCallChain(false))
                 }]);
 
     });
