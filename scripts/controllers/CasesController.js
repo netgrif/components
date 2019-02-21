@@ -9,7 +9,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
                     self.taskTabs = [];
-                    self.caseHeaders = $user.getPreference(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
+                    self.caseHeaders = $user.getPreferenceCaseHeaders(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
                     self.caseTab = new CaseTab("Cases", this, $filterRepository.get(self.viewId), {
                         $http,
                         $dialog,
@@ -49,7 +49,9 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                     $timeout,
                                     $mdExpansionPanelGroup,
                                     $i18n,
-                                    $process
+                                    $process,
+                                    $rootScope,
+                                    $config
                                 }, {
                                     allowHighlight: $config.enable.cases.allowHighlight,
                                     autoOpenUnfinished: $config.enable.cases.autoOpenUnfinished,
@@ -86,6 +88,19 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                             self.caseTab.load(false);
                         }
                     });
+
+                    const noTasksListener = $rootScope.$on("noTasks", (event) => {
+                        if (self.taskTabs && self.taskTabs.length > 0)
+                            self.closeTab(this.activeTab.useCase.stringId);
+                    });
+
                     $scope.$on('$destroy', navClickListener);
+                    $scope.$on('$destroy', noTasksListener);
+                    $scope.$on('$destroy', function() {
+                        self.caseTab.searchInput=undefined;
+                        self.caseTab.search();
+                        $scope.$emit('reloadCounters');
+                    });
+
                 }]);
     });

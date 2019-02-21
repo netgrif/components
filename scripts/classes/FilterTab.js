@@ -22,6 +22,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.searchVisibilityIcon = "public";
         this.filter = undefined;
         this.sideViewDetail = false;
+        this.selectedFilters = angular.$user.getPreferenceTaskFilters(this.parent.viewId);
     }
 
     FilterTab.URL_SEARCH = "/api/filter/search";
@@ -33,14 +34,14 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.reload();
     };
 
-    FilterTab.prototype.reload = function () {
+    FilterTab.prototype.reload = function (showSnackbar = true) {
         this.filters.splice(0, this.filters.length);
         this.filter = undefined;
         this.sideViewDetail = false;
-        this.load(false, true);
+        this.load(false, true,  showSnackbar);
     };
 
-    FilterTab.prototype.load = function (next, force) {
+    FilterTab.prototype.load = function (next, force, showSnackbar = true) {
         if (this.loading) return;
         if (next && this.filters && this.page.totalElements === this.filters.length) return;
         if (!next && !force && this.filters.length > 0) return;
@@ -55,7 +56,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.$http(requestConfig).then(response => {
             self.page = response.page;
             if (self.page.totalElements === 0) {
-                self.$snackbar.warning(self.$i18n.block.snackbar.noSavedFilters);
+                self._showSnackbar(showSnackbar);
                 self.page.next = undefined;
                 if (self.filters)
                     self.filters.splice(0, self.filters.length);
@@ -75,26 +76,44 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                     self.filters.push(new Filter(resource.title, resource.type,
                         resource.query, readable, rawData[i]._links, self, configObj))
                 });
-
+                if (self.selectedFilters) {
+                    self.filters.forEach(f => {
+                        if (self.selectedFilters.includes(f.stringId)) {
+                            f.selected = true;
+                        }
+                    });
+                }
                 self.loading = false;
             }, () => {
-                self.$snackbar.warning(self.$i18n.block.snackbar.noFiltersFound);
+                self._showSnackbar(showSnackbar);
                 self.page.next = undefined;
                 if (self.filters)
                     self.filters.splice(0, self.filters.length);
                 self.loading = false;
-            })
-
+            });
         }, error => {
             self.$snackbar.error(self.$i18n.block.snackbar.filtersFailedLoad);
             console.log(error);
             self.loading = false;
-        })
+        });
+    };
+
+    FilterTab.prototype._showSnackbar = function(show) {
+        if (show) {
+            this.$snackbar.warning(this.$i18n.block.snackbar.noFiltersFound);
+        }
     };
 
     FilterTab.prototype.getSelectedFilters = function () {
         const selected = [];
         this.filters.forEach(f => f.selected ? selected.push(f) : undefined);
+        return selected;
+    };
+
+    FilterTab.prototype.saveFilters = function () {
+        const selected = this.getSelectedFilters();
+        this.$user.savePreferenceTaskFilters(this.parent.viewId, selected.map(f => f.stringId));
+        this.filters.forEach(f => f.selected = false);
         return selected;
     };
 

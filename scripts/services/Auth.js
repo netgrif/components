@@ -38,12 +38,15 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     if (auth.authenticated) {
                         $process.init().then(() => {
                             $filterRepository.createDefaults();
-                            callback && callback({
-                                authenticated: auth.authenticated
+                            $user.loadPreferences((isLoaded) => {
+                                if (!isLoaded)
+                                    $snackbar.error($i18n.block.snackbar.preferencesFailedLoad);
+                                callback && callback({
+                                    authenticated: auth.authenticated
+                                });
+                                $location.path(auth.isExcluded(auth.path) ? appPath : auth.path);
                             });
-                            $location.path(auth.isExcluded(auth.path) ? appPath : auth.path);
                         });
-
                         $BrowserSupportNotification.resolve(auth.authenticated);
                     }
 

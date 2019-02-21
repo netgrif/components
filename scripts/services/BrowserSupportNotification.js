@@ -11,6 +11,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                 if (buorg)
                     if (!buorg.classList.contains("hide"))
                         buorg.classList.add("hide");
+                document.documentElement.style.marginTop = '0px';
             },
             show: function() {
                 let customBrowserSupportMsg = document.getElementById("browser-support-msg");

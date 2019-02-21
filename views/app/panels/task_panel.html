@@ -50,14 +50,14 @@
                     <md-menu-item ng-if="taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && !taskCtrl.user && $user.canDo(taskCtrl.roles, 'perform')">
                         <md-button ng-click="taskCtrl.assign(taskCtrl.createReloadChain())">
                             <md-icon class="material-icons">person</md-icon>
-                            <span>{{::$i18n.block.btn.assign}}</span>
+                            <span>{{::taskCtrl.getAssignTitle()}}</span>
                         </md-button>
                     </md-menu-item>
 
                     <md-menu-item ng-if="$user.canDo(taskCtrl.roles, 'delegate')">
                         <md-button ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())">
                             <md-icon class="material-icons">person_outline</md-icon>
-                            <span>{{::$i18n.block.btn.delegate}}</span>
+                            <span>{{::taskCtrl.getDelegateTitle()}}</span>
                         </md-button>
                     </md-menu-item>
 
@@ -68,17 +68,17 @@
                         </md-button>
                     </md-menu-item>
 
-                    <md-menu-item ng-if="taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && (taskCtrl.user.email === $user.login || $user.canDo(taskCtrl.roles, 'cancel'))">
+                    <md-menu-item ng-if="(taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && taskCtrl.user.email === $user.login) || (taskCtrl.user && $user.canDo(taskCtrl.roles, 'cancel'))">
                         <md-button ng-click="taskCtrl.cancel(taskCtrl.createReloadChain())">
                             <md-icon class="material-icons">cancel</md-icon>
-                            <span>{{::$i18n.block.btn.cancel}}</span>
+                            <span>{{::taskCtrl.getCancelTitle()}}</span>
                         </md-button>
                     </md-menu-item>
 
                     <md-menu-item ng-if="taskCtrl.user.email === $user.login">
                         <md-button ng-click="taskCtrl.finish(taskCtrl.createReloadChain())">
                             <md-icon class="material-icons">done</md-icon>
-                            <span>{{::$i18n.block.btn.finish}}</span>
+                            <span>{{::taskCtrl.getFinishTitle()}}</span>
                         </md-button>
                     </md-menu-item>
 
@@ -282,7 +282,7 @@
                     </div>
 
                     <div ng-repeat="field in group.data" ng-if="!field.behavior.hidden && !field.behavior.forbidden" flex="{{group.stretch ? '100' : '50'}}" flex-md="100" flex-sm="100" flex-xs="100">
-                        <div flex ng-include="'views/app/datafields/field_input_'+field.type+'.html'" ng-cloak></div>
+                        <div flex ng-include="'views/app/datafields/field_input_'+field.getTemplate()+'.html'" ng-cloak></div>
                         <md-divider hide show-xs class="color-border-primary-op-50 margin-bottom-2x"></md-divider>
                     </div>
 
@@ -302,23 +302,23 @@
             <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
                 <md-button ng-if="taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && !taskCtrl.user && $user.canDo(taskCtrl.roles, 'perform')" ng-click="taskCtrl.assign(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
-                    <span>{{::$i18n.block.btn.assign}}</span>
+                    <span>{{::taskCtrl.getAssignTitle()}}</span>
                 </md-button>
 
                 <md-button ng-if="$user.canDo(taskCtrl.roles, 'delegate')" ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
-                    <span>{{::$i18n.block.btn.delegate}}</span>
+                    <span>{{::taskCtrl.getDelegateTitle()}}</span>
                 </md-button>
 
                 <md-button ng-if="(taskCtrl.user.email === $user.login)" ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.reassign}}</span>
                 </md-button>
 
-                <md-button ng-if="taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && (taskCtrl.user.email === $user.login || $user.canDo(taskCtrl.roles, 'cancel'))" ng-click="taskCtrl.cancel(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
-                    <span>{{::$i18n.block.btn.cancel}}</span>
+                <md-button ng-if="(taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && taskCtrl.user.email === $user.login) || (taskCtrl.user && $user.canDo(taskCtrl.roles, 'cancel'))" ng-click="taskCtrl.cancel(taskCtrl.createReloadChain());taskCtrl.collapse()" class="layout-xs-rw-100">
+                    <span>{{::taskCtrl.getCancelTitle()}}</span>
                 </md-button>
 
                 <md-button ng-if="taskCtrl.user.email === $user.login" ng-click="taskCtrl.finish(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
-                    <span>{{::$i18n.block.btn.finish}}</span>
+                    <span>{{::taskCtrl.getFinishTitle()}}</span>
                 </md-button>
 
                 <md-button ng-if="taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual" ng-click="taskCtrl.click()" class="md-primary layout-xs-rw-100">

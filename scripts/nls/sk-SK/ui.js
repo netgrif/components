@@ -432,6 +432,7 @@ define({
             noWorkflowModel: "V systéme sa nenachádzajú žiadne workflow modely",
             loadingWorkflowFailed: "Nepodarilo sa načítať workflow modely",
             filtersFailedLoad: "Filtre sa nepodarilo načítať",
+            preferencesFailedLoad: "Používateľské preferencie sa nepodarilo načítať",
             noFiltersFound: "Neboli nájdené žiadne filtre",
             noSavedFilters: "Doposiaľ neboli uložené žiadne filtre",
             deletingFilter: "Vymazávanie filtra",

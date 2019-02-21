@@ -444,6 +444,7 @@ define({
                 noWorkflowModel: "There are no workflow models uploaded into the system",
                 loadingWorkflowFailed: "Loading workflow models has failed",
                 filtersFailedLoad: "Filters has failed to load",
+                preferencesFailedLoad: "User preferences failed to load",
                 noFiltersFound: "No filters has been found",
                 noSavedFilters: "There are no saved filters",
                 deletingFilter: "Deleting of the filter",

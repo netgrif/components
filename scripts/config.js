@@ -138,6 +138,8 @@ define([], function () {
             modelDelete: false,
             inviteUserWithNoProcessRoles: true,
             browserSupportNotification: true,
+            closeTaskTabOnNoTasks: false,
+            downloadHighlight: true,
             editProfile: true,
 
             cases: {

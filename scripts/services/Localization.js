@@ -1,6 +1,6 @@
 
 define(['angular','i18n!nls/ui','../modules/Main'],function (angular, ui) {
-    angular.module('ngMain').factory('$i18n',function ($config) {
+    angular.module('ngMain').factory('$i18n',function ($config, $user) {
 
         // function mapLocal(obj) {
         //     let mapped;
@@ -20,7 +20,7 @@ define(['angular','i18n!nls/ui','../modules/Main'],function (angular, ui) {
         let myi18n = {
             change: function (locale) {
                 if(!locale || locale === localStorage.getItem('locale')) return;
-                localStorage.setItem('locale',locale);
+                $user.savePreferenceLocale(locale);
                 location.reload();
             },
             current: function () {

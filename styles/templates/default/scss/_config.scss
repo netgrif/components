@@ -39,6 +39,7 @@ $color-grey-900: 				#212121;
 // Black - opacity
 $color-black-op-20:				rgba(0, 0, 0, .20);
 $color-black-op-30:				rgba(0, 0, 0, .30);
+$color-black-op-38:				rgba(0, 0, 0, .38);
 $color-black-op-40:				rgba(0, 0, 0, .40);
 $color-black-op-50:				rgba(0, 0, 0, .50);
 $color-black-op-54:				rgba(0, 0, 0, .54);
@@ -92,6 +93,7 @@ $color-background-app:			$color-blue-grey-100;
 
 // Text
 $color-text-highlight:          $color-light-blue-A700;
+$file-name-highlight:           $color-deep-purple-600;
 
 // Toolbar
 $color-toolbar-app-name:        $color-grey-50;
