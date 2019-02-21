@@ -13,6 +13,9 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
         const invitationUrl = "/api/auth/invite";
         const resetPasswordUrl = "/api/auth/reset";
         const newPasswordUrl = "/api/auth/recover";
+        const changePasswordUrl = "/api/auth/changePassword";
+
+        const updateUserUrl = "/api/user";
 
         const auth = {
             authenticated: false,
@@ -148,6 +151,37 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     $log.error(error);
                     callback(false, "");
                 });
+            },
+            changePassword: function (data, callback = angular.noop) {
+                $http.post(changePasswordUrl, {
+                    login: $user.login,
+                    password: btoa(data.currentPsw),
+                    newPassword: btoa(data.newPsw),
+                }).then(response => {
+                    if (response.success)
+                        callback(true, response.success);
+                    else if (response.error) {
+                        $log.error(response.error);
+                        callback(false, response.error);
+                    }
+                }, error => {
+                    $log.error("Changing password has failed");
+                    $log.error(error);
+                    callback(false, "");
+                });
+            },
+            updateUser: function (updates, callback = angular.noop) {
+                $http.post(updateUserUrl + "/" + $user.id, updates)
+                    .then(function (resource) {
+                        $user.fromResource(resource);
+
+                        callback && callback(true, resource);
+                    }, error => {
+                        $log.error("Updating user has failed");
+                        $log.error(error);
+
+                        callback && callback(false, error);
+                    });
             },
             init: function () {
                 if (!auth.isExcluded()) {

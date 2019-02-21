@@ -140,6 +140,7 @@ define([], function () {
             browserSupportNotification: true,
             closeTaskTabOnNoTasks: false,
             downloadHighlight: true,
+            editProfile: true,
 
             cases: {
                 caseDelete: true,
