@@ -96,15 +96,22 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                 self.loading = true;
                 let request = self.buildRequest(next ? self.page.pageLinks.next.href : undefined);
                 $http(request).then(response => {
+                    let lastSelected = self.selectedUser;
                     if (!next)
                         self.clearAll();
                     self.page = Object.assign(self.page, response.page);
                     self.page.pageLinks = response.$response().data._links;
                     response.$request().$get("users").then(resources => {
                         $scope.users = self.users = self.users.concat(resources);
+                        if (self.users.some(u => u.id === lastSelected))
+                            self.selectedUser = lastSelected;
                         self.loading = false;
                     }, () => {
-                        $log.debug("Resource users was not found");
+                        if (self.page.totalElements === 0) {
+                            self.clearAll();
+                        } else {
+                            $log.debug("Resource users was not found");
+                        }
                         self.loading = false;
                     });
                 }, () => {
@@ -129,7 +136,8 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
                 self.page = {
                     pageLinks: {}
                 };
-                self.users = [];
+                $scope.users = self.users = [];
+                self.selectedUser = undefined;
             };
 
             self.buildRequest = function(next) {
@@ -168,9 +176,7 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
 
             $scope.assignTask = function () {
                 if (!$scope.opt.task) return;
-                if (!self.selectedUser) {
-                    $mdDialog.hide();
-                } else {
+                if (self.selectedUser) {
                     $mdDialog.hide(self.users.find(user => user.id === self.selectedUser));
                 }
             };
