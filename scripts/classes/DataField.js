@@ -21,6 +21,7 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         this.valid = this.isValid();
         this.active = false;
         this.uploadProgress = 0;
+        this.searchTerm = undefined;
 
         this.buttonTypesToClasses = {
             // TODO 12.12.2018 Uncomment 'button' when button feature fully implemented -> see example in DashboardController
