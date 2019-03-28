@@ -1,7 +1,7 @@
 /*  Top level module
     map all application components
  */
-define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularCurrencyFormat', 'angularRouteSegment', 'angularMaterialExpansionPanels', 'angularInView',
+define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularCurrencyFormat', 'angularRouteSegment', 'angularMaterialExpansionPanels', 'angularInView',
         'scripts/directives/DirectivesLoader',
         'scripts/filters/FiltersLoader',
         'scripts/services/ServicesLoader',
@@ -9,33 +9,40 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularCurr
         'scripts/controllers/ControllersLoader'],
     function (angular, config) {
         // console.log(angular.version);
-        let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'currencyFormat', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment','angular-inview',
-         'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
+        let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'currencyFormat', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment', 'angular-inview',
+            'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
         app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
             const theme = config.themes[config.theme];
-            if(theme.primary instanceof Object)
+            if (theme.primary instanceof Object)
                 $mdThemingProvider.definePalette('mainPalette', theme.primary);
-            if(theme.accent instanceof Object)
+            if (theme.accent instanceof Object)
                 $mdThemingProvider.definePalette('accentPalette', theme.accent);
-            if(theme.warn instanceof Object)
+            if (theme.warn instanceof Object)
                 $mdThemingProvider.definePalette('warnPalette', theme.warn);
 
             const theming = $mdThemingProvider.theme('default');
-            if(typeof theme.primary === "string")
+            if (typeof theme.primary === "string")
                 theming.primaryPalette(theme.primary);
             else
                 theming.primaryPalette('mainPalette');
 
-            if(typeof theme.accent === "string")
+            if (typeof theme.accent === "string")
                 theming.accentPalette(theme.accent);
             else
                 theming.accentPalette('accentPalette');
 
-            if(typeof theme.warn === "string")
+            if (typeof theme.warn === "string")
                 theming.warnPalette(theme.warn);
             else
                 theming.warnPalette('warnPalette');
 
+            if (typeof theme.background === 'string')
+                theming.backgroundPalette(theme.background);
+            else
+                theming.backgroundPalette('configBackgroundPalette');
+
+            $routeSegmentProvider.options.autoLoadTemplates = true;
+            $routeSegmentProvider.options.strictMode = true;
             $routeSegmentProvider
                 .when('/', 'app')
                 .when('/login', 'login')
@@ -109,10 +116,12 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularCurr
                     controllerAs: 'loginCtrl',
                     dependencies: ['token']
                 });
+            $routeProvider.otherwise({redirectTo: '/'});
 
             $locationProvider.html5Mode(true);
             $httpProvider.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
             $httpProvider.defaults.headers.common['Accept-Language'] = localStorage.getItem("locale") || config.defaults.locale;
+            $httpProvider.interceptors.push('$authToken');
             $httpProvider.interceptors.push('authHttpInterceptor');
 
             $mdDateLocaleProvider.firstDayOfWeek = 1;
@@ -121,9 +130,9 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularCurr
                 else return null;
             };
             $mdDateLocaleProvider.parseDate = date => {
-                if(date instanceof String || typeof date === 'string'){
+                if (date instanceof String || typeof date === 'string') {
                     const parts = date.split(/\./);
-                    if(parts.length === 3){
+                    if (parts.length === 3) {
                         return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
                     }
                 }
@@ -133,8 +142,9 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal','angularCurr
             // Angular v1.6.6, from 1.7 does not exists
             $compileProvider.preAssignBindingsEnabled(false);
         });
-        app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar, $process) {
+        app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar, $process, $authToken) {
             $log.debug("App is running...");
+            $authToken.init();
             $auth.init();
             $rootScope.$i18n = $i18n;
             $rootScope.$user = $user;

@@ -1,3 +1,3 @@
-# Premium Insurance - frontend
+# Netgrif Application Engine
 
-Premium Insurance application frontend
+Default frontend application for Netgrif Application Engine

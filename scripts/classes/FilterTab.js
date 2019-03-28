@@ -25,7 +25,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.selectedFilters = angular.$user.getPreferenceTaskFilters(this.parent.viewId);
     }
 
-    FilterTab.URL_SEARCH = "/api/filter/search";
+    FilterTab.URL_SEARCH = "/filter/search";
 
     FilterTab.prototype = Object.create(Tab.prototype);
     FilterTab.prototype.constructor = FilterTab;
@@ -49,8 +49,11 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         const self = this;
         this.loading = true;
         const requestConfig = {
-            url: next ? self.page.next : FilterTab.URL_SEARCH + "?sort=visibility",
+            url: next ? self.page.next : this.$config.getApiUrl(FilterTab.URL_SEARCH),
             method: "POST",
+            params: {
+                sort: "visibility"
+            },
             data: self.search
         };
         this.$http(requestConfig).then(response => {

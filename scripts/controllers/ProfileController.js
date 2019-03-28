@@ -7,7 +7,7 @@ define(['angular', '../modules/Main'],
 
                     const TOTAL_INPUTS = 3;
 
-                    const profileUrl = "/api/user/me?small=false";
+                    const profileUrl = "/user/me";
 
                     self.isInEditMode = false;
 
@@ -16,7 +16,13 @@ define(['angular', '../modules/Main'],
                     self.completion = 0;
 
                     self.loadProfile = function () {
-                        $http.get(profileUrl).then(function (response) {
+                        $http({
+                            method: "GET",
+                            url: $config.getApiUrl(profileUrl),
+                            params: {
+                                small: false
+                            }
+                        }).then(function (response) {
                             makeProfileFromResource(response);
                             self.updateCompletion();
                             self.loadProcessRolesOfUser();

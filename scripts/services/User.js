@@ -1,5 +1,5 @@
 define(['angular', '../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$user', function ($log, $http, $snackbar) {
+    angular.module('ngMain').factory('$user', function ($log, $http, $snackbar, $config) {
         const user = {
             id: 0,
             login: undefined,
@@ -99,7 +99,7 @@ define(['angular', '../modules/Main'], function (angular) {
                 }
             },
 
-            savePreferenceLocale: function(value) {
+            savePreferenceLocale: function (value) {
                 this.preferences.locale = value;
                 localStorage.setItem("locale", value);
                 this.savePreference();
@@ -113,7 +113,7 @@ define(['angular', '../modules/Main'], function (angular) {
              * @param key - task view viewId
              * @param value - list of filters stringIds
              */
-            savePreferenceTaskFilters: function(key, value) {
+            savePreferenceTaskFilters: function (key, value) {
                 this.preferences.taskFilters[key] = value;
                 this.savePreference();
             },
@@ -122,7 +122,7 @@ define(['angular', '../modules/Main'], function (angular) {
              * @param key - task view viewId
              * @returns list of filters stringIds
              */
-            getPreferenceTaskFilters: function(key) {
+            getPreferenceTaskFilters: function (key) {
                 return this.preferences.taskFilters[key];
             },
 
@@ -130,17 +130,17 @@ define(['angular', '../modules/Main'], function (angular) {
              * @param key - case view viewId
              * @param value - list of headers
              */
-            savePreferenceCaseHeaders: function(key, value) {
+            savePreferenceCaseHeaders: function (key, value) {
                 this.preferences.caseViewHeaders[key] = value;
                 this.savePreference();
             },
 
-            getPreferenceCaseHeaders: function(key) {
+            getPreferenceCaseHeaders: function (key) {
                 return this.preferences.caseViewHeaders[key];
             },
 
             savePreference: function (callback = angular.noop) {
-                $http.post("/api/user/preferences", this.preferences).then(response => {
+                $http.post($config.getApiUrl("/user/preferences"), this.preferences).then(response => {
                     $log.info(response);
                     callback && callback(true);
                 }, error => {
@@ -150,7 +150,7 @@ define(['angular', '../modules/Main'], function (angular) {
             },
 
             loadPreferences: function (callback = angular.noop) {
-                $http.get("/api/user/preferences").then(response => {
+                $http.get($config.getApiUrl("/user/preferences")).then(response => {
                     this.preferences = response;
                     callback && callback(true);
                 }, error => {

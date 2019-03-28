@@ -1,8 +1,8 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Case', '../modules/Main', 'angularMaterialExpansionPanels'],
     function (angular, CaseTab, TaskTab, Case) {
         angular.module('ngMain').controller('CaseDialogController',
-            ['$log', '$scope', '$http', '$mdDialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', 'locals', '$i18n',
-                function ($log, $scope, $http, $mdDialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, locals, $i18n) {
+            ['$log', '$scope', '$http', '$mdDialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', 'locals', '$i18n','$config',
+                function ($log, $scope, $http, $mdDialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, locals, $i18n, $config) {
                     const self = this;
 
                     Object.assign(this, locals, locals.locals);
@@ -13,7 +13,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Case'
                     self.loadCases = function (netId) {
                         if (!netId) return;
                         const self = this;
-                        $http.post("/api/workflow/case/search", {petriNet: {id: netId}}).then(function (response) {
+                        $http.post($config.getApiUrl("/workflow/case/search"), {petriNet: {id: netId}}).then(function (response) {
                             response.$request().$get("cases").then(function (resources) {
                                 self.cases = resources;
                                 self.cases.forEach(c => {

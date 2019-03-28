@@ -18,7 +18,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         $fileUpload,
                         $timeout,
                         $i18n,
-                        $process
+                        $process,
+                        $config
                     }, {
                         caseDelete: $config.enable.cases.caseDelete,
                         viewId: self.viewId,

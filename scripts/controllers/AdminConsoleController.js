@@ -85,7 +85,10 @@ define(['angular', '../modules/Admin'], function (angular) {
                 self.loadProcessRoles = function () {
                     if (!self.selectedNet) return;
                     self.processRoles = [];
-                    $http.get("/api/petrinet/" + self.selectedNet.stringId + "/roles").then(function (response) {
+                    $http.get($config.getApiUrl({
+                        url: "/petrinet/{net}/roles",
+                        params: {net: self.selectedNet.stringId}
+                    })).then(function (response) {
                         response.$request().$get("processRoles").then(function (resources) {
                             self.processRoles = resources;
                             self.processRoles.sort((r1, r2) => {
@@ -168,7 +171,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                  * Load list of groups for invite tab
                  */
                 self.loadOrganizations = function () {
-                    $http.get("/api/group/all").then(function (response) {
+                    $http.get($config.getApiUrl("/group/all")).then(function (response) {
                         response.$request().$get("groups").then(function (resources) {
                             self.groups = resources;
                             self.groups.forEach(org => {
@@ -237,7 +240,12 @@ define(['angular', '../modules/Admin'], function (angular) {
                         return;
                     this.roles.roles.splice(0, this.roles.roles);
                     this.filteredRoles.splice(0, this.filteredRoles.length);
-                    $http.get("/api/petrinet/" + this.roles.process.stringId + "/roles").then(response => {
+                    $http.get($config.getApiUrl({
+                        url: "/petrinet/{net}/roles",
+                        params: {
+                            net: this.roles.process.stringId
+                        }
+                    })).then(response => {
                         response.$request().$get("processRoles").then(resources => {
                             this.roles.roles = resources;
                             this.sortRoles();
@@ -338,7 +346,10 @@ define(['angular', '../modules/Admin'], function (angular) {
                 self.buildRequest = function (next) {
                     return {
                         method: 'POST',
-                        url: next ? next : "/api/user/search?small=true",
+                        url: next ? next : $config.getApiUrl("/user/search"),
+                        params: {
+                            small: true
+                        },
                         data: self.buildSearchQuery()
                     }
                 };
@@ -518,7 +529,13 @@ define(['angular', '../modules/Admin'], function (angular) {
                         return;
 
                     $user.clear();
-                    $http.get("/api/user/me?small=true").then(response => {
+                    $http({
+                        method: "GET",
+                        url: $config.getApiUrl("/user/me"),
+                        params: {
+                            small: true
+                        }
+                    }).then(response => {
                         $user.fromResource(response);
                     }, error => {
                         $log.error("Failed to reload user's data!");
@@ -532,7 +549,7 @@ define(['angular', '../modules/Admin'], function (angular) {
                 };
 
                 self.loadNets = function () {
-                    $http.get("/api/petrinet").then(function (response) {
+                    $http.get($config.getApiUrl("/petrinet")).then(function (response) {
                         response.$request().$get("petriNetReferences").then(function (resources) {
                             self.processes = resources;
                         }, function () {
