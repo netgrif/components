@@ -1,21 +1,20 @@
 define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$auth', function ($http, $location, $rootScope, $log, $timeout, $user, $snackbar, $i18n, $process, $config, $filterRepository, $BrowserSupportNotification) {
+    angular.module('ngMain').factory('$auth', function ($http, $location, $rootScope, $log, $timeout, $user, $snackbar, $i18n, $process, $config, $filterRepository, $BrowserSupportNotification, $authToken) {
 
         const appPath = "/";
         const loginPath = "/login";
         const signupPath = "/signup";
         const recoverPath = "/recover";
 
-        const serverLoginUrl = "/api/auth/login";
-        const logoutUrl = "/api/auth/logout";
-        const signupUrl = "/api/auth/signup";
-        const tokenVerificationUrl = "/api/auth/token/verify";
-        const invitationUrl = "/api/auth/invite";
-        const resetPasswordUrl = "/api/auth/reset";
-        const newPasswordUrl = "/api/auth/recover";
-        const changePasswordUrl = "/api/auth/changePassword";
-
-        const updateUserUrl = "/api/user";
+        const serverLoginUrl = "/auth/login";
+        const logoutUrl = "/auth/logout";
+        const signupUrl = "/auth/signup";
+        const tokenVerificationUrl = "/auth/token/verify";
+        const invitationUrl = "/auth/invite";
+        const resetPasswordUrl = "/auth/reset";
+        const newPasswordUrl = "/auth/recover";
+        const changePasswordUrl = "/auth/changePassword";
+        const updateUserUrl = "/user/{id}";
 
         const auth = {
             authenticated: false,
@@ -29,7 +28,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     'Authorization': "Basic " + btoa(credentials.username + ":" + credentials.password)
                 } : {};
 
-                $http.get(serverLoginUrl, {
+                $http.get($config.getApiUrl(serverLoginUrl), {
                     headers: headers
                 }).then(function (response) {
                     auth.authenticated = !!response.email;
@@ -59,10 +58,11 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                 });
             },
             logout: function () {
-                $http.post(logoutUrl, {}).then(function () {
+                $http.post($config.getApiUrl(logoutUrl), {}).then(function () {
                     $log.debug("Logout successful");
                     auth.authenticated = false;
                     $user.clear();
+                    $authToken.clear();
                     $location.path(loginPath);
 
                     $BrowserSupportNotification.resolve(auth.authenticated);
@@ -72,7 +72,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
             },
             signup: function (formData, callback = angular.noop) {
                 formData.password = btoa(formData.password);
-                $http.post(signupUrl, formData)
+                $http.post($config.getApiUrl(signupUrl), formData)
                     .then(function (response) {
                         $log.debug(response);
                         if (response.success) {
@@ -87,7 +87,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     });
             },
             verifyToken: function (token, callback = angular.noop) {
-                $http.post(tokenVerificationUrl, token).then(response => {
+                $http.post($config.getApiUrl(tokenVerificationUrl), token).then(response => {
                     if (response.success)
                         callback(response.success);
                     else if (response.error) {
@@ -105,7 +105,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                     invitation.groups = [];
                 if (!invitation.processRoles)
                     invitation.processRoles = [];
-                $http.post(invitationUrl, invitation).then(response => {
+                $http.post($config.getApiUrl(invitationUrl), invitation).then(response => {
                     if (response.success)
                         callback(true, response.success);
                     else if (response.error) {
@@ -119,7 +119,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                 });
             },
             sendResetPassword: function (email, callback = angular.noop) {
-                $http.post(resetPasswordUrl, email).then(response => {
+                $http.post($config.getApiUrl(resetPasswordUrl), email).then(response => {
                     if (response.success)
                         callback(true, response.success);
                     else if (response.error) {
@@ -133,7 +133,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                 });
             },
             setNewPassword: function (token, password, callback = angular.noop) {
-                $http.post(newPasswordUrl, {
+                $http.post($config.getApiUrl(newPasswordUrl), {
                     token: token,
                     password: btoa(password),
                     email: "",
@@ -153,7 +153,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                 });
             },
             changePassword: function (data, callback = angular.noop) {
-                $http.post(changePasswordUrl, {
+                $http.post($config.getApiUrl(changePasswordUrl), {
                     login: $user.login,
                     password: btoa(data.currentPsw),
                     newPassword: btoa(data.newPsw),
@@ -171,7 +171,7 @@ define(['angular', 'angularRoute', '../modules/Main'], function (angular) {
                 });
             },
             updateUser: function (updates, callback = angular.noop) {
-                $http.post(updateUserUrl + "/" + $user.id, updates)
+                $http.post($config.getApiUrl({url: updateUserUrl, params: {id: $user.id}}), updates)
                     .then(function (resource) {
                         $user.fromResource(resource);
 

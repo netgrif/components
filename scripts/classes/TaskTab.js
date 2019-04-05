@@ -29,7 +29,8 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
                 $http: this.$http,
                 $snackbar: this.$snackbar,
                 $i18n: this.$i18n,
-                $process: this.$process
+                $process: this.$process,
+                $config: this.$config
             }, {
                 considerWholeSearchInput: false
             });
@@ -39,9 +40,9 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
     TaskTab.prototype = Object.create(Tab.prototype);
     TaskTab.prototype.constructor = TaskTab;
 
-    TaskTab.URL_ALL = "/api/task";
-    TaskTab.URL_MY = "/api/task/my";
-    TaskTab.URL_SEARCH = "/api/task/search";
+    TaskTab.URL_ALL = "/task";
+    TaskTab.URL_MY = "/task/my";
+    TaskTab.URL_SEARCH = "/task/search";
 
     TaskTab.REPLACE_FILTER_POLICY = "replaceFilter";
     TaskTab.MERGE_FILTER_POLICY = "mergeFilter";
@@ -86,10 +87,13 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
     };
 
     TaskTab.prototype.buildRequest = function (next, all) {
-        const url = next && this.page.next ? this.page.next : this.baseUrl + "?sort=priority"; //+ (all ? "&size="+this.tasks.length : "");
+        const url = next && this.page.next ? this.page.next : this.$config.getApiUrl(this.baseUrl); //+ (all ? "&size="+this.tasks.length : "");
         return {
             method: "POST",
             url: url,
+            params: {
+                sort: "priority"
+            },
             data: JSON.parse(this.activeFilter.query)
         };
     };
@@ -202,10 +206,10 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
         this.$rootScope.$emit('noTasks');
     };
 
-    TaskTab.prototype.emitNumberOfTasks = function(){
-        if(!this.$rootScope)
+    TaskTab.prototype.emitNumberOfTasks = function () {
+        if (!this.$rootScope)
             return;
-        this.$rootScope.$emit('tabContentLoad',{
+        this.$rootScope.$emit('tabContentLoad', {
             count: this.page.totalElements,
             viewId: this.viewId
         });
@@ -270,7 +274,7 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
         const self = this;
         this.$http({
             method: "POST",
-            url: "/api/workflow/case/search",
+            url: this.$config.getApiUrl("/workflow/case/search"),
             data: {
                 id: this.useCase.stringId
             }
@@ -312,7 +316,7 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
             query: this.activeFilter.query,
             readableQuery: JSON.stringify(this.activeFilter.readableQuery)
         };
-        this.$http.post("/api/filter", requestBody).then(response => {
+        this.$http.post(this.$config.getApiUrl("/filter"), requestBody).then(response => {
             if (response.success) {
                 this.$snackbar.success(response.success);
             } else

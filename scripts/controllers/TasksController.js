@@ -14,7 +14,8 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                         $dialog,
                         $i18n,
                         $user,
-                        $rootScope
+                        $rootScope,
+                        $config
                     }, {});
                     self.taskTabs = [];
 
@@ -30,7 +31,8 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                                 $timeout,
                                 $mdExpansionPanelGroup,
                                 $i18n,
-                                $process
+                                $process,
+                                $config
                             }, {
                                 closable: closable,
                                 filterPolicy: filterPolicy,

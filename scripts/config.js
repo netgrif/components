@@ -1,7 +1,9 @@
 define([], function () {
     return {
         appName: "Application Engine",
-        version: "2.1.0",
+        version: "2.2.0",
+        basePath: "",
+        apiPath: "http://localhost:8080/api",
         themes: {
             default: {
                 primary: {

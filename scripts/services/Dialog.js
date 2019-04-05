@@ -60,8 +60,8 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
         return dialogService;
     });
 
-    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional', '$i18n', '$process', '$timeout',
-        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional, $i18n, $process, $timeout) {
+    angular.module('ngMain').controller('DialogController', ['$scope', '$log', '$mdDialog', '$http', '$snackbar', 'parentCtrl', 'optional', '$i18n', '$process', '$timeout','$config',
+        function ($scope, $log, $mdDialog, $http, $snackbar, parentCtrl, optional, $i18n, $process, $timeout, $config) {
             var self = this;
 
             $scope.parentCtrl = parentCtrl;
@@ -135,8 +135,9 @@ define(['angular', 'angularMaterial', '../modules/Main'], function (angular) {
             self.buildRequest = function(next) {
                 return {
                     method: 'POST',
-                    url: next ? next : "/api/user/search?small=true",
+                    url: next ? next : $config.getApiUrl("/user/search"),
                     params: {
+                        small: true,
                         size: 10,
                         sort: "name,asc"
                     },
