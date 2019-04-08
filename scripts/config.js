@@ -26,7 +26,8 @@ define([], function () {
                     'contrastLightColors': undefined
                 },
                 accent: "grey",
-                warn: "red"
+                warn: "red",
+                background: "grey"
             },
             darkBlue: {
                 primary: {
@@ -49,7 +50,8 @@ define([], function () {
                     'contrastLightColors': undefined
                 },
                 accent: "grey",
-                warn: "amber"
+                warn: "amber",
+                background: "grey"
             },
             lightBlue: {
                 primary: {
@@ -72,7 +74,8 @@ define([], function () {
                     'contrastLightColors': undefined
                 },
                 accent: "grey",
-                warn: "red"
+                warn: "red",
+                background: "grey"
             }
         },
         theme: "default",
