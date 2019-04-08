@@ -25,9 +25,18 @@
     "tests"
   ],
   "dependencies": {
-    "angular-material": "^1.1.1",
+    "angular": "^1.6.6",
+    "angular-animate": "^1.6.6",
+    "angular-aria": "^1.6.6",
+    "angular-currency-format": "^1.0.6",
     "angular-hal": "^2.3.0",
-    "requirejs": "^2.3.2",
-    "angular-material-expansion-panel": "^0.7.2"
+    "angular-inview": "^2.3.0",
+    "angular-material": "^1.1.1",
+    "angular-material-expansion-panel": "^0.7.2",
+    "angular-messages": "^1.6.6",
+    "angular-route": "^1.6.1",
+    "angular-route-segment": "^1.5.1",
+    "jquery": "^3.2.1",
+    "requirejs": "^2.3.2"
   }
 }
