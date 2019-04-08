@@ -11,7 +11,7 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularCur
         // console.log(angular.version);
         let app = angular.module('app', ['ngMaterial', 'ngMessages', 'angular-hal', 'currencyFormat', 'ngRoute', 'route-segment', 'material.components.expansionPanels', 'view-segment', 'angular-inview',
             'ngMain', 'ngCases', 'ngAdmin', 'ngTasks', 'ngWorkflow']); // Here add modules that you defined
-        app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider, $compileProvider) {
+        app.config(function ($mdThemingProvider, $routeProvider, $routeSegmentProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider) {
             const theme = config.themes[config.theme];
             if (theme.primary instanceof Object)
                 $mdThemingProvider.definePalette('mainPalette', theme.primary);
@@ -138,9 +138,6 @@ define('app', ['angular', 'config', 'angularMaterial', 'angularHal', 'angularCur
                 }
                 return new Date(NaN);
             };
-
-            // Angular v1.6.6, from 1.7 does not exists
-            $compileProvider.preAssignBindingsEnabled(false);
         });
         app.run(function ($log, $auth, $rootScope, $i18n, $user, $config, $snackbar, $process, $authToken) {
             $log.debug("App is running...");
