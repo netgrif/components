@@ -49,7 +49,7 @@ span {
     &-overflow {
 
         &-dots {
-            @include textOverflowWithDots(100%);
+            @include textOverflowWithDots(auto);
         }
     }
 
@@ -99,8 +99,22 @@ span {
     }
 }
 
+.word {
+
+    &-break {
+
+        &-all {
+            word-break: break-all;
+        }
+    }
+}
+
 // Highlight class for md-autocomplete
 span.highlight {
     color: $color-text-highlight !important;
     font-weight: 500;
+}
+
+.file-name-highlight {
+    color: $file-name-highlight !important;
 }

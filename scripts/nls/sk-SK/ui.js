@@ -183,7 +183,9 @@ define({
             actions: {
                 this: "Akcie",
                 edit: "Upraviť",
-                changePsw: "Zmeniť heslo"
+                changePsw: "Zmeniť heslo",
+                submit: "Uložiť zmeny",
+                cancel: "Zrušiť"
             }
         },
         settings: {
@@ -412,16 +414,25 @@ define({
             wrongUserCredentials: "Nesprávne používateľské autentizačné údaje",
             userIsNotVerified: "Používateľ nie je overený",
             registrationFailed: "Registrácia sa nepodarila",
+            changePasswordFailed: "Zmena hesla sa nepodarila",
+            changePasswordSuccessful: "Heslo bolo úspešne zmenené",
+            incorrectLogin: "Prihlasovacie údaje sú nesprávne",
+            insufficientPassword: "Nedostočné heslo",
+            incorrectPassword: "Zadali ste nesprávne heslo",
             passwordFieldsDoNotMatch: "Hodnoty polí s heslami sa nezhodujú",
             failedToLoadUsersInTask: "Nepodarilo sa načítať používateľov pre úlohu",
             failedToLoadRoles: "Nepodarilo sa načítať roly",
             unableToLoadUserData: "Nepodarilo sa načítať dáta používateľa",
+            unableToLoadUserGroups: "Nepodarilo sa načítať organizácie používateľa",
+            profileUpdated: "Profil bol úspešne aktualizovaný",
+            profileFailedToUpdate: "Profil nebolo možné aktualizovať",
             noFileWasAttached: "Nebol priložený žiaden súbor",
             fileMustHaveXmlFormat: "Súbor musí byť vo formáte XML",
             modelFailedToUpload: "Model sa nepodarilo nahrať",
             noWorkflowModel: "V systéme sa nenachádzajú žiadne workflow modely",
             loadingWorkflowFailed: "Nepodarilo sa načítať workflow modely",
             filtersFailedLoad: "Filtre sa nepodarilo načítať",
+            preferencesFailedLoad: "Používateľské preferencie sa nepodarilo načítať",
             noFiltersFound: "Neboli nájdené žiadne filtre",
             noSavedFilters: "Doposiaľ neboli uložené žiadne filtre",
             deletingFilter: "Vymazávanie filtra",

@@ -194,7 +194,9 @@ define({
                 actions: {
                     this: "Actions",
                     edit: "Edit",
-                    changePsw: "Change Password"
+                    changePsw: "Change Password",
+                    submit: "Submit changes",
+                    cancel: "Cancel"
                 }
             },
             settings: {
@@ -424,16 +426,25 @@ define({
                 wrongUserCredentials: "Wrong user credentials",
                 userIsNotVerified: "User is not verified",
                 registrationFailed: "Registration failed",
+                changePasswordFailed: "Password change failed",
+                changePasswordSuccessful: "Password has been successfully changed",
+                incorrectLogin: "Incorrect login",
+                insufficientPassword: "The password you entered is insufficient",
+                incorrectPassword: "The password you entered is invalid",
                 passwordFieldsDoNotMatch: "Password fields do not match",
                 failedToLoadUsersInTask: "Failed to load users in task",
                 failedToLoadRoles: "Failed to load roles",
                 unableToLoadUserData: "Unable to load user data",
+                unableToLoadUserGroups: "Unable to load user organizations",
+                profileUpdated: "Profile has been successfully updated",
+                profileFailedToUpdate: "Profile failed to update",
                 noFileWasAttached: "No file was attached",
                 fileMustHaveXmlFormat: "File must have XML format",
                 modelFailedToUpload: "Model failed to upload",
                 noWorkflowModel: "There are no workflow models uploaded into the system",
                 loadingWorkflowFailed: "Loading workflow models has failed",
                 filtersFailedLoad: "Filters has failed to load",
+                preferencesFailedLoad: "User preferences failed to load",
                 noFiltersFound: "No filters has been found",
                 noSavedFilters: "There are no saved filters",
                 deletingFilter: "Deleting of the filter",

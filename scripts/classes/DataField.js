@@ -21,10 +21,13 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         this.valid = this.isValid();
         this.active = false;
         this.uploadProgress = 0;
+        this.searchTerm = undefined;
 
         this.buttonTypesToClasses = {
-            'text': 'max-width-100 text-overflow-dots',
-            'text raised': 'max-width-100 text-overflow-dots md-raised',
+            // TODO 12.12.2018 Uncomment 'button' when button feature fully implemented -> see example in DashboardController
+            // 'button': 'max-width-100 text-overflow-dots',
+            'button': 'text-overflow-dots md-raised',
+            'button raised': 'max-width-100 text-overflow-dots md-raised',
             'icon': 'md-icon-button',
             'fab': 'md-fab md-mini'
         }
@@ -32,6 +35,14 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
 
     DataField.prototype = Object.create(HalResource.prototype);
     DataField.prototype.constructor = DataField;
+
+    DataField.prototype.getTemplate = function() {
+        if (!this.view) {
+            return this.type;
+        }
+
+        return this.type + "_" + this.view.value;
+    };
 
     DataField.prototype.format = function (value) {
         if (this.type === "text" && value === null)
@@ -64,6 +75,9 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
      */
     DataField.prototype.isValid = function () {
         switch (this.type) {
+            case "button":
+                this.valid = true;
+                break;
             case "file":
                 this.valid = this.newFile ? !!this.uploaded : !!this.newValue;
                 break;
@@ -112,6 +126,16 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         else if (this.type === "number") {
             return DataField.roundToTwo(value);
         }
+        if (this.type === "multichoice" && this.view && this.view.value === "list" && value) {
+            this.multiNewValue = {};
+            value.forEach(v => {
+                if (v.defaultValue) {
+                    this.multiNewValue[v.defaultValue] = true;
+                } else {
+                    this.multiNewValue[v] = true;
+                }
+            });
+        }
         return value;
     };
 
@@ -122,6 +146,16 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
                 value: this.format(this.newValue)
             };
         return undefined;
+    };
+
+    DataField.prototype.saveMultichoiceList = function(choice) {
+        if (this.value.includes(choice)) {
+            this.value = this.value.filter(item => item !== choice);
+        } else {
+            this.value.push(choice);
+        }
+        this.newValue = this.value;
+        this.parent.save();
     };
 
     /**
@@ -189,6 +223,26 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
     DataField.prototype.download = function () {
         const downloadWindow = window.open(this.parent.links.file.href + this.stringId);
         downloadWindow.onload = () => downloadWindow.close();
+    };
+
+    function generateFileDownloadStorageKey(caseId, fieldId, userId) {
+        return "data-" + caseId + "-" + fieldId + "-" + userId;
+    }
+
+    DataField.prototype.setHasBeenDownloaded = function(hasBeenDownloaded) {
+        let fileInfo = {
+            hasBeenDownloaded: hasBeenDownloaded
+        };
+        localStorage.setItem(generateFileDownloadStorageKey(this.parent.caseId, this.stringId, this.$user.id), JSON.stringify(fileInfo));
+    };
+
+    DataField.prototype.hasBeenDownloaded = function() {
+        let loaded = localStorage.getItem(generateFileDownloadStorageKey(this.parent.caseId, this.stringId, this.$user.id));
+        if (loaded) {
+            let fileInfo = JSON.parse(loaded);
+            return fileInfo.hasBeenDownloaded;
+        }
+        return false;
     };
 
     DataField.prototype.openFileChooser = function () {

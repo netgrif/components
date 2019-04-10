@@ -1,8 +1,8 @@
 define(['angular', '../modules/Workflow', '../modules/Main'],
     function (angular) {
         angular.module('ngWorkflow').controller('WorkflowPanelController',
-            ['$log', '$scope', '$http', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', 'resource', 'links', 'parent',
-                function ($log, $scope, $http, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, resource, links, parent) {
+            ['$log', '$scope', '$http', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', 'resource', 'links', 'parent', '$config',
+                function ($log, $scope, $http, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, resource, links, parent, $config) {
                     const self = this;
 
                     self.links = links;
@@ -17,7 +17,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         downloadWindow.onload = () => downloadWindow.close();
                     };
 
-                    Object.assign(self,resource);
+                    Object.assign(self, resource);
                     self.uploadDate = self.parseDate(self.createdDate);
 
                     self.details = {
@@ -85,8 +85,11 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     //     }
                     // };
 
-                    self.delete = function() {
-                        $http.delete("/api/petrinet/" + self.id).then(function (response) {
+                    self.delete = function () {
+                        $http.delete($config.getApiUrl({
+                            url: "/petrinet/{id}",
+                            params: {id: self.id}
+                        })).then(function (response) {
                             $snackbar.info(`${$i18n.block.snackbar.model} ${self.title}  v${self.version} ${$i18n.block.snackbar.wasDeleted}`);
                             parent.load(false);
 

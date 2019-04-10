@@ -2,7 +2,7 @@
 
     <md-tabs md-dynamic-height md-border-bottom md-selected="tasksCtrl.activeTabIndex" class="background-tabs">
 
-        <md-tab ng-repeat="taskTab in tasksCtrl.taskTabs" md-on-select="tasksCtrl.tabChanged()">
+        <md-tab ng-repeat="taskTab in tasksCtrl.taskTabs track by taskTab.id" md-on-select="tasksCtrl.tabChanged()">
 
             <md-tab-label>
                 {{::taskTab.label}}

@@ -1,9 +1,11 @@
 define(['angular', '../modules/Workflow', '../modules/Main'],
     function (angular) {
         angular.module('ngWorkflow').controller('WorkflowController',
-            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope','$process',
-                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process) {
+            ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope','$process','$config',
+                function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config) {
                     const self = this;
+
+                    self.viewId = $config.show.workflow.viewId;
 
                     self.petriNetMeta = {
                         releaseType: "patch"
@@ -41,7 +43,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
 
                         self.petriNetMeta.initials = self.petriNetMeta.initials.toUpperCase();
                         let meta = jQuery.isEmptyObject(self.petriNetMeta) ? undefined : JSON.stringify(self.petriNetMeta);
-                        $fileUpload.upload(self.netFile, meta, "/api/petrinet/import", uploadEvent => {
+                        $fileUpload.upload(self.netFile, meta, "/petrinet/import", uploadEvent => {
                             if (uploadEvent.lengthComputable) {
                                 self.uploadProgress = (uploadEvent.loaded / uploadEvent.total) * 100;
                             }
@@ -104,7 +106,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                     self.buildRequest = function (next) {
                         return {
                             method: 'POST',
-                            url: next ? next : "/api/petrinet/search",
+                            url: next ? next : $config.getApiUrl("/petrinet/search"),
                             data: self.buildSearchQuery()
                         };
                     };
@@ -145,11 +147,18 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         });
                     };
 
+                    const navClickListener = $rootScope.$on("navClick", (event, data) => {
+                        if (data.item === self.viewId) {
+                            self.load(false);
+                        }
+                    });
+
                     self.search = function () {
                         self.searchLast = self.searchInput.trim();
                         self.load(false);
                     };
 
                     self.start();
+                    $scope.$on('$destroy', navClickListener);
                 }]);
     });

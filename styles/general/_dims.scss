@@ -40,8 +40,15 @@ $border-radius:					2px;
 		&-0 {
 			min-height: 0 !important;
 		}
+		&-48px {
+			min-height: $dim-48px;
+		}
 		&-100 {
 			min-height: 100% !important;
+		}
+
+		&-fit-content {
+			min-height: fit-content !important;
 		}
 	}
 	&-width {

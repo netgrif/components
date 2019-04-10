@@ -1,7 +1,9 @@
 define([], function () {
     return {
         appName: "Application Engine",
-        version: "2.1.0",
+        version: "2.2.0",
+        basePath: "",
+        apiPath: "http://localhost:8080/api",
         themes: {
             default: {
                 primary: {
@@ -24,7 +26,8 @@ define([], function () {
                     'contrastLightColors': undefined
                 },
                 accent: "grey",
-                warn: "red"
+                warn: "red",
+                background: "grey"
             },
             darkBlue: {
                 primary: {
@@ -47,7 +50,8 @@ define([], function () {
                     'contrastLightColors': undefined
                 },
                 accent: "grey",
-                warn: "amber"
+                warn: "amber",
+                background: "grey"
             },
             lightBlue: {
                 primary: {
@@ -70,7 +74,8 @@ define([], function () {
                     'contrastLightColors': undefined
                 },
                 accent: "grey",
-                warn: "red"
+                warn: "red",
+                background: "grey"
             }
         },
         theme: "default",
@@ -115,6 +120,9 @@ define([], function () {
                 taskPriority: true,
                 taskCaseTitle: true
             },
+            workflow: {
+              viewId: "workflow"
+            },
             documents: {
                 transactions: false,
 
@@ -135,6 +143,9 @@ define([], function () {
             modelDelete: false,
             inviteUserWithNoProcessRoles: true,
             browserSupportNotification: true,
+            closeTaskTabOnNoTasks: false,
+            downloadHighlight: true,
+            editProfile: true,
 
             cases: {
                 caseDelete: true,

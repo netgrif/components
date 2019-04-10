@@ -1,0 +1,36 @@
+<div class="data-field" layout="row" layout-align="start center" layout-wrap flex="100">
+
+    <div flex="45" flex-xs="100">
+        <span flex class="data-field-title" ng-class="{'cursor-pointer':!!field.description, 'active':field.active}">
+            {{field.name}}
+            <md-tooltip ng-if="field.description">
+                {{field.description}}
+            </md-tooltip>
+        </span>
+    </div>
+
+    <div hide-xs flex="5"></div>
+
+    <div flex="45" flex-xs="100" class="padding-horizontal-2x">
+        <md-input-container flex="100" class="md-block fill-content" ng-class="{'md-input-invalid': field.valid, 'min-height-fit-content': true}">
+            <md-radio-group flex="100" id="{{'data-'+field.parent.stringId+'-'+field.stringId}}"
+                            ng-model="field.newValue"
+                            ng-change="field.changed = true;field.parent.save()"
+                            ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
+                            md-on-open="field.active = true"
+                            md-on-close="field.active = false"
+                            ng-required="field.behavior.required"
+                            nae-open-on-focus
+                            aria-label="Select choice">
+                <md-radio-button layout="row" layout-align="start center" ng-repeat="choice in field.choices" ng-value="choice"
+                                 aria-label="{{it.title}}" class="min-height-48px margin-0 word-break-all">
+                    {{ choice }}
+                </md-radio-button>
+            </md-radio-group>
+        </md-input-container>
+    </div>
+
+    <div hide-xs flex="5"></div>
+
+    {{::field.bindElement()}}
+</div>

@@ -80,7 +80,7 @@ define(['angular', '../classes/Filter', '../modules/Main', '../services/Loading'
                         return;
                     const request = {
                         method: "POST",
-                        url: filter.type === Filter.CASE_TYPE ? "/api/workflow/case/count" : "/api/task/count",
+                        url: $config.getApiUrl(filter.type === Filter.CASE_TYPE ? "/workflow/case/count" : "/task/count"),
                         data: JSON.parse(filter.query)
                     };
                     $http(request).then(response => {
@@ -110,6 +110,13 @@ define(['angular', '../classes/Filter', '../modules/Main', '../services/Loading'
                     self.reloadCounters();
                 // self.setCounter(data.viewId, data.count);
             });
+
+            const reloadCountersListener = $rootScope.$on("reloadCounters", (event) => {
+                self.reloadCounters();
+            });
+
             $scope.$on('$destroy', tabContentLoadListener);
+            $scope.$on('$destroy', reloadCountersListener);
+
         }]);
 });

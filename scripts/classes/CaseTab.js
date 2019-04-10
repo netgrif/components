@@ -45,7 +45,7 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     CaseTab.prototype = Object.create(Tab.prototype);
     CaseTab.prototype.constructor = CaseTab;
 
-    CaseTab.URL_SEARCH = "/api/workflow/case/search";
+    CaseTab.URL_SEARCH = "/workflow/case/search";
 
     CaseTab.HEADERS_PREFERENCE_KEY = "caseHeaders";
     CaseTab.HEADERS_SORT_DIR_ASC = "asc";
@@ -115,11 +115,14 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     };
 
     CaseTab.prototype.saveHeaders = function () {
-        this.$user.savePreference(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, Object.values(this.headers.selected).map(header => {
-            if (header.process)
-                return header.process + "-" + header.stringId;
-            return header.stringId;
-        }));
+        let headers = Object.values(this.headers.selected)
+            .filter(header => { return !!header })
+            .map(header => {
+                if (header.process)
+                    return header.process + "-" + header.stringId;
+                return header.stringId;
+            });
+        this.$user.savePreferenceCaseHeaders(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, headers);
     };
 
     CaseTab.prototype.flipDirection = function (dir) {
@@ -171,7 +174,7 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
 
         const request = {
             method: "POST",
-            url: next && this.page.next ? this.page.next : CaseTab.URL_SEARCH,
+            url: next && this.page.next ? this.page.next : this.$config.getApiUrl(CaseTab.URL_SEARCH),
             data: JSON.parse(this.activeFilter.query)
         };
 
@@ -240,7 +243,8 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
             $snackbar: this.$snackbar,
             $user: this.$user,
             $fileUpload: this.$fileUpload,
-            $i18n: this.$i18n
+            $i18n: this.$i18n,
+            $config: this.$config
         }, {
             caseDelete: this.caseDelete,
             preselectedData: Object.values(this.headers.selected)
@@ -287,6 +291,22 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
             this.newCase.title = this.getDefaultCaseTitle();
     };
 
+    /**
+     * Check if all the space in md-content is taken by md-tab (if inview is not in view) and load next page if needed
+     */
+    CaseTab.prototype.checkSize = function() {
+        let self = this;
+        if (self.page.next) {
+            this.$timeout(() => {
+                let tab = angular.element("md-tabs")[0].offsetHeight;
+                let content = angular.element("md-content")[0].offsetHeight;
+                if (content / tab > 0.9) {
+                    self.load(true);
+                }
+            }, 0);
+        }
+    };
+
     CaseTab.prototype.createCase = function () {
         if (this.allowedNets.length === 0 || jQuery.isEmptyObject(this.newCase)) {
             this.$dialog.closeCurrent();
@@ -301,7 +321,7 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
             return;
         }
 
-        this.$http.post("/api/workflow/case", JSON.stringify(this.newCase))
+        this.$http.post(this.$config.getApiUrl("/workflow/case"), JSON.stringify(this.newCase))
             .then(function (response) {
                 if (response) {
                     self.$dialog.closeCurrent();
@@ -315,7 +335,8 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
                         $snackbar: self.$snackbar,
                         $user: self.$user,
                         $fileUpload: self.$fileUpload,
-                        $i18n: self.$i18n
+                        $i18n: self.$i18n,
+                        $config: self.$config
                     }));
                     self.cases.splice(0, self.cases.length);
                     self.page = {};

@@ -137,6 +137,27 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                         ])
                     };
 
+                    self.getAssignTitle = function () {
+                        if (self.assignTitle)
+                            return self.assignTitle;
+                        return $i18n.block.btn.assign;
+                    };
+                    self.getFinishTitle = function () {
+                        if (self.finishTitle)
+                            return self.finishTitle;
+                        return $i18n.block.btn.finish;
+                    };
+                    self.getCancelTitle = function () {
+                        if (self.cancelTitle)
+                            return self.cancelTitle;
+                        return $i18n.block.btn.cancel;
+                    };
+                    self.getDelegateTitle = function () {
+                        if (self.delegateTitle)
+                            return self.delegateTitle;
+                        return $i18n.block.btn.delegate;
+                    };
+
                     /*--- Inner objects ---*/
                     function Chain(success = [], failure = [], always = []) {
                         this.success = success;
@@ -204,6 +225,8 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                     }
 
                     function assignTask(callChain = new Chain()) {
+                        if (self.loading)
+                            return;
                         if (self.user) {
                             callChain.run(true);
                             return;
@@ -228,6 +251,8 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                     }
 
                     function delegateTask(callChain = new Chain()) {
+                        if (self.loading)
+                            return;
                         $dialog.showByTemplate('assign_user', self, {task: Object.assign(self, {fieldRoles: Object.keys(self.roles)})})
                             .then(user => {
                                 if (!user)
@@ -251,7 +276,9 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                     }
 
                     function cancelTask(callChain = new Chain()) {
-                        if (!self.user || self.user.email !== $user.login) {
+                        if (self.loading)
+                            return;
+                        if (!self.user || ((self.user.email !== $user.login) && !$user.canDo(self.roles, 'cancel')) ) {
                             callChain.run(false);
                             return;
                         }
@@ -273,6 +300,8 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                     }
 
                     function sendFinishTaskRequest(callChain = new Chain()) {
+                        if (self.loading)
+                            return;
                         self.loading = true;
                         $http.get(links.finish.href).then(response => {
                             self.loading = false;

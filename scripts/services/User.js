@@ -1,5 +1,5 @@
 define(['angular', '../modules/Main'], function (angular) {
-    angular.module('ngMain').factory('$user', function () {
+    angular.module('ngMain').factory('$user', function ($log, $http, $snackbar, $config) {
         const user = {
             id: 0,
             login: undefined,
@@ -7,6 +7,10 @@ define(['angular', '../modules/Main'], function (angular) {
             name: undefined,
             roles: undefined,
             groups: undefined,
+            preference: {
+                taskFilters: {},
+                caseViewHeaders: {}
+            },
 
             clear: function () {
                 user.id = 0;
@@ -14,6 +18,7 @@ define(['angular', '../modules/Main'], function (angular) {
                 user.authority = undefined;
                 user.name = undefined;
                 user.roles = undefined;
+                user.preferences = undefined;
             },
 
             fromResource: function (resource) {
@@ -94,17 +99,64 @@ define(['angular', '../modules/Main'], function (angular) {
                 }
             },
 
-            savePreference: function (key, value) {
-                localStorage.setItem("userPreference-" + key, JSON.stringify(value));
+            savePreferenceLocale: function (value) {
+                this.preferences.locale = value;
+                localStorage.setItem("locale", value);
+                this.savePreference();
             },
-            getPreference: function (key) {
-                const value = localStorage.getItem("userPreference-" + key);
-                if (value)
-                    return JSON.parse(value);
-                return undefined;
+
+            getPreferenceLocale: function () {
+                return this.preferences.locale;
             },
-            removePreference: function (key) {
-                localStorage.removeItem("userPreference-" + key);
+
+            /**
+             * @param key - task view viewId
+             * @param value - list of filters stringIds
+             */
+            savePreferenceTaskFilters: function (key, value) {
+                this.preferences.taskFilters[key] = value;
+                this.savePreference();
+            },
+
+            /**
+             * @param key - task view viewId
+             * @returns list of filters stringIds
+             */
+            getPreferenceTaskFilters: function (key) {
+                return this.preferences.taskFilters[key];
+            },
+
+            /**
+             * @param key - case view viewId
+             * @param value - list of headers
+             */
+            savePreferenceCaseHeaders: function (key, value) {
+                this.preferences.caseViewHeaders[key] = value;
+                this.savePreference();
+            },
+
+            getPreferenceCaseHeaders: function (key) {
+                return this.preferences.caseViewHeaders[key];
+            },
+
+            savePreference: function (callback = angular.noop) {
+                $http.post($config.getApiUrl("/user/preferences"), this.preferences).then(response => {
+                    $log.info(response);
+                    callback && callback(true);
+                }, error => {
+                    $log.debug(error);
+                    callback && callback(false);
+                });
+            },
+
+            loadPreferences: function (callback = angular.noop) {
+                $http.get($config.getApiUrl("/user/preferences")).then(response => {
+                    this.preferences = response;
+                    callback && callback(true);
+                }, error => {
+                    $log.debug(error);
+                    callback && callback(false);
+                });
             }
         };
         return user;
