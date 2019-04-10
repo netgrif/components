@@ -70,7 +70,7 @@
 
     <md-dialog-actions layout="row" layout-align="end center">
 
-        <md-button class="md-primary" ng-click="assignTask()">
+        <md-button class="md-primary" ng-click="assignTask()" ng-disabled="!dialogCtrl.selectedUser">
             {{::$root.$i18n.block.dialog.assignUser.assign}}
         </md-button>
 
