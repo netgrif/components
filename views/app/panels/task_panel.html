@@ -301,23 +301,38 @@
         <md-expansion-panel-footer md-no-sticky>
             <div flex layout-gt-xs="row" layout-xs="column" layout-align-gt-xs="end center" layout-align-xs="center center">
 
-                <md-button ng-if="taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && !taskCtrl.user && $user.canDo(taskCtrl.roles, 'perform')" ng-click="taskCtrl.assign(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
+                <md-button ng-if="taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && !taskCtrl.user && $user.canDo(taskCtrl.roles, 'perform')"
+                           ng-click="taskCtrl.assign(taskCtrl.createReloadChain())"
+                           ng-disabled="taskCtrl.loading"
+                           class="layout-xs-rw-100">
                     <span>{{::taskCtrl.getAssignTitle()}}</span>
                 </md-button>
 
-                <md-button ng-if="$user.canDo(taskCtrl.roles, 'delegate')" ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
+                <md-button ng-if="$user.canDo(taskCtrl.roles, 'delegate')"
+                           ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())"
+                           ng-disabled="taskCtrl.loading"
+                           class="layout-xs-rw-100">
                     <span>{{::taskCtrl.getDelegateTitle()}}</span>
                 </md-button>
 
-                <md-button ng-if="(taskCtrl.user.email === $user.login)" ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
+                <md-button ng-if="(taskCtrl.user.email === $user.login)"
+                           ng-click="taskCtrl.delegate(taskCtrl.createReloadChain())"
+                           ng-disabled="taskCtrl.loading"
+                           class="layout-xs-rw-100">
                     <span>{{::$i18n.block.btn.reassign}}</span>
                 </md-button>
 
-                <md-button ng-if="(taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && taskCtrl.user.email === $user.login) || (taskCtrl.user && $user.canDo(taskCtrl.roles, 'cancel'))" ng-click="taskCtrl.cancel(taskCtrl.createReloadChain());taskCtrl.collapse()" class="layout-xs-rw-100">
+                <md-button ng-if="(taskCtrl.assignPolicy === taskCtrl.ASSIGN_POLICY.manual && taskCtrl.user.email === $user.login) || (taskCtrl.user && $user.canDo(taskCtrl.roles, 'cancel'))"
+                           ng-click="taskCtrl.cancel(taskCtrl.createReloadChain());taskCtrl.collapse()"
+                           ng-disabled="taskCtrl.loading"
+                           class="layout-xs-rw-100">
                     <span>{{::taskCtrl.getCancelTitle()}}</span>
                 </md-button>
 
-                <md-button ng-if="taskCtrl.user.email === $user.login" ng-click="taskCtrl.finish(taskCtrl.createReloadChain())" class="layout-xs-rw-100">
+                <md-button ng-if="taskCtrl.user.email === $user.login"
+                           ng-click="taskCtrl.finish(taskCtrl.createReloadChain())"
+                           ng-disabled="taskCtrl.loading"
+                           class="layout-xs-rw-100">
                     <span>{{::taskCtrl.getFinishTitle()}}</span>
                 </md-button>
 
