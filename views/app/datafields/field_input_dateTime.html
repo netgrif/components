@@ -12,8 +12,23 @@
     <div hide-xs flex="5"></div>
 
     <div flex="45" flex-xs="100" layout="row" layout-align="start">
-        <i class="material-icons color-fg-primary-500 margin-right-2x">today</i>
-        <span>{{field.newValue | date : "dd.MM.yyyy HH:mm"}}</span>
+        <md-input-container class="md-block" style="display: flex !important;" flex ng-class="field.valid ? '':' md-input-invalid'">
+            <label style="margin-left: 70px;" for="{{'data-'+field.parent.stringId+'-'+field.stringId}}" class="placeholder">{{::$i18n.block.data.enterDateTime}}</label>
+            <i  class="material-icons" style="margin-top: 7px;margin-left: 15px;">today</i>
+            <input mdc-datetime-picker="" date="true" time="true" type="text" id="{{'data-'+field.parent.stringId+'-'+field.stringId}}"
+                   placeholder="YYYY-MM-DD HH:MM" show-todays-date minutes="true" short-time="false" auto-ok="true"
+                   minute-steps="1" week-start="1" click-outside-to-close="true"
+                   class="dtp-no-msclear dtp-input" style="width: auto;"
+                   ng-model="field.newValue"
+                   ng-change="field.changed = true"
+                   ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
+                   ng-blur="field.parent.save();field.active = false"
+                   ng-required="field.behavior.required"
+                   md-date-filter="field.validate"
+                   min-date="field.formatedMinDate"
+                   max-date="field.formatedMaxDate"
+                   aria-label="Pick date and time">
+        </md-input-container>
     </div>
 
     <div hide-xs flex="5"></div>
