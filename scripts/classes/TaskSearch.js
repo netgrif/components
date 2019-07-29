@@ -68,21 +68,18 @@ define(['./Filter'], function (Filter) {
      * @param {Filter} filter
      */
     TaskSearch.prototype.populateFromFilter = function (filter) {
-        if (this.chips.length > 0 || !filter.readableQuery)
+        if (this.chips.length > 0 || !filter.query)
             return;
-        Object.keys(filter.readableQuery).forEach(key => {
-            filter.readableQuery[key].forEach(val => this.chips.push(new Chip("", key, "", val)));
+
+        Object.keys(filter.query).forEach(key => {
+            filter.query[key].forEach(val => this.chips.push(new Chip("", key, "", val)));
+
+            if (filter.query[key] instanceof Array) {
+                this.query[key] = filter.query[key].map(val => new QueryObject(key, val, ""));
+            } else {
+                this.query[key] = new QueryObject(key, filter.query[key], "");
+            }
         });
-        const q = JSON.parse(filter.query);
-        if (q instanceof Object) {
-            Object.keys(q).forEach(key => {
-                if (q[key] instanceof Array) {
-                    this.query[key] = q[key].map(val => new QueryObject(key, val, ""));
-                } else {
-                    this.query[key] = new QueryObject(key, q[key], "");
-                }
-            });
-        }
     };
 
     TaskSearch.prototype.selectedItemChanged = function (item) {
@@ -172,7 +169,7 @@ define(['./Filter'], function (Filter) {
     };
 
     TaskSearch.prototype.getFilter = function () {
-        return new Filter("", Filter.TASK_TYPE, JSON.stringify(this.getQuery()), this.getReadableQuery());
+        return new Filter("", Filter.TASK_TYPE, this.getQuery());
     };
 
     TaskSearch.prototype.addChip = function (item) {

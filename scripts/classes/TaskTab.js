@@ -94,7 +94,7 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
             params: {
                 sort: "priority"
             },
-            data: JSON.parse(this.activeFilter.query)
+            data: this.activeFilter.query
         };
     };
 
@@ -313,8 +313,7 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
             description: this.activeFilter.description,
             visibility: this.activeFilter.visibility,
             type: Filter.TASK_TYPE,
-            query: this.activeFilter.query,
-            readableQuery: JSON.stringify(this.activeFilter.readableQuery)
+            query: this.activeFilter.query
         };
         this.$http.post(this.$config.getApiUrl("/filter"), requestBody).then(response => {
             if (response.success) {

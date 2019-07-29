@@ -175,7 +175,7 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
         const request = {
             method: "POST",
             url: next && this.page.next ? this.page.next : this.$config.getApiUrl(CaseTab.URL_SEARCH),
-            data: JSON.parse(this.activeFilter.query)
+            data: this.activeFilter.query
         };
 
         if (!next) {
