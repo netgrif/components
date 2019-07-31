@@ -1,5 +1,5 @@
-define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, CaseTab, TaskTab, Filter) {
+define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../classes/Search', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (angular, CaseTab, TaskTab, Filter, Search) {
         angular.module('ngCases').controller('CasesController',
             ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config', '$filterRepository',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
@@ -10,6 +10,15 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     self.activeTab = undefined;
                     self.taskTabs = [];
                     self.caseHeaders = $user.getPreferenceCaseHeaders(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
+                    self.caseSearch = new Search(self, "case", {
+                        $http,
+                        $snackbar,
+                        $dialog,
+                        $i18n,
+                        $user,
+                        $rootScope,
+                        $config
+                    }, {});
                     self.caseTab = new CaseTab("Cases", this, $filterRepository.get(self.viewId), {
                         $http,
                         $dialog,
