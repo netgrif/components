@@ -10,7 +10,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     self.activeTab = undefined;
                     self.taskTabs = [];
                     self.caseHeaders = $user.getPreferenceCaseHeaders(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
-                    self.caseSearch = new Search(self, "case", {
+                    self.caseSearch = new Search(self, Search.SEARCH_CASES, {
                         $http,
                         $snackbar,
                         $dialog,

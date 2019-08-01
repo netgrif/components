@@ -11,7 +11,7 @@
                 <div layout-gt-xs="row" layout-xs="column">
                     <md-input-container class="md-block" flex>
                         <label class="placeholder">{{::$i18n.page.tasks.search.category}}</label>
-                        <md-select ng-model="search.searchCategory">
+                        <md-select ng-model="search.searchCategory" ng-change="search.dispatchCategorySelection()">
                             <md-option ng-repeat="category in search.categories[search.searchType]" ng-value="category">
                                 {{category}}
                             </md-option>

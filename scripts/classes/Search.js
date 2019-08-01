@@ -57,6 +57,29 @@ define(['./Filter'], function (Filter) {
         //     }
         // };
     }
+
+    Search.SEARCH_CASES = "case";
+    Search.SEARCH_TASKS = "task";
+
+    Search.prototype.unknownSearchType = function() {
+        console.error("Unknown search type '"+this.searchType+"'!");
+    };
+
+    Search.prototype.dispatchCategorySelection = function() {
+        switch (this.searchType) {
+            case Search.SEARCH_CASES:
+                this.categorySelectedCase();
+                return;
+            default:
+                this.unknownSearchType();
+                return;
+        }
+    };
+
+    Search.prototype.categorySelectedCase = function() {
+
+    };
+
 /*
     function Chip(subject, subjectTitle, id, search) {
         this.subject = subject;
