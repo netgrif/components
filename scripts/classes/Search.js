@@ -24,47 +24,58 @@ define(['./Filter'], function (Filter) {
         this.searchOperator = undefined;
         this.searchArguments = [];
 
+        this.inprogessChipELements = [];
+
         this.categories = {
             case: [
                 {
                     name: "Visual Id",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.FREE
+                    inputType: Search.ARGUMENT_INPUT.FREE,
+                    elasticKeyword: "visualId"
                 },
                 {
                     name: "Process",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE
+                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
+                    elasticKeyword: "processIdentifier"
                 },
                 {
                     name: "Title",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.FREE
+                    inputType: Search.ARGUMENT_INPUT.FREE,
+                    elasticFuzzy: "title"
                 },
                 {
                     name: "Creation Date",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
-                    inputType: Search.ARGUMENT_INPUT.FREE
+                    inputType: Search.ARGUMENT_INPUT.FREE,
+                    elasticFuzzy: "creationDate"
                 },
                 {
                     name: "Author",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.FREE
+                    inputType: Search.ARGUMENT_INPUT.FREE,
+                    elasticKeyword: "authorEmail",
+                    elasticFuzzy: "authorName"
                 },
                 {
                     name: "Dataset",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.FREE
+                    // TODO dataset
                 },
                 {
                     name: "Task",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE
+                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
+                    elasticKeyword: "taskIds"
                 },
                 {
                     name: "Roles",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE
+                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
+                    elasticKeyword: "enabledRoles"
                 }
             ]
         };
@@ -116,7 +127,7 @@ define(['./Filter'], function (Filter) {
             display: "in range",
             numberOfOperands: 2
         },
-        LIKE: {   // TODO fuzzy
+        LIKE: {
             display: "like",
             numberOfOperands: 1
         },
@@ -135,10 +146,30 @@ define(['./Filter'], function (Filter) {
       return this.searchCategory.inputType === Search.ARGUMENT_INPUT.FREE;
     };
 
+    Search.prototype.allArgumentsFilled = function() {
+        if(!this.searchOperator)
+            return false;
+        for(let argIndex = 0; argIndex < this.searchOperator.numberOfOperands; argIndex++) {
+            if( !this.searchArguments[argIndex] || this.searchArguments[argIndex].toString().length === 0)
+                return false;
+        }
+        return true;
+    };
+
     Search.prototype.unknownSearchType = function() {
         console.error("Unknown search type '"+this.searchType+"'!");
     };
 
+    function ChipElement(category, operator, arguments) {
+        this.category = category;
+        this.operator = operator;
+        this.arguments = [...arguments];
+        this.elementQuery = Search.createElementQuery(this);
+    }
+
+    Search.createElementQuery = function (chipElement) {
+        
+    };
 /*
     function Chip(subject, subjectTitle, id, search) {
         this.subject = subject;

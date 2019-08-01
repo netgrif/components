@@ -35,6 +35,14 @@
                     </div>
 
                     <!-- TODO autocomplete argument fields -->
+
+                    <md-button ng-disabled="!search.allArgumentsFilled()" class="md-fab md-mini"
+                               ng-click="console.log('hello world')">
+                        <md-icon class="material-icons">add</md-icon>
+                        <md-tooltip md-direction="top">
+                            add chip element
+                        </md-tooltip>
+                    </md-button>
 <!--
                     <md-autocomplete md-search-text="taskTab.searchToolbar.searchText"
                                      md-selected-item="taskTab.searchToolbar.selectedItem"
@@ -100,5 +108,10 @@
         </div>
 -->
     </div>
+
+        <div flex layout="column">
+            <div flex layout="row">
+            </div>
+        </div>
 
 </div> <!-- ./card -->
