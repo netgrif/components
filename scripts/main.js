@@ -40,7 +40,7 @@ requirejs.config({
         'angularRouteSegment': ['angular', 'angularRoute'],
         'angularMaterial': ['angular', 'angularAnimate', 'angularAria', 'angularMessages'],
         'angularMaterialExpansionPanels': ['angular', 'angularAnimate', 'angularAria', 'angularMessages','angularMaterial'],
-        'angularMaterialDatePicker': ['angular', 'angularAnimate', 'angularAria','angularMaterial']
+        'angularMaterialDatePicker': ['angular', 'angularAnimate', 'angularAria','angularMaterial', 'moment']
     },
     config: {
         i18n: {
