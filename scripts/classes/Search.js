@@ -19,18 +19,53 @@ define(['./Filter'], function (Filter) {
         this.searchType = searchType;
         this.query = {};
 
+        // bound variables
         this.searchCategory = undefined;
+        this.searchOperator = undefined;
+        this.searchArguments = [];
 
         this.categories = {
             case: [
-                "Visual Id",
-                "Process",
-                "Title",
-                "Creation Date",
-                "Author",
-                "Dataset",
-                "Task",
-                "Roles"
+                {
+                    name: "Visual Id",
+                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                    inputType: Search.ARGUMENT_INPUT.FREE
+                },
+                {
+                    name: "Process",
+                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE
+                },
+                {
+                    name: "Title",
+                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                    inputType: Search.ARGUMENT_INPUT.FREE
+                },
+                {
+                    name: "Creation Date",
+                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
+                    inputType: Search.ARGUMENT_INPUT.FREE
+                },
+                {
+                    name: "Author",
+                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                    inputType: Search.ARGUMENT_INPUT.FREE
+                },
+                {
+                    name: "Dataset",
+                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
+                    inputType: Search.ARGUMENT_INPUT.FREE
+                },
+                {
+                    name: "Task",
+                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE
+                },
+                {
+                    name: "Roles",
+                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE
+                }
             ]
         };
 
@@ -60,24 +95,48 @@ define(['./Filter'], function (Filter) {
 
     Search.SEARCH_CASES = "case";
     Search.SEARCH_TASKS = "task";
-
-    Search.prototype.unknownSearchType = function() {
-        console.error("Unknown search type '"+this.searchType+"'!");
-    };
-
-    Search.prototype.dispatchCategorySelection = function() {
-        switch (this.searchType) {
-            case Search.SEARCH_CASES:
-                this.categorySelectedCase();
-                return;
-            default:
-                this.unknownSearchType();
-                return;
+    Search.OPERATOR = {
+        EQUAL: {
+            display: "=",
+            numberOfOperands: 1
+        },
+        NOT_EQUAL: {
+            display: "!=",
+            numberOfOperands: 1
+        },
+        MORE_THAN: {
+            display: ">",
+            numberOfOperands: 1
+        },
+        LESS_THAN: {
+            display: "<",
+            numberOfOperands: 1
+        },
+        IN_RANGE: {
+            display: "in range",
+            numberOfOperands: 2
+        },
+        LIKE: {   // TODO fuzzy
+            display: "like",
+            numberOfOperands: 1
+        },
+        IS_NULL: {
+            display: "is null",
+            numberOfOperands: 0
         }
     };
 
-    Search.prototype.categorySelectedCase = function() {
+    Search.ARGUMENT_INPUT = {
+        FREE: "free",
+        AUTOCOMPLETE: "autocomplete"
+    };
 
+    Search.prototype.argumentInputIsFree = function() {
+      return this.searchCategory.inputType === Search.ARGUMENT_INPUT.FREE;
+    };
+
+    Search.prototype.unknownSearchType = function() {
+        console.error("Unknown search type '"+this.searchType+"'!");
     };
 
 /*

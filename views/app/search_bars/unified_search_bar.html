@@ -11,12 +11,30 @@
                 <div layout-gt-xs="row" layout-xs="column">
                     <md-input-container class="md-block" flex>
                         <label class="placeholder">{{::$i18n.page.tasks.search.category}}</label>
-                        <md-select ng-model="search.searchCategory" ng-change="search.dispatchCategorySelection()">
+                        <md-select ng-model="search.searchCategory">
                             <md-option ng-repeat="category in search.categories[search.searchType]" ng-value="category">
-                                {{category}}
+                                {{category.name}}
                             </md-option>
                         </md-select>
                     </md-input-container>
+
+                    <md-input-container class="md-block" flex ng-if="search.searchCategory">
+                        <label class="placeholder">operator</label>
+                        <md-select ng-model="search.searchOperator">
+                            <md-option ng-repeat="operator in search.searchCategory.allowedOperators" ng-value="operator">
+                                {{operator.display}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <div ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0 && search.argumentInputIsFree()" layout="row">
+                        <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
+                            <label class="placeholder">argument {{$index+1}}</label>
+                            <input ng-model="search.searchArguments[$index]">
+                        </md-input-container>
+                    </div>
+
+                    <!-- TODO autocomplete argument fields -->
 <!--
                     <md-autocomplete md-search-text="taskTab.searchToolbar.searchText"
                                      md-selected-item="taskTab.searchToolbar.selectedItem"
