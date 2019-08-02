@@ -24,7 +24,8 @@ define(['./Filter'], function (Filter) {
         this.searchOperator = undefined;
         this.searchArguments = [];
 
-        this.inprogessChipElements = [];
+        this.chipParts = [];
+        this.chips = [];
 
         this.categories = {
             case: [
@@ -246,8 +247,8 @@ define(['./Filter'], function (Filter) {
         console.error("Unknown search type '"+this.searchType+"'!");
     };
 
-    Search.prototype.addChipElement = function () {
-        this.inprogessChipElements.push(new ChipElement(this.searchCategory, this.searchOperator, this.searchArguments));
+    Search.prototype.addChipPart = function () {
+        this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments));
         this.resetInputFields();
     };
 
@@ -257,12 +258,21 @@ define(['./Filter'], function (Filter) {
         this.searchArguments = [];
     };
 
-    function ChipElement(category, operator, arguments) {
-        this.elementText = Search.createElementText(category, operator, arguments);
-        this.elementQuery = Search.createElementQuery(category, operator, arguments);
+    Search.prototype.addChip = function () {
+        if(this.allArgumentsFilled()) {
+            this.addChipPart();
+            this.resetInputFields();
+        }
+        this.chips.push(new Chip(this.chipParts));
+        this.chipParts = [];
+    };
+
+    function ChipPart(category, operator, arguments) {
+        this.elementText = this.createElementText(category, operator, arguments);
+        this.elementQuery = this.createElementQuery(category, operator, arguments);
     }
 
-    Search.createElementQuery = function (category, operator, arguments) {
+    ChipPart.prototype.createElementQuery = function (category, operator, arguments) {
         switch(operator) {
             case Search.OPERATOR.LIKE:
                 return operator.createQuery(category.getElasticFuzzy(), arguments);
@@ -271,8 +281,28 @@ define(['./Filter'], function (Filter) {
         }
     };
     
-    Search.createElementText = function (category, operator, arguments) {
+    ChipPart.prototype.createElementText = function (category, operator, arguments) {
         return category.name+" "+operator.createText(arguments);
+    };
+
+    function Chip(chipParts) {
+        this.elementText = this.createElementText(chipParts);
+        this.elementQuery = this.createElementQuery(chipParts);
+    }
+
+    Chip.prototype.createElementText = function (chipParts) {
+        let text = chipParts[0].elementText;
+        for(let i = 1; i < chipParts.length; i++)
+            text += " | " + chipParts[i].elementText;
+        return text;
+    };
+    
+    Chip.prototype.createElementQuery = function (chipParts) {
+        let query = "("+chipParts[0].elementQuery;
+        for(let i = 1; i < chipParts.length; i++)
+            query += " OR " + chipParts[i].elementQuery;
+        query += ")";
+        return query;
     };
 /*
     function Chip(subject, subjectTitle, id, search) {

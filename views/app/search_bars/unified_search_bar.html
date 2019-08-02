@@ -37,10 +37,18 @@
                     <!-- TODO autocomplete argument fields -->
 
                     <md-button ng-disabled="!search.allArgumentsFilled()" class="md-fab md-mini"
-                               ng-click="search.addChipElement()">
+                               ng-click="search.addChipPart()">
                         <md-icon class="material-icons">add</md-icon>
                         <md-tooltip md-direction="top">
                             add chip element
+                        </md-tooltip>
+                    </md-button>
+
+                    <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.length > 0)" class="md-fab md-mini"
+                               ng-click="search.addChip()">
+                        <md-icon class="material-icons">send</md-icon>
+                        <md-tooltip md-direction="top">
+                            add chip
                         </md-tooltip>
                     </md-button>
 <!--
@@ -89,9 +97,9 @@
                     </md-menu-content>
                 </md-menu>
 -->
-            </div>
+                </div>
 
-        </div>
+            </div>
 <!--
         <div layout="row" layout-align="start center">
 
@@ -107,12 +115,19 @@
 
         </div>
 -->
-    </div>
-
-        <div flex layout="column">
-            <div flex layout="row" ng-repeat="chipElement in search.inprogessChipElements">
-                {{chipElement.elementText}}
-            </div>
         </div>
 
-</div> <!-- ./card -->
+        <md-chips ng-model="search.chipParts" readonly="true" md-removable="true">
+            <md-chip-template>
+                {{$chip.elementText}}
+            </md-chip-template>
+        </md-chips>
+
+        <md-chips ng-model="search.chips" readonly="true" md-removable="true">
+            <md-chip-template md-primary>
+                {{$chip.elementText}}
+            </md-chip-template>
+        </md-chips>
+
+    </div>
+</div><!-- ./card -->
