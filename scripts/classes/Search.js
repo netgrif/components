@@ -243,10 +243,6 @@ define(['./Filter'], function (Filter) {
         return true;
     };
 
-    Search.prototype.unknownSearchType = function() {
-        console.error("Unknown search type '"+this.searchType+"'!");
-    };
-
     Search.prototype.addChipPart = function () {
         this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments));
         this.resetInputFields();
@@ -263,8 +259,16 @@ define(['./Filter'], function (Filter) {
             this.addChipPart();
             this.resetInputFields();
         }
-        this.chips.push(new Chip(this.chipParts));
+        this.chips.push(new Chip(this.chipParts, "OR"));
         this.chipParts = [];
+    };
+
+    Search.prototype.buildQuery = function () {
+        if(this.allArgumentsFilled() || this.chipParts.length > 1) {
+            this.addChip();
+        }
+        // TODO process query properly
+        console.log(new Chip(this.chips, "AND"));
     };
 
     function ChipPart(category, operator, arguments) {
@@ -285,9 +289,9 @@ define(['./Filter'], function (Filter) {
         return category.name+" "+operator.createText(arguments);
     };
 
-    function Chip(chipParts) {
+    function Chip(chipParts, booleanOperator) {
         this.elementText = this.createElementText(chipParts);
-        this.elementQuery = this.createElementQuery(chipParts);
+        this.elementQuery = this.createElementQuery(chipParts, booleanOperator);
     }
 
     Chip.prototype.createElementText = function (chipParts) {
@@ -297,13 +301,14 @@ define(['./Filter'], function (Filter) {
         return text;
     };
     
-    Chip.prototype.createElementQuery = function (chipParts) {
+    Chip.prototype.createElementQuery = function (chipParts, booleanOperator) {
         let query = "("+chipParts[0].elementQuery;
         for(let i = 1; i < chipParts.length; i++)
-            query += " OR " + chipParts[i].elementQuery;
+            query += " "+booleanOperator+" " + chipParts[i].elementQuery;
         query += ")";
         return query;
     };
+
 /*
     function Chip(subject, subjectTitle, id, search) {
         this.subject = subject;
