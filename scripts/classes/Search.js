@@ -140,12 +140,16 @@ define(['./Filter'], function (Filter) {
 
     Search.SEARCH_CASES = "case";
     Search.SEARCH_TASKS = "task";
+
     Search.OPERATOR = {
         EQUAL: {
             display: "=",
             numberOfOperands: 1,
             createQuery: function(keyword, args) {
                 return Search.operatorQuery(keyword, args, "");
+            },
+            createText: function (args) {
+                return Search.operatorText(args, "=");
             }
         },
         NOT_EQUAL: {
@@ -153,6 +157,9 @@ define(['./Filter'], function (Filter) {
             numberOfOperands: 1,
             createQuery: function (keyword, args) {
                 return "(!"+Search.OPERATOR.EQUAL.createQuery(keyword, args)+")";
+            },
+            createText: function (args) {
+                return Search.operatorText(args, "!=");
             }
         },
         MORE_THAN: {
@@ -160,6 +167,9 @@ define(['./Filter'], function (Filter) {
             numberOfOperands: 1,
             createQuery: function (keyword, args) {
                 return Search.operatorQuery(keyword, args, ">");
+            },
+            createText: function (args) {
+                return Search.operatorText(args, ">");
             }
         },
         LESS_THAN: {
@@ -167,6 +177,9 @@ define(['./Filter'], function (Filter) {
             numberOfOperands: 1,
             createQuery: function (keyword, args) {
                 return Search.operatorQuery(keyword, args, "<");
+            },
+            createText: function (args) {
+                return Search.operatorText(args, "<");
             }
         },
         IN_RANGE: {
@@ -174,6 +187,9 @@ define(['./Filter'], function (Filter) {
             numberOfOperands: 2,
             createQuery: function (keyword, args) {
                 return "("+keyword+":["+args[0]+" TO "+args[1]+"])";
+            },
+            createText: function (args) {
+                return "is between "+args[0]+" and "+args[1];
             }
         },
         LIKE: {
@@ -181,6 +197,9 @@ define(['./Filter'], function (Filter) {
             numberOfOperands: 1,
             createQuery: function (fuzzy, args) {
                 return "("+fuzzy+":\""+args[0]+"\"~2)";
+            },
+            createText: function (args) {
+                return Search.operatorText(args, "is like");
             }
         },
         IS_NULL: {
@@ -188,6 +207,9 @@ define(['./Filter'], function (Filter) {
             numberOfOperands: 0,
             createQuery: function (keyword, args) {
                 return "((!(_exists_:"+keyword+")) OR ("+keyword+":\"\"))";
+            },
+            createText: function (args) {
+                return Search.operatorText(args, "is null");
             }
         }
     };
@@ -199,6 +221,10 @@ define(['./Filter'], function (Filter) {
 
     Search.operatorQuery = function(keyword, args, operator) {
         return "("+keyword+":"+operator+"\""+args[0]+"\")";
+    };
+
+    Search.operatorText = function(args, operator) {
+        return operator+" "+args[0];
     };
 
 
@@ -232,9 +258,7 @@ define(['./Filter'], function (Filter) {
     };
 
     function ChipElement(category, operator, arguments) {
-        this.category = category;
-        this.operator = operator;
-        this.arguments = ; // TODO copy array
+        this.elementText = Search.createElementText(category, operator, arguments);
         this.elementQuery = Search.createElementQuery(category, operator, arguments);
     }
 
@@ -245,6 +269,10 @@ define(['./Filter'], function (Filter) {
             default:
                 return operator.createQuery(category.getElasticKeyword(), arguments);
         }
+    };
+    
+    Search.createElementText = function (category, operator, arguments) {
+        return category.name+" "+operator.createText(arguments);
     };
 /*
     function Chip(subject, subjectTitle, id, search) {
