@@ -24,7 +24,7 @@ define(['./Filter'], function (Filter) {
         this.searchOperator = undefined;
         this.searchArguments = [];
 
-        this.inprogessChipELements = [];
+        this.inprogessChipElements = [];
 
         this.categories = {
             case: [
@@ -32,32 +32,56 @@ define(['./Filter'], function (Filter) {
                     name: "Visual Id",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.FREE,
-                    elasticKeyword: "visualId"
+                    getElasticKeyword: function () {
+                        return "visualId";
+                    },
+                    getElasticFuzzy: function () {
+                        return this.getElasticKeyword();
+                    }
                 },
                 {
                     name: "Process",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
-                    elasticKeyword: "processIdentifier"
+                    getElasticKeyword: function () {
+                        return "processIdentifier";
+                    },
+                    getElasticFuzzy: function () {
+                        return this.getElasticKeyword();
+                    }
                 },
                 {
                     name: "Title",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.FREE,
-                    elasticFuzzy: "title"
+                    getElasticKeyword: function () {
+                        return this.getElasticFuzzy();
+                    },
+                    getElasticFuzzy: function () {
+                        return "title";
+                    }
                 },
                 {
                     name: "Creation Date",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
                     inputType: Search.ARGUMENT_INPUT.FREE,
-                    elasticFuzzy: "creationDate"
+                    getElasticKeyword: function () {
+                        return this.getElasticFuzzy();
+                    },
+                    getElasticFuzzy: function () {
+                        return "creationDate";
+                    }
                 },
                 {
                     name: "Author",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.FREE,
-                    elasticKeyword: "authorEmail",
-                    elasticFuzzy: "authorName"
+                    getElasticKeyword: function () {
+                        return "authorEmail";
+                    },
+                    getElasticFuzzy: function () {
+                        return "authorName";
+                    }
                 },
                 {
                     name: "Dataset",
@@ -69,13 +93,23 @@ define(['./Filter'], function (Filter) {
                     name: "Task",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
-                    elasticKeyword: "taskIds"
+                    getElasticKeyword: function () {
+                        return "taskIds";
+                    },
+                    getElasticFuzzy: function () {
+                        return this.getElasticKeyword();
+                    }
                 },
                 {
                     name: "Roles",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
-                    elasticKeyword: "enabledRoles"
+                    getElasticKeyword: function () {
+                        return "enabledRoles";
+                    },
+                    getElasticFuzzy: function () {
+                        return this.getElasticKeyword();
+                    }
                 }
             ]
         };
@@ -109,31 +143,52 @@ define(['./Filter'], function (Filter) {
     Search.OPERATOR = {
         EQUAL: {
             display: "=",
-            numberOfOperands: 1
+            numberOfOperands: 1,
+            createQuery: function(keyword, args) {
+                return Search.operatorQuery(keyword, args, "");
+            }
         },
         NOT_EQUAL: {
             display: "!=",
-            numberOfOperands: 1
+            numberOfOperands: 1,
+            createQuery: function (keyword, args) {
+                return "(!"+Search.OPERATOR.EQUAL.createQuery(keyword, args)+")";
+            }
         },
         MORE_THAN: {
             display: ">",
-            numberOfOperands: 1
+            numberOfOperands: 1,
+            createQuery: function (keyword, args) {
+                return Search.operatorQuery(keyword, args, ">");
+            }
         },
         LESS_THAN: {
             display: "<",
-            numberOfOperands: 1
+            numberOfOperands: 1,
+            createQuery: function (keyword, args) {
+                return Search.operatorQuery(keyword, args, "<");
+            }
         },
         IN_RANGE: {
             display: "in range",
-            numberOfOperands: 2
+            numberOfOperands: 2,
+            createQuery: function (keyword, args) {
+                return "("+keyword+":["+args[0]+" TO "+args[1]+"])";
+            }
         },
         LIKE: {
             display: "like",
-            numberOfOperands: 1
+            numberOfOperands: 1,
+            createQuery: function (fuzzy, args) {
+                return "("+fuzzy+":\""+args[0]+"\"~2)";
+            }
         },
         IS_NULL: {
             display: "is null",
-            numberOfOperands: 0
+            numberOfOperands: 0,
+            createQuery: function (keyword, args) {
+                return "((!(_exists_:"+keyword+")) OR ("+keyword+":\"\"))";
+            }
         }
     };
 
@@ -141,6 +196,11 @@ define(['./Filter'], function (Filter) {
         FREE: "free",
         AUTOCOMPLETE: "autocomplete"
     };
+
+    Search.operatorQuery = function(keyword, args, operator) {
+        return "("+keyword+":"+operator+"\""+args[0]+"\")";
+    };
+
 
     Search.prototype.argumentInputIsFree = function() {
       return this.searchCategory.inputType === Search.ARGUMENT_INPUT.FREE;
@@ -160,15 +220,31 @@ define(['./Filter'], function (Filter) {
         console.error("Unknown search type '"+this.searchType+"'!");
     };
 
+    Search.prototype.addChipElement = function () {
+        this.inprogessChipElements.push(new ChipElement(this.searchCategory, this.searchOperator, this.searchArguments));
+        this.resetInputFields();
+    };
+
+    Search.prototype.resetInputFields = function () {
+        this.searchCategory = undefined;
+        this.searchOperator = undefined;
+        this.searchArguments = [];
+    };
+
     function ChipElement(category, operator, arguments) {
         this.category = category;
         this.operator = operator;
-        this.arguments = [...arguments];
-        this.elementQuery = Search.createElementQuery(this);
+        this.arguments = ; // TODO copy array
+        this.elementQuery = Search.createElementQuery(category, operator, arguments);
     }
 
-    Search.createElementQuery = function (chipElement) {
-        
+    Search.createElementQuery = function (category, operator, arguments) {
+        switch(operator) {
+            case Search.OPERATOR.LIKE:
+                return operator.createQuery(category.getElasticFuzzy(), arguments);
+            default:
+                return operator.createQuery(category.getElasticKeyword(), arguments);
+        }
     };
 /*
     function Chip(subject, subjectTitle, id, search) {
