@@ -10,12 +10,9 @@ define(['./Filter'], function (Filter) {
     function Search(parent, searchType, angular, config = {}) {
         Object.assign(this, angular, config);
 
+        const self = this;
+
         this.parent = parent;
-        this.chips = [];
-        this.subject = undefined;
-        this.autoCompleteStorage = {};
-        this.searchText = "";
-        this.selectedItem = undefined;
         this.searchType = searchType;
         this.query = {};
 
@@ -32,96 +29,121 @@ define(['./Filter'], function (Filter) {
                 visualId: {
                     name: "Visual Id",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.FREE,
                     getElasticKeyword: function () {
                         return "visualId";
                     },
                     getElasticFuzzy: function () {
                         return this.getElasticKeyword();
+                    },
+                    getQueryArguments: function () {
+                        return self.searchArguments;
                     }
                 },
                 process: {
                     name: "Process",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
                     autocompleteItems: new Map(),
-                    autocompleteFilter: function() {
-
+                    autocompleteFilter: function(index) {
+                        return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
                     getElasticKeyword: function () {
                         return "processIdentifier";
                     },
                     getElasticFuzzy: function () {
                         return this.getElasticKeyword();
+                    },
+                    getQueryArguments: function () {
+                        let args = [];
+                        this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
+                            args.push(autocomplete.id);
+                        });
+                        return args;
                     }
                 },
                 title: {
                     name: "Title",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.FREE,
                     getElasticKeyword: function () {
                         return this.getElasticFuzzy();
                     },
                     getElasticFuzzy: function () {
                         return "title";
+                    },
+                    getQueryArguments: function () {
+                        return self.searchArguments;
                     }
                 },
                 creationDate: {
                     name: "Creation Date",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
-                    inputType: Search.ARGUMENT_INPUT.FREE,
                     getElasticKeyword: function () {
                         return this.getElasticFuzzy();
                     },
                     getElasticFuzzy: function () {
                         return "creationDate";
+                    },
+                    getQueryArguments: function () {
+                        return self.searchArguments;
                     }
                 },
                 author: {
                     name: "Author",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.FREE,
                     getElasticKeyword: function () {
                         return "authorEmail";
                     },
                     getElasticFuzzy: function () {
                         return "authorName";
+                    },
+                    getQueryArguments: function () {
+                        return self.searchArguments;
                     }
                 },
                 dataset: {
                     name: "Dataset",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.FREE
                     // TODO dataset
                 },
                 task: {
                     name: "Task",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
                     autocompleteItems: new Map(),
-                    autocompleteFilter: function() {
-
+                    autocompleteFilter: function(index) {
+                        return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
                     getElasticKeyword: function () {
                         return "taskIds";
                     },
                     getElasticFuzzy: function () {
                         return this.getElasticKeyword();
+                    },
+                    getQueryArguments: function () {
+                        let args = [];
+                        this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
+                            args.push(autocomplete.id);
+                        });
+                        return args;
                     }
                 },
                 role: {
                     name: "Roles",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
                     autocompleteItems: new Map(),
-                    autocompleteFilter: function() {
-
+                    autocompleteFilter: function(index) {
+                        return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
                     getElasticKeyword: function () {
                         return "enabledRoles";
                     },
                     getElasticFuzzy: function () {
                         return this.getElasticKeyword();
+                    },
+                    getQueryArguments: function () {
+                        let args = [];
+                        this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
+                            args.push(autocomplete.id);
+                        });
+                        return args;
                     }
                 }
             }
@@ -206,13 +228,19 @@ define(['./Filter'], function (Filter) {
         }
     };
 
-    Search.ARGUMENT_INPUT = {
-        FREE: "free",
-        AUTOCOMPLETE: "autocomplete"
-    };
-
     Search.operatorQuery = function(keyword, args, operator) {
-        return "("+keyword+":"+operator+"\""+args[0]+"\")";
+        let query = "";
+        if(args.length > 1)
+            query += "(";
+        args.forEach(function (arg, index) {
+            if(index > 0)
+                query += " OR ";
+            query += "("+keyword+":"+operator+"\""+arg+"\")";
+        });
+        if(args.length > 1)
+            query += ")";
+
+        return query;
     };
 
     Search.operatorText = function(args, operator) {
@@ -252,10 +280,6 @@ define(['./Filter'], function (Filter) {
             this.categories[this.searchType][categoryName].autocompleteItems.set(name, [new AutocompleteItem(id, netId)]);
     };
 
-    Search.prototype.argumentInputIsFree = function() {
-      return this.searchCategory.inputType === Search.ARGUMENT_INPUT.FREE;
-    };
-
     Search.prototype.allArgumentsFilled = function() {
         if(!this.searchOperator)
             return false;
@@ -287,7 +311,7 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.buildQuery = function () {
-        if(this.allArgumentsFilled() || this.chipParts.length > 1) {
+        if(this.allArgumentsFilled() || this.chipParts.length > 0) {
             this.addChip();
         }
         // TODO process query properly
@@ -297,15 +321,15 @@ define(['./Filter'], function (Filter) {
 
     function ChipPart(category, operator, arguments) {
         this.elementText = this.createElementText(category, operator, arguments);
-        this.elementQuery = this.createElementQuery(category, operator, arguments);
+        this.elementQuery = this.createElementQuery(category, operator);
     }
 
-    ChipPart.prototype.createElementQuery = function (category, operator, arguments) {
+    ChipPart.prototype.createElementQuery = function (category, operator) {
         switch(operator) {
             case Search.OPERATOR.LIKE:
-                return operator.createQuery(category.getElasticFuzzy(), arguments);
+                return operator.createQuery(category.getElasticFuzzy(), category.getQueryArguments());
             default:
-                return operator.createQuery(category.getElasticKeyword(), arguments);
+                return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments());
         }
     };
     
