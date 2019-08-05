@@ -28,8 +28,8 @@ define(['./Filter'], function (Filter) {
         this.chips = [];
 
         this.categories = {
-            case: [
-                {
+            case: {
+                visualId: {
                     name: "Visual Id",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.FREE,
@@ -40,11 +40,11 @@ define(['./Filter'], function (Filter) {
                         return this.getElasticKeyword();
                     }
                 },
-                {
+                process: {
                     name: "Process",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
-                    autocompleteItems: [],
+                    autocompleteItems: new Map(),
                     autocompleteFilter: function() {
 
                     },
@@ -55,7 +55,7 @@ define(['./Filter'], function (Filter) {
                         return this.getElasticKeyword();
                     }
                 },
-                {
+                title: {
                     name: "Title",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.FREE,
@@ -66,7 +66,7 @@ define(['./Filter'], function (Filter) {
                         return "title";
                     }
                 },
-                {
+                creationDate: {
                     name: "Creation Date",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
                     inputType: Search.ARGUMENT_INPUT.FREE,
@@ -77,7 +77,7 @@ define(['./Filter'], function (Filter) {
                         return "creationDate";
                     }
                 },
-                {
+                author: {
                     name: "Author",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.FREE,
@@ -88,17 +88,17 @@ define(['./Filter'], function (Filter) {
                         return "authorName";
                     }
                 },
-                {
+                dataset: {
                     name: "Dataset",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.FREE
                     // TODO dataset
                 },
-                {
+                task: {
                     name: "Task",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
-                    autocompleteItems: [],
+                    autocompleteItems: new Map(),
                     autocompleteFilter: function() {
 
                     },
@@ -109,11 +109,11 @@ define(['./Filter'], function (Filter) {
                         return this.getElasticKeyword();
                     }
                 },
-                {
+                role: {
                     name: "Roles",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
-                    autocompleteItems: [],
+                    autocompleteItems: new Map(),
                     autocompleteFilter: function() {
 
                     },
@@ -124,31 +124,10 @@ define(['./Filter'], function (Filter) {
                         return this.getElasticKeyword();
                     }
                 }
-            ]
+            }
         };
 
-        // this.subjects = {
-        //     process: {
-        //         title: this.$i18n.block.dialog.saveFilter.process,
-        //         value: "process",
-        //         disable: false,
-        //         load: {
-        //             method: "loadProcessReferences",
-        //             always: false
-        //         }
-        //     }
-        //     ,
-        //     transition: {
-        //         title: this.$i18n.block.dialog.saveFilter.task,
-        //         value: "transition",
-        //         disable: true,
-        //         dependency: ["process"],
-        //         load: {
-        //             method: "loadTransitionReferences",
-        //             always: false
-        //         }
-        //     }
-        // };
+        this.populateAutocomplete();
     }
 
     Search.SEARCH_CASES = "case";
@@ -240,6 +219,38 @@ define(['./Filter'], function (Filter) {
         return operator+" "+args[0];
     };
 
+    Search.prototype.populateAutocomplete = function () {
+        switch (this.searchType) {
+            case Search.SEARCH_CASES:
+                for (let key in this.categories.case) {
+                    if(this.categories.case.hasOwnProperty(key) && this.categories.case[key].hasOwnProperty("autocompleteItems")) {
+                        this.categories.case[key].autocompleteItems.clear();
+                    }
+                }
+
+                this.$process.nets.forEach(function (net) {
+                    this.addNameToIdMapping("process", net.identifier, net.id, null);
+
+                    net.transitions.forEach(function (transition) {
+                        this.addNameToIdMapping("task", transition.title, transition.id, transition.netId);
+                    }, this);
+
+                    net.roles.forEach(function (role) {
+                        this.addNameToIdMapping("role", role.name, role.id, net.id);
+                    }, this);
+                }, this);
+                break;
+            default:
+                console.error("Unknown search type '"+this.searchType+"'");
+        }
+    };
+
+    Search.prototype.addNameToIdMapping = function(categoryName, name, id, netId) {
+        if(this.categories[this.searchType][categoryName].autocompleteItems.has(name))
+            this.categories[this.searchType][categoryName].autocompleteItems.get(name).push(new AutocompleteItem(id, netId));
+        else
+            this.categories[this.searchType][categoryName].autocompleteItems.set(name, [new AutocompleteItem(id, netId)]);
+    };
 
     Search.prototype.argumentInputIsFree = function() {
       return this.searchCategory.inputType === Search.ARGUMENT_INPUT.FREE;
@@ -263,7 +274,7 @@ define(['./Filter'], function (Filter) {
     Search.prototype.resetInputFields = function () {
         this.searchCategory = undefined;
         this.searchOperator = undefined;
-        this.searchArguments = [];
+        this.searchArguments.splice(0, this.searchArguments.length);
     };
 
     Search.prototype.addChip = function () {
@@ -272,7 +283,7 @@ define(['./Filter'], function (Filter) {
             this.resetInputFields();
         }
         this.chips.push(new Chip(this.chipParts, "OR"));
-        this.chipParts = [];
+        this.chipParts.splice(0, this.chipParts.length);
     };
 
     Search.prototype.buildQuery = function () {
@@ -281,16 +292,6 @@ define(['./Filter'], function (Filter) {
         }
         // TODO process query properly
         console.log(new Chip(this.chips, "AND"));
-    };
-
-    Search.prototype.populateAutocomplete = function () {
-        switch (this.searchType) {
-            case Search.SEARCH_CASES:
-                this.
-                break;
-            default:
-                console.error("Unknown search type '"+this.searchType+"'");
-        }
     };
 
 
@@ -333,9 +334,9 @@ define(['./Filter'], function (Filter) {
     };
 
 
-    function AutocompleteItem(name, id) {
-        this.name = name;
+    function AutocompleteItem(id, netId) {
         this.id = id;
+        this.netId = netId;
     }
 /*
     function Chip(subject, subjectTitle, id, search) {

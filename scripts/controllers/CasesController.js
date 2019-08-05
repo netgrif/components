@@ -17,7 +17,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         $i18n,
                         $user,
                         $rootScope,
-                        $config
+                        $config,
+                        $process
                     }, {});
                     self.caseTab = new CaseTab("Cases", this, $filterRepository.get(self.viewId), {
                         $http,
