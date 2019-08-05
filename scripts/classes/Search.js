@@ -44,6 +44,10 @@ define(['./Filter'], function (Filter) {
                     name: "Process",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
+                    autocompleteItems: [],
+                    autocompleteFilter: function() {
+
+                    },
                     getElasticKeyword: function () {
                         return "processIdentifier";
                     },
@@ -94,6 +98,10 @@ define(['./Filter'], function (Filter) {
                     name: "Task",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
+                    autocompleteItems: [],
+                    autocompleteFilter: function() {
+
+                    },
                     getElasticKeyword: function () {
                         return "taskIds";
                     },
@@ -105,6 +113,10 @@ define(['./Filter'], function (Filter) {
                     name: "Roles",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     inputType: Search.ARGUMENT_INPUT.AUTOCOMPLETE,
+                    autocompleteItems: [],
+                    autocompleteFilter: function() {
+
+                    },
                     getElasticKeyword: function () {
                         return "enabledRoles";
                     },
@@ -271,6 +283,17 @@ define(['./Filter'], function (Filter) {
         console.log(new Chip(this.chips, "AND"));
     };
 
+    Search.prototype.populateAutocomplete = function () {
+        switch (this.searchType) {
+            case Search.SEARCH_CASES:
+                this.
+                break;
+            default:
+                console.error("Unknown search type '"+this.searchType+"'");
+        }
+    };
+
+
     function ChipPart(category, operator, arguments) {
         this.elementText = this.createElementText(category, operator, arguments);
         this.elementQuery = this.createElementQuery(category, operator, arguments);
@@ -309,6 +332,11 @@ define(['./Filter'], function (Filter) {
         return query;
     };
 
+
+    function AutocompleteItem(name, id) {
+        this.name = name;
+        this.id = id;
+    }
 /*
     function Chip(subject, subjectTitle, id, search) {
         this.subject = subject;
