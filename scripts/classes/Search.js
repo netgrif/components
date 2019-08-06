@@ -33,9 +33,6 @@ define(['./Filter'], function (Filter) {
                     getElasticKeyword: function () {
                         return ["visualId"];
                     },
-                    getElasticFuzzy: function () {
-                        return this.getElasticKeyword();
-                    },
                     getQueryArguments: function () {
                         return self.searchArguments;
                     }
@@ -44,15 +41,14 @@ define(['./Filter'], function (Filter) {
                     name: "Process",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
-                    argsInput: "autocomplete",
+                    argsInput: function () {
+                        return "autocomplete";
+                    },
                     autocompleteFilter: function(index) {
                         return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
                     getElasticKeyword: function () {
                         return ["processIdentifier"];
-                    },
-                    getElasticFuzzy: function () {
-                        return this.getElasticKeyword();
                     },
                     getQueryArguments: function () {
                         let args = [];
@@ -66,9 +62,6 @@ define(['./Filter'], function (Filter) {
                     name: "Title",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     getElasticKeyword: function () {
-                        return this.getElasticFuzzy();
-                    },
-                    getElasticFuzzy: function () {
                         return ["title"];
                     },
                     getQueryArguments: function () {
@@ -79,9 +72,6 @@ define(['./Filter'], function (Filter) {
                     name: "Creation Date",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
                     getElasticKeyword: function () {
-                        return this.getElasticFuzzy();
-                    },
-                    getElasticFuzzy: function () {
                         return ["creationDate"];
                     },
                     getQueryArguments: function () {
@@ -92,10 +82,7 @@ define(['./Filter'], function (Filter) {
                     name: "Author",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     getElasticKeyword: function () {
-                        return ["authorEmail"];
-                    },
-                    getElasticFuzzy: function () {
-                        return ["authorName"];
+                        return ["authorEmail", "authorName"];
                     },
                     getQueryArguments: function () {
                         return self.searchArguments;
@@ -105,7 +92,9 @@ define(['./Filter'], function (Filter) {
                     name: "Dataset",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
-                    argsInput: "",
+                    argsInput: function () {
+                        return this.autocompleteItems.get(self.searchDatafield)[0].inputType;
+                    },
                     datafieldFilter: function () {
                         return Array.from(this.autocompleteItems.keys()).filter(item => item.includes(self.searchDatafield));
                     },
@@ -116,9 +105,6 @@ define(['./Filter'], function (Filter) {
                         });
                         return keywords;
                     },
-                    getElasticFuzzy: function () {
-                        return this.getElasticKeyword();
-                    },
                     getQueryArguments: function () {
                         return self.searchArguments;
                     }
@@ -127,15 +113,14 @@ define(['./Filter'], function (Filter) {
                     name: "Task",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
-                    argsInput: "autocomplete",
+                    argsInput: function () {
+                        return "autocomplete";
+                    },
                     autocompleteFilter: function(index) {
                         return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
                     getElasticKeyword: function () {
                         return ["taskIds"];
-                    },
-                    getElasticFuzzy: function () {
-                        return this.getElasticKeyword();
                     },
                     getQueryArguments: function () {
                         let args = [];
@@ -149,15 +134,14 @@ define(['./Filter'], function (Filter) {
                     name: "Roles",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
-                    argsInput: "autocomplete",
+                    argsInput: function () {
+                        return "autocomplete";
+                    },
                     autocompleteFilter: function(index) {
                         return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
                     getElasticKeyword: function () {
                         return ["enabledRoles"];
-                    },
-                    getElasticFuzzy: function () {
-                        return this.getElasticKeyword();
                     },
                     getQueryArguments: function () {
                         let args = [];
@@ -235,8 +219,8 @@ define(['./Filter'], function (Filter) {
             display: "like",
             numberOfOperands: 1,
             // TODO how 2 fuzzy?
-            createQuery: function (fuzzys, args) {
-                return "("+fuzzys[0]+":\""+args[0]+"\"~2)";
+            createQuery: function (keywords, args) {
+                return "("+keywords[0]+":\""+args[0]+"\"~2)";
             },
             createText: function (args) {
                 return Search.operatorText(args, "is like");
@@ -245,7 +229,7 @@ define(['./Filter'], function (Filter) {
         IS_NULL: {
             display: "is null",
             numberOfOperands: 0,
-            createQuery: function (keywords, args) {
+            createQuery: function (keywords) {
                 let simpleQueries = [];
                 keywords.forEach(function (keyword) {
                     simpleQueries.push("((!(_exists_:"+keyword+")) OR ("+keyword+":\"\"))");
@@ -298,7 +282,7 @@ define(['./Filter'], function (Filter) {
                 }
 
                 this.$process.nets.forEach(function (net) {
-                    this.addNameToIdMapping("process", net.identifier, net.id, null);
+                    this.addNameToIdMapping("process", net.identifier, net.id);
 
                     net.transitions.forEach(function (transition) {
                         this.addNameToIdMapping("task", transition.title, transition.id, transition.netId);
@@ -309,7 +293,7 @@ define(['./Filter'], function (Filter) {
                     }, this);
 
                     net.immediateData.forEach(function (immediateData) {
-                        this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id);
+                        this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
                     }, this);
                 }, this);
                 break;
@@ -318,11 +302,11 @@ define(['./Filter'], function (Filter) {
         }
     };
 
-    Search.prototype.addNameToIdMapping = function(categoryName, name, id, netId) {
+    Search.prototype.addNameToIdMapping = function(categoryName, name, id, netId, inputType) {
         if(this.categories[this.searchType][categoryName].autocompleteItems.has(name))
-            this.categories[this.searchType][categoryName].autocompleteItems.get(name).push(new AutocompleteItem(id, netId));
+            this.categories[this.searchType][categoryName].autocompleteItems.get(name).push(new AutocompleteItem(id, netId, inputType));
         else
-            this.categories[this.searchType][categoryName].autocompleteItems.set(name, [new AutocompleteItem(id, netId)]);
+            this.categories[this.searchType][categoryName].autocompleteItems.set(name, [new AutocompleteItem(id, netId, inputType)]);
     };
 
     Search.prototype.allArgumentsFilled = function() {
@@ -371,17 +355,13 @@ define(['./Filter'], function (Filter) {
     }
 
     ChipPart.prototype.createElementQuery = function (category, operator) {
-        switch(operator) {
-            case Search.OPERATOR.LIKE:
-                return operator.createQuery(category.getElasticFuzzy(), category.getQueryArguments());
-            default:
-                return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments());
-        }
+        return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments());
     };
     
     ChipPart.prototype.createElementText = function (category, operator, arguments) {
         return category.name+" "+operator.createText(arguments);
     };
+
 
     function Chip(chipParts, booleanOperator) {
         this.elementText = this.createElementText(chipParts);
@@ -400,9 +380,10 @@ define(['./Filter'], function (Filter) {
     };
 
 
-    function AutocompleteItem(id, netId) {
+    function AutocompleteItem(id, netId, inputType) {
         this.id = id;
         this.netId = netId;
+        this.inputType = inputType;
     }
 /*
     function Chip(subject, subjectTitle, id, search) {
