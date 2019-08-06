@@ -18,6 +18,7 @@ define(['./Filter'], function (Filter) {
 
         // bound variables
         this.searchCategory = undefined;
+        this.searchDatafield = undefined;
         this.searchOperator = undefined;
         this.searchArguments = [];
 
@@ -43,6 +44,7 @@ define(['./Filter'], function (Filter) {
                     name: "Process",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
+                    argsInput: "autocomplete",
                     autocompleteFilter: function(index) {
                         return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
@@ -102,12 +104,17 @@ define(['./Filter'], function (Filter) {
                 dataset: {
                     name: "Dataset",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
-                    // TODO dataset
+                    autocompleteItems: new Map(),
+                    argsInput: "",
+                    datafieldFilter: function () {
+                        return Array.from(this.autocompleteItems.keys()).filter(item => item.includes(self.searchDatafield));
+                    }
                 },
                 task: {
                     name: "Task",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
+                    argsInput: "autocomplete",
                     autocompleteFilter: function(index) {
                         return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
@@ -129,6 +136,7 @@ define(['./Filter'], function (Filter) {
                     name: "Roles",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
+                    argsInput: "autocomplete",
                     autocompleteFilter: function(index) {
                         return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
@@ -266,6 +274,10 @@ define(['./Filter'], function (Filter) {
                     net.roles.forEach(function (role) {
                         this.addNameToIdMapping("role", role.name, role.id, net.id);
                     }, this);
+
+                    net.immediateData.forEach(function (immediateData) {
+                        this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id);
+                    }, this);
                 }, this);
                 break;
             default:
@@ -297,6 +309,7 @@ define(['./Filter'], function (Filter) {
 
     Search.prototype.resetInputFields = function () {
         this.searchCategory = undefined;
+        this.searchDatafield = undefined;
         this.searchOperator = undefined;
         this.searchArguments.splice(0, this.searchArguments.length);
     };

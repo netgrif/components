@@ -18,7 +18,30 @@
                         </md-select>
                     </md-input-container>
 
-                    <md-input-container class="md-block" flex ng-if="search.searchCategory">
+                    <div ng-if="search.searchCategory && search.searchCategory.name === 'Dataset'" layout="row">
+                        <md-autocomplete md-search-text="search.searchDatafield"
+                                         md-selected-item-change="search.searchCategory.datafieldFilter()"
+                                         md-items="item in search.searchCategory.datafieldFilter()"
+                                         md-item-text="item"
+                                         md-min-length="0"
+                                         md-no-cache="true"
+                                         md-select-on-match="true"
+                                         md-match-case-insensitive="true"
+                                         md-dropdown-items="5"
+                                         md-floating-label="{{::$i18n.page.tasks.search.search}}">
+
+                            <md-item-template>
+                                <span md-highlight-text="search.searchDatafield" md-highlight-flags="i">
+                                    {{item}}
+                                </span>
+                            </md-item-template>
+                            <md-not-found>
+                                {{$i18n.page.tasks.filter.processNotFound}}
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+                    <md-input-container class="md-block" flex ng-if="search.searchCategory && (search.searchCategory.name !== 'Dataset' || search.searchDatafield)">
                         <label class="placeholder">operator</label>
                         <md-select ng-model="search.searchOperator">
                             <md-option ng-repeat="operator in search.searchCategory.allowedOperators" ng-value="operator">
@@ -27,35 +50,38 @@
                         </md-select>
                     </md-input-container>
 
-                    <div ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0 && !search.searchCategory.autocompleteItems" layout="row">
-                        <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
-                            <label class="placeholder">argument {{$index+1}}</label>
-                            <input ng-model="search.searchArguments[$index]">
-                        </md-input-container>
-                    </div>
-                    <div ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0 && search.searchCategory.autocompleteItems" layout="row">
-                        <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
-                            <md-autocomplete md-search-text="search.searchArguments[$index]"
-                                             md-selected-item-change="search.searchCategory.autocompleteFilter($index)"
-                                             md-items="item in search.searchCategory.autocompleteFilter($index)"
-                                             md-item-text="item"
-                                             md-min-length="0"
-                                             md-no-cache="true"
-                                             md-select-on-match="true"
-                                             md-match-case-insensitive="true"
-                                             md-dropdown-items="5"
-                                             md-floating-label="{{::$i18n.page.tasks.search.search}}">
+                    <div ng-switch="search.searchCategory.argsInput" ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0">
+                        <div ng-switch-default layout="row">
+                            <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
+                                <label class="placeholder">argument {{$index+1}}</label>
+                                <input ng-model="search.searchArguments[$index]">
+                            </md-input-container>
+                        </div>
 
-                                <md-item-template>
-                                    <span md-highlight-text="search.searchArguments[$index]" md-highlight-flags="i">
-                                        {{item}}
-                                    </span>
-                                </md-item-template>
-                                <md-not-found>
-                                    {{$i18n.page.tasks.filter.processNotFound}}
-                                </md-not-found>
-                            </md-autocomplete>
-                        </md-input-container>
+                        <div ng-switch-when="autocomplete" layout="row">
+                            <md-input-container class="md-block" ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index" flex>
+                                <md-autocomplete md-search-text="search.searchArguments[$index]"
+                                                 md-selected-item-change="search.searchCategory.autocompleteFilter($index)"
+                                                 md-items="item in search.searchCategory.autocompleteFilter($index)"
+                                                 md-item-text="item"
+                                                 md-min-length="0"
+                                                 md-no-cache="true"
+                                                 md-select-on-match="true"
+                                                 md-match-case-insensitive="true"
+                                                 md-dropdown-items="5"
+                                                 md-floating-label="{{::$i18n.page.tasks.search.search}}">
+
+                                    <md-item-template>
+                                        <span md-highlight-text="search.searchArguments[$index]" md-highlight-flags="i">
+                                            {{item}}
+                                        </span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        {{$i18n.page.tasks.filter.processNotFound}}
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </md-input-container>
+                        </div>
                     </div>
 
                     <md-button ng-disabled="!search.allArgumentsFilled()" class="md-fab md-mini"
