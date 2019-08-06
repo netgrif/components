@@ -31,7 +31,7 @@ define(['./Filter'], function (Filter) {
                     name: "Visual Id",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     getElasticKeyword: function () {
-                        return "visualId";
+                        return ["visualId"];
                     },
                     getElasticFuzzy: function () {
                         return this.getElasticKeyword();
@@ -49,7 +49,7 @@ define(['./Filter'], function (Filter) {
                         return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
                     getElasticKeyword: function () {
-                        return "processIdentifier";
+                        return ["processIdentifier"];
                     },
                     getElasticFuzzy: function () {
                         return this.getElasticKeyword();
@@ -69,7 +69,7 @@ define(['./Filter'], function (Filter) {
                         return this.getElasticFuzzy();
                     },
                     getElasticFuzzy: function () {
-                        return "title";
+                        return ["title"];
                     },
                     getQueryArguments: function () {
                         return self.searchArguments;
@@ -82,7 +82,7 @@ define(['./Filter'], function (Filter) {
                         return this.getElasticFuzzy();
                     },
                     getElasticFuzzy: function () {
-                        return "creationDate";
+                        return ["creationDate"];
                     },
                     getQueryArguments: function () {
                         return self.searchArguments;
@@ -92,10 +92,10 @@ define(['./Filter'], function (Filter) {
                     name: "Author",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     getElasticKeyword: function () {
-                        return "authorEmail";
+                        return ["authorEmail"];
                     },
                     getElasticFuzzy: function () {
-                        return "authorName";
+                        return ["authorName"];
                     },
                     getQueryArguments: function () {
                         return self.searchArguments;
@@ -108,6 +108,19 @@ define(['./Filter'], function (Filter) {
                     argsInput: "",
                     datafieldFilter: function () {
                         return Array.from(this.autocompleteItems.keys()).filter(item => item.includes(self.searchDatafield));
+                    },
+                    getElasticKeyword: function () {
+                        let keywords = [];
+                        this.autocompleteItems.get(self.searchDatafield).forEach(function (keyword) {
+                            keywords.push("dataSet."+keyword.id+".value");
+                        });
+                        return keywords;
+                    },
+                    getElasticFuzzy: function () {
+                        return this.getElasticKeyword();
+                    },
+                    getQueryArguments: function () {
+                        return self.searchArguments;
                     }
                 },
                 task: {
@@ -119,7 +132,7 @@ define(['./Filter'], function (Filter) {
                         return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
                     getElasticKeyword: function () {
-                        return "taskIds";
+                        return ["taskIds"];
                     },
                     getElasticFuzzy: function () {
                         return this.getElasticKeyword();
@@ -141,7 +154,7 @@ define(['./Filter'], function (Filter) {
                         return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                     },
                     getElasticKeyword: function () {
-                        return "enabledRoles";
+                        return ["enabledRoles"];
                     },
                     getElasticFuzzy: function () {
                         return this.getElasticKeyword();
@@ -167,8 +180,8 @@ define(['./Filter'], function (Filter) {
         EQUAL: {
             display: "=",
             numberOfOperands: 1,
-            createQuery: function(keyword, args) {
-                return Search.operatorQuery(keyword, args, "");
+            createQuery: function(keywords, args) {
+                return Search.operatorQuery(keywords, args, "");
             },
             createText: function (args) {
                 return Search.operatorText(args, "=");
@@ -177,8 +190,8 @@ define(['./Filter'], function (Filter) {
         NOT_EQUAL: {
             display: "!=",
             numberOfOperands: 1,
-            createQuery: function (keyword, args) {
-                return "(!"+Search.OPERATOR.EQUAL.createQuery(keyword, args)+")";
+            createQuery: function (keywords, args) {
+                return "(!"+Search.OPERATOR.EQUAL.createQuery(keywords, args)+")";
             },
             createText: function (args) {
                 return Search.operatorText(args, "!=");
@@ -187,8 +200,8 @@ define(['./Filter'], function (Filter) {
         MORE_THAN: {
             display: ">",
             numberOfOperands: 1,
-            createQuery: function (keyword, args) {
-                return Search.operatorQuery(keyword, args, ">");
+            createQuery: function (keywords, args) {
+                return Search.operatorQuery(keywords, args, ">");
             },
             createText: function (args) {
                 return Search.operatorText(args, ">");
@@ -197,8 +210,8 @@ define(['./Filter'], function (Filter) {
         LESS_THAN: {
             display: "<",
             numberOfOperands: 1,
-            createQuery: function (keyword, args) {
-                return Search.operatorQuery(keyword, args, "<");
+            createQuery: function (keywords, args) {
+                return Search.operatorQuery(keywords, args, "<");
             },
             createText: function (args) {
                 return Search.operatorText(args, "<");
@@ -207,8 +220,12 @@ define(['./Filter'], function (Filter) {
         IN_RANGE: {
             display: "in range",
             numberOfOperands: 2,
-            createQuery: function (keyword, args) {
-                return "("+keyword+":["+args[0]+" TO "+args[1]+"])";
+            createQuery: function (keywords, args) {
+                let simpleQueries = [];
+                keywords.forEach(function (keyword) {
+                    simpleQueries.push("("+keyword+":["+args[0]+" TO "+args[1]+"])");
+                });
+                return Search.bindQueries(simpleQueries, "OR");
             },
             createText: function (args) {
                 return "is between "+args[0]+" and "+args[1];
@@ -217,8 +234,9 @@ define(['./Filter'], function (Filter) {
         LIKE: {
             display: "like",
             numberOfOperands: 1,
-            createQuery: function (fuzzy, args) {
-                return "("+fuzzy+":\""+args[0]+"\"~2)";
+            // TODO how 2 fuzzy?
+            createQuery: function (fuzzys, args) {
+                return "("+fuzzys[0]+":\""+args[0]+"\"~2)";
             },
             createText: function (args) {
                 return Search.operatorText(args, "is like");
@@ -227,8 +245,12 @@ define(['./Filter'], function (Filter) {
         IS_NULL: {
             display: "is null",
             numberOfOperands: 0,
-            createQuery: function (keyword, args) {
-                return "((!(_exists_:"+keyword+")) OR ("+keyword+":\"\"))";
+            createQuery: function (keywords, args) {
+                let simpleQueries = [];
+                keywords.forEach(function (keyword) {
+                    simpleQueries.push("((!(_exists_:"+keyword+")) OR ("+keyword+":\"\"))");
+                });
+                return Search.bindQueries(simpleQueries, "OR");
             },
             createText: function (args) {
                 return Search.operatorText(args, "is null");
@@ -236,23 +258,34 @@ define(['./Filter'], function (Filter) {
         }
     };
 
-    Search.operatorQuery = function(keyword, args, operator) {
-        let query = "";
-        if(args.length > 1)
-            query += "(";
-        args.forEach(function (arg, index) {
-            if(index > 0)
-                query += " OR ";
-            query += "("+keyword+":"+operator+"\""+arg+"\")";
+    Search.operatorQuery = function(keywords, args, operator) {
+        let simpleQueries = [];
+        keywords.forEach(function (keyword) {
+            args.forEach(function (arg) {
+                simpleQueries.push(Search.simpleOperatorQuery(keyword, arg, operator));
+            });
         });
-        if(args.length > 1)
-            query += ")";
+        return Search.bindQueries(simpleQueries, "OR");
+    };
 
-        return query;
+    Search.simpleOperatorQuery = function(keyword, arg, operator) {
+        return "("+keyword+":"+operator+"\""+arg+"\")";
     };
 
     Search.operatorText = function(args, operator) {
         return operator+" "+args[0];
+    };
+
+    Search.bindQueries = function(queries, bindingOperator) {
+        let query = "";
+        if(queries.length > 1)
+            query += "(";
+        query += queries[0];
+        for(let i = 1; i < queries.length; i++)
+            query += " "+bindingOperator+" " + queries[i];
+        if(queries.length > 1)
+            query += ")";
+        return query;
     };
 
     Search.prototype.populateAutocomplete = function () {
@@ -352,7 +385,11 @@ define(['./Filter'], function (Filter) {
 
     function Chip(chipParts, booleanOperator) {
         this.elementText = this.createElementText(chipParts);
-        this.elementQuery = this.createElementQuery(chipParts, booleanOperator);
+        let queries = [];
+        chipParts.forEach(function (chipPart) {
+            queries.push(chipPart.elementQuery);
+        });
+        this.elementQuery = Search.bindQueries(queries, booleanOperator);
     }
 
     Chip.prototype.createElementText = function (chipParts) {
@@ -360,14 +397,6 @@ define(['./Filter'], function (Filter) {
         for(let i = 1; i < chipParts.length; i++)
             text += " | " + chipParts[i].elementText;
         return text;
-    };
-    
-    Chip.prototype.createElementQuery = function (chipParts, booleanOperator) {
-        let query = "("+chipParts[0].elementQuery;
-        for(let i = 1; i < chipParts.length; i++)
-            query += " "+booleanOperator+" " + chipParts[i].elementQuery;
-        query += ")";
-        return query;
     };
 
 
