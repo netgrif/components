@@ -1,4 +1,4 @@
-define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
+define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter, Search) {
     /**
      * Constructor for CaseTab class
      * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n, $process
@@ -23,8 +23,10 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
         };
 
         this.activeFilter = baseFilter;
-        this.searchInput = undefined;
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
+        this.caseSearch = new Search(this, Search.SEARCH_CASES, {
+            $process: this.$process
+        }, {});
 
         this.headers = {
             sortItem: undefined,
@@ -167,6 +169,7 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     };
 
     CaseTab.prototype.buildSearchRequest = function (next) {
+        // TODO filters and search
         if (this.searchInput && this.searchInput.trim() !== "")
             this.activeFilter.set("fullText", this.searchInput.trim());
         else
@@ -175,7 +178,7 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
         const request = {
             method: "POST",
             url: next && this.page.next ? this.page.next : this.$config.getApiUrl(CaseTab.URL_SEARCH),
-            data: this.activeFilter.query
+            data: this.caseSearch.query
         };
 
         if (!next) {

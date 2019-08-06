@@ -237,7 +237,7 @@ define(['./Filter'], function (Filter) {
                 return Search.bindQueries(simpleQueries, "OR");
             },
             createText: function (args) {
-                return Search.operatorText(args, "is null");
+                return "is null";
             }
         }
     };
@@ -344,8 +344,14 @@ define(['./Filter'], function (Filter) {
         if(this.allArgumentsFilled() || this.chipParts.length > 0) {
             this.addChip();
         }
-        // TODO process query properly
-        console.log(new Chip(this.chips, "AND"));
+        let queries = [];
+        this.chips.forEach(function (chip) {
+            queries.push(chip.elementQuery);
+        });
+        this.query = {
+            query: Search.bindQueries(queries, "AND")
+        };
+        console.log(this.query);
     };
 
 

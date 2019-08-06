@@ -179,7 +179,7 @@
             </md-chips>
 
             <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.length > 0 || search.chips.length > 0)" class="md-fab md-mini"
-                       ng-click="search.buildQuery()" layout-align=" end">
+                       ng-click="search.buildQuery();tab.search();mainCtrl.reloadCounters()" layout-align=" end">
                 <md-icon class="material-icons">search</md-icon>
                 <md-tooltip md-direction="top">
                     search

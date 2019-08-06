@@ -11,8 +11,8 @@
 			<md-tab-body>
 				<md-content layout="column" class="color-bg-transparent padding-2x">
 
-<!--					<div ng-init="tab=caseCtrl.caseTab" ng-include="'views/app/search_bars/case_search_bar.html'"></div>-->
-					<div ng-init="search=caseCtrl.caseSearch" ng-include="'views/app/search_bars/unified_search_bar.html'"></div>
+					<div ng-init="tab=caseCtrl.caseTab" ng-include="'views/app/search_bars/case_search_bar.html'"></div>
+					<div ng-init="tab=caseCtrl.caseTab;search=tab.caseSearch" ng-include="'views/app/search_bars/unified_search_bar.html'"></div>
 
 					<md-divider class="border-width-2x color-border-transparent"></md-divider>
 
