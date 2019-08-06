@@ -25,15 +25,9 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
         if (this.searchable) {
-            this.searchToolbar = new TaskSearch(this, {
-                $http: this.$http,
-                $snackbar: this.$snackbar,
-                $i18n: this.$i18n,
-                $process: this.$process,
-                $config: this.$config
-            }, {
-                considerWholeSearchInput: false
-            });
+            this.taskSearch = new Search(this, Search.SEARCH_TASKS, {
+                $process: this.$process
+            }, {});
         }
     }
 
@@ -64,8 +58,8 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
         if (this.showTransactions)
             this.loadTransactions();
 
-        if (this.searchToolbar)
-            this.searchToolbar.populateFromFilter(this.activeFilter);
+        // if (this.searchToolbar) // TODO change to current
+        //     this.searchToolbar.populateFromFilter(this.activeFilter);
 
         this.load(false);
     };
@@ -292,7 +286,8 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
     };
 
     TaskTab.prototype.search = function () {
-        const searchFilter = this.searchToolbar.getFilter();
+        // TODO make it work
+        // const searchFilter = this.searchToolbar.getFilter();
 
         if (this.filterPolicy === TaskTab.MERGE_FILTER_POLICY) {
             this.activeFilter = this.activeFilter.merge(searchFilter);

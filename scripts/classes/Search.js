@@ -41,7 +41,7 @@ define(['./Filter'], function (Filter) {
                     name: "Process",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
-                    argsInput: function () {
+                    argsInputType: function () {
                         return "autocomplete";
                     },
                     autocompleteFilter: function(index) {
@@ -92,7 +92,7 @@ define(['./Filter'], function (Filter) {
                     name: "Dataset",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
-                    argsInput: function () {
+                    argsInputType: function () {
                         return this.autocompleteItems.get(self.searchDatafield)[0].inputType;
                     },
                     datafieldFilter: function () {
@@ -113,7 +113,7 @@ define(['./Filter'], function (Filter) {
                     name: "Task",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
-                    argsInput: function () {
+                    argsInputType: function () {
                         return "autocomplete";
                     },
                     autocompleteFilter: function(index) {
@@ -131,10 +131,10 @@ define(['./Filter'], function (Filter) {
                     }
                 },
                 role: {
-                    name: "Roles",
+                    name: "Role",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
-                    argsInput: function () {
+                    argsInputType: function () {
                         return "autocomplete";
                     },
                     autocompleteFilter: function(index) {
@@ -151,8 +151,37 @@ define(['./Filter'], function (Filter) {
                         return args;
                     }
                 }
+            },
+            task: {
+                process: undefined,
+                task: undefined,
+                role: undefined,
+                user: {
+                    name: "User",
+                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
+                    autocompleteItems: new Map(),
+                    argsInputType: function () {
+                        return "user"; // TODO async queries + autocomplete
+                    },
+                    autocompleteFilter: function(index) {
+                        return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
+                    },
+                    getElasticKeyword: function () {
+                        return ["userId"];
+                    },
+                    getQueryArguments: function () {
+                        let args = [];
+                        this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
+                            args.push(autocomplete.id);
+                        });
+                        return args;
+                    }
+                }
             }
         };
+        this.categories.task.process = self.categories.case.process;
+        this.categories.task.task = self.categories.case.task;
+        this.categories.task.role = self.categories.case.role;
 
         this.populateAutocomplete();
     }
@@ -273,33 +302,27 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.populateAutocomplete = function () {
-        switch (this.searchType) {
-            case Search.SEARCH_CASES:
-                for (let key in this.categories.case) {
-                    if(this.categories.case.hasOwnProperty(key) && this.categories.case[key].hasOwnProperty("autocompleteItems")) {
-                        this.categories.case[key].autocompleteItems.clear();
-                    }
-                }
-
-                this.$process.nets.forEach(function (net) {
-                    this.addNameToIdMapping("process", net.identifier, net.id);
-
-                    net.transitions.forEach(function (transition) {
-                        this.addNameToIdMapping("task", transition.title, transition.id, transition.netId);
-                    }, this);
-
-                    net.roles.forEach(function (role) {
-                        this.addNameToIdMapping("role", role.name, role.id, net.id);
-                    }, this);
-
-                    net.immediateData.forEach(function (immediateData) {
-                        this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
-                    }, this);
-                }, this);
-                break;
-            default:
-                console.error("Unknown search type '"+this.searchType+"'");
+        for (let key in this.categories.case) {
+            if(this.categories.case.hasOwnProperty(key) && this.categories.case[key].hasOwnProperty("autocompleteItems")) {
+                this.categories.case[key].autocompleteItems.clear();
+            }
         }
+
+        this.$process.nets.forEach(function (net) {
+            this.addNameToIdMapping("process", net.identifier, net.id);
+
+            net.transitions.forEach(function (transition) {
+                this.addNameToIdMapping("task", transition.title, transition.id, transition.netId);
+            }, this);
+
+            net.roles.forEach(function (role) {
+                this.addNameToIdMapping("role", role.name, role.id, net.id);
+            }, this);
+
+            net.immediateData.forEach(function (immediateData) {
+                this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
+            }, this);
+        }, this);
     };
 
     Search.prototype.addNameToIdMapping = function(categoryName, name, id, netId, inputType) {

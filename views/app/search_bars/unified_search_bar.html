@@ -50,7 +50,7 @@
                         </md-select>
                     </md-input-container>
 
-                    <div ng-switch="search.searchCategory.argsInput && search.searchCategory.argsInput()" ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0">
+                    <div ng-switch="search.searchCategory.argsInputType && search.searchCategory.argsInputType()" ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0">
                         <div ng-switch-default layout="row">
                             <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
                                 <label class="placeholder">argument {{$index+1}}</label>
