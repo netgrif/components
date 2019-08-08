@@ -21,7 +21,7 @@ define(['./Filter'], function (Filter) {
         this.searchDatafield = undefined;
         this.searchOperator = undefined;
         this.searchArguments = [];
-        this.searchUserObjects = [];
+        this.searchObjects = [];
 
         this.chipParts = [];
         this.chips = [];
@@ -72,6 +72,9 @@ define(['./Filter'], function (Filter) {
                 creationDate: {
                     name: "Creation Date",
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
+                    argsInputType: function () {
+                        return "date";
+                    },
                     getElasticKeyword: function () {
                         return ["creationDate"];
                     },
@@ -169,7 +172,7 @@ define(['./Filter'], function (Filter) {
                     },
                     getQueryArguments: function () {
                         let args = [];
-                        self.searchUserObjects.forEach(function (userObject) {
+                        self.searchObjects.forEach(function (userObject) {
                             args.push(userObject.id);
                         });
                         return args;
@@ -353,7 +356,7 @@ define(['./Filter'], function (Filter) {
         this.searchDatafield = undefined;
         this.searchOperator = undefined;
         this.searchArguments.splice(0, this.searchArguments.length);
-        this.searchUserObjects.splice(0, this.searchUserObjects.length);
+        this.searchObjects.splice(0, this.searchObjects.length);
     };
 
     Search.prototype.addChip = function () {
