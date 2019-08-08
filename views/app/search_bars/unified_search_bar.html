@@ -82,6 +82,32 @@
                                 </md-autocomplete>
                             </md-input-container>
                         </div>
+
+                        <div ng-switch-when="user" layout="row">
+                            <md-input-container class="md-block" ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index" flex>
+                                <md-autocomplete md-search-text="search.searchArguments[$index]"
+                                                 md-selected-item="search.searchUserObjects[$index]"
+                                                 md-items="item in search.queryUsers(search.searchArguments[$index])"
+                                                 md-item-text="item.name"
+                                                 md-min-length="0"
+                                                 md-no-cache="true"
+                                                 md-select-on-match="true"
+                                                 md-match-case-insensitive="true"
+                                                 md-dropdown-items="5"
+                                                 md-floating-label="{{::$i18n.page.tasks.search.search}}"
+                                                 md-delay="500">
+
+                                    <md-item-template>
+                                        <span md-highlight-text="search.searchArguments[$index]" md-highlight-flags="i">
+                                            {{item.name}}
+                                        </span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        {{$i18n.page.tasks.filter.processNotFound}}
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </md-input-container>
+                        </div>
                     </div>
 
                     <md-button ng-disabled="!search.allArgumentsFilled()" class="md-fab md-mini"

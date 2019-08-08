@@ -1,4 +1,4 @@
-define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Transaction, Filter, TaskSearch) {
+define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transaction, Filter, Search) {
     /**
      * Constructor for TaskTab class
      * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n, $process, $rootScope, $config
@@ -26,7 +26,9 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
         this.activeFilter = this.baseFilter;
         if (this.searchable) {
             this.taskSearch = new Search(this, Search.SEARCH_TASKS, {
-                $process: this.$process
+                $process: this.$process,
+                $http: this.$http,
+                $config: this.$config
             }, {});
         }
     }

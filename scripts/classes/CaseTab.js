@@ -1,7 +1,7 @@
 define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter, Search) {
     /**
      * Constructor for CaseTab class
-     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n, $process
+     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n, $process, $config
      * @param {String} label
      * @param {Object} controller
      * @param {Filter} baseFilter
@@ -25,7 +25,9 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
         this.activeFilter = baseFilter;
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
         this.caseSearch = new Search(this, Search.SEARCH_CASES, {
-            $process: this.$process
+            $process: this.$process,
+            $http: this.$http,
+            $config: this.$config
         }, {});
 
         this.headers = {

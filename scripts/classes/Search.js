@@ -3,7 +3,7 @@ define(['./Filter'], function (Filter) {
     /**
      * @param parent Parent controller
      * @param searchType TODO
-     * @param angular $http, $snackbar, $i18n, $process
+     * @param angular $process, $http, $config
      * @param config options: considerWholeSearchInput
      * @constructor
      */
@@ -21,6 +21,7 @@ define(['./Filter'], function (Filter) {
         this.searchDatafield = undefined;
         this.searchOperator = undefined;
         this.searchArguments = [];
+        this.searchUserObjects = [];
 
         this.chipParts = [];
         this.chips = [];
@@ -161,18 +162,15 @@ define(['./Filter'], function (Filter) {
                     allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
                     autocompleteItems: new Map(),
                     argsInputType: function () {
-                        return "user"; // TODO async queries + autocomplete
-                    },
-                    autocompleteFilter: function(index) {
-                        return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
+                        return "user";
                     },
                     getElasticKeyword: function () {
                         return ["userId"];
                     },
                     getQueryArguments: function () {
                         let args = [];
-                        this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
-                            args.push(autocomplete.id);
+                        self.searchUserObjects.forEach(function (userObject) {
+                            args.push(userObject.id);
                         });
                         return args;
                     }
@@ -301,6 +299,7 @@ define(['./Filter'], function (Filter) {
         return query;
     };
 
+
     Search.prototype.populateAutocomplete = function () {
         for (let key in this.categories.case) {
             if(this.categories.case.hasOwnProperty(key) && this.categories.case[key].hasOwnProperty("autocompleteItems")) {
@@ -319,9 +318,11 @@ define(['./Filter'], function (Filter) {
                 this.addNameToIdMapping("role", role.name, role.id, net.id);
             }, this);
 
-            net.immediateData.forEach(function (immediateData) {
-                this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
-            }, this);
+            if(this.searchType === Search.SEARCH_CASES) {
+                net.immediateData.forEach(function (immediateData) {
+                    this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
+                }, this);
+            }
         }, this);
     };
 
@@ -352,6 +353,7 @@ define(['./Filter'], function (Filter) {
         this.searchDatafield = undefined;
         this.searchOperator = undefined;
         this.searchArguments.splice(0, this.searchArguments.length);
+        this.searchUserObjects.splice(0, this.searchUserObjects.length);
     };
 
     Search.prototype.addChip = function () {
@@ -375,6 +377,24 @@ define(['./Filter'], function (Filter) {
             query: Search.bindQueries(queries, "AND")
         };
         console.log(this.query);
+    };
+
+    Search.prototype.queryUsers = function(searchText) {
+        let requestBody = {
+            fulltext: searchText
+        };
+        return this.$http.post(this.$config.getApiUrl("/user/search"), requestBody).then(response => {
+            return response.$request().$get("users").then(function (resources) {
+                let users = [];
+                resources.forEach(function (user) {
+                    users.push(new UserSearchObject(user.fullName, user.email, user.id));
+                });
+                return users;
+            });
+        }, error => {
+            console.log("User search query failed");
+            console.log(error);
+        });
     };
 
 
@@ -413,6 +433,12 @@ define(['./Filter'], function (Filter) {
         this.id = id;
         this.netId = netId;
         this.inputType = inputType;
+    }
+
+    function UserSearchObject(name, email, id) {
+        this.name = name;
+        this.email = email;
+        this.id = id;
     }
 /*
     function Chip(subject, subjectTitle, id, search) {
