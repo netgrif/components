@@ -60,8 +60,8 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
         if (this.showTransactions)
             this.loadTransactions();
 
-        // if (this.searchToolbar) // TODO change to current
-        //     this.searchToolbar.populateFromFilter(this.activeFilter);
+        if (this.taskSearch)
+            this.taskSearch.populateFromFilter(this.activeFilter);
 
         this.load(false);
     };

@@ -183,8 +183,8 @@ define(['./Filter'], function (Filter) {
         this.populateAutocomplete();
     }
 
-    Search.SEARCH_CASES = "Case";
-    Search.SEARCH_TASKS = "Task";
+    Search.SEARCH_CASES = Filter.CASE_TYPE;
+    Search.SEARCH_TASKS = Filter.TASK_TYPE;
 
     Search.OPERATOR = {
         EQUAL: {
@@ -373,7 +373,8 @@ define(['./Filter'], function (Filter) {
             queries.push(chip.query);
         });
         this.query = Search.bindQueries(queries, "AND");
-        console.log(this.query);
+        console.log(this.query); // TODO remove after development
+        return this.query;
     };
 
     Search.prototype.queryUsers = function(searchText) {
