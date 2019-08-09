@@ -10,7 +10,7 @@ define(['./Case'], function (Case) {
      * @param {Object} config
      * @constructor
      */
-    function Filter(title, type, query, links, tab, config = {}) {
+    function Filter(title, type, query, links, tab, conjunctiveQueryParts = undefined, config = {}) {
         this.title = title;
         this.description = undefined;
         this.visibility = 2;
@@ -18,7 +18,7 @@ define(['./Case'], function (Case) {
         this.created = new Date();
         this.type = type;
         this.query = query;
-
+        this.conjunctiveQueryParts = conjunctiveQueryParts;
         this.tab = tab;
         this.links = links;
 
@@ -84,33 +84,29 @@ define(['./Case'], function (Case) {
      * @param {Filter} filter
      * @returns {Filter} new filter with merged query
      */
-    Filter.prototype.merge = function (filter) {
-        Object.keys(filter.query).forEach(key => {
-            if (!this.query[key]) {
-                this.query[key] = filter.query[key];
-            } else {
-                if (this.query[key] instanceof Array) {
-                    if (filter.query[key] instanceof Array) {
-                        const arrayQuery = new Set(this.query[key]);
-                        filter.query[key].forEach(val => arrayQuery.add(val));
-                        filter.query[key] = [...arrayQuery];
+    Filter.prototype.merge = function (filter, requireQueryParts = false) {
+        if(this.type !== filter.type) {
+            console.error("attempting to merge filters of different type");
+            return null;
+        }
 
-                    } else if (filter.query[key] instanceof String) {
-                        !this.query[key].includes(filter.query[key]) ? this.query[key].push(filter.query[key]) : undefined;
-                    }
+        if(requireQueryParts && !(this.conjunctiveQueryParts && filter.conjunctiveQueryParts)) {
+            console.error("merge of filter query parts was required but provided filters didn't contain them!");
+            return null;
+        }
 
-                } else if (this.query[key] instanceof String) {
-                    if (filter.query[key] instanceof Array) {
-                        !filter.query[key].includes(this.query[key]) ? filter.query[key].push(this.query[key]) : undefined;
-                        this.query[key] = filter.query[key];
-                    } else if (filter.query[key] instanceof String && this.query[key] !== filter.query[key]) {
-                        this.query[key] = [this.query[key], filter.query[key]];
-                    }
-                }
-            }
-        });
+        let mergedQueryParts = this.conjunctiveQueryParts ? this.conjunctiveQueryParts.slice(0) : [];
+        mergedQueryParts.concat( filter.conjunctiveQueryParts ? filter.conjunctiveQueryParts : []);
 
-        return new Filter(this.title, this.type, this.query, this.links, this.tab);
+        let mergedQuery;
+        if(this.query.length === 0)
+            mergedQuery = filter.query;
+        else if(filter.query.length === 0)
+            mergedQuery = this.query;
+        else
+            mergedQuery = "("+this.query+") AND ("+filter.query+")";
+
+        return new Filter(this.title, this.type, mergedQuery, this.links, this.tab, mergedQueryParts);
     };
 
     Filter.prototype.set = function (attribute, value) {

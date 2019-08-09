@@ -180,7 +180,9 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
         const request = {
             method: "POST",
             url: next && this.page.next ? this.page.next : this.$config.getApiUrl(CaseTab.URL_SEARCH),
-            data: this.caseSearch.query
+            data: {
+                query: this.caseSearch.query
+            }
         };
 
         if (!next) {

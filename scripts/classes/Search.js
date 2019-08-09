@@ -2,7 +2,7 @@ define(['./Filter'], function (Filter) {
 
     /**
      * @param parent Parent controller
-     * @param searchType TODO
+     * @param searchType Search.SEARCH_CASES or Search.SEARCH_TASKS
      * @param angular $process, $http, $config
      * @param config options: considerWholeSearchInput
      * @constructor
@@ -14,7 +14,7 @@ define(['./Filter'], function (Filter) {
 
         this.parent = parent;
         this.searchType = searchType;
-        this.query = {};
+        this.query = "";
 
         // bound variables
         this.searchCategory = undefined;
@@ -26,169 +26,165 @@ define(['./Filter'], function (Filter) {
         this.chipParts = [];
         this.chips = [];
 
-        this.categories = {
-            case: {
-                visualId: {
-                    name: "Visual Id",
-                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    getElasticKeyword: function () {
-                        return ["visualId"];
-                    },
-                    getQueryArguments: function () {
-                        return self.searchArguments;
-                    }
+        this.categories = {};
+        this.categories[Search.SEARCH_CASES] = {
+            visualId: {
+                name: "Visual Id",
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                getElasticKeyword: function () {
+                    return ["visualId"];
                 },
-                process: {
-                    name: "Process",
-                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    autocompleteItems: new Map(),
-                    argsInputType: function () {
-                        return "autocomplete";
-                    },
-                    autocompleteFilter: function(index) {
-                        return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
-                    },
-                    getElasticKeyword: function () {
-                        return ["processIdentifier"];
-                    },
-                    getQueryArguments: function () {
-                        let args = [];
-                        this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
-                            args.push(autocomplete.id);
-                        });
-                        return args;
-                    }
+                getQueryArguments: function () {
+                    return self.searchArguments;
+                }
+            },
+            process: {
+                name: "Process",
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                autocompleteItems: new Map(),
+                argsInputType: function () {
+                    return "autocomplete";
                 },
-                title: {
-                    name: "Title",
-                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    getElasticKeyword: function () {
-                        return ["title"];
-                    },
-                    getQueryArguments: function () {
-                        return self.searchArguments;
-                    }
+                autocompleteFilter: function(index) {
+                    return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
                 },
-                creationDate: {
-                    name: "Creation Date",
-                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
-                    argsInputType: function () {
-                        return "date";
-                    },
-                    getElasticKeyword: function () {
-                        return ["creationDate"];
-                    },
-                    getQueryArguments: function () {
-                        return self.searchArguments;
-                    }
+                getElasticKeyword: function () {
+                    return ["processIdentifier"];
                 },
-                author: {
-                    name: "Author",
-                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    getElasticKeyword: function () {
-                        return ["authorEmail", "authorName"];
-                    },
-                    getQueryArguments: function () {
-                        return self.searchArguments;
-                    }
+                getQueryArguments: function () {
+                    let args = [];
+                    this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
+                        args.push(autocomplete.id);
+                    });
+                    return args;
+                }
+            },
+            title: {
+                name: "Title",
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                getElasticKeyword: function () {
+                    return ["title"];
                 },
-                dataset: {
-                    name: "Dataset",
-                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
-                    autocompleteItems: new Map(),
-                    argsInputType: function () {
-                        return this.autocompleteItems.get(self.searchDatafield)[0].inputType;
-                    },
-                    datafieldFilter: function () {
-                        return Array.from(this.autocompleteItems.keys()).filter(item => item.includes(self.searchDatafield));
-                    },
-                    getElasticKeyword: function () {
-                        let keywords = [];
-                        this.autocompleteItems.get(self.searchDatafield).forEach(function (keyword) {
-                            keywords.push("dataSet."+keyword.id+".value");
-                        });
-                        return keywords;
-                    },
-                    getQueryArguments: function () {
-                        return self.searchArguments;
-                    }
+                getQueryArguments: function () {
+                    return self.searchArguments;
+                }
+            },
+            creationDate: {
+                name: "Creation Date",
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
+                argsInputType: function () {
+                    return "date";
                 },
-                task: {
-                    name: "Task",
-                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    autocompleteItems: new Map(),
-                    argsInputType: function () {
-                        return "autocomplete";
-                    },
-                    autocompleteFilter: function(index) {
-                        return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
-                    },
-                    getElasticKeyword: function () {
-                        return ["taskIds"];
-                    },
-                    getQueryArguments: function () {
-                        let args = [];
-                        this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
-                            args.push(autocomplete.id);
-                        });
-                        return args;
-                    }
+                getElasticKeyword: function () {
+                    return ["creationDate"];
                 },
-                role: {
-                    name: "Role",
-                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
-                    autocompleteItems: new Map(),
-                    argsInputType: function () {
-                        return "autocomplete";
-                    },
-                    autocompleteFilter: function(index) {
-                        return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
-                    },
-                    getElasticKeyword: function () {
-                        return ["enabledRoles"];
-                    },
-                    getQueryArguments: function () {
-                        let args = [];
-                        this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
-                            args.push(autocomplete.id);
-                        });
-                        return args;
-                    }
+                getQueryArguments: function () {
+                    return self.searchArguments;
+                }
+            },
+            author: {
+                name: "Author",
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                getElasticKeyword: function () {
+                    return ["authorEmail", "authorName"];
+                },
+                getQueryArguments: function () {
+                    return self.searchArguments;
+                }
+            },
+            dataset: {
+                name: "Dataset",
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
+                autocompleteItems: new Map(),
+                argsInputType: function () {
+                    return this.autocompleteItems.get(self.searchDatafield)[0].inputType;
+                },
+                datafieldFilter: function () {
+                    return Array.from(this.autocompleteItems.keys()).filter(item => item.includes(self.searchDatafield));
+                },
+                getElasticKeyword: function () {
+                    let keywords = [];
+                    this.autocompleteItems.get(self.searchDatafield).forEach(function (keyword) {
+                        keywords.push("dataSet."+keyword.id+".value");
+                    });
+                    return keywords;
+                },
+                getQueryArguments: function () {
+                    return self.searchArguments;
                 }
             },
             task: {
-                process: undefined,
-                task: undefined,
-                role: undefined,
-                user: {
-                    name: "User",
-                    allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
-                    autocompleteItems: new Map(),
-                    argsInputType: function () {
-                        return "user";
-                    },
-                    getElasticKeyword: function () {
-                        return ["userId"];
-                    },
-                    getQueryArguments: function () {
-                        let args = [];
-                        self.searchObjects.forEach(function (userObject) {
-                            args.push(userObject.id);
-                        });
-                        return args;
-                    }
+                name: "Task",
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                autocompleteItems: new Map(),
+                argsInputType: function () {
+                    return "autocomplete";
+                },
+                autocompleteFilter: function(index) {
+                    return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
+                },
+                getElasticKeyword: function () {
+                    return ["taskIds"];
+                },
+                getQueryArguments: function () {
+                    let args = [];
+                    this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
+                        args.push(autocomplete.id);
+                    });
+                    return args;
+                }
+            },
+            role: {
+                name: "Role",
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                autocompleteItems: new Map(),
+                argsInputType: function () {
+                    return "autocomplete";
+                },
+                autocompleteFilter: function(index) {
+                    return Array.from(this.autocompleteItems.keys()).filter( item => item.includes(self.searchArguments[index]));
+                },
+                getElasticKeyword: function () {
+                    return ["enabledRoles"];
+                },
+                getQueryArguments: function () {
+                    let args = [];
+                    this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
+                        args.push(autocomplete.id);
+                    });
+                    return args;
                 }
             }
         };
-        this.categories.task.process = self.categories.case.process;
-        this.categories.task.task = self.categories.case.task;
-        this.categories.task.role = self.categories.case.role;
+        this.categories[Search.SEARCH_TASKS] = {
+            process: self.categories[Search.SEARCH_CASES].process,
+            task: self.categories[Search.SEARCH_CASES].task,
+            role: self.categories[Search.SEARCH_CASES].role,
+            user: {
+                name: "User",
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
+                autocompleteItems: new Map(),
+                argsInputType: function () {
+                    return "user";
+                },
+                getElasticKeyword: function () {
+                    return ["userId"];
+                },
+                getQueryArguments: function () {
+                    let args = [];
+                    self.searchObjects.forEach(function (userObject) {
+                        args.push(userObject.id);
+                    });
+                    return args;
+                }
+            }
+        };
 
         this.populateAutocomplete();
     }
 
-    Search.SEARCH_CASES = "case";
-    Search.SEARCH_TASKS = "task";
+    Search.SEARCH_CASES = "Case";
+    Search.SEARCH_TASKS = "Task";
 
     Search.OPERATOR = {
         EQUAL: {
@@ -368,17 +364,15 @@ define(['./Filter'], function (Filter) {
         this.chipParts.splice(0, this.chipParts.length);
     };
 
-    Search.prototype.buildQuery = function () {
+    Search.prototype.buildSearchQuery = function () {
         if(this.allArgumentsFilled() || this.chipParts.length > 0) {
             this.addChip();
         }
         let queries = [];
         this.chips.forEach(function (chip) {
-            queries.push(chip.elementQuery);
+            queries.push(chip.query);
         });
-        this.query = {
-            query: Search.bindQueries(queries, "AND")
-        };
+        this.query = Search.bindQueries(queries, "AND");
         console.log(this.query);
     };
 
@@ -400,35 +394,76 @@ define(['./Filter'], function (Filter) {
         });
     };
 
+    Search.prototype.getFilter = function () {
+        return new Filter("", this.searchType, this.buildSearchQuery(), undefined, this.parent, this.chips);
+    };
+
+    Search.prototype.populateFromFilter = function (filter) {
+        if( !filter.query)
+            return;
+
+        this.resetInputFields();
+
+        if( !filter.conjunctiveQueryParts || filter.conjunctiveQueryParts.length === 0) {
+            this.chips.push(Chip.createChip("custom filter" /* TODO i18n */, filter.query));
+            return;
+        }
+
+        filter.conjunctiveQueryParts.forEach(function (filterChip) {
+            if( !filterChip.query || filterChip.query.length === 0) {
+                console.error("Filter has chip with no query! skipping");
+                console.error(filterChip);
+                return; // continue
+            }
+
+            this.chips.push( Chip.createChip(
+                filterChip.text && filterChip.text.length > 0 ? filterChip.text : "custom filter", // TODO i18n
+                filterChip.query,
+                filterChip.chipParts
+            ));
+
+        }, this);
+
+    };
+
 
     function ChipPart(category, operator, arguments) {
-        this.elementText = this.createElementText(category, operator, arguments);
-        this.elementQuery = this.createElementQuery(category, operator);
+        this.text = this.createElementaryText(category, operator, arguments);
+        this.query = this.createElementaryQuery(category, operator);
     }
 
-    ChipPart.prototype.createElementQuery = function (category, operator) {
+    ChipPart.prototype.createElementaryQuery = function (category, operator) {
         return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments());
     };
     
-    ChipPart.prototype.createElementText = function (category, operator, arguments) {
+    ChipPart.prototype.createElementaryText = function (category, operator, arguments) {
         return category.name+" "+operator.createText(arguments);
     };
 
 
     function Chip(chipParts, booleanOperator) {
-        this.elementText = this.createElementText(chipParts);
+        this.text = this.createElementaryText(chipParts);
         let queries = [];
         chipParts.forEach(function (chipPart) {
-            queries.push(chipPart.elementQuery);
+            queries.push(chipPart.query);
         });
-        this.elementQuery = Search.bindQueries(queries, booleanOperator);
+        this.query = Search.bindQueries(queries, booleanOperator);
+        this.chipParts = chipParts;
     }
 
-    Chip.prototype.createElementText = function (chipParts) {
-        let text = chipParts[0].elementText;
+    Chip.prototype.createElementaryText = function (chipParts) {
+        let text = chipParts[0].text;
         for(let i = 1; i < chipParts.length; i++)
-            text += " | " + chipParts[i].elementText;
+            text += " | " + chipParts[i].text;
         return text;
+    };
+
+    Chip.createChip = function(text, query, chipParts = undefined) {
+        return {
+            text: text,
+            query: query,
+            chipParts: chipParts ? chipParts : []
+        }
     };
 
 
@@ -438,35 +473,13 @@ define(['./Filter'], function (Filter) {
         this.inputType = inputType;
     }
 
+
     function UserSearchObject(name, email, id) {
         this.name = name;
         this.email = email;
         this.id = id;
     }
-/*
-    function Chip(subject, subjectTitle, id, search) {
-        this.subject = subject;
-        this.search = search;
-        this.id = id;
-        this.subjectTitle = subjectTitle;
-        this.text = this.buildTitle(this.subjectTitle);
-    }
 
-    Chip.prototype.buildTitle = function (subject) {
-        return subject + ": " + this.search;
-    };
-
-    function AutoCompleteItem(subject, resource) {
-        this.subject = subject;
-        Object.assign(this, resource);
-    }
-
-    function QueryObject(subject, param, dependency) {
-        this.subject = subject;
-        this.param = param;
-        this.dependency = dependency;
-    }
-*/
     /**
      * Populate search toolbar from filter applied on task tab
      * @param {Filter} filter

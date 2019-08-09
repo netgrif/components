@@ -90,7 +90,9 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
             params: {
                 sort: "priority"
             },
-            data: this.activeFilter.query
+            data: {
+                query: this.activeFilter.query
+            }
         };
     };
 
@@ -288,8 +290,7 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
     };
 
     TaskTab.prototype.search = function () {
-        // TODO make it work
-        // const searchFilter = this.searchToolbar.getFilter();
+        const searchFilter = this.taskSearch.getFilter();
 
         if (this.filterPolicy === TaskTab.MERGE_FILTER_POLICY) {
             this.activeFilter = this.activeFilter.merge(searchFilter);
