@@ -171,6 +171,9 @@ define(['./Filter'], function (Filter) {
                     return ["userId"];
                 },
                 getQueryArguments: function () {
+                    if( !self.searchObjects || self.searchObjects.length === 0)
+                        return [];
+
                     let args = [];
                     self.searchObjects.forEach(function (userObject) {
                         args.push(userObject.id);
