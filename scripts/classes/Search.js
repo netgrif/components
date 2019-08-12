@@ -358,6 +358,21 @@ define(['./Filter'], function (Filter) {
         this.searchObjects.splice(0, this.searchObjects.length);
     };
 
+    Search.prototype.clearFieldsCategory = function() {
+        this.searchDatafield = undefined;
+        this.clearFieldsDatafield();
+    };
+
+    Search.prototype.clearFieldsDatafield = function() {
+        this.searchOperator = undefined;
+        this.clearFieldsOperator();
+    };
+
+    Search.prototype.clearFieldsOperator = function() {
+        this.searchArguments.splice(0, this.searchArguments.length);
+        this.searchObjects.splice(0, this.searchObjects.length);
+    };
+
     Search.prototype.addChip = function () {
         if(this.allArgumentsFilled()) {
             this.addChipPart();

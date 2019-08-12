@@ -11,7 +11,7 @@
                 <div layout-gt-xs="row" layout-xs="column">
                     <md-input-container class="md-block" flex>
                         <label class="placeholder">{{::$i18n.page.tasks.search.category}}</label>
-                        <md-select ng-model="search.searchCategory">
+                        <md-select ng-model="search.searchCategory" ng-change="search.clearFieldsCategory()">
                             <md-option ng-repeat="(key, category) in search.categories[search.searchType]" ng-value="category">
                                 {{category.name}}
                             </md-option>
@@ -20,7 +20,7 @@
 
                     <div ng-if="search.searchCategory && search.searchCategory.name === 'Dataset'" layout="row">
                         <md-autocomplete md-search-text="search.searchDatafield"
-                                         md-selected-item-change="search.searchCategory.datafieldFilter()"
+                                         md-selected-item-change="search.searchCategory.datafieldFilter(); search.clearFieldsDatafield()"
                                          md-items="item in search.searchCategory.datafieldFilter()"
                                          md-item-text="item"
                                          md-min-length="0"
@@ -43,7 +43,7 @@
 
                     <md-input-container class="md-block" flex ng-if="search.searchCategory && (search.searchCategory.name !== 'Dataset' || search.searchDatafield)">
                         <label class="placeholder">operator</label>
-                        <md-select ng-model="search.searchOperator">
+                        <md-select ng-model="search.searchOperator" ng-change="search.clearFieldsOperator()">
                             <md-option ng-repeat="operator in search.searchCategory.allowedOperators" ng-value="operator">
                                 {{operator.display}}
                             </md-option>
