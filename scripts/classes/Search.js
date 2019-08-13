@@ -290,7 +290,11 @@ define(['./Filter'], function (Filter) {
             createQuery: function (keywords, args) {
                 let simpleQueries = [];
                 keywords.forEach(function (keyword) {
-                    simpleQueries.push("("+keyword+":["+args[0]+" TO "+args[1]+"])");
+                    let arg1 = Search.wrapWithQuotes(args[0]);
+                    let arg2 = Search.wrapWithQuotes(args[1]);
+                    if(arg1.wrapped || arg2.wrapped)
+                        throw new Error("Range queries don't support phrases as arguments!");
+                    simpleQueries.push("("+keyword+":["+arg1.value+" TO "+arg2.value+"])");
                 });
                 return Search.bindQueries(simpleQueries, "OR");
             },
@@ -301,9 +305,12 @@ define(['./Filter'], function (Filter) {
         LIKE: {
             display: "like",
             numberOfOperands: 1,
-            // TODO how 2 fuzzy?
             createQuery: function (keywords, args) {
-                return "("+keywords[0]+":\""+args[0]+"\"~2)";
+                let arg = Search.wrapWithQuotes(args[0]);
+                if(arg.wrapped)
+                    return "("+keywords[0]+":"+arg.value+"~3)";
+                else
+                    return "("+keywords[0]+":"+arg.value+"~)";
             },
             createText: function (args) {
                 return Search.operatorText(args, "is like");
@@ -325,18 +332,23 @@ define(['./Filter'], function (Filter) {
         }
     };
 
+    Search.ELASTIC = {
+        ESCAPABLE_CHARACTERS: new Set (['+', '-', '=', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\', '/']),
+        UNESCAPABLE_CHARACTERS: new Set(['<', '>'])
+    };
+
     Search.operatorQuery = function(keywords, args, operator) {
         let simpleQueries = [];
         keywords.forEach(function (keyword) {
             args.forEach(function (arg) {
-                simpleQueries.push(Search.simpleOperatorQuery(keyword, arg, operator));
+                simpleQueries.push(Search.simpleOperatorQuery(keyword, Search.wrapWithQuotes(arg).value, operator));
             });
         });
         return Search.bindQueries(simpleQueries, "OR");
     };
 
     Search.simpleOperatorQuery = function(keyword, arg, operator) {
-        return "("+keyword+":"+operator+"\""+arg+"\")";
+        return "("+keyword+":"+operator+arg+")";
     };
 
     Search.operatorText = function(args, operator) {
@@ -353,6 +365,25 @@ define(['./Filter'], function (Filter) {
         if(queries.length > 1)
             query += ")";
         return query;
+    };
+
+    Search.escapeInput = function(input) {
+        let output = "";
+        for(let i = 0; i < input.length; i++) {
+            if(Search.ELASTIC.UNESCAPABLE_CHARACTERS.has(input.charAt(i)))
+                continue;
+            if(Search.ELASTIC.ESCAPABLE_CHARACTERS.has(input.charAt(i)))
+                output += "\\";
+            output += input.charAt(i);
+        }
+        return output;
+    };
+
+    Search.wrapWithQuotes = function(input) {
+        if(typeof input === "string" && input.includes(" "))
+            return {value: '"'+input+'"', wrapped: true};
+        else
+            return {value: input, wrapped: false};
     };
 
 
@@ -606,7 +637,11 @@ define(['./Filter'], function (Filter) {
 
 
     function ChipPart(category, operator, arguments, possibleNets = undefined) {
-        this.text = this.createElementaryText(category, operator, arguments);
+        let escapedArguments = [];
+        arguments.forEach(function (argument) {
+            escapedArguments.push(Search.escapeInput(argument));
+        });
+        this.text = this.createElementaryText(category, operator, escapedArguments);
         this.query = this.createElementaryQuery(category, operator);
         this.possibleNets = possibleNets;
         this.isComplement = operator === Search.OPERATOR.NOT_EQUAL;
