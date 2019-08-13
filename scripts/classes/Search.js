@@ -124,6 +124,8 @@ define(['./Filter'], function (Filter) {
                     return this.autocompleteItems.get(self.searchDatafield)[0].inputType;
                 },
                 datafieldFilter: function () {
+                    if(!self.searchDatafield)
+                        return this._filterDatafields("");
                     return this._filterDatafields(self.searchDatafield);
                 },
                 getElasticKeyword: function () {
@@ -140,7 +142,7 @@ define(['./Filter'], function (Filter) {
                     return this._filterDatafields("").length > 0;
                 },
                 _filterDatafields: function (text) {
-                    return Array.from(this.autocompleteItems.keys()).filter(item => item.includes(text));
+                    return self._filterAutocompleteItems(text, this);
                 }
             },
             task: {
@@ -469,15 +471,26 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.addChipPart = function () {
-        if(this.searchCategory.argsInputType() === "autocomplete") {
-            let possibleNets = [];
-            this.searchCategory.autocompleteItems.get(this.searchArguments[0]).forEach(function (autocompleteItem) {
-                possibleNets.push(autocompleteItem.netId);
-            });
-            this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets));
+        let possibleNets = [];
+        switch (this.searchCategory.name) {
+            case "Process":
+            case "Task":
+            case "Role":
+                this.searchCategory.autocompleteItems.get(this.searchArguments[0]).forEach(function (autocompleteItem) {
+                    possibleNets.push(autocompleteItem.netId);
+                });
+                this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets));
+                break;
+            case "Dataset":
+                this.searchCategory.autocompleteItems.get(this.searchDatafield).forEach(function (autocompleteItem) {
+                    possibleNets.push(autocompleteItem.netId);
+                });
+                this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets));
+                break;
+            default:
+                this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments));
+                break;
         }
-        else
-            this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments));
         this.resetInputFields();
     };
 
@@ -597,10 +610,19 @@ define(['./Filter'], function (Filter) {
         this.query = this.createElementaryQuery(category, operator);
         this.possibleNets = possibleNets;
         this.isComplement = operator === Search.OPERATOR.NOT_EQUAL;
-        if(this.isComplement && category.name !== "Process") {
-            // not enough information to deduce anything
-            this.possibleNets = undefined;
-            this.isComplement = undefined;
+        if(this.isComplement) {
+            switch (category.name) {
+                case "Process":
+                    break;
+                case "Dataset":
+                    // the complement doesn't affect the process but the value of the datafield in it
+                    this.isComplement = false;
+                    break;
+                default:
+                    // not enough information to deduce anything about possible nets
+                    this.possibleNets = undefined;
+                    this.isComplement = undefined;
+            }
         }
     }
 
