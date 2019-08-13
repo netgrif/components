@@ -53,6 +53,8 @@ define(['./Filter'], function (Filter) {
                     return "autocomplete";
                 },
                 autocompleteFilter: function(index) {
+                    if(!self.searchArguments[index])
+                        return this._filterArguments("");
                     return this._filterArguments(self.searchArguments[index]);
                 },
                 getElasticKeyword: function () {
@@ -69,7 +71,7 @@ define(['./Filter'], function (Filter) {
                     return this._filterArguments("").length > 0;
                 },
                 _filterArguments: function (text) {
-                    return self._filterAutocompleteItems(text, this, self);
+                    return self._filterAutocompleteItems(text, this);
                 }
             },
             title: {
@@ -149,6 +151,8 @@ define(['./Filter'], function (Filter) {
                     return "autocomplete";
                 },
                 autocompleteFilter: function(index) {
+                    if(!self.searchArguments[index])
+                        return this._filterArguments("");
                     return this._filterArguments(self.searchArguments[index]);
                 },
                 getElasticKeyword: function () {
@@ -165,7 +169,7 @@ define(['./Filter'], function (Filter) {
                     return this._filterArguments("").length > 0;
                 },
                 _filterArguments: function (text) {
-                    return self._filterAutocompleteItems(text, this, self);
+                    return self._filterAutocompleteItems(text, this);
                 }
             },
             role: {
@@ -176,6 +180,8 @@ define(['./Filter'], function (Filter) {
                     return "autocomplete";
                 },
                 autocompleteFilter: function(index) {
+                    if(!self.searchArguments[index])
+                        return this._filterArguments("");
                     return this._filterArguments(self.searchArguments[index]);
                 },
                 getElasticKeyword: function () {
@@ -192,7 +198,7 @@ define(['./Filter'], function (Filter) {
                     return this._filterArguments("").length > 0;
                 },
                 _filterArguments: function (text) {
-                    return self._filterAutocompleteItems(text, this, self);
+                    return self._filterAutocompleteItems(text, this);
                 }
             }
         };
@@ -356,7 +362,7 @@ define(['./Filter'], function (Filter) {
         }
 
         this.$process.nets.forEach(function (net) {
-            this.addNameToIdMapping("process", net.identifier, net.id, net.id);
+            this.addNameToIdMapping("process", net.title, net.id, net.id);
 
             net.transitions.forEach(function (transition) {
                 this.addNameToIdMapping("task", transition.title, transition.id, transition.netId);
@@ -399,42 +405,12 @@ define(['./Filter'], function (Filter) {
 
     Search.prototype.filterPossibleNets = function() {
         let setUnions = [];
-        if(this.chipParts.length > 0) {
-            let union = new Set();
-            this.chipParts.forEach(function (chipPart) {
-                if(chipPart.possibleNets) {
-                    if(chipPart.isComplement) {
-                        let complement = new Set(this.allNets);
-                        chipPart.possibleNets.forEach(function (netId) {
-                            complement.delete(netId);
-                        });
-                        complement.forEach(function (netId) {
-                           union.add(netId);
-                        });
-                    }
-                    else {
-                        chipPart.possibleNets.forEach(function (netId) {
-                            union.add(netId);
-                        });
-                    }
-                }
-            }, this);
-            if(union.size > 0)
-                setUnions.push(union);
-        }
         if(this.chips.length > 0) {
             this.chips.forEach(function (chip) {
-                let union = new Set();
-                chip.chipParts.forEach(function (chipPart) {
-                    if(chipPart.possibleNets) {
-                        chipPart.possibleNets.forEach(function (netId) {
-                            union.add(netId);
-                        });
-                    }
-                });
+                let union = this._possibleNetsUnionFromChipParts(chip.chipParts);
                 if(union.size > 0)
                     setUnions.push(union);
-            });
+            }, this);
         }
 
         let setIntersection = new Set();
@@ -448,6 +424,29 @@ define(['./Filter'], function (Filter) {
 
         this.possibleNets = setIntersection;
         this.evaluateEnabledCategories();
+    };
+
+    Search.prototype._possibleNetsUnionFromChipParts = function(chipParts) {
+        let union = new Set();
+        chipParts.forEach(function (chipPart) {
+            if(chipPart.possibleNets) {
+                if(chipPart.isComplement) {
+                    let complement = new Set(this.allNets);
+                    chipPart.possibleNets.forEach(function (netId) {
+                        complement.delete(netId);
+                    });
+                    complement.forEach(function (netId) {
+                        union.add(netId);
+                    });
+                }
+                else {
+                    chipPart.possibleNets.forEach(function (netId) {
+                        union.add(netId);
+                    });
+                }
+            }
+        }, this);
+        return union;
     };
 
     Search.prototype.evaluateEnabledCategories = function() {
@@ -470,8 +469,13 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.addChipPart = function () {
-        if(this.searchCategory === "process")
-            this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, this.searchObjects[0].possibleNets));
+        if(this.searchCategory.argsInputType() === "autocomplete") {
+            let possibleNets = [];
+            this.searchCategory.autocompleteItems.get(this.searchArguments[0]).forEach(function (autocompleteItem) {
+                possibleNets.push(autocompleteItem.netId);
+            });
+            this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets));
+        }
         else
             this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments));
         this.resetInputFields();
@@ -572,17 +576,18 @@ define(['./Filter'], function (Filter) {
 
     };
 
-    Search.prototype._filterAutocompleteItems = function (text, category, search) {
+    Search.prototype._filterAutocompleteItems = function (text, category) {
         let filtered = [];
         category.autocompleteItems.forEach(function (value, key) {
             if(key.includes(text)) {
                 for(let i = 0; i < value.length; i++) {
-                    if(search.possibleNets.has(value[i].netId))
+                    if(this.possibleNets.has(value[i].netId)) {
                         filtered.push(key);
-                    break;
+                        break;
+                    }
                 }
             }
-        });
+        }, this);
         return filtered;
     };
 
@@ -592,6 +597,11 @@ define(['./Filter'], function (Filter) {
         this.query = this.createElementaryQuery(category, operator);
         this.possibleNets = possibleNets;
         this.isComplement = operator === Search.OPERATOR.NOT_EQUAL;
+        if(this.isComplement && category.name !== "Process") {
+            // not enough information to deduce anything
+            this.possibleNets = undefined;
+            this.isComplement = undefined;
+        }
     }
 
     ChipPart.prototype.createElementaryQuery = function (category, operator) {
@@ -605,12 +615,12 @@ define(['./Filter'], function (Filter) {
 
     function Chip(chipParts, booleanOperator) {
         this.text = this.createElementaryText(chipParts);
+        this.chipParts = chipParts.slice(0);
         let queries = [];
-        chipParts.forEach(function (chipPart) {
+        this.chipParts.forEach(function (chipPart) {
             queries.push(chipPart.query);
         });
         this.query = Search.bindQueries(queries, booleanOperator);
-        this.chipParts = chipParts;
     }
 
     Chip.prototype.createElementaryText = function (chipParts) {

@@ -61,7 +61,6 @@
                         <div ng-switch-when="autocomplete" layout="row">
                             <md-input-container class="md-block" ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index" flex>
                                 <md-autocomplete md-search-text="search.searchArguments[$index]"
-                                                 md-selected-item="search.searchObjects[$index]"
                                                  md-selected-item-change="search.searchCategory.autocompleteFilter($index)"
                                                  md-items="item in search.searchCategory.autocompleteFilter($index)"
                                                  md-item-text="item"
