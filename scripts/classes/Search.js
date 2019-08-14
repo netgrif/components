@@ -508,7 +508,7 @@ define(['./Filter'], function (Filter) {
         if(!this.searchOperator)
             return false;
         for(let argIndex = 0; argIndex < this.searchOperator.numberOfOperands; argIndex++) {
-            if( !this.searchArguments[argIndex] || this.searchArguments[argIndex].toString().length === 0)
+            if( typeof this.searchArguments[argIndex] === "undefined" || this.searchArguments[argIndex].toString().length === 0)
                 return false;
         }
         return true;

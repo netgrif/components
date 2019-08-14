@@ -120,6 +120,7 @@
                             <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
                                 <md-switch class="md-primary"
                                            ng-model="search.searchArguments[$index]"
+                                           ng-init="search.searchArguments[$index] = false"
                                            aria-label="Switch">
                                 </md-switch>
                             </md-input-container>
