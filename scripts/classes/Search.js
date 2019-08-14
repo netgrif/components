@@ -89,12 +89,12 @@ define(['./Filter'], function (Filter) {
             },
             creationDate: {
                 name: "Creation Date",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE],
+                allowedOperators: [Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE_DATE],
                 argsInputType: function () {
                     return "date";
                 },
                 getElasticKeyword: function () {
-                    return ["creationDate"];
+                    return ["creationDateSortable"];
                 },
                 getQueryArguments: function () {
                     return self.searchArguments;
@@ -257,8 +257,8 @@ define(['./Filter'], function (Filter) {
         NOT_EQUAL: {
             display: "!=",
             numberOfOperands: 1,
-            createQuery: function (keywords, args) {
-                return "(!"+Search.OPERATOR.EQUAL.createQuery(keywords, args)+")";
+            createQuery: function (keywords, args, equalityOperator) {
+                return "(!"+equalityOperator.createQuery(keywords, args)+")";
             },
             createText: function (args) {
                 return Search.operatorText(args, "!=");
@@ -329,7 +329,19 @@ define(['./Filter'], function (Filter) {
             createText: function (args) {
                 return "is null";
             }
-        }
+        },
+        EQUAL_DATE: {},
+        IN_RANGE_DATE: {}
+    };
+    Object.assign(Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.EQUAL);
+    Search.OPERATOR.EQUAL_DATE.createQuery = function(keywords, args) {
+        return Search.OPERATOR.IN_RANGE_DATE.createQuery(keywords, [args[0], args[0]]);
+    };
+    Object.assign(Search.OPERATOR.IN_RANGE_DATE, Search.OPERATOR.IN_RANGE);
+    Search.OPERATOR.IN_RANGE_DATE.createQuery = function(keywords, args) {
+        let arg2 = new Date(args[1]);
+        arg2.setDate(arg2.getDate()+1); // javascript handles rollover
+        return "("+keywords[0]+":["+args[0].getTime()+" TO "+arg2.getTime()+"})";
     };
 
     Search.ELASTIC = {
@@ -407,7 +419,8 @@ define(['./Filter'], function (Filter) {
 
             if(this.searchType === Search.SEARCH_CASES) {
                 net.immediateData.forEach(function (immediateData) {
-                    this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
+                    if(immediateData.type !== "date" && immediateData.type !== "dateTime")
+                        this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
                 }, this);
             }
         }, this);
@@ -641,6 +654,7 @@ define(['./Filter'], function (Filter) {
         arguments.forEach(function (argument) {
             escapedArguments.push(Search.escapeInput(argument));
         });
+
         this.text = this.createElementaryText(category, operator, escapedArguments);
         this.query = this.createElementaryQuery(category, operator);
         this.possibleNets = possibleNets;
@@ -662,7 +676,10 @@ define(['./Filter'], function (Filter) {
     }
 
     ChipPart.prototype.createElementaryQuery = function (category, operator) {
-        return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments());
+        if(category.argsInputType() === "date")
+            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(), Search.OPERATOR.EQUAL_DATE);
+        else
+            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(), Search.OPERATOR.EQUAL);
     };
     
     ChipPart.prototype.createElementaryText = function (category, operator, arguments) {
