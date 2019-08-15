@@ -84,16 +84,18 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
 
     TaskTab.prototype.buildRequest = function (next, all) {
         const url = next && this.page.next ? this.page.next : this.$config.getApiUrl(this.baseUrl); //+ (all ? "&size="+this.tasks.length : "");
-        return {
+        let request = {
             method: "POST",
             url: url,
             params: {
                 sort: "priority"
             },
-            data: {
-                query: this.activeFilter.query
-            }
+            data: {}
         };
+        if(this.activeFilter.query.length > 0)
+            request.data.query = this.activeFilter.query;
+
+        return request;
     };
 
     TaskTab.prototype.load = function (next, force) {

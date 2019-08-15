@@ -14,7 +14,6 @@ define(['./Filter'], function (Filter) {
 
         this.parent = parent;
         this.searchType = searchType;
-        this.query = "";
 
         this.allNets = new Set();
         this.possibleNets = new Set();
@@ -26,8 +25,15 @@ define(['./Filter'], function (Filter) {
         this.searchArguments = [];
         this.searchObjects = [];
 
-        this.chipParts = [];
-        this.chips = [];
+        this.chipParts = {
+            committed: [],
+            predicted: undefined
+        };
+        this.chips = {
+            committed: [],
+            predicted: undefined
+        };
+
         this.enabledCategories = [];
 
         this.categories = {};
@@ -235,7 +241,7 @@ define(['./Filter'], function (Filter) {
         };
 
         this.populateAutocomplete();
-        this.fillAllNets();
+        this.fillVariableAllNets();
         this.resetPossibleNets();
         this.evaluateEnabledCategories();
     }
@@ -368,14 +374,21 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.bindQueries = function(queries, bindingOperator) {
+        if(queries.length === 0)
+            return "";
+
         let query = "";
+
         if(queries.length > 1)
             query += "(";
+
         query += queries[0];
         for(let i = 1; i < queries.length; i++)
             query += " "+bindingOperator+" " + queries[i];
+
         if(queries.length > 1)
             query += ")";
+
         return query;
     };
 
@@ -433,7 +446,7 @@ define(['./Filter'], function (Filter) {
             this.categories[this.searchType][categoryName].autocompleteItems.set(name, [new AutocompleteItem(id, netId, inputType)]);
     };
 
-    Search.prototype.fillAllNets = function() {
+    Search.prototype.fillVariableAllNets = function() {
         this.categories[Search.SEARCH_CASES].process.autocompleteItems.forEach(function (value, key) {
             value.forEach(function (autocompleteObject) {
                 this.allNets.add(autocompleteObject.netId);
@@ -451,8 +464,8 @@ define(['./Filter'], function (Filter) {
 
     Search.prototype.filterPossibleNets = function() {
         let setUnions = [];
-        if(this.chips.length > 0) {
-            this.chips.forEach(function (chip) {
+        if(this.chips.committed.length > 0) {
+            this.chips.committed.forEach(function (chip) {
                 let union = this._possibleNetsUnionFromChipParts(chip.chipParts);
                 if(union.size > 0)
                     setUnions.push(union);
@@ -514,28 +527,13 @@ define(['./Filter'], function (Filter) {
         return true;
     };
 
-    Search.prototype.addChipPart = function () {
-        let possibleNets = [];
-        switch (this.searchCategory.name) {
-            case "Process":
-            case "Task":
-            case "Role":
-                this.searchCategory.autocompleteItems.get(this.searchArguments[0]).forEach(function (autocompleteItem) {
-                    possibleNets.push(autocompleteItem.netId);
-                });
-                this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets));
-                break;
-            case "Dataset":
-                this.searchCategory.autocompleteItems.get(this.searchDatafield).forEach(function (autocompleteItem) {
-                    possibleNets.push(autocompleteItem.netId);
-                });
-                this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets));
-                break;
-            default:
-                this.chipParts.push(new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments));
-                break;
+    Search.prototype.commitChipPart = function () {
+        this._predictChipPart();
+        if(this.chipParts.predicted) {
+            this.chipParts.committed.push(this.chipParts.predicted);
+            this.resetInputFields();
+            this.chipParts.predicted = undefined;
         }
-        this.resetInputFields();
     };
 
     Search.prototype.resetInputFields = function () {
@@ -561,26 +559,23 @@ define(['./Filter'], function (Filter) {
         this.searchObjects.splice(0, this.searchObjects.length);
     };
 
-    Search.prototype.addChip = function () {
-        if(this.allArgumentsFilled()) {
-            this.addChipPart();
-            this.resetInputFields();
+    Search.prototype.commitChip = function () {
+        this.commitChipPart();
+        this._predictChip();
+        if(this.chips.predicted) {
+            this.chips.committed.push(this.chips.predicted);
+            this.chipParts.committed.splice(0, this.chipParts.committed.length);
+            this.chips.predicted = undefined;
         }
-        this.chips.push(new Chip(this.chipParts, "OR"));
-        this.chipParts.splice(0, this.chipParts.length);
     };
 
-    Search.prototype.buildSearchQuery = function () {
-        if(this.allArgumentsFilled() || this.chipParts.length > 0) {
-            this.addChip();
-        }
+    Search.prototype.buildSearchQuery = function (chips) {
         let queries = [];
-        this.chips.forEach(function (chip) {
+        chips.forEach(function (chip) {
             queries.push(chip.query);
         });
-        this.query = Search.bindQueries(queries, "AND");
-        console.log(this.query); // TODO remove after development
-        return this.query;
+        console.log(Search.bindQueries(queries, "AND")); // TODO remove after development
+        return Search.bindQueries(queries, "AND");
     };
 
     Search.prototype.queryUsers = function(searchText) {
@@ -601,8 +596,16 @@ define(['./Filter'], function (Filter) {
         });
     };
 
-    Search.prototype.getFilter = function () {
-        return new Filter("", this.searchType, this.buildSearchQuery(), undefined, this.parent, this.chips);
+    Search.prototype.commitFilter = function() {};
+
+    Search.prototype.getFilter = function() {
+        this._predictChip();
+        let combinedChips;
+        if(this.chips.predicted)
+            combinedChips = [].concat(this.chips.committed, [this.chips.predicted]);
+        else
+            combinedChips = this.chips.committed;
+        return new Filter("", this.searchType, this.buildSearchQuery(combinedChips), undefined, this.parent, combinedChips);
     };
 
     Search.prototype.populateFromFilter = function (filter) {
@@ -610,9 +613,10 @@ define(['./Filter'], function (Filter) {
             return;
 
         this.resetInputFields();
+        this.chips.committed.splice(0, this.chips.committed.length);
 
         if( !filter.conjunctiveQueryParts || filter.conjunctiveQueryParts.length === 0) {
-            this.chips.push(Chip.createChip("custom filter" /* TODO i18n */, filter.query));
+            this.chips.committed.push(Chip.createChip("custom filter" /* TODO i18n */, filter.query));
             return;
         }
 
@@ -623,7 +627,7 @@ define(['./Filter'], function (Filter) {
                 return; // continue
             }
 
-            this.chips.push( Chip.createChip(
+            this.chips.committed.push( Chip.createChip(
                 filterChip.text && filterChip.text.length > 0 ? filterChip.text : "custom filter", // TODO i18n
                 filterChip.query,
                 filterChip.chipParts
@@ -646,6 +650,47 @@ define(['./Filter'], function (Filter) {
             }
         }, this);
         return filtered;
+    };
+
+    Search.prototype._predictChipPart = function () {
+        if(this.allArgumentsFilled()) {
+            let possibleNets = [];
+            switch (this.searchCategory.name) {
+                case "Process":
+                case "Task":
+                case "Role":
+                    this.searchCategory.autocompleteItems.get(this.searchArguments[0]).forEach(function (autocompleteItem) {
+                        possibleNets.push(autocompleteItem.netId);
+                    });
+                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets);
+                    break;
+                case "Dataset":
+                    this.searchCategory.autocompleteItems.get(this.searchDatafield).forEach(function (autocompleteItem) {
+                        possibleNets.push(autocompleteItem.netId);
+                    });
+                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets);
+                    break;
+                default:
+                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments);
+                    break;
+            }
+        }
+        else
+            this.chipParts.predicted = undefined;
+    };
+
+    Search.prototype._predictChip = function () {
+        this._predictChipPart();
+        let combinedChipParts;
+        if(this.chipParts.predicted)
+            combinedChipParts = [].concat(this.chipParts.committed, [this.chipParts.predicted]);
+        else
+            combinedChipParts = this.chipParts.committed;
+
+        if(combinedChipParts.length > 0)
+            this.chips.predicted = new Chip(combinedChipParts, "OR");
+        else
+            this.chips.predicted = undefined;
     };
 
 

@@ -171,19 +171,13 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
     };
 
     CaseTab.prototype.buildSearchRequest = function (next) {
-        // TODO filters and search
-        if (this.searchInput && this.searchInput.trim() !== "")
-            this.activeFilter.set("fullText", this.searchInput.trim());
-        else
-            this.activeFilter.remove("fullText");
-
         const request = {
             method: "POST",
             url: next && this.page.next ? this.page.next : this.$config.getApiUrl(CaseTab.URL_SEARCH),
-            data: {
-                query: this.caseSearch.query
-            }
+            data: {}
         };
+        if(this.activeFilter.query.length > 0)
+            request.data.query = this.activeFilter.query;
 
         if (!next) {
             request.params = {
@@ -197,6 +191,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
     CaseTab.prototype.search = function () {
         if (this.cases.length === 0)
             this.cases.splice(0, this.cases.length);
+        this.activeFilter = this.caseSearch.getFilter();
         this.load(false);
     };
 
