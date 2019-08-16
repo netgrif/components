@@ -40,6 +40,8 @@
     "jquery": "^3.3.1",
     "requirejs": "^2.3.6",
     "requirejs-domReady": "^2.0.1",
-    "requirejs-i18n": "^2.0.6"
+    "requirejs-i18n": "^2.0.6",
+    "ng-material-datetimepicker": "^1.18.5",
+    "moment": "^2.24.0"
   }
 }

@@ -54,8 +54,9 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                                 self.clearAll();
                                 self.load(false);
                                 $process.loadNets(true);
+                            } else {
+                                $snackbar.error($i18n.block.snackbar.modelFailedToUpload + ": " + response.error);
                             }
-                            else $snackbar.error($i18n.block.snackbar.modelFailedToUpload);
                             self.netFile = undefined;
                             self.petriNetMeta = {};
                         });
