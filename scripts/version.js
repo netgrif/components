@@ -1,3 +1,3 @@
 define([], function () {
-    return {"NAE_version":"2.2.0-SNAPSHOT"};
+    return {"NAE_version":"3.1.0-SNAPSHOT"};
 });
