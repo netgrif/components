@@ -157,13 +157,18 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
             return h.sort.enable;
         });
         if (!sortHeader)
-            return "_id,desc";
+            return "stringId,desc";
 
         const fieldId = sortHeader.stringId.substring(sortHeader.stringId.indexOf("-") + 1);
-        if (sortHeader.stringId.startsWith("meta-"))
+        if (sortHeader.stringId.startsWith("meta-")) {
+            if (fieldId === "creationDate")
+                return "creationDateSortable," + sortHeader.sort.dir;
+            if (fieldId === "title")
+                return "titleSortable," + sortHeader.sort.dir;
             return fieldId + "," + sortHeader.sort.dir;
-        else
-            return "dataSet." + fieldId + ".value," + sortHeader.sort.dir;
+        } else {
+            return "dataSet." + fieldId + ".sortable," + sortHeader.sort.dir;
+        }
     };
 
     CaseTab.prototype.buildSearchRequest = function (next) {

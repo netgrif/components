@@ -43536,6 +43536,29 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   .base .file-chooser-avatar:hover label {
     display: block; }
 
+.base .dtp table.dtp-picker-days tr > td > a.selected,
+.base .dtp table.dtp-picker-days tr > td > a.selected.hilite,
+.base .dtp div.dtp-date, .base .dtp div.dtp-time, .base .dtp .dtp-hand.on,
+.base .dtp .dtp-actual-meridien a.selected,
+.base .dtp .dtp-picker-time > a.dtp-select-hour.selected {
+  background: #009688; }
+
+.base .dtp table.dtp-picker-days tr > td > a.hilite:not(.selected),
+.base .dtp div.dtp-actual-time.p60 span.selected {
+  color: #00796B; }
+
+.base .dtp div.dtp-year-btn, .base .dtp div.dtp-actual-year, .base .dtp div.dtp-actual-maxtime {
+  color: #d0f0f0; }
+
+.base .dtp > .dtp-content > .dtp-date-view > header.dtp-header {
+  background: #009688; }
+
+.base md-menu-content.dtp-month-list {
+  background-color: #d0f0f0; }
+
+.base md-menu-content.dtp-year-list {
+  background-color: #d0f0f0; }
+
 .base md-dialog md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon, .base md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
   color: #FAFAFA !important; }
   .base md-dialog md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon.color-fg-primary-500, .base md-dialog md-toolbar:not(.md-menu-toolbar) md-icon.color-fg-primary-500 {
