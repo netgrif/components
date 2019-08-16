@@ -1,5 +1,5 @@
 define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../classes/Search', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, CaseTab, TaskTab, Filter) {
+    function (angular, CaseTab, TaskTab, Filter, Search) {
         angular.module('ngCases').controller('CasesController',
             ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config', '$filterRepository',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
@@ -40,7 +40,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     self.openTaskTab = function (useCase) {
                         if (!self.taskTabs.some(tab => tab.useCase.stringId === useCase.stringId))
                             self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title,
-                                new Filter("Default By Case", Filter.CASE_TYPE, "{\"case\": \"" + useCase.stringId + "\"}"),
+                                new Filter("Default By Case", Filter.TASK_TYPE, Search.queryByCaseStringId(useCase.stringId, Search.SEARCH_TASKS)),
                                 useCase, {
                                     $http,
                                     $snackbar,

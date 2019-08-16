@@ -411,6 +411,14 @@ define(['./Filter'], function (Filter) {
             return {value: input, wrapped: false};
     };
 
+    Search.queryByCaseStringId = function(caseStringId, searchType) {
+        if(searchType === Search.SEARCH_CASES)
+            return Search.simpleOperatorQuery("stringId", caseStringId, "");
+        if(searchType === Search.SEARCH_TASKS)
+            return Search.simpleOperatorQuery("caseId", caseStringId, "");
+        console.error("unknown search type '"+searchType+"'");
+    };
+
 
     Search.prototype.populateAutocomplete = function () {
         for (let key in this.categories[Search.SEARCH_CASES]) {
