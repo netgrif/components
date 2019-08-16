@@ -153,7 +153,7 @@ define(['./Filter'], function (Filter) {
             },
             task: {
                 name: "Task",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 autocompleteItems: new Map(),
                 argsInputType: function () {
                     return "autocomplete";
@@ -167,11 +167,27 @@ define(['./Filter'], function (Filter) {
                     return ["taskIds"];
                 },
                 getQueryArguments: function () {
-                    let args = [];
-                    this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
-                        args.push(autocomplete.id);
-                    });
-                    return args;
+                    return self.searchArguments;
+                },
+                overrideQueryGeneration: function (operator) {
+                    let matchingAutocompleteItems = [];
+                    this.getQueryArguments().forEach(function (taskName) {
+                        matchingAutocompleteItems = matchingAutocompleteItems.concat(this.autocompleteItems.get(taskName));
+                    }, this);
+                    let elementarySubqueries = [];
+                    matchingAutocompleteItems.forEach(function (autocompleteItem) {
+                        let simpleSubqueries = [];
+                        simpleSubqueries.push(Search.OPERATOR.EQUAL.createQuery(this.getElasticKeyword(), [autocompleteItem.id]));
+                        simpleSubqueries.push(Search.OPERATOR.EQUAL.createQuery(self.categories[self.searchType].process.getElasticKeyword(), [autocompleteItem.netId]));
+                        elementarySubqueries.push(Search.bindQueries(simpleSubqueries, "AND"));
+                    }, this);
+                    let equalsQuery = Search.bindQueries(elementarySubqueries, "OR");
+                    if(operator === Search.OPERATOR.EQUAL)
+                        return equalsQuery;
+                    if(operator === Search.OPERATOR.NOT_EQUAL)
+                        return "(!"+equalsQuery+")";
+                    console.error("unsupported operator");
+                    return "";
                 },
                 isEnabled: function () {
                     return this._filterArguments("").length > 0;
@@ -212,7 +228,7 @@ define(['./Filter'], function (Filter) {
         };
         this.categories[Search.SEARCH_TASKS] = {
             process: self.categories[Search.SEARCH_CASES].process,
-            task: self.categories[Search.SEARCH_CASES].task,
+            task: {},
             role: self.categories[Search.SEARCH_CASES].role,
             user: {
                 name: "User",
@@ -238,6 +254,11 @@ define(['./Filter'], function (Filter) {
                     return true;
                 }
             }
+        };
+        // Override some functionality
+        Object.assign(this.categories[Search.SEARCH_TASKS].task, this.categories[Search.SEARCH_CASES].task);
+        this.categories[Search.SEARCH_TASKS].task.getElasticKeyword = function () {
+            return ["transitionId"];
         };
 
         this.populateAutocomplete();
@@ -339,6 +360,7 @@ define(['./Filter'], function (Filter) {
         EQUAL_DATE: {},
         IN_RANGE_DATE: {}
     };
+    // Inherit and override some functionality
     Object.assign(Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.EQUAL);
     Search.OPERATOR.EQUAL_DATE.createQuery = function(keywords, args) {
         return Search.OPERATOR.IN_RANGE_DATE.createQuery(keywords, [args[0], args[0]]);
@@ -729,6 +751,9 @@ define(['./Filter'], function (Filter) {
     }
 
     ChipPart.prototype.createElementaryQuery = function (category, operator) {
+        if(category.overrideQueryGeneration)
+            return category.overrideQueryGeneration(operator);
+
         if(category.argsInputType() === "date")
             return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(), Search.OPERATOR.EQUAL_DATE);
         else
