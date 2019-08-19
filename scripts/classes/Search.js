@@ -70,7 +70,7 @@ define(['./Filter'], function (Filter) {
                     return this._filterArguments(self.searchArguments[index]);
                 },
                 getElasticKeyword: function () {
-                    return ["processIdentifier"];
+                    return ["processId"];
                 },
                 getQueryArguments: function () {
                     let args = [];
