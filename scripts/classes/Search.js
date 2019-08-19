@@ -645,26 +645,9 @@ define(['./Filter'], function (Filter) {
         this.resetInputFields();
         this.chips.committed.splice(0, this.chips.committed.length);
 
-        if( !filter.conjunctiveQueryParts || filter.conjunctiveQueryParts.length === 0) {
-            this.chips.committed.push(Chip.createChip("custom filter" /* TODO i18n */, filter.query));
-            return;
-        }
-
-        filter.conjunctiveQueryParts.forEach(function (filterChip) {
-            if( !filterChip.query || filterChip.query.length === 0) {
-                console.error("Filter has chip with no query! skipping");
-                console.error(filterChip);
-                return; // continue
-            }
-
-            this.chips.committed.push( Chip.createChip(
-                filterChip.text && filterChip.text.length > 0 ? filterChip.text : "custom filter", // TODO i18n
-                filterChip.query,
-                filterChip.chipParts
-            ));
-
-        }, this);
-
+        let filterChip = Chip.createChip(filter.title, filter.query);
+        filterChip.canRemove = false;
+        this.chips.committed.push(filterChip);
     };
 
     Search.prototype._filterAutocompleteItems = function (text, category) {
@@ -754,7 +737,7 @@ define(['./Filter'], function (Filter) {
         if(category.overrideQueryGeneration)
             return category.overrideQueryGeneration(operator);
 
-        if(category.argsInputType() === "date")
+        if(category.argsInputType && category.argsInputType() === "date")
             return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(), Search.OPERATOR.EQUAL_DATE);
         else
             return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(), Search.OPERATOR.EQUAL);
@@ -773,6 +756,7 @@ define(['./Filter'], function (Filter) {
             queries.push(chipPart.query);
         });
         this.query = Search.bindQueries(queries, booleanOperator);
+        this.canRemove = true;
     }
 
     Chip.prototype.createElementaryText = function (chipParts) {

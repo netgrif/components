@@ -195,10 +195,13 @@
         </md-chips>
 
         <div flex layout="row">
-            <md-chips ng-model="search.chips.committed" readonly="true" md-removable="true" flex
+            <md-chips ng-model="search.chips.committed" readonly="true" md-removable="false" flex
                       md-on-remove="search.resetPossibleNets(); tab.search()">
                 <md-chip-template md-primary>
                     {{$chip.text}}
+                    <md-button class="md-icon-button" md-chip-remove ng-if="$chip.canRemove">
+                        <md-icon class="material-icons">clear</md-icon>
+                    </md-button>
                 </md-chip-template>
             </md-chips>
 
