@@ -59,7 +59,7 @@ define(['./Filter'], function (Filter) {
             },
             process: {
                 name: "Process",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 autocompleteItems: new Map(),
                 argsInputType: function () {
                     return "autocomplete";
@@ -245,7 +245,7 @@ define(['./Filter'], function (Filter) {
             },
             role: {
                 name: "Role",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 autocompleteItems: new Map(),
                 argsInputType: function () {
                     return "autocomplete";
@@ -285,7 +285,7 @@ define(['./Filter'], function (Filter) {
             role: self.categories[Search.SEARCH_CASES].role,
             user: {
                 name: "User",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL],
                 autocompleteItems: new Map(),
                 argsInputType: function () {
                     return "user";
