@@ -27,7 +27,8 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
         this.caseSearch = new Search(this, Search.SEARCH_CASES, {
             $process: this.$process,
             $http: this.$http,
-            $config: this.$config
+            $config: this.$config,
+            $i18n: this.$i18n
         }, {});
 
         this.headers = {

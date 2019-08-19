@@ -28,7 +28,8 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
             this.taskSearch = new Search(this, Search.SEARCH_TASKS, {
                 $process: this.$process,
                 $http: this.$http,
-                $config: this.$config
+                $config: this.$config,
+                $i18n: this.$i18n
             }, {});
         }
     }

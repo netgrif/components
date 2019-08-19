@@ -3,7 +3,7 @@ define(['./Filter'], function (Filter) {
     /**
      * @param parent Parent controller
      * @param searchType Search.SEARCH_CASES or Search.SEARCH_TASKS
-     * @param angular $process, $http, $config
+     * @param angular $process, $http, $config, $i18n
      * @param config options: considerWholeSearchInput
      * @constructor
      */
@@ -47,6 +47,12 @@ define(['./Filter'], function (Filter) {
                 getQueryArguments: function () {
                     return self.searchArguments;
                 },
+                getTextPrefix: function() {
+                    return this.name;
+                },
+                getFormattedArguments: function() {
+                    return this.getQueryArguments();
+                },
                 isEnabled: function () {
                     return true;
                 }
@@ -73,6 +79,12 @@ define(['./Filter'], function (Filter) {
                     });
                     return args;
                 },
+                getTextPrefix: function() {
+                    return this.name;
+                },
+                getFormattedArguments: function() {
+                    return self.searchArguments;
+                },
                 isEnabled: function () {
                     return this._filterArguments("").length > 0;
                 },
@@ -88,6 +100,12 @@ define(['./Filter'], function (Filter) {
                 },
                 getQueryArguments: function () {
                     return self.searchArguments;
+                },
+                getTextPrefix: function() {
+                    return this.name;
+                },
+                getFormattedArguments: function() {
+                    return this.getQueryArguments();
                 },
                 isEnabled: function () {
                     return true;
@@ -105,6 +123,12 @@ define(['./Filter'], function (Filter) {
                 getQueryArguments: function () {
                     return self.searchArguments;
                 },
+                getTextPrefix: function() {
+                    return this.name;
+                },
+                getFormattedArguments: function() {
+                    return self.formatDateArguments(this.getQueryArguments());
+                },
                 isEnabled: function () {
                     return true;
                 }
@@ -116,6 +140,12 @@ define(['./Filter'], function (Filter) {
                     return ["authorEmail", "authorName"];
                 },
                 getQueryArguments: function () {
+                    return self.searchArguments;
+                },
+                getTextPrefix: function() {
+                    return this.name;
+                },
+                getFormattedArguments: function() {
                     return self.searchArguments;
                 },
                 isEnabled: function () {
@@ -144,6 +174,17 @@ define(['./Filter'], function (Filter) {
                 getQueryArguments: function () {
                     return self.searchArguments;
                 },
+                getTextPrefix: function() {
+                    return "Datafield "+self.searchDatafield;
+                },
+                getFormattedArguments: function() {
+                    switch (this.argsInputType()) {
+                        case "date":
+                            return self.formatDateArguments(this.getQueryArguments());
+                        default:
+                            return this.getQueryArguments();
+                    }
+                },
                 isEnabled: function () {
                     return this._filterDatafields("").length > 0;
                 },
@@ -168,6 +209,12 @@ define(['./Filter'], function (Filter) {
                 },
                 getQueryArguments: function () {
                     return self.searchArguments;
+                },
+                getTextPrefix: function() {
+                    return this.name;
+                },
+                getFormattedArguments: function() {
+                    return this.getQueryArguments();
                 },
                 overrideQueryGeneration: function (operator) {
                     let matchingAutocompleteItems = [];
@@ -218,6 +265,12 @@ define(['./Filter'], function (Filter) {
                     });
                     return args;
                 },
+                getTextPrefix: function() {
+                    return this.name;
+                },
+                getFormattedArguments: function() {
+                    return self.searchArguments;
+                },
                 isEnabled: function () {
                     return this._filterArguments("").length > 0;
                 },
@@ -249,6 +302,12 @@ define(['./Filter'], function (Filter) {
                         args.push(userObject.id);
                     });
                     return args;
+                },
+                getTextPrefix: function() {
+                    return this.name;
+                },
+                getFormattedArguments: function() {
+                    return self.searchArguments;
                 },
                 isEnabled: function () {
                     return true;
@@ -415,15 +474,18 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.escapeInput = function(input) {
-        let output = "";
-        for(let i = 0; i < input.length; i++) {
-            if(Search.ELASTIC.UNESCAPABLE_CHARACTERS.has(input.charAt(i)))
-                continue;
-            if(Search.ELASTIC.ESCAPABLE_CHARACTERS.has(input.charAt(i)))
-                output += "\\";
-            output += input.charAt(i);
+        if(typeof input === "string") {
+            let output = "";
+            for(let i = 0; i < input.length; i++) {
+                if(Search.ELASTIC.UNESCAPABLE_CHARACTERS.has(input.charAt(i)))
+                    continue;
+                if(Search.ELASTIC.ESCAPABLE_CHARACTERS.has(input.charAt(i)))
+                    output += "\\";
+                output += input.charAt(i);
+            }
+            return output;
         }
-        return output;
+        return input;
     };
 
     Search.wrapWithQuotes = function(input) {
@@ -733,6 +795,15 @@ define(['./Filter'], function (Filter) {
         }
     }
 
+    Search.prototype.formatDateArguments = function(arguments) {
+        let formattedArguments = [];
+        arguments.forEach(function (arg) {
+            formattedArguments.push(arg.toLocaleDateString(this.$i18n.current(), {year:"numeric", month:"numeric", day:"numeric"}));
+        }, this);
+        return formattedArguments;
+    };
+
+
     ChipPart.prototype.createElementaryQuery = function (category, operator) {
         if(category.overrideQueryGeneration)
             return category.overrideQueryGeneration(operator);
@@ -743,8 +814,8 @@ define(['./Filter'], function (Filter) {
             return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(), Search.OPERATOR.EQUAL);
     };
     
-    ChipPart.prototype.createElementaryText = function (category, operator, arguments) {
-        return category.name+" "+operator.createText(arguments);
+    ChipPart.prototype.createElementaryText = function (category, operator) {
+        return category.getTextPrefix()+" "+operator.createText(category.getFormattedArguments());
     };
 
 
