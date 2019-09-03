@@ -40,7 +40,7 @@ define(['./Filter'], function (Filter) {
         this.categories[Search.SEARCH_CASES] = {
             visualId: {
                 name: "Visual Id",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 getElasticKeyword: function () {
                     return ["visualId"];
                 },
@@ -135,7 +135,7 @@ define(['./Filter'], function (Filter) {
             },
             author: {
                 name: "Author",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 getElasticKeyword: function () {
                     return ["authorEmail", "authorName"];
                 },
@@ -392,11 +392,7 @@ define(['./Filter'], function (Filter) {
             display: "like",
             numberOfOperands: 1,
             createQuery: function (keywords, args) {
-                let arg = Search.wrapWithQuotes(args[0]);
-                if(arg.wrapped)
-                    return "("+keywords[0]+":"+arg.value+"~3)";
-                else
-                    return "("+keywords[0]+":"+arg.value+"~)";
+                return "("+keywords[0]+":"+args[0]+")";
             },
             createText: function (args) {
                 return Search.operatorText(args, "is like");
