@@ -7,13 +7,14 @@ define(['./Filter'], function (Filter) {
      * @param config options: considerWholeSearchInput
      * @constructor
      */
-    function Search(parent, searchType, angular, config = {}) {
+    function Search(parent, searchType, guiComplexity, angular, config = {}) {
         Object.assign(this, angular, config);
 
         const self = this;
 
         this.parent = parent;
         this.searchType = searchType;
+        this.guiComplexity = guiComplexity;
 
         this.allNets = new Set();
         this.possibleNets = new Set();
@@ -40,6 +41,7 @@ define(['./Filter'], function (Filter) {
         this.categories[Search.SEARCH_CASES] = {
             visualId: {
                 name: "Visual Id",
+                headerName: "meta-visualId",
                 allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 getElasticKeyword: function () {
                     return ["visualId"];
@@ -94,6 +96,7 @@ define(['./Filter'], function (Filter) {
             },
             title: {
                 name: "Title",
+                headerName: "meta-title",
                 allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
                 getElasticKeyword: function () {
                     return ["title"];
@@ -113,6 +116,7 @@ define(['./Filter'], function (Filter) {
             },
             creationDate: {
                 name: "Creation Date",
+                headerName: "meta-creationDate",
                 allowedOperators: [Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE_DATE],
                 argsInputType: function () {
                     return "date";
@@ -135,6 +139,7 @@ define(['./Filter'], function (Filter) {
             },
             author: {
                 name: "Author",
+                headerName: "meta-author",
                 allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 getElasticKeyword: function () {
                     return ["authorEmail", "authorName"];
@@ -329,6 +334,9 @@ define(['./Filter'], function (Filter) {
     Search.SEARCH_CASES = Filter.CASE_TYPE;
     Search.SEARCH_TASKS = Filter.TASK_TYPE;
 
+    Search.COMPLEX_SEARCH = "COMPLEX";
+    Search.HEADER_SEARCH = "HEADER";
+
     Search.OPERATOR = {
         EQUAL: {
             display: "=",
@@ -408,7 +416,7 @@ define(['./Filter'], function (Filter) {
                 });
                 return Search.bindQueries(simpleQueries, "OR");
             },
-            createText: function (args) {
+            createText: function () {
                 return "is null";
             }
         },
@@ -764,6 +772,32 @@ define(['./Filter'], function (Filter) {
             this.chips.predicted = undefined;
     };
 
+    Search.prototype.getHeaderInputTypes = function () {
+        let inputTypes = [];
+        if(this.parent.headers) {
+            for(const key of Object.keys(this.parent.headers.selected)) {
+                let headerItem = this.parent.headers.selected[key];
+                if(headerItem.stringId.startsWith("meta-")) {
+                    for(const category of Object.keys(this.categories[this.searchType])) {
+                        if(headerItem.stringId === this.categories[this.searchType][category].headerName) {
+                            inputTypes.push( this.categories[this.searchType][category].argsInputType && this.categories[this.searchType][category].argsInputType() );
+                            break;
+                        }
+                    }
+                }
+                else {
+                    for(let datafield of this.categories[this.searchType].dataset.autocompleteItems.get(headerItem.title)) {
+                        if(headerItem.stringId === datafield.id) {
+                            inputTypes.push(datafield.inputType);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return inputTypes;
+    };
+
 
     function ChipPart(category, operator, arguments, possibleNets = undefined) {
         let escapedArguments = [];
@@ -855,198 +889,5 @@ define(['./Filter'], function (Filter) {
         this.id = id;
     }
 
-    /**
-     * Populate search toolbar from filter applied on task tab
-     * @param {Filter} filter
-     */
-  /*  Search.prototype.populateFromFilter = function (filter) {
-        if (this.chips.length > 0 || !filter.query)
-            return;
-
-        Object.keys(filter.query).forEach(key => {
-            filter.query[key].forEach(val => this.chips.push(new Chip("", key, "", val)));
-
-            if (filter.query[key] instanceof Array) {
-                this.query[key] = filter.query[key].map(val => new QueryObject(key, val, ""));
-            } else {
-                this.query[key] = new QueryObject(key, filter.query[key], "");
-            }
-        });
-    };
-
-    Search.prototype.selectedItemChanged = function (item) {
-        if (!item)
-            return;
-        this.addChip(item);
-        this.searchText = "";
-        this.selectedItem = undefined;
-
-        if (this.parent)
-            this.parent.search();
-    };
-
-    Search.prototype.getItems = function () {
-        if (!this.subject)
-            return [];
-        return this.loadCategory();
-    };
-
-    Search.prototype.addQuery = function (item) {
-        const queryObj = new QueryObject(item.subject, item.id, item.petriNetId);
-        if (this.query[queryObj.subject]) {
-            if (this.query[queryObj.subject] instanceof Array)
-                this.query[queryObj.subject].push(queryObj);
-            else {
-                const values = [];
-                values.push(this.query[queryObj.subject]);
-                values.push(queryObj);
-                this.query[queryObj.subject] = values;
-            }
-        } else {
-            this.query[queryObj.subject] = queryObj;
-        }
-
-        this.resolveSubjects();
-    };
-
-    Search.prototype.removeQuery = function (subject, id) {
-        if (this.query[subject] instanceof Array) {
-            const index = this.query[subject].findIndex(o => o.param === id);
-            if (index !== -1)
-                this.query[subject].splice(index, 1);
-        } else {
-            delete this.query[subject];
-        }
-
-        if (this.query[subject] && this.query[subject] instanceof Array && this.query[subject].length === 1)
-            this.query[subject] = this.query[subject][0];
-
-        const affected = Object.keys(this.subjects).find(sub => this.subjects[sub].dependency ? this.subjects[sub].dependency.includes(subject) : false);
-        if (affected && this.query[affected]) {
-            const removeAffectedChip = affectedQuery => {
-                if (affectedQuery.dependency && affectedQuery.dependency === id)
-                    this.removeChip(new Chip(affected, "whatever", affectedQuery.param, "whatever"));
-            };
-            if (this.query[affected] instanceof Array)
-                this.query[affected].forEach(removeAffectedChip);
-            else
-                removeAffectedChip(this.query[affected]);
-
-            if (this.query[affected] && this.query[affected] instanceof Object)
-                removeAffectedChip(this.query[affected]);
-        }
-    };
-
-    Search.prototype.getQuery = function () {
-        const q = {};
-        Object.keys(this.query).forEach(key => {
-            if (this.query[key] instanceof Array)
-                q[key] = this.query[key].map(v => v.param);
-            else
-                q[key] = this.query[key].param;
-        });
-        return q;
-    };
-
-    Search.prototype.getReadableQuery = function () {
-        const q = {};
-        this.chips.forEach(chip => {
-            if (!q[chip.subjectTitle]) {
-                q[chip.subjectTitle] = [chip.search];
-            } else {
-                q[chip.subjectTitle].push(chip.search);
-            }
-        });
-        return q;
-    };
-
-    Search.prototype.getFilter = function () {
-        return new Filter("", Filter.TASK_TYPE, this.getQuery());
-    };
-
-    Search.prototype.addChip = function (item) {
-        if (!this.chips.some(c => c.id === item.id)) {
-            this.chips.push(new Chip(item.subject, this.subjects[item.subject].title, item.id, item.title));
-            this.addQuery(item);
-        }
-    };
-
-    Search.prototype.removeChip = function (chip) {
-        const index = this.chips.findIndex(c => c.id === chip.id);
-        if (index !== -1) {
-            this.removeQuery(chip.subject, chip.id);
-            this.chips.splice(index, 1);
-        }
-    };
-
-    Search.prototype.chipRemoved = function (chip) {
-        this.removeQuery(chip.subject, chip.id);
-        this.resolveSubjects();
-        this.parent.search();
-    };
-
-    Search.prototype.resolveSubjects = function () {
-        Object.keys(this.subjects).forEach(subject => {
-            if (!this.subjects[subject].dependency)
-                return;
-            this.subjects[subject].disable = !this.subjects[subject].dependency.every(d => !!this.query[d]);
-        });
-        if (this.subject.disable)
-            this.subject = this.subject.process;
-    };
-
-    Search.prototype.reset = function () {
-        this.chips = [];
-        this.subject = undefined;
-        this.searchText = "";
-        this.selectedItem = undefined;
-        this.query = {};
-
-        this.resolveSubjects();
-        this.parent.search();
-    };
-
-    Search.prototype.filterValues = function (data = []) {
-        if (!this.searchText || this.searchText === "")
-            return data;
-        return data.filter(item => {
-            const val = item.title.trim().toLowerCase();
-            if (this.considerWholeSearchInput)
-                return val.includes(this.searchText.trim().toLowerCase());
-            return val.startsWith(this.searchText.trim().toLowerCase());
-        })
-    };
-
-    Search.prototype.loadCategory = function () {
-        if (!this.autoCompleteStorage[this.subject.value] || this.subject.load.always)
-            return this[this.subject.load.method]();
-        else
-            return this.filterValues(this.autoCompleteStorage[this.subject.value]);
-    };
-
-    Search.prototype.loadProcessReferences = function () {
-        const self = this;
-        this.autoCompleteStorage.process = this.$process.nets.map(n => new AutoCompleteItem("process", n));
-        return this.filterValues(this.autoCompleteStorage.process);
-    };
-
-    Search.prototype.loadTransitionReferences = function () {
-        const self = this;
-
-        let queryProcess = [];
-        if (this.query.process instanceof Array)
-            queryProcess = queryProcess.concat(this.query.process.map(p => p.param));
-        else
-            queryProcess.push(this.query.process.param);
-        this.autoCompleteStorage.transition = [];
-        queryProcess.forEach(p => {
-            const net = this.$process.get(p);
-            if (net)
-                this.autoCompleteStorage.transition = this.autoCompleteStorage.transition.concat(net.transitions.map(t => new AutoCompleteItem("transition", t)));
-        });
-        return this.filterValues(this.autoCompleteStorage.transition);
-
-    };
-*/
     return Search;
 });

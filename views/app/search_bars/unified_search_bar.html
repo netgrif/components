@@ -1,10 +1,8 @@
-<div layout="row" class="card padding-2x">
+<div layout="row" class="card padding-2x" ng-if="search.guiComplexity==='COMPLEX'">
 
     <div flex layout="column">
 
         <div layout="row" layout-align="start center">
-
-<!--            <i class="material-icons color-fg-primary-500 margin-right-14px">search</i>-->
 
             <div flex layout="row">
 
@@ -50,101 +48,12 @@
                         </md-select>
                     </md-input-container>
 
-                    <div ng-switch="search.searchCategory.argsInputType && search.searchCategory.argsInputType()" ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0">
-                        <div ng-switch-default layout="row">
-                            <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
-                                <label class="placeholder">argument {{$index+1}}</label>
-                                <input ng-model="search.searchArguments[$index]">
-                            </md-input-container>
-                        </div>
-
-                        <div ng-switch-when="autocomplete" layout="row">
-                            <md-input-container class="md-block" ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index" flex>
-                                <md-autocomplete md-search-text="search.searchArguments[$index]"
-                                                 md-selected-item-change="search.searchCategory.autocompleteFilter($index)"
-                                                 md-items="item in search.searchCategory.autocompleteFilter($index)"
-                                                 md-item-text="item"
-                                                 md-min-length="0"
-                                                 md-no-cache="true"
-                                                 md-select-on-match="true"
-                                                 md-match-case-insensitive="true"
-                                                 md-dropdown-items="5"
-                                                 md-floating-label="{{::$i18n.page.tasks.search.search}}">
-
-                                    <md-item-template>
-                                        <span md-highlight-text="search.searchArguments[$index]" md-highlight-flags="i">
-                                            {{item}}
-                                        </span>
-                                    </md-item-template>
-                                    <md-not-found>
-                                        {{$i18n.page.tasks.filter.processNotFound}}
-                                    </md-not-found>
-                                </md-autocomplete>
-                            </md-input-container>
-                        </div>
-
-                        <div ng-switch-when="user" layout="row">
-                            <md-input-container class="md-block" ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index" flex>
-                                <md-autocomplete md-search-text="search.searchArguments[$index]"
-                                                 md-selected-item="search.searchObjects[$index]"
-                                                 md-items="item in search.queryUsers(search.searchArguments[$index])"
-                                                 md-item-text="item.name"
-                                                 md-min-length="0"
-                                                 md-no-cache="true"
-                                                 md-select-on-match="true"
-                                                 md-match-case-insensitive="true"
-                                                 md-dropdown-items="5"
-                                                 md-floating-label="{{::$i18n.page.tasks.search.search}}"
-                                                 md-delay="500">
-
-                                    <md-item-template>
-                                        <span md-highlight-text="search.searchArguments[$index]" md-highlight-flags="i">
-                                            {{item.name}}
-                                        </span>
-                                    </md-item-template>
-                                    <md-not-found>
-                                        {{$i18n.page.tasks.filter.processNotFound}}
-                                    </md-not-found>
-                                </md-autocomplete>
-                            </md-input-container>
-                        </div>
-
-                        <div ng-switch-when="number" layout="row">
-                            <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
-                                <label class="placeholder">argument {{$index+1}}</label>
-                                <input ng-model="search.searchArguments[$index]" type="number">
-                            </md-input-container>
-                        </div>
-
-                        <div ng-switch-when="boolean" layout="row">
-                            <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
-                                <md-switch class="md-primary"
-                                           ng-model="search.searchArguments[$index]"
-                                           ng-init="search.searchArguments[$index] = false"
-                                           aria-label="Switch">
-                                </md-switch>
-                            </md-input-container>
-                        </div>
-
-                        <div ng-switch-when="date" layout="row">
-                            <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">
-                                <label class="placeholder">argument {{$index+1}}</label>
-                                <md-datepicker ng-model="search.searchArguments[$index]"
-                                               aria-label="Pick date"
-                                               md-open-on-focus>
-                                </md-datepicker>
-                            </md-input-container>
-                        </div>
-
-<!--                        TODO dateTime after NAE-182 is merged-->
-<!--                        <div ng-switch-when="dateTime" layout="row">-->
-<!--                            <md-input-container class="md-block" flex  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index">-->
-<!--                                <label class="placeholder">argument {{$index+1}}</label>-->
-<!--                                -->
-<!--                                </md-datepicker>-->
-<!--                            </md-input-container>-->
-<!--                        </div>-->
+                    <div ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index" ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0">
+                         <div ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"
+                              ng-init="switchExpression = 'search.searchCategory.argsInputType && search.searchCategory.argsInputType()'">
+                         </div>
                     </div>
+
 
                     <md-button ng-disabled="!search.allArgumentsFilled()" class="md-fab md-mini"
                                ng-click="search.commitChipPart(); search.filterPossibleNets(); tab.search()">
@@ -214,5 +123,12 @@
             </md-button>
         </div>
 
+    </div>
+</div>
+<div ng-if="search.guiComplexity==='HEADER'">
+    <div ng-repeat="type in search.getHeaderInputTypes() track by $index">
+        <div ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"
+             ng-init="switchExpression = 'type'">
+        </div>
     </div>
 </div><!-- ./card -->

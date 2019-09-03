@@ -24,7 +24,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
 
         this.activeFilter = baseFilter;
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
-        this.caseSearch = new Search(this, Search.SEARCH_CASES, {
+        this.caseSearch = new Search(this, Search.SEARCH_CASES, Search.COMPLEX_SEARCH, {
             $process: this.$process,
             $http: this.$http,
             $config: this.$config,
