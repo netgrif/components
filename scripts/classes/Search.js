@@ -3,6 +3,7 @@ define(['./Filter'], function (Filter) {
     /**
      * @param parent Parent controller
      * @param searchType Search.SEARCH_CASES or Search.SEARCH_TASKS
+     * @param guiComplexity which GUIs are displayed to the user (Search.COMPLEX_GUI, Search.HEADER_GUI, Search.COMBINED_GUI)
      * @param angular $process, $http, $config, $i18n
      * @param config options: considerWholeSearchInput
      * @constructor
@@ -346,7 +347,7 @@ define(['./Filter'], function (Filter) {
 
     Search.COMPLEX_GUI = "COMPLEX";
     Search.HEADER_GUI = "HEADER";
-    Search.COMBINED_GUI = "BOTH";
+    Search.COMBINED_GUI = "COMBINED";
 
     Search.OPERATOR = {
         EQUAL: {

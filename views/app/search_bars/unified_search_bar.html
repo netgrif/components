@@ -1,4 +1,4 @@
-<div layout="row" class="card padding-2x" ng-if="search.guiComplexity==='COMPLEX' || search.guiComplexity==='BOTH'">
+<div layout="row" class="card padding-2x" ng-if="search.guiComplexity==='COMPLEX' || search.guiComplexity==='COMBINED'">
 
     <div flex layout="column">
 
@@ -125,7 +125,7 @@
 
     </div>
 </div>
-<div layout="row" class="card-header padding-horizontal-2x" ng-if="search.guiComplexity==='HEADER' || search.guiComplexity==='BOTH'">
+<div layout="row" class="card-header padding-horizontal-2x" ng-if="search.guiComplexity==='HEADER' || search.guiComplexity==='COMBINED'">
     <div ng-repeat="metadata in search.headerSearchFieldsMetadata track by $index">
         <div ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"
              ng-init="switchExpression = 'metadata.inputType'; inputGui = 'HEADER'">
