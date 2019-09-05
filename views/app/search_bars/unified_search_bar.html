@@ -1,4 +1,4 @@
-<div layout="row" class="card padding-2x" ng-if="search.guiComplexity==='COMPLEX'">
+<div layout="row" class="card padding-2x" ng-if="search.guiComplexity==='COMPLEX' || search.guiComplexity==='BOTH'">
 
     <div flex layout="column">
 
@@ -50,7 +50,7 @@
 
                     <div ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index" ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0">
                          <div ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"
-                              ng-init="switchExpression = 'search.searchCategory.argsInputType && search.searchCategory.argsInputType()'">
+                              ng-init="switchExpression = 'search.searchCategory.argsInputType && search.searchCategory.argsInputType()'; inputGui = 'COMPLEX'">
                          </div>
                     </div>
 
@@ -125,10 +125,18 @@
 
     </div>
 </div>
-<div ng-if="search.guiComplexity==='HEADER'">
+<div layout="row" class="card-header padding-horizontal-2x" ng-if="search.guiComplexity==='HEADER' || search.guiComplexity==='BOTH'">
     <div ng-repeat="type in search.getHeaderInputTypes() track by $index">
         <div ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"
-             ng-init="switchExpression = 'type'">
+             ng-init="switchExpression = 'type'; inputGui = 'HEADER'">
         </div>
     </div>
+    <!-- TODO change disabled condition -->
+    <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0)" class="md-fab md-mini"
+               ng-click="search.commitChip(); tab.search(); mainCtrl.reloadCounters(); search.filterPossibleNets()" layout-align=" end">
+        <md-icon class="material-icons">search</md-icon>
+        <md-tooltip md-direction="top">
+            search
+        </md-tooltip>
+    </md-button>
 </div><!-- ./card -->

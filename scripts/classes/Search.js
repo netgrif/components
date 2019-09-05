@@ -23,8 +23,12 @@ define(['./Filter'], function (Filter) {
         this.searchCategory = undefined;
         this.searchDatafield = undefined;
         this.searchOperator = undefined;
-        this.searchArguments = [];
-        this.searchObjects = [];
+        this.searchArguments = {};
+        this.searchArguments[Search.COMPLEX_SEARCH] = [];
+        this.searchArguments[Search.HEADER_SEARCH] = [];
+        this.searchObjects = {};
+        this.searchObjects[Search.COMPLEX_SEARCH] = [];
+        this.searchObjects[Search.HEADER_SEARCH] = [];
 
         this.chipParts = {
             committed: [],
@@ -46,14 +50,14 @@ define(['./Filter'], function (Filter) {
                 getElasticKeyword: function () {
                     return ["visualId"];
                 },
-                getQueryArguments: function () {
-                    return self.searchArguments;
+                getQueryArguments: function (inputGui) {
+                    return self.searchArguments[inputGui];
                 },
                 getTextPrefix: function() {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return this.getQueryArguments();
+                    return this.getQueryArguments(Search.COMPLEX_SEARCH);
                 },
                 isEnabled: function () {
                     return true;
@@ -66,17 +70,17 @@ define(['./Filter'], function (Filter) {
                 argsInputType: function () {
                     return "autocomplete";
                 },
-                autocompleteFilter: function(index) {
-                    if(!self.searchArguments[index])
+                autocompleteFilter: function(inputGui, index) {
+                    if(!self.searchArguments[inputGui][index])
                         return this._filterArguments("");
-                    return this._filterArguments(self.searchArguments[index]);
+                    return this._filterArguments(self.searchArguments[inputGui][index]);
                 },
                 getElasticKeyword: function () {
                     return ["processId"];
                 },
-                getQueryArguments: function () {
+                getQueryArguments: function (inputGui) {
                     let args = [];
-                    this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
+                    this.autocompleteItems.get(self.searchArguments[inputGui][0]).forEach(function (autocomplete) {
                         args.push(autocomplete.id);
                     });
                     return args;
@@ -85,7 +89,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return self.searchArguments;
+                    return self.searchArguments[Search.COMPLEX_SEARCH];
                 },
                 isEnabled: function () {
                     return this._filterArguments("").length > 0;
@@ -101,14 +105,14 @@ define(['./Filter'], function (Filter) {
                 getElasticKeyword: function () {
                     return ["title"];
                 },
-                getQueryArguments: function () {
-                    return self.searchArguments;
+                getQueryArguments: function (inputGui) {
+                    return self.searchArguments[inputGui];
                 },
                 getTextPrefix: function() {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return this.getQueryArguments();
+                    return this.getQueryArguments(Search.COMPLEX_SEARCH);
                 },
                 isEnabled: function () {
                     return true;
@@ -124,14 +128,14 @@ define(['./Filter'], function (Filter) {
                 getElasticKeyword: function () {
                     return ["creationDateSortable"];
                 },
-                getQueryArguments: function () {
-                    return self.searchArguments;
+                getQueryArguments: function (inputGui) {
+                    return self.searchArguments[inputGui];
                 },
                 getTextPrefix: function() {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return self.formatDateArguments(this.getQueryArguments());
+                    return self.formatDateArguments(this.getQueryArguments(Search.COMPLEX_SEARCH));
                 },
                 isEnabled: function () {
                     return true;
@@ -144,14 +148,14 @@ define(['./Filter'], function (Filter) {
                 getElasticKeyword: function () {
                     return ["authorEmail", "authorName"];
                 },
-                getQueryArguments: function () {
-                    return self.searchArguments;
+                getQueryArguments: function (inputGui) {
+                    return self.searchArguments[inputGui];
                 },
                 getTextPrefix: function() {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return self.searchArguments;
+                    return this.getQueryArguments(Search.COMPLEX_SEARCH);
                 },
                 isEnabled: function () {
                     return true;
@@ -176,8 +180,8 @@ define(['./Filter'], function (Filter) {
                     });
                     return keywords;
                 },
-                getQueryArguments: function () {
-                    return self.searchArguments;
+                getQueryArguments: function (inputGui) {
+                    return self.searchArguments[inputGui];
                 },
                 getTextPrefix: function() {
                     return "Datafield "+self.searchDatafield;
@@ -185,9 +189,9 @@ define(['./Filter'], function (Filter) {
                 getFormattedArguments: function() {
                     switch (this.argsInputType()) {
                         case "date":
-                            return self.formatDateArguments(this.getQueryArguments());
+                            return self.formatDateArguments(this.getQueryArguments(Search.COMPLEX_SEARCH));
                         default:
-                            return this.getQueryArguments();
+                            return this.getQueryArguments(Search.COMPLEX_SEARCH);
                     }
                 },
                 isEnabled: function () {
@@ -204,22 +208,22 @@ define(['./Filter'], function (Filter) {
                 argsInputType: function () {
                     return "autocomplete";
                 },
-                autocompleteFilter: function(index) {
-                    if(!self.searchArguments[index])
+                autocompleteFilter: function(inputGui, index) {
+                    if(!self.searchArguments[inputGui][index])
                         return this._filterArguments("");
-                    return this._filterArguments(self.searchArguments[index]);
+                    return this._filterArguments(self.searchArguments[inputGui][index]);
                 },
                 getElasticKeyword: function () {
                     return ["taskIds"];
                 },
-                getQueryArguments: function () {
-                    return self.searchArguments;
+                getQueryArguments: function (inputGui) {
+                    return self.searchArguments[inputGui];
                 },
                 getTextPrefix: function() {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return this.getQueryArguments();
+                    return this.getQueryArguments(Search.COMPLEX_SEARCH);
                 },
                 overrideQueryGeneration: function (operator) {
                     let matchingAutocompleteItems = [];
@@ -255,17 +259,17 @@ define(['./Filter'], function (Filter) {
                 argsInputType: function () {
                     return "autocomplete";
                 },
-                autocompleteFilter: function(index) {
-                    if(!self.searchArguments[index])
+                autocompleteFilter: function(inputGui, index) {
+                    if(!self.searchArguments[inputGui][index])
                         return this._filterArguments("");
-                    return this._filterArguments(self.searchArguments[index]);
+                    return this._filterArguments(self.searchArguments[inputGui][index]);
                 },
                 getElasticKeyword: function () {
                     return ["enabledRoles"];
                 },
-                getQueryArguments: function () {
+                getQueryArguments: function (inputGui) {
                     let args = [];
-                    this.autocompleteItems.get(self.searchArguments[0]).forEach(function (autocomplete) {
+                    this.autocompleteItems.get(self.searchArguments[inputGui][0]).forEach(function (autocomplete) {
                         args.push(autocomplete.id);
                     });
                     return args;
@@ -274,7 +278,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return self.searchArguments;
+                    return self.searchArguments[Search.COMPLEX_SEARCH];
                 },
                 isEnabled: function () {
                     return this._filterArguments("").length > 0;
@@ -298,12 +302,12 @@ define(['./Filter'], function (Filter) {
                 getElasticKeyword: function () {
                     return ["userId"];
                 },
-                getQueryArguments: function () {
-                    if( !self.searchObjects || self.searchObjects.length === 0)
+                getQueryArguments: function (inputGui) {
+                    if( !self.searchObjects[inputGui] || self.searchObjects[inputGui].length === 0)
                         return [];
 
                     let args = [];
-                    self.searchObjects.forEach(function (userObject) {
+                    self.searchObjects[inputGui].forEach(function (userObject) {
                         args.push(userObject.id);
                     });
                     return args;
@@ -312,7 +316,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return self.searchArguments;
+                    return self.searchArguments[Search.COMPLEX_SEARCH];
                 },
                 isEnabled: function () {
                     return true;
@@ -336,6 +340,7 @@ define(['./Filter'], function (Filter) {
 
     Search.COMPLEX_SEARCH = "COMPLEX";
     Search.HEADER_SEARCH = "HEADER";
+    Search.BOTH_SEARCH = "BOTH";
 
     Search.OPERATOR = {
         EQUAL: {
@@ -617,7 +622,7 @@ define(['./Filter'], function (Filter) {
         if(!this.searchOperator)
             return false;
         for(let argIndex = 0; argIndex < this.searchOperator.numberOfOperands; argIndex++) {
-            if( typeof this.searchArguments[argIndex] === "undefined" || this.searchArguments[argIndex].toString().length === 0)
+            if( typeof this.searchArguments[Search.COMPLEX_SEARCH][argIndex] === "undefined" || this.searchArguments[Search.COMPLEX_SEARCH][argIndex].toString().length === 0)
                 return false;
         }
         return true;
@@ -636,8 +641,8 @@ define(['./Filter'], function (Filter) {
         this.searchCategory = undefined;
         this.searchDatafield = undefined;
         this.searchOperator = undefined;
-        this.searchArguments.splice(0, this.searchArguments.length);
-        this.searchObjects.splice(0, this.searchObjects.length);
+        this.searchArguments[Search.COMPLEX_SEARCH].splice(0, this.searchArguments[Search.COMPLEX_SEARCH].length);
+        this.searchObjects[Search.COMPLEX_SEARCH].splice(0, this.searchObjects[Search.COMPLEX_SEARCH].length);
     };
 
     Search.prototype.clearFieldsCategory = function() {
@@ -651,8 +656,8 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.clearFieldsOperator = function() {
-        this.searchArguments.splice(0, this.searchArguments.length);
-        this.searchObjects.splice(0, this.searchObjects.length);
+        this.searchArguments[Search.COMPLEX_SEARCH].splice(0, this.searchArguments[Search.COMPLEX_SEARCH].length);
+        this.searchObjects[Search.COMPLEX_SEARCH].splice(0, this.searchObjects[Search.COMPLEX_SEARCH].length);
     };
 
     Search.prototype.commitChip = function () {
@@ -738,19 +743,19 @@ define(['./Filter'], function (Filter) {
                 case "Process":
                 case "Task":
                 case "Role":
-                    this.searchCategory.autocompleteItems.get(this.searchArguments[0]).forEach(function (autocompleteItem) {
+                    this.searchCategory.autocompleteItems.get(this.searchArguments[Search.COMPLEX_SEARCH][0]).forEach(function (autocompleteItem) {
                         possibleNets.push(autocompleteItem.netId);
                     });
-                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets);
+                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_SEARCH], possibleNets);
                     break;
                 case "Dataset":
                     this.searchCategory.autocompleteItems.get(this.searchDatafield).forEach(function (autocompleteItem) {
                         possibleNets.push(autocompleteItem.netId);
                     });
-                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments, possibleNets);
+                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_SEARCH], possibleNets);
                     break;
                 default:
-                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments);
+                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_SEARCH]);
                     break;
             }
         }
@@ -839,9 +844,9 @@ define(['./Filter'], function (Filter) {
             return category.overrideQueryGeneration(operator);
 
         if(category.argsInputType && category.argsInputType() === "date")
-            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(), Search.OPERATOR.EQUAL_DATE);
+            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(Search.COMPLEX_SEARCH), Search.OPERATOR.EQUAL_DATE);
         else
-            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(), Search.OPERATOR.EQUAL);
+            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(Search.COMPLEX_SEARCH), Search.OPERATOR.EQUAL);
     };
     
     ChipPart.prototype.createElementaryText = function (category, operator) {
