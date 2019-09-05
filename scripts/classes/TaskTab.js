@@ -25,7 +25,7 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
         if (this.searchable) {
-            this.taskSearch = new Search(this, Search.SEARCH_TASKS, Search.COMPLEX_SEARCH, {
+            this.taskSearch = new Search(this, Search.SEARCH_TASKS, Search.COMPLEX_GUI, {
                 $process: this.$process,
                 $http: this.$http,
                 $config: this.$config,

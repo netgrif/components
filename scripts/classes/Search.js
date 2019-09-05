@@ -19,16 +19,18 @@ define(['./Filter'], function (Filter) {
         this.allNets = new Set();
         this.possibleNets = new Set();
 
+        this.headerSearchFieldsMetadata = [];
+
         // bound variables
         this.searchCategory = undefined;
         this.searchDatafield = undefined;
         this.searchOperator = undefined;
         this.searchArguments = {};
-        this.searchArguments[Search.COMPLEX_SEARCH] = [];
-        this.searchArguments[Search.HEADER_SEARCH] = [];
+        this.searchArguments[Search.COMPLEX_GUI] = [];
+        this.searchArguments[Search.HEADER_GUI] = [];
         this.searchObjects = {};
-        this.searchObjects[Search.COMPLEX_SEARCH] = [];
-        this.searchObjects[Search.HEADER_SEARCH] = [];
+        this.searchObjects[Search.COMPLEX_GUI] = [];
+        this.searchObjects[Search.HEADER_GUI] = [];
 
         this.chipParts = {
             committed: [],
@@ -57,7 +59,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return this.getQueryArguments(Search.COMPLEX_SEARCH);
+                    return this.getQueryArguments(Search.COMPLEX_GUI);
                 },
                 isEnabled: function () {
                     return true;
@@ -89,7 +91,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return self.searchArguments[Search.COMPLEX_SEARCH];
+                    return self.searchArguments[Search.COMPLEX_GUI];
                 },
                 isEnabled: function () {
                     return this._filterArguments("").length > 0;
@@ -112,7 +114,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return this.getQueryArguments(Search.COMPLEX_SEARCH);
+                    return this.getQueryArguments(Search.COMPLEX_GUI);
                 },
                 isEnabled: function () {
                     return true;
@@ -135,7 +137,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return self.formatDateArguments(this.getQueryArguments(Search.COMPLEX_SEARCH));
+                    return self.formatDateArguments(this.getQueryArguments(Search.COMPLEX_GUI));
                 },
                 isEnabled: function () {
                     return true;
@@ -155,7 +157,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return this.getQueryArguments(Search.COMPLEX_SEARCH);
+                    return this.getQueryArguments(Search.COMPLEX_GUI);
                 },
                 isEnabled: function () {
                     return true;
@@ -176,7 +178,7 @@ define(['./Filter'], function (Filter) {
                 getElasticKeyword: function () {
                     let keywords = [];
                     this.autocompleteItems.get(self.searchDatafield).forEach(function (keyword) {
-                        keywords.push("dataSet."+keyword.id+".value");
+                        keywords.push(this.fullKeywordFromId(keyword.id));
                     });
                     return keywords;
                 },
@@ -189,13 +191,16 @@ define(['./Filter'], function (Filter) {
                 getFormattedArguments: function() {
                     switch (this.argsInputType()) {
                         case "date":
-                            return self.formatDateArguments(this.getQueryArguments(Search.COMPLEX_SEARCH));
+                            return self.formatDateArguments(this.getQueryArguments(Search.COMPLEX_GUI));
                         default:
-                            return this.getQueryArguments(Search.COMPLEX_SEARCH);
+                            return this.getQueryArguments(Search.COMPLEX_GUI);
                     }
                 },
                 isEnabled: function () {
                     return this._filterDatafields("").length > 0;
+                },
+                fullKeywordFromId: function (datafieldId) {
+                    return "dataSet."+datafieldId+".value";
                 },
                 _filterDatafields: function (text) {
                     return self._filterAutocompleteItems(text, this);
@@ -223,7 +228,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return this.getQueryArguments(Search.COMPLEX_SEARCH);
+                    return this.getQueryArguments(Search.COMPLEX_GUI);
                 },
                 overrideQueryGeneration: function (operator) {
                     let matchingAutocompleteItems = [];
@@ -278,7 +283,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return self.searchArguments[Search.COMPLEX_SEARCH];
+                    return self.searchArguments[Search.COMPLEX_GUI];
                 },
                 isEnabled: function () {
                     return this._filterArguments("").length > 0;
@@ -316,7 +321,7 @@ define(['./Filter'], function (Filter) {
                     return this.name;
                 },
                 getFormattedArguments: function() {
-                    return self.searchArguments[Search.COMPLEX_SEARCH];
+                    return self.searchArguments[Search.COMPLEX_GUI];
                 },
                 isEnabled: function () {
                     return true;
@@ -333,14 +338,15 @@ define(['./Filter'], function (Filter) {
         this.fillVariableAllNets();
         this.resetPossibleNets();
         this.evaluateEnabledCategories();
+        this.setHeaderInputMetadata();
     }
 
     Search.SEARCH_CASES = Filter.CASE_TYPE;
     Search.SEARCH_TASKS = Filter.TASK_TYPE;
 
-    Search.COMPLEX_SEARCH = "COMPLEX";
-    Search.HEADER_SEARCH = "HEADER";
-    Search.BOTH_SEARCH = "BOTH";
+    Search.COMPLEX_GUI = "COMPLEX";
+    Search.HEADER_GUI = "HEADER";
+    Search.COMBINED_GUI = "BOTH";
 
     Search.OPERATOR = {
         EQUAL: {
@@ -622,7 +628,7 @@ define(['./Filter'], function (Filter) {
         if(!this.searchOperator)
             return false;
         for(let argIndex = 0; argIndex < this.searchOperator.numberOfOperands; argIndex++) {
-            if( typeof this.searchArguments[Search.COMPLEX_SEARCH][argIndex] === "undefined" || this.searchArguments[Search.COMPLEX_SEARCH][argIndex].toString().length === 0)
+            if( typeof this.searchArguments[Search.COMPLEX_GUI][argIndex] === "undefined" || this.searchArguments[Search.COMPLEX_GUI][argIndex].toString().length === 0)
                 return false;
         }
         return true;
@@ -641,8 +647,8 @@ define(['./Filter'], function (Filter) {
         this.searchCategory = undefined;
         this.searchDatafield = undefined;
         this.searchOperator = undefined;
-        this.searchArguments[Search.COMPLEX_SEARCH].splice(0, this.searchArguments[Search.COMPLEX_SEARCH].length);
-        this.searchObjects[Search.COMPLEX_SEARCH].splice(0, this.searchObjects[Search.COMPLEX_SEARCH].length);
+        this.searchArguments[Search.COMPLEX_GUI].splice(0, this.searchArguments[Search.COMPLEX_GUI].length);
+        this.searchObjects[Search.COMPLEX_GUI].splice(0, this.searchObjects[Search.COMPLEX_GUI].length);
     };
 
     Search.prototype.clearFieldsCategory = function() {
@@ -656,8 +662,8 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.clearFieldsOperator = function() {
-        this.searchArguments[Search.COMPLEX_SEARCH].splice(0, this.searchArguments[Search.COMPLEX_SEARCH].length);
-        this.searchObjects[Search.COMPLEX_SEARCH].splice(0, this.searchObjects[Search.COMPLEX_SEARCH].length);
+        this.searchArguments[Search.COMPLEX_GUI].splice(0, this.searchArguments[Search.COMPLEX_GUI].length);
+        this.searchObjects[Search.COMPLEX_GUI].splice(0, this.searchObjects[Search.COMPLEX_GUI].length);
     };
 
     Search.prototype.commitChip = function () {
@@ -700,12 +706,17 @@ define(['./Filter'], function (Filter) {
     Search.prototype.commitFilter = function() {};
 
     Search.prototype.getFilter = function() {
-        this._predictChip();
         let combinedChips;
-        if(this.chips.predicted)
-            combinedChips = [].concat(this.chips.committed, [this.chips.predicted]);
-        else
-            combinedChips = this.chips.committed;
+        if(this.guiComplexity === Search.COMPLEX_GUI || this.guiComplexity === Search.COMBINED_GUI) {
+            this._predictChip();
+            if(this.chips.predicted)
+                combinedChips = [].concat(this.chips.committed, [this.chips.predicted]);
+            else
+                combinedChips = this.chips.committed;
+        }
+        if(this.guiComplexity === Search.HEADER_GUI || this.guiComplexity === Search.COMBINED_GUI) {
+            // TODO add header search chips
+        }
         return new Filter("", this.searchType, this.buildSearchQuery(combinedChips), undefined, this.parent, combinedChips);
     };
 
@@ -743,19 +754,19 @@ define(['./Filter'], function (Filter) {
                 case "Process":
                 case "Task":
                 case "Role":
-                    this.searchCategory.autocompleteItems.get(this.searchArguments[Search.COMPLEX_SEARCH][0]).forEach(function (autocompleteItem) {
+                    this.searchCategory.autocompleteItems.get(this.searchArguments[Search.COMPLEX_GUI][0]).forEach(function (autocompleteItem) {
                         possibleNets.push(autocompleteItem.netId);
                     });
-                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_SEARCH], possibleNets);
+                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_GUI], Search.COMPLEX_GUI, possibleNets);
                     break;
                 case "Dataset":
                     this.searchCategory.autocompleteItems.get(this.searchDatafield).forEach(function (autocompleteItem) {
                         possibleNets.push(autocompleteItem.netId);
                     });
-                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_SEARCH], possibleNets);
+                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_GUI], Search.COMPLEX_GUI, possibleNets);
                     break;
                 default:
-                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_SEARCH]);
+                    this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_GUI], Search.COMPLEX_GUI);
                     break;
             }
         }
@@ -777,15 +788,29 @@ define(['./Filter'], function (Filter) {
             this.chips.predicted = undefined;
     };
 
-    Search.prototype.getHeaderInputTypes = function () {
-        let inputTypes = [];
+    Search.prototype.formatDateArguments = function(arguments) {
+        let formattedArguments = [];
+        arguments.forEach(function (arg) {
+            formattedArguments.push(arg.toLocaleDateString(this.$i18n.current(), {year:"numeric", month:"numeric", day:"numeric"}));
+        }, this);
+        return formattedArguments;
+    };
+
+    Search.prototype.setHeaderInputMetadata = function () {
+        this.headerSearchFieldsMetadata.splice(0, this.headerSearchFieldsMetadata.length);
+
         if(this.parent.headers) {
             for(const key of Object.keys(this.parent.headers.selected)) {
                 let headerItem = this.parent.headers.selected[key];
                 if(headerItem.stringId.startsWith("meta-")) {
                     for(const category of Object.keys(this.categories[this.searchType])) {
                         if(headerItem.stringId === this.categories[this.searchType][category].headerName) {
-                            inputTypes.push( this.categories[this.searchType][category].argsInputType && this.categories[this.searchType][category].argsInputType() );
+                            this.headerSearchFieldsMetadata.push(
+                                new HeaderSearchMetadata(
+                                    this.categories[this.searchType][category].getElasticKeyword(),
+                                    this.categories[this.searchType][category].argsInputType && this.categories[this.searchType][category].argsInputType()
+                                )
+                            );
                             break;
                         }
                     }
@@ -793,25 +818,29 @@ define(['./Filter'], function (Filter) {
                 else {
                     for(let datafield of this.categories[this.searchType].dataset.autocompleteItems.get(headerItem.title)) {
                         if(headerItem.stringId === datafield.id) {
-                            inputTypes.push(datafield.inputType);
+                            this.headerSearchFieldsMetadata.push(
+                                new HeaderSearchMetadata(
+                                    [this.categories[this.searchType].dataset.fullKeywordFromId(datafield.id)],
+                                    datafield.inputType
+                                )
+                            );
                             break;
                         }
                     }
                 }
             }
         }
-        return inputTypes;
     };
 
 
-    function ChipPart(category, operator, arguments, possibleNets = undefined) {
+    function ChipPart(category, operator, arguments, inputGui, possibleNets = undefined) {
         let escapedArguments = [];
         arguments.forEach(function (argument) {
             escapedArguments.push(Search.escapeInput(argument));
         });
 
         this.text = this.createElementaryText(category, operator, escapedArguments);
-        this.query = this.createElementaryQuery(category, operator);
+        this.query = this.createElementaryQuery(category, operator, inputGui);
         this.possibleNets = possibleNets;
         this.isComplement = operator === Search.OPERATOR.NOT_EQUAL;
         if(this.isComplement) {
@@ -830,23 +859,14 @@ define(['./Filter'], function (Filter) {
         }
     }
 
-    Search.prototype.formatDateArguments = function(arguments) {
-        let formattedArguments = [];
-        arguments.forEach(function (arg) {
-            formattedArguments.push(arg.toLocaleDateString(this.$i18n.current(), {year:"numeric", month:"numeric", day:"numeric"}));
-        }, this);
-        return formattedArguments;
-    };
-
-
-    ChipPart.prototype.createElementaryQuery = function (category, operator) {
+    ChipPart.prototype.createElementaryQuery = function (category, operator, inputGui) {
         if(category.overrideQueryGeneration)
             return category.overrideQueryGeneration(operator);
 
         if(category.argsInputType && category.argsInputType() === "date")
-            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(Search.COMPLEX_SEARCH), Search.OPERATOR.EQUAL_DATE);
+            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(inputGui), Search.OPERATOR.EQUAL_DATE);
         else
-            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(Search.COMPLEX_SEARCH), Search.OPERATOR.EQUAL);
+            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(inputGui), Search.OPERATOR.EQUAL);
     };
     
     ChipPart.prototype.createElementaryText = function (category, operator) {
@@ -892,6 +912,12 @@ define(['./Filter'], function (Filter) {
         this.name = name;
         this.email = email;
         this.id = id;
+    }
+
+
+    function HeaderSearchMetadata(elasticKeyword, inputType) {
+        this.elasticKeyword = elasticKeyword;
+        this.inputType = inputType;
     }
 
     return Search;

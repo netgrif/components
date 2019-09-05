@@ -24,12 +24,6 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
 
         this.activeFilter = baseFilter;
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
-        this.caseSearch = new Search(this, Search.SEARCH_CASES, Search.BOTH_SEARCH, {
-            $process: this.$process,
-            $http: this.$http,
-            $config: this.$config,
-            $i18n: this.$i18n
-        }, {});
 
         this.headers = {
             sortItem: undefined,
@@ -45,6 +39,13 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
             }
         };
         this.buildHeaders();
+
+        this.caseSearch = new Search(this, Search.SEARCH_CASES, Search.COMBINED_GUI, {
+            $process: this.$process,
+            $http: this.$http,
+            $config: this.$config,
+            $i18n: this.$i18n
+        }, {});
     }
 
     CaseTab.prototype = Object.create(Tab.prototype);
@@ -128,6 +129,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
                 return header.stringId;
             });
         this.$user.savePreferenceCaseHeaders(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, headers);
+        this.caseSearch.setHeaderInputMetadata();
     };
 
     CaseTab.prototype.flipDirection = function (dir) {
