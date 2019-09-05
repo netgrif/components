@@ -799,38 +799,62 @@ define(['./Filter'], function (Filter) {
 
     Search.prototype.setHeaderInputMetadata = function () {
         this.headerSearchFieldsMetadata.splice(0, this.headerSearchFieldsMetadata.length);
-
         if(this.parent.headers) {
             for(const key of Object.keys(this.parent.headers.selected)) {
                 let headerItem = this.parent.headers.selected[key];
-                if(headerItem.stringId.startsWith("meta-")) {
-                    for(const category of Object.keys(this.categories[this.searchType])) {
-                        if(headerItem.stringId === this.categories[this.searchType][category].headerName) {
-                            this.headerSearchFieldsMetadata.push(
-                                new HeaderSearchMetadata(
-                                    this.categories[this.searchType][category].getElasticKeyword(),
-                                    this.categories[this.searchType][category].argsInputType && this.categories[this.searchType][category].argsInputType()
-                                )
-                            );
-                            break;
+                if(headerItem) {
+                    if(headerItem.stringId.startsWith("meta-")) {
+                        for(const category of Object.keys(this.categories[this.searchType])) {
+                            if(headerItem.stringId === this.categories[this.searchType][category].headerName) {
+                                this.headerSearchFieldsMetadata.push(
+                                    new HeaderSearchMetadata(
+                                        this.categories[this.searchType][category].getElasticKeyword(),
+                                        this.categories[this.searchType][category].argsInputType && this.categories[this.searchType][category].argsInputType(),
+                                        this.categories[this.searchType][category].allowedOperators
+                                    )
+                                );
+                                break;
+                            }
                         }
                     }
-                }
-                else {
-                    for(let datafield of this.categories[this.searchType].dataset.autocompleteItems.get(headerItem.title)) {
-                        if(headerItem.stringId === datafield.id) {
-                            this.headerSearchFieldsMetadata.push(
-                                new HeaderSearchMetadata(
-                                    [this.categories[this.searchType].dataset.fullKeywordFromId(datafield.id)],
-                                    datafield.inputType
-                                )
-                            );
-                            break;
+                    else {
+                        for(let datafield of this.categories[this.searchType].dataset.autocompleteItems.get(headerItem.title)) {
+                            if(headerItem.stringId === datafield.id) {
+                                this.headerSearchFieldsMetadata.push(
+                                    new HeaderSearchMetadata(
+                                        [this.categories[this.searchType].dataset.fullKeywordFromId(datafield.id)],
+                                        datafield.inputType,
+                                        this.categories[this.searchType].dataset.allowedOperators
+                                    )
+                                );
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
+    };
+
+    Search.prototype.createChipsFromHeaderInput = function () {
+        let fakeChipParts = [];
+
+        for(let i = 0; i < this.headerSearchFieldsMetadata.length; i++) {
+            let operator = Search.OPERATOR.EQUAL;
+            if(this.headerSearchFieldsMetadata[i].allowedOperators.includes(Search.OPERATOR.LIKE))
+                operator = Search.OPERATOR.LIKE;
+            if(this.headerSearchFieldsMetadata[i].inputType==="date")
+                operator = Search.OPERATOR.EQUAL_DATE;
+
+            // TODO only if it is filled!
+            fakeChipParts.push({
+                text: "",
+                query: Search.simpleOperatorQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, this.searchArguments[Search.HEADER_GUI][i], operator)
+            });
+
+            return new Chip(fakeChipParts, "AND");
+        }
+
     };
 
 
@@ -916,9 +940,10 @@ define(['./Filter'], function (Filter) {
     }
 
 
-    function HeaderSearchMetadata(elasticKeyword, inputType) {
+    function HeaderSearchMetadata(elasticKeyword, inputType, allowedOperators) {
         this.elasticKeyword = elasticKeyword;
         this.inputType = inputType;
+        this.allowedOperators = allowedOperators;
     }
 
     return Search;
