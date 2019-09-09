@@ -594,6 +594,37 @@ define(['./Filter'], function (Filter) {
                     if(immediateData.type !== "dateTime") // TODO remove after dateTime is supported
                         this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
                 }, this);
+
+                let typeCollision = true
+                while(typeCollision) {
+                    typeCollision = false;
+                    let mixedTypesMap = this.categories[Search.SEARCH_CASES].dataset.autocompleteItems;
+                    this.categories[Search.SEARCH_CASES].dataset.autocompleteItems = new Map();
+                    mixedTypesMap.forEach(function (value, key) {
+                        let type = value[0].inputType;
+                        let i;
+                        for(i = 1; i < value.length; i++) {
+                            if(value[i].inputType !== type)
+                                break;
+                        }
+                        if(i === value.length) {
+                            if(!this.categories[Search.SEARCH_CASES].dataset.autocompleteItems.has(key))
+                                this.categories[Search.SEARCH_CASES].dataset.autocompleteItems.set(key, value);
+                            else {
+                                typeCollision = true;
+                                value.forEach(function (autocompleteItem) {
+                                    this.addNameToIdMapping("dataset", key, autocompleteItem.id, autocompleteItem.netId, autocompleteItem.inputType);
+                                }, this);
+                            }
+                        }
+                        else {
+                            typeCollision = true;
+                            value.forEach(function (autocompleteItem) {
+                                this.addNameToIdMapping("dataset", key+" ["+autocompleteItem.inputType+"]", autocompleteItem.id, autocompleteItem.netId, autocompleteItem.inputType); // TODO i18n
+                            }, this);
+                        }
+                    }, this);
+                }
             }
         }, this);
     };
