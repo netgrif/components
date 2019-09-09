@@ -390,7 +390,7 @@ define(['./Filter'], function (Filter) {
             display: "=",
             numberOfOperands: 1,
             createQuery: function(keywords, args) {
-                return Search.operatorQuery(keywords, args, "");
+                return Search._operatorQuery(keywords, args, "");
             },
             createText: function (args) {
                 return Search.operatorText(args, "=");
@@ -410,7 +410,7 @@ define(['./Filter'], function (Filter) {
             display: ">",
             numberOfOperands: 1,
             createQuery: function (keywords, args) {
-                return Search.operatorQuery(keywords, args, ">");
+                return Search._operatorQuery(keywords, args, ">");
             },
             createText: function (args) {
                 return Search.operatorText(args, ">");
@@ -420,7 +420,7 @@ define(['./Filter'], function (Filter) {
             display: "<",
             numberOfOperands: 1,
             createQuery: function (keywords, args) {
-                return Search.operatorQuery(keywords, args, "<");
+                return Search._operatorQuery(keywords, args, "<");
             },
             createText: function (args) {
                 return Search.operatorText(args, "<");
@@ -507,7 +507,7 @@ define(['./Filter'], function (Filter) {
         return Search.bindQueries(simpleQueries, "OR");
     };
 
-    Search.operatorQuery = function(keywords, args, operator) {
+    Search._operatorQuery = function(keywords, args, operator) {
         return Search.forEachKeyword(keywords, function (keyword) {
             return Search.simpleOperatorQuery(keyword, Search.wrapWithQuotes(args[0]).value, operator);
         });
@@ -595,7 +595,7 @@ define(['./Filter'], function (Filter) {
                         this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
                 }, this);
 
-                let typeCollision = true
+                let typeCollision = true;
                 while(typeCollision) {
                     typeCollision = false;
                     let mixedTypesMap = this.categories[Search.SEARCH_CASES].dataset.autocompleteItems;
@@ -786,10 +786,9 @@ define(['./Filter'], function (Filter) {
         });
     };
 
-    Search.prototype.commitFilter = function() {};
-
     Search.prototype.getFilter = function() {
         let combinedChips;
+
         if(this.guiComplexity === Search.COMPLEX_GUI || this.guiComplexity === Search.COMBINED_GUI) {
             this._predictChip();
             if(this.chips.predicted)
@@ -800,6 +799,15 @@ define(['./Filter'], function (Filter) {
         if(this.guiComplexity === Search.HEADER_GUI || this.guiComplexity === Search.COMBINED_GUI) {
             combinedChips = combinedChips.concat(this.createChipsFromHeaderInput());
         }
+
+        if(this.possibleNets.size < this.allNets.size) {
+            let netQueries = [];
+            this.possibleNets.forEach(function (netId) {
+                netQueries.push(Search.OPERATOR.EQUAL.createQuery(this.categories[Search.SEARCH_CASES].process.getElasticKeyword(), [netId]));
+            }, this);
+            combinedChips = combinedChips.concat([{text:"", query:Search.bindQueries(netQueries, "OR")}]);
+        }
+
         return new Filter("", this.searchType, this.buildSearchQuery(combinedChips), undefined, this.parent, combinedChips);
     };
 
