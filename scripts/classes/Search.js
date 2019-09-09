@@ -180,7 +180,7 @@ define(['./Filter'], function (Filter) {
                     let keywords = [];
                     this.autocompleteItems.get(self.searchDatafield).forEach(function (keyword) {
                         keywords.push(this.fullKeywordFromId(keyword.id));
-                    });
+                    }, this);
                     return keywords;
                 },
                 getQueryArguments: function (inputGui) {
@@ -716,7 +716,7 @@ define(['./Filter'], function (Filter) {
                 combinedChips = this.chips.committed;
         }
         if(this.guiComplexity === Search.HEADER_GUI || this.guiComplexity === Search.COMBINED_GUI) {
-            // TODO add header search chips
+            combinedChips = combinedChips.concat(this.createChipsFromHeaderInput());
         }
         return new Filter("", this.searchType, this.buildSearchQuery(combinedChips), undefined, this.parent, combinedChips);
     };
@@ -846,15 +846,19 @@ define(['./Filter'], function (Filter) {
             if(this.headerSearchFieldsMetadata[i].inputType==="date")
                 operator = Search.OPERATOR.EQUAL_DATE;
 
-            // TODO only if it is filled!
-            fakeChipParts.push({
-                text: "",
-                query: Search.simpleOperatorQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, this.searchArguments[Search.HEADER_GUI][i], operator)
-            });
-
-            return new Chip(fakeChipParts, "AND");
+            if(this.searchArguments[Search.HEADER_GUI][i]) {
+                fakeChipParts.push({
+                    text: "",
+                    query: operator.createQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, [this.searchArguments[Search.HEADER_GUI][i]])
+                });
+                console.log(i);
+            }
         }
 
+        if(fakeChipParts.length > 0)
+            return [new Chip(fakeChipParts, "AND")];
+        else
+            return [];
     };
 
 
