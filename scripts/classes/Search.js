@@ -265,7 +265,7 @@ define(['./Filter'], function (Filter) {
                 },
                 overrideQueryGeneration: function (operator) {
                     let matchingAutocompleteItems = [];
-                    this.getQueryArguments().forEach(function (taskName) {
+                    this.getQueryArguments(Search.COMPLEX_GUI).forEach(function (taskName) {
                         matchingAutocompleteItems = matchingAutocompleteItems.concat(this.autocompleteItems.get(taskName));
                     }, this);
                     let elementarySubqueries = [];
@@ -800,12 +800,12 @@ define(['./Filter'], function (Filter) {
             combinedChips = combinedChips.concat(this.createChipsFromHeaderInput());
         }
 
-        if(this.possibleNets.size < this.allNets.size) {
+        if(this.possibleNets.size < this.allNets.size && !this.containsProcessQuery(combinedChips)) {
             let netQueries = [];
             this.possibleNets.forEach(function (netId) {
                 netQueries.push(Search.OPERATOR.EQUAL.createQuery(this.categories[Search.SEARCH_CASES].process.getElasticKeyword(), [netId]));
             }, this);
-            combinedChips = combinedChips.concat([{text:"", query:Search.bindQueries(netQueries, "OR")}]);
+            combinedChips = combinedChips.concat([Chip.createChip("", Search.bindQueries(netQueries, "OR"))]);
         }
 
         return new Filter("", this.searchType, this.buildSearchQuery(combinedChips), undefined, this.parent, combinedChips);
@@ -937,11 +937,7 @@ define(['./Filter'], function (Filter) {
                 operator = Search.OPERATOR.EQUAL_DATE;
 
             if(this.searchArguments[Search.HEADER_GUI][i]) {
-                fakeChipParts.push({
-                    text: "",
-                    query: operator.createQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, [this.searchArguments[Search.HEADER_GUI][i]])
-                });
-                console.log(i);
+                fakeChipParts.push(Chip.createChip("", operator.createQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, [this.searchArguments[Search.HEADER_GUI][i]])));
             }
         }
 
@@ -949,6 +945,14 @@ define(['./Filter'], function (Filter) {
             return [new Chip(fakeChipParts, "AND")];
         else
             return [];
+    };
+
+    Search.prototype.containsProcessQuery = function(chips) {
+        for(let i = 0; i < chips.length; i++) {
+            if(chips[0].query.includes(this.categories[Search.SEARCH_CASES].process.getElasticKeyword()+":"))
+                return true;
+        }
+        return false;
     };
 
 
