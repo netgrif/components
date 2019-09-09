@@ -49,7 +49,9 @@ define(['./Filter'], function (Filter) {
             visualId: {
                 name: "Visual Id",
                 headerName: "meta-visualId",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
+                allowedOperators: function () {
+                    return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
+                },
                 getElasticKeyword: function () {
                     return ["visualId"];
                 },
@@ -68,8 +70,10 @@ define(['./Filter'], function (Filter) {
             },
             process: {
                 name: "Process",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 autocompleteItems: new Map(),
+                allowedOperators: function () {
+                    return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
+                },
                 argsInputType: function () {
                     return "autocomplete";
                 },
@@ -104,7 +108,9 @@ define(['./Filter'], function (Filter) {
             title: {
                 name: "Title",
                 headerName: "meta-title",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE],
+                allowedOperators: function () {
+                    return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE];
+                },
                 getElasticKeyword: function () {
                     return ["title"];
                 },
@@ -124,7 +130,9 @@ define(['./Filter'], function (Filter) {
             creationDate: {
                 name: "Creation Date",
                 headerName: "meta-creationDate",
-                allowedOperators: [Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE_DATE],
+                allowedOperators: function () {
+                    return [Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN_DATE, Search.OPERATOR.LESS_THAN_DATE, Search.OPERATOR.IN_RANGE_DATE];
+                },
                 argsInputType: function () {
                     return "date";
                 },
@@ -147,7 +155,9 @@ define(['./Filter'], function (Filter) {
             author: {
                 name: "Author",
                 headerName: "meta-author",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
+                allowedOperators: function () {
+                    return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
+                },
                 getElasticKeyword: function () {
                     return ["authorEmail", "authorName"];
                 },
@@ -166,8 +176,28 @@ define(['./Filter'], function (Filter) {
             },
             dataset: {
                 name: "Dataset",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE],
                 autocompleteItems: new Map(),
+                allowedOperators: function (datafieldType, datafieldMapKey) {
+                    let defaultOperators = [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE];
+
+                    if(!datafieldType) {
+                        let datafields = this.autocompleteItems.get(datafieldMapKey);
+                        if(!datafields || datafields.length == 0)
+                            return defaultOperators;
+                        datafieldType = datafields[0].inputType;
+                    }
+
+                    switch (datafieldType) {
+                        default:
+                            return defaultOperators;
+
+                        case "number":
+                            return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL];
+
+                        case "date":
+                            return [Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN_DATE, Search.OPERATOR.LESS_THAN_DATE, Search.OPERATOR.IN_RANGE_DATE, Search.OPERATOR.IS_NULL];
+                    }
+                },
                 argsInputType: function () {
                     return this.autocompleteItems.get(self.searchDatafield)[0].inputType;
                 },
@@ -209,8 +239,10 @@ define(['./Filter'], function (Filter) {
             },
             task: {
                 name: "Task",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 autocompleteItems: new Map(),
+                allowedOperators: function () {
+                    return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
+                },
                 argsInputType: function () {
                     return "autocomplete";
                 },
@@ -260,8 +292,10 @@ define(['./Filter'], function (Filter) {
             },
             role: {
                 name: "Role",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL],
                 autocompleteItems: new Map(),
+                allowedOperators: function () {
+                    return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
+                },
                 argsInputType: function () {
                     return "autocomplete";
                 },
@@ -300,8 +334,10 @@ define(['./Filter'], function (Filter) {
             role: self.categories[Search.SEARCH_CASES].role,
             user: {
                 name: "User",
-                allowedOperators: [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL],
                 autocompleteItems: new Map(),
+                allowedOperators: function () {
+                    return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL];
+                },
                 argsInputType: function () {
                     return "user";
                 },
@@ -394,15 +430,13 @@ define(['./Filter'], function (Filter) {
             display: "in range",
             numberOfOperands: 2,
             createQuery: function (keywords, args) {
-                let simpleQueries = [];
-                keywords.forEach(function (keyword) {
+                return Search.forEachKeyword(keywords, function (keyword) {
                     let arg1 = Search.wrapWithQuotes(args[0]);
                     let arg2 = Search.wrapWithQuotes(args[1]);
                     if(arg1.wrapped || arg2.wrapped)
                         throw new Error("Range queries don't support phrases as arguments!");
-                    simpleQueries.push("("+keyword+":["+arg1.value+" TO "+arg2.value+"])");
+                    return "("+keyword+":["+arg1.value+" TO "+arg2.value+"])";
                 });
-                return Search.bindQueries(simpleQueries, "OR");
             },
             createText: function (args) {
                 return "is between "+args[0]+" and "+args[1];
@@ -422,18 +456,18 @@ define(['./Filter'], function (Filter) {
             display: "is null",
             numberOfOperands: 0,
             createQuery: function (keywords) {
-                let simpleQueries = [];
-                keywords.forEach(function (keyword) {
-                    simpleQueries.push("((!(_exists_:"+keyword+")) OR ("+keyword+":\"\"))");
+                return Search.forEachKeyword(keywords, function (keyword) {
+                    return "((!(_exists_:"+keyword+")) OR ("+keyword+":\"\"))";
                 });
-                return Search.bindQueries(simpleQueries, "OR");
             },
             createText: function () {
                 return "is null";
             }
         },
         EQUAL_DATE: {},
-        IN_RANGE_DATE: {}
+        IN_RANGE_DATE: {},
+        MORE_THAN_DATE: {},
+        LESS_THAN_DATE: {}
     };
     // Inherit and override some functionality
     Object.assign(Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.EQUAL);
@@ -444,7 +478,20 @@ define(['./Filter'], function (Filter) {
     Search.OPERATOR.IN_RANGE_DATE.createQuery = function(keywords, args) {
         let arg2 = new Date(args[1]);
         arg2.setDate(arg2.getDate()+1); // javascript handles rollover
-        return "("+keywords[0]+":["+args[0].getTime()+" TO "+arg2.getTime()+"})";
+        return Search.forEachKeyword(keywords, function (keyword) {
+            return "("+keyword+":["+args[0].getTime()+" TO "+arg2.getTime()+"})";
+        });
+    };
+    Object.assign(Search.OPERATOR.MORE_THAN_DATE, Search.OPERATOR.MORE_THAN);
+    Search.OPERATOR.MORE_THAN_DATE.createQuery = function(keywords, args) {
+        let arg1 = new Date(args[0]);
+        arg1.setDate(arg1.getDate()+1);
+        arg1.setMilliseconds(arg1.getMilliseconds()-1);
+        return Search.OPERATOR.MORE_THAN.createQuery(keywords, [arg1.getTime()])
+    };
+    Object.assign(Search.OPERATOR.LESS_THAN_DATE, Search.OPERATOR.LESS_THAN);
+    Search.OPERATOR.LESS_THAN_DATE.createQuery = function(keywords, args) {
+        return Search.OPERATOR.LESS_THAN.createQuery(keywords, [new Date(args[0]).getTime()])
     };
 
     Search.ELASTIC = {
@@ -452,14 +499,18 @@ define(['./Filter'], function (Filter) {
         UNESCAPABLE_CHARACTERS: new Set(['<', '>'])
     };
 
-    Search.operatorQuery = function(keywords, args, operator) {
+    Search.forEachKeyword = function(keywords, simpleQueryConstructor) {
         let simpleQueries = [];
         keywords.forEach(function (keyword) {
-            args.forEach(function (arg) {
-                simpleQueries.push(Search.simpleOperatorQuery(keyword, Search.wrapWithQuotes(arg).value, operator));
-            });
+            simpleQueries.push(simpleQueryConstructor(keyword));
         });
         return Search.bindQueries(simpleQueries, "OR");
+    };
+
+    Search.operatorQuery = function(keywords, args, operator) {
+        return Search.forEachKeyword(keywords, function (keyword) {
+            return Search.simpleOperatorQuery(keyword, Search.wrapWithQuotes(args[0]).value, operator);
+        });
     };
 
     Search.simpleOperatorQuery = function(keyword, arg, operator) {
@@ -540,7 +591,7 @@ define(['./Filter'], function (Filter) {
 
             if(this.searchType === Search.SEARCH_CASES) {
                 net.immediateData.forEach(function (immediateData) {
-                    if(immediateData.type !== "date" && immediateData.type !== "dateTime")
+                    if(immediateData.type !== "dateTime") // TODO remove after dateTime is supported
                         this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
                 }, this);
             }
@@ -841,7 +892,7 @@ define(['./Filter'], function (Filter) {
 
         for(let i = 0; i < this.headerSearchFieldsMetadata.length; i++) {
             let operator = Search.OPERATOR.EQUAL;
-            if(this.headerSearchFieldsMetadata[i].allowedOperators.includes(Search.OPERATOR.LIKE))
+            if(this.headerSearchFieldsMetadata[i].allowedOperators(this.headerSearchFieldsMetadata[i].inputType).includes(Search.OPERATOR.LIKE))
                 operator = Search.OPERATOR.LIKE;
             if(this.headerSearchFieldsMetadata[i].inputType==="date")
                 operator = Search.OPERATOR.EQUAL_DATE;

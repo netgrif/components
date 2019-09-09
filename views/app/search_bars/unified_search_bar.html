@@ -42,7 +42,7 @@
                     <md-input-container class="md-block" flex ng-if="search.searchCategory && (search.searchCategory.name !== 'Dataset' || search.searchDatafield)">
                         <label class="placeholder">operator</label>
                         <md-select ng-model="search.searchOperator" ng-change="search.clearFieldsOperator()">
-                            <md-option ng-repeat="operator in search.searchCategory.allowedOperators" ng-value="operator">
+                            <md-option ng-repeat="operator in search.searchCategory.allowedOperators(undefined, search.searchDatafield)" ng-value="operator">
                                 {{operator.display}}
                             </md-option>
                         </md-select>
