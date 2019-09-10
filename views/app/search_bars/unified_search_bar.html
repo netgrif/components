@@ -1,6 +1,6 @@
 <div layout="column" class="card padding-2x" ng-if="search.guiComplexity==='COMPLEX' || search.guiComplexity==='COMBINED'">
     <div layout="row" layout-align="space-between center">
-        <div layout="row">
+        <div layout="row" layout-align="start center">
             <md-input-container class="md-block" flex>
                 <label class="placeholder">{{::$i18n.page.tasks.search.category}}</label>
                 <md-select ng-model="search.searchCategory" ng-change="search.clearDatafieldInput()">
@@ -41,44 +41,53 @@
                 </md-select>
             </md-input-container>
 
-            <div ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index" ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0">
-                 <div ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"
-                      ng-init="switchExpression = 'search.searchCategory.argsInputType && search.searchCategory.argsInputType()'; inputGui = 'COMPLEX'">
-                 </div>
-            </div>
+             <div ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0"
+                  ng-init="switchExpression = 'search.searchCategory.argsInputType && search.searchCategory.argsInputType()'; inputGui = 'COMPLEX'"
+                  ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index"
+                  ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'">
+             </div>
 
             <!-- TODO i18n tooltips -->
-            <md-button ng-disabled="!search.allArgumentsFilled()" class="md-fab md-mini md-accent"
-                       ng-click="search.commitChipPart(); search.filterPossibleNets(); tab.search()">
+            <md-button ng-disabled="!search.allArgumentsFilled()"
+                       ng-click="search.commitChipPart(); search.filterPossibleNets(); tab.search()"
+                       class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">add</md-icon>
                 <md-tooltip md-direction="top">
                     add chip element
                 </md-tooltip>
             </md-button>
 
-            <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0)" class="md-fab md-mini md-accent"
-                       ng-click="search.commitChip(); search.filterPossibleNets(); tab.search()">
+            <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0)"
+                       ng-click="search.commitChip(); search.filterPossibleNets(); tab.search()"
+                       class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">send</md-icon>
                 <md-tooltip md-direction="top">
                     add chip
                 </md-tooltip>
             </md-button>
 
-            <md-button ng-click="search.resetInputFields()" ng-disabled="!search.searchCategory && search.searchArguments['HEADER'].length === 0 && search.searchObjects['HEADER'].length === 0" class="md-fab md-mini md-accent">
+            <md-button ng-disabled="!search.searchCategory && search.searchArguments['HEADER'].length === 0 && search.searchObjects['HEADER'].length === 0"
+                       ng-click="search.resetInputFields()"
+                       class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">clear_all</md-icon>
                 <md-tooltip md-direction="top">
                     clear input
                 </md-tooltip>
             </md-button>
 
-            <md-button ng-click="search.resetInputFields()" ng-disabled="search.removableChipsExist()" class="md-fab md-mini md-accent">
+            <md-button ng-disabled="search.removableChipsExist()"
+                       ng-click="search.resetInputFields()"
+                       class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">delete</md-icon>
                 <md-tooltip md-direction="top">
                     clear search
                 </md-tooltip>
             </md-button>
 
-            <md-button ng-click="tab.openSaveFilterDialog()" ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0)" ng-if="search.searchType==='Task'" class="md-fab md-mini md-accent">
+            <md-button ng-if="search.searchType==='Task'"
+                       ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0)"
+                       ng-click="tab.openSaveFilterDialog()"
+                       class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">save</md-icon>
 <!--                        <span>{{::$i18n.block.btn.save}}</span>-->
                 <md-tooltip md-direction="top">
@@ -86,7 +95,7 @@
                 </md-tooltip>
             </md-button>
         </div>
-        <div>
+        <div flex-gt-xs="5" layout="row" layout-align="end center">
             <md-button ng-if="search.searchType === 'Case' && $user.hasAuthority(tab.authorityToCreate)"
                        ng-click="tab.openNewCaseDialog()"
                        class="md-fab md-raised md-mini md-primary">
@@ -98,25 +107,32 @@
         </div>
     </div>
     <div layout="row">
-        <div layout="column">
-            <md-chips ng-model="search.chipParts.committed" readonly="true" md-removable="true"
-                      md-on-remove="search.resetPossibleNets(); tab.search()">
-                <md-chip-template>
-                    {{$chip.text}}
-                </md-chip-template>
-            </md-chips>
-
-            <md-chips ng-model="search.chips.committed" readonly="true" md-removable="false" flex
-                      md-on-remove="search.resetPossibleNets(); tab.search()">
-                <md-chip-template md-primary>
-                    {{$chip.text}}
-                    <md-button class="md-icon-button" md-chip-remove ng-if="$chip.canRemove">
-                        <md-icon class="material-icons">clear</md-icon>
-                    </md-button>
-                </md-chip-template>
-            </md-chips>
+        <div layout="column" flex>
+            <div>
+                <md-chips ng-model="search.chipParts.committed"
+                          readonly="true" md-removable="true"
+                          md-on-remove="search.resetPossibleNets(); tab.search()"
+                          class="min-height-40px">
+                    <md-chip-template>
+                        {{$chip.text}}
+                    </md-chip-template>
+                </md-chips>
+            </div>
+            <div>
+                <md-chips class="min-height-40px" ng-model="search.chips.committed"
+                          readonly="true"
+                          md-removable="false"
+                          md-on-remove="search.resetPossibleNets(); tab.search()">
+                    <md-chip-template>
+                        {{$chip.text}}
+                        <md-button class="md-icon-button" md-chip-remove ng-if="$chip.canRemove">
+                            <md-icon class="material-icons">clear</md-icon>
+                        </md-button>
+                    </md-chip-template>
+                </md-chips>
+            </div>
         </div>
-        <div>
+        <div flex-gt-xs="5" layout="row" layout-align="end center">
             <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0)" class="md-fab md-mini md-accent"
                        ng-click="search.commitChip(); tab.search(); mainCtrl.reloadCounters(); search.filterPossibleNets()" layout-align=" end">
                 <md-icon class="material-icons">search</md-icon>
