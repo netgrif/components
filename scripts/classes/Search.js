@@ -717,6 +717,10 @@ define(['./Filter'], function (Filter) {
         return true;
     };
 
+    Search.prototype.removableChipsExist = function() {
+        return this.chipParts.committed.length === 0 && this.chips.committed.filter(chip => chip.canRemove).length === 0;
+    };
+
     Search.prototype.commitChipPart = function () {
         this._predictChipPart();
         if(this.chipParts.predicted) {
@@ -728,25 +732,35 @@ define(['./Filter'], function (Filter) {
 
     Search.prototype.resetInputFields = function () {
         this.searchCategory = undefined;
+        this.clearDatafieldInput();
+        this.clearHeaderInput();
+    };
+
+    Search.prototype.clearDatafieldInput = function() {
         this.searchDatafield = undefined;
+        this.clearOperatorInput();
+    };
+
+    Search.prototype.clearOperatorInput = function() {
         this.searchOperator = undefined;
+        this.clearArgumentsInput();
+    };
+
+    Search.prototype.clearArgumentsInput = function() {
         this.searchArguments[Search.COMPLEX_GUI].splice(0, this.searchArguments[Search.COMPLEX_GUI].length);
         this.searchObjects[Search.COMPLEX_GUI].splice(0, this.searchObjects[Search.COMPLEX_GUI].length);
     };
 
-    Search.prototype.clearFieldsCategory = function() {
-        this.searchDatafield = undefined;
-        this.clearFieldsDatafield();
+    Search.prototype.clearHeaderInput = function() {
+        this.searchArguments[Search.HEADER_GUI].splice(0, this.searchArguments[Search.HEADER_GUI].length);
+        this.searchObjects[Search.HEADER_GUI].splice(0, this.searchObjects[Search.HEADER_GUI].length);
     };
 
-    Search.prototype.clearFieldsDatafield = function() {
-        this.searchOperator = undefined;
-        this.clearFieldsOperator();
-    };
-
-    Search.prototype.clearFieldsOperator = function() {
-        this.searchArguments[Search.COMPLEX_GUI].splice(0, this.searchArguments[Search.COMPLEX_GUI].length);
-        this.searchObjects[Search.COMPLEX_GUI].splice(0, this.searchObjects[Search.COMPLEX_GUI].length);
+    Search.prototype.clearFilter = function() {
+        this.chipParts.committed.splice(0, this.chipParts.committed.length);
+        this.chipParts.predicted = undefined;
+        this.chips.committed = this.chips.committed.filter(chip => !chip.canRemove);
+        this.chips.predicted = undefined;
     };
 
     Search.prototype.commitChip = function () {
