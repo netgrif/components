@@ -761,6 +761,8 @@ define(['./Filter'], function (Filter) {
         this.chipParts.predicted = undefined;
         this.chips.committed = this.chips.committed.filter(chip => !chip.canRemove);
         this.chips.predicted = undefined;
+        this.resetPossibleNets();
+        this.parent.search();
     };
 
     Search.prototype.commitChip = function () {

@@ -43,6 +43,10 @@ $border-radius:					2px;
 		}
 		&-40px {
 			min-height: $dim-40px;
+
+			.md-chips {
+				min-height: $dim-40px;
+			}
 		}
 		&-48px {
 			min-height: $dim-48px;

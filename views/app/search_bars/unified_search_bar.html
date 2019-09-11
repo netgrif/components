@@ -76,7 +76,7 @@
             </md-button>
 
             <md-button ng-disabled="search.removableChipsExist()"
-                       ng-click="search.resetInputFields()"
+                       ng-click="search.clearFilter()"
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">delete</md-icon>
                 <md-tooltip md-direction="top">
@@ -125,9 +125,7 @@
                           md-on-remove="search.resetPossibleNets(); tab.search()">
                     <md-chip-template>
                         {{$chip.text}}
-                        <md-button class="md-icon-button" md-chip-remove ng-if="$chip.canRemove">
-                            <md-icon class="material-icons">clear</md-icon>
-                        </md-button>
+                        <md-icon class="material-icons" md-chip-remove ng-if="$chip.canRemove">clear</md-icon>
                     </md-chip-template>
                 </md-chips>
             </div>

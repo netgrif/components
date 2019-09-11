@@ -40859,6 +40859,11 @@
 .min-height-0 {
   min-height: 0 !important; }
 
+.min-height-40px {
+  min-height: 40px; }
+  .min-height-40px .md-chips {
+    min-height: 40px; }
+
 .min-height-48px {
   min-height: 48px; }
 
@@ -41084,6 +41089,11 @@
 
 .min-height-0 {
   min-height: 0 !important; }
+
+.min-height-40px {
+  min-height: 40px; }
+  .min-height-40px .md-chips {
+    min-height: 40px; }
 
 .min-height-48px {
   min-height: 48px; }
@@ -41544,6 +41554,11 @@ span.highlight {
 .min-height-0 {
   min-height: 0 !important; }
 
+.min-height-40px {
+  min-height: 40px; }
+  .min-height-40px .md-chips {
+    min-height: 40px; }
+
 .min-height-48px {
   min-height: 48px; }
 
@@ -41879,6 +41894,11 @@ span.highlight {
 
 .min-height-0 {
   min-height: 0 !important; }
+
+.min-height-40px {
+  min-height: 40px; }
+  .min-height-40px .md-chips {
+    min-height: 40px; }
 
 .min-height-48px {
   min-height: 48px; }
@@ -42295,6 +42315,11 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .min-height-0 {
   min-height: 0 !important; }
 
+.base .min-height-40px {
+  min-height: 40px; }
+  .base .min-height-40px .md-chips {
+    min-height: 40px; }
+
 .base .min-height-48px {
   min-height: 48px; }
 
@@ -42621,6 +42646,11 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .min-height-0 {
   min-height: 0 !important; }
 
+.base .min-height-40px {
+  min-height: 40px; }
+  .base .min-height-40px .md-chips {
+    min-height: 40px; }
+
 .base .min-height-48px {
   min-height: 48px; }
 
@@ -42889,6 +42919,11 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 
 .base .min-height-0 {
   min-height: 0 !important; }
+
+.base .min-height-40px {
+  min-height: 40px; }
+  .base .min-height-40px .md-chips {
+    min-height: 40px; }
 
 .base .min-height-48px {
   min-height: 48px; }
@@ -43241,6 +43276,11 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 
 .base .min-height-0 {
   min-height: 0 !important; }
+
+.base .min-height-40px {
+  min-height: 40px; }
+  .base .min-height-40px .md-chips {
+    min-height: 40px; }
 
 .base .min-height-48px {
   min-height: 48px; }
