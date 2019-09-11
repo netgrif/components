@@ -1,12 +1,12 @@
-<div ng-switch="$eval(switchExpression)">
-    <div ng-switch-default>
-        <md-input-container class="md-block">
+<div ng-switch="$eval(switchExpression)" layout="row" layout-align="start center">
+    <div ng-switch-default layout="row" layout-align="start center">
+        <md-input-container class="md-block margin-0">
             <label class="placeholder">argument {{$index+1}}</label>
             <input ng-model="search.searchArguments[inputGui][$index]">
         </md-input-container>
     </div>
 
-    <div ng-switch-when="autocomplete">
+    <div ng-switch-when="autocomplete" layout="row" layout-align="start center">
         <md-autocomplete md-search-text="search.searchArguments[inputGui][$index]"
                          md-selected-item-change="search.searchCategory.autocompleteFilter(inputGui, $index)"
                          md-items="item in search.searchCategory.autocompleteFilter(inputGui, $index)"
@@ -16,7 +16,8 @@
                          md-select-on-match="true"
                          md-match-case-insensitive="true"
                          md-dropdown-items="5"
-                         md-floating-label="{{::$i18n.page.tasks.search.search}}">
+                         md-floating-label="{{::$i18n.page.tasks.search.search}}"
+                         >
 
             <md-item-template>
                 <span md-highlight-text="search.searchArguments[inputGui][$index]" md-highlight-flags="i">
@@ -29,8 +30,8 @@
         </md-autocomplete>
     </div>
 
-    <div ng-switch-when="user">
-        <md-input-container class="md-block">
+    <div ng-switch-when="user" layout="row" layout-align="start center">
+        <md-input-container class="md-block margin-0">
             <md-autocomplete md-search-text="search.searchArguments[inputGui][$index]"
                              md-selected-item="search.searchObjects[inputGui][$index]"
                              md-items="item in search.queryUsers(search.searchArguments[inputGui][$index])"
@@ -55,15 +56,15 @@
         </md-input-container>
     </div>
 
-    <div ng-switch-when="number">
-        <md-input-container class="md-block">
+    <div ng-switch-when="number" layout="row" layout-align="start center">
+        <md-input-container class="md-block margin-0">
             <label class="placeholder">argument {{$index+1}}</label>
             <input ng-model="search.searchArguments[inputGui][$index]" type="number" step="any">
         </md-input-container>
     </div>
 
-    <div ng-switch-when="boolean">
-        <md-input-container class="md-block">
+    <div ng-switch-when="boolean" layout="row" layout-align="start center">
+        <md-input-container class="md-block margin-0">
             <md-switch class="md-primary"
                        ng-model="search.searchArguments[inputGui][$index]"
                        ng-init="search.searchArguments[inputGui][$index] = false"
@@ -72,8 +73,8 @@
         </md-input-container>
     </div>
 
-    <div ng-switch-when="date">
-        <md-input-container class="md-block">
+    <div ng-switch-when="date" layout="row" layout-align="start center">
+        <md-input-container class="md-block margin-0">
             <label class="placeholder">argument {{$index+1}}</label>
             <md-datepicker ng-model="search.searchArguments[inputGui][$index]"
                            aria-label="Pick date"

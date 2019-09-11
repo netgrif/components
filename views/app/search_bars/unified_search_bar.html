@@ -1,7 +1,7 @@
 <div layout="column" class="card padding-2x" ng-if="search.guiComplexity==='COMPLEX' || search.guiComplexity==='COMBINED'">
     <div layout="row" layout-align="space-between center">
         <div layout="row" layout-align="start center">
-            <md-input-container class="md-block" flex>
+            <md-input-container class="md-block margin-0" flex>
                 <label class="placeholder">{{::$i18n.page.tasks.search.category}}</label>
                 <md-select ng-model="search.searchCategory" ng-change="search.clearDatafieldInput()">
                     <md-option ng-repeat="(key, category) in search.enabledCategories" ng-value="category">
@@ -20,7 +20,8 @@
                              md-match-case-insensitive="true"
                              md-dropdown-items="5"
                              md-floating-label="{{::$i18n.page.tasks.search.search}}"
-                             ng-if="search.searchCategory && search.searchCategory.name === 'Dataset'">
+                             ng-if="search.searchCategory && search.searchCategory.name === 'Dataset'"
+                             class="margin-0">
 
                 <md-item-template>
                     <span md-highlight-text="search.searchDatafield" md-highlight-flags="i">
@@ -32,7 +33,7 @@
                 </md-not-found>
             </md-autocomplete>
 
-            <md-input-container class="md-block" flex ng-if="search.searchCategory && (search.searchCategory.name !== 'Dataset' || search.searchDatafield)">
+            <md-input-container class="md-block margin-0" flex ng-if="search.searchCategory && (search.searchCategory.name !== 'Dataset' || search.searchDatafield)">
                 <label class="placeholder">operator</label>
                 <md-select ng-model="search.searchOperator" ng-change="search.clearArgumentsInput()">
                     <md-option ng-repeat="operator in search.searchCategory.allowedOperators(undefined, search.searchDatafield)" ng-value="operator">
@@ -140,19 +141,19 @@
             </md-button>
         </div>
     </div>
-</div>
-<div layout="row" class="card-header padding-horizontal-2x" ng-if="search.guiComplexity==='HEADER' || search.guiComplexity==='COMBINED'">
-    <div ng-repeat="metadata in search.headerSearchFieldsMetadata track by $index">
-        <div ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"
-             ng-init="switchExpression = 'metadata.inputType'; inputGui = 'HEADER'">
-        </div>
-    </div>
-    <!-- TODO change disabled condition -->
-    <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0)" class="md-fab md-mini"
-               ng-click="search.commitChip(); tab.search(); mainCtrl.reloadCounters(); search.filterPossibleNets()" layout-align=" end">
-        <md-icon class="material-icons">search</md-icon>
-        <md-tooltip md-direction="top">
-            search
-        </md-tooltip>
-    </md-button>
 </div><!-- ./card -->
+<!--<div layout="row" class="card-header padding-horizontal-2x" ng-if="search.guiComplexity==='HEADER' || search.guiComplexity==='COMBINED'">-->
+<!--    <div ng-repeat="metadata in search.headerSearchFieldsMetadata track by $index">-->
+<!--        <div ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"-->
+<!--             ng-init="switchExpression = 'metadata.inputType'; inputGui = 'HEADER'">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; TODO change disabled condition &ndash;&gt;-->
+<!--    <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0)" class="md-fab md-mini"-->
+<!--               ng-click="search.commitChip(); tab.search(); mainCtrl.reloadCounters(); search.filterPossibleNets()" layout-align=" end">-->
+<!--        <md-icon class="material-icons">search</md-icon>-->
+<!--        <md-tooltip md-direction="top">-->
+<!--            search-->
+<!--        </md-tooltip>-->
+<!--    </md-button>-->
+<!--</div>-->

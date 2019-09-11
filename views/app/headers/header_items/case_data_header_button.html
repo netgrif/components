@@ -1,0 +1,34 @@
+<md-menu ng-if="tab.headers.mode !== tab.constants.HEADER_MODE_EDIT" layout="column" layout-align="center center">
+    <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
+        <md-icon class="material-icons">more_vert</md-icon>
+    </md-button>
+    <md-menu-content>
+        <md-menu-item>
+            <md-button ng-click="tab.headers.changeMode(tab.constants.HEADER_MODE_SORT)">
+                <md-icon class="material-icons">sort</md-icon>
+                <span>sort</span> <!-- TODO i18n -->
+            </md-button>
+        </md-menu-item>
+        <md-menu-item>
+            <md-button ng-click="tab.headers.changeMode(tab.constants.HEADER_MODE_SEARCH)">
+                <md-icon class="material-icons">search</md-icon>
+                <span>search</span> <!-- TODO i18n -->
+            </md-button>
+        </md-menu-item>
+        <md-menu-item>
+            <md-button ng-click="tab.headers.changeMode(tab.constants.HEADER_MODE_EDIT)">
+                <md-icon class="material-icons">edit</md-icon>
+                <span>{{::$i18n.block.case.header.enableEditMode}}</span>
+            </md-button>
+        </md-menu-item>
+    </md-menu-content>
+</md-menu>
+
+<md-button ng-if="tab.headers.mode === tab.constants.HEADER_MODE_EDIT"
+           ng-click="tab.headers.changeMode(tab.headers.lastMode, false); tab.saveHeaders()"
+           class="md-icon-button md-primary">
+    <md-icon class="material-icons">done</md-icon>
+    <md-tooltip md-direction="bottom">
+        {{::$i18n.block.case.header.confirmChanges}}
+    </md-tooltip>
+</md-button>

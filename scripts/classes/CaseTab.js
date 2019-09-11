@@ -27,7 +27,8 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
 
         this.headers = {
             sortItem: undefined,
-            editable: false,
+            mode: CaseTab.HEADER_MODE_SORT,
+            lastMode: CaseTab.HEADER_MODE_SORT,
             metaData: [],
             processData: [],
             selected: {
@@ -36,6 +37,11 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
                 column2: undefined,
                 column3: undefined,
                 column4: undefined
+            },
+            changeMode: function (newMode, saveLastMode = true) {
+                if(saveLastMode)
+                    this.lastMode = this.mode;
+                this.mode = newMode;
             }
         };
         this.buildHeaders();
@@ -46,6 +52,14 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
             $config: this.$config,
             $i18n: this.$i18n
         }, {});
+
+        this.constants = {
+            HEADER_MODE_EDIT: CaseTab.HEADER_MODE_EDIT,
+            HEADER_MODE_SORT: CaseTab.HEADER_MODE_SORT,
+            HEADER_MODE_SEARCH: CaseTab.HEADER_MODE_SEARCH,
+
+            HEADERS_SORT_DIR_ASC: CaseTab.HEADERS_SORT_DIR_ASC
+        };
     }
 
     CaseTab.prototype = Object.create(Tab.prototype);
@@ -56,6 +70,10 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
     CaseTab.HEADERS_PREFERENCE_KEY = "caseHeaders";
     CaseTab.HEADERS_SORT_DIR_ASC = "asc";
     CaseTab.HEADERS_SORT_DIR_DESC = "desc";
+
+    CaseTab.HEADER_MODE_EDIT = "edit";
+    CaseTab.HEADER_MODE_SORT = "sort";
+    CaseTab.HEADER_MODE_SEARCH = "search";
 
     CaseTab.prototype.activate = function () {
         this.newCase.title = this.getDefaultCaseTitle();
