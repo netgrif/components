@@ -124,3 +124,22 @@ md-autocomplete.md-block {
         height: 39px !important;
     }
 }
+
+// Special case alignments and visual corrections
+.autocomplete-aligned-to-input {
+    margin-bottom: 6px;
+
+    md-input-container {
+        margin: 0px;
+
+        .md-errors-spacer {
+            min-height: 0px;
+        }
+    }
+}
+
+.empty-chips-with-height {
+    .md-chips {
+        min-height: 40px;
+    }
+}

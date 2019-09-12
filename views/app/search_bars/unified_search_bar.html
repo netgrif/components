@@ -21,7 +21,7 @@
                              md-dropdown-items="5"
                              md-floating-label="{{::$i18n.page.tasks.search.search}}"
                              ng-if="search.searchCategory && search.searchCategory.name === 'Dataset'"
-                             class="margin-0">
+                             class="autocomplete-aligned-to-input">
 
                 <md-item-template>
                     <span md-highlight-text="search.searchDatafield" md-highlight-flags="i">
@@ -111,19 +111,21 @@
         <div layout="column" flex>
             <div>
                 <md-chips ng-model="search.chipParts.committed"
-                          readonly="true" md-removable="true"
+                          readonly="true"
+                          md-removable="true"
                           md-on-remove="search.resetPossibleNets(); tab.search()"
-                          class="min-height-40px">
+                          class="empty-chips-with-height">
                     <md-chip-template>
                         {{$chip.text}}
                     </md-chip-template>
                 </md-chips>
             </div>
             <div>
-                <md-chips class="min-height-40px" ng-model="search.chips.committed"
+                <md-chips ng-model="search.chips.committed"
                           readonly="true"
                           md-removable="false"
-                          md-on-remove="search.resetPossibleNets(); tab.search()">
+                          md-on-remove="search.resetPossibleNets(); tab.search()"
+                          class="empty-chips-with-height">
                     <md-chip-template>
                         {{$chip.text}}
                         <md-icon class="material-icons" md-chip-remove ng-if="$chip.canRemove">clear</md-icon>

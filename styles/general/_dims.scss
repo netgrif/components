@@ -5,7 +5,6 @@ $dim-2x:						2*$dim-default;
 $dim-2px:						2px;
 $dim-12px:						12px;
 $dim-14px:						14px;
-$dim-40px:						40px;
 $dim-48px:						48px;
 $dim-52px:						52px;
 $dim-56px:						56px;
@@ -40,13 +39,6 @@ $border-radius:					2px;
 
 		&-0 {
 			min-height: 0 !important;
-		}
-		&-40px {
-			min-height: $dim-40px;
-
-			.md-chips {
-				min-height: $dim-40px;
-			}
 		}
 		&-48px {
 			min-height: $dim-48px;
