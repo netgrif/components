@@ -736,9 +736,17 @@ define(['./Filter'], function (Filter) {
         this.searchObjects[Search.COMPLEX_GUI].splice(0, this.searchObjects[Search.COMPLEX_GUI].length);
     };
 
-    Search.prototype.clearHeaderInput = function() {
-        this.searchArguments[Search.HEADER_GUI].splice(0, this.searchArguments[Search.HEADER_GUI].length);
-        this.searchObjects[Search.HEADER_GUI].splice(0, this.searchObjects[Search.HEADER_GUI].length);
+    Search.prototype.clearHeaderInput = function(index = undefined) {
+        if(typeof index === "undefined") {
+            this.searchArguments[Search.HEADER_GUI].splice(0, this.searchArguments[Search.HEADER_GUI].length);
+            this.searchObjects[Search.HEADER_GUI].splice(0, this.searchObjects[Search.HEADER_GUI].length);
+        }
+        else {
+            if(typeof this.searchArguments[Search.HEADER_GUI][index] !== "undefined")
+                this.searchArguments[Search.HEADER_GUI].splice(index, 1);
+            if(typeof this.searchObjects[Search.HEADER_GUI][index] !== "undefined")
+                this.searchObjects[Search.HEADER_GUI].splice(index, 1);
+        }
     };
 
     Search.prototype.clearFilter = function() {

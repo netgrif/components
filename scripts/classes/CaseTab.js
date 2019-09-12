@@ -146,7 +146,17 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
                     return header.process + "-" + header.stringId;
                 return header.stringId;
             });
-        this.$user.savePreferenceCaseHeaders(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, headers);
+
+        let preferenceKey = this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY;
+        let oldPreference = this.$user.getPreferenceCaseHeaders(preferenceKey);
+
+        for(let i = 0; i < headers.length; i++) {
+            if(headers[i] !== oldPreference[i]) {
+                this.caseSearch.clearHeaderInput(i);
+            }
+        }
+
+        this.$user.savePreferenceCaseHeaders(preferenceKey, headers);
         this.caseSearch.setHeaderInputMetadata();
     };
 
