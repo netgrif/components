@@ -199,7 +199,7 @@ define(['./Filter'], function (Filter) {
                     }
                 },
                 argsInputType: function () {
-                    return this.autocompleteItems.get(self.searchDatafield)[0].inputType;
+                    return self.searchDatafield.inputType;
                 },
                 datafieldFilter: function () {
                     if(!self.searchDatafield)
@@ -208,7 +208,7 @@ define(['./Filter'], function (Filter) {
                 },
                 getElasticKeyword: function () {
                     let keywords = [];
-                    this.autocompleteItems.get(self.searchDatafield).forEach(function (keyword) {
+                    this.autocompleteItems.get(self.searchDatafield.toSerializedForm()).forEach(function (keyword) {
                         keywords.push(this.fullKeywordFromId(keyword.id));
                     }, this);
                     return keywords;
@@ -217,7 +217,7 @@ define(['./Filter'], function (Filter) {
                     return self.searchArguments[inputGui];
                 },
                 getTextPrefix: function() {
-                    return "Datafield "+self.searchDatafield;
+                    return "Datafield "+self.searchDatafield.text;
                 },
                 getFormattedArguments: function() {
                     switch (this.argsInputType()) {
@@ -234,7 +234,23 @@ define(['./Filter'], function (Filter) {
                     return "dataSet."+datafieldId+".value";
                 },
                 _filterDatafields: function (text) {
-                    return self._filterAutocompleteItems(text, this);
+                    let filtered = [];
+                    this.autocompleteItems.forEach(function (value, key) {
+                        let objectKey = this._splitMapKey(key);
+                        if(objectKey.text.includes(text)) {
+                            for(let i = 0; i < value.length; i++) {
+                                if(self.possibleNets.has(value[i].netId)) {
+                                    filtered.push(objectKey);
+                                    break;
+                                }
+                            }
+                        }
+                    }, this);
+                    return filtered;
+                },
+                _splitMapKey: function (mapKey) {
+                    let parts = mapKey.split("#");
+                    return new DatafieldMapKey(parts.shift(), parts.join("#"));
                 }
             },
             task: {
@@ -592,48 +608,17 @@ define(['./Filter'], function (Filter) {
             if(this.searchType === Search.SEARCH_CASES) {
                 net.immediateData.forEach(function (immediateData) {
                     if(immediateData.type !== "dateTime") // TODO remove after dateTime is supported
-                        this.addNameToIdMapping("dataset", immediateData.title, immediateData.stringId, net.id, immediateData.type);
+                        this.addNameToIdMapping("dataset", DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), immediateData.stringId, net.id, immediateData.type);
                 }, this);
-
-                let typeCollision = true;
-                while(typeCollision) {
-                    typeCollision = false;
-                    let mixedTypesMap = this.categories[Search.SEARCH_CASES].dataset.autocompleteItems;
-                    this.categories[Search.SEARCH_CASES].dataset.autocompleteItems = new Map();
-                    mixedTypesMap.forEach(function (value, key) {
-                        let type = value[0].inputType;
-                        let i;
-                        for(i = 1; i < value.length; i++) {
-                            if(value[i].inputType !== type)
-                                break;
-                        }
-                        if(i === value.length) {
-                            if(!this.categories[Search.SEARCH_CASES].dataset.autocompleteItems.has(key))
-                                this.categories[Search.SEARCH_CASES].dataset.autocompleteItems.set(key, value);
-                            else {
-                                typeCollision = true;
-                                value.forEach(function (autocompleteItem) {
-                                    this.addNameToIdMapping("dataset", key, autocompleteItem.id, autocompleteItem.netId, autocompleteItem.inputType);
-                                }, this);
-                            }
-                        }
-                        else {
-                            typeCollision = true;
-                            value.forEach(function (autocompleteItem) {
-                                this.addNameToIdMapping("dataset", key+" ["+autocompleteItem.inputType+"]", autocompleteItem.id, autocompleteItem.netId, autocompleteItem.inputType); // TODO i18n
-                            }, this);
-                        }
-                    }, this);
-                }
             }
         }, this);
     };
 
-    Search.prototype.addNameToIdMapping = function(categoryName, name, id, netId, inputType) {
-        if(this.categories[this.searchType][categoryName].autocompleteItems.has(name))
-            this.categories[this.searchType][categoryName].autocompleteItems.get(name).push(new AutocompleteItem(id, netId, inputType));
+    Search.prototype.addNameToIdMapping = function(categoryName, key, id, netId, inputType) {
+        if(this.categories[this.searchType][categoryName].autocompleteItems.has(key))
+            this.categories[this.searchType][categoryName].autocompleteItems.get(key).push(new AutocompleteItem(id, netId, inputType));
         else
-            this.categories[this.searchType][categoryName].autocompleteItems.set(name, [new AutocompleteItem(id, netId, inputType)]);
+            this.categories[this.searchType][categoryName].autocompleteItems.set(key, [new AutocompleteItem(id, netId, inputType)]);
     };
 
     Search.prototype.fillVariableAllNets = function() {
@@ -867,7 +852,7 @@ define(['./Filter'], function (Filter) {
                     this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_GUI], Search.COMPLEX_GUI, possibleNets);
                     break;
                 case "Dataset":
-                    this.searchCategory.autocompleteItems.get(this.searchDatafield).forEach(function (autocompleteItem) {
+                    this.searchCategory.autocompleteItems.get(this.searchDatafield.toSerializedForm()).forEach(function (autocompleteItem) {
                         possibleNets.push(autocompleteItem.netId);
                     });
                     this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_GUI], Search.COMPLEX_GUI, possibleNets);
@@ -924,7 +909,7 @@ define(['./Filter'], function (Filter) {
                         }
                     }
                     else {
-                        for(let datafield of this.categories[this.searchType].dataset.autocompleteItems.get(headerItem.title)) {
+                        for(let datafield of this.categories[this.searchType].dataset.autocompleteItems.get(DatafieldMapKey.serializedForm(headerItem.type, headerItem.title))) {
                             if(headerItem.stringId === datafield.id) {
                                 this.headerSearchFieldsMetadata.push(
                                     new HeaderSearchMetadata(
@@ -1059,6 +1044,42 @@ define(['./Filter'], function (Filter) {
         this.inputType = inputType;
         this.allowedOperators = allowedOperators;
     }
+
+
+    function DatafieldMapKey(type, text) {
+        this.inputType = type;
+        this.text = text;
+    }
+
+    DatafieldMapKey.prototype.getTypeIcon = function() {
+        switch (this.inputType) {
+            default:
+                return "text_format";
+            case "boolean":
+                return "toggle_off";
+            case "date":
+                return "today";
+            case "enumeration":
+                return "radio_button_checked";
+            case "file":
+                return "insert_drive_file";
+            case "multichoice":
+                return "check_box";
+            case "number":
+                return "looks_one";
+            case "user":
+                return "person";
+
+        }
+    };
+
+    DatafieldMapKey.prototype.toSerializedForm = function() {
+        return DatafieldMapKey.serializedForm(this.inputType, this.text);
+    };
+
+    DatafieldMapKey.serializedForm = function (type, text) {
+        return type + "#" + text;
+    };
 
     return Search;
 });

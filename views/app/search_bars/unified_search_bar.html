@@ -10,10 +10,10 @@
                 </md-select>
             </md-input-container>
 
-            <md-autocomplete md-search-text="search.searchDatafield"
+            <md-autocomplete md-selected-item="search.searchDatafield"
                              md-selected-item-change="search.searchCategory.datafieldFilter(); search.clearFieldsDatafield()"
                              md-items="item in search.searchCategory.datafieldFilter()"
-                             md-item-text="item"
+                             md-item-text="item.text"
                              md-min-length="0"
                              md-no-cache="true"
                              md-select-on-match="true"
@@ -24,8 +24,9 @@
                              class="autocomplete-aligned-to-input">
 
                 <md-item-template>
+                    <md-icon class="material-icons">{{item.getTypeIcon()}}</md-icon>
                     <span md-highlight-text="search.searchDatafield" md-highlight-flags="i">
-                        {{item}}
+                        {{item.text}}
                     </span>
                 </md-item-template>
                 <md-not-found>
