@@ -8,6 +8,7 @@ $dim-14px:						14px;
 $dim-48px:						48px;
 $dim-52px:						52px;
 $dim-56px:						56px;
+$dim-68px:						68px;
 
 $border-radius:					2px;
 
@@ -25,6 +26,10 @@ $border-radius:					2px;
 
 	&-56px {
 		height: $dim-56px;
+	}
+
+	&-68px {
+		height: $dim-68px;
 	}
 }
 
