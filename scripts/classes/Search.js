@@ -24,7 +24,10 @@ define(['./Filter'], function (Filter) {
 
         // bound variables
         this.searchCategory = undefined;
-        this.searchDatafield = undefined;
+        this.searchDatafield = {
+            text: undefined,
+            object: undefined
+        };
         this.searchOperator = undefined;
         this.searchArguments = {};
         this.searchArguments[Search.COMPLEX_GUI] = [];
@@ -199,16 +202,16 @@ define(['./Filter'], function (Filter) {
                     }
                 },
                 argsInputType: function () {
-                    return self.searchDatafield.inputType;
+                    return self.searchDatafield.object.inputType;
                 },
                 datafieldFilter: function () {
-                    if(!self.searchDatafield)
+                    if(!self.searchDatafield.text)
                         return this._filterDatafields("");
-                    return this._filterDatafields(self.searchDatafield);
+                    return this._filterDatafields(self.searchDatafield.text);
                 },
                 getElasticKeyword: function () {
                     let keywords = [];
-                    this.autocompleteItems.get(self.searchDatafield.toSerializedForm()).forEach(function (keyword) {
+                    this.autocompleteItems.get(self.searchDatafield.object.toSerializedForm()).forEach(function (keyword) {
                         keywords.push(this.fullKeywordFromId(keyword.id));
                     }, this);
                     return keywords;
@@ -217,7 +220,7 @@ define(['./Filter'], function (Filter) {
                     return self.searchArguments[inputGui];
                 },
                 getTextPrefix: function() {
-                    return "Datafield "+self.searchDatafield.text;
+                    return "Datafield "+self.searchDatafield.object.text;
                 },
                 getFormattedArguments: function() {
                     switch (this.argsInputType()) {
@@ -722,7 +725,8 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.clearDatafieldInput = function() {
-        this.searchDatafield = undefined;
+        this.searchDatafield.text = undefined;
+        this.searchDatafield.object = undefined;
         this.clearOperatorInput();
     };
 
@@ -860,7 +864,7 @@ define(['./Filter'], function (Filter) {
                     this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_GUI], Search.COMPLEX_GUI, possibleNets);
                     break;
                 case "Dataset":
-                    this.searchCategory.autocompleteItems.get(this.searchDatafield.toSerializedForm()).forEach(function (autocompleteItem) {
+                    this.searchCategory.autocompleteItems.get(this.searchDatafield.object.toSerializedForm()).forEach(function (autocompleteItem) {
                         possibleNets.push(autocompleteItem.netId);
                     });
                     this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_GUI], Search.COMPLEX_GUI, possibleNets);
