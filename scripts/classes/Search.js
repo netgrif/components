@@ -185,7 +185,7 @@ define(['./Filter'], function (Filter) {
 
                     if(!datafieldType) {
                         let datafields = this.autocompleteItems.get(datafieldMapKey);
-                        if(!datafields || datafields.length == 0)
+                        if(!datafields || datafields.length === 0)
                             return defaultOperators;
                         datafieldType = datafields[0].inputType;
                     }
@@ -199,6 +199,9 @@ define(['./Filter'], function (Filter) {
 
                         case "date":
                             return [Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN_DATE, Search.OPERATOR.LESS_THAN_DATE, Search.OPERATOR.IN_RANGE_DATE, Search.OPERATOR.IS_NULL];
+
+                        case "boolean":
+                            return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
                     }
                 },
                 argsInputType: function () {
@@ -240,7 +243,7 @@ define(['./Filter'], function (Filter) {
                     let filtered = [];
                     this.autocompleteItems.forEach(function (value, key) {
                         let objectKey = this._splitMapKey(key);
-                        if(objectKey.text.includes(text)) {
+                        if(objectKey.text.toLowerCase().includes(text.toLowerCase())) {
                             for(let i = 0; i < value.length; i++) {
                                 if(self.possibleNets.has(value[i].netId)) {
                                     filtered.push(objectKey);
@@ -839,7 +842,7 @@ define(['./Filter'], function (Filter) {
     Search.prototype._filterAutocompleteItems = function (text, category) {
         let filtered = [];
         category.autocompleteItems.forEach(function (value, key) {
-            if(key.includes(text)) {
+            if(key.toLowerCase().includes(text.toLowerCase())) {
                 for(let i = 0; i < value.length; i++) {
                     if(this.possibleNets.has(value[i].netId)) {
                         filtered.push(key);
