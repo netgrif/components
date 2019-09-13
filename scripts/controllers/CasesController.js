@@ -33,6 +33,12 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         self.activeTab.activate();
                     };
 
+                    self.checkLength = function (text){
+                        if(text.length > 40){
+                            return text.substring(0,40) +"..."
+                        }
+                        return text
+                    };
                     /**
                      * add new tab for case's tasks if not already exists, then send refresh signal
                      * @param {Object} useCase
