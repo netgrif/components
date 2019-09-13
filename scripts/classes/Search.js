@@ -244,6 +244,19 @@ define(['./Filter'], function (Filter) {
                 fullKeywordFromId: function (datafieldId) {
                     return "dataSet."+datafieldId+".value";
                 },
+                overrideQueryGeneration: function (operator) {
+                    let matchingAutocompleteItems = this.autocompleteItems.get(self.searchDatafield.object.toSerializedForm());
+
+                    let complexSubqueries = [];
+                    matchingAutocompleteItems.forEach(function (autocompleteItem) {
+                        let simpleSubqueries = [];
+                        simpleSubqueries.push(operator.createQuery(this.getElasticKeyword(), this.getQueryArguments(Search.COMPLEX_GUI)));
+                        simpleSubqueries.push(Search.OPERATOR.EQUAL.createQuery(self.categories[self.searchType].process.getElasticKeyword(), [autocompleteItem.netId]));
+                        complexSubqueries.push(Search.bindQueries(simpleSubqueries, "AND"));
+                    }, this);
+
+                    return Search.bindQueries(complexSubqueries, "OR");
+                },
                 _filterDatafields: function (text) {
                     let filtered = [];
                     this.autocompleteItems.forEach(function (value, key) {
@@ -707,7 +720,7 @@ define(['./Filter'], function (Filter) {
         if(!this.searchOperator)
             return false;
         for(let argIndex = 0; argIndex < this.searchOperator.numberOfOperands; argIndex++) {
-            if( typeof this.searchArguments[Search.COMPLEX_GUI][argIndex] === "undefined" || this.searchArguments[Search.COMPLEX_GUI][argIndex].toString().length === 0)
+            if( !this.searchArguments[Search.COMPLEX_GUI][argIndex] || this.searchArguments[Search.COMPLEX_GUI][argIndex].toString().length === 0)
                 return false;
         }
         return true;
@@ -819,14 +832,6 @@ define(['./Filter'], function (Filter) {
         }
         if(this.guiComplexity === Search.HEADER_GUI || this.guiComplexity === Search.COMBINED_GUI) {
             combinedChips = combinedChips.concat(this.createChipsFromHeaderInput());
-        }
-
-        if(this.possibleNets.size < this.allNets.size && !this.containsProcessQuery(combinedChips)) {
-            let netQueries = [];
-            this.possibleNets.forEach(function (netId) {
-                netQueries.push(Search.OPERATOR.EQUAL.createQuery(this.categories[Search.SEARCH_CASES].process.getElasticKeyword(), [netId]));
-            }, this);
-            combinedChips = combinedChips.concat([Chip.createChip("", Search.bindQueries(netQueries, "OR"))]);
         }
 
         return new Filter("", this.searchType, this.buildSearchQuery(combinedChips), undefined, this.parent, combinedChips);
