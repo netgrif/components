@@ -969,14 +969,16 @@ define(['./Filter'], function (Filter) {
         let fakeChipParts = [];
 
         for(let i = 0; i < this.headerSearchFieldsMetadata.length; i++) {
-            let operator = Search.OPERATOR.EQUAL;
-            if(this.headerSearchFieldsMetadata[i].allowedOperators(this.headerSearchFieldsMetadata[i].inputType).includes(Search.OPERATOR.LIKE))
-                operator = Search.OPERATOR.LIKE;
-            if(this.headerSearchFieldsMetadata[i].inputType==="date")
-                operator = Search.OPERATOR.EQUAL_DATE;
+            if(this.headerSearchFieldsMetadata[i].inputType !== "blank") {
+                let operator = Search.OPERATOR.EQUAL;
+                if(this.headerSearchFieldsMetadata[i].allowedOperators(this.headerSearchFieldsMetadata[i].inputType).includes(Search.OPERATOR.LIKE))
+                    operator = Search.OPERATOR.LIKE;
+                if(this.headerSearchFieldsMetadata[i].inputType==="date")
+                    operator = Search.OPERATOR.EQUAL_DATE;
 
-            if(this.searchArguments[Search.HEADER_GUI][i]) {
-                fakeChipParts.push(Chip.createChip("", operator.createQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, [this.searchArguments[Search.HEADER_GUI][i]])));
+                if(this.searchArguments[Search.HEADER_GUI][i]) {
+                    fakeChipParts.push(Chip.createChip("", operator.createQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, [this.searchArguments[Search.HEADER_GUI][i]])));
+                }
             }
         }
 
