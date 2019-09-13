@@ -47,6 +47,11 @@ define(['./Filter'], function (Filter) {
 
         this.enabledCategories = [];
 
+        this.inputFieldTitles = {
+            complex: [],
+            header: []
+        };
+
         this.categories = {};
         this.categories[Search.SEARCH_CASES] = {
             visualId: {
@@ -905,6 +910,8 @@ define(['./Filter'], function (Filter) {
 
     Search.prototype.setHeaderInputMetadata = function () {
         this.headerSearchFieldsMetadata.splice(0, this.headerSearchFieldsMetadata.length);
+        this.inputFieldTitles.header.splice(0, this.inputFieldTitles.header.length);
+
         if(this.parent.headers) {
             for(const key of Object.keys(this.parent.headers.selected)) {
                 let headerItem = this.parent.headers.selected[key];
@@ -937,6 +944,17 @@ define(['./Filter'], function (Filter) {
                             }
                         }
                     }
+
+                    this.inputFieldTitles.header.push(headerItem.title);
+                }
+                else {
+                    this.headerSearchFieldsMetadata.push(
+                        new HeaderSearchMetadata(
+                            undefined,
+                            "blank",
+                            undefined
+                        )
+                    );
                 }
             }
         }
@@ -969,6 +987,27 @@ define(['./Filter'], function (Filter) {
                 return true;
         }
         return false;
+    };
+
+    Search.prototype.setInputTitles = function () {
+        this.inputFieldTitles.complex.splice(0, this.inputFieldTitles.complex.length);
+
+        if(this.searchOperator === Search.OPERATOR.IN_RANGE || this.searchOperator === Search.OPERATOR.IN_RANGE_DATE) {
+            // TODO i18n
+            this.inputFieldTitles.complex.push("From");
+            this.inputFieldTitles.complex.push("To");
+        }
+        else {
+            let fieldTitle;
+            if(this.searchCategory === this.categories[Search.SEARCH_CASES].dataset)
+                fieldTitle = this.searchDatafield.object.text;
+            else
+                fieldTitle = this.searchCategory.name;
+
+            for(let i = 0; i < this.searchOperator.numberOfOperands; i++) {
+                this.inputFieldTitles.complex.push(fieldTitle);
+            }
+        }
     };
 
 

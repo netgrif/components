@@ -1,7 +1,7 @@
 <div ng-switch="$eval(switchExpression)" layout="row" layout-align="start center">
     <div ng-switch-default layout="row" layout-align="start center">
         <md-input-container class="md-block margin-0">
-            <label class="placeholder">argument {{$index+1}}</label>
+            <label class="placeholder">{{inputTitles[$index]}}</label>
             <input ng-model="search.searchArguments[inputGui][$index]">
         </md-input-container>
     </div>
@@ -16,7 +16,7 @@
                          md-select-on-match="true"
                          md-match-case-insensitive="true"
                          md-dropdown-items="5"
-                         md-floating-label="{{::$i18n.page.tasks.search.search}}"
+                         md-floating-label="{{inputTitles[$index]}}"
                          class="autocomplete-aligned-to-input">
 
             <md-item-template>
@@ -25,7 +25,7 @@
                 </span>
             </md-item-template>
             <md-not-found>
-                {{$i18n.page.tasks.filter.processNotFound}}
+                {{$i18n.page.tasks.filter.processNotFound}} <!-- TODO change text -->
             </md-not-found>
         </md-autocomplete>
     </div>
@@ -41,7 +41,7 @@
                              md-select-on-match="true"
                              md-match-case-insensitive="true"
                              md-dropdown-items="5"
-                             md-floating-label="{{::$i18n.page.tasks.search.search}}"
+                             md-floating-label="{{inputTitles[$index]}}"
                              md-delay="500"
                              class="autocomplete-aligned-to-input">
 
@@ -51,7 +51,7 @@
                     </span>
                 </md-item-template>
                 <md-not-found>
-                    {{$i18n.page.tasks.filter.processNotFound}}
+                    {{$i18n.page.tasks.filter.processNotFound}} <!-- TODO change text -->
                 </md-not-found>
             </md-autocomplete>
         </md-input-container>
@@ -59,13 +59,14 @@
 
     <div ng-switch-when="number" layout="row" layout-align="start center">
         <md-input-container class="md-block margin-0">
-            <label class="placeholder">argument {{$index+1}}</label>
+            <label class="placeholder">{{inputTitles[$index]}}</label>
             <input ng-model="search.searchArguments[inputGui][$index]" type="number" step="any">
         </md-input-container>
     </div>
 
     <div ng-switch-when="boolean" layout="row" layout-align="start center">
         <md-input-container class="md-block margin-0">
+            <label class="placeholder">{{inputTitles[$index]}}</label>
             <md-switch class="md-primary margin-0"
                        ng-model="search.searchArguments[inputGui][$index]"
                        ng-init="search.searchArguments[inputGui][$index] = false"
@@ -76,7 +77,7 @@
 
     <div ng-switch-when="date" layout="row" layout-align="start center">
         <md-input-container class="md-block margin-0">
-            <label class="placeholder">argument {{$index+1}}</label>
+            <label class="placeholder">{{inputTitles[$index]}}</label>
             <md-datepicker ng-model="search.searchArguments[inputGui][$index]"
                            aria-label="Pick date"
                            md-open-on-focus>
@@ -87,4 +88,6 @@
 <!--    TODO dateTime after NAE-182 is merged-->
 <!--    <div ng-switch-when="dateTime" layout="row">-->
 <!--    </div>-->
+
+    <div ng-switch-when="blank"></div>
 </div>

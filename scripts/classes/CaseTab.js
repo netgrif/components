@@ -150,9 +150,11 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
         let preferenceKey = this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY;
         let oldPreference = this.$user.getPreferenceCaseHeaders(preferenceKey);
 
-        for(let i = 0; i < headers.length; i++) {
-            if(headers[i] !== oldPreference[i]) {
-                this.caseSearch.clearHeaderInput(i);
+        if(oldPreference) {
+            for(let i = 0; i < headers.length; i++) {
+                if(oldPreference[i] && headers[i] !== oldPreference[i]) {
+                    this.caseSearch.clearHeaderInput(i);
+                }
             }
         }
 
