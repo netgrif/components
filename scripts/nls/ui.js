@@ -300,6 +300,7 @@ define({
                 yes: "Yes",
                 no: "No",
                 enterDate: "Enter date",
+                enterDateTime: "Enter date and time",
                 enable: "Enable",
                 disable: "Disable"
             },

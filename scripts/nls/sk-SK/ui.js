@@ -288,6 +288,7 @@ define({
             yes: "Áno",
             no: "Nie",
             enterDate: "Zadať dátum",
+            enterDateTime: "Zadať dátum a čas",
             enable: "Povoliť",
             disable: "Zakázať"
         },

@@ -50,13 +50,13 @@ define(['angular', '../modules/Main'], function (angular) {
 
             request: function (request) {
                 if (interceptor.token && interceptor.token.token)
-                    request.headers['x-auth-token'] = interceptor.token.token;
+                    request.headers['X-Auth-Token'] = interceptor.token.token;
 
                 return request;
             },
 
             response: function (response) {
-                const received = response.headers('x-auth-token');
+                const received = response.headers('X-Auth-Token');
 
                 if (received && (!interceptor.token || !interceptor.token.token || received !== interceptor.token.token)) {
                     interceptor.token = createToken(received);

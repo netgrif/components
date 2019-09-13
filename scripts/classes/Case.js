@@ -50,8 +50,8 @@ define(['./DataField', './HalResource'], function (DataField, HalResource) {
         if (date instanceof Date)
             return `${DataField.padding(date.getDate(), 0)}.${DataField.padding(date.getMonth() + 1, 0)}. ${date.getFullYear()}`;
 
-        return `${DataField.padding(date.dayOfMonth, 0)}.${DataField.padding(date.monthValue, 0)}.${date.year}
-            ${DataField.padding(date.hour, 0, 0)}:${DataField.padding(date.minute, 0, 0)}`;
+        return `${DataField.padding(date[2], 0)}.${DataField.padding(date[1], 0)}.${date[0]}
+                ${DataField.padding(date[3], 0, 0)}:${DataField.padding(date[4], 0, 0)}`;
     };
 
     Case.prototype.load = function (callback = () => {

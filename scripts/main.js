@@ -18,10 +18,12 @@ requirejs.config({
         'angularMaterialExpansionPanels': "bower_components/angular-material-expansion-panel/dist/md-expansion-panel.min",
         'domReady': "bower_components/requirejs-domReady/domReady",
         'i18n': "bower_components/requirejs-i18n/i18n",
+        'angularMaterialDatePicker': "bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min",
         'nls': "scripts/nls",
         'config': "scripts/config",
         'app': "scripts/app",
-        'version': "scripts/version"
+        'version': "scripts/version",
+        'moment' : "bower_components/moment/moment"
     },
     shim: {
         'angular': {
@@ -37,7 +39,8 @@ requirejs.config({
         'angularRoute': ['angular'],
         'angularRouteSegment': ['angular', 'angularRoute'],
         'angularMaterial': ['angular', 'angularAnimate', 'angularAria', 'angularMessages'],
-        'angularMaterialExpansionPanels': ['angular', 'angularAnimate', 'angularAria', 'angularMessages','angularMaterial']
+        'angularMaterialExpansionPanels': ['angular', 'angularAnimate', 'angularAria', 'angularMessages','angularMaterial'],
+        'angularMaterialDatePicker': ['angular', 'angularAnimate', 'angularAria','angularMaterial', 'moment']
     },
     config: {
         i18n: {
