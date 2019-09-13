@@ -631,8 +631,7 @@ define(['./Filter'], function (Filter) {
 
             if(this.searchType === Search.SEARCH_CASES) {
                 net.immediateData.forEach(function (immediateData) {
-                    if(immediateData.type !== "dateTime") // TODO remove after dateTime is supported
-                        this.addNameToIdMapping("dataset", DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), immediateData.stringId, net.id, immediateData.type);
+                    this.addNameToIdMapping("dataset", DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), immediateData.stringId, net.id, immediateData.type);
                 }, this);
             }
         }, this);

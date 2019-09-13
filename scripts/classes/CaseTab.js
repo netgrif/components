@@ -171,6 +171,9 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
     };
 
     CaseTab.prototype.changeSorting = function (header) {
+        if(!header)
+            return;
+
         this.headers.sortItem = header;
         if (header.sort.enable) {
             header.sort.dir = this.flipDirection(header.sort.dir);

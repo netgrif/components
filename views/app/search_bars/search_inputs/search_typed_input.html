@@ -85,9 +85,20 @@
         </md-input-container>
     </div>
 
-<!--    TODO dateTime after NAE-182 is merged-->
-<!--    <div ng-switch-when="dateTime" layout="row">-->
-<!--    </div>-->
+    <div ng-switch-when="dateTime" layout="row">
+        <md-input-container class="md-block">
+            <label class="placeholder" for="{{'dateTime'+$index}}">{{inputTitles[$index]}}</label>
+            <md-icon class="material-icons">today</md-icon>
+            <input mdc-datetime-picker="" date="true" time="true" type="text"
+                   placeholder="{{inputTitles[$index]}}" show-todays-date minutes="true" short-time="false" auto-ok="true"
+                   minute-steps="1" week-start="1" click-outside-to-close="true"
+                   class="dtp-no-msclear dtp-input"
+                   ng-model="search.searchArguments[inputGui][$index]"
+                   format="D.M.YYYY HH:mm"
+                   id="{{'dateTime'+$index}}"
+                   aria-label="Pick date and time">
+        </md-input-container>
+    </div>
 
     <div ng-switch-when="blank"></div>
 </div>
