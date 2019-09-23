@@ -1,11 +1,12 @@
 <div layout="column" class="card padding-2x" ng-if="search.guiComplexity==='COMPLEX' || search.guiComplexity==='COMBINED'">
     <div layout="row" layout-align="space-between center">
         <div layout="row" layout-align="start center">
+
             <md-input-container class="md-block margin-0 min-width-150px" flex>
-                <label class="placeholder">{{::$i18n.page.tasks.search.category}}</label>
+                <label class="placeholder">{{::$i18n.block.search.searchType}}</label>
                 <md-select ng-model="search.searchCategory" ng-change="search.clearDatafieldInput()">
-                    <md-option ng-repeat="(key, category) in search.enabledCategories" ng-value="category">
-                        {{category.name}}
+                    <md-option ng-repeat="(key, type) in search.enabledCategories" ng-value="type">
+                        {{type.name}}
                     </md-option>
                 </md-select>
             </md-input-container>
@@ -20,7 +21,7 @@
                              md-select-on-match="true"
                              md-match-case-insensitive="true"
                              md-dropdown-items="5"
-                             md-floating-label="Datafield"
+                             md-floating-label="search.$i18n.block.search.datafield"
                              ng-if="search.searchCategory && search.searchCategory.name === 'Dataset'"
                              class="autocomplete-aligned-to-input min-width-250px">
                 <md-item-template>
@@ -30,12 +31,12 @@
                     </span>
                 </md-item-template>
                 <md-not-found>
-                    {{$i18n.page.tasks.filter.processNotFound}}
+                    {{$i18n.block.search.autocompleteInputNotFound}}
                 </md-not-found>
             </md-autocomplete>
 
             <md-input-container class="md-block margin-0 min-width-100px" flex ng-if="search.searchCategory && (search.searchCategory.name !== 'Dataset' || search.searchDatafield.object)">
-                <label class="placeholder">Condition</label>
+                <label class="placeholder">{{::i18n.block.search.condition}}</label>
                 <md-select ng-model="search.searchOperator" ng-change="search.clearArgumentsInput(); search.setInputTitles()">
                     <md-option ng-repeat="operator in search.searchCategory.allowedOperators(undefined, search.searchDatafield.object.toSerializedForm())" ng-value="operator">
                         {{operator.display}}
@@ -49,13 +50,12 @@
                   ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'">
              </div>
 
-            <!-- TODO i18n tooltips -->
             <md-button ng-disabled="!search.allArgumentsFilled()"
                        ng-click="search.commitChipPart(); search.filterPossibleNets(); tab.search()"
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">add</md-icon>
                 <md-tooltip md-direction="top">
-                    add chip element
+                    {{::i18n.block.search.addChipPart}}
                 </md-tooltip>
             </md-button>
 
@@ -64,7 +64,7 @@
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">send</md-icon>
                 <md-tooltip md-direction="top">
-                    add chip
+                    {{::i18n.block.search.addChip}}
                 </md-tooltip>
             </md-button>
 
@@ -73,7 +73,7 @@
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">clear_all</md-icon>
                 <md-tooltip md-direction="top">
-                    clear input
+                    {{::i18n.block.search.clearInput}}
                 </md-tooltip>
             </md-button>
 
@@ -82,7 +82,7 @@
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">delete</md-icon>
                 <md-tooltip md-direction="top">
-                    clear search
+                    {{::i18n.block.search.clearSearch}}
                 </md-tooltip>
             </md-button>
 
@@ -91,11 +91,11 @@
                        ng-click="tab.openSaveFilterDialog()"
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">save</md-icon>
-<!--                        <span>{{::$i18n.block.btn.save}}</span>-->
                 <md-tooltip md-direction="top">
-                    save filter
+                    {{::i18n.block.search.saveFilter}}
                 </md-tooltip>
             </md-button>
+
         </div>
         <div flex-gt-xs="5" layout="row" layout-align="end center">
             <md-button ng-if="search.searchType === 'Case' && $user.hasAuthority(tab.authorityToCreate)"
@@ -139,7 +139,7 @@
                        ng-click="search.commitChip(); tab.search(); mainCtrl.reloadCounters(); search.filterPossibleNets()" layout-align=" end">
                 <md-icon class="material-icons">search</md-icon>
                 <md-tooltip md-direction="top">
-                    search
+                    {{::i18n.block.search.search}}
                 </md-tooltip>
             </md-button>
         </div>

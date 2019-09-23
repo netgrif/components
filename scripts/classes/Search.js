@@ -467,7 +467,7 @@ define(['./Filter'], function (Filter) {
             }
         },
         IN_RANGE: {
-            display: "in range",
+            display: self.i18n.block.search.operator.inRange,
             numberOfOperands: 2,
             createQuery: function (keywords, args) {
                 return Search.forEachKeyword(keywords, function (keyword) {
@@ -479,11 +479,11 @@ define(['./Filter'], function (Filter) {
                 });
             },
             createText: function (args) {
-                return "is between "+args[0]+" and "+args[1];
+                return "is between "+args[0]+" and "+args[1]; // TODO i18n
             }
         },
         LIKE: {
-            display: "like",
+            display: self.i18n.block.search.operator.like,
             numberOfOperands: 1,
             createQuery: function (keywords, args) {
                 return "("+keywords[0]+":"+args[0]+")";
@@ -493,7 +493,7 @@ define(['./Filter'], function (Filter) {
             }
         },
         IS_NULL: {
-            display: "is null",
+            display: self.i18n.block.search.operator.isNull,
             numberOfOperands: 0,
             createQuery: function (keywords) {
                 return Search.forEachKeyword(keywords, function (keyword) {
@@ -501,7 +501,7 @@ define(['./Filter'], function (Filter) {
                 });
             },
             createText: function () {
-                return "is null";
+                return "is null"; // TODO i18n
             }
         },
         EQUAL_DATE: {},
@@ -519,7 +519,7 @@ define(['./Filter'], function (Filter) {
         let arg2 = new Date(args[1]);
         arg2.setDate(arg2.getDate()+1); // javascript handles rollover
         return Search.forEachKeyword(keywords, function (keyword) {
-            return "("+keyword+":["+args[0].getTime()+" TO "+arg2.getTime()+"})";
+            return "("+keyword+":["+args[0].getTime()+" TO "+arg2.getTime()+"})"; // TODO i18n
         });
     };
     Object.assign(Search.OPERATOR.MORE_THAN_DATE, Search.OPERATOR.MORE_THAN);
@@ -999,9 +999,8 @@ define(['./Filter'], function (Filter) {
         this.inputFieldTitles.complex.splice(0, this.inputFieldTitles.complex.length);
 
         if(this.searchOperator === Search.OPERATOR.IN_RANGE || this.searchOperator === Search.OPERATOR.IN_RANGE_DATE) {
-            // TODO i18n
-            this.inputFieldTitles.complex.push("From");
-            this.inputFieldTitles.complex.push("To");
+            this.inputFieldTitles.complex.push(this.$i18n.block.search.rangeFrom);
+            this.inputFieldTitles.complex.push(this.$i18n.block.search.rangeTo);
         }
         else {
             let fieldTitle;

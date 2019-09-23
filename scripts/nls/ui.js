@@ -476,6 +476,32 @@ define({
             char: {
 
             },
+            search: {
+                rangeFrom: "From",
+                rangeTo: "To",
+                chipNameMyCases: "User = me",
+                autocompleteInputNotFound: "none found",
+                searchType: "Search type",
+                datafield: "Datafield",
+                condition: "Condition",
+                addChipPart: "Add search condition part",
+                addChip: "Combine condition parts",
+                clearInput: "Clear search input",
+                clearSearch: "Clear search conditions",
+                saveFilter: "Save conditions as filter",
+                search: "Search",
+                header: {
+                    sortMode: "Ordering mode",
+                    searchMode: "Search mode",
+                    enableEditMode: "Enable edit mode",
+                    confirmChanges: "Confirm changes"
+                },
+                operator: {
+                    inRange: "in range",
+                    like: "is like",
+                    isNull: "is empty"
+                }
+            },
             custom: {
 
             }
