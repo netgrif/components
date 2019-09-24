@@ -244,8 +244,6 @@ define({
                 author: "Autor",
                 createDate: "Dátum vytvorenia",
                 optional: "Voliteľné pole",
-                enableEditMode: "Povoliť úpravy",
-                confirmChanges: "Potvrdiť úpravy"
             },
             newTitle: "Nová inštancia"
         },
@@ -463,6 +461,51 @@ define({
         },
         char: {
 
+        },
+        search: {
+            rangeFrom: "Od",
+            rangeTo: "Do",
+            autocompleteInputNotFound: "žiadne nenájdené",
+            searchType: "Druh vyhľadávania",
+            datafield: "Dátové pole",
+            condition: "Podmienka",
+            addChipPart: "Pridať časť podmienky vyhľadávania",
+            addChip: "Spojiť časti podmienok vyhľadávania",
+            clearInput: "Vymazať vstupné polia",
+            clearSearch: "Zrušiť podmienky vyhľadávania",
+            saveFilter: "Uložiť podmienky do filtra",
+            search: "Vyhľadať",
+            header: {
+                sortMode: "Mód zoraďovania",
+                searchMode: "Mód vyhľadávania",
+                enableEditMode: "Povoliť úpravy",
+                confirmChanges: "Potvrdiť úpravy"
+            },
+            operator: {
+                inRange: "z rozsahu",
+                like: "podobný ako",
+                isNull: "je prázdny"
+            },
+            chipText: {
+                myCases: "Používateľ = ja",
+                inRangePart1: "je medzi",
+                inRangePart2: "a"
+            },
+            category: {
+                case: {
+                    visualId: "Vizuálne ID",
+                    process: "Proces",
+                    title: "Názov",
+                    creationDate: "Dátum vytvorenia",
+                    author: "Autor",
+                    dataset: "Dáta",
+                    task: "Úloha",
+                    role: "Rola"
+                },
+                task: {
+                    user: "Používateľ"
+                }
+            }
         },
         custom: {
 
