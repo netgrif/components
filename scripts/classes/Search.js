@@ -223,6 +223,9 @@ define(['./Filter'], function (Filter) {
                         case "date":
                             return [Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN_DATE, Search.OPERATOR.LESS_THAN_DATE, Search.OPERATOR.IN_RANGE_DATE, Search.OPERATOR.IS_NULL];
 
+                        case "dateTime":
+                            return [Search.OPERATOR.EQUAL_DATE_TIME, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN_DATE_TIME, Search.OPERATOR.LESS_THAN_DATE_TIME, Search.OPERATOR.IN_RANGE_DATE_TIME, Search.OPERATOR.IS_NULL];
+
                         case "boolean":
                             return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
                     }
@@ -251,7 +254,9 @@ define(['./Filter'], function (Filter) {
                 getFormattedArguments: function() {
                     switch (this.argsInputType()) {
                         case "date":
-                            return self.formatDateArguments(this.getQueryArguments(Search.COMPLEX_GUI));
+                            return self.formatDateArgumentsDate(this.getQueryArguments(Search.COMPLEX_GUI));
+                        case "dateTime":
+                            return self.formatDateArgumentsDateTime(this.getQueryArguments(Search.COMPLEX_GUI));
                         default:
                             return this.getQueryArguments(Search.COMPLEX_GUI);
                     }
@@ -528,22 +533,27 @@ define(['./Filter'], function (Filter) {
         EQUAL_DATE: {},
         IN_RANGE_DATE: {},
         MORE_THAN_DATE: {},
-        LESS_THAN_DATE: {}
-        // TODO operators for date time
+        LESS_THAN_DATE: {},
+        EQUAL_DATE_TIME: {},
+        IN_RANGE_DATE_TIME: {},
+        MORE_THAN_DATE_TIME: {},
+        LESS_THAN_DATE_TIME: {}
     };
     // Inherit and override some functionality
     Object.assign(Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.EQUAL);
     Search.OPERATOR.EQUAL_DATE.createQuery = function(keywords, args) {
         return Search.OPERATOR.IN_RANGE_DATE.createQuery(keywords, [args[0], args[0]]);
     };
+
     Object.assign(Search.OPERATOR.IN_RANGE_DATE, Search.OPERATOR.IN_RANGE);
     Search.OPERATOR.IN_RANGE_DATE.createQuery = function(keywords, args) {
         let arg2 = new Date(args[1]);
         arg2.setDate(arg2.getDate()+1); // javascript handles rollover
         return Search.forEachKeyword(keywords, function (keyword) {
-            return "("+keyword+":["+args[0].getTime()+" TO "+arg2.getTime()+"})"; // TODO i18n
+            return "("+keyword+":["+args[0].getTime()+" TO "+arg2.getTime()+"})";
         });
     };
+
     Object.assign(Search.OPERATOR.MORE_THAN_DATE, Search.OPERATOR.MORE_THAN);
     Search.OPERATOR.MORE_THAN_DATE.createQuery = function(keywords, args) {
         let arg1 = new Date(args[0]);
@@ -551,9 +561,37 @@ define(['./Filter'], function (Filter) {
         arg1.setMilliseconds(arg1.getMilliseconds()-1);
         return Search.OPERATOR.MORE_THAN.createQuery(keywords, [arg1.getTime()])
     };
+
     Object.assign(Search.OPERATOR.LESS_THAN_DATE, Search.OPERATOR.LESS_THAN);
     Search.OPERATOR.LESS_THAN_DATE.createQuery = function(keywords, args) {
         return Search.OPERATOR.LESS_THAN.createQuery(keywords, [new Date(args[0]).getTime()])
+    };
+
+    Object.assign(Search.OPERATOR.EQUAL_DATE_TIME, Search.OPERATOR.EQUAL);
+    Search.OPERATOR.EQUAL_DATE_TIME.createQuery = function(keywords, args) {
+        return Search.OPERATOR.IN_RANGE_DATE_TIME.createQuery(keywords, [args[0], args[0]]);
+    };
+
+    Object.assign(Search.OPERATOR.IN_RANGE_DATE_TIME, Search.OPERATOR.IN_RANGE);
+    Search.OPERATOR.IN_RANGE_DATE_TIME.createQuery = function(keywords, args) {
+        let arg2 = new Date(args[1]);
+        arg2.setMinutes(arg2.getMinutes()+1);
+        return Search.forEachKeyword(keywords, function(keyword) {
+            return "("+keyword+":["+args[0].getTime()+" TO "+arg2.getTime()+"})";
+        });
+    };
+
+    Object.assign(Search.OPERATOR.MORE_THAN_DATE_TIME, Search.OPERATOR.MORE_THAN);
+    Search.OPERATOR.MORE_THAN_DATE_TIME.createQuery = function(keywords, args) {
+        let arg1 = new Date(args[0]);
+        arg1.setMinutes(arg1.getMinutes()+1);
+        arg1.setMilliseconds(arg1.getMilliseconds()-1);
+        return Search.OPERATOR.MORE_THAN.createQuery(keywords, [arg1.getTime()]);
+    };
+
+    Object.assign(Search.OPERATOR.LESS_THAN_DATE_TIME, Search.OPERATOR.LESS_THAN);
+    Search.OPERATOR.LESS_THAN_DATE_TIME.createQuery = function(keywords, args) {
+        return Search.OPERATOR.LESS_THAN_DATE.createQuery(keywords, args);
     };
 
     Search.ELASTIC = {
@@ -654,6 +692,8 @@ define(['./Filter'], function (Filter) {
                 return Search.OPERATOR.EQUAL;
             case "date":
                 return Search.OPERATOR.EQUAL_DATE;
+            case "dateTime":
+                return Search.OPERATOR.EQUAL_DATE_TIME;
         }
     };
 
@@ -951,12 +991,20 @@ define(['./Filter'], function (Filter) {
             this.chips.predicted = undefined;
     };
 
-    Search.prototype.formatDateArguments = function(arguments) {
+    Search.prototype.formatDateArguments = function(arguments, format) {
         let formattedArguments = [];
         arguments.forEach(function (arg) {
-            formattedArguments.push(arg.toLocaleDateString(this.$i18n.current(), {year:"numeric", month:"numeric", day:"numeric"}));
+            formattedArguments.push(arg.toLocaleDateString(this.$i18n.current(), format));
         }, this);
         return formattedArguments;
+    };
+
+    Search.prototype.formatDateArgumentsDate = function(arguments) {
+        return this.formatDateArguments(arguments, {year:"numeric", month:"numeric", day:"numeric"});
+    };
+
+    Search.prototype.formatDateArgumentsDateTime = function(arguments) {
+        return this.formatDateArguments(arguments, {year:"numeric", month:"numeric", day:"numeric", hour:"numeric", minute:"numeric"});
     };
 
     Search.prototype.setHeaderInputMetadata = function () {
@@ -1172,7 +1220,8 @@ define(['./Filter'], function (Filter) {
                 return "looks_one";
             case "user":
                 return "person";
-
+            case "dateTime":
+                return "schedule";
         }
     };
 
