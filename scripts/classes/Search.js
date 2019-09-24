@@ -1093,10 +1093,7 @@ define(['./Filter'], function (Filter) {
         if(category.overrideQueryGeneration)
             return category.overrideQueryGeneration(operator);
 
-        if(category.argsInputType && category.argsInputType() === "date")
-            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(inputGui), Search.OPERATOR.EQUAL_DATE);
-        else
-            return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(inputGui), Search.OPERATOR.EQUAL);
+        return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(inputGui), Search.equalityOperatorFromType(category.argsInputType()));
     };
     
     ChipPart.prototype.createElementaryText = function (category, operator) {
