@@ -22,6 +22,17 @@ define(['./Filter'], function (Filter) {
 
         this.headerSearchFieldsMetadata = [];
 
+        this.constants = {
+            CATEGORY: Search.CATEGORY,
+
+            COMPLEX_GUI: Search.COMPLEX_GUI,
+            HEADER_GUI: Search.HEADER_GUI,
+            COMBINED_GUI: Search.COMBINED_GUI,
+
+            SEARCH_CASES: Search.SEARCH_CASES,
+            SEARCH_TASKS: Search.SEARCH_TASKS
+        };
+
         // bound variables
         this.searchCategory = undefined;
         this.searchDatafield = {
@@ -55,7 +66,8 @@ define(['./Filter'], function (Filter) {
         this.categories = {};
         this.categories[Search.SEARCH_CASES] = {
             visualId: {
-                name: "Visual Id",
+                id: Search.CATEGORY.CASE.VISUAL_ID,
+                name: self.$i18n.block.search.category.case.visualId,
                 headerName: "meta-visualId",
                 allowedOperators: function () {
                     return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
@@ -77,7 +89,8 @@ define(['./Filter'], function (Filter) {
                 }
             },
             process: {
-                name: "Process",
+                id: Search.CATEGORY.CASE.PROCESS,
+                name: self.$i18n.block.search.category.case.process,
                 autocompleteItems: new Map(),
                 allowedOperators: function () {
                     return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
@@ -114,7 +127,8 @@ define(['./Filter'], function (Filter) {
                 }
             },
             title: {
-                name: "Title",
+                id: Search.CATEGORY.CASE.TITLE,
+                name: self.$i18n.block.search.category.case.title,
                 headerName: "meta-title",
                 allowedOperators: function () {
                     return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.LIKE];
@@ -136,7 +150,8 @@ define(['./Filter'], function (Filter) {
                 }
             },
             creationDate: {
-                name: "Creation Date",
+                id: Search.CATEGORY.CASE.CREATION_DATE,
+                name: self.$i18n.block.search.category.case.creationDate,
                 headerName: "meta-creationDate",
                 allowedOperators: function () {
                     return [Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN_DATE, Search.OPERATOR.LESS_THAN_DATE, Search.OPERATOR.IN_RANGE_DATE];
@@ -161,7 +176,8 @@ define(['./Filter'], function (Filter) {
                 }
             },
             author: {
-                name: "Author",
+                id: Search.CATEGORY.CASE.AUTHOR,
+                name: self.$i18n.block.search.category.case.author,
                 headerName: "meta-author",
                 allowedOperators: function () {
                     return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
@@ -183,7 +199,8 @@ define(['./Filter'], function (Filter) {
                 }
             },
             dataset: {
-                name: "Dataset",
+                id: Search.CATEGORY.CASE.DATASET,
+                name: self.$i18n.block.search.category.case.dataset,
                 autocompleteItems: new Map(),
                 allowedOperators: function (datafieldType, datafieldMapKey) {
                     let defaultOperators = [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.MORE_THAN, Search.OPERATOR.LESS_THAN, Search.OPERATOR.IN_RANGE, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE];
@@ -196,6 +213,7 @@ define(['./Filter'], function (Filter) {
                     }
 
                     switch (datafieldType) {
+                        // TODO operators
                         default:
                             return defaultOperators;
 
@@ -250,7 +268,7 @@ define(['./Filter'], function (Filter) {
                     let complexSubqueries = [];
                     matchingAutocompleteItems.forEach(function (autocompleteItem) {
                         let simpleSubqueries = [];
-                        simpleSubqueries.push(operator.createQuery(this.getElasticKeyword(), this.getQueryArguments(Search.COMPLEX_GUI)));
+                        simpleSubqueries.push(operator.createQuery(this.getElasticKeyword(), this.getQueryArguments(Search.COMPLEX_GUI), Search.equalityOperatorFromType(this.argsInputType())));
                         simpleSubqueries.push(Search.OPERATOR.EQUAL.createQuery(self.categories[self.searchType].process.getElasticKeyword(), [autocompleteItem.netId]));
                         complexSubqueries.push(Search.bindQueries(simpleSubqueries, "AND"));
                     }, this);
@@ -278,7 +296,8 @@ define(['./Filter'], function (Filter) {
                 }
             },
             task: {
-                name: "Task",
+                id: Search.CATEGORY.CASE.TASK,
+                name: self.$i18n.block.search.category.case.task,
                 autocompleteItems: new Map(),
                 allowedOperators: function () {
                     return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
@@ -331,7 +350,8 @@ define(['./Filter'], function (Filter) {
                 }
             },
             role: {
-                name: "Role",
+                id: Search.CATEGORY.CASE.ROLE,
+                name: self.$i18n.block.search.category.case.role,
                 autocompleteItems: new Map(),
                 allowedOperators: function () {
                     return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
@@ -373,7 +393,8 @@ define(['./Filter'], function (Filter) {
             task: {},
             role: self.categories[Search.SEARCH_CASES].role,
             user: {
-                name: "User",
+                id: Search.CATEGORY.TASK.USER,
+                name: self.$i18n.block.search.category.task.user,
                 autocompleteItems: new Map(),
                 allowedOperators: function () {
                     return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL];
@@ -467,7 +488,7 @@ define(['./Filter'], function (Filter) {
             }
         },
         IN_RANGE: {
-            display: self.i18n.block.search.operator.inRange,
+            display: "in range"/*self.$i18n.block.search.operator.inRange*/, // TODO i18n in static scope
             numberOfOperands: 2,
             createQuery: function (keywords, args) {
                 return Search.forEachKeyword(keywords, function (keyword) {
@@ -479,21 +500,21 @@ define(['./Filter'], function (Filter) {
                 });
             },
             createText: function (args) {
-                return "is between "+args[0]+" and "+args[1]; // TODO i18n
+                return "${self.$i18n.block.search.chipText.inRangePart1} ${args[0]} ${self.$i18n.block.search.chipText.inRangePart2} ${args[1]}";
             }
         },
         LIKE: {
-            display: self.i18n.block.search.operator.like,
+            display: "like"/*self.$i18n.block.search.operator.like*/, // TODO i18n in static scope
             numberOfOperands: 1,
             createQuery: function (keywords, args) {
                 return "("+keywords[0]+":"+args[0]+")";
             },
             createText: function (args) {
-                return Search.operatorText(args, "is like");
+                return Search.operatorText(args, self.$i18n.block.search.operator.like);
             }
         },
         IS_NULL: {
-            display: self.i18n.block.search.operator.isNull,
+            display: "is null"/*self.$i18n.block.search.operator.isNull*/, // TODO i18n in static scope
             numberOfOperands: 0,
             createQuery: function (keywords) {
                 return Search.forEachKeyword(keywords, function (keyword) {
@@ -501,13 +522,14 @@ define(['./Filter'], function (Filter) {
                 });
             },
             createText: function () {
-                return "is null"; // TODO i18n
+                return self.$i18n.block.search.operator.isNull;
             }
         },
         EQUAL_DATE: {},
         IN_RANGE_DATE: {},
         MORE_THAN_DATE: {},
         LESS_THAN_DATE: {}
+        // TODO operators for date time
     };
     // Inherit and override some functionality
     Object.assign(Search.OPERATOR.EQUAL_DATE, Search.OPERATOR.EQUAL);
@@ -537,6 +559,22 @@ define(['./Filter'], function (Filter) {
     Search.ELASTIC = {
         ESCAPABLE_CHARACTERS: new Set (['+', '-', '=', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\', '/']),
         UNESCAPABLE_CHARACTERS: new Set(['<', '>'])
+    };
+
+    Search.CATEGORY = {
+        CASE: {
+            VISUAL_ID: "visualId",
+            PROCESS: "process",
+            TITLE: "title",
+            CREATION_DATE: "creationDate",
+            AUTHOR: "author",
+            DATASET: "dataset",
+            TASK: "task",
+            ROLE: "role"
+        },
+        TASK: {
+            USER: "user"
+        }
     };
 
     Search.forEachKeyword = function(keywords, simpleQueryConstructor) {
@@ -610,6 +648,15 @@ define(['./Filter'], function (Filter) {
         console.error("unknown search type '"+searchType+"'");
     };
 
+    Search.equalityOperatorFromType = function(type) {
+        switch (type) {
+            default:
+                return Search.OPERATOR.EQUAL;
+            case "date":
+                return Search.OPERATOR.EQUAL_DATE;
+        }
+    };
+
 
     Search.prototype.populateAutocomplete = function () {
         for (let key in this.categories[Search.SEARCH_CASES]) {
@@ -619,19 +666,19 @@ define(['./Filter'], function (Filter) {
         }
 
         this.$process.nets.forEach(function (net) {
-            this.addNameToIdMapping("process", net.title, net.id, net.id);
+            this.addNameToIdMapping(Search.CATEGORY.CASE.PROCESS, net.title, net.id, net.id);
 
             net.transitions.forEach(function (transition) {
-                this.addNameToIdMapping("task", transition.title, transition.id, transition.netId);
+                this.addNameToIdMapping(Search.CATEGORY.CASE.TASK, transition.title, transition.id, transition.netId);
             }, this);
 
             net.roles.forEach(function (role) {
-                this.addNameToIdMapping("role", role.name, role.id, net.id);
+                this.addNameToIdMapping(Search.CATEGORY.CASE.ROLE, role.name, role.id, net.id);
             }, this);
 
             if(this.searchType === Search.SEARCH_CASES) {
                 net.immediateData.forEach(function (immediateData) {
-                    this.addNameToIdMapping("dataset", DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), immediateData.stringId, net.id, immediateData.type);
+                    this.addNameToIdMapping(Search.CATEGORY.CASE.DATASET, DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), immediateData.stringId, net.id, immediateData.type);
                 }, this);
             }
         }, this);
@@ -719,7 +766,7 @@ define(['./Filter'], function (Filter) {
         if(!this.searchOperator)
             return false;
         for(let argIndex = 0; argIndex < this.searchOperator.numberOfOperands; argIndex++) {
-            if( !this.searchArguments[Search.COMPLEX_GUI][argIndex] || this.searchArguments[Search.COMPLEX_GUI][argIndex].toString().length === 0)
+            if(typeof this.searchArguments[Search.COMPLEX_GUI][argIndex] === "undefined" || this.searchArguments[Search.COMPLEX_GUI][argIndex].toString().length === 0)
                 return false;
         }
         return true;
@@ -866,16 +913,16 @@ define(['./Filter'], function (Filter) {
     Search.prototype._predictChipPart = function () {
         if(this.allArgumentsFilled()) {
             let possibleNets = [];
-            switch (this.searchCategory.name) {
-                case "Process":
-                case "Task":
-                case "Role":
+            switch (this.searchCategory.id) {
+                case this.categories[Search.SEARCH_CASES].process.id:
+                case this.categories[Search.SEARCH_CASES].task.id:
+                case this.categories[Search.SEARCH_CASES].role.id:
                     this.searchCategory.autocompleteItems.get(this.searchArguments[Search.COMPLEX_GUI][0]).forEach(function (autocompleteItem) {
                         possibleNets.push(autocompleteItem.netId);
                     });
                     this.chipParts.predicted = new ChipPart(this.searchCategory, this.searchOperator, this.searchArguments[Search.COMPLEX_GUI], Search.COMPLEX_GUI, possibleNets);
                     break;
-                case "Dataset":
+                case this.categories[Search.SEARCH_CASES].dataset.id:
                     this.searchCategory.autocompleteItems.get(this.searchDatafield.object.toSerializedForm()).forEach(function (autocompleteItem) {
                         possibleNets.push(autocompleteItem.netId);
                     });
@@ -1027,10 +1074,10 @@ define(['./Filter'], function (Filter) {
         this.possibleNets = possibleNets;
         this.isComplement = operator === Search.OPERATOR.NOT_EQUAL;
         if(this.isComplement) {
-            switch (category.name) {
-                case "Process":
+            switch (category.id) {
+                case Search.CATEGORY.CASE.PROCESS:
                     break;
-                case "Dataset":
+                case Search.CATEGORY.CASE.DATASET:
                     // the complement doesn't affect the process but the value of the datafield in it
                     this.isComplement = false;
                     break;

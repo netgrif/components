@@ -479,7 +479,6 @@ define({
             search: {
                 rangeFrom: "From",
                 rangeTo: "To",
-                chipNameMyCases: "User = me",
                 autocompleteInputNotFound: "none found",
                 searchType: "Search type",
                 datafield: "Datafield",
@@ -500,6 +499,26 @@ define({
                     inRange: "in range",
                     like: "is like",
                     isNull: "is empty"
+                },
+                chipText: {
+                    myCases: "User = me",
+                    inRangePart1: "is between",
+                    inRangePart2: "and"
+                },
+                category: {
+                    case: {
+                        visualId: "Visual ID",
+                        process: "Process",
+                        title: "Title",
+                        creationDate: "Creation date",
+                        author: "Author",
+                        dataset: "Dataset",
+                        task: "Task",
+                        role: "Role"
+                    },
+                    task: {
+                        user: "User"
+                    }
                 }
             },
             custom: {

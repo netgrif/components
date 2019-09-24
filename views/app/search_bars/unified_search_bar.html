@@ -1,4 +1,4 @@
-<div layout="column" class="card padding-2x" ng-if="search.guiComplexity==='COMPLEX' || search.guiComplexity==='COMBINED'">
+<div layout="column" class="card padding-2x" ng-if="search.guiComplexity === search.constants.COMPLEX_GUI || search.guiComplexity === search.constants.COMBINED_GUI">
     <div layout="row" layout-align="space-between center">
         <div layout="row" layout-align="start center">
 
@@ -21,8 +21,8 @@
                              md-select-on-match="true"
                              md-match-case-insensitive="true"
                              md-dropdown-items="5"
-                             md-floating-label="search.$i18n.block.search.datafield"
-                             ng-if="search.searchCategory && search.searchCategory.name === 'Dataset'"
+                             md-floating-label="{{search.$i18n.block.search.datafield}}"
+                             ng-if="search.searchCategory && search.searchCategory.id === search.constants.CATEGORY.CASE.DATASET"
                              class="autocomplete-aligned-to-input min-width-250px">
                 <md-item-template>
                     <md-icon class="material-icons">{{item.getTypeIcon()}}</md-icon>
@@ -31,12 +31,12 @@
                     </span>
                 </md-item-template>
                 <md-not-found>
-                    {{$i18n.block.search.autocompleteInputNotFound}}
+                    {{::$i18n.block.search.autocompleteInputNotFound}}
                 </md-not-found>
             </md-autocomplete>
 
-            <md-input-container class="md-block margin-0 min-width-100px" flex ng-if="search.searchCategory && (search.searchCategory.name !== 'Dataset' || search.searchDatafield.object)">
-                <label class="placeholder">{{::i18n.block.search.condition}}</label>
+            <md-input-container class="md-block margin-0 min-width-100px" flex ng-if="search.searchCategory && (search.searchCategory.id !== search.constants.CATEGORY.CASE.DATASET || search.searchDatafield.object)">
+                <label class="placeholder">{{::$i18n.block.search.condition}}</label>
                 <md-select ng-model="search.searchOperator" ng-change="search.clearArgumentsInput(); search.setInputTitles()">
                     <md-option ng-repeat="operator in search.searchCategory.allowedOperators(undefined, search.searchDatafield.object.toSerializedForm())" ng-value="operator">
                         {{operator.display}}
@@ -45,7 +45,7 @@
             </md-input-container>
 
              <div ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0"
-                  ng-init="switchExpression = 'search.searchCategory.argsInputType && search.searchCategory.argsInputType()'; inputGui = 'COMPLEX'; inputTitles = search.inputFieldTitles.complex"
+                  ng-init="switchExpression = 'search.searchCategory.argsInputType && search.searchCategory.argsInputType()'; inputGui = search.constants.COMPLEX_GUI; inputTitles = search.inputFieldTitles.complex"
                   ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index"
                   ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'">
              </div>
@@ -55,7 +55,7 @@
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">add</md-icon>
                 <md-tooltip md-direction="top">
-                    {{::i18n.block.search.addChipPart}}
+                    {{::$i18n.block.search.addChipPart}}
                 </md-tooltip>
             </md-button>
 
@@ -64,16 +64,16 @@
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">send</md-icon>
                 <md-tooltip md-direction="top">
-                    {{::i18n.block.search.addChip}}
+                    {{::$i18n.block.search.addChip}}
                 </md-tooltip>
             </md-button>
 
-            <md-button ng-disabled="!search.searchCategory && search.searchArguments['HEADER'].length === 0 && search.searchObjects['HEADER'].length === 0"
+            <md-button ng-disabled="!search.searchCategory && search.searchArguments[search.constants.HEADER_GUI].length === 0 && search.searchObjects[search.constants.HEADER_GUI].length === 0"
                        ng-click="search.resetInputFields()"
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">clear_all</md-icon>
                 <md-tooltip md-direction="top">
-                    {{::i18n.block.search.clearInput}}
+                    {{::$i18n.block.search.clearInput}}
                 </md-tooltip>
             </md-button>
 
@@ -82,23 +82,23 @@
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">delete</md-icon>
                 <md-tooltip md-direction="top">
-                    {{::i18n.block.search.clearSearch}}
+                    {{::$i18n.block.search.clearSearch}}
                 </md-tooltip>
             </md-button>
 
-            <md-button ng-if="search.searchType==='Task'"
+            <md-button ng-if="search.searchType === search.constants.SEARCH_TASKS"
                        ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0)"
                        ng-click="tab.openSaveFilterDialog()"
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">save</md-icon>
                 <md-tooltip md-direction="top">
-                    {{::i18n.block.search.saveFilter}}
+                    {{::$i18n.block.search.saveFilter}}
                 </md-tooltip>
             </md-button>
 
         </div>
         <div flex-gt-xs="5" layout="row" layout-align="end center">
-            <md-button ng-if="search.searchType === 'Case' && $user.hasAuthority(tab.authorityToCreate)"
+            <md-button ng-if="search.searchType === search.constants.SEARCH_CASES && $user.hasAuthority(tab.authorityToCreate)"
                        ng-click="tab.openNewCaseDialog()"
                        class="md-fab md-raised md-mini md-primary">
                 <md-icon class="material-icons">library_add</md-icon>
@@ -135,11 +135,11 @@
             </div>
         </div>
         <div flex-gt-xs="5" layout="row" layout-align="end center">
-            <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0 || search.searchArguments['HEADER'].length > 0 || search.searchObjects['HEADER'].length > 0)" class="md-fab md-mini md-accent"
+            <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0 || search.searchArguments[search.constants.HEADER_GUI].length > 0 || search.searchObjects[search.constants.HEADER_GUI].length > 0)" class="md-fab md-mini md-accent"
                        ng-click="search.commitChip(); tab.search(); mainCtrl.reloadCounters(); search.filterPossibleNets()" layout-align=" end">
                 <md-icon class="material-icons">search</md-icon>
                 <md-tooltip md-direction="top">
-                    {{::i18n.block.search.search}}
+                    {{::$i18n.block.search.search}}
                 </md-tooltip>
             </md-button>
         </div>

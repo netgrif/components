@@ -30,5 +30,5 @@
 
 <div ng-if="tab.headers.mode === tab.constants.HEADER_MODE_SEARCH"
      ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"
-     ng-init="switchExpression = 'tab.caseSearch.headerSearchFieldsMetadata[$index].inputType'; inputGui = 'HEADER'; inputTitles = search.inputFieldTitles.header">
+     ng-init="switchExpression = 'tab.caseSearch.headerSearchFieldsMetadata[$index].inputType'; inputGui = search.constants.HEADER_GUI; inputTitles = search.inputFieldTitles.header">
 </div>
