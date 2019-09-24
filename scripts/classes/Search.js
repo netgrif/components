@@ -213,7 +213,6 @@ define(['./Filter'], function (Filter) {
                     }
 
                     switch (datafieldType) {
-                        // TODO operators
                         default:
                             return defaultOperators;
 
@@ -228,6 +227,12 @@ define(['./Filter'], function (Filter) {
 
                         case "boolean":
                             return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL];
+
+                        case "enumeration":
+                        case "multichoice":
+                        case "file":
+                        case "user":
+                            return [Search.OPERATOR.EQUAL, Search.OPERATOR.NOT_EQUAL, Search.OPERATOR.IS_NULL, Search.OPERATOR.LIKE];
                     }
                 },
                 argsInputType: function () {
