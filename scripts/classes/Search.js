@@ -510,7 +510,8 @@ define(['./Filter'], function (Filter) {
                 });
             },
             createText: function (args) {
-                return "${self.$i18n.block.search.chipText.inRangePart1} ${args[0]} ${self.$i18n.block.search.chipText.inRangePart2} ${args[1]}";
+                // return `${self.$i18n.block.search.chipText.inRangePart1} ${args[0]} ${self.$i18n.block.search.chipText.inRangePart2} ${args[1]}`; TODO i18n in static scope
+                return `is between ${args[0]} and ${args[1]}`;
             }
         },
         LIKE: {
@@ -520,7 +521,7 @@ define(['./Filter'], function (Filter) {
                 return "("+keywords[0]+":"+args[0]+")";
             },
             createText: function (args) {
-                return Search.operatorText(args, self.$i18n.block.search.operator.like);
+                return Search.operatorText(args, self.$i18n.block.search.operator.like); // TODO i18n in static scope
             }
         },
         IS_NULL: {
@@ -532,7 +533,7 @@ define(['./Filter'], function (Filter) {
                 });
             },
             createText: function () {
-                return self.$i18n.block.search.operator.isNull;
+                return self.$i18n.block.search.operator.isNull; // TODO i18n in static scope
             }
         },
         EQUAL_DATE: {},
