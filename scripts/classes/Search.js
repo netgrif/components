@@ -1090,14 +1090,6 @@ define(['./Filter'], function (Filter) {
             return [];
     };
 
-    Search.prototype.containsProcessQuery = function(chips) {
-        for(let i = 0; i < chips.length; i++) {
-            if(chips[0].query.includes(this.categories[Search.SEARCH_CASES].process.getElasticKeyword()+":"))
-                return true;
-        }
-        return false;
-    };
-
     Search.prototype.setInputTitles = function () {
         this.inputFieldTitles.complex.splice(0, this.inputFieldTitles.complex.length);
 
