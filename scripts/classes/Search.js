@@ -278,7 +278,7 @@ define(['./Filter'], function (Filter) {
                     let complexSubqueries = [];
                     matchingAutocompleteItems.forEach(function (autocompleteItem) {
                         let simpleSubqueries = [];
-                        simpleSubqueries.push(operator.createQuery(this.getElasticKeyword(), this.getQueryArguments(Search.COMPLEX_GUI), Search.equalityOperatorFromType(this.argsInputType())));
+                        simpleSubqueries.push(operator.createQuery([autocompleteItem.id], this.getQueryArguments(Search.COMPLEX_GUI), Search.equalityOperatorFromType(this.argsInputType())));
                         simpleSubqueries.push(Search.OPERATOR.EQUAL.createQuery(self.categories[self.searchType].process.getElasticKeyword(), [autocompleteItem.netId]));
                         complexSubqueries.push(Search.bindQueries(simpleSubqueries, "AND"));
                     }, this);
@@ -506,7 +506,7 @@ define(['./Filter'], function (Filter) {
                     let arg2 = Search.wrapWithQuotes(args[1]);
                     if(arg1.wrapped || arg2.wrapped)
                         throw new Error("Range queries don't support phrases as arguments!");
-                    return "("+keyword+":["+arg1.value+" TO "+arg2.value+"])";
+                    return "("+keyword+":["+Search.escapeInput(arg1.value)+" TO "+Search.escapeInput(arg2.value)+"])";
                 });
             },
             createText: function (args) {
@@ -518,10 +518,11 @@ define(['./Filter'], function (Filter) {
             display: "like"/*self.$i18n.block.search.operator.like*/, // TODO i18n in static scope
             numberOfOperands: 1,
             createQuery: function (keywords, args) {
-                return "("+keywords[0]+":"+args[0]+")";
+                return "("+keywords[0]+":"+Search.escapeInput(args[0])+")";
             },
             createText: function (args) {
-                return Search.operatorText(args, self.$i18n.block.search.operator.like); // TODO i18n in static scope
+                // return Search.operatorText(args, self.$i18n.block.search.operator.like); // TODO i18n in static scope
+                return Search.operatorText(args, "is like");
             }
         },
         IS_NULL: {
@@ -533,7 +534,8 @@ define(['./Filter'], function (Filter) {
                 });
             },
             createText: function () {
-                return self.$i18n.block.search.operator.isNull; // TODO i18n in static scope
+                // return self.$i18n.block.search.operator.isNull; // TODO i18n in static scope
+                return "is null";
             }
         },
         EQUAL_DATE: {},
@@ -631,7 +633,7 @@ define(['./Filter'], function (Filter) {
 
     Search._operatorQuery = function(keywords, args, operator) {
         return Search.forEachKeyword(keywords, function (keyword) {
-            return Search.simpleOperatorQuery(keyword, Search.wrapWithQuotes(args[0]).value, operator);
+            return Search.simpleOperatorQuery(keyword, Search.wrapWithQuotes(Search.escapeInput(args[0])).value, operator);
         });
     };
 
@@ -1118,12 +1120,7 @@ define(['./Filter'], function (Filter) {
 
 
     function ChipPart(category, operator, arguments, inputGui, possibleNets = undefined) {
-        let escapedArguments = [];
-        arguments.forEach(function (argument) {
-            escapedArguments.push(Search.escapeInput(argument));
-        });
-
-        this.text = this.createElementaryText(category, operator, escapedArguments);
+        this.text = this.createElementaryText(category, operator);
         this.query = this.createElementaryQuery(category, operator, inputGui);
         this.possibleNets = possibleNets;
         this.isComplement = operator === Search.OPERATOR.NOT_EQUAL;
@@ -1147,7 +1144,11 @@ define(['./Filter'], function (Filter) {
         if(category.overrideQueryGeneration)
             return category.overrideQueryGeneration(operator);
 
-        return operator.createQuery(category.getElasticKeyword(), category.getQueryArguments(inputGui), Search.equalityOperatorFromType(category.argsInputType()));
+        return operator.createQuery(
+            category.getElasticKeyword(),
+            category.getQueryArguments(inputGui),
+            Search.equalityOperatorFromType(category.argsInputType ? category.argsInputType() : undefined)
+        );
     };
     
     ChipPart.prototype.createElementaryText = function (category, operator) {
