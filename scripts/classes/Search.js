@@ -471,7 +471,7 @@ define(['./Filter'], function (Filter) {
             display: "!=",
             numberOfOperands: 1,
             createQuery: function (keywords, args, equalityOperator) {
-                return "(!"+equalityOperator.createQuery(keywords, args)+")";
+                return `(!${equalityOperator.createQuery(keywords, args)})`;
             },
             createText: function (args) {
                 return Search.operatorText(args, "!=");
@@ -506,7 +506,7 @@ define(['./Filter'], function (Filter) {
                     let arg2 = Search.wrapWithQuotes(args[1]);
                     if(arg1.wrapped || arg2.wrapped)
                         throw new Error("Range queries don't support phrases as arguments!");
-                    return "("+keyword+":["+Search.escapeInput(arg1.value)+" TO "+Search.escapeInput(arg2.value)+"])";
+                    return `(${keyword}:[${Search.escapeInput(arg1.value)} TO ${Search.escapeInput(arg2.value)}])`;
                 });
             },
             createText: function (args) {
@@ -518,7 +518,7 @@ define(['./Filter'], function (Filter) {
             display: "like"/*self.$i18n.block.search.operator.like*/, // TODO i18n in static scope
             numberOfOperands: 1,
             createQuery: function (keywords, args) {
-                return "("+keywords[0]+":"+Search.escapeInput(args[0])+")";
+                return `(${keywords[0]}:${Search.escapeInput(args[0])})`;
             },
             createText: function (args) {
                 // return Search.operatorText(args, self.$i18n.block.search.operator.like); // TODO i18n in static scope
@@ -530,7 +530,7 @@ define(['./Filter'], function (Filter) {
             numberOfOperands: 0,
             createQuery: function (keywords) {
                 return Search.forEachKeyword(keywords, function (keyword) {
-                    return "((!(_exists_:"+keyword+")) OR ("+keyword+":\"\"))";
+                    return `((!(_exists_:${keyword})) OR (${keyword}:""))`;
                 });
             },
             createText: function () {
@@ -558,7 +558,7 @@ define(['./Filter'], function (Filter) {
         let arg2 = new Date(args[1]);
         arg2.setDate(arg2.getDate()+1); // javascript handles rollover
         return Search.forEachKeyword(keywords, function (keyword) {
-            return "("+keyword+":["+args[0].getTime()+" TO "+arg2.getTime()+"})";
+            return `(${keyword}:[${args[0].getTime()} TO ${arg2.getTime()}})`;
         });
     };
 
@@ -585,7 +585,7 @@ define(['./Filter'], function (Filter) {
         let arg2 = new Date(args[1]);
         arg2.setMinutes(arg2.getMinutes()+1);
         return Search.forEachKeyword(keywords, function(keyword) {
-            return "("+keyword+":["+args[0].getTime()+" TO "+arg2.getTime()+"})";
+            return `(${keyword}:[${args[0].getTime()} TO ${arg2.getTime()}})`;
         });
     };
 
@@ -638,11 +638,11 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.simpleOperatorQuery = function(keyword, arg, operator) {
-        return "("+keyword+":"+operator+arg+")";
+        return `(${keyword}:${operator}${arg})`;
     };
 
     Search.operatorText = function(args, operator) {
-        return operator+" "+args[0];
+        return `${operator} ${args[0]}`;
     };
 
     Search.bindQueries = function(queries, bindingOperator) {
@@ -681,7 +681,7 @@ define(['./Filter'], function (Filter) {
 
     Search.wrapWithQuotes = function(input) {
         if(typeof input === "string" && input.includes(" "))
-            return {value: '"'+input+'"', wrapped: true};
+            return {value: `"${input}"`, wrapped: true};
         else
             return {value: input, wrapped: false};
     };
@@ -691,7 +691,7 @@ define(['./Filter'], function (Filter) {
             return Search.simpleOperatorQuery("stringId", caseStringId, "");
         if(searchType === Search.SEARCH_TASKS)
             return Search.simpleOperatorQuery("caseId", caseStringId, "");
-        console.error("unknown search type '"+searchType+"'");
+        console.error(`unknown search type '${searchType}'`);
     };
 
     Search.equalityOperatorFromType = function(type) {
