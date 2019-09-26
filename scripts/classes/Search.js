@@ -1110,6 +1110,12 @@ define(['./Filter'], function (Filter) {
         }
     };
 
+    Search.prototype.inputBlured = function (inputGui) {
+        if(inputGui !== Search.HEADER_GUI)
+            return;
+        this.parent.search();
+    };
+
 
     function ChipPart(category, operator, arguments, inputGui, possibleNets = undefined) {
         this.text = this.createElementaryText(category, operator);
