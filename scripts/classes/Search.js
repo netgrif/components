@@ -821,7 +821,7 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.removableChipsExist = function() {
-        return this.chipParts.committed.length === 0 && this.chips.committed.filter(chip => chip.canRemove).length === 0;
+        return !(this.chipParts.committed.length === 0 && this.chips.committed.filter(chip => chip.canRemove).length === 0);
     };
 
     Search.prototype.commitChipPart = function () {

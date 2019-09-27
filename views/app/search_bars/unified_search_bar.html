@@ -53,7 +53,7 @@
             <md-button ng-disabled="!search.allArgumentsFilled()"
                        ng-click="search.commitChipPart(); search.filterPossibleNets(); tab.search()"
                        class="md-fab md-mini md-accent">
-                <md-icon class="material-icons">add</md-icon>
+                <md-icon class="material-icons">add_circle_outline</md-icon>
                 <md-tooltip md-direction="top">
                     {{::$i18n.block.search.addChipPart}}
                 </md-tooltip>
@@ -77,7 +77,7 @@
                 </md-tooltip>
             </md-button>
 
-            <md-button ng-disabled="search.removableChipsExist()"
+            <md-button ng-disabled="!search.removableChipsExist()"
                        ng-click="search.clearFilter()"
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">delete</md-icon>
@@ -87,7 +87,7 @@
             </md-button>
 
             <md-button ng-if="search.searchType === search.constants.SEARCH_TASKS"
-                       ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0)"
+                       ng-disabled="!(search.allArgumentsFilled() || search.removableChipsExist())"
                        ng-click="tab.openSaveFilterDialog()"
                        class="md-fab md-mini md-accent">
                 <md-icon class="material-icons">save</md-icon>
@@ -101,7 +101,7 @@
             <md-button ng-if="search.searchType === search.constants.SEARCH_CASES && $user.hasAuthority(tab.authorityToCreate)"
                        ng-click="tab.openNewCaseDialog()"
                        class="md-fab md-raised md-mini md-primary">
-                <md-icon class="material-icons">library_add</md-icon>
+                <md-icon class="material-icons">add</md-icon>
                 <md-tooltip md-direction="left">
                     {{::$i18n.block.add.create + tab.createDialogTitle}}
                 </md-tooltip>
