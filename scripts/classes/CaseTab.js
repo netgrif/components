@@ -113,6 +113,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
                         enable: false,
                         dir: CaseTab.HEADERS_SORT_DIR_ASC
                     };
+                    data['netId'] = net.id;
                     return data;
                 })
             })

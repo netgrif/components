@@ -1039,12 +1039,13 @@ define(['./Filter'], function (Filter) {
                     }
                     else {
                         for(let datafield of this.categories[this.searchType].dataset.autocompleteItems.get(DatafieldMapKey.serializedForm(headerItem.type, headerItem.title))) {
-                            if(headerItem.stringId === datafield.id) {
+                            if(headerItem.stringId === datafield.id && headerItem.netId === datafield.netId) {
                                 this.headerSearchFieldsMetadata.push(
                                     new HeaderSearchMetadata(
                                         [this.categories[this.searchType].dataset.fullKeywordFromId(datafield.id)],
                                         datafield.inputType,
-                                        this.categories[this.searchType].dataset.allowedOperators
+                                        this.categories[this.searchType].dataset.allowedOperators,
+                                        datafield.netId
                                     )
                                 );
                                 break;
@@ -1077,9 +1078,14 @@ define(['./Filter'], function (Filter) {
                     operator = Search.OPERATOR.LIKE;
                 if(this.headerSearchFieldsMetadata[i].inputType==="date")
                     operator = Search.OPERATOR.EQUAL_DATE;
+                if(this.headerSearchFieldsMetadata[i].inputType==="dateTime")
+                    operator = Search.OPERATOR.EQUAL_DATE_TIME;
 
                 if(this.searchArguments[Search.HEADER_GUI][i]) {
                     fakeChipParts.push(Chip.createChip("", operator.createQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, [this.searchArguments[Search.HEADER_GUI][i]])));
+
+                    if(this.headerSearchFieldsMetadata[i].netId)
+                        fakeChipParts.push(Chip.createChip("", Search.OPERATOR.EQUAL.createQuery(this.categories[this.searchType].process.getElasticKeyword(), [this.headerSearchFieldsMetadata[i].netId])));
                 }
             }
         }
@@ -1195,10 +1201,11 @@ define(['./Filter'], function (Filter) {
     }
 
 
-    function HeaderSearchMetadata(elasticKeyword, inputType, allowedOperators) {
+    function HeaderSearchMetadata(elasticKeyword, inputType, allowedOperators, netId) {
         this.elasticKeyword = elasticKeyword;
         this.inputType = inputType;
         this.allowedOperators = allowedOperators;
+        this.netId = netId;
     }
 
 
