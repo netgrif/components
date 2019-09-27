@@ -468,13 +468,13 @@ define(['./Filter'], function (Filter) {
             }
         },
         NOT_EQUAL: {
-            display: "!=",
+            display: "≠",
             numberOfOperands: 1,
             createQuery: function (keywords, args, equalityOperator) {
                 return `(!${equalityOperator.createQuery(keywords, args)})`;
             },
             createText: function (args) {
-                return Search.operatorText(args, "!=");
+                return Search.operatorText(args, "≠");
             }
         },
         MORE_THAN: {
