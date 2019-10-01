@@ -1128,6 +1128,12 @@ define(['./Filter'], function (Filter) {
         Search.OPERATOR.IN_RANGE.display = this.$i18n.block.search.operator.inRange;
         Search.OPERATOR.IN_RANGE.inRangePart1 = this.$i18n.block.search.chipText.inRangePart1;
         Search.OPERATOR.IN_RANGE.inRangePart2 = this.$i18n.block.search.chipText.inRangePart2;
+        Search.OPERATOR.IN_RANGE_DATE.display = Search.OPERATOR.IN_RANGE.display;
+        Search.OPERATOR.IN_RANGE_DATE.inRangePart1 = Search.OPERATOR.IN_RANGE.inRangePart1;
+        Search.OPERATOR.IN_RANGE_DATE.inRangePart2 = Search.OPERATOR.IN_RANGE.inRangePart2;
+        Search.OPERATOR.IN_RANGE_DATE_TIME.display = Search.OPERATOR.IN_RANGE.display;
+        Search.OPERATOR.IN_RANGE_DATE_TIME.inRangePart1 = Search.OPERATOR.IN_RANGE.inRangePart1;
+        Search.OPERATOR.IN_RANGE_DATE_TIME.inRangePart2 = Search.OPERATOR.IN_RANGE.inRangePart2;
 
         Search.OPERATOR.LIKE.display = this.$i18n.block.search.operator.like;
         Search.OPERATOR.LIKE.operatorText = this.$i18n.block.search.chipText.isLike;

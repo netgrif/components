@@ -13,7 +13,7 @@
 
             <md-autocomplete md-search-text="search.searchDatafield.text"
                              md-selected-item="search.searchDatafield.object"
-                             md-selected-item-change="search.searchCategory.datafieldFilter(); search.clearFieldsDatafield()"
+                             md-selected-item-change="search.searchCategory.datafieldFilter(); search.clearOperatorInput()"
                              md-items="item in search.searchCategory.datafieldFilter()"
                              md-item-text="item.text"
                              md-min-length="0"
