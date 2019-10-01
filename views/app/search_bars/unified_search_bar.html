@@ -92,7 +92,7 @@
     </div>
     <div ng-if="search.chipParts.committed.length > 0 || search.chips.committed.length > 0" layout="row">
         <div flex="5" layout="row" layout-align="end center">
-            <md-button ng-disabled="search.chipParts.committed.length === 0"
+            <md-button ng-disabled="search.chipParts.committed.length < 2"
                        ng-click="search.commitChip(); search.filterPossibleNets(); tab.search()"
                        class="md-fab md-mini md-accent margin-left-0 margin-top-0 margin-bottom-0 margin-right-default">
                 <span class="mdi mdi-24px mdi-vector-union"></span>
