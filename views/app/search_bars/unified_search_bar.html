@@ -113,11 +113,12 @@
             <div>
                 <md-chips ng-model="search.chipParts.committed"
                           readonly="true"
-                          md-removable="true"
+                          md-removable="false"
                           md-on-remove="search.resetPossibleNets(); tab.search()"
                           class="empty-chips-with-height">
                     <md-chip-template>
                         {{$chip.text}}
+                        <md-icon class="material-icons" md-chip-remove>clear</md-icon>
                     </md-chip-template>
                 </md-chips>
             </div>
