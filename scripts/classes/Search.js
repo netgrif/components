@@ -447,6 +447,7 @@ define(['./Filter'], function (Filter) {
         this.resetPossibleNets();
         this.evaluateEnabledCategories();
         this.setHeaderInputMetadata();
+        this.setStaticI18n();
     }
 
     Search.SEARCH_CASES = Filter.CASE_TYPE;
@@ -498,7 +499,10 @@ define(['./Filter'], function (Filter) {
             }
         },
         IN_RANGE: {
-            display: "in range"/*self.$i18n.block.search.operator.inRange*/, // TODO i18n in static scope
+            // values filled from i18n in instance constructor
+            display: "",
+            inRangePart1: "",
+            inRangePart2: "",
             numberOfOperands: 2,
             createQuery: function (keywords, args) {
                 return Search.forEachKeyword(keywords, function (keyword) {
@@ -510,23 +514,25 @@ define(['./Filter'], function (Filter) {
                 });
             },
             createText: function (args) {
-                // return `${self.$i18n.block.search.chipText.inRangePart1} ${args[0]} ${self.$i18n.block.search.chipText.inRangePart2} ${args[1]}`; TODO i18n in static scope
-                return `is between ${args[0]} and ${args[1]}`;
+                return `${this.inRangePart1} ${args[0]} ${this.inRangePart2} ${args[1]}`;
             }
         },
         LIKE: {
-            display: "like"/*self.$i18n.block.search.operator.like*/, // TODO i18n in static scope
+            // values filled from i18n in instance constructor
+            display: "",
+            operatorText: "",
             numberOfOperands: 1,
             createQuery: function (keywords, args) {
                 return `(${keywords[0]}:${Search.escapeInput(args[0])})`;
             },
             createText: function (args) {
-                // return Search.operatorText(args, self.$i18n.block.search.operator.like); // TODO i18n in static scope
-                return Search.operatorText(args, "is like");
+                return Search.operatorText(args, this.operatorText);
             }
         },
         IS_NULL: {
-            display: "is null"/*self.$i18n.block.search.operator.isNull*/, // TODO i18n in static scope
+            // values filled from i18n in instance constructor
+            display: "",
+            operatorText: "",
             numberOfOperands: 0,
             createQuery: function (keywords) {
                 return Search.forEachKeyword(keywords, function (keyword) {
@@ -534,8 +540,7 @@ define(['./Filter'], function (Filter) {
                 });
             },
             createText: function () {
-                // return self.$i18n.block.search.operator.isNull; // TODO i18n in static scope
-                return "is null";
+                return this.operatorText;
             }
         },
         EQUAL_DATE: {},
@@ -1120,6 +1125,18 @@ define(['./Filter'], function (Filter) {
         if(inputGui !== Search.HEADER_GUI)
             return;
         this.parent.search();
+    };
+
+    Search.prototype.setStaticI18n = function () {
+        Search.OPERATOR.IN_RANGE.display = this.$i18n.block.search.operator.inRange;
+        Search.OPERATOR.IN_RANGE.inRangePart1 = this.$i18n.block.search.chipText.inRangePart1;
+        Search.OPERATOR.IN_RANGE.inRangePart2 = this.$i18n.block.search.chipText.inRangePart2;
+
+        Search.OPERATOR.LIKE.display = this.$i18n.block.search.operator.like;
+        Search.OPERATOR.LIKE.operatorText = this.$i18n.block.search.chipText.isLike;
+
+        Search.OPERATOR.IS_NULL.display = this.$i18n.block.search.operator.isNull;
+        Search.OPERATOR.IS_NULL.operatorText = this.$i18n.block.search.chipText.isNull;
     };
 
 

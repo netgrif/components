@@ -483,13 +483,15 @@ define({
             },
             operator: {
                 inRange: "z rozsahu",
-                like: "podobný ako",
+                like: "podobný s",
                 isNull: "je prázdny"
             },
             chipText: {
                 myCases: "Používateľ = ja",
                 inRangePart1: "je medzi",
-                inRangePart2: "a"
+                inRangePart2: "a",
+                isLike: "je podobný s",
+                isNull: "je prázdny"
             },
             category: {
                 case: {

@@ -503,7 +503,9 @@ define({
                 chipText: {
                     myCases: "User = me",
                     inRangePart1: "is between",
-                    inRangePart2: "and"
+                    inRangePart2: "and",
+                    isLike: "is like",
+                    isNull: "is empty"
                 },
                 category: {
                     case: {
