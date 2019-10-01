@@ -1101,7 +1101,7 @@ define(['./Filter'], function (Filter) {
     Search.prototype.setInputTitles = function () {
         this.inputFieldTitles.complex.splice(0, this.inputFieldTitles.complex.length);
 
-        if(this.searchOperator === Search.OPERATOR.IN_RANGE || this.searchOperator === Search.OPERATOR.IN_RANGE_DATE) {
+        if(this.searchOperator === Search.OPERATOR.IN_RANGE || this.searchOperator === Search.OPERATOR.IN_RANGE_DATE || this.searchOperator === Search.OPERATOR.IN_RANGE_DATE_TIME) {
             this.inputFieldTitles.complex.push(this.$i18n.block.search.rangeFrom);
             this.inputFieldTitles.complex.push(this.$i18n.block.search.rangeTo);
         }

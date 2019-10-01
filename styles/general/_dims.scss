@@ -11,6 +11,7 @@ $dim-56px:						56px;
 $dim-68px:						68px;
 $dim-100px:                     100px;
 $dim-150px:                     150px;
+$dim-170px:						170px;
 $dim-250px:                     250px;
 
 $border-radius:					2px;
@@ -72,6 +73,9 @@ $border-radius:					2px;
         &-150px {
             min-width: $dim-150px;
         }
+		&-170px {
+			min-width: $dim-170px;
+		}
         &-250px {
             min-width: $dim-250px;
         }

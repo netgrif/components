@@ -2,7 +2,7 @@
     <div layout="row" layout-align="space-between center">
         <div layout="row" layout-align="start center">
 
-            <md-input-container class="md-block margin-0 min-width-150px" flex>
+            <md-input-container class="md-block margin-0 min-width-170px" flex>
                 <label class="placeholder">{{::$i18n.block.search.searchType}}</label>
                 <md-select ng-model="search.searchCategory" ng-change="search.clearDatafieldInput()">
                     <md-option ng-repeat="(key, type) in search.enabledCategories" ng-value="type">
@@ -50,48 +50,19 @@
                   ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'">
              </div>
 
-            <md-button ng-disabled="!search.allArgumentsFilled()"
-                       ng-click="search.commitChipPart(); search.filterPossibleNets(); tab.search()"
-                       class="md-fab md-mini md-accent">
-                <md-icon class="material-icons">search</md-icon>
-                <md-tooltip md-direction="top">
-                    {{::$i18n.block.search.addChipPart}}
-                </md-tooltip>
-            </md-button>
+            <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonAddChipPart.html'"></div>
 
-            <md-button ng-disabled="!search.searchCategory && search.searchArguments[search.constants.HEADER_GUI].length === 0 && search.searchObjects[search.constants.HEADER_GUI].length === 0 && !search.removableChipsExist()"
-                       ng-click="search.resetInputFields(); search.clearFilter()"
-                       class="md-fab md-mini md-accent margin-left-0">
-                <md-icon class="material-icons">delete</md-icon>
-                <md-tooltip md-direction="top">
-                    {{::$i18n.block.search.clearSearch}}
-                </md-tooltip>
-            </md-button>
+            <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonClearSearch.html'"></div>
 
-            <md-button ng-if="search.searchType === search.constants.SEARCH_TASKS"
-                       ng-disabled="!(search.allArgumentsFilled() || search.removableChipsExist())"
-                       ng-click="tab.openSaveFilterDialog()"
-                       class="md-fab md-mini md-accent margin-left-0">
-                <md-icon class="material-icons">save</md-icon>
-                <md-tooltip md-direction="top">
-                    {{::$i18n.block.search.saveFilter}}
-                </md-tooltip>
-            </md-button>
+            <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonSaveFilter.html'"></div>
 
         </div>
         <div flex-gt-xs="5" layout="row" layout-align="end center">
-            <md-button ng-if="search.searchType === search.constants.SEARCH_CASES && $user.hasAuthority(tab.authorityToCreate)"
-                       ng-click="tab.openNewCaseDialog()"
-                       class="md-fab md-raised md-mini md-primary">
-                <md-icon class="material-icons">add</md-icon>
-                <md-tooltip md-direction="left">
-                    {{::$i18n.block.add.create + tab.createDialogTitle}}
-                </md-tooltip>
-            </md-button>
+            <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonNewCase.html'"></div>
         </div>
     </div>
     <div ng-if="search.chipParts.committed.length > 0 || search.chips.committed.length > 0" layout="row">
-        <div flex="5" layout="row" layout-align="end center">
+        <div flex-gt-lg="5" flex-lg="10" layout="row" layout-align="end center">
             <md-button ng-disabled="search.chipParts.committed.length < 2"
                        ng-click="search.commitChip(); search.filterPossibleNets(); tab.search()"
                        class="md-fab md-mini md-accent margin-left-0 margin-top-0 margin-bottom-0 margin-right-default">
@@ -103,34 +74,15 @@
 
             <span class="mdi mdi-24px mdi-vector-combine margin-right-default"></span>
         </div>
-        <md-chips ng-model="search.chipParts.committed"
-                  readonly="true"
-                  md-removable="false"
-                  md-on-remove="search.resetPossibleNets(); tab.search()"
-                  class="empty-chips-with-height"
-                  flex>
-            <md-chip-template>
-                {{$chip.text}}
-                <md-icon class="material-icons" md-chip-remove>clear</md-icon>
-            </md-chip-template>
-        </md-chips>
+        <div ng-include="'views/app/search_bars/search_bar_components/chips/chipParts.html'" flex></div>
     </div>
     <div ng-if="search.chips.committed.length > 0" layout="row">
-        <div flex="5" layout="row" layout-align="end center">
+        <div flex-gt-lg="5" flex-lg="10" layout="row" layout-align="end center">
             <span class="mdi mdi-24px mdi-vector-intersection margin-right-default"></span>
         </div>
-        <md-chips ng-model="search.chips.committed"
-                  readonly="true"
-                  md-removable="false"
-                  md-on-remove="search.resetPossibleNets(); tab.search()"
-                  class="empty-chips-with-height"
-                  flex>
-            <md-chip-template>
-                {{$chip.text}}
-                <md-icon class="material-icons" md-chip-remove ng-if="$chip.canRemove">clear</md-icon>
-            </md-chip-template>
-        </md-chips>
+        <div ng-include="'views/app/search_bars/search_bar_components/chips/chips.html'" flex></div>
     </div>
+<!--    TODO remove this after development-->
 <!--    <div flex-gt-xs="5" layout="row" layout-align="end center">-->
 <!--        <md-button ng-disabled="!(search.allArgumentsFilled() || search.chipParts.committed.length > 0 || search.chips.committed.length > 0 || search.searchArguments[search.constants.HEADER_GUI].length > 0 || search.searchObjects[search.constants.HEADER_GUI].length > 0)" class="md-fab md-mini md-accent"-->
 <!--                   ng-click="search.commitChip(); tab.search(); mainCtrl.reloadCounters(); search.filterPossibleNets()" layout-align=" end">-->
