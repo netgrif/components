@@ -485,8 +485,7 @@ define({
                 condition: "Condition",
                 addChipPart: "Add search condition part",
                 addChip: "Combine condition parts",
-                clearInput: "Clear search input",
-                clearSearch: "Clear search conditions",
+                clearSearch: "Clear search",
                 saveFilter: "Save conditions as filter",
                 search: "Search",
                 header: {

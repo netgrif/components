@@ -471,8 +471,7 @@ define({
             condition: "Podmienka",
             addChipPart: "Pridať časť podmienky vyhľadávania",
             addChip: "Spojiť časti podmienok vyhľadávania",
-            clearInput: "Vymazať vstupné polia",
-            clearSearch: "Zrušiť podmienky vyhľadávania",
+            clearSearch: "Zrušiť vyhľadávanie",
             saveFilter: "Uložiť podmienky do filtra",
             search: "Vyhľadať",
             header: {
