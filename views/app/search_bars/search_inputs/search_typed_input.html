@@ -2,7 +2,9 @@
     <div ng-switch-default layout="row" layout-align="start center">
         <md-input-container class="md-block margin-0">
             <label class="placeholder">{{inputTitles[$index]}}</label>
-            <input ng-model="search.searchArguments[inputGui][$index]" ng-blur="search.inputBlured(inputGui)">
+            <input ng-model="search.searchArguments[inputGui][$index]"
+                   ng-blur="search.inputBlured(inputGui)"
+                   ng-keypress="$event.keyCode == 13 && search.inputBlured(inputGui)">
         </md-input-container>
     </div>
 
@@ -18,7 +20,7 @@
                          md-dropdown-items="5"
                          md-floating-label="{{inputTitles[$index]}}"
                          class="autocomplete-aligned-to-input"
-                         ng-blur="search.inputBlured(inputGui)">
+                         md-selected-item-change="search.inputBlured(inputGui)">
 
             <md-item-template>
                 <span md-highlight-text="search.searchArguments[inputGui][$index]" md-highlight-flags="i">
@@ -45,7 +47,7 @@
                              md-floating-label="{{inputTitles[$index]}}"
                              md-delay="500"
                              class="autocomplete-aligned-to-input"
-                             ng-blur="search.inputBlured(inputGui)">
+                             md-selected-item-change="search.inputBlured(inputGui)">
 
                 <md-item-template>
                     <span md-highlight-text="search.searchArguments[inputGui][$index]" md-highlight-flags="i">
@@ -62,7 +64,11 @@
     <div ng-switch-when="number" layout="row" layout-align="start center">
         <md-input-container class="md-block margin-0">
             <label class="placeholder">{{inputTitles[$index]}}</label>
-            <input ng-model="search.searchArguments[inputGui][$index]" type="number" step="any" ng-blur="search.inputBlured(inputGui)">
+            <input type="number"
+                   step="any"
+                   ng-model="search.searchArguments[inputGui][$index]"
+                   ng-blur="search.inputBlured(inputGui)"
+                   ng-keypress="$event.keyCode == 13 && search.inputBlured(inputGui)">
         </md-input-container>
     </div>
 
@@ -73,7 +79,7 @@
                        ng-model="search.searchArguments[inputGui][$index]"
                        ng-init="search.searchArguments[inputGui][$index] = false"
                        aria-label="Switch"
-                       ng-blur="search.inputBlured(inputGui)">
+                       ng-change="search.inputBlured(inputGui)">
             </md-switch>
         </md-input-container>
     </div>
@@ -84,7 +90,7 @@
             <md-datepicker ng-model="search.searchArguments[inputGui][$index]"
                            aria-label="Pick date"
                            md-open-on-focus
-                           ng-blur="search.inputBlured(inputGui)">
+                           ng-change="search.inputBlured(inputGui)">
             </md-datepicker>
         </md-input-container>
     </div>
@@ -101,7 +107,7 @@
                    format="D.M.YYYY HH:mm"
                    id="{{'dateTime'+$index}}"
                    aria-label="Pick date and time"
-                   ng-blur="search.inputBlured(inputGui)">
+                   ng-change="search.inputBlured(inputGui)">
         </md-input-container>
     </div>
 

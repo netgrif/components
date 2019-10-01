@@ -1077,7 +1077,7 @@ define(['./Filter'], function (Filter) {
         let fakeChipParts = [];
 
         for(let i = 0; i < this.headerSearchFieldsMetadata.length; i++) {
-            if(this.headerSearchFieldsMetadata[i].inputType !== "blank") {
+            if(this.headerSearchFieldsMetadata[i].inputType !== "blank" && typeof this.searchArguments[Search.HEADER_GUI][i] !== "undefined") {
                 let operator = Search.OPERATOR.EQUAL;
                 if(this.headerSearchFieldsMetadata[i].allowedOperators(this.headerSearchFieldsMetadata[i].inputType).includes(Search.OPERATOR.LIKE))
                     operator = Search.OPERATOR.LIKE;
@@ -1086,12 +1086,9 @@ define(['./Filter'], function (Filter) {
                 if(this.headerSearchFieldsMetadata[i].inputType==="dateTime")
                     operator = Search.OPERATOR.EQUAL_DATE_TIME;
 
-                if(this.searchArguments[Search.HEADER_GUI][i]) {
-                    fakeChipParts.push(Chip.createChip("", operator.createQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, [this.searchArguments[Search.HEADER_GUI][i]])));
-
-                    if(this.headerSearchFieldsMetadata[i].netId)
-                        fakeChipParts.push(Chip.createChip("", Search.OPERATOR.EQUAL.createQuery(this.categories[this.searchType].process.getElasticKeyword(), [this.headerSearchFieldsMetadata[i].netId])));
-                }
+                fakeChipParts.push(Chip.createChip("", operator.createQuery(this.headerSearchFieldsMetadata[i].elasticKeyword, [this.searchArguments[Search.HEADER_GUI][i]])));
+                if(this.headerSearchFieldsMetadata[i].netId)
+                    fakeChipParts.push(Chip.createChip("", Search.OPERATOR.EQUAL.createQuery(this.categories[this.searchType].process.getElasticKeyword(), [this.headerSearchFieldsMetadata[i].netId])));
             }
         }
 
