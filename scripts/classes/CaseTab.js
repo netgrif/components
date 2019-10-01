@@ -151,16 +151,20 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
         let preferenceKey = this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY;
         let oldPreference = this.$user.getPreferenceCaseHeaders(preferenceKey);
 
+        let searchInputCleared = false;
         if(oldPreference) {
             for(let i = 0; i < headers.length; i++) {
                 if(oldPreference[i] && headers[i] !== oldPreference[i]) {
                     this.caseSearch.clearHeaderInput(i);
+                    searchInputCleared = true;
                 }
             }
         }
 
         this.$user.savePreferenceCaseHeaders(preferenceKey, headers);
         this.caseSearch.setHeaderInputMetadata();
+        if(searchInputCleared)
+            this.search();
     };
 
     CaseTab.prototype.flipDirection = function (dir) {
