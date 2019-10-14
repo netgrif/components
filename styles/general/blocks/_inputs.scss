@@ -130,7 +130,19 @@ md-autocomplete.md-block {
     margin-bottom: 7px;
 
     md-input-container {
-        margin: 0px;
+        margin: 10px 0px 0px;
+
+        .md-errors-spacer {
+            min-height: 0px;
+        }
+    }
+}
+
+.user-autocomplete-aligned-to-input {
+    margin-bottom: 7px;
+
+    md-input-container {
+        margin: 7px 0px 0px;
 
         .md-errors-spacer {
             min-height: 0px;
@@ -141,5 +153,14 @@ md-autocomplete.md-block {
 .empty-chips-with-height {
     .md-chips {
         min-height: 40px;
+    }
+}
+
+.smaller-width-date-field {
+    .md-datepicker-input-container {
+        .md-datepicker-input {
+            min-width: 100px;
+            max-width: 100px;
+        }
     }
 }

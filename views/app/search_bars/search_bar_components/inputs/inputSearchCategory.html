@@ -1,4 +1,4 @@
-<md-input-container class="md-block margin-0 min-width-170px" flex>
+<md-input-container class="md-block margin-bottom-0 min-width-170px" flex>
     <label class="placeholder">{{::$i18n.block.search.searchType}}</label>
     <md-select ng-model="search.searchCategory" ng-change="search.clearDatafieldInput()">
         <md-option ng-repeat="(key, type) in search.enabledCategories" ng-value="type">

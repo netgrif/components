@@ -43401,12 +43401,23 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .autocomplete-aligned-to-input {
   margin-bottom: 7px; }
   .base .autocomplete-aligned-to-input md-input-container {
-    margin: 0px; }
+    margin: 10px 0px 0px; }
     .base .autocomplete-aligned-to-input md-input-container .md-errors-spacer {
+      min-height: 0px; }
+
+.base .user-autocomplete-aligned-to-input {
+  margin-bottom: 7px; }
+  .base .user-autocomplete-aligned-to-input md-input-container {
+    margin: 7px 0px 0px; }
+    .base .user-autocomplete-aligned-to-input md-input-container .md-errors-spacer {
       min-height: 0px; }
 
 .base .empty-chips-with-height .md-chips {
   min-height: 40px; }
+
+.base .smaller-width-date-field .md-datepicker-input-container .md-datepicker-input {
+  min-width: 100px;
+  max-width: 100px; }
 
 .base .height-48px {
   height: 48px; }

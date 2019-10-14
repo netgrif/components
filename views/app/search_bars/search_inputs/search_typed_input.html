@@ -1,6 +1,6 @@
 <div ng-switch="$eval(switchExpression)" layout="row" layout-align="start center">
     <div ng-switch-default layout="row" layout-align="start center">
-        <md-input-container class="md-block margin-0">
+        <md-input-container class="md-block margin-bottom-0">
             <label class="placeholder">{{inputTitles[$index]}}</label>
             <input ng-model="search.searchArguments[inputGui][$index]"
                    ng-blur="search.inputBlured(inputGui)"
@@ -34,7 +34,7 @@
     </div>
 
     <div ng-switch-when="user" layout="row" layout-align="start center">
-        <md-input-container class="md-block margin-0">
+        <md-input-container class="md-block margin-bottom-0 margin-top-0">
             <md-autocomplete md-search-text="search.searchArguments[inputGui][$index]"
                              md-selected-item="search.searchObjects[inputGui][$index]"
                              md-items="item in search.queryUsers(search.searchArguments[inputGui][$index])"
@@ -46,7 +46,7 @@
                              md-dropdown-items="5"
                              md-floating-label="{{inputTitles[$index]}}"
                              md-delay="500"
-                             class="autocomplete-aligned-to-input"
+                             class="user-autocomplete-aligned-to-input margin-top-0"
                              md-selected-item-change="search.inputBlured(inputGui)">
 
                 <md-item-template>
@@ -62,7 +62,7 @@
     </div>
 
     <div ng-switch-when="number" layout="row" layout-align="start center">
-        <md-input-container class="md-block margin-0">
+        <md-input-container class="md-block margin-bottom-0">
             <label class="placeholder">{{inputTitles[$index]}}</label>
             <input type="number"
                    step="any"
@@ -73,7 +73,7 @@
     </div>
 
     <div ng-switch-when="boolean" layout="row" layout-align="start center">
-        <md-input-container class="md-block margin-0">
+        <md-input-container class="md-block margin-bottom-0">
 <!--            <label class="placeholder">{{inputTitles[$index]}}</label>-->
             <md-switch class="md-primary margin-0"
                        ng-model="search.searchArguments[inputGui][$index]"
@@ -85,12 +85,13 @@
     </div>
 
     <div ng-switch-when="date" layout="row" layout-align="start center">
-        <md-input-container class="md-block margin-0">
+        <md-input-container class="md-block margin-bottom-0">
             <label class="placeholder">{{inputTitles[$index]}}</label>
             <md-datepicker ng-model="search.searchArguments[inputGui][$index]"
                            aria-label="Pick date"
                            md-open-on-focus
-                           ng-change="search.inputBlured(inputGui)">
+                           ng-change="search.inputBlured(inputGui)"
+                           class="smaller-width-date-field margin-bottom-0">
             </md-datepicker>
         </md-input-container>
     </div>
