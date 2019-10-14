@@ -35,7 +35,7 @@
                 </md-not-found>
             </md-autocomplete>
 
-            <md-input-container class="md-block margin-0 min-width-100px" flex ng-if="search.searchCategory && (search.searchCategory.id !== search.constants.CATEGORY.CASE.DATASET || search.searchDatafield.object)">
+            <md-input-container class="md-block margin-0 min-width-120px" flex ng-if="search.searchCategory && (search.searchCategory.id !== search.constants.CATEGORY.CASE.DATASET || search.searchDatafield.object)">
                 <label class="placeholder">{{::$i18n.block.search.condition}}</label>
                 <md-select ng-model="search.searchOperator" ng-change="search.clearArgumentsInput(); search.setInputTitles()">
                     <md-option ng-repeat="operator in search.searchCategory.allowedOperators(undefined, search.searchDatafield.object.toSerializedForm())" ng-value="operator">

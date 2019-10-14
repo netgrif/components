@@ -96,13 +96,13 @@
     </div>
 
     <div ng-switch-when="dateTime" layout="row">
-        <md-input-container class="md-block">
+        <md-input-container class="md-block margin-bottom-0 margin-top-0 margin-right-0">
             <label class="placeholder" for="{{'dateTime'+$index}}">{{inputTitles[$index]}}</label>
             <md-icon class="material-icons">today</md-icon>
             <input mdc-datetime-picker="" date="true" time="true" type="text"
                    placeholder="{{inputTitles[$index]}}" show-todays-date minutes="true" short-time="false" auto-ok="true"
                    minute-steps="1" week-start="1" click-outside-to-close="true"
-                   class="dtp-no-msclear dtp-input margin-left-0"
+                   class="dtp-no-msclear dtp-input margin-left-0 max-width-17em"
                    ng-model="search.searchArguments[inputGui][$index]"
                    format="D.M.YYYY HH:mm"
                    id="{{'dateTime'+$index}}"

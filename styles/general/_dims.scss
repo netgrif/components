@@ -10,9 +10,12 @@ $dim-52px:						52px;
 $dim-56px:						56px;
 $dim-68px:						68px;
 $dim-100px:                     100px;
+$dim-120px:						120px;
 $dim-150px:                     150px;
 $dim-170px:						170px;
 $dim-250px:                     250px;
+
+$dim-17em:						17em;
 
 $border-radius:					2px;
 
@@ -70,6 +73,9 @@ $border-radius:					2px;
         &-100px {
             min-width: $dim-100px;
         }
+		&-120px {
+			min-width: $dim-120px;
+		}
         &-150px {
             min-width: $dim-150px;
         }
@@ -99,6 +105,9 @@ $border-radius:					2px;
 		}
 		&-100 {
 			max-width: 100% !important;
+		}
+		&-17em {
+			max-width: $dim-17em;
 		}
 	}
 }
