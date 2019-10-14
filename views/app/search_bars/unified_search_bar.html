@@ -1,5 +1,24 @@
 <div layout="column" class="card padding-2x" ng-if="search.guiComplexity === search.constants.COMPLEX_GUI || search.guiComplexity === search.constants.COMBINED_GUI">
-    <div layout="row" layout-align="space-between center">
+    <div hide-gt-md layout="column">
+        <div layout="row"  layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonAddChipPart.html'"></div>
+                <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonClearSearch.html'"></div>
+                <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonSaveFilter.html'"></div>
+            </div>
+            <div flex="10" layout="row" layout-align="end center">
+                <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonNewCase.html'"></div>
+            </div>
+        </div>
+        <div layout="row" layout-align="start center" class="margin-top-12px">
+            <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchCategory.html'"></div>
+            <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchDatafield.html'"></div>
+            <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchOperator.html'"></div>
+        </div>
+        <div layout="row" layout-align="start center" class="margin-top-12px"
+             ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchArguments.html'"></div>
+    </div>
+    <div hide show-gt-md layout="row" layout-align="space-between center"> <!-- displayed if width >= 1280px -->
         <div layout="row" layout-align="start center">
             <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchCategory.html'"></div>
             <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchDatafield.html'"></div>
@@ -10,13 +29,15 @@
             <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonClearSearch.html'"></div>
             <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonSaveFilter.html'"></div>
         </div>
-        <div flex-gt-xs="5" layout="row" layout-align="end center">
+        <div flex="5" layout="row" layout-align="end center">
             <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonNewCase.html'"></div>
         </div>
     </div>
+
+    <!-- responsive design for chips is done by changing the flex of the button/icon area -->
     <div ng-if="search.chipParts.committed.length > 0 || search.chips.committed.length > 0" layout="row">
         <div flex-gt-lg="5" flex-lg="10" flex-md="15" layout="row" layout-align="end center">
-            <md-button ng-disabled="search.chipParts.committed.length < 2"
+            <md-button ng-disabled="search.chipParts.committed.length < 1"
                        ng-click="search.commitChip(); search.filterPossibleNets(); tab.search()"
                        class="md-fab md-mini md-accent margin-left-0 margin-top-0 margin-bottom-0 margin-right-default">
                 <span class="mdi mdi-24px mdi-vector-union"></span>
