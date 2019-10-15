@@ -162,7 +162,7 @@ md-autocomplete.md-block {
 
     md-datepicker {
         .md-datepicker-button {
-            margin-right: 0;
+            margin-right: -40px;
             margin-left: 0;
             width: 30px;
             padding: 0;
@@ -172,8 +172,45 @@ md-autocomplete.md-block {
             margin-left: 0;
 
             .md-datepicker-input {
+                margin-left: 40px;
                 width: 140px;
             }
         }
+    }
+}
+
+.maximize-width-on-xs-displays {
+    @media only screen and (max-width: 600px) {
+        min-width: 100%;
+        max-width: 100%;
+
+        &-md-datepicker {
+            .md-datepicker-input-container {
+                min-width: 100%;
+                max-width: 100%;
+
+                .md-datepicker-input {
+                    margin-left: 40px;
+
+                    min-width: calc(100% - 40px);
+                    max-width: calc(100% - 40px);
+                }
+            }
+        }
+
+        &-mdc-datetime-picker {
+            min-width: calc(100% - 40px);
+            max-width: calc(100% - 40px);
+        }
+    }
+}
+
+.datetime-aligned-to-input {
+    #md-input-container-stronger-css-identifier {
+        margin-top: 20px;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 37px !important; // overrides 39px !important because the class identifier is more specific than a simple tag identifier
     }
 }

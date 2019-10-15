@@ -40954,6 +40954,9 @@
 .margin-top-2x {
   margin-top: 16px; }
 
+.margin-top-14px {
+  margin-top: 14px; }
+
 .margin-top-20px {
   margin-top: 20px; }
 
@@ -40980,6 +40983,9 @@
 
 .margin-left-2x {
   margin-left: 16px; }
+
+.margin-left-40px {
+  margin-left: 40px; }
 
 .margin-right-0 {
   margin-right: 0 !important; }
@@ -41204,6 +41210,9 @@
 .margin-top-2x {
   margin-top: 16px; }
 
+.margin-top-14px {
+  margin-top: 14px; }
+
 .margin-top-20px {
   margin-top: 20px; }
 
@@ -41230,6 +41239,9 @@
 
 .margin-left-2x {
   margin-left: 16px; }
+
+.margin-left-40px {
+  margin-left: 40px; }
 
 .margin-right-0 {
   margin-right: 0 !important; }
@@ -41687,6 +41699,9 @@ span.highlight {
 .margin-top-2x {
   margin-top: 16px; }
 
+.margin-top-14px {
+  margin-top: 14px; }
+
 .margin-top-20px {
   margin-top: 20px; }
 
@@ -41713,6 +41728,9 @@ span.highlight {
 
 .margin-left-2x {
   margin-left: 16px; }
+
+.margin-left-40px {
+  margin-left: 40px; }
 
 .margin-right-0 {
   margin-right: 0 !important; }
@@ -42047,6 +42065,9 @@ span.highlight {
 .margin-top-2x {
   margin-top: 16px; }
 
+.margin-top-14px {
+  margin-top: 14px; }
+
 .margin-top-20px {
   margin-top: 20px; }
 
@@ -42073,6 +42094,9 @@ span.highlight {
 
 .margin-left-2x {
   margin-left: 16px; }
+
+.margin-left-40px {
+  margin-left: 40px; }
 
 .margin-right-0 {
   margin-right: 0 !important; }
@@ -42486,6 +42510,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .margin-top-2x {
   margin-top: 16px; }
 
+.base .margin-top-14px {
+  margin-top: 14px; }
+
 .base .margin-top-20px {
   margin-top: 20px; }
 
@@ -42512,6 +42539,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 
 .base .margin-left-2x {
   margin-left: 16px; }
+
+.base .margin-left-40px {
+  margin-left: 40px; }
 
 .base .margin-right-0 {
   margin-right: 0 !important; }
@@ -42836,6 +42866,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .margin-top-2x {
   margin-top: 16px; }
 
+.base .margin-top-14px {
+  margin-top: 14px; }
+
 .base .margin-top-20px {
   margin-top: 20px; }
 
@@ -42862,6 +42895,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 
 .base .margin-left-2x {
   margin-left: 16px; }
+
+.base .margin-left-40px {
+  margin-left: 40px; }
 
 .base .margin-right-0 {
   margin-right: 0 !important; }
@@ -43129,6 +43165,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .margin-top-2x {
   margin-top: 16px; }
 
+.base .margin-top-14px {
+  margin-top: 14px; }
+
 .base .margin-top-20px {
   margin-top: 20px; }
 
@@ -43155,6 +43194,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 
 .base .margin-left-2x {
   margin-left: 16px; }
+
+.base .margin-left-40px {
+  margin-left: 40px; }
 
 .base .margin-right-0 {
   margin-right: 0 !important; }
@@ -43418,7 +43460,7 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
   width: calc(100% - 40px) !important; }
 
 .base .more-compact-date-field md-datepicker .md-datepicker-button {
-  margin-right: 0;
+  margin-right: -40px;
   margin-left: 0;
   width: 30px;
   padding: 0; }
@@ -43426,7 +43468,30 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .more-compact-date-field md-datepicker .md-datepicker-input-container {
   margin-left: 0; }
   .base .more-compact-date-field md-datepicker .md-datepicker-input-container .md-datepicker-input {
+    margin-left: 40px;
     width: 140px; }
+
+@media only screen and (max-width: 600px) {
+  .base .maximize-width-on-xs-displays {
+    min-width: 100%;
+    max-width: 100%; }
+    .base .maximize-width-on-xs-displays-md-datepicker .md-datepicker-input-container {
+      min-width: 100%;
+      max-width: 100%; }
+      .base .maximize-width-on-xs-displays-md-datepicker .md-datepicker-input-container .md-datepicker-input {
+        margin-left: 40px;
+        min-width: calc(100% - 40px);
+        max-width: calc(100% - 40px); }
+    .base .maximize-width-on-xs-displays-mdc-datetime-picker {
+      min-width: calc(100% - 40px);
+      max-width: calc(100% - 40px); } }
+
+.base .datetime-aligned-to-input #md-input-container-stronger-css-identifier {
+  margin-top: 20px;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 37px !important; }
 
 .base .height-48px {
   height: 48px; }
@@ -43535,6 +43600,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .margin-top-2x {
   margin-top: 16px; }
 
+.base .margin-top-14px {
+  margin-top: 14px; }
+
 .base .margin-top-20px {
   margin-top: 20px; }
 
@@ -43561,6 +43629,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 
 .base .margin-left-2x {
   margin-left: 16px; }
+
+.base .margin-left-40px {
+  margin-left: 40px; }
 
 .base .margin-right-0 {
   margin-right: 0 !important; }

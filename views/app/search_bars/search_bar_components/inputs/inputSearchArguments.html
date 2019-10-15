@@ -1,5 +1,6 @@
 <div ng-if="search.searchOperator && search.searchOperator.numberOfOperands > 0"
      ng-init="switchExpression = 'search.searchCategory.argsInputType && search.searchCategory.argsInputType()'; inputGui = search.constants.COMPLEX_GUI; inputTitles = search.inputFieldTitles.complex"
      ng-repeat="argIndex in [].constructor(search.searchOperator.numberOfOperands) track by $index"
-     ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'">
+     ng-include="'views/app/search_bars/search_inputs/search_typed_input.html'"
+     class="maximize-width-on-xs-displays">
 </div>
