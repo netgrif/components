@@ -29,7 +29,8 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
                 $process: this.$process,
                 $http: this.$http,
                 $config: this.$config,
-                $i18n: this.$i18n
+                $i18n: this.$i18n,
+                $timeout: this.$timeout
             }, {});
         }
     }

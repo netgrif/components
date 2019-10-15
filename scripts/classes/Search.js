@@ -4,7 +4,7 @@ define(['./Filter'], function (Filter) {
      * @param parent Parent controller
      * @param searchType Search.SEARCH_CASES or Search.SEARCH_TASKS
      * @param guiComplexity which GUIs are displayed to the user (Search.COMPLEX_GUI, Search.HEADER_GUI, Search.COMBINED_GUI)
-     * @param angular $process, $http, $config, $i18n
+     * @param angular $process, $http, $config, $i18n, $timeout
      * @param config options: considerWholeSearchInput
      * @constructor
      */
@@ -21,6 +21,8 @@ define(['./Filter'], function (Filter) {
         this.possibleNets = new Set();
 
         this.headerSearchFieldsMetadata = [];
+
+        this.delayedBlur = undefined;
 
         this.constants = {
             CATEGORY: Search.CATEGORY,
@@ -862,6 +864,9 @@ define(['./Filter'], function (Filter) {
 
     Search.prototype.clearHeaderInput = function(index = undefined) {
         if(typeof index === "undefined") {
+            if(this.delayedBlur)
+                this.$timeout.cancel(this.delayedBlur);
+
             this.searchArguments[Search.HEADER_GUI].splice(0, this.searchArguments[Search.HEADER_GUI].length);
             this.searchObjects[Search.HEADER_GUI].splice(0, this.searchObjects[Search.HEADER_GUI].length);
         }
@@ -1121,7 +1126,13 @@ define(['./Filter'], function (Filter) {
     Search.prototype.inputBlured = function (inputGui) {
         if(inputGui !== Search.HEADER_GUI)
             return;
-        this.parent.search();
+
+        if(this.delayedBlur)
+            this.$timeout.cancel(this.delayedBlur);
+
+        this.delayedBlur = this.$timeout(function (searchRef) {
+            searchRef.parent.search();
+        }, 100, false, this);
     };
 
     Search.prototype.setStaticI18n = function () {
