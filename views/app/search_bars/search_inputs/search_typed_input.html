@@ -85,13 +85,13 @@
     </div>
 
     <div ng-switch-when="date" layout="row" layout-align="start center">
-        <md-input-container class="md-block margin-bottom-0">
-            <label class="placeholder">{{inputTitles[$index]}}</label>
+        <md-input-container class="md-block more-compact-date-field margin-bottom-0">
+            <label class="placeholder ">{{inputTitles[$index]}}</label>
             <md-datepicker ng-model="search.searchArguments[inputGui][$index]"
                            aria-label="Pick date"
                            md-open-on-focus
                            ng-change="search.inputBlured(inputGui)"
-                           class="smaller-width-date-field margin-bottom-0">
+                           class="margin-bottom-0">
             </md-datepicker>
         </md-input-container>
     </div>

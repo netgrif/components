@@ -43398,12 +43398,10 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base md-autocomplete.md-block md-input-container {
   height: 39px !important; }
 
-.base .autocomplete-aligned-to-input {
-  margin-bottom: 7px; }
-  .base .autocomplete-aligned-to-input md-input-container {
-    margin: 10px 0px 0px; }
-    .base .autocomplete-aligned-to-input md-input-container .md-errors-spacer {
-      min-height: 0px; }
+.base .autocomplete-aligned-to-input md-input-container {
+  margin: 10px 0px 0px; }
+  .base .autocomplete-aligned-to-input md-input-container .md-errors-spacer {
+    min-height: 0px; }
 
 .base .user-autocomplete-aligned-to-input {
   margin-bottom: 7px; }
@@ -43415,9 +43413,20 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
 .base .empty-chips-with-height .md-chips {
   min-height: 40px; }
 
-.base .smaller-width-date-field .md-datepicker-input-container .md-datepicker-input {
-  min-width: 100px;
-  max-width: 100px; }
+.base .more-compact-date-field label {
+  right: unset !important;
+  width: calc(100% - 40px) !important; }
+
+.base .more-compact-date-field md-datepicker .md-datepicker-button {
+  margin-right: 0;
+  margin-left: 0;
+  width: 30px;
+  padding: 0; }
+
+.base .more-compact-date-field md-datepicker .md-datepicker-input-container {
+  margin-left: 0; }
+  .base .more-compact-date-field md-datepicker .md-datepicker-input-container .md-datepicker-input {
+    width: 140px; }
 
 .base .height-48px {
   height: 48px; }

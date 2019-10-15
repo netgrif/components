@@ -24,13 +24,13 @@
                 <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonNewCase.html'"></div>
             </div>
         </div>
-        <div layout="row" layout-align="start center" class="margin-top-20px">
-            <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchCategory.html'"></div>
-            <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchDatafield.html'"></div>
-            <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchOperator.html'"></div>
+        <div layout="row" layout-align="start center" layout-wrap>
+            <div flex="none" ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchCategory.html'"></div>
+            <div flex="none" ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchDatafield.html'"></div>
+            <div flex="none" ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchOperator.html'"></div>
+            <div flex="none" layout="row" layout-align="start center"
+                 ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchArguments.html'"></div>
         </div>
-        <div layout="row" layout-align="start center"
-             ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchArguments.html'"></div>
     </div>
     <div hide show-gt-md layout="row" layout-align="space-between center"> <!-- displayed if 1280px <= width -->
         <div layout="row" layout-align="start center">

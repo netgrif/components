@@ -127,8 +127,6 @@ md-autocomplete.md-block {
 
 // Special case alignments and visual corrections
 .autocomplete-aligned-to-input {
-    margin-bottom: 7px;
-
     md-input-container {
         margin: 10px 0px 0px;
 
@@ -156,11 +154,26 @@ md-autocomplete.md-block {
     }
 }
 
-.smaller-width-date-field {
-    .md-datepicker-input-container {
-        .md-datepicker-input {
-            min-width: 100px;
-            max-width: 100px;
+.more-compact-date-field {
+    label {
+        right: unset !important;
+        width: calc(100% - 40px) !important;
+    }
+
+    md-datepicker {
+        .md-datepicker-button {
+            margin-right: 0;
+            margin-left: 0;
+            width: 30px;
+            padding: 0;
+        }
+
+        .md-datepicker-input-container {
+            margin-left: 0;
+
+            .md-datepicker-input {
+                width: 140px;
+            }
         }
     }
 }
