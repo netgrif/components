@@ -902,7 +902,6 @@ define(['./Filter'], function (Filter) {
         chips.forEach(function (chip) {
             queries.push(chip.query);
         });
-        console.log(Search.bindQueries(queries, "AND")); // TODO remove after development
         return Search.bindQueries(queries, "AND");
     };
 
