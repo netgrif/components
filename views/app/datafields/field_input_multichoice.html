@@ -13,7 +13,7 @@
 
     <div flex="45" flex-xs="100">
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
-            <label class="placeholder">{{field.placeholder}}</label>
+            <label ng-if="!field.behavior.visible" class="placeholder">{{field.placeholder}}</label>
             <md-select id="{{'data-'+field.parent.stringId+'-'+field.stringId}}" ng-model="field.newValue"
                        ng-change="field.changed = true;field.parent.save()"
                        ng-disabled="!(field.parent.user.email == $user.login && field.behavior.editable)"
