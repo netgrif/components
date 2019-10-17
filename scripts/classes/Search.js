@@ -887,7 +887,7 @@ define(['./Filter'], function (Filter) {
         this.chips.committed = this.chips.committed.filter(chip => !chip.canRemove);
         this.chips.predicted = undefined;
         this.resetPossibleNets();
-        this.parent.search();
+        this.doSearch();
     };
 
     Search.prototype.commitChip = function () {
@@ -1133,7 +1133,7 @@ define(['./Filter'], function (Filter) {
             this.$timeout.cancel(this.delayedBlur);
 
         this.delayedBlur = this.$timeout(function (searchRef) {
-            searchRef.parent.search();
+            searchRef.doSearch();
         }, 100, false, this);
     };
 
@@ -1157,6 +1157,19 @@ define(['./Filter'], function (Filter) {
 
     Search.prototype.hasGUI = function(queriedGUI) {
         return (this.guiComplexity & queriedGUI) !== 0
+    };
+
+    Search.prototype.enterKeyPressed = function(inputGui, addChipBeforeSearch = false) {
+        if(inputGui === Search.HEADER_GUI)
+            return;
+        if(inputGui === Search.COMPLEX_GUI && addChipBeforeSearch)
+            this.commitChipPart();
+
+        this.doSearch();
+    };
+
+    Search.prototype.doSearch = function() {
+        this.parent.search();
     };
 
 

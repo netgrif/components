@@ -4,7 +4,7 @@
             <label class="placeholder maximize-width-on-xs-displays">{{inputTitles[$index]}}</label>
             <input ng-model="search.searchArguments[inputGui][$index]"
                    ng-blur="search.inputBlured(inputGui)"
-                   ng-keypress="$event.keyCode == 13 && search.inputBlured(inputGui)">
+                   ng-keypress="$event.keyCode == 13 && ($event.target.blur() || true) && search.enterKeyPressed(inputGui, true)">
         </md-input-container>
     </div>
 
@@ -20,7 +20,8 @@
                          md-dropdown-items="5"
                          md-floating-label="{{inputTitles[$index]}}"
                          class="autocomplete-aligned-to-input maximize-width-on-xs-displays"
-                         md-selected-item-change="search.inputBlured(inputGui)">
+                         ng-blur="search.inputBlured(inputGui)"
+                         ng-keypress="$event.keyCode == 13 && ($event.target.blur() || true) && search.enterKeyPressed(inputGui, true)">
 
             <md-item-template>
                 <span md-highlight-text="search.searchArguments[inputGui][$index]" md-highlight-flags="i">
@@ -47,7 +48,8 @@
                              md-floating-label="{{inputTitles[$index]}}"
                              md-delay="500"
                              class="user-autocomplete-aligned-to-input margin-top-0"
-                             md-selected-item-change="search.inputBlured(inputGui)">
+                             ng-blur="search.inputBlured(inputGui)"
+                             ng-keypress="$event.keyCode == 13 && ($event.target.blur() || true) && search.enterKeyPressed(inputGui, true)">
 
                 <md-item-template>
                     <span md-highlight-text="search.searchArguments[inputGui][$index]" md-highlight-flags="i">
@@ -68,7 +70,7 @@
                    step="any"
                    ng-model="search.searchArguments[inputGui][$index]"
                    ng-blur="search.inputBlured(inputGui)"
-                   ng-keypress="$event.keyCode == 13 && search.inputBlured(inputGui)">
+                   ng-keypress="$event.keyCode == 13 && ($event.target.blur() || true) && search.enterKeyPressed(inputGui, true)">
         </md-input-container>
     </div>
 
@@ -78,7 +80,7 @@
                        ng-model="search.searchArguments[inputGui][$index]"
                        ng-init="search.searchArguments[inputGui][$index] = false"
                        aria-label="Switch"
-                       ng-change="search.inputBlured(inputGui)">
+                       ng-change="search.doSearch()">
             </md-switch>
         </md-input-container>
     </div>
@@ -89,7 +91,7 @@
             <md-datepicker ng-model="search.searchArguments[inputGui][$index]"
                            aria-label="Pick date"
                            md-open-on-focus
-                           ng-change="search.inputBlured(inputGui)"
+                           ng-change="search.doSearch()"
                            class="margin-bottom-0 maximize-width-on-xs-displays-md-datepicker">
             </md-datepicker>
         </md-input-container>
@@ -107,7 +109,7 @@
                    format="D.M.YYYY HH:mm"
                    id="{{'dateTime'+$index}}"
                    aria-label="Pick date and time"
-                   ng-change="search.inputBlured(inputGui)">
+                   ng-change="search.doSearch()">
         </md-input-container>
     </div>
 
