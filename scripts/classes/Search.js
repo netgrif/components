@@ -1084,7 +1084,10 @@ define(['./Filter'], function (Filter) {
         let fakeChipParts = [];
 
         for(let i = 0; i < this.headerSearchFieldsMetadata.length; i++) {
-            if(this.headerSearchFieldsMetadata[i].inputType !== "blank" && typeof this.searchArguments[Search.HEADER_GUI][i] !== "undefined" && this.searchArguments[Search.HEADER_GUI][i].toString().trim().length > 0) {
+            if( this.headerSearchFieldsMetadata[i].inputType !== "blank"
+                && typeof this.searchArguments[Search.HEADER_GUI][i] !== "undefined"
+                && this.searchArguments[Search.HEADER_GUI][i] !== null
+                && this.searchArguments[Search.HEADER_GUI][i].toString().trim().length > 0) {
                 let operator = Search.OPERATOR.EQUAL;
                 if(this.headerSearchFieldsMetadata[i].allowedOperators(this.headerSearchFieldsMetadata[i].inputType).includes(Search.OPERATOR.LIKE))
                     operator = Search.OPERATOR.LIKE;

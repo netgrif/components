@@ -299,6 +299,8 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
         if (this.filterPolicy === TaskTab.MERGE_FILTER_POLICY) {
             this.activeFilter = this.activeFilter.merge(searchFilter);
         } else if (this.filterPolicy === TaskTab.REPLACE_FILTER_POLICY) {
+            if(this.activeFilter.query === searchFilter.query)
+                return;
             this.activeFilter = searchFilter;
         }
 

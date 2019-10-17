@@ -238,7 +238,12 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
     CaseTab.prototype.search = function () {
         if (this.cases.length === 0)
             this.cases.splice(0, this.cases.length);
-        this.activeFilter = this.caseSearch.getFilter();
+        let newFilter = this.caseSearch.getFilter();
+
+        if(newFilter.query === this.activeFilter.query)
+            return;
+
+        this.activeFilter = newFilter;
         this.load(false);
     };
 
