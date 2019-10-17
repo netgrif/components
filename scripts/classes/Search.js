@@ -279,7 +279,7 @@ define(['./Filter'], function (Filter) {
                     let complexSubqueries = [];
                     matchingAutocompleteItems.forEach(function (autocompleteItem) {
                         let simpleSubqueries = [];
-                        simpleSubqueries.push(operator.createQuery([autocompleteItem.id], this.getQueryArguments(Search.COMPLEX_GUI), Search.equalityOperatorFromType(this.argsInputType())));
+                        simpleSubqueries.push(operator.createQuery([this.fullKeywordFromId(autocompleteItem.id)], this.getQueryArguments(Search.COMPLEX_GUI), Search.equalityOperatorFromType(this.argsInputType())));
                         simpleSubqueries.push(Search.OPERATOR.EQUAL.createQuery(self.categories[self.searchType].process.getElasticKeyword(), [autocompleteItem.netId]));
                         complexSubqueries.push(Search.bindQueries(simpleSubqueries, "AND"));
                     }, this);
@@ -1084,10 +1084,11 @@ define(['./Filter'], function (Filter) {
         let fakeChipParts = [];
 
         for(let i = 0; i < this.headerSearchFieldsMetadata.length; i++) {
-            if( this.headerSearchFieldsMetadata[i].inputType !== "blank"
-                && typeof this.searchArguments[Search.HEADER_GUI][i] !== "undefined"
-                && this.searchArguments[Search.HEADER_GUI][i] !== null
-                && this.searchArguments[Search.HEADER_GUI][i].toString().trim().length > 0) {
+            if(this.headerSearchFieldsMetadata[i].inputType !== "blank"
+               && typeof this.searchArguments[Search.HEADER_GUI][i] !== "undefined"
+               && this.searchArguments[Search.HEADER_GUI][i] !== null
+               && this.searchArguments[Search.HEADER_GUI][i].toString().trim().length > 0) {
+
                 let operator = Search.OPERATOR.EQUAL;
                 if(this.headerSearchFieldsMetadata[i].allowedOperators(this.headerSearchFieldsMetadata[i].inputType).includes(Search.OPERATOR.LIKE))
                     operator = Search.OPERATOR.LIKE;
