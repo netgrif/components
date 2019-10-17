@@ -1164,7 +1164,7 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.enterKeyPressed = function(inputGui, addChipBeforeSearch = false) {
-        if(inputGui === Search.HEADER_GUI)
+        if(inputGui === Search.HEADER_GUI || !this.allArgumentsFilled())
             return;
         if(inputGui === Search.COMPLEX_GUI && addChipBeforeSearch)
             this.commitChipPart();

@@ -43471,7 +43471,7 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     margin-left: 40px;
     width: 140px; }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 599px) {
   .base .maximize-width-on-xs-displays {
     min-width: 100%;
     max-width: 100%; }
