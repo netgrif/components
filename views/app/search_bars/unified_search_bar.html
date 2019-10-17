@@ -1,4 +1,4 @@
-<div layout="column" class="card padding-2x" ng-if="search.guiComplexity === search.constants.COMPLEX_GUI || search.guiComplexity === search.constants.COMBINED_GUI">
+<div layout="column" class="card padding-2x" ng-if="search.hasGUI(search.constants.COMPLEX_GUI)">
     <div hide-gt-xs layout="column" layout-align="center center"> <!-- displayed if width < 600px -->
         <div layout="row"  layout-align="end center" class="min-width-100">
             <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonNewCase.html'"></div>
@@ -70,4 +70,7 @@
         </div>
         <div ng-include="'views/app/search_bars/search_bar_components/chips/chips.html'" flex></div>
     </div>
+</div>
+<div layout="row" layout-align="end center" class="card padding-2x" ng-if="!search.hasGUI(search.constants.COMPLEX_GUI) && search.searchType === search.constants.SEARCH_CASES && $user.hasAuthority(tab.authorityToCreate)">
+    <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonNewCase.html'"></div>
 </div><!-- ./card -->

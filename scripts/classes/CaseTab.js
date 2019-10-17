@@ -46,7 +46,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
         };
         this.buildHeaders();
 
-        this.caseSearch = new Search(this, Search.SEARCH_CASES, Search.COMBINED_GUI, {
+        this.caseSearch = new Search(this, Search.SEARCH_CASES, Search.HEADER_GUI, {
             $process: this.$process,
             $http: this.$http,
             $config: this.$config,

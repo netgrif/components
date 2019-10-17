@@ -3,7 +3,7 @@ define(['./Filter'], function (Filter) {
     /**
      * @param parent Parent controller
      * @param searchType Search.SEARCH_CASES or Search.SEARCH_TASKS
-     * @param guiComplexity which GUIs are displayed to the user (Search.COMPLEX_GUI, Search.HEADER_GUI, Search.COMBINED_GUI)
+     * @param guiComplexity which GUIs are displayed to the user (any combination of following flags is allowed: Search.COMPLEX_GUI, Search.HEADER_GUI; combine flags with bitwise OR)
      * @param angular $process, $http, $config, $i18n, $timeout
      * @param config options: considerWholeSearchInput
      * @constructor
@@ -29,7 +29,6 @@ define(['./Filter'], function (Filter) {
 
             COMPLEX_GUI: Search.COMPLEX_GUI,
             HEADER_GUI: Search.HEADER_GUI,
-            COMBINED_GUI: Search.COMBINED_GUI,
 
             SEARCH_CASES: Search.SEARCH_CASES,
             SEARCH_TASKS: Search.SEARCH_TASKS
@@ -455,9 +454,9 @@ define(['./Filter'], function (Filter) {
     Search.SEARCH_CASES = Filter.CASE_TYPE;
     Search.SEARCH_TASKS = Filter.TASK_TYPE;
 
-    Search.COMPLEX_GUI = "COMPLEX";
-    Search.HEADER_GUI = "HEADER";
-    Search.COMBINED_GUI = "COMBINED";
+    // flags extractable trough bitwise operators
+    Search.COMPLEX_GUI = 1;
+    Search.HEADER_GUI = 2;
 
     Search.OPERATOR = {
         EQUAL: {
@@ -924,16 +923,16 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.getFilter = function() {
-        let combinedChips;
+        let combinedChips = [];
 
-        if(this.guiComplexity === Search.COMPLEX_GUI || this.guiComplexity === Search.COMBINED_GUI) {
+        if(this.hasGUI(Search.COMPLEX_GUI)) {
             this._predictChip();
             if(this.chips.predicted)
                 combinedChips = [].concat(this.chips.committed, [this.chips.predicted]);
             else
                 combinedChips = this.chips.committed;
         }
-        if(this.guiComplexity === Search.HEADER_GUI || this.guiComplexity === Search.COMBINED_GUI) {
+        if(this.hasGUI(Search.HEADER_GUI)) {
             combinedChips = combinedChips.concat(this.createChipsFromHeaderInput());
         }
 
@@ -1150,6 +1149,10 @@ define(['./Filter'], function (Filter) {
 
         Search.OPERATOR.IS_NULL.display = this.$i18n.block.search.operator.isNull;
         Search.OPERATOR.IS_NULL.operatorText = this.$i18n.block.search.chipText.isNull;
+    };
+
+    Search.prototype.hasGUI = function(queriedGUI) {
+        return (this.guiComplexity & queriedGUI) !== 0
     };
 
 
