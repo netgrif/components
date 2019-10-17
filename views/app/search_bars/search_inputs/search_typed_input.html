@@ -80,7 +80,7 @@
                        ng-model="search.searchArguments[inputGui][$index]"
                        ng-init="search.searchArguments[inputGui][$index] = false"
                        aria-label="Switch"
-                       ng-change="search.doSearch()">
+                       ng-change="search.inputBlured(inputGui)">
             </md-switch>
         </md-input-container>
     </div>
@@ -91,7 +91,7 @@
             <md-datepicker ng-model="search.searchArguments[inputGui][$index]"
                            aria-label="Pick date"
                            md-open-on-focus
-                           ng-change="search.doSearch()"
+                           ng-change="search.inputBlured(inputGui)"
                            class="margin-bottom-0 maximize-width-on-xs-displays-md-datepicker">
             </md-datepicker>
         </md-input-container>
@@ -109,7 +109,7 @@
                    format="D.M.YYYY HH:mm"
                    id="{{'dateTime'+$index}}"
                    aria-label="Pick date and time"
-                   ng-change="search.doSearch()">
+                   ng-change="search.inputBlured(inputGui)">
         </md-input-container>
     </div>
 
