@@ -524,7 +524,11 @@ define(['./Filter'], function (Filter) {
             operatorText: "",
             numberOfOperands: 1,
             createQuery: function (keywords, args) {
-                return `(${keywords[0]}:${Search.escapeInput(args[0])})`;
+                let escaped = Search.escapeInput(args[0]);
+                if(escaped.split(" ").length > 1)
+                    return `(${keywords[0]}:${escaped})`;
+                else
+                    return `(${keywords[0]}:${escaped}~)`;
             },
             createText: function (args) {
                 return Search.operatorText(args, this.operatorText);
