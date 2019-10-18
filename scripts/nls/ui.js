@@ -485,6 +485,8 @@ define({
                 condition: "Condition",
                 addChipPart: "Add search condition part",
                 addChip: "Combine condition parts",
+                disjunctionChipsHint: "Searched item must fulfill at least one of these conditions",
+                conjunctionChipsHint: "Searched item must fulfill all of these conditions",
                 clearSearch: "Clear search",
                 saveFilter: "Save conditions as filter",
                 search: "Search",

@@ -43,13 +43,21 @@
                 </md-tooltip>
             </md-button>
 
-            <span class="mdi mdi-24px mdi-vector-combine margin-right-default"></span>
+            <span class="mdi mdi-24px mdi-vector-combine margin-right-default">
+                <md-tooltip md-direction="top">
+                    {{::$i18n.block.search.disjunctionChipsHint}}
+                </md-tooltip>
+            </span>
         </div>
         <div ng-include="'views/app/search_bars/search_bar_components/chips/chipParts.html'" flex></div>
     </div>
     <div ng-if="search.chips.committed.length > 0" layout="row">
         <div flex-gt-lg="5" flex-lg="10" flex-md="15" flex-sm="15" flex-xs="25" layout="row" layout-align="end center">
-            <span class="mdi mdi-24px mdi-vector-intersection margin-right-default"></span>
+            <span class="mdi mdi-24px mdi-vector-intersection margin-right-default">
+                <md-tooltip md-direction="top">
+                    {{::$i18n.block.search.conjunctionChipsHint}}
+                </md-tooltip>
+            </span>
         </div>
         <div ng-include="'views/app/search_bars/search_bar_components/chips/chips.html'" flex></div>
     </div>

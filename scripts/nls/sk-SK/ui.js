@@ -471,6 +471,8 @@ define({
             condition: "Podmienka",
             addChipPart: "Pridať časť podmienky vyhľadávania",
             addChip: "Spojiť časti podmienok vyhľadávania",
+            disjunctionChipsHint: "Vyhľadávaný prvok musí spĺňať aspoň jednu z týchto podmienok",
+            conjunctionChipsHint: "Vyhľadávaný prvok musí spĺňať všetky z týchto podmienok",
             clearSearch: "Zrušiť vyhľadávanie",
             saveFilter: "Uložiť podmienky do filtra",
             search: "Vyhľadať",
