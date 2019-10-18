@@ -1,6 +1,6 @@
 <div layout="column" class="card padding-2x" ng-if="search.hasGUI(search.constants.COMPLEX_GUI)">
-    <div hide-gt-xs layout="column" layout-align="center center"> <!-- displayed if width < 600px -->
-        <div layout="row"  layout-align="end center" class="min-width-100">
+    <div hide-gt-xs layout="column" layout-align="start center"> <!-- displayed if width < 600px -->
+        <div layout="row"  layout-align="end start" class="min-width-100">
             <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonNewCase.html'"></div>
         </div>
         <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchCategory.html'" flex-xs="grow" class="maximize-width-on-xs-displays"></div>
@@ -13,7 +13,7 @@
             <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonSaveFilter.html'"></div>
         </div>
     </div>
-    <div hide show-gt-xs layout="row" layout-align="space-between center"> <!-- displayed if 600px <= width -->
+    <div hide show-gt-xs layout="row" layout-align="space-between start"> <!-- displayed if 600px <= width -->
         <div layout="row" layout-align="start center" layout-wrap>
             <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchCategory.html'"></div>
             <div ng-include="'views/app/search_bars/search_bar_components/inputs/inputSearchDatafield.html'"></div>
@@ -26,7 +26,7 @@
                 <div ng-include="'views/app/search_bars/search_bar_components/buttons/buttonSaveFilter.html'"></div>
             </div>
         </div>
-        <div flex-gt-lg="5" flex-lg="5" flex-md="10" flex-sm="10" layout="row" layout-align="end start"
+        <div flex="nogrow" layout="row" layout-align="end start"
              ng-include="'views/app/search_bars/search_bar_components/buttons/buttonNewCase.html'">
         </div>
     </div>
