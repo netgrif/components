@@ -1,6 +1,7 @@
 define(['./Filter'], function (Filter) {
 
     /**
+     * @deprecated
      * @param parent Parent controller
      * @param angular $http, $snackbar, $i18n, $process
      * @param config options: considerWholeSearchInput
