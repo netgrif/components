@@ -1,5 +1,5 @@
-define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filter', '../classes/Search', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, CaseTab, TaskTab, Filter, Search) {
+define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/FilterTab', '../classes/Filter', '../classes/Search', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (angular, CaseTab, TaskTab, FilterTab, Filter, Search) {
         angular.module('ngCases').controller('CasesController',
             ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config', '$filterRepository',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
@@ -10,7 +10,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     self.activeTab = undefined;
                     self.taskTabs = [];
                     self.caseHeaders = $user.getPreferenceCaseHeaders(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
-                    self.caseTab = new CaseTab("Cases", this, $filterRepository.get(self.viewId), {
+                    self.caseTabs = [new CaseTab("Cases", this, $filterRepository.get(self.viewId), {
                         $http,
                         $dialog,
                         $snackbar,
@@ -26,10 +26,25 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
                         allowedNets: $process.nets,
                         preselectedHeaders: self.caseHeaders ? self.caseHeaders : ["meta-visualId", "meta-title", "meta-author", "meta-creationDate"]
-                    });
+                    })];
+
+                    self.filterTab = new FilterTab(Filter.CASE_TYPE, self, {
+                        $http,
+                        $snackbar,
+                        $dialog,
+                        $i18n,
+                        $user,
+                        $rootScope,
+                        $config
+                    }, {});
 
                     self.tabChanged = function () {
-                        self.activeTab = self.taskTabs[self.activeTabIndex - 1];
+                        let processedIndex = self.processActiveTabIndex();
+                        if(processedIndex.isCaseTab)
+                            self.activeTab = self.caseTabs[processedIndex.index];
+                        else
+                            self.activeTab = self.taskTabs[processedIndex.index];
+
                         self.activeTab.activate();
                     };
 
@@ -68,6 +83,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
 
                     };
 
+                    self.openTabFromFilters = function(filters) {
+
+                    };
+
                     self.closeTab = function (useCaseId) {
                         const index = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCaseId);
                         if (index !== -1) {
@@ -75,6 +94,13 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                             self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
                         }
                         self.caseTab.load(false);
+                    };
+
+                    self.processActiveTabIndex = function() {
+                        return {
+                            isCaseTab: self.activeTabIndex < self.caseTabs.length,
+                            index: self.activeTabIndex < self.caseTabs.length ? self.activeTabIndex : self.activeTabIndex - self.caseTabs.length
+                        };
                     };
 
                     if ($cache.get("dashboard") && $cache.get("dashboard").cases) {

@@ -8,7 +8,7 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     self.viewId = $config.show.tasks.viewId;
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
-                    self.filterTab = new FilterTab(self, {
+                    self.filterTab = new FilterTab(Filter.TASK_TYPE, self, {
                         $http,
                         $snackbar,
                         $dialog,
@@ -52,6 +52,10 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                                 self.tabChanged();
                             }, 200);
                         }
+                    };
+
+                    self.openTabFromFilters = function(filters) {
+                        self.openTaskTabs(filters);
                     };
 
                     self.tabChanged = function () {

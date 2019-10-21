@@ -8,21 +8,26 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
      * @param config
      * @constructor
      */
-    function FilterTab(parent, angular, config = {}) {
+    function FilterTab(type, parent, angular, config = {}) {
         Tab.call(this, 99, "filter");
 
         this.parent = parent;
         Object.assign(this, angular, config);
 
         this.filters = [];
+        this.type = type;
         this.search = {
             title: undefined,
-            visibility: 2
+            visibility: 2,
+            type: type
         };
         this.searchVisibilityIcon = "public";
         this.filter = undefined;
         this.sideViewDetail = false;
-        this.selectedFilters = angular.$user.getPreferenceTaskFilters(this.parent.viewId);
+
+        if(this.type === Filter.TASK_TYPE)
+            this.selectedFilters = angular.$user.getPreferenceTaskFilters(this.parent.viewId);
+        // TODO cases
     }
 
     FilterTab.URL_SEARCH = "/filter/search";
@@ -114,7 +119,9 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
 
     FilterTab.prototype.saveFilters = function () {
         const selected = this.getSelectedFilters();
-        this.$user.savePreferenceTaskFilters(this.parent.viewId, selected.map(f => f.stringId));
+        if(this.type === Filter.TASK_TYPE)
+            this.$user.savePreferenceTaskFilters(this.parent.viewId, selected.map(f => f.stringId));
+        // TODO cases
         this.filters.forEach(f => f.selected = false);
         return selected;
     };

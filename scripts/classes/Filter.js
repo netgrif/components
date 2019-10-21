@@ -29,8 +29,8 @@ define(['./Case'], function (Case) {
         this.formatedCreationDate = Case.formatDate(this.created);
     }
 
-    Filter.TASK_TYPE = "Task";
-    Filter.CASE_TYPE = "Case";
+    Filter.TASK_TYPE = "task";
+    Filter.CASE_TYPE = "case";
 
     Filter.getVisibilityIcon = function (visibility) {
         switch (visibility) {

@@ -44,39 +44,7 @@
 
         </md-tab>
 
-        <md-tab md-on-select="tasksCtrl.filterTab.activate()">
-
-            <md-tab-label>
-                <md-icon class="material-icons md-highlight">add</md-icon>
-            </md-tab-label>
-
-            <md-tab-body>
-
-                <md-content layout="column" layout-align="center" class="padding-2x color-bg-transparent">
-
-                    <div ng-include="'views/app/search_bars/filter_search_bar.html'"></div>
-
-                    <md-divider class="border-width-2x color-border-transparent"></md-divider>
-
-                    <!-- Detail closed view -->
-                    <div layout="row" ng-if="!tasksCtrl.filterTab.sideViewDetail" ng-init="filters=tasksCtrl.filterTab.filters" ng-include="'views/app/filter/filter_full.html'"></div>
-
-                    <!-- Detail opened view -->
-                    <div layout="row" ng-if="tasksCtrl.filterTab.sideViewDetail">
-
-                        <div flex ng-init="filters=tasksCtrl.filterTab.filters" ng-include="'views/app/filter/filter_small.html'"></div>
-
-                        <md-divider hide-sm hide-xs class="border-width-2x color-border-transparent"></md-divider>
-
-                        <div hide-sm hide-xs flex-gt-sm="40" layout="column" ng-include="'views/app/filter/filter_detail.html'"></div>
-
-                    </div>
-
-                </md-content> <!-- ./column -->
-
-            </md-tab-body>
-
-        </md-tab>
+        <div ng-include="'views/app/filter/filter_tab.html'" ng-init="parentCtrl = tasksCtrl"></div>
 
     </md-tabs>
 
