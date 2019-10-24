@@ -32,6 +32,7 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
                 $i18n: this.$i18n,
                 $timeout: this.$timeout
             }, {});
+            this.taskSearch.populateFromFilter(this.baseFilter);
         }
     }
 
@@ -61,9 +62,6 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
 
         if (this.showTransactions)
             this.loadTransactions();
-
-        if (this.taskSearch)
-            this.taskSearch.populateFromFilter(this.activeFilter);
 
         this.load(false);
     };
