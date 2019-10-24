@@ -1,9 +1,11 @@
 define([], function () {
-    function Tab(id,label) {
+    function Tab(id, label, baseFilter) {
         this.id = id;
         this.label = label;
         this.page = {};
         this.loading = false;
+        this.baseFilter = baseFilter;
+        this.activeFilter = this.baseFilter;
     }
     Tab.prototype.activate = function () { };
 

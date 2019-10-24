@@ -52,6 +52,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
             $i18n: this.$i18n,
             $timeout: this.$timeout
         }, {});
+        this.caseSearch.populateFromFilter(baseFilter);
 
         this.constants = {
             HEADER_MODE_EDIT: CaseTab.HEADER_MODE_EDIT,
