@@ -10,7 +10,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
      * @constructor
      */
     function CaseTab(label, controller, baseFilter, angular, config = {}) {
-        Tab.call(this, 0, label);
+        Tab.call(this, 0, label, baseFilter);
 
         this.controller = controller;
         this.authorityToCreate = "ROLE_USER";
@@ -22,7 +22,6 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
             title: this.$i18n.block.case.newTitle
         };
 
-        this.activeFilter = baseFilter;
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
 
         this.headers = {
@@ -238,12 +237,15 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
     CaseTab.prototype.search = function () {
         if (this.cases.length === 0)
             this.cases.splice(0, this.cases.length);
-        let newFilter = this.caseSearch.getFilter();
 
-        if(newFilter.query === this.activeFilter.query)
-            return;
+        const newFilter = this.caseSearch.getFilter();
 
-        this.activeFilter = newFilter;
+        if (this.filterPolicy === Tab.MERGE_FILTER_POLICY) {
+            this.activeFilter = this.activeFilter.merge(newFilter);
+        } else if (this.filterPolicy === Tab.REPLACE_FILTER_POLICY) {
+            this.activeFilter = newFilter;
+        }
+
         this.load(false);
     };
 
@@ -408,29 +410,8 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
         this.cases.splice(this.cases.indexOf(useCase), 1);
     };
 
-    CaseTab.prototype.openSaveFilterDialog = function () {
-        this.$dialog.showByTemplate('save_filter', this);
-    };
-
-    CaseTab.prototype.saveFilter = function () {
-        const requestBody = {
-            title: this.activeFilter.title,
-            description: this.activeFilter.description,
-            visibility: this.activeFilter.visibility,
-            type: Filter.CASE_TYPE,
-            query: this.activeFilter.query
-        };
-        this.$http.post(this.$config.getApiUrl("/filter"), requestBody).then(response => {
-            if (response.success) {
-                this.$snackbar.success(response.success);
-            } else
-                this.$snackbar.error(response.error);
-            this.$dialog.closeCurrent();
-        }, error => {
-            console.log("Filter failed to be saved");
-            console.log(error);
-            this.$dialog.closeCurrent();
-        })
+    CaseTab.prototype.callSaveFilter = function() {
+        this.saveFilter(Filter.CASE_TYPE);
     };
 
     return CaseTab;

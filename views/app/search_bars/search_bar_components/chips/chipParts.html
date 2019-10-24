@@ -1,7 +1,7 @@
 <md-chips ng-model="search.chipParts.committed"
           readonly="true"
           md-removable="false"
-          md-on-remove="search.resetPossibleNets(); tab.search()"
+          md-on-remove="search.resetPossibleNets(); search.doSearch()"
           class="empty-chips-with-height"
           flex>
     <md-chip-template>

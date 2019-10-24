@@ -1,5 +1,5 @@
-define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/FilterTab', '../classes/Filter', '../classes/Search', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, CaseTab, TaskTab, FilterTab, Filter, Search) {
+define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/FilterTab', '../classes/Filter', '../classes/Search', '../classes/Tab', '../modules/Cases', '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (angular, CaseTab, TaskTab, FilterTab, Filter, Search, Tab) {
         angular.module('ngCases').controller('CasesController',
             ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config', '$filterRepository',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
@@ -67,7 +67,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
 
                     };
 
-                    self.openCaseTabs = function (filter = [], closable = true,) {
+                    self.openCaseTabs = function (filter = [], closable = true, filterPolicy = Tab.REPLACE_FILTER_POLICY) {
                         filter.forEach(f => {
                             self.caseTabs.push(new CaseTab(f.title, self, f,{
                                 $http,
@@ -81,6 +81,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                 $config
                             }, {
                                 closable: closable,
+                                filterPolicy: filterPolicy,
                                 caseDelete: $config.enable.cases.caseDelete,
                                 viewId: self.viewId,
                                 authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
