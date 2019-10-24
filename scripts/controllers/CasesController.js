@@ -91,7 +91,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         const index = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCaseId);
                         if (index !== -1) {
                             self.taskTabs.splice(index, 1);
-                            self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
+                            self.changeActiveTabAfterDeletion(index + self.caseTabs.length);
                         }
                     };
 
@@ -104,7 +104,11 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         let combinedIndex = index;
                         if(!isCaseTab)
                             combinedIndex += self.caseTabs.length;
-                        self.activeTabIndex = combinedIndex < self.activeTabIndex-1 ? self.activeTabIndex - 1 : self.activeTabIndex;
+                        self.changeActiveTabAfterDeletion(combinedIndex);
+                    };
+
+                    self.changeActiveTabAfterDeletion = function(absoluteIndexBeforeDeletion) {
+                        self.activeTabIndex = absoluteIndexBeforeDeletion > self.activeTabIndex ? self.activeTabIndex : self.activeTabIndex - 1;
                     };
 
                     self.decodeActiveTabIndex = function() {
