@@ -323,7 +323,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
     };
 
     CaseTab.prototype.closeCase = function (useCase) {
-        this.controller.closeTab(useCase.stringId);
+        this.controller.closeTaskTab(useCase.stringId);
     };
 
     CaseTab.prototype.openNewCaseDialog = function (title) {

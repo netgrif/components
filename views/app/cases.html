@@ -47,7 +47,7 @@
 			<md-tab-label>
 				<md-icon class="material-icons">check_box</md-icon>
 				{{::tab.useCase.title}}
-				<md-icon class="material-icons cursor-pointer font-size-22" ng-click="caseCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
+				<md-icon class="material-icons cursor-pointer font-size-22" ng-click="caseCtrl.closeTab($index, false)">close</md-icon>
 			</md-tab-label>
 
 			<md-tab-body>
@@ -75,7 +75,7 @@
 						<md-divider class="border-width-2x color-border-transparent"></md-divider>
 						<span class="font-size-20">{{::$i18n.page.cases.noTasksForThisCaseAvailable}}</span>
 						<md-divider class="border-width-default color-border-transparent"></md-divider>
-						<md-button class="md-button" ng-click="caseCtrl.closeTab(tab.useCase.stringId)">{{::$i18n.block.btn.closeTab}}</md-button>
+						<md-button class="md-button" ng-click="caseCtrl.closeTab($index, false)">{{::$i18n.block.btn.closeTab}}</md-button>
 					</div>
 
 					<div layout="row" layout-align="center center" class="padding-2x margin-2x">

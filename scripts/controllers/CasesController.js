@@ -39,7 +39,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     }, {});
 
                     self.tabChanged = function () {
-                        let processedIndex = self.processActiveTabIndex();
+                        let processedIndex = self.decodeActiveTabIndex();
                         if(processedIndex.isCaseTab)
                             self.activeTab = self.caseTabs[processedIndex.index];
                         else
@@ -84,48 +84,73 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     };
 
                     self.openTabFromFilters = function(filters) {
-
+                        // TODO
                     };
 
-                    self.closeTab = function (useCaseId) {
+                    self.closeTaskTab = function (useCaseId) {
                         const index = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCaseId);
                         if (index !== -1) {
                             self.taskTabs.splice(index, 1);
                             self.activeTabIndex = index < self.activeTabIndex ? self.activeTabIndex - 1 : self.activeTabIndex;
                         }
-                        self.caseTab.load(false);
                     };
 
-                    self.processActiveTabIndex = function() {
+                    self.closeTab = function (index, isCaseTab) {
+                        if(isCaseTab)
+                            self.caseTabs.splice(index, 1);
+                        else
+                            self.taskTabs.splice(index, 1);
+
+                        let combinedIndex = index;
+                        if(!isCaseTab)
+                            combinedIndex += self.caseTabs.length;
+                        self.activeTabIndex = combinedIndex < self.activeTabIndex-1 ? self.activeTabIndex - 1 : self.activeTabIndex;
+                    };
+
+                    self.decodeActiveTabIndex = function() {
                         return {
                             isCaseTab: self.activeTabIndex < self.caseTabs.length,
                             index: self.activeTabIndex < self.caseTabs.length ? self.activeTabIndex : self.activeTabIndex - self.caseTabs.length
                         };
                     };
 
+                    self.activateCaseTab = function(caseTabIndex) {
+                        if(caseTabIndex < 0 || caseTabIndex >= self.caseTabs.length)
+                            throw new Error("CaseTab with given index doesn't exist!");
+                        else
+                            self.activeTabIndex = caseTabIndex;
+                    };
+
+                    self.activateTaskTab = function(taskTabIndex) {
+                        if(taskTabIndex < 0 || taskTabIndex >= self.taskTabs.length)
+                            throw new Error("TaskTab with given index doesn't exist!");
+                        else
+                            self.activeTabIndex = taskTabIndex + self.caseTabs.length;
+                    };
+
                     if ($cache.get("dashboard") && $cache.get("dashboard").cases) {
-                        self.caseTab.openCase($cache.get("dashboard").cases);
-                        self.activeTabIndex = self.taskTabs.length;
+                        self.openTaskTab($cache.get("dashboard").cases);
+                        self.activateTaskTab(self.taskTabs.length-1);
                         $cache.remove("dashboard");
                     }
 
                     const navClickListener = $rootScope.$on("navClick", (event, data) => {
                         if (data.item === self.viewId) {
                             self.activeTabIndex = 0;
-                            self.caseTab.load(false);
+                            self.caseTabs[0].load(false);
                         }
                     });
 
                     const noTasksListener = $rootScope.$on("noTasks", (event) => {
                         if (self.taskTabs && self.taskTabs.length > 0)
-                            self.closeTab(this.activeTab.useCase.stringId);
+                            self.closeTaskTab(this.activeTab.useCase.stringId);
                     });
 
                     $scope.$on('$destroy', navClickListener);
                     $scope.$on('$destroy', noTasksListener);
                     $scope.$on('$destroy', function() {
-                        self.caseTab.searchInput=undefined;
-                        self.caseTab.search();
+                        self.caseTabs[0].caseSearch.resetInputFields();
+                        self.caseTabs[0].caseSearch.clearFilter();
                         $scope.$emit('reloadCounters');
                     });
 
