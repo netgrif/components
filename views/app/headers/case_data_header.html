@@ -1,4 +1,4 @@
-<div ng-if="tab.caseDelete" layout="row" layout-align="start center" class="card-header padding-horizontal-2x height-68px">
+<div ng-if="caseTab.caseDelete" layout="row" layout-align="start center" class="card-header padding-horizontal-2x height-68px">
 
     <a flex-gt-sm="10" flex-sm="15" flex-xs="30" layout="row" layout-align="start center">
         <span flex>{{::$i18n.block.case.header.label}}</span>
@@ -23,7 +23,7 @@
 
     <div flex-gt-xs="10" flex-xs="20" layout="row" layout-align="end center" ng-include="'views/app/headers/header_items/case_data_header_button.html'"></div> <!-- Menu spacer -->
 </div>
-<div ng-if="!tab.caseDelete" layout="row" layout-align="start center" class="card-header padding-horizontal-2x">
+<div ng-if="!caseTab.caseDelete" layout="row" layout-align="start center" class="card-header padding-horizontal-2x">
 
     <a flex-xl="4" flex-lg="5" flex-md="8" flex-sm="10" flex-xs="10">
         {{::$i18n.block.case.header.label}}

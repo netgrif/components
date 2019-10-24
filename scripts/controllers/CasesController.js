@@ -10,23 +10,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     self.activeTab = undefined;
                     self.taskTabs = [];
                     self.caseHeaders = $user.getPreferenceCaseHeaders(self.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY);
-                    self.caseTabs = [new CaseTab("Cases", this, $filterRepository.get(self.viewId), {
-                        $http,
-                        $dialog,
-                        $snackbar,
-                        $user,
-                        $fileUpload,
-                        $timeout,
-                        $i18n,
-                        $process,
-                        $config
-                    }, {
-                        caseDelete: $config.enable.cases.caseDelete,
-                        viewId: self.viewId,
-                        authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
-                        allowedNets: $process.nets,
-                        preselectedHeaders: self.caseHeaders ? self.caseHeaders : ["meta-visualId", "meta-title", "meta-author", "meta-creationDate"]
-                    })];
+                    self.caseTabs = [];
 
                     self.filterTab = new FilterTab(Filter.CASE_TYPE, self, {
                         $http,
@@ -83,8 +67,31 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
 
                     };
 
+                    self.openCaseTabs = function (filter = [], closable = true,) {
+                        filter.forEach(f => {
+                            self.caseTabs.push(new CaseTab(f.title, self, f,{
+                                $http,
+                                $dialog,
+                                $snackbar,
+                                $user,
+                                $fileUpload,
+                                $timeout,
+                                $i18n,
+                                $process,
+                                $config
+                            }, {
+                                closable: closable,
+                                caseDelete: $config.enable.cases.caseDelete,
+                                viewId: self.viewId,
+                                authorityToCreate: ["ROLE_USER", "ROLE_ADMIN"],
+                                allowedNets: $process.nets,
+                                preselectedHeaders: self.caseHeaders ? self.caseHeaders : ["meta-visualId", "meta-title", "meta-author", "meta-creationDate"]
+                            }));
+                        });
+                    };
+
                     self.openTabFromFilters = function(filters) {
-                        // TODO
+                        self.openCaseTabs(filters);
                     };
 
                     self.closeTaskTab = function (useCaseId) {
@@ -158,5 +165,6 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                         $scope.$emit('reloadCounters');
                     });
 
+                    self.openCaseTabs([$filterRepository.get(self.viewId)], false);
                 }]);
     });
