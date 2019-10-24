@@ -6,7 +6,7 @@
 
             <md-tab-label>
                 {{::taskTab.label}}
-                <md-icon ng-if="taskTab.closable" class="material-icons cursor-pointer font-size-22" ng-click="tasksCtrl.closeTaskTab(taskTab.id)">close</md-icon>
+                <md-icon ng-if="taskTab.closable" class="material-icons cursor-pointer font-size-22" ng-click="tasksCtrl.closeTaskTab($index)">close</md-icon>
             </md-tab-label>
 
             <md-tab-body>
