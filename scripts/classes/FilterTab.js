@@ -27,7 +27,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.sideViewDetail = false;
 
         if(this.type === Filter.TASK_TYPE)
-            this.selectedFilters = angular.$user.getPreferenceTaskFilters(this.parent.viewId);
+            this.selectedFilters = new Map(this.loadSelectedFilters(angular.$user.getPreferenceTaskFilters(this.parent.viewId)));
         // TODO cases
     }
 
@@ -47,10 +47,10 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.load(false, true,  showSnackbar);
     };
 
-    FilterTab.prototype.load = function (next, force, showSnackbar = true) {
+    FilterTab.prototype.load = function (next, force, showSnackbar = true, searchRequest = self.search, searchResult = self.filters) {
         if (this.loading) return;
-        if (next && this.filters && this.page.totalElements === this.filters.length) return;
-        if (!next && !force && this.filters.length > 0) return;
+        if (next && searchResult && this.page.totalElements === searchResult.length) return;
+        if (!next && !force && searchResult.length > 0) return;
 
         const self = this;
         this.loading = true;
@@ -60,11 +60,11 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
             params: {
                 sort: "visibility"
             },
-            data: self.search
+            data: searchRequest
         };
         this.$http(requestConfig).then(response => {
-            if (self.filters)
-                self.filters.splice(0, self.filters.length);
+            if (searchResult)
+                searchResult.splice(0, searchResult.length);
 
             self.page = response.page;
             if (self.page.totalElements === 0) {
@@ -82,12 +82,12 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                     const configObj = Object.assign({}, resource, {
                         $i18n: self.$i18n
                     });
-                    self.filters.push(new Filter(resource.title, resource.type,
+                    searchResult.push(new Filter(resource.title, resource.type,
                         resource.query, rawData[i]._links, self, resource.conjunctiveQueryParts, configObj))
                 });
                 if (self.selectedFilters) {
-                    self.filters.forEach(f => {
-                        if (self.selectedFilters.includes(f.stringId)) {
+                    searchResult.forEach(f => {
+                        if (self.selectedFilters.has(f.stringId)) {
                             f.selected = true;
                         }
                     });
@@ -96,8 +96,8 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
             }, () => {
                 self._showSnackbar(showSnackbar);
                 self.page.next = undefined;
-                if (self.filters)
-                    self.filters.splice(0, self.filters.length);
+                if (searchResult)
+                    searchResult.splice(0, searchResult.length);
                 self.loading = false;
             });
         }, error => {
@@ -114,9 +114,15 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
     };
 
     FilterTab.prototype.getSelectedFilters = function () {
-        const selected = [];
-        this.filters.forEach(f => f.selected ? selected.push(f) : undefined);
-        return selected;
+        return [...this.selectedFilters.values()];
+    };
+
+    FilterTab.prototype.updateSelectedFilters = function (index) {
+        let filter = this.filters[index];
+        if(filter.selected)
+            this.selectedFilters.set(filter.stringId, filter);
+        else
+            this.selectedFilters.delete(filter.stringId);
     };
 
     FilterTab.prototype.saveFilters = function () {
@@ -137,6 +143,22 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.tab.filter = undefined;
         this.tab.sideViewDetail = false;
         this.filters.splice(this.filters.findIndex(f => f.stringId === filter.stringId), 1);
+    };
+
+    FilterTab.prototype.loadSelectedFilters = function(filterIds) {
+        let savedFilters = [];
+        let request = {
+            type: self.type,
+            id: filterIds
+        };
+        this.load(false, true, false, request, savedFilters);
+
+        let mapGenerator = [];
+        filterIds.forEach(function(id) {
+            mapGenerator.push([id, savedFilters.find(function(it) {return it.stringId === id})]);
+        });
+
+        return mapGenerator;
     };
 
     return FilterTab;
