@@ -23,7 +23,7 @@
 
                 <md-menu-item>
 
-                    <md-button ng-click="parentCtrl.filterTab.changeSearchVisibility(2)">
+                    <md-button ng-click="parentCtrl.filterTab.changeSearchVisibility(2); parentCtrl.filterTab.load(false,true)">
                         <md-icon class="material-icons">public</md-icon>
                         <span>{{::$i18n.page.tasks.filter.public}}</span>
                     </md-button>
@@ -32,7 +32,7 @@
 
                 <md-menu-item>
 
-                    <md-button ng-click="parentCtrl.filterTab.changeSearchVisibility(1)">
+                    <md-button ng-click="parentCtrl.filterTab.changeSearchVisibility(1); parentCtrl.filterTab.load(false,true)">
                         <md-icon class="material-icons">group</md-icon>
                         <span>{{::$i18n.page.tasks.filter.group}}</span>
                     </md-button>
@@ -41,7 +41,7 @@
 
                 <md-menu-item>
 
-                    <md-button ng-click="parentCtrl.filterTab.changeSearchVisibility(0)">
+                    <md-button ng-click="parentCtrl.filterTab.changeSearchVisibility(0); parentCtrl.filterTab.load(false,true)">
                         <md-icon class="material-icons">person</md-icon>
                         <span>{{::$i18n.page.tasks.filter.private}}</span>
                     </md-button>

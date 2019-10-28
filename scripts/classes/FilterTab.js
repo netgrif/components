@@ -3,6 +3,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
     /**
      * angular: $http, $snackbar, $dialog, $i18n
      * config:
+     * @param type - Filter.CASE_TYPE or Filter.TASK_TYPE
      * @param parent
      * @param angular
      * @param config
@@ -62,12 +63,13 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
             data: self.search
         };
         this.$http(requestConfig).then(response => {
+            if (self.filters)
+                self.filters.splice(0, self.filters.length);
+
             self.page = response.page;
             if (self.page.totalElements === 0) {
                 self._showSnackbar(showSnackbar);
                 self.page.next = undefined;
-                if (self.filters)
-                    self.filters.splice(0, self.filters.length);
                 self.loading = false;
                 return;
             }
