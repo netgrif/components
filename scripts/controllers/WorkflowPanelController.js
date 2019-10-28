@@ -1,5 +1,5 @@
-define(['angular', '../modules/Workflow', '../modules/Main'],
-    function (angular) {
+define(['angular', '../classes/DataField', '../modules/Workflow', '../modules/Main'],
+    function (angular, DataField) {
         angular.module('ngWorkflow').controller('WorkflowPanelController',
             ['$log', '$scope', '$http', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', 'resource', 'links', 'parent', '$config',
                 function ($log, $scope, $http, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, resource, links, parent, $config) {
@@ -7,8 +7,9 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
 
                     self.links = links;
 
-                    self.parseDate = function (isoDate) {
-                        return `${isoDate.dayOfMonth}.${isoDate.monthValue}.${isoDate.year}`
+                    self.parseDate = function (date) {
+                        return `${DataField.padding(date[2], 0)}.${DataField.padding(date[1], 0)}.${date[0]}
+                                ${DataField.padding(date[3], 0, 0)}:${DataField.padding(date[4], 0, 0)}`;
                     };
 
                     //TODO model file download

@@ -1,0 +1,119 @@
+<div ng-switch="$eval(switchExpression)" layout="row" layout-align="start center" class="maximize-width-on-xs-displays">
+    <div ng-switch-default layout="row" layout-align="start center" class="maximize-width-on-xs-displays">
+        <md-input-container class="md-block margin-bottom-0 maximize-width-on-xs-displays">
+            <label class="placeholder maximize-width-on-xs-displays">{{inputTitles[$index]}}</label>
+            <input ng-model="search.searchArguments[inputGui][$index]"
+                   ng-blur="search.inputBlured(inputGui)"
+                   ng-keypress="$event.keyCode == 13 && ($event.target.blur() || true) && search.enterKeyPressed(inputGui, true)">
+        </md-input-container>
+    </div>
+
+    <div ng-switch-when="autocomplete" layout="row" layout-align="start center" class="maximize-width-on-xs-displays">
+        <md-autocomplete md-search-text="search.searchArguments[inputGui][$index]"
+                         md-selected-item-change="search.searchCategory.autocompleteFilter(inputGui, $index)"
+                         md-items="item in search.searchCategory.autocompleteFilter(inputGui, $index)"
+                         md-item-text="item"
+                         md-min-length="0"
+                         md-no-cache="true"
+                         md-select-on-match="true"
+                         md-match-case-insensitive="true"
+                         md-require-match="true"
+                         md-dropdown-items="8"
+                         md-floating-label="{{inputTitles[$index]}}"
+                         class="autocomplete-aligned-to-input maximize-width-on-xs-displays"
+                         ng-blur="search.inputBlured(inputGui)"
+                         ng-keypress="$event.keyCode == 13 && ($event.target.blur() || true) && search.enterKeyPressed(inputGui, true)">
+
+            <md-item-template>
+                <span md-highlight-text="search.searchArguments[inputGui][$index]" md-highlight-flags="i">
+                    {{item}}
+                </span>
+            </md-item-template>
+            <md-not-found>
+                {{$i18n.block.search.autocompleteInputNotFound}}
+            </md-not-found>
+        </md-autocomplete>
+    </div>
+
+    <div ng-switch-when="user" layout="row" layout-align="start center" class="maximize-width-on-xs-displays">
+        <md-input-container class="md-block margin-bottom-0 margin-top-0 maximize-width-on-xs-displays">
+            <md-autocomplete md-search-text="search.searchArguments[inputGui][$index]"
+                             md-selected-item="search.searchObjects[inputGui][$index]"
+                             md-items="item in search.queryUsers(search.searchArguments[inputGui][$index])"
+                             md-item-text="item.name"
+                             md-min-length="0"
+                             md-no-cache="true"
+                             md-select-on-match="true"
+                             md-match-case-insensitive="true"
+                             md-require-match="true"
+                             md-dropdown-items="8"
+                             md-floating-label="{{inputTitles[$index]}}"
+                             md-delay="200"
+                             class="user-autocomplete-aligned-to-input margin-top-0"
+                             ng-blur="search.inputBlured(inputGui)"
+                             ng-keypress="$event.keyCode == 13 && ($event.target.blur() || true) && search.enterKeyPressed(inputGui, true)">
+
+                <md-item-template>
+                    <span md-highlight-text="search.searchArguments[inputGui][$index]" md-highlight-flags="i">
+                        {{item.name}}
+                    </span>
+                </md-item-template>
+                <md-not-found>
+                    {{$i18n.block.search.autocompleteInputNotFound}}
+                </md-not-found>
+            </md-autocomplete>
+        </md-input-container>
+    </div>
+
+    <div ng-switch-when="number" layout="row" layout-align="start center" class="maximize-width-on-xs-displays">
+        <md-input-container class="md-block margin-bottom-0 maximize-width-on-xs-displays">
+            <label class="placeholder maximize-width-on-xs-displays">{{inputTitles[$index]}}</label>
+            <input type="number"
+                   step="any"
+                   ng-model="search.searchArguments[inputGui][$index]"
+                   ng-blur="search.inputBlured(inputGui)"
+                   ng-keypress="$event.keyCode == 13 && ($event.target.blur() || true) && search.enterKeyPressed(inputGui, true)">
+        </md-input-container>
+    </div>
+
+    <div ng-switch-when="boolean" layout="row" layout-align="start center" class="maximize-width-on-xs-displays">
+        <md-input-container class="md-block margin-bottom-0 maximize-width-on-xs-displays">
+            <md-switch class="md-primary margin-0"
+                       ng-model="search.searchArguments[inputGui][$index]"
+                       ng-init="search.searchArguments[inputGui][$index] = false"
+                       aria-label="Switch"
+                       ng-change="search.inputBlured(inputGui)">
+            </md-switch>
+        </md-input-container>
+    </div>
+
+    <div ng-switch-when="date" layout="row" layout-align="start center" class="maximize-width-on-xs-displays">
+        <md-input-container class="md-block more-compact-date-field margin-bottom-0 maximize-width-on-xs-displays">
+            <label class="placeholder maximize-width-on-xs-displays margin-left-40px">{{inputTitles[$index]}}</label>
+            <md-datepicker ng-model="search.searchArguments[inputGui][$index]"
+                           aria-label="Pick date"
+                           md-open-on-focus
+                           ng-change="search.inputBlured(inputGui)"
+                           class="margin-bottom-0 maximize-width-on-xs-displays-md-datepicker">
+            </md-datepicker>
+        </md-input-container>
+    </div>
+
+    <div ng-switch-when="dateTime" layout="row" class="maximize-width-on-xs-displays datetime-aligned-to-input">
+        <md-input-container class="md-block margin-right-0 maximize-width-on-xs-displays" id="md-input-container-stronger-css-identifier">
+            <label class="placeholder maximize-width-on-xs-displays" for="{{'dateTime'+$index}}">{{inputTitles[$index]}}</label>
+            <md-icon class="material-icons">today</md-icon>
+            <input mdc-datetime-picker="" date="true" time="true" type="text"
+                   show-todays-date minutes="true" short-time="false" auto-ok="true"
+                   minute-steps="1" week-start="1" click-outside-to-close="true"
+                   class="dtp-no-msclear dtp-input margin-left-0 max-width-17em maximize-width-on-xs-displays-mdc-datetime-picker"
+                   ng-model="search.searchArguments[inputGui][$index]"
+                   format="D.M.YYYY HH:mm"
+                   id="{{'dateTime'+$index}}"
+                   aria-label="Pick date and time"
+                   ng-change="search.inputBlured(inputGui)">
+        </md-input-container>
+    </div>
+
+    <div ng-switch-when="blank"></div>
+</div>

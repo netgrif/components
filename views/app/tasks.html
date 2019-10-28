@@ -12,7 +12,7 @@
             <md-tab-body>
                 <md-content class="padding-2x color-bg-transparent">
 
-                    <div ng-include="'views/app/search_bars/task_search_bar.html'"></div>
+                    <div ng-init="tab=taskTab;search=taskTab.taskSearch" ng-include="'views/app/search_bars/unified_search_bar.html'"></div>
 
                     <md-divider class="border-width-2x color-border-transparent"></md-divider>
 

@@ -476,6 +476,54 @@ define({
             char: {
 
             },
+            search: {
+                rangeFrom: "From",
+                rangeTo: "To",
+                autocompleteInputNotFound: "none found",
+                searchType: "Search type",
+                datafield: "Datafield",
+                condition: "Condition",
+                addChipPart: "Add search condition part",
+                addChip: "Combine condition parts",
+                disjunctionChipsHint: "Searched item must fulfill at least one of these conditions",
+                conjunctionChipsHint: "Searched item must fulfill all of these conditions",
+                clearSearch: "Clear search",
+                saveFilter: "Save conditions as filter",
+                search: "Search",
+                header: {
+                    sortMode: "Ordering mode",
+                    searchMode: "Search mode",
+                    enableEditMode: "Enable edit mode",
+                    confirmChanges: "Confirm changes"
+                },
+                operator: {
+                    inRange: "in range",
+                    like: "is like",
+                    isNull: "is empty"
+                },
+                chipText: {
+                    myCases: "User = me",
+                    inRangePart1: "is between",
+                    inRangePart2: "and",
+                    isLike: "is like",
+                    isNull: "is empty"
+                },
+                category: {
+                    case: {
+                        visualId: "Visual ID",
+                        process: "Process",
+                        title: "Title",
+                        creationDate: "Creation date",
+                        author: "Author",
+                        dataset: "Dataset",
+                        task: "Task",
+                        role: "Role"
+                    },
+                    task: {
+                        user: "User"
+                    }
+                }
+            },
             custom: {
 
             }

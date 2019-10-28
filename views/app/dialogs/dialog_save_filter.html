@@ -81,14 +81,12 @@
                     <!--</md-chips>-->
 
                 <!--</div>-->
-                <div ng-repeat="(key, value) in parentCtrl.activeFilter.readableQuery" class="margin-top-default">
-                    <span flex class="cursor-pointer">
-                        {{key}}
-                    </span>
 
-                    <md-chips ng-model="value" readonly="true" md-removable="false" class="margin-bottom-default">
-                    </md-chips>
-                </div>
+                <md-chips ng-model="parentCtrl.activeFilter.conjunctiveQueryParts" readonly="true" md-removable="false" class="margin-bottom-default">
+                    <md-chip-template>
+                        {{$chip.text}}
+                    </md-chip-template>
+                </md-chips>
 
             </div> <!-- ./column./md-dialog-content -->
         </md-dialog-content>

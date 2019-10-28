@@ -5,35 +5,28 @@ define(['./Case'], function (Case) {
      * @param {String} title
      * @param {String} type
      * @param {String} query
-     * @param {Object} readableQuery
      * @param {Object} links
      * @param {Object} tab
      * @param {Object} config
      * @constructor
      */
-    function Filter(title, type, query, readableQuery, links, tab, config = {}) {
-        this.tab = tab;
+    function Filter(title, type, query, links, tab, conjunctiveQueryParts = undefined, config = {}) {
         this.title = title;
-        this.type = type;
-        this.query = query;
-        this.links = links;
+        this.description = undefined;
         this.visibility = 2;
         this.author = undefined;
         this.created = new Date();
-        this.description = undefined;
+        this.type = type;
+        this.query = query;
+        this.conjunctiveQueryParts = conjunctiveQueryParts;
+        this.tab = tab;
+        this.links = links;
 
         Object.assign(this, config);
-
-        try {
-            this.readableQuery = JSON.parse(readableQuery);
-        } catch (e) {
-            this.readableQuery = readableQuery;
-        }
 
         this.selected = false;
         this.visibilityIcon = Filter.getVisibilityIcon(this.visibility);
         this.formatedCreationDate = Case.formatDate(this.created);
-        // this.readableQuery = this.getReadableQuery();
     }
 
     Filter.TASK_TYPE = "Task";
@@ -85,72 +78,43 @@ define(['./Case'], function (Case) {
         })
     };
 
-    function wrapWithArray(value) {
-        if (value instanceof Array) return;
-        return [value];
-    }
-
-    Filter.prototype.getReadableQuery = function () {
-        const query = JSON.parse(this.query);
-        const readable = {};
-        Object.keys(query).forEach(key => {
-            if (key === 'process' || key === 'transition') {
-                const refs = wrapWithArray(query[key]);
-                readable[key.toUpperCase()] = refs.map(ref => ref.title);
-            } else
-                readable[key.toUpperCase()] = wrapWithArray(query[key]);
-        });
-        return readable;
-    };
-
     /**
      * Merge this filter with provided filter.
      * Existing filter is not modified
      * @param {Filter} filter
      * @returns {Filter} new filter with merged query
      */
-    Filter.prototype.merge = function (filter) {
-        const thisQuery = JSON.parse(this.query);
-        const thatQuery = JSON.parse(filter.query);
+    Filter.prototype.merge = function (filter, requireQueryParts = false) {
+        if(this.type !== filter.type) {
+            console.error("attempting to merge filters of different type");
+            return null;
+        }
 
-        Object.keys(thatQuery).forEach(key => {
-            if (!thisQuery[key]) {
-                thisQuery[key] = thatQuery[key];
-            } else {
-                if (thisQuery[key] instanceof Array) {
-                    if (thatQuery[key] instanceof Array) {
-                        const arrayQuery = new Set(thisQuery[key]);
-                        thatQuery[key].forEach(val => arrayQuery.add(val));
-                        thisQuery[key] = [...arrayQuery];
+        if(requireQueryParts && !(this.conjunctiveQueryParts && filter.conjunctiveQueryParts)) {
+            console.error("merge of filter query parts was required but provided filters didn't contain them!");
+            return null;
+        }
 
-                    } else if (thatQuery[key] instanceof String) {
-                        !thisQuery[key].includes(thatQuery[key]) ? thisQuery[key].push(thatQuery[key]) : undefined;
-                    }
+        let mergedQueryParts = this.conjunctiveQueryParts ? this.conjunctiveQueryParts.slice(0) : [];
+        mergedQueryParts.concat( filter.conjunctiveQueryParts ? filter.conjunctiveQueryParts : []);
 
-                } else if (thisQuery[key] instanceof String) {
-                    if (thatQuery[key] instanceof Array) {
-                        !thatQuery[key].includes(thisQuery[key]) ? thatQuery[key].push(thisQuery[key]) : undefined;
-                        thisQuery[key] = thatQuery[key];
-                    } else if (thatQuery[key] instanceof String && thisQuery[key] !== thatQuery[key]) {
-                        thisQuery[key] = [thisQuery[key], thatQuery[key]];
-                    }
-                }
-            }
-        });
+        let mergedQuery;
+        if(this.query.length === 0)
+            mergedQuery = filter.query;
+        else if(filter.query.length === 0)
+            mergedQuery = this.query;
+        else
+            mergedQuery = "("+this.query+") AND ("+filter.query+")";
 
-        return new Filter(this.title, this.type, JSON.stringify(thisQuery), this.readableQuery, this.links, this.tab);
+        return new Filter(this.title, this.type, mergedQuery, this.links, this.tab, mergedQueryParts);
     };
 
     Filter.prototype.set = function (attribute, value) {
-        const thisQuery = JSON.parse(this.query);
-        thisQuery[attribute] = value;
-        this.query = JSON.stringify(thisQuery);
+        this.query[attribute] = value;
     };
 
     Filter.prototype.remove = function (attribute) {
-        const thisQuery = JSON.parse(this.query);
-        delete thisQuery[attribute];
-        this.query = JSON.stringify(thisQuery);
+        delete this.query[attribute];
     };
 
     return Filter;
