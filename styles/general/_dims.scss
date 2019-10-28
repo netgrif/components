@@ -5,9 +5,19 @@ $dim-2x:						2*$dim-default;
 $dim-2px:						2px;
 $dim-12px:						12px;
 $dim-14px:						14px;
+$dim-20px:						20px;
+$dim-40px:						40px;
 $dim-48px:						48px;
 $dim-52px:						52px;
 $dim-56px:						56px;
+$dim-68px:						68px;
+$dim-100px:                     100px;
+$dim-120px:						120px;
+$dim-150px:                     150px;
+$dim-170px:						170px;
+$dim-250px:                     250px;
+
+$dim-17em:						17em;
 
 $border-radius:					2px;
 
@@ -25,6 +35,10 @@ $border-radius:					2px;
 
 	&-56px {
 		height: $dim-56px;
+	}
+
+	&-68px {
+		height: $dim-68px;
 	}
 }
 
@@ -58,6 +72,21 @@ $border-radius:					2px;
 		&-100 {
 			min-width: 100% !important;
 		}
+        &-100px {
+            min-width: $dim-100px;
+        }
+		&-120px {
+			min-width: $dim-120px;
+		}
+        &-150px {
+            min-width: $dim-150px;
+        }
+		&-170px {
+			min-width: $dim-170px;
+		}
+        &-250px {
+            min-width: $dim-250px;
+        }
 	}
 }
 
@@ -78,6 +107,9 @@ $border-radius:					2px;
 		}
 		&-100 {
 			max-width: 100% !important;
+		}
+		&-17em {
+			max-width: $dim-17em;
 		}
 	}
 }
@@ -153,6 +185,14 @@ $border-radius:					2px;
 		&-2x {
 			margin-top: $dim-2x;
 		}
+
+		&-14px {
+			margin-top: $dim-14px;
+		}
+
+		&-20px {
+			margin-top: $dim-20px;
+		}
 	}
 
 	&-bottom {
@@ -194,6 +234,10 @@ $border-radius:					2px;
 
 		&-2x {
 			margin-left: $dim-2x;
+		}
+
+		&-40px {
+			margin-left: $dim-40px;
 		}
 
 	}

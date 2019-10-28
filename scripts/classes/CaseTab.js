@@ -1,7 +1,7 @@
-define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
+define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter, Search) {
     /**
      * Constructor for CaseTab class
-     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n, $process
+     * Angular dependencies: $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $i18n, $process, $config
      * @param {String} label
      * @param {Object} controller
      * @param {Filter} baseFilter
@@ -23,12 +23,12 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
         };
 
         this.activeFilter = baseFilter;
-        this.searchInput = undefined;
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
 
         this.headers = {
             sortItem: undefined,
-            editable: false,
+            mode: CaseTab.HEADER_MODE_SORT,
+            lastMode: CaseTab.HEADER_MODE_SORT,
             metaData: [],
             processData: [],
             selected: {
@@ -37,9 +37,30 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
                 column2: undefined,
                 column3: undefined,
                 column4: undefined
+            },
+            changeMode: function (newMode, saveLastMode = true) {
+                if(saveLastMode)
+                    this.lastMode = this.mode;
+                this.mode = newMode;
             }
         };
         this.buildHeaders();
+
+        this.caseSearch = new Search(this, Search.SEARCH_CASES, Search.COMPLEX_GUI | Search.HEADER_GUI, {
+            $process: this.$process,
+            $http: this.$http,
+            $config: this.$config,
+            $i18n: this.$i18n,
+            $timeout: this.$timeout
+        }, {});
+
+        this.constants = {
+            HEADER_MODE_EDIT: CaseTab.HEADER_MODE_EDIT,
+            HEADER_MODE_SORT: CaseTab.HEADER_MODE_SORT,
+            HEADER_MODE_SEARCH: CaseTab.HEADER_MODE_SEARCH,
+
+            HEADERS_SORT_DIR_ASC: CaseTab.HEADERS_SORT_DIR_ASC
+        };
     }
 
     CaseTab.prototype = Object.create(Tab.prototype);
@@ -50,6 +71,10 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     CaseTab.HEADERS_PREFERENCE_KEY = "caseHeaders";
     CaseTab.HEADERS_SORT_DIR_ASC = "asc";
     CaseTab.HEADERS_SORT_DIR_DESC = "desc";
+
+    CaseTab.HEADER_MODE_EDIT = "edit";
+    CaseTab.HEADER_MODE_SORT = "sort";
+    CaseTab.HEADER_MODE_SEARCH = "search";
 
     CaseTab.prototype.activate = function () {
         this.newCase.title = this.getDefaultCaseTitle();
@@ -89,6 +114,7 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
                         enable: false,
                         dir: CaseTab.HEADERS_SORT_DIR_ASC
                     };
+                    data['netId'] = net.id;
                     return data;
                 })
             })
@@ -122,7 +148,24 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
                     return header.process + "-" + header.stringId;
                 return header.stringId;
             });
-        this.$user.savePreferenceCaseHeaders(this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY, headers);
+
+        let preferenceKey = this.viewId + "-" + CaseTab.HEADERS_PREFERENCE_KEY;
+        let oldPreference = this.$user.getPreferenceCaseHeaders(preferenceKey);
+
+        let searchInputCleared = false;
+        if(oldPreference) {
+            for(let i = 0; i < headers.length; i++) {
+                if(oldPreference[i] && headers[i] !== oldPreference[i]) {
+                    this.caseSearch.clearHeaderInput(i);
+                    searchInputCleared = true;
+                }
+            }
+        }
+
+        this.$user.savePreferenceCaseHeaders(preferenceKey, headers);
+        this.caseSearch.setHeaderInputMetadata();
+        if(searchInputCleared)
+            this.search();
     };
 
     CaseTab.prototype.flipDirection = function (dir) {
@@ -134,6 +177,9 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     };
 
     CaseTab.prototype.changeSorting = function (header) {
+        if(!header)
+            return;
+
         this.headers.sortItem = header;
         if (header.sort.enable) {
             header.sort.dir = this.flipDirection(header.sort.dir);
@@ -172,16 +218,13 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     };
 
     CaseTab.prototype.buildSearchRequest = function (next) {
-        if (this.searchInput && this.searchInput.trim() !== "")
-            this.activeFilter.set("fullText", this.searchInput.trim());
-        else
-            this.activeFilter.remove("fullText");
-
         const request = {
             method: "POST",
             url: next && this.page.next ? this.page.next : this.$config.getApiUrl(CaseTab.URL_SEARCH),
-            data: JSON.parse(this.activeFilter.query)
+            data: {}
         };
+        if(this.activeFilter.query.length > 0)
+            request.data.query = this.activeFilter.query;
 
         if (!next) {
             request.params = {
@@ -195,6 +238,12 @@ define(['./Tab', './Case', './Filter'], function (Tab, Case, Filter) {
     CaseTab.prototype.search = function () {
         if (this.cases.length === 0)
             this.cases.splice(0, this.cases.length);
+        let newFilter = this.caseSearch.getFilter();
+
+        if(newFilter.query === this.activeFilter.query)
+            return;
+
+        this.activeFilter = newFilter;
         this.load(false);
     };
 

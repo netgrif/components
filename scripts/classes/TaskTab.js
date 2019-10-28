@@ -1,4 +1,4 @@
-define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Transaction, Filter, TaskSearch) {
+define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transaction, Filter, Search) {
     /**
      * Constructor for TaskTab class
      * Angular dependency: $http, $snackbar, $user, $dialog, $fileUpload, $timeout, $mdExpansionPanelGroup, $i18n, $process, $rootScope, $config
@@ -25,15 +25,14 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
         this.taskControllers = {};
         this.activeFilter = this.baseFilter;
         if (this.searchable) {
-            this.searchToolbar = new TaskSearch(this, {
-                $http: this.$http,
-                $snackbar: this.$snackbar,
-                $i18n: this.$i18n,
+            this.taskSearch = new Search(this, Search.SEARCH_TASKS, Search.COMPLEX_GUI, {
                 $process: this.$process,
-                $config: this.$config
-            }, {
-                considerWholeSearchInput: false
-            });
+                $http: this.$http,
+                $config: this.$config,
+                $i18n: this.$i18n,
+                $timeout: this.$timeout
+            }, {});
+            this.taskSearch.populateFromFilter(this.baseFilter);
         }
     }
 
@@ -64,9 +63,6 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
         if (this.showTransactions)
             this.loadTransactions();
 
-        if (this.searchToolbar)
-            this.searchToolbar.populateFromFilter(this.activeFilter);
-
         this.load(false);
     };
 
@@ -88,14 +84,18 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
 
     TaskTab.prototype.buildRequest = function (next, all) {
         const url = next && this.page.next ? this.page.next : this.$config.getApiUrl(this.baseUrl); //+ (all ? "&size="+this.tasks.length : "");
-        return {
+        let request = {
             method: "POST",
             url: url,
             params: {
                 sort: "priority"
             },
-            data: JSON.parse(this.activeFilter.query)
+            data: {}
         };
+        if(this.activeFilter.query.length > 0)
+            request.data.query = this.activeFilter.query;
+
+        return request;
     };
 
     TaskTab.prototype.load = function (next, force) {
@@ -292,11 +292,13 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
     };
 
     TaskTab.prototype.search = function () {
-        const searchFilter = this.searchToolbar.getFilter();
+        const searchFilter = this.taskSearch.getFilter();
 
         if (this.filterPolicy === TaskTab.MERGE_FILTER_POLICY) {
             this.activeFilter = this.activeFilter.merge(searchFilter);
         } else if (this.filterPolicy === TaskTab.REPLACE_FILTER_POLICY) {
+            if(this.activeFilter.query === searchFilter.query)
+                return;
             this.activeFilter = searchFilter;
         }
 
@@ -313,8 +315,7 @@ define(['./Tab', './Transaction', './Filter', './TaskSearch'], function (Tab, Tr
             description: this.activeFilter.description,
             visibility: this.activeFilter.visibility,
             type: Filter.TASK_TYPE,
-            query: this.activeFilter.query,
-            readableQuery: JSON.stringify(this.activeFilter.readableQuery)
+            query: this.activeFilter.query
         };
         this.$http.post(this.$config.getApiUrl("/filter"), requestBody).then(response => {
             if (response.success) {

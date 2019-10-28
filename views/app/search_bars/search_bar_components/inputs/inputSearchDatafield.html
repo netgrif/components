@@ -1,0 +1,24 @@
+<md-autocomplete md-search-text="search.searchDatafield.text"
+                 md-selected-item="search.searchDatafield.object"
+                 md-selected-item-change="search.searchCategory.datafieldFilter(); search.clearOperatorInput()"
+                 md-items="item in search.searchCategory.datafieldFilter()"
+                 md-item-text="item.text"
+                 md-min-length="0"
+                 md-no-cache="true"
+                 md-select-on-match="true"
+                 md-match-case-insensitive="true"
+                 md-require-match="true"
+                 md-dropdown-items="8"
+                 md-floating-label="{{search.$i18n.block.search.datafield}}"
+                 ng-if="search.searchCategory && search.searchCategory.id === search.constants.CATEGORY.CASE.DATASET"
+                 class="autocomplete-aligned-to-input min-width-250px maximize-width-on-xs-displays">
+    <md-item-template>
+        <md-icon class="material-icons">{{item.getTypeIcon()}}</md-icon>
+        <span md-highlight-text="search.searchDatafield.text" md-highlight-flags="i">
+                        {{item.text}}
+                    </span>
+    </md-item-template>
+    <md-not-found>
+        {{::$i18n.block.search.autocompleteInputNotFound}}
+    </md-not-found>
+</md-autocomplete>
