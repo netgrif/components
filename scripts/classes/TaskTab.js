@@ -108,7 +108,7 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
         const requestConfig = this.buildRequest(next, force);
         this.$http(requestConfig).then(function (response) {
             self.page = response.page;
-            if (self.page.totalElements === 0) {
+            if (self.page.totalElements === 0 || response.$response().data._embedded === undefined) {
                 self.page.next = undefined;
                 if (self.isNotEmpty())
                     self.removeAll();
