@@ -85,10 +85,10 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     self.openTaskTabs([$filterRepository.get("tasks")], false);
                     self.openTaskTabs([$filterRepository.get("tasks-my")], false, Tab.MERGE_FILTER_POLICY);
                     self.activeTabIndex = 0;
-                    self.filterTab.reload(false);
 
-                    $timeout(() => {
+                    self.filterTab.loadSelectedFilters($user.getPreferenceTaskFilters(self.viewId), function () {
                         self.openTaskTabs(self.filterTab.getSelectedFilters(), true, Tab.REPLACE_FILTER_POLICY, true);
-                    }, 200);
+                        self.filterTab.reload(false);
+                    });
                 }]);
     });

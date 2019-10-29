@@ -26,8 +26,6 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.filter = undefined;
         this.sideViewDetail = false;
 
-        if(this.type === Filter.TASK_TYPE)
-            this.selectedFilters = new Map(this.loadSelectedFilters(angular.$user.getPreferenceTaskFilters(this.parent.viewId)));
         // TODO cases
     }
 
@@ -47,7 +45,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.load(false, true,  showSnackbar);
     };
 
-    FilterTab.prototype.load = function (next, force, showSnackbar = true, searchRequest = self.search, searchResult = self.filters) {
+    FilterTab.prototype.load = function (next, force, showSnackbar = true, searchRequest = this.search, searchResult = this.filters, callback = undefined) {
         if (this.loading) return;
         if (next && searchResult && this.page.totalElements === searchResult.length) return;
         if (!next && !force && searchResult.length > 0) return;
@@ -93,6 +91,8 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                     });
                 }
                 self.loading = false;
+                if(callback)
+                    callback();
             }, () => {
                 self._showSnackbar(showSnackbar);
                 self.page.next = undefined;
@@ -145,20 +145,23 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.filters.splice(this.filters.findIndex(f => f.stringId === filter.stringId), 1);
     };
 
-    FilterTab.prototype.loadSelectedFilters = function(filterIds) {
+    FilterTab.prototype.loadSelectedFilters = function(filterIds, callback = undefined) {
+        const self = this;
         let savedFilters = [];
         let request = {
-            type: self.type,
+            type: this.type,
             id: filterIds
         };
-        this.load(false, true, false, request, savedFilters);
+        this.load(false, true, false, request, savedFilters, function() {
+            let mapGenerator = [];
+            savedFilters.forEach(function(filter) {
+                mapGenerator.push([filter.stringId, filter]);
+            });
+            self.selectedFilters = new Map(mapGenerator);
 
-        let mapGenerator = [];
-        filterIds.forEach(function(id) {
-            mapGenerator.push([id, savedFilters.find(function(it) {return it.stringId === id})]);
+            if(callback)
+                callback();
         });
-
-        return mapGenerator;
     };
 
     return FilterTab;
