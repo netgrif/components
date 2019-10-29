@@ -167,5 +167,10 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     });
 
                     self.openCaseTabs([$filterRepository.get(self.viewId)], false);
+
+                    self.filterTab.loadSelectedFilters($user.getPreferenceCaseFilters(self.viewId), function () {
+                        self.openCaseTabs(self.filterTab.getSelectedFilters(), true, Tab.REPLACE_FILTER_POLICY);
+                        self.filterTab.reload(false);
+                    });
                 }]);
     });

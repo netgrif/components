@@ -9,6 +9,7 @@ define(['angular', '../modules/Main'], function (angular) {
             groups: undefined,
             preference: {
                 taskFilters: {},
+                caseFilters: {},
                 caseViewHeaders: {}
             },
 
@@ -124,6 +125,23 @@ define(['angular', '../modules/Main'], function (angular) {
              */
             getPreferenceTaskFilters: function (key) {
                 return this.preferences.taskFilters[key];
+            },
+
+            /**
+             * @param key - case view viewId
+             * @param value - list of filters stringIds
+             */
+            savePreferenceCaseFilters: function (key, value) {
+                this.preferences.caseFilters[key] = value;
+                this.savePreference();
+            },
+
+            /**
+             * @param key - case view viewId
+             * @returns list of filters stringIds
+             */
+            getPreferenceCaseFilters: function (key) {
+                return this.preferences.caseFilters[key];
             },
 
             /**

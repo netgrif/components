@@ -25,8 +25,6 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.searchVisibilityIcon = "public";
         this.filter = undefined;
         this.sideViewDetail = false;
-
-        // TODO cases
     }
 
     FilterTab.URL_SEARCH = "/filter/search";
@@ -129,7 +127,8 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         const selected = this.getSelectedFilters();
         if(this.type === Filter.TASK_TYPE)
             this.$user.savePreferenceTaskFilters(this.parent.viewId, selected.map(f => f.stringId));
-        // TODO cases
+        else if(this.type === Filter.CASE_TYPE)
+            this.$user.savePreferenceCaseFilters(this.parent.viewId, selected.map(f => f.stringId));
         this.filters.forEach(f => f.selected = false);
         return selected;
     };
@@ -153,12 +152,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
             id: filterIds
         };
         this.load(false, true, false, request, savedFilters, function() {
-            let mapGenerator = [];
-            savedFilters.forEach(function(filter) {
-                mapGenerator.push([filter.stringId, filter]);
-            });
-            self.selectedFilters = new Map(mapGenerator);
-
+            self.selectedFilters = new Map(savedFilters.map(filter => [filter.stringId, filter]));
             if(callback)
                 callback();
         });
