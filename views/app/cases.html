@@ -68,7 +68,7 @@
 
 					<md-divider class="border-width-2x color-border-transparent"></md-divider>
 
-					<md-expansion-panel-group md-component-id="'caseView-tasksGroup-'+tab.id" eval-attr-as-expr="mdComponentId" multiple></md-expansion-panel-group>
+					<md-expansion-panel-group md-component-id="'caseView-tasksGroup-'+taskTab.id" eval-attr-as-expr="mdComponentId" multiple></md-expansion-panel-group>
 
 					<div ng-if="!taskTab.loading && taskTab.tasks.length === 0" layout="column" layout-align="center center" class="color-fg-material-grey-text">
 						<md-divider class="border-width-default color-border-transparent"></md-divider>
@@ -80,7 +80,7 @@
 					</div>
 
 					<div layout="row" layout-align="center center" class="padding-2x margin-2x">
-						<md-progress-circular md-mode="indeterminate" ng-disabled="!tab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
+						<md-progress-circular md-mode="indeterminate" ng-disabled="!taskTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular> 
 					</div>
 
 				</md-content>
