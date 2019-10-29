@@ -20,6 +20,9 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     self.taskTabs = [];
 
                     self.openTaskTabs = function (filter = [], closable = true, filterPolicy = Tab.REPLACE_FILTER_POLICY, filterTab = false) {
+                        if(filter.length === 0)
+                            return;
+
                         const lastIndex = self.taskTabs.length;
                         filter.forEach(f => {
                             self.taskTabs.push(new TaskTab(self.taskTabs.length, f.title, f, null, {

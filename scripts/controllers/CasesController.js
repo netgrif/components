@@ -68,6 +68,9 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     };
 
                     self.openCaseTabs = function (filter = [], closable = true, filterPolicy = Tab.REPLACE_FILTER_POLICY) {
+                        if(filter.length === 0)
+                            return;
+
                         filter.forEach(f => {
                             self.caseTabs.push(new CaseTab(f.title, self, f,{
                                 $http,

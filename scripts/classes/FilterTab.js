@@ -89,8 +89,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                     });
                 }
                 self.loading = false;
-                if(callback)
-                    callback();
+                callback && callback();
             }, () => {
                 self._showSnackbar(showSnackbar);
                 self.page.next = undefined;
@@ -145,6 +144,12 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
     };
 
     FilterTab.prototype.loadSelectedFilters = function(filterIds, callback = undefined) {
+        if(filterIds.length === 0) {
+            this.selectedFilters = new Map();
+            callback && callback();
+            return;
+        }
+
         const self = this;
         let savedFilters = [];
         let request = {
@@ -153,8 +158,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         };
         this.load(false, true, false, request, savedFilters, function() {
             self.selectedFilters = new Map(savedFilters.map(filter => [filter.stringId, filter]));
-            if(callback)
-                callback();
+            callback && callback();
         });
     };
 
