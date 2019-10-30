@@ -1,10 +1,13 @@
 define(['angular', '../modules/Main'], function (angular) {
     angular.module('ngMain').filter('cut', function ($config) {
-        return function (value, wordwise, tail) {
+        return function (value, wordwise, max, tail) {
             if (!value) return '';
 
-            let max = $config.show.caseTitleLength;
-            if (!max) return value;
+            max = parseInt(max, 10);
+            if (!max)
+                max = $config.show.caseTitleLength;
+            if (!max)
+                return value;
             if (value.length <= max) return value;
 
             value = value.substr(0, max);
