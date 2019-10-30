@@ -42297,6 +42297,9 @@ md-expansion-panel.highlight md-expansion-panel-collapsed, md-expansion-panel.hi
     md-expansion-panel.highlight md-expansion-panel-collapsed:hover md-progress-circular path, md-expansion-panel.highlight md-expansion-panel .md-expansion-panel-header-container:hover md-progress-circular path {
       stroke: #FAFAFA !important; }
 
+.expansion-panel-header-title {
+  line-height: 26px !important; }
+
 #browser-support-msg {
   position: fixed;
   top: 0;
