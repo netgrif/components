@@ -4,7 +4,7 @@
 
             <div ng-if="taskCtrl.taskCaseTitle" flex-gt-md="20" flex-md="25" flex-sm="35" flex-xs="30" layout="row" layout-align="start center">
                 <i class="material-icons {{taskCtrl.caseColor}} margin-right-2x" ng-repeat="icon in taskCtrl.icons()">{{icon}}</i>
-                <span hide-xs class="text-overflow-dots">{{taskCtrl.caseTitle}}</span>
+                <span hide-xs class="text-overflow-dots">{{taskCtrl.caseTitle | cut:true}}</span>
             </div>
 
             <span ng-if="taskCtrl.taskCaseTitle && taskCtrl.taskPriority" flex-gt-sm="25" flex-sm="35" flex-xs="50">
@@ -103,7 +103,7 @@
 
             <div ng-if="taskCtrl.taskCaseTitle" flex-gt-md="20" flex-md="25" flex-sm="35" flex-xs="30" layout="row" layout-align="start center">
                 <i class="material-icons {{taskCtrl.caseColor}} margin-right-2x" ng-repeat="icon in taskCtrl.icons()">{{icon}}</i>
-                <span hide-xs class="expansion-panel-header-title" id="widthCaseTitle">{{taskCtrl.makeReadableTitle(taskCtrl.caseTitle)}}</span>
+                <span hide-xs class="expansion-panel-header-title" id="widthCaseTitle">{{taskCtrl.caseTitle | cut:true}}</span>
             </div>
 
             <span ng-if="taskCtrl.taskCaseTitle && taskCtrl.taskPriority" flex-gt-sm="25" flex-sm="35" flex-xs="50">
@@ -177,7 +177,7 @@
                                 </md-tooltip>
                             </span>
                             <span>
-                                {{taskCtrl.caseTitle}}
+                                {{taskCtrl.caseTitle | cut:true}}
                             </span>
 
                         </div>

@@ -137,35 +137,6 @@ define(['jquery', 'angular', "../classes/DataField", '../modules/Main', 'angular
                         ])
                     };
 
-                    self.makeReadableTitle = function(text){
-                        let countLengthLine = 27
-                        if(text.length > countLengthLine){
-                            let tmp = text.split(" ");
-                            let string = "";
-                            let counter = 0
-                            for(i = 0; i < tmp.length; i++){
-                                if( tmp[i].length < countLengthLine - counter ) {
-                                    string += tmp[i] + " ";
-                                    counter += tmp[i].length
-                                } else if( tmp[i].length < countLengthLine ) {
-                                    string += "\n" + tmp[i];
-                                    counter = tmp[i].length;
-                                } else {
-                                    let wordLen = Math.ceil(tmp[i].length / countLengthLine);
-                                    start = 0
-                                    end = countLengthLine-1
-                                    for(j = 0; j<wordLen; j++){
-                                        string += tmp[i].substring(start,end) + "-" + "\n"
-                                        start += countLengthLine-1
-                                        end += countLengthLine-1
-                                    }
-                                }
-                            }
-                            return string
-                        }
-                        return text
-                    }
-
                     self.getAssignTitle = function () {
                         if (self.assignTitle)
                             return self.assignTitle;

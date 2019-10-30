@@ -44,7 +44,7 @@
 		<md-tab class="primary" ng-repeat="tab in caseCtrl.taskTabs" md-on-select="caseCtrl.tabChanged()">
 
 			<md-tab-label>
-				{{caseCtrl.checkLength(tab.useCase.title)}}
+				{{tab.useCase.title | cut:true}}
 				<md-icon class="material-icons cursor-pointer font-size-22" ng-click="caseCtrl.closeTab(tab.useCase.stringId)">close</md-icon>
 			</md-tab-label>
 
