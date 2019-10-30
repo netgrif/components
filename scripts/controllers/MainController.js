@@ -81,7 +81,7 @@ define(['angular', '../classes/Filter', '../modules/Main', '../services/Loading'
                     const request = {
                         method: "POST",
                         url: $config.getApiUrl(filter.type === Filter.CASE_TYPE ? "/workflow/case/count" : "/task/count"),
-                        data: JSON.parse(filter.query)
+                        data: filter.query
                     };
                     $http(request).then(response => {
                         if (response && response.data) {

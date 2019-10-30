@@ -61,7 +61,7 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
         }
         if (this.type === "dateTime") {
             if (value instanceof Date)
-                return `${value.getFullYear()}-${DataField.padding(value.getMonth() + 1, 0)}-${DataField.padding(value.getDate(), 0)}`;
+                return `${DataField.padding(value.getDate(), 0)}.${DataField.padding(value.getMonth() + 1, 0)}.${value.getFullYear()} ${DataField.padding(value.getHours(), 0,0)}:${DataField.padding(value.getMinutes(), 0,0)}:${DataField.padding(value.getSeconds(), 0, 0)}`;
             else
                 return `${DataField.padding(value.dayOfMonth, 0)}.${DataField.padding(value.monthValue, 0)}.${value.year}
             ${DataField.padding(value.hour, 0, 0)}:${DataField.padding(value.minute, 0, 0)}`;
@@ -118,10 +118,10 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
 
         if (!value) return undefined;
         if (this.type === "date") {
-            return new Date(value.year, value.monthValue - 1, value.dayOfMonth);
+            return new Date(value[0], value[1] - 1, value[2]);
         }
         else if (this.type === "dateTime") {
-            return new Date(value.year, value.monthValue - 1, value.dayOfMonth, value.hour, value.minute, value.second);
+            return new Date(value[0], value[1] - 1, value[2], value[3], value[4]);
         }
         else if (this.type === "number") {
             return DataField.roundToTwo(value);

@@ -1,0 +1,9 @@
+<md-button ng-if="search.searchType === search.constants.SEARCH_TASKS"
+           ng-disabled="!(search.allArgumentsFilled() || search.removableChipsExist())"
+           ng-click="tab.openSaveFilterDialog()"
+           class="md-fab md-mini md-accent margin-left-0">
+    <md-icon class="material-icons">save</md-icon>
+    <md-tooltip md-direction="top">
+        {{::$i18n.block.search.saveFilter}}
+    </md-tooltip>
+</md-button>
