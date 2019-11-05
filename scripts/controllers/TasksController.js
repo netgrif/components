@@ -22,7 +22,7 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     self.openTaskTabs = function (filter = [], closable = true, filterPolicy = TaskTab.REPLACE_FILTER_POLICY, filterTab = false) {
                         const lastIndex = self.taskTabs.length;
                         filter.forEach(f => {
-                            self.taskTabs.push(new TaskTab(self.taskTabs.length, f.title, f, null, {
+                            self.taskTabs.push(new TaskTab(self.taskTabs.length, f.title, f, null, false, {
                                 $http,
                                 $snackbar,
                                 $dialog,
