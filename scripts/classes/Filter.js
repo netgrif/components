@@ -99,20 +99,20 @@ define(['./Case'], function (Case) {
         mergedQueryParts.concat( filter.conjunctiveQueryParts ? filter.conjunctiveQueryParts : []);
 
         let mergedQuery;
-        if(this.query.length === 0)
+        if(this.query.length === 0 || this.query === "{}")
             mergedQuery = filter.query;
-        else if(filter.query.length === 0)
+        else if(filter.query.length === 0 || filter.query === "{}")
             mergedQuery = this.query;
         else {
             let mergedParsedQuery = JSON.parse(this.query);
             let filterParsedQuery = JSON.parse(filter.query);
 
-            let filterKeys = new Set(filterParsedQuery.keys());
+            let presentKeys = new Set(Object.keys(mergedParsedQuery));
             let conflictingKeys = new Set();
             let mergeObject = {};
 
-            mergedParsedQuery.keys().forEach( key => {
-                if(filterKeys.has(key))
+            Object.keys(filterParsedQuery).forEach( key => {
+                if(presentKeys.has(key))
                     conflictingKeys.add(key);
                 else
                     mergeObject[key] = filterParsedQuery[key];
@@ -137,7 +137,7 @@ define(['./Case'], function (Case) {
                 else
                     filterParsedQuery[key].forEach(value => { mergedValues.add(value) });
 
-                mergedParsedQuery[key] = mergedValues.values();
+                mergedParsedQuery[key] = Array.from(mergedValues);
             });
 
             mergedQuery = JSON.stringify(mergedParsedQuery);

@@ -958,7 +958,7 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.prototype.populateFromFilter = function (filter) {
-        if( !filter.query)
+        if( !filter.query || filter.query === "{}")
             return;
 
         this.resetInputFields();
