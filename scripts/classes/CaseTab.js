@@ -221,10 +221,8 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
         const request = {
             method: "POST",
             url: next && this.page.next ? this.page.next : this.$config.getApiUrl(CaseTab.URL_SEARCH),
-            data: {}
+            data: JSON.parse(this.activeFilter.query)
         };
-        if(this.activeFilter.query.length > 0)
-            request.data.query = this.activeFilter.query;
 
         if (!next) {
             request.params = {

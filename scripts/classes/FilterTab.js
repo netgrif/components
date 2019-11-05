@@ -76,7 +76,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                         $i18n: self.$i18n
                     });
                     self.filters.push(new Filter(resource.title, resource.type,
-                        resource.query, rawData[i]._links, self, resource.conjunctiveQueryParts, configObj))
+                        JSON.stringify(resource.query), rawData[i]._links, self, resource.conjunctiveQueryParts, configObj))
                 });
                 if (self.selectedFilters) {
                     self.filters.forEach(f => {

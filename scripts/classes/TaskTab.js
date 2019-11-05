@@ -90,10 +90,8 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
             params: {
                 sort: "priority"
             },
-            data: {}
+            data: JSON.parse(this.activeFilter.query)
         };
-        if(this.activeFilter.query.length > 0)
-            request.data.query = this.activeFilter.query;
 
         return request;
     };

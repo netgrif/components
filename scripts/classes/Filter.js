@@ -103,8 +103,45 @@ define(['./Case'], function (Case) {
             mergedQuery = filter.query;
         else if(filter.query.length === 0)
             mergedQuery = this.query;
-        else
-            mergedQuery = "("+this.query+") AND ("+filter.query+")";
+        else {
+            let mergedParsedQuery = JSON.parse(this.query);
+            let filterParsedQuery = JSON.parse(filter.query);
+
+            let filterKeys = new Set(filterParsedQuery.keys());
+            let conflictingKeys = new Set();
+            let mergeObject = {};
+
+            mergedParsedQuery.keys().forEach( key => {
+                if(filterKeys.has(key))
+                    conflictingKeys.add(key);
+                else
+                    mergeObject[key] = filterParsedQuery[key];
+            });
+
+            Object.assign(mergedParsedQuery, mergeObject);
+
+            if(conflictingKeys.has("query")) {
+                conflictingKeys.delete("query");
+                mergedParsedQuery.query = "("+mergedParsedQuery.query+") AND ("+filterParsedQuery.query+")";
+            }
+
+            conflictingKeys.forEach(key => {
+                let mergedValues;
+                if(typeof mergedParsedQuery[key] === "string")
+                    mergedValues = new Set([mergedParsedQuery[key]]);
+                else
+                    mergedValues = new Set(mergedParsedQuery[key]);
+
+                if(typeof filterParsedQuery[key] === "string")
+                    mergedValues.add(filterParsedQuery[key]);
+                else
+                    filterParsedQuery[key].forEach(value => { mergedValues.add(value) });
+
+                mergedParsedQuery[key] = mergedValues.values();
+            });
+
+            mergedQuery = JSON.stringify(mergedParsedQuery);
+        }
 
         return new Filter(this.title, this.type, mergedQuery, this.links, this.tab, mergedQueryParts);
     };
