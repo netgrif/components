@@ -1,5 +1,3 @@
-import se from "../../bower_components/moment/src/locale/se";
-
 define(['./Filter'], function (Filter) {
 
     /**
