@@ -147,11 +147,13 @@ define(['./Case'], function (Case) {
     };
 
     Filter.prototype.set = function (attribute, value) {
-        this.query[attribute] = value;
+        this.query = JSON.stringify(JSON.parse(this.query)[attribute] = value);
     };
 
     Filter.prototype.remove = function (attribute) {
-        delete this.query[attribute];
+        let q = JSON.parse(this.query);
+        delete q[attribute];
+        this.query = JSON.stringify(q);
     };
 
     return Filter;
