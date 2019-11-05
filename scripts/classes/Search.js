@@ -697,11 +697,16 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.queryByCaseStringId = function(caseStringId, searchType) {
+        let query;
         if(searchType === Search.SEARCH_CASES)
-            return Search.simpleOperatorQuery("stringId", caseStringId, "");
-        if(searchType === Search.SEARCH_TASKS)
-            return Search.simpleOperatorQuery("caseId", caseStringId, "");
-        console.error(`unknown search type '${searchType}'`);
+            query = Search.simpleOperatorQuery("stringId", caseStringId, "");
+        else if(searchType === Search.SEARCH_TASKS)
+            query =  Search.simpleOperatorQuery("caseId", caseStringId, "");
+        else {
+            console.error(`unknown search type '${searchType}'`);
+            return;
+        }
+        return Search.wrapQuery(query);
     };
 
     Search.equalityOperatorFromType = function(type) {
@@ -713,6 +718,10 @@ define(['./Filter'], function (Filter) {
             case "dateTime":
                 return Search.OPERATOR.EQUAL_DATE_TIME;
         }
+    };
+
+    Search.wrapQuery = function(nakedQuery) {
+        return `{"query":"${nakedQuery}"}`;
     };
 
 
@@ -905,7 +914,7 @@ define(['./Filter'], function (Filter) {
         chips.forEach(function (chip) {
             queries.push(chip.query);
         });
-        return `{"query":"${Search.bindQueries(queries, "AND")}"}`;
+        return Search.wrapQuery(Search.bindQueries(queries, "AND"));
     };
 
     Search.prototype.queryUsers = function(searchText) {
