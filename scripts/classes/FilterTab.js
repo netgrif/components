@@ -144,7 +144,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
     };
 
     FilterTab.prototype.loadSelectedFilters = function(filterIds, callback = undefined) {
-        if(filterIds.length === 0) {
+        if(!filterIds || filterIds.length === 0) {
             this.selectedFilters = new Map();
             callback && callback();
             return;
