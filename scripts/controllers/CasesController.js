@@ -39,30 +39,35 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                      */
                     self.openTaskTab = function (useCase) {
                         if (!self.taskTabs.some(tab => tab.useCase.stringId === useCase.stringId))
-                            self.taskTabs.push(new TaskTab(self.taskTabs.length, useCase.title,
-                                new Filter("Default By Case", Filter.TASK_TYPE, Search.queryByCaseStringId(useCase.stringId, Search.SEARCH_TASKS)),
-                                useCase, {
-                                    $http,
-                                    $snackbar,
-                                    $dialog,
-                                    $user,
-                                    $fileUpload,
-                                    $timeout,
-                                    $mdExpansionPanelGroup,
-                                    $i18n,
-                                    $process,
-                                    $rootScope,
-                                    $config
-                                }, {
-                                    allowHighlight: $config.enable.cases.allowHighlight,
-                                    autoOpenUnfinished: $config.enable.cases.autoOpenUnfinished,
-                                    searchable: $config.show.cases.taskSearch,
-                                    fullReload: $config.enable.cases.fullReload,
+                            self.taskTabs.push(
+                                new TaskTab(
+                                    self.taskTabs.length,
+                                    useCase.title,
+                                    new Filter("Default By Case", Filter.TASK_TYPE, `{"case":"${useCase.stringId}"}`),
+                                    useCase,
+                                    true, {
+                                        $http,
+                                        $snackbar,
+                                        $dialog,
+                                        $user,
+                                        $fileUpload,
+                                        $timeout,
+                                        $mdExpansionPanelGroup,
+                                        $i18n,
+                                        $process,
+                                        $rootScope,
+                                        $config
+                                    }, {
+                                        allowHighlight: $config.enable.cases.allowHighlight,
+                                        autoOpenUnfinished: $config.enable.cases.autoOpenUnfinished,
+                                        searchable: $config.show.cases.taskSearch,
+                                        fullReload: $config.enable.cases.fullReload,
 
-                                    showTransactions: $config.show.cases.transactions,
-                                    taskPriority: $config.show.cases.taskPriority,
-                                    taskCaseTitle: $config.show.cases.taskCaseTitle
-                                }));
+                                        showTransactions: $config.show.cases.transactions,
+                                        taskPriority: $config.show.cases.taskPriority,
+                                        taskCaseTitle: $config.show.cases.taskCaseTitle
+                                    }
+                                ));
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
 

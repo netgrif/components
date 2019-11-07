@@ -6,15 +6,19 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
      * @param label
      * @param {Filter} baseFilter
      * @param useCase
+     * @param useLegacyEndpoint
      * @param angular
      * @param config options: closable(if tab have close button), filterPolicy:constant, showTransactions,
      * allowHighlight(highlight unfinished tasks), searchable, autoOpenUnfinished, fullReload
      * @constructor
      */
-    function TaskTab(id, label, baseFilter, useCase, angular, config = {}) {
+    function TaskTab(id, label, baseFilter, useCase, useLegacyEndpoint, angular, config = {}) {
         Tab.call(this, id, label);
 
-        this.baseUrl = TaskTab.URL_SEARCH;
+        if(useLegacyEndpoint)
+            this.baseUrl = TaskTab.URL_SEARCH;
+        else
+            this.baseUrl = TaskTab.URL_SEARCH_ES;
         this.baseFilter = baseFilter;
         this.useCase = useCase;
         Object.assign(this, angular, config);
@@ -42,6 +46,7 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
     TaskTab.URL_ALL = "/task";
     TaskTab.URL_MY = "/task/my";
     TaskTab.URL_SEARCH = "/task/search";
+    TaskTab.URL_SEARCH_ES = "/task/search_es";
 
     TaskTab.REPLACE_FILTER_POLICY = "replaceFilter";
     TaskTab.MERGE_FILTER_POLICY = "mergeFilter";
@@ -90,10 +95,8 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
             params: {
                 sort: "priority"
             },
-            data: {}
+            data: JSON.parse(this.activeFilter.query)
         };
-        if(this.activeFilter.query.length > 0)
-            request.data.query = this.activeFilter.query;
 
         return request;
     };

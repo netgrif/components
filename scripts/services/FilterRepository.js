@@ -40,9 +40,9 @@ define(['angular', '../classes/Filter', '../modules/Main'], function (angular, F
              * Create and save default filters of the application
              */
             createDefaults: function () {
-                repository.put($config.show.cases.viewId, new Filter("Base case filter", Filter.CASE_TYPE, ""));
-                repository.put("tasks", new Filter($i18n.page.tasks.all, Filter.TASK_TYPE, "", null, null));
-                repository.put("tasks-my", new Filter($i18n.page.tasks.my, Filter.TASK_TYPE, "(userId:\""+$user.id+"\")", null, null, [{text:$i18n.block.search.chipText.myCases, query:"(userId:\""+$user.id+"\")"}]));
+                repository.put($config.show.cases.viewId, new Filter("Base case filter", Filter.CASE_TYPE, "{}"));
+                repository.put("tasks", new Filter($i18n.page.tasks.all, Filter.TASK_TYPE, "{}", null, null));
+                repository.put("tasks-my", new Filter($i18n.page.tasks.my, Filter.TASK_TYPE, `{"query":"(userId:\\"${$user.id}\\")"}`, null, null, [{text:$i18n.block.search.chipText.myCases, query:`(userId:\\"${$user.id}\\")`}]));
             },
         };
 

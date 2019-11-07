@@ -99,22 +99,61 @@ define(['./Case'], function (Case) {
         mergedQueryParts.concat( filter.conjunctiveQueryParts ? filter.conjunctiveQueryParts : []);
 
         let mergedQuery;
-        if(this.query.length === 0)
+        if(this.query.length === 0 || this.query === "{}")
             mergedQuery = filter.query;
-        else if(filter.query.length === 0)
+        else if(filter.query.length === 0 || filter.query === "{}")
             mergedQuery = this.query;
-        else
-            mergedQuery = "("+this.query+") AND ("+filter.query+")";
+        else {
+            let mergedParsedQuery = JSON.parse(this.query);
+            let filterParsedQuery = JSON.parse(filter.query);
+
+            let presentKeys = new Set(Object.keys(mergedParsedQuery));
+            let conflictingKeys = new Set();
+            let mergeObject = {};
+
+            Object.keys(filterParsedQuery).forEach( key => {
+                if(presentKeys.has(key))
+                    conflictingKeys.add(key);
+                else
+                    mergeObject[key] = filterParsedQuery[key];
+            });
+
+            Object.assign(mergedParsedQuery, mergeObject);
+
+            if(conflictingKeys.has("query")) {
+                conflictingKeys.delete("query");
+                mergedParsedQuery.query = "("+mergedParsedQuery.query+") AND ("+filterParsedQuery.query+")";
+            }
+
+            conflictingKeys.forEach(key => {
+                let mergedValues;
+                if(typeof mergedParsedQuery[key] === "string")
+                    mergedValues = new Set([mergedParsedQuery[key]]);
+                else
+                    mergedValues = new Set(mergedParsedQuery[key]);
+
+                if(typeof filterParsedQuery[key] === "string")
+                    mergedValues.add(filterParsedQuery[key]);
+                else
+                    filterParsedQuery[key].forEach(value => { mergedValues.add(value) });
+
+                mergedParsedQuery[key] = Array.from(mergedValues);
+            });
+
+            mergedQuery = JSON.stringify(mergedParsedQuery);
+        }
 
         return new Filter(this.title, this.type, mergedQuery, this.links, this.tab, mergedQueryParts);
     };
 
     Filter.prototype.set = function (attribute, value) {
-        this.query[attribute] = value;
+        this.query = JSON.stringify(JSON.parse(this.query)[attribute] = value);
     };
 
     Filter.prototype.remove = function (attribute) {
-        delete this.query[attribute];
+        let q = JSON.parse(this.query);
+        delete q[attribute];
+        this.query = JSON.stringify(q);
     };
 
     return Filter;
