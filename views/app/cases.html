@@ -47,7 +47,7 @@
 
 			<md-tab-label>
 				<md-icon class="material-icons">check_box</md-icon>
-				{{::taskTab.useCase.title}}
+				{{::taskTab.useCase.title | cut:true}}
 				<md-icon class="material-icons cursor-pointer font-size-22" ng-click="caseCtrl.closeTab($index, false)">close</md-icon>
 			</md-tab-label>
 

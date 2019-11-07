@@ -697,11 +697,16 @@ define(['./Filter'], function (Filter) {
     };
 
     Search.queryByCaseStringId = function(caseStringId, searchType) {
+        let query;
         if(searchType === Search.SEARCH_CASES)
-            return Search.simpleOperatorQuery("stringId", caseStringId, "");
-        if(searchType === Search.SEARCH_TASKS)
-            return Search.simpleOperatorQuery("caseId", caseStringId, "");
-        console.error(`unknown search type '${searchType}'`);
+            query = Search.simpleOperatorQuery("stringId", caseStringId, "");
+        else if(searchType === Search.SEARCH_TASKS)
+            query =  Search.simpleOperatorQuery("caseId", caseStringId, "");
+        else {
+            console.error(`unknown search type '${searchType}'`);
+            return;
+        }
+        return Search.wrapQuery(query);
     };
 
     Search.equalityOperatorFromType = function(type) {
@@ -713,6 +718,10 @@ define(['./Filter'], function (Filter) {
             case "dateTime":
                 return Search.OPERATOR.EQUAL_DATE_TIME;
         }
+    };
+
+    Search.wrapQuery = function(nakedQuery) {
+        return `{"query":"${nakedQuery}"}`;
     };
 
 
@@ -905,7 +914,7 @@ define(['./Filter'], function (Filter) {
         chips.forEach(function (chip) {
             queries.push(chip.query);
         });
-        return Search.bindQueries(queries, "AND");
+        return Search.wrapQuery(Search.bindQueries(queries, "AND"));
     };
 
     Search.prototype.queryUsers = function(searchText) {
@@ -940,17 +949,31 @@ define(['./Filter'], function (Filter) {
             combinedChips = combinedChips.concat(this.createChipsFromHeaderInput());
         }
 
-        return new Filter("", this.searchType, this.buildSearchQuery(combinedChips), undefined, this.parent, combinedChips);
+        let searchChips = [];
+        let filterChips = [];
+        combinedChips.forEach(chip => {
+            if(chip.containsFullFilter)
+                filterChips.push(chip);
+            else
+                searchChips.push(chip);
+        });
+
+        let filter = new Filter("", this.searchType, this.buildSearchQuery(searchChips), undefined, this.parent, searchChips);
+        filterChips.forEach(chip => {
+            filter = filter.merge(new Filter("", this.searchType, chip.query, undefined, this.parent));
+        });
+
+        return filter;
     };
 
     Search.prototype.populateFromFilter = function (filter) {
-        if( !filter.query)
+        if( !filter.query || filter.query === "{}")
             return;
 
         this.resetInputFields();
         this.chips.committed.splice(0, this.chips.committed.length);
 
-        let filterChip = Chip.createChip(filter.title, filter.query);
+        let filterChip = Chip.createChip(filter.title, filter.query, undefined, true);
         filterChip.canRemove = false;
         this.chips.committed.push(filterChip);
     };
@@ -1011,20 +1034,20 @@ define(['./Filter'], function (Filter) {
             this.chips.predicted = undefined;
     };
 
-    Search.prototype.formatDateArguments = function(arguments, format) {
+    Search.prototype.formatDateArguments = function(dateArguments, format) {
         let formattedArguments = [];
-        arguments.forEach(function (arg) {
+        dateArguments.forEach(function (arg) {
             formattedArguments.push(arg.toLocaleDateString(this.$i18n.current(), format));
         }, this);
         return formattedArguments;
     };
 
-    Search.prototype.formatDateArgumentsDate = function(arguments) {
-        return this.formatDateArguments(arguments, {year:"numeric", month:"numeric", day:"numeric"});
+    Search.prototype.formatDateArgumentsDate = function(dateArguments) {
+        return this.formatDateArguments(dateArguments, {year:"numeric", month:"numeric", day:"numeric"});
     };
 
-    Search.prototype.formatDateArgumentsDateTime = function(arguments) {
-        return this.formatDateArguments(arguments, {year:"numeric", month:"numeric", day:"numeric", hour:"numeric", minute:"numeric"});
+    Search.prototype.formatDateArgumentsDateTime = function(dateTimeArguments) {
+        return this.formatDateArguments(dateTimeArguments, {year:"numeric", month:"numeric", day:"numeric", hour:"numeric", minute:"numeric"});
     };
 
     Search.prototype.setHeaderInputMetadata = function () {
@@ -1177,7 +1200,7 @@ define(['./Filter'], function (Filter) {
     };
 
 
-    function ChipPart(category, operator, arguments, inputGui, possibleNets = undefined) {
+    function ChipPart(category, operator, searchArguments, inputGui, possibleNets = undefined) {
         this.text = this.createElementaryText(category, operator);
         this.query = this.createElementaryQuery(category, operator, inputGui);
         this.possibleNets = possibleNets;
@@ -1223,6 +1246,7 @@ define(['./Filter'], function (Filter) {
         });
         this.query = Search.bindQueries(queries, booleanOperator);
         this.canRemove = true;
+        this.containsFullFilter = false;
     }
 
     Chip.prototype.createElementaryText = function (chipParts) {
@@ -1232,11 +1256,12 @@ define(['./Filter'], function (Filter) {
         return text;
     };
 
-    Chip.createChip = function(text, query, chipParts = undefined) {
+    Chip.createChip = function(text, query, chipParts = undefined, containsFullFilter = false) {
         return {
             text: text,
             query: query,
-            chipParts: chipParts ? chipParts : []
+            chipParts: chipParts ? chipParts : [],
+            containsFullFilter: containsFullFilter
         }
     };
 

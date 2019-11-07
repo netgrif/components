@@ -25,7 +25,7 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
 
                         const lastIndex = self.taskTabs.length;
                         filter.forEach(f => {
-                            self.taskTabs.push(new TaskTab(self.taskTabs.length, f.title, f, null, {
+                            self.taskTabs.push(new TaskTab(self.taskTabs.length, f.title, f, null, false, {
                                 $http,
                                 $snackbar,
                                 $dialog,

@@ -13,7 +13,7 @@
 
     <div flex="45" flex-xs="100">
         <md-input-container class="md-block" ng-class="field.valid ? '':' md-input-invalid'" flex>
-            <label class="placeholder">{{::$i18n.block.data.enterDate}}</label>
+            <label ng-if="!(field.behavior.visible && field.newValue)" class="placeholder">{{::$i18n.block.data.enterDate}}</label>
             <md-datepicker id="{{'data-'+field.parent.stringId+'-'+field.stringId}}"
                            ng-model="field.newValue"
                            ng-change="field.changed = true"

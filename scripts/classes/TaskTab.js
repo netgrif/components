@@ -6,15 +6,19 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
      * @param label
      * @param {Filter} baseFilter
      * @param useCase
+     * @param useLegacyEndpoint
      * @param angular
      * @param config options: closable(if tab have close button), filterPolicy:constant, showTransactions,
      * allowHighlight(highlight unfinished tasks), searchable, autoOpenUnfinished, fullReload
      * @constructor
      */
-    function TaskTab(id, label, baseFilter, useCase, angular, config = {}) {
+    function TaskTab(id, label, baseFilter, useCase, useLegacyEndpoint, angular, config = {}) {
         Tab.call(this, id, label, baseFilter);
 
-        this.baseUrl = TaskTab.URL_SEARCH;
+        if(useLegacyEndpoint)
+            this.baseUrl = TaskTab.URL_SEARCH;
+        else
+            this.baseUrl = TaskTab.URL_SEARCH_ES;
         this.useCase = useCase;
         Object.assign(this, angular, config);
 
@@ -40,6 +44,7 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
     TaskTab.URL_ALL = "/task";
     TaskTab.URL_MY = "/task/my";
     TaskTab.URL_SEARCH = "/task/search";
+    TaskTab.URL_SEARCH_ES = "/task/search_es";
 
     TaskTab.prototype.activate = function () {
         const view = this.useCase ? 'caseView' : 'taskView';
@@ -85,10 +90,8 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
             params: {
                 sort: "priority"
             },
-            data: {}
+            data: JSON.parse(this.activeFilter.query)
         };
-        if(this.activeFilter.query.length > 0)
-            request.data.query = this.activeFilter.query;
 
         return request;
     };
@@ -103,7 +106,7 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
         const requestConfig = this.buildRequest(next, force);
         this.$http(requestConfig).then(function (response) {
             self.page = response.page;
-            if (self.page.totalElements === 0) {
+            if (self.page.totalElements === 0 || response.$response().data._embedded === undefined) {
                 self.page.next = undefined;
                 if (self.isNotEmpty())
                     self.removeAll();
