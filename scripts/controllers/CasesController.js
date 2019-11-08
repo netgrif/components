@@ -114,8 +114,14 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                     };
 
                     self.closeTab = function (index, isCaseTab) {
-                        if(isCaseTab)
+                        if(isCaseTab) {
+                            let closedTab = self.caseTabs[index];
                             self.caseTabs.splice(index, 1);
+                            if(closedTab.baseFilter.stringId) {
+                                let saved = $user.getPreferenceCaseFilters(self.viewId);
+                                $user.savePreferenceCaseFilters(self.viewId, saved.filter(f => f !== closedTab.baseFilter.stringId));
+                            }
+                        }
                         else
                             self.taskTabs.splice(index, 1);
 
