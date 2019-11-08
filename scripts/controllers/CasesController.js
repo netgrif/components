@@ -37,7 +37,7 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                      * @param {Object} useCase
                      */
                     self.openTaskTab = function (useCase) {
-                        if (!self.taskTabs.some(tab => tab.useCase.stringId === useCase.stringId))
+                        if (!self.taskTabs.some(tab => tab.useCase.stringId === useCase.stringId)) {
                             self.taskTabs.push(
                                 new TaskTab(
                                     self.taskTabs.length,
@@ -67,6 +67,8 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                         taskCaseTitle: $config.show.cases.taskCaseTitle
                                     }
                                 ));
+                            self.activeTabIndex = self.taskTabs.length + self.caseTabs.length - 1;
+                        }
                         else
                             self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
 
