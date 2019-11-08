@@ -1,6 +1,6 @@
 <md-button ng-disabled="!search.searchCategory && search.searchArguments[search.constants.HEADER_GUI].length === 0 && search.searchObjects[search.constants.HEADER_GUI].length === 0 && !search.removableChipsExist()"
            ng-click="search.resetInputFields(); search.clearFilter()"
-           class="md-fab md-mini margin-left-0">
+           class="md-fab md-raised md-mini margin-left-0 md-primary">
     <md-icon class="material-icons">delete</md-icon>
     <md-tooltip md-direction="top">
         {{::$i18n.block.search.clearSearch}}

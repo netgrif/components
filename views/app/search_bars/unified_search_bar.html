@@ -36,7 +36,7 @@
         <div flex-gt-lg="5" flex-lg="10" flex-md="15" flex-sm="15" flex-xs="25" layout="row" layout-align="end center">
             <md-button ng-disabled="search.chipParts.committed.length < 1"
                        ng-click="search.commitChip(); search.filterPossibleNets(); search.doSearch()"
-                       class="md-fab md-mini md-accent margin-left-0 margin-top-0 margin-bottom-0 margin-right-default">
+                       class="md-fab md-raised md-mini md-primary margin-left-0 margin-top-0 margin-bottom-0 margin-right-default">
                 <span class="mdi mdi-24px mdi-vector-union"></span>
                 <md-tooltip md-direction="top">
                     {{::$i18n.block.search.addChip}}
