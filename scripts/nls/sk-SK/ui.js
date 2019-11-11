@@ -49,7 +49,7 @@ define({
                 date: "Vytvorenie",
                 group: "Skupinový",
                 public: "Verejný",
-                private: "Súkromný",
+                person: "Súkromný",
                 detail: "Filter: ",
                 description: "Popis",
                 transition: "Úlohy: ",

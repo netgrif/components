@@ -10,10 +10,10 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
      * @constructor
      */
     function FilterTab(type, parent, angular, config = {}) {
-        Tab.call(this, 99, "filter");
+        Tab.call(this, 99, "filter", angular);
 
         this.parent = parent;
-        Object.assign(this, angular, config);
+        Object.assign(this, config);
 
         this.filters = [];
         this.type = type;
@@ -43,7 +43,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.load(false, true,  showSnackbar);
     };
 
-    FilterTab.prototype.load = function (next, force, showSnackbar = true, searchRequest = this.search, searchResult = this.filters, callback = undefined) {
+    FilterTab.prototype.load = function (next, force, showSnackbar = true, searchRequest = this.search, searchResult = this.filters, callback = angular.noop) {
         if (this.loading) return;
         if (next && searchResult && this.page.totalElements === searchResult.length) return;
         if (!next && !force && searchResult.length > 0) return;
@@ -89,7 +89,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                     });
                 }
                 self.loading = false;
-                callback && callback();
+                callback();
             }, () => {
                 self._showSnackbar(showSnackbar);
                 self.page.next = undefined;
@@ -143,7 +143,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.filters.splice(this.filters.findIndex(f => f.stringId === filter.stringId), 1);
     };
 
-    FilterTab.prototype.loadSelectedFilters = function(filterIds, callback = undefined) {
+    FilterTab.prototype.loadSelectedFilters = function(filterIds, callback = angular.noop) {
         if(!filterIds || filterIds.length === 0) {
             this.selectedFilters = new Map();
             callback && callback();
@@ -158,7 +158,7 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         };
         this.load(false, true, false, request, savedFilters, function() {
             self.selectedFilters = new Map(savedFilters.map(filter => [filter.stringId, filter]));
-            callback && callback();
+            callback();
         });
     };
 

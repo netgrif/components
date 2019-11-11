@@ -13,14 +13,14 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
      * @constructor
      */
     function TaskTab(id, label, baseFilter, useCase, useLegacyEndpoint, angular, config = {}) {
-        Tab.call(this, id, label, baseFilter);
+        Tab.call(this, id, label, angular, baseFilter);
 
         if(useLegacyEndpoint)
             this.baseUrl = TaskTab.URL_SEARCH;
         else
             this.baseUrl = TaskTab.URL_SEARCH_ES;
         this.useCase = useCase;
-        Object.assign(this, angular, config);
+        Object.assign(this, config);
 
         this.tasks = [];
         this.transactions = [];

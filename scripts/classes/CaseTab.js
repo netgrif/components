@@ -10,12 +10,12 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
      * @constructor
      */
     function CaseTab(label, controller, baseFilter, angular, config = {}) {
-        Tab.call(this, 0, label, baseFilter);
+        Tab.call(this, 0, label, angular, baseFilter);
 
         this.controller = controller;
         this.authorityToCreate = "ROLE_USER";
         this.allowedNets = [];
-        Object.assign(this, angular, config);
+        Object.assign(this, config);
 
         this.cases = [];
         this.newCase = {
