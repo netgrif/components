@@ -67,10 +67,13 @@ define(['angular', '../classes/CaseTab', '../classes/TaskTab', '../classes/Filte
                                         taskCaseTitle: $config.show.cases.taskCaseTitle
                                     }
                                 ));
-                            self.activeTabIndex = self.taskTabs.length + self.caseTabs.length - 1;
+                                $timeout(() => {
+                                    self.activeTabIndex = self.taskTabs.length + self.caseTabs.length - 1;
+                                    self.tabChanged();
+                                }, 200);
                         }
                         else
-                            self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + 1;
+                            self.activeTabIndex = self.taskTabs.findIndex(tab => tab.useCase.stringId === useCase.stringId) + self.caseTabs.length;
 
                     };
 
