@@ -1,5 +1,5 @@
-define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Filter', '../modules/Tasks', '../modules/Main', 'angularMaterialExpansionPanels'],
-    function (angular, TaskTab, FilterTab, Filter) {
+define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Filter', '../classes/Tab', '../modules/Tasks', '../modules/Main', 'angularMaterialExpansionPanels'],
+    function (angular, TaskTab, FilterTab, Filter, Tab) {
         angular.module('ngTasks').controller('TasksController',
             ['$log', '$scope', '$http', '$dialog', '$snackbar', '$user', '$fileUpload', '$timeout', '$mdExpansionPanelGroup', '$cache', '$i18n', '$rootScope', '$process', '$config', '$filterRepository',
                 function ($log, $scope, $http, $dialog, $snackbar, $user, $fileUpload, $timeout, $mdExpansionPanelGroup, $cache, $i18n, $rootScope, $process, $config, $filterRepository) {
@@ -8,7 +8,7 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     self.viewId = $config.show.tasks.viewId;
                     self.activeTabIndex = 0;
                     self.activeTab = undefined;
-                    self.filterTab = new FilterTab(self, {
+                    self.filterTab = new FilterTab(Filter.TASK_TYPE, self, {
                         $http,
                         $snackbar,
                         $dialog,
@@ -19,7 +19,10 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     }, {});
                     self.taskTabs = [];
 
-                    self.openTaskTabs = function (filter = [], closable = true, filterPolicy = TaskTab.REPLACE_FILTER_POLICY, filterTab = false) {
+                    self.openTaskTabs = function (filter = [], closable = true, filterPolicy = Tab.REPLACE_FILTER_POLICY, filterTab = false) {
+                        if(filter.length === 0)
+                            return;
+
                         const lastIndex = self.taskTabs.length;
                         filter.forEach(f => {
                             self.taskTabs.push(new TaskTab(self.taskTabs.length, f.title, f, null, false, {
@@ -54,6 +57,10 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                         }
                     };
 
+                    self.openTabFromFilters = function(filters) {
+                        self.openTaskTabs(filters);
+                    };
+
                     self.tabChanged = function () {
                         self.activeTab = self.taskTabs[self.activeTabIndex];
                         self.activeTab.activate();
@@ -62,7 +69,7 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     self.closeTaskTab = function (taskTabIndex) {
                         let closedTab = self.taskTabs[taskTabIndex];
                         self.taskTabs.splice(taskTabIndex, 1);
-                        self.activeTabIndex--;
+                        self.activeTabIndex = taskTabIndex > self.activeTabIndex ? self.activeTabIndex : self.activeTabIndex - 1;
                         if (closedTab.baseFilter.stringId) {
                             let saved = $user.getPreferenceTaskFilters(self.viewId);
                             $user.savePreferenceTaskFilters(self.viewId, saved.filter(f => f !== closedTab.baseFilter.stringId));
@@ -79,12 +86,12 @@ define(['angular', '../classes/TaskTab', '../classes/FilterTab', '../classes/Fil
                     $scope.$on('$destroy', navClickListener);
 
                     self.openTaskTabs([$filterRepository.get("tasks")], false);
-                    self.openTaskTabs([$filterRepository.get("tasks-my")], false, TaskTab.MERGE_FILTER_POLICY);
+                    self.openTaskTabs([$filterRepository.get("tasks-my")], false, Tab.MERGE_FILTER_POLICY);
                     self.activeTabIndex = 0;
-                    self.filterTab.reload(false);
 
-                    $timeout(() => {
-                        self.openTaskTabs(self.filterTab.getSelectedFilters(), true, TaskTab.REPLACE_FILTER_POLICY, true);
-                    }, 200);
+                    self.filterTab.loadSelectedFilters($user.getPreferenceTaskFilters(self.viewId), function () {
+                        self.openTaskTabs(self.filterTab.getSelectedFilters(), true, Tab.REPLACE_FILTER_POLICY, true);
+                        self.filterTab.reload(false);
+                    });
                 }]);
     });

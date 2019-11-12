@@ -13,21 +13,19 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
      * @constructor
      */
     function TaskTab(id, label, baseFilter, useCase, useLegacyEndpoint, angular, config = {}) {
-        Tab.call(this, id, label);
+        Tab.call(this, id, label, angular, baseFilter);
 
         if(useLegacyEndpoint)
             this.baseUrl = TaskTab.URL_SEARCH;
         else
             this.baseUrl = TaskTab.URL_SEARCH_ES;
-        this.baseFilter = baseFilter;
         this.useCase = useCase;
-        Object.assign(this, angular, config);
+        Object.assign(this, config);
 
         this.tasks = [];
         this.transactions = [];
         this.transactionProgress = 0;
         this.taskControllers = {};
-        this.activeFilter = this.baseFilter;
         if (this.searchable) {
             this.taskSearch = new Search(this, Search.SEARCH_TASKS, Search.COMPLEX_GUI, {
                 $process: this.$process,
@@ -47,9 +45,6 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
     TaskTab.URL_MY = "/task/my";
     TaskTab.URL_SEARCH = "/task/search";
     TaskTab.URL_SEARCH_ES = "/task/search_es";
-
-    TaskTab.REPLACE_FILTER_POLICY = "replaceFilter";
-    TaskTab.MERGE_FILTER_POLICY = "mergeFilter";
 
     TaskTab.prototype.activate = function () {
         const view = this.useCase ? 'caseView' : 'taskView';
@@ -297,40 +292,17 @@ define(['./Tab', './Transaction', './Filter', './Search'], function (Tab, Transa
     TaskTab.prototype.search = function () {
         const searchFilter = this.taskSearch.getFilter();
 
-        if (this.filterPolicy === TaskTab.MERGE_FILTER_POLICY) {
+        if (this.filterPolicy === Tab.MERGE_FILTER_POLICY) {
             this.activeFilter = this.activeFilter.merge(searchFilter);
-        } else if (this.filterPolicy === TaskTab.REPLACE_FILTER_POLICY) {
-            if(this.activeFilter.query === searchFilter.query)
-                return;
+        } else if (this.filterPolicy === Tab.REPLACE_FILTER_POLICY) {
             this.activeFilter = searchFilter;
         }
 
         this.reload();
     };
 
-    TaskTab.prototype.openSaveFilterDialog = function () {
-        this.$dialog.showByTemplate('save_filter', this);
-    };
-
-    TaskTab.prototype.saveFilter = function () {
-        const requestBody = {
-            title: this.activeFilter.title,
-            description: this.activeFilter.description,
-            visibility: this.activeFilter.visibility,
-            type: Filter.TASK_TYPE,
-            query: this.activeFilter.query
-        };
-        this.$http.post(this.$config.getApiUrl("/filter"), requestBody).then(response => {
-            if (response.success) {
-                this.$snackbar.success(response.success);
-            } else
-                this.$snackbar.error(response.error);
-            this.$dialog.closeCurrent();
-        }, error => {
-            console.log("Filter failed to be saved");
-            console.log(error);
-            this.$dialog.closeCurrent();
-        })
+    TaskTab.prototype.callSaveFilter = function() {
+        this.saveFilter(Filter.TASK_TYPE);
     };
 
     return TaskTab;

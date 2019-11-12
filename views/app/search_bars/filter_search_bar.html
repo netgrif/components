@@ -2,20 +2,20 @@
 
     <div flex-gt-sm="30" flex-sm flex-xs layout="row" layout-align="start center" class="height-52px">
 
-        <form flex ng-submit="tasksCtrl.filterTab.load(false,true)">
+        <form flex ng-submit="parentCtrl.filterTab.load(false,true)">
             <md-input-container flex class="md-block">
                 <md-icon class="material-icons color-fg-primary-500">search</md-icon>
                 <label>{{::$i18n.block.input.search}}</label>
-                <input type="text" ng-model="tasksCtrl.filterTab.search.title" title="Search input">
+                <input type="text" ng-model="parentCtrl.filterTab.search.title" title="Search input">
             </md-input-container>
         </form>
 
         <md-menu>
 
             <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
-                <md-icon class="material-icons color-fg-primary-500">{{tasksCtrl.filterTab.searchVisibilityIcon}}</md-icon>
+                <md-icon class="material-icons color-fg-primary-500">{{parentCtrl.filterTab.searchVisibilityIcon}}</md-icon>
                 <md-tooltip md-direction="right">
-                    {{$i18n.page.tasks.filter[tasksCtrl.filterTab.searchVisibilityIcon]}}
+                    {{$i18n.page.tasks.filter[parentCtrl.filterTab.searchVisibilityIcon]}}
                 </md-tooltip>
             </md-button>
 
@@ -23,7 +23,7 @@
 
                 <md-menu-item>
 
-                    <md-button ng-click="tasksCtrl.filterTab.changeSearchVisibility(2)">
+                    <md-button ng-click="parentCtrl.filterTab.changeSearchVisibility(2); parentCtrl.filterTab.load(false,true)">
                         <md-icon class="material-icons">public</md-icon>
                         <span>{{::$i18n.page.tasks.filter.public}}</span>
                     </md-button>
@@ -32,7 +32,7 @@
 
                 <md-menu-item>
 
-                    <md-button ng-click="tasksCtrl.filterTab.changeSearchVisibility(1)">
+                    <md-button ng-click="parentCtrl.filterTab.changeSearchVisibility(1); parentCtrl.filterTab.load(false,true)">
                         <md-icon class="material-icons">group</md-icon>
                         <span>{{::$i18n.page.tasks.filter.group}}</span>
                     </md-button>
@@ -41,9 +41,9 @@
 
                 <md-menu-item>
 
-                    <md-button ng-click="tasksCtrl.filterTab.changeSearchVisibility(0)">
+                    <md-button ng-click="parentCtrl.filterTab.changeSearchVisibility(0); parentCtrl.filterTab.load(false,true)">
                         <md-icon class="material-icons">person</md-icon>
-                        <span>{{::$i18n.page.tasks.filter.private}}</span>
+                        <span>{{::$i18n.page.tasks.filter.person}}</span>
                     </md-button>
 
                 </md-menu-item>
@@ -53,7 +53,7 @@
         </md-menu>
     </div>
 
-    <md-button class="md-fab md-raised md-mini md-primary" ng-click="tasksCtrl.openTaskTabs(tasksCtrl.filterTab.saveFilters())">
+    <md-button class="md-fab md-raised md-mini md-primary" ng-click="parentCtrl.openTabFromFilters(parentCtrl.filterTab.saveFilters())">
         <md-icon class="material-icons">done</md-icon>
         <md-tooltip md-direction="left">
             {{::$i18n.block.btn.apply}}

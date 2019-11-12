@@ -60,7 +60,7 @@ define({
                     date: "Created",
                     group: "Group",
                     public: "Public",
-                    private: "Private",
+                    person: "Private",
                     detail: "Filter: ",
                     description: "Description",
                     transition: "Transition: ",
