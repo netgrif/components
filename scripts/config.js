@@ -104,6 +104,7 @@ define([], function () {
             }
         },
         show: {
+            caseTitleLength: 40,
             cases: {
                 viewId: "cases",
                 countBadge: true,

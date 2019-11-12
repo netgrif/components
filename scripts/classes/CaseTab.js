@@ -10,19 +10,18 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
      * @constructor
      */
     function CaseTab(label, controller, baseFilter, angular, config = {}) {
-        Tab.call(this, 0, label);
+        Tab.call(this, 0, label, angular, baseFilter);
 
         this.controller = controller;
         this.authorityToCreate = "ROLE_USER";
         this.allowedNets = [];
-        Object.assign(this, angular, config);
+        Object.assign(this, config);
 
         this.cases = [];
         this.newCase = {
             title: this.$i18n.block.case.newTitle
         };
 
-        this.activeFilter = baseFilter;
         this.createDialogTitle = this.allowedNets.length === 1 ? (!this.allowedNets[0].defaultCaseName ? label : this.allowedNets[0].defaultCaseName) : label;
 
         this.headers = {
@@ -53,6 +52,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
             $i18n: this.$i18n,
             $timeout: this.$timeout
         }, {});
+        this.caseSearch.populateFromFilter(baseFilter);
 
         this.constants = {
             HEADER_MODE_EDIT: CaseTab.HEADER_MODE_EDIT,
@@ -221,10 +221,8 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
         const request = {
             method: "POST",
             url: next && this.page.next ? this.page.next : this.$config.getApiUrl(CaseTab.URL_SEARCH),
-            data: {}
+            data: JSON.parse(this.activeFilter.query)
         };
-        if(this.activeFilter.query.length > 0)
-            request.data.query = this.activeFilter.query;
 
         if (!next) {
             request.params = {
@@ -238,12 +236,15 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
     CaseTab.prototype.search = function () {
         if (this.cases.length === 0)
             this.cases.splice(0, this.cases.length);
-        let newFilter = this.caseSearch.getFilter();
 
-        if(newFilter.query === this.activeFilter.query)
-            return;
+        const newFilter = this.caseSearch.getFilter();
 
-        this.activeFilter = newFilter;
+        if (this.filterPolicy === Tab.MERGE_FILTER_POLICY) {
+            this.activeFilter = this.activeFilter.merge(newFilter);
+        } else if (this.filterPolicy === Tab.REPLACE_FILTER_POLICY) {
+            this.activeFilter = newFilter;
+        }
+
         this.load(false);
     };
 
@@ -323,7 +324,7 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
     };
 
     CaseTab.prototype.closeCase = function (useCase) {
-        this.controller.closeTab(useCase.stringId);
+        this.controller.closeTaskTab(useCase.stringId);
     };
 
     CaseTab.prototype.openNewCaseDialog = function (title) {
@@ -406,6 +407,10 @@ define(['./Tab', './Case', './Filter', './Search'], function (Tab, Case, Filter,
 
     CaseTab.prototype.delete = function (useCase) {
         this.cases.splice(this.cases.indexOf(useCase), 1);
+    };
+
+    CaseTab.prototype.callSaveFilter = function() {
+        this.saveFilter(Filter.CASE_TYPE);
     };
 
     return CaseTab;

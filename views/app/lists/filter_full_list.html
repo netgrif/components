@@ -4,8 +4,8 @@
 
     <md-divider ng-repeat-end class="border-width-default color-border-transparent"></md-divider>
 
-    <div layout="row" layout-align="center center" in-view="$inview&&tasksCtrl.filterTab.load(true,false)" class="padding-2x margin-2x">
-        <md-progress-circular md-mode="indeterminate" ng-disabled="!tasksCtrl.filterTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
+    <div layout="row" layout-align="center center" in-view="$inview && parentCtrl.filterTab.load(true,false)" class="padding-2x margin-2x">
+        <md-progress-circular md-mode="indeterminate" ng-disabled="!parentCtrl.filterTab.loading" class="progress-circular-stroke-primary-500" md-diameter="50"></md-progress-circular>
     </div>
 
 </md-list>

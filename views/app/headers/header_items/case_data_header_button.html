@@ -1,22 +1,22 @@
-<md-menu ng-if="tab.headers.mode !== tab.constants.HEADER_MODE_EDIT" layout="column" layout-align="center center">
+<md-menu ng-if="caseTab.headers.mode !== caseTab.constants.HEADER_MODE_EDIT" layout="column" layout-align="center center">
     <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" md-menu-origin>
         <md-icon class="material-icons">more_vert</md-icon>
     </md-button>
     <md-menu-content>
         <md-menu-item>
-            <md-button ng-click="tab.headers.changeMode(tab.constants.HEADER_MODE_SORT)">
+            <md-button ng-click="caseTab.headers.changeMode(caseTab.constants.HEADER_MODE_SORT)">
                 <md-icon class="material-icons">sort</md-icon>
                 <span>{{::$i18n.block.search.header.sortMode}}</span>
             </md-button>
         </md-menu-item>
-        <md-menu-item ng-if="tab.caseSearch.hasGUI(tab.caseSearch.constants.HEADER_GUI)">
-            <md-button ng-click="tab.headers.changeMode(tab.constants.HEADER_MODE_SEARCH)">
+        <md-menu-item ng-if="caseTab.caseSearch.hasGUI(caseTab.caseSearch.constants.HEADER_GUI)">
+            <md-button ng-click="caseTab.headers.changeMode(caseTab.constants.HEADER_MODE_SEARCH)">
                 <md-icon class="material-icons">search</md-icon>
                 <span>{{::$i18n.block.search.header.searchMode}}</span>
             </md-button>
         </md-menu-item>
         <md-menu-item>
-            <md-button ng-click="tab.headers.changeMode(tab.constants.HEADER_MODE_EDIT)">
+            <md-button ng-click="caseTab.headers.changeMode(caseTab.constants.HEADER_MODE_EDIT)">
                 <md-icon class="material-icons">edit</md-icon>
                 <span>{{::$i18n.block.search.header.enableEditMode}}</span>
             </md-button>
@@ -24,8 +24,8 @@
     </md-menu-content>
 </md-menu>
 
-<md-button ng-if="tab.headers.mode === tab.constants.HEADER_MODE_EDIT"
-           ng-click="tab.headers.changeMode(tab.headers.lastMode, false); tab.saveHeaders()"
+<md-button ng-if="caseTab.headers.mode === caseTab.constants.HEADER_MODE_EDIT"
+           ng-click="caseTab.headers.changeMode(caseTab.headers.lastMode, false); caseTab.saveHeaders()"
            class="md-icon-button md-primary">
     <md-icon class="material-icons">done</md-icon>
     <md-tooltip md-direction="bottom">

@@ -3,26 +3,28 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
     /**
      * angular: $http, $snackbar, $dialog, $i18n
      * config:
+     * @param type - Filter.CASE_TYPE or Filter.TASK_TYPE
      * @param parent
      * @param angular
      * @param config
      * @constructor
      */
-    function FilterTab(parent, angular, config = {}) {
-        Tab.call(this, 99, "filter");
+    function FilterTab(type, parent, angular, config = {}) {
+        Tab.call(this, 99, "filter", angular);
 
         this.parent = parent;
-        Object.assign(this, angular, config);
+        Object.assign(this, config);
 
         this.filters = [];
+        this.type = type;
         this.search = {
             title: undefined,
-            visibility: 2
+            visibility: 2,
+            type: type
         };
         this.searchVisibilityIcon = "public";
         this.filter = undefined;
         this.sideViewDetail = false;
-        this.selectedFilters = angular.$user.getPreferenceTaskFilters(this.parent.viewId);
     }
 
     FilterTab.URL_SEARCH = "/filter/search";
@@ -41,10 +43,10 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.load(false, true,  showSnackbar);
     };
 
-    FilterTab.prototype.load = function (next, force, showSnackbar = true) {
+    FilterTab.prototype.load = function (next, force, showSnackbar = true, searchRequest = this.search, searchResult = this.filters, callback = angular.noop) {
         if (this.loading) return;
-        if (next && this.filters && this.page.totalElements === this.filters.length) return;
-        if (!next && !force && this.filters.length > 0) return;
+        if (next && searchResult && this.page.totalElements === searchResult.length) return;
+        if (!next && !force && searchResult.length > 0) return;
 
         const self = this;
         this.loading = true;
@@ -54,15 +56,16 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
             params: {
                 sort: "visibility"
             },
-            data: self.search
+            data: searchRequest
         };
         this.$http(requestConfig).then(response => {
+            if (searchResult)
+                searchResult.splice(0, searchResult.length);
+
             self.page = response.page;
             if (self.page.totalElements === 0) {
                 self._showSnackbar(showSnackbar);
                 self.page.next = undefined;
-                if (self.filters)
-                    self.filters.splice(0, self.filters.length);
                 self.loading = false;
                 return;
             }
@@ -75,22 +78,23 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
                     const configObj = Object.assign({}, resource, {
                         $i18n: self.$i18n
                     });
-                    self.filters.push(new Filter(resource.title, resource.type,
-                        resource.query, rawData[i]._links, self, resource.conjunctiveQueryParts, configObj))
+                    searchResult.push(new Filter(resource.title, resource.type,
+                        JSON.stringify(resource.query), rawData[i]._links, self, resource.conjunctiveQueryParts, configObj))
                 });
                 if (self.selectedFilters) {
-                    self.filters.forEach(f => {
-                        if (self.selectedFilters.includes(f.stringId)) {
+                    searchResult.forEach(f => {
+                        if (self.selectedFilters.has(f.stringId)) {
                             f.selected = true;
                         }
                     });
                 }
                 self.loading = false;
+                callback();
             }, () => {
                 self._showSnackbar(showSnackbar);
                 self.page.next = undefined;
-                if (self.filters)
-                    self.filters.splice(0, self.filters.length);
+                if (searchResult)
+                    searchResult.splice(0, searchResult.length);
                 self.loading = false;
             });
         }, error => {
@@ -107,14 +111,23 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
     };
 
     FilterTab.prototype.getSelectedFilters = function () {
-        const selected = [];
-        this.filters.forEach(f => f.selected ? selected.push(f) : undefined);
-        return selected;
+        return [...this.selectedFilters.values()];
+    };
+
+    FilterTab.prototype.updateSelectedFilters = function (index) {
+        let filter = this.filters[index];
+        if(filter.selected)
+            this.selectedFilters.set(filter.stringId, filter);
+        else
+            this.selectedFilters.delete(filter.stringId);
     };
 
     FilterTab.prototype.saveFilters = function () {
         const selected = this.getSelectedFilters();
-        this.$user.savePreferenceTaskFilters(this.parent.viewId, selected.map(f => f.stringId));
+        if(this.type === Filter.TASK_TYPE)
+            this.$user.savePreferenceTaskFilters(this.parent.viewId, selected.map(f => f.stringId));
+        else if(this.type === Filter.CASE_TYPE)
+            this.$user.savePreferenceCaseFilters(this.parent.viewId, selected.map(f => f.stringId));
         this.filters.forEach(f => f.selected = false);
         return selected;
     };
@@ -128,6 +141,25 @@ define(['./Tab', './Filter'], function (Tab, Filter) {
         this.tab.filter = undefined;
         this.tab.sideViewDetail = false;
         this.filters.splice(this.filters.findIndex(f => f.stringId === filter.stringId), 1);
+    };
+
+    FilterTab.prototype.loadSelectedFilters = function(filterIds, callback = angular.noop) {
+        if(!filterIds || filterIds.length === 0) {
+            this.selectedFilters = new Map();
+            callback && callback();
+            return;
+        }
+
+        const self = this;
+        let savedFilters = [];
+        let request = {
+            type: this.type,
+            id: filterIds
+        };
+        this.load(false, true, false, request, savedFilters, function() {
+            self.selectedFilters = new Map(savedFilters.map(filter => [filter.stringId, filter]));
+            callback();
+        });
     };
 
     return FilterTab;

@@ -13,7 +13,7 @@
 
     <div flex="45" flex-xs="100" layout="row" layout-align="start">
         <md-input-container class="md-block" style="display: flex !important;" ng-class="field.valid ? '':' md-input-invalid'">
-            <label style="margin-left: 70px;" for="{{'data-'+field.parent.stringId+'-'+field.stringId}}" class="placeholder">{{::$i18n.block.data.enterDateTime}}</label>
+            <label style="margin-left: 70px;" for="{{'data-'+field.parent.stringId+'-'+field.stringId}}" class="placeholder">{{!(field.behavior.visible && field.newValue) ? $i18n.block.data.enterDateTime : " "}}</label>
             <i  class="material-icons" style="margin-top: 7px;margin-left: 15px;">today</i>
             <input mdc-datetime-picker="" date="true" time="true" type="text" id="{{'data-'+field.parent.stringId+'-'+field.stringId}}"
                    placeholder="{{field.placeholder}}" show-todays-date minutes="true" short-time="false" auto-ok="true"

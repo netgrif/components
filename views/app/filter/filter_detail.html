@@ -3,10 +3,10 @@
         <div layout="row" layout-align="space-between center" class="height-56px color-bg-primary-500 border-radius-top-default">
 
             <div class="padding-2x color-fg-accent-50">
-                <span>{{tasksCtrl.filterTab.filter.title}}</span>
+                <span>{{parentCtrl.filterTab.filter.title}}</span>
             </div>
 
-            <md-button class="md-icon-button" ng-click="tasksCtrl.filterTab.filter.closeSideDetail()">
+            <md-button class="md-icon-button" ng-click="parentCtrl.filterTab.filter.closeSideDetail()">
                 <md-icon class="material-icons color-fg-accent-50">close</md-icon>
             </md-button>
 
@@ -16,7 +16,7 @@
 
             <div flex layout="column">
 
-                <div ng-repeat="(key, value) in tasksCtrl.filterTab.filter.readableQuery track by $index"  class="{{$first ? '' : 'margin-top-default'}}">
+                <div ng-repeat="(key, value) in parentCtrl.filterTab.filter.readableQuery track by $index"  class="{{$first ? '' : 'margin-top-default'}}">
                     <span flex class="cursor-pointer">
                         {{key}}
                     </span>
@@ -25,30 +25,9 @@
                     </md-chips>
                 </div>
 
-                <!--<div class="margin-top-default">-->
-                    <!--<span flex class="cursor-pointer">-->
-                        <!--{{::$i18n.page.tasks.filter.transition}}-->
-                        <!--<md-tooltip>-->
-                            <!--{{::$i18n.page.tasks.filter.tooltips.transition}}-->
-                        <!--</md-tooltip>-->
-                    <!--</span>-->
-
-                    <!--<md-chips class="margin-bottom-default">-->
-                        <!--<md-chip>-->
-                            <!--Odvoz-->
-                        <!--</md-chip>-->
-                        <!--<md-chip>-->
-                            <!--Odovzdat kurierovi-->
-                        <!--</md-chip>-->
-                        <!--<md-chip>-->
-                            <!--Prijat od kuriera-->
-                        <!--</md-chip>-->
-                    <!--</md-chips>-->
-                <!--</div>-->
-
                 <md-input-container>
                     <label>{{::$i18n.page.tasks.filter.description}}</label>
-                    <textarea ng-model="tasksCtrl.filterTab.filter.description" md-maxlength="150" rows="3" md-select-on-focus title="Filter description"></textarea>
+                    <textarea ng-model="parentCtrl.filterTab.filter.description" md-maxlength="150" rows="3" md-select-on-focus title="Filter description"></textarea>
                 </md-input-container>
 
 
@@ -70,9 +49,9 @@
 
                                 <div flex="70" flex-md="90" layout="row" layout-align="space-between center" class="padding-vertical-default margin-left-2x">
                                     <div layout="row" layout-align="start center">
-                                        <i class="material-icons color-fg-primary-500 margin-right-2x">{{tasksCtrl.filterTab.filter.visibilityIcon}}</i>
+                                        <i class="material-icons color-fg-primary-500 margin-right-2x">{{parentCtrl.filterTab.filter.visibilityIcon}}</i>
                                         <span class="cursor-pointer">
-                                            {{::$i18n.page.tasks.filter[tasksCtrl.filterTab.filter.visibilityIcon]}}
+                                            {{::$i18n.page.tasks.filter[parentCtrl.filterTab.filter.visibilityIcon]}}
                                         </span>
                                     </div>
                                 </div>
@@ -99,9 +78,9 @@
                                     <div layout="row" layout-align="start center">
                                         <i class="material-icons color-fg-primary-500 margin-right-2x">account_circle</i>
                                         <span class="cursor-pointer">
-                                            {{tasksCtrl.filterTab.filter.author.fullName}}
+                                            {{parentCtrl.filterTab.filter.author.fullName}}
                                             <md-tooltip>
-                                                {{tasksCtrl.filterTab.filter.author.email}}
+                                                {{parentCtrl.filterTab.filter.author.email}}
                                             </md-tooltip>
                                         </span>
                                     </div>
@@ -129,7 +108,7 @@
                                     <div layout="row" layout-align="start center">
                                         <i class="material-icons color-fg-primary-500 margin-right-2x">today</i>
                                         <span class="cursor-pointer">
-                                            {{tasksCtrl.filterTab.filter.formatedCreationDate}}
+                                            {{parentCtrl.filterTab.filter.formatedCreationDate}}
                                         </span>
                                     </div>
                                 </div>
@@ -157,7 +136,7 @@
                         <!--{{::$i18n.block.btn.edit}}-->
                     <!--</md-button>-->
 
-                    <md-button class="md-primary" layout-align="center center" ng-click="tasksCtrl.filterTab.filter.delete()">
+                    <md-button class="md-primary" layout-align="center center" ng-click="parentCtrl.filterTab.filter.delete()">
                         {{::$i18n.block.btn.delete}}
                     </md-button>
 

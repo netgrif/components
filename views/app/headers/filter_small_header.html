@@ -3,25 +3,25 @@
     <a flex-gt-lg="10" flex-lg="15"  flex-md="20" flex-sm="15" flex-xs="30">
         {{::$i18n.page.tasks.filter.type}}
         <md-icon class="material-icons">
-            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            {{TODO.parentCtrl.sort.expresion == 'TODO' && !TODO.parentCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
         </md-icon>
     </a>
     <a flex-gt-lg="25" flex-lg="35" flex-md="70" flex-sm="35" flex-xs="55">
         {{::$i18n.page.tasks.filter.label}}
         <md-icon class="material-icons">
-            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            {{TODO.parentCtrl.sort.expresion == 'TODO' && !TODO.parentCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
         </md-icon>
     </a>
     <a flex-gt-lg="30" flex-lg="40" hide-md flex-sm="40" hide-xs>
         {{::$i18n.page.tasks.filter.author}}
         <md-icon class="material-icons">
-            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            {{TODO.parentCtrl.sort.expresion == 'TODO' && !TODO.parentCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
         </md-icon>
     </a>
     <a hide show-gt-lg flex-gt-lg="25">
         {{::$i18n.page.tasks.filter.date}}
         <md-icon class="material-icons">
-            {{TODO.tasksCtrl.sort.expresion == 'TODO' && !TODO.tasksCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
+            {{TODO.parentCtrl.sort.expresion == 'TODO' && !TODO.parentCtrl.sort.reverse ? 'arrow_drop_up' : 'arrow_drop_down'}}
         </md-icon>
     </a>
     <div flex-gt-lg="10" flex-lg="10" flex-md="10" flex-sm="10" flex-xs="15"></div> <!-- Detail btn -->
