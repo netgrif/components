@@ -118,7 +118,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         if (next && !self.page.pageLinks.next) return;
 
                         self.loading = true;
-                        $http(self.buildRequest(next ? self.page.pageLinks.next : undefined)).then(response => {
+                        $http(self.buildRequest(next ? self.page.pageLinks.next.href : undefined)).then(response => {
                             if (response.page.totalElements === 0) {
                                 $snackbar.info($i18n.block.snackbar.noWorkflowModel);
                                 self.clearAll();
@@ -153,6 +153,23 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                             self.load(false);
                         }
                     });
+
+                    // /**
+                    //  * Check if all the space in md-content is taken by md-tab (if inview is not in view) and load next page if needed
+                    //  */
+                    // self.checkSize = function() {
+                    //     let self = this;
+                    //     if (self.page.pageLinks.next) {
+                    //         this.$timeout(() => {
+                    //             let tab = angular.element("md-tabs")[0].offsetHeight;
+                    //             let content = angular.element("md-content")[0].offsetHeight;
+                    //             if (content / tab > 0.9) {
+                    //                 self.load(true);
+                    //             }
+                    //         }, 0);
+                    //     }
+                    // };
+
 
                     self.search = function () {
                         self.searchLast = self.searchInput.trim();
