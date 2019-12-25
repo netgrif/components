@@ -55,7 +55,7 @@
                             <md-icon class="material-icons">insert_drive_file</md-icon>
                             <span>{{::$i18n.block.data.newFile}}</span>
                         </md-button>
-                        <input type="file" id="{{'file-'+field.stringId}}"
+                        <input type="file" id="{{'file-'+field.stringId + '-' + field.parent.stringId}}"
                                file-model="field.file"
                                file-change-callback="field.fileChanged"
                                file-change-arg="field"
