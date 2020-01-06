@@ -5,3 +5,4 @@
 export * from './lib/netgrif-application-engine.service';
 export * from './lib/netgrif-application-engine.component';
 export * from './lib/netgrif-application-engine.module';
+export * from './lib/simple/simple.component';
