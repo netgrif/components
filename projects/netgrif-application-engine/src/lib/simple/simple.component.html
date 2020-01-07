@@ -1,12 +1,14 @@
 <div class="nae-form">
 	<form #simpleForm="ngForm" (ngSubmit)="onSubmit()">
-		<div class="nae-form-group">
-			<label for="name">Name</label>
-			<select id="name" [(ngModel)]="chosen" (change)="onSubmit()" name="name" required>
-				<option *ngFor="let name of names" [value]="name">{{name}}</option>
-			</select>
-		</div>
-
-		<h3>Chosen name: {{chosen}}</h3>
+		<mat-form-field>
+			<mat-label>Name</mat-label>
+			<mat-select [(ngModel)]="chosen" (change)="onSubmit()" name="name" id="name" required>
+				<mat-option *ngFor="let name of names" [value]="name">
+					{{name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
 	</form>
+
+	<h3>Chosen name: {{chosen}}</h3>
 </div>

@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build and start": "ng build & ng serve",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -12,13 +13,16 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.0.0-rc.6",
+    "@angular/cdk": "~8.2.3",
     "@angular/common": "~9.0.0-rc.6",
     "@angular/compiler": "~9.0.0-rc.6",
     "@angular/core": "~9.0.0-rc.6",
     "@angular/forms": "~9.0.0-rc.6",
+    "@angular/material": "~8.2.3",
     "@angular/platform-browser": "~9.0.0-rc.6",
     "@angular/platform-browser-dynamic": "~9.0.0-rc.6",
     "@angular/router": "~9.0.0-rc.6",
+    "hammerjs": "^2.0.8",
     "rxjs": "~6.5.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
