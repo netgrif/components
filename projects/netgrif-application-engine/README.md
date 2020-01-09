@@ -1,6 +1,6 @@
-# NetgrifApplicationEngine
+# Netgrif Application Engine
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.0-rc.6.
+This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.0-rc.7.
 
 ## Code scaffolding
 
