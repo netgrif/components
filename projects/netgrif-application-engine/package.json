@@ -17,7 +17,8 @@
         "workflow engine"
     ],
     "contributors": [
-        "Milan Mladoniczky <mladoniczky@netgrif.com>"
+        "Milan Mladoniczky <mladoniczky@netgrif.com>",
+        "Juraj Mažári <mazari@netgrif.com>"
     ],
     "peerDependencies": {
         "@angular/common": "^9.0.0-rc.6",
@@ -27,5 +28,8 @@
         "@angular/material": "~8.2.3",
         "hammerjs": "^2.0.8",
         "tslib": "^1.10.0"
+    },
+    "publishConfig": {
+        "registry": "https://nexus.netgrif.com/repository/npm-private/"
     }
 }
