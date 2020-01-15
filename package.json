@@ -7,7 +7,7 @@
         "nae:test": "ng lint netgrif-application-engine && ng test netgrif-application-engine",
         "nae:local-build": "npm run nae:build && npm i dist/netgrif-application-engine --save-optional",
         "nae:prod-build": "npm run nae:test && npm run nae:build",
-        "project:start": "npm run nae:build && ng serve",
+        "project:start": "npm run nae:local-build && ng serve",
         "example-app:start": "ng serve",
         "test": "ng test",
         "lint": "ng lint",
@@ -53,5 +53,8 @@
         "ts-node": "~8.3.0",
         "tslint": "~5.18.0",
         "typescript": "~3.6.4"
+    },
+    "optionalDependencies": {
+        "@netgrif/application-engine": "file:dist/netgrif-application-engine"
     }
 }

@@ -1,0 +1,57 @@
+import {Injectable} from '@angular/core';
+import {MatDialog} from "@angular/material";
+import {QuestionDialogComponent} from "./question-dialog/question-dialog.component";
+import {SimpleDialogComponent} from "./simple-dialog/simple-dialog.component";
+import {QuestionDialogWithAnswerComponent} from "./question-dialog-with-answer/question-dialog-with-answer.component";
+
+export enum DialogType {
+    INFO = "info",
+    SUCCESS = "success",
+    WARNING = "warn"
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class DialogService {
+
+    constructor(private dialog: MatDialog) {
+    }
+
+    openSimpleDialog(title: string, content: string, type = DialogType.INFO, configMatDialog?: object) {
+        return this.dialog.open(SimpleDialogComponent,
+            Object.assign({
+                data: {
+                    title: title,
+                    content: content,
+                    type: type
+                }
+            }, configMatDialog)
+        );
+    }
+
+    openQuestionDialog(title: string, question: string, negativeAnswer: string, positiveAnswer: string, configMatDialog?: object) {
+        return this.dialog.open(QuestionDialogComponent,
+            Object.assign({
+                data: {
+                    title: title,
+                    content: question,
+                    negativeAnswer: negativeAnswer,
+                    positiveAnswer: positiveAnswer
+                }
+            }, configMatDialog)
+        );
+    }
+
+    openQuestionWithAnswerDialog(title: string, question: string, placeholder: string, configMatDialog?: object) {
+        return this.dialog.open(QuestionDialogWithAnswerComponent,
+            Object.assign({
+                data: {
+                    title: title,
+                    content: question,
+                    placeholder: placeholder
+                }
+            }, configMatDialog)
+        );
+    }
+}
