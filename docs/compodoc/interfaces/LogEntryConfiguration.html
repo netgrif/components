@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/netgrif-application-engine/src/lib/logger/LogEntry.ts</code>
+            <code>projects/netgrif-application-engine/src/lib/logger/log-entry.ts</code>
         </p>
 
             <p class="comment">
@@ -259,7 +259,7 @@ export class LogEntry {
     }
 
     get levelString(): string {
-        return this.level[this.level];
+        return LogLevel[this.level.toString()];
     }
 
     /**
@@ -287,7 +287,13 @@ export class LogEntry {
         }
         str +&#x3D; this.message;
         if (this.config.serializeParams &amp;&amp; this.params) {
-            str +&#x3D; &#x27; , params: &#x27; + this.serializeParams();
+            if (this.params instanceof Array) {
+                if (this.params.length !&#x3D;&#x3D; 0) {
+                    str +&#x3D; &#x27; , params: &#x27; + this.serializeParams();
+                }
+            } else {
+                str +&#x3D; &#x27; , params: &#x27; + this.serializeParams();
+            }
         }
         return str;
     }

@@ -40,7 +40,7 @@ export class LogEntry {
     }
 
     get levelString(): string {
-        return this.level[this.level];
+        return LogLevel[this.level.toString()];
     }
 
     /**
@@ -68,7 +68,13 @@ export class LogEntry {
         }
         str += this.message;
         if (this.config.serializeParams && this.params) {
-            str += ' , params: ' + this.serializeParams();
+            if (this.params instanceof Array) {
+                if (this.params.length !== 0) {
+                    str += ' , params: ' + this.serializeParams();
+                }
+            } else {
+                str += ' , params: ' + this.serializeParams();
+            }
         }
         return str;
     }

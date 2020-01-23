@@ -1,12 +1,14 @@
-import {LogPublisher} from './LogPublisher';
-import {LogEntry} from '../LogEntry';
+import {LogPublisher} from './log-publisher';
+import {LogEntry} from '../log-entry';
 import {LogPublisherService} from '../log-publisher.service';
 
 export class LocalStorageLogPublisher extends LogPublisher {
 
+    public static readonly DEFAULT_KEY = 'application-log';
+
     constructor(publisherService: LogPublisherService, logKey?: string) {
         super(publisherService);
-        this.location = !logKey ? 'application-log' : logKey;
+        this.location = !logKey ? LocalStorageLogPublisher.DEFAULT_KEY : logKey;
     }
 
     clear(): void {
@@ -14,7 +16,7 @@ export class LocalStorageLogPublisher extends LogPublisher {
     }
 
     log(entry: LogEntry): void {
-        if (entry) {
+        if (!entry) {
             return;
         }
         const logString: string = localStorage.getItem(this.location);
@@ -34,6 +36,7 @@ export class LocalStorageLogPublisher extends LogPublisher {
                 localStorage.setItem(this.location, JSON.stringify(log));
             } catch (e) {
                 console.error(e);
+                throw new Error(e.message);
             }
         }
     }

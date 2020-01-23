@@ -1,4 +1,4 @@
-import {LogEntry} from '../LogEntry';
+import {LogEntry} from '../log-entry';
 import {LogPublisherService} from '../log-publisher.service';
 
 export abstract class LogPublisher {
@@ -8,7 +8,11 @@ export abstract class LogPublisher {
     constructor(publisherService: LogPublisherService) {
         publisherService
             .register(this)
-            .subscribe(entry => this.log(entry));
+            .subscribe(entry => {
+                if (entry) {
+                    this.log(entry);
+                }
+            });
     }
 
     abstract log(entry: LogEntry): void;

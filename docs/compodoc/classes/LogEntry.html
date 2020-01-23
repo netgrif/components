@@ -60,7 +60,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/netgrif-application-engine/src/lib/logger/LogEntry.ts</code>
+            <code>projects/netgrif-application-engine/src/lib/logger/log-entry.ts</code>
         </p>
 
 
@@ -160,7 +160,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/LogEntry.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/log-entry.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -288,7 +288,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/LogEntry.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/log-entry.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -317,7 +317,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/LogEntry.ts:16</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/log-entry.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -346,7 +346,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/LogEntry.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/log-entry.ts:17</a></div>
                             </td>
                         </tr>
 
@@ -375,7 +375,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/LogEntry.ts:18</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/log-entry.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -404,7 +404,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/LogEntry.ts:19</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/log-entry.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -443,7 +443,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="50"
-                            class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/LogEntry.ts:50</a></div>
+                            class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/log-entry.ts:50</a></div>
                 </td>
             </tr>
 
@@ -490,7 +490,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="61"
-                            class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/LogEntry.ts:61</a></div>
+                            class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/log-entry.ts:61</a></div>
                 </td>
             </tr>
 
@@ -540,7 +540,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/LogEntry.ts:42</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/log-entry.ts:42</a></div>
                                 </td>
                             </tr>
 
@@ -593,7 +593,7 @@ export class LogEntry {
     }
 
     get levelString(): string {
-        return this.level[this.level];
+        return LogLevel[this.level.toString()];
     }
 
     /**
@@ -621,7 +621,13 @@ export class LogEntry {
         }
         str +&#x3D; this.message;
         if (this.config.serializeParams &amp;&amp; this.params) {
-            str +&#x3D; &#x27; , params: &#x27; + this.serializeParams();
+            if (this.params instanceof Array) {
+                if (this.params.length !&#x3D;&#x3D; 0) {
+                    str +&#x3D; &#x27; , params: &#x27; + this.serializeParams();
+                }
+            } else {
+                str +&#x3D; &#x27; , params: &#x27; + this.serializeParams();
+            }
         }
         return str;
     }

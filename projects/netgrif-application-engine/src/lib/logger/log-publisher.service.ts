@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {LogPublisher} from './publishers/LogPublisher';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {LogEntry} from './LogEntry';
-import {ConsoleLogPublisher} from './publishers/ConsoleLogPublisher';
-import {LocalStorageLogPublisher} from './publishers/LocalStorageLogPublisher';
+import {LogPublisher} from './publishers/log-publisher';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {LogEntry} from './log-entry';
+import {ConsoleLogPublisher} from './publishers/console-log-publisher';
+import {LocalStorageLogPublisher} from './publishers/local-storage-log-publisher';
 
-const PUBLISHERS = {
+export const PUBLISHERS = {
     ConsoleLogPublisher,
     LocalStorageLogPublisher
 };
@@ -31,9 +31,9 @@ export class LogPublisherService {
         return this._publishers;
     }
 
-    register(publisher: LogPublisher): Subject<LogEntry> {
+    register(publisher: LogPublisher): Observable<LogEntry> {
         if (!publisher) {
-            return null;
+            return of(null);
         }
         this._publishers.push(publisher);
         return this._log;
@@ -44,7 +44,6 @@ export class LogPublisherService {
             return;
         }
         this._log.next(entry);
-        console.log(this._log.getValue().toString());
     }
 
     clearAll(): void {

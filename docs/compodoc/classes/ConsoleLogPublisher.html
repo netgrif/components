@@ -60,7 +60,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/netgrif-application-engine/src/lib/logger/publishers/ConsoleLogPublisher.ts</code>
+            <code>projects/netgrif-application-engine/src/lib/logger/publishers/console-log-publisher.ts</code>
         </p>
 
 
@@ -133,15 +133,45 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor()</code>
+<code>constructor(publisherService: <a href="../injectables/LogPublisherService.html">LogPublisherService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/publishers/ConsoleLogPublisher.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/publishers/console-log-publisher.ts:7</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>publisherService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LogPublisherService.html" target="_self" >LogPublisherService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -178,7 +208,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/LogPublisher.html#source" target="_self" >LogPublisher:5</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/LogPublisher.html#source" target="_self" >LogPublisher:6</a></code>
 </div>
                             </td>
                         </tr>
@@ -215,8 +245,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/publishers/ConsoleLogPublisher.ts:12</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="13"
+                            class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/publishers/console-log-publisher.ts:13</a></div>
                 </td>
             </tr>
 
@@ -254,8 +284,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="16"
-                            class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/publishers/ConsoleLogPublisher.ts:16</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="17"
+                            class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/publishers/console-log-publisher.ts:17</a></div>
                 </td>
             </tr>
 
@@ -332,7 +362,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/LogPublisher.html#source" target="_self" >LogPublisher:15</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/LogPublisher.html#source" target="_self" >LogPublisher:20</a></code>
 </div>
                 </td>
             </tr>
@@ -379,7 +409,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/LogPublisher.html#source" target="_self" >LogPublisher:13</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/LogPublisher.html#source" target="_self" >LogPublisher:18</a></code>
 </div>
                 </td>
             </tr>
@@ -437,15 +467,16 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {LogPublisher} from &#x27;./LogPublisher&#x27;;
-import {LogEntry} from &#x27;../LogEntry&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {LogPublisher} from &#x27;./log-publisher&#x27;;
+import {LogEntry} from &#x27;../log-entry&#x27;;
 import {LogLevel} from &#x27;../logger.service&#x27;;
+import {LogPublisherService} from &#x27;../log-publisher.service&#x27;;
 
 
 export class ConsoleLogPublisher extends LogPublisher {
 
-    constructor() {
-        super();
+    constructor(publisherService: LogPublisherService) {
+        super(publisherService);
     }
 
     clear(): void {
@@ -453,6 +484,9 @@ export class ConsoleLogPublisher extends LogPublisher {
     }
 
     log(entry: LogEntry): void {
+        if (!entry) {
+            return;
+        }
         switch (entry.level) {
             case LogLevel.DEBUG:
                 console.debug(entry.toString());

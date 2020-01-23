@@ -3,9 +3,9 @@
 export * from './logger.service';
 export * from './log-publisher.service';
 
-/* MODELS */
-export * from './LogEntry';
-export * from './publishers/LogPublisher';
-export * from './publishers/ConsoleLogPublisher';
-export * from './publishers/LocalStorageLogPublisher';
+/* CLASSES */
+export * from './log-entry';
+export * from './publishers/log-publisher';
+export * from './publishers/console-log-publisher';
+export * from './publishers/local-storage-log-publisher';
 

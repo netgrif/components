@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LogEntry, LogEntryConfiguration} from './LogEntry';
+import {LogEntry, LogEntryConfiguration} from './log-entry';
 import {LogPublisherService} from './log-publisher.service';
 
 export enum LogLevel {
@@ -37,7 +37,7 @@ export abstract class AbstractLoggerService {
         return (level >= this.level && level !== LogLevel.OFF) || this.level === LogLevel.ALL;
     }
 
-    protected writeToLog(level: LogLevel, message: string, ...params: Array<object>): void {
+    protected writeToLog(level: LogLevel, message: string, params: object): void {
         if (!this.shouldLog(level)) {
             return;
         }
@@ -45,23 +45,23 @@ export abstract class AbstractLoggerService {
         this.publisher.publish(entry);
     }
 
-    info(message: string, ...params: Array<object>): void {
+    info(message: string, ...params: Array<any>): void {
         this.writeToLog(LogLevel.INFO, message, params);
     }
 
-    debug(message: string, ...params: Array<object>): void {
+    debug(message: string, ...params: Array<any>): void {
         this.writeToLog(LogLevel.DEBUG, message, params);
     }
 
-    warn(message: string, ...params: Array<object>): void {
+    warn(message: string, ...params: Array<any>): void {
         this.writeToLog(LogLevel.WARN, message, params);
     }
 
-    error(message: string, ...params: Array<object>): void {
+    error(message: string, ...params: Array<any>): void {
         this.writeToLog(LogLevel.ERROR, message, params);
     }
 
-    log(level: LogLevel, message: string, ...param: Array<object>): void {
+    log(level: LogLevel, message: string, ...param: Array<any>): void {
         this.writeToLog(level, message, param);
     }
 }

@@ -206,7 +206,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>debug(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...params: Array<object>)</code>
+<code>debug(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...params: Array<any>)</code>
                 </td>
             </tr>
 
@@ -254,7 +254,7 @@
                                 <tr>
                                     <td>params</td>
                                     <td>
-                                            <code>Array&lt;object&gt;</code>
+                                            <code>Array&lt;any&gt;</code>
                                     </td>
 
                                     <td>
@@ -294,7 +294,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>error(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...params: Array<object>)</code>
+<code>error(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...params: Array<any>)</code>
                 </td>
             </tr>
 
@@ -342,7 +342,7 @@
                                 <tr>
                                     <td>params</td>
                                     <td>
-                                            <code>Array&lt;object&gt;</code>
+                                            <code>Array&lt;any&gt;</code>
                                     </td>
 
                                     <td>
@@ -382,7 +382,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>info(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...params: Array<object>)</code>
+<code>info(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...params: Array<any>)</code>
                 </td>
             </tr>
 
@@ -430,7 +430,7 @@
                                 <tr>
                                     <td>params</td>
                                     <td>
-                                            <code>Array&lt;object&gt;</code>
+                                            <code>Array&lt;any&gt;</code>
                                     </td>
 
                                     <td>
@@ -470,7 +470,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>log(level: <a href="../undefineds/LogLevel.html">LogLevel</a>, message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...param: Array<object>)</code>
+<code>log(level: <a href="../undefineds/LogLevel.html">LogLevel</a>, message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...param: Array<any>)</code>
                 </td>
             </tr>
 
@@ -530,7 +530,7 @@
                                 <tr>
                                     <td>param</td>
                                     <td>
-                                            <code>Array&lt;object&gt;</code>
+                                            <code>Array&lt;any&gt;</code>
                                     </td>
 
                                     <td>
@@ -648,7 +648,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>warn(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...params: Array<object>)</code>
+<code>warn(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...params: Array<any>)</code>
                 </td>
             </tr>
 
@@ -696,7 +696,7 @@
                                 <tr>
                                     <td>params</td>
                                     <td>
-                                            <code>Array&lt;object&gt;</code>
+                                            <code>Array&lt;any&gt;</code>
                                     </td>
 
                                     <td>
@@ -738,7 +738,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>writeToLog(level: <a href="../undefineds/LogLevel.html">LogLevel</a>, message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ...params: Array<object>)</code>
+                    <code>writeToLog(level: <a href="../undefineds/LogLevel.html">LogLevel</a>, message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
                 </td>
             </tr>
 
@@ -798,7 +798,7 @@
                                 <tr>
                                     <td>params</td>
                                     <td>
-                                            <code>Array&lt;object&gt;</code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
                                     </td>
 
                                     <td>
@@ -908,7 +908,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
-import {LogEntry, LogEntryConfiguration} from &#x27;./LogEntry&#x27;;
+import {LogEntry, LogEntryConfiguration} from &#x27;./log-entry&#x27;;
 import {LogPublisherService} from &#x27;./log-publisher.service&#x27;;
 
 export enum LogLevel {
@@ -946,7 +946,7 @@ export abstract class AbstractLoggerService {
         return (level &gt;&#x3D; this.level &amp;&amp; level !&#x3D;&#x3D; LogLevel.OFF) || this.level &#x3D;&#x3D;&#x3D; LogLevel.ALL;
     }
 
-    protected writeToLog(level: LogLevel, message: string, ...params: Array&lt;object&gt;): void {
+    protected writeToLog(level: LogLevel, message: string, params: object): void {
         if (!this.shouldLog(level)) {
             return;
         }
@@ -954,23 +954,23 @@ export abstract class AbstractLoggerService {
         this.publisher.publish(entry);
     }
 
-    info(message: string, ...params: Array&lt;object&gt;): void {
+    info(message: string, ...params: Array&lt;any&gt;): void {
         this.writeToLog(LogLevel.INFO, message, params);
     }
 
-    debug(message: string, ...params: Array&lt;object&gt;): void {
+    debug(message: string, ...params: Array&lt;any&gt;): void {
         this.writeToLog(LogLevel.DEBUG, message, params);
     }
 
-    warn(message: string, ...params: Array&lt;object&gt;): void {
+    warn(message: string, ...params: Array&lt;any&gt;): void {
         this.writeToLog(LogLevel.WARN, message, params);
     }
 
-    error(message: string, ...params: Array&lt;object&gt;): void {
+    error(message: string, ...params: Array&lt;any&gt;): void {
         this.writeToLog(LogLevel.ERROR, message, params);
     }
 
-    log(level: LogLevel, message: string, ...param: Array&lt;object&gt;): void {
+    log(level: LogLevel, message: string, ...param: Array&lt;any&gt;): void {
         this.writeToLog(level, message, param);
     }
 }

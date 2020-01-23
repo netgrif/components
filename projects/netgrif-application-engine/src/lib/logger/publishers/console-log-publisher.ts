@@ -1,5 +1,5 @@
-import {LogPublisher} from './LogPublisher';
-import {LogEntry} from '../LogEntry';
+import {LogPublisher} from './log-publisher';
+import {LogEntry} from '../log-entry';
 import {LogLevel} from '../logger.service';
 import {LogPublisherService} from '../log-publisher.service';
 
