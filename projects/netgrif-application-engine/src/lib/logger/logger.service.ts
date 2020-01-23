@@ -1,22 +1,77 @@
 import {Injectable} from '@angular/core';
+import {LogEntry, LogEntryConfiguration} from './LogEntry';
+import {LogPublisherService} from './log-publisher.service';
 
-export interface Logger {
-    info(message: string, args?: Array<object> | object): string;
+export enum LogLevel {
+    ALL = 0,
+    DEBUG = 1,
+    INFO = 2,
+    WARN = 3,
+    ERROR = 4,
+    OFF = 6
 }
 
-@Injectable()
-export class LoggerService implements Logger {
+export interface LoggerConfiguration extends LogEntryConfiguration {
+    level?: LogLevel;
+}
 
-    constructor() {
+export abstract class AbstractLoggerService {
+
+    protected readonly config: LoggerConfiguration;
+    protected readonly publisher: LogPublisherService;
+
+    protected constructor(private publisherService: LogPublisherService) {
+        this.publisher = publisherService;
+        this.config = {
+            logWithDate: true,
+            serializeParams: true,
+            level: LogLevel.ALL
+        };
     }
 
-    protected formatMessage(msg: string): string {
-        return new Date().toISOString() + ': ' + msg;
+    get level() {
+        return this.config.level;
     }
 
-    info(message: string, args?: Array<object> | object): string {
-        console.log(this.formatMessage(message), args);
-        return this.formatMessage(message);
+    protected shouldLog(level: LogLevel): boolean {
+        return (level >= this.level && level !== LogLevel.OFF) || this.level === LogLevel.ALL;
     }
 
+    protected writeToLog(level: LogLevel, message: string, ...params: Array<object>): void {
+        if (!this.shouldLog(level)) {
+            return;
+        }
+        const entry = new LogEntry(level, message, params, this.config);
+        this.publisher.publish(entry);
+    }
+
+    info(message: string, ...params: Array<object>): void {
+        this.writeToLog(LogLevel.INFO, message, params);
+    }
+
+    debug(message: string, ...params: Array<object>): void {
+        this.writeToLog(LogLevel.DEBUG, message, params);
+    }
+
+    warn(message: string, ...params: Array<object>): void {
+        this.writeToLog(LogLevel.WARN, message, params);
+    }
+
+    error(message: string, ...params: Array<object>): void {
+        this.writeToLog(LogLevel.ERROR, message, params);
+    }
+
+    log(level: LogLevel, message: string, ...param: Array<object>): void {
+        this.writeToLog(level, message, param);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class LoggerService extends AbstractLoggerService {
+
+    constructor(publisherService: LogPublisherService) {
+        super(publisherService);
+    }
 }

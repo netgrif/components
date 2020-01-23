@@ -17,7 +17,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
             <ul class="list">
                 <li class="title">
                     <a href="index.html" data-type="index-link">
-                        <img alt="" class="img-responsive" data-type="compodoc-logo" data-src=images/icon-512x512.png> 
+                        <img alt="" class="img-responsive" data-type="compodoc-logo" data-src=images/docs-title-logo.png> 
                     </a>
                 </li>
 
@@ -54,28 +54,35 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </a>
                         <ul class="links collapse " ${ isNormalMode ? 'id="modules-links"' : 'id="xs-modules-links"' }>
                             <li class="link">
-                                <a href="modules/LoggerModule.html" data-type="entity-link">LoggerModule</a>
-                                <li class="chapter inner">
-                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-LoggerModule-e75f38750f0a7265f2cb5164d2203857"' : 'data-target="#xs-injectables-links-module-LoggerModule-e75f38750f0a7265f2cb5164d2203857"' }>
-                                        <span class="icon ion-md-arrow-round-down"></span>
-                                        <span>Injectables</span>
-                                        <span class="icon ion-ios-arrow-down"></span>
-                                    </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-LoggerModule-e75f38750f0a7265f2cb5164d2203857"' :
-                                        'id="xs-injectables-links-module-LoggerModule-e75f38750f0a7265f2cb5164d2203857"' }>
-                                        <li class="link">
-                                            <a href="injectables/LoggerService.html"
-                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>LoggerService</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </li>
-                            <li class="link">
                                 <a href="modules/MaterialModule.html" data-type="entity-link">MaterialModule</a>
                             </li>
                 </ul>
                 </li>
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#classes-links"' :
+                            'data-target="#xs-classes-links"' }>
+                            <span class="icon ion-ios-paper"></span>
+                            <span>Classes</span>
+                            <span class="icon ion-ios-arrow-down"></span>
+                        </div>
+                        <ul class="links collapse " ${ isNormalMode ? 'id="classes-links"' : 'id="xs-classes-links"' }>
+                            <li class="link">
+                                <a href="classes/AbstractLoggerService.html" data-type="entity-link">AbstractLoggerService</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ConsoleLogPublisher.html" data-type="entity-link">ConsoleLogPublisher</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LocalStorageLogPublisher.html" data-type="entity-link">LocalStorageLogPublisher</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LogEntry.html" data-type="entity-link">LogEntry</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LogPublisher.html" data-type="entity-link">LogPublisher</a>
+                            </li>
+                        </ul>
+                    </li>
                         <li class="chapter">
                             <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#injectables-links"' :
                                 'data-target="#xs-injectables-links"' }>
@@ -86,6 +93,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
                                     <a href="injectables/LoggerService.html" data-type="entity-link">LoggerService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/LogPublisherService.html" data-type="entity-link">LogPublisherService</a>
                                 </li>
                             </ul>
                         </li>
@@ -98,12 +108,31 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
                             <li class="link">
-                                <a href="interfaces/Logger.html" data-type="entity-link">Logger</a>
+                                <a href="interfaces/LogEntryConfiguration.html" data-type="entity-link">LogEntryConfiguration</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/LoggerConfiguration.html" data-type="entity-link">LoggerConfiguration</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#miscellaneous-links"'
+                            : 'data-target="#xs-miscellaneous-links"' }>
+                            <span class="icon ion-ios-cube"></span>
+                            <span>Miscellaneous</span>
+                            <span class="icon ion-ios-arrow-down"></span>
+                        </div>
+                        <ul class="links collapse " ${ isNormalMode ? 'id="miscellaneous-links"' : 'id="xs-miscellaneous-links"' }>
+                            <li class="link">
+                                <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
                             </li>
                         </ul>
                     </li>
                     <li class="chapter">
                         <a data-type="chapter-link" href="coverage.html"><span class="icon ion-ios-stats"></span>Documentation coverage</a>
+                    </li>
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="unit-test.html"><span class="icon ion-ios-podium"></span>Unit test coverage</a>
                     </li>
                     <li class="divider"></li>
                     <li class="copyright">

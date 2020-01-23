@@ -18,16 +18,16 @@ module.exports = function (config) {
         },
         coverageIstanbulReporter: {
             dir: require('path').join(__dirname, '../../coverage/netgrif-application-engine'),
-            reports: ['html', 'lcovonly', 'text-summary'],
+            reports: ['html', 'text-summary','json-summary'],
             fixWebpackSourcePaths: true
         },
-        reporters: ['progress', 'kjhtml', 'mocha'],
+        reporters: ['progress', 'kjhtml', 'mocha', 'coverage-istanbul'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
         browsers: ['Chrome'],
-        singleRun: false,
+        singleRun: true,
         restartOnFileChange: true
     });
 };
