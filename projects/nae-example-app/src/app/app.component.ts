@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {LoggerService} from '@netgrif/application-engine';
-import {NumberField} from "@netgrif/application-engine/lib/data-fields/number-field/number-field";
 
 @Component({
     selector: 'app-root',
@@ -13,6 +12,4 @@ export class AppComponent {
     constructor(log: LoggerService) {
         log.info('App component has started');
     }
-
-    field = new NumberField("number", "placeholder", 5);
 }
