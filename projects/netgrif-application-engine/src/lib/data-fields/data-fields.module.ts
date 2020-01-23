@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NumberFieldComponent } from './number-field/number-field.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
+import { TextFieldComponent } from './text-field/text-field.component';
+import {MatFormFieldModule, MatInputModule} from "@angular/material";
 
 @NgModule({
-  declarations: [NumberFieldComponent],
+    declarations: [TextFieldComponent, NumberFieldComponent],
+    exports: [
+        TextFieldComponent
+    ],
     imports: [
         CommonModule,
         MatFormFieldModule,
