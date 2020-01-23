@@ -1,0 +1,10 @@
+<div fxLayout="row wrap"fxLayoutAlign="start center">
+    <div fxFlex="45" fxFlex.xs="100">
+        <span fxFlex>{{title}}</span>
+    </div>
+    <div fxShow.xs="false" fxFlex="5"></div>
+    <div fxFlex="45" fxFlex.xs="100">
+        <ng-content></ng-content>
+    </div>
+    <div fxShow.xs="false" fxFlex="5"></div>
+</div>
