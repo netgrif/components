@@ -1,5 +1,5 @@
 export abstract class DataField<T> {
 
-    constructor(title: string, placeholder: string, value: T, validations: T) {}
+    constructor(public title: string, public placeholder: string, public value: T) {}
 
 }
