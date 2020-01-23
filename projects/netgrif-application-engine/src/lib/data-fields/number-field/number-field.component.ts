@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NumberField} from "./number-field";
 
 @Component({
@@ -8,11 +8,8 @@ import {NumberField} from "./number-field";
 })
 export class NumberFieldComponent implements OnInit {
 
-    private backedField: NumberField;
+    @Input() public backedField: NumberField;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+    ngOnInit() {
+    }
 }

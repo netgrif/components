@@ -1,5 +1,5 @@
-<mat-form-field>
-    <label>
-        <input matInput type="number" value="" placeholder="">
-    </label>
+<mat-form-field appearance="standard">
+    <mat-label>{{backedField.title}}</mat-label>
+    <input matInput type="number" [(ngModel)]="backedField.value" placeholder="{{backedField.placeholder}}">
 </mat-form-field>
+<p>{{backedField.value}}</p>
