@@ -1,5 +1,5 @@
-<mat-form-field appearance="standard">
-    <mat-label>{{backedField.title}}</mat-label>
-    <input matInput type="number" [(ngModel)]="backedField.value" placeholder="{{backedField.placeholder}}">
-</mat-form-field>
-<p>{{backedField.value}}</p>
+<nae-data-field-template [title]="backedField.title">
+    <mat-form-field appearance="standard">
+        <input matInput type="number" [(ngModel)]="backedField.value" placeholder="{{backedField.placeholder}}">
+    </mat-form-field>
+</nae-data-field-template>
