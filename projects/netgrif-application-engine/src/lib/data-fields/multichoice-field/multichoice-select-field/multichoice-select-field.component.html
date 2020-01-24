@@ -1,0 +1,6 @@
+<mat-form-field>
+    <mat-label>Placeholder</mat-label>
+    <mat-select [(value)]="selected" [formControl]="validate" multiple>
+        <mat-option *ngFor="let option of multichoiceField.choices" [value]="option">{{option}}</mat-option>
+    </mat-select>
+</mat-form-field>

@@ -7,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class DataFieldTemplateComponent implements OnInit {
 
-    @Input() public title;
+    @Input() public title: string;
 
     ngOnInit() {
     }
