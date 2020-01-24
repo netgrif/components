@@ -8,7 +8,7 @@ import {NumberField} from "./number-field";
 })
 export class NumberFieldComponent implements OnInit {
 
-    @Input() public backedField: NumberField;
+    @Input() public numberField: NumberField;
 
     ngOnInit() {
     }
