@@ -1,2 +1,5 @@
-<nae-enumeration-select-field [enumerationField]="enumerationField" *ngIf="enumerationField.view === 'default'"></nae-enumeration-select-field>
-<nae-enumeration-list-field [enumerationField]="enumerationField" *ngIf="enumerationField.view === 'list'"></nae-enumeration-list-field>
+<nae-data-field-template [title]="enumerationField.title" [ngSwitch]="enumerationField.view">
+    <nae-enumeration-autocomplete-select-field [enumerationField]="enumerationField" *ngSwitchCase="'autocomplete'"></nae-enumeration-autocomplete-select-field>
+    <nae-enumeration-list-field                [enumerationField]="enumerationField" *ngSwitchCase="'list'"></nae-enumeration-list-field>
+    <nae-enumeration-select-field              [enumerationField]="enumerationField" *ngSwitchDefault></nae-enumeration-select-field>
+</nae-data-field-template>

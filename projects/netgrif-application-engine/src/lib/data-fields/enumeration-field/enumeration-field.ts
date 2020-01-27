@@ -7,7 +7,8 @@ export interface EnumerationFieldValue {
 
 export enum EnumerationFieldView {
     DEFAULT = 'default',
-    LIST = 'list'
+    LIST = 'list',
+    AUTOCOMPLETE = 'autocomplete'
 }
 
 export class EnumerationField extends DataField<EnumerationFieldValue>{

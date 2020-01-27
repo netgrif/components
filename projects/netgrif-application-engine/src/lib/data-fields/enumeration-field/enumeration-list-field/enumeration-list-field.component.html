@@ -1,12 +1,8 @@
-<mat-form-field>
-    <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group">
-        <mat-radio-button class="example-radio-button">
-            season
-        </mat-radio-button>
-        <mat-radio-button class="example-radio-button">
-            season
-        </mat-radio-button>
-    </mat-radio-group>
-</mat-form-field>
+<mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    [(ngModel)]="selected">
+    <mat-radio-button class="example-radio-button" *ngFor="let option of enumerationField.choices" [value]="option.key">
+        {{option.value}}
+    </mat-radio-button>
+</mat-radio-group>

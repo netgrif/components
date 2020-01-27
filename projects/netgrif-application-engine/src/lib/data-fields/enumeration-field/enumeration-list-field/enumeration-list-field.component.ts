@@ -14,7 +14,7 @@ export class EnumerationListFieldComponent implements OnInit {
     validate: FormControl;
 
     ngOnInit() {
-        this.validate = new FormControl(this.enumerationField.value.key, [Validators.required]);
+        this.validate = new FormControl('', [Validators.required]);
         this.selected = this.enumerationField.value.key;
     }
 
