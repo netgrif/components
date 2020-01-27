@@ -1,6 +1,4 @@
-<mat-form-field appearance="outline">
-    <mat-label>{{textField.label}}</mat-label>
-    <input matInput [placeholder]="textField.placeholder">
-    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-    <mat-hint>Hint</mat-hint>
-</mat-form-field>
+<nae-data-field-template [title]="textField.title" [ngSwitch]="textField.view">
+    <nae-textarea-field [textAreaField]="textField" *ngSwitchCase="'textarea'"></nae-textarea-field>
+    <nae-simple-text-field [textField]="textField" *ngSwitchDefault></nae-simple-text-field>
+</nae-data-field-template>

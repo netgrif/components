@@ -4,9 +4,16 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {DataFieldTemplateComponent} from './data-field-template/data-field-template.component';
 import {TextFieldComponent} from './text-field/text-field.component';
 import {MatFormFieldModule, MatInputModule} from "@angular/material";
+import { TextareaFieldComponent } from './text-field/textarea-field/textarea-field.component';
+import { SimpleTextFieldComponent } from './text-field/simple-text-field/simple-text-field.component';
 
 @NgModule({
-    declarations: [DataFieldTemplateComponent],
+    declarations: [
+        TextFieldComponent,
+        TextareaFieldComponent,
+        SimpleTextFieldComponent,
+        DataFieldTemplateComponent
+    ],
     exports: [
         TextFieldComponent
     ],
