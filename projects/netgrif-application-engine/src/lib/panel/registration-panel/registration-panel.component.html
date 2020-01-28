@@ -1,0 +1,60 @@
+<div class="component-container" fxLayout="column" fxLayoutAlign="stretch">
+    <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="25px">
+        <mat-card fxFlex="25" fxFlex.md="40" fxFlex.sm="100" fxFlex.xs="100">
+            <div class="registration-container" fxLayout="column" fxLayoutGap="25px">
+                <form [formGroup]="form"
+                      (ngSubmit)="onSubmit(form.value)">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-form-field fxFlex="90">
+                            <input matInput placeholder="Login" formControlName="login" minlength="4" required>
+                            <mat-error *ngIf="form.controls['login'].hasError('minlength')">
+                                The login name must have at least 4 letters
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-form-field fxFlex="90">
+                            <input matInput placeholder="Enter your email" formControlName="email" required>
+                            <mat-error *ngIf="form.controls['email'].hasError('email')">
+                                Not a valid email
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-form-field fxFlex="90">
+                            <input matInput placeholder="Enter your password"
+                                   [type]="hidePassword ? 'password' : 'text'"
+                                   formControlName="password" required>
+                            <button mat-icon-button matSuffix
+                                    (click)="hidePassword = !hidePassword"
+                                    [attr.aria-label]="'Hide password'"
+                                    [attr.aria-pressed]="hidePassword">
+                                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-form-field fxFlex="90">
+                            <input matInput placeholder="Repeat your password"
+                                   [type]="hideRepeatPassword ? 'password' : 'text'"
+                                   formControlName="confirmPassword" required>
+                            <mat-error *ngIf="form.controls['confirmPassword'].hasError('mismatchedPassword')">
+                                Passwords do not match
+                            </mat-error>
+                            <button mat-icon-button matSuffix (click)="hideRepeatPassword = !hideRepeatPassword"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideRepeatPassword">
+                                <mat-icon>{{hideRepeatPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="left" fxLayoutAlign.xs="center">
+                        <button fxFlexOffset="5" fxFlexOffset.xs="0" mat-raised-button class="register-button"
+                                fxFlex="35" fxFlex.xs="70">Register
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
