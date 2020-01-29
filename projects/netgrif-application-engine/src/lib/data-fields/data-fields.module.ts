@@ -7,19 +7,21 @@ import { MatInputModule } from "@angular/material/input";
 import { FormsModule } from "@angular/forms";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DataFieldTemplateComponent } from './data-field-template/data-field-template.component';
+import { ParentWidthDependantStyleDirective } from './data-field-template/directives/parent-width-dependant-style.directive';
 
 @NgModule({
-    declarations: [TextFieldComponent, NumberFieldComponent, DataFieldTemplateComponent],
-    exports: [
-        TextFieldComponent,
-        NumberFieldComponent
-    ],
-    imports: [
-        CommonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
-        FlexLayoutModule
-    ]
+  declarations: [
+      DataFieldTemplateComponent,
+      ParentWidthDependantStyleDirective,
+      TextFieldComponent,
+      NumberFieldComponent
+  ],
+  imports: [
+    CommonModule,
+      MatFormFieldModule,
+      MatInputModule,
+      FormsModule,
+    FlexLayoutModule
+  ]
 })
 export class DataFieldsModule { }

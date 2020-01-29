@@ -4,3 +4,28 @@
         font-weight: 400;
     }
 }
+
+.inner-padding {
+    padding: 3px 5px;
+}
+
+.content {
+    &-large {
+        max-width: 45%;
+        min-width: 45%;
+    }
+    &-small {
+        max-width: 100%;
+        min-width: 100%;
+    }
+}
+
+.padding {
+    &-large {
+        max-width: 5%;
+        min-width: 5%;
+    }
+    &-small {
+        display: none;
+    }
+}
