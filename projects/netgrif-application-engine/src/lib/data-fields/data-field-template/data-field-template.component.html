@@ -1,10 +1,26 @@
-<div fxLayout="row wrap" fxLayoutAlign="start center">
-    <div fxFlex="45" fxFlex.xs="100">
+<div fxLayout="row wrap" fxLayoutAlign="start center" class="inner-padding" >
+    <div naeParentWidthDependantStyle
+         [widthBreakpoint]="250"
+         [styleNameGreaterEqual]="'content-large'"
+         [styleNameLess]="'content-small'"
+         fxLayoutAlign="start center" >
         <span fxFlex class="data-field-title">{{title}}</span>
     </div>
-    <div fxShow.xs="false" fxFlex="5"></div>
-    <div fxFlex="45" fxFlex.xs="100">
+    <div naeParentWidthDependantStyle
+         [widthBreakpoint]="250"
+         [styleNameGreaterEqual]="'padding-large'"
+         [styleNameLess]="'padding-small'" >
+    </div>
+    <div naeParentWidthDependantStyle
+         [widthBreakpoint]="250"
+         [styleNameGreaterEqual]="'content-large'"
+         [styleNameLess]="'content-small'"
+         fxLayoutAlign="start center" >
         <ng-content></ng-content>
     </div>
-    <div fxShow.xs="false" fxFlex="5"></div>
+    <div naeParentWidthDependantStyle
+         [widthBreakpoint]="250"
+         [styleNameGreaterEqual]="'padding-large'"
+         [styleNameLess]="'padding-small'" >
+    </div>
 </div>
