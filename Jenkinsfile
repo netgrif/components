@@ -39,9 +39,16 @@ pipeline {
 
     stage('ZIP') {
       steps {
-        zip(archive: true, zipFile: 'nae-${env.BUILD_TAG}.zip', dir: './dist/netgrif-application-engine')
+        zip(archive: true, zipFile: 'nae-build.zip', dir: './dist/netgrif-application-engine')
       }
     }
 
+  }
+
+  post {
+    always {
+      junit './coverage/netgrif-application-engine/**/*.xml'
+      archiveArtifacts artifacts: './dist/netgrif-application-engine/nae-build.zip', fingerprint: true
+    }
   }
 }
