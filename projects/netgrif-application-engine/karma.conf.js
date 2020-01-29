@@ -27,18 +27,18 @@ module.exports = function (config) {
         nyanReporter: {
             suppressErrorReport: false, // default is false
             suppressErrorHighlighting: false, // default is false
-            numberOfRainbowLines: 20, // default is 4
+            numberOfRainbowLines: 33, // default is 4
             renderOnRunCompleteOnly: true // default is false
         },
         junitReporter: {
-            outputDir: '../../coverage/netgrif-application-engine', // results will be saved as $outputDir/$browserName.xml
-            outputFile: undefined, // if included, results will be saved as $outputDir/$browserName/$outputFile
+            outputDir: '../../coverage/netgrif-application-engine/', // results will be saved as $outputDir/$browserName.xml
+            outputFile: 'JUNITX-test-report.xml', // if included, results will be saved as $outputDir/$browserName/$outputFile
             suite: '', // suite will become the package name attribute in xml testsuite element
             useBrowserName: true, // add browser name to report and classes names
             nameFormatter: undefined, // function (browser, result) to customize the name attribute in xml testcase element
             classNameFormatter: undefined, // function (browser, result) to customize the classname attribute in xml testcase element
             properties: {}, // key value pair of properties to add to the <properties> section of the report
-            xmlVersion: null // use '1' if reporting to be per SonarQube 6.2 XML format
+            xmlVersion: '1' // use '1' if reporting to be per SonarQube 6.2 XML format
         },
         reporters: ['progress', 'kjhtml', 'coverage-istanbul','nyan','junit'],
         port: 9876,
