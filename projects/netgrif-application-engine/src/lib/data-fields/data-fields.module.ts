@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DataFieldTemplateComponent } from './data-field-template/data-field-template.component';
-import { ParentWidthDependantStyleDirective } from './data-field-template/directives/parent-width-dependant-style.directive';
+import {AngularResizedEventModule} from "angular-resize-event";
 
 @NgModule({
   declarations: [
-      DataFieldTemplateComponent,
-      ParentWidthDependantStyleDirective
+      DataFieldTemplateComponent
   ],
   imports: [
     CommonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    AngularResizedEventModule
   ]
 })
 export class DataFieldsModule { }
