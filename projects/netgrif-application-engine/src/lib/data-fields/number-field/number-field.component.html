@@ -1,5 +1,8 @@
-<nae-data-field-template [title]="numberField.title">
-    <mat-form-field appearance="standard">
+<nae-data-field-template [title]="numberField.title" [dataFieldTemplate]="dataField"></nae-data-field-template>
+
+<ng-template #dataField let-showLargeLayout="showLargeLayout">
+    <mat-form-field appearance="outline">
+        <mat-label *ngIf="!showLargeLayout.value">label</mat-label>
         <input matInput type="number" [(ngModel)]="numberField.value" placeholder="{{numberField.placeholder}}">
     </mat-form-field>
-</nae-data-field-template>
+</ng-template>
