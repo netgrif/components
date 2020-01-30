@@ -1,26 +1,19 @@
-<div fxLayout="row wrap" fxLayoutAlign="start center" class="inner-padding" >
-    <div naeParentWidthDependantStyle
-         [widthBreakpoint]="250"
-         [styleNameGreaterEqual]="'content-large'"
-         [styleNameLess]="'content-small'"
-         fxLayoutAlign="start center" >
-        <span fxFlex class="data-field-title">{{title}}</span>
-    </div>
-    <div naeParentWidthDependantStyle
-         [widthBreakpoint]="250"
-         [styleNameGreaterEqual]="'padding-large'"
-         [styleNameLess]="'padding-small'" >
-    </div>
-    <div naeParentWidthDependantStyle
-         [widthBreakpoint]="250"
-         [styleNameGreaterEqual]="'content-large'"
-         [styleNameLess]="'content-small'"
-         fxLayoutAlign="start center" >
-        <ng-content></ng-content>
-    </div>
-    <div naeParentWidthDependantStyle
-         [widthBreakpoint]="250"
-         [styleNameGreaterEqual]="'padding-large'"
-         [styleNameLess]="'padding-small'" >
-    </div>
+<div class="inner-padding fill-all-space" (resized)="evaluateTemplateCondition($event)">
+    <ng-template [ngIf]="showLargeLayout.value" [ngIfElse]="elseTemplate">
+        <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space">
+            <div fxFlex="45">
+                <span fxFlex class="data-field-title">{{title}}</span>
+            </div>
+            <div fxFlex="5"></div>
+            <div fxFlex="45">
+                <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+            </div>
+            <div fxFlex="5"></div>
+        </div>
+    </ng-template>
+    <ng-template #elseTemplate>
+        <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space">
+            <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+        </div>
+    </ng-template>
 </div>
