@@ -1,9 +1,9 @@
-import {DataField} from "../abstract-data-field";
+import {DataField} from "../abstract-data-field/abstract-data-field";
 
-export class TextField extends DataField<string>{
+export class TextField extends DataField{
 
-    constructor(title: string, placeholder: string, value: string, public validations: any, public label: string) {
-        super(title, placeholder, value);
+    constructor(public title: string, public placeholder: string, public label: string) {
+        super();
     }
 
 }
