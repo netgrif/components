@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {TextFieldComponent} from "./text-field/text-field.component";
 import {NumberFieldComponent} from './number-field/number-field.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -13,11 +12,9 @@ import {ParentWidthDependantStyleDirective} from './data-field-template/directiv
     declarations: [
         DataFieldTemplateComponent,
         ParentWidthDependantStyleDirective,
-        TextFieldComponent,
         NumberFieldComponent
     ],
     exports: [
-        TextFieldComponent,
         NumberFieldComponent
     ],
     imports: [
