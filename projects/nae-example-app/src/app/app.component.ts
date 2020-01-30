@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {LoggerService} from '@netgrif/application-engine';
+import {Component, TemplateRef, ViewChild} from '@angular/core';
+import {LoggerService, SideMenuService, SkuskaComponent} from '@netgrif/application-engine';
 
 @Component({
     selector: 'app-root',
@@ -9,7 +9,13 @@ import {LoggerService} from '@netgrif/application-engine';
 export class AppComponent {
     title = 'nae-example-app';
 
-    constructor(log: LoggerService) {
+    @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
+
+    constructor(log: LoggerService, private sideMenuService: SideMenuService) {
         log.info('App component has started');
+    }
+
+    public toggleSideMenu() {
+        this.sideMenuService.open(SkuskaComponent);
     }
 }
