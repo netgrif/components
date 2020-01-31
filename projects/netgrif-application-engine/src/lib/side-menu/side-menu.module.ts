@@ -16,7 +16,7 @@ import { SideMenuContainerComponent } from './side-menu-container/side-menu-cont
         MatButtonModule,
         PortalModule
     ],
-    exports: []
+    exports: [SideMenuContainerComponent]
 })
 export class SideMenuModule {
 }

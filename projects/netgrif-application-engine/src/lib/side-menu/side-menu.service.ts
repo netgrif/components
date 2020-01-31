@@ -14,7 +14,7 @@ import {PortalWrapper} from "./portal-wrapper";
 export class SideMenuService {
 
     private _sideMenu: MatSidenav;
-    private _portal: PortalWrapper;
+    private _portalWrapper: PortalWrapper;
 
     constructor() {}
 
@@ -28,13 +28,13 @@ export class SideMenuService {
     }
 
     public setPortal(portal: PortalWrapper) {
-        this._portal = portal;
+        this._portalWrapper = portal;
     }
 
     /**
-     * Open this _sideMenu, and return a Promise that will resolve when it's fully opened (or get rejected if it didn't).
+     * Open this _sideMenu, and return a Observable that will resolve when it's fully opened (or get rejected if it didn't).
      *
-     * @returns Promise<MatDrawerToggleResult>
+     * @returns Observable<MatDrawerToggleResult>
      */
     public open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>): Observable<MatDrawerToggleResult> {
         this._createView(componentOrTemplateRef);
@@ -43,20 +43,20 @@ export class SideMenuService {
 
     private _createView<T>(template: ComponentType<T> | TemplateRef<T>) {
         if (template instanceof TemplateRef) {
-            this._portal.portal = new TemplatePortal(template, null);
+            this._portalWrapper.portal = new TemplatePortal(template, null);
         }
         if (template instanceof Type) {
-            this._portal.portal = new ComponentPortal(template);
+            this._portalWrapper.portal = new ComponentPortal(template);
         }
     }
 
     /**
-     * Close this _sideMenu, and return a Promise that will resolve when it's fully closed (or get rejected if it didn't).
+     * Close this _sideMenu, and return a Observable that will resolve when it's fully closed (or get rejected if it didn't).
      *
-     * @returns Promise<MatDrawerToggleResult>
+     * @returns Observable<MatDrawerToggleResult>
      */
-    public close(): Promise<MatDrawerToggleResult> {
-        return this._sideMenu.close();
+    public close(): Observable<MatDrawerToggleResult> {
+        return from(this._sideMenu.close());
     }
 
     /**
@@ -64,9 +64,9 @@ export class SideMenuService {
      *
      * @param {boolean} isOpen  Whether the _sideMenu should be open.
      *
-     * @returns {Promise<MatDrawerToggleResult>}
+     * @returns {Observable<MatDrawerToggleResult>}
      */
-    public toggle(isOpen?: boolean): Promise<MatDrawerToggleResult> {
-        return this._sideMenu.toggle(isOpen);
+    public toggle(isOpen?: boolean): Observable<MatDrawerToggleResult> {
+        return from(this._sideMenu.toggle(isOpen));
     }
 }
