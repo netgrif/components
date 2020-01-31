@@ -209,14 +209,15 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
             }
         }, response => {
             this.uploadProgress = 0;
-            if (!response) {
+            if (response.isSave) {
+                this.$snackbar.success(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.uploadedSuccessfully}`);
+                this.parent.updateDataGroups(response.changedFields);
+            } else {
                 this.$snackbar.error(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.failedToUpload}`);
                 return;
             }
-
             this.uploaded = true;
             this.newFile = true;
-            this.$snackbar.success(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.uploadedSuccessfully}`);
         });
     };
 
