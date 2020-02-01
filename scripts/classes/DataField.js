@@ -247,7 +247,7 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
     };
 
     DataField.prototype.openFileChooser = function () {
-        const fileInput = jQuery("#file-" + this.stringId);
+        const fileInput = jQuery("#file-" + this.stringId + '-' + this.parent.stringId);
         if (fileInput)
             fileInput.trigger("click");
         else
