@@ -209,14 +209,15 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
             }
         }, response => {
             this.uploadProgress = 0;
-            if (!response) {
+            if (response.isSave) {
+                this.$snackbar.success(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.uploadedSuccessfully}`);
+                this.parent.updateDataGroups(response.changedFields);
+            } else {
                 this.$snackbar.error(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.failedToUpload}`);
                 return;
             }
-
             this.uploaded = true;
             this.newFile = true;
-            this.$snackbar.success(`${this.$i18n.block.snackbar.file} ${this.file.name} ${this.$i18n.block.snackbar.uploadedSuccessfully}`);
         });
     };
 
@@ -246,7 +247,7 @@ define(['./HalResource', 'jquery'], function (HalResource, jQuery) {
     };
 
     DataField.prototype.openFileChooser = function () {
-        const fileInput = jQuery("#file-" + this.stringId);
+        const fileInput = jQuery("#file-" + this.stringId + '-' + this.parent.stringId);
         if (fileInput)
             fileInput.trigger("click");
         else

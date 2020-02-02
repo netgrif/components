@@ -118,7 +118,7 @@ define(['angular', '../modules/Workflow', '../modules/Main'],
                         if (next && !self.page.pageLinks.next) return;
 
                         self.loading = true;
-                        $http(self.buildRequest(next ? self.page.pageLinks.next : undefined)).then(response => {
+                        $http(self.buildRequest(next ? self.page.pageLinks.next.href : undefined)).then(response => {
                             if (response.page.totalElements === 0) {
                                 $snackbar.info($i18n.block.snackbar.noWorkflowModel);
                                 self.clearAll();
