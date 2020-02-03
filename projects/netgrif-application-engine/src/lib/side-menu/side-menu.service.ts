@@ -1,12 +1,14 @@
-import {
-    Injectable,
-    TemplateRef,
-    Type
-} from '@angular/core';
-import {MatSidenav, MatDrawerToggleResult} from "@angular/material";
+import {Injectable, TemplateRef, Type} from '@angular/core';
+import {MatDrawerToggleResult, MatSidenav} from "@angular/material";
 import {ComponentPortal, ComponentType, TemplatePortal} from "@angular/cdk/portal";
 import {from, Observable} from "rxjs";
 import {PortalWrapper} from "./portal-wrapper";
+
+export enum SideMenuWidth {
+    SMALL = 'side-menu-width-small',
+    MEDIUM = 'side-menu-width-medium',
+    LARGE = 'side-menu-width-large'
+}
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +38,8 @@ export class SideMenuService {
      *
      * @returns Observable<MatDrawerToggleResult>
      */
-    public open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>): Observable<MatDrawerToggleResult> {
+    public open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>, width: SideMenuWidth = SideMenuWidth.MEDIUM): Observable<MatDrawerToggleResult> {
+        this._portalWrapper.width = width;
         this._createView(componentOrTemplateRef);
         return from(this._sideMenu.open());
     }

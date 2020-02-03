@@ -1,5 +1,5 @@
 <mat-sidenav-container class="side-menu-container">
-    <mat-sidenav #rightSideMenu mode="over" position="end" class="side-menu">
+    <mat-sidenav #rightSideMenu mode="over" position="end" class="side-menu" [ngClass]="portalWrapper.width">
         <ng-template [cdkPortalOutlet]="portalWrapper.portal"></ng-template>
     </mat-sidenav>
     <mat-sidenav-content>

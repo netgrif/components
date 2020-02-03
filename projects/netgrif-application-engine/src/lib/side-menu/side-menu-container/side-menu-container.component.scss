@@ -4,9 +4,18 @@
     bottom: 0;
     left: 0;
     right: 0;
-    margin-inside: 10%;
 }
 
 .side-menu {
     border-radius: 4px;
+}
+
+.side-menu-width-small {
+    width: 300px;
+}
+.side-menu-width-medium {
+    width: 400px;
+}
+.side-menu-width-large {
+    width: 500px;
 }
