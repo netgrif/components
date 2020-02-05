@@ -15,20 +15,21 @@ import {RouterModule, Routes} from "@angular/router";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {
     LoggerModule,
-    RegistrationCardComponent
+    LoginCardComponent,
+    ForgottenPasswordCardComponent
 } from '@netgrif/application-engine';
 import {MatIconModule} from "@angular/material/icon";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 
 export const routes: Routes = [
-    {path: 'registration component', component: RegistrationCardComponent}
+    {path: 'login component', component: LoginCardComponent},
+    {path: 'forgotten password component', component: ForgottenPasswordCardComponent},
 ];
 
 @NgModule({
     declarations: [
-        AppComponent,
+        AppComponent
     ],
     imports: [
         BrowserModule,
@@ -45,7 +46,7 @@ export const routes: Routes = [
         MatFormFieldModule,
         MatIconModule,
         ReactiveFormsModule,
-        MatInputModule
+        MatInputModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
