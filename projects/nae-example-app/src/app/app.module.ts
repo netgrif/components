@@ -15,20 +15,20 @@ import {RouterModule, Routes} from "@angular/router";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {
     LoggerModule,
-    PanelModule,
-    RegistrationPanelComponent,
+    RegistrationCardComponent
 } from '@netgrif/application-engine';
-import { TestComponent } from './test/test.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 export const routes: Routes = [
-    {path: 'registration component', component: RegistrationPanelComponent},
+    {path: 'registration component', component: RegistrationCardComponent}
 ];
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports: [
         BrowserModule,
@@ -36,7 +36,6 @@ export const routes: Routes = [
         BrowserAnimationsModule,
         LoggerModule,
         MatButtonModule,
-        PanelModule,
         RouterModule.forRoot(routes),
         MatSidenavModule,
         MatListModule,
@@ -45,7 +44,8 @@ export const routes: Routes = [
         MatExpansionModule,
         MatFormFieldModule,
         MatIconModule,
-        MatProgressSpinnerModule
+        ReactiveFormsModule,
+        MatInputModule
     ],
     providers: [],
     bootstrap: [AppComponent]

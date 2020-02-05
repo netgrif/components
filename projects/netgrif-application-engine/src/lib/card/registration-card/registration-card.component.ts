@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {passwordValidator} from "./password.validator";
-import {AbstractPanel} from "../abstract-panel";
+import {AbstractCard} from "../abstract-card";
 
 @Component({
     selector: 'nae-registration-panel',
-    templateUrl: './registration-panel.component.html',
-    styleUrls: ['./registration-panel.component.scss']
+    templateUrl: './registration-card.component.html',
+    styleUrls: ['./registration-card.component.scss']
 })
-export class RegistrationPanelComponent extends AbstractPanel implements OnInit {
+export class RegistrationCardComponent extends AbstractCard implements OnInit {
     hidePassword = true;
     hideRepeatPassword = true;
 
