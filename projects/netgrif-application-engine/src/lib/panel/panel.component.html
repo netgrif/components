@@ -1,0 +1,22 @@
+<mat-accordion>
+    <mat-expansion-panel [disabled]="expansionDisabled" hideToggle (afterExpand)="showSpinner=false"
+                         (afterCollapse)="showSpinner=false"
+                         (click)="showSpinner=true">
+        <mat-expansion-panel-header>
+            <mat-panel-description fxLayout="row" fxLayoutAlign=" center">
+                <mat-icon fxLayout="row">{{panelIcon}}</mat-icon>
+                <span fxLayout="row" fxLayoutAlign="center" class="panel-heading" *ngFor="let field of featuredFields;"
+                      fxFlex>{{field}}</span>
+                <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+                    <button mat-button (click)="show($event)" *ngIf="!showSpinner">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-spinner *ngIf="showSpinner" [diameter]="30"></mat-spinner>
+                </div>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="panel-main-content">
+            <ng-content></ng-content>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>

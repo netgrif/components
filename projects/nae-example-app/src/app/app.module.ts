@@ -3,31 +3,35 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCardModule, MatListModule, MatSidenavModule} from "@angular/material";
 import {RouterModule, Routes} from "@angular/router";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {
     LoggerModule,
+    PanelModule,
+    MaterialModule,
+    CovalentModule
 } from '@netgrif/application-engine';
+import {ExamplePanelComponent} from './example-panel/example-panel.component';
 
 export const routes: Routes = [
+    {path: 'panel component example', component: ExamplePanelComponent},
 ];
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        ExamplePanelComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         LoggerModule,
-        MatButtonModule,
         RouterModule.forRoot(routes),
-        MatSidenavModule,
-        MatListModule,
         FlexLayoutModule,
-        MatCardModule
+        PanelModule,
+        MaterialModule,
+        CovalentModule
     ],
     providers: [],
     bootstrap: [AppComponent]
