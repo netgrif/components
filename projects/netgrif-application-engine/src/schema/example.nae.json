@@ -1,0 +1,229 @@
+{
+    "extends": "nae-default",
+    "providers": {
+        "auth": {
+            "address": "https://backend.com/auth",
+            "authentication": "Basic",
+            "endpoints": {
+                "login": "/login",
+                "logout": "/logout",
+                "signup": "/signup"
+            },
+            "sessionBearer": "x-auth-token"
+        },
+        "resource": [
+            {
+                "name": "case",
+                "address": "https://backend.com/api/v3/case",
+                "format": "hal",
+                "openApi": "https://swagger.io"
+            },
+            {
+                "name": "task",
+                "address": "https://backend.com/api/v3/task",
+                "format": "json"
+            }
+        ]
+    },
+    "theme": {
+        "name": "example-classico",
+        "pallets": {
+            "light": {
+                "primary": {
+                    "50": "",
+                    "100": "",
+                    "200": "",
+                    "300": "",
+                    "400": "",
+                    "500": "",
+                    "600": "",
+                    "700": "",
+                    "800": "",
+                    "900": "",
+                    "A100": "",
+                    "A200": "",
+                    "A400": "",
+                    "A700": "",
+                    "contrast": {
+                        "light": [
+                            "300",
+                            "400",
+                            "500",
+                            "600",
+                            "700",
+                            "800",
+                            "900"
+                        ],
+                        "dark": [
+                            "50",
+                            "100",
+                            "200"
+                        ]
+                    }
+                },
+                "secondary": {
+                    "50": "",
+                    "100": "",
+                    "200": "",
+                    "300": "",
+                    "400": "",
+                    "500": "",
+                    "600": "",
+                    "700": "",
+                    "800": "",
+                    "900": "",
+                    "A100": "",
+                    "A200": "",
+                    "A400": "",
+                    "A700": "",
+                    "contrast": {
+                        "light": [
+                            "300",
+                            "400",
+                            "500",
+                            "600",
+                            "700",
+                            "800",
+                            "900"
+                        ],
+                        "dark": [
+                            "50",
+                            "100",
+                            "200"
+                        ]
+                    }
+                },
+                "warn": {
+                    "50": "",
+                    "100": "",
+                    "200": "",
+                    "300": "",
+                    "400": "",
+                    "500": "",
+                    "600": "",
+                    "700": "",
+                    "800": "",
+                    "900": "",
+                    "A100": "",
+                    "A200": "",
+                    "A400": "",
+                    "A700": "",
+                    "contrast": {
+                        "light": [
+                            "300",
+                            "400",
+                            "500",
+                            "600",
+                            "700",
+                            "800",
+                            "900"
+                        ],
+                        "dark": [
+                            "50",
+                            "100",
+                            "200"
+                        ]
+                    }
+                },
+                "dark": {
+                    "primary": "blue",
+                    "secondary": "pink"
+                }
+            }
+        }
+    },
+    "assets": [
+        "../../../assets"
+    ],
+    "filters": {
+        "all-cases": {
+            "title": "All Cases",
+            "access": "public",
+            "query": "select * from case where title like ${some-param}"
+        }
+    },
+    "i18n": [
+        "sk-SK",
+        "en-US"
+    ],
+    "views": {
+        "layout": "empty",
+        "routes": {
+            "login": {
+                "type": "view",
+                "layout": {
+                    "name": "login",
+                    "params": {
+                        "orientation": "vertical"
+                    }
+                },
+                "access": "public",
+                "navigation": false
+            },
+            "portal": {
+                "type": "container",
+                "layout": {
+                    "name": "sidenav-toolbar",
+                    "params": {
+                        "title": "Some title",
+                        "logo": "$assets.logo",
+                        "toolbar": {
+                            "userMenu": true
+                        },
+                        "sidenav": {
+                            "userMenu": false,
+                            "hide": "partial",
+                            "navigationType": "tree",
+                            "appVersion": true,
+                            "naeVersion": true,
+                            "links": [
+                                {
+                                    "title": "Some additional link",
+                                    "href": "https://example.com"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "navigation": {
+                    "icon": "$assets.svg.someIcon"
+                },
+                "access": "private",
+                "routes": {
+                    "cases": {
+                        "type": "view",
+                        "layout": {
+                            "name": "caseView",
+                            "params": {
+                                "filters": [
+                                    "$filters.all-cases",
+                                    "db.case.find()"
+                                ]
+                            }
+                        },
+                        "navigation": {
+                            "title": "All cases",
+                            "icon": "list"
+                        },
+                        "access": {
+                            "permission": [
+                                "USER"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "defaults": {
+        "log": {
+            "level": "INFO",
+            "logWithDate": true,
+            "serializeExtraParams": true,
+            "includeLogLevel": true,
+            "publishers": [
+                "console"
+            ]
+        }
+    }
+}
