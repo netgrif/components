@@ -9,7 +9,7 @@
         "nae:doc": "compodoc -p projects/netgrif-application-engine/tsconfig.lib.json -d docs/compodoc --theme gitbook --customLogo assets/icon-512x512.png",
         "nae:local-build": "npm run nae:build && npm i dist/netgrif-application-engine --save-optional",
         "nae:prod-build": "npm run nae:test && npm run nae:build && npm run nae:doc",
-        "project:start": "npm run nae:build && ng serve",
+        "project:start": "npm run nae:local-build && ng serve",
         "example-app:start": "ng serve",
         "test": "ng test",
         "lint": "ng lint",
@@ -22,6 +22,7 @@
         "@angular/common": "^9.0.0-rc.8",
         "@angular/compiler": "^9.0.0-rc.8",
         "@angular/core": "^9.0.0-rc.8",
+        "@angular/flex-layout": "^8.0.0-beta.27",
         "@angular/forms": "^9.0.0-rc.8",
         "@angular/material": "~8.2.3",
         "@angular/platform-browser": "^9.0.0-rc.8",
@@ -57,5 +58,8 @@
         "tslint": "~5.18.0",
         "typedoc": "^0.16.6",
         "typescript": "~3.6.4"
+    },
+    "optionalDependencies": {
+        "@netgrif/application-engine": "file:dist/netgrif-application-engine"
     }
 }
