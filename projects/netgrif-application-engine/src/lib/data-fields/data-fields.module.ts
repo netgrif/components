@@ -7,6 +7,8 @@ import {FileFieldComponent} from './file-field/file-field.component';
 import {MatButtonModule, MatIconModule, MatProgressBarModule} from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
 import {CovalentCommonModule} from "@covalent/core";
+import {FileUploadService} from "./file-field/file-upload.service";
+import {FileDownloadService} from "./file-field/file-download.service";
 
 @NgModule({
     declarations: [
@@ -25,6 +27,10 @@ import {CovalentCommonModule} from "@covalent/core";
         MatButtonModule,
         HttpClientModule,
         CovalentCommonModule
+    ],
+    providers: [
+        FileUploadService,
+        FileDownloadService
     ]
 })
 export class DataFieldsModule {
