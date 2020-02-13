@@ -3,6 +3,7 @@ import {FileField, FileUploadModel} from "./file-field";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {FileUploadService} from "./file-upload.service";
 import {FileDownloadService} from "./file-download.service";
+import * as JSZip from 'jszip';
 
 @Component({
     selector: 'nae-file-field',
@@ -43,7 +44,12 @@ export class FileFieldComponent implements OnInit{
             }
             Array.from(this.fileUploadEl.nativeElement.files).forEach(file => {
                 const fileUploadModel = {
-                    data: file, state: 'in',
+                    data: {
+                        file: file,
+                        name: file.name.substr(0, file.name.lastIndexOf('.')),
+                        extension: file.name.substr(file.name.lastIndexOf('.') + 1)
+                    },
+                    state: 'in',
                     inProgress: false, progress: 0,
                     canRetry: false, canCancel: true,
                     successfullyUploaded: false
@@ -55,7 +61,10 @@ export class FileFieldComponent implements OnInit{
                 if (this.allFiles.length > this.fileField.maxShowListFiles) {
                     this.fileListEl.nativeElement.style.height = this.fileField.maxShowListFiles * 23 + 'px';
                 }
-                this._fileUploadService.uploadFile(fileUploadModel)
+                // One by one upload file
+                if (!this.fileField.zipped) {
+                    this._fileUploadService.uploadFile(fileUploadModel)
+                }
             });
 
             this.fileUploadEl.nativeElement.value = '';
@@ -63,6 +72,15 @@ export class FileFieldComponent implements OnInit{
         };
 
         this.fileUploadEl.nativeElement.click();
+    }
+
+    public onSend() {
+        // ZIPPING
+        let zip = new JSZip();
+        this.allFiles.forEach(file => {
+            zip.folder('fileFieldZipFolder').file(file.data.file.name);
+        });
+        this._fileUploadService.uploadFile(zip.files);
     }
 
     public cancelFile(file: FileUploadModel) {
@@ -83,7 +101,10 @@ export class FileFieldComponent implements OnInit{
     }
 
     public shortFileName(file: FileUploadModel) {
-        return file.data.name.length > 15 ? file.data.name.slice(0, 15) + '...' + file.data.type : file.data.name;
+        const fileNameLength: number = 25;
+        return file.data.name.length > fileNameLength ?
+            file.data.name.slice(0, fileNameLength - file.data.extension.length - '...'.length) + '...' + file.data.extension :
+            file.data.file.name;
     }
 
     private removeFileFromArray(file: FileUploadModel) {
@@ -95,7 +116,7 @@ export class FileFieldComponent implements OnInit{
 
     private maxUploadSizeControl(file: FileUploadModel) {
         if (this.fileField.maxUploadSizeInBytes && this.fileField.filesSize <= this.fileField.maxUploadSizeInBytes) {
-            this.fileField.filesSize += file.data.size;
+            this.fileField.filesSize += file.data.file.size;
             return false;
         } else if (!this.fileField.maxUploadSizeInBytes) {
             return false;

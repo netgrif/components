@@ -8,6 +8,11 @@
             {{fileField.placeholder}}
         </button>
 
+        <button style="margin-bottom: 10px" mat-button color="warn" (click)="onSend()">
+            <mat-icon>send</mat-icon>
+            SEND
+        </button>
+
         <ul style="padding-left: 18px; overflow-y: auto;" #fileList>
             <li *ngFor="let file of allFiles" [@fadeInOut]="file.state">
                 <div fxLayout="row" fxLayoutAlign=" center">
@@ -18,7 +23,7 @@
                             'download': file.successfullyUploaded,
                             'upload': !file.successfullyUploaded
                           }">{{shortFileName(file)}}</span>
-                    <span style="width: 200px; font-size: 12px; color: grey">{{file.data.size | decimalBytes }}</span>
+                    <span style="width: 200px; font-size: 12px; color: grey">{{file.data.file.size | decimalBytes }}</span>
                     <mat-progress-bar color="warn" [value]="file.progress" style="height: 8px"></mat-progress-bar>
                     <mat-icon (click)="retryFile(file)" *ngIf="file.canRetry"
                               style="font-size: 21px; height: 21px; margin-left: 6px; cursor: pointer;">restore_page</mat-icon>

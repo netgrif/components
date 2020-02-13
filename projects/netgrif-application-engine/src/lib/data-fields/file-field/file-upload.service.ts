@@ -3,7 +3,6 @@ import {FileUploadModel} from "./file-field";
 import {HttpClient, HttpErrorResponse, HttpEventType, HttpRequest} from "@angular/common/http";
 import {catchError, last, map, tap} from "rxjs/operators";
 import {of} from "rxjs";
-import * as JSZip from 'jszip';
 
 @Injectable()
 export class FileUploadService {
@@ -17,15 +16,11 @@ export class FileUploadService {
 
     public uploadFile(file: FileUploadModel) {
         const fd = new FormData();
-        fd.append(this._param, file.data);
+        fd.append(this._param, file.data.file);
 
         const req = new HttpRequest('POST', this._target, fd, {
             reportProgress: true
         });
-
-        // ZIPPING
-        // let zip = new JSZip();
-        // zip.folder(file.data.name);
 
         file.inProgress = true;
         file.sub = this._http.request(req).pipe(
