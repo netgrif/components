@@ -4,3 +4,4 @@
 
 /* MODULES */
 export * from './panel.module';
+export * from './case-panel/case-panel-definition';
