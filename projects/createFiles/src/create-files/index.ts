@@ -1,11 +1,13 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
-import * as data from '../create-files/example.nae.json';
+import * as data from '../../../../example.nae.json';
+
+
 
 export function createFiles(_options: any): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-      if(!tree.exists("./styles/templates/_customLightPalette.scss"))
-          tree.create("./styles/templates/_customLightPalette.scss",``);
-      tree.overwrite("./styles/templates/_customLightPalette.scss",  `
+      if(!tree.exists("projects/nae-example-app/src/styles/_customLightPalette.scss"))
+          tree.create("projects/nae-example-app/src/styles/_customLightPalette.scss",``);
+      tree.overwrite("projects/nae-example-app/src/styles/_customLightPalette.scss",  `
 @import '~@angular/material/theming';
 $bv-light-primary: (
  `+handleJsonString(JSON.stringify(data.theme.pallets.light.primary ),true,false)+'\n'+"contrast : ( "+'\n'
@@ -23,9 +25,9 @@ $bv-light-warn: (
               +handleJsonString(JSON.stringify(data.theme.pallets.light.warn.contrast.dark ),false,true)+`)
 );
 `);
-if(!tree.exists("./styles/templates/_customDarkPalette.scss"))
-          tree.create("./styles/templates/_customDarkPalette.scss",``);
-      tree.overwrite("./styles/templates/_customDarkPalette.scss",  `
+if(!tree.exists("projects/nae-example-app/src/styles/_customDarkPalette.scss"))
+          tree.create("projects/nae-example-app/src/styles/_customDarkPalette.scss",``);
+      tree.overwrite("projects/nae-example-app/src/styles/_customDarkPalette.scss",  `
 @import '~@angular/material/theming';
 $bv-dark-primary: (
  `+handleJsonString(JSON.stringify(data.theme.pallets.dark.primary ),true,false)+'\n'+"contrast : ( "+'\n'
@@ -43,9 +45,9 @@ $bv-dark-warn: (
               +handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.dark ),false,true)+`)
 );
 `);
-if(!tree.exists("./styles/templates/_customThemes.scss"))
-          tree.create("./styles/templates/_customThemes.scss",``);
-tree.overwrite("./styles/templates/_customThemes.scss",  `
+if(!tree.exists("projects/nae-example-app/src/styles/_customThemes.scss"))
+          tree.create("projects/nae-example-app/src/styles/_customThemes.scss",``);
+tree.overwrite("projects/nae-example-app/src/styles/_customThemes.scss",  `
 @import '~@angular/material/theming';
 @import '_customLightPalette.scss';
 @import '_customDarkPalette.scss';
