@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {LoggerService} from '@netgrif/application-engine';
-import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -10,7 +9,7 @@ import {Router} from '@angular/router';
 export class AppComponent {
     title = 'nae-example-app';
 
-    constructor(log: LoggerService, public routes: Router) {
+    constructor(log: LoggerService) {
         log.info('App component has started');
     }
 }
