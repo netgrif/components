@@ -4,14 +4,17 @@ import {PanelComponent} from "./panel.component";
 import {FlexModule} from "@angular/flex-layout";
 import {MaterialModule} from "../material/material.module";
 
-
 @NgModule({
-    declarations: [PanelComponent],
-    exports: [PanelComponent],
+    declarations: [
+        PanelComponent,
+    ],
     imports: [
         CommonModule,
-        FlexModule,
-        MaterialModule
+        MaterialModule,
+        FlexModule
+    ],
+    exports: [
+        PanelComponent,
     ]
 })
 export class PanelModule {

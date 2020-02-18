@@ -1,16 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from '@angular/core';
 
 @Component({
-    selector: 'nae-panel',
+    selector: 'nae-app-panel',
     templateUrl: './panel.component.html',
     styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent implements OnInit {
 
-    @Input() featuredFields: Array<string>;
-    @Input() panelIcon: string;
     @Input() expansionDisabled = false;
-    public showSpinner = false;
+    @Input() panelHeader: TemplateRef<object>;
+    @Input() panelContent: TemplateRef<object>;
+    @Output() stopLoading: EventEmitter<object> = new EventEmitter();
 
     constructor() {
     }
@@ -18,9 +18,12 @@ export class PanelComponent implements OnInit {
     ngOnInit() {
     }
 
-    show(event: MouseEvent): boolean {
-        event.stopPropagation();
-        return false;
+    emitExpand() {
+        this.stopLoading.emit();
+    }
+
+    emitCollapse() {
+        this.stopLoading.emit();
     }
 
 }

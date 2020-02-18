@@ -1,4 +1,6 @@
-export * from './panel.module';
+/*
+ * Public API Surface of netgrif-application-engine
+ */
 
-/* COMPONENTS */
-export * from './panel.component';
+/* MODULES */
+export * from './panel.module';
