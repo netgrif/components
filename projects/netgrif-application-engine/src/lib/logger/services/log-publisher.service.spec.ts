@@ -1,10 +1,10 @@
 import {TestBed} from '@angular/core/testing';
 
 import {LogPublisherService, PUBLISHERS} from './log-publisher.service';
-import {LogPublisher} from './publishers/log-publisher';
-import {LogEntry} from './log-entry';
+import {LogPublisher} from '../publishers/log-publisher';
+import {LogEntry} from '../models/log-entry';
 import {LogLevel} from './logger.service';
-import {LocalStorageLogPublisher} from './publishers/local-storage-log-publisher';
+import {LocalStorageLogPublisher} from '../publishers/local-storage-log-publisher';
 
 describe('LogPublisherService', () => {
     let service: LogPublisherService;

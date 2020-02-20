@@ -1,7 +1,7 @@
 import {LogPublisher} from './log-publisher';
-import {LogEntry} from '../log-entry';
-import {LogLevel} from '../logger.service';
-import {LogPublisherService} from '../log-publisher.service';
+import {LogEntry} from '../models/log-entry';
+import {LogLevel} from '../services/logger.service';
+import {LogPublisherService} from '../services/log-publisher.service';
 
 
 export class ConsoleLogPublisher extends LogPublisher {
