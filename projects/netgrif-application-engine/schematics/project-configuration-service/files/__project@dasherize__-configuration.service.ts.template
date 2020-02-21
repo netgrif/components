@@ -8,5 +8,6 @@ export class <%= classify(project) %>ConfigurationService extends ConfigurationS
 
     constructor() {
         super();
+        super.configuration = <%= configuration %>;
     }
 }
