@@ -4,7 +4,7 @@ import {ConfigurationService} from "@netgrif/application-engine";
 @Injectable({
     providedIn: 'root'
 })
-export class <%= classify(project)+'ConfigurationService' %> extends ConfigurationService{
+export class <%= classify(project) %>ConfigurationService extends ConfigurationService{
 
     constructor() {
         super();

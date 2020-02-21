@@ -3,7 +3,7 @@
     "schematics": {
         "project-configuration-service": {
             "description": "Generate a project specific configuration service that contains the information from nae.json. Then change the app configuration, so that this new service is injected instead of the native one.",
-            "factory": "./project-configuration-service/index#myService",
+            "factory": "./project-configuration-service/index#projectConfigurationService",
             "schema": "./project-configuration-service/schema.json"
         }
     }
