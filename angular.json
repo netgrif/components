@@ -32,7 +32,10 @@
                         "main": "projects/netgrif-application-engine/src/test.ts",
                         "tsConfig": "projects/netgrif-application-engine/tsconfig.spec.json",
                         "karmaConfig": "projects/netgrif-application-engine/karma.conf.js",
-                        "codeCoverage": true
+                        "codeCoverage": true,
+                        "codeCoverageExclude": [
+                            "projects/netgrif-application-engine/src/test.ts"
+                        ]
                     }
                 },
                 "lint": {

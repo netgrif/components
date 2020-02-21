@@ -27,7 +27,7 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content interface">
+               <div class="content miscellaneous-functions">
                    <div class="content-data">
 
 
@@ -41,84 +41,54 @@
 
 
 
+
+
+                   
+
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li>Logger</li>
+  <li>Miscellaneous</li>
+  <li>Functions</li>
 </ol>
 
-<ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
-        </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
-        </li>
-</ul>
-
-<div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
-        <p class="comment">
-            <h3>File</h3>
-        </p>
-        <p class="comment">
-            <code>projects/netgrif-application-engine/src/lib/logger/logger.service.ts</code>
-        </p>
-
-
-
-        <section>
-            <h3 id="index">Index</h3>
-            <table class="table table-sm table-bordered index-table">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <h6><b>Methods</b></h6>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <ul class="index-list">
-                                <li>
-                                    <a href="#info">info</a>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-            <section>
-    
-    <h3 id="methods">
-        Methods
-    </h3>
-    <table class="table table-sm table-bordered">
+<section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="info"></a>
+                    <ul class="index-list">
+                        <li>
+                            <a href="#randomString" title="projects/netgrif-application-engine/src/scripts/Utils.ts"><b>randomString</b>&nbsp;&nbsp;&nbsp;(projects/.../Utils.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>projects/netgrif-application-engine/src/scripts/Utils.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="randomString"></a>
                     <span class="name">
                         <b>
-                            info
+                            randomString
                         </b>
-                        <a href="#info"><span class="icon ion-ios-link"></span></a>
+                        <a href="#randomString"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>info(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, args?: Array<object> | object)</code>
+<code>randomString(length)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="4"
-                            class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/logger.service.ts:4</a></div>
-                </td>
-            </tr>
 
 
             <tr>
@@ -130,31 +100,15 @@
                             <thead>
                                 <tr>
                                     <td>Name</td>
-                                    <td>Type</td>
                                     <td>Optional</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>message</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                                    <td>length</td>
 
                                     <td>
                                         No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>args</td>
-                                    <td>
-                                            <code>Array&lt;object&gt; | object</code>
-                                    </td>
-
-                                    <td>
-                                        Yes
                                     </td>
 
 
@@ -177,41 +131,6 @@
     </table>
 </section>
 
-    </div>
-
-
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
-
-export interface Logger {
-    info(message: string, args?: Array&lt;object&gt; | object): string;
-}
-
-@Injectable()
-export class LoggerService implements Logger {
-
-    constructor() {
-    }
-
-    protected formatMessage(msg: string): string {
-        return new Date().toISOString() + &#x27;: &#x27; + msg;
-    }
-
-    info(message: string, args?: Array&lt;object&gt; | object): string {
-        console.log(this.formatMessage(message), args);
-        return this.formatMessage(message);
-    }
-
-}
-</code></pre>
-    </div>
-</div>
-
-
-                   
-
-
-
 
                    </div><div class="search-results">
     <div class="has-results">
@@ -229,8 +148,8 @@ export class LoggerService implements Logger {
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'Logger.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-functions';
+            var COMPODOC_CURRENT_PAGE_URL = 'functions.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
