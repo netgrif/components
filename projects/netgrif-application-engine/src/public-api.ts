@@ -9,3 +9,6 @@ export * from './lib/material/material.module';
 export * from './lib/logger/public-api';
 export * from './lib/side-menu/public-api';
 export * from './lib/data-fields/public-api';
+
+/* SERVICES */
+export * from './lib/snack-bar/snack-bar.service';
