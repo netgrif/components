@@ -1,0 +1,40 @@
+<nae-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
+               (stopLoading)="showSpinner=false">
+    <ng-template #taskPanelHeader>
+        <div fxLayoutAlign=" center" fxLayout="row" fxFlex="100" (click)="showSpinner=true">
+            <span fxLayoutAlign=" center" fxFlex>
+                <mat-icon class="task-panel-icon">{{panelIcon}}</mat-icon>
+                <span>{{panelIconField}}</span>
+            </span>
+            <span fxFlex *ngFor="let field of taskPanelDefinition.featuredFields;">{{field}}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+            <button mat-icon-button (click)="show($event)" *ngIf="!showSpinner" [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>person</mat-icon>
+                    <span>Assign</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>person_outline</mat-icon>
+                    <span>Delegate</span>
+                </button>
+            </mat-menu>
+            <mat-spinner *ngIf="showSpinner" [diameter]="30"></mat-spinner>
+        </div>
+    </ng-template>
+    <ng-template #taskPanelContent>
+        <div class="panel-main-content" fxLayout="column">
+            <div class="task-panel-body" fxFlex="80">
+                <ng-content></ng-content>
+            </div>
+            <div class="task-panel-footer" fxLayout="row" fxFlex="20" fxLayoutAlign="end center">
+                <button mat-button>ASSIGN</button>
+                <button mat-button>DELEGATE</button>
+                <button mat-button>COLLAPSE</button>
+            </div>
+        </div>
+    </ng-template>
+</nae-app-panel>
