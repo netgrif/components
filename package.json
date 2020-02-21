@@ -7,7 +7,7 @@
         "nae:test": "ng lint netgrif-application-engine && ng test netgrif-application-engine",
         "nae:typedoc": "typedoc --tsconfig projects/netgrif-application-engine/tsconfig.lib.json  projects/netgrif-application-engine/src/lib",
         "nae:doc": "compodoc -p projects/netgrif-application-engine/tsconfig.lib.json -d docs/compodoc --theme gitbook --customLogo assets/icon-512x512.png",
-        "nae:local-build": "npm run nae:build && npm i dist/netgrif-application-engine --save-optional",
+        "nae:local-build": "npm run nae:build && cd projects/netgrif-application-engine && npm run build && cd ../.. && npm i dist/netgrif-application-engine --save-optional",
         "nae:prod-build": "npm run nae:test && npm run nae:build && npm run nae:doc",
         "project:start": "npm run nae:build && ng serve",
         "example-app:start": "ng serve",
