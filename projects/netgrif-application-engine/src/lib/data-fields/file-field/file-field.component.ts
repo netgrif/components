@@ -1,130 +1,33 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {FileField, FileUploadModel} from "./file-field";
-import {animate, state, style, transition, trigger} from "@angular/animations";
-import {FileUploadService} from "./file-upload.service";
-import {FileDownloadService} from "./file-download.service";
-import * as JSZip from 'jszip';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {FileField} from "./file-field";
+import {FileFieldService} from "./file-field.service";
 
 @Component({
     selector: 'nae-file-field',
     templateUrl: './file-field.component.html',
-    styleUrls: ['./file-field.component.scss'],
-    animations: [
-        trigger('fadeInOut', [
-            state('in', style({opacity: 100})),
-            transition('* => void', [
-                animate(300, style({opacity: 0}))
-            ])
-        ])
-    ]
+    styleUrls: ['./file-field.component.scss']
 })
-export class FileFieldComponent implements OnInit{
+export class FileFieldComponent implements OnInit, AfterViewInit{
 
     public multiple: string;
-    public allFiles: Array<FileUploadModel> = [];
 
     @Input() public fileField: FileField;
-    @ViewChild('fileList') public fileListEl: ElementRef;
     @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
 
-    constructor(private _fileUploadService: FileUploadService,
-                private _fileDownloadService: FileDownloadService) {
+    constructor(private _fileFieldService: FileFieldService) {
     }
 
     ngOnInit() {
+        this._fileFieldService.fileField = this.fileField;
         this.multiple = this.fileField.maxUploadFiles > 1 ? 'multiple' : undefined;
     }
 
+    ngAfterViewInit(): void {
+        this._fileFieldService.fileUploadEl = this.fileUploadEl;
+    }
+
     public onFileUpload() {
-        this.fileUploadEl.nativeElement.onchange = () => {
-            if ((this.allFiles.length + this.fileUploadEl.nativeElement.files.length) > this.fileField.maxUploadFiles) {
-                //TODO: 'You choose more files as you allowed' - snackbar warning
-                console.log('You choose more files as you allowed!');
-                return;
-            }
-            Array.from(this.fileUploadEl.nativeElement.files).forEach(file => {
-                const fileUploadModel = {
-                    data: {
-                        file: file,
-                        name: file.name.substr(0, file.name.lastIndexOf('.')),
-                        extension: file.name.substr(file.name.lastIndexOf('.') + 1)
-                    },
-                    state: 'in',
-                    inProgress: false, progress: 0,
-                    canRetry: false, canCancel: true,
-                    successfullyUploaded: false
-                };
-                if (this.maxUploadSizeControl(fileUploadModel)) {
-                    return;
-                }
-                this.allFiles.push(fileUploadModel);
-                if (this.allFiles.length > this.fileField.maxShowListFiles) {
-                    this.fileListEl.nativeElement.style.height = this.fileField.maxShowListFiles * 23 + 'px';
-                }
-                // One by one upload file
-                if (!this.fileField.zipped) {
-                    this._fileUploadService.uploadFile(fileUploadModel)
-                }
-            });
-
-            this.fileUploadEl.nativeElement.value = '';
-
-        };
-
-        this.fileUploadEl.nativeElement.click();
-    }
-
-    public onSend() {
-        // ZIPPING
-        let zip = new JSZip();
-        this.allFiles.forEach(file => {
-            zip.folder('fileFieldZipFolder').file(file.data.file.name);
-        });
-        this._fileUploadService.uploadFile(zip.files);
-    }
-
-    public cancelFile(file: FileUploadModel) {
-        file.sub.unsubscribe();
-        this.removeFileFromArray(file);
-    }
-
-    public retryFile(file: FileUploadModel) {
-        file.canRetry = false;
-        file.successfullyUploaded = false;
-        this._fileUploadService.uploadFile(file)
-    }
-
-    public onFileDownload(file: FileUploadModel) {
-        if (!file.successfullyUploaded)
-            return;
-        this._fileDownloadService.downloadFile(file);
-    }
-
-    public shortFileName(file: FileUploadModel) {
-        const fileNameLength: number = 25;
-        return file.data.name.length > fileNameLength ?
-            file.data.name.slice(0, fileNameLength - file.data.extension.length - '...'.length) + '...' + file.data.extension :
-            file.data.file.name;
-    }
-
-    private removeFileFromArray(file: FileUploadModel) {
-        const index = this.allFiles.indexOf(file);
-        if (index > -1) {
-            this.allFiles.splice(index, 1);
-        }
-    }
-
-    private maxUploadSizeControl(file: FileUploadModel) {
-        if (this.fileField.maxUploadSizeInBytes && this.fileField.filesSize <= this.fileField.maxUploadSizeInBytes) {
-            this.fileField.filesSize += file.data.file.size;
-            return false;
-        } else if (!this.fileField.maxUploadSizeInBytes) {
-            return false;
-        } else {
-            //TODO: max upload size overflow - snackbar warning
-            console.log('File size exceeded allowed limit');
-            return true;
-        }
+        this._fileFieldService.onFileUpload(true)
     }
 
 }

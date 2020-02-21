@@ -1,0 +1,41 @@
+<div style="position: relative">
+    <mat-toolbar color="accent" class="toolbar">
+        Upload files
+        <button mat-mini-fab class="add-files-button" (click)="onFileUpload()">
+            <mat-icon class="add-files-icon">
+                add
+            </mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <div fxLayout="column" class="container">
+
+        <ul style="overflow-y: auto;" #fileList>
+            <li *ngFor="let file of allFiles" [@fadeInOut]="file.state">
+                <div fxLayout="row" fxLayoutAlign=" center">
+                    <mat-icon *ngIf="!file.successfullyUploaded">description</mat-icon>
+                    <mat-icon *ngIf="file.successfullyUploaded">done</mat-icon>
+                    <span (click)="onFileDownload(file)" style="margin-left: 8px; width: 500px; font-size: 14px;"
+                          [ngClass]="{
+                                'download': file.successfullyUploaded,
+                                'upload': !file.successfullyUploaded
+                              }">{{shortFileName(file)}}</span>
+                    <span style="width: 200px; font-size: 13px; color: grey">{{file.data.file.size | decimalBytes }}</span>
+                    <mat-progress-bar color="warn" [value]="file.progress" style="height: 8px"></mat-progress-bar>
+                    <mat-icon (click)="retryFile(file)" *ngIf="file.canRetry"
+                              style="font-size: 21px; height: 21px; margin-left: 6px; cursor: pointer;">restore_page
+                    </mat-icon>
+                    <mat-icon (click)="cancelFile(file)" *ngIf="file.canCancel"
+                              style="font-size: 15px; height: 15px; margin-left: 6px; cursor: pointer;">close
+                    </mat-icon>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+    <button *ngIf="fileField.zipped" style="position: absolute; right: 33px;" mat-raised-button color="warn" (click)="onSend()">
+        <mat-icon>send</mat-icon>
+        SEND
+    </button>
+</div>

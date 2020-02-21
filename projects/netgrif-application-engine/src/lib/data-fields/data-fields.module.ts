@@ -6,9 +6,9 @@ import {AngularResizedEventModule} from "angular-resize-event";
 import {FileFieldComponent} from './file-field/file-field.component';
 import {MatButtonModule, MatIconModule, MatProgressBarModule} from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
-import {CovalentCommonModule} from "@covalent/core";
 import {FileUploadService} from "./file-field/file-upload.service";
 import {FileDownloadService} from "./file-field/file-download.service";
+import {SideMenuModule} from "../side-menu/side-menu.module";
 
 @NgModule({
     declarations: [
@@ -26,7 +26,7 @@ import {FileDownloadService} from "./file-field/file-download.service";
         MatProgressBarModule,
         MatButtonModule,
         HttpClientModule,
-        CovalentCommonModule
+        SideMenuModule
     ],
     providers: [
         FileUploadService,
