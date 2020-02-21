@@ -34,7 +34,7 @@ export class FileField extends DataField<File> {
     public filesSize: number = 0;
 
     constructor(title: string, placeholder: string, value?: File, private _maxUploadSizeInBytes?: number,
-                private _maxUploadFiles: number = 1, private _maxShowListFiles: number = 3, private _zipped: boolean = true,
+                private _maxUploadFiles: number = 1, private _zipped: boolean = true,
                 private _allowTypes?: FileUploadMIMEtype | string | Array<FileUploadMIMEtype>) {
         super(title, placeholder, value);
     }
@@ -46,10 +46,6 @@ export class FileField extends DataField<File> {
 
     get maxUploadFiles(): number {
         return this._maxUploadFiles;
-    }
-
-    get maxShowListFiles(): number {
-        return this._maxShowListFiles;
     }
 
     get zipped(): boolean {
