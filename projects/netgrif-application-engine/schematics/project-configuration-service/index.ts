@@ -25,6 +25,25 @@ export function projectConfigurationService(options: ProjectConfigurationService
             options.project = workspace.defaultProject;
         }
 
-        return tree;
+        const projectName = options.project as string;
+
+        const project = workspace.projects[projectName];
+
+        const projectType = project.projectType === 'application' ? 'app' : 'lib';
+
+        const path = `${project.sourceRoot}/${projectType}`;
+
+        const templateSource = apply(url('./files'), [
+            applyTemplates({
+                classify: strings.classify,
+                dasherize: strings.dasherize,
+                project: projectName
+            }),
+            move(normalize(path as string))
+        ]);
+
+        return chain([
+            mergeWith(templateSource)
+        ]);
     };
 }
