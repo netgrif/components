@@ -3,13 +3,5 @@
     "id": "SchematicsProjectConfigurationService",
     "title": "Project Configuration Service Schema",
     "type": "object",
-    "properties": {
-        "project": {
-            "type": "string",
-            "description": "The name of the project.",
-            "$default": {
-                "$source": "projectName"
-            }
-        }
-    }
+    "properties": {}
 }
