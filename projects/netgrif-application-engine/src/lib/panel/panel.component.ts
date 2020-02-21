@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 
 @Component({
     selector: 'nae-app-panel',
@@ -8,9 +8,11 @@ import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from '@angu
 export class PanelComponent implements OnInit {
 
     @Input() expansionDisabled = false;
+    @Input() preventExpand = false;
     @Input() panelHeader: TemplateRef<object>;
     @Input() panelContent: TemplateRef<object>;
     @Output() stopLoading: EventEmitter<object> = new EventEmitter();
+    @ViewChild('matExpansionPanel') _matExpansionPanel;
 
     constructor() {
     }
@@ -24,6 +26,12 @@ export class PanelComponent implements OnInit {
 
     emitCollapse() {
         this.stopLoading.emit();
+    }
+
+    expandPanel() {
+        if (this.preventExpand) {
+            this._matExpansionPanel.close()
+        }
     }
 
 }

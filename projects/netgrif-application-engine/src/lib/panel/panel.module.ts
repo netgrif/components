@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {PanelComponent} from "./panel.component";
 import {FlexModule} from "@angular/flex-layout";
 import {MaterialModule} from "../material/material.module";
-import {CovalentModule} from "../covalent/covalent.module";
 import { CasePanelComponent } from './case-panel/case-panel.component';
 
 @NgModule({
@@ -14,12 +13,10 @@ import { CasePanelComponent } from './case-panel/case-panel.component';
     imports: [
         CommonModule,
         MaterialModule,
-        FlexModule,
-        CovalentModule
+        FlexModule
     ],
     exports: [
         PanelComponent,
-        CovalentModule,
         CasePanelComponent
     ]
 })

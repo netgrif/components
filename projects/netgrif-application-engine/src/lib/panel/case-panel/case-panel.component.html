@@ -1,5 +1,4 @@
-<nae-app-panel [panelContent]="casePanelContent" [panelHeader]="casePanelHeader"
-               (click)="showSpinner=true" (stopLoading)="showSpinner=false">
+<nae-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true">
     <ng-template #casePanelHeader>
         <div fxLayoutAlign=" center" fxLayout="row" fxFlex="100">
             <span fxLayoutAlign=" center" fxFlex>
@@ -9,7 +8,7 @@
             <span fxFlex *ngFor="let field of casePanelDefinition.featuredFields;">{{field}}</span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
-            <button mat-icon-button (click)="show($event)" *ngIf="!showSpinner" [matMenuTriggerFor]="menu">
+            <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -18,12 +17,6 @@
                     <span>Delete</span>
                 </button>
             </mat-menu>
-            <mat-spinner *ngIf="showSpinner" [diameter]="30"></mat-spinner>
-        </div>
-    </ng-template>
-    <ng-template #casePanelContent>
-        <div class="panel-main-content">
-            <ng-content></ng-content>
         </div>
     </ng-template>
 </nae-app-panel>
