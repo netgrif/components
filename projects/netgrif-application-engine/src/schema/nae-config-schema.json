@@ -1,0 +1,142 @@
+{
+    "$id": "https://netgrif.com/engine/nae-config-schema.json",
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "title": "Netgrif Application Engine",
+    "properties": {
+        "name": {
+            "$id": "#/properties/name",
+            "type": "string",
+            "title": "The Name Schema",
+            "default": "",
+            "examples": [
+                "NAE app"
+            ],
+            "pattern": "^(.*)$"
+        },
+        "version": {
+            "$id": "#/properties/version",
+            "type": "string",
+            "title": "The Version Schema",
+            "default": "",
+            "examples": [
+                "0.7.8"
+            ],
+            "pattern": "^(.*)$"
+        },
+        "theme": {
+            "$id": "#/properties/theme",
+            "type": "string",
+            "title": "The Theme Schema",
+            "default": "",
+            "examples": [
+                "zsdRed"
+            ],
+            "pattern": "^(.*)$"
+        },
+        "defaults": {
+            "$id": "#/properties/defaults",
+            "type": "object",
+            "title": "The Defaults Schema",
+            "required": [
+                "userInvitations",
+                "roles"
+            ],
+            "properties": {
+                "userInvitations": {
+                    "$id": "#/properties/defaults/properties/userInvitations",
+                    "type": "boolean",
+                    "title": "The Userinvitations Schema",
+                    "default": false,
+                    "examples": [
+                        false
+                    ]
+                },
+                "roles": {
+                    "$id": "#/properties/defaults/properties/roles",
+                    "type": "array",
+                    "title": "The Roles Schema",
+                    "items": {
+                        "$id": "#/properties/defaults/properties/roles/items",
+                        "type": "string",
+                        "title": "The Items Schema",
+                        "default": "",
+                        "examples": [
+                            "process1:role1",
+                            "process2:admin_role"
+                        ],
+                        "pattern": "^(.*)$"
+                    }
+                }
+            }
+        },
+        "log": {
+            "$id": "#/properties/log",
+            "type": "object",
+            "title": "The Log Schema",
+            "required": [
+                "level",
+                "logWithDate",
+                "serializeExtraParams",
+                "includeLogLevel",
+                "publishers"
+            ],
+            "properties": {
+                "level": {
+                    "$id": "#/properties/log/properties/level",
+                    "type": "string",
+                    "title": "The Level Schema",
+                    "default": "",
+                    "examples": [
+                        "ALL"
+                    ],
+                    "pattern": "^(.*)$"
+                },
+                "logWithDate": {
+                    "$id": "#/properties/log/properties/logWithDate",
+                    "type": "boolean",
+                    "title": "The Logwithdate Schema",
+                    "default": false,
+                    "examples": [
+                        true
+                    ]
+                },
+                "serializeExtraParams": {
+                    "$id": "#/properties/log/properties/serializeExtraParams",
+                    "type": "boolean",
+                    "title": "The Serializeextraparams Schema",
+                    "default": false,
+                    "examples": [
+                        true
+                    ]
+                },
+                "includeLogLevel": {
+                    "$id": "#/properties/log/properties/includeLogLevel",
+                    "type": "boolean",
+                    "title": "The Includeloglevel Schema",
+                    "default": false,
+                    "examples": [
+                        true
+                    ]
+                },
+                "publishers": {
+                    "$id": "#/properties/log/properties/publishers",
+                    "type": "array",
+                    "title": "The Publishers Schema",
+                    "items": {
+                        "$id": "#/properties/log/properties/publishers/items",
+                        "type": "string",
+                        "title": "The Items Schema",
+                        "default": "",
+                        "examples": [
+                            "console",
+                            "localStorage"
+                        ],
+                        "pattern": "^(.*)$"
+                    }
+                }
+            }
+        }
+    }
+}
