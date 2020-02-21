@@ -5,6 +5,7 @@ import {FileUploadService} from "./file-upload.service";
 import {FilesUploadComponent} from "../../side-menu/files-upload/files-upload.component";
 import {FileDownloadService} from "./file-download.service";
 import * as JSZip from 'jszip';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from "../../snack-bar/snack-bar.service";
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,8 @@ export class FileFieldService {
 
     constructor(private _fileUploadService: FileUploadService,
                 private _fileDownloadService: FileDownloadService,
-                private _sideMenuService: SideMenuService) {
+                private _sideMenuService: SideMenuService,
+                private _snackBarService: SnackBarService) {
     }
 
     public onFileUpload(firstOpen: boolean) {
@@ -65,8 +67,7 @@ export class FileFieldService {
     private fileUpload(firstOpen: boolean) {
         this.fileUploadEl.nativeElement.onchange = () => {
             if ((this.allFiles.length + this.fileUploadEl.nativeElement.files.length) > this.fileField.maxUploadFiles) {
-                //TODO: 'You choose more files as you allowed' - snackbar warning
-                console.log('You choose more files as you allowed!');
+                this._snackBarService.openWarningSnackBar('You choose more files as you allowed', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
                 return;
             }
             Array.from(this.fileUploadEl.nativeElement.files).forEach(file => {
@@ -81,11 +82,12 @@ export class FileFieldService {
                     canRetry: false, canCancel: true,
                     successfullyUploaded: false
                 };
-                if (this.allFiles.find(file => file.data.file.name === fileUploadModel.data.file.name)||
-                    this.maxUploadSizeControl(fileUploadModel)) {
-                    //TODO: 'You cannot upload two of the same files.' - snackbar warning
+                if (this.allFiles.find(file => file.data.file.name === fileUploadModel.data.file.name)) {
+                    this._snackBarService.openWarningSnackBar('You cannot upload two of the same files', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
                     return;
                 }
+                if (this.maxUploadSizeControl(fileUploadModel)) return;
+
                 this.allFiles.push(fileUploadModel);
                 // One by one upload file
                 if (!this.fileField.zipped) {
@@ -103,14 +105,11 @@ export class FileFieldService {
     }
 
     private maxUploadSizeControl(file: FileUploadModel) {
-        if (this.fileField.maxUploadSizeInBytes && this.fileField.filesSize <= this.fileField.maxUploadSizeInBytes) {
-            this.fileField.filesSize += file.data.file.size;
-            return false;
-        } else if (!this.fileField.maxUploadSizeInBytes) {
+        this.fileField.filesSize += file.data.file.size;
+        if (this.fileField.maxUploadSizeInBytes && this.fileField.filesSize <= this.fileField.maxUploadSizeInBytes && !this.fileField.maxUploadSizeInBytes) {
             return false;
         } else {
-            //TODO: max upload size overflow - snackbar warning
-            console.log('File size exceeded allowed limit');
+            this._snackBarService.openWarningSnackBar('Files size exceeded allowed limit', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
             return true;
         }
     }

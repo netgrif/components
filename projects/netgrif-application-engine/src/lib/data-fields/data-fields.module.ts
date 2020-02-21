@@ -4,7 +4,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {DataFieldTemplateComponent} from './data-field-template/data-field-template.component';
 import {AngularResizedEventModule} from "angular-resize-event";
 import {FileFieldComponent} from './file-field/file-field.component';
-import {MatButtonModule, MatIconModule, MatProgressBarModule} from "@angular/material";
+import {MatButtonModule, MatIconModule, MatProgressBarModule, MatSnackBarModule} from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
 import {FileUploadService} from "./file-field/file-upload.service";
 import {FileDownloadService} from "./file-field/file-download.service";
@@ -26,7 +26,8 @@ import {SideMenuModule} from "../side-menu/side-menu.module";
         MatProgressBarModule,
         MatButtonModule,
         HttpClientModule,
-        SideMenuModule
+        SideMenuModule,
+        MatSnackBarModule
     ],
     providers: [
         FileUploadService,
