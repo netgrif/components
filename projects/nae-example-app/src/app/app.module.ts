@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LoggerModule} from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -13,8 +12,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        BrowserAnimationsModule,
-        LoggerModule
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
