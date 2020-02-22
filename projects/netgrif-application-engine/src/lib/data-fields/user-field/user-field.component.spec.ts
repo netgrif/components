@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserAssignRowComponent } from './user-assign-row.component';
+import { UserFieldComponent } from './user-field.component';
 
-describe('UserAssignRowComponent', () => {
-  let component: UserAssignRowComponent;
-  let fixture: ComponentFixture<UserAssignRowComponent>;
+describe('UserFieldComponent', () => {
+  let component: UserFieldComponent;
+  let fixture: ComponentFixture<UserFieldComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserAssignRowComponent ]
+      declarations: [ UserFieldComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserAssignRowComponent);
+    fixture = TestBed.createComponent(UserFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

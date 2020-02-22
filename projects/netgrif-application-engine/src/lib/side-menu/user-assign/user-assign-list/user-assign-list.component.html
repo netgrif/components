@@ -1,8 +1,8 @@
 <!--TODO: Complete mat autocomplete-->
 <!--<mat-autocomplete autoActiveFirstOption>-->
-    <nae-user-assign-row
+    <nae-user-assign-item
         *ngFor="let user of filteredUserList | async"
         [user]="user"
-        (click)="assigned(user)">
-    </nae-user-assign-row>
+        (click)="selected(user)">
+    </nae-user-assign-item>
 <!--</mat-autocomplete>-->

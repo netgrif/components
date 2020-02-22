@@ -14,14 +14,14 @@ export class UserAssignListComponent implements OnInit {
 
     @Input() userList: User[];
     @Input() control = new FormControl();
-    @Output() onUserAssigned: EventEmitter<User>;
+    @Output() onUserSelected: EventEmitter<User>;
     @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete;
 
     public filteredUserList: Observable<User[]>;
     private _currentUser: User;
 
     constructor() {
-        this.onUserAssigned = new EventEmitter();
+        this.onUserSelected = new EventEmitter();
         this.filteredUserList = this.control.valueChanges
             .pipe(
                 startWith(''),
@@ -31,13 +31,13 @@ export class UserAssignListComponent implements OnInit {
 
     ngOnInit() {}
 
-    public assigned(selectedUser: User): void {
+    public selected(selectedUser: User): void {
         this._currentUser = selectedUser;
-        this.onUserAssigned.emit(selectedUser);
+        this.onUserSelected.emit(selectedUser);
         this.userList.map(user => user === selectedUser ? user.selected = true : user.selected = false);
     }
 
-    public isAssigned(user: User): boolean {
+    public isSelected(user: User): boolean {
         if (!user || !this._currentUser) {
             return false;
         }

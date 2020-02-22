@@ -7,18 +7,18 @@ import {
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule, MatInputModule, MatListModule,
-    MatSidenavModule,
+    MatSidenavModule, MatSnackBarModule,
     MatToolbarModule
 } from "@angular/material";
 import {PortalModule} from "@angular/cdk/portal";
 import { SideMenuContainerComponent } from './side-menu-container/side-menu-container.component';
 import { UserAssignComponent } from './user-assign/user-assign.component';
 import { UserAssignListComponent } from './user-assign/user-assign-list/user-assign-list.component';
-import { UserAssignRowComponent } from './user-assign/user-assign-row/user-assign-row.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { UserAssignItemComponent } from './user-assign/user-assign-list/user-assign-item/user-assign-item.component';
 
 @NgModule({
-    declarations: [SideMenuContainerComponent, UserAssignComponent, UserAssignListComponent, UserAssignRowComponent],
+    declarations: [SideMenuContainerComponent, UserAssignComponent, UserAssignListComponent, UserAssignItemComponent],
     imports: [
         CommonModule,
         RouterModule,
@@ -33,7 +33,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         MatListModule,
         MatAutocompleteModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatSnackBarModule
     ],
     exports: [SideMenuContainerComponent]
 })
