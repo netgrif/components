@@ -1,5 +1,5 @@
-import {Component, TemplateRef, ViewChild} from '@angular/core';
-import {LoggerService, SideMenuService, SkuskaComponent} from '@netgrif/application-engine';
+import {Component, Input} from '@angular/core';
+import {FileField, FileUploadMIMEtype, LoggerService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'app-root',
@@ -9,13 +9,11 @@ import {LoggerService, SideMenuService, SkuskaComponent} from '@netgrif/applicat
 export class AppComponent {
     title = 'nae-example-app';
 
-    @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
+    @Input() fileField: FileField = new FileField('Title', 'UPLOAD', null,
+        undefined, 10, false,
+        [FileUploadMIMEtype.JPG, FileUploadMIMEtype.XML]);
 
-    constructor(log: LoggerService, private sideMenuService: SideMenuService) {
+    constructor(private log: LoggerService) {
         log.info('App component has started');
-    }
-
-    public toggleSideMenu() {
-        this.sideMenuService.open(SkuskaComponent);
     }
 }

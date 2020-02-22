@@ -34,7 +34,7 @@ export class FileFieldService {
         // ZIPPING
         let zip = new JSZip();
         this.allFiles.forEach(file => {
-            zip.folder('fileFieldZipFolder').file(file.data.file.name);
+            zip.folder('fileFieldZipFolder').file(file.data.file.name, 'asd');
         });
         this._fileUploadService.uploadFile(zip.files);
         this._sideMenuService.close();
@@ -106,11 +106,10 @@ export class FileFieldService {
 
     private maxUploadSizeControl(file: FileUploadModel) {
         this.fileField.filesSize += file.data.file.size;
-        if (this.fileField.maxUploadSizeInBytes && this.fileField.filesSize <= this.fileField.maxUploadSizeInBytes && !this.fileField.maxUploadSizeInBytes) {
-            return false;
-        } else {
+        if (this.fileField.filesSize > this.fileField.maxUploadSizeInBytes) {
             this._snackBarService.openWarningSnackBar('Files size exceeded allowed limit', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
             return true;
         }
+        return false;
     }
 }
