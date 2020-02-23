@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
-import {Router} from "@angular/router";
 import {AbstractCard} from "../abstract-card";
 
 @Component({
@@ -11,7 +10,7 @@ import {AbstractCard} from "../abstract-card";
 export class LoginCardComponent extends AbstractCard implements OnInit {
     hidePassword = true;
 
-    constructor(private fb: FormBuilder, public route: Router) {
+    constructor(private fb: FormBuilder) {
         super();
         this.form = fb.group({
             login: [''],
