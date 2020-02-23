@@ -1,17 +1,18 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../out-tsc/spec",
-    "types": [
-      "jasmine",
-      "node"
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../out-tsc/spec",
+        "types": [
+            "jasmine",
+            "node"
+        ],
+        "target": "ES5"
+    },
+    "files": [
+        "src/test.ts"
+    ],
+    "include": [
+        "**/*.spec.ts",
+        "**/*.d.ts"
     ]
-  },
-  "files": [
-    "src/test.ts"
-  ],
-  "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
-  ]
 }
