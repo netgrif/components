@@ -3,5 +3,18 @@
     "id": "SchematicsCustomTemplates",
     "title": "Project custom templates",
     "type": "object",
-    "properties": {}
+    "description" : "Write path to styles.scss. Example : ./src/styles.sccc",
+    "properties": {
+        "path": {
+            "type": "string",
+            "description": "Path to styles.scss file",
+            "$default": {
+                "$source": "argv",
+                "index" : 0
+            }
+        }
+    },
+    "required" : [
+        "path"
+    ]
 }

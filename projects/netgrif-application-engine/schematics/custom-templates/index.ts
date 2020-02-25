@@ -1,4 +1,6 @@
-import {Rule, SchematicContext, Tree, url, applyTemplates, apply, move, chain, mergeWith} from '@angular-devkit/schematics';
+import {Rule, SchematicContext,SchematicsException, Tree, url, applyTemplates, apply, move, chain, mergeWith} from '@angular-devkit/schematics';
+import {Schema} from "./schema";
+import { getProjectInfo } from "../utilityFunctions";
 
 function handleJsonString(json: string, mainJsonobject: boolean, darkTheme: boolean) {
     if (mainJsonobject) {
@@ -18,10 +20,24 @@ function handleJsonString(json: string, mainJsonobject: boolean, darkTheme: bool
     return json
 }
 
-export function customTemplates(_options: any): Rule {
+export function customTemplates(_options: Schema): Rule {
     return (tree: Tree, _context: SchematicContext) => {
 
+
         let data = JSON.parse(tree.read("./nae.json")!.toString());
+        let correctPath = false;
+
+        const { path } = _options;
+        if (tree.exists(path) && path.includes("styles.scss")) {
+            tree.overwrite(path,"@import \"./styles/templates/customThemes.scss\"; "+ '\n' + "@include mat-core();" + '\n'  +tree.read(path));
+            correctPath = true
+        }
+        else if(tree.exists("./projects/"+getProjectInfo(tree).projectName+"/src/styles.scss")){
+            tree.overwrite("./projects/"+getProjectInfo(tree).projectName+"/src/styles.scss","@import \"./styles/templates/customThemes.scss;"+ '\n' + "@include mat-core();" + '\n'  +tree.read("./projects/"+getProjectInfo(tree).projectName+"/src/styles.scss"));
+        }
+        else{
+            throw new SchematicsException('Your typed path : '+path+' incorrect and no file styles.scss in src folder.');
+        }
 
         let primaryLigt = handleJsonString(JSON.stringify(data.theme.pallets.light.primary), true, false) + '\n';
         let primaryContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.primary.contrast.light), false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.light.primary.contrast.dark), false, true);
@@ -35,7 +51,6 @@ export function customTemplates(_options: any): Rule {
         let secondaryContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.light), false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.dark), false, true);
         let warnDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn), true, false);
         let warnContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.light), false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.dark), false, true);
-
 
         const customTemplates = apply(
             url('./files'),
@@ -54,7 +69,7 @@ export function customTemplates(_options: any): Rule {
                     warnDark : warnDark,
                     warnContrastDark : warnContrastDark
                 }),
-                move("./styles/templates")
+                correctPath ? move(path.replace('styles.scss','')+"/styles/templates") : move("./projects/"+getProjectInfo(tree).projectName+"/src/styles/templates")
             ]
         );
 
