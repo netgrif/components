@@ -37,6 +37,7 @@
         "@angular-devkit/build-angular": "^0.900.0-rc.8",
         "@angular-devkit/build-ng-packagr": "^0.900.0-rc.8",
         "@angular-devkit/schematics-cli": "^0.900.1",
+        "schematics-utilities": "^2.0.1",
         "@angular/cli": "^9.0.0-rc.8",
         "@angular/compiler-cli": "^9.0.0-rc.8",
         "@angular/language-service": "^9.0.0-rc.8",
@@ -59,5 +60,8 @@
         "tslint": "~5.18.0",
         "typedoc": "^0.16.6",
         "typescript": "~3.6.4"
+    },
+    "optionalDependencies": {
+        "@netgrif/application-engine": "file:dist/netgrif-application-engine"
     }
 }
