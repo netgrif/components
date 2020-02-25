@@ -1,0 +1,10 @@
+@import '~@angular/material/theming';
+$bv-light-primary: ( <%= primaryLigt %>
+"contrast : (  <%= primaryContrastLight %>)
+);
+$bv-light-secondary: ( <%= secondaryLight %>
+"contrast : (  <%= secondaryContrastLight %>)
+);
+$bv-light-warn: (  <%= warnLight %>
+"contrast : (  <%= warnContrastLight %>)
+);
