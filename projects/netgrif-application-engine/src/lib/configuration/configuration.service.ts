@@ -9,30 +9,15 @@ export class ConfigurationService {
 
     private configuration: NetgrifApplicationEngine;
 
-    public getAsync(configurationPath?: string): Observable<any> {
-        return of(this.get(configurationPath));
+    public getAsync(): Observable<NetgrifApplicationEngine> {
+        return of(this.get());
     }
 
-    public get(configurationPath?: string): any {
-        if (configurationPath === undefined) {
-           return ConfigurationService.createCopy(this.configuration);
-        }
-
-        let currentNode = this.configuration;
-        for(let pathPart of configurationPath.split(/[.\[]/)) {
-            if (pathPart.endsWith(']')) {
-               pathPart = pathPart.substring(0, pathPart.length - 2);
-            }
-            currentNode = currentNode[pathPart];
-            if (currentNode === undefined) {
-                return undefined;
-            }
-        }
-
-        return ConfigurationService.createCopy(currentNode);
+    public get(): NetgrifApplicationEngine {
+        return this.createConfigurationCopy();
     }
 
-    private static createCopy(configurationPart: any): any {
-        return JSON.parse(JSON.stringify(configurationPart));
+    private createConfigurationCopy(): any {
+        return JSON.parse(JSON.stringify(this.configuration));
     }
 }
