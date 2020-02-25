@@ -26,7 +26,7 @@ export function customTemplates(_options: any): Rule {
         let primaryLigt = handleJsonString(JSON.stringify(data.theme.pallets.light.primary), true, false) + '\n';
         let primaryContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.primary.contrast.light), false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.light.primary.contrast.dark), false, true);
         let secondaryLight =  handleJsonString(JSON.stringify(data.theme.pallets.light.secondary), true, false) + '\n';
-        let secondaryContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.secondary.contrast.light),false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.light.secondary.contrast.dark), false,false);
+        let secondaryContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.secondary.contrast.light),false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.light.secondary.contrast.dark), false,true);
         let warnLight = handleJsonString(JSON.stringify(data.theme.pallets.light.warn), true, false) + '\n';
         let warnContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.warn.contrast.light), false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.light.warn.contrast.dark), false, true);
         let primaryDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.primary), true, false)  ;
