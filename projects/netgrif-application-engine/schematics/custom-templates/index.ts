@@ -29,11 +29,11 @@ export function customTemplates(_options: any): Rule {
         let secondaryContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.secondary.contrast.light),false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.light.secondary.contrast.dark), false,false);
         let warnLight = handleJsonString(JSON.stringify(data.theme.pallets.light.warn), true, false) + '\n';
         let warnContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.warn.contrast.light), false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.light.warn.contrast.dark), false, true);
-        let primaryDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary), true, false) + '\n' + "contrast : ( " + '\n';
+        let primaryDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.primary), true, false)  ;
         let primaryContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.primary.contrast.light), false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.dark.primary.contrast.dark), false, true);
-        let secondaryDark =  handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary), true, false) + '\n' + "contrast : ( " + '\n';
+        let secondaryDark =  handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary), true, false);
         let secondaryContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.light), false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.dark), false, true);
-        let warnDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn), true, false) + '\n' + "contrast : ( " + '\n';
+        let warnDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn), true, false);
         let warnContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.light), false, false) + " " + handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.dark), false, true);
 
 
