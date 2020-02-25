@@ -7,7 +7,7 @@ import {Observable, of} from "rxjs";
 })
 export class ConfigurationService {
 
-    private configuration: NetgrifApplicationEngine;
+    protected configuration: NetgrifApplicationEngine;
 
     public getAsync(): Observable<NetgrifApplicationEngine> {
         return of(this.get());
