@@ -1,9 +1,10 @@
 import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 
 import {SchematicsException, Tree, } from "@angular-devkit/schematics";
-import {FileEntry} from "@angular-devkit/schematics/src/tree/interface";
+import {FileEntry, UpdateRecorder} from "@angular-devkit/schematics/src/tree/interface";
 import {experimental, strings} from "@angular-devkit/core";
 import {NetgrifApplicationEngine} from "../src/lib/configuration/interfaces/schema";
+import {Change, InsertChange} from "@schematics/angular/utility/change";
 
 interface ProjectInfo {
     /**
@@ -65,4 +66,14 @@ export function getTsSource(path: string, content: string): ts.SourceFile {
 
 export function fileEntryToTsSource(file: FileEntry, encoding: string = 'utf8'): ts.SourceFile {
     return getTsSource(file.path, file.content.toString(encoding));
+}
+
+export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Array<Change>): UpdateRecorder {
+    const exportRecorder= tree.beginUpdate(file.path);
+    for (const change of changes) {
+        if (change instanceof InsertChange) {
+            exportRecorder.insertLeft(change.pos, change.toAdd);
+        }
+    }
+    return exportRecorder;
 }

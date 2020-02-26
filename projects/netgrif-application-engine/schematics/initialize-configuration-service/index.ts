@@ -5,7 +5,7 @@ import {
     schematic, SchematicsException
 } from '@angular-devkit/schematics';
 import { addProviderToModule} from '@schematics/angular/utility/ast-utils';
-import {fileEntryToTsSource, getProjectInfo} from "../utilityFunctions";
+import {createChangesRecorder, fileEntryToTsSource, getProjectInfo} from "../utilityFunctions";
 
 export function initializeConfigurationService(): Rule {
     return (tree: Tree) => {
@@ -22,9 +22,12 @@ export function initializeConfigurationService(): Rule {
             `{provide: ConfigurationService, useClass: ${projectInfo.projectNameClassified}ConfigurationService}`,
             `./${projectInfo.projectNameDasherized}-configuration.service`);
 
+        const changesRecorder = createChangesRecorder(tree, appModule, changes);
+
+        tree.commitUpdate(changesRecorder);
+
         return chain([
             schematic('create-configuration-service', {}),
-
         ]);
     };
 }
