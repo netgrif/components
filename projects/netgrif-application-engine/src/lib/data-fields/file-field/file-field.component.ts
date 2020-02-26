@@ -10,6 +10,7 @@ import {FileFieldService} from "./file-field.service";
 export class FileFieldComponent implements OnInit, AfterViewInit{
 
     public multiple: string;
+    public name: string;
 
     @Input() public fileField: FileField;
     @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
@@ -20,6 +21,7 @@ export class FileFieldComponent implements OnInit, AfterViewInit{
     ngOnInit() {
         this._fileFieldService.fileField = this.fileField;
         this.multiple = this.fileField.maxUploadFiles > 1 ? 'multiple' : undefined;
+        this.name = this.fileField.value ? this.fileField.value.name : this.fileField.placeholder
     }
 
     ngAfterViewInit(): void {

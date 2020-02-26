@@ -9,7 +9,7 @@ import {FileField, FileUploadMIMEtype, LoggerService} from '@netgrif/application
 export class AppComponent {
     title = 'nae-example-app';
 
-    @Input() fileField: FileField = new FileField('Title', 'UPLOAD', null,
+    @Input() fileField: FileField = new FileField('Title', 'UPLOAD', undefined,
         undefined, 10, false,
         [FileUploadMIMEtype.JPG, FileUploadMIMEtype.XML]);
 

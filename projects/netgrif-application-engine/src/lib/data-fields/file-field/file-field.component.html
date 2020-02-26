@@ -5,7 +5,7 @@
     <div>
         <button style="margin-bottom: 10px" mat-button color="warn" (click)="onFileUpload()">
             <mat-icon>file_upload</mat-icon>
-            {{fileField.placeholder}}
+            {{name}}
         </button>
 
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="multiple"

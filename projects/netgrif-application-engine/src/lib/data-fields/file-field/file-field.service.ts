@@ -34,7 +34,7 @@ export class FileFieldService {
         // ZIPPING
         let zip = new JSZip();
         this.allFiles.forEach(file => {
-            zip.folder('fileFieldZipFolder').file(file.data.file.name, 'asd');
+            zip.folder('fileFieldZipFolder').file(file.data.file.name);
         });
         this._fileUploadService.uploadFile(zip.files);
         this._sideMenuService.close();
