@@ -1,19 +1,21 @@
 import {
-    Rule, Tree, SchematicsException,
-    apply, url, applyTemplates, move,
-    chain, mergeWith
+    apply,
+    applyTemplates,
+    chain,
+    mergeWith,
+    move,
+    Rule,
+    SchematicsException,
+    Tree,
+    url
 } from '@angular-devkit/schematics';
-import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
-import { getFileContent } from '@schematics/angular/utility/test';
-import { strings, normalize, experimental } from '@angular-devkit/core';
+// import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
+// import { getFileContent } from '@schematics/angular/utility/test';
+import {normalize, strings} from '@angular-devkit/core';
+import {getProjectInfo} from "../utilityFunctions";
 // import { addProviderToModule} from '@schematics/angular/utility/ast-utils';
-import {addProviderToModule, Change, InsertChange} from "schematics-utilities";
-import { HostTree } from '@angular-devkit/schematics';
-
-interface ProjectInfo {
-    path: string,
-    projectName: string
-}
+// import {addProviderToModule, Change, InsertChange} from "schematics-utilities";
+// import { HostTree } from '@angular-devkit/schematics';
 
 export function projectConfigurationService(): Rule {
     return (tree: Tree) => {
@@ -27,92 +29,66 @@ export function projectConfigurationService(): Rule {
                 project: projectInfo.projectName,
                 configuration: naeConfig
             }),
-            move(normalize(projectInfo.path as string))
+            move(normalize(projectInfo.path as string)),
         ]);
-        addAppModule();
+
+        // addAppModule();
         return chain([
             mergeWith(templateSource)
         ]);
     };
 }
 
-function getTsSource(path: string, content: string): ts.SourceFile {
-    return ts.createSourceFile(path, content, ts.ScriptTarget.Latest, true);
-}
+// function getTsSource(path: string, content: string): ts.SourceFile {
+//     return ts.createSourceFile(path, content, ts.ScriptTarget.Latest, true);
+// }
 
-function applyChanges(path: string, content: string, changes: Change[]): string {
-    const tree = new HostTree();
-    tree.create(path, content);
-    const exportRecorder = tree.beginUpdate(path);
-    for (const change of changes) {
-        if (change instanceof InsertChange) {
-            exportRecorder.insertLeft(change.pos, change.toAdd);
-        }
-    }
-    tree.commitUpdate(exportRecorder);
+// function applyChanges(path: string, content: string, changes: Change[]): string {
+//     const tree = new HostTree();
+//     tree.create(path, content);
+//     const exportRecorder = tree.beginUpdate(path);
+//     for (const change of changes) {
+//         if (change instanceof InsertChange) {
+//             exportRecorder.insertLeft(change.pos, change.toAdd);
+//         }
+//     }
+//     tree.commitUpdate(exportRecorder);
+//
+//     return getFileContent(tree, path);
+// }
 
-    return getFileContent(tree, path);
-}
-
-function addAppModule()  {
-    const moduleContent = `
-      import { BrowserModule } from '@angular/platform-browser';
-      import { NgModule } from '@angular/core';
-
-      @NgModule({
-        imports: [BrowserModule],
-        declarations: [],
-        providers: [
-          {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-          }
-        ]
-      })
-      export class AppModule { }
-    `;
-
-    let modulePath = '/src/app/app.module.ts';
-    const source = getTsSource(modulePath, moduleContent);
-    // @ts-ignore
-    const changes = addProviderToModule(source, modulePath, 'LogService', './log.service');
-    const output = applyChanges(modulePath, moduleContent, changes);
-    console.log(output)
-
-}
-
-
-function getProjectInfo(tree: Tree): ProjectInfo {
-    const workspaceConfig = tree.read('/angular.json');
-    if (!workspaceConfig) {
-        throw new SchematicsException('Could not find Angular workspace configuration');
-    }
-
-    const workspaceContent = workspaceConfig.toString();
-
-    const workspace: experimental.workspace.WorkspaceSchema = JSON.parse(workspaceContent);
-
-    const result = {
-        path: '',
-        projectName: ''
-    };
-
-    result.projectName = workspace.defaultProject as string;
-
-    const project = workspace.projects[result.projectName];
-
-    const projectType = project.projectType === 'application' ? 'app' : 'lib';
-
-    result.path = `${project.sourceRoot}/${projectType}`;
-
-    return result;
-}
+// function addAppModule()  {
+//     const moduleContent = `
+//       import { BrowserModule } from '@angular/platform-browser';
+//       import { NgModule } from '@angular/core';
+//
+//       @NgModule({
+//         imports: [BrowserModule],
+//         declarations: [],
+//         providers: [
+//           {
+//             provide: HTTP_INTERCEPTORS,
+//             useClass: AuthInterceptor,
+//             multi: true
+//           }
+//         ]
+//       })
+//       export class AppModule { }
+//     `;
+//
+//     let modulePath = '/src/app/app.module.ts';
+//     const source = getTsSource(modulePath, moduleContent);
+//     // @ts-ignore
+//     const changes = addProviderToModule(source, modulePath, 'LogService', './log.service');
+//     const output = applyChanges(modulePath, moduleContent, changes);
+//     console.log(output)
+//
+// }
 
 function getNaeConfiguration(tree: Tree): string {
     const naeConfig = tree.read('/nae.json');
     if (!naeConfig) {
-        throw new SchematicsException('Could not find Netgrif Application Engine workspace configuration');
+        throw new SchematicsException('Could not find Netgrif Application Engine workspace configuration.  Missing \'nae.json\'.');
     }
 
     return naeConfig.toString();

@@ -1,13 +1,10 @@
-import {Injectable} from '@angular/core';
 import {NetgrifApplicationEngine} from "./interfaces/schema";
 import {Observable, of} from "rxjs";
 
-@Injectable({
-    providedIn: 'root'
-})
-export class ConfigurationService {
+export abstract class ConfigurationService {
 
-    protected configuration: NetgrifApplicationEngine;
+    protected constructor (private configuration: NetgrifApplicationEngine) {
+    }
 
     public getAsync(): Observable<NetgrifApplicationEngine> {
         return of(this.get());

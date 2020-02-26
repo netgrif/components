@@ -7,7 +7,6 @@ import {ConfigurationService} from "@netgrif/application-engine";
 export class <%= classify(project) %>ConfigurationService extends ConfigurationService{
 
     constructor() {
-        super();
-        super.configuration = <%= configuration %>;
+        super(<%= configuration %>);
     }
 }
