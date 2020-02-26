@@ -14,7 +14,13 @@ import {getNaeConfigurationString, getProjectInfo} from "../utilityFunctions";
 export function createConfigurationService(): Rule {
     return (tree: Tree) => {
         const projectInfo = getProjectInfo(tree);
+
         const naeConfig = getNaeConfigurationString(tree);
+
+        if(tree.exists(projectInfo.path+"/"+projectInfo.projectNameDasherized+"-configuration.service.ts")) {
+            tree.delete(projectInfo.path+"/"+projectInfo.projectNameDasherized+"-configuration.service.ts")
+        }
+
 
         const templateSource = apply(url('./files'), [
             applyTemplates({
@@ -25,7 +31,6 @@ export function createConfigurationService(): Rule {
             }),
             move(normalize(projectInfo.path as string)),
         ]);
-
         // addAppModule();
         return chain([
             mergeWith(templateSource)

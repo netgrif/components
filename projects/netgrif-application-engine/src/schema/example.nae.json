@@ -11,7 +11,7 @@
             },
             "sessionBearer": "x-auth-token"
         },
-        "resource": [
+        "resources": [
             {
                 "name": "case",
                 "address": "https://backend.com/api/v3/case",

@@ -6,221 +6,231 @@
  */
 
 export type Resources =
-  | {
-      name: string;
-      address: string;
-      format: string;
-      openApi?: string;
-      [k: string]: any;
-    }
-  | []
-  | [
-      {
-        name: string;
-        address: string;
-        format: string;
-        openApi?: string;
-        [k: string]: any;
-      }
-    ];
+    | {
+    name: string;
+    address: string;
+    format: string;
+    openApi?: string;
+}
+    | []
+    | Array<{
+    name: string;
+    address: string;
+    format: string;
+    openApi?: string;
+}>;
 
 /**
  * Schema for NAE
  */
 export interface NetgrifApplicationEngine {
-  extends?: string;
-  providers: SetAuthAndResourcesAddress;
-  theme: Theme;
-  assets: any[];
-  i18n?: any[];
-  filters?: Filter;
-  views: View;
-  services?: Services;
-  [k: string]: any;
+    extends?: string;
+    providers: SetAuthAndResourcesAddress;
+    theme: Theme;
+    assets: any[];
+    i18n?: any[];
+    filters?: Filter;
+    views: View;
+    services?: Services;
+
+    [k: string]: any;
 }
+
 export interface SetAuthAndResourcesAddress {
-  auth: Auth;
-  resources: Resources;
-  [k: string]: any;
+    auth: Auth;
+    resources: Resources;
+
+    [k: string]: any;
 }
+
 export interface Auth {
-  address: string;
-  authentication: string;
-  sessionBearer?: string;
-  endpoints?: string;
-  [k: string]: any;
+    address: string;
+    authentication: string;
+    sessionBearer?: string;
+    endpoints?: string | { [k: string]: string };
+
+    [k: string]: any;
 }
+
 export interface Theme {
-  name: string;
-  pallets: {
-    light: {
-      primary?:
-        | string
-        | {
-            "50"?: string;
-            "100"?: string;
-            "200"?: string;
-            "300"?: string;
-            "400"?: string;
-            "500"?: string;
-            "600"?: string;
-            "700"?: string;
-            "800"?: string;
-            "900"?: string;
-            contrast?: string;
+    name: string;
+    pallets: {
+        light: {
+            primary?:
+                string
+                | {
+                "50"?: string;
+                "100"?: string;
+                "200"?: string;
+                "300"?: string;
+                "400"?: string;
+                "500"?: string;
+                "600"?: string;
+                "700"?: string;
+                "800"?: string;
+                "900"?: string;
+                contrast?: { "light": string[]; "dark": string[]; };
+                [k: string]: any;
+            };
+            secondary?:
+                string
+                | {
+                "50"?: string;
+                "100"?: string;
+                "200"?: string;
+                "300"?: string;
+                "400"?: string;
+                "500"?: string;
+                "600"?: string;
+                "700"?: string;
+                "800"?: string;
+                "900"?: string;
+                contrast?: { "light": string[]; "dark": string[]; };
+                [k: string]: any;
+            };
+            warn?:
+                string
+                | {
+                "50"?: string;
+                "100"?: string;
+                "200"?: string;
+                "300"?: string;
+                "400"?: string;
+                "500"?: string;
+                "600"?: string;
+                "700"?: string;
+                "800"?: string;
+                "900"?: string;
+                contrast?: { "light": string[]; "dark": string[]; };
+                [k: string]: any;
+            };
             [k: string]: any;
-          };
-      secondary?:
-        | string
-        | {
-            "50"?: string;
-            "100"?: string;
-            "200"?: string;
-            "300"?: string;
-            "400"?: string;
-            "500"?: string;
-            "600"?: string;
-            "700"?: string;
-            "800"?: string;
-            "900"?: string;
-            contrast?: string;
+        };
+        dark?: {
+            primary?:
+                string
+                | {
+                "50"?: string;
+                "100"?: string;
+                "200"?: string;
+                "300"?: string;
+                "400"?: string;
+                "500"?: string;
+                "600"?: string;
+                "700"?: string;
+                "800"?: string;
+                "900"?: string;
+                contrast?: { "light": string[]; "dark": string[]; };
+                [k: string]: any;
+            };
+            secondary?:
+                string
+                | {
+                "50"?: string;
+                "100"?: string;
+                "200"?: string;
+                "300"?: string;
+                "400"?: string;
+                "500"?: string;
+                "600"?: string;
+                "700"?: string;
+                "800"?: string;
+                "900"?: string;
+                contrast?: { "light": string[]; "dark": string[]; };
+                [k: string]: any;
+            };
+            warn?:
+                string
+                | {
+                "50"?: string;
+                "100"?: string;
+                "200"?: string;
+                "300"?: string;
+                "400"?: string;
+                "500"?: string;
+                "600"?: string;
+                "700"?: string;
+                "800"?: string;
+                "900"?: string;
+                contrast?: { "light": string[]; "dark": string[]; };
+                [k: string]: any;
+            };
             [k: string]: any;
-          };
-      warn?:
-        | string
-        | {
-            "50"?: string;
-            "100"?: string;
-            "200"?: string;
-            "300"?: string;
-            "400"?: string;
-            "500"?: string;
-            "600"?: string;
-            "700"?: string;
-            "800"?: string;
-            "900"?: string;
-            contrast?: string;
-            [k: string]: any;
-          };
-      [k: string]: any;
+        };
+        [k: string]: any;
     };
-    dark?: {
-      primary?:
-        | string
-        | {
-            "50"?: string;
-            "100"?: string;
-            "200"?: string;
-            "300"?: string;
-            "400"?: string;
-            "500"?: string;
-            "600"?: string;
-            "700"?: string;
-            "800"?: string;
-            "900"?: string;
-            contrast?: string;
-            [k: string]: any;
-          };
-      secondary?:
-        | string
-        | {
-            "50"?: string;
-            "100"?: string;
-            "200"?: string;
-            "300"?: string;
-            "400"?: string;
-            "500"?: string;
-            "600"?: string;
-            "700"?: string;
-            "800"?: string;
-            "900"?: string;
-            contrast?: string;
-            [k: string]: any;
-          };
-      warn?:
-        | string
-        | {
-            "50"?: string;
-            "100"?: string;
-            "200"?: string;
-            "300"?: string;
-            "400"?: string;
-            "500"?: string;
-            "600"?: string;
-            "700"?: string;
-            "800"?: string;
-            "900"?: string;
-            contrast?: string;
-            [k: string]: any;
-          };
-      [k: string]: any;
-    };
+
     [k: string]: any;
-  };
-  [k: string]: any;
 }
+
 export interface Filter {
-  /**
-   * This interface was referenced by `Filter`'s JSON-Schema definition
-   * via the `patternProperty` "^[a-zA-Z0-9_]+$".
-   */
-  [k: string]: {
-    title: string;
-    access: string;
-    query: string;
-    [k: string]: any;
-  };
-}
-export interface View {
-  layout: string;
-  routes?: {
     /**
-     * This interface was referenced by `undefined`'s JSON-Schema definition
+     * This interface was referenced by `Filter`'s JSON-Schema definition
      * via the `patternProperty` "^[a-zA-Z0-9_]+$".
      */
-    [k: string]: Route;
-  };
-  [k: string]: any;
-}
-export interface Route {
-  type: string;
-  layout: {
-    name: string;
-    params?: {
-      orientation?: string;
-      [k: string]: any;
-    };
-    [k: string]: any;
-  };
-  access:
-    | {
+    [k: string]: {
+        title: string;
+        access: string;
+        query: string;
         [k: string]: any;
-      }
-    | ("public" | "private");
-  navigation:
-    | boolean
-    | {
+    };
+}
+
+export interface View {
+    layout: string;
+    routes?: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^[a-zA-Z0-9_]+$".
+         */
+        [k: string]: Route;
+    };
+
+    [k: string]: any;
+}
+
+export interface Route {
+    type: string;
+    layout: {
+        name: string;
+        params?: {
+            orientation?: string;
+            [k: string]: any;
+        };
+        [k: string]: any;
+    };
+    access:
+        | {
+        [k: string]: any;
+    }
+        | ("public" | "private");
+    navigation:
+        | boolean
+        | {
         title?: string;
         icon?: string;
         [k: string]: any;
-      };
-  routes?: {
-    /**
-     * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` "^[a-zA-Z0-9_]+$".
-     */
-    [k: string]: Route;
-  };
-  [k: string]: any;
-}
-export interface Services {
-  log?: {
-    level?: string;
-    logWithDate?: boolean;
-    serializeExtraParams?: boolean;
-    includeLogLevel?: boolean;
-    publishers?: any[];
+    };
+    routes?: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^[a-zA-Z0-9_]+$".
+         */
+        [k: string]: Route;
+    };
+
     [k: string]: any;
-  };
-  [k: string]: any;
+}
+
+export interface Services {
+    log?: {
+        level?: string;
+        logWithDate?: boolean;
+        serializeExtraParams?: boolean;
+        includeLogLevel?: boolean;
+        publishers?: any[];
+        [k: string]: any;
+    };
+
+    [k: string]: any;
 }
