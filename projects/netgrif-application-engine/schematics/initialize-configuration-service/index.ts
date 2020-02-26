@@ -4,8 +4,8 @@ import {
     Tree,
     schematic, SchematicsException
 } from '@angular-devkit/schematics';
-import { addProviderToModule} from '@schematics/angular/utility/ast-utils';
 import {createChangesRecorder, fileEntryToTsSource, getProjectInfo} from "../utilityFunctions";
+import { addProviderToModule } from '../modifiedLibraryFunctions';
 
 export function initializeConfigurationService(): Rule {
     return (tree: Tree) => {
@@ -19,8 +19,9 @@ export function initializeConfigurationService(): Rule {
         const appModuleSourceFile = fileEntryToTsSource(appModule);
 
         const changes = addProviderToModule(appModuleSourceFile, appModule.path,
-            `{provide: ConfigurationService, useClass: ${projectInfo.projectNameClassified}ConfigurationService}`,
-            `./${projectInfo.projectNameDasherized}-configuration.service`);
+            `${projectInfo.projectNameClassified}ConfigurationService`,
+            `./${projectInfo.projectNameDasherized}-configuration.service`,
+            `{provide: ConfigurationService, useClass: ${projectInfo.projectNameClassified}ConfigurationService}`);
 
         const changesRecorder = createChangesRecorder(tree, appModule, changes);
 
