@@ -5,6 +5,7 @@ import {
 } from '@angular-devkit/schematics';
 
 import { strings, normalize, experimental } from '@angular-devkit/core';
+import { addProviderToModule} from '@schematics/angular/utility/ast-utils';
 
 interface ProjectInfo {
     path: string,
@@ -66,3 +67,7 @@ function getNaeConfiguration(tree: Tree): string {
 
     return naeConfig.toString();
 }
+
+// providers: [
+//     {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}
+// ],
