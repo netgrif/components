@@ -6,6 +6,7 @@ import {
 } from '@angular-devkit/schematics';
 import {createChangesRecorder, fileEntryToTsSource, getProjectInfo} from "../utilityFunctions";
 import { addProviderToModule } from '../modifiedLibraryFunctions';
+import {insertImport} from "@schematics/angular/utility/ast-utils";
 
 export function initializeConfigurationService(): Rule {
     return (tree: Tree) => {
@@ -22,6 +23,8 @@ export function initializeConfigurationService(): Rule {
             `${projectInfo.projectNameClassified}ConfigurationService`,
             `./${projectInfo.projectNameDasherized}-configuration.service`,
             `{provide: ConfigurationService, useClass: ${projectInfo.projectNameClassified}ConfigurationService}`);
+
+        changes.push( insertImport(appModuleSourceFile, appModule.path, 'ConfigurationService', '@netgrif/application-engine') );
 
         const changesRecorder = createChangesRecorder(tree, appModule, changes);
 
