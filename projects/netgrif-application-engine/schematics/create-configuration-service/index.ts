@@ -16,7 +16,7 @@ import {getNaeConfigurationString, getProjectInfo} from "../utilityFunctions";
 // import {addProviderToModule, Change, InsertChange} from "schematics-utilities";
 // import { HostTree } from '@angular-devkit/schematics';
 
-export function projectConfigurationService(): Rule {
+export function createConfigurationService(): Rule {
     return (tree: Tree) => {
         const projectInfo = getProjectInfo(tree);
         const naeConfig = getNaeConfigurationString(tree);

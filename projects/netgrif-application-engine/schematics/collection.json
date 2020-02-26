@@ -1,10 +1,10 @@
 {
     "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
-        "project-configuration-service": {
-            "description": "Generate a project specific configuration service that contains the information from nae.json. Then change the app configuration, so that this new service is injected instead of the native one.",
-            "factory": "./project-configuration-service/index#projectConfigurationService",
-            "schema": "./project-configuration-service/schema.json"
+        "create-configuration-service": {
+            "description": "Generate a project specific configuration service that contains the information from nae.json.",
+            "factory": "./create-configuration-service/index#createConfigurationService",
+            "schema": "./create-configuration-service/schema.json"
         }
     }
 }
