@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
-import {LoggerService, SideMenuService, SkuskaComponent} from '@netgrif/application-engine';
+import {LoggerService, SideMenuService, NewCaseComponent} from '@netgrif/application-engine';
 
 @Component({
     selector: 'app-root',
@@ -16,6 +16,6 @@ export class AppComponent {
     }
 
     public toggleSideMenu() {
-        this.sideMenuService.open(SkuskaComponent);
+        this.sideMenuService.open(NewCaseComponent);
     }
 }
