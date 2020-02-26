@@ -1,5 +1,6 @@
 import {SchematicsException, Tree} from "@angular-devkit/schematics";
 import {experimental} from "@angular-devkit/core";
+import {NetgrifApplicationEngine} from "@netgrif/application-engine/lib/configuration/interfaces/schema";
 
 interface ProjectInfo {
     path: string,
@@ -31,4 +32,17 @@ export function getProjectInfo(tree: Tree): ProjectInfo {
     result.path = `${project.sourceRoot}/${projectType}`;
 
     return result;
+}
+
+export function getNaeConfigurationString(tree: Tree): string {
+    const naeConfig = tree.read('/nae.json');
+    if (!naeConfig) {
+        throw new SchematicsException('Could not find Netgrif Application Engine workspace configuration.  Missing \'nae.json\'.');
+    }
+
+    return naeConfig.toString();
+}
+
+export function getNaeConfiguration(tree: Tree): NetgrifApplicationEngine {
+    return JSON.parse(getNaeConfigurationString(tree));
 }

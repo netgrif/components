@@ -5,14 +5,13 @@ import {
     mergeWith,
     move,
     Rule,
-    SchematicsException,
     Tree,
     url
 } from '@angular-devkit/schematics';
 // import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 // import { getFileContent } from '@schematics/angular/utility/test';
 import {normalize, strings} from '@angular-devkit/core';
-import {getProjectInfo} from "../utilityFunctions";
+import {getNaeConfigurationString, getProjectInfo} from "../utilityFunctions";
 // import { addProviderToModule} from '@schematics/angular/utility/ast-utils';
 // import {addProviderToModule, Change, InsertChange} from "schematics-utilities";
 // import { HostTree } from '@angular-devkit/schematics';
@@ -20,7 +19,7 @@ import {getProjectInfo} from "../utilityFunctions";
 export function projectConfigurationService(): Rule {
     return (tree: Tree) => {
         const projectInfo = getProjectInfo(tree);
-        const naeConfig = getNaeConfiguration(tree);
+        const naeConfig = getNaeConfigurationString(tree);
 
         const templateSource = apply(url('./files'), [
             applyTemplates({
@@ -84,15 +83,6 @@ export function projectConfigurationService(): Rule {
 //     console.log(output)
 //
 // }
-
-function getNaeConfiguration(tree: Tree): string {
-    const naeConfig = tree.read('/nae.json');
-    if (!naeConfig) {
-        throw new SchematicsException('Could not find Netgrif Application Engine workspace configuration.  Missing \'nae.json\'.');
-    }
-
-    return naeConfig.toString();
-}
 
 // providers: [
 //     {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}
