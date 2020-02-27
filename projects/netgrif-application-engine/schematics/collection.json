@@ -10,6 +10,11 @@
             "description": "Generate a project specific configuration service that contains the information from nae.json.",
             "factory": "./configuration-service/create-configuration-service/index#createConfigurationService",
             "schema": "./configuration-service/create-configuration-service/schema.json"
+        },
+        "create-view": {
+            "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt for the user to input their settings.",
+            "factory": "./view/create-view/index#createView",
+            "schema": "./view/create-view/schema.json"
         }
     }
 }

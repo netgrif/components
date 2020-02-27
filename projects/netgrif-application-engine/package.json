@@ -3,8 +3,8 @@
     "version": "4.0.0",
     "scripts": {
         "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
-        "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/netgrif-application-engine/",
-        "copy:files": "cp --parents -p schematics/*/files/** ../../dist/netgrif-application-engine/",
+        "copy:schemas": "cp --parents schematics/*/*/schema.json ../../dist/netgrif-application-engine/",
+        "copy:files": "cp --parents -p schematics/*/*/files/** ../../dist/netgrif-application-engine/",
         "copy:collection": "cp schematics/collection.json ../../dist/netgrif-application-engine/schematics/collection.json",
         "postbuild": "npm run copy:schemas && npm run copy:files && npm run copy:collection"
     },
