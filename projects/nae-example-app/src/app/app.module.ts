@@ -3,8 +3,9 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LoggerModule} from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NaeExampleAppConfigurationService } from './nae-example-app-configuration.service';
+import { ConfigurationService } from '@netgrif/application-engine';
 
 @NgModule({
     declarations: [
@@ -13,10 +14,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        BrowserAnimationsModule,
-        LoggerModule
+        BrowserAnimationsModule
     ],
-    providers: [],
+    providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
     bootstrap: [AppComponent]
 })
 export class AppModule {
