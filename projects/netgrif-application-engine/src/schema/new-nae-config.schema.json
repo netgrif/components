@@ -1,0 +1,850 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "extends": {
+            "type": "string"
+        },
+        "providers": {
+            "type": "object",
+            "properties": {
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "address": {
+                            "type": "string"
+                        },
+                        "authentication": {
+                            "type": "string"
+                        },
+                        "endpoints": {
+                            "type": "object",
+                            "properties": {
+                                "login": {
+                                    "type": "string"
+                                },
+                                "logout": {
+                                    "type": "string"
+                                },
+                                "signup": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "login",
+                                "logout",
+                                "signup"
+                            ]
+                        },
+                        "sessionBearer": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "address",
+                        "authentication",
+                        "endpoints",
+                        "sessionBearer"
+                    ]
+                },
+                "resource": {
+                    "type": "array",
+                    "items": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "format": {
+                                    "type": "string"
+                                },
+                                "openApi": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "address",
+                                "format",
+                                "openApi"
+                            ]
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "format": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "address",
+                                "format"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "auth",
+                "resource"
+            ]
+        },
+        "theme": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "pallets": {
+                    "type": "object",
+                    "properties": {
+                        "light": {
+                            "type": "object",
+                            "properties": {
+                                "primary": {
+                                    "type": "object",
+                                    "properties": {
+                                        "50": {
+                                            "type": "string"
+                                        },
+                                        "100": {
+                                            "type": "string"
+                                        },
+                                        "200": {
+                                            "type": "string"
+                                        },
+                                        "300": {
+                                            "type": "string"
+                                        },
+                                        "400": {
+                                            "type": "string"
+                                        },
+                                        "500": {
+                                            "type": "string"
+                                        },
+                                        "600": {
+                                            "type": "string"
+                                        },
+                                        "700": {
+                                            "type": "string"
+                                        },
+                                        "800": {
+                                            "type": "string"
+                                        },
+                                        "900": {
+                                            "type": "string"
+                                        },
+                                        "A100": {
+                                            "type": "string"
+                                        },
+                                        "A200": {
+                                            "type": "string"
+                                        },
+                                        "A400": {
+                                            "type": "string"
+                                        },
+                                        "A700": {
+                                            "type": "string"
+                                        },
+                                        "contrast": {
+                                            "type": "object",
+                                            "properties": {
+                                                "light": {
+                                                    "type": "array",
+                                                    "items": [
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        }
+                                                    ]
+                                                },
+                                                "dark": {
+                                                    "type": "array",
+                                                    "items": [
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "light",
+                                                "dark"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "50",
+                                        "100",
+                                        "200",
+                                        "300",
+                                        "400",
+                                        "500",
+                                        "600",
+                                        "700",
+                                        "800",
+                                        "900",
+                                        "A100",
+                                        "A200",
+                                        "A400",
+                                        "A700",
+                                        "contrast"
+                                    ]
+                                },
+                                "secondary": {
+                                    "type": "object",
+                                    "properties": {
+                                        "50": {
+                                            "type": "string"
+                                        },
+                                        "100": {
+                                            "type": "string"
+                                        },
+                                        "200": {
+                                            "type": "string"
+                                        },
+                                        "300": {
+                                            "type": "string"
+                                        },
+                                        "400": {
+                                            "type": "string"
+                                        },
+                                        "500": {
+                                            "type": "string"
+                                        },
+                                        "600": {
+                                            "type": "string"
+                                        },
+                                        "700": {
+                                            "type": "string"
+                                        },
+                                        "800": {
+                                            "type": "string"
+                                        },
+                                        "900": {
+                                            "type": "string"
+                                        },
+                                        "A100": {
+                                            "type": "string"
+                                        },
+                                        "A200": {
+                                            "type": "string"
+                                        },
+                                        "A400": {
+                                            "type": "string"
+                                        },
+                                        "A700": {
+                                            "type": "string"
+                                        },
+                                        "contrast": {
+                                            "type": "object",
+                                            "properties": {
+                                                "light": {
+                                                    "type": "array",
+                                                    "items": [
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        }
+                                                    ]
+                                                },
+                                                "dark": {
+                                                    "type": "array",
+                                                    "items": [
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "light",
+                                                "dark"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "50",
+                                        "100",
+                                        "200",
+                                        "300",
+                                        "400",
+                                        "500",
+                                        "600",
+                                        "700",
+                                        "800",
+                                        "900",
+                                        "A100",
+                                        "A200",
+                                        "A400",
+                                        "A700",
+                                        "contrast"
+                                    ]
+                                },
+                                "warn": {
+                                    "type": "object",
+                                    "properties": {
+                                        "50": {
+                                            "type": "string"
+                                        },
+                                        "100": {
+                                            "type": "string"
+                                        },
+                                        "200": {
+                                            "type": "string"
+                                        },
+                                        "300": {
+                                            "type": "string"
+                                        },
+                                        "400": {
+                                            "type": "string"
+                                        },
+                                        "500": {
+                                            "type": "string"
+                                        },
+                                        "600": {
+                                            "type": "string"
+                                        },
+                                        "700": {
+                                            "type": "string"
+                                        },
+                                        "800": {
+                                            "type": "string"
+                                        },
+                                        "900": {
+                                            "type": "string"
+                                        },
+                                        "A100": {
+                                            "type": "string"
+                                        },
+                                        "A200": {
+                                            "type": "string"
+                                        },
+                                        "A400": {
+                                            "type": "string"
+                                        },
+                                        "A700": {
+                                            "type": "string"
+                                        },
+                                        "contrast": {
+                                            "type": "object",
+                                            "properties": {
+                                                "light": {
+                                                    "type": "array",
+                                                    "items": [
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        }
+                                                    ]
+                                                },
+                                                "dark": {
+                                                    "type": "array",
+                                                    "items": [
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "light",
+                                                "dark"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "50",
+                                        "100",
+                                        "200",
+                                        "300",
+                                        "400",
+                                        "500",
+                                        "600",
+                                        "700",
+                                        "800",
+                                        "900",
+                                        "A100",
+                                        "A200",
+                                        "A400",
+                                        "A700",
+                                        "contrast"
+                                    ]
+                                },
+                                "dark": {
+                                    "type": "object",
+                                    "properties": {
+                                        "primary": {
+                                            "type": "string"
+                                        },
+                                        "secondary": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "primary",
+                                        "secondary"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "primary",
+                                "secondary",
+                                "warn",
+                                "dark"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "light"
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "pallets"
+            ]
+        },
+        "assets": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "filters": {
+            "type": "object",
+            "properties": {
+                "all-cases": {
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string"
+                        },
+                        "access": {
+                            "type": "string"
+                        },
+                        "query": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "title",
+                        "access",
+                        "query"
+                    ]
+                }
+            },
+            "required": [
+                "all-cases"
+            ]
+        },
+        "i18n": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "views": {
+            "type": "object",
+            "properties": {
+                "layout": {
+                    "type": "string"
+                },
+                "routes": {
+                    "type": "object",
+                    "properties": {
+                        "login": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "layout": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "params": {
+                                            "type": "object",
+                                            "properties": {
+                                                "orientation": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "orientation"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "name",
+                                        "params"
+                                    ]
+                                },
+                                "access": {
+                                    "type": "string"
+                                },
+                                "navigation": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "layout",
+                                "access",
+                                "navigation"
+                            ]
+                        },
+                        "portal": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "layout": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "params": {
+                                            "type": "object",
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "logo": {
+                                                    "type": "string"
+                                                },
+                                                "toolbar": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "userMenu": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "userMenu"
+                                                    ]
+                                                },
+                                                "sidenav": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "userMenu": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "hide": {
+                                                            "type": "string"
+                                                        },
+                                                        "navigationType": {
+                                                            "type": "string"
+                                                        },
+                                                        "appVersion": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "naeVersion": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "links": {
+                                                            "type": "array",
+                                                            "items": [
+                                                                {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "title": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "href": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "title",
+                                                                        "href"
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "userMenu",
+                                                        "hide",
+                                                        "navigationType",
+                                                        "appVersion",
+                                                        "naeVersion",
+                                                        "links"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "title",
+                                                "logo",
+                                                "toolbar",
+                                                "sidenav"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "name",
+                                        "params"
+                                    ]
+                                },
+                                "navigation": {
+                                    "type": "object",
+                                    "properties": {
+                                        "icon": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "icon"
+                                    ]
+                                },
+                                "access": {
+                                    "type": "string"
+                                },
+                                "routes": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cases": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string"
+                                                },
+                                                "layout": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "params": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "filters": {
+                                                                    "type": "array",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "string"
+                                                                        },
+                                                                        {
+                                                                            "type": "string"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "filters"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "name",
+                                                        "params"
+                                                    ]
+                                                },
+                                                "navigation": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "title": {
+                                                            "type": "string"
+                                                        },
+                                                        "icon": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "title",
+                                                        "icon"
+                                                    ]
+                                                },
+                                                "access": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "permission": {
+                                                            "type": "array",
+                                                            "items": [
+                                                                {
+                                                                    "type": "string"
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "permission"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "layout",
+                                                "navigation",
+                                                "access"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "cases"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "layout",
+                                "navigation",
+                                "access",
+                                "routes"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "login",
+                        "portal"
+                    ]
+                }
+            },
+            "required": [
+                "layout",
+                "routes"
+            ]
+        },
+        "defaults": {
+            "type": "object",
+            "properties": {
+                "log": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string"
+                        },
+                        "logWithDate": {
+                            "type": "boolean"
+                        },
+                        "serializeExtraParams": {
+                            "type": "boolean"
+                        },
+                        "includeLogLevel": {
+                            "type": "boolean"
+                        },
+                        "publishers": {
+                            "type": "array",
+                            "items": [
+                                {
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "level",
+                        "logWithDate",
+                        "serializeExtraParams",
+                        "includeLogLevel",
+                        "publishers"
+                    ]
+                }
+            },
+            "required": [
+                "log"
+            ]
+        }
+    },
+    "required": [
+        "extends",
+        "providers",
+        "theme",
+        "assets",
+        "filters",
+        "i18n",
+        "views",
+        "defaults"
+    ]
+}

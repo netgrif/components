@@ -1,16 +1,19 @@
 pipeline {
   agent any
+  tools {
+    nodejs 'localNodeJS'
+  }
   stages {
+
     stage('Install') {
       steps {
         sh 'npm install'
-        echo 'Dependencies Installed'
       }
     }
 
-    stage('Test') {
+    stage('Tests') {
       parallel {
-        stage('Test') {
+        stage('Unit Test') {
           steps {
             sh 'npm run ng test netgrif-application-engine'
           }
@@ -22,6 +25,12 @@ pipeline {
           }
         }
 
+        stage('Sonar') {
+            steps {
+                echo 'Sonar'
+
+            }
+        }
       }
     }
 
@@ -48,7 +57,7 @@ pipeline {
   post {
     always {
       junit testResults: '**/coverage/netgrif-application-engine/**/JUNITX-test-report.xml',
-        allowEmptyResults: true,
+        allowEmptyResults: false,
         healthScaleFactor: 1.0
       archiveArtifacts artifacts: './dist/netgrif-application-engine/nae-build.zip', fingerprint: true
     }
