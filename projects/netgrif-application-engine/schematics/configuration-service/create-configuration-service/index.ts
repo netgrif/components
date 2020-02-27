@@ -9,7 +9,7 @@ import {
     url
 } from '@angular-devkit/schematics';
 import {normalize, strings} from '@angular-devkit/core';
-import {getNaeConfigurationString, getProjectInfo} from "../utilityFunctions";
+import {getNaeConfigurationString, getProjectInfo} from "../../utilityFunctions";
 
 export function createConfigurationService(): Rule {
     return (tree: Tree) => {

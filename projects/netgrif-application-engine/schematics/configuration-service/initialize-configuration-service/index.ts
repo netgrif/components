@@ -4,8 +4,8 @@ import {
     Tree,
     schematic, SchematicsException
 } from '@angular-devkit/schematics';
-import {createChangesRecorder, fileEntryToTsSource, getProjectInfo} from "../utilityFunctions";
-import { addProviderToModule } from '../modifiedLibraryFunctions';
+import {createChangesRecorder, fileEntryToTsSource, getProjectInfo} from "../../utilityFunctions";
+import { addProviderToModule } from '../../modifiedLibraryFunctions';
 import {insertImport} from "@schematics/angular/utility/ast-utils";
 
 export function initializeConfigurationService(): Rule {
