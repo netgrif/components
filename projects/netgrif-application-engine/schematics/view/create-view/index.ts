@@ -2,9 +2,9 @@ import {
     Rule,
     Tree
 } from '@angular-devkit/schematics';
-import {getNaeConfiguration, getProjectInfo, ProjectInfo} from "../../utilityFunctions";
-import {Route, Routes} from "@angular/router";
-import {Route as NaeRoute} from "../../../src/lib/configuration/interfaces/schema";
+import {getNaeConfiguration, getProjectInfo, ProjectInfo} from '../../utilityFunctions';
+import {Route, Routes} from '@angular/router';
+import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
 
 interface SchematicArguments {
     path: string | undefined,
@@ -28,13 +28,13 @@ export function createView(): Rule {
 
 function getRoutesJsonContent(tree: Tree, projectInfo: ProjectInfo): Routes {
     const routes = tree.read(`${projectInfo.path}/routes.json`);
-    if(!routes) {
+    if (!routes) {
         return [];
     }
     return JSON.parse(routes.toString());
 }
 
-function getSchematicArguments(naeRoutes: {[k:string]: NaeRoute} | undefined, angularRoutes: Routes): SchematicArguments {
+function getSchematicArguments(naeRoutes: { [k: string]: NaeRoute } | undefined, angularRoutes: Routes): SchematicArguments {
     if (!naeRoutes) {
         return emptyArguments();
     }
@@ -45,8 +45,8 @@ function getSchematicArguments(naeRoutes: {[k:string]: NaeRoute} | undefined, an
 }
 
 function addAllRoutesToMap(map: Map<string, Route>, routes: Routes, pathPrefix: string = ''): void {
-    routes.forEach( route => {
-        if(route.path !== undefined) {
+    routes.forEach(route => {
+        if (route.path !== undefined) {
             const routePath = constructRoutePath(pathPrefix, route.path);
             map.set(routePath, route);
             if (route.children !== undefined) {
@@ -56,12 +56,12 @@ function addAllRoutesToMap(map: Map<string, Route>, routes: Routes, pathPrefix: 
     });
 }
 
-function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: {[k:string]: NaeRoute}, pathPrefix: string = ''): SchematicArguments {
+function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k: string]: NaeRoute }, pathPrefix: string = ''): SchematicArguments {
     for (const routePathPart of Object.keys(naeRoutes)) {
         const route = naeRoutes[routePathPart];
         const routePath = constructRoutePath(pathPrefix, routePathPart);
 
-        if ( !existingRoutesMap.has(routePath)) {
+        if (!existingRoutesMap.has(routePath)) {
             return {
                 path: routePath,
                 type: route.type,
@@ -81,7 +81,7 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: {[k:s
 }
 
 function constructRoutePath(pathPrefix: string, pathPart: string): string {
-    return `${pathPrefix}${pathPrefix.length > 0 ? '/': ''}${pathPart}`;
+    return `${pathPrefix}${pathPrefix.length > 0 ? '/' : ''}${pathPart}`;
 }
 
 function emptyArguments(): SchematicArguments {
