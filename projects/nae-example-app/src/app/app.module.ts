@@ -8,6 +8,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexModule} from "@angular/flex-layout";
 import { DocumentationComponent } from './documentation/documentation.component';
 
+import { NaeExampleAppConfigurationService } from './nae-example-app-configuration.service';
+import { ConfigurationService } from '@netgrif/application-engine';
 
 @NgModule({
     declarations: [
@@ -22,8 +24,9 @@ import { DocumentationComponent } from './documentation/documentation.component'
         FlexModule,
         MaterialModule,
         CovalentModule
+        BrowserAnimationsModule
     ],
-    providers: [],
+    providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
     bootstrap: [AppComponent]
 })
 export class AppModule {
