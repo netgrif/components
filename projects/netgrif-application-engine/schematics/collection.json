@@ -15,6 +15,11 @@
             "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt for the user to input their settings.",
             "factory": "./view/create-view/index#createView",
             "schema": "./view/create-view/schema.json"
+        },
+        "create-view-prompt": {
+            "description": "creates a view based on provided settings. Opens a prompt if no settings are provided.",
+            "factory": "./view/create-view-prompt/index#createViewPrompt",
+            "schema": "./view/create-view-prompt/schema.json"
         }
     }
 }
