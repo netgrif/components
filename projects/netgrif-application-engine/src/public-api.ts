@@ -5,7 +5,7 @@
 /* MODULES */
 export * from './lib/material/material.module';
 
-
 /* APIS */
 export * from './lib/logger/public-api';
+export * from './lib/configuration/public-api';
 export * from './lib/card/public-api';
