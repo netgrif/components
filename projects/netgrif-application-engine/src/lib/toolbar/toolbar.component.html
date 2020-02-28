@@ -1,0 +1,51 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <div class="main-toolbar-logo" fxFlex fxLayout="row">
+            <a href="/">
+                <img src="assets/img/netgrif_full_white.svg" alt="Netgrif">
+            </a>
+        </div>
+        <div fxFlex fxHide.gt-xs="false" fxHide.lt-md="true" fxLayout="row" fxLayoutAlign="center">
+            {{appName}}
+        </div>
+        <div class="main-toolbar-menu" fxFlex fxLayout="row" fxLayoutAlign="end">
+            <button mat-button [matMenuTriggerFor]="mainMenu" class="main-toolbar-menu-button" fxLayout="row">
+                <span class="main-toolbar-logged-user" fxHide.xs="true">{{loggedUser}}</span>
+                <mat-icon class="main-toolbar-icon" aria-hidden="false" aria-label="Example home icon">account_circle
+                </mat-icon>
+                <mat-menu #mainMenu="matMenu" class="main-toolbar-opened-menu">
+                    <button mat-menu-item [matMenuTriggerFor]="languages">
+                        <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
+                            language
+                        </mat-icon>
+                        Language
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
+                            account_circle
+                        </mat-icon>
+                        Profile
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
+                            exit_to_app
+                        </mat-icon>
+                        Logout
+                    </button>
+                </mat-menu>
+                <mat-menu #languages="matMenu">
+                    <button mat-menu-item (click)="selectLanguageService.changeLanguage('english')">English
+                        <mat-icon *ngIf="selectLanguageService.languages.english" class="main-toolbar-menu-icon"
+                                  aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
+                        </mat-icon>
+                    </button>
+                    <button mat-menu-item (click)="selectLanguageService.changeLanguage('slovak')">Slovak
+                        <mat-icon *ngIf="selectLanguageService.languages.slovak" class="main-toolbar-menu-icon"
+                                  aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
+                        </mat-icon>
+                    </button>
+                </mat-menu>
+            </button>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
