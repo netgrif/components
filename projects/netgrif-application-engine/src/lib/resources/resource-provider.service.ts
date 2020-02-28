@@ -7,6 +7,7 @@ import {Injectable} from "@angular/core";
 
 export type Observe =
     'body'
+
 export type Headers =
     HttpHeaders | {
     [header: string]: string | string[];

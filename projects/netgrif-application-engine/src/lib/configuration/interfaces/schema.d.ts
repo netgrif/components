@@ -5,19 +5,17 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type Resources =
-    | {
+export type Resource = {
     name: string;
     address: string;
     format: string;
     openApi?: string;
 }
-    | Array<{
-    name: string;
-    address: string;
-    format: string;
-    openApi?: string;
-}>;
+
+export type Resources =
+    | Resource
+    | Array<Resource>;
+
 
 /**
  * Schema for NAE

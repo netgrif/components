@@ -10,6 +10,11 @@
             "description": "Generate a project specific configuration service that contains the information from nae.json.",
             "factory": "./create-configuration-service/index#createConfigurationService",
             "schema": "./create-configuration-service/schema.json"
+        },
+        "initialize-resource": {
+            "description": "Generate Resource from nae.json.",
+            "factory": "./initialize-resources/index#initializeResources",
+            "schema": "./initialize-resources/schema.json"
         }
     }
 }
