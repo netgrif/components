@@ -2,9 +2,10 @@ import {
     Rule,
     Tree
 } from '@angular-devkit/schematics';
-import {getNaeConfiguration, getProjectInfo, ProjectInfo} from '../../utilityFunctions';
+import {getNaeConfiguration, getProjectInfo} from '../../utilityFunctions';
 import {Route, Routes} from '@angular/router';
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
+import {getRoutesJsonContent} from "../viewUtilityFunctions";
 
 interface SchematicArguments {
     path: string | undefined,
@@ -26,13 +27,7 @@ export function createView(): Rule {
     };
 }
 
-function getRoutesJsonContent(tree: Tree, projectInfo: ProjectInfo): Routes {
-    const routes = tree.read(`${projectInfo.path}/routes.json`);
-    if (!routes) {
-        return [];
-    }
-    return JSON.parse(routes.toString());
-}
+
 
 function getSchematicArguments(naeRoutes: { [k: string]: NaeRoute } | undefined, angularRoutes: Routes): SchematicArguments {
     if (!naeRoutes) {
