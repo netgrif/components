@@ -12,7 +12,6 @@ export type Resources =
     format: string;
     openApi?: string;
 }
-    | []
     | Array<{
     name: string;
     address: string;
