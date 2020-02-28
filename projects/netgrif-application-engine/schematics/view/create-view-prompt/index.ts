@@ -26,7 +26,7 @@ function createView(tree: Tree, args: CreateViewArguments): Rule {
         case "login":
             return createLoginView(tree, args);
         default:
-            throw new SchematicsException(`Unknown view type '${schematicArguments.viewType}'`);
+            throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
 }
 
