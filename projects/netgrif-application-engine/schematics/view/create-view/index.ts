@@ -20,7 +20,7 @@ export function createView(): Rule {
 
 function getSchematicArguments(naeRoutes: { [k: string]: NaeRoute } | undefined, angularRoutes: Routes): CreateViewArguments {
     if (!naeRoutes) {
-        return emptyArguments();
+        return emptyArguments(new Map<string, Route>());
     }
 
     const routeMap = new Map<string, Route>();
@@ -48,8 +48,9 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
         if (!existingRoutesMap.has(routePath)) {
             return {
                 path: routePath,
-                type: route.layout.name,
-                layoutParams: route.layout.params
+                viewType: route.layout.name,
+                layoutParams: route.layout.params,
+                _routesMap: existingRoutesMap
             };
         }
 
@@ -60,16 +61,17 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
             }
         }
     }
-    return emptyArguments();
+    return emptyArguments(existingRoutesMap);
 }
 
 function constructRoutePath(pathPrefix: string, pathPart: string): string {
     return `${pathPrefix}${pathPrefix.length > 0 ? '/' : ''}${pathPart}`;
 }
 
-function emptyArguments(): CreateViewArguments {
+function emptyArguments(routesMap: Map<string, Route>): CreateViewArguments {
     return {
         path: undefined,
-        type: undefined
+        viewType: undefined,
+        _routesMap: routesMap
     };
 }
