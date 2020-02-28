@@ -5,6 +5,7 @@
     ],
     "rules": {
         "no-unused-variable": true,
-        "no-uninitialized": [true, "variables", "properties"]
+        "no-uninitialized": [true, "variables", "properties"],
+        "strict-type-predicates": true
     }
 }
