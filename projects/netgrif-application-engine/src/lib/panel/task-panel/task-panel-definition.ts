@@ -1,4 +1,5 @@
-export class TaskPanelDefinition {
-    constructor(public featuredFields: Array<any>, public panelIcon: string, public panelIconField: string) {
-    }
+export interface TaskPanelDefinition {
+    featuredFields: Array<any>;
+    panelIcon: string;
+    panelIconField: string;
 }

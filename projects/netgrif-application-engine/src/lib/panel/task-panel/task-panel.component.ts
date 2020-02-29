@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TaskPanelDefinition} from "./task-panel-definition";
+import {MatExpansionPanel} from "@angular/material/expansion";
 
 @Component({
   selector: 'nae-task-panel',
@@ -9,10 +10,13 @@ import {TaskPanelDefinition} from "./task-panel-definition";
 export class TaskPanelComponent implements OnInit {
 
     @Input() taskPanelDefinition: TaskPanelDefinition;
-    showSpinner = false;
-    panelIcon: string;
-    panelIconField: string;
+    public showSpinner = false;
+    public panelIcon: string;
+    public panelIconField: string;
+    public panelRef: MatExpansionPanel;
 
+    constructor() {
+    }
 
     ngOnInit() {
         this.panelIcon = this.taskPanelDefinition.panelIcon;
@@ -22,6 +26,10 @@ export class TaskPanelComponent implements OnInit {
     public show(event: MouseEvent): boolean {
         event.stopPropagation();
         return false;
+    }
+
+    public setPanelRef(panelRef: MatExpansionPanel) {
+        this.panelRef = panelRef
     }
 
 }

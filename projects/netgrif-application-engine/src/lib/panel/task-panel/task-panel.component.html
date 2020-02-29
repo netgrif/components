@@ -1,5 +1,5 @@
 <nae-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
-               (stopLoading)="showSpinner=false">
+               (stopLoading)="showSpinner=false" (getExpansionPanelRef)="setPanelRef($event)">
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign=" center" fxLayout="row" fxFlex="100" (click)="showSpinner=true">
             <span fxLayoutAlign=" center" fxFlex>
@@ -33,7 +33,7 @@
             <div class="task-panel-footer" fxLayout="row" fxFlex="20" fxLayoutAlign="end center">
                 <button mat-button>ASSIGN</button>
                 <button mat-button>DELEGATE</button>
-                <button mat-button>COLLAPSE</button>
+                <button (click)="panelRef.expanded = false;" mat-button>COLLAPSE</button>
             </div>
         </div>
     </ng-template>
