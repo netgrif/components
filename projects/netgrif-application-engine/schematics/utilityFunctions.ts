@@ -6,14 +6,16 @@ import {experimental, strings} from "@angular-devkit/core";
 import {NetgrifApplicationEngine} from "../src/lib/configuration/interfaces/schema";
 import {Change, InsertChange} from "@schematics/angular/utility/change";
 
-export interface ProjectInfo {
+export class ProjectInfo {
     /**
      * projects/[name]/src/app
      */
-    path: string,
-    projectName: string,
-    projectNameClassified: string,
-    projectNameDasherized: string
+    path: string = '';
+    projectName: string = '';
+    projectNameClassified: string = '';
+    projectNameDasherized: string = '';
+    projectPrefix: string = '';
+    projectPrefixDasherized: string = '';
 }
 
 
@@ -27,12 +29,7 @@ export function getProjectInfo(tree: Tree): ProjectInfo {
 
     const workspace: experimental.workspace.WorkspaceSchema = JSON.parse(workspaceContent);
 
-    const result = {
-        path: '',
-        projectName: '',
-        projectNameClassified: '',
-        projectNameDasherized: ''
-    };
+    const result = new ProjectInfo();
 
     result.projectName = workspace.defaultProject as string;
     result.projectNameClassified = strings.classify(result.projectName);
@@ -43,6 +40,9 @@ export function getProjectInfo(tree: Tree): ProjectInfo {
     const projectType = project.projectType === 'application' ? 'app' : 'lib';
 
     result.path = `${project.sourceRoot}/${projectType}`;
+
+    result.projectPrefix = project.prefix;
+    result.projectPrefixDasherized = strings.dasherize(result.projectPrefix);
 
     return result;
 }

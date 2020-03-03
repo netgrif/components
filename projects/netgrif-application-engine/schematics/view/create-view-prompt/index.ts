@@ -13,7 +13,10 @@ export function createViewPrompt(schematicArguments: CreateViewArguments): Rule 
     };
 }
 
-function checkPathValidity(path: string, routeMap: Map<string, Route>) {
+function checkPathValidity(path: string | undefined, routeMap: Map<string, Route>) {
+    if (path === undefined) {
+        throw new SchematicsException(`Path cannot be undefined!`);
+    }
     // if the path was entered from a prompt, it might not have a parent
     const parentPath = getParentPath(path);
     if( parentPath !== '' && !routeMap.has(parentPath) ) {
