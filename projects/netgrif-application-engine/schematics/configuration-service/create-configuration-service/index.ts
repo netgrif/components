@@ -31,7 +31,7 @@ export function createConfigurationService(): Rule {
             }),
             move(normalize(projectInfo.path as string)),
         ]);
-        // addAppModule();
+
         return chain([
             mergeWith(templateSource)
         ]);

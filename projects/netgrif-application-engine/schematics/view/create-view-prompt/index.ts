@@ -1,10 +1,18 @@
 import {
-    Rule, SchematicsException,
-    Tree
+    apply,
+    applyTemplates,
+    mergeWith,
+    move,
+    Rule,
+    SchematicsException,
+    Tree,
+    url
 } from '@angular-devkit/schematics';
+import {normalize} from '@angular-devkit/core';
 import {CreateViewArguments} from './schema';
 import {Route} from '@angular/router';
 import {getParentPath} from '../viewUtilityFunctions';
+import {getProjectInfo} from '../../utilityFunctions';
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
@@ -34,5 +42,14 @@ function createView(tree: Tree, args: CreateViewArguments): Rule {
 }
 
 function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
+    const projectInfo = getProjectInfo(tree);
 
+    const loginTemplate = apply(url('./files/login'), [
+        applyTemplates({
+            prefix: projectInfo.projectPrefixDasherized
+        }),
+        move(normalize(`${projectInfo.path}/views/${args.path}`))
+    ]);
+
+    return mergeWith(loginTemplate);
 }
