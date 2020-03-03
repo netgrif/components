@@ -5,6 +5,7 @@ import {FileEntry, UpdateRecorder} from "@angular-devkit/schematics/src/tree/int
 import {experimental, strings} from "@angular-devkit/core";
 import {NetgrifApplicationEngine} from "../src/lib/configuration/interfaces/schema";
 import {Change, InsertChange} from "@schematics/angular/utility/change";
+import {SourceFile} from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 
 export class ProjectInfo {
     /**
@@ -16,6 +17,11 @@ export class ProjectInfo {
     projectNameDasherized: string = '';
     projectPrefix: string = '';
     projectPrefixDasherized: string = '';
+}
+
+export interface AppModuleData {
+    fileEntry: FileEntry,
+    sourceFile: SourceFile
 }
 
 
@@ -76,4 +82,18 @@ export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Arra
         }
     }
     return exportRecorder;
+}
+
+export function getAppModule(tree: Tree, projectPath: string): AppModuleData {
+    const appModule = tree.get(`${projectPath}/app.module.ts`);
+    if (!appModule) {
+        throw new SchematicsException('Could not find application Module. Missing \'app.module.ts\'.');
+    }
+
+    const appModuleSourceFile = fileEntryToTsSource(appModule);
+
+    return {
+        fileEntry: appModule,
+        sourceFile: appModuleSourceFile
+    };
 }
