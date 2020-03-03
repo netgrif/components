@@ -1,6 +1,7 @@
 import {
     apply,
     applyTemplates,
+    chain,
     mergeWith,
     move,
     Rule,
@@ -43,6 +44,7 @@ function createView(tree: Tree, args: CreateViewArguments): Rule {
 
 function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
     const projectInfo = getProjectInfo(tree);
+    const rules = [];
 
     const loginTemplate = apply(url('./files/login'), [
         applyTemplates({
@@ -50,6 +52,9 @@ function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
         }),
         move(normalize(`${projectInfo.path}/views/${args.path}`))
     ]);
+    rules.push(mergeWith(loginTemplate));
 
-    return mergeWith(loginTemplate);
+
+
+    return chain(rules);
 }

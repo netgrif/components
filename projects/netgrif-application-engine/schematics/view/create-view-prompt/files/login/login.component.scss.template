@@ -5,19 +5,12 @@
     margin: 0;
 }
 
-.login {
-    &-background {
-        background: url("../../../assets/login_background.png");
-        background-size: cover;
+.login-card-layout {
+    @media (max-width: 599px) {
+        height: 100%;
+        width: 100%;
     }
 
-    &-card-layout {
-        @media (max-width: 599px) {
-            height: 100%;
-            width: 100%;
-        }
-
-        min-height: 400px;
-        width: 600px;
-    }
+    min-height: 400px;
+    width: 600px;
 }
