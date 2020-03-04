@@ -18,6 +18,11 @@ export class ProjectInfo {
     projectPrefixDasherized: string = '';
 }
 
+export interface FileData {
+    fileEntry: FileEntry,
+    sourceFile: ts.SourceFile
+}
+
 
 export function getProjectInfo(tree: Tree): ProjectInfo {
     const workspaceConfig = tree.read('/angular.json');
@@ -68,6 +73,11 @@ export function fileEntryToTsSource(file: FileEntry, encoding: string = 'utf8'):
     return getTsSource(file.path, file.content.toString(encoding));
 }
 
+export function commitChangesToFile(tree: Tree, file: FileEntry, changes: Array<Change>): void {
+    const changesRecorder = createChangesRecorder(tree, file, changes);
+    tree.commitUpdate(changesRecorder);
+}
+
 export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Array<Change>): UpdateRecorder {
     const exportRecorder= tree.beginUpdate(file.path);
     for (const change of changes) {
@@ -76,4 +86,22 @@ export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Arra
         }
     }
     return exportRecorder;
+}
+
+export function getAppModule(tree: Tree, projectPath: string): FileData {
+    return getFileData(tree, projectPath, 'app.module.ts');
+}
+
+export function getFileData(tree: Tree, projectRootPath: string, relativeFilePath: string): FileData {
+    const file = tree.get(`${projectRootPath}/${relativeFilePath}`);
+    if ( !file) {
+        throw new SchematicsException(`Could not find requested file. Missing '${relativeFilePath}'.`);
+    }
+
+    const source = fileEntryToTsSource(file);
+
+    return {
+        fileEntry: file,
+        sourceFile: source
+    };
 }

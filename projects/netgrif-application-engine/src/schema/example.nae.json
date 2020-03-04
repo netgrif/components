@@ -147,11 +147,10 @@
         "en-US"
     ],
     "views": {
-        "layout": "empty",
+        "view": {},
         "routes": {
             "login": {
-                "type": "view",
-                "layout": {
+                "view": {
                     "name": "login",
                     "params": {
                         "orientation": "vertical"
@@ -161,8 +160,7 @@
                 "navigation": false
             },
             "portal": {
-                "type": "container",
-                "layout": {
+                "view": {
                     "name": "sidenav-toolbar",
                     "params": {
                         "title": "Some title",
@@ -191,8 +189,7 @@
                 "access": "private",
                 "routes": {
                     "cases": {
-                        "type": "view",
-                        "layout": {
+                        "view": {
                             "name": "caseView",
                             "params": {
                                 "filters": [

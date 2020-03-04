@@ -9,9 +9,15 @@
             "type": "string",
             "x-prompt": "enter the view path. No leading backslash."
         },
-        "type": {
+        "viewType": {
             "description": "type of the created view",
             "type": "string",
+            "enum": [
+                "login",
+                "sidenav-toolbar",
+                "caseView",
+                "taskView"
+            ],
             "x-prompt": {
                 "type": "list",
                 "message": "select a view type",
@@ -26,6 +32,6 @@
     },
     "required": [
         "path",
-        "type"
+        "viewType"
     ]
 }
