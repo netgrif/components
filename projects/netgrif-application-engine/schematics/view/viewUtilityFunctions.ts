@@ -15,5 +15,5 @@ export function getParentPath(path: string): string {
     if (index === -1) {
         return '';
     }
-    return path.substring(0, index-1)
+    return path.substring(0, index)
 }

@@ -16,6 +16,11 @@
             "factory": "./view/create-view/index#createView",
             "schema": "./view/create-view/schema.json"
         },
+        "initialize-routing-file": {
+            "description": "Initialize routing json file",
+            "factory": "./view/initialize-routing/index#initializeRoutes",
+            "schema": "./view/initialize-routing/schema.json"
+        },
         "create-view-prompt": {
             "description": "creates a view based on provided settings. Opens a prompt if no settings are provided.",
             "factory": "./view/create-view-prompt/index#createViewPrompt",

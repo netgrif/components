@@ -1,0 +1,15 @@
+[
+    {"path": "", "component": "HomeComponent"},
+    {"path": "project", "component": "ProjectBuilderComponent"},
+    {"path": "modeler", "component": "ModelerComponent", "children": [
+        {"path": "", "component": "EditModeComponent"},
+        {"path": "simulation", "component": "SimulationModeComponent"},
+        {"path": "data", "component": "DataModeComponent"},
+        {"path": "roles", "component": "RoleModeComponent"},
+        {"path": "actions", "component": "ActionsModeComponent"}
+    ]},
+    {"path": "form", "component": "FormBuilderComponent"},
+    {"path": "dashboard", "component": "DashboardBuilderComponent"},
+    {"path": "settings", "component": "SettingsComponent"},
+    {"path": "profile", "component": "ProfileComponent"}
+]
