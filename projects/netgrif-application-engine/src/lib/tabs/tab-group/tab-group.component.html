@@ -1,0 +1,14 @@
+<mat-tab-group>
+    <ng-template ngFor let-tab [ngForOf]="openedTabs">
+        <ng-template mat-tab-label>
+            <mat-icon *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
+            {{tab.label.text}}
+            <button mat-icon-button *ngIf="tab.label.canBeDeleted">
+                <mat-icon>clear</mat-icon>
+            </button>
+        </ng-template>
+        <ng-template> <!-- lazily loaded body -->
+            <ng-template></ng-template>
+        </ng-template>
+    </ng-template>
+</mat-tab-group>
