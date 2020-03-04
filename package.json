@@ -1,6 +1,5 @@
 {
     "name": "@netgrif/application-engine-project",
-    "description": "",
     "version": "4.0.0",
     "scripts": {
         "ng": "ng",
@@ -34,6 +33,7 @@
         "@ngrx/store": "^8.6.0",
         "@ngrx/store-devtools": "^8.6.0",
         "hammerjs": "^2.0.8",
+        "json-schema-to-typescript": "^8.0.1",
         "rxjs": "^6.5.4",
         "tslib": "^1.10.0",
         "zone.js": "~0.10.2"
