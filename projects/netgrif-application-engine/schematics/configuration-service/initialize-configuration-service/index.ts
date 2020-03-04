@@ -2,9 +2,9 @@ import {
     chain,
     Rule,
     Tree,
-    schematic, SchematicsException
+    schematic
 } from '@angular-devkit/schematics';
-import {createChangesRecorder, fileEntryToTsSource, getAppModule, getProjectInfo} from '../../utilityFunctions';
+import {commitChangesToFile, getAppModule, getProjectInfo} from '../../utilityFunctions';
 import { addProviderToModule } from '../../modifiedLibraryFunctions';
 import {insertImport} from "@schematics/angular/utility/ast-utils";
 
@@ -20,9 +20,7 @@ export function initializeConfigurationService(): Rule {
 
         changes.push( insertImport(appModule.sourceFile, appModule.fileEntry.path, 'ConfigurationService', '@netgrif/application-engine') );
 
-        const changesRecorder = createChangesRecorder(tree, appModule.fileEntry, changes);
-
-        tree.commitUpdate(changesRecorder);
+        commitChangesToFile(tree, appModule.fileEntry, changes);
 
         return chain([
             schematic('create-configuration-service', {}),

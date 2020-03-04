@@ -5,7 +5,6 @@ import {FileEntry, UpdateRecorder} from "@angular-devkit/schematics/src/tree/int
 import {experimental, strings} from "@angular-devkit/core";
 import {NetgrifApplicationEngine} from "../src/lib/configuration/interfaces/schema";
 import {Change, InsertChange} from "@schematics/angular/utility/change";
-import {SourceFile} from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 
 export class ProjectInfo {
     /**
@@ -19,9 +18,9 @@ export class ProjectInfo {
     projectPrefixDasherized: string = '';
 }
 
-export interface AppModuleData {
+export interface FileData {
     fileEntry: FileEntry,
-    sourceFile: SourceFile
+    sourceFile: ts.SourceFile
 }
 
 
@@ -74,6 +73,11 @@ export function fileEntryToTsSource(file: FileEntry, encoding: string = 'utf8'):
     return getTsSource(file.path, file.content.toString(encoding));
 }
 
+export function commitChangesToFile(tree: Tree, file: FileEntry, changes: Array<Change>): void {
+    const changesRecorder = createChangesRecorder(tree, file, changes);
+    tree.commitUpdate(changesRecorder);
+}
+
 export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Array<Change>): UpdateRecorder {
     const exportRecorder= tree.beginUpdate(file.path);
     for (const change of changes) {
@@ -84,16 +88,20 @@ export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Arra
     return exportRecorder;
 }
 
-export function getAppModule(tree: Tree, projectPath: string): AppModuleData {
-    const appModule = tree.get(`${projectPath}/app.module.ts`);
-    if (!appModule) {
-        throw new SchematicsException('Could not find application Module. Missing \'app.module.ts\'.');
+export function getAppModule(tree: Tree, projectPath: string): FileData {
+    return getFileData(tree, projectPath, 'app.module.ts');
+}
+
+export function getFileData(tree: Tree, projectRootPath: string, relativeFilePath: string): FileData {
+    const file = tree.get(`${projectRootPath}/${relativeFilePath}`);
+    if ( !file) {
+        throw new SchematicsException(`Could not find requested file. Missing '${relativeFilePath}'.`);
     }
 
-    const appModuleSourceFile = fileEntryToTsSource(appModule);
+    const source = fileEntryToTsSource(file);
 
     return {
-        fileEntry: appModule,
-        sourceFile: appModuleSourceFile
+        fileEntry: file,
+        sourceFile: source
     };
 }

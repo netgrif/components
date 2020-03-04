@@ -9,11 +9,12 @@ import {
     Tree,
     url
 } from '@angular-devkit/schematics';
-import {normalize} from '@angular-devkit/core';
+import {normalize, strings} from '@angular-devkit/core';
 import {CreateViewArguments} from './schema';
 import {Route} from '@angular/router';
 import {getParentPath} from '../viewUtilityFunctions';
-import {getProjectInfo} from '../../utilityFunctions';
+import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../../utilityFunctions';
+import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
@@ -45,16 +46,38 @@ function createView(tree: Tree, args: CreateViewArguments): Rule {
 function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
+    const classNamePrefix = convertPathToClassNamePrefix(args.path as string);
+    const classNameNoComponent = `${strings.classify(classNamePrefix)}Login`;
 
     const loginTemplate = apply(url('./files/login'), [
         applyTemplates({
-            prefix: projectInfo.projectPrefixDasherized
+            prefix: projectInfo.projectPrefixDasherized,
+            path: classNamePrefix,
+            dasherize: strings.dasherize,
+            classify: strings.classify
         }),
         move(normalize(`${projectInfo.path}/views/${args.path}`))
     ]);
     rules.push(mergeWith(loginTemplate));
 
+    const appModule = getAppModule(tree, projectInfo.path);
+    let appModuleChanges = addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'FlexModule', '@angular/flex-layout');
+    appModuleChanges = appModuleChanges.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'CardModule', '@netgrif/application-engine'));
 
+    const componentPath = `./views/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
+    appModuleChanges = appModuleChanges.concat(addDeclarationToModule(appModule.sourceFile, appModule.fileEntry.path, `${classNameNoComponent}Component`, componentPath));
+
+    commitChangesToFile(tree, appModule.fileEntry, appModuleChanges);
+
+    const routingModuleChanges = [];
+    const routesModule = getFileData(tree, projectInfo.path, 'app-routing.module.ts');
+    routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, `${classNameNoComponent}Component`, componentPath));
+
+    commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);
 
     return chain(rules);
+}
+
+function convertPathToClassNamePrefix(path: string): string {
+    return path.replace('-', '_').replace('/', '-').toLocaleLowerCase();
 }
