@@ -1,0 +1,26 @@
+.main-toolbar-logo {
+    max-height: 60%;
+}
+
+.main-toolbar-logo img {
+    width: 120px;
+}
+
+mat-icon.main-toolbar-icon {
+    font-size: 48px;
+    height: 100%;
+    margin-right: 15px;
+}
+
+.main-toolbar-logged-user {
+    margin-right: 15px;
+}
+
+.main-toolbar-menu, .main-toolbar-menu-button {
+    font-size: 20px;
+    height: 100%;
+}
+
+.main-toolbar-menu-icon {
+    font-size: 23px;
+}
