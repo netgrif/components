@@ -1,7 +1,0 @@
-{
-    "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsInitializeRoutingJson",
-    "title": "Initialize routing json file",
-    "type": "object",
-    "properties": {}
-}

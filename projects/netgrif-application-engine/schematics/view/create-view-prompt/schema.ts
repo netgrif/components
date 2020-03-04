@@ -1,5 +1,5 @@
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
-import {Route} from '@angular/router';
+import {Route} from '../viewUtilityFunctions';
 
 export interface CreateViewArguments {
     path: string | undefined,

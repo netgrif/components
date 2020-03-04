@@ -2,16 +2,15 @@ import {
     Rule,
     Tree
 } from '@angular-devkit/schematics';
-import {getRoutesJsonContent} from "../viewUtilityFunctions";
+import {getRoutesJsonContent, Route} from '../viewUtilityFunctions';
 import {getProjectInfo} from "../../utilityFunctions";
-import {Route} from "@angular/router";
+import {AddRouteArguments} from '../create-view/schema';
 
-
-export function initializeRoutes(routeObject: Route, path: string): Rule {
+export function addRouteToRoutes(schematicArguments: AddRouteArguments): Rule {
     return (tree: Tree) => {
-        const paths: String[] = path.split("/");
+        const paths: String[] = schematicArguments.path.split("/");
         const data: Route[] = getRoutesJsonContent(tree, getProjectInfo(tree));
-        (paths.length == 1) ? data.push(routeObject) : updateRoutes(data, routeObject, 0, paths);
+        (paths.length == 1) ? data.push(schematicArguments.routeObject) : updateRoutes(data, schematicArguments.routeObject, 0, paths);
         tree.overwrite(getProjectInfo(tree).path + "/routes.json", JSON.stringify(data))
     };
 }

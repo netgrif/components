@@ -5,14 +5,14 @@ import {
     mergeWith,
     move,
     Rule,
+    schematic,
     SchematicsException,
     Tree,
     url
 } from '@angular-devkit/schematics';
 import {normalize, strings} from '@angular-devkit/core';
 import {CreateViewArguments} from './schema';
-import {Route} from '@angular/router';
-import {getParentPath} from '../viewUtilityFunctions';
+import {getParentPath, Route} from '../viewUtilityFunctions';
 import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../../utilityFunctions';
 import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
 
@@ -64,20 +64,34 @@ function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
     let appModuleChanges = addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'FlexModule', '@angular/flex-layout');
     appModuleChanges = appModuleChanges.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'CardModule', '@netgrif/application-engine'));
 
+    const className = `${classNameNoComponent}Component`;
     const componentPath = `./views/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
-    appModuleChanges = appModuleChanges.concat(addDeclarationToModule(appModule.sourceFile, appModule.fileEntry.path, `${classNameNoComponent}Component`, componentPath));
+    appModuleChanges = appModuleChanges.concat(addDeclarationToModule(appModule.sourceFile, appModule.fileEntry.path, className, componentPath));
 
     commitChangesToFile(tree, appModule.fileEntry, appModuleChanges);
 
     const routingModuleChanges = [];
     const routesModule = getFileData(tree, projectInfo.path, 'app-routing.module.ts');
-    routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, `${classNameNoComponent}Component`, componentPath));
+    routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, className, componentPath));
 
     commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);
 
+    rules.push(schematic('add-route', {
+        routeObject: createRouteObject(args.path as string, className),
+        path: args.path
+    }));
     return chain(rules);
 }
 
 function convertPathToClassNamePrefix(path: string): string {
     return path.replace('-', '_').replace('/', '-').toLocaleLowerCase();
+}
+
+function createRouteObject(path: string, className: string): Route {
+    const index = path.lastIndexOf('/');
+    let relevantPath = path;
+    if (index !== -1) {
+        relevantPath = path.substring(index+1);
+    }
+    return {path: relevantPath, component: className};
 }

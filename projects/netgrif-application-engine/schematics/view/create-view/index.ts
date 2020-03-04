@@ -3,9 +3,8 @@ import {
     Tree
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration, getProjectInfo} from '../../utilityFunctions';
-import {Route, Routes} from '@angular/router';
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
-import {getRoutesJsonContent} from "../viewUtilityFunctions";
+import {getRoutesJsonContent, Route, Routes} from '../viewUtilityFunctions';
 import {CreateViewArguments} from '../create-view-prompt/schema';
 
 export function createView(): Rule {
