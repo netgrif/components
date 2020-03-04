@@ -1,5 +1,6 @@
 import {
-    Rule, schematic,
+    Rule,
+    schematic,
     Tree
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration, getProjectInfo} from '../../utilityFunctions';
@@ -22,9 +23,9 @@ function getSchematicArguments(naeRoutes: { [k: string]: NaeRoute } | undefined,
         return emptyArguments(new Map<string, Route>());
     }
 
-    const routeMap = new Map<string, Route>();
-    addAllRoutesToMap(routeMap, angularRoutes);
-    return findMissingView(routeMap, naeRoutes);
+    const pathToRouteMap = new Map<string, Route>();
+    addAllRoutesToMap(pathToRouteMap, angularRoutes);
+    return findMissingView(pathToRouteMap, naeRoutes);
 }
 
 function addAllRoutesToMap(map: Map<string, Route>, routes: Routes, pathPrefix: string = ''): void {
@@ -47,8 +48,8 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
         if (!existingRoutesMap.has(routePath)) {
             return {
                 path: routePath,
-                viewType: route.layout.name,
-                layoutParams: route.layout.params,
+                viewType: route.view.name,
+                layoutParams: route.view.params,
                 _routesMap: existingRoutesMap
             };
         }
