@@ -7,11 +7,11 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TabCreationDetectorComponent implements OnInit {
 
-    @Input() initializePortalFunction: (index: number) => void;
+    @Input() initializeTabFunction: (index: number) => void;
     @Input() tabIndex: number;
 
     ngOnInit() {
-        this.initializePortalFunction.call(this.tabIndex);
+        this.initializeTabFunction(this.tabIndex);
     }
 
 }

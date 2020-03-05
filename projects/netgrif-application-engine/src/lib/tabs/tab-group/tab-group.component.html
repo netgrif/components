@@ -1,5 +1,5 @@
 <mat-tab-group>
-    <ng-template ngFor let-tab [ngForOf]="openedTabs" let-i="index">
+    <mat-tab *ngFor="let tab of openedTabs; let i=index">
         <ng-template mat-tab-label>
             <mat-icon *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
             {{tab.label.text}}
@@ -7,11 +7,11 @@
                 <mat-icon>clear</mat-icon>
             </button>
         </ng-template>
-        <ng-template> <!-- lazily loaded body -->
-            <nae-tab-creation-detector [initializePortalFunction]="initializePortal" [tabIndex]="i"></nae-tab-creation-detector>
-            <ng-template [ngIf]="tab.portalInitialized">
+        <ng-template matTabContent>
+            <nae-tab-creation-detector [initializeTabFunction]="initializeTabLambda" [tabIndex]="i"></nae-tab-creation-detector>
+            <ng-template [ngIf]="tab.tabInitialized">
                 <ng-template [cdkPortalOutlet]="tab.portal"></ng-template>
             </ng-template>
         </ng-template>
-    </ng-template>
+    </mat-tab>
 </mat-tab-group>

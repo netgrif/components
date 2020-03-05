@@ -7,7 +7,7 @@ import {NAE_TAB_DATA} from '../tabs.module';
 interface OpenedTab extends TabContent{
     portal?: ComponentPortal<any>,
     injector?: Injector
-    portalInitialized?: boolean
+    tabInitialized?: boolean
 }
 
 @Component({
@@ -19,13 +19,14 @@ export class TabGroupComponent implements OnInit {
 
     @Input() initialTabs: Array<TabContent>;
 
-    openedTabs: Array<OpenedTab>;
+    openedTabs: Array<OpenedTab> = [];
 
-
+    initializeTabLambda = (index: number) => {this.initializeTab(index)};
 
     constructor() { }
 
     ngOnInit(): void {
+        console.log(this.initialTabs);
         this.initialTabs.forEach(tab => {
             if (tab.order === undefined) {
                 tab.order = 0;
@@ -36,8 +37,9 @@ export class TabGroupComponent implements OnInit {
         this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc');
 
         this.openedTabs.forEach(tab => {
-            tab.portalInitialized = false
+            tab.tabInitialized = false
         });
+        console.log(this.openedTabs);
     }
 
     public openTab(tabContent: TabContent, autoswitch: boolean = false): void {
@@ -52,13 +54,13 @@ export class TabGroupComponent implements OnInit {
 
     }
 
-    public initializePortal(index: number): void {
+    public initializeTab(index: number): void {
         const providers: StaticProvider[] = [
             {provide: NAE_TAB_DATA, useValue: this.openedTabs[index].injectedObject}
         ];
         const injector = Injector.create({providers});
 
         this.openedTabs[index].portal = new ComponentPortal(this.openedTabs[index].tabContentComponent, null, injector);
-        this.openedTabs[index].portalInitialized = true;
+        this.openedTabs[index].tabInitialized = true;
     }
 }
