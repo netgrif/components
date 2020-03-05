@@ -11,7 +11,7 @@ export class TabGroup {
     openedTabs: Array<OpenedTab>;
     selectedIndex = new FormControl(0);
 
-    private lastId = 0;
+    private nextId = 0;
 
     constructor(private initialTabs: Array<TabContent>) {
         this.initialTabs.forEach(tab => {
@@ -21,11 +21,11 @@ export class TabGroup {
         });
 
         // orderBy is a stable sort. Native javascript implementation has undefined stability and it depends on it's implementation (browser)
-        this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData => new OpenedTab(tabData, this.getNextId()));
+        this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData => new OpenedTab(tabData, `${this.getNextId()}`));
     }
 
-    public openTab(tabContent: TabContent, autoswitch: boolean = false): void {
-        const newTab = new OpenedTab(tabContent, this.getNextId());
+    public openTab(tabContent: TabContent, autoswitch: boolean = false): string {
+        const newTab = new OpenedTab(tabContent, `${this.getNextId()}`);
         let index = this.openedTabs.findIndex(existingTab => existingTab.order > newTab.order);
         if (index === -1) {
             index = this.openedTabs.length;
@@ -35,6 +35,7 @@ export class TabGroup {
         if (autoswitch) {
             this.selectedIndex.setValue(index);
         }
+        return `${this.nextId - 1}`;
     }
 
     public switchToTabIndex(index: number): void {
@@ -42,7 +43,7 @@ export class TabGroup {
         this.selectedIndex.setValue(index);
     }
 
-    public switchToTabUniqueId(uniqueId: number): void {
+    public switchToTabUniqueId(uniqueId: string): void {
         const index = this.getTabIndex(uniqueId);
         this.selectedIndex.setValue(index);
     }
@@ -55,7 +56,7 @@ export class TabGroup {
         this.openedTabs.splice(index, 1);
     }
 
-    public closeTabUniqueId(uniqueId: number): void {
+    public closeTabUniqueId(uniqueId: string): void {
         const index = this.getTabIndex(uniqueId);
         if ( !this.openedTabs[index].canBeDeleted) {
             throw new Error(`Tab with ID ${uniqueId} can't be closed`);
@@ -81,7 +82,7 @@ export class TabGroup {
         }
     }
 
-    private getTabIndex(uniqueId: number): number {
+    private getTabIndex(uniqueId: string): number {
         const index = this.openedTabs.findIndex(tab => tab.uniqueId === uniqueId);
         if (index === -1) {
             throw new Error(`No tab with ID ${uniqueId} exists`);
@@ -90,7 +91,7 @@ export class TabGroup {
     }
 
     private getNextId(): number {
-        return this.lastId++;
+        return this.nextId++;
     }
 
     private checkIndexRange(index: number) {

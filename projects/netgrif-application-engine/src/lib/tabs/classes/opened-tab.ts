@@ -15,7 +15,7 @@ export class OpenedTab implements TabContent {
     portal: ComponentPortal<any>;
     isTabInitialized: boolean = false;
 
-    constructor(tabContent: TabContent, public uniqueId) {
+    constructor(tabContent: TabContent, public uniqueId: string) {
         Object.assign(this, tabContent);
     }
 }
