@@ -37,7 +37,14 @@ export class TabGroup {
         }
     }
 
-    public switchToTab(uniqueId: number): void {
+    public switchToTabIndex(index: number): void {
+        if (index < 0 || index >= this.openedTabs.length) {
+            throw new Error(`No tab with index ${index} exists`);
+        }
+        this.selectedIndex.setValue(index);
+    }
+
+    public switchToTabUniqueId(uniqueId: number): void {
         const index = this.getTabIndex(uniqueId);
         this.selectedIndex.setValue(index);
     }
