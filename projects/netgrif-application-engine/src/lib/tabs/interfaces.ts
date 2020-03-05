@@ -1,11 +1,11 @@
 import {Type} from '@angular/core';
 
 export interface TabContent {
-    label: {
+    label?: {
         icon?: string,
-        text?: string,
-        canBeDeleted: boolean
+        text?: string
     },
+    canBeDeleted: boolean,
     tabContentComponent: Type<any>,
     injectedObject?: object,
     order?: number

@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group [selectedIndex]="selectedIndex.value" (selectedIndexChange)="selectedIndex.setValue($event)">
     <mat-tab *ngFor="let tab of openedTabs; let i=index">
         <ng-template mat-tab-label>
             <mat-icon *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
@@ -9,7 +9,7 @@
         </ng-template>
         <ng-template matTabContent>
             <nae-tab-creation-detector [initializeTabFunction]="initializeTabLambda" [tabIndex]="i"></nae-tab-creation-detector>
-            <ng-template [ngIf]="tab.tabInitialized">
+            <ng-template [ngIf]="tab.isTabInitialized">
                 <ng-template [cdkPortalOutlet]="tab.portal"></ng-template>
             </ng-template>
         </ng-template>
