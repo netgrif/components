@@ -38,9 +38,7 @@ export class TabGroup {
     }
 
     public switchToTabIndex(index: number): void {
-        if (index < 0 || index >= this.openedTabs.length) {
-            throw new Error(`No tab with index ${index} exists`);
-        }
+        this.checkIndexRange(index);
         this.selectedIndex.setValue(index);
     }
 
@@ -49,10 +47,18 @@ export class TabGroup {
         this.selectedIndex.setValue(index);
     }
 
-    public closeTab(uniqueId: number): void {
+    public closeTabIndex(index: number): void {
+        this.checkIndexRange(index);
+        if ( !this.openedTabs[index].canBeDeleted) {
+            throw new Error(`Tab at index ${index} can't be closed`);
+        }
+        this.openedTabs.splice(index, 1);
+    }
+
+    public closeTabUniqueId(uniqueId: number): void {
         const index = this.getTabIndex(uniqueId);
         if ( !this.openedTabs[index].canBeDeleted) {
-            throw new Error(`Tab with ID ${uniqueId} can't be deleted`);
+            throw new Error(`Tab with ID ${uniqueId} can't be closed`);
         }
         this.openedTabs.splice(index, 1);
     }
@@ -85,5 +91,11 @@ export class TabGroup {
 
     private getNextId(): number {
         return this.lastId++;
+    }
+
+    private checkIndexRange(index: number) {
+        if (index < 0 || index >= this.openedTabs.length) {
+            throw new Error(`No tab with index ${index} exists`);
+        }
     }
 }
