@@ -3,7 +3,7 @@
         <ng-template mat-tab-label>
             <mat-icon *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
             {{tab.label.text}}
-            <button mat-icon-button *ngIf="tab.label.canBeDeleted">
+            <button mat-icon-button *ngIf="tab.canBeDeleted">
                 <mat-icon>clear</mat-icon>
             </button>
         </ng-template>
