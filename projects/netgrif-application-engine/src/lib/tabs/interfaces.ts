@@ -1,5 +1,4 @@
 import {Type} from '@angular/core';
-import {TabGroup} from './classes/tab-group';
 
 export interface TabContent {
     label?: {
@@ -14,5 +13,13 @@ export interface TabContent {
 
 export interface InjectedTabData {
     tabUniqueId: number,
-    tabGroupRef: TabGroup
+    tabGroupRef: TabGroupInterface
+}
+
+export interface TabGroupInterface {
+    openTab(tabContent: TabContent, autoswitch?: boolean): string;
+    switchToTabIndex(index: number): void;
+    switchToTabUniqueId(uniqueId: string): void;
+    closeTabIndex(index: number): void;
+    closeTabUniqueId(uniqueId: string): void;
 }

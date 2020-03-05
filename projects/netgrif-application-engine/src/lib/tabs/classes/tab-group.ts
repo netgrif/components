@@ -1,4 +1,4 @@
-import {TabContent} from '../interfaces';
+import {TabContent, TabGroupInterface} from '../interfaces';
 import {OpenedTab} from './opened-tab';
 import {Injector, StaticProvider} from '@angular/core';
 import {NAE_TAB_DATA} from '../tabs.module';
@@ -6,12 +6,19 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {FormControl} from '@angular/forms';
 import {orderBy} from 'natural-orderby';
 
-export class TabGroup {
+export class TabGroup implements TabGroupInterface{
 
     openedTabs: Array<OpenedTab>;
     selectedIndex = new FormControl(0);
 
     private nextId = 0;
+    private tabGroupInterface: TabGroupInterface = {
+        openTab: (tabContent: TabContent, autoswitch: boolean = false) => this.openTab(tabContent, autoswitch),
+        switchToTabIndex: (index: number) => this.switchToTabIndex(index),
+        switchToTabUniqueId: (uniqueId: string) => this.switchToTabUniqueId(uniqueId),
+        closeTabIndex: (index: number) => this.closeTabIndex(index),
+        closeTabUniqueId: (uniqueId: string) => this.closeTabUniqueId(uniqueId)
+    };
 
     constructor(private initialTabs: Array<TabContent>) {
         this.initialTabs.forEach(tab => {
@@ -69,7 +76,7 @@ export class TabGroup {
         if( !tab.isTabInitialized) {
             Object.assign(tab.injectedObject, {
                 tabUniqueId: tab.uniqueId,
-                tabGroupRef: this
+                tabGroupRef: this.tabGroupInterface
             });
 
             const providers: StaticProvider[] = [
