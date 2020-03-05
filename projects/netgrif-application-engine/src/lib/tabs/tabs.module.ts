@@ -4,6 +4,7 @@ import {TabGroupComponent} from './tab-group/tab-group.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {MaterialModule} from "../material/material.module";
 import { TabCreationDetectorComponent } from './tab-creation-detector/tab-creation-detector.component';
+import {InjectedTabData} from './interfaces';
 
 
 @NgModule({
@@ -19,4 +20,4 @@ import { TabCreationDetectorComponent } from './tab-creation-detector/tab-creati
 })
 export class TabsModule { }
 
-export const NAE_TAB_DATA = new InjectionToken<object>('NaeTabData');
+export const NAE_TAB_DATA = new InjectionToken<InjectedTabData>('NaeTabData');

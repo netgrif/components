@@ -1,5 +1,5 @@
-<mat-tab-group [selectedIndex]="selectedIndex.value" (selectedIndexChange)="selectedIndex.setValue($event)">
-    <mat-tab *ngFor="let tab of openedTabs; let i=index">
+<mat-tab-group [selectedIndex]="tabGroup.selectedIndex.value" (selectedIndexChange)="tabGroup.selectedIndex.setValue($event)">
+    <mat-tab *ngFor="let tab of tabGroup.openedTabs; let i=index">
         <ng-template mat-tab-label>
             <mat-icon *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
             {{tab.label.text}}
