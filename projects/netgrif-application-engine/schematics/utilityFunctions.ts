@@ -1,11 +1,20 @@
 import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 
-import {SchematicsException, Tree, } from "@angular-devkit/schematics";
+import {
+    apply,
+    applyTemplates,
+    chain,
+    mergeWith,
+    move,
+    Rule,
+    SchematicsException,
+    Tree,
+    url,
+} from "@angular-devkit/schematics";
 import {FileEntry, UpdateRecorder} from "@angular-devkit/schematics/src/tree/interface";
-import {experimental, strings} from "@angular-devkit/core";
+import {experimental, normalize, strings} from "@angular-devkit/core";
 import {NetgrifApplicationEngine} from "../src/lib/configuration/interfaces/schema";
 import {Change, InsertChange} from "@schematics/angular/utility/change";
-
 export class ProjectInfo {
     /**
      * projects/[name]/src/app
@@ -104,4 +113,13 @@ export function getFileData(tree: Tree, projectRootPath: string, relativeFilePat
         fileEntry: file,
         sourceFile: source
     };
+}
+export function createFilesFromTemplates(pathToTemplates:string,pathToMoveGeneratedFiles:string,options:object) :Rule{
+    const templateSource = apply(url(pathToTemplates), [
+        applyTemplates(options),
+        move(normalize(pathToMoveGeneratedFiles)),
+    ]);
+    return chain([
+        mergeWith(templateSource)
+    ]);
 }
