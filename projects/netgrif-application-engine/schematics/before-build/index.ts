@@ -8,6 +8,7 @@ export function beforeBuild(): Rule {
     return () => {
         return chain([
             schematic('populate-configuration-service', {}),
+            schematic('populate-route-module', {})
         ]);
     };
 }
