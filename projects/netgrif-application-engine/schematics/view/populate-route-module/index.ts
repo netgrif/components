@@ -9,7 +9,7 @@ import {findNodes} from "@schematics/angular/utility/ast-utils";
 import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 import {FileEntry, UpdateRecorder} from "@angular-devkit/schematics/src/tree/interface";
 
-export function updateCreateRouteModule(): Rule {
+export function populateRouteModule(): Rule {
     return (tree: Tree) => {
         let data: Array<any> = getRoutesJsonContent(tree, getProjectInfo(tree));
         checkFileExists(tree);

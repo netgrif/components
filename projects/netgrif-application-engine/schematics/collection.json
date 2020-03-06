@@ -31,10 +31,10 @@
             "factory": "./view/add-route/index#addRouteToRoutes",
             "schema": "./view/add-route/schema.json"
         },
-        "update-create-route-module": {
-            "description": "Create or update routes if route module exists",
-            "factory": "./view/update-create-route-module/index#updateCreateRouteModule",
-            "schema": "./view/update-create-route-module/schema.json"
+        "populate-route-module": {
+            "description": "Updates routes in route module to match with those in routes.json",
+            "factory": "./view/populate-route-module/index#populateRouteModule",
+            "schema": "./view/populate-route-module/schema.json"
         }
     }
 }
