@@ -1,5 +1,6 @@
 import {createAction, props} from '@ngrx/store';
-import {Credentials, User} from '../../models/user';
+import {User} from '../../models/user';
+import Credentials from '../../models/credentials';
 
 export enum AuthenticationActionTypes {
     LOGIN = '[AUTH] Login',
@@ -11,12 +12,12 @@ export enum AuthenticationActionTypes {
 
 export const login = createAction(
     AuthenticationActionTypes.LOGIN,
-    props<{ credentials: Credentials }>()
+    props<Credentials>()
 );
 
 export const loginSuccess = createAction(
     AuthenticationActionTypes.LOGIN_SUCCESS,
-    props<{ user: User }>()
+    props<User>()
 );
 
 export const loginFailure = createAction(

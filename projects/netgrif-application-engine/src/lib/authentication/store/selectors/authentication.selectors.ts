@@ -1,4 +1,4 @@
-import {AUTHENTICATION_FEATURE_KEY, State as AuthState} from '../reducers/authentication.redurcers';
+import {AUTHENTICATION_FEATURE_KEY, AuthState as AuthState} from '../reducers/authentication.redurcers';
 import {createSelector} from '@ngrx/store';
 
 export const selectAuthentication = state => state[AUTHENTICATION_FEATURE_KEY];

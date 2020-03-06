@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BasicAuthenticationService} from '../basic-authentication/services/basic-authentication.service';
+import {BasicAuthenticationService} from '../basic-authentication/basic-authentication.service';
 import {CanActivate, Router} from '@angular/router';
 
 @Injectable()

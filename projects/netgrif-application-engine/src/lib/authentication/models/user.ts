@@ -1,14 +1,5 @@
-export default class User {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    permissions: {};
-    roles: {};
-    groups: {};
-    preferences?: any;
+export interface User {
+    username: string;
 
-    get fullname() {
-        return this.firstName + ' ' + this.lastName;
-    }
+    [k: string]: any;
 }
