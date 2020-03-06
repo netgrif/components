@@ -3,7 +3,12 @@
     "schematics": {
         "ng-add": {
             "description": "Adds NAE library to the project and creates all the necessary files.",
-            "factory": "./add/index#ngAdd"
+            "factory": "./add/add/index#ngAdd"
+        },
+        "create-nae-files": {
+            "description": "Creates all the necessary files for a NAE project",
+            "factory": "./add/create-nae-files/index#createNaeFiles",
+            "schema": "./add/create-nae-files/schema.json"
         },
         "initialize-configuration-service": {
             "description": "Generate a project specific configuration service and add the correct provider entry to app.module",
