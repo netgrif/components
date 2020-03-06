@@ -8,3 +8,4 @@ export * from './lib/material/material.module';
 /* APIS */
 export * from './lib/logger/public-api';
 export * from './lib/authentication/public-api';
+export * from './lib/user/public-api';
