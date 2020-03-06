@@ -1,20 +1,20 @@
-import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
+import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 
 import {
     apply,
     applyTemplates,
-    chain,
     mergeWith,
     move,
     Rule,
     SchematicsException,
     Tree,
     url,
-} from "@angular-devkit/schematics";
-import {FileEntry, UpdateRecorder} from "@angular-devkit/schematics/src/tree/interface";
-import {experimental, normalize, strings} from "@angular-devkit/core";
-import {NetgrifApplicationEngine} from "../src/lib/configuration/interfaces/schema";
-import {Change, InsertChange} from "@schematics/angular/utility/change";
+} from '@angular-devkit/schematics';
+import {FileEntry, UpdateRecorder} from '@angular-devkit/schematics/src/tree/interface';
+import {experimental, normalize, strings} from '@angular-devkit/core';
+import {NetgrifApplicationEngine} from '../src/lib/configuration/interfaces/schema';
+import {Change, InsertChange} from '@schematics/angular/utility/change';
+
 export class ProjectInfo {
     /**
      * projects/[name]/src/app
@@ -88,7 +88,7 @@ export function commitChangesToFile(tree: Tree, file: FileEntry, changes: Array<
 }
 
 export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Array<Change>): UpdateRecorder {
-    const exportRecorder= tree.beginUpdate(file.path);
+    const exportRecorder = tree.beginUpdate(file.path);
     for (const change of changes) {
         if (change instanceof InsertChange) {
             exportRecorder.insertLeft(change.pos, change.toAdd);
@@ -103,7 +103,7 @@ export function getAppModule(tree: Tree, projectPath: string): FileData {
 
 export function getFileData(tree: Tree, projectRootPath: string, relativeFilePath: string): FileData {
     const file = tree.get(`${projectRootPath}/${relativeFilePath}`);
-    if ( !file) {
+    if (!file) {
         throw new SchematicsException(`Could not find requested file. Missing '${relativeFilePath}'.`);
     }
 
@@ -114,12 +114,11 @@ export function getFileData(tree: Tree, projectRootPath: string, relativeFilePat
         sourceFile: source
     };
 }
-export function createFilesFromTemplates(pathToTemplates:string,pathToMoveGeneratedFiles:string,options:object) :Rule{
+
+export function createFilesFromTemplates(pathToTemplates: string, pathToMoveGeneratedFiles: string, options: object): Rule {
     const templateSource = apply(url(pathToTemplates), [
         applyTemplates(options),
         move(normalize(pathToMoveGeneratedFiles)),
     ]);
-    return chain([
-        mergeWith(templateSource)
-    ]);
+    return mergeWith(templateSource);
 }
