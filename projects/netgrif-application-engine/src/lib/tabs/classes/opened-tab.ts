@@ -9,9 +9,9 @@ export class OpenedTab implements TabContent {
         text?: string;
     };
     canBeDeleted: boolean;
-    order: number;
     tabContentComponent: Type<any>;
-    injectedObject: object;
+    injectedObject: object = {};
+    order: number = 0;
     portal: ComponentPortal<any>;
     isTabInitialized: boolean = false;
 
