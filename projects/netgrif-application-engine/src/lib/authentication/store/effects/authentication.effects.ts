@@ -1,27 +1,27 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {BasicAuthenticationService} from '../../basic-authentication/services/basic-authentication.service';
 import {Router} from '@angular/router';
 import {login, loginFailure, loginSuccess, logout} from '../actions/authentication.actions';
 import {of} from 'rxjs';
 import {catchError, exhaustMap, map, tap} from 'rxjs/operators';
-import {Credentials} from '../../models/user';
+import Credentials from '../../models/credentials';
+import {AuthenticationMethodService} from '../../services/authentication-method.service';
 
 @Injectable()
 export class AuthenticationEffects {
 
-    constructor(private actions$: Actions, private authService: BasicAuthenticationService, private router: Router) {
+    constructor(private actions$: Actions, private authService: AuthenticationMethodService, private router: Router) {
     }
 
     login$ = createEffect(() => this.actions$.pipe(
         ofType(login),
         exhaustMap(action =>
-            this.authService.login(action.credentials as Credentials).pipe(
-                map(user => loginSuccess({user})),
-                catchError(error => of(loginFailure({error})))
+            this.authService.login(action as Credentials).pipe(
+                map(user => loginSuccess(user),
+                    catchError(error => of(loginFailure({error})))
+                )
             )
-        )
-    ));
+        ));
 
     loginSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(loginSuccess),

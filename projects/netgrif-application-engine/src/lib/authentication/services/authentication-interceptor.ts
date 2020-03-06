@@ -1,6 +1,6 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {BasicAuthenticationService} from '../basic-authentication/services/basic-authentication.service';
+import {BasicAuthenticationService} from '../basic-authentication/basic-authentication.service';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 

@@ -1,15 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Credentials, User} from '../../models/user';
+import {Credentials, User} from '../models/user';
+import {AuthenticationService} from '../services/authentication.service';
 
 
 const BASE_URL = 'http://localhost:8080/auth';
 
 @Injectable()
-export class BasicAuthenticationService {
+export class BasicAuthenticationService extends AuthenticationService {
 
     constructor(private http: HttpClient) {
+        super();
     }
 
     get token(): string {

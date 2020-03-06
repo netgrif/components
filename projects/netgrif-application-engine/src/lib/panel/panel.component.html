@@ -1,0 +1,11 @@
+<mat-accordion>
+    <mat-expansion-panel [disabled]="expansionDisabled" hideToggle (afterExpand)="emitExpand()"
+                         (afterCollapse)="emitCollapse()">
+        <mat-expansion-panel-header>
+            <mat-panel-description *ngTemplateOutlet="panelHeader">
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="panel-main-content" *ngTemplateOutlet="panelContent">
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
