@@ -23,7 +23,7 @@ export function initializeConfigurationService(): Rule {
         commitChangesToFile(tree, appModule.fileEntry, changes);
 
         return chain([
-            schematic('create-configuration-service', {}),
+            schematic('populate-configuration-service', {}),
         ]);
     };
 }
