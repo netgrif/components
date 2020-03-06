@@ -30,6 +30,11 @@
             "description": "Adds a new Route object into an existing routes.json file.",
             "factory": "./view/add-route/index#addRouteToRoutes",
             "schema": "./view/add-route/schema.json"
+        },
+        "update-create-route-module": {
+            "description": "Create or update routes if route module exists",
+            "factory": "./view/update-create-route-module/index#updateCreateRouteModule",
+            "schema": "./view/update-create-route-module/schema.json"
         }
     }
 }
