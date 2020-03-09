@@ -20,7 +20,11 @@ import {EnumerationSelectFieldComponent} from "./enumeration-field/enumeration-s
 import {EnumerationAutocompleteSelectFieldComponent} from "./enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NumberFieldComponent} from "./number-field/number-field.component";
+import {MultichoiceFieldComponent} from "./multichoice-field/multichoice-field.component";
+import {MultichoiceSelectFieldComponent} from "./multichoice-field/multichoice-select-field/multichoice-select-field.component";
+import {MultichoiceListFieldComponent} from "./multichoice-field/multichoice-list-field/multichoice-list-field.component";
 import {MatSlideToggleModule} from "@angular/material";
+import {BooleanFieldComponent} from "./boolean-field/boolean-field.component";
 
 @NgModule({
     declarations: [
