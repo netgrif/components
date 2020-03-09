@@ -21,6 +21,7 @@ import {FileUploadService} from "./file-field/file-upload.service";
 import {FileDownloadService} from "./file-field/file-download.service";
 import {SideMenuModule} from "../side-menu/side-menu.module";
 import {HttpClientModule} from "@angular/common/http";
+import {AngularResizedEventModule} from "angular-resize-event";
 
 @NgModule({
     declarations: [
