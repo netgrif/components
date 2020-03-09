@@ -1,0 +1,42 @@
+import {Component, Input, OnInit} from '@angular/core';
+import {FormControl} from "@angular/forms";
+import {Observable} from "rxjs";
+import {map, startWith} from "rxjs/operators";
+import {EnumerationField} from "../enumeration-field";
+
+@Component({
+    selector: 'nae-enumeration-autocomplete-select-field',
+    templateUrl: './enumeration-autocomplete-select-field.component.html',
+    styleUrls: ['./enumeration-autocomplete-select-field.component.scss']
+})
+export class EnumerationAutocompleteSelectFieldComponent implements OnInit {
+
+    @Input() enumerationField: EnumerationField;
+
+    validate = new FormControl();
+    selected: string;
+    options: string[];
+    filteredOptions: Observable<string[]>;
+
+    ngOnInit() {
+        this.selected = this.enumerationField.value.key;
+        this.options = this.enumerationField.choices.map(value => value['value']);
+        this.filteredOptions = this.validate.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value))
+        );
+    }
+
+    /**
+     * Function to filter out matchless options without accent and case-sensitive differences
+     * @param {string} value to compare matching options
+     * @private {string} argument without accent
+     * @return {Array<string>} return matched options
+     */
+    private _filter(value: string): string[] {
+        const filterValue = value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        return this.options.filter(option => option.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(filterValue) === 0);
+    }
+
+}

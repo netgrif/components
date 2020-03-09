@@ -12,15 +12,29 @@ import { SimpleTextFieldComponent } from './text-field/simple-text-field/simple-
         TextFieldComponent,
         TextareaFieldComponent,
         SimpleTextFieldComponent,
+        EnumerationFieldComponent,
+        EnumerationListFieldComponent,
+        EnumerationSelectFieldComponent,
+        EnumerationAutocompleteSelectFieldComponent,
         DataFieldTemplateComponent
     ],
     exports: [
-        TextFieldComponent
+        TextFieldComponent,
+        EnumerationFieldComponent
     ],
     imports: [
         CommonModule,
         FlexLayoutModule,
         MatFormFieldModule,
+        MatInputModule,
+        MatOptionModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        MatListModule,
+        ReactiveFormsModule,
+        MatRadioModule,
+        MatAutocompleteModule,
         MatInputModule
     ]
 })
