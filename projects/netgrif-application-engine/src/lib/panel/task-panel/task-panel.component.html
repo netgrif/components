@@ -28,7 +28,7 @@
     <ng-template #taskPanelContent>
         <div class="panel-main-content" fxLayout="column">
             <div class="task-panel-body" fxFlex="80">
-                <ng-content></ng-content>
+                <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>
             <div class="task-panel-footer" fxLayout="row" fxFlex="20" fxLayoutAlign="end center">
                 <button mat-button>ASSIGN</button>
