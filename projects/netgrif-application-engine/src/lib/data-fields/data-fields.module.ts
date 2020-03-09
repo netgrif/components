@@ -43,6 +43,7 @@ import {MatButtonModule, MatIconModule} from "@angular/material";
         FileFieldComponent,
         UserFieldComponent,
         DateTimeFieldComponent,
+        ButtonFieldComponent,
         DataFieldTemplateComponent,
     ],
     exports: [
@@ -54,7 +55,8 @@ import {MatButtonModule, MatIconModule} from "@angular/material";
         DateFieldComponent,
         FileFieldComponent,
         UserFieldComponent,
-        DateTimeFieldComponent
+        DateTimeFieldComponent,
+        ButtonFieldComponent
     ],
     imports: [
         CommonModule,
