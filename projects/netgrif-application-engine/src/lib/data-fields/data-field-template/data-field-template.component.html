@@ -1,0 +1,19 @@
+<div class="inner-padding fill-all-space" (resized)="evaluateTemplateCondition($event)">
+    <ng-template [ngIf]="showLargeLayout.value" [ngIfElse]="elseTemplate">
+        <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space">
+            <div fxFlex="45">
+                <span fxFlex class="data-field-title">{{title}}</span>
+            </div>
+            <div fxFlex="5"></div>
+            <div fxFlex="45">
+                <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+            </div>
+            <div fxFlex="5"></div>
+        </div>
+    </ng-template>
+    <ng-template #elseTemplate>
+        <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space">
+            <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+        </div>
+    </ng-template>
+</div>

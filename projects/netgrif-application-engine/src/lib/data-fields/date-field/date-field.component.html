@@ -1,0 +1,15 @@
+<nae-data-field-template [title]="dateField.title">
+    <mat-form-field appearance="standard">
+        <div fxLayout="row">
+            <mat-datepicker-toggle [for]="datepicker"></mat-datepicker-toggle>
+            <input matInput
+                   [matDatepicker]="datepicker"
+                   [(ngModel)]="dateField.value"
+                   (click)="datepicker.open()"
+                   (keydown.enter)="datepicker.close()"
+                   placeholder="{{dateField.placeholder}}">
+            <mat-datepicker #datepicker>
+            </mat-datepicker>
+        </div>
+    </mat-form-field>
+</nae-data-field-template>

@@ -12,13 +12,13 @@ import {
     MatDatepickerModule,
     MatDialogModule,
     MatDividerModule,
-    MatExpansionModule,
+    MatExpansionModule, MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatNativeDateModule,
+    MatNativeDateModule, MatOptionModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
@@ -44,6 +44,7 @@ import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import {PortalModule} from '@angular/cdk/portal';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -73,15 +74,12 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
         MatGridListModule,
         MatIconModule,
         MatInputModule,
-        MatListModule,
         MatMenuModule,
         MatNativeDateModule,
         MatPaginatorModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
-        MatRadioModule,
         MatRippleModule,
-        MatSelectModule,
         MatSidenavModule,
         MatSliderModule,
         MatSlideToggleModule,
@@ -93,7 +91,14 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
         MatTooltipModule,
         MatTreeModule,
         PortalModule,
-        ScrollingModule
+        ScrollingModule,
+        MatOptionModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        MatListModule,
+        ReactiveFormsModule,
+        MatRadioModule
     ]
 })
 export class MaterialModule {
