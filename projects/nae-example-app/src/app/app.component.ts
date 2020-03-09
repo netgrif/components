@@ -1,5 +1,4 @@
-import {Component, Input} from '@angular/core';
-import {FileField, FileUploadMIMEtype, LoggerService} from '@netgrif/application-engine';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'app-root',
@@ -9,11 +8,6 @@ import {FileField, FileUploadMIMEtype, LoggerService} from '@netgrif/application
 export class AppComponent {
     title = 'nae-example-app';
 
-    @Input() fileField: FileField = new FileField('Title', 'UPLOAD', undefined,
-        undefined, 10, false,
-        [FileUploadMIMEtype.JPG, FileUploadMIMEtype.XML]);
-
-    constructor(private log: LoggerService) {
-        log.info('App component has started');
+    constructor() {
     }
 }
