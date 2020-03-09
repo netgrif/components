@@ -1,28 +1,27 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NumberFieldComponent} from './number-field/number-field.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {FormsModule} from "@angular/forms";
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {DataFieldTemplateComponent} from './data-field-template/data-field-template.component';
-import {AngularResizedEventModule} from "angular-resize-event";
+import {TextFieldComponent} from './text-field/text-field.component';
+import {MatFormFieldModule, MatInputModule} from "@angular/material";
+import { TextareaFieldComponent } from './text-field/textarea-field/textarea-field.component';
+import { SimpleTextFieldComponent } from './text-field/simple-text-field/simple-text-field.component';
 
 @NgModule({
     declarations: [
-        DataFieldTemplateComponent,
-        NumberFieldComponent
+        TextFieldComponent,
+        TextareaFieldComponent,
+        SimpleTextFieldComponent,
+        DataFieldTemplateComponent
     ],
     exports: [
-        NumberFieldComponent
+        TextFieldComponent
     ],
     imports: [
         CommonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
         FlexLayoutModule,
-        AngularResizedEventModule
+        MatFormFieldModule,
+        MatInputModule
     ]
 })
 export class DataFieldsModule { }
