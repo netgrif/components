@@ -42,6 +42,7 @@ import {MatButtonModule, MatIconModule} from "@angular/material";
         BooleanFieldComponent,
         FileFieldComponent,
         UserFieldComponent,
+        DateTimeFieldComponent,
         DataFieldTemplateComponent,
     ],
     exports: [
@@ -52,7 +53,8 @@ import {MatButtonModule, MatIconModule} from "@angular/material";
         BooleanFieldComponent,
         DateFieldComponent,
         FileFieldComponent,
-        UserFieldComponent
+        UserFieldComponent,
+        DateTimeFieldComponent
     ],
     imports: [
         CommonModule,
@@ -61,6 +63,7 @@ import {MatButtonModule, MatIconModule} from "@angular/material";
         AngularResizedEventModule,
         HttpClientModule,
         SideMenuModule,
+        NgxMaterialTimepickerModule
     ],
     providers: [
         FileUploadService,
