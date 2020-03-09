@@ -20,6 +20,7 @@ import {EnumerationSelectFieldComponent} from "./enumeration-field/enumeration-s
 import {EnumerationAutocompleteSelectFieldComponent} from "./enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NumberFieldComponent} from "./number-field/number-field.component";
+import {MatSlideToggleModule} from "@angular/material";
 
 @NgModule({
     declarations: [
@@ -35,12 +36,14 @@ import {NumberFieldComponent} from "./number-field/number-field.component";
         MultichoiceSelectFieldComponent,
         MultichoiceListFieldComponent,
         DataFieldTemplateComponent,
+        BooleanFieldComponent
     ],
     exports: [
         TextFieldComponent,
         EnumerationFieldComponent,
         NumberFieldComponent,
-        MultichoiceFieldComponent
+        MultichoiceFieldComponent,
+        BooleanFieldComponent
     ],
     imports: [
         CommonModule,
@@ -55,7 +58,8 @@ import {NumberFieldComponent} from "./number-field/number-field.component";
         ReactiveFormsModule,
         MatRadioModule,
         MatAutocompleteModule,
-        MatInputModule
+        MatInputModule,
+        MatSlideToggleModule
     ]
 })
 export class DataFieldsModule { }
