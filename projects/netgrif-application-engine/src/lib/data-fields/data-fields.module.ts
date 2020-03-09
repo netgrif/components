@@ -3,9 +3,23 @@ import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {DataFieldTemplateComponent} from './data-field-template/data-field-template.component';
 import {TextFieldComponent} from './text-field/text-field.component';
-import {MatFormFieldModule, MatInputModule} from "@angular/material";
+import {
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    MatOptionModule,
+    MatRadioModule,
+    MatSelectModule
+} from "@angular/material";
 import { TextareaFieldComponent } from './text-field/textarea-field/textarea-field.component';
 import { SimpleTextFieldComponent } from './text-field/simple-text-field/simple-text-field.component';
+import {EnumerationFieldComponent} from "./enumeration-field/enumeration-field.component";
+import {EnumerationListFieldComponent} from "./enumeration-field/enumeration-list-field/enumeration-list-field.component";
+import {EnumerationSelectFieldComponent} from "./enumeration-field/enumeration-select-field/enumeration-select-field.component";
+import {EnumerationAutocompleteSelectFieldComponent} from "./enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NumberFieldComponent} from "./number-field/number-field.component";
 
 @NgModule({
     declarations: [
@@ -16,11 +30,13 @@ import { SimpleTextFieldComponent } from './text-field/simple-text-field/simple-
         EnumerationListFieldComponent,
         EnumerationSelectFieldComponent,
         EnumerationAutocompleteSelectFieldComponent,
-        DataFieldTemplateComponent
+        NumberFieldComponent,
+        DataFieldTemplateComponent,
     ],
     exports: [
         TextFieldComponent,
-        EnumerationFieldComponent
+        EnumerationFieldComponent,
+        NumberFieldComponent
     ],
     imports: [
         CommonModule,
