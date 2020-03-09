@@ -22,6 +22,8 @@ import {FileDownloadService} from "./file-field/file-download.service";
 import {SideMenuModule} from "../side-menu/side-menu.module";
 import {HttpClientModule} from "@angular/common/http";
 import {AngularResizedEventModule} from "angular-resize-event";
+import { UserFieldComponent } from './user-field/user-field.component';
+import {MatButtonModule, MatIconModule} from "@angular/material";
 
 @NgModule({
     declarations: [
@@ -39,6 +41,7 @@ import {AngularResizedEventModule} from "angular-resize-event";
         DateFieldComponent,
         BooleanFieldComponent,
         FileFieldComponent,
+        UserFieldComponent,
         DataFieldTemplateComponent,
     ],
     exports: [
@@ -48,7 +51,8 @@ import {AngularResizedEventModule} from "angular-resize-event";
         MultichoiceFieldComponent,
         BooleanFieldComponent,
         DateFieldComponent,
-        FileFieldComponent
+        FileFieldComponent,
+        UserFieldComponent
     ],
     imports: [
         CommonModule,

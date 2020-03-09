@@ -7,3 +7,4 @@ export * from './multichoice-field/multichoice-field';
 export * from './boolean-field/boolean-field';
 export * from './date-field/date-field';
 export * from './file-field/file-field';
+export * from './user-field/user-field'
