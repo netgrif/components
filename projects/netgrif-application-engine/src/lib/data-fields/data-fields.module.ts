@@ -44,6 +44,7 @@ import {DateFieldComponent} from './date-field/date-field.component';
         MultichoiceListFieldComponent,
         DateFieldComponent,
         BooleanFieldComponent,
+        FileFieldComponent,
         DataFieldTemplateComponent,
     ],
     exports: [
@@ -52,7 +53,8 @@ import {DateFieldComponent} from './date-field/date-field.component';
         NumberFieldComponent,
         MultichoiceFieldComponent,
         BooleanFieldComponent,
-        DateFieldComponent
+        DateFieldComponent,
+        FileFieldComponent
     ],
     imports: [
         CommonModule,
@@ -70,8 +72,18 @@ import {DateFieldComponent} from './date-field/date-field.component';
         MatInputModule,
         MatSlideToggleModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        AngularResizedEventModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatButtonModule,
+        HttpClientModule,
+        SideMenuModule,
+        MatSnackBarModule
+    ],
+    providers: [
+        FileUploadService,
+        FileDownloadService
     ]
 })
-export class DataFieldsModule {
-}
+export class DataFieldsModule { }
