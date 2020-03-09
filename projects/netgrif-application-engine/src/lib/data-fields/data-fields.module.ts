@@ -25,6 +25,9 @@ import {MultichoiceSelectFieldComponent} from "./multichoice-field/multichoice-s
 import {MultichoiceListFieldComponent} from "./multichoice-field/multichoice-list-field/multichoice-list-field.component";
 import {MatSlideToggleModule} from "@angular/material";
 import {BooleanFieldComponent} from "./boolean-field/boolean-field.component";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {DateFieldComponent} from './date-field/date-field.component';
 
 @NgModule({
     declarations: [
@@ -39,15 +42,17 @@ import {BooleanFieldComponent} from "./boolean-field/boolean-field.component";
         MultichoiceFieldComponent,
         MultichoiceSelectFieldComponent,
         MultichoiceListFieldComponent,
+        DateFieldComponent,
+        BooleanFieldComponent,
         DataFieldTemplateComponent,
-        BooleanFieldComponent
     ],
     exports: [
         TextFieldComponent,
         EnumerationFieldComponent,
         NumberFieldComponent,
         MultichoiceFieldComponent,
-        BooleanFieldComponent
+        BooleanFieldComponent,
+        DateFieldComponent
     ],
     imports: [
         CommonModule,
@@ -66,4 +71,5 @@ import {BooleanFieldComponent} from "./boolean-field/boolean-field.component";
         MatSlideToggleModule
     ]
 })
-export class DataFieldsModule { }
+export class DataFieldsModule {
+}
