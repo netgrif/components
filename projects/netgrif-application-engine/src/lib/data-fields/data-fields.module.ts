@@ -31,12 +31,16 @@ import {NumberFieldComponent} from "./number-field/number-field.component";
         EnumerationSelectFieldComponent,
         EnumerationAutocompleteSelectFieldComponent,
         NumberFieldComponent,
+        MultichoiceFieldComponent,
+        MultichoiceSelectFieldComponent,
+        MultichoiceListFieldComponent,
         DataFieldTemplateComponent,
     ],
     exports: [
         TextFieldComponent,
         EnumerationFieldComponent,
-        NumberFieldComponent
+        NumberFieldComponent,
+        MultichoiceFieldComponent
     ],
     imports: [
         CommonModule,
