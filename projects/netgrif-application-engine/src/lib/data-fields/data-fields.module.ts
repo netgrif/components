@@ -68,7 +68,9 @@ import {DateFieldComponent} from './date-field/date-field.component';
         MatRadioModule,
         MatAutocompleteModule,
         MatInputModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ]
 })
 export class DataFieldsModule {
