@@ -13,7 +13,8 @@ import {AuthenticationMethodService} from './services/authentication-method.serv
         CommonModule,
         HttpClientModule
         // StoreModule.forFeature(AUTHENTICATION_FEATURE_KEY, reducer),
-        // EffectsModule.forFeature([AuthenticationEffects])
+        // EffectsModule.forFeature([AuthenticationEffects]),
+        // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true }),
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},

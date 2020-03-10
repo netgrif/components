@@ -5,11 +5,8 @@ import {User} from '../../../models/user';
 import {AuthenticationMethodService} from '../../authentication-method.service';
 import Credentials from '../../../models/credentials';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
-import {AuthenticationModule} from '../../../authentication.module';
 
-@Injectable({
-    providedIn: AuthenticationModule
-})
+@Injectable()
 export class BasicAuthenticationService extends AuthenticationMethodService {
 
     constructor(private _http: HttpClient, private _config: ConfigurationService) {

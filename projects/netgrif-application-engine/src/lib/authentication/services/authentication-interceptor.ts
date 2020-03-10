@@ -4,11 +4,8 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {SessionService} from '../session/services/session.service';
 import {AuthenticationService} from './authentication/authentication.service';
-import {AuthenticationModule} from '../authentication.module';
 
-@Injectable({
-    providedIn: AuthenticationModule
-})
+@Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
     constructor(private _session: SessionService, private _auth: AuthenticationService) {

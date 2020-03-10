@@ -1,5 +1,5 @@
 /* MODULES */
-export * from './user.module';
+
 
 /* MODELS */
 export * from './models/user';

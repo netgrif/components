@@ -70,5 +70,8 @@
         "tslint": "~5.18.0",
         "typedoc": "^0.16.11",
         "typescript": "^3.7.5"
+    },
+    "optionalDependencies": {
+        "@netgrif/application-engine": "file:dist/netgrif-application-engine"
     }
 }
