@@ -1,12 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {User} from '../models/user';
-import {AuthenticationMethodService} from '../services/authentication-method.service';
-import Credentials from '../models/credentials';
-import {ConfigurationService} from '../../configuration/configuration.service';
+import {User} from '../../../models/user';
+import {AuthenticationMethodService} from '../../authentication-method.service';
+import Credentials from '../../../models/credentials';
+import {ConfigurationService} from '../../../../configuration/configuration.service';
+import {AuthenticationModule} from '../../../authentication.module';
 
-@Injectable()
+@Injectable({
+    providedIn: AuthenticationModule
+})
 export class BasicAuthenticationService extends AuthenticationMethodService {
 
     constructor(private _http: HttpClient, private _config: ConfigurationService) {

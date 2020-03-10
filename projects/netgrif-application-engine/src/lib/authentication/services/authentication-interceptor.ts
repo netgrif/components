@@ -1,31 +1,40 @@
-import {Injectable, Injector} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {BasicAuthenticationService} from '../basic-authentication/basic-authentication.service';
+import {Injectable} from '@angular/core';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
+import {SessionService} from '../session/services/session.service';
+import {AuthenticationService} from './authentication/authentication.service';
+import {AuthenticationModule} from '../authentication.module';
 
-@Injectable()
+@Injectable({
+    providedIn: AuthenticationModule
+})
 export class AuthenticationInterceptor implements HttpInterceptor {
-    private authService: BasicAuthenticationService;
 
-    constructor(private injector: Injector) {
+    constructor(private _session: SessionService, private _auth: AuthenticationService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.authService = this.injector.get<BasicAuthenticationService>(BasicAuthenticationService);
-        const token: string = this.authService.token;
-        req = req.clone({
-            setHeaders: {
-                Authorization: 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
-        });
-        return next.handle(req).pipe( // TODO refactor to separte interceptor
-            catchError(response => {
-                if (response instanceof HttpErrorResponse && response.status === 401) {
-                    console.error(response);
+        if (this._session.sessionToken) {
+            req = req.clone({
+                headers: req.headers.set(this._session.sessionHeader, this._session.sessionToken)
+            });
+        }
+        return next.handle(req).pipe(
+            tap(event => {
+                if (event instanceof HttpResponse) {
+                    if (event.headers.has(this._session.sessionHeader)) {
+                        this._session.sessionToken = event.headers.get(this._session.sessionHeader);
+                    }
                 }
-                return throwError(response);
+            }),
+            catchError(errorEvent => {
+                if (errorEvent instanceof HttpErrorResponse && errorEvent.status === 401) {
+                    console.debug('Authentication token is invalid. Clearing stream');
+                    this._session.clear();
+                    this._auth.authenticated$.next(false);
+                }
+                return throwError(errorEvent);
             })
         );
     }

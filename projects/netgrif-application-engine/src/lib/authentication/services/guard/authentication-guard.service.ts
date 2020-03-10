@@ -3,8 +3,11 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {Route} from '../../../configuration/interfaces/schema';
+import {AuthenticationModule} from '../../authentication.module';
 
-@Injectable()
+@Injectable({
+    providedIn: AuthenticationModule
+})
 export class AuthenticationGuardService implements CanActivate {
 
     public static readonly LOGIN_COMPONENT = 'loginview';

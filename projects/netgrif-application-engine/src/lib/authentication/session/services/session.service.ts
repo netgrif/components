@@ -1,25 +1,25 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, throwError} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {NullStorage} from '../NullStorage';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
-import {catchError, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SessionService implements HttpInterceptor {
+export class SessionService {
 
     public static readonly SESSION_TOKEN_STORAGE_KEY = 'naet';
 
     private _session$: BehaviorSubject<string>;
     private _storage: Storage;
-    private _sessionHeader: string;
+    private readonly _sessionHeader: string;
 
     constructor(private _config: ConfigurationService) {
         this._storage = this._config.get().providers.auth.session.store ? localStorage : new NullStorage();
         this._sessionHeader = this._config.get().providers.auth.sessionBearer ?
             this._config.get().providers.auth.sessionBearer : 'x-auth-token';
+        this._session$ = new BehaviorSubject<string>(null);
+        this.load();
     }
 
     get session$(): Observable<string> {
@@ -36,6 +36,10 @@ export class SessionService implements HttpInterceptor {
         return this._session$.getValue();
     }
 
+    get sessionHeader(): string {
+        return this._sessionHeader;
+    }
+
     clear(): void {
         this.sessionToken = null;
         this._storage.removeItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
@@ -46,29 +50,5 @@ export class SessionService implements HttpInterceptor {
         if (token) {
             this.sessionToken = atob(token).split(':')[1];
         }
-    }
-
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (this.sessionToken) {
-            req = req.clone({
-                headers: req.headers.set(this._sessionHeader, this.sessionToken)
-            });
-        }
-        return next.handle(req).pipe(
-            tap(event => {
-                if (event instanceof HttpResponse) {
-                    if (event.headers.has(this._sessionHeader)) {
-                        this.sessionToken = event.headers.get(this._sessionHeader);
-                    }
-                }
-            }),
-            catchError(errorEvent => {
-                if (errorEvent instanceof HttpErrorResponse && errorEvent.status === 401) {
-                    console.debug('Authentication token is invalid. Clearing stream');
-                    this.clear();
-                }
-                return throwError(errorEvent);
-            })
-        );
     }
 }
