@@ -12,6 +12,7 @@ export function createNaeFiles(): Rule {
         return chain([
             createRoutesModule(),
             schematic('initialize-configuration-service', {}),
+            schematic('custom-templates', {})
         ]);
     };
 }

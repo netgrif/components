@@ -1,6 +1,11 @@
 {
     "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
+        "custom-templates": {
+            "description": "Generate a project custom themes from nae.json.",
+            "factory": "./add/custom-templates/index#customTemplates",
+            "schema": "./add/custom-templates/schema.json"
+        },
         "ng-add": {
             "description": "Adds NAE library to the project and creates all the necessary files.",
             "factory": "./add/add/index#ngAdd"
@@ -34,10 +39,6 @@
             "description": "Creates a view based on provided settings. Opens a prompt if no settings are provided.",
             "factory": "./view/create-view-prompt/index#createViewPrompt",
             "schema": "./view/create-view-prompt/schema.json"
-        "custom-templates": {
-            "description": "Generate a project custom project themes from nae.json.",
-            "factory": "./custom-templates/index#customTemplates",
-            "schema": "./custom-templates/schema.json"
         }
     }
 }
