@@ -17,7 +17,8 @@ import {
 } from '../../utilityFunctions';
 import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
 import {Change} from "@schematics/angular/utility/change";
-import { ImportsToAdd } from './importsToadd';
+import { ImportsToAdd } from './classes/importsToAdd';
+import {ClassName} from './classes/ClassName';
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
@@ -51,26 +52,23 @@ function createView(tree: Tree, args: CreateViewArguments): Rule {
 function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
-    const classNamePrefix = convertPathToClassNamePrefix(args.path as string);
-    const classNameNoComponent = `${strings.classify(classNamePrefix)}Login`;
-    const className = `${classNameNoComponent}Component`;
-    const componentPath = `./views/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
+    const className = new ClassName(args.path as string, 'Login');
 
     rules.push(createFilesFromTemplates('./files/login', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: classNamePrefix,
+        path: className.prefix,
         dasherize: strings.dasherize,
         classify: strings.classify
     }));
 
-    updateAppModule(tree, className, componentPath, [
+    updateAppModule(tree, className.name, className.fileImportPath, [
         new ImportsToAdd("FlexModule", "@angular/flex-layout"),
         new ImportsToAdd("CardModule", "@netgrif/application-engine")]);
-    updateRoutingModule(tree, className, componentPath);
+    updateRoutingModule(tree, className.name, className.fileImportPath);
 
 
     rules.push(schematic('add-route', {
-        routeObject: createRouteObject(args.path as string, className),
+        routeObject: createRouteObject(args.path as string, className.name),
         path: args.path
     }));
     return chain(rules);
