@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsCreateViewPrompt",
+    "title": "Create new View with prompt for settings",
+    "type": "object",
+    "properties": {
+        "path": {
+            "description": "web address path from site root that corresponds to this view",
+            "type": "string",
+            "x-prompt": "enter the view path. No leading backslash."
+        },
+        "viewType": {
+            "description": "type of the created view",
+            "type": "string",
+            "enum": [
+                "login",
+                "sidenav-toolbar",
+                "caseView",
+                "taskView"
+            ],
+            "x-prompt": {
+                "type": "list",
+                "message": "select a view type",
+                "items": [
+                    "login",
+                    "sidenav-toolbar",
+                    "caseView",
+                    "taskView"
+                ]
+            }
+        }
+    },
+    "required": [
+        "path",
+        "viewType"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsAddRoute",
+    "title": "Add Route to routes.json",
+    "type": "object",
+    "properties": {
+
+    }
+}

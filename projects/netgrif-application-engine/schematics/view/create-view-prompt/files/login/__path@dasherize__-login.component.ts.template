@@ -1,0 +1,12 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: '<%= prefix %>-login',
+  templateUrl: './<%= dasherize(path) %>-login.component.html',
+  styleUrls: ['./<%= dasherize(path) %>-login.component.scss']
+})
+export class <%= classify(path) %>LoginComponent {
+
+  constructor() { }
+
+}

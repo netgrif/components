@@ -3,13 +3,28 @@
     "schematics": {
         "initialize-configuration-service": {
             "description": "Generate a project specific configuration service and add the correct provider entry to app.module",
-            "factory": "./initialize-configuration-service/index#initializeConfigurationService",
-            "schema": "./initialize-configuration-service/schema.json"
+            "factory": "./configuration-service/initialize-configuration-service/index#initializeConfigurationService",
+            "schema": "./configuration-service/initialize-configuration-service/schema.json"
         },
         "create-configuration-service": {
             "description": "Generate a project specific configuration service that contains the information from nae.json.",
-            "factory": "./create-configuration-service/index#createConfigurationService",
-            "schema": "./create-configuration-service/schema.json"
+            "factory": "./configuration-service/create-configuration-service/index#createConfigurationService",
+            "schema": "./configuration-service/create-configuration-service/schema.json"
+        },
+        "create-view": {
+            "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt for the user to input their settings.",
+            "factory": "./view/create-view/index#createView",
+            "schema": "./view/create-view/schema.json"
+        },
+        "add-route": {
+            "description": "Adds a new Route object into an existing routes.json file.",
+            "factory": "./view/add-route/index#addRouteToRoutes",
+            "schema": "./view/add-route/schema.json"
+        },
+        "create-view-prompt": {
+            "description": "Creates a view based on provided settings. Opens a prompt if no settings are provided.",
+            "factory": "./view/create-view-prompt/index#createViewPrompt",
+            "schema": "./view/create-view-prompt/schema.json"
         }
     }
 }
