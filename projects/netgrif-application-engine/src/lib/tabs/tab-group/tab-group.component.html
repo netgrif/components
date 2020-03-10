@@ -1,12 +1,17 @@
 <mat-tab-group [selectedIndex]="tabGroup.selectedIndex.value" (selectedIndexChange)="tabGroup.selectedIndex.setValue($event)">
     <mat-tab *ngFor="let tab of tabGroup.openedTabs; let i=index">
         <ng-template mat-tab-label>
-            <mat-icon *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
-            {{tab.label.text}}
-            <button mat-icon-button *ngIf="tab.canBeDeleted" (click)="tabGroup.closeTabIndex(i)">
-                <mat-icon>clear</mat-icon>
-            </button>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon class="icon-margin-right" *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
+                    <span>{{tab.label.text}}</span>
+                </div>
+                <button mat-icon-button *ngIf="tab.canBeDeleted" (click)="tabGroup.closeTabIndex(i)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </div>
         </ng-template>
+<!--        lazy loading of tab contents is disabled for now-->
 <!--        <ng-template matTabContent>-->
             <nae-tab-creation-detector [initializeTabFunction]="initializeTabLambda" [tabIndex]="i"></nae-tab-creation-detector>
             <ng-template [ngIf]="tab.isTabInitialized">
