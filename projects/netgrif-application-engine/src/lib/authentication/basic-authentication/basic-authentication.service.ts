@@ -1,37 +1,43 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Credentials, User} from '../models/user';
-import {AuthenticationService} from '../services/authentication.service';
-
-
-const BASE_URL = 'http://localhost:8080/auth';
+import {Observable, throwError} from 'rxjs';
+import {User} from '../models/user';
+import {AuthenticationMethodService} from '../services/authentication-method.service';
+import Credentials from '../models/credentials';
+import {ConfigurationService} from '../../configuration/configuration.service';
 
 @Injectable()
-export class BasicAuthenticationService extends AuthenticationService {
+export class BasicAuthenticationService extends AuthenticationMethodService {
 
-    constructor(private http: HttpClient) {
+    constructor(private _http: HttpClient, private _config: ConfigurationService) {
         super();
     }
 
-    get token(): string {
-        return localStorage.getItem('token');
-    }
+    login(credentials: Credentials = {username: '', password: ''}): Observable<User> {
+        const url = this._config.get().providers.auth.endpoints['login'];
+        if (!url) {
+            throwError(new Error('Login URL is not defined in the config [nae.providers.auth.endpoints.login]'));
+        }
+        if (!credentials.username || !credentials.password) {
+            throwError(new Error('User\'s credentials are not defined!'));
+        }
+        credentials.username = credentials.username.trim();
+        credentials.password = credentials.password.trim();
+        if (credentials.username === '' || credentials.password === '') {
+            throwError(new Error('User\'s credentials are empty!'));
+        }
 
-    set token(token) {
-        localStorage.setItem('token', token);
-    }
-
-
-    login(credentials: Credentials): Observable<any> {
-        const url = BASE_URL + '/login';
-        return this.http.get<User>(url, {
-            headers: new HttpHeaders().set('Authorization', 'Basic ' + btoa(credentials.username + '.' + credentials.password))
+        return this._http.get<User>(url, {
+            headers: new HttpHeaders().set('Authorization', `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`)
         });
     }
 
-    logout(): Observable<any> {
-        const url = BASE_URL + '/logout';
-        return this.http.post(url, {});
+    logout(): Observable<object> {
+        const url = this._config.get().providers.auth.endpoints['logout'];
+        if (!url) {
+            throw new Error('Logout URL is not defined in the config [nae.providers.auth.endpoints.logout]');
+        }
+
+        return this._http.post(url, {});
     }
 }

@@ -12,5 +12,7 @@ export function authenticationServiceFactory(config: ConfigurationService, http:
     const authType = auth.authentication.toLowerCase();
     if (authType === 'basic') {
         return new BasicAuthenticationService(http);
+    } else {
+        return new NullAuthenticationService();
     }
 }
