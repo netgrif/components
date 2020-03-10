@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AuthenticationService, UserService} from '@netgrif/application-engine';
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-root',
@@ -8,10 +8,7 @@ import {AuthenticationService, UserService} from '@netgrif/application-engine';
 })
 export class AppComponent {
     title = 'nae-example-app';
-    isLogged = false;
 
-    constructor(private auth: AuthenticationService, private userService: UserService) {
-        auth.authenticated$.subscribe(value => this.isLogged = value);
-        userService.login({username: 'super@netgrif.com', password: 'password'}).subscribe(user => console.log(user));
+    constructor(public routes: Router) {
     }
 }

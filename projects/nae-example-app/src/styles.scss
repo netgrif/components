@@ -1,4 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import '~@covalent/core/theming/all-theme';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import '~@covalent/markdown/markdown-theme';
+@import 'custom-highlight-theme';
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+$typography: mat-typography-config(
+    $font-family: 'Roboto, monospace',
+    $headline: mat-typography-level(32px, 48px, 700)
+);
+
+@include mat-core($typography);
+
+$primary: mat-palette($mat-orange, 800, 100, 900);
+$accent: mat-palette($mat-dark-blue, 600, 100, 900);
+
+$warn: mat-palette($mat-red, 600, 100, 900);
+
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include covalent-theme($theme, $typography);
+@include custom-covalent-highlight-theme();
+
+tr mat-header-row {
+    background-color: green;
+}
+
+table {
+    width: 100%;
+}
+
+h1, h2 {
+    font-weight: 400;
+}
+
+.table-properties-name {
+    font-weight: 400;
+    color: rgba(0,0,0,.70);
+    font-family: 'Roboto Mono',monospace;
+    font-size: 12px;
+}
+
