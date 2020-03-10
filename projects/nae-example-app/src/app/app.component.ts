@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-root',
@@ -8,6 +9,6 @@ import {Component} from '@angular/core';
 export class AppComponent {
     title = 'nae-example-app';
 
-    constructor() {
+    constructor(public routes: Router) {
     }
 }
