@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import Role from "../models/role";
-import {Store} from "@ngrx/store";
-import {State} from "../store/reducers/user.reducers";
 import {User} from "../models/user";
 import Credentials from "../../authentication/models/credentials";
+import {AuthenticationService} from "../../authentication/services/authentication.service";
+import {tap} from "rxjs/operators";
+import {ActionType} from "../models/action-type";
 
 @Injectable({
     providedIn: 'root'
@@ -13,18 +14,19 @@ export class UserService {
 
     private _user: User;
 
-    constructor(private _store: Store<State>,
-                // private _authService: AuthenticationService
-    ) {
+    constructor(
+                // private _store: Store<State>,
+                private _authService: AuthenticationService) {
     }
 
-    public login(credentials: Credentials): Observable<any> {
+    public login(credentials: Credentials): Observable<User> {
         // TODO: NgRx store
         // this._store.dispatch(loginUser({user: user}));
 
-        // return this._authService.login(credentials)
-        //     .pipe((authUser: User) => this._user = authUser );
-        return
+        return this._authService.login(credentials)
+            .pipe(
+                tap((authUser: User) => this._user = authUser)
+            );
     }
 
     public getLoggedUser(): User {
@@ -34,16 +36,45 @@ export class UserService {
         return this._user;
     }
 
-    public hasPermision(user: User): boolean {
-        return
+    /**
+     * Check if user has specified authority
+     * @param {Array<string> / string} auth
+     * @returns {boolean}
+     */
+    public hasAuthority(auth: Array<string> | string): boolean {
+        if (!auth || !this._user.authorities) return false;
+        if (auth instanceof Array) {
+            return auth.some(a => this._user.authorities.some(u => u === a));
+        } else
+            return this._user.authorities.some(a => a === auth);
     }
 
-    public changeRoles(roles: Array<Role>): Observable<any> {
-        return
+    public hasPermision(permission: string): boolean {
+        if (!permission) return false;
+        const perm = "PERM_" + permission.toUpperCase();
+        return this.hasAuthority(perm);
+    }
+
+    public changeRoles(roles: Array<Role>): void {
+        if (roles instanceof Array) {
+            this._user.roles = roles;
+        }
     }
 
     public hasRole(role: Role): boolean {
-        return
+        if (!role || !this._user.roles) return false;
+        return this._user.roles.some(r => r === role);
+    }
+
+    /**
+     * Check if user can perform specified action
+     * @param {Role} roles
+     * @param {ActionType} action
+     * @returns {boolean}
+     */
+    public canDo(roles: Role, action: ActionType): boolean {
+        if (!action || !this._user.roles || !(roles instanceof Object)) return false;
+        return this._user.roles.some(role => role.stringId === roles.stringId ? role.actions.get(action) : false);
     }
 
     public logout(): void {
