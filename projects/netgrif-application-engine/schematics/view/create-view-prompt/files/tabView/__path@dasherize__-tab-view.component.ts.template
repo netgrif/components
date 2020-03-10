@@ -1,0 +1,30 @@
+import { Component} from '@angular/core';
+
+@Component({
+  selector: '<%= prefix %>-tab-view',
+  templateUrl: './<%= dasherize(path) %>-tab-view.component.html.template',
+  styleUrls: ['./<%= dasherize(path) %>-tab-view.component.scss.template']
+})
+export class <%= classify(path) %>TabViewComponent {
+
+    tabs = [
+        <% for(let tab of tabs) { %>
+        {
+            <% if (tab.icon !== undefined || tab.text !== undefined) { %>
+                <% if (tab.icon !== undefined) { %>
+                icon: '<%= tab.icon %>',
+                <% } %>
+                <% if (tab.text !== undefined) { %>
+                icon: '<%= tab.text %>',
+                <% } %>
+            <% } %>
+            canBeDeleted: <%= tab.canBeDeleted %>,
+            tabContentComponent: <%= tab.tabContentComponent %>,
+            <% if (tab.order !== undefined) { %>
+            order: <%= tab.order %>
+            <% } %>
+        },
+        <% } %>
+    ];
+
+}

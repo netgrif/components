@@ -43,7 +43,7 @@ function createView(tree: Tree, args: CreateViewArguments): Rule {
         case "login":
             return createLoginView(tree, args);
         case "tabView":
-            return createLoginView(tree, args);
+            return createTabView(tree, args);
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
@@ -64,7 +64,7 @@ function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
     updateAppModule(tree, className.name, className.fileImportPath, [
         new ImportsToAdd("FlexModule", "@angular/flex-layout"),
         new ImportsToAdd("CardModule", "@netgrif/application-engine")]);
-    updateRoutingModule(tree, className.name, className.fileImportPath);
+    addRoutingModuleImport(tree, className.name, className.fileImportPath);
 
 
     rules.push(schematic('add-route', {
@@ -75,11 +75,19 @@ function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
 }
 
 function createTabView(tree: Tree, args: CreateViewArguments): Rule {
+    const projectInfo = getProjectInfo(tree);
+    const rules = [];
+    const className = new ClassName(args.path as string, 'TabView');
 
-}
+    updateAppModule(tree, className.name, className.fileImportPath, [
+        new ImportsToAdd("FlexModule", "@angular/flex-layout"),
+        new ImportsToAdd("TabsModule", "@netgrif/application-engine")]);
 
-function convertPathToClassNamePrefix(path: string): string {
-    return path.replace('-', '_').replace('/', '-').toLocaleLowerCase();
+    rules.push(schematic('add-route', {
+        routeObject: createRouteObject(args.path as string, className.name),
+        path: `${args.path}/*`
+    }));
+    return chain(rules);
 }
 
 function createRouteObject(path: string, className: string): Route {
@@ -105,7 +113,7 @@ function addImportsToAppModule(imports: Array<ImportsToAdd> = [], appModule: Fil
     return appModuleChanges;
 }
 
-function updateRoutingModule(tree: Tree, className: string, componentPath: string): void {
+function addRoutingModuleImport(tree: Tree, className: string, componentPath: string): void {
     const routingModuleChanges = [];
     const routesModule = getFileData(tree, getProjectInfo(tree).path, 'app-routing.module.ts');
     routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, className, componentPath));
