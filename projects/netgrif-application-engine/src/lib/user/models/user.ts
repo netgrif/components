@@ -1,16 +1,18 @@
-import Role from "./role";
+import Role from './role';
 
 export class User {
-    stringId: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    authorities: String[];
-    roles: Role[];
-    groups: String[];
-    preferences?: any;
+    constructor(
+        public id: string,
+        public email: string,
+        public firstName: string,
+        public lastName: string,
+        public authorities: Array<string>,
+        public roles: Array<Role>,
+        public groups?: Array<string>,
+        public preferences?: object) {
+    }
 
-    get fullname() {
+    get fullName() {
         return this.firstName + ' ' + this.lastName;
     }
 }

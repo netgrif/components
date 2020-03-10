@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {AuthenticationMethodService} from '../../authentication-method.service';
 import Credentials from '../../../models/credentials';
 import {Observable, of} from 'rxjs';
-import {User} from '../../../models/user';
 import {AuthenticationModule} from '../../../authentication.module';
+import {User} from '../../../models/user';
 
 @Injectable({
     providedIn: AuthenticationModule
@@ -15,7 +15,7 @@ export class NullAuthenticationService extends AuthenticationMethodService {
     }
 
     login(credentials: Credentials): Observable<User> {
-        return of({...credentials});
+        return of(null);
     }
 
     logout(): Observable<object> {

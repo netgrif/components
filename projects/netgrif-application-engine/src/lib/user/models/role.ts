@@ -1,8 +1,6 @@
-import {ActionType} from "./action-type";
-
 export default interface Role {
-    stringId: string;
-    title: string;
+    id: string;
     name: string;
-    actions?: Map<ActionType, boolean>
+    description?: string;
+    net?: string;
 }
