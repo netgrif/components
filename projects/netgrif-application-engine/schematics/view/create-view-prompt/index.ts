@@ -38,6 +38,8 @@ function createView(tree: Tree, args: CreateViewArguments): Rule {
     switch (args.viewType) {
         case "login":
             return createLoginView(tree, args);
+        case "tabView":
+            return createLoginView(tree, args);
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
@@ -81,6 +83,10 @@ function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
         path: args.path
     }));
     return chain(rules);
+}
+
+function createTabView(tree: Tree, args: CreateViewArguments): Rule {
+
 }
 
 function convertPathToClassNamePrefix(path: string): string {
