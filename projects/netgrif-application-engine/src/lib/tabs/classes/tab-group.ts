@@ -1,10 +1,10 @@
 import {TabContent, TabGroupInterface} from '../interfaces';
 import {OpenedTab} from './opened-tab';
 import {Injector, StaticProvider} from '@angular/core';
-import {NAE_TAB_DATA} from '../tabs.module';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {FormControl} from '@angular/forms';
 import {orderBy} from 'natural-orderby';
+import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token.module';
 
 export class TabGroup implements TabGroupInterface{
 
