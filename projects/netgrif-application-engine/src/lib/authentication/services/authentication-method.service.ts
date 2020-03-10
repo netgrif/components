@@ -9,5 +9,5 @@ export abstract class AuthenticationMethodService {
 
     abstract login(credentials: Credentials): Observable<User>;
 
-    abstract logout(): void;
+    abstract logout(): Observable<object>;
 }
