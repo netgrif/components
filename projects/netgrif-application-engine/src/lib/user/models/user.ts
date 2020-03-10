@@ -1,4 +1,5 @@
 import Role from "./role";
+import {Preferences} from './preferences/preferences';
 
 export class User {
     stringId: string;
@@ -8,7 +9,7 @@ export class User {
     authorities: String[];
     roles: Role[];
     groups: String[];
-    preferences?: any;
+    preferences: Preferences;
 
     get fullname() {
         return this.firstName + ' ' + this.lastName;

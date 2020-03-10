@@ -6,6 +6,7 @@ import Credentials from "../../authentication/models/credentials";
 import {AuthenticationService} from "../../authentication/services/authentication.service";
 import {tap} from "rxjs/operators";
 import {ActionType} from "../models/action-type";
+import {UserPreferenceService} from './user-preference.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,7 @@ export class UserService {
 
     constructor(
                 // private _store: Store<State>,
+                private _preferenceService: UserPreferenceService,
                 private _authService: AuthenticationService) {
     }
 
@@ -25,7 +27,10 @@ export class UserService {
 
         return this._authService.login(credentials)
             .pipe(
-                tap((authUser: User) => this._user = authUser)
+                tap((authUser: User) => {
+                    this._user = authUser;
+                    this._preferenceService.user = authUser;
+                })
             );
     }
 
