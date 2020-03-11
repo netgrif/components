@@ -1,6 +1,6 @@
 import {Tree} from "@angular-devkit/schematics";
 import {commitChangesToFile, FileData, getAppModule, getFileData, getProjectInfo, ProjectInfo} from '../utilityFunctions';
-import {ImportsToAdd} from './create-view-prompt/classes/importsToAdd';
+import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
 import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
 import {Change} from '@schematics/angular/utility/change';
 
@@ -31,14 +31,14 @@ export function getParentPath(path: string): string {
     return path.substring(0, index)
 }
 
-export function updateAppModule(tree: Tree, className: string, componentPath: string, imports: Array<ImportsToAdd> = []): void {
+export function updateAppModule(tree: Tree, className: string, componentPath: string, imports: Array<ImportToAdd> = []): void {
     const appModule = getAppModule(tree, getProjectInfo(tree).path);
     let changes = addDeclarationToModule(appModule.sourceFile, appModule.fileEntry.path, className, componentPath);
     changes =  changes.concat(addImportsToAppModule(imports, appModule));
     commitChangesToFile(tree, appModule.fileEntry, changes);
 }
 
-export function addImportsToAppModule(imports: Array<ImportsToAdd> = [], appModule: FileData): Change[] {
+export function addImportsToAppModule(imports: Array<ImportToAdd> = [], appModule: FileData): Change[] {
     let changes = [];
     imports.forEach(importToAdd => {
         changes = changes.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, importToAdd.moduleClassName, importToAdd.moduleImportPath));

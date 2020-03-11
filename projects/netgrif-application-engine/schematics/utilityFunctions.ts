@@ -1,4 +1,4 @@
-import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
+import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 
 import {
     apply,
@@ -10,11 +10,13 @@ import {
     SchematicsException,
     Tree,
     url,
-} from "@angular-devkit/schematics";
-import {FileEntry, UpdateRecorder} from "@angular-devkit/schematics/src/tree/interface";
-import {experimental, normalize, strings} from "@angular-devkit/core";
-import {NetgrifApplicationEngine} from "../src/lib/configuration/interfaces/schema";
-import {Change, InsertChange} from "@schematics/angular/utility/change";
+} from '@angular-devkit/schematics';
+import {FileEntry, UpdateRecorder} from '@angular-devkit/schematics/src/tree/interface';
+import {experimental, normalize, strings} from '@angular-devkit/core';
+import {NetgrifApplicationEngine} from '../src/lib/configuration/interfaces/schema';
+import {Change, InsertChange} from '@schematics/angular/utility/change';
+import {FileSystemNode} from './utilityClasses';
+
 export class ProjectInfo {
     /**
      * projects/[name]/src/app
@@ -88,7 +90,7 @@ export function commitChangesToFile(tree: Tree, file: FileEntry, changes: Array<
 }
 
 export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Array<Change>): UpdateRecorder {
-    const exportRecorder= tree.beginUpdate(file.path);
+    const exportRecorder = tree.beginUpdate(file.path);
     for (const change of changes) {
         if (change instanceof InsertChange) {
             exportRecorder.insertLeft(change.pos, change.toAdd);
@@ -103,7 +105,7 @@ export function getAppModule(tree: Tree, projectPath: string): FileData {
 
 export function getFileData(tree: Tree, projectRootPath: string, relativeFilePath: string): FileData {
     const file = tree.get(`${projectRootPath}/${relativeFilePath}`);
-    if ( !file) {
+    if (!file) {
         throw new SchematicsException(`Could not find requested file. Missing '${relativeFilePath}'.`);
     }
 
@@ -114,7 +116,8 @@ export function getFileData(tree: Tree, projectRootPath: string, relativeFilePat
         sourceFile: source
     };
 }
-export function createFilesFromTemplates(pathToTemplates:string,pathToMoveGeneratedFiles:string,options:object) :Rule{
+
+export function createFilesFromTemplates(pathToTemplates: string, pathToMoveGeneratedFiles: string, options: object): Rule {
     const templateSource = apply(url(pathToTemplates), [
         applyTemplates(options),
         move(normalize(pathToMoveGeneratedFiles)),
@@ -122,4 +125,67 @@ export function createFilesFromTemplates(pathToTemplates:string,pathToMoveGenera
     return chain([
         mergeWith(templateSource)
     ]);
+}
+
+/**
+ * computes the relative path from one file to another
+ * @param sourcePath - path relative to project root of the source file
+ * @param destinationPath - path relative to project root of the destination file
+ * @return path that leads from source file to destination file
+ */
+export function createRelativePath(sourcePath: string, destinationPath: string): string {
+    const root: FileSystemNode = new FileSystemNode('', null);
+    let lastNode: FileSystemNode = root;
+
+    sourcePath.split('/').forEach(pathPart => {
+        if (pathPart === '.') {
+            return; // continue
+        }
+        const newNode = new FileSystemNode(pathPart, lastNode);
+        lastNode.children.push(newNode);
+        lastNode = newNode;
+    });
+    const sourceNode = lastNode;
+    lastNode = root;
+
+    destinationPath.split('/').forEach(pathPart => {
+        if (pathPart === '.') {
+            return;
+        }
+
+        if (lastNode.children.length === 1 && lastNode.children[0].path === pathPart) {
+            lastNode = lastNode.children[0];
+        } else {
+            const newNode = new FileSystemNode(pathPart, lastNode);
+            lastNode.children.push(newNode);
+            lastNode = newNode;
+        }
+    });
+
+    let currentNode = sourceNode.parent;
+    const pathFragments = [];
+    let traversalDirectionUp = true;
+    if (currentNode.children.length == 2) {
+        pathFragments.push('.');
+        traversalDirectionUp = false;
+    }
+    while (traversalDirectionUp) {
+        if (currentNode.children.length == 2) {
+            traversalDirectionUp = false;
+            currentNode = currentNode.children[1]; // destination path is always added second
+        } else {
+            currentNode = currentNode.parent;
+            pathFragments.push('..');
+        }
+    }
+    while (true) {
+        pathFragments.push(currentNode.path);
+        if (currentNode.children.length > 0) {
+            currentNode = currentNode.children[0];
+        } else {
+            break;
+        }
+    }
+
+    return pathFragments.join('/');
 }
