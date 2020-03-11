@@ -109,7 +109,11 @@ function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean)
     if (addRoute) {
         rules.push(schematic('add-route', {
             routeObject: createRouteObject(args.path as string, className.name),
-            path: `${args.path}/*`
+            path: `${args.path}`
+        }));
+        rules.push(schematic('add-route', {
+            routeObject: createRouteObject(`${args.path}/**`, className.name),
+            path: `${args.path}/**`
         }));
     }
     return chain(rules);
