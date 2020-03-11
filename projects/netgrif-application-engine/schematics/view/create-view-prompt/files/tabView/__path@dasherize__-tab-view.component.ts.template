@@ -4,8 +4,8 @@ import { <%= imp.className %> } from '<%= imp.importPath %>';<% } %>
 
 @Component({
   selector: '<%= prefix %>-tab-view',
-  templateUrl: './<%= dasherize(path) %>-tab-view.component.html.template',
-  styleUrls: ['./<%= dasherize(path) %>-tab-view.component.scss.template']
+  templateUrl: './<%= dasherize(path) %>-tab-view.component.html',
+  styleUrls: ['./<%= dasherize(path) %>-tab-view.component.scss']
 })
 export class <%= classify(path) %>TabViewComponent {
 

@@ -73,10 +73,10 @@ function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolea
     updateAppModule(tree, className.name, className.fileImportPath, [
         new ImportToAdd("FlexModule", "@angular/flex-layout"),
         new ImportToAdd("CardModule", "@netgrif/application-engine")]);
-    addRoutingModuleImport(tree, className.name, className.fileImportPath);
-
 
     if (addRoute) {
+        addRoutingModuleImport(tree, className.name, className.fileImportPath);
+
         rules.push(schematic('add-route', {
             routeObject: createRouteObject(args.path as string, className.name),
             path: args.path
@@ -107,6 +107,8 @@ function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean)
         new ImportToAdd("TabsModule", "@netgrif/application-engine")]);
 
     if (addRoute) {
+        addRoutingModuleImport(tree, className.name, className.fileImportPath);
+
         rules.push(schematic('add-route', {
             routeObject: createRouteObject(args.path as string, className.name),
             path: `${args.path}`
