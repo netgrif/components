@@ -1,5 +1,6 @@
 import {
     Rule,
+    SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
 import {getRoutesJsonContent, Route} from '../viewUtilityFunctions';
@@ -17,13 +18,16 @@ export function addRouteToRoutes(schematicArguments: AddRouteArguments): Rule {
 
 function updateRoutes(data: Route[], routeToAdd: Route, index: number, paths: String[]): Route[] {
     for (let route of data) {
-        if (route['path'] == paths[index] && paths.length - 1 == index) {
+        if (route.path === paths[index] && index + 2 === paths.length) {
             addRoute(route, routeToAdd);
-            break
         }
-        if (route['path'] == paths[index]) {
-            if (route.children != undefined)
+        else if (route.path === paths[index]) {
+            if (route.children != undefined) {
                 updateRoutes(route.children, routeToAdd, index + 1, paths);
+            }
+            else {
+                throw new SchematicsException(`Parent route doesn't exist! Route '${paths.join('/')}' misses some of it's parent routes.`);
+            }
         }
     }
     return data
