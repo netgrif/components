@@ -1,10 +1,16 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from "@angular/router";
-import {FlexLayoutModule} from "@angular/flex-layout";
-import {MatButtonModule, MatSidenavModule} from "@angular/material";
-import {PortalModule} from "@angular/cdk/portal";
-import { SideMenuContainerComponent } from './side-menu-container/side-menu-container.component';
+import {RouterModule} from '@angular/router';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {SideMenuContainerComponent} from './side-menu-container/side-menu-container.component';
+import {FilesUploadComponent} from './files-upload/files-upload.component';
+import {FilesUploadItemComponent} from './files-upload/files-upload-list/files-upload-item/files-upload-item.component';
+import {FilesUploadListComponent} from './files-upload/files-upload-list/files-upload-list.component';
+import {UserAssignItemComponent} from './user-assign/user-assign-list/user-assign-item/user-assign-item.component';
+import {UserAssignListComponent} from './user-assign/user-assign-list/user-assign-list.component';
+import {UserAssignComponent} from './user-assign/user-assign.component';
+import {MaterialModule} from '../material/material.module';
+import {CovalentModule} from '../covalent/covalent.module';
 
 @NgModule({
     declarations: [
@@ -20,9 +26,10 @@ import { SideMenuContainerComponent } from './side-menu-container/side-menu-cont
         CommonModule,
         RouterModule,
         FlexLayoutModule,
-        Material
+        MaterialModule,
+        CovalentModule
     ],
-    entryComponents: [FilesUploadComponent],
+    entryComponents: [FilesUploadComponent, UserAssignComponent],
     exports: [SideMenuContainerComponent, FilesUploadComponent]
 })
 export class SideMenuModule {
