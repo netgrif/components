@@ -1,0 +1,13 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: '<%= prefix %>-task-view',
+  templateUrl: './<%= dasherize(path) %>-task-view.component.html',
+  styleUrls: ['./<%= dasherize(path) %>-task-view.component.scss']
+})
+export class <%= classify(path) %>TaskViewComponent {
+   taskPanels: any[];
+
+  constructor() { }
+
+}

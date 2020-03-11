@@ -116,12 +116,12 @@ function createTaskView(tree: Tree, args: CreateViewArguments): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
     const classNamePrefix = convertPathToClassNamePrefix(args.path as string);
-    const classNameNoComponent = `${strings.classify(classNamePrefix)}Task`;
+    const classNameNoComponent = `${strings.classify(classNamePrefix)}TaskView`;
     const className = `${classNameNoComponent}Component`;
-    const componentPath = `./tasks/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
+    const componentPath = `./views/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
 
 
-    rules.push(createFilesFromTemplates('./files/task-view', `${projectInfo.path}/tasks/${args.path}`, {
+    rules.push(createFilesFromTemplates('./files/task-view', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         path: classNamePrefix,
         dasherize: strings.dasherize,
@@ -130,9 +130,10 @@ function createTaskView(tree: Tree, args: CreateViewArguments): Rule {
 
     updateAppModule(tree, className, componentPath, [
         new ImportsToAdd("FlexModule", "@angular/flex-layout"),
+        new ImportsToAdd("MatCardModule", "@angular/material/card"),
+        new ImportsToAdd("PanelModule", "@netgrif/application-engine"),
         new ImportsToAdd("CardModule", "@netgrif/application-engine")]);
     updateRoutingModule(tree, className, componentPath);
-
 
     rules.push(schematic('add-route', {
         routeObject: createRouteObject(args.path as string, className),

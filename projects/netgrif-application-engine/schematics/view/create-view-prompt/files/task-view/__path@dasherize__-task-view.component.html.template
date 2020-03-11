@@ -2,6 +2,10 @@
     <div fxLayout="column" fxLayoutGap="20px"  fxLayoutAlign="space-between stretch" class="content-margin" >
         <mat-card class="search-panel" >TO DO SEARCH</mat-card>
         <mat-card >TO DO FILTER</mat-card>
-
+       <mat-accordion>
+                   <nae-task-panel *ngFor="let taskPanel of taskPanels" [taskPanelDefinition]="taskPanel.header">
+       <!--                taskPanel.content-->
+                   </nae-task-panel>
+               </mat-accordion>
     </div>
 </div>
