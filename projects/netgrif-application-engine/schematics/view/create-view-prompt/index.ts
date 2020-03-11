@@ -135,9 +135,9 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
         return result;
     }
 
+    let viewCounter = 0;
     tabViewParams.tabs.forEach( tab => {
         let tabTemplate: TabContentTemplate;
-        let viewCounter = 0;
         if (tab.component !== undefined) {
             if (tab.component.class === undefined || tab.component.classPath === undefined) {
                 throw new SchematicsException("TabView content Component must define both a 'class' and a 'classPath' attribute");
