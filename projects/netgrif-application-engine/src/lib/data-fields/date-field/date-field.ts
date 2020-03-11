@@ -1,8 +1,9 @@
-import {DataField} from "../abstract-data-field";
+import {DataField} from "../models/abstract-data-field";
+import {Behaviour} from '../models/behaviour';
 
 export class DateField extends DataField<Date> {
 
-    constructor(title: string, placeholder: string, value: Date) {
-        super(title, placeholder, value);
+    constructor(title: string, placeholder: string, value: Date, behaviour: Behaviour) {
+        super(title, placeholder, value, behaviour);
     }
 }

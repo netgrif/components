@@ -27,6 +27,7 @@ import {DateTimeFieldComponent} from './date-time-field/date-time-field.componen
 import {ButtonFieldComponent} from './button-field/button-field.component';
 import {CovalentModule} from '../covalent/covalent.module';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { RequiredLabelComponent } from './required-label/required-label.component';
 
 @NgModule({
     declarations: [
@@ -48,6 +49,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
         DateTimeFieldComponent,
         ButtonFieldComponent,
         DataFieldTemplateComponent,
+        RequiredLabelComponent,
     ],
     exports: [
         TextFieldComponent,

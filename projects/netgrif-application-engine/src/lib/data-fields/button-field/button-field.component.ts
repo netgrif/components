@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ButtonField} from "./button-field";
+import {ButtonField} from "./models/button-field";
 
 @Component({
   selector: 'nae-button-field',

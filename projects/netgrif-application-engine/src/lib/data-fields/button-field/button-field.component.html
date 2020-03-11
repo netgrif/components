@@ -1,3 +1,12 @@
-<nae-data-field-template [title]="buttonField.title">
-    <button mat-raised-button color="warn">{{buttonField.placeholder}}</button>
-</nae-data-field-template>
+<nae-data-field-template *ngIf="!buttonField.behaviour.hidden" [title]="buttonField.title" [dataFieldTemplate]="dataField"></nae-data-field-template>
+
+<ng-template #dataField let-showLargeLayout="showLargeLayout">
+
+<!--    <div>-->
+        <button mat-raised-button color="primary"
+                [disabled]="buttonField.behaviour.visible && !buttonField.behaviour.editable">
+            {{buttonField.placeholder}}
+        </button>
+        <nae-required-label *ngIf="buttonField.behaviour.required"></nae-required-label>
+<!--    </div>-->
+</ng-template>

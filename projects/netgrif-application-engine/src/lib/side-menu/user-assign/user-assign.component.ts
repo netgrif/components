@@ -4,7 +4,7 @@ import {SideMenuService} from "../side-menu.service";
 import {FormControl} from "@angular/forms";
 import {UserAssignListComponent} from "./user-assign-list/user-assign-list.component";
 import {SnackBarService} from "../../snack-bar/snack-bar.service";
-import {UserFieldService} from "../../data-fields/user-field/user-field.service";
+import {UserFieldService} from "../../data-fields/user-field/services/user-field.service";
 
 @Component({
     selector: 'nae-user-assign',
