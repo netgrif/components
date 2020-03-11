@@ -1,3 +1,3 @@
-export class ImportsToAdd {
+export class ImportToAdd {
     constructor(public moduleClassName: string, public moduleImportPath: string) {}
 }
