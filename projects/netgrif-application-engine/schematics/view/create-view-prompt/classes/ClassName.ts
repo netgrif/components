@@ -27,6 +27,6 @@ export class ClassName {
     }
 
     private static convertPathToClassNamePrefix(path: string): string {
-        return path.replace('-', '_').replace('/', '-').toLocaleLowerCase();
+        return path.replace(/-/g, '_').replace(/\//g, '-').toLocaleLowerCase();
     }
 }
