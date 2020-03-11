@@ -41,7 +41,7 @@ export function updateAppModule(tree: Tree, className: string, componentPath: st
 export function addImportsToAppModule(imports: Array<ImportToAdd> = [], appModule: FileData): Change[] {
     let changes = [];
     imports.forEach(importToAdd => {
-        changes = changes.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, importToAdd.moduleClassName, importToAdd.moduleImportPath));
+        changes = changes.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, importToAdd.className, importToAdd.importPath));
     });
     return changes;
 }
