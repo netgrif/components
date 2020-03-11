@@ -39,7 +39,7 @@ export function updateAppModule(tree: Tree, className: string, componentPath: st
 }
 
 export function addImportsToAppModule(imports: Array<ImportToAdd> = [], appModule: FileData): Change[] {
-    let changes = [];
+    let changes: Array<Change> = [];
     imports.forEach(importToAdd => {
         changes = changes.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, importToAdd.className, importToAdd.importPath));
     });
@@ -47,7 +47,7 @@ export function addImportsToAppModule(imports: Array<ImportToAdd> = [], appModul
 }
 
 export function addRoutingModuleImport(tree: Tree, className: string, componentPath: string): void {
-    const routingModuleChanges = [];
+    const routingModuleChanges: Array<Change> = [];
     const routesModule = getFileData(tree, getProjectInfo(tree).path, 'app-routing.module.ts');
     routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, className, componentPath));
     commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);

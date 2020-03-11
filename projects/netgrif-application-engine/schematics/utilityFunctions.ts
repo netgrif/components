@@ -134,7 +134,7 @@ export function createFilesFromTemplates(pathToTemplates: string, pathToMoveGene
  * @return path that leads from source file to destination file
  */
 export function createRelativePath(sourcePath: string, destinationPath: string): string {
-    const root: FileSystemNode = new FileSystemNode('', null);
+    const root: FileSystemNode = new FileSystemNode('', null as unknown as FileSystemNode);
     let lastNode: FileSystemNode = root;
 
     sourcePath.split('/').forEach(pathPart => {
