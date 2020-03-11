@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import Role from '../models/role';
 import {User} from '../models/user';
-import Credentials from '../../authentication/models/credentials';
+import {Credentials} from '../../authentication/models/credentials';
 import {tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 

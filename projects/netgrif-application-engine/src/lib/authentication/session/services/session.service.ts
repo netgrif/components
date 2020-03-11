@@ -9,15 +9,17 @@ import {NullStorage} from '../NullStorage';
 export class SessionService {
 
     public static readonly SESSION_TOKEN_STORAGE_KEY = 'naet';
+    public static readonly SESSION_BEARER_HEADER_DEFAULT = 'X-Auth-Token';
 
     private _session$: BehaviorSubject<string>;
     private _storage: Storage;
     private readonly _sessionHeader: string;
 
     constructor(private _config: ConfigurationService) {
-        this._storage = this._config.get().providers.auth.session.store ? localStorage : new NullStorage();
+        const sessionConfig = this._config.get().providers.auth.session;
+        this._storage = sessionConfig && sessionConfig.store ? localStorage : new NullStorage();
         this._sessionHeader = this._config.get().providers.auth.sessionBearer ?
-            this._config.get().providers.auth.sessionBearer : 'x-auth-token';
+            this._config.get().providers.auth.sessionBearer : SessionService.SESSION_BEARER_HEADER_DEFAULT;
         this._session$ = new BehaviorSubject<string>(null);
         this.load();
     }

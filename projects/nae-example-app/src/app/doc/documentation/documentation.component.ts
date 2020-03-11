@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, TemplateRef} from '@angular/core';
-import {ApiProperties} from "./api-properties";
+import {ApiProperties} from './api-properties';
 
 
 @Component({

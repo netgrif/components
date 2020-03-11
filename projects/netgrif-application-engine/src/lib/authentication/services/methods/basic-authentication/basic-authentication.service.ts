@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {User} from '../../../models/user';
 import {AuthenticationMethodService} from '../../authentication-method.service';
-import Credentials from '../../../models/credentials';
+import {Credentials} from '../../../models/credentials';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 
 @Injectable()

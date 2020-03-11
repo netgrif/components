@@ -1,6 +1,6 @@
-import Credentials from '../models/credentials';
 import {User} from '../models/user';
 import {Observable} from 'rxjs';
+import {Credentials} from '../models/credentials';
 
 export abstract class AuthenticationMethodService {
 

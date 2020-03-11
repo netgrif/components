@@ -1,4 +1,4 @@
-import Credentials from '../../models/credentials';
+import {Credentials} from '../../models/credentials';
 import {Injectable} from '@angular/core';
 import {AuthenticationMethodService} from '../authentication-method.service';
 import {BehaviorSubject, Observable, of} from 'rxjs';
@@ -18,7 +18,7 @@ export class AuthenticationService {
     private _authenticated$: BehaviorSubject<boolean>;
 
     constructor(private _auth: AuthenticationMethodService, private _config: ConfigurationService) {
-
+        this._authenticated$ = new BehaviorSubject<boolean>(false);
     }
 
     login(credentials: Credentials): Observable<User> {

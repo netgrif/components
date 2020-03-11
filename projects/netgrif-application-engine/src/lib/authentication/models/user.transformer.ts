@@ -21,7 +21,7 @@ export class UserTransformer implements Transformer<AuthUser, User> {
         return !roles ? [] : roles.map(r => ({
             id: r.roleId,
             net: r.netId,
-            name: 'some role'
+            name: null
         }));
     }
 
