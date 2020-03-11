@@ -59,7 +59,7 @@ function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
 
     rules.push(createFilesFromTemplates('./files/login', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: classNamePrefix,
+        path: className.prefix,
         dasherize: strings.dasherize,
         classify: strings.classify
     }));
@@ -115,28 +115,24 @@ function updateRoutingModule(tree: Tree, className: string, componentPath: strin
 function createTaskView(tree: Tree, args: CreateViewArguments): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
-    const classNamePrefix = convertPathToClassNamePrefix(args.path as string);
-    const classNameNoComponent = `${strings.classify(classNamePrefix)}TaskView`;
-    const className = `${classNameNoComponent}Component`;
-    const componentPath = `./views/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
-
+    const className = new ClassName(args.path as string, 'TaskView');
 
     rules.push(createFilesFromTemplates('./files/task-view', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: classNamePrefix,
+        path: className.prefix,
         dasherize: strings.dasherize,
         classify: strings.classify
     }));
 
-    updateAppModule(tree, className, componentPath, [
+    updateAppModule(tree,className.name, className.fileImportPath,[
         new ImportsToAdd("FlexModule", "@angular/flex-layout"),
         new ImportsToAdd("MatCardModule", "@angular/material/card"),
         new ImportsToAdd("PanelModule", "@netgrif/application-engine"),
         new ImportsToAdd("CardModule", "@netgrif/application-engine")]);
-    updateRoutingModule(tree, className, componentPath);
+    addRoutingModuleImport(tree, className.name, className.fileImportPath);
 
     rules.push(schematic('add-route', {
-        routeObject: createRouteObject(args.path as string, className),
+        routeObject: createRouteObject(args.path as string, className.name),
         path: args.path
     }));
     return chain(rules);
