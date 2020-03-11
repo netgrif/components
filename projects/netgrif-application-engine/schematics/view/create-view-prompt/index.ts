@@ -5,18 +5,18 @@ import {
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
+import {
+    addRoutingModuleImport,
+    getParentPath,
+    Route,
+    updateAppModule
+} from '../viewUtilityFunctions';
+import {
+    getProjectInfo,
+    createFilesFromTemplates
+} from '../../utilityFunctions';
 import {strings} from '@angular-devkit/core';
 import {CreateViewArguments} from './schema';
-import {getParentPath, Route} from '../viewUtilityFunctions';
-import {
-    commitChangesToFile,
-    getAppModule,
-    getFileData,
-    getProjectInfo,
-    createFilesFromTemplates, FileData
-} from '../../utilityFunctions';
-import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
-import {Change} from "@schematics/angular/utility/change";
 import { ImportsToAdd } from './classes/importsToAdd';
 import {ClassName} from './classes/ClassName';
 
@@ -97,25 +97,4 @@ function createRouteObject(path: string, className: string): Route {
         relevantPath = path.substring(index + 1);
     }
     return {path: relevantPath, component: className};
-}
-
-function updateAppModule(tree: Tree, className: string, componentPath: string, imports: Array<ImportsToAdd> = []): void {
-    const appModule = getAppModule(tree, getProjectInfo(tree).path);
-    let appModuleChanges = addDeclarationToModule(appModule.sourceFile, appModule.fileEntry.path, className, componentPath);
-    appModuleChanges = addImportsToAppModule(imports, appModule, appModuleChanges);
-    commitChangesToFile(tree, appModule.fileEntry, appModuleChanges);
-}
-
-function addImportsToAppModule(imports: Array<ImportsToAdd> = [], appModule: FileData, appModuleChanges: Change[]): Change[] {
-    imports.forEach(value => {
-        appModuleChanges = appModuleChanges.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, value.moduleName, value.moduleFrom));
-    });
-    return appModuleChanges;
-}
-
-function addRoutingModuleImport(tree: Tree, className: string, componentPath: string): void {
-    const routingModuleChanges = [];
-    const routesModule = getFileData(tree, getProjectInfo(tree).path, 'app-routing.module.ts');
-    routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, className, componentPath));
-    commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);
 }

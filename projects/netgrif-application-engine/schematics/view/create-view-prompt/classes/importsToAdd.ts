@@ -1,4 +1,3 @@
 export class ImportsToAdd {
-    constructor(public moduleName: string,
-                public moduleFrom: string){}
+    constructor(public moduleClassName: string, public moduleImportPath: string) {}
 }
