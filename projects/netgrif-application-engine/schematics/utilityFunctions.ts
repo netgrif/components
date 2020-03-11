@@ -168,6 +168,7 @@ export function createRelativePath(sourcePath: string, destinationPath: string):
     if (currentNode.children.length == 2) {
         pathFragments.push('.');
         traversalDirectionUp = false;
+        currentNode = currentNode.children[1];
     }
     while (traversalDirectionUp) {
         if (currentNode.children.length == 2) {
