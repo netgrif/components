@@ -3,11 +3,17 @@ import {PreferenceHeaders} from './preference-headers';
 
 export interface Preferences {
     taskFilters: PreferenceFilters;
-    taskHeaders: PreferenceHeaders;
+    taskHeaders: {
+        [viewId: string]: PreferenceHeaders
+    };
 
     caseFilters: PreferenceFilters;
-    caseHeaders: PreferenceHeaders;
+    caseHeaders: {
+        [viewId: string]: PreferenceHeaders
+    };
 
     workflowFilters: PreferenceFilters;
-    workflowHeaders: PreferenceHeaders;
+    workflowHeaders: {
+        [viewId: string]: PreferenceHeaders
+    };
 }
