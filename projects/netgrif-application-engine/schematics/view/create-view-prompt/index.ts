@@ -5,19 +5,20 @@ import {
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
+import {
+    addRoutingModuleImport,
+    getParentPath,
+    Route,
+    updateAppModule
+} from '../viewUtilityFunctions';
+import {
+    getProjectInfo,
+    createFilesFromTemplates
+} from '../../utilityFunctions';
 import {strings} from '@angular-devkit/core';
 import {CreateViewArguments} from './schema';
-import {getParentPath, Route} from '../viewUtilityFunctions';
-import {
-    commitChangesToFile,
-    getAppModule,
-    getFileData,
-    getProjectInfo,
-    createFilesFromTemplates, FileData
-} from '../../utilityFunctions';
-import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
-import {Change} from "@schematics/angular/utility/change";
-import { ImportsToAdd } from './importsToadd';
+import { ImportsToAdd } from './classes/importsToAdd';
+import {ClassName} from './classes/ClassName';
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
@@ -41,9 +42,10 @@ function createView(tree: Tree, args: CreateViewArguments): Rule {
     switch (args.viewType) {
         case "login":
             return createLoginView(tree, args);
+        case "tabView":
+            return createTabView(tree, args);
         case "taskView":
             return createTaskView(tree, args);
-
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
@@ -52,10 +54,7 @@ function createView(tree: Tree, args: CreateViewArguments): Rule {
 function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
-    const classNamePrefix = convertPathToClassNamePrefix(args.path as string);
-    const classNameNoComponent = `${strings.classify(classNamePrefix)}Login`;
-    const className = `${classNameNoComponent}Component`;
-    const componentPath = `./views/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
+    const className = new ClassName(args.path as string, 'Login');
 
     rules.push(createFilesFromTemplates('./files/login', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
@@ -64,21 +63,32 @@ function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
         classify: strings.classify
     }));
 
-    updateAppModule(tree, className, componentPath, [
+    updateAppModule(tree, className.name, className.fileImportPath, [
         new ImportsToAdd("FlexModule", "@angular/flex-layout"),
         new ImportsToAdd("CardModule", "@netgrif/application-engine")]);
-    updateRoutingModule(tree, className, componentPath);
+    addRoutingModuleImport(tree, className.name, className.fileImportPath);
 
 
     rules.push(schematic('add-route', {
-        routeObject: createRouteObject(args.path as string, className),
+        routeObject: createRouteObject(args.path as string, className.name),
         path: args.path
     }));
     return chain(rules);
 }
 
-function convertPathToClassNamePrefix(path: string): string {
-    return path.replace('-', '_').replace('/', '-').toLocaleLowerCase();
+function createTabView(tree: Tree, args: CreateViewArguments): Rule {
+    const rules = [];
+    const className = new ClassName(args.path as string, 'TabView');
+
+    updateAppModule(tree, className.name, className.fileImportPath, [
+        new ImportsToAdd("FlexModule", "@angular/flex-layout"),
+        new ImportsToAdd("TabsModule", "@netgrif/application-engine")]);
+
+    rules.push(schematic('add-route', {
+        routeObject: createRouteObject(args.path as string, className.name),
+        path: `${args.path}/*`
+    }));
+    return chain(rules);
 }
 
 function createRouteObject(path: string, className: string): Route {
@@ -89,29 +99,6 @@ function createRouteObject(path: string, className: string): Route {
     }
     return {path: relevantPath, component: className};
 }
-
-function updateAppModule(tree: Tree, className: string, componentPath: string, imports: Array<ImportsToAdd> = []): void {
-    const appModule = getAppModule(tree, getProjectInfo(tree).path);
-    let appModuleChanges = addDeclarationToModule(appModule.sourceFile, appModule.fileEntry.path, className, componentPath);
-    appModuleChanges = addImportsToAppModule(imports, appModule, appModuleChanges);
-    commitChangesToFile(tree, appModule.fileEntry, appModuleChanges);
-}
-
-function addImportsToAppModule(imports: Array<ImportsToAdd> = [], appModule: FileData, appModuleChanges: Change[]): Change[] {
-    imports.forEach(value => {
-        appModuleChanges = appModuleChanges.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, value.moduleName, value.moduleFrom));
-    });
-    return appModuleChanges;
-}
-
-function updateRoutingModule(tree: Tree, className: string, componentPath: string): void {
-    const routingModuleChanges = [];
-    const routesModule = getFileData(tree, getProjectInfo(tree).path, 'app-routing.module.ts');
-    routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, className, componentPath));
-    commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);
-}
-
-
 function createTaskView(tree: Tree, args: CreateViewArguments): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
