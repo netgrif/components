@@ -1,4 +1,4 @@
-import {DataField} from "../abstract-data-field";
+import {DataField} from '../abstract-data-field';
 
 export enum TextFieldView {
     DEFAULT = 'default',

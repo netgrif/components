@@ -31,8 +31,9 @@ export class TaskPanelContentComponent implements OnInit {
   formCols: number;
 
   constructor() {
-      this.fillBlankSpace(Resources.data);
-      this.resources = Resources.data.map(item => ( {item: this.toClass(item), type: item.type, layout: item.layout}));
+      console.time('start');
+      this.resources = this.fillBlankSpace(Resources.data);
+      console.timeEnd('start');
       this.formCols = Resources.cols;
   }
 
@@ -58,13 +59,38 @@ export class TaskPanelContentComponent implements OnInit {
       }
     }
     resource.forEach(item => {
-        for (let i = item.layout.y; i <= item.layout.y + item.layout.rows; i++) {
-            for (let j = item.layout.x; j <= item.layout.x + item.layout.cols; j++) {
+        for (let i = item.layout.y; i < item.layout.y + item.layout.rows; i++) {
+            for (let j = item.layout.x; j < item.layout.x + item.layout.cols; j++) {
+                console.log(i);
+                console.log(j);
                 grid[i][j] = true;
             }
         }
     });
     console.log(grid);
+    const returnResource = resource.map(item => ( {item: this.toClass(item), type: item.type, layout: item.layout}));
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (grid[i][j] === false) {
+                returnResource.push( {item: undefined, type: 'blank', layout: {x: j, y: i, cols: 1, rows: 1}} );
+            }
+        }
+    }
+    return returnResource.sort((a, b) => {
+        if (a.layout.y < b.layout.y) {
+            return -1;
+        } else if (a.layout.y > b.layout.y) {
+            return 1;
+        }
+        if (a.layout.x < b.layout.x) {
+            return -1;
+        } else if (a.layout.x > b.layout.x) {
+            return 1;
+        }
+        console.log(a, b);
+        console.log('illegal');
+        return 0;
+    });
   }
 
   toClass(item: DataFieldResource): any {

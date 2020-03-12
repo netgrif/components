@@ -1,4 +1,4 @@
-import {DataField} from "../abstract-data-field";
+import {DataField} from '../abstract-data-field';
 
 export interface EnumerationFieldValue {
     key: string;
@@ -11,12 +11,12 @@ export enum EnumerationFieldView {
     AUTOCOMPLETE = 'autocomplete'
 }
 
-export class EnumerationField extends DataField<EnumerationFieldValue>{
+export class EnumerationField extends DataField<EnumerationFieldValue> {
 
     constructor(stringId: string, title: string, value: EnumerationFieldValue,
                 private _choices: Array<EnumerationFieldValue>, behavior: any, placeholder?: string, description?: string,
                 public materialAppearance = 'standard', private _view = EnumerationFieldView.DEFAULT) {
-        super(stringId, title, behavior, placeholder, description, value)
+        super(stringId, title, behavior, placeholder, description, value);
     }
 
     get choices(): Array<EnumerationFieldValue> {

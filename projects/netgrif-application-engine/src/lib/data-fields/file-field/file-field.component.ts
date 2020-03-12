@@ -1,15 +1,15 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {FileField} from "./file-field";
-import {FileFieldService} from "./file-field.service";
-import {FilesUploadComponent} from "../../side-menu/files-upload/files-upload.component";
-import {SideMenuService, SideMenuWidth} from "../../side-menu/side-menu.service";
+import {FileField} from './file-field';
+import {FileFieldService} from './file-field.service';
+import {FilesUploadComponent} from '../../side-menu/files-upload/files-upload.component';
+import {SideMenuService, SideMenuWidth} from '../../side-menu/side-menu.service';
 
 @Component({
     selector: 'nae-file-field',
     templateUrl: './file-field.component.html',
     styleUrls: ['./file-field.component.scss']
 })
-export class FileFieldComponent implements OnInit, AfterViewInit{
+export class FileFieldComponent implements OnInit, AfterViewInit {
 
     public multiple: string;
     public name: string;
@@ -24,7 +24,7 @@ export class FileFieldComponent implements OnInit, AfterViewInit{
     ngOnInit() {
         this._fileFieldService.fileField = this.fileField;
         this.multiple = this.fileField.maxUploadFiles > 1 ? 'multiple' : undefined;
-        this.name = this.fileField.value ? this.fileField.value.name : this.fileField.placeholder
+        this.name = this.fileField.value ? this.fileField.value.name : this.fileField.placeholder;
     }
 
     ngAfterViewInit(): void {

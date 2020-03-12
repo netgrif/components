@@ -1,4 +1,4 @@
-import {DataField} from "../abstract-data-field";
+import {DataField} from '../abstract-data-field';
 
 export class DateField extends DataField<Date> {
 

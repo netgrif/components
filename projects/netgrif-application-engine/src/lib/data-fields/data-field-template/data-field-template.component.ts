@@ -1,6 +1,6 @@
 import {Component, Input, TemplateRef} from '@angular/core';
-import {ResizedEvent} from "angular-resize-event";
-import {WrappedBoolean} from "./wrapped-boolean";
+import {ResizedEvent} from 'angular-resize-event';
+import {WrappedBoolean} from './wrapped-boolean';
 
 @Component({
     selector: 'nae-data-field-template',
@@ -12,7 +12,7 @@ export class DataFieldTemplateComponent {
     @Input() public title: string;
     @Input() public description: string;
     @Input() public dataFieldTemplate: TemplateRef<any>;
-    @Input() public layoutChangeWidthBreakpoint: number = 250;
+    @Input() public layoutChangeWidthBreakpoint = 250;
 
     private _showLargeLayout: WrappedBoolean = new WrappedBoolean();
 

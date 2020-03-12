@@ -1,7 +1,7 @@
 export abstract class DataField<T> {
 
-    protected constructor(private _stringId: string,private _title: string, private _behavior,
-                          private _placeholder?: string, private _description?: string,private _value?: T) {}
+    protected constructor(private _stringId: string, private _title: string, private _behavior,
+                          private _placeholder?: string, private _description?: string, private _value?: T) {}
 
     get stringId(): string {
         return this._stringId;

@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {User} from "../user";
-import {Observable} from "rxjs";
-import {map, startWith} from "rxjs/operators";
-import {FormControl} from "@angular/forms";
-import {MatAutocomplete} from "@angular/material";
+import {User} from '../user';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {FormControl} from '@angular/forms';
+import {MatAutocomplete} from '@angular/material';
 
 @Component({
     selector: 'nae-user-assign-list',
@@ -14,14 +14,14 @@ export class UserAssignListComponent implements OnInit {
 
     @Input() userList: User[];
     @Input() control = new FormControl();
-    @Output() onUserSelected: EventEmitter<User>;
+    @Output() userSelected: EventEmitter<User>;
     @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete;
 
     public filteredUserList: Observable<User[]>;
     private _currentUser: User;
 
     constructor() {
-        this.onUserSelected = new EventEmitter();
+        this.userSelected = new EventEmitter();
         this.filteredUserList = this.control.valueChanges
             .pipe(
                 startWith(''),
@@ -33,7 +33,7 @@ export class UserAssignListComponent implements OnInit {
 
     public selected(selectedUser: User): void {
         this._currentUser = selectedUser;
-        this.onUserSelected.emit(selectedUser);
+        this.userSelected.emit(selectedUser);
         this.userList.map(user => user === selectedUser ? user.selected = true : user.selected = false);
     }
 
@@ -45,9 +45,10 @@ export class UserAssignListComponent implements OnInit {
     }
 
     private _filterUsers(value: string): User[] {
-        const filterValue = value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-        return this.userList.filter(user => user.fullName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(filterValue) === 0);
+        return this.userList.filter(user => user.fullName.toLowerCase().normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
     }
 
 }

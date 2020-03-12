@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MultichoiceField} from "./multichoice-field";
+import {MultichoiceField} from './multichoice-field';
 
 @Component({
   selector: 'nae-multichoice-field',

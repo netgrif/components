@@ -1,5 +1,5 @@
-import {DataField} from "../abstract-data-field";
-import {Subscription} from "rxjs";
+import {DataField} from '../abstract-data-field';
+import {Subscription} from 'rxjs';
 
 export enum FileUploadMIMEtype {
     IMAGE = 'image/*',
@@ -31,10 +31,10 @@ interface FileUploadDataModel {
 
 export class FileField extends DataField<File> {
 
-    public filesSize: number = 0;
+    public filesSize = 0;
 
-    constructor(stringId: string, title: string, behavior: any, value?: File, placeholder?: string, description?: string, private _maxUploadSizeInBytes?: number,
-                private _maxUploadFiles: number = 1, private _zipped: boolean = true,
+    constructor(stringId: string, title: string, behavior: any, value?: File, placeholder?: string, description?: string,
+                private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1, private _zipped: boolean = true,
                 private _allowTypes?: FileUploadMIMEtype | string | Array<FileUploadMIMEtype>) {
         super(stringId, title, behavior, placeholder, description, value);
     }

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TextField} from "../text-field";
-import {WrappedBoolean} from "../../data-field-template/wrapped-boolean";
+import {TextField} from '../text-field';
+import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
 
 @Component({
   selector: 'nae-textarea-field',

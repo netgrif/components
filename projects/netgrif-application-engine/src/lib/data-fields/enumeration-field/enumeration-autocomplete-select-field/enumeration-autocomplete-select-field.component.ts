@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl} from "@angular/forms";
-import {Observable} from "rxjs";
-import {map, startWith} from "rxjs/operators";
-import {EnumerationField} from "../enumeration-field";
-import {WrappedBoolean} from "../../data-field-template/wrapped-boolean";
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {EnumerationField} from '../enumeration-field';
+import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
 
 @Component({
     selector: 'nae-enumeration-autocomplete-select-field',
@@ -31,14 +31,14 @@ export class EnumerationAutocompleteSelectFieldComponent implements OnInit {
 
     /**
      * Function to filter out matchless options without accent and case-sensitive differences
-     * @param {string} value to compare matching options
-     * @private {string} argument without accent
-     * @return {Array<string>} return matched options
+     * @param  value to compare matching options
+     * @return  return matched options
      */
     private _filter(value: string): string[] {
-        const filterValue = value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-        return this.options.filter(option => option.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(filterValue) === 0);
+        return this.options.filter(option => option.toLowerCase().normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
     }
 
 }

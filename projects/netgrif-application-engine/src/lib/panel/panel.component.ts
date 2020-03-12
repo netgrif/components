@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
-import {MatExpansionPanel} from "@angular/material/expansion";
+import {MatExpansionPanel} from '@angular/material/expansion';
 
 @Component({
     selector: 'nae-app-panel',
@@ -23,7 +23,7 @@ export class PanelComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.getExpansionPanelRef.emit(this.matExpansionPanel)
+        this.getExpansionPanelRef.emit(this.matExpansionPanel);
     }
 
     emitExpand() {
@@ -36,7 +36,7 @@ export class PanelComponent implements OnInit, AfterViewInit {
 
     expandPanel() {
         if (this.preventExpand) {
-            this.matExpansionPanel.close()
+            this.matExpansionPanel.close();
         }
     }
 

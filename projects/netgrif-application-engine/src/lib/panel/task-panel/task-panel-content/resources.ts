@@ -22,7 +22,6 @@ export class Resources {
             order: 0,
             subType: 'simple',
             formatting: 'example@example.com',
-            validationJS: 'if(!(new RegExp("[a-z0-9!#\\u0024%&\'*+\/=?^_`{|}~-]+(?:\\.[a-z0-9!#\\u0024%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?").test(value))){ if(this.validationErrors) this.validationErrors.email=true; return false;} else { if(this.validationErrors) this.validationErrors.email=false;} return true;',
             validationErrors: {
                 email: false
             },
@@ -39,7 +38,7 @@ export class Resources {
             },
             layout: {
                 x: 0,
-                y: 1,
+                y: 2,
                 cols: 4,
                 rows: 1
             },
@@ -50,7 +49,6 @@ export class Resources {
             },
             subType: 'simple',
             formatting: 'example@example.com',
-            validationJS: 'if(!(new RegExp("[a-z0-9!#\\u0024%&\'*+\/=?^_`{|}~-]+(?:\\.[a-z0-9!#\\u0024%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?").test(value))){ if(this.validationErrors) this.validationErrors.email=true; return false;} else { if(this.validationErrors) this.validationErrors.email=false;} return true;',
             validationErrors: {
                 email: false
             },
@@ -74,7 +72,6 @@ export class Resources {
             value: 10.0,
             order: 2,
             minValue: 0.0,
-            validationJS: 'if(value < 0){ if(this.validationErrors) this.validationErrors.inrange=true; return false;} else { if(this.validationErrors) this.validationErrors.inrange=false;} return true;',
             validationErrors: {
                 inrange: false
             },
@@ -91,7 +88,7 @@ export class Resources {
             },
             layout: {
                 x: 0,
-                y: 2,
+                y: 3,
                 cols: 4,
                 rows: 1
             },
@@ -115,7 +112,7 @@ export class Resources {
             },
             layout: {
                 x: 0,
-                y: 2,
+                y: 4,
                 cols: 4,
                 rows: 1
             },
@@ -142,7 +139,7 @@ export class Resources {
             },
             layout: {
                 x: 0,
-                y: 2,
+                y: 5,
                 cols: 4,
                 rows: 1
             },
@@ -169,8 +166,8 @@ export class Resources {
             },
             layout: {
                 x: 0,
-                y: 3,
-                cols: 4,
+                y: 6,
+                cols: 3,
                 rows: 1
             },
             value: [
@@ -199,8 +196,8 @@ export class Resources {
             },
             layout: {
                 x: 0,
-                y: 3,
-                cols: 4,
+                y: 7,
+                cols: 1,
                 rows: 1
             },
             value: [
@@ -238,8 +235,8 @@ export class Resources {
                 editable: true
             },
             layout: {
-                x: 0,
-                y: 4,
+                x: 1,
+                y: 7,
                 cols: 2,
                 rows: 1
             },
@@ -257,14 +254,13 @@ export class Resources {
                 editable: true
             },
             layout: {
-                x: 0,
-                y: 5,
+                x: 2,
+                y: 8,
                 cols: 2,
                 rows: 2
             },
             order: 8,
             minDate: '2020-03-09',
-            validationJS: 'const startDate = new Date(\'2020-03-09\'); if((value - startDate) < -86400000){ if(this.validationErrors) this.validationErrors.between=true; return false;} else { if(this.validationErrors) this.validationErrors.between=false;} return true;',
             validationErrors: {
                 between: false
             }
@@ -279,9 +275,9 @@ export class Resources {
                 editable: true
             },
             layout: {
-                x: 0,
-                y: 6,
-                cols: 4,
+                x: 1,
+                y: 10,
+                cols: 2,
                 rows: 1
             },
             order: 9
@@ -297,7 +293,7 @@ export class Resources {
             },
             layout: {
                 x: 0,
-                y: 7,
+                y: 11,
                 cols: 4,
                 rows: 1
             },
@@ -315,7 +311,7 @@ export class Resources {
             },
             layout: {
                 x: 0,
-                y: 8,
+                y: 12,
                 cols: 4,
                 rows: 1
             },

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FileUploadModel} from "../../../data-fields/file-field/file-field";
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import {FileUploadModel} from '../../../data-fields/file-field/file-field';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
     selector: 'nae-files-upload-list',

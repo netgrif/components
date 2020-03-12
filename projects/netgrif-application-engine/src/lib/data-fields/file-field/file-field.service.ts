@@ -1,10 +1,10 @@
 import {ElementRef, Injectable} from '@angular/core';
-import {FileField, FileUploadModel} from "./file-field";
-import {SideMenuService, SideMenuWidth} from "../../side-menu/side-menu.service";
-import {FileUploadService} from "./file-upload.service";
-import {FileDownloadService} from "./file-download.service";
+import {FileField, FileUploadModel} from './file-field';
+import {SideMenuService} from '../../side-menu/side-menu.service';
+import {FileUploadService} from './file-upload.service';
+import {FileDownloadService} from './file-download.service';
 import * as JSZip from 'jszip';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from "../../snack-bar/snack-bar.service";
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../snack-bar/snack-bar.service';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +23,7 @@ export class FileFieldService {
 
     public onSend() {
         // ZIPPING
-        let zip = new JSZip();
+        const zip = new JSZip();
         this.allFiles.forEach(file => {
             zip.folder('fileFieldZipFolder').file(file.data.file.name);
         });
@@ -39,7 +39,7 @@ export class FileFieldService {
     public retryFile(file: FileUploadModel) {
         file.canRetry = false;
         file.successfullyUploaded = false;
-        this._fileUploadService.uploadFile(file)
+        this._fileUploadService.uploadFile(file);
     }
 
     public onFileDownload(file: FileUploadModel) {
@@ -58,13 +58,14 @@ export class FileFieldService {
     public fileUpload() {
         this.fileUploadEl.nativeElement.onchange = () => {
             if ((this.allFiles.length + this.fileUploadEl.nativeElement.files.length) > this.fileField.maxUploadFiles) {
-                this._snackBarService.openWarningSnackBar('You choose more files as you allowed', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
+                this._snackBarService.openWarningSnackBar('You choose more files as you allowed',
+                    SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
                 return;
             }
             Array.from(this.fileUploadEl.nativeElement.files).forEach(file => {
                 const fileUploadModel = {
                     data: {
-                        file: file,
+                        file,
                         name: file.name.substr(0, file.name.lastIndexOf('.')),
                         extension: file.name.substr(file.name.lastIndexOf('.') + 1)
                     },
@@ -73,8 +74,9 @@ export class FileFieldService {
                     canRetry: false, canCancel: true,
                     successfullyUploaded: false
                 };
-                if (this.allFiles.find(file => file.data.file.name === fileUploadModel.data.file.name)) {
-                    this._snackBarService.openWarningSnackBar('You cannot upload two of the same files', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
+                if (this.allFiles.find(f => f.data.file.name === fileUploadModel.data.file.name)) {
+                    this._snackBarService.openWarningSnackBar('You cannot upload two of the same files',
+                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
                     return;
                 }
                 if (this.maxUploadSizeControl(fileUploadModel)) return;
@@ -82,7 +84,7 @@ export class FileFieldService {
                 this.allFiles.push(fileUploadModel);
                 // One by one upload file
                 if (!this.fileField.zipped) {
-                    this._fileUploadService.uploadFile(fileUploadModel)
+                    this._fileUploadService.uploadFile(fileUploadModel);
                 }
             });
             this.fileUploadEl.nativeElement.value = '';
@@ -93,7 +95,8 @@ export class FileFieldService {
     private maxUploadSizeControl(file: FileUploadModel) {
         this.fileField.filesSize += file.data.file.size;
         if (this.fileField.filesSize > this.fileField.maxUploadSizeInBytes) {
-            this._snackBarService.openWarningSnackBar('Files size exceeded allowed limit', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
+            this._snackBarService.openWarningSnackBar('Files size exceeded allowed limit',
+                SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
             return true;
         }
         return false;

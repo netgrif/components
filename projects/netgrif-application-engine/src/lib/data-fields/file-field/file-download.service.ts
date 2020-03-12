@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FileUploadModel} from "./file-field";
+import {FileUploadModel} from './file-field';
 
 @Injectable()
 export class FileDownloadService {
@@ -7,6 +7,6 @@ export class FileDownloadService {
   constructor() { }
 
   public downloadFile(file: FileUploadModel) {
-      //TODO: download file
+      // TODO: download file
   }
 }

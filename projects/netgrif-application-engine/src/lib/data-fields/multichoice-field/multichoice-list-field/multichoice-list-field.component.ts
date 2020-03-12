@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MultichoiceField} from "../multichoice-field";
-import {FormControl, Validators} from "@angular/forms";
-import {WrappedBoolean} from "../../data-field-template/wrapped-boolean";
+import {MultichoiceField} from '../multichoice-field';
+import {FormControl, Validators} from '@angular/forms';
+import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
 
 @Component({
   selector: 'nae-multichoice-list-field',

@@ -1,9 +1,9 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {FileUploadModel} from "./file-field";
-import {HttpClient, HttpEventType, HttpRequest} from "@angular/common/http";
-import {catchError, last, map, tap} from "rxjs/operators";
-import {of} from "rxjs";
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from "../../snack-bar/snack-bar.service";
+import {FileUploadModel} from './file-field';
+import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
+import {catchError, last, map, tap} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../snack-bar/snack-bar.service';
 
 @Injectable()
 export class FileUploadService {
@@ -42,7 +42,8 @@ export class FileUploadService {
                 file.inProgress = false;
                 file.canRetry = true;
                 console.log(error);
-                this._snackBarService.openErrorSnackBar(file.data.file.name + ' upload failed', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+                this._snackBarService.openErrorSnackBar(file.data.file.name + ' upload failed',
+                    SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
                 return of(`${file.data.name} upload failed.`);
             })
         ).subscribe(
@@ -50,7 +51,8 @@ export class FileUploadService {
                 if (typeof (event) === 'object') {
                     // this.removeFileFromArray(file);
                     file.successfullyUploaded = true;
-                    this._snackBarService.openInfoSnackBar(file.data.file.name + ' upload successful', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+                    this._snackBarService.openInfoSnackBar(file.data.file.name + ' upload successful',
+                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
                     this._complete.emit(event.body);
                 }
             }

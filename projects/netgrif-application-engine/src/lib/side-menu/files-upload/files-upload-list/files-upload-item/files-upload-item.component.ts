@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FileUploadModel} from "../../../../data-fields/file-field/file-field";
-import {FileFieldService} from "../../../../data-fields/file-field/file-field.service";
+import {FileUploadModel} from '../../../../data-fields/file-field/file-field';
+import {FileFieldService} from '../../../../data-fields/file-field/file-field.service';
 
 @Component({
     selector: 'nae-files-upload-item',
@@ -30,7 +30,7 @@ export class FilesUploadItemComponent implements OnInit {
     }
 
     public shortFileName(file: FileUploadModel) {
-        const fileNameLength: number = 25;
+        const fileNameLength = 25;
         return file.data.name.length > fileNameLength ?
             file.data.name.slice(0, fileNameLength - file.data.extension.length - '...'.length) + '...' + file.data.extension :
             file.data.file.name;

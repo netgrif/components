@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BooleanField} from "./boolean-field";
+import {BooleanField} from './boolean-field';
 
 @Component({
   selector: 'nae-boolean-field',

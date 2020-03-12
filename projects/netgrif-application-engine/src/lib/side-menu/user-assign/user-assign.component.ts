@@ -1,10 +1,8 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {User} from "./user";
-import {SideMenuService} from "../side-menu.service";
-import {FormControl} from "@angular/forms";
-import {UserAssignListComponent} from "./user-assign-list/user-assign-list.component";
-import {SnackBarService} from "../../snack-bar/snack-bar.service";
-import {UserFieldService} from "../../data-fields/user-field/user-field.service";
+import {User} from './user';
+import {FormControl} from '@angular/forms';
+import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
+import {UserFieldService} from '../../data-fields/user-field/user-field.service';
 
 @Component({
     selector: 'nae-user-assign',
@@ -37,7 +35,7 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
                 'Novák',
                 'martin456@yahoo.com'
             )
-        ]
+        ];
     }
 
     ngOnInit() {

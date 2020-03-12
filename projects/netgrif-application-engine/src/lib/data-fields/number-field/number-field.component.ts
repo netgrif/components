@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NumberField} from "./number-field";
-import {FormControl, Validators} from "@angular/forms";
+import {NumberField} from './number-field';
 
 @Component({
   selector: 'nae-number-field',

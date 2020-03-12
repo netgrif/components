@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MultichoiceField} from "../multichoice-field";
-import {FormControl, Validators} from "@angular/forms";
-import {WrappedBoolean} from "../../data-field-template/wrapped-boolean";
+import {MultichoiceField} from '../multichoice-field';
+import {FormControl} from '@angular/forms';
+import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
 
 @Component({
     selector: 'nae-multichoice-select-field',
@@ -16,8 +16,8 @@ export class MultichoiceSelectFieldComponent implements OnInit {
     validate: FormControl;
 
     ngOnInit() {
-        //this.validate = new FormControl('', [Validators.required]);
+        // this.validate = new FormControl('', [Validators.required]);
         this.selected = this.multichoiceField.value.map( it => it.key);
-        //this.validate.setValue(this.selected);
+        // this.validate.setValue(this.selected);
     }
 }

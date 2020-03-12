@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {login, loginFailure, loginSuccess, logout} from '../actions/authentication.actions';
 import {of} from 'rxjs';
 import {catchError, exhaustMap, map, tap} from 'rxjs/operators';
-import Credentials from '../../models/credentials';
+import {Credentials} from '../../models/credentials';
 import {AuthenticationMethodService} from '../../services/authentication-method.service';
 
 @Injectable()
