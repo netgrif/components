@@ -1,4 +1,4 @@
-import {Tree} from '@angular-devkit/schematics';
+import {Rule, schematic, Tree} from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getFileData, getProjectInfo, ProjectInfo} from '../utilityFunctions';
 import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
 import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
@@ -55,4 +55,20 @@ export function addRoutingModuleImport(tree: Tree, className: string, componentP
     const routesModule = getFileData(tree, getProjectInfo(tree).path, 'app-routing.module.ts');
     routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, className, componentPath));
     commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);
+}
+
+export function addRouteToRoutesJson(path: string, className: string): Rule {
+    return schematic('add-route', {
+        routeObject: createRouteObject(path, className),
+        path
+    });
+}
+
+export function createRouteObject(path: string, className: string): Route {
+    const index = path.lastIndexOf('/');
+    let relevantPath = path;
+    if (index !== -1) {
+        relevantPath = path.substring(index + 1);
+    }
+    return {path: relevantPath, component: className};
 }

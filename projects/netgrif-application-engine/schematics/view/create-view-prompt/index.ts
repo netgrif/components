@@ -1,11 +1,11 @@
 import {
     chain,
     Rule,
-    schematic,
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
 import {
+    addRouteToRoutesJson,
     addRoutingModuleImport,
     getParentPath,
     Route,
@@ -81,11 +81,7 @@ function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolea
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-
-        rules.push(schematic('add-route', {
-            routeObject: createRouteObject(args.path as string, className.name),
-            path: args.path
-        }));
+        rules.push( addRouteToRoutesJson(args.path as string, className.name));
     }
     return chain(rules);
 }
@@ -120,26 +116,10 @@ function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean)
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-
-        rules.push(schematic('add-route', {
-            routeObject: createRouteObject(args.path as string, className.name),
-            path: `${args.path}`
-        }));
-        rules.push(schematic('add-route', {
-            routeObject: createRouteObject(`${args.path}/**`, className.name),
-            path: `${args.path}/**`
-        }));
+        rules.push( addRouteToRoutesJson(args.path as string, className.name));
+        rules.push( addRouteToRoutesJson(`${args.path}/**`, className.name));
     }
     return chain(rules);
-}
-
-function createRouteObject(path: string, className: string): Route {
-    const index = path.lastIndexOf('/');
-    let relevantPath = path;
-    if (index !== -1) {
-        relevantPath = path.substring(index + 1);
-    }
-    return {path: relevantPath, component: className};
 }
 
 function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabViewPath: string, tabClassName: ClassName): TabViews {
