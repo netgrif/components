@@ -1,0 +1,34 @@
+<nae-app-documentation [liveExample]="authenticationExample"
+                       [mainTitle]="TITLE"
+                       [mainDescription]="DESCRIPTION"
+                       [apiModuleImport]="'AuthenticationModule'"></nae-app-documentation>
+<ng-template #authenticationExample>
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="25px" fxFlex>
+        <div fxLayout="column" fxLayoutAlign="start center" fxFlex="25">
+            <form (ngSubmit)="login()" fxLayout="column" fxLayoutAlign="start center" class="full-width outer-padding">
+                <mat-form-field class="full-width">
+                    <mat-label>Login</mat-label>
+                    <input matInput type="text" placeholder="Login" name="login" [(ngModel)]="credentials.username">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" placeholder="Password" name="password"
+                           [(ngModel)]="credentials.password">
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="start center" class="full-width">
+                    <button mat-flat-button type="submit" color="primary" fxFlex="33">Login</button>
+                    <div fxFlex="33"></div>
+                    <button mat-stroked-button color="accent" (click)="logout()" fxFlex="33">Logout</button>
+                </div>
+            </form>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start start" fxFlex="75" class="full-height outer-padding">
+            <h3>User object</h3>
+            <td-highlight lang="html" fxFlex class="full-width full-height">
+                <![CDATA[
+                {{userString}}
+                ]]>
+            </td-highlight>
+        </div>
+    </div>
+</ng-template>

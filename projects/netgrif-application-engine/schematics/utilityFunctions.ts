@@ -47,7 +47,7 @@ export function getProjectInfo(tree: Tree): ProjectInfo {
 
     const result = new ProjectInfo();
 
-    result.projectName = workspace.defaultProject as string;
+    result.projectName = workspace.defaultProject;
     result.projectNameClassified = strings.classify(result.projectName);
     result.projectNameDasherized = strings.dasherize(result.projectName);
 

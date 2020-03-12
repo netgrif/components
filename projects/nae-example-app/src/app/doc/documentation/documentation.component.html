@@ -1,0 +1,35 @@
+<mat-tab-group>
+    <mat-tab label="Overview">
+        <h2>{{mainTitle}}</h2>
+        <mat-card-content class="component-description">{{mainDescription}}
+        </mat-card-content>
+        <h2>Live example</h2>
+        <div class="panel-main-content" *ngTemplateOutlet="liveExample">
+        </div>
+        <h2>Code snippet</h2>
+        <td-highlight lang="html">
+            <![CDATA[
+            {{codeSnippet}}
+            ]]>
+        </td-highlight>
+    </mat-tab>
+    <mat-tab label="API">
+        <h2>API reference</h2>
+        <td-highlight lang="ts" style="width: max-content;">{{apiModuleImport}}
+        </td-highlight>
+        <h2>Properties</h2>
+        <table mat-table [dataSource]="apiProperties" class="mat-elevation-z8">
+            <caption>Module objects properties</caption>
+            <ng-container matColumnDef="name">
+                <th scope="col" mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element" class="table-properties-name"> {{element.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <th scope="col" mat-header-cell *matHeaderCellDef>Description</th>
+                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" [ngClass]=""></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-tab>
+</mat-tab-group>

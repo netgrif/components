@@ -1,6 +1,6 @@
 import {LogPublisher} from './log-publisher';
-import {LogEntry} from '../log-entry';
-import {LogPublisherService} from '../log-publisher.service';
+import {LogEntry} from '../models/log-entry';
+import {LogPublisherService} from '../services/log-publisher.service';
 
 export class LocalStorageLogPublisher extends LogPublisher {
 
@@ -34,9 +34,9 @@ export class LocalStorageLogPublisher extends LogPublisher {
             console.debug('Log entry from ' + deleted.date.toISOString() + ' was deleted from the LocalStorage \'' + this.location + '\'');
             try {
                 localStorage.setItem(this.location, JSON.stringify(log));
-            } catch (e) {
-                console.error(e);
-                throw new Error(e.message);
+            } catch (ex) {
+                console.error(ex);
+                throw new Error(ex.message);
             }
         }
     }

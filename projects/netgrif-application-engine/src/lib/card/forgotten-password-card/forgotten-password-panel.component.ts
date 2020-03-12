@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
-import {AbstractCard} from "../abstract-card";
+import {FormBuilder, Validators} from '@angular/forms';
+import {AbstractCard} from '../abstract-card';
 
 @Component({
     selector: 'nae-forgotten-password-panel',
@@ -21,6 +21,6 @@ export class ForgottenPasswordCardComponent extends AbstractCard implements OnIn
     }
 
     onSubmit(form: object) {
-        console.log(form)
+        console.log(form);
     }
 }
