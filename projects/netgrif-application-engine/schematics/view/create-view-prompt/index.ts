@@ -24,7 +24,6 @@ import {ImportToAdd} from './classes/ImportToAdd';
 import {ClassName} from './classes/ClassName';
 import {TabViewParams} from './classes/paramsInterfaces';
 import {TabContentTemplate} from './classes/TabContentTemplate';
-import {Change} from '@schematics/angular/utility/change';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 
 
@@ -112,12 +111,12 @@ function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean)
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('TabsModule', '@netgrif/application-engine')]);
 
-    const appModule = getAppModule(tree, projectInfo.path);
-    let changes: Array<Change> = [];
     tabViews.entryComponentsImports.forEach(imp => {
-        changes = changes.concat(addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, imp.className, imp.importPath));
+        // the tree/fileEntry gets updated with every iteration, so we need to get the current state every time
+        const appModule = getAppModule(tree, projectInfo.path);
+        const changes = addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, imp.className, imp.importPath);
+        commitChangesToFile(tree, appModule.fileEntry, changes);
     });
-    commitChangesToFile(tree, appModule.fileEntry, changes);
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
@@ -162,11 +161,17 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
             if (tab.component.class === undefined || tab.component.classPath === undefined) {
                 throw new SchematicsException('TabView content Component must define both a \'class\' and a \'classPath\' attribute');
             }
-            tabTemplate = new TabContentTemplate(tab.component.class);
+
+            if ( !tab.component.classPath.startsWith('./')) {
+               tab.component.classPath = `./${tab.component.classPath}`;
+            }
+
             result.tabViewImports.push(
                 new ImportToAdd(tab.component.class, createRelativePath(tabClassName.fileImportPath, tab.component.classPath))
             );
             result.entryComponentsImports.push(new ImportToAdd(tab.component.class, tab.component.classPath));
+
+            tabTemplate = new TabContentTemplate(tab.component.class);
         } else if (tab.view !== undefined) {
             if (tab.view.name === undefined) {
                 throw new SchematicsException('TabView content View must define a \'name\' attribute');
