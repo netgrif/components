@@ -1,6 +1,13 @@
-<mat-form-field appearance="outline">
-    <mat-label>Placeholder</mat-label>
-    <mat-select [(value)]="selected" [formControl]="validate" multiple>
-        <mat-option *ngFor="let option of multichoiceField.choices" [value]="option">{{option}}</mat-option>
+<mat-form-field appearance="outline" color="primary">
+    <mat-label>{{multichoiceField.placeholder}}</mat-label>
+    <mat-select multiple
+                [(ngModel)]="selected"
+                [formControl]="validate"
+                [disabled]="multichoiceField.behaviour.visible && !multichoiceField.behaviour.editable"
+                [required]="multichoiceField.behaviour.required">
+        <mat-option *ngFor="let option of multichoiceField.choices"
+                    [value]="option">
+            {{option}}
+        </mat-option>
     </mat-select>
 </mat-form-field>

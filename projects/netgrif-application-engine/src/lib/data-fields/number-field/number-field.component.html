@@ -1,8 +1,15 @@
-<nae-data-field-template [title]="numberField.title" [dataFieldTemplate]="dataField"></nae-data-field-template>
+<nae-data-field-template *ngIf="!numberField.behaviour.hidden" [title]="numberField.title" [dataFieldTemplate]="dataField"></nae-data-field-template>
 
 <ng-template #dataField let-showLargeLayout="showLargeLayout">
-    <mat-form-field appearance="standard">
-        <mat-label *ngIf="!showLargeLayout.value">{{numberField.title}}</mat-label>
-        <input matInput type="number" [(ngModel)]="numberField.value" placeholder="{{numberField.placeholder}}">
+
+    <mat-form-field appearance="outline" color="primary">
+        <mat-label>{{numberField.label}}</mat-label>
+        <input matInput
+               type="number"
+               [disabled]="numberField.behaviour.visible && !numberField.behaviour.editable"
+               [(ngModel)]="numberField.value"
+               [placeholder]="numberField.placeholder"
+               [required]="numberField.behaviour.required">
     </mat-form-field>
+
 </ng-template>

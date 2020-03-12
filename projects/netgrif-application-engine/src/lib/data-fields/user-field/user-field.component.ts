@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserField} from "./models/user-field";
-import {SideMenuService} from "../../side-menu/side-menu.service";
+import {SideMenuService} from "../../side-menu/services/side-menu.service";
 import {UserAssignComponent} from "../../side-menu/user-assign/user-assign.component";
 import {UserFieldService} from "./services/user-field.service";
 

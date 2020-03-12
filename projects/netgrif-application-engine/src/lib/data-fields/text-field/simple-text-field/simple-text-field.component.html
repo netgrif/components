@@ -1,6 +1,10 @@
-<mat-form-field appearance="outline">
+<mat-form-field appearance="outline" color="primary">
     <mat-label>{{textField.label}}</mat-label>
-    <input matInput [placeholder]="textField.placeholder">
+    <input matInput
+           [disabled]="textField.behaviour.visible && !textField.behaviour.editable"
+           [placeholder]="textField.placeholder"
+           [value]="textField.value"
+           [required]="textField.behaviour.required">
     <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
     <mat-hint>Hint</mat-hint>
 </mat-form-field>

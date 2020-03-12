@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {User} from "./user";
-import {SideMenuService} from "../side-menu.service";
+import {SideMenuService} from "../services/side-menu.service";
 import {FormControl} from "@angular/forms";
 import {UserAssignListComponent} from "./user-assign-list/user-assign-list.component";
 import {SnackBarService} from "../../snack-bar/snack-bar.service";

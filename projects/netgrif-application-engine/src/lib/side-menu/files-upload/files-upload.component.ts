@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FileField, FileUploadModel} from "../../data-fields/file-field/file-field";
-import {FileFieldService} from "../../data-fields/file-field/file-field.service";
+import {FileField, FileUploadModel} from "../../data-fields/file-field/models/file-field";
+import {FileFieldService} from "../../data-fields/file-field/services/file-field.service";
 
 @Component({
     selector: 'nae-files-upload',

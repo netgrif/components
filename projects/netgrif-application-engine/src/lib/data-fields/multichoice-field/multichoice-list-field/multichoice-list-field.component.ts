@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MultichoiceField} from "../multichoice-field";
+import {MultichoiceField} from "../models/multichoice-field";
 import {FormControl, Validators} from "@angular/forms";
 
 @Component({

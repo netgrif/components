@@ -1,6 +1,6 @@
-import {DataField} from "../models/abstract-data-field";
+import {DataField} from "../../models/abstract-data-field";
 import {Subscription} from "rxjs";
-import {Behaviour} from '../models/behaviour';
+import {Behaviour} from '../../models/behaviour';
 
 export enum FileUploadMIMEtype {
     IMAGE = 'image/*',
@@ -54,6 +54,6 @@ export class FileField extends DataField<File> {
     }
 
     get allowTypes(): string {
-        return this._allowTypes.toString();
+        return this._allowTypes instanceof Array ? this._allowTypes.toString() : this._allowTypes;
     }
 }

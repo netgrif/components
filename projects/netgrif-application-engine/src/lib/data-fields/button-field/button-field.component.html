@@ -7,6 +7,6 @@
                 [disabled]="buttonField.behaviour.visible && !buttonField.behaviour.editable">
             {{buttonField.placeholder}}
         </button>
-        <nae-required-label *ngIf="buttonField.behaviour.required"></nae-required-label>
+        <nae-required-label *ngIf="buttonField.behaviour.required" [isIn]="!(buttonField.behaviour.visible && !buttonField.behaviour.editable)"></nae-required-label>
 <!--    </div>-->
 </ng-template>

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {FileField} from "./file-field";
-import {FileFieldService} from "./file-field.service";
+import {FileField} from "./models/file-field";
+import {FileFieldService} from "./services/file-field.service";
 
 @Component({
     selector: 'nae-file-field',

@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'nae-required-label',
-  templateUrl: './required-label.component.html',
-  styleUrls: ['./required-label.component.scss']
+    selector: 'nae-required-label',
+    templateUrl: './required-label.component.html',
+    styleUrls: ['./required-label.component.scss']
 })
 export class RequiredLabelComponent implements OnInit {
 
-  constructor() { }
+    @Input() public isIn: boolean = false;
 
-  ngOnInit(): void {
-  }
+    constructor() {
+    }
+
+    ngOnInit(): void {
+    }
 
 }

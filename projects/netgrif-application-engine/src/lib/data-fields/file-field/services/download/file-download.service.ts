@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FileUploadModel} from "./file-field";
+import {FileUploadModel} from "../../models/file-field";
 
 @Injectable()
 export class FileDownloadService {
