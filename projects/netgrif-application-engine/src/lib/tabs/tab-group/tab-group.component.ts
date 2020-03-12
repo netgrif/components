@@ -9,10 +9,10 @@ import {TabGroup} from '../classes/tab-group';
 })
 export class TabGroupComponent implements OnInit {
 
-    initializeTabLambda = (index: number) => {this.tabGroup.initializeTab(index)};
-
     @Input() initialTabs: Array<TabContent>;
     tabGroup: TabGroup;
+
+    initializeTabLambda = (index: number) => {this.tabGroup.initializeTab(index); };
 
     ngOnInit(): void {
         this.tabGroup = new TabGroup(this.initialTabs);

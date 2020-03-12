@@ -6,7 +6,7 @@ import {FormControl} from '@angular/forms';
 import {orderBy} from 'natural-orderby';
 import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token.module';
 
-export class TabGroup implements TabGroupInterface{
+export class TabGroup implements TabGroupInterface {
 
     openedTabs: Array<OpenedTab>;
     selectedIndex = new FormControl(0);
@@ -27,7 +27,8 @@ export class TabGroup implements TabGroupInterface{
             }
         });
 
-        // orderBy is a stable sort. Native javascript implementation has undefined stability and it depends on it's implementation (browser)
+        // orderBy is a stable sort
+        // Native javascript implementation has undefined stability and it depends on it's implementation (browser)
         this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData => new OpenedTab(tabData, `${this.getNextId()}`));
     }
 
@@ -37,7 +38,7 @@ export class TabGroup implements TabGroupInterface{
         if (index === -1) {
             index = this.openedTabs.length;
         }
-        this.openedTabs.splice(index,0, newTab);
+        this.openedTabs.splice(index, 0, newTab);
 
         if (autoswitch) {
             this.selectedIndex.setValue(index);
@@ -57,7 +58,7 @@ export class TabGroup implements TabGroupInterface{
 
     public closeTabIndex(index: number): void {
         this.checkIndexRange(index);
-        if ( !this.openedTabs[index].canBeDeleted) {
+        if (!this.openedTabs[index].canBeDeleted) {
             throw new Error(`Tab at index ${index} can't be closed`);
         }
         this.openedTabs.splice(index, 1);
@@ -65,7 +66,7 @@ export class TabGroup implements TabGroupInterface{
 
     public closeTabUniqueId(uniqueId: string): void {
         const index = this.getTabIndex(uniqueId);
-        if ( !this.openedTabs[index].canBeDeleted) {
+        if (!this.openedTabs[index].canBeDeleted) {
             throw new Error(`Tab with ID ${uniqueId} can't be closed`);
         }
         this.openedTabs.splice(index, 1);
@@ -73,7 +74,7 @@ export class TabGroup implements TabGroupInterface{
 
     public initializeTab(index: number): void {
         const tab = this.openedTabs[index];
-        if( !tab.isTabInitialized) {
+        if (!tab.isTabInitialized) {
             Object.assign(tab.injectedObject, {
                 tabUniqueId: tab.uniqueId,
                 tabGroupRef: this.tabGroupInterface

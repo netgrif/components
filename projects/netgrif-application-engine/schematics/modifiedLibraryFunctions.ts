@@ -92,7 +92,7 @@ export function addSymbolToNgModuleMetadata(
     }
 
     const arrLiteral = assignment.initializer as ts.ArrayLiteralExpression;
-    if (arrLiteral.elements.length == 0) {
+    if (arrLiteral.elements.length === 0) {
         // Forward the property.
         node = arrLiteral;
     } else {

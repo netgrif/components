@@ -11,9 +11,9 @@ export class OpenedTab implements TabContent {
     canBeDeleted: boolean;
     tabContentComponent: Type<any>;
     injectedObject: object = {};
-    order: number = 0;
+    order = 0;
     portal: ComponentPortal<any>;
-    isTabInitialized: boolean = false;
+    isTabInitialized = false;
 
     constructor(tabContent: TabContent, public uniqueId: string) {
         Object.assign(this, tabContent);

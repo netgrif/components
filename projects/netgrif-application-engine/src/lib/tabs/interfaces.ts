@@ -4,16 +4,16 @@ export interface TabContent {
     label?: {
         icon?: string,
         text?: string
-    },
-    canBeDeleted: boolean,
-    tabContentComponent: Type<any>,
-    injectedObject?: object,
-    order?: number
+    };
+    canBeDeleted: boolean;
+    tabContentComponent: Type<any>;
+    injectedObject?: object;
+    order?: number;
 }
 
 export interface InjectedTabData {
-    tabUniqueId: number,
-    tabGroupRef: TabGroupInterface
+    tabUniqueId: number;
+    tabGroupRef: TabGroupInterface;
 }
 
 export interface TabGroupInterface {
