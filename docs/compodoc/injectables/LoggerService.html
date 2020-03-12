@@ -56,7 +56,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/netgrif-application-engine/src/lib/logger/logger.service.ts</code>
+            <code>projects/netgrif-application-engine/src/lib/logger/services/logger.service.ts</code>
         </p>
 
 
@@ -148,7 +148,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/logger.service.ts:72</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/netgrif-application-engine/src/lib/logger/services/logger.service.ts:64</a></div>
                             </td>
                         </tr>
 
@@ -219,7 +219,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:52</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:44</a></code>
 </div>
                 </td>
             </tr>
@@ -307,7 +307,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:60</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:52</a></code>
 </div>
                 </td>
             </tr>
@@ -395,7 +395,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:48</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:40</a></code>
 </div>
                 </td>
             </tr>
@@ -483,7 +483,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:64</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:56</a></code>
 </div>
                 </td>
             </tr>
@@ -585,7 +585,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:36</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:28</a></code>
 </div>
                 </td>
             </tr>
@@ -661,7 +661,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:56</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:48</a></code>
 </div>
                 </td>
             </tr>
@@ -751,7 +751,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:40</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:32</a></code>
 </div>
                 </td>
             </tr>
@@ -857,7 +857,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:20</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:12</a></code>
 </div>
                             </td>
                         </tr>
@@ -893,7 +893,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:21</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/LoggerService.html#source" target="_self" >AbstractLoggerService:13</a></code>
 </div>
                             </td>
                         </tr>
@@ -908,17 +908,9 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
-import {LogEntry, LogEntryConfiguration} from &#x27;./log-entry&#x27;;
+import {LogEntry, LogEntryConfiguration} from &#x27;../models/log-entry&#x27;;
 import {LogPublisherService} from &#x27;./log-publisher.service&#x27;;
-
-export enum LogLevel {
-    ALL &#x3D; 0,
-    DEBUG &#x3D; 1,
-    INFO &#x3D; 2,
-    WARN &#x3D; 3,
-    ERROR &#x3D; 4,
-    OFF &#x3D; 6
-}
+import {LogLevel} from &#x27;./log-level&#x27;;
 
 export interface LoggerConfiguration extends LogEntryConfiguration {
     level?: LogLevel;

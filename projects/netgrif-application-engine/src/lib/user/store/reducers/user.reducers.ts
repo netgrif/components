@@ -1,11 +1,6 @@
 import {Action, createReducer, on} from '@ngrx/store';
-import {
-    loginFailure,
-    loginSuccess,
-    loginUser,
-    logoutUser,
-} from "../actions/user.actions";
-import {User} from "../../models/user";
+import {loginFailure, loginSuccess, loginUser, logoutUser,} from '../actions/user.actions';
+import {User} from '../../models/user';
 
 export const USER_FEATURE_KEY = 'nae-user';
 
@@ -21,7 +16,7 @@ export const initialState: State = {
 
 const userReducer = createReducer(
     initialState,
-    on(loginUser, (state, {user}) => ({...state, user: user})),
+    on(loginUser, (state, {user}) => ({...state, user})),
     on(loginSuccess, (state, {user}) => ({...state, user, error: null})),
     on(loginFailure, (state, {error}) => ({...state, user: null, error})),
     on(logoutUser, (state) => initialState),

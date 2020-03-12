@@ -2,5 +2,5 @@ projectKey=Engine-frontend
 serverUrl=https://sonar.netgrif.com
 serverVersion=8.1.0.31237
 dashboardUrl=https://sonar.netgrif.com/dashboard?id=Engine-frontend
-ceTaskId=AXA07iBK0CuW0UXy1Z6A
-ceTaskUrl=https://sonar.netgrif.com/api/ce/task?id=AXA07iBK0CuW0UXy1Z6A
+ceTaskId=AXDMFFyGLKSXQA8TvFCx
+ceTaskUrl=https://sonar.netgrif.com/api/ce/task?id=AXDMFFyGLKSXQA8TvFCx

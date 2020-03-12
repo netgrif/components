@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { NullAuthenticationService } from './null-authentication.service';
+import {NullAuthenticationService} from './null-authentication.service';
 
 describe('NullAuthenticationService', () => {
   let service: NullAuthenticationService;

@@ -19,12 +19,13 @@
         </td-highlight>
         <h2>Properties</h2>
         <table mat-table [dataSource]="apiProperties" class="mat-elevation-z8">
+            <caption>Module objects properties</caption>
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <th scope="col" mat-header-cell *matHeaderCellDef>Name</th>
                 <td mat-cell *matCellDef="let element" class="table-properties-name"> {{element.name}} </td>
             </ng-container>
             <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef>Description</th>
+                <th scope="col" mat-header-cell *matHeaderCellDef>Description</th>
                 <td mat-cell *matCellDef="let element"> {{element.description}} </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns" [ngClass]=""></tr>
