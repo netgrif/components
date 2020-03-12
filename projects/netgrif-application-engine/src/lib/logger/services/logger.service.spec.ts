@@ -1,8 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 
 import {LoggerService} from './logger.service';
-import {LocalStorageLogPublisher} from './publishers/local-storage-log-publisher';
-import {LogLevel} from "./logLevel";
+import {LocalStorageLogPublisher} from '../publishers/local-storage-log-publisher';
+import {LogLevel} from './log-level';
 
 describe('LoggerService', () => {
     const testString = 'Testing string to log: ';

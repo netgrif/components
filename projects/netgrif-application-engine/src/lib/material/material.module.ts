@@ -45,14 +45,17 @@ import {CdkTreeModule} from '@angular/cdk/tree';
 import {PortalModule} from '@angular/cdk/portal';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 @NgModule({
     declarations: [],
     imports: [
-        CommonModule
+        CommonModule,
+        FlexLayoutModule
     ],
     exports: [
+        FlexLayoutModule,
         A11yModule,
         CdkStepperModule,
         CdkTableModule,
@@ -74,12 +77,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         MatGridListModule,
         MatIconModule,
         MatInputModule,
+        MatListModule,
         MatMenuModule,
         MatNativeDateModule,
         MatPaginatorModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
+        MatRadioModule,
         MatRippleModule,
+        MatSelectModule,
         MatSidenavModule,
         MatSliderModule,
         MatSlideToggleModule,

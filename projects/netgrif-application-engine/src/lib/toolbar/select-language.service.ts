@@ -6,8 +6,8 @@ import {Injectable} from '@angular/core';
 export class SelectLanguageService {
 
     public languages = {
-        'slovak': false,
-        'english': true
+        slovak: false,
+        english: true
     };
 
     constructor() {

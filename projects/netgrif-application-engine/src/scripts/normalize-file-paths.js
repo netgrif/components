@@ -10,11 +10,11 @@ function log(str) {
 }
 
 function info(str) {
-    console.info(formatLog(str,"\x1b[36m"));
+    console.info(formatLog(str, "\x1b[36m"));
 }
 
-function error(str){
-    console.info(formatLog(str,"\x1b[31m"))
+function error(str) {
+    console.info(formatLog(str, "\x1b[31m"));
 }
 
 commander
@@ -30,12 +30,12 @@ commander
 
         log("Normalizing file " + value);
         Object.keys(json).forEach(key => {
-            if (key === 'total') {
+            if (key === "total") {
                 info("Skipping attribute 'total'");
                 newObj.total = json.total;
                 return;
             }
-            const splitIndex = key.lastIndexOf('projects');
+            const splitIndex = key.lastIndexOf("projects");
             if (splitIndex > -1) {
                 const newKey = key.substring((splitIndex)).replace(/\\/g, "/");
                 info("Normalized: " + key + " --> " + newKey);
@@ -49,9 +49,8 @@ commander
     })
     .parse(process.argv);
 
-
 if (process.argv.length <= 2) {
     console.log("Nothing to do here");
     process.exit(0);
 }
-
+

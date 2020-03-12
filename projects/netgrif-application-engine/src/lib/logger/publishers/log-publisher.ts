@@ -1,5 +1,5 @@
-import {LogEntry} from '../log-entry';
-import {LogPublisherService} from '../log-publisher.service';
+import {LogEntry} from '../models/log-entry';
+import {LogPublisherService} from '../services/log-publisher.service';
 
 export abstract class LogPublisher {
 

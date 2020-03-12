@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {LogPublisher} from './publishers/log-publisher';
+import {LogPublisher} from '../publishers/log-publisher';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {LogEntry} from './log-entry';
-import {ConsoleLogPublisher} from './publishers/console-log-publisher';
-import {LocalStorageLogPublisher} from './publishers/local-storage-log-publisher';
+import {LogEntry} from '../models/log-entry';
+import {ConsoleLogPublisher} from '../publishers/console-log-publisher';
+import {LocalStorageLogPublisher} from '../publishers/local-storage-log-publisher';
 
 export const PUBLISHERS = {
     ConsoleLogPublisher,

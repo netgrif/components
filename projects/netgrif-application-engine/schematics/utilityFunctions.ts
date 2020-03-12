@@ -1,19 +1,19 @@
-import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
+import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 
-import {SchematicsException, Tree, } from "@angular-devkit/schematics";
-import {FileEntry, UpdateRecorder} from "@angular-devkit/schematics/src/tree/interface";
-import {experimental, strings} from "@angular-devkit/core";
-import {NetgrifApplicationEngine} from "../src/lib/configuration/interfaces/schema";
-import {Change, InsertChange} from "@schematics/angular/utility/change";
+import {SchematicsException, Tree,} from '@angular-devkit/schematics';
+import {FileEntry, UpdateRecorder} from '@angular-devkit/schematics/src/tree/interface';
+import {experimental, strings} from '@angular-devkit/core';
+import {NetgrifApplicationEngine} from '../src/lib/configuration/interfaces/schema';
+import {Change, InsertChange} from '@schematics/angular/utility/change';
 
 interface ProjectInfo {
     /**
      * projects/[name]/src/app
      */
-    path: string,
-    projectName: string,
-    projectNameClassified: string,
-    projectNameDasherized: string
+    path: string;
+    projectName: string;
+    projectNameClassified: string;
+    projectNameDasherized: string;
 }
 
 
@@ -34,7 +34,7 @@ export function getProjectInfo(tree: Tree): ProjectInfo {
         projectNameDasherized: ''
     };
 
-    result.projectName = workspace.defaultProject as string;
+    result.projectName = workspace.defaultProject;
     result.projectNameClassified = strings.classify(result.projectName);
     result.projectNameDasherized = strings.dasherize(result.projectName);
 
@@ -69,7 +69,7 @@ export function fileEntryToTsSource(file: FileEntry, encoding: string = 'utf8'):
 }
 
 export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Array<Change>): UpdateRecorder {
-    const exportRecorder= tree.beginUpdate(file.path);
+    const exportRecorder = tree.beginUpdate(file.path);
     for (const change of changes) {
         if (change instanceof InsertChange) {
             exportRecorder.insertLeft(change.pos, change.toAdd);

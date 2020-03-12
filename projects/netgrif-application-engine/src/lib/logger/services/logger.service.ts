@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {LogEntry, LogEntryConfiguration} from './log-entry';
+import {LogEntry, LogEntryConfiguration} from '../models/log-entry';
 import {LogPublisherService} from './log-publisher.service';
-import {LogLevel} from "./logLevel";
+import {LogLevel} from './log-level';
 
 export interface LoggerConfiguration extends LogEntryConfiguration {
     level?: LogLevel;

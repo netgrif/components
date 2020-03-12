@@ -1,4 +1,4 @@
-import {LogLevel} from "./logLevel";
+import {LogLevel} from '../services/log-level';
 
 /**
  * Log entry configuration.

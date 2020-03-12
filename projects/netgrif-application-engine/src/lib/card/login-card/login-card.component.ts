@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
-import {AbstractCard} from "../abstract-card";
+import {FormBuilder} from '@angular/forms';
+import {AbstractCard} from '../abstract-card';
 
 @Component({
     selector: 'nae-login-panel',
