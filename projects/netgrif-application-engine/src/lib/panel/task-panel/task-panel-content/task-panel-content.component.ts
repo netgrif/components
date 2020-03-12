@@ -32,7 +32,8 @@ export class TaskPanelContentComponent implements OnInit {
 
   constructor() {
       console.time('start');
-      this.resources = this.fillBlankSpace(Resources.data);
+      // TODO number of columns must come from backend (from form builder in transition)
+      this.resources = this.fillBlankSpace(Resources.data, 4);
       console.timeEnd('start');
       this.formCols = Resources.cols;
   }
@@ -40,24 +41,11 @@ export class TaskPanelContentComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  fillBlankSpace(resource: any[]) {
+  fillBlankSpace(resource: any[], numberOfColumns: number) {
     const grid: boolean[][] = [];
-    let cols = 0;
+    const fillers = new Map<number, >
     let rows = 0;
-    resource.forEach(item => {
-        if (cols < item.layout.x + item.layout.cols) {
-            cols = item.layout.x + item.layout.cols;
-        }
-        if (rows < item.layout.y + item.layout.rows) {
-            rows = item.layout.y + item.layout.rows;
-        }
-    });
-    for (let i = 0; i < rows; i++) {
-      grid[i] = [];
-      for (let j = 0; j < cols; j++) {
-          grid[i][j] = false;
-      }
-    }
+
     resource.forEach(item => {
         for (let i = item.layout.y; i < item.layout.y + item.layout.rows; i++) {
             for (let j = item.layout.x; j < item.layout.x + item.layout.cols; j++) {
@@ -67,10 +55,9 @@ export class TaskPanelContentComponent implements OnInit {
             }
         }
     });
-    console.log(grid);
     const returnResource = resource.map(item => ( {item: this.toClass(item), type: item.type, layout: item.layout}));
     for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
+        for (let j = 0; j < numberOfColumns; j++) {
             if (grid[i][j] === false) {
                 returnResource.push( {item: undefined, type: 'blank', layout: {x: j, y: i, cols: 1, rows: 1}} );
             }
@@ -91,6 +78,10 @@ export class TaskPanelContentComponent implements OnInit {
         console.log('illegal');
         return 0;
     });
+  }
+
+  private newGridRow(cols: number): boolean[] {
+      return Array<boolean>(cols).fill(false);
   }
 
   toClass(item: DataFieldResource): any {
