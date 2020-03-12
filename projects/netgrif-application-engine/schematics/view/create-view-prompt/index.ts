@@ -12,21 +12,27 @@ import {
     updateAppModule
 } from '../viewUtilityFunctions';
 import {
-    getProjectInfo,
-    createFilesFromTemplates, createRelativePath
+    commitChangesToFile,
+    createFilesFromTemplates,
+    createRelativePath,
+    getAppModule,
+    getProjectInfo
 } from '../../utilityFunctions';
 import {strings} from '@angular-devkit/core';
 import {CreateViewArguments} from './schema';
-import { ImportToAdd } from './classes/ImportToAdd';
+import {ImportToAdd} from './classes/ImportToAdd';
 import {ClassName} from './classes/ClassName';
 import {TabViewParams} from './classes/paramsInterfaces';
 import {TabContentTemplate} from './classes/TabContentTemplate';
+import {Change} from '@schematics/angular/utility/change';
+import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 
 
 interface TabViews {
-    rules: Array<Rule>,
-    tabTemplates: Array<TabContentTemplate>,
-    imports: Array<ImportToAdd>
+    rules: Array<Rule>;
+    tabTemplates: Array<TabContentTemplate>;
+    tabViewImports: Array<ImportToAdd>;
+    entryComponentsImports: Array<ImportToAdd>;
 }
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
@@ -49,9 +55,9 @@ function checkPathValidity(path: string | undefined, routeMap: Map<string, Route
 
 function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = true): Rule {
     switch (args.viewType) {
-        case "login":
+        case 'login':
             return createLoginView(tree, args, addRoute);
-        case "tabView":
+        case 'tabView':
             return createTabView(tree, args, addRoute);
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
@@ -71,8 +77,8 @@ function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolea
     }));
 
     updateAppModule(tree, className.name, className.fileImportPath, [
-        new ImportToAdd("FlexModule", "@angular/flex-layout"),
-        new ImportToAdd("CardModule", "@netgrif/application-engine")]);
+        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('CardModule', '@netgrif/application-engine')]);
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
@@ -97,14 +103,21 @@ function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean)
         prefix: projectInfo.projectPrefixDasherized,
         path: className.prefix,
         tabs: tabViews.tabTemplates,
-        imports: tabViews.imports,
+        imports: tabViews.tabViewImports,
         dasherize: strings.dasherize,
         classify: strings.classify
     }));
 
     updateAppModule(tree, className.name, className.fileImportPath, [
-        new ImportToAdd("FlexModule", "@angular/flex-layout"),
-        new ImportToAdd("TabsModule", "@netgrif/application-engine")]);
+        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('TabsModule', '@netgrif/application-engine')]);
+
+    const appModule = getAppModule(tree, projectInfo.path);
+    let changes: Array<Change> = [];
+    tabViews.entryComponentsImports.forEach(imp => {
+        changes = changes.concat(addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, imp.className, imp.importPath));
+    });
+    commitChangesToFile(tree, appModule.fileEntry, changes);
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
@@ -134,7 +147,8 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
     const result: TabViews = {
         rules: [],
         tabTemplates: [],
-        imports: []
+        tabViewImports: [],
+        entryComponentsImports: []
     };
 
     if (tabViewParams.tabs === undefined) {
@@ -142,24 +156,27 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
     }
 
     let viewCounter = 0;
-    tabViewParams.tabs.forEach( tab => {
+    tabViewParams.tabs.forEach(tab => {
         let tabTemplate: TabContentTemplate;
         if (tab.component !== undefined) {
             if (tab.component.class === undefined || tab.component.classPath === undefined) {
-                throw new SchematicsException("TabView content Component must define both a 'class' and a 'classPath' attribute");
+                throw new SchematicsException('TabView content Component must define both a \'class\' and a \'classPath\' attribute');
             }
             tabTemplate = new TabContentTemplate(tab.component.class);
-            result.imports.push( new ImportToAdd(tab.component.class, createRelativePath(tabClassName.fileImportPath, tab.component.classPath)));
-        }
-        else if (tab.view !== undefined) {
-            if(tab.view.name === undefined) {
-                throw new SchematicsException("TabView content View must define a 'name' attribute");
+            result.tabViewImports.push(
+                new ImportToAdd(tab.component.class, createRelativePath(tabClassName.fileImportPath, tab.component.classPath))
+            );
+            result.entryComponentsImports.push(new ImportToAdd(tab.component.class, tab.component.classPath));
+        } else if (tab.view !== undefined) {
+            if (tab.view.name === undefined) {
+                throw new SchematicsException('TabView content View must define a \'name\' attribute');
             }
             const createViewArguments = {
                 path: `${tabViewPath}/content/${viewCounter}`,
                 viewType: tab.view.name,
                 layoutParams: tab.view.params,
-                _routesMap: null as unknown as Map<string, Route> // this attribute is required in the interface, but the method doesn't use it
+                // this attribute is required in the interface, but the method doesn't use it
+                _routesMap: null as unknown as Map<string, Route>
             };
 
             result.rules.push(createView(tree, createViewArguments, false));
@@ -167,12 +184,14 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
             const newComponentName = new ClassName(`${tabViewPath}/content/${viewCounter}`, resolveClassSuffixForView(tab.view.name));
 
             tabTemplate = new TabContentTemplate(newComponentName.name);
-            result.imports.push( new ImportToAdd(newComponentName.name, createRelativePath(tabClassName.fileImportPath, newComponentName.fileImportPath)) );
+            result.tabViewImports.push(
+                new ImportToAdd(newComponentName.name, createRelativePath(tabClassName.fileImportPath, newComponentName.fileImportPath))
+            );
+            result.entryComponentsImports.push(new ImportToAdd(newComponentName.name, newComponentName.fileImportPath));
 
             viewCounter++;
-        }
-        else {
-            throw new SchematicsException("TabView content must contain either a 'component' or a 'view' attribute");
+        } else {
+            throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
         }
 
         if (tab.canBeDeleted !== undefined) {
