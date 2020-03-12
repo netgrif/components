@@ -116,14 +116,17 @@ import {CdkTableModule} from &#x27;@angular/cdk/table&#x27;;
 import {CdkTreeModule} from &#x27;@angular/cdk/tree&#x27;;
 import {PortalModule} from &#x27;@angular/cdk/portal&#x27;;
 import {ScrollingModule} from &#x27;@angular/cdk/scrolling&#x27;;
+import {FlexLayoutModule} from &#x27;@angular/flex-layout&#x27;;
 
 
 @NgModule({
     declarations: [],
     imports: [
-        CommonModule
+        CommonModule,
+        FlexLayoutModule
     ],
     exports: [
+        FlexLayoutModule,
         A11yModule,
         CdkStepperModule,
         CdkTableModule,

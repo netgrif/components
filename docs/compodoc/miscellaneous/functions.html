@@ -58,7 +58,52 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
+                            <a href="#addProviderToModule" title="projects/netgrif-application-engine/schematics/modifiedLibraryFunctions.ts"><b>addProviderToModule</b>&nbsp;&nbsp;&nbsp;(projects/.../modifiedLibraryFunctions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#addSymbolToNgModuleMetadata" title="projects/netgrif-application-engine/schematics/modifiedLibraryFunctions.ts"><b>addSymbolToNgModuleMetadata</b>&nbsp;&nbsp;&nbsp;(projects/.../modifiedLibraryFunctions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#authenticationServiceFactory" title="projects/netgrif-application-engine/src/lib/authentication/authentication.factory.ts"><b>authenticationServiceFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../authentication.factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createChangesRecorder" title="projects/netgrif-application-engine/schematics/utilityFunctions.ts"><b>createChangesRecorder</b>&nbsp;&nbsp;&nbsp;(projects/.../utilityFunctions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createConfigurationService" title="projects/netgrif-application-engine/schematics/create-configuration-service/index.ts"><b>createConfigurationService</b>&nbsp;&nbsp;&nbsp;(projects/.../index.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#fileEntryToTsSource" title="projects/netgrif-application-engine/schematics/utilityFunctions.ts"><b>fileEntryToTsSource</b>&nbsp;&nbsp;&nbsp;(projects/.../utilityFunctions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getInitial" title="projects/netgrif-application-engine/src/lib/authentication/store/authentication.state.ts"><b>getInitial</b>&nbsp;&nbsp;&nbsp;(projects/.../authentication.state.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getNaeConfiguration" title="projects/netgrif-application-engine/schematics/utilityFunctions.ts"><b>getNaeConfiguration</b>&nbsp;&nbsp;&nbsp;(projects/.../utilityFunctions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getNaeConfigurationString" title="projects/netgrif-application-engine/schematics/utilityFunctions.ts"><b>getNaeConfigurationString</b>&nbsp;&nbsp;&nbsp;(projects/.../utilityFunctions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getProjectInfo" title="projects/netgrif-application-engine/schematics/utilityFunctions.ts"><b>getProjectInfo</b>&nbsp;&nbsp;&nbsp;(projects/.../utilityFunctions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getTsSource" title="projects/netgrif-application-engine/schematics/utilityFunctions.ts"><b>getTsSource</b>&nbsp;&nbsp;&nbsp;(projects/.../utilityFunctions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#initializeConfigurationService" title="projects/netgrif-application-engine/schematics/initialize-configuration-service/index.ts"><b>initializeConfigurationService</b>&nbsp;&nbsp;&nbsp;(projects/.../index.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#passwordValidator" title="projects/netgrif-application-engine/src/lib/card/registration-card/password.validator.ts"><b>passwordValidator</b>&nbsp;&nbsp;&nbsp;(projects/.../password.validator.ts)</a>
+                        </li>
+                        <li>
                             <a href="#randomString" title="projects/netgrif-application-engine/src/scripts/Utils.ts"><b>randomString</b>&nbsp;&nbsp;&nbsp;(projects/.../Utils.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#reducer" title="projects/netgrif-application-engine/src/lib/authentication/store/reducers/authentication.redurcers.ts"><b>reducer</b>&nbsp;&nbsp;&nbsp;(projects/.../authentication.redurcers.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#reducer" title="projects/netgrif-application-engine/src/lib/user/store/reducers/user.reducers.ts"><b>reducer</b>&nbsp;&nbsp;&nbsp;(projects/.../user.reducers.ts)</a>
                         </li>
                     </ul>
                 </td>
@@ -67,7 +112,882 @@
     </table>
 </section>
 
-    <h3>projects/netgrif-application-engine/src/scripts/Utils.ts</h3>
+    <h3>projects/netgrif-application-engine/schematics/modifiedLibraryFunctions.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addProviderToModule"></a>
+                    <span class="name">
+                        <b>
+                            addProviderToModule
+                        </b>
+                        <a href="#addProviderToModule"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addProviderToModule(source, modulePath, classifiedName, importPath, providerText?)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>copied from original at @schematics/angular/utility/ast-utils
+our version allows for more freedom by adding the <code>insertedText</code> parameter</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>source</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>modulePath</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>classifiedName</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>importPath</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>providerText</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Change[]</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addSymbolToNgModuleMetadata"></a>
+                    <span class="name">
+                        <b>
+                            addSymbolToNgModuleMetadata
+                        </b>
+                        <a href="#addSymbolToNgModuleMetadata"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbolName, insertedText?, importPath)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>copied from original at @schematics/angular/utility/ast-utils
+our version allows for more freedom by adding the <code>insertedText</code> parameter</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>source</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>modified file</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ngModulePath</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>path to module file</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>metadataField</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>name of the array, where the symbol is added</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>symbolName</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>name of the symbol eg. class name</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>insertedText</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>the exact text that should be included in the array. If none is provided <code>symbolName</code> is used instead</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>importPath</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>path for the import</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Change[]</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-application-engine/src/lib/authentication/authentication.factory.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authenticationServiceFactory"></a>
+                    <span class="name">
+                        <b>
+                            authenticationServiceFactory
+                        </b>
+                        <a href="#authenticationServiceFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>authenticationServiceFactory(config, http)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>config</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>http</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-application-engine/schematics/utilityFunctions.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createChangesRecorder"></a>
+                    <span class="name">
+                        <b>
+                            createChangesRecorder
+                        </b>
+                        <a href="#createChangesRecorder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createChangesRecorder(tree, file, changes)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>tree</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>file</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>changes</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>UpdateRecorder</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fileEntryToTsSource"></a>
+                    <span class="name">
+                        <b>
+                            fileEntryToTsSource
+                        </b>
+                        <a href="#fileEntryToTsSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>fileEntryToTsSource(file, encoding)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>file</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>encoding</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>ts.SourceFile</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNaeConfiguration"></a>
+                    <span class="name">
+                        <b>
+                            getNaeConfiguration
+                        </b>
+                        <a href="#getNaeConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getNaeConfiguration(tree)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>tree</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>NetgrifApplicationEngine</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNaeConfigurationString"></a>
+                    <span class="name">
+                        <b>
+                            getNaeConfigurationString
+                        </b>
+                        <a href="#getNaeConfigurationString"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getNaeConfigurationString(tree)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>tree</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getProjectInfo"></a>
+                    <span class="name">
+                        <b>
+                            getProjectInfo
+                        </b>
+                        <a href="#getProjectInfo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getProjectInfo(tree)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>tree</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/ProjectInfo.html" target="_self" >ProjectInfo</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTsSource"></a>
+                    <span class="name">
+                        <b>
+                            getTsSource
+                        </b>
+                        <a href="#getTsSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTsSource(path, content)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>path</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>content</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>ts.SourceFile</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-application-engine/schematics/create-configuration-service/index.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createConfigurationService"></a>
+                    <span class="name">
+                        <b>
+                            createConfigurationService
+                        </b>
+                        <a href="#createConfigurationService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createConfigurationService()</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Rule</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-application-engine/src/lib/authentication/store/authentication.state.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInitial"></a>
+                    <span class="name">
+                        <b>
+                            getInitial
+                        </b>
+                        <a href="#getInitial"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInitial()</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/AuthState.html" target="_self" >AuthState</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-application-engine/schematics/initialize-configuration-service/index.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeConfigurationService"></a>
+                    <span class="name">
+                        <b>
+                            initializeConfigurationService
+                        </b>
+                        <a href="#initializeConfigurationService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initializeConfigurationService()</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Rule</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-application-engine/src/lib/card/registration-card/password.validator.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="passwordValidator"></a>
+                    <span class="name">
+                        <b>
+                            passwordValidator
+                        </b>
+                        <a href="#passwordValidator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>passwordValidator(control)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>control</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>literal type | null</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-application-engine/src/scripts/Utils.ts</h3>
     <section>
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
@@ -124,6 +1044,134 @@
                     </div>
                     <div class="io-description">
                         
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-application-engine/src/lib/authentication/store/reducers/authentication.redurcers.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reducer"></a>
+                    <span class="name">
+                        <b>
+                            reducer
+                        </b>
+                        <a href="#reducer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>reducer(state, action)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>state</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-application-engine/src/lib/user/store/reducers/user.reducers.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reducer"></a>
+                    <span class="name">
+                        <b>
+                            reducer
+                        </b>
+                        <a href="#reducer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>reducer(state, action)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>state</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
                     </div>
                 </td>
             </tr>
