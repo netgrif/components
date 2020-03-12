@@ -2,7 +2,8 @@ import {DataField} from "../abstract-data-field";
 
 export class BooleanField extends DataField<boolean>{
 
-    constructor(title: string, placeholder: string, value: boolean) {
-        super(title, placeholder, value);
+    constructor(stringId: string, title: string, value: boolean, behavior: any,
+                placeholder?: string, description?: string,) {
+        super(stringId, title, behavior, placeholder, description, value);
     }
 }

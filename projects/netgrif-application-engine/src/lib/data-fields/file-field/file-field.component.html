@@ -1,9 +1,9 @@
-<nae-data-field-template [title]="fileField.title" [dataFieldTemplate]="dataField"></nae-data-field-template>
+<nae-data-field-template [title]="fileField.title" [description]="fileField.description" [dataFieldTemplate]="dataField"></nae-data-field-template>
 
 <ng-template #dataField let-showLargeLayout="showLargeLayout">
 
     <div>
-        <button style="margin-bottom: 10px" mat-button color="warn" (click)="onFileUpload()">
+        <button mat-stroked-button style="margin-bottom: 10px" mat-button color="warn" (click)="onFileUpload()">
             <mat-icon>file_upload</mat-icon>
             {{name}}
         </button>

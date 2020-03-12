@@ -2,6 +2,6 @@ import { NumberField } from './number-field';
 
 describe('NumberField', () => {
   it('should create an instance', () => {
-    expect(new NumberField()).toBeTruthy();
+    expect(new NumberField('', '', 0, {})).toBeTruthy();
   });
 });

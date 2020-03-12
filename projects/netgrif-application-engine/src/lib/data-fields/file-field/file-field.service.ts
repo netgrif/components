@@ -2,7 +2,6 @@ import {ElementRef, Injectable} from '@angular/core';
 import {FileField, FileUploadModel} from "./file-field";
 import {SideMenuService, SideMenuWidth} from "../../side-menu/side-menu.service";
 import {FileUploadService} from "./file-upload.service";
-import {FilesUploadComponent} from "../../side-menu/files-upload/files-upload.component";
 import {FileDownloadService} from "./file-download.service";
 import * as JSZip from 'jszip';
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from "../../snack-bar/snack-bar.service";
@@ -20,14 +19,6 @@ export class FileFieldService {
                 private _fileDownloadService: FileDownloadService,
                 private _sideMenuService: SideMenuService,
                 private _snackBarService: SnackBarService) {
-    }
-
-    public onFileUpload(firstOpen: boolean) {
-        if (firstOpen && this.allFiles.length !== 0) {
-            this._sideMenuService.open(FilesUploadComponent, SideMenuWidth.LARGE);
-        } else {
-            this.fileUpload(firstOpen);
-        }
     }
 
     public onSend() {
@@ -64,7 +55,7 @@ export class FileFieldService {
         }
     }
 
-    private fileUpload(firstOpen: boolean) {
+    public fileUpload() {
         this.fileUploadEl.nativeElement.onchange = () => {
             if ((this.allFiles.length + this.fileUploadEl.nativeElement.files.length) > this.fileField.maxUploadFiles) {
                 this._snackBarService.openWarningSnackBar('You choose more files as you allowed', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
@@ -94,13 +85,8 @@ export class FileFieldService {
                     this._fileUploadService.uploadFile(fileUploadModel)
                 }
             });
-
             this.fileUploadEl.nativeElement.value = '';
-            if (firstOpen) {
-                this._sideMenuService.open(FilesUploadComponent, SideMenuWidth.LARGE);
-            }
         };
-
         this.fileUploadEl.nativeElement.click();
     }
 

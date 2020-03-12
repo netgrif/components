@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EnumerationField} from "../enumeration-field";
 import {FormControl, Validators} from "@angular/forms";
+import {WrappedBoolean} from "../../data-field-template/wrapped-boolean";
 
 @Component({
   selector: 'nae-enumeration-select-field',
@@ -10,6 +11,7 @@ import {FormControl, Validators} from "@angular/forms";
 export class EnumerationSelectFieldComponent implements OnInit {
 
     @Input() enumerationField: EnumerationField;
+    @Input() showLargeLayout: WrappedBoolean;
     selected: string;
     validate: FormControl;
 

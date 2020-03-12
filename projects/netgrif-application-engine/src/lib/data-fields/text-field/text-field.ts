@@ -7,8 +7,10 @@ export enum TextFieldView {
 
 export class TextField extends DataField<string> {
 
-    constructor(title: string, placeholder: string, value: string, public validations: any, public label: string, private _view = TextFieldView.DEFAULT) {
-        super(title, placeholder, value);
+    constructor(stringId: string, title: string, value: string, behavior: any,
+                placeholder?: string, description?: string, public validations?: any,
+                public materialAppearance = 'standard', private _view = TextFieldView.DEFAULT) {
+        super(stringId, title, behavior, placeholder, description, value);
     }
 
     get view(): TextFieldView {

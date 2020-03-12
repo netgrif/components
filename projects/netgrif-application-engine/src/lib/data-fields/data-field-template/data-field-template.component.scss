@@ -5,11 +5,15 @@
     }
 }
 
-.inner-padding {
-    padding: 3px 5px;
-}
-
 .fill-all-space {
     min-width: 100%;
     min-height: 100%;
+
+    padding: 0;
+    margin : 0 auto;
+}
+
+.cell-padding {
+    margin: 0;
+    padding: 8px;
 }

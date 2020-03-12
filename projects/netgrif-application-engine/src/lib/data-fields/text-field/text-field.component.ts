@@ -17,6 +17,7 @@ export class TextFieldComponent implements OnInit {
 
     @Input() textField: TextField;
 
+
     constructor() {
     }
 

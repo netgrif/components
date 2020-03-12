@@ -1,4 +1,8 @@
-<nae-data-field-template [title]="multichoiceField.title">
-    <nae-multichoice-select-field *ngIf="multichoiceField.view === 'default'" [multichoiceField]="multichoiceField"></nae-multichoice-select-field>
-    <nae-multichoice-list-field *ngIf="multichoiceField.view === 'list'" [multichoiceField]="multichoiceField"></nae-multichoice-list-field>
-</nae-data-field-template>
+<nae-data-field-template [title]="multichoiceField.title" [dataFieldTemplate]="multiFieldTemplate" [description]="multichoiceField.description"></nae-data-field-template>
+
+<ng-template #multiFieldTemplate let-showLargeLayout="showLargeLayout">
+    <div [ngSwitch]="multichoiceField.view">
+        <nae-multichoice-list-field [showLargeLayout]="showLargeLayout" *ngSwitchCase="'list'" [multichoiceField]="multichoiceField"></nae-multichoice-list-field>
+        <nae-multichoice-select-field [showLargeLayout]="showLargeLayout" *ngSwitchDefault [multichoiceField]="multichoiceField"></nae-multichoice-select-field>
+    </div>
+</ng-template>

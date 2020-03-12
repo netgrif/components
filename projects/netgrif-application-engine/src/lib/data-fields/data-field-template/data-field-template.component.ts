@@ -10,6 +10,7 @@ import {WrappedBoolean} from "./wrapped-boolean";
 export class DataFieldTemplateComponent {
 
     @Input() public title: string;
+    @Input() public description: string;
     @Input() public dataFieldTemplate: TemplateRef<any>;
     @Input() public layoutChangeWidthBreakpoint: number = 250;
 

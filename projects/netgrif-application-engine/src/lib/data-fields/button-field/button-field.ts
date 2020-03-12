@@ -2,7 +2,8 @@ import {DataField} from "../abstract-data-field";
 
 export class ButtonField extends DataField<string>{
 
-    constructor(title: string, placeholder: string, value?: string) {
-        super(title, placeholder, value);
+    constructor(stringId: string, title: string, behavior: any, value?: string,
+                placeholder?: string, description?: string) {
+        super(stringId, title, behavior, placeholder, description, value);
     }
 }

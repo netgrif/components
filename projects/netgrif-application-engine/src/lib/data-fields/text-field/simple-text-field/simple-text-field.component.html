@@ -1,6 +1,6 @@
-<mat-form-field appearance="outline">
-    <mat-label>{{textField.label}}</mat-label>
-    <input matInput [placeholder]="textField.placeholder">
+<mat-form-field [appearance]="textField.materialAppearance" class="full-width">
+    <mat-label *ngIf="!showLargeLayout.value">{{textField.title}}</mat-label>
+    <input matInput [placeholder]="textField.placeholder" [value]="textField.value">
+    <mat-hint>{{textField.description}}</mat-hint>
     <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-    <mat-hint>Hint</mat-hint>
 </mat-form-field>

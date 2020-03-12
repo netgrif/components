@@ -3,9 +3,10 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LoggerModule, SideMenuModule, DataFieldsModule} from '@netgrif/application-engine';
+import {SideMenuModule, DataFieldsModule} from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material";
+import {PanelModule} from '@netgrif/application-engine';
 
 @NgModule({
     declarations: [
@@ -15,10 +16,10 @@ import {MatButtonModule} from "@angular/material";
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        LoggerModule,
         MatButtonModule,
         SideMenuModule,
-        DataFieldsModule
+        DataFieldsModule,
+        PanelModule
     ],
     bootstrap: [AppComponent]
 })

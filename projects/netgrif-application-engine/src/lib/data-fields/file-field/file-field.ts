@@ -33,10 +33,10 @@ export class FileField extends DataField<File> {
 
     public filesSize: number = 0;
 
-    constructor(title: string, placeholder: string, value?: File, private _maxUploadSizeInBytes?: number,
+    constructor(stringId: string, title: string, behavior: any, value?: File, placeholder?: string, description?: string, private _maxUploadSizeInBytes?: number,
                 private _maxUploadFiles: number = 1, private _zipped: boolean = true,
                 private _allowTypes?: FileUploadMIMEtype | string | Array<FileUploadMIMEtype>) {
-        super(title, placeholder, value);
+        super(stringId, title, behavior, placeholder, description, value);
     }
 
 
@@ -53,6 +53,9 @@ export class FileField extends DataField<File> {
     }
 
     get allowTypes(): string {
-        return this._allowTypes.toString();
+        if (this._allowTypes !== undefined) {
+            return this._allowTypes.toString();
+        }
+        return '';
     }
 }

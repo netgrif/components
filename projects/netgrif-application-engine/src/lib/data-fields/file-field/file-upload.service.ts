@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {FileUploadModel} from "./file-field";
-import {HttpClient, HttpErrorResponse, HttpEventType, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpEventType, HttpRequest} from "@angular/common/http";
 import {catchError, last, map, tap} from "rxjs/operators";
 import {of} from "rxjs";
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from "../../snack-bar/snack-bar.service";
@@ -38,9 +38,10 @@ export class FileUploadService {
             tap(message => {
             }),
             last(),
-            catchError((error: HttpErrorResponse) => {
+            catchError((error) => {
                 file.inProgress = false;
                 file.canRetry = true;
+                console.log(error);
                 this._snackBarService.openErrorSnackBar(file.data.file.name + ' upload failed', SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
                 return of(`${file.data.name} upload failed.`);
             })

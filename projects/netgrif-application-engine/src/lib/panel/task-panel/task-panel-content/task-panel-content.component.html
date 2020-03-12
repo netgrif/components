@@ -1,6 +1,42 @@
-<mat-grid-list [cols]="resources">
-    <mat-grid-tile>1</mat-grid-tile>
-    <mat-grid-tile>2</mat-grid-tile>
-    <mat-grid-tile>3</mat-grid-tile>
-    <mat-grid-tile>4</mat-grid-tile>
+<mat-grid-list cols="4" rowHeight="105px">
+    <mat-grid-tile *ngFor="let item of resources"
+                   class="border"
+                   [colspan]="item.layout.cols"
+                   [rowspan]="item.layout.rows"
+                   [ngSwitch]="item.type">
+
+            <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width" [booleanField]="item.item">
+            </nae-boolean-field>
+
+            <nae-text-field *ngSwitchCase="'text'" class="full-width" [textField]="item.item">
+            </nae-text-field>
+
+            <nae-number-field *ngSwitchCase="'number'" class="full-width" [numberField]="item.item">
+            </nae-number-field>
+
+            <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width" [enumerationField]="item.item">
+            </nae-enumeration-field>
+
+            <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width" [multichoiceField]="item.item">
+            </nae-multichoice-field>
+
+            <nae-date-field *ngSwitchCase="'date'" class="full-width" [dateField]="item.item">
+            </nae-date-field>
+
+            <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width" [dateTimeField]="item.item">
+            </nae-date-time-field>
+
+            <nae-file-field *ngSwitchCase="'file'" class="full-width" [fileField]="item.item">
+            </nae-file-field>
+
+            <nae-user-field *ngSwitchCase="'user'" class="full-width" [userField]="item.item">
+            </nae-user-field>
+
+            <nae-button-field *ngSwitchCase="'button'" class="full-width" [buttonField]="item.item" >
+            </nae-button-field>
+
+            <div *ngSwitchCase="'blank'"></div>
+
+            <span *ngSwitchDefault>{{item.type}}</span>
+    </mat-grid-tile>
 </mat-grid-list>

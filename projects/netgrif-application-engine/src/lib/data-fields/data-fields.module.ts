@@ -23,7 +23,8 @@ import {SideMenuModule} from "../side-menu/side-menu.module";
 import {HttpClientModule} from "@angular/common/http";
 import {AngularResizedEventModule} from "angular-resize-event";
 import { UserFieldComponent } from './user-field/user-field.component';
-import {MatButtonModule, MatIconModule} from "@angular/material";
+import {DateTimeFieldComponent} from "./date-time-field/date-time-field.component";
+import {ButtonFieldComponent} from "./button-field/button-field.component";
 
 @NgModule({
     declarations: [
@@ -65,7 +66,6 @@ import {MatButtonModule, MatIconModule} from "@angular/material";
         AngularResizedEventModule,
         HttpClientModule,
         SideMenuModule,
-        NgxMaterialTimepickerModule
     ],
     providers: [
         FileUploadService,

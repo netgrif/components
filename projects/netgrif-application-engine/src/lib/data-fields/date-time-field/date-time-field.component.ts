@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DateTimeField} from "./date-time-field";
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @Component({
   selector: 'nae-date-time-field',

@@ -23,7 +23,7 @@ export class FilesUploadComponent implements OnInit {
     }
 
     public onFileUpload() {
-        this._fileFieldService.onFileUpload(false);
+        this._fileFieldService.fileUpload();
     }
 
     public onSend() {

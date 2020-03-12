@@ -5,6 +5,7 @@ import {FlexModule} from "@angular/flex-layout";
 import {MaterialModule} from "../material/material.module";
 import { TaskPanelComponent } from './task-panel/task-panel.component';
 import { TaskPanelContentComponent } from './task-panel/task-panel-content/task-panel-content.component';
+import {DataFieldsModule} from "../data-fields/data-fields.module";
 
 @NgModule({
     declarations: [
@@ -15,11 +16,15 @@ import { TaskPanelContentComponent } from './task-panel/task-panel-content/task-
     imports: [
         CommonModule,
         MaterialModule,
-        FlexModule
+        FlexModule,
+        DataFieldsModule
     ],
     exports: [
         PanelComponent,
         TaskPanelComponent
+    ],
+    entryComponents: [
+        TaskPanelContentComponent
     ]
 })
 export class PanelModule {

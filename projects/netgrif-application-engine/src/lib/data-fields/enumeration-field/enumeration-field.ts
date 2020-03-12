@@ -13,11 +13,13 @@ export enum EnumerationFieldView {
 
 export class EnumerationField extends DataField<EnumerationFieldValue>{
 
-    constructor(title: string, placeholder: string, value: EnumerationFieldValue, private _choices: Array<object>, private _view = EnumerationFieldView.DEFAULT) {
-        super(title, placeholder, value)
+    constructor(stringId: string, title: string, value: EnumerationFieldValue,
+                private _choices: Array<EnumerationFieldValue>, behavior: any, placeholder?: string, description?: string,
+                public materialAppearance = 'standard', private _view = EnumerationFieldView.DEFAULT) {
+        super(stringId, title, behavior, placeholder, description, value)
     }
 
-    get choices(): Array<object> {
+    get choices(): Array<EnumerationFieldValue> {
         return this._choices;
     }
 
