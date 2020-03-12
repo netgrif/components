@@ -55,7 +55,7 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
         }
 
         if (route.routes !== undefined) {
-            let result = findMissingView(existingRoutesMap, route.routes, routePath);
+            const result = findMissingView(existingRoutesMap, route.routes, routePath);
             if (result.path !== undefined) {
                 return result;
             }

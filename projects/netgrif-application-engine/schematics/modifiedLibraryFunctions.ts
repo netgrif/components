@@ -1,7 +1,7 @@
-import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
+import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 
-import {Change, InsertChange} from "@schematics/angular/utility/change";
-import {getDecoratorMetadata, getMetadataField, insertImport} from "@schematics/angular/utility/ast-utils";
+import {Change, InsertChange} from '@schematics/angular/utility/change';
+import {getDecoratorMetadata, getMetadataField, insertImport} from '@schematics/angular/utility/ast-utils';
 
 
 /**
@@ -55,12 +55,12 @@ export function addSymbolToNgModuleMetadata(
     if (!matchingProperties) {
         return [];
     }
-    if (matchingProperties.length == 0) {
+    if (matchingProperties.length === 0) {
         // We haven't found the field in the metadata declaration. Insert a new field.
         const expr = node as ts.ObjectLiteralExpression;
         let position: number;
         let toInsert: string;
-        if (expr.properties.length == 0) {
+        if (expr.properties.length === 0) {
             position = expr.getEnd() - 1;
             toInsert = `  ${metadataField}: [${insertedText}]\n`;
         } else {
@@ -118,11 +118,11 @@ export function addSymbolToNgModuleMetadata(
 
     let toInsert: string;
     let position = node.getEnd();
-    if (node.kind == ts.SyntaxKind.ObjectLiteralExpression) {
+    if (node.kind === ts.SyntaxKind.ObjectLiteralExpression) {
         // We haven't found the field in the metadata declaration. Insert a new
         // field.
         const expr = node as ts.ObjectLiteralExpression;
-        if (expr.properties.length == 0) {
+        if (expr.properties.length === 0) {
             position = expr.getEnd() - 1;
             toInsert = `  ${insertedText}\n`;
         } else {
@@ -134,7 +134,7 @@ export function addSymbolToNgModuleMetadata(
                 toInsert = `, ${insertedText}`;
             }
         }
-    } else if (node.kind == ts.SyntaxKind.ArrayLiteralExpression) {
+    } else if (node.kind === ts.SyntaxKind.ArrayLiteralExpression) {
         // We found the field but it's empty. Insert it just before the `]`.
         position--;
         toInsert = `${insertedText}`;
