@@ -23,6 +23,8 @@ import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sid
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
 import { PanelExampleComponent } from './doc/panel-example/panel-example.component';
+import { CasePanelExampleComponent } from './doc/case-panel-example/case-panel-example.component';
+import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-example.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +34,9 @@ import { PanelExampleComponent } from './doc/panel-example/panel-example.compone
         CaseSidemenuExampleComponent,
         SidemenuExampleComponent,
         UserAssignSidemenuExampleComponent,
-        PanelExampleComponent
+        PanelExampleComponent,
+        CasePanelExampleComponent,
+        SnackBarExampleComponent
     ],
     imports: [
         BrowserModule,

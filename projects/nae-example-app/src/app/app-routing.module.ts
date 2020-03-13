@@ -6,13 +6,17 @@ import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.
 import {UserAssignSidemenuExampleComponent} from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
 
 import {PanelExampleComponent} from './doc/panel-example/panel-example.component';
+import {CasePanelExampleComponent} from './doc/case-panel-example/case-panel-example.component';
+import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
     {path: 'new-case-sidemenu', component: CaseSidemenuExampleComponent},
     {path: 'sidemenu', component: SidemenuExampleComponent},
     {path: 'user-assign-sidemenu', component: UserAssignSidemenuExampleComponent},
-    {path: 'panel', component: PanelExampleComponent}
+    {path: 'panel', component: PanelExampleComponent},
+    {path: 'case-panel', component: CasePanelExampleComponent},
+    {path: 'snack-bar', component: SnackBarExampleComponent}
 ];
 
 @NgModule({
