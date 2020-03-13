@@ -9,7 +9,8 @@ import {
     CovalentModule,
     MaterialModule,
     NewCaseComponent,
-    SideMenuModule
+    SideMenuModule,
+    UserAssignComponent
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -19,6 +20,7 @@ import {NaeExampleAppConfigurationService} from './nae-example-app-configuration
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
+import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +28,8 @@ import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.
         DocumentationComponent,
         AuthenticationComponent,
         CaseSidemenuExampleComponent,
-        SidemenuExampleComponent
+        SidemenuExampleComponent,
+        UserAssignSidemenuExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -39,7 +42,10 @@ import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.
         AuthenticationModule,
         SideMenuModule
     ],
-    entryComponents: [NewCaseComponent],
+    entryComponents: [
+        NewCaseComponent,
+        UserAssignComponent
+    ],
     providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
     bootstrap: [AppComponent]
 })

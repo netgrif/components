@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {User} from "./user";
-import {SideMenuService} from "../side-menu.service";
-import {FormControl} from "@angular/forms";
-import {UserAssignListComponent} from "./user-assign-list/user-assign-list.component";
+import {User} from './user';
+import {SideMenuService} from '../side-menu.service';
+import {FormControl} from '@angular/forms';
+import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 
 @Component({
     selector: 'nae-user-assign',
@@ -35,7 +35,7 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
                 'Novák',
                 'martin456@yahoo.com'
             )
-        ]
+        ];
     }
 
     ngOnInit() {
@@ -49,8 +49,8 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
         this._currentUser = user;
     }
 
-    public assign(): User{
-        //TODO: Assign user
+    public assign(): User {
+        // TODO: Assign user
         console.log('User was assigned', this._currentUser);
         if (this._currentUser !== undefined) {
             this._sideMenuService.close();
