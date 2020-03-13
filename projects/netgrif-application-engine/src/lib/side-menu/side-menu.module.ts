@@ -31,7 +31,7 @@ import {ReactiveFormsModule} from '@angular/forms';
         MatAutocompleteModule,
         MatSelectModule
     ],
-    exports: [SideMenuContainerComponent]
+    exports: [SideMenuContainerComponent, NewCaseComponent]
 })
 export class SideMenuModule {
 }

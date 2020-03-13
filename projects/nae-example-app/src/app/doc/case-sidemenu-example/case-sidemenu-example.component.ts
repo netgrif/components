@@ -8,9 +8,7 @@ import {SideMenuService, NewCaseComponent} from '@netgrif/application-engine';
 })
 export class CaseSidemenuExampleComponent implements OnInit {
     readonly TITLE = 'New Case SideMenu';
-    readonly DESCRIPTION = 'Ukážka použitia New Case SideMenu...';
-
-    @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
+    readonly DESCRIPTION = 'Ukážka použitia New case sidemenu...';
 
     constructor(private sideMenuService: SideMenuService) {
     }

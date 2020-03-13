@@ -17,14 +17,16 @@ import {DocumentationComponent} from './doc/documentation/documentation.componen
 
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
-import { CaseSidemenuExampleComponent } from './doc/case-sidemenu-example/case-sidemenu-example.component';
+import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
+import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         DocumentationComponent,
         AuthenticationComponent,
-        CaseSidemenuExampleComponent
+        CaseSidemenuExampleComponent,
+        SidemenuExampleComponent
     ],
     imports: [
         BrowserModule,
