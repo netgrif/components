@@ -165,13 +165,13 @@ export function createRelativePath(sourcePath: string, destinationPath: string):
     let currentNode = sourceNode.parent;
     const pathFragments = [];
     let traversalDirectionUp = true;
-    if (currentNode.children.length == 2) {
+    if (currentNode.children.length === 2) {
         pathFragments.push('.');
         traversalDirectionUp = false;
         currentNode = currentNode.children[1];
     }
     while (traversalDirectionUp) {
-        if (currentNode.children.length == 2) {
+        if (currentNode.children.length === 2) {
             traversalDirectionUp = false;
             currentNode = currentNode.children[1]; // destination path is always added second
         } else {
