@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatSidenav} from "@angular/material";
-import {PortalWrapper} from "../portal-wrapper";
-import {SideMenuService} from "../side-menu.service";
+import {MatSidenav} from '@angular/material';
+import {PortalWrapper} from '../portal-wrapper';
+import {SideMenuService} from '../side-menu.service';
 
 @Component({
   selector: 'nae-side-menu-container',

@@ -1,8 +1,8 @@
 import {Injectable, TemplateRef, Type} from '@angular/core';
-import {MatDrawerToggleResult, MatSidenav} from "@angular/material";
-import {ComponentPortal, ComponentType, TemplatePortal} from "@angular/cdk/portal";
-import {from, Observable} from "rxjs";
-import {PortalWrapper} from "./portal-wrapper";
+import {MatDrawerToggleResult, MatSidenav} from '@angular/material';
+import {ComponentPortal, ComponentType, TemplatePortal} from '@angular/cdk/portal';
+import {from, Observable} from 'rxjs';
+import {PortalWrapper} from './portal-wrapper';
 
 export enum SideMenuWidth {
     SMALL = 'side-menu-width-small',
@@ -23,7 +23,7 @@ export class SideMenuService {
     /**
      * Setter for _sideMenu.
      *
-     * @param {MatSidenav} sideMenu
+     * @param sideMenu - sidemenu
      */
     public setSideMenu(sideMenu: MatSidenav) {
         this._sideMenu = sideMenu;
@@ -38,7 +38,8 @@ export class SideMenuService {
      *
      * @returns Observable<MatDrawerToggleResult>
      */
-    public open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>, width: SideMenuWidth = SideMenuWidth.MEDIUM): Observable<MatDrawerToggleResult> {
+    public open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
+                   width: SideMenuWidth = SideMenuWidth.MEDIUM): Observable<MatDrawerToggleResult> {
         this._portalWrapper.width = width;
         this._createView(componentOrTemplateRef);
         return from(this._sideMenu.open());
@@ -65,9 +66,9 @@ export class SideMenuService {
     /**
      * Toggle this _sideMenu. This is equivalent to calling open() when it's already opened, or close() when it's closed.
      *
-     * @param {boolean} isOpen  Whether the _sideMenu should be open.
+     * @param  isOpen  Whether the _sideMenu should be open.
      *
-     * @returns {Observable<MatDrawerToggleResult>}
+     * @returns open or close side menu
      */
     public toggle(isOpen?: boolean): Observable<MatDrawerToggleResult> {
         return from(this._sideMenu.toggle(isOpen));

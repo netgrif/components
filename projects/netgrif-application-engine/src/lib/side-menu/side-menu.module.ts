@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from "@angular/router";
-import {FlexLayoutModule} from "@angular/flex-layout";
+import {RouterModule} from '@angular/router';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -9,11 +9,11 @@ import {
     MatSidenavModule,
     MatStepperModule,
     MatToolbarModule
-} from "@angular/material";
-import {PortalModule} from "@angular/cdk/portal";
+} from '@angular/material';
+import {PortalModule} from '@angular/cdk/portal';
 import { SideMenuContainerComponent } from './side-menu-container/side-menu-container.component';
 import { NewCaseComponent } from './new-case/new-case.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [SideMenuContainerComponent, NewCaseComponent],
