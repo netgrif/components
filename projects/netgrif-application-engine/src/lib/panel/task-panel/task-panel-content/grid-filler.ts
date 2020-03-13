@@ -1,3 +1,5 @@
+import {GridLayoutElement} from './grid-layout-element';
+
 export class GridFiller {
     constructor(private start: number, private end: number) { }
 
@@ -6,7 +8,7 @@ export class GridFiller {
             if (end < this.end) {
                 // split the filler into two
                 const rightHalf = new GridFiller(end + 1, this.end);
-                this.end = end - 1;
+                this.end = start - 1;
                 return [this, rightHalf];
             } else {
                 // end might be cut-off
@@ -23,5 +25,18 @@ export class GridFiller {
                 return [];
             }
         }
+    }
+
+    convertToGridLayoutElement(y: number): GridLayoutElement {
+        return {
+            item: undefined,
+            type: 'blank',
+            layout: {
+                x: this.start,
+                y,
+                rows: 1,
+                cols: this.end - this.start + 1
+            }
+        };
     }
 }
