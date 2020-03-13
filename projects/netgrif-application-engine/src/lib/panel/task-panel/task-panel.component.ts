@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TaskPanelDefinition} from "./task-panel-definition";
-import {MatExpansionPanel} from "@angular/material/expansion";
+import {TaskPanelDefinition} from './task-panel-definition';
+import {MatExpansionPanel} from '@angular/material/expansion';
 
 @Component({
   selector: 'nae-task-panel',
@@ -29,7 +29,7 @@ export class TaskPanelComponent implements OnInit {
     }
 
     public setPanelRef(panelRef: MatExpansionPanel) {
-        this.panelRef = panelRef
+        this.panelRef = panelRef;
     }
 
 }
