@@ -1,0 +1,15 @@
+<nae-data-field-template [title]="fileField.title" [description]="fileField.description" [dataFieldTemplate]="dataField"></nae-data-field-template>
+
+<ng-template #dataField let-showLargeLayout="showLargeLayout">
+
+    <div>
+        <button mat-stroked-button style="margin-bottom: 10px" mat-button color="warn" (click)="onFileUpload()">
+            <mat-icon>file_upload</mat-icon>
+            {{name}}
+        </button>
+
+        <input type="file" #fileUploadInput name="fileUpload" [multiple]="multiple"
+               accept="{{fileField.allowTypes}}" style="display:none;"/>
+    </div>
+
+</ng-template>

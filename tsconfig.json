@@ -21,6 +21,9 @@
     "paths": {
       "netgrif-application-engine": [
         "dist/netgrif-application-engine"
+      ],
+      "jszip": [
+        "./node_modules/jszip/dist/jszip.min.js"
       ]
     }
   },

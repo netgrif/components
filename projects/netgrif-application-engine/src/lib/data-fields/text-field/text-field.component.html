@@ -1,0 +1,8 @@
+<nae-data-field-template [title]="textField.title" [description]="textField.description" [dataFieldTemplate]="textFieldTemplate"></nae-data-field-template>
+
+<ng-template #textFieldTemplate let-showLargeLayout="showLargeLayout">
+    <div [ngSwitch]="textField.view">
+        <nae-textarea-field [textAreaField]="textField" *ngSwitchCase="'textarea'" [showLargeLayout]="showLargeLayout"></nae-textarea-field>
+        <nae-simple-text-field [textField]="textField" *ngSwitchDefault [showLargeLayout]="showLargeLayout"></nae-simple-text-field>
+    </div>
+</ng-template>

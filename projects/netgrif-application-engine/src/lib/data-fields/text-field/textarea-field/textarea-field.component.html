@@ -1,0 +1,5 @@
+<mat-form-field [appearance]="textAreaField.materialAppearance" floatLabel="always" class="full-width">
+    <mat-label *ngIf="!showLargeLayout.value">{{textAreaField.title}}</mat-label>
+    <textarea matInput [placeholder]="textAreaField.placeholder">{{textAreaField.value}}</textarea>
+    <mat-hint>{{textAreaField.description}}</mat-hint>
+</mat-form-field>

@@ -1,0 +1,11 @@
+<mat-form-field [appearance]="enumerationField.materialAppearance" class="full-width">
+    <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}</mat-label>
+    <input type="text" [placeholder]="enumerationField.placeholder" aria-label="Number" [(ngModel)]="selected"
+           matInput [formControl]="validate" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+        </mat-option>
+    </mat-autocomplete>
+    <mat-hint>{{enumerationField.description}}</mat-hint>
+</mat-form-field>

@@ -1,0 +1,13 @@
+<nae-data-field-template [title]="enumerationField.title" [description]="enumerationField.description" [dataFieldTemplate]="enumFieldTemplate">
+</nae-data-field-template>
+
+<ng-template #enumFieldTemplate let-showLargeLayout="showLargeLayout">
+    <div [ngSwitch]="enumerationField.view">
+        <nae-enumeration-autocomplete-select-field [showLargeLayout]="showLargeLayout" [enumerationField]="enumerationField" *ngSwitchCase="'autocomplete'">
+        </nae-enumeration-autocomplete-select-field>
+        <nae-enumeration-list-field [showLargeLayout]="showLargeLayout" [enumerationField]="enumerationField" *ngSwitchCase="'list'">
+        </nae-enumeration-list-field>
+        <nae-enumeration-select-field [showLargeLayout]="showLargeLayout" [enumerationField]="enumerationField" *ngSwitchDefault>
+        </nae-enumeration-select-field>
+    </div>
+</ng-template>

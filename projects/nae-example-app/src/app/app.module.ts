@@ -10,7 +10,8 @@ import {
     MaterialModule,
     NewCaseComponent,
     SideMenuModule,
-    UserAssignComponent
+    UserAssignComponent,
+    PanelModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -21,6 +22,7 @@ import {AuthenticationComponent} from './doc/services/authentication/authenticat
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
+import { PanelExampleComponent } from './doc/panel-example/panel-example.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +31,8 @@ import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-e
         AuthenticationComponent,
         CaseSidemenuExampleComponent,
         SidemenuExampleComponent,
-        UserAssignSidemenuExampleComponent
+        UserAssignSidemenuExampleComponent,
+        PanelExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -40,7 +43,8 @@ import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-e
         MaterialModule,
         CovalentModule,
         AuthenticationModule,
-        SideMenuModule
+        SideMenuModule,
+        PanelModule
     ],
     entryComponents: [
         NewCaseComponent,

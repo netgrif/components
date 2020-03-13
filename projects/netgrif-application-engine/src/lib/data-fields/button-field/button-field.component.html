@@ -1,0 +1,7 @@
+<nae-data-field-template [title]="buttonField.title" [description]="buttonField.description" [dataFieldTemplate]="button"></nae-data-field-template>
+
+<ng-template #button let-showLargeLayout="showLargeLayout">
+    <mat-label *ngIf="!showLargeLayout.value">{{buttonField.title}}</mat-label>
+    <button mat-raised-button color="warn">{{buttonField.placeholder}}</button>
+    <mat-hint>{{buttonField.description}}</mat-hint>
+</ng-template>

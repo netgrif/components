@@ -12,7 +12,7 @@
     <nae-user-assign-list class="list"
         [control]="control"
         [userList]="users"
-                          (userAssigned)="userWasAssigned($event)">
+        (userSelected)="userWasSelected($event)">
     </nae-user-assign-list>
     <button mat-button color="warn" class="assign-button" (click)="assign()">ASSIGN</button>
 </div>

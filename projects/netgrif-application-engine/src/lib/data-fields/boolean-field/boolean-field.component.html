@@ -1,0 +1,7 @@
+<nae-data-field-template [title]="booleanField.title" [description]="booleanField.description" [dataFieldTemplate]="boolean">
+</nae-data-field-template>
+
+<ng-template #boolean let-showLargeLayout="showLargeLayout">
+        <mat-label *ngIf="!showLargeLayout.value">{{booleanField.title}}<br></mat-label>
+        <mat-slide-toggle [checked]="booleanField.value">{{booleanField.placeholder}}</mat-slide-toggle>
+</ng-template>

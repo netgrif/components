@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {User} from './user';
-import {SideMenuService} from '../side-menu.service';
 import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
+import {UserFieldService} from '../../data-fields/user-field/user-field.service';
 
 @Component({
     selector: 'nae-user-assign',
@@ -18,7 +18,7 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
     public control = new FormControl();
     private _currentUser: User;
 
-    constructor(private _sideMenuService: SideMenuService) {
+    constructor(private _userFieldService: UserFieldService) {
         this.users = [
             new User(
                 'Fero',
@@ -45,19 +45,12 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
         this.input.matAutocomplete = this.listComponent.autocomplete;
     }
 
-    userWasAssigned(user: User): void {
+    public userWasSelected(user: User): void {
         this._currentUser = user;
     }
 
-    public assign(): User {
-        // TODO: Assign user
-        console.log('User was assigned', this._currentUser);
-        if (this._currentUser !== undefined) {
-            this._sideMenuService.close();
-            return this._currentUser;
-        } else {
-            return null;
-        }
+    public assign(): User{
+        this._userFieldService.assignUser(this._currentUser);
     }
 
 }
