@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MatSnackBar} from "@angular/material";
+import {MatSnackBar} from '@angular/material';
 
 export enum SnackBarVerticalPosition {
     BOTTOM = 'bottom',
@@ -18,32 +18,36 @@ export class SnackBarService {
 
   constructor(private _snackBar: MatSnackBar) { }
 
-    openInfoSnackBar(message: string, verticalPosition = SnackBarVerticalPosition.BOTTOM, horizontalPosition = SnackBarHorizontalPosition.CENTER, duration = undefined, config?: object) {
-        return this._snackBar.open(message, "✅", Object.assign({
-            duration: duration,
-            horizontalPosition: horizontalPosition,
-            verticalPosition: verticalPosition
+    openInfoSnackBar(message: string, verticalPosition = SnackBarVerticalPosition.BOTTOM,
+                     horizontalPosition = SnackBarHorizontalPosition.CENTER, duration?: number, config?: object) {
+        return this._snackBar.open(message, '✅', Object.assign({
+            duration,
+            horizontalPosition,
+            verticalPosition
         }, config));
     }
-    openErrorSnackBar(message: string, verticalPosition = SnackBarVerticalPosition.BOTTOM, horizontalPosition = SnackBarHorizontalPosition.CENTER, duration = undefined, config?: object) {
-        return this._snackBar.open(message, "❌", Object.assign({
-            duration: duration,
-            horizontalPosition: horizontalPosition,
-            verticalPosition: verticalPosition
+    openErrorSnackBar(message: string, verticalPosition = SnackBarVerticalPosition.BOTTOM,
+                      horizontalPosition = SnackBarHorizontalPosition.CENTER, duration?: number, config?: object) {
+        return this._snackBar.open(message, '❌', Object.assign({
+            duration,
+            horizontalPosition,
+            verticalPosition
         }, config));
     }
-    openWarningSnackBar(message: string, verticalPosition = SnackBarVerticalPosition.BOTTOM, horizontalPosition = SnackBarHorizontalPosition.CENTER, duration = undefined, config?: object) {
-        return this._snackBar.open(message, "❕", Object.assign({
-            duration: duration,
-            horizontalPosition: horizontalPosition,
-            verticalPosition: verticalPosition
+    openWarningSnackBar(message: string, verticalPosition = SnackBarVerticalPosition.BOTTOM,
+                        horizontalPosition = SnackBarHorizontalPosition.CENTER, duration?: number, config?: object) {
+        return this._snackBar.open(message, '❕', Object.assign({
+            duration,
+            horizontalPosition,
+            verticalPosition
         }, config));
     }
-    openGenericSnackBar(message: string, action: string, verticalPosition = SnackBarVerticalPosition.BOTTOM, horizontalPosition = SnackBarHorizontalPosition.CENTER, duration = undefined, config?: object) {
+    openGenericSnackBar(message: string, action: string, verticalPosition = SnackBarVerticalPosition.BOTTOM,
+                        horizontalPosition = SnackBarHorizontalPosition.CENTER, duration?: number, config?: object) {
         return this._snackBar.open(message, action, Object.assign({
-            duration: duration,
-            horizontalPosition: horizontalPosition,
-            verticalPosition: verticalPosition
+            duration,
+            horizontalPosition,
+            verticalPosition
         }, config));
     }
 }
