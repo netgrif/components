@@ -1,16 +1,59 @@
 import {TestBed} from '@angular/core/testing';
 
 import {SessionService} from './session.service';
+import {ConfigurationService} from '../../../configuration/configuration.service';
 
-describe('TokenService', () => {
-  let service: SessionService;
+describe('SessionService', () => {
+    let service: SessionService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(SessionService);
-  });
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [{provide: ConfigurationService, useClass: TestConfigService}]
+        });
+        service = TestBed.inject(SessionService);
+    });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });
+
+
+class TestConfigService extends ConfigurationService {
+    constructor() {
+        super({
+            providers: {
+                auth: {
+                    address: 'http://localhost:8080/api',
+                    authentication: 'Basic',
+                    endpoints: {
+                        login: 'http://localhost:8080/api/auth/login',
+                        logout: 'http://localhost:8080/api/auth/logout'
+                    }
+                },
+                resources: {
+                    name: 'main',
+                    address: 'http://localhost:8080/api',
+                    format: 'json'
+                }
+            },
+            views: {
+                layout: 'empty',
+                routes: {}
+            },
+            theme: {
+                name: 'default',
+                pallets: {
+                    light: {
+                        primary: 'blue'
+                    },
+                    dark: {
+                        primary: 'blue'
+                    }
+
+                }
+            },
+            assets: []
+        });
+    }
+}

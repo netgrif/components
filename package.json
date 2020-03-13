@@ -68,7 +68,6 @@
         "karma-junit-reporter": "^2.0.1",
         "karma-mocha-reporter": "^2.2.5",
         "karma-nyan-reporter": "^0.2.5",
-        "karma-phantomjs-launcher": "^1.0.4",
         "ng-packagr": "^9.0.3",
         "protractor": "^5.4.3",
         "schematics-utilities": "^2.0.1",
@@ -76,7 +75,7 @@
         "ts-node": "~8.3.0",
         "tslint": "~5.18.0",
         "typedoc": "^0.16.11",
-        "typescript": "^3.6.5"
+        "typescript": "~3.6.5"
     },
     "optionalDependencies": {
         "@netgrif/application-engine": "file:dist/netgrif-application-engine"
