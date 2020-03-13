@@ -12,10 +12,6 @@ import {FilesUploadItemComponent} from './files-upload/files-upload-list/files-u
 import {MaterialModule} from '../material/material.module';
 import {CovalentCommonModule} from '@covalent/core';
 import { NewCaseComponent } from './new-case/new-case.component';
-import { UserAssignComponent } from './user-assign/user-assign.component';
-import { UserAssignListComponent } from './user-assign/user-assign-list/user-assign-list.component';
-import { UserAssignRowComponent } from './user-assign/user-assign-row/user-assign-row.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -23,7 +19,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
         NewCaseComponent,
         UserAssignComponent,
         UserAssignListComponent,
-        UserAssignRowComponent,
         UserAssignItemComponent,
         FilesUploadComponent,
         FilesUploadListComponent,

@@ -49,7 +49,7 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
         this._currentUser = user;
     }
 
-    public assign(): User{
+    public assign(): void {
         this._userFieldService.assignUser(this._currentUser);
     }
 
