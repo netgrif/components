@@ -22,7 +22,7 @@ export function createConfigurationService(): Rule {
             }),
             move(normalize(projectInfo.path)),
         ]);
-        // addAppModule();
+
         return chain([
             mergeWith(templateSource)
         ]);
