@@ -5,6 +5,8 @@ import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
 import {tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {ActionType} from "../models/action-type";
+import {UserPreferenceService} from './user-preference.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +15,22 @@ export class UserService {
 
     private _user: User;
 
-    constructor(private _authService: AuthenticationService) {
+    constructor(
+                // private _store: Store<State>,
+                private _preferenceService: UserPreferenceService,
+                private _authService: AuthenticationService) {}
+
+    public login(credentials: Credentials): Observable<User> {
+        // TODO: NgRx store
+        // this._store.dispatch(loginUser({user: user}));
+
+        return this._authService.login(credentials)
+            .pipe(
+                tap((authUser: User) => {
+                    this._user = authUser;
+                    this._preferenceService.user = authUser;
+                })
+            );
     }
 
     get user() {
