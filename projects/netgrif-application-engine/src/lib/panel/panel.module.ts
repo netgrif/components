@@ -19,7 +19,7 @@ import { CasePanelComponent } from './case-panel/case-panel.component';
     ],
     exports: [
         PanelComponent,
-        TaskPanelComponent
+        TaskPanelComponent,
         CasePanelComponent
     ]
 })

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CasePanelDefinition} from "./case-panel-definition";
+import {CasePanelDefinition} from './case-panel-definition';
 
 @Component({
     selector: 'nae-case-panel',
