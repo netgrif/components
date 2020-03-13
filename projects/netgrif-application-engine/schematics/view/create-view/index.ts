@@ -40,7 +40,8 @@ function addAllRoutesToMap(map: Map<string, Route>, routes: Routes, pathPrefix: 
     });
 }
 
-function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k: string]: NaeRoute }, pathPrefix: string = ''): CreateViewArguments {
+function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k: string]: NaeRoute },
+                         pathPrefix: string = ''): CreateViewArguments {
     for (const routePathPart of Object.keys(naeRoutes)) {
         const route = naeRoutes[routePathPart];
         const routePath = constructRoutePath(pathPrefix, routePathPart);
@@ -55,7 +56,7 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
         }
 
         if (route.routes !== undefined) {
-            let result = findMissingView(existingRoutesMap, route.routes, routePath);
+            const result = findMissingView(existingRoutesMap, route.routes, routePath);
             if (result.path !== undefined) {
                 return result;
             }

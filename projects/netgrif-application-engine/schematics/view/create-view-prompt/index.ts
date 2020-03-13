@@ -29,14 +29,14 @@ function checkPathValidity(path: string | undefined, routeMap: Map<string, Route
     }
     // if the path was entered from a prompt, it might not have a parent
     const parentPath = getParentPath(path);
-    if( parentPath !== '' && !routeMap.has(parentPath) ) {
+    if ( parentPath !== '' && !routeMap.has(parentPath) ) {
         throw new SchematicsException(`Parent view doesn't exist! Create a view with '${parentPath}' path first.`);
     }
 }
 
 function createView(tree: Tree, args: CreateViewArguments): Rule {
     switch (args.viewType) {
-        case "login":
+        case 'login':
             return createLoginView(tree, args);
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
@@ -62,11 +62,13 @@ function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
 
     const appModule = getAppModule(tree, projectInfo.path);
     let appModuleChanges = addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'FlexModule', '@angular/flex-layout');
-    appModuleChanges = appModuleChanges.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'CardModule', '@netgrif/application-engine'));
+    appModuleChanges = appModuleChanges.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path,
+        'CardModule', '@netgrif/application-engine'));
 
     const className = `${classNameNoComponent}Component`;
     const componentPath = `./views/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
-    appModuleChanges = appModuleChanges.concat(addDeclarationToModule(appModule.sourceFile, appModule.fileEntry.path, className, componentPath));
+    appModuleChanges = appModuleChanges.concat(addDeclarationToModule(appModule.sourceFile, appModule.fileEntry.path,
+        className, componentPath));
 
     commitChangesToFile(tree, appModule.fileEntry, appModuleChanges);
 
@@ -91,7 +93,7 @@ function createRouteObject(path: string, className: string): Route {
     const index = path.lastIndexOf('/');
     let relevantPath = path;
     if (index !== -1) {
-        relevantPath = path.substring(index+1);
+        relevantPath = path.substring(index + 1);
     }
     return {path: relevantPath, component: className};
 }

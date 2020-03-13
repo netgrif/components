@@ -10,17 +10,17 @@ export class ProjectInfo {
     /**
      * projects/[name]/src/app
      */
-    path: string = '';
-    projectName: string = '';
-    projectNameClassified: string = '';
-    projectNameDasherized: string = '';
-    projectPrefix: string = '';
-    projectPrefixDasherized: string = '';
+    path = '';
+    projectName = '';
+    projectNameClassified = '';
+    projectNameDasherized = '';
+    projectPrefix = '';
+    projectPrefixDasherized = '';
 }
 
 export interface FileData {
-    fileEntry: FileEntry,
-    sourceFile: ts.SourceFile
+    fileEntry: FileEntry;
+    sourceFile: ts.SourceFile;
 }
 
 

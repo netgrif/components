@@ -1,13 +1,14 @@
-import {Tree} from "@angular-devkit/schematics";
-import {ProjectInfo} from "../utilityFunctions";
+import {Tree} from '@angular-devkit/schematics';
+import {ProjectInfo} from '../utilityFunctions';
 
 /**
- * Mocks the `Route` interface of {@link @angular/router#Route | Angular's router package}. But changes the type of the `component` attribute to `string`.
+ * Mocks the `Route` interface of {@link @angular/router#Route | Angular's router package}.
+ * But changes the type of the `component` attribute to `string`.
  */
-export interface Route{
+export interface Route {
     component: string;
     path: string;
-    children?: Array<Route>
+    children?: Array<Route>;
 }
 
 export declare type Routes = Route[];
@@ -25,5 +26,5 @@ export function getParentPath(path: string): string {
     if (index === -1) {
         return '';
     }
-    return path.substring(0, index)
+    return path.substring(0, index);
 }
