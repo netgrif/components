@@ -1,7 +1,10 @@
 <mat-radio-group
+    color="primary"
     aria-labelledby="example-radio-group-label"
     class="example-radio-group"
-    [(ngModel)]="selected">
+    [(ngModel)]="selected"
+    [required]="enumerationField.behaviour.required"
+    [disabled]="enumerationField.behaviour.visible && !enumerationField.behaviour.editable">
     <mat-radio-button class="example-radio-button" *ngFor="let option of enumerationField.choices" [value]="option.key">
         {{option.value}}
     </mat-radio-button>

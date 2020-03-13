@@ -1,5 +1,9 @@
-<nae-data-field-template [title]="dateField.title">
-    <mat-form-field appearance="standard">
+<nae-data-field-template *ngIf="!dateField.behaviour.hidden" [title]="dateField.title" [dataFieldTemplate]="dataField"></nae-data-field-template>
+
+<ng-template #dataField let-showLargeLayout="showLargeLayout">
+
+    <mat-form-field appearance="outline" color="primary">
+        <mat-label></mat-label>
         <div fxLayout="row">
             <mat-datepicker-toggle [for]="datepicker"></mat-datepicker-toggle>
             <input matInput
@@ -7,9 +11,13 @@
                    [(ngModel)]="dateField.value"
                    (click)="datepicker.open()"
                    (keydown.enter)="datepicker.close()"
-                   placeholder="{{dateField.placeholder}}">
+                   [placeholder]="dateField.placeholder"
+                   [required]="dateField.behaviour.required"
+                   [disabled]="dateField.behaviour.visible && !dateField.behaviour.editable">
             <mat-datepicker #datepicker>
             </mat-datepicker>
         </div>
     </mat-form-field>
-</nae-data-field-template>
+
+</ng-template>
+

@@ -1,4 +1,10 @@
-<nae-data-field-template [title]="dateTimeField.title">
-    <input [ngxTimepicker]="timepicker">
+<nae-data-field-template *ngIf="!dateTimeField.behaviour.hidden" [title]="dateTimeField.title" [dataFieldTemplate]="dataField"></nae-data-field-template>
+
+<ng-template #dataField let-showLargeLayout="showLargeLayout">
+
+    <input [ngxTimepicker]="timepicker"
+           [required]="dateTimeField.behaviour.required"
+           [disabled]="dateTimeField.behaviour.visible && !dateTimeField.behaviour.editable">
     <ngx-material-timepicker #timepicker [format]="24"></ngx-material-timepicker>
-</nae-data-field-template>
+
+</ng-template>

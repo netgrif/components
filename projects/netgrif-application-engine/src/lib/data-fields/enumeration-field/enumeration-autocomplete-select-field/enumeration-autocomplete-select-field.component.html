@@ -1,5 +1,14 @@
-<mat-form-field appearance="outline">
-    <input type="text" placeholder="{{enumerationField.placeholder}}" aria-label="Number" [(ngModel)]="selected" matInput [formControl]="validate" [matAutocomplete]="auto">
+<mat-form-field appearance="outline" color="primary">
+    <mat-label>{{enumerationField.label}}</mat-label>
+    <input type="text"
+           aria-label="Number"
+           matInput
+           [placeholder]="enumerationField.placeholder"
+           [(ngModel)]="selected"
+           [formControl]="validate"
+           [required]="enumerationField.behaviour.required"
+           [disabled]="enumerationField.behaviour.visible && !enumerationField.behaviour.editable"
+           [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
             {{option}}

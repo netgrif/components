@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EnumerationField} from "./enumeration-field";
+import {EnumerationField} from "./models/enumeration-field";
 
 @Component({
     selector: 'nae-enumeration-field',

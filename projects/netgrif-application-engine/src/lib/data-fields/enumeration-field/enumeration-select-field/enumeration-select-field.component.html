@@ -1,6 +1,9 @@
-<mat-form-field appearance="outline">
+<mat-form-field appearance="outline" color="primary">
     <mat-label>{{enumerationField.placeholder}}</mat-label>
-    <mat-select [(value)]="selected" [formControl]="validate" required>
+    <mat-select [(value)]="selected"
+                [formControl]="validate"
+                [required]="enumerationField.behaviour.required"
+                [disabled]="enumerationField.behaviour.visible && !enumerationField.behaviour.editable">
         <mat-option *ngFor="let option of enumerationField.choices" [value]="option.key">
             {{option.value}}
         </mat-option>

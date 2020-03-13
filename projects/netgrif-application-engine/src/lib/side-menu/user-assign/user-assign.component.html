@@ -1,8 +1,8 @@
-<mat-toolbar color="warn">User Assign</mat-toolbar>
+<mat-toolbar color="primary">User Assign</mat-toolbar>
 <div class="user-assign-container">
     <div class="user-assign-search-container">
         <mat-icon class="search-icon">search</mat-icon>
-        <mat-form-field class="user-assign-search">
+        <mat-form-field class="user-assign-search" color="primary">
             <input matInput placeholder="Choose user" [value]="control.value" [formControl]="control" #inputSearch>
             <button mat-button *ngIf="control.value" matSuffix mat-icon-button (click)="control.setValue('')">
                 <mat-icon>close</mat-icon>
@@ -14,5 +14,5 @@
         [userList]="users"
         (onUserSelected)="userWasSelected($event)">
     </nae-user-assign-list>
-    <button mat-button color="warn" class="assign-button" (click)="onAssign()">ASSIGN</button>
+    <button mat-button color="primary" class="assign-button" (click)="onAssign()">ASSIGN</button>
 </div>

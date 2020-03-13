@@ -6,7 +6,7 @@ export class Behaviour {
     hidden: boolean;
     forbidden: boolean;
 
-    get disabled(): boolean {
-        return this.visible && !this.editable
-    }
+    // disabled(): boolean {
+    //     return this.visible && !this.editable
+    // }
 }

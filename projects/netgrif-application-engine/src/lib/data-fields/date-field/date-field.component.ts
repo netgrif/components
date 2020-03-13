@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DateField} from "./date-field";
+import {DateField} from "./models/date-field";
 import {FormControl} from "@angular/forms";
 
 @Component({

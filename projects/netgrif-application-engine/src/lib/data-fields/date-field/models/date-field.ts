@@ -1,5 +1,5 @@
-import {DataField} from "../models/abstract-data-field";
-import {Behaviour} from '../models/behaviour';
+import {DataField} from "../../models/abstract-data-field";
+import {Behaviour} from '../../models/behaviour';
 
 export class DateField extends DataField<Date> {
 
