@@ -316,6 +316,50 @@ export class Resources {
                 rows: 1
             },
             order: 11
+        },
+        {
+            stringId: 'button',
+            type: 'button',
+            name: 'Button',
+            description: 'Button field description',
+            placeholder: 'Button field placeholder',
+            behavior: {
+                editable: true
+            },
+            layout: {
+                x: 1,
+                y: 13,
+                cols: 1,
+                rows: 2
+            },
+            value: 'button',
+            order: 0,
+            subType: 'simple',
+            defaultValue: 'button'
+        },
+        {
+            stringId: 'text2',
+            type: 'text',
+            name: 'Text',
+            description: 'Text field description',
+            placeholder: 'Text field placeholder',
+            behavior: {
+                editable: true
+            },
+            layout: {
+                x: 3,
+                y: 14,
+                cols: 1,
+                rows: 1
+            },
+            value: 'text',
+            order: 0,
+            subType: 'simple',
+            formatting: 'example@example.com',
+            validationErrors: {
+                email: false
+            },
+            defaultValue: 'text'
         }
     ];
 }
