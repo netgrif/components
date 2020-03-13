@@ -15,6 +15,7 @@
             "enum": [
                 "login",
                 "sidenav-toolbar",
+                "tabView",
                 "caseView",
                 "taskView"
             ],
@@ -24,6 +25,7 @@
                 "items": [
                     "login",
                     "sidenav-toolbar",
+                    "tabView",
                     "caseView",
                     "taskView"
                 ]

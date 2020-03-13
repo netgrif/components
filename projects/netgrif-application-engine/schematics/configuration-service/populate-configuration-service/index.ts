@@ -1,6 +1,9 @@
-import {apply, applyTemplates, chain, mergeWith, move, Rule, Tree, url} from '@angular-devkit/schematics';
-import {normalize, strings} from '@angular-devkit/core';
-import {getNaeConfigurationString, getProjectInfo} from '../utilityFunctions';
+import {
+    Rule,
+    Tree,
+} from '@angular-devkit/schematics';
+import {strings} from '@angular-devkit/core';
+import {createFilesFromTemplates, getNaeConfigurationString, getProjectInfo} from '../../utilityFunctions';
 
 export function populateConfigurationService(): Rule {
     return (tree: Tree) => {
@@ -12,18 +15,12 @@ export function populateConfigurationService(): Rule {
             tree.delete(projectInfo.path + '/' + projectInfo.projectNameDasherized + '-configuration.service.ts');
         }
 
-        const templateSource = apply(url('./files'), [
-            applyTemplates({
-                classify: strings.classify,
-                dasherize: strings.dasherize,
-                project: projectInfo.projectName,
-                configuration: naeConfig
-            }),
-            move(normalize(projectInfo.path)),
-        ]);
+        return createFilesFromTemplates('./files', projectInfo.path as string, {
+            classify: strings.classify,
+            dasherize: strings.dasherize,
+            project: projectInfo.projectName,
+            configuration: naeConfig
+        });
 
-        return chain([
-            mergeWith(templateSource)
-        ]);
     };
 }
