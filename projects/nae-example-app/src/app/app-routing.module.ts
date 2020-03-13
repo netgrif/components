@@ -8,6 +8,7 @@ import {PanelExampleComponent} from './doc/panel-example/panel-example.component
 import {CasePanelExampleComponent} from './doc/case-panel-example/case-panel-example.component';
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
+import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
     {path: 'panel', component: PanelExampleComponent},
     {path: 'case-panel', component: CasePanelExampleComponent},
     {path: 'snack-bar', component: SnackBarExampleComponent},
-    {path: 'dialog', component: DialogExampleComponent}
+    {path: 'dialog', component: DialogExampleComponent},
+    {path: 'tab-view', component: TabViewExampleComponent}
 ];
 
 @NgModule({

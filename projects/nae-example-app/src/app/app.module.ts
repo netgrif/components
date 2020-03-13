@@ -10,7 +10,12 @@ import {
     NewCaseComponent,
     SideMenuModule,
     PanelModule,
-    DialogModule, UserAssignComponent, SimpleDialogComponent, QuestionDialogWithAnswerComponent, QuestionDialogComponent
+    DialogModule,
+    UserAssignComponent,
+    SimpleDialogComponent,
+    QuestionDialogWithAnswerComponent,
+    QuestionDialogComponent,
+    TabsModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -24,6 +29,8 @@ import { PanelExampleComponent } from './doc/panel-example/panel-example.compone
 import { CasePanelExampleComponent } from './doc/case-panel-example/case-panel-example.component';
 import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-example.component';
 import { DialogExampleComponent } from './doc/dialog-example/dialog-example.component';
+import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example.component';
+import { ContentComponent } from './doc/tab-view-example/content/content.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +43,9 @@ import { DialogExampleComponent } from './doc/dialog-example/dialog-example.comp
         PanelExampleComponent,
         CasePanelExampleComponent,
         SnackBarExampleComponent,
-        DialogExampleComponent
+        DialogExampleComponent,
+        TabViewExampleComponent,
+        ContentComponent
     ],
     imports: [
         BrowserModule,
@@ -49,14 +58,16 @@ import { DialogExampleComponent } from './doc/dialog-example/dialog-example.comp
         AuthenticationModule,
         SideMenuModule,
         PanelModule,
-        DialogModule
+        DialogModule,
+        TabsModule
     ],
     entryComponents: [
         NewCaseComponent,
         UserAssignComponent,
         SimpleDialogComponent,
         QuestionDialogComponent,
-        QuestionDialogWithAnswerComponent
+        QuestionDialogWithAnswerComponent,
+        ContentComponent
     ],
     providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
     bootstrap: [AppComponent]
