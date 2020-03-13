@@ -3,19 +3,28 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {AuthenticationModule, ConfigurationService, CovalentModule, MaterialModule} from '@netgrif/application-engine';
+import {
+    AuthenticationModule,
+    ConfigurationService,
+    CovalentModule,
+    MaterialModule,
+    NewCaseComponent,
+    SideMenuModule
+} from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {DocumentationComponent} from './doc/documentation/documentation.component';
 
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
+import { CaseSidemenuExampleComponent } from './doc/case-sidemenu-example/case-sidemenu-example.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         DocumentationComponent,
-        AuthenticationComponent
+        AuthenticationComponent,
+        CaseSidemenuExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -25,8 +34,10 @@ import {AuthenticationComponent} from './doc/services/authentication/authenticat
         FlexLayoutModule,
         MaterialModule,
         CovalentModule,
-        AuthenticationModule
+        AuthenticationModule,
+        SideMenuModule
     ],
+    entryComponents: [NewCaseComponent],
     providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
     bootstrap: [AppComponent]
 })
