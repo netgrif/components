@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "updateCreateRouteModule",
-    "title": "Create or update route module",
+    "id": "SchematicsBeforeBuild",
+    "title": "Prepares project for build",
     "type": "object",
     "properties": {}
 }
