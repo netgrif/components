@@ -10,6 +10,11 @@
             "description": "Generate a project specific configuration service that contains the information from nae.json.",
             "factory": "./create-configuration-service/index#createConfigurationService",
             "schema": "./create-configuration-service/schema.json"
+        },
+        "custom-templates": {
+            "description": "Generate a project custom project themes from nae.json.",
+            "factory": "./custom-templates/index#customTemplates",
+            "schema": "./custom-templates/schema.json"
         }
     }
 }

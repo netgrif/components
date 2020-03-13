@@ -1,6 +1,6 @@
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 
-import {SchematicsException, Tree,} from '@angular-devkit/schematics';
+import {SchematicsException, Tree} from '@angular-devkit/schematics';
 import {FileEntry, UpdateRecorder} from '@angular-devkit/schematics/src/tree/interface';
 import {experimental, strings} from '@angular-devkit/core';
 import {NetgrifApplicationEngine} from '../src/lib/configuration/interfaces/schema';
