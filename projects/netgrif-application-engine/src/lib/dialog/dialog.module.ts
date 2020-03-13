@@ -7,7 +7,11 @@ import { SimpleDialogComponent } from './simple-dialog/simple-dialog.component';
 import { QuestionDialogWithAnswerComponent } from './question-dialog-with-answer/question-dialog-with-answer.component';
 
 @NgModule({
-    declarations: [QuestionDialogComponent, SimpleDialogComponent, QuestionDialogWithAnswerComponent],
+    declarations: [
+        SimpleDialogComponent,
+        QuestionDialogComponent,
+        QuestionDialogWithAnswerComponent
+    ],
     exports: [
     ],
     imports: [

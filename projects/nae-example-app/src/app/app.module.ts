@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
@@ -10,13 +9,12 @@ import {
     MaterialModule,
     NewCaseComponent,
     SideMenuModule,
-    UserAssignComponent,
-    PanelModule
+    PanelModule,
+    DialogModule, UserAssignComponent, SimpleDialogComponent, QuestionDialogWithAnswerComponent, QuestionDialogComponent
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {DocumentationComponent} from './doc/documentation/documentation.component';
-
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
@@ -25,6 +23,7 @@ import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-e
 import { PanelExampleComponent } from './doc/panel-example/panel-example.component';
 import { CasePanelExampleComponent } from './doc/case-panel-example/case-panel-example.component';
 import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-example.component';
+import { DialogExampleComponent } from './doc/dialog-example/dialog-example.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +35,8 @@ import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-exam
         UserAssignSidemenuExampleComponent,
         PanelExampleComponent,
         CasePanelExampleComponent,
-        SnackBarExampleComponent
+        SnackBarExampleComponent,
+        DialogExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -48,11 +48,15 @@ import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-exam
         CovalentModule,
         AuthenticationModule,
         SideMenuModule,
-        PanelModule
+        PanelModule,
+        DialogModule
     ],
     entryComponents: [
         NewCaseComponent,
-        UserAssignComponent
+        UserAssignComponent,
+        SimpleDialogComponent,
+        QuestionDialogComponent,
+        QuestionDialogWithAnswerComponent
     ],
     providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
     bootstrap: [AppComponent]

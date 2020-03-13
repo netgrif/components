@@ -4,10 +4,10 @@ import {AuthenticationComponent} from './doc/services/authentication/authenticat
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import {UserAssignSidemenuExampleComponent} from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
-
 import {PanelExampleComponent} from './doc/panel-example/panel-example.component';
 import {CasePanelExampleComponent} from './doc/case-panel-example/case-panel-example.component';
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
+import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -16,7 +16,8 @@ const routes: Routes = [
     {path: 'user-assign-sidemenu', component: UserAssignSidemenuExampleComponent},
     {path: 'panel', component: PanelExampleComponent},
     {path: 'case-panel', component: CasePanelExampleComponent},
-    {path: 'snack-bar', component: SnackBarExampleComponent}
+    {path: 'snack-bar', component: SnackBarExampleComponent},
+    {path: 'dialog', component: DialogExampleComponent}
 ];
 
 @NgModule({
