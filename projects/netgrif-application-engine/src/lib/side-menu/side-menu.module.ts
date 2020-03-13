@@ -5,18 +5,31 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {
     MatAutocompleteModule,
     MatButtonModule,
-    MatInputModule, MatSelectModule,
+    MatInputModule,
+    MatSelectModule,
     MatSidenavModule,
     MatStepperModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatListModule
 } from '@angular/material';
 import {PortalModule} from '@angular/cdk/portal';
 import { SideMenuContainerComponent } from './side-menu-container/side-menu-container.component';
 import { NewCaseComponent } from './new-case/new-case.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import { UserAssignComponent } from './user-assign/user-assign.component';
+import { UserAssignListComponent } from './user-assign/user-assign-list/user-assign-list.component';
+import { UserAssignRowComponent } from './user-assign/user-assign-row/user-assign-row.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
-    declarations: [SideMenuContainerComponent, NewCaseComponent],
+    declarations: [
+        SideMenuContainerComponent,
+        NewCaseComponent,
+        UserAssignComponent,
+        UserAssignListComponent,
+        UserAssignRowComponent
+    ],
     imports: [
         CommonModule,
         RouterModule,
@@ -29,9 +42,16 @@ import {ReactiveFormsModule} from '@angular/forms';
         ReactiveFormsModule,
         MatToolbarModule,
         MatAutocompleteModule,
-        MatSelectModule
+        MatSelectModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatListModule,
+        FormsModule,
     ],
-    exports: [SideMenuContainerComponent, NewCaseComponent]
+    exports: [
+        SideMenuContainerComponent,
+        NewCaseComponent
+    ]
 })
 export class SideMenuModule {
 }
