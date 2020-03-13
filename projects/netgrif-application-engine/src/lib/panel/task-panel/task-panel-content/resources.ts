@@ -7,8 +7,6 @@ export class Resources {
             stringId: 'text',
             type: 'text',
             name: 'Text',
-            description: 'Text field description',
-            placeholder: 'Text field placeholder',
             behavior: {
                 editable: true
             },
@@ -20,11 +18,6 @@ export class Resources {
             },
             value: 'text',
             order: 0,
-            subType: 'simple',
-            formatting: 'example@example.com',
-            validationErrors: {
-                email: false
-            },
             defaultValue: 'text'
         },
         {

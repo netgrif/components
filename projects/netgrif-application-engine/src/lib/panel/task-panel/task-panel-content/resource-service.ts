@@ -2,8 +2,8 @@ export interface DataFieldResource {
     stringId: string;
     type: string;
     name: string;
-    description: string;
-    placeholder: string;
+    description?: string;
+    placeholder?: string;
     behavior: {
         editable: boolean
     };
