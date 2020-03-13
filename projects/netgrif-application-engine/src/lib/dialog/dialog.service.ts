@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {MatDialog} from "@angular/material";
-import {QuestionDialogComponent} from "./question-dialog/question-dialog.component";
-import {SimpleDialogComponent} from "./simple-dialog/simple-dialog.component";
-import {QuestionDialogWithAnswerComponent} from "./question-dialog-with-answer/question-dialog-with-answer.component";
+import {MatDialog} from '@angular/material';
+import {QuestionDialogComponent} from './question-dialog/question-dialog.component';
+import {SimpleDialogComponent} from './simple-dialog/simple-dialog.component';
+import {QuestionDialogWithAnswerComponent} from './question-dialog-with-answer/question-dialog-with-answer.component';
 
 export enum DialogType {
-    INFO = "info",
-    SUCCESS = "success",
-    WARNING = "warn"
+    INFO = 'info',
+    SUCCESS = 'success',
+    WARNING = 'warn'
 }
 
 @Injectable({
@@ -22,9 +22,9 @@ export class DialogService {
         return this.dialog.open(SimpleDialogComponent,
             Object.assign({
                 data: {
-                    title: title,
-                    content: content,
-                    type: type
+                    title,
+                    content,
+                    type
                 }
             }, configMatDialog)
         );
@@ -34,10 +34,10 @@ export class DialogService {
         return this.dialog.open(QuestionDialogComponent,
             Object.assign({
                 data: {
-                    title: title,
+                    title,
                     content: question,
-                    negativeAnswer: negativeAnswer,
-                    positiveAnswer: positiveAnswer
+                    negativeAnswer,
+                    positiveAnswer
                 }
             }, configMatDialog)
         );
@@ -47,9 +47,9 @@ export class DialogService {
         return this.dialog.open(QuestionDialogWithAnswerComponent,
             Object.assign({
                 data: {
-                    title: title,
+                    title,
                     content: question,
-                    placeholder: placeholder
+                    placeholder
                 }
             }, configMatDialog)
         );

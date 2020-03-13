@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractDialog} from "../abstract-dialog";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {AbstractDialog} from '../abstract-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
     selector: 'nae-question-dialog-with-answer',
