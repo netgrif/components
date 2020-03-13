@@ -4,11 +4,13 @@ import {PanelComponent} from './panel.component';
 import {FlexModule} from '@angular/flex-layout';
 import {MaterialModule} from '../material/material.module';
 import { TaskPanelComponent } from './task-panel/task-panel.component';
+import { CasePanelComponent } from './case-panel/case-panel.component';
 
 @NgModule({
     declarations: [
         PanelComponent,
         TaskPanelComponent,
+        CasePanelComponent,
     ],
     imports: [
         CommonModule,
@@ -18,6 +20,7 @@ import { TaskPanelComponent } from './task-panel/task-panel.component';
     exports: [
         PanelComponent,
         TaskPanelComponent
+        CasePanelComponent
     ]
 })
 export class PanelModule {
