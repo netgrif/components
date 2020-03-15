@@ -2,7 +2,7 @@ import {Injectable, TemplateRef, Type} from '@angular/core';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material';
 import {ComponentPortal, ComponentType, TemplatePortal} from '@angular/cdk/portal';
 import {from, Observable} from 'rxjs';
-import {PortalWrapper} from './models/portal-wrapper';
+import {PortalWrapper} from '../models/portal-wrapper';
 
 export enum SideMenuWidth {
     SMALL = 'side-menu-width-small',

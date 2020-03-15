@@ -1,6 +1,6 @@
 import {Component, Input, TemplateRef} from '@angular/core';
 import {ResizedEvent} from 'angular-resize-event';
-import {WrappedBoolean} from "./models/wrapped-boolean";
+import {WrappedBoolean} from './models/wrapped-boolean';
 
 @Component({
     selector: 'nae-data-field-template',

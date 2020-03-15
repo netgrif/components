@@ -1,10 +1,14 @@
 import {ElementRef, Injectable} from '@angular/core';
-import {FileField, FileUploadModel} from './file-field';
-import {SideMenuService} from '../../side-menu/side-menu.service';
-import {FileUploadService} from './file-upload.service';
-import {FileDownloadService} from './file-download.service';
 import * as JSZip from 'jszip';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../snack-bar/snack-bar.service';
+import {FileField, FileUploadModel} from '../models/file-field';
+import {FileUploadService} from './upload/file-upload.service';
+import {FileDownloadService} from './download/file-download.service';
+import {SideMenuService} from '../../../side-menu/services/side-menu.service';
+import {
+    SnackBarHorizontalPosition,
+    SnackBarService,
+    SnackBarVerticalPosition
+} from '../../../snack-bar/snack-bar.service';
 
 @Injectable({
     providedIn: 'root'

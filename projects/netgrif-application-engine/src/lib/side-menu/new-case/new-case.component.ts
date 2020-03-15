@@ -1,7 +1,7 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {SideMenuService} from '../side-menu.service';
+import {SideMenuService} from '../services/side-menu.service';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 

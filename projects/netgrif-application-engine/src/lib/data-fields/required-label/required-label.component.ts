@@ -7,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class RequiredLabelComponent implements OnInit {
 
-    @Input() public isIn: boolean = false;
+    @Input() public isIn = false;
 
     constructor() {
     }

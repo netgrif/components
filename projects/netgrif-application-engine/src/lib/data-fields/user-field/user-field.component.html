@@ -1,4 +1,4 @@
-<nae-data-field-template *ngIf="!userField.behaviour.hidden"
+<nae-data-field-template *ngIf="!userField.behavior.hidden"
                          [title]="userField.title"
                          [dataFieldTemplate]="dataField"
                          [description]="userField.description"></nae-data-field-template>
@@ -22,7 +22,7 @@
             <mat-icon>person_add</mat-icon>
             Select user
         </button>
-        <nae-required-label *ngIf="userField.behaviour.required" [isIn]="!userField.disabled"></nae-required-label>
+        <nae-required-label *ngIf="userField.behavior.required" [isIn]="!userField.disabled"></nae-required-label>
     </div>
 
 </ng-template>

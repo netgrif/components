@@ -1,4 +1,4 @@
-import {DataField} from '../../../data-fields/abstract-data-field';
+import {DataField} from '../../../data-fields/models/abstract-data-field';
 
 export interface GridLayoutElement {
     item: DataField<any>;

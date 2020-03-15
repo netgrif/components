@@ -3,7 +3,7 @@
     <mat-select [(value)]="selected"
                 [placeholder]="multichoiceField.placeholder"
                 [disabled]="multichoiceField.disabled"
-                [required]="multichoiceField.behaviour.required"
+                [required]="multichoiceField.behavior.required"
                 multiple>
         <mat-option *ngFor="let option of multichoiceField.choices" [value]="option.key">
             {{option.value}}

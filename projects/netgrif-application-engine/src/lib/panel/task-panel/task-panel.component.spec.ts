@@ -21,7 +21,6 @@ describe('TaskPanelComponent', () => {
             CommonModule,
             FlexModule,
             BrowserAnimationsModule,
-            TaskPanelTestModule,
             DataFieldsModule
         ],
         declarations: [PanelComponent, TaskPanelComponent],
@@ -40,11 +39,3 @@ describe('TaskPanelComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
-@NgModule({
-    imports: [DataFieldsModule],
-    declarations: [TaskPanelContentComponent],
-    entryComponents: [TaskPanelContentComponent],
-    schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
-})
-class TaskPanelTestModule { }

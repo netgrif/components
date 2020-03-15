@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {User} from '../../../side-menu/user-assign/user';
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../snack-bar/snack-bar.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
-import {UserField} from './models/user-field';
+import {UserField} from '../models/user-field';
 
 @Injectable({
     providedIn: 'root'

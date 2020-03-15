@@ -1,4 +1,4 @@
-<nae-data-field-template *ngIf="!numberField.behaviour.hidden"
+<nae-data-field-template *ngIf="!numberField.behavior.hidden"
                          [title]="numberField.title"
                          [dataFieldTemplate]="dataField"
                          [description]="numberField.description"></nae-data-field-template>
@@ -11,7 +11,7 @@
                [(ngModel)]="numberField.value"
                [placeholder]="numberField.placeholder"
                [disabled]="numberField.disabled"
-               [required]="numberField.behaviour.required">
+               [required]="numberField.behavior.required">
         <mat-hint>{{numberField.description}}</mat-hint>
     </mat-form-field>
 </ng-template>

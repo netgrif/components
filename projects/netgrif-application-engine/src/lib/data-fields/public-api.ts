@@ -7,6 +7,6 @@ export * from './multichoice-field/models/multichoice-field';
 export * from './boolean-field/models/boolean-field';
 export * from './date-field/models/date-field';
 export * from './file-field/models/file-field';
-export * from './user-field/models/user-field'
+export * from './user-field/models/user-field';
 export * from './date-time-field/models/date-time-field';
 export * from './button-field/models/button-field';

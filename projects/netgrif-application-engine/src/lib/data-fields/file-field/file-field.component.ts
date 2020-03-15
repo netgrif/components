@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@a
 import {FileField} from './models/file-field';
 import {FileFieldService} from './services/file-field.service';
 import {FilesUploadComponent} from '../../side-menu/files-upload/files-upload.component';
-import {SideMenuService, SideMenuWidth} from '../../side-menu/side-menu.service';
+import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
 
 @Component({
     selector: 'nae-file-field',

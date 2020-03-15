@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EnumerationField} from '../models/enumeration-field';
 import {FormControl, Validators} from '@angular/forms';
-import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
+import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
 @Component({
   selector: 'nae-enumeration-list-field',

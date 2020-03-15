@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {TextField} from '../text-field';
-import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
+import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
 @Component({
     selector: 'nae-simple-text-field',

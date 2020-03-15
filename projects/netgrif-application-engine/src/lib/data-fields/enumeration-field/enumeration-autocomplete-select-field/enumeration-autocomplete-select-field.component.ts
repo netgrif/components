@@ -3,7 +3,7 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {EnumerationField} from '../models/enumeration-field';
-import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
+import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
 @Component({
     selector: 'nae-enumeration-autocomplete-select-field',

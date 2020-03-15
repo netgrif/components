@@ -3,24 +3,24 @@ import {Resources} from './resources';
 import {DataFieldResource} from './resource-service';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
 import {TextField, TextFieldView} from '../../../data-fields/text-field/text-field';
-import {NumberField} from '../../../data-fields/number-field/number-field';
+import {NumberField} from '../../../data-fields/number-field/models/number-field';
 import {
     EnumerationField,
     EnumerationFieldValue,
     EnumerationFieldView
-} from '../../../data-fields/enumeration-field/enumeration-field';
+} from '../../../data-fields/enumeration-field/models/enumeration-field';
 import {
     MultichoiceField,
     MultichoiceFieldValue,
     MultichoiceFieldView
-} from '../../../data-fields/multichoice-field/multichoice-field';
-import {DateField} from '../../../data-fields/date-field/date-field';
-import {DateTimeField} from '../../../data-fields/date-time-field/date-time-field';
-import {UserField} from '../../../data-fields/user-field/user-field';
+} from '../../../data-fields/multichoice-field/models/multichoice-field';
+import {DateField} from '../../../data-fields/date-field/models/date-field';
+import {DateTimeField} from '../../../data-fields/date-time-field/models/date-time-field';
+import {UserField} from '../../../data-fields/user-field/models/user-field';
 import {User} from '../../../side-menu/user-assign/user';
-import {ButtonField} from '../../../data-fields/button-field/button-field';
-import {FileField} from '../../../data-fields/file-field/file-field';
-import {DataField} from '../../../data-fields/abstract-data-field';
+import {ButtonField} from '../../../data-fields/button-field/models/button-field';
+import {FileField} from '../../../data-fields/file-field/models/file-field';
+import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
 
@@ -148,7 +148,7 @@ export class TaskPanelContentComponent implements OnInit {
                     item.placeholder, item.description, 'standard', typeMulti);
             case 'date':
                 const date = new Date(item.minDate);
-                return new DateField(item.stringId, item.name, date, item.placeholder, item.description);
+                return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder, item.description);
             case 'dateTime':
                 const dateTime = new Date();
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior, item.placeholder, item.description);

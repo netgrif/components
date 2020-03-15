@@ -6,7 +6,7 @@
     <textarea matInput
               [placeholder]="textAreaField.placeholder"
               [disabled]="textAreaField.disabled"
-              [required]="textAreaField.behaviour.required"
-              [(value)]="textAreaField.value"></textarea>
+              [required]="textAreaField.behavior.required"
+              [(ngModel)]="textAreaField.value"></textarea>
     <mat-hint>{{textAreaField.description}}</mat-hint>
 </mat-form-field>
