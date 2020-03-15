@@ -1,3 +1,2 @@
-export interface Filter {
-
-}
+// tslint:disable-next-line
+export interface Filter {}

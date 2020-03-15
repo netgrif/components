@@ -2,9 +2,8 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TabGroupComponent} from './tab-group.component';
 import {MaterialModule} from '../../material/material.module';
 import {TabCreationDetectorComponent} from '../tab-creation-detector/tab-creation-detector.component';
-import {Component} from '@angular/core';
-import {TabContent} from '@netgrif/application-engine';
-import {ContentComponent} from '../../../../../nae-example-app/src/app/doc/tab-view-example/content/content.component';
+import {Component, NgModule} from '@angular/core';
+import {TabContent} from '../interfaces';
 
 describe('AbstractTabComponent', () => {
     let component: TabGroupComponent;
@@ -12,10 +11,11 @@ describe('AbstractTabComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule],
+            imports: [MaterialModule, TabTestModule],
             declarations: [TabGroupComponent,
                 TabCreationDetectorComponent,
-                TestWrapperComponent]
+                TestWrapperComponent,
+            ]
         })
         .compileComponents();
 
@@ -41,8 +41,23 @@ class TestWrapperComponent {
                 icon: 'home'
             },
             canBeDeleted: false,
-            tabContentComponent: TestWrapperComponent // https://stackoverflow.com/questions/41689468/how-to-shallow-test-a-component-with-an-entrycomponents
+            tabContentComponent: TestComponent
         }
     ];
 }
+
+@Component({
+    selector: 'nae-test-div',
+    template: '<div></div>'
+})
+class TestComponent {}
+
+@NgModule({
+    declarations: [TestComponent],
+    entryComponents: [TestComponent]
+})
+class TabTestModule { }
+
+
+
 
