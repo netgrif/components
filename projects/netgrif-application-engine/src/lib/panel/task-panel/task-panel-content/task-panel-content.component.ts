@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Resources} from './resources';
 import {DataFieldResource} from './resource-service';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
-import {TextField, TextFieldView} from '../../../data-fields/text-field/text-field';
+import {TextField, TextFieldView} from '../../../data-fields/text-field/models/text-field';
 import {NumberField} from '../../../data-fields/number-field/models/number-field';
 import {
     EnumerationField,

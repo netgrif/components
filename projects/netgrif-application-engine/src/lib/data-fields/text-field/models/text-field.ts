@@ -1,5 +1,5 @@
-import {DataField} from '../models/abstract-data-field';
-import {Behavior} from '../models/behavior';
+import {DataField} from '../../models/abstract-data-field';
+import {Behavior} from '../../models/behavior';
 
 export enum TextFieldView {
     DEFAULT = 'default',

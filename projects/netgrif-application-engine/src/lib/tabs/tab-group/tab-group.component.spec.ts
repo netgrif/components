@@ -4,6 +4,7 @@ import {MaterialModule} from '../../material/material.module';
 import {TabCreationDetectorComponent} from '../tab-creation-detector/tab-creation-detector.component';
 import {Component, NgModule} from '@angular/core';
 import {TabContent} from '../interfaces';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractTabComponent', () => {
     let component: TabGroupComponent;
@@ -11,7 +12,7 @@ describe('AbstractTabComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, TabTestModule],
+            imports: [MaterialModule, TabTestModule, BrowserAnimationsModule],
             declarations: [TabGroupComponent,
                 TabCreationDetectorComponent,
                 TestWrapperComponent,

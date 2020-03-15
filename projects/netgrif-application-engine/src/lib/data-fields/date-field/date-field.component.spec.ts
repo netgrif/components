@@ -1,25 +1,51 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DateFieldComponent } from './date-field.component';
+import {DateFieldComponent} from './date-field.component';
+import {MaterialModule} from '../../material/material.module';
+import {AngularResizedEventModule} from 'angular-resize-event';
+import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
+import {RequiredLabelComponent} from '../required-label/required-label.component';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {DateField} from './models/date-field';
 
 describe('DateFieldComponent', () => {
-  let component: DateFieldComponent;
-  let fixture: ComponentFixture<DateFieldComponent>;
+    let component: DateFieldComponent;
+    let fixture: ComponentFixture<TestWrapperComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DateFieldComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [MaterialModule, AngularResizedEventModule],
+            declarations: [
+                DateFieldComponent,
+                DataFieldTemplateComponent,
+                RequiredLabelComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        })
+            .compileComponents();
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DateFieldComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(TestWrapperComponent);
+        component = fixture.debugElement.children[0].componentInstance;
+        fixture.detectChanges();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
+
+@Component({
+    selector: 'nae-test-wrapper',
+    template: '<nae-date-field [dateField]="field"></nae-date-field>'
+})
+class TestWrapperComponent {
+    field = new DateField('', '', new Date(), {
+        required: true,
+        optional: true,
+        visible: true,
+        editable: true,
+        hidden: true
+    });
+}
+

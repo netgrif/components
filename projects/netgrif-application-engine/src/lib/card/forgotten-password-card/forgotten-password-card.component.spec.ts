@@ -1,8 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ForgottenPasswordCardComponent} from './forgotten-password-panel.component';
-import {FormBuilder, FormsModule} from '@angular/forms';
-import {MatButtonModule, MatCardModule, MatFormFieldModule} from '@angular/material';
+import {FormBuilder} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {MaterialModule} from '../../material/material.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ForgottenPasswordPanelComponent', () => {
     let component: ForgottenPasswordCardComponent;
@@ -10,7 +11,7 @@ describe('ForgottenPasswordPanelComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [FlexLayoutModule, MatCardModule, MatButtonModule, MatFormFieldModule, FormsModule],
+            imports: [MaterialModule, FlexLayoutModule, BrowserAnimationsModule],
             declarations: [ForgottenPasswordCardComponent],
             providers: [FormBuilder]
         })

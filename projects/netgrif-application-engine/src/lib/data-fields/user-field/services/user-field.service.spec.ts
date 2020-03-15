@@ -1,12 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 
 import { UserFieldService } from './user-field.service';
+import {MaterialModule} from '../../../material/material.module';
+import {MatSnackBar} from '@angular/material';
 
 describe('UserFieldService', () => {
   let service: UserFieldService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+        imports: [MaterialModule],
+        providers: [MatSnackBar]
+    });
     service = TestBed.inject(UserFieldService);
   });
 

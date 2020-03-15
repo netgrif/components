@@ -18,6 +18,7 @@ describe('BooleanFieldComponent', () => {
                 BooleanFieldComponent,
                 DataFieldTemplateComponent,
                 RequiredLabelComponent,
+                TestWrapperComponent
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })

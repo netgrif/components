@@ -1,6 +1,6 @@
 export * from './data-fields.module';
 export * from './models/abstract-data-field';
-export * from './text-field/text-field';
+export * from './text-field/models/text-field';
 export * from './number-field/models/number-field';
 export * from './enumeration-field/models/enumeration-field';
 export * from './multichoice-field/models/multichoice-field';
