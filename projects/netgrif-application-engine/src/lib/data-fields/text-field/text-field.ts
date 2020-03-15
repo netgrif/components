@@ -1,5 +1,5 @@
 import {DataField} from '../models/abstract-data-field';
-import {Behaviour} from '../models/behaviour';
+import {Behavior} from '../models/behavior';
 
 export enum TextFieldView {
     DEFAULT = 'default',
@@ -8,7 +8,7 @@ export enum TextFieldView {
 
 export class TextField extends DataField<string> {
 
-    constructor(stringId: string, title: string, value: string, behavior: Behaviour,
+    constructor(stringId: string, title: string, value: string, behavior: Behavior,
                 placeholder?: string, description?: string, public validations?: any,
                 public materialAppearance = 'standard', private _view = TextFieldView.DEFAULT) {
         super(stringId, title, behavior, placeholder, description, value);

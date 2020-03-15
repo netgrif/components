@@ -1,9 +1,10 @@
-import {DataField} from "../../models/abstract-data-field";
-import {Behaviour} from '../../models/behaviour';
+import {DataField} from '../../models/abstract-data-field';
+import {Behavior} from '../../models/behavior';
 
-export class BooleanField extends DataField<boolean>{
+export class BooleanField extends DataField<boolean> {
 
-    constructor(title: string, placeholder: string, value: boolean, behaviour: Behaviour) {
-        super(title, placeholder, value, behaviour);
+    constructor(stringId: string, title: string, value: boolean, behavior: Behavior,
+                placeholder?: string, description?: string) {
+        super(stringId, title, behavior, placeholder, description, value);
     }
 }

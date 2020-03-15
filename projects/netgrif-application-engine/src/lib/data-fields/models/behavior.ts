@@ -1,4 +1,4 @@
-export class Behaviour {
+export class Behavior {
     required: boolean;
     optional: boolean;
     visible: boolean;

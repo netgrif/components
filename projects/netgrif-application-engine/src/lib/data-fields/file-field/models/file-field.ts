@@ -1,6 +1,6 @@
 import {DataField} from '../../models/abstract-data-field';
 import {Subscription} from 'rxjs';
-import {Behaviour} from '../../models/behaviour';
+import {Behavior} from '../../models/behavior';
 
 export enum FileUploadMIMEtype {
     IMAGE = 'image/*',

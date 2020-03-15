@@ -1,9 +1,9 @@
 import {DataField} from "../../models/abstract-data-field";
-import {Behaviour} from '../../models/behaviour';
+import {Behavior} from '../../models/behavior';
 
 export class NumberField extends DataField<number>{
 
-    constructor(title: string, placeholder: string, value: number, behaviour: Behaviour, private _label?: string) {
+    constructor(title: string, placeholder: string, value: number, behaviour: Behavior, private _label?: string) {
         super(title, placeholder, value, behaviour);
     }
 

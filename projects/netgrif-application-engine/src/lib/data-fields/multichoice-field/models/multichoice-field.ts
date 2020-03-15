@@ -1,5 +1,5 @@
 import {DataField} from '../abstract-data-field';
-import {Behaviour} from '../../models/behaviour';
+import {Behavior} from '../../models/behavior';
 
 export interface MultichoiceFieldValue {
     key: string;
@@ -14,7 +14,7 @@ export enum MultichoiceFieldView {
 export class MultichoiceField  extends DataField<Array<MultichoiceFieldValue>> {
 
     constructor(stringId: string, title: string, values: Array<MultichoiceFieldValue>,
-                private _choices: Array<MultichoiceFieldValue>, behavior: Behaviour,
+                private _choices: Array<MultichoiceFieldValue>, behavior: Behavior,
                 placeholder?: string, description?: string, public materialAppearance = 'standard',
                 private _view = MultichoiceFieldView.DEFAULT) {
         super(stringId, title, behavior, placeholder, description, values);

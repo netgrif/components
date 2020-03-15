@@ -19,14 +19,16 @@ import {BooleanFieldComponent} from './boolean-field/boolean-field.component';
 import {DateFieldComponent} from './date-field/date-field.component';
 import {FileFieldComponent} from './file-field/file-field.component';
 import {MaterialModule} from '../material/material.module';
-import {FileUploadService} from './file-field/file-upload.service';
-import {FileDownloadService} from './file-field/file-download.service';
 import {SideMenuModule} from '../side-menu/side-menu.module';
 import {HttpClientModule} from '@angular/common/http';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import { UserFieldComponent } from './user-field/user-field.component';
 import {DateTimeFieldComponent} from './date-time-field/date-time-field.component';
 import {ButtonFieldComponent} from './button-field/button-field.component';
+import {RequiredLabelComponent} from './required-label/required-label.component';
+import {CovalentModule} from '../covalent/covalent.module';
+import {FileUploadService} from './file-field/services/upload/file-upload.service';
+import {FileDownloadService} from './file-field/services/download/file-download.service';
 
 @NgModule({
     declarations: [
@@ -69,8 +71,7 @@ import {ButtonFieldComponent} from './button-field/button-field.component';
         CovalentModule,
         AngularResizedEventModule,
         HttpClientModule,
-        SideMenuModule,
-        NgxMaterialTimepickerModule
+        SideMenuModule
     ],
     providers: [
         FileUploadService,

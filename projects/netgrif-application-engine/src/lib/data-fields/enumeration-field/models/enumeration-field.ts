@@ -1,5 +1,5 @@
 import {DataField} from '../../models/abstract-data-field';
-import {Behaviour} from '../../models/behaviour';
+import {Behavior} from '../../models/behavior';
 
 export interface EnumerationFieldValue {
     key: string,
@@ -14,7 +14,7 @@ export enum EnumerationFieldView {
 
 export class EnumerationField extends DataField<EnumerationFieldValue> {
 
-    constructor(title: string, placeholder: string, value: EnumerationFieldValue, behaviour: Behaviour, private _label: string, private _choices: Array<EnumerationFieldValue>, private _view = EnumerationFieldView.DEFAULT) {
+    constructor(title: string, placeholder: string, value: EnumerationFieldValue, behaviour: Behavior, private _label: string, private _choices: Array<EnumerationFieldValue>, private _view = EnumerationFieldView.DEFAULT) {
         super(title, placeholder, value, behaviour);
     }
 
