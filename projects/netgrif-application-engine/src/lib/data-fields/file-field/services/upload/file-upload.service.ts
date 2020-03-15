@@ -1,9 +1,9 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {FileUploadModel} from './file-field';
+import {FileUploadModel} from './../models/file-field';
 import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
 import {catchError, last, map, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../snack-bar/snack-bar.service';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/snack-bar.service';
 
 @Injectable()
 export class FileUploadService {

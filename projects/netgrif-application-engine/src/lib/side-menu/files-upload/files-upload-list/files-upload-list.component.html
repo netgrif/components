@@ -1,6 +1,6 @@
 <div fxLayout="column" class="container">
 
-    <ul style="overflow-y: auto;">
+    <ul class="overflow-y">
         <div *ngFor="let file of allFiles" [@fadeInOut]="file.state">
             <nae-files-upload-item [file]="file"></nae-files-upload-item>
         </div>

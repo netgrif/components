@@ -1,4 +1,8 @@
-<mat-selection-list [(ngModel)]="selected" [formControl]="validate">
+<mat-selection-list color="primary"
+                    [(ngModel)]="selected"
+                    [formControl]="validate"
+                    [disabled]="multichoiceField.disabled"
+                    [required]="multichoiceField.behaviour.required">
     <mat-label *ngIf="!showLargeLayout.value">{{multichoiceField.title}}<br></mat-label>
     <mat-list-option *ngFor="let option of multichoiceField.choices" [value]="option.key">
         {{option.value}}

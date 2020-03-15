@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MultichoiceField} from '../multichoice-field';
+import {MultichoiceField} from '../models/multichoice-field';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
 

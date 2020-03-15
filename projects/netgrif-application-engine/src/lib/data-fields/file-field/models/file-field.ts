@@ -1,5 +1,6 @@
-import {DataField} from '../abstract-data-field';
+import {DataField} from '../../models/abstract-data-field';
 import {Subscription} from 'rxjs';
+import {Behaviour} from '../../models/behaviour';
 
 export enum FileUploadMIMEtype {
     IMAGE = 'image/*',
@@ -33,7 +34,7 @@ export class FileField extends DataField<File> {
 
     public filesSize = 0;
 
-    constructor(stringId: string, title: string, behavior: any, value?: File, placeholder?: string, description?: string,
+    constructor(stringId: string, title: string, behavior: Behavior, value?: File, placeholder?: string, description?: string,
                 private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1, private _zipped: boolean = true,
                 private _allowTypes?: FileUploadMIMEtype | string | Array<FileUploadMIMEtype>) {
         super(stringId, title, behavior, placeholder, description, value);
@@ -53,9 +54,6 @@ export class FileField extends DataField<File> {
     }
 
     get allowTypes(): string {
-        if (this._allowTypes !== undefined) {
-            return this._allowTypes.toString();
-        }
-        return '';
+        return this._allowTypes instanceof Array ? this._allowTypes.toString() : this._allowTypes;
     }
 }

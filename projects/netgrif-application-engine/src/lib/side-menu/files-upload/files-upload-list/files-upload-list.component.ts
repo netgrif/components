@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FileUploadModel} from '../../../data-fields/file-field/file-field';
+import {FileUploadModel} from '../../../data-fields/file-field/models/file-field';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({

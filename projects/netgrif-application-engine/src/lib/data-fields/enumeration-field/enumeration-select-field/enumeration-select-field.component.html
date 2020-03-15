@@ -1,6 +1,10 @@
-<mat-form-field [appearance]="enumerationField.materialAppearance" class="full-width">
+<mat-form-field [appearance]="enumerationField.materialAppearance" class="full-width" color="primary">
     <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}</mat-label>
-    <mat-select [(value)]="selected" [formControl]="validate" [placeholder]="enumerationField.placeholder">
+    <mat-select [(value)]="selected"
+                [formControl]="validate"
+                [placeholder]="enumerationField.placeholder"
+                [required]="enumerationField.behaviour.required"
+                [disabled]="enumerationField.disabled">
         <mat-option *ngFor="let option of enumerationField.choices" [value]="option.key">
             {{option.value}}
         </mat-option>

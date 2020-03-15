@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EnumerationField} from '../enumeration-field';
+import {EnumerationField} from '../models/enumeration-field';
 import {FormControl, Validators} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
 

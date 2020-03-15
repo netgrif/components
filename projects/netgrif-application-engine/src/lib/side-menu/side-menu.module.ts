@@ -10,8 +10,8 @@ import {FilesUploadComponent} from './files-upload/files-upload.component';
 import {FilesUploadListComponent} from './files-upload/files-upload-list/files-upload-list.component';
 import {FilesUploadItemComponent} from './files-upload/files-upload-list/files-upload-item/files-upload-item.component';
 import {MaterialModule} from '../material/material.module';
-import {CovalentCommonModule} from '@covalent/core';
 import { NewCaseComponent } from './new-case/new-case.component';
+import {CovalentModule} from '../covalent/covalent.module';
 
 @NgModule({
     declarations: [
@@ -29,9 +29,9 @@ import { NewCaseComponent } from './new-case/new-case.component';
         RouterModule,
         FlexLayoutModule,
         MaterialModule,
-        CovalentCommonModule
+        CovalentModule
     ],
-    entryComponents: [FilesUploadComponent],
+    entryComponents: [FilesUploadComponent, UserAssignComponent],
     exports: [
         SideMenuContainerComponent,
         NewCaseComponent,

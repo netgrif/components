@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NumberField} from './number-field';
+import {NumberField} from './models/number-field';
 
 @Component({
   selector: 'nae-number-field',

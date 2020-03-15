@@ -1,6 +1,8 @@
+import {Behaviour} from './behaviour';
+
 export abstract class DataField<T> {
 
-    protected constructor(private _stringId: string, private _title: string, private _behavior,
+    protected constructor(private _stringId: string, private _title: string, private _behavior: Behaviour,
                           private _placeholder?: string, private _description?: string, private _value?: T) {}
 
     get stringId(): string {
@@ -19,7 +21,7 @@ export abstract class DataField<T> {
         return this._description;
     }
 
-    get behavior(): string {
+    get behavior(): Behaviour {
         return this._behavior;
     }
 
@@ -29,5 +31,9 @@ export abstract class DataField<T> {
 
     set value(value: T) {
         this._value = value;
+    }
+
+    get disabled(): boolean {
+        return this._behaviour.visible && !this._behaviour.editable;
     }
 }

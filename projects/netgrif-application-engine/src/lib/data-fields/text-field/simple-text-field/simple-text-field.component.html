@@ -1,6 +1,10 @@
-<mat-form-field [appearance]="textField.materialAppearance" class="full-width">
+<mat-form-field [appearance]="textField.materialAppearance" class="full-width" color="primary">
     <mat-label *ngIf="!showLargeLayout.value">{{textField.title}}</mat-label>
-    <input matInput [placeholder]="textField.placeholder" [value]="textField.value">
+    <input matInput
+           [placeholder]="textField.placeholder"
+           [disabled]="textField.disabled"
+           [required]="textField.behaviour.required"
+           [value]="textField.value">
     <mat-hint>{{textField.description}}</mat-hint>
     <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
 </mat-form-field>

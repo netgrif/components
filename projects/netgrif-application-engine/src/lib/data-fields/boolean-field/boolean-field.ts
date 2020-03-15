@@ -1,3 +1,4 @@
+
 import {DataField} from '../abstract-data-field';
 
 export class BooleanField extends DataField<boolean> {

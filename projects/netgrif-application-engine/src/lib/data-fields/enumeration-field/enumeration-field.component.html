@@ -1,4 +1,9 @@
-<nae-data-field-template [title]="enumerationField.title" [description]="enumerationField.description" [dataFieldTemplate]="enumFieldTemplate">
+<nae-data-field-template
+    [required]="enumerationField.behavior.required"
+    [disabled]="enumerationField.disabled"
+    [title]="enumerationField.title"
+    [description]="enumerationField.description"
+    [dataFieldTemplate]="enumFieldTemplate">
 </nae-data-field-template>
 
 <ng-template #enumFieldTemplate let-showLargeLayout="showLargeLayout">

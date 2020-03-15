@@ -4,9 +4,9 @@
         <mat-icon *ngIf="file.successfullyUploaded">done</mat-icon>
         <span (click)="onFileDownload(file)" class="file-name"
               [ngClass]="{
-                          'file-name-download': file.successfullyUploaded,
-                          'file-name-upload': !file.successfullyUploaded
-                          }">{{shortFileName(file)}}</span>
+                              'file-name-download': file.successfullyUploaded,
+                              'file-name-upload': !file.successfullyUploaded
+              }">{{shortFileName(file)}}</span>
         <span class="file-size">{{file.data.file.size | decimalBytes }}</span>
         <mat-progress-bar color="primary" [value]="file.progress" class="progress-bar-size"></mat-progress-bar>
         <mat-icon (click)="retryFile(file)" *ngIf="file.canRetry" class="retry-upload-file-icon">restore_page</mat-icon>

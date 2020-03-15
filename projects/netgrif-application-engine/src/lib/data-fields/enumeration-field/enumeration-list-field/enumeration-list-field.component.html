@@ -1,5 +1,9 @@
-<mat-radio-group class="full-width example-radio-group"
+<mat-radio-group
+    color="primary"
+    class="full-width example-radio-group"
     aria-labelledby="example-radio-group-label"
+    [required]="enumerationField.behavior.required"
+    [disabled]="enumerationField.disabled"
     [(ngModel)]="selected">
     <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}<br></mat-label>
     <mat-radio-button class="example-radio-button" *ngFor="let option of enumerationField.choices" [value]="option.key">

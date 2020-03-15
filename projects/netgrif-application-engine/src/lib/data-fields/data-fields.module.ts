@@ -48,6 +48,7 @@ import {ButtonFieldComponent} from './button-field/button-field.component';
         DateTimeFieldComponent,
         ButtonFieldComponent,
         DataFieldTemplateComponent,
+        RequiredLabelComponent,
     ],
     exports: [
         TextFieldComponent,
@@ -65,9 +66,11 @@ import {ButtonFieldComponent} from './button-field/button-field.component';
         CommonModule,
         FlexLayoutModule,
         MaterialModule,
+        CovalentModule,
         AngularResizedEventModule,
         HttpClientModule,
         SideMenuModule,
+        NgxMaterialTimepickerModule
     ],
     providers: [
         FileUploadService,

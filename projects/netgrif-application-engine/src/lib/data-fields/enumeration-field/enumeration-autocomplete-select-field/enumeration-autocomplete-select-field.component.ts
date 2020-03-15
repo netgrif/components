@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {EnumerationField} from '../enumeration-field';
+import {EnumerationField} from '../models/enumeration-field';
 import {WrappedBoolean} from '../../data-field-template/wrapped-boolean';
 
 @Component({

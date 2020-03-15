@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserField} from './user-field';
-import {SideMenuService} from '../../side-menu/side-menu.service';
+import {UserField} from './models/user-field';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {UserAssignComponent} from '../../side-menu/user-assign/user-assign.component';
-import {UserFieldService} from './user-field.service';
+import {UserFieldService} from './services/user-field.service';
 
 @Component({
     selector: 'nae-user-field',
