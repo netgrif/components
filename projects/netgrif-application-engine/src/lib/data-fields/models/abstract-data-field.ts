@@ -23,4 +23,8 @@ export abstract class DataField<T> {
     get behaviour(): Behaviour {
         return this._behaviour;
     }
+
+    get disabled(): boolean {
+        return this._behaviour.visible && !this._behaviour.editable;
+    }
 }

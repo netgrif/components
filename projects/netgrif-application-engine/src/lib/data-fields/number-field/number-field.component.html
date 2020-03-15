@@ -6,7 +6,7 @@
         <mat-label>{{numberField.label}}</mat-label>
         <input matInput
                type="number"
-               [disabled]="numberField.behaviour.visible && !numberField.behaviour.editable"
+               [disabled]="numberField.disabled"
                [(ngModel)]="numberField.value"
                [placeholder]="numberField.placeholder"
                [required]="numberField.behaviour.required">

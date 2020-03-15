@@ -4,7 +4,7 @@
 
     <input [ngxTimepicker]="timepicker"
            [required]="dateTimeField.behaviour.required"
-           [disabled]="dateTimeField.behaviour.visible && !dateTimeField.behaviour.editable">
+           [disabled]="dateTimeField.disabled">
     <ngx-material-timepicker #timepicker [format]="24"></ngx-material-timepicker>
 
 </ng-template>

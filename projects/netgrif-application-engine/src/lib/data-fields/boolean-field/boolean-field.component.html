@@ -3,7 +3,7 @@
 <ng-template #dataField let-showLargeLayout="showLargeLayout">
 
     <mat-slide-toggle color="primary"
-                      [disabled]="booleanField.behaviour.visible && !booleanField.behaviour.editable"
+                      [disabled]="booleanField.disabled"
                       [checked]="booleanField.value">
         <nae-required-label *ngIf="booleanField.behaviour.required" [isIn]="true"></nae-required-label>
         {{booleanField.placeholder}}

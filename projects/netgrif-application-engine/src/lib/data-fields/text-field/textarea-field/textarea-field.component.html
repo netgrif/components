@@ -1,7 +1,7 @@
 <mat-form-field appearance="outline" color="primary">
     <mat-label>{{textAreaField.label}}</mat-label>
     <textarea matInput
-              [disabled]="textAreaField.behaviour.visible && !textAreaField.behaviour.editable"
+              [disabled]="textAreaField.disabled"
               [placeholder]="textAreaField.placeholder"
               [required]="textAreaField.behaviour.required"
               [value]="textAreaField.value">

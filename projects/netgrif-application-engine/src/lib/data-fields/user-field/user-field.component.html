@@ -4,18 +4,18 @@
 
     <div>
         <button *ngIf="userField.value !== undefined"
-                [disabled]="userField.behaviour.visible && !userField.behaviour.editable"
+                [disabled]="userField.disabled"
                 mat-button color="primary" (click)="selectUser()">
             <mat-icon>how_to_reg</mat-icon>
             {{userField.value.fullName}}
         </button>
         <button *ngIf="userField.value === undefined"
-                [disabled]="userField.behaviour.visible && !userField.behaviour.editable"
+                [disabled]="userField.disabled"
                 mat-button color="primary" (click)="selectUser()">
             <mat-icon>person_add</mat-icon>
             Select user
         </button>
-        <nae-required-label *ngIf="userField.behaviour.required" [isIn]="!(userField.behaviour.visible && !userField.behaviour.editable)"></nae-required-label>
+        <nae-required-label *ngIf="userField.behaviour.required" [isIn]="!userField.disabled"></nae-required-label>
     </div>
 
 </ng-template>

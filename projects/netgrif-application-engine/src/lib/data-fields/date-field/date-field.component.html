@@ -13,7 +13,7 @@
                    (keydown.enter)="datepicker.close()"
                    [placeholder]="dateField.placeholder"
                    [required]="dateField.behaviour.required"
-                   [disabled]="dateField.behaviour.visible && !dateField.behaviour.editable">
+                   [disabled]="dateField.disabled">
             <mat-datepicker #datepicker>
             </mat-datepicker>
         </div>

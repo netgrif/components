@@ -3,7 +3,7 @@
     <mat-select [(value)]="selected"
                 [formControl]="validate"
                 [required]="enumerationField.behaviour.required"
-                [disabled]="enumerationField.behaviour.visible && !enumerationField.behaviour.editable">
+                [disabled]="enumerationField.disabled">
         <mat-option *ngFor="let option of enumerationField.choices" [value]="option.key">
             {{option.value}}
         </mat-option>

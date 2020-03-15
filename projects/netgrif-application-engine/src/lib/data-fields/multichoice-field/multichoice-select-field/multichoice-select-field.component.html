@@ -3,7 +3,7 @@
     <mat-select multiple
                 [(ngModel)]="selected"
                 [formControl]="validate"
-                [disabled]="multichoiceField.behaviour.visible && !multichoiceField.behaviour.editable"
+                [disabled]="multichoiceField.disabled"
                 [required]="multichoiceField.behaviour.required">
         <mat-option *ngFor="let option of multichoiceField.choices"
                     [value]="option">

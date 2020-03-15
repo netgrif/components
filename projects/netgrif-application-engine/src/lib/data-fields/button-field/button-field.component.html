@@ -4,9 +4,9 @@
 
 <!--    <div>-->
         <button mat-raised-button color="primary"
-                [disabled]="buttonField.behaviour.visible && !buttonField.behaviour.editable">
+                [disabled]="buttonField.disabled">
             {{buttonField.placeholder}}
         </button>
-        <nae-required-label *ngIf="buttonField.behaviour.required" [isIn]="!(buttonField.behaviour.visible && !buttonField.behaviour.editable)"></nae-required-label>
+        <nae-required-label *ngIf="buttonField.behaviour.required" [isIn]="!buttonField.disabled"></nae-required-label>
 <!--    </div>-->
 </ng-template>
