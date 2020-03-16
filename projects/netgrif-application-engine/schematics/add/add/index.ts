@@ -7,7 +7,7 @@ import {
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
 export function ngAdd(): Rule {
-    return (tree: Tree, _context: SchematicContext) => {
+    return (_: Tree, _context: SchematicContext) => {
         _context.addTask(new NodePackageInstallTask());
 
         // TODO help user set up nae.json if it doesn't exist
