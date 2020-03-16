@@ -44,6 +44,7 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
+        browserNoActivityTimeout: 180000,
         browsers: ["FirefoxHeadless"],
         singleRun: true,
         restartOnFileChange: true,
