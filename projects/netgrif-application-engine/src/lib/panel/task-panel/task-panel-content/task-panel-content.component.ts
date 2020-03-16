@@ -51,27 +51,41 @@ export class TaskPanelContentComponent implements OnInit {
     fillBlankSpace(resource: any[], columnCount: number): Array<GridLayoutElement> {
         const grid: Array<Array<GridFiller>> = [];
 
-        resource.forEach(item => {
-            const itemRowEnd = item.layout.y + item.layout.rows - 1;
-            const itemColEnd = item.layout.x + item.layout.cols - 1;
+        resource.forEach(dataField => {
+            const itemRowEnd = dataField.layout.y + dataField.layout.rows - 1;
+            const itemColEnd = dataField.layout.x + dataField.layout.cols - 1;
             if (itemRowEnd >= grid.length) {
                 this.addGridRows(grid, itemRowEnd + 1, columnCount);
             }
-            for (let row = item.layout.y; row <= itemRowEnd; row++) {
-                const newFillers = [];
-                for (const filler of grid[row]) {
-                    newFillers.push(...filler.fillersAfterCover(item.layout.x, itemColEnd));
+            for (let row = dataField.layout.y; row <= itemRowEnd; row++) {
+                if (dataField.behavior.hidden) {
+                    for (const filler of grid[row]) {
+                        filler.isIntentional = false;
+                    }
+                } else {
+                    const newFillers = [];
+                    for (const filler of grid[row]) {
+                        newFillers.push(...filler.fillersAfterCover(dataField.layout.x, itemColEnd));
+                    }
+                    grid[row] = newFillers;
                 }
-                grid[row] = newFillers;
             }
         });
 
-        const returnResource = resource.map(item => ({item: this.toClass(item), type: item.type, layout: item.layout}));
-        grid.forEach( (row, y) => {
+        const returnResource = resource.filter( item => !item.behavior.hidden)
+            .map(item => ({item: this.toClass(item), type: item.type, layout: item.layout}));
+        let encounterFirst = false;
+        for (let y = grid.length - 1; y > 0 ; y--) {
+            const row = grid[y];
             row.forEach( filler => {
-               returnResource.push(filler.convertToGridLayoutElement(y));
+                if (!encounterFirst && !filler.isFullWidth(columnCount)) {
+                    encounterFirst = true;
+                }
+                if (encounterFirst && ( filler.isIntentional || !filler.isFullWidth(columnCount))) {
+                    returnResource.push(filler.convertToGridLayoutElement(y));
+                }
             });
-        });
+        }
 
         return returnResource.sort((a, b) => {
             if (a.layout.y < b.layout.y) {
@@ -112,7 +126,7 @@ export class TaskPanelContentComponent implements OnInit {
                     item.description, item.validationJS, 'standard', type);
             case 'number':
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
-                    item.validationJS, item.placeholder, item.description);
+                    item.validationJS, item.placeholder, item.description, 'outline');
             case 'enumeration':
                 let typeEnum = EnumerationFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {

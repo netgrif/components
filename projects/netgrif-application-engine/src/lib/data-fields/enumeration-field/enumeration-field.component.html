@@ -1,4 +1,4 @@
-<nae-data-field-template
+<nae-data-field-template *ngIf="!enumerationField.behavior.hidden"
     [title]="enumerationField.title"
     [description]="enumerationField.description"
     [dataFieldTemplate]="enumFieldTemplate">

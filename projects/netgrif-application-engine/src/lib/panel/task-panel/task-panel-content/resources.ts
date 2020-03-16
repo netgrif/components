@@ -8,7 +8,7 @@ export class Resources {
             type: 'text',
             name: 'Text',
             behavior: {
-                editable: true
+                visible: true
             },
             layout: {
                 x: 0,
@@ -27,7 +27,8 @@ export class Resources {
             description: 'Text field description',
             placeholder: 'Text field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -54,7 +55,8 @@ export class Resources {
             description: 'Number field description',
             placeholder: 'Number field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -77,7 +79,7 @@ export class Resources {
             description: 'Enumeration field description',
             placeholder: 'Enumeration field placeholder',
             behavior: {
-                editable: true
+                hidden: true
             },
             layout: {
                 x: 0,
@@ -101,7 +103,8 @@ export class Resources {
             description: 'Enumeration field description',
             placeholder: 'Enumeration field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -128,7 +131,8 @@ export class Resources {
             description: 'Enumeration field description',
             placeholder: 'Enumeration field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -155,7 +159,8 @@ export class Resources {
             description: 'Multichoice field description',
             placeholder: 'Multichoice field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -185,7 +190,8 @@ export class Resources {
             description: 'Multichoice field description',
             placeholder: 'Multichoice field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -225,7 +231,8 @@ export class Resources {
             description: 'Boolean field description',
             placeholder: 'Boolean field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 1,
@@ -244,7 +251,8 @@ export class Resources {
             description: 'Date field description',
             placeholder: 'Date field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 2,
@@ -265,7 +273,8 @@ export class Resources {
             description: 'File field description',
             placeholder: 'File field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 1,
@@ -282,7 +291,8 @@ export class Resources {
             description: 'User field description',
             placeholder: 'User field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -300,7 +310,8 @@ export class Resources {
             description: 'DateTime field description',
             placeholder: 'DateTime field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -317,7 +328,8 @@ export class Resources {
             description: 'Button field description',
             placeholder: 'Button field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 1,
@@ -337,7 +349,8 @@ export class Resources {
             description: 'Text field description',
             placeholder: 'Text field placeholder',
             behavior: {
-                editable: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 3,

@@ -1,12 +1,12 @@
+import {Behavior} from '../../../data-fields/models/behavior';
+
 export interface DataFieldResource {
     stringId: string;
     type: string;
     name: string;
     description?: string;
     placeholder?: string;
-    behavior: {
-        editable: boolean
-    };
+    behavior: Behavior;
     layout: {
         x: number,
         y: number,
