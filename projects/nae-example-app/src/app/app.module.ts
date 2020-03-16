@@ -69,7 +69,7 @@ import { ContentComponent } from './doc/tab-view-example/content/content.compone
         QuestionDialogWithAnswerComponent,
         ContentComponent
     ],
-    providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
+    providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}, {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}, {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
     bootstrap: [AppComponent]
 })
 export class AppModule {

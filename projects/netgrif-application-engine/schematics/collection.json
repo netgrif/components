@@ -52,8 +52,13 @@
         },
         "initialize-resource": {
             "description": "Generate Resource from nae.json.",
-            "factory": "./initialize-resources/index#initializeResources",
-            "schema": "./initialize-resources/schema.json"
+            "factory": "./resources/initialize-resources/index#initializeResources",
+            "schema": "./resources/initialize-resources/schema.json"
+        },
+        "market-resource": {
+            "description": "Resource market",
+            "factory": "./resources/market-resource/index#initializeMarketResources",
+            "schema": "./resources/market-resource/schema.json"
         }
     }
 }

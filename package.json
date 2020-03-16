@@ -16,7 +16,8 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "sonar": "sonar-scanner"
+        "sonar": "sonar-scanner",
+        "scriptTest": "ng generate @netgrif/application-engine:create-nae-files"
     },
     "private": true,
     "dependencies": {
