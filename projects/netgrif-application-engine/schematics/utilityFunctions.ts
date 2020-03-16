@@ -117,14 +117,12 @@ export function getFileData(tree: Tree, projectRootPath: string, relativeFilePat
     };
 }
 
-export function createFilesFromTemplates(pathToTemplates: string, pathToMoveGeneratedFiles: string, options: object): Rule {
+export function createFilesFromTemplates(pathToTemplates: string, pathToMoveGeneratedFiles: string, options: object = {}): Rule {
     const templateSource = apply(url(pathToTemplates), [
         applyTemplates(options),
         move(normalize(pathToMoveGeneratedFiles)),
     ]);
-    return chain([
-        mergeWith(templateSource)
-    ]);
+    return mergeWith(templateSource);
 }
 
 /**
@@ -190,3 +188,4 @@ export function createRelativePath(sourcePath: string, destinationPath: string):
 
     return pathFragments.join('/');
 }
+

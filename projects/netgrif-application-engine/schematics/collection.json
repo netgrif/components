@@ -1,6 +1,20 @@
 {
     "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
+        "ng-add": {
+            "description": "Adds NAE library to the project and creates all the necessary files.",
+            "factory": "./add/add/index#ngAdd"
+        },
+        "create-nae-files": {
+            "description": "Creates all the necessary files for a NAE project",
+            "factory": "./add/create-nae-files/index#createNaeFiles",
+            "schema": "./add/create-nae-files/schema.json"
+        },
+        "custom-templates": {
+            "description": "Generate a project custom themes from nae.json.",
+            "factory": "./add/custom-templates/index#customTemplates",
+            "schema": "./add/custom-templates/schema.json"
+        },
         "before-build": {
             "description": "Is run before each build to fill all the project classes with the most recent state of various configurations.",
             "factory": "./before-build/index#beforeBuild",
@@ -15,11 +29,6 @@
             "description": "Generate a project specific configuration service that contains the information from nae.json.",
             "factory": "./configuration-service/populate-configuration-service/index#populateConfigurationService",
             "schema": "./configuration-service/populate-configuration-service/schema.json"
-        },
-        "custom-templates": {
-            "description": "Generate a project custom project themes from nae.json.",
-            "factory": "./custom-templates/index#customTemplates",
-            "schema": "./custom-templates/schema.json"
         },
         "create-view": {
             "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt for the user to input their settings.",
