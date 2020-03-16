@@ -1,0 +1,7 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "populateRouteModule",
+    "title": "Populate route module with routes from routes.json",
+    "type": "object",
+    "properties": {}
+}

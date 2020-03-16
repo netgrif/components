@@ -4,7 +4,10 @@
     "lib": {
         "entryFile": "src/public-api.ts",
         "umdModuleIds": {
-            "@netgrif/application-engine": "@netgrif/application-engine"
+            "@netgrif/application-engine": "@netgrif/application-engine",
+            "jszip": "JSZip",
+            "angular-resize-event": "angularResizeEvent",
+            "@covalent/core": "@covalent/core"
         }
     }
 }

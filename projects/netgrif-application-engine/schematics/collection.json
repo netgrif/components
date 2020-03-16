@@ -1,30 +1,45 @@
 {
     "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
+        "before-build": {
+            "description": "Is run before each build to fill all the project classes with the most recent state of various configurations.",
+            "factory": "./before-build/index#beforeBuild",
+            "schema": "./before-build/schema.json"
+        },
         "initialize-configuration-service": {
             "description": "Generate a project specific configuration service and add the correct provider entry to app.module",
             "factory": "./configuration-service/initialize-configuration-service/index#initializeConfigurationService",
             "schema": "./configuration-service/initialize-configuration-service/schema.json"
         },
-        "create-configuration-service": {
+        "populate-configuration-service": {
             "description": "Generate a project specific configuration service that contains the information from nae.json.",
-            "factory": "./configuration-service/create-configuration-service/index#createConfigurationService",
-            "schema": "./configuration-service/create-configuration-service/schema.json"
+            "factory": "./configuration-service/populate-configuration-service/index#populateConfigurationService",
+            "schema": "./configuration-service/populate-configuration-service/schema.json"
+        },
+        "custom-templates": {
+            "description": "Generate a project custom project themes from nae.json.",
+            "factory": "./custom-templates/index#customTemplates",
+            "schema": "./custom-templates/schema.json"
         },
         "create-view": {
             "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt for the user to input their settings.",
             "factory": "./view/create-view/index#createView",
             "schema": "./view/create-view/schema.json"
         },
-        "initialize-routing-file": {
-            "description": "Initialize routing json file",
-            "factory": "./view/initialize-routing/index#initializeRoutes",
-            "schema": "./view/initialize-routing/schema.json"
-        },
         "create-view-prompt": {
-            "description": "creates a view based on provided settings. Opens a prompt if no settings are provided.",
+            "description": "Creates a view based on provided settings. Opens a prompt if no settings are provided.",
             "factory": "./view/create-view-prompt/index#createViewPrompt",
             "schema": "./view/create-view-prompt/schema.json"
+        },
+        "add-route": {
+            "description": "Adds a new Route object into an existing routes.json file.",
+            "factory": "./view/add-route/index#addRouteToRoutes",
+            "schema": "./view/add-route/schema.json"
+        },
+        "populate-route-module": {
+            "description": "Updates routes in route module to match with those in routes.json",
+            "factory": "./view/populate-route-module/index#populateRouteModule",
+            "schema": "./view/populate-route-module/schema.json"
         },
         "initialize-resource": {
             "description": "Generate Resource from nae.json.",

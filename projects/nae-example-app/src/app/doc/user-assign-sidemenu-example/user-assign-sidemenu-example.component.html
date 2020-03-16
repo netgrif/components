@@ -1,0 +1,12 @@
+<nae-app-documentation [liveExample]="userAssignSideMenuExample"
+                       [mainTitle]="TITLE"
+                       [mainDescription]="DESCRIPTION"
+                       [apiModuleImport]="'SideMenuModule'"></nae-app-documentation>
+
+<ng-template #userAssignSideMenuExample>
+    <nae-side-menu-container>
+        <div class="padding-30px">
+            <button mat-button (click)="toggleSideMenu()">Open Side Menu</button>
+        </div>
+    </nae-side-menu-container>
+</ng-template>

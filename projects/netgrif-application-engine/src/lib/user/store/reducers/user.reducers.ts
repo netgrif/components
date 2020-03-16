@@ -1,5 +1,5 @@
 import {Action, createReducer, on} from '@ngrx/store';
-import {loginFailure, loginSuccess, loginUser, logoutUser,} from '../actions/user.actions';
+import {loginFailure, loginSuccess, loginUser, logoutUser} from '../actions/user.actions';
 import {User} from '../../models/user';
 
 export const USER_FEATURE_KEY = 'nae-user';

@@ -1,0 +1,21 @@
+<div class="fill-all-space" (resized)="evaluateTemplateCondition($event)">
+
+    <!-- Large layout -->
+    <ng-template [ngIf]="showLargeLayout.value" [ngIfElse]="elseTemplate">
+        <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space">
+            <div fxFlex="50" class="cell-padding">
+                <span fxFlex class="data-field-title" [matTooltip]="description">{{title}}</span>
+            </div>
+            <div fxFlex="50" class="cell-padding">
+                <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- Small layout -->
+    <ng-template #elseTemplate>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100" class="cell-padding fill-all-space">
+            <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+        </div>
+    </ng-template>
+</div>

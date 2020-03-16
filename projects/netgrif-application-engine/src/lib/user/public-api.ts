@@ -1,9 +1,8 @@
 /* MODULES */
 
+// MODELS
+export * from './models/public-api';
 
-/* MODELS */
-export * from './models/user';
-export * from './models/role';
-
-/* SERVICES */
+// SERVICES
 export * from './services/user.service';
+export * from './services/user-preference.service';

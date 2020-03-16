@@ -1,0 +1,24 @@
+.user-assign-container {
+    padding: 15px;
+    position: relative;
+}
+
+.user-assign-search {
+    width: 100%;
+}
+
+.user-assign-search-container {
+    display: flex;
+}
+
+.assign-button {
+    position: absolute;
+    right: 15px;
+    bottom: -35px;
+}
+
+.search-icon {
+    top: 18px;
+    position: relative;
+    margin-right: 10px;
+}

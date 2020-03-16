@@ -12,13 +12,13 @@ import {
     MatDatepickerModule,
     MatDialogModule,
     MatDividerModule,
-    MatExpansionModule,
+    MatExpansionModule, MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatNativeDateModule,
+    MatNativeDateModule, MatOptionModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
@@ -44,6 +44,7 @@ import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import {PortalModule} from '@angular/cdk/portal';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 
@@ -96,7 +97,14 @@ import {FlexLayoutModule} from '@angular/flex-layout';
         MatTooltipModule,
         MatTreeModule,
         PortalModule,
-        ScrollingModule
+        ScrollingModule,
+        MatOptionModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        MatListModule,
+        ReactiveFormsModule,
+        MatRadioModule
     ]
 })
 export class MaterialModule {

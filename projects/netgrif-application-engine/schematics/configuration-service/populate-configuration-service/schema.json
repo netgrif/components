@@ -1,0 +1,7 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsPopulateConfigurationService",
+    "title": "Populate Configuration Service Schema",
+    "type": "object",
+    "properties": {}
+}
