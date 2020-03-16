@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+        NEXUS_CRED = credentials('1986c778-eba7-44d7-b6f6-71e73906d894')
+  }
   tools {
     nodejs 'localNodeJS'
   }
@@ -46,11 +49,19 @@ pipeline {
       }
     }
 
-    stage('ZIP') {
-      steps {
-        zip(archive: true, zipFile: 'nae-build.zip', dir: './dist/netgrif-application-engine')
-      }
-    }
+    stage('Publish') {
+          steps {
+            sh 'mv .npmrc .npmrc_renamed'
+            sh 'echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc'
+            sh 'echo "email=jenkins@netgrif.com" >> .npmrc'
+            sh 'echo -n "_auth=" >> .npmrc'
+            sh 'echo -n $NEXUS_CRED | openssl base64 >> .npmrc'
+            sh 'cat .npmrc'
+            sh 'npm publish dist/netgrif-application-engine'
+            sh 'rm .npmrc'
+            sh 'mv .npmrc_renamed .npmrc'
+          }
+     }
 
   }
 

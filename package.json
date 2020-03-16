@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine-project",
-    "version": "4.0.0-alpha.1",
+    "version": "4.0.0-alpha.2",
     "scripts": {
         "ng": "ng",
         "nae:build": "ng build netgrif-application-engine --prod",
