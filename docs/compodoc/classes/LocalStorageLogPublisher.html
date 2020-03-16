@@ -554,9 +554,9 @@ export class LocalStorageLogPublisher extends LogPublisher {
             console.debug(&#x27;Log entry from &#x27; + deleted.date.toISOString() + &#x27; was deleted from the LocalStorage \&#x27;&#x27; + this.location + &#x27;\&#x27;&#x27;);
             try {
                 localStorage.setItem(this.location, JSON.stringify(log));
-            } catch (e) {
-                console.error(e);
-                throw new Error(e.message);
+            } catch (ex) {
+                console.error(ex);
+                throw new Error(ex.message);
             }
         }
     }

@@ -1,0 +1,16 @@
+<mat-sidenav-container class="drawer-container">
+    <mat-sidenav #sidenav [mode]="config.mode" [(opened)]="opened" position="start"
+                 [disableClose]="config.disableClose"
+                 class="drawer-content mat-elevation-z16">
+        <div fxLayout="column" fxLayoutAlign="start start" fxFlex>
+            <span>User</span>
+            <span>Settings</span>
+            <span>Navigation</span>
+            <span>Side-footer</span>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div *ngTemplateOutlet="mainContent"></div>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

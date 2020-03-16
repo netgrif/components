@@ -230,7 +230,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as ts from &#x27;@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript&#x27;;
 
-import {SchematicsException, Tree, } from &#x27;@angular-devkit/schematics&#x27;;
+import {SchematicsException, Tree} from &#x27;@angular-devkit/schematics&#x27;;
 import {FileEntry, UpdateRecorder} from &#x27;@angular-devkit/schematics/src/tree/interface&#x27;;
 import {experimental, strings} from &#x27;@angular-devkit/core&#x27;;
 import {NetgrifApplicationEngine} from &#x27;../src/lib/configuration/interfaces/schema&#x27;;
@@ -264,7 +264,7 @@ export function getProjectInfo(tree: Tree): ProjectInfo {
         projectNameDasherized: &#x27;&#x27;
     };
 
-    result.projectName &#x3D; workspace.defaultProject as string;
+    result.projectName &#x3D; workspace.defaultProject;
     result.projectNameClassified &#x3D; strings.classify(result.projectName);
     result.projectNameDasherized &#x3D; strings.dasherize(result.projectName);
 

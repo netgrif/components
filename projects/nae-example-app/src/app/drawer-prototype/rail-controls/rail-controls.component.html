@@ -1,0 +1,9 @@
+<nae-app-navigation-rail #rail [mainContent]="mainContent" (expandChange)="onRailChange($event)" [expandOnHover]="hover">
+
+<ng-template #mainContent >
+    <div fxLayout="column" fxLayoutAlign="start start" style="padding: 16px; height: 300px;">
+        <button mat-stroked-button color="primary" (click)="rail.toggle()">Toggle sidenav</button>
+        <mat-slide-toggle color="accent"
+                          (change)="hover = $event.checked">{{hover ? 'on Hover' : 'on Click'}}</mat-slide-toggle>
+    </div>
+</ng-template>

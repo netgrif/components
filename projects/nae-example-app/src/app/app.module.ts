@@ -10,12 +10,20 @@ import {DocumentationComponent} from './doc/documentation/documentation.componen
 
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
+import {NavigationDrawerComponent} from './drawer-prototype/navigation-drawer/navigation-drawer.component';
+import {DrawerControlsComponent} from './drawer-prototype/drawer-controls/drawer-controls.component';
+import { NavigationRailComponent } from './drawer-prototype/navigation-rail/navigation-rail.component';
+import { RailControlsComponent } from './drawer-prototype/rail-controls/rail-controls.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         DocumentationComponent,
-        AuthenticationComponent
+        AuthenticationComponent,
+        NavigationDrawerComponent,
+        DrawerControlsComponent,
+        NavigationRailComponent,
+        RailControlsComponent
     ],
     imports: [
         BrowserModule,

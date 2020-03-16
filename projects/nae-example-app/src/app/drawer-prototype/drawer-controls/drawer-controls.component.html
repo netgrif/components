@@ -1,0 +1,10 @@
+<nae-app-navigation-drawer #sidenav [fixed]="fixed" [mainContent]="mainContent"
+                           (openedChange)="openStatusChanged($event)"></nae-app-navigation-drawer>
+
+<ng-template #mainContent >
+    <div fxLayout="column" fxLayoutAlign="start start" style="padding: 16px; height: 300px;">
+        <button mat-stroked-button color="primary" (click)="sidenav.toggle()">Toggle sidenav</button>
+        <mat-slide-toggle color="accent"
+                          (change)="fixed = $event.checked">{{fixed ? 'Fixed' : 'Moving'}}</mat-slide-toggle>
+    </div>
+</ng-template>

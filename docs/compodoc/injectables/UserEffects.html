@@ -74,7 +74,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/netgrif-application-engine/src/lib/user/store/effects/user.effects.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">projects/netgrif-application-engine/src/lib/user/store/effects/user.effects.ts:6</a></div>
                             </td>
                         </tr>
 
@@ -131,12 +131,8 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
-import {Actions, createEffect, ofType} from &#x27;@ngrx/effects&#x27;;
-import {of} from &#x27;rxjs&#x27;;
-import {catchError, map, mergeMap, tap} from &#x27;rxjs/operators&#x27;;
+import {Actions} from &#x27;@ngrx/effects&#x27;;
 import {UserService} from &#x27;../../services/user.service&#x27;;
-import {logoutUser, loginUser, loginFailure} from &#x27;../actions/user.actions&#x27;;
-import Credentials from &#x27;../../../authentication/models/credentials&#x27;;
 
 @Injectable()
 export class UserEffects {
