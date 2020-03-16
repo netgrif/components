@@ -45,6 +45,7 @@ module.exports = function(config) {
         logLevel: config.LOG_INFO,
         autoWatch: true,
         browserNoActivityTimeout: 180000,
+        captureTimeout: 180000,
         browsers: ["FirefoxHeadless"],
         singleRun: true,
         restartOnFileChange: true,
