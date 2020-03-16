@@ -76,8 +76,11 @@ function returnArrayNodesFromSourceFile(moduleSource: ts.SourceFile): ts.Node {
 function findIndexOfRoutesArrayInNodes(nodes: ts.Node[]): number {
     let index = 0;
     for (const node of nodes) {
-        if (node.parent.getFirstToken() !== undefined && node.parent.getFirstToken().getFullText().trim() === 'routes') {
-            return index;
+        const token = node.parent.getFirstToken();
+        if (token !== undefined) {
+            if ((token as ts.Node).getFullText().trim() === 'routes') {
+                return index;
+            }
         }
         index++;
     }

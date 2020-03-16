@@ -11,7 +11,7 @@ import {
     mergeWith
 } from '@angular-devkit/schematics';
 import {Schema} from './schema';
-import {getProjectInfo} from '../utilityFunctions';
+import {getProjectInfo} from '../../utilityFunctions';
 
 function handleJsonString(json: string, mainJsonobject: boolean, darkTheme: boolean) {
     if (mainJsonobject) {
