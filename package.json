@@ -70,6 +70,7 @@
         "karma-nyan-reporter": "^0.2.5",
         "ng-packagr": "^9.0.3",
         "protractor": "^5.4.3",
+        "puppeteer": "^2.1.1",
         "schematics-utilities": "^2.0.1",
         "sonarqube-scanner": "^2.5.0",
         "ts-node": "~8.3.0",
