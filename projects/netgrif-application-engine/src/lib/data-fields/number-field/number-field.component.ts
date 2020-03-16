@@ -11,6 +11,5 @@ export class NumberFieldComponent implements OnInit {
     @Input() public numberField: NumberField;
 
     ngOnInit() {
-        console.log(this.numberField);
     }
 }

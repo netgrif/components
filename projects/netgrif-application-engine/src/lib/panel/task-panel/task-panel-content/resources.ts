@@ -8,7 +8,8 @@ export class Resources {
             type: 'text',
             name: 'Text',
             behavior: {
-                visible: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -79,7 +80,8 @@ export class Resources {
             description: 'Enumeration field description',
             placeholder: 'Enumeration field placeholder',
             behavior: {
-                hidden: true
+                editable: true,
+                required: true
             },
             layout: {
                 x: 0,
@@ -112,15 +114,13 @@ export class Resources {
                 cols: 4,
                 rows: 1
             },
-            value: 'enumeration2',
+            value: 'enumeration',
             order: 3,
             view : {
                 value : 'list'
             },
             choices: [
                 'enumeration',
-                'enumeration2',
-                'enumeration3'
             ],
             defaultValue: 'enumeration'
         },
@@ -196,7 +196,7 @@ export class Resources {
             layout: {
                 x: 0,
                 y: 7,
-                cols: 1,
+                cols: 4,
                 rows: 1
             },
             value: [
@@ -235,9 +235,9 @@ export class Resources {
                 required: true
             },
             layout: {
-                x: 1,
-                y: 7,
-                cols: 2,
+                x: 0,
+                y: 8,
+                cols: 4,
                 rows: 1
             },
             value: true,
@@ -255,10 +255,10 @@ export class Resources {
                 required: true
             },
             layout: {
-                x: 2,
-                y: 8,
-                cols: 2,
-                rows: 2
+                x: 0,
+                y: 9,
+                cols: 4,
+                rows: 1
             },
             order: 8,
             minDate: '2020-03-09',
@@ -277,9 +277,9 @@ export class Resources {
                 required: true
             },
             layout: {
-                x: 1,
+                x: 2,
                 y: 10,
-                cols: 2,
+                cols: 1,
                 rows: 1
             },
             order: 9
@@ -295,9 +295,9 @@ export class Resources {
                 required: true
             },
             layout: {
-                x: 0,
+                x: 2,
                 y: 11,
-                cols: 4,
+                cols: 1,
                 rows: 1
             },
             order: 10,
@@ -332,10 +332,10 @@ export class Resources {
                 required: true
             },
             layout: {
-                x: 1,
+                x: 2,
                 y: 13,
                 cols: 1,
-                rows: 2
+                rows: 1
             },
             value: 'button',
             order: 0,
@@ -353,9 +353,9 @@ export class Resources {
                 required: true
             },
             layout: {
-                x: 3,
+                x: 0,
                 y: 14,
-                cols: 1,
+                cols: 4,
                 rows: 1
             },
             value: 'text',

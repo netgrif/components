@@ -1,7 +1,6 @@
 <nae-data-field-template *ngIf="!enumerationField.behavior.hidden"
-    [title]="enumerationField.title"
-    [description]="enumerationField.description"
-    [dataFieldTemplate]="enumFieldTemplate">
+                        [dataField]="enumerationField"
+                        [dataFieldTemplate]="enumFieldTemplate">
 </nae-data-field-template>
 
 <ng-template #enumFieldTemplate let-showLargeLayout="showLargeLayout">

@@ -1,16 +1,16 @@
-<nae-data-field-template [title]="fileField.title"
-                         [description]="fileField.description"
-                         [dataFieldTemplate]="dataField"
-                         *ngIf="!fileField.behavior.hidden" ></nae-data-field-template>
+<nae-data-field-template *ngIf="!fileField.behavior.hidden"
+                         [dataField]="fileField"
+                         [dataFieldTemplate]="dataField">
+</nae-data-field-template>
 
 <ng-template #dataField let-showLargeLayout="showLargeLayout">
     <div>
-        <button mat-stroked-button class="margin-bottom-10px" color="primary" (click)="onFileUpload()" [disabled]="fileField.disabled">
+        <mat-label *ngIf="!showLargeLayout.value">{{fileField.title}}<nae-required-label *ngIf="fileField.behavior.required" [isIn]="!fileField.disabled"></nae-required-label><br></mat-label>
+        <button mat-stroked-button class="margin-bottom-10px" color="primary" (click)="onFileUpload()"
+                [disabled]="fileField.disabled">
             <mat-icon>file_upload</mat-icon>
             {{name}}
         </button>
-        <nae-required-label *ngIf="fileField.behavior.required" [isIn]="!fileField.disabled"></nae-required-label>
-
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="multiple"
                accept="{{fileField.allowTypes}}" class="invisible-input"/>
     </div>

@@ -1,7 +1,7 @@
 <nae-data-field-template *ngIf="!textField.behavior.hidden"
-                         [title]="textField.title"
-                         [description]="textField.description"
-                         [dataFieldTemplate]="textFieldTemplate"></nae-data-field-template>
+                         [dataField]="textField"
+                         [dataFieldTemplate]="textFieldTemplate">
+</nae-data-field-template>
 
 <ng-template #textFieldTemplate let-showLargeLayout="showLargeLayout">
     <div [ngSwitch]="textField.view">

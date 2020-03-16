@@ -1,13 +1,15 @@
-<nae-data-field-template *ngIf="!booleanField.behavior.hidden" [title]="booleanField.title"
-                         [description]="booleanField.description" [dataFieldTemplate]="boolean">
+<nae-data-field-template *ngIf="!booleanField.behavior.hidden"
+                         [dataField]="booleanField"
+                         [dataFieldTemplate]="boolean">
 </nae-data-field-template>
 
 <ng-template #boolean let-showLargeLayout="showLargeLayout">
-    <mat-label *ngIf="!showLargeLayout.value">{{booleanField.title}}<br></mat-label>
-    <mat-slide-toggle color="primary"
-                      [disabled]="booleanField.disabled"
-                      [checked]="booleanField.value">
-        <nae-required-label *ngIf="booleanField.behavior.required" [isIn]="true"></nae-required-label>
-        {{booleanField.placeholder}}
-    </mat-slide-toggle>
+    <div>
+        <mat-label *ngIf="!showLargeLayout.value">{{booleanField.title}}<nae-required-label *ngIf="booleanField.behavior.required" [isIn]="true"></nae-required-label> <br></mat-label>
+        <mat-slide-toggle color="primary"
+                          [disabled]="booleanField.disabled"
+                          [checked]="booleanField.value">
+            {{booleanField.placeholder}}
+        </mat-slide-toggle>
+    </div>
 </ng-template>

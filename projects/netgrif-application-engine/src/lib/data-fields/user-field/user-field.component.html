@@ -1,11 +1,11 @@
 <nae-data-field-template *ngIf="!userField.behavior.hidden"
-                         [title]="userField.title"
-                         [dataFieldTemplate]="dataField"
-                         [description]="userField.description"></nae-data-field-template>
+                         [dataField]="userField"
+                         [dataFieldTemplate]="dataField">
+</nae-data-field-template>
 
 <ng-template #dataField let-showLargeLayout="showLargeLayout">
-
     <div>
+        <mat-label *ngIf="!showLargeLayout.value">{{userField.title}}  <nae-required-label *ngIf="userField.behavior.required" [isIn]="!userField.disabled"></nae-required-label><br></mat-label>
         <button mat-stroked-button
                 *ngIf="userField.value !== undefined"
                 [disabled]="userField.disabled"
@@ -22,7 +22,7 @@
             <mat-icon>person_add</mat-icon>
             Select user
         </button>
-        <nae-required-label *ngIf="userField.behavior.required" [isIn]="!userField.disabled"></nae-required-label>
+
     </div>
 
 </ng-template>

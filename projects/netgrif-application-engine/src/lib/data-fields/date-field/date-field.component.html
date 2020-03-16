@@ -1,4 +1,7 @@
-<nae-data-field-template *ngIf="!dateField.behavior.hidden" [title]="dateField.title" [description]="dateField.description" [dataFieldTemplate]="date"></nae-data-field-template>
+<nae-data-field-template *ngIf="!dateField.behavior.hidden"
+                         [dataField]="dateField"
+                         [dataFieldTemplate]="date">
+</nae-data-field-template>
 
 <ng-template #date let-showLargeLayout="showLargeLayout">
     <mat-form-field [appearance]="dateField.materialAppearance" class="full-width" color="primary">
