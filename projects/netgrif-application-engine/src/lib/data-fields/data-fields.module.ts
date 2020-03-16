@@ -29,6 +29,7 @@ import {RequiredLabelComponent} from './required-label/required-label.component'
 import {CovalentModule} from '../covalent/covalent.module';
 import {FileUploadService} from './file-field/services/upload/file-upload.service';
 import {FileDownloadService} from './file-field/services/download/file-download.service';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -71,7 +72,8 @@ import {FileDownloadService} from './file-field/services/download/file-download.
         CovalentModule,
         AngularResizedEventModule,
         HttpClientModule,
-        SideMenuModule
+        SideMenuModule,
+        ReactiveFormsModule
     ],
     providers: [
         FileUploadService,

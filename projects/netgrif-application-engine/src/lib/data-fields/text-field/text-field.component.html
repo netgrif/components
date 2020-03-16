@@ -5,7 +5,7 @@
 
 <ng-template #textFieldTemplate let-showLargeLayout="showLargeLayout">
     <div [ngSwitch]="textField.view">
-        <nae-textarea-field [textAreaField]="textField" *ngSwitchCase="'textarea'" [showLargeLayout]="showLargeLayout"></nae-textarea-field>
-        <nae-simple-text-field [textField]="textField" *ngSwitchDefault [showLargeLayout]="showLargeLayout"></nae-simple-text-field>
+        <nae-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="textField" [showLargeLayout]="showLargeLayout"></nae-textarea-field>
+        <nae-simple-text-field *ngSwitchDefault [textField]="textField" [formControl]="formControl" [changedFields]="changedFields" [showLargeLayout]="showLargeLayout"></nae-simple-text-field>
     </div>
 </ng-template>

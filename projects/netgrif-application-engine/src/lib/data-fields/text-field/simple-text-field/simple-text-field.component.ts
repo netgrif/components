@@ -1,7 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {TextField} from '../models/text-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {Subject} from 'rxjs';
+import {ChangedFields} from '../ChangedFields';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
     selector: 'nae-simple-text-field',
@@ -10,19 +13,22 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 })
 export class SimpleTextFieldComponent implements OnInit {
 
-    email = new FormControl('', [Validators.required, Validators.email]);
     @Input() textField: TextField;
+    @Input() formControl: FormControl;
+    @Input() changedFields: Subject<ChangedFields>;
     @Input() showLargeLayout: WrappedBoolean;
 
     constructor() {
     }
 
     ngOnInit() {
-
-    }
-
-    getErrorMessage() {
-        return this.email.hasError('required') ? 'You must enter a value' :
-            this.email.hasError('email') ? 'Not a valid email' : '';
+        this.textField.resolve(this.formControl);
+        this.changedFields.pipe(
+            filter(fields => this.textField.stringId in fields),
+            map(fields => fields[this.textField.stringId])
+        ).subscribe(change => {
+            this.textField.applyChange(change);
+            this.textField.resolve(this.formControl);
+        });
     }
 }

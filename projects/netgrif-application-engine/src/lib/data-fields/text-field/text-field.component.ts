@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TextField} from './models/text-field';
+import {FormControl} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {ChangedFields} from './ChangedFields';
 
 export enum TextFieldType {
     LEGACY = 'legacy',
@@ -16,7 +19,8 @@ export enum TextFieldType {
 export class TextFieldComponent implements OnInit {
 
     @Input() textField: TextField;
-
+    @Input() formControl: FormControl;
+    @Input() changedFields: Subject<ChangedFields>;
 
     constructor() {
     }
