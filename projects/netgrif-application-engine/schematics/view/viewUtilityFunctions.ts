@@ -72,3 +72,17 @@ export function createRouteObject(path: string, className: string): Route {
     }
     return {path: relevantPath, component: className};
 }
+export function constructRoutePath(pathPrefix: string, pathPart: string): string {
+    return `${pathPrefix}${pathPrefix.length > 0 ? '/' : ''}${pathPart}`;
+}
+export function addAllRoutesToMap(map: Map<string, Route>, routes: Routes, pathPrefix: string = ''): void {
+    routes.forEach(route => {
+        if (route.path !== undefined) {
+            const routePath = constructRoutePath(pathPrefix, route.path);
+            map.set(routePath, route);
+            if (route.children !== undefined) {
+                addAllRoutesToMap(map, route.children, routePath);
+            }
+        }
+    });
+}

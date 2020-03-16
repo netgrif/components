@@ -1,0 +1,7 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsCustomTemplates",
+    "title": "Project custom templates",
+    "type": "object",
+    "properties": {}
+}
