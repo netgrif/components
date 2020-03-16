@@ -53,4 +53,3 @@ if (process.argv.length <= 2) {
     console.log("Nothing to do here");
     process.exit(0);
 }
-
