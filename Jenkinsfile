@@ -18,6 +18,7 @@ pipeline {
       parallel {
         stage('Unit Test') {
           steps {
+            sh 'export CHROME_BIN=/usr/local/bin/my-chrome-build'
             sh 'npm run ng test netgrif-application-engine'
           }
         }
