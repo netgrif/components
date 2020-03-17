@@ -8,6 +8,7 @@
 /bazel-out
 package-lock.json
 /docs
+/.scannerwork
 
 # dependencies
 /node_modules
