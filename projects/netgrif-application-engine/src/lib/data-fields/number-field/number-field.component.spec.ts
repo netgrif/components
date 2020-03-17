@@ -36,7 +36,7 @@ describe('NumberFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-number-field [numberField]="field"></nae-number-field>'
+    template: '<nae-number-field [dataField]="field"></nae-number-field>'
 })
 class TestWrapperComponent {
     field = new NumberField('', '', 5, {

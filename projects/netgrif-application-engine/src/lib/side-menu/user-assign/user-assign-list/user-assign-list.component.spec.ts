@@ -4,7 +4,7 @@ import {UserAssignListComponent} from './user-assign-list.component';
 import {UserAssignItemComponent} from './user-assign-item/user-assign-item.component';
 import {MaterialModule} from '../../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {User} from '../user';
+import {User} from '../../../data-fields/user-field/models/user';
 import {Component} from '@angular/core';
 import {CovalentCommonModule} from '@covalent/core';
 

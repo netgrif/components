@@ -1,5 +1,5 @@
 import {DataField} from '../../models/abstract-data-field';
-import {User} from '../../../side-menu/user-assign/user';
+import {User} from './user';
 import {Behavior} from '../../models/behavior';
 
 export class UserField extends DataField<User> {

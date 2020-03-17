@@ -17,7 +17,7 @@ import {
 import {DateField} from '../../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../../data-fields/user-field/models/user-field';
-import {User} from '../../../side-menu/user-assign/user';
+import {User} from '../../../data-fields/user-field/models/user';
 import {ButtonField} from '../../../data-fields/button-field/models/button-field';
 import {FileField} from '../../../data-fields/file-field/models/file-field';
 import {DataField} from '../../../data-fields/models/abstract-data-field';

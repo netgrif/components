@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from '../../user';
+import {User} from '../../../../data-fields/user-field/models/user';
 
 @Component({
   selector: 'nae-user-assign-item',

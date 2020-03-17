@@ -1,5 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {User} from '../../user';
+import {User} from '../../../../data-fields/user-field/models/user';
 import {UserAssignItemComponent} from './user-assign-item.component';
 import {Component} from '@angular/core';
 

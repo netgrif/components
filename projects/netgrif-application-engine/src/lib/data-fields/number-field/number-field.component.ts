@@ -1,15 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NumberField} from './models/number-field';
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 
 @Component({
   selector: 'nae-number-field',
   templateUrl: './number-field.component.html',
   styleUrls: ['./number-field.component.scss']
 })
-export class NumberFieldComponent implements OnInit {
+export class NumberFieldComponent extends AbstractDataFieldComponent {
 
-    @Input() public numberField: NumberField;
+    @Input() public dataField: NumberField;
 
-    ngOnInit() {
+    constructor() {
+        super();
     }
+
 }

@@ -1,8 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {ChangedFields, TextField} from '@netgrif/application-engine';
+import {ChangedFields, TextField, TextFieldComponent} from '@netgrif/application-engine';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
-import {TextFieldComponent} from '@netgrif/application-engine/lib/data-fields/text-field/text-field.component';
 
 @Component({
     selector: 'nae-app-reactive-text-field',
