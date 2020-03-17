@@ -18,7 +18,7 @@ pipeline {
       parallel {
         stage('Unit Test') {
           steps {
-            sh 'which google-chrome'
+            sh 'ls -al /usr/bin/'
             sh 'npm run ng test netgrif-application-engine'
           }
         }
