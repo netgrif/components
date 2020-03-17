@@ -39,7 +39,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'ls -al coverage/netgrif-application-engine/'
+        sh 'ls -al coverage/netgrif-application-engine/HeadlessChrome_80.0.3987_(Linux_0.0.0)/'
         sh 'npm run nae:build'
       }
     }
@@ -68,7 +68,7 @@ pipeline {
 
   post {
     always {
-      junit testResults: '**/coverage/netgrif-application-engine/**/JUNITX-test-report.xml',
+      junit testResults: '**/coverage/netgrif-application-engine/HeadlessChrome_80.0.3987_(Linux_0.0.0)/JUNITX-test-report.xml',
         allowEmptyResults: false,
         healthScaleFactor: 1.0
       archiveArtifacts artifacts: './dist/netgrif-application-engine/nae-build.zip', fingerprint: true
