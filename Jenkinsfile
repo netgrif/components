@@ -67,7 +67,8 @@ pipeline {
 
      stage('Archive') {
          steps {
-            junit '**/coverage/netgrif-application-engine/JUNITX-test-report.xml'
+            sh 'cat ./coverage/netgrif-application-engine/JUNITX-test-report.xml'
+            junit './coverage/netgrif-application-engine/JUNITX-test-report.xml'
          }
      }
 
