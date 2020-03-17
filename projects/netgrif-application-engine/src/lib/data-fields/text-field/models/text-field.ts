@@ -24,7 +24,7 @@ export class TextField extends DataField<string> {
         formControl.setValue(this.value);
         this.behavior.editable ? formControl.enable() : formControl.disable();
         formControl.clearValidators();
-        formControl.setValidators(this.resolveValidators);
+        formControl.setValidators(this.resolveValidators());
     }
 
     public applyChange(change: Change): void {

@@ -19,7 +19,7 @@ export enum TextFieldType {
 export class TextFieldComponent implements OnInit {
 
     @Input() textField: TextField;
-    @Input() formControl: FormControl;
+    @Input() formControlRef: FormControl;
     @Input() changedFields: Subject<ChangedFields>;
 
     constructor() {

@@ -3,7 +3,7 @@
     <input matInput
            [placeholder]="textField.placeholder"
            [required]="textField.behavior.required"
-           [formControlName]="textField.stringId">
+           [formControl]="formControlRef">
     <mat-hint>{{textField.description}}</mat-hint>
-    <mat-error *ngIf="!formControl.valid">{{formControl.errors}}</mat-error>
+    <mat-error *ngIf="!formControlRef.valid">{{formControlRef.errors}}</mat-error>
 </mat-form-field>

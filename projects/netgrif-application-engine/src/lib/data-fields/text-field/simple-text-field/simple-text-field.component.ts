@@ -14,7 +14,7 @@ import {filter, map} from 'rxjs/operators';
 export class SimpleTextFieldComponent implements OnInit {
 
     @Input() textField: TextField;
-    @Input() formControl: FormControl;
+    @Input() formControlRef: FormControl;
     @Input() changedFields: Subject<ChangedFields>;
     @Input() showLargeLayout: WrappedBoolean;
 
@@ -22,13 +22,13 @@ export class SimpleTextFieldComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.textField.resolve(this.formControl);
+        this.textField.resolve(this.formControlRef);
         this.changedFields.pipe(
             filter(fields => this.textField.stringId in fields),
             map(fields => fields[this.textField.stringId])
         ).subscribe(change => {
             this.textField.applyChange(change);
-            this.textField.resolve(this.formControl);
+            this.textField.resolve(this.formControlRef);
         });
     }
 }
