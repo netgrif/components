@@ -69,7 +69,6 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts artifacts: './dist/netgrif-application-engine/nae-build.zip', fingerprint: true
       junit '**/coverage/netgrif-application-engine/JUNITX-test-report.xml'
     }
   }
