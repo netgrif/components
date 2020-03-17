@@ -6,7 +6,6 @@ module.exports = function(config) {
     const process = require('process');
     process.env.NO_PROXY = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
     process.env.no_proxy = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
-    process.env.CHROME_BIN = require('puppeteer').executablePath();
     config.set({
         basePath: "",
         frameworks: ["jasmine", "@angular-devkit/build-angular"],
@@ -50,11 +49,16 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['ChromeHeadless','FirefoxHeadless','ChromeHeadlessNoSandbox'],
+        browsers: ['ChromeHeadless','HeadlessFirefox'],
         customLaunchers: {
-            ChromeHeadlessNoSandbox: {
-                base: 'ChromeHeadless',
-                flags: ['--no-sandbox']
+            'HeadlessFirefox': {
+                base: 'Firefox',
+                flags: [
+                    '-headless',
+                ],
+                prefs: {
+                    'network.proxy.type': 0
+                }
             }
         },
         singleRun: true,
