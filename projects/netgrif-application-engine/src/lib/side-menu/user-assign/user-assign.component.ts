@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {User} from './user';
+import {User} from '../../data-fields/user-field/models/user';
 import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {UserFieldService} from '../../data-fields/user-field/services/user-field.service';
@@ -19,6 +19,7 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
     private _currentUser: User;
 
     constructor(private _userFieldService: UserFieldService) {
+        // TODO load users
         this.users = [
             new User(
                 'Fero',

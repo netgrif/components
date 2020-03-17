@@ -9,7 +9,6 @@ import {
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
 
-
 @Component({
     selector: 'nae-app-reactive-text-field',
     templateUrl: './reactive-text-field.component.html',
