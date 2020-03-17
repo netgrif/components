@@ -67,8 +67,7 @@ pipeline {
 
      stage('Archive') {
          steps {
-            sh 'cp -r ./coverage/ $WORKSPACE/coverage'
-            junit '**/coverage/netgrif-application-engine/*.xml'
+            junit '**/coverage/**/*.xml'
          }
      }
 
