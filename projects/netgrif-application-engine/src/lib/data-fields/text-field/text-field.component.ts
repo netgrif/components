@@ -1,8 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TextField} from './models/text-field';
-import {FormControl} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {ChangedFields} from './ChangedFields';
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 
 export enum TextFieldType {
     LEGACY = 'legacy',
@@ -16,17 +14,12 @@ export enum TextFieldType {
     templateUrl: './text-field.component.html',
     styleUrls: ['./text-field.component.scss']
 })
-export class TextFieldComponent implements OnInit {
+export class TextFieldComponent extends AbstractDataFieldComponent {
 
-    @Input() textField: TextField;
-    @Input() formControlRef: FormControl;
-    @Input() changedFields: Subject<ChangedFields>;
+    @Input() dataField: TextField;
 
     constructor() {
-    }
-
-    ngOnInit() {
-
+        super();
     }
 
 }

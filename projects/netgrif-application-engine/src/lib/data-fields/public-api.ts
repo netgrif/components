@@ -14,4 +14,4 @@ export * from './date-time-field/models/date-time-field';
 export * from './button-field/models/button-field';
 
 // Interfaces
-export * from './text-field/ChangedFields';
+export * from './models/changed-fields';

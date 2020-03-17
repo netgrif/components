@@ -6,7 +6,7 @@
 <ng-template #liveExample>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-text-field [textField]="field" [formControlRef]="fieldFormControl" [changedFields]="changeStream"></nae-text-field>
+            <nae-text-field #fieldComponent [dataField]="field" [changedFields]="changeStream"></nae-text-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -16,5 +16,8 @@
             <button mat-button (click)="changeOther()">change other</button>
         </div>
     </div>
-    {{fieldGroupControl.value | json}}
+    group value: <span *ngIf="viewInitialized">{{fieldGroupControl.value | json}}</span><br>
+    group valid: <span *ngIf="viewInitialized">{{fieldGroupControl.valid}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{naeTextField.formControl.errors | json}}</span><br>
+    field value: <span *ngIf="viewInitialized">{{naeTextField.formControl.value}}</span>
 </ng-template>

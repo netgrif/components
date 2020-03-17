@@ -14,7 +14,7 @@ response example:
 it might be better if some parent element gave only the relevant changes to each task
 
  */
-import {Behavior} from '../models/behavior';
+import {Behavior} from './behavior';
 
 export interface ChangedFields {
     [key: string]: Change;
@@ -22,7 +22,7 @@ export interface ChangedFields {
 
 export interface Change {
     value?: string | number | boolean | any;
-    // behavior is cleared and contains information only for one transition
+    // behavior is "cleared" and contains information only for one transition
     behavior?: Behavior;
     [key: string]: any;
 }
