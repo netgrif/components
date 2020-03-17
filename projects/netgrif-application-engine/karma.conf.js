@@ -1,10 +1,12 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
-const process = require('process');
-process.env.CHROME_BIN = '/usr/local/bin/my-chrome-build';
-
 module.exports = function(config) {
+
+    const process = require('process');
+    process.env.NO_PROXY = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
+    process.env.no_proxy = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
+    process.env.CHROME_BIN = require('puppeteer').executablePath();
     config.set({
         basePath: "",
         frameworks: ["jasmine", "@angular-devkit/build-angular"],
@@ -48,8 +50,13 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        captureTimeout: 300000,
-        browsers: ['ChromeHeadless','FirefoxHeadless'],
+        browsers: ['ChromeHeadless','FirefoxHeadless','ChromeHeadlessNoSandbox'],
+        customLaunchers: {
+            ChromeHeadlessNoSandbox: {
+                base: 'ChromeHeadless',
+                flags: ['--no-sandbox']
+            }
+        },
         singleRun: true,
         restartOnFileChange: true,
     });
