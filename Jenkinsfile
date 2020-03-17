@@ -60,22 +60,16 @@ pipeline {
             sh 'npm publish dist/netgrif-application-engine'
             sh 'rm .npmrc'
             sh 'mv .npmrc_renamed .npmrc'
-            sh 'ls -al coverage/netgrif-application-engine/'
-            sh 'pwd'
           }
      }
-
-     stage('Archive') {
-         steps {
-            junit '**/coverage/**/*.xml'
-         }
-     }
-
   }
 
+  /*
   post {
     always {
-      archiveArtifacts artifacts: './dist/netgrif-application-engine', fingerprint: true
+        junit '**/coverage/**/*.xml'
+        archiveArtifacts artifacts: './dist/netgrif-application-engine', fingerprint: true
     }
   }
+  */
 }
