@@ -60,6 +60,7 @@ pipeline {
             sh 'npm publish dist/netgrif-application-engine'
             sh 'rm .npmrc'
             sh 'mv .npmrc_renamed .npmrc'
+            sh 'ls -al coverage/'
           }
      }
 
@@ -67,7 +68,7 @@ pipeline {
 
   post {
     always {
-      junit testResults: '**/coverage/netgrif-application-engine/HeadlessChrome_80.0.3987_(Linux_0.0.0)/JUNITX-test-report.xml',
+      junit testResults: '**/coverage/netgrif-application-engine/JUNITX-test-report.xml',
         allowEmptyResults: false,
         healthScaleFactor: 1.0
       archiveArtifacts artifacts: './dist/netgrif-application-engine/nae-build.zip', fingerprint: true
