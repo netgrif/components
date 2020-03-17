@@ -3,7 +3,6 @@ import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeSc
 import {
     apply,
     applyTemplates,
-    chain,
     mergeWith,
     move,
     Rule,
