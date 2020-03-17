@@ -3,7 +3,6 @@ import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeSc
 import {
     apply,
     applyTemplates,
-    chain,
     mergeWith,
     move,
     Rule,
@@ -47,7 +46,7 @@ export function getProjectInfo(tree: Tree): ProjectInfo {
 
     const result = new ProjectInfo();
 
-    result.projectName = workspace.defaultProject;
+    result.projectName = workspace.defaultProject as string;
     result.projectNameClassified = strings.classify(result.projectName);
     result.projectNameDasherized = strings.dasherize(result.projectName);
 

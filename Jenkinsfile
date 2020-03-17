@@ -39,8 +39,6 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'ls -al'
-        sh 'ls -al /coverage/netgrif-application-engine/'
         sh 'npm run nae:build'
       }
     }
@@ -64,15 +62,12 @@ pipeline {
             sh 'mv .npmrc_renamed .npmrc'
           }
      }
-
   }
 
-  post {
-    always {
-      junit testResults: '**/coverage/netgrif-application-engine/**/JUNITX-test-report.xml',
-        allowEmptyResults: false,
-        healthScaleFactor: 1.0
-      archiveArtifacts artifacts: './dist/netgrif-application-engine/nae-build.zip', fingerprint: true
-    }
-  }
+  // post {
+  //   always {
+  //          junit '**/coverage/**/*.xml'
+  //         archiveArtifacts artifacts: './dist/netgrif-application-engine', fingerprint: true
+  //      }
+  //    }
 }
