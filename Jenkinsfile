@@ -39,7 +39,6 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'ls -al coverage/netgrif-application-engine/HeadlessChrome_80.0.3987_(Linux_0.0.0)/'
         sh 'npm run nae:build'
       }
     }
