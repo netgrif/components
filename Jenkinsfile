@@ -64,10 +64,10 @@ pipeline {
      }
   }
 
-  /* post {
-        always {
-            // junit '**/coverage/**/*.xml'
-            // archiveArtifacts artifacts: './dist/netgrif-application-engine', fingerprint: true
-        }
-      } */
+  // post {
+  //   always {
+  //          junit '**/coverage/**/*.xml'
+  //         archiveArtifacts artifacts: './dist/netgrif-application-engine', fingerprint: true
+  //      }
+  //    }
 }
