@@ -18,7 +18,6 @@ pipeline {
       parallel {
         stage('Unit Test') {
           steps {
-            sh 'ls -al /usr/local/bin/'
             sh 'npm run ng test netgrif-application-engine'
           }
         }
@@ -40,6 +39,7 @@ pipeline {
 
     stage('Build') {
       steps {
+        sh 'ls -al /coverage/netgrif-application-engine/'
         sh 'npm run nae:build'
       }
     }
