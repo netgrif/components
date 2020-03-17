@@ -2,10 +2,6 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 module.exports = function(config) {
-
-    const process = require('process');
-    process.env.NO_PROXY = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
-    process.env.no_proxy = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
     config.set({
         basePath: "",
         frameworks: ["jasmine", "@angular-devkit/build-angular"],
@@ -49,18 +45,7 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['ChromeHeadless','HeadlessFirefox'],
-        customLaunchers: {
-            'HeadlessFirefox': {
-                base: 'Firefox',
-                flags: [
-                    '-headless',
-                ],
-                prefs: {
-                    'network.proxy.type': 0
-                }
-            }
-        },
+        browsers: ['ChromeHeadless'],
         singleRun: true,
         restartOnFileChange: true,
     });
