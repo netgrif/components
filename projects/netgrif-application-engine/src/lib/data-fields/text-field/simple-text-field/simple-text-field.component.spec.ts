@@ -7,6 +7,8 @@ import {TextField} from '../models/text-field';
 import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormControl} from '@angular/forms';
+import {Subject} from 'rxjs';
 
 describe('SimpleTextFieldComponent', () => {
     let component: SimpleTextFieldComponent;
@@ -31,7 +33,11 @@ describe('SimpleTextFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-simple-text-field [showLargeLayout]="label" [textField]="field"> </nae-simple-text-field>'
+    template: `<nae-simple-text-field [showLargeLayout]="label"
+                                      [textField]="field"
+                                      [formControlRef]="formControl"
+                                      [changedFields]="changes">
+                </nae-simple-text-field>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
@@ -42,4 +48,6 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     });
+    formControl = new FormControl();
+    changes = new Subject();
 }
