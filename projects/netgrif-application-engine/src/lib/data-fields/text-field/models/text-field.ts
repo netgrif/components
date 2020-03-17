@@ -1,6 +1,7 @@
 import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
-import {FormControl} from '@angular/forms';
+import {FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {Change} from '../ChangedFields';
 
 export enum TextFieldView {
     DEFAULT = 'default',
@@ -21,10 +22,35 @@ export class TextField extends DataField<string> {
 
     public resolve(formControl: FormControl): void {
         formControl.setValue(this.value);
-        // this.behavior?.editable ?
+        this.behavior.editable ? formControl.enable() : formControl.disable();
+        formControl.clearValidators();
+        formControl.setValidators(this.resolveValidators);
     }
 
-    public applyChange(change: {[key: string]: any}): void {
+    public applyChange(change: Change): void {
+        Object.keys(change).forEach( changedAttribute => {
+            switch (changedAttribute) {
+                case 'value':
+                    this.value = change[changedAttribute];
+                    break;
+                case 'behavior':
+                    Object.assign(this.behavior, change[changedAttribute]);
+                    break;
+                default:
+                    throw new Error(`Unknown attribute '${changedAttribute}' in changed fields response`);
+            }
+        });
+    }
 
+    private resolveValidators(): Array<ValidatorFn> {
+        const result = [];
+
+        if (this.behavior.required) {
+           result.push(Validators.required);
+        }
+
+        // TODO validations
+
+        return result;
     }
 }

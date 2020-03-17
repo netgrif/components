@@ -1,4 +1,6 @@
 export * from './data-fields.module';
+
+// Components
 export * from './models/abstract-data-field';
 export * from './text-field/models/text-field';
 export * from './number-field/models/number-field';
@@ -10,3 +12,6 @@ export * from './file-field/models/file-field';
 export * from './user-field/models/user-field';
 export * from './date-time-field/models/date-time-field';
 export * from './button-field/models/button-field';
+
+// Interfaces
+export * from './text-field/ChangedFields';
