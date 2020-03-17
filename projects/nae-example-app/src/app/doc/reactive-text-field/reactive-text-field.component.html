@@ -4,20 +4,45 @@
                        [apiModuleImport]="'DataFieldsModule'"></nae-app-documentation>
 
 <ng-template #liveExample>
+
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-text-field #fieldComponent [dataField]="field" [changedFields]="changeStream"></nae-text-field>
+            <nae-boolean-field #booleanFieldComponent [dataField]="booleanField" [changedFields]="changeStream"></nae-boolean-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
-            <input type="text" formControlName="value">
-            <mat-checkbox formControlName="required">required</mat-checkbox>
+            <mat-checkbox formControlName="booleanFieldValue">value</mat-checkbox>
+            <mat-checkbox formControlName="booleanFieldRequired">required</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+            <button mat-stroked-button (click)="changeOther()">change other</button>
+        </div>
+    </div>
+
+    field errors: <span *ngIf="viewInitialized">{{naeBooleanField.formControl.errors | json}}</span><br>
+    field value: <span *ngIf="viewInitialized">{{naeBooleanField.formControl.value}}</span>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
+            <nae-text-field #textFieldComponent [dataField]="textField" [changedFields]="changeStream"></nae-text-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <input type="text" formControlName="textFieldValue">
+            <mat-checkbox formControlName="textFieldRequired">required</mat-checkbox>
             <button mat-button (click)="change()">change</button>
             <button mat-button (click)="changeOther()">change other</button>
         </div>
     </div>
-    group value: <span *ngIf="viewInitialized">{{fieldGroupControl.value | json}}</span><br>
-    group valid: <span *ngIf="viewInitialized">{{fieldGroupControl.valid}}</span><br>
+
     field errors: <span *ngIf="viewInitialized">{{naeTextField.formControl.errors | json}}</span><br>
     field value: <span *ngIf="viewInitialized">{{naeTextField.formControl.value}}</span>
+
+    <mat-divider></mat-divider>
+
+    group value: <span *ngIf="viewInitialized">{{fieldGroupControl.value | json}}</span><br>
+    group valid: <span *ngIf="viewInitialized">{{fieldGroupControl.valid}}</span><br>
+
+    <mat-divider></mat-divider>
 </ng-template>

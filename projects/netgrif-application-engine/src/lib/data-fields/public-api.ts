@@ -1,6 +1,10 @@
 export * from './data-fields.module';
 
 // Components
+export * from './text-field/text-field.component';
+export * from './boolean-field/boolean-field.component';
+
+// Class
 export * from './models/abstract-data-field';
 export * from './text-field/models/text-field';
 export * from './number-field/models/number-field';

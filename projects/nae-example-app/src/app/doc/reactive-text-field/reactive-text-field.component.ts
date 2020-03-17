@@ -1,8 +1,14 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {ChangedFields, TextField} from '@netgrif/application-engine';
+import {
+    ChangedFields,
+    TextField,
+    TextFieldComponent,
+    BooleanFieldComponent,
+    BooleanField
+} from '@netgrif/application-engine';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
-import {TextFieldComponent} from '@netgrif/application-engine/lib/data-fields/text-field/text-field.component';
+
 
 @Component({
     selector: 'nae-app-reactive-text-field',
@@ -11,16 +17,25 @@ import {TextFieldComponent} from '@netgrif/application-engine/lib/data-fields/te
 })
 export class ReactiveTextFieldComponent implements AfterViewInit {
 
-    readonly TITLE = 'Reactive text field';
-    readonly DESCRIPTION = 'Reactive text field test/playground';
+    readonly TITLE = 'Reactive forms';
+    readonly DESCRIPTION = 'Reactive datafields test/playground';
 
-    @ViewChild('fieldComponent') naeTextField: TextFieldComponent;
+    // TEXTFIELD
+    @ViewChild('textFieldComponent') naeTextField: TextFieldComponent;
+    textField = new TextField('textFieldId', 'Reactive text field', 'hello', {visible: true, editable: true});
 
-    field = new TextField('fieldId', 'Reactive text field', 'hello', {visible: true, editable: true});
+    // BOOLEANFIELD
+    @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
+    booleanField = new BooleanField('booleanFieldId', 'Reactive boolean field', true, {visible: true, editable: true});
+
     changeStream = new Subject<ChangedFields>();
     changeGroupControl = new FormGroup({
-        value: new FormControl(this.field.value),
-        required: new FormControl(false)
+
+        textFieldValue: new FormControl(this.textField.value),
+        textFieldRequired: new FormControl(false),
+
+        booleanFieldValue: new FormControl(this.booleanField.value),
+        booleanFieldRequired: new FormControl(false),
     });
 
     fieldGroupControl: FormGroup;
@@ -29,19 +44,26 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
         this.fieldGroupControl = new FormGroup({
-            fieldId: new FormControl(this.field.value)
+            textFieldId: new FormControl(this.textField.value),
+            booleanFieldId: new FormControl(this.booleanField.value)
         });
         this.viewInitialized = true;
     }
 
     change() {
         this.changeStream.next({
-            fieldId: {
+            textFieldId: {
                 behavior: {
-                    required: this.changeGroupControl.get('required').value
+                    required: this.changeGroupControl.get('textFieldRequired').value
                 },
-                value: this.changeGroupControl.get('value').value
-            }
+                value: this.changeGroupControl.get('textFieldValue').value
+            },
+            booleanFieldId: {
+                behavior: {
+                    required: this.changeGroupControl.get('booleanFieldRequired').value
+                },
+                value: this.changeGroupControl.get('booleanFieldValue').value
+            },
         });
     }
 

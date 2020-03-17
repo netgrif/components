@@ -6,6 +6,7 @@ import {MaterialModule} from '../../material/material.module';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
+import {FormControl} from '@angular/forms';
 
 describe('BooleanFieldComponent', () => {
     let component: BooleanFieldComponent;
@@ -36,7 +37,7 @@ describe('BooleanFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-boolean-field [booleanField]="field"></nae-boolean-field>'
+    template: '<nae-boolean-field [dataField]="field" [formControlRef]="form"></nae-boolean-field>'
 })
 class TestWrapperComponent {
     field = new BooleanField('', '', true, {
@@ -46,4 +47,5 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     });
+    form = new FormControl();
 }

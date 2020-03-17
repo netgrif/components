@@ -5,7 +5,7 @@
                    [rowspan]="item.layout.rows"
                    [ngSwitch]="item.type">
 
-            <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width" [booleanField]="item.item">
+            <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width" [dataField]="item.item">
             </nae-boolean-field>
 
             <nae-text-field *ngSwitchCase="'text'" class="full-width" [dataField]="item.item">
