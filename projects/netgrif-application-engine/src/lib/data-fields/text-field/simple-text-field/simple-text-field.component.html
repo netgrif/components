@@ -5,5 +5,5 @@
            [required]="textField.behavior.required"
            [formControl]="formControlRef">
     <mat-hint>{{textField.description}}</mat-hint>
-    <mat-error *ngIf="!formControlRef.valid">{{formControlRef.errors}}</mat-error>
+    <mat-error *ngIf="!formControlRef.valid">{{formControlRef.errors | json}}</mat-error>
 </mat-form-field>
