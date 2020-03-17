@@ -65,11 +65,15 @@ pipeline {
           }
      }
 
+     stage('Archive') {
+        junit '**/coverage/netgrif-application-engine/JUNITX-test-report.xml'
+     }
+
   }
 
   post {
     always {
-      junit '**/coverage/netgrif-application-engine/JUNITX-test-report.xml'
+      /* archiveArtifacts artifacts: './dist/netgrif-application-engine/nae-build.zip', fingerprint: true */
     }
   }
 }
