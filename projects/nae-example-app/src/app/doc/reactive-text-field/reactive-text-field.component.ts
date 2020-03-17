@@ -65,15 +65,4 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             },
         });
     }
-
-    changeOther() {
-        this.changeStream.next({
-            otherId: {
-                behavior: {
-                    required: this.changeGroupControl.get('required').value
-                },
-                value: this.changeGroupControl.get('value').value
-            }
-        });
-    }
 }

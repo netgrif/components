@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BooleanField} from './models/boolean-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
-import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'nae-boolean-field',
@@ -11,7 +10,6 @@ import {FormControl} from '@angular/forms';
 export class BooleanFieldComponent extends AbstractDataFieldComponent {
 
   @Input() dataField: BooleanField;
-  @Input() formControlRef: FormControl;
 
   constructor() {
       super();

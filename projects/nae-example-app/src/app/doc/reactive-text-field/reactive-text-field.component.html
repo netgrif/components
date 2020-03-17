@@ -14,12 +14,11 @@
             <mat-checkbox formControlName="booleanFieldValue">value</mat-checkbox>
             <mat-checkbox formControlName="booleanFieldRequired">required</mat-checkbox>
             <button mat-stroked-button (click)="change()">change</button>
-            <button mat-stroked-button (click)="changeOther()">change other</button>
         </div>
     </div>
 
     field errors: <span *ngIf="viewInitialized">{{naeBooleanField.formControl.errors | json}}</span><br>
-    field value: <span *ngIf="viewInitialized">{{naeBooleanField.formControl.value}}</span>
+    field value: <span *ngIf="viewInitialized">{{naeBooleanField.formControl.value}}</span><br>
 
     <mat-divider></mat-divider>
 
@@ -32,12 +31,11 @@
             <input type="text" formControlName="textFieldValue">
             <mat-checkbox formControlName="textFieldRequired">required</mat-checkbox>
             <button mat-button (click)="change()">change</button>
-            <button mat-button (click)="changeOther()">change other</button>
         </div>
     </div>
 
     field errors: <span *ngIf="viewInitialized">{{naeTextField.formControl.errors | json}}</span><br>
-    field value: <span *ngIf="viewInitialized">{{naeTextField.formControl.value}}</span>
+    field value: <span *ngIf="viewInitialized">{{naeTextField.formControl.value}}</span><br>
 
     <mat-divider></mat-divider>
 
