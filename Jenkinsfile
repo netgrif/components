@@ -39,7 +39,6 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'ls -al'
         sh 'ls -al coverage/netgrif-application-engine/'
         sh 'npm run nae:build'
       }
