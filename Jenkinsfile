@@ -68,7 +68,7 @@ pipeline {
 
   post {
     always {
-      junit testResults: '**/coverage/netgrif-application-engine/**/JUNITX-test-report.xml',
+      junit testResults: './coverage/netgrif-application-engine/JUNITX-test-report.xml',
         allowEmptyResults: false,
         healthScaleFactor: 1.0
       archiveArtifacts artifacts: './dist/netgrif-application-engine/nae-build.zip', fingerprint: true
