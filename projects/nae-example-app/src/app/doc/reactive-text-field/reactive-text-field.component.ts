@@ -4,7 +4,9 @@ import {
     TextField,
     TextFieldComponent,
     BooleanFieldComponent,
-    BooleanField
+    BooleanField,
+    DateField,
+    DateFieldComponent
 } from '@netgrif/application-engine';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
@@ -27,6 +29,10 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
     booleanField = new BooleanField('booleanFieldId', 'Reactive boolean field', true, {visible: true, editable: true});
 
+    // DateFIELD
+    @ViewChild('dateFieldComponent') naeDateField: DateFieldComponent;
+    dateField = new DateField('dateFieldId', 'Reactive date field', new Date('2020-03-09'), {visible: true, editable: true});
+
     changeStream = new Subject<ChangedFields>();
     changeGroupControl = new FormGroup({
 
@@ -35,6 +41,9 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
         booleanFieldValue: new FormControl(this.booleanField.value),
         booleanFieldRequired: new FormControl(false),
+
+        dateFieldValue: new FormControl(this.dateField.value),
+        dateFieldRequired: new FormControl(false),
     });
 
     fieldGroupControl: FormGroup;
@@ -44,7 +53,8 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         this.fieldGroupControl = new FormGroup({
             textFieldId: new FormControl(this.textField.value),
-            booleanFieldId: new FormControl(this.booleanField.value)
+            booleanFieldId: new FormControl(this.booleanField.value),
+            dateFieldId: new FormControl(this.booleanField.value)
         });
         this.viewInitialized = true;
     }
@@ -62,6 +72,12 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
                     required: this.changeGroupControl.get('booleanFieldRequired').value
                 },
                 value: this.changeGroupControl.get('booleanFieldValue').value
+            },
+            dateFieldId: {
+                behavior: {
+                    required: this.changeGroupControl.get('dateFieldRequired').value
+                },
+                value: this.changeGroupControl.get('dateFieldValue').value
             },
         });
     }

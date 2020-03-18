@@ -1,20 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DateField} from './models/date-field';
-import {FormControl} from '@angular/forms';
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 
 @Component({
     selector: 'nae-date-field',
     templateUrl: './date-field.component.html',
     styleUrls: ['./date-field.component.scss']
 })
-export class DateFieldComponent implements OnInit {
+export class DateFieldComponent extends AbstractDataFieldComponent {
 
-    @Input() public dateField: DateField;
+    @Input() public dataField: DateField;
 
-    public validate: FormControl;
-
-    ngOnInit() {
-        this.validate = new FormControl(this.dateField.value);
+    constructor() {
+        super();
     }
 
     // TODO correct locale (date format and first day of the week)
