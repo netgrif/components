@@ -36,7 +36,7 @@ export class FileField extends DataField<File> {
 
     constructor(stringId: string, title: string, behavior: Behavior, value?: File, placeholder?: string, description?: string,
                 private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1, private _zipped: boolean = true,
-                private _allowTypes?: FileUploadMIMEtype | string | Array<FileUploadMIMEtype>) {
+                private _allowTypes?: string | FileUploadMIMEtype | Array<FileUploadMIMEtype>) {
         super(stringId, title, behavior, placeholder, description, value);
     }
 
