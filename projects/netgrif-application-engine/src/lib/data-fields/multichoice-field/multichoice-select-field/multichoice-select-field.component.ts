@@ -17,7 +17,7 @@ export class MultichoiceSelectFieldComponent implements OnInit {
 
     ngOnInit() {
         // this.validate = new FormControl('', [Validators.required]);
-        this.selected = this.multichoiceField.value.map( it => it.key);
+        // this.selected = this.multichoiceField.value.map( it => it.key);
         // this.validate.setValue(this.selected);
     }
 }

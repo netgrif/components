@@ -11,6 +11,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 export class MultichoiceListFieldComponent implements OnInit {
 
     @Input() multichoiceField: MultichoiceField;
+    @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
 
     selected: Array<string>;
@@ -18,8 +19,8 @@ export class MultichoiceListFieldComponent implements OnInit {
 
     ngOnInit() {
         this.validate = new FormControl(this.multichoiceField.value, [Validators.required]);
-        this.selected = this.multichoiceField.value.map( it => it.key);
-        this.validate.setValue(this.selected);
+        // this.selected = this.multichoiceField.value.map( it => it.key);
+        // this.validate.setValue(this.selected);
     }
 
 }
