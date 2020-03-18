@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     BooleanField,
-    BooleanFieldComponent,
+    BooleanFieldComponent, Change,
     ChangedFields,
     DateField,
     DateFieldComponent,
@@ -13,6 +13,7 @@ import {
     MaterialAppearance,
     MultichoiceField,
     MultichoiceFieldComponent,
+    MultichoiceFieldView,
     NumberField,
     NumberFieldComponent,
     TextField,
@@ -73,8 +74,14 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         '', '', MaterialAppearance.STANDARD, EnumerationFieldView.AUTOCOMPLETE);
 
     // MULTICHOICE LIST FIELD
-    @ViewChild('dateFieldComponent') naeMultichoiceLIstField: MultichoiceFieldComponent;
+    @ViewChild('multichoiceListFieldComponent') naeMultichoiceListField: MultichoiceFieldComponent;
     multichoiceListField = new MultichoiceField('multichoiceListFieldId', 'Reactive multichoice list field', ['a', 'b'],
+        [{key: 'a', value: 'Alice'}, {key: 'b', value: 'Bob'}, {key: 'c', value: 'Claire'}], {visible: true, editable: true},
+        undefined, undefined, undefined, MultichoiceFieldView.LIST);
+
+    // MULTICHOICE SELECT FIELD
+    @ViewChild('multichoiceSelectFieldComponent') naeMultichoiceSelectField: MultichoiceFieldComponent;
+    multichoiceSelectField = new MultichoiceField('multichoiceSelectFieldId', 'Reactive multichoice select field', ['a', 'b'],
         [{key: 'a', value: 'Alice'}, {key: 'b', value: 'Bob'}, {key: 'c', value: 'Claire'}], {visible: true, editable: true});
 
     changeStream = new Subject<ChangedFields>();
@@ -112,8 +119,14 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         enumAutoFieldRequired: [false],
         enumAutoFieldDisabled: [false],
         enumAutoFieldHidden: [false],
-        multichoiceListFieldValue: [],
-        multichoiceListFieldRequired: [false]
+        multichoiceListFieldValue: [this.multichoiceListField.value],
+        multichoiceListFieldRequired: [false],
+        multichoiceListFieldDisabled: [false],
+        multichoiceListFieldHidden: [false],
+        multichoiceSelectFieldValue: [this.multichoiceSelectField.value],
+        multichoiceSelectFieldRequired: [false],
+        multichoiceSelectFieldDisabled: [false],
+        multichoiceSelectFieldHidden: [false],
     });
 
     fieldGroupControl = new FormGroup({});
@@ -130,6 +143,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             {stringId: this.enumSelectField.stringId, component: this.naeEnumSelectField},
             {stringId: this.enumListField.stringId, component: this.naeEnumListField},
             {stringId: this.enumAutoField.stringId, component: this.naeEnumAutoField},
+            {stringId: this.multichoiceListField.stringId, component: this.naeMultichoiceListField},
         ];
         fields.forEach( field => {
             this.addControl(field);
@@ -141,74 +155,31 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     change() {
         this.changeStream.next({
-            textFieldId: {
-                behavior: {
-                    required: this.changeGroupControl.get('textFieldRequired').value,
-                    hidden: this.changeGroupControl.get('textFieldHidden').value,
-                    editable: !this.changeGroupControl.get('textFieldDisabled').value,
-                },
-                value: this.changeGroupControl.get('textFieldValue').value
-            },
-            booleanFieldId: {
-                behavior: {
-                    required: this.changeGroupControl.get('booleanFieldRequired').value,
-                    hidden: this.changeGroupControl.get('booleanFieldHidden').value,
-                    editable: !this.changeGroupControl.get('booleanFieldDisabled').value,
-                },
-                value: this.changeGroupControl.get('booleanFieldValue').value
-            },
-            numberFieldId: {
-                behavior: {
-                    required: this.changeGroupControl.get('numberFieldRequired').value,
-                    hidden: this.changeGroupControl.get('numberFieldHidden').value,
-                    editable: !this.changeGroupControl.get('numberFieldDisabled').value,
-                },
-                value: this.changeGroupControl.get('numberFieldValue').value
-            },
-            dateFieldId: {
-                behavior: {
-                    required: this.changeGroupControl.get('dateFieldRequired').value,
-                    hidden: this.changeGroupControl.get('dateFieldHidden').value,
-                    editable: !this.changeGroupControl.get('dateFieldDisabled').value,
-                },
-                value: this.changeGroupControl.get('dateFieldValue').value
-            },
-            dateTimeFieldId: {
-                behavior: {
-                    required: this.changeGroupControl.get('dateTimeFieldRequired').value,
-                    hidden: this.changeGroupControl.get('dateTimeFieldHidden').value,
-                    editable: !this.changeGroupControl.get('dateTimeFieldDisabled').value,
-                },
-                value: this.changeGroupControl.get('dateTimeFieldValue').value
-            },
-            enumSelectFieldId: {
-                behavior: {
-                    required: this.changeGroupControl.get('enumSelectFieldRequired').value,
-                    hidden: this.changeGroupControl.get('enumSelectFieldHidden').value,
-                    editable: !this.changeGroupControl.get('enumSelectFieldDisabled').value,
-                },
-                value: this.changeGroupControl.get('enumSelectFieldValue').value
-            },
-            enumListFieldId: {
-                behavior: {
-                    required: this.changeGroupControl.get('enumListFieldRequired').value,
-                    hidden: this.changeGroupControl.get('enumListFieldHidden').value,
-                    editable: !this.changeGroupControl.get('enumListFieldDisabled').value,
-                },
-                value: this.changeGroupControl.get('enumListFieldValue').value
-            },
-            enumAutoFieldId: {
-                behavior: {
-                    required: this.changeGroupControl.get('enumAutoFieldRequired').value,
-                    hidden: this.changeGroupControl.get('enumAutoFieldHidden').value,
-                    editable: !this.changeGroupControl.get('enumAutoFieldDisabled').value,
-                },
-                value: this.changeGroupControl.get('enumAutoFieldValue').value
-            }
+            textFieldId: this.constructChangeObject('textField'),
+            booleanFieldId: this.constructChangeObject('booleanField'),
+            numberFieldId: this.constructChangeObject('numberField'),
+            dateFieldId: this.constructChangeObject('dateField'),
+            dateTimeFieldId: this.constructChangeObject('dateTimeField'),
+            enumSelectFieldId: this.constructChangeObject('enumSelectField'),
+            enumListFieldId: this.constructChangeObject('enumListField'),
+            enumAutoFieldId: this.constructChangeObject('enumAutoField'),
+            multichoiceListFieldId: this.constructChangeObject('multichoiceListField'),
+            multichoiceSelectFieldId: this.constructChangeObject('multichoiceSelectField'),
         });
     }
 
     private addControl(field): void {
         this.fieldGroupControl.addControl(field.stringId, field.component.formControl);
+    }
+
+    private constructChangeObject(prefix: string): Change {
+        return {
+            behavior: {
+                required: this.changeGroupControl.get(`${prefix}Required`).value,
+                hidden: this.changeGroupControl.get(`${prefix}Hidden`).value,
+                editable: !this.changeGroupControl.get(`${prefix}Disabled`).value,
+            },
+            value: this.changeGroupControl.get(`${prefix}Value`).value
+        };
     }
 }

@@ -60,8 +60,8 @@
         </div>
     </div>
 
-    field errors: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.errors | json}}</span><br>
     field value: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.value}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.errors | json}}</span><br>
 
     <mat-divider></mat-divider>
 
@@ -85,8 +85,8 @@
         </div>
     </div>
 
-    field errors: <span *ngIf="viewInitialized">{{enumSelectFieldComponent.formControl.errors | json}}</span><br>
     field value: <span *ngIf="viewInitialized">{{enumSelectFieldComponent.formControl.value}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{enumSelectFieldComponent.formControl.errors | json}}</span><br>
 
     <mat-divider></mat-divider>
 
@@ -110,8 +110,8 @@
         </div>
     </div>
 
-    field errors: <span *ngIf="viewInitialized">{{enumListFieldComponent.formControl.errors | json}}</span><br>
     field value: <span *ngIf="viewInitialized">{{enumListFieldComponent.formControl.value}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{enumListFieldComponent.formControl.errors | json}}</span><br>
 
     <mat-divider></mat-divider>
 
@@ -135,8 +135,8 @@
         </div>
     </div>
 
-    field errors: <span *ngIf="viewInitialized">{{enumAutoFieldComponent.formControl.errors | json}}</span><br>
     field value: <span *ngIf="viewInitialized">{{enumAutoFieldComponent.formControl.value}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{enumAutoFieldComponent.formControl.errors | json}}</span><br>
 
     <mat-divider></mat-divider>
 
@@ -180,18 +180,47 @@
 
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-multichoice-field #multichoiceFieldComponent [dataField]="numberField" [changedFields]="changeStream"></nae-multichoice-field>
+            <nae-multichoice-field #multichoiceListFieldComponent [dataField]="multichoiceListField" [changedFields]="changeStream"></nae-multichoice-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
-<!--            <input type="number" formControlName="multihcoiceFieldValue">-->
-            <mat-checkbox formControlName="multichoiceFieldRequired">required</mat-checkbox>
+            <mat-select formControlName="multichoiceListFieldValue" multiple>
+                <mat-option value="a">Alice</mat-option>
+                <mat-option value="b">Bob</mat-option>
+                <mat-option value="c">Claire</mat-option>
+            </mat-select>
+            <mat-checkbox formControlName="multichoiceListFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="multichoiceListFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="multichoiceListFieldHidden">hidden</mat-checkbox>
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
 
-    field value: <span *ngIf="viewInitialized">{{numberFieldComponent.formControl.value}}</span><br>
-    field errors: <span *ngIf="viewInitialized">{{numberFieldComponent.formControl.errors | json}}</span><br>
+    field value: {{multichoiceListFieldComponent.formControl.value}}<br>
+    field errors: <span *ngIf="viewInitialized">{{multichoiceListFieldComponent.formControl.errors | json}}</span><br>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
+            <nae-multichoice-field #multichoiceSelectFieldComponent [dataField]="multichoiceSelectField" [changedFields]="changeStream"></nae-multichoice-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <mat-select formControlName="multichoiceSelectFieldValue" multiple>
+                <mat-option value="a">Alice</mat-option>
+                <mat-option value="b">Bob</mat-option>
+                <mat-option value="c">Claire</mat-option>
+            </mat-select>
+            <mat-checkbox formControlName="multichoiceSelectFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="multichoiceSelectFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="multichoiceSelectFieldHidden">hidden</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+
+    field value: {{multichoiceSelectFieldComponent.formControl.value}}<br>
+    field errors: <span *ngIf="viewInitialized">{{multichoiceSelectFieldComponent.formControl.errors | json}}</span><br>
 
     <mat-divider></mat-divider>
 

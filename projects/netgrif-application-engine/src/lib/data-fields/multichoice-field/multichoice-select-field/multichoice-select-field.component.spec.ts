@@ -35,7 +35,7 @@ describe('MultichoiceSelectFieldComponent', () => {
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
-    field = new MultichoiceField('', '', [{key: '', value: ''}], [], {
+    field = new MultichoiceField('', '', [''], [], {
         required: true,
         optional: true,
         visible: true,
