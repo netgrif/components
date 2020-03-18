@@ -1,12 +1,15 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
+    DataField,
     ChangedFields,
     TextField,
     TextFieldComponent,
+    BooleanField,
     BooleanFieldComponent,
-    BooleanField
+    NumberField,
+    NumberFieldComponent
 } from '@netgrif/application-engine';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
 
 @Component({
@@ -19,34 +22,41 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     readonly TITLE = 'Reactive forms';
     readonly DESCRIPTION = 'Reactive datafields test/playground';
 
-    // TEXTFIELD
+    constructor(private formBuilder: FormBuilder) {
+    }
+
+    // TEXT FIELD
     @ViewChild('textFieldComponent') naeTextField: TextFieldComponent;
     textField = new TextField('textFieldId', 'Reactive text field', 'hello', {visible: true, editable: true});
 
-    // BOOLEANFIELD
+    // BOOLEAN FIELD
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
     booleanField = new BooleanField('booleanFieldId', 'Reactive boolean field', true, {visible: true, editable: true});
 
+    // NUMBER FIELD
+    @ViewChild('numberFieldComponent') naeNumberField: NumberFieldComponent;
+    numberField = new NumberField('numberFieldId', 'Reactive number field', 7, {visible: true, editable: true});
+
     changeStream = new Subject<ChangedFields>();
-    changeGroupControl = new FormGroup({
 
-        textFieldValue: new FormControl(this.textField.value),
-        textFieldRequired: new FormControl(false),
-
-        booleanFieldValue: new FormControl(this.booleanField.value),
-        booleanFieldRequired: new FormControl(false),
+    changeGroupControl = this.formBuilder.group({
+        textFieldValue: [this.textField.value],
+        textFieldRequired: [false],
+        booleanFieldValue: [this.booleanField.value],
+        booleanFieldRequired: [false],
+        numberFieldValue: [this.numberField.value],
+        numberFieldRequired: [false]
     });
 
-    fieldGroupControl: FormGroup;
+    fieldGroupControl = new FormGroup({});
 
     viewInitialized = false;
 
     ngAfterViewInit(): void {
-        this.fieldGroupControl = new FormGroup({
-            textFieldId: new FormControl(this.textField.value),
-            booleanFieldId: new FormControl(this.booleanField.value)
+        const fields = [this.textField, this.booleanField, this.numberField];
+        fields.forEach( field => {
+            this.addControl(field);
         });
-        this.viewInitialized = true;
     }
 
     change() {
@@ -63,6 +73,16 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
                 },
                 value: this.changeGroupControl.get('booleanFieldValue').value
             },
+            numberFieldId: {
+                behavior: {
+                    required: this.changeGroupControl.get('numberFieldRequired').value
+                },
+                value: this.changeGroupControl.get('numberFieldValue').value
+            }
         });
+    }
+
+    private addControl(field: DataField<any>): void {
+        this.fieldGroupControl.addControl(field.stringId, new FormControl(field.value));
     }
 }

@@ -150,10 +150,7 @@ export class TaskPanelContentComponent implements OnInit {
                         typeMulti = MultichoiceFieldView.LIST;
                     }
                 }
-                const values: MultichoiceFieldValue[] = [];
-                (item.value as string[]).forEach(it => {
-                    values.push({key: it, value: it} as MultichoiceFieldValue);
-                });
+                const values: string[] = item.value as string[];
                 const choicesMulti: MultichoiceFieldValue[] = [];
                 item.choices.forEach(it => {
                     choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);

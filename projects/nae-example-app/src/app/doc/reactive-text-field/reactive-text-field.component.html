@@ -17,8 +17,8 @@
         </div>
     </div>
 
-    field errors: <span *ngIf="viewInitialized">{{naeBooleanField.formControl.errors | json}}</span><br>
-    field value: <span *ngIf="viewInitialized">{{naeBooleanField.formControl.value}}</span><br>
+    field value: <span *ngIf="viewInitialized">{{booleanFieldComponent.formControl.value}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{booleanFieldComponent.formControl.errors | json}}</span><br>
 
     <mat-divider></mat-divider>
 
@@ -30,12 +30,29 @@
             <h3>Change</h3>
             <input type="text" formControlName="textFieldValue">
             <mat-checkbox formControlName="textFieldRequired">required</mat-checkbox>
-            <button mat-button (click)="change()">change</button>
+            <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
 
-    field errors: <span *ngIf="viewInitialized">{{naeTextField.formControl.errors | json}}</span><br>
-    field value: <span *ngIf="viewInitialized">{{naeTextField.formControl.value}}</span><br>
+    field value: <span *ngIf="viewInitialized">{{textFieldComponent.formControl.value}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{textFieldComponent.formControl.errors | json}}</span><br>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
+            <nae-number-field #numberFieldComponent [dataField]="numberField" [changedFields]="changeStream"></nae-number-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <input type="number" formControlName="numberFieldValue">
+            <mat-checkbox formControlName="numberFieldRequired">required</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+
+    field value: <span *ngIf="viewInitialized">{{numberFieldComponent.formControl.value}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{numberFieldComponent.formControl.errors | json}}</span><br>
 
     <mat-divider></mat-divider>
 
