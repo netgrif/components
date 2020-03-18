@@ -204,6 +204,7 @@
     field errors: {{multichoiceSelectFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider><br>
-    group value: {{fieldGroupControl.value | json}}<br>
-    group valid: {{fieldGroupControl.valid}}<br>
+    group value: <span *ngIf="fieldGroupInitialized">{{fieldGroupControl.value | json}}</span><br>
+    group valid: <span *ngIf="fieldGroupInitialized">{{fieldGroupControl.valid}}</span><br>
+
 </ng-template>

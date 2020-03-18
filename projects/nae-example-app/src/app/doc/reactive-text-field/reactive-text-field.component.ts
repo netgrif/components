@@ -100,6 +100,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     });
 
     fieldGroupControl = new FormGroup({});
+    fieldGroupInitialized = false;
 
     ngAfterViewInit(): void {
         const fields = [
@@ -115,6 +116,9 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         ];
         fields.forEach( field => {
             this.addControl(field);
+        });
+        setTimeout(() => {
+            this.fieldGroupInitialized = true;
         });
     }
 
