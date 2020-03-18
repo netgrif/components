@@ -18,12 +18,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
-    field value: <span *ngIf="viewInitialized">{{booleanFieldComponent.formControl.value}}</span><br>
-    field errors: <span *ngIf="viewInitialized">{{booleanFieldComponent.formControl.errors | json}}</span><br>
+    field value: {{booleanFieldComponent.formControl.value}}<br>
+    field errors: {{booleanFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
-
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
             <nae-date-field #dateFieldComponent [dataField]="dateField" [changedFields]="changeStream"></nae-date-field>
@@ -41,12 +39,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
-    field value: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.value}}</span><br>
-    field errors: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.errors | json}}</span><br>
+    field value: {{dateFieldComponent.formControl.value}}<br>
+    field errors: {{dateFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
-
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
             <nae-date-time-field #dateTimeFieldComponent [dataField]="dateTimeField" [changedFields]="changeStream"></nae-date-time-field>
@@ -59,12 +55,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
-    field value: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.value}}</span><br>
-    field errors: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.errors | json}}</span><br>
+    field value: {{dateFieldComponent.formControl.value}}<br>
+    field errors: {{dateFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
-
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
             <nae-enumeration-field #enumSelectFieldComponent [dataField]="enumSelectField" [changedFields]="changeStream"></nae-enumeration-field>
@@ -84,12 +78,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
-    field value: <span *ngIf="viewInitialized">{{enumSelectFieldComponent.formControl.value}}</span><br>
-    field errors: <span *ngIf="viewInitialized">{{enumSelectFieldComponent.formControl.errors | json}}</span><br>
+    field value: {{enumSelectFieldComponent.formControl.value}}<br>
+    field errors: {{enumSelectFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
-
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
             <nae-enumeration-field #enumListFieldComponent [dataField]="enumListField" [changedFields]="changeStream"></nae-enumeration-field>
@@ -109,12 +101,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
-    field value: <span *ngIf="viewInitialized">{{enumListFieldComponent.formControl.value}}</span><br>
-    field errors: <span *ngIf="viewInitialized">{{enumListFieldComponent.formControl.errors | json}}</span><br>
+    field value: {{enumListFieldComponent.formControl.value}}<br>
+    field errors: {{enumListFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
-
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
             <nae-enumeration-field #enumAutoFieldComponent [dataField]="enumAutoField" [changedFields]="changeStream"></nae-enumeration-field>
@@ -134,12 +124,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
-    field value: <span *ngIf="viewInitialized">{{enumAutoFieldComponent.formControl.value}}</span><br>
-    field errors: <span *ngIf="viewInitialized">{{enumAutoFieldComponent.formControl.errors | json}}</span><br>
+    field value: {{enumAutoFieldComponent.formControl.value}}<br>
+    field errors: {{enumAutoFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
-
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
             <nae-text-field #textFieldComponent [dataField]="textField" [changedFields]="changeStream"></nae-text-field>
@@ -153,12 +141,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
-    field value: <span *ngIf="viewInitialized">{{textFieldComponent.formControl.value}}</span><br>
-    field errors: <span *ngIf="viewInitialized">{{textFieldComponent.formControl.errors | json}}</span><br>
+    field value: {{textFieldComponent.formControl.value}}<br>
+    field errors: {{textFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
-
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
             <nae-number-field #numberFieldComponent [dataField]="numberField" [changedFields]="changeStream"></nae-number-field>
@@ -172,12 +158,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
-    field value: <span *ngIf="viewInitialized">{{numberFieldComponent.formControl.value}}</span><br>
-    field errors: <span *ngIf="viewInitialized">{{numberFieldComponent.formControl.errors | json}}</span><br>
+    field value: {{numberFieldComponent.formControl.value}}<br>
+    field errors: {{numberFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
-
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
             <nae-multichoice-field #multichoiceListFieldComponent [dataField]="multichoiceListField" [changedFields]="changeStream"></nae-multichoice-field>
@@ -195,12 +179,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
     field value: {{multichoiceListFieldComponent.formControl.value}}<br>
-    field errors: <span *ngIf="viewInitialized">{{multichoiceListFieldComponent.formControl.errors | json}}</span><br>
+    field errors: {{multichoiceListFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
-
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
             <nae-multichoice-field #multichoiceSelectFieldComponent [dataField]="multichoiceSelectField" [changedFields]="changeStream"></nae-multichoice-field>
@@ -218,14 +200,10 @@
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
-
     field value: {{multichoiceSelectFieldComponent.formControl.value}}<br>
-    field errors: <span *ngIf="viewInitialized">{{multichoiceSelectFieldComponent.formControl.errors | json}}</span><br>
+    field errors: {{multichoiceSelectFieldComponent.formControl.errors | json}}<br>
 
-    <mat-divider></mat-divider>
-
-    group value: <span *ngIf="viewInitialized">{{fieldGroupControl.value | json}}</span><br>
-    group valid: <span *ngIf="viewInitialized">{{fieldGroupControl.valid}}</span><br>
-
-    <mat-divider></mat-divider>
+    <mat-divider></mat-divider><br>
+    group value: {{fieldGroupControl.value | json}}<br>
+    group valid: {{fieldGroupControl.valid}}<br>
 </ng-template>

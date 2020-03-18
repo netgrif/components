@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     BooleanField,
     BooleanFieldComponent, Change,
-    ChangedFields,
+    ChangedFields, DataField,
     DateField,
     DateFieldComponent,
     DateTimeField,
@@ -87,51 +87,19 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     changeStream = new Subject<ChangedFields>();
 
     changeGroupControl = this.formBuilder.group({
-        textFieldValue: [this.textField.value],
-        textFieldRequired: [false],
-        textFieldDisabled: [false],
-        textFieldHidden: [false],
-        booleanFieldValue: [this.booleanField.value],
-        booleanFieldRequired: [false],
-        booleanFieldDisabled: [false],
-        booleanFieldHidden: [false],
-        numberFieldValue: [this.numberField.value],
-        numberFieldRequired: [false],
-        numberFieldDisabled: [false],
-        numberFieldHidden: [false],
-        dateFieldValue: [this.dateField.value],
-        dateFieldRequired: [false],
-        dateFieldDisabled: [false],
-        dateFieldHidden: [false],
-        dateTimeFieldValue: [this.dateTimeField.value],
-        dateTimeFieldRequired: [false],
-        dateTimeFieldDisabled: [false],
-        dateTimeFieldHidden: [false],
-        enumSelectFieldValue: [this.enumSelectField.value],
-        enumSelectFieldRequired: [false],
-        enumSelectFieldDisabled: [false],
-        enumSelectFieldHidden: [false],
-        enumListFieldValue: [this.enumListField.value],
-        enumListFieldRequired: [false],
-        enumListFieldDisabled: [false],
-        enumListFieldHidden: [false],
-        enumAutoFieldValue: [this.enumListField.value],
-        enumAutoFieldRequired: [false],
-        enumAutoFieldDisabled: [false],
-        enumAutoFieldHidden: [false],
-        multichoiceListFieldValue: [this.multichoiceListField.value],
-        multichoiceListFieldRequired: [false],
-        multichoiceListFieldDisabled: [false],
-        multichoiceListFieldHidden: [false],
-        multichoiceSelectFieldValue: [this.multichoiceSelectField.value],
-        multichoiceSelectFieldRequired: [false],
-        multichoiceSelectFieldDisabled: [false],
-        multichoiceSelectFieldHidden: [false],
+        ...this.constructFormBuilderObject('text', this.textField),
+        ...this.constructFormBuilderObject('boolean', this.booleanField),
+        ...this.constructFormBuilderObject('number', this.numberField),
+        ...this.constructFormBuilderObject('date', this.dateField),
+        ...this.constructFormBuilderObject('dateTime', this.dateTimeField),
+        ...this.constructFormBuilderObject('enumSelect', this.enumSelectField),
+        ...this.constructFormBuilderObject('enumList', this.enumListField),
+        ...this.constructFormBuilderObject('enumAuto', this.enumAutoField),
+        ...this.constructFormBuilderObject('multichoiceList', this.multichoiceListField),
+        ...this.constructFormBuilderObject('multichoiceSelect', this.multichoiceSelectField),
     });
 
     fieldGroupControl = new FormGroup({});
-
-    viewInitialized = false;
 
     ngAfterViewInit(): void {
         const fields = [
@@ -147,9 +115,6 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         ];
         fields.forEach( field => {
             this.addControl(field);
-        });
-        setTimeout(() => {
-            this.viewInitialized = true;
         });
     }
 
@@ -170,6 +135,15 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     private addControl(field): void {
         this.fieldGroupControl.addControl(field.stringId, field.component.formControl);
+    }
+
+    private constructFormBuilderObject(prefix: string, dataField: DataField<any>) {
+        const result = {};
+        result[`${prefix}FieldValue`] = [dataField.value];
+        ['Required', 'Disabled', 'Hidden'].forEach( suffix => {
+            result[`${prefix}Field${suffix}`] = [false];
+        });
+        return result;
     }
 
     private constructChangeObject(prefix: string): Change {
