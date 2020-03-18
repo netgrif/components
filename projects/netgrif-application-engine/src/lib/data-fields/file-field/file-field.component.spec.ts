@@ -36,7 +36,7 @@ describe('FileFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-file-field [fileField]="field"></nae-file-field>'
+    template: '<nae-file-field [dataField]="field"></nae-file-field>'
 })
 class TestWrapperComponent {
     field = new FileField('', '', {

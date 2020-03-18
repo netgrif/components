@@ -64,7 +64,7 @@ export class SideMenuService {
     }
 
     /**
-     * Toggle this _sideMenu. This is equivalent to calling open() when it's already opened, or close() when it's closed.
+     * Toggle this _sideMenu. This is equivalent to calling close() when it's already opened, or open() when it's closed.
      *
      * @param  isOpen  Whether the _sideMenu should be open.
      *

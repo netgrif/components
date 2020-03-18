@@ -15,6 +15,8 @@ import {
     EnumerationField,
     EnumerationFieldComponent,
     EnumerationFieldView,
+    FileField,
+    FileFieldComponent,
     MaterialAppearance,
     MultichoiceField,
     MultichoiceFieldComponent,
@@ -100,6 +102,11 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     multichoiceSelectField = new MultichoiceField('multichoiceSelectFieldId', 'Reactive multichoice select field', ['a', 'b'],
         [{key: 'a', value: 'Alice'}, {key: 'b', value: 'Bob'}, {key: 'c', value: 'Claire'}], {visible: true, editable: true});
 
+    // FILE FIELD
+    @ViewChild('fileFieldComponent') naeFileField: FileFieldComponent;
+    fileField = new FileField('fileFieldId', 'Reactive file field',  {visible: true, editable: true},
+        undefined, undefined, undefined, undefined, 10, false);
+
     changeStream = new Subject<ChangedFields>();
 
     changeGroupControl = this.formBuilder.group({
@@ -115,6 +122,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         ...this.constructFormBuilderObject('enumAuto', this.enumAutoField),
         ...this.constructFormBuilderObject('multichoiceList', this.multichoiceListField),
         ...this.constructFormBuilderObject('multichoiceSelect', this.multichoiceSelectField),
+        ...this.constructFormBuilderObject('file', this.fileField, false),
     });
 
     fieldGroupControl = new FormGroup({});
@@ -134,6 +142,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             {stringId: this.enumAutoField.stringId, component: this.naeEnumAutoField},
             {stringId: this.multichoiceListField.stringId, component: this.naeMultichoiceListField},
             {stringId: this.multichoiceSelectField.stringId, component: this.naeMultichoiceSelectField},
+            {stringId: this.fileField.stringId, component: this.naeFileField},
         ];
         fields.forEach( field => {
             this.addControl(field);
@@ -157,6 +166,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             enumAutoFieldId: this.constructChangeObject('enumAuto'),
             multichoiceListFieldId: this.constructChangeObject('multichoiceList'),
             multichoiceSelectFieldId: this.constructChangeObject('multichoiceSelect'),
+            fileFieldId: this.constructChangeObject('file', false),
         });
     }
 
@@ -164,23 +174,29 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         this.fieldGroupControl.addControl(field.stringId, field.component.formControl);
     }
 
-    private constructFormBuilderObject(prefix: string, dataField: DataField<any>) {
+    private constructFormBuilderObject(prefix: string, dataField: DataField<any>, includeValue: boolean = true) {
         const result = {};
-        result[`${prefix}FieldValue`] = [dataField.value];
+        if (includeValue) {
+            result[`${prefix}FieldValue`] = [dataField.value];
+        }
         ['Required', 'Disabled', 'Hidden'].forEach( suffix => {
             result[`${prefix}Field${suffix}`] = [false];
         });
         return result;
     }
 
-    private constructChangeObject(prefix: string): Change {
-        return {
+    private constructChangeObject(prefix: string, includeValue: boolean = true): Change {
+        const result = {
             behavior: {
                 required: this.changeGroupControl.get(`${prefix}FieldRequired`).value,
                 hidden: this.changeGroupControl.get(`${prefix}FieldHidden`).value,
                 editable: !this.changeGroupControl.get(`${prefix}FieldDisabled`).value,
             },
-            value: this.changeGroupControl.get(`${prefix}FieldValue`).value
+            value: undefined
         };
+        if (includeValue) {
+            result.value = this.changeGroupControl.get(`${prefix}FieldValue`).value;
+        }
+        return result;
     }
 }

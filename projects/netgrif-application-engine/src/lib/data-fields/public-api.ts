@@ -9,6 +9,7 @@ export * from './date-time-field/date-time-field.component';
 export * from './enumeration-field/enumeration-field.component';
 export * from './button-field/button-field.component';
 export * from './multichoice-field/multichoice-field.component';
+export * from './file-field/file-field.component';
 
 // Class
 export * from './models/abstract-data-field';
