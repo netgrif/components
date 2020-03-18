@@ -12,6 +12,7 @@ export class DrawerControlsComponent implements OnInit {
     fixed: boolean;
 
     constructor() {
+        this.fixed = true;
     }
 
     ngOnInit(): void {

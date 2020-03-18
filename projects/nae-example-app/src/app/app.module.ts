@@ -12,8 +12,12 @@ import {NaeExampleAppConfigurationService} from './nae-example-app-configuration
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
 import {NavigationDrawerComponent} from './drawer-prototype/navigation-drawer/navigation-drawer.component';
 import {DrawerControlsComponent} from './drawer-prototype/drawer-controls/drawer-controls.component';
-import { NavigationRailComponent } from './drawer-prototype/navigation-rail/navigation-rail.component';
-import { RailControlsComponent } from './drawer-prototype/rail-controls/rail-controls.component';
+import {NavigationRailComponent} from './drawer-prototype/navigation-rail/navigation-rail.component';
+import {RailControlsComponent} from './drawer-prototype/rail-controls/rail-controls.component';
+import {UserShowcaseComponent} from './drawer-prototype/user-showcase/user-showcase.component';
+import {HttpClientModule} from '@angular/common/http';
+import {MatIconModule} from '@angular/material';
+import { NavigationTreeComponent } from './drawer-prototype/navigation-tree/navigation-tree.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +27,9 @@ import { RailControlsComponent } from './drawer-prototype/rail-controls/rail-con
         NavigationDrawerComponent,
         DrawerControlsComponent,
         NavigationRailComponent,
-        RailControlsComponent
+        RailControlsComponent,
+        UserShowcaseComponent,
+        NavigationTreeComponent
     ],
     imports: [
         BrowserModule,
@@ -33,7 +39,9 @@ import { RailControlsComponent } from './drawer-prototype/rail-controls/rail-con
         FlexLayoutModule,
         MaterialModule,
         CovalentModule,
-        AuthenticationModule
+        AuthenticationModule,
+        HttpClientModule,
+        MatIconModule
     ],
     providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
     bootstrap: [AppComponent]

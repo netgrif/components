@@ -3,7 +3,10 @@
 }
 
 .drawer-content {
-    width: 184px;
-    min-width: 184px;
-    padding: 8px;
+    width: 200px;
+    min-width: 200px;
+}
+
+.mat-drawer-side {
+    border-right: 0;
 }

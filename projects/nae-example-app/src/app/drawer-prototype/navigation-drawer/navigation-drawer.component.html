@@ -3,9 +3,9 @@
                  [disableClose]="config.disableClose"
                  class="drawer-content mat-elevation-z16">
         <div fxLayout="column" fxLayoutAlign="start start" fxFlex>
-            <span>User</span>
+            <nae-app-user-showcase [mode]="'full'" [user]="user"></nae-app-user-showcase>
             <span>Settings</span>
-            <span>Navigation</span>
+            <nae-app-navigation-tree></nae-app-navigation-tree>
             <span>Side-footer</span>
         </div>
     </mat-sidenav>

@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material';
+import {User} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-navigation-drawer',
@@ -12,6 +13,15 @@ export class NavigationDrawerComponent implements OnInit, AfterViewInit {
     @Output() public openedChange: EventEmitter<boolean>;
 
     @ViewChild('sidenav') private _sideNav: MatSidenav;
+
+    // TODO remove
+    user: User = new User('1',
+        'mladoniczky@netgrif.com',
+        'Milan',
+        'Mladoniczky',
+        [],
+        []
+    );
 
     public opened: boolean;
     private _fixed: boolean;
@@ -82,7 +92,7 @@ export class NavigationDrawerComponent implements OnInit, AfterViewInit {
             opened: false,
             disableClose: false
         };
-        if (this._fixed) {
+        if (this._fixed && this._sideNav) {
             this._sideNav.open();
         }
     }
