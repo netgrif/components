@@ -166,7 +166,7 @@ export class TaskPanelContentComponent implements OnInit {
                 return new UserField(item.stringId, item.name, item.behavior, new User('name',
                     'surname', 'email'), item.roles, item.placeholder, item.description);
             case 'button':
-                return new ButtonField(item.stringId, item.name, item.behavior, item.value as string,
+                return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description);
             case 'file':
                 return new FileField(item.stringId, item.name, item.behavior, undefined, item.placeholder, item.description);

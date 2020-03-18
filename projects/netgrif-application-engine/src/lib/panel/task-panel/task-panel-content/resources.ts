@@ -337,7 +337,6 @@ export class Resources {
                 cols: 1,
                 rows: 1
             },
-            value: 'button',
             order: 0,
             subType: 'simple',
             defaultValue: 'button'

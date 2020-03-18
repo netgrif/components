@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {BooleanField} from './models/boolean-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 
