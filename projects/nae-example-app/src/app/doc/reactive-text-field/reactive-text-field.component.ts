@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
-    DataField,
     ChangedFields,
     TextField,
     TextFieldComponent,
@@ -9,7 +8,9 @@ import {
     NumberField,
     NumberFieldComponent,
     DateField,
-    DateFieldComponent
+    DateFieldComponent,
+    DateTimeField,
+    DateTimeFieldComponent
 } from '@netgrif/application-engine';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
@@ -43,6 +44,11 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     @ViewChild('dateFieldComponent') naeDateField: DateFieldComponent;
     dateField = new DateField('dateFieldId', 'Reactive date field', new Date('2020-03-09'), {visible: true, editable: true});
 
+    // DATE TIME FIELD
+    @ViewChild('dateTimeFieldComponent') naeDateTimeField: DateTimeFieldComponent;
+    dateTimeField = new DateTimeField('dateTimeFieldId', 'Reactive date time field', new Date('2020-03-09'),
+        {visible: true, editable: true});
+
     changeStream = new Subject<ChangedFields>();
 
     changeGroupControl = this.formBuilder.group({
@@ -53,7 +59,9 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         numberFieldValue: [this.numberField.value],
         numberFieldRequired: [false],
         dateFieldValue: [this.dateField.value],
-        dateFieldRequired: [false]
+        dateFieldRequired: [false],
+        dateTimeFieldValue: [this.dateTimeField.value],
+        dateTimeFieldRequired: [false],
     });
 
     fieldGroupControl = new FormGroup({});
@@ -61,9 +69,17 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     viewInitialized = false;
 
     ngAfterViewInit(): void {
-        const fields = [this.textField, this.booleanField, this.numberField, this.dateField];
+        const fields = [
+            {stringId: this.textField.stringId, component: this.naeTextField},
+            {stringId: this.booleanField.stringId, component: this.naeBooleanField},
+            {stringId: this.numberField.stringId, component: this.naeNumberField},
+            {stringId: this.dateField.stringId, component: this.naeDateField},
+            {stringId: this.dateTimeField.stringId, component: this.naeDateTimeField}];
         fields.forEach( field => {
             this.addControl(field);
+        });
+        setTimeout(() => {
+            this.viewInitialized = true;
         });
     }
 
@@ -93,10 +109,16 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
                 },
                 value: this.changeGroupControl.get('dateFieldValue').value
             },
+            dateTimeFieldId: {
+                behavior: {
+                    required: this.changeGroupControl.get('dateTimeFieldRequired').value
+                },
+                value: this.changeGroupControl.get('dateTimeFieldValue').value
+            },
         });
     }
 
-    private addControl(field: DataField<any>): void {
-        this.fieldGroupControl.addControl(field.stringId, new FormControl(field.value));
+    private addControl(field): void {
+        this.fieldGroupControl.addControl(field.stringId, field.component.formControl);
     }
 }
