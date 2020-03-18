@@ -17,7 +17,6 @@
                 color="primary"
                 ngDefaultControl
                 [matTooltip]="dataField.description"
-                [disabled]="dataField.disabled"
                 [formControl]="formControl"
                 (click)="formControl.setValue(formControl.value + 1)">
             {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : dataField.placeholder }}
