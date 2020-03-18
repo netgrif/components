@@ -62,7 +62,7 @@ export abstract class DataField<T> {
         formControl.setValidators(this.resolveFormControlValidators());
     }
 
-    private resolveFormControlValidators(): Array<ValidatorFn> {
+    protected resolveFormControlValidators(): Array<ValidatorFn> {
         const result = [];
 
         if (this.behavior.required) {

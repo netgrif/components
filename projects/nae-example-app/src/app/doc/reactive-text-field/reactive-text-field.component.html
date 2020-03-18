@@ -24,6 +24,27 @@
 
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
+            <nae-date-field #dateFieldComponent [dataField]="dateField" [changedFields]="changeStream"></nae-date-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" formControlName="dateFieldValue">
+                <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-checkbox formControlName="dateFieldRequired">required</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+
+    field errors: <span *ngIf="viewInitialized">{{naeDateField.formControl.errors | json}}</span><br>
+    field value: <span *ngIf="viewInitialized">{{naeDateField.formControl.value}}</span><br>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
             <nae-text-field #textFieldComponent [dataField]="textField" [changedFields]="changeStream"></nae-text-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
