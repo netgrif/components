@@ -34,7 +34,7 @@ describe('EnumerationSelectFieldComponent', () => {
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
-    field = new EnumerationField('', '', {key: '', value: ''}, [], {
+    field = new EnumerationField('', '', '', [], {
         required: true,
         optional: true,
         visible: true,
