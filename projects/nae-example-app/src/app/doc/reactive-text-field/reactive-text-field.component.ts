@@ -1,8 +1,10 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     BooleanField,
-    BooleanFieldComponent, Change,
-    ChangedFields, DataField,
+    BooleanFieldComponent,
+    Change,
+    ChangedFields,
+    DataField,
     DateField,
     DateFieldComponent,
     DateTimeField,
@@ -17,7 +19,8 @@ import {
     NumberField,
     NumberFieldComponent,
     TextField,
-    TextFieldComponent
+    TextFieldComponent,
+    TextFieldView
 } from '@netgrif/application-engine';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
@@ -38,6 +41,11 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // TEXT FIELD
     @ViewChild('textFieldComponent') naeTextField: TextFieldComponent;
     textField = new TextField('textFieldId', 'Reactive text field', 'hello', {visible: true, editable: true});
+
+    // TEXT AREA FIELD
+    @ViewChild('textAreaFieldComponent') naeTextAreaField: TextFieldComponent;
+    textAreaField = new TextField('textAreaFieldId', 'Reactive text area field', 'hello world', {visible: true, editable: true},
+        undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
 
     // BOOLEAN FIELD
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
@@ -88,6 +96,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     changeGroupControl = this.formBuilder.group({
         ...this.constructFormBuilderObject('text', this.textField),
+        ...this.constructFormBuilderObject('textArea', this.textAreaField),
         ...this.constructFormBuilderObject('boolean', this.booleanField),
         ...this.constructFormBuilderObject('number', this.numberField),
         ...this.constructFormBuilderObject('date', this.dateField),
@@ -105,6 +114,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         const fields = [
             {stringId: this.textField.stringId, component: this.naeTextField},
+            {stringId: this.textAreaField.stringId, component: this.naeTextAreaField},
             {stringId: this.booleanField.stringId, component: this.naeBooleanField},
             {stringId: this.numberField.stringId, component: this.naeNumberField},
             {stringId: this.dateField.stringId, component: this.naeDateField},
@@ -113,6 +123,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             {stringId: this.enumListField.stringId, component: this.naeEnumListField},
             {stringId: this.enumAutoField.stringId, component: this.naeEnumAutoField},
             {stringId: this.multichoiceListField.stringId, component: this.naeMultichoiceListField},
+            {stringId: this.multichoiceSelectField.stringId, component: this.naeMultichoiceSelectField},
         ];
         fields.forEach( field => {
             this.addControl(field);
@@ -124,16 +135,17 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     change() {
         this.changeStream.next({
-            textFieldId: this.constructChangeObject('textField'),
-            booleanFieldId: this.constructChangeObject('booleanField'),
-            numberFieldId: this.constructChangeObject('numberField'),
-            dateFieldId: this.constructChangeObject('dateField'),
-            dateTimeFieldId: this.constructChangeObject('dateTimeField'),
-            enumSelectFieldId: this.constructChangeObject('enumSelectField'),
-            enumListFieldId: this.constructChangeObject('enumListField'),
-            enumAutoFieldId: this.constructChangeObject('enumAutoField'),
-            multichoiceListFieldId: this.constructChangeObject('multichoiceListField'),
-            multichoiceSelectFieldId: this.constructChangeObject('multichoiceSelectField'),
+            textFieldId: this.constructChangeObject('text'),
+            textAreaFieldId: this.constructChangeObject('textArea'),
+            booleanFieldId: this.constructChangeObject('boolean'),
+            numberFieldId: this.constructChangeObject('number'),
+            dateFieldId: this.constructChangeObject('date'),
+            dateTimeFieldId: this.constructChangeObject('dateTime'),
+            enumSelectFieldId: this.constructChangeObject('enumSelect'),
+            enumListFieldId: this.constructChangeObject('enumList'),
+            enumAutoFieldId: this.constructChangeObject('enumAuto'),
+            multichoiceListFieldId: this.constructChangeObject('multichoiceList'),
+            multichoiceSelectFieldId: this.constructChangeObject('multichoiceSelect'),
         });
     }
 
@@ -153,11 +165,11 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     private constructChangeObject(prefix: string): Change {
         return {
             behavior: {
-                required: this.changeGroupControl.get(`${prefix}Required`).value,
-                hidden: this.changeGroupControl.get(`${prefix}Hidden`).value,
-                editable: !this.changeGroupControl.get(`${prefix}Disabled`).value,
+                required: this.changeGroupControl.get(`${prefix}FieldRequired`).value,
+                hidden: this.changeGroupControl.get(`${prefix}FieldHidden`).value,
+                editable: !this.changeGroupControl.get(`${prefix}FieldDisabled`).value,
             },
-            value: this.changeGroupControl.get(`${prefix}Value`).value
+            value: this.changeGroupControl.get(`${prefix}FieldValue`).value
         };
     }
 }
