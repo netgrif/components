@@ -13,6 +13,8 @@
             <h3>Change</h3>
             <mat-checkbox formControlName="booleanFieldValue">value</mat-checkbox>
             <mat-checkbox formControlName="booleanFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="booleanFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="booleanFieldHidden">hidden</mat-checkbox>
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
@@ -34,6 +36,8 @@
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-checkbox formControlName="dateFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="dateFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="dateFieldHidden">hidden</mat-checkbox>
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
@@ -50,6 +54,8 @@
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
             <mat-checkbox formControlName="dateTimeFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="dateTimeFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="dateTimeFieldHidden">hidden</mat-checkbox>
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
@@ -61,12 +67,89 @@
 
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
+            <nae-enumeration-field #enumSelectFieldComponent [dataField]="enumSelectField" [changedFields]="changeStream"></nae-enumeration-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <mat-form-field>
+                <mat-select formControlName="enumSelectFieldValue">
+                    <mat-option *ngFor="let opt of enumSelectField.choices" [value]="opt.key">
+                        {{opt.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-checkbox formControlName="enumSelectFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="enumSelectFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="enumSelectFieldHidden">hidden</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+
+    field errors: <span *ngIf="viewInitialized">{{enumSelectFieldComponent.formControl.errors | json}}</span><br>
+    field value: <span *ngIf="viewInitialized">{{enumSelectFieldComponent.formControl.value}}</span><br>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
+            <nae-enumeration-field #enumListFieldComponent [dataField]="enumListField" [changedFields]="changeStream"></nae-enumeration-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <mat-form-field>
+                <mat-select formControlName="enumListFieldValue">
+                    <mat-option *ngFor="let opt of enumListField.choices" [value]="opt.key">
+                        {{opt.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-checkbox formControlName="enumListFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="enumListFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="enumListFieldHidden">hidden</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+
+    field errors: <span *ngIf="viewInitialized">{{enumListFieldComponent.formControl.errors | json}}</span><br>
+    field value: <span *ngIf="viewInitialized">{{enumListFieldComponent.formControl.value}}</span><br>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
+            <nae-enumeration-field #enumAutoFieldComponent [dataField]="enumAutoField" [changedFields]="changeStream"></nae-enumeration-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <mat-form-field>
+                <mat-select formControlName="enumAutoFieldValue">
+                    <mat-option *ngFor="let opt of enumAutoField.choices" [value]="opt.key">
+                        {{opt.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-checkbox formControlName="enumAutoFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="enumAutoFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="enumAutoFieldHidden">hidden</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+
+    field errors: <span *ngIf="viewInitialized">{{enumAutoFieldComponent.formControl.errors | json}}</span><br>
+    field value: <span *ngIf="viewInitialized">{{enumAutoFieldComponent.formControl.value}}</span><br>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
             <nae-text-field #textFieldComponent [dataField]="textField" [changedFields]="changeStream"></nae-text-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
             <input type="text" formControlName="textFieldValue">
             <mat-checkbox formControlName="textFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="textFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="textFieldHidden">hidden</mat-checkbox>
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>
@@ -84,6 +167,8 @@
             <h3>Change</h3>
             <input type="number" formControlName="numberFieldValue">
             <mat-checkbox formControlName="numberFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="numberFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="numberFieldHidden">hidden</mat-checkbox>
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>

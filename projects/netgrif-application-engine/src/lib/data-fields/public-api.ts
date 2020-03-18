@@ -6,6 +6,7 @@ export * from './boolean-field/boolean-field.component';
 export * from './number-field/number-field.component';
 export * from './date-field/date-field.component';
 export * from './date-time-field/date-time-field.component';
+export * from './enumeration-field/enumeration-field.component';
 
 // Class
 export * from './models/abstract-data-field';
