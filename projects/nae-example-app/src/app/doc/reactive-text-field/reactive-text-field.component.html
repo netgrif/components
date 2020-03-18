@@ -38,8 +38,8 @@
         </div>
     </div>
 
-    field errors: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.errors | json}}</span><br>
     field value: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.value}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{dateFieldComponent.formControl.errors | json}}</span><br>
 
     <mat-divider></mat-divider>
 
@@ -68,6 +68,23 @@
             <h3>Change</h3>
             <input type="number" formControlName="numberFieldValue">
             <mat-checkbox formControlName="numberFieldRequired">required</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+
+    field value: <span *ngIf="viewInitialized">{{numberFieldComponent.formControl.value}}</span><br>
+    field errors: <span *ngIf="viewInitialized">{{numberFieldComponent.formControl.errors | json}}</span><br>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
+            <nae-multichoice-field #multichoiceFieldComponent [dataField]="numberField" [changedFields]="changeStream"></nae-multichoice-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+<!--            <input type="number" formControlName="multihcoiceFieldValue">-->
+            <mat-checkbox formControlName="multichoiceFieldRequired">required</mat-checkbox>
             <button mat-stroked-button (click)="change()">change</button>
         </div>
     </div>

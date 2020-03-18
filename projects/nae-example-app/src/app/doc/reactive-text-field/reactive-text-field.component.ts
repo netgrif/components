@@ -9,7 +9,9 @@ import {
     NumberField,
     NumberFieldComponent,
     DateField,
-    DateFieldComponent
+    DateFieldComponent,
+    MultichoiceField,
+    MultichoiceFieldComponent
 } from '@netgrif/application-engine';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
@@ -43,6 +45,11 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     @ViewChild('dateFieldComponent') naeDateField: DateFieldComponent;
     dateField = new DateField('dateFieldId', 'Reactive date field', new Date('2020-03-09'), {visible: true, editable: true});
 
+    // MULTICHOICE LIST FIELD
+    @ViewChild('dateFieldComponent') naeMultichoiceLIstField: MultichoiceFieldComponent;
+    multichoiceListField = new MultichoiceField('multichoiceListFieldId', 'Reactive multichoice list field', ['a', 'b'],
+        [{key: 'a', value: 'Alice'}, {key: 'b', value: 'Bob'}, {key: 'c', value: 'Claire'}], {visible: true, editable: true});
+
     changeStream = new Subject<ChangedFields>();
 
     changeGroupControl = this.formBuilder.group({
@@ -53,7 +60,9 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         numberFieldValue: [this.numberField.value],
         numberFieldRequired: [false],
         dateFieldValue: [this.dateField.value],
-        dateFieldRequired: [false]
+        dateFieldRequired: [false],
+        multichoiceListFieldValue: [],
+        multichoiceListFieldRequired: [false]
     });
 
     fieldGroupControl = new FormGroup({});

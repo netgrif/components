@@ -5,6 +5,7 @@ export * from './text-field/text-field.component';
 export * from './boolean-field/boolean-field.component';
 export * from './number-field/number-field.component';
 export * from './date-field/date-field.component';
+export * from './multichoice-field/multichoice-field.component';
 
 // Class
 export * from './models/abstract-data-field';
