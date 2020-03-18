@@ -5,16 +5,15 @@
 
 <ng-template #date let-showLargeLayout="showLargeLayout">
     <mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
-            <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-            <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
-            <input matInput
-                   [matDatepicker]="datepicker"
-                   (click)="datepicker.open()"
-                   (keydown.enter)="datepicker.close()"
-                   [placeholder]="dataField.placeholder"
-                   [formControl]="formControl">
-            <mat-datepicker #datepicker>
-            </mat-datepicker>
-            <mat-hint>{{dataField.description}}</mat-hint>
+        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
+        <input matInput
+               [matDatepicker]="datepicker"
+               (click)="datepicker.open()"
+               (keydown.enter)="datepicker.close()"
+               [placeholder]="dataField.placeholder"
+               [formControl]="formControl">
+        <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker></mat-datepicker>
+        <mat-hint>{{dataField.description}}</mat-hint>
     </mat-form-field>
 </ng-template>

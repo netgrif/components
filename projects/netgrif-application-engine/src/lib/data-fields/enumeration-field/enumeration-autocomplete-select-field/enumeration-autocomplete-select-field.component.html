@@ -4,10 +4,7 @@
            aria-label="Number"
            matInput
            [placeholder]="enumerationField.placeholder"
-           [(ngModel)]="selected"
-           [formControl]="validate"
-           [required]="enumerationField.behavior.required"
-           [disabled]="enumerationField.disabled"
+           [formControl]="formControlRef"
            [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">

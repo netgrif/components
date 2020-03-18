@@ -36,7 +36,7 @@ describe('DatetimeFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-date-time-field [dateTimeField]="field"></nae-date-time-field>'
+    template: '<nae-date-time-field [dataField]="field"></nae-date-time-field>'
 })
 class TestWrapperComponent {
     field = new DateTimeField('', '', new Date(), {
