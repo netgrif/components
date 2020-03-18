@@ -2,6 +2,9 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     BooleanField,
     BooleanFieldComponent,
+    ButtonField,
+    ButtonFieldComponent,
+    ButtonFieldView,
     Change,
     ChangedFields,
     DataField,
@@ -52,6 +55,11 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // BOOLEAN FIELD
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
     booleanField = new BooleanField('booleanFieldId', 'Reactive boolean field', true, {visible: true, editable: true});
+
+    // BUTTON FIELD
+    @ViewChild('buttonFieldComponent') naeButtonField: ButtonFieldComponent;
+    buttonField = new ButtonField('buttonFieldId', 'Reactive button field',
+        {visible: true, editable: true}, undefined,  undefined, 'test', ButtonFieldView.STROKED);
 
     // NUMBER FIELD
     @ViewChild('numberFieldComponent') naeNumberField: NumberFieldComponent;
@@ -105,6 +113,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         ...this.constructFormBuilderObject('text', this.textField),
         ...this.constructFormBuilderObject('textArea', this.textAreaField),
         ...this.constructFormBuilderObject('boolean', this.booleanField),
+        ...this.constructFormBuilderObject('button', this.buttonField),
         ...this.constructFormBuilderObject('number', this.numberField),
         ...this.constructFormBuilderObject('date', this.dateField),
         ...this.constructFormBuilderObject('dateTime', this.dateTimeField),
@@ -124,6 +133,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             {stringId: this.textField.stringId, component: this.naeTextField},
             {stringId: this.textAreaField.stringId, component: this.naeTextAreaField},
             {stringId: this.booleanField.stringId, component: this.naeBooleanField},
+            {stringId: this.buttonField.stringId, component: this.naeButtonField},
             {stringId: this.numberField.stringId, component: this.naeNumberField},
             {stringId: this.dateField.stringId, component: this.naeDateField},
             {stringId: this.dateTimeField.stringId, component: this.naeDateTimeField},
@@ -147,6 +157,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             textFieldId: this.constructChangeObject('text'),
             textAreaFieldId: this.constructChangeObject('textArea'),
             booleanFieldId: this.constructChangeObject('boolean'),
+            buttonFieldId: this.constructChangeObject('button'),
             numberFieldId: this.constructChangeObject('number'),
             dateFieldId: this.constructChangeObject('date'),
             dateTimeFieldId: this.constructChangeObject('dateTime'),

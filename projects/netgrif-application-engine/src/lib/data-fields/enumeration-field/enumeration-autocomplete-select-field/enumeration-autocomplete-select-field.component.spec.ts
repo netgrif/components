@@ -7,6 +7,7 @@ import {EnumerationField} from '../models/enumeration-field';
 import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormControl} from '@angular/forms';
 
 describe('EnumerationAutocompleteSelectFieldComponent', () => {
     let component: EnumerationAutocompleteSelectFieldComponent;
@@ -31,17 +32,18 @@ describe('EnumerationAutocompleteSelectFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-enumeration-autocomplete-select-field [showLargeLayout]="label" [enumerationField]="field">' +
+    template: '<nae-enumeration-autocomplete-select-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
         '</nae-enumeration-autocomplete-select-field>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
-    field = new EnumerationField('', '', '', [], {
+    field = new EnumerationField('', '', 'test', [{key: 'test', value: 'test'}], {
         required: true,
         optional: true,
         visible: true,
         editable: true,
         hidden: true
     });
+    form = new FormControl();
 }
 

@@ -7,6 +7,7 @@ import {MultichoiceField} from '../models/multichoice-field';
 import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormControl} from '@angular/forms';
 
 describe('MultichoiceListFieldComponent', () => {
     let component: MultichoiceListFieldComponent;
@@ -32,7 +33,8 @@ describe('MultichoiceListFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-multichoice-list-field [showLargeLayout]="label" [multichoiceField]="field"></nae-multichoice-list-field>'
+    template: '<nae-multichoice-list-field [showLargeLayout]="label" [multichoiceField]="field" [formControlRef]="form">' +
+        '</nae-multichoice-list-field>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
@@ -43,4 +45,5 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     });
+    form = new FormControl();
 }

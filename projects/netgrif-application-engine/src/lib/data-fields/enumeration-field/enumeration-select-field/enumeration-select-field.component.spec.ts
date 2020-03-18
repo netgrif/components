@@ -6,6 +6,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {FormControl} from '@angular/forms';
 
 describe('EnumerationSelectFieldComponent', () => {
     let component: EnumerationSelectFieldComponent;
@@ -30,7 +31,8 @@ describe('EnumerationSelectFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-enumeration-select-field [showLargeLayout]="label" [enumerationField]="field"></nae-enumeration-select-field>'
+    template: '<nae-enumeration-select-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</nae-enumeration-select-field>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
@@ -41,5 +43,6 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     });
+    form = new FormControl();
 }
 
