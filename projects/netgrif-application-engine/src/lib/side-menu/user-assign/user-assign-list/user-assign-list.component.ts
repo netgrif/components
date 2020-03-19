@@ -31,10 +31,12 @@ export class UserAssignListComponent implements OnInit {
 
     ngOnInit() {}
 
-    public selected(selectedUser: UserValue): void {
+    public select(selectedUser: UserValue): void {
         this._currentUser = selectedUser;
         this.userSelected.emit(selectedUser);
-        this.userList.map(user => user === selectedUser ? user.selected = true : user.selected = false);
+        this.userList.forEach(user => {
+            user.selected = user === selectedUser;
+        });
     }
 
     public isSelected(user: UserValue): boolean {
