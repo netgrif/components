@@ -1,4 +1,4 @@
-export class User {
+export class UserValue {
 
     private _selected: boolean;
 

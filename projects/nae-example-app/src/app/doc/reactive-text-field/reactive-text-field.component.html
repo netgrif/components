@@ -264,6 +264,22 @@
     field errors: {{fileFieldComponent.formControl.errors | json}}<br>
 
     <mat-divider></mat-divider>
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
+            <nae-user-field #userFieldComponent [dataField]="userField" [changedFields]="changeStream"></nae-user-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <mat-checkbox formControlName="userFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="userFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="userFieldHidden">hidden</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+    field value: {{fileFieldComponent.formControl.value}}<br>
+    field errors: {{fileFieldComponent.formControl.errors | json}}<br>
+
+    <mat-divider></mat-divider>
     <br>
     group value: <span *ngIf="fieldGroupInitialized">{{fieldGroupControl.value | json}}</span><br>
     group valid: <span *ngIf="fieldGroupInitialized">{{fieldGroupControl.valid}}</span><br>

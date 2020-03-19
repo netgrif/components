@@ -17,7 +17,7 @@ import {
 import {DateField} from '../../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../../data-fields/user-field/models/user-field';
-import {User} from '../../../data-fields/user-field/models/user';
+import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {ButtonField} from '../../../data-fields/button-field/models/button-field';
 import {FileField} from '../../../data-fields/file-field/models/file-field';
 import {DataField, MaterialAppearance} from '../../../data-fields/models/abstract-data-field';
@@ -163,7 +163,7 @@ export class TaskPanelContentComponent implements OnInit {
                 const dateTime = new Date();
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior, item.placeholder, item.description);
             case 'user':
-                return new UserField(item.stringId, item.name, item.behavior, new User('name',
+                return new UserField(item.stringId, item.name, item.behavior, new UserValue('name',
                     'surname', 'email'), item.roles, item.placeholder, item.description);
             case 'button':
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,

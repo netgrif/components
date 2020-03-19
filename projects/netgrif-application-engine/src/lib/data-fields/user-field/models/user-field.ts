@@ -1,14 +1,14 @@
 import {DataField} from '../../models/abstract-data-field';
-import {User} from './user';
+import {UserValue} from './user-value';
 import {Behavior} from '../../models/behavior';
 
-export class UserField extends DataField<User> {
-    constructor(stringId: string, title: string, behavior: Behavior, value: User, private _roles: Array<User>,
-                placeholder?: string, description?: string, ) {
+export class UserField extends DataField<UserValue> {
+    constructor(stringId: string, title: string, behavior: Behavior, value: UserValue, private _roles: Array<UserValue>,
+                placeholder?: string, description?: string) {
         super(stringId, title, behavior, placeholder, description, value);
     }
 
-    get roles(): Array<User> {
+    get roles(): Array<UserValue> {
         return this._roles;
     }
 }
