@@ -21,7 +21,7 @@ export class TextField extends DataField<string> {
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
-        let result = [];
+        const result = [];
 
         if (this.behavior.required) {
             result.push(Validators.required);
@@ -31,9 +31,9 @@ export class TextField extends DataField<string> {
             if (this._validators === undefined) {
                 this._validators = [];
                 this._validators = this.resolveValidations();
-                result = [...result, ...this._validators];
+                result.push(this._validators);
             } else {
-                result = [...result, ...this._validators];
+                result.push(this._validators);
             }
         }
 

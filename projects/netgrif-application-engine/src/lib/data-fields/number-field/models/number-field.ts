@@ -11,7 +11,7 @@ export class NumberField extends DataField<number> {
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
-        let result = [];
+        const result = [];
 
         if (this.behavior.required) {
             result.push(Validators.required);
@@ -21,16 +21,16 @@ export class NumberField extends DataField<number> {
             if (this._validators === undefined) {
                 this._validators = [];
                 this._validators = this.resolveValidations();
-                result = [...result, ...this._validators];
+                result.push(...this._validators);
             } else {
-                result = [...result, ...this._validators];
+                result.push(...this._validators);
             }
         }
 
         return result;
     }
 
-    private resolveValidations(): Array<ValidatorFn> {
+    protected resolveValidations(): Array<ValidatorFn> {
         const result = [];
 
         this.validations.forEach(item => {
