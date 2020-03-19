@@ -1,27 +1,44 @@
 <div [ngSwitch]="mode">
-    <div *ngSwitchCase="'full'" fxLayout="column" fxLayoutAlign="start center"
-         style="width:200px; margin-bottom: 16px;">
-        <div
-            style="width: 100%; height: 100px; background-image:url(assets/default-user-background.jpg);border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;"
-            class="mat-elevation-z6"></div>
-        <div style="margin-top: -32px;margin-bottom: 8px; width: 64px; height: 64px; border-radius: 64px;" class="mat-elevation-z6">
-            <img style="width: 100%; height: 100%;" src="assets/avatardefault.png" alt="user avatar">
+    <div *ngSwitchCase="'full'" #fullShowcase fxLayout="column" fxLayoutAlign="start center" class="full-showcase-container"
+         [routerLink]="link">
+        <div [style.backgroundImage]="'url('+userBanner+')'" class="full-width user-banner mat-elevation-z6" matRipple [matRippleTrigger]="fullShowcase"></div>
+        <div class="user-avatar-large mat-elevation-z6" matRipple [matRippleTrigger]="fullShowcase">
+            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
         </div>
-        <div fxLayout="column" fxLayoutAlign="center center"
-             style="width: 100%; padding: 8px;text-align: center;">
-            <span style="font-size: 20px; margin-bottom: 4px;">{{user.fullName}}</span>
-            <span style="font-size: 12px; color: #616161">{{user.email}}</span>
+        <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text">
+            <span>{{user.fullName}}</span>
+            <span>{{user.email}}</span>
         </div>
-        <mat-divider style="width: 90%;" inset="true"></mat-divider>
     </div>
-    <div *ngSwitchCase="'horizontal'">
-
+    <div *ngSwitchCase="'horizontal'" fxLayout="row" fxLayoutAlign="start center"
+         class="horizontal-showcase-container" [routerLink]="link" matRipple>
+        <div class="user-avatar-large mat-elevation-z6">
+            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text">
+            <span>{{user.fullName}}</span>
+            <span>{{user.email}}</span>
+        </div>
     </div>
-    <div *ngSwitchCase="'vertical'">
-
+    <div *ngSwitchCase="'vertical'" fxLayout="column" fxLayoutAlign="start center" class="vertical-showcase-container"
+         [routerLink]="link" matRipple>
+        <div class="user-avatar-large mat-elevation-z6">
+            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text">
+            <span>{{user.fullName}}</span>
+            <span>{{user.email}}</span>
+        </div>
     </div>
-    <div *ngSwitchCase="'icon'">
-
+    <div *ngSwitchCase="'icon'" [routerLink]="link">
+        <div class="mat-elevation-z6"
+             [ngClass]="{'user-avatar-large':iconStyle === 'large', 'user-avatar-small':iconStyle==='small'}"
+             [matTooltip]="user.fullName+'\n'+user.email"
+             matTooltipHideDelay="1000"
+             [matTooltipPosition]="tooltipPosition"
+             matRipple>
+            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
+        </div>
     </div>
     <div *ngSwitchDefault>
         <span>User showcase mode not set!</span>

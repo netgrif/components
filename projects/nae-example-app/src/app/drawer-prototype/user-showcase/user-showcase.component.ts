@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {User} from '@netgrif/application-engine';
-import {MatIconRegistry} from '@angular/material';
-import {DomSanitizer} from '@angular/platform-browser';
+import {TooltipPosition} from '@angular/material';
 
 export type Mode = 'full' | 'horizontal' | 'vertical' | 'icon';
+export type IconStyle = 'large' | 'small';
 
 @Component({
     selector: 'nae-app-user-showcase',
@@ -12,20 +12,28 @@ export type Mode = 'full' | 'horizontal' | 'vertical' | 'icon';
 })
 export class UserShowcaseComponent implements OnInit, AfterViewInit {
 
-    @Input() public mode: Mode;
     @Input() public user: User;
+    @Input() public mode: Mode = 'horizontal';
+    @Input() public tooltipPosition: TooltipPosition = 'below';
+    @Input() public iconStyle: IconStyle = 'large';
+    @Input() public link: string;
 
-    constructor(private _matIconRegistry: MatIconRegistry, private _sanitizer: DomSanitizer) {
-        _matIconRegistry.addSvgIcon('default-user-avatar',
-            _sanitizer.bypassSecurityTrustResourceUrl('assets/avatar-default.svg'));
+    constructor() {
+
     }
 
     ngOnInit(): void {
-        if (!this.mode) {
-            this.mode = 'horizontal';
-        }
+
     }
 
     ngAfterViewInit(): void {
+    }
+
+    get userBanner(): string {
+        return this.user['banner'] ? this.user['banner'] : 'assets/default-user-background.jpg';
+    }
+
+    get userAvatar(): string {
+        return this.user['avatar'] ? this.user['avatar'] : 'assets/avatardefault.png';
     }
 }
