@@ -17,7 +17,7 @@ import {
 } from '../../utilityFunctions';
 import {strings} from '@angular-devkit/core';
 import {CreateViewArguments} from './schema';
-import { ImportsToAdd } from './classes/importsToAdd';
+import {ImportsToAdd} from './classes/importsToAdd';
 import {ClassName} from './classes/ClassName';
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
@@ -40,11 +40,11 @@ function checkPathValidity(path: string | undefined, routeMap: Map<string, Route
 
 function createView(tree: Tree, args: CreateViewArguments): Rule {
     switch (args.viewType) {
-        case "login":
+        case 'login':
             return createLoginView(tree, args);
-        case "tabView":
+        case 'tabView':
             return createTabView(tree, args);
-        case "taskView":
+        case 'taskView':
             return createTaskView(tree, args);
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
@@ -64,8 +64,8 @@ function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
     }));
 
     updateAppModule(tree, className.name, className.fileImportPath, [
-        new ImportsToAdd("FlexModule", "@angular/flex-layout"),
-        new ImportsToAdd("CardModule", "@netgrif/application-engine")]);
+        new ImportsToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportsToAdd('CardModule', '@netgrif/application-engine')]);
     addRoutingModuleImport(tree, className.name, className.fileImportPath);
 
 
@@ -81,8 +81,8 @@ function createTabView(tree: Tree, args: CreateViewArguments): Rule {
     const className = new ClassName(args.path as string, 'TabView');
 
     updateAppModule(tree, className.name, className.fileImportPath, [
-        new ImportsToAdd("FlexModule", "@angular/flex-layout"),
-        new ImportsToAdd("TabsModule", "@netgrif/application-engine")]);
+        new ImportsToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportsToAdd('TabsModule', '@netgrif/application-engine')]);
 
     rules.push(schematic('add-route', {
         routeObject: createRouteObject(args.path as string, className.name),
@@ -111,11 +111,11 @@ function createTaskView(tree: Tree, args: CreateViewArguments): Rule {
         classify: strings.classify
     }));
 
-    updateAppModule(tree,className.name, className.fileImportPath,[
-        new ImportsToAdd("FlexModule", "@angular/flex-layout"),
-        new ImportsToAdd("MatCardModule", "@angular/material/card"),
-        new ImportsToAdd("PanelModule", "@netgrif/application-engine"),
-        new ImportsToAdd("CardModule", "@netgrif/application-engine")]);
+    updateAppModule(tree, className.name, className.fileImportPath, [
+        new ImportsToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportsToAdd('MatCardModule', '@angular/material/card'),
+        new ImportsToAdd('PanelModule', '@netgrif/application-engine'),
+        new ImportsToAdd('CardModule', '@netgrif/application-engine')]);
     addRoutingModuleImport(tree, className.name, className.fileImportPath);
 
     rules.push(schematic('add-route', {
