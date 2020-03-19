@@ -45,7 +45,8 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     // TEXT FIELD
     @ViewChild('textFieldComponent') naeTextField: TextFieldComponent;
-    textField = new TextField('textFieldId', 'Reactive text field', 'hello', {visible: true, editable: true});
+    textField = new TextField('textFieldId', 'Reactive text field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
+        [{validationRule: 'telNumber', validationMessage: 'dasdsad' }] );
 
     // TEXT AREA FIELD
     @ViewChild('textAreaFieldComponent') naeTextAreaField: TextFieldComponent;

@@ -4,6 +4,11 @@ import {OnDestroy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
 
+export interface Validation {
+    validationRule: string;
+    validationMessage: string;
+}
+
 export enum MaterialAppearance {
     LEGACY = 'legacy',
     STANDARD = 'standard',
@@ -68,8 +73,6 @@ export abstract class DataField<T> {
         if (this.behavior.required) {
             result.push(Validators.required);
         }
-
-        // TODO validations
 
         return result;
     }
