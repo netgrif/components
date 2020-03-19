@@ -12,6 +12,7 @@
             {{name}}
         </button>
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="multiple"
-               accept="{{dataField.allowTypes}}" class="invisible-input" [formControl]="formControl"/>
+               accept="{{dataField.allowTypes}}" class="invisible-input"/>
+        <input type="hidden" [formControl]="formControl" [multiple]="multiple" accept="{{dataField.allowTypes}}">
     </div>
 </ng-template>
