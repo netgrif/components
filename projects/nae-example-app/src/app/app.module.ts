@@ -31,6 +31,7 @@ import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-exam
 import { DialogExampleComponent } from './doc/dialog-example/dialog-example.component';
 import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example.component';
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
+import {ProfileModule} from "../../../netgrif-application-engine/src/lib/user/profile/profile.module";
 
 @NgModule({
     declarations: [
@@ -59,7 +60,8 @@ import { ContentComponent } from './doc/tab-view-example/content/content.compone
         SideMenuModule,
         PanelModule,
         DialogModule,
-        TabsModule
+        TabsModule,
+        ProfileModule
     ],
     entryComponents: [
         NewCaseComponent,
