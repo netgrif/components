@@ -4,7 +4,7 @@ import {UserAssignListComponent} from './user-assign-list.component';
 import {UserAssignItemComponent} from './user-assign-item/user-assign-item.component';
 import {MaterialModule} from '../../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {User} from '../../../data-fields/user-field/models/user';
+import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {Component} from '@angular/core';
 import {CovalentCommonModule} from '@covalent/core';
 
@@ -43,7 +43,7 @@ describe('UserAssignListComponent', () => {
 })
 class TestWrapperComponent {
     users = [
-        new User(
+        new UserValue(
             'Fero',
             'Galamboši',
             'ferinko123@gmail.com'

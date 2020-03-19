@@ -10,6 +10,7 @@ export * from './enumeration-field/enumeration-field.component';
 export * from './button-field/button-field.component';
 export * from './multichoice-field/multichoice-field.component';
 export * from './file-field/file-field.component';
+export * from './user-field/user-field.component';
 
 // Class
 export * from './models/abstract-data-field';
@@ -21,6 +22,7 @@ export * from './boolean-field/models/boolean-field';
 export * from './date-field/models/date-field';
 export * from './file-field/models/file-field';
 export * from './user-field/models/user-field';
+export * from './user-field/models/user-value';
 export * from './date-time-field/models/date-time-field';
 export * from './button-field/models/button-field';
 

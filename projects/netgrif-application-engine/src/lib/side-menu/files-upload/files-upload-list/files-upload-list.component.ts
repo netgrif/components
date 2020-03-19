@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FileUploadModel} from '../../../data-fields/file-field/models/file-field';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {FileFieldService} from '../../../data-fields/file-field/services/file-field.service';
 
 @Component({
     selector: 'nae-files-upload-list',
@@ -15,11 +16,9 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
         ])
     ]
 })
-export class FilesUploadListComponent implements OnInit {
+export class FilesUploadListComponent {
 
     @Input() public allFiles: Array<FileUploadModel> = [];
-
-    ngOnInit() {
-    }
+    @Input() public fileFieldService: FileFieldService;
 
 }

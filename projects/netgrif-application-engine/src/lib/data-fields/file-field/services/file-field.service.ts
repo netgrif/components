@@ -10,9 +10,7 @@ import {
     SnackBarVerticalPosition
 } from '../../../snack-bar/snack-bar.service';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class FileFieldService {
 
     public allFiles: Array<FileUploadModel> = [];

@@ -25,7 +25,10 @@ import {
     NumberFieldComponent,
     TextField,
     TextFieldComponent,
-    TextFieldView
+    TextFieldView,
+    UserValue,
+    UserField,
+    UserFieldComponent
 } from '@netgrif/application-engine';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
@@ -108,6 +111,11 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     fileField = new FileField('fileFieldId', 'Reactive file field',  {visible: true, editable: true},
         undefined, undefined, undefined, undefined, 10, false);
 
+    // USER FIELD
+    @ViewChild('userFieldComponent') naeUserField: UserFieldComponent;
+    userField = new UserField('userFieldId', 'Reactive user field',  {visible: true, editable: true},
+        new UserValue('Name', 'Surname', 'surname@netgrif.com'), []);
+
     changeStream = new Subject<ChangedFields>();
 
     changeGroupControl = this.formBuilder.group({
@@ -124,6 +132,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         ...this.constructFormBuilderObject('multichoiceList', this.multichoiceListField),
         ...this.constructFormBuilderObject('multichoiceSelect', this.multichoiceSelectField),
         ...this.constructFormBuilderObject('file', this.fileField, false),
+        ...this.constructFormBuilderObject('user', this.userField, false),
     });
 
     fieldGroupControl = new FormGroup({});
@@ -144,6 +153,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             {stringId: this.multichoiceListField.stringId, component: this.naeMultichoiceListField},
             {stringId: this.multichoiceSelectField.stringId, component: this.naeMultichoiceSelectField},
             {stringId: this.fileField.stringId, component: this.naeFileField},
+            {stringId: this.userField.stringId, component: this.naeUserField},
         ];
         fields.forEach( field => {
             this.addControl(field);
@@ -168,6 +178,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             multichoiceListFieldId: this.constructChangeObject('multichoiceList'),
             multichoiceSelectFieldId: this.constructChangeObject('multichoiceSelect'),
             fileFieldId: this.constructChangeObject('file', false),
+            userFieldId: this.constructChangeObject('user', false),
         });
     }
 

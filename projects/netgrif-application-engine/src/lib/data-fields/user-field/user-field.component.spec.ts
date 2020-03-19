@@ -34,7 +34,7 @@ describe('UserFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-user-field [userField]="field"> </nae-user-field>'
+    template: '<nae-user-field [dataField]="field"> </nae-user-field>'
 })
 class TestWrapperComponent {
     field = new UserField('', '', {

@@ -13,7 +13,7 @@ export class TextField extends DataField<string> {
     constructor(stringId: string, title: string, value: string, behavior: Behavior,
                 placeholder?: string, description?: string, public validations?: Validation[],
                 public materialAppearance = MaterialAppearance.STANDARD, private _view = TextFieldView.DEFAULT) {
-        super(stringId, title, behavior, placeholder, description, value);
+        super(stringId, title, value, behavior, placeholder, description);
     }
 
     get view(): TextFieldView {

@@ -6,7 +6,7 @@ export class BooleanField extends DataField<boolean> {
 
     constructor(stringId: string, title: string, value: boolean, behavior: Behavior,
                 placeholder?: string, description?: string) {
-        super(stringId, title, behavior, placeholder, description, value);
+        super(stringId, title, value, behavior, placeholder, description);
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
