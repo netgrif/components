@@ -123,10 +123,10 @@ export class TaskPanelContentComponent implements OnInit {
                     }
                 }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
-                    item.description, item.validationJS, MaterialAppearance.STANDARD, type);
+                    item.description, item.validations, MaterialAppearance.STANDARD, type);
             case 'number':
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
-                    item.validationJS, item.placeholder, item.description, MaterialAppearance.STANDARD);
+                    item.validations, item.placeholder, item.description, MaterialAppearance.STANDARD);
             case 'enumeration':
                 let typeEnum = EnumerationFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {

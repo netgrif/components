@@ -8,4 +8,5 @@
               [required]="textAreaField.behavior.required"
               [formControl]="formControlRef"></textarea>
     <mat-hint>{{textAreaField.description}}</mat-hint>
+    <mat-error *ngIf="!formControlRef.valid">{{getErrorMessage()}}</mat-error>
 </mat-form-field>

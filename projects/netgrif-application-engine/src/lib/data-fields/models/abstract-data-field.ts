@@ -5,6 +5,11 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
 
+export interface Validation {
+    validationRule: string;
+    validationMessage: string;
+}
+
 export enum MaterialAppearance {
     LEGACY = 'legacy',
     STANDARD = 'standard',
@@ -84,8 +89,6 @@ export abstract class DataField<T> {
         if (this.behavior.required) {
             result.push(Validators.required);
         }
-
-        // TODO validations
 
         return result;
     }

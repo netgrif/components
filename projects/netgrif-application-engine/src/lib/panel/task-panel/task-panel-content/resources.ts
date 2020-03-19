@@ -44,9 +44,6 @@ export class Resources {
             },
             subType: 'simple',
             formatting: 'example@example.com',
-            validationErrors: {
-                email: false
-            },
             defaultValue: 'text'
         },
         {
@@ -68,9 +65,6 @@ export class Resources {
             value: 10.0,
             order: 2,
             minValue: 0.0,
-            validationErrors: {
-                inrange: false
-            },
             defaultValue: 10.0
         },
         {
@@ -262,9 +256,6 @@ export class Resources {
             },
             order: 8,
             minDate: '2020-03-09',
-            validationErrors: {
-                between: false
-            }
         },
         {
             stringId: 'file',
@@ -361,9 +352,6 @@ export class Resources {
             order: 0,
             subType: 'simple',
             formatting: 'example@example.com',
-            validationErrors: {
-                email: false
-            },
             defaultValue: 'text'
         }
     ];
