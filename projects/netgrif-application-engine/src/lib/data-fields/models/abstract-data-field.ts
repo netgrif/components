@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {OnDestroy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
+import {distinctUntilChanged} from 'rxjs/operators';
 
 export enum MaterialAppearance {
     LEGACY = 'legacy',
@@ -13,8 +14,12 @@ export enum MaterialAppearance {
 
 export abstract class DataField<T> {
 
-    protected constructor(private _stringId: string, private _title: string, private _behavior: Behavior,
-                          private _placeholder?: string, private _description?: string, private _value?: T) {}
+    private _value: BehaviorSubject<T>;
+
+    protected constructor(private _stringId: string, private _title: string, initialValue: T,
+                          private _behavior: Behavior, private _placeholder?: string, private _description?: string) {
+        this._value = new BehaviorSubject<T>(initialValue);
+    }
 
     get stringId(): string {
         return this._stringId;
@@ -37,20 +42,31 @@ export abstract class DataField<T> {
     }
 
     get value(): T {
-        return this._value;
+        return this._value.getValue();
     }
 
     set value(value: T) {
-        this._value = value;
+        this._value.next(value);
     }
 
     get disabled(): boolean {
         return this._behavior.visible && !this._behavior.editable;
     }
 
+    public valueChanges(): Observable<T> {
+        return this._value.asObservable();
+    }
+
     public registerFormControl(formControl: FormControl): void {
-        formControl.registerOnChange(() => {
-            this.value = formControl.value;
+        formControl.valueChanges.pipe(
+            distinctUntilChanged(this.valueEquality)
+        ).subscribe( newValue => {
+            this.value = newValue;
+        });
+        this._value.pipe(
+            distinctUntilChanged(this.valueEquality)
+        ).subscribe( newValue => {
+            formControl.setValue(newValue);
         });
         this.updateFormControlState(formControl);
     }
@@ -72,6 +88,10 @@ export abstract class DataField<T> {
         // TODO validations
 
         return result;
+    }
+
+    protected valueEquality(a: T, b: T): boolean {
+        return a === b;
     }
 
     public applyChange(change: Change): void {

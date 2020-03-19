@@ -5,6 +5,6 @@ export class NumberField extends DataField<number> {
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, validations?: any,
                 placeholder?: string, description?: string, public materialAppearance = MaterialAppearance.STANDARD) {
-        super(stringId, title,  behavior, placeholder, description, value);
+        super(stringId, title, value, behavior, placeholder, description);
     }
 }

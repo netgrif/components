@@ -15,7 +15,7 @@ export class ButtonField extends DataField<number> {
 
     constructor(stringId: string, title: string, behavior: Behavior, value?: number,
                 placeholder?: string, description?: string, private _view = ButtonFieldView.STANDARD) {
-        super(stringId, title, behavior, placeholder, description, (value === undefined) ? 0 : value);
+        super(stringId, title, (value === undefined) ? 0 : value, behavior, placeholder, description);
     }
 
     get view(): ButtonFieldView {

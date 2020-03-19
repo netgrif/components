@@ -5,6 +5,10 @@ export class DateTimeField extends DataField<Date> {
 
     constructor(stringId: string, title: string, value: Date, behavior: Behavior, placeholder?: string,
                 description?: string, public validations?: any, public materialAppearance = MaterialAppearance.STANDARD) {
-        super(stringId, title, behavior, placeholder, description, value);
+        super(stringId, title, value, behavior, placeholder, description);
+    }
+
+    protected valueEquality(a: Date, b: Date): boolean {
+        return (a === undefined && b === undefined) || (a !== undefined && b !== undefined && a.getTime() === b.getTime());
     }
 }

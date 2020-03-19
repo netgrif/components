@@ -17,7 +17,7 @@ export class EnumerationField extends DataField<string> {
     constructor(stringId: string, title: string, value: string,
                 private _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
                 public materialAppearance = MaterialAppearance.STANDARD, private _view = EnumerationFieldView.DEFAULT) {
-        super(stringId, title, behavior, placeholder, description, value);
+        super(stringId, title, value, behavior, placeholder, description);
     }
 
     get choices(): Array<EnumerationFieldValue> {
