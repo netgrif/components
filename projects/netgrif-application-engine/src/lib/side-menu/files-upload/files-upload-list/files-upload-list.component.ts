@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FileUploadModel} from '../../../data-fields/file-field/models/file-field';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {FileFieldService} from '../../../data-fields/file-field/services/file-field.service';

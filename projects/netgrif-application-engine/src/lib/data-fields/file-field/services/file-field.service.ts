@@ -21,6 +21,9 @@ export class FileFieldService {
                 private _fileDownloadService: FileDownloadService,
                 private _sideMenuService: SideMenuService,
                 private _snackBarService: SnackBarService) {
+        this._fileUploadService.fileUploadCompleted.subscribe( () => {
+            this.fileField.value = this.resolveFilesArray();
+        });
     }
 
     public onSend() {
@@ -54,6 +57,7 @@ export class FileFieldService {
         const index = this.allFiles.indexOf(file);
         if (index > -1) {
             this.allFiles.splice(index, 1);
+            this.fileField.value = this.resolveFilesArray();
         }
     }
 
@@ -102,5 +106,9 @@ export class FileFieldService {
             return true;
         }
         return false;
+    }
+
+    private resolveFilesArray(): Array<File> {
+        return this.allFiles.filter(f => f.successfullyUploaded).map(f => f.data.file);
     }
 }

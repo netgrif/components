@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {EnumerationField} from './models/enumeration-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 

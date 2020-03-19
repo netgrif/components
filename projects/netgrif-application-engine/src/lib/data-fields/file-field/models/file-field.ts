@@ -30,11 +30,11 @@ interface FileUploadDataModel {
     extension: string;
 }
 
-export class FileField extends DataField<File> {
+export class FileField extends DataField<Array<File>> {
 
     public filesSize = 0;
 
-    constructor(stringId: string, title: string, behavior: Behavior, value?: File, placeholder?: string, description?: string,
+    constructor(stringId: string, title: string, behavior: Behavior, value?: Array<File>, placeholder?: string, description?: string,
                 private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1, private _zipped: boolean = true,
                 private _allowTypes?: string | FileUploadMIMEtype | Array<FileUploadMIMEtype>) {
         super(stringId, title, value, behavior, placeholder, description);
@@ -56,7 +56,13 @@ export class FileField extends DataField<File> {
         return this._allowTypes instanceof Array ? this._allowTypes.toString() : this._allowTypes;
     }
 
-    protected valueEquality(a: File, b: File): boolean {
-        return (a === undefined && b === undefined) || (a !== undefined && b !== undefined && a.name === b.name);
+    protected valueEquality(a: Array<File>, b: Array<File>): boolean {
+        // we assume that files are always given in the same order
+        return (a === undefined && b === undefined) || (
+            a !== undefined
+            && b !== undefined
+            && a.length === b.length
+            && a.every( (element, index) => element.name === b[index].name)
+        );
     }
 }
