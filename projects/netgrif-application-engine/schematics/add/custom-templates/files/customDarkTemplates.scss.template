@@ -1,0 +1,13 @@
+@import '~@angular/material/theming';
+$bv-dark-primary: ( <%= primaryDark %>
+contrast : (
+<%= primaryContrastDark %>)
+);
+$bv-dark-secondary: ( <%= secondaryDark %>
+contrast : (
+ <%= secondaryContrastDark %>)
+);
+$bv-dark-warn: (  <%= warnDark %>
+contrast : (
+<%= warnContrastDark %>)
+);

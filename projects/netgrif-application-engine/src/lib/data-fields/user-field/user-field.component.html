@@ -1,0 +1,28 @@
+<nae-data-field-template *ngIf="!userField.behavior.hidden"
+                         [dataField]="userField"
+                         [dataFieldTemplate]="dataField">
+</nae-data-field-template>
+
+<ng-template #dataField let-showLargeLayout="showLargeLayout">
+    <div>
+        <mat-label *ngIf="!showLargeLayout.value">{{userField.title}}  <nae-required-label *ngIf="userField.behavior.required" [isIn]="!userField.disabled"></nae-required-label><br></mat-label>
+        <button mat-stroked-button
+                *ngIf="userField.value !== undefined"
+                [disabled]="userField.disabled"
+                color="primary"
+                (click)="selectUser()">
+            <mat-icon>how_to_reg</mat-icon>
+            {{userField.value.fullName}}
+        </button>
+        <button mat-stroked-button
+                *ngIf="userField.value === undefined"
+                [disabled]="userField.disabled"
+                color="primary"
+                (click)="selectUser()">
+            <mat-icon>person_add</mat-icon>
+            Select user
+        </button>
+
+    </div>
+
+</ng-template>

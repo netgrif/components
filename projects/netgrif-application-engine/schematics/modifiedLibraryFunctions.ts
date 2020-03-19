@@ -1,7 +1,7 @@
-import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
+import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 
-import {Change, InsertChange} from "@schematics/angular/utility/change";
-import {getDecoratorMetadata, getMetadataField, insertImport} from "@schematics/angular/utility/ast-utils";
+import {Change, InsertChange} from '@schematics/angular/utility/change';
+import {getDecoratorMetadata, getMetadataField, insertImport} from '@schematics/angular/utility/ast-utils';
 
 
 /**
@@ -48,40 +48,40 @@ export function addSymbolToNgModuleMetadata(
     );
 
     if (!insertedText) {
-       insertedText = symbolName;
+        insertedText = symbolName;
     }
 
     // Get the last node of the array literal.
     if (!matchingProperties) {
         return [];
     }
-    if (matchingProperties.length == 0) {
+    if (matchingProperties.length === 0) {
         // We haven't found the field in the metadata declaration. Insert a new field.
         const expr = node as ts.ObjectLiteralExpression;
-        let position: number;
-        let toInsert: string;
-        if (expr.properties.length == 0) {
-            position = expr.getEnd() - 1;
-            toInsert = `  ${metadataField}: [${insertedText}]\n`;
+        let exprPosition: number;
+        let strToInsert: string;
+        if (expr.properties.length === 0) {
+            exprPosition = expr.getEnd() - 1;
+            strToInsert = `  ${metadataField}: [${insertedText}]\n`;
         } else {
             node = expr.properties[expr.properties.length - 1];
-            position = node.getEnd();
+            exprPosition = node.getEnd();
             // Get the indentation of the last element, if any.
             const text = node.getFullText(source);
             const matches = text.match(/^\r?\n\s*/);
             if (matches && matches.length > 0) {
-                toInsert = `,${matches[0]}${metadataField}: [${insertedText}]`;
+                strToInsert = `,${matches[0]}${metadataField}: [${insertedText}]`;
             } else {
-                toInsert = `, ${metadataField}: [${insertedText}]`;
+                strToInsert = `, ${metadataField}: [${insertedText}]`;
             }
         }
         if (importPath !== null) {
             return [
-                new InsertChange(ngModulePath, position, toInsert),
+                new InsertChange(ngModulePath, exprPosition, strToInsert),
                 insertImport(source, ngModulePath, symbolName.replace(/\..*$/, ''), importPath),
             ];
         } else {
-            return [new InsertChange(ngModulePath, position, toInsert)];
+            return [new InsertChange(ngModulePath, exprPosition, strToInsert)];
         }
     }
     const assignment = matchingProperties[0] as ts.PropertyAssignment;
@@ -92,7 +92,7 @@ export function addSymbolToNgModuleMetadata(
     }
 
     const arrLiteral = assignment.initializer as ts.ArrayLiteralExpression;
-    if (arrLiteral.elements.length == 0) {
+    if (arrLiteral.elements.length === 0) {
         // Forward the property.
         node = arrLiteral;
     } else {
@@ -108,7 +108,7 @@ export function addSymbolToNgModuleMetadata(
 
     if (Array.isArray(node)) {
         const nodeArray = node as {} as Array<ts.Node>;
-        const symbolsArray = nodeArray.map(node => node.getText());
+        const symbolsArray = nodeArray.map(n => n.getText());
         if (symbolsArray.includes(symbolName)) {
             return [];
         }
@@ -118,11 +118,11 @@ export function addSymbolToNgModuleMetadata(
 
     let toInsert: string;
     let position = node.getEnd();
-    if (node.kind == ts.SyntaxKind.ObjectLiteralExpression) {
+    if (node.kind === ts.SyntaxKind.ObjectLiteralExpression) {
         // We haven't found the field in the metadata declaration. Insert a new
         // field.
         const expr = node as ts.ObjectLiteralExpression;
-        if (expr.properties.length == 0) {
+        if (expr.properties.length === 0) {
             position = expr.getEnd() - 1;
             toInsert = `  ${insertedText}\n`;
         } else {
@@ -134,7 +134,7 @@ export function addSymbolToNgModuleMetadata(
                 toInsert = `, ${insertedText}`;
             }
         }
-    } else if (node.kind == ts.SyntaxKind.ArrayLiteralExpression) {
+    } else if (node.kind === ts.SyntaxKind.ArrayLiteralExpression) {
         // We found the field but it's empty. Insert it just before the `]`.
         position--;
         toInsert = `${insertedText}`;

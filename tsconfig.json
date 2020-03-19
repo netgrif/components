@@ -21,12 +21,15 @@
     "paths": {
       "netgrif-application-engine": [
         "dist/netgrif-application-engine"
+      ],
+      "jszip": [
+        "./node_modules/jszip/dist/jszip.min.js"
       ]
     }
   },
   "angularCompilerOptions": {
+    "enableIvy": false,
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "enableIvy": false
+    "strictInjectionParameters": true
   }
 }

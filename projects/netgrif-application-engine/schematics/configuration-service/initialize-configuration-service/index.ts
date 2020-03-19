@@ -6,7 +6,7 @@ import {
 } from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getProjectInfo} from '../../utilityFunctions';
 import { addProviderToModule } from '../../modifiedLibraryFunctions';
-import {insertImport} from "@schematics/angular/utility/ast-utils";
+import {insertImport} from '@schematics/angular/utility/ast-utils';
 
 export function initializeConfigurationService(): Rule {
     return (tree: Tree) => {
@@ -23,7 +23,7 @@ export function initializeConfigurationService(): Rule {
         commitChangesToFile(tree, appModule.fileEntry, changes);
 
         return chain([
-            schematic('create-configuration-service', {}),
+            schematic('populate-configuration-service', {}),
         ]);
     };
 }

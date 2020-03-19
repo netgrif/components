@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
-import {passwordValidator} from "./password.validator";
-import {AbstractCard} from "../abstract-card";
+import {FormBuilder, Validators} from '@angular/forms';
+import {passwordValidator} from './password.validator';
+import {AbstractCard} from '../abstract-card';
 
 @Component({
     selector: 'nae-registration-panel',

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SelectLanguageService} from "./select-language.service";
+import {SelectLanguageService} from './select-language.service';
 
 @Component({
     selector: 'nae-toolbar',
@@ -9,10 +9,10 @@ import {SelectLanguageService} from "./select-language.service";
 export class ToolbarComponent implements OnInit {
 
     @Input()
-    public loggedUser:string;
+    public loggedUser: string;
 
     @Input()
-    public appName:string;
+    public appName: string;
 
     constructor(public selectLanguageService: SelectLanguageService) {
     }

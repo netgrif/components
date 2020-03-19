@@ -1,9 +1,9 @@
-import {NetgrifApplicationEngine} from "./interfaces/schema";
-import {Observable, of} from "rxjs";
+import {NetgrifApplicationEngine} from './interfaces/schema';
+import {Observable, of} from 'rxjs';
 
 export abstract class ConfigurationService {
 
-    protected constructor (private configuration: NetgrifApplicationEngine) {
+    protected constructor(private configuration: NetgrifApplicationEngine) {
     }
 
     public getAsync(): Observable<NetgrifApplicationEngine> {

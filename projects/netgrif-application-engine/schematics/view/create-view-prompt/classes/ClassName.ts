@@ -23,10 +23,10 @@ export class ClassName {
         this.prefix = ClassName.convertPathToClassNamePrefix(path);
         this.withoutComponent = `${strings.classify(this.prefix)}${componentSuffix}`;
         this.name = `${this.withoutComponent}Component`;
-        this.fileImportPath = `./views/${path}/${strings.dasherize(this.withoutComponent)}.component`;
+        this.fileImportPath = `./views/${path}/${this.prefix}-${strings.dasherize(componentSuffix)}.component`;
     }
 
     private static convertPathToClassNamePrefix(path: string): string {
-        return path.replace('-', '_').replace('/', '-').toLocaleLowerCase();
+        return path.replace(/-/g, '_').replace(/\//g, '-').toLocaleLowerCase();
     }
 }

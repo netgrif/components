@@ -1,0 +1,20 @@
+@import '~@angular/material/theming';
+@import 'customLightTemplates.scss';
+@import 'customDarkTemplates.scss';
+
+.custom-light-theme {
+  $custom-light-theme: mat-light-theme(
+             mat-palette($bv-light-primary),
+             mat-palette($bv-light-secondary),
+             mat-palette($bv-light-warn));
+     @include angular-material-theme($custom-light-theme);
+ }
+
+.custom-dark-theme {
+     $custom-dark-theme: mat-dark-theme(
+         mat-palette($bv-dark-primary),
+         mat-palette($bv-dark-secondary),
+         mat-palette($bv-dark-warn));
+     @include angular-material-theme($custom-dark-theme);
+}
+
