@@ -27,7 +27,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         super.ngOnInit();
         this._fileFieldService.fileField = this.dataField;
         this.multiple = this.dataField.maxUploadFiles > 1 ? 'multiple' : undefined;
-        this.name = this.dataField.value ? this.dataField.value.name : this.dataField.placeholder;
+        this.name = this.constructDisplayName();
     }
 
     ngAfterViewInit(): void {
@@ -44,6 +44,14 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         } else {
             this._fileFieldService.fileUpload();
             this._sideMenuService.open(FilesUploadComponent, SideMenuWidth.LARGE, data);
+        }
+    }
+
+    private constructDisplayName(): string {
+        if (this.dataField.value !== undefined) {
+            return this.dataField.value.map(file => file.name).join(', ');
+        } else {
+            return this.dataField.placeholder;
         }
     }
 
