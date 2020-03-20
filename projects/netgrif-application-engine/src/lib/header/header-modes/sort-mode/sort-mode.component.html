@@ -1,0 +1,9 @@
+<div matSort (matSortChange)="onSortModeEdit($event)" fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
+    <div *ngFor="let header of getIterableHeaders()" fxFlex
+         [fxHide.lt-lg]="header.columnId=='column4'"
+         [fxHide.lt-md]="header.columnId=='column3' || header.columnId=='column4'"
+         [fxHide.lt-sm]="header.columnId=='column2' || header.columnId=='column3' || header.columnId=='column4'"
+         mat-sort-header="{{header.columnId}}">
+        {{header.title}}
+    </div>
+</div>
