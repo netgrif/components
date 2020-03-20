@@ -58,6 +58,8 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
             return createLoginView(tree, args, addRoute);
         case 'tabView':
             return createTabView(tree, args, addRoute);
+        case 'taskView':
+            return createTaskView(tree, args, addRoute);
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
@@ -204,7 +206,7 @@ function resolveClassSuffixForView(view: string): string {
             throw new SchematicsException(`Unknown view type '${view}'`);
     }
 }
-function createTaskView(tree: Tree, args: CreateViewArguments): Rule {
+function createTaskView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
     const className = new ClassName(args.path as string, 'TaskView');
@@ -217,15 +219,14 @@ function createTaskView(tree: Tree, args: CreateViewArguments): Rule {
     }));
 
     updateAppModule(tree, className.name, className.fileImportPath, [
-        new ImportsToAdd('FlexModule', '@angular/flex-layout'),
-        new ImportsToAdd('MatCardModule', '@angular/material/card'),
-        new ImportsToAdd('PanelModule', '@netgrif/application-engine'),
-        new ImportsToAdd('CardModule', '@netgrif/application-engine')]);
-    addRoutingModuleImport(tree, className.name, className.fileImportPath);
-
-    rules.push(schematic('add-route', {
-        routeObject: createRouteObject(args.path as string, className.name),
-        path: args.path
-    }));
+        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('MatCardModule', '@angular/material/card'),
+        new ImportToAdd('PanelModule', '@netgrif/application-engine'),
+        new ImportToAdd('TaskListModule', '@netgrif/application-engine'),
+        new ImportToAdd('CardModule', '@netgrif/application-engine')]);
+    if (addRoute) {
+        addRoutingModuleImport(tree, className.name, className.fileImportPath);
+        rules.push(addRouteToRoutesJson(args.path as string, className.name));
+    }
     return chain(rules);
 }

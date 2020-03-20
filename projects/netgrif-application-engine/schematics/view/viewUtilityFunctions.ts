@@ -85,25 +85,3 @@ export function addAllRoutesToMap(map: Map<string, Route>, routes: Routes, pathP
         }
     });
 }
-
-export function updateAppModule(tree: Tree, className: string, componentPath: string, imports: Array<ImportsToAdd> = []): void {
-    const appModule = getAppModule(tree, getProjectInfo(tree).path);
-    let changes = addDeclarationToModule(appModule.sourceFile, appModule.fileEntry.path, className, componentPath);
-    changes =  changes.concat(addImportsToAppModule(imports, appModule));
-    commitChangesToFile(tree, appModule.fileEntry, changes);
-}
-
-export function addImportsToAppModule(imports: Array<ImportsToAdd> = [], appModule: FileData): Change[] {
-    let changes: Array<Change> = [];
-    imports.forEach(importToAdd => {
-        changes = changes.concat(addImportToModule(appModule.sourceFile, appModule.fileEntry.path, importToAdd.moduleClassName, importToAdd.moduleImportPath));
-    });
-    return changes;
-}
-
-export function addRoutingModuleImport(tree: Tree, className: string, componentPath: string): void {
-    const routingModuleChanges = [];
-    const routesModule = getFileData(tree, getProjectInfo(tree).path, 'app-routing.module.ts');
-    routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, className, componentPath));
-    commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);
-}

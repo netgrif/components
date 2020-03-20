@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Resources} from './resources';
 import {DataFieldResource} from './resource-service';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
@@ -23,6 +23,7 @@ import {FileField} from '../../../data-fields/file-field/models/file-field';
 import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
+import {NAE_TASK_DATA} from '../../../panel-list/task-data-injection-token/task-data-injection-token.module';
 
 @Component({
     selector: 'nae-task-panel-content',
@@ -31,7 +32,7 @@ import {GridFiller} from './grid-filler';
 })
 export class TaskPanelContentComponent implements OnInit {
 
-    constructor() {
+    constructor(@Inject(NAE_TASK_DATA) public taskResources) {
         console.time('start');
         // TODO number of columns must come from backend (from form builder in transition)
         this.resources = this.fillBlankSpace(Resources.data, 4);

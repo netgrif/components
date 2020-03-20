@@ -15,6 +15,7 @@ import {CommonModule} from '@angular/common';
         CommonModule
     ],
     exports: [
+        TaskListComponent
     ]
 })
 export class TaskListModule {

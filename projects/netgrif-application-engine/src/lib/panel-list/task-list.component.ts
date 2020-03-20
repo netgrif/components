@@ -1,10 +1,6 @@
-import {Component,  OnInit} from '@angular/core';
-import {TaskPanelDefinition} from '../panel/task-panel/task-panel-definition';
+import {Component, Input, OnInit} from '@angular/core';
+import {TaskPanelData} from './task-panel-data/task-panel-data';
 
-export interface TaskPanel {
-    header: TaskPanelDefinition;
-    context: string;
-}
 
 @Component({
     selector: 'nae-task-list',
@@ -12,7 +8,7 @@ export interface TaskPanel {
     styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit {
-    taskPanels: TaskPanel[];
+   @Input() taskPanels: Array<TaskPanelData>;
 
     constructor() {
     }

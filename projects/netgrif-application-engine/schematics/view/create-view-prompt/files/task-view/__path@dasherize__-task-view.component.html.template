@@ -1,7 +1,7 @@
 <div class="task-tab-background">
-    <div fxLayout="column" fxLayoutGap="20px"  fxLayoutAlign="space-between stretch" class="content-margin" >
+    <div fxLayout="column" fxLayoutGap="20"  fxLayoutAlign="space-between stretch" class="content-margin" >
         <mat-card class="search-panel" >TO DO SEARCH</mat-card>
-        <mat-card >TO DO FILTER</mat-card>
-       <nae-task-list></nae-task-list>
+        <mat-card>TO DO HEADER</mat-card>
+        <nae-task-list [taskPanels]="taskPanel"></nae-task-list>
     </div>
 </div>

@@ -1,5 +1,4 @@
 <mat-accordion>
-    <nae-task-panel *ngFor="let taskPanel of taskPanels" [taskPanelDefinition]="taskPanel.header">
-        <!--                taskPanel.content--> KOVY KOMPONENT
+    <nae-task-panel *ngFor="let taskPanel of taskPanels" [taskPanelDefinition]="taskPanel.header" [resources]="taskPanel.resource">
     </nae-task-panel>
 </mat-accordion>
