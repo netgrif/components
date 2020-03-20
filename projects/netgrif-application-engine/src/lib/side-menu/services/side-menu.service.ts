@@ -1,8 +1,9 @@
-import {Injectable, TemplateRef, Type} from '@angular/core';
+import {Injectable, Injector, StaticProvider, TemplateRef, Type} from '@angular/core';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material';
 import {ComponentPortal, ComponentType, TemplatePortal} from '@angular/cdk/portal';
 import {from, Observable} from 'rxjs';
 import {PortalWrapper} from '../models/portal-wrapper';
+import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token/side-menu-injection-token.module';
 
 export enum SideMenuWidth {
     SMALL = 'side-menu-width-small',
@@ -39,18 +40,24 @@ export class SideMenuService {
      * @returns Observable<MatDrawerToggleResult>
      */
     public open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
-                   width: SideMenuWidth = SideMenuWidth.MEDIUM): Observable<MatDrawerToggleResult> {
+                   width: SideMenuWidth = SideMenuWidth.MEDIUM,
+                   injectionData?: any): Observable<MatDrawerToggleResult> {
         this._portalWrapper.width = width;
-        this._createView(componentOrTemplateRef);
+        this._createView(componentOrTemplateRef, injectionData);
         return from(this._sideMenu.open());
     }
 
-    private _createView<T>(template: ComponentType<T> | TemplateRef<T>) {
+    private _createView<T>(template: ComponentType<T> | TemplateRef<T>, injectionData?: any) {
         if (template instanceof TemplateRef) {
             this._portalWrapper.portal = new TemplatePortal(template, null);
         }
         if (template instanceof Type) {
-            this._portalWrapper.portal = new ComponentPortal(template);
+            const providers: Array<StaticProvider> = [];
+            if (injectionData !== undefined) {
+                providers.push({provide: NAE_SIDE_MENU_DATA, useValue: injectionData});
+            }
+            const injector = Injector.create({providers});
+            this._portalWrapper.portal = new ComponentPortal(template, null, injector);
         }
     }
 
@@ -64,7 +71,7 @@ export class SideMenuService {
     }
 
     /**
-     * Toggle this _sideMenu. This is equivalent to calling open() when it's already opened, or close() when it's closed.
+     * Toggle this _sideMenu. This is equivalent to calling close() when it's already opened, or open() when it's closed.
      *
      * @param  isOpen  Whether the _sideMenu should be open.
      *

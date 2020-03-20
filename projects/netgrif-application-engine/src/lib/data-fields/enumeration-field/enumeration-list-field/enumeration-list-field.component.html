@@ -3,8 +3,7 @@
     class="full-width example-radio-group"
     aria-labelledby="example-radio-group-label"
     [required]="enumerationField.behavior.required"
-    [disabled]="enumerationField.disabled"
-    [(ngModel)]="selected">
+    [formControl]="formControlRef" >
     <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}} <nae-required-label *ngIf="enumerationField.behavior.required" [isIn]="true"></nae-required-label><br></mat-label>
     <mat-radio-button class="example-radio-button" *ngFor="let option of enumerationField.choices" [value]="option.key">
         {{option.value}}

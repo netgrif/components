@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
 import {catchError, last, map, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/snack-bar.service';
 import {FileUploadModel} from '../../models/file-field';
 
@@ -14,6 +14,10 @@ export class FileUploadService {
 
     constructor(private _http: HttpClient,
                 private _snackBarService: SnackBarService) {
+    }
+
+    public get fileUploadCompleted(): Observable<string> {
+        return this._complete.asObservable();
     }
 
     public uploadFile(file: FileUploadModel) {
@@ -49,7 +53,6 @@ export class FileUploadService {
         ).subscribe(
             (event: any) => {
                 if (typeof (event) === 'object') {
-                    // this.removeFileFromArray(file);
                     file.successfullyUploaded = true;
                     this._snackBarService.openInfoSnackBar(file.data.file.name + ' upload successful',
                         SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);

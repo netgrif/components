@@ -5,8 +5,8 @@
     <mat-label *ngIf="!showLargeLayout.value">{{textAreaField.title}}</mat-label>
     <textarea matInput
               [placeholder]="textAreaField.placeholder"
-              [disabled]="textAreaField.disabled"
               [required]="textAreaField.behavior.required"
-              [(ngModel)]="textAreaField.value"></textarea>
+              [formControl]="formControlRef"></textarea>
     <mat-hint>{{textAreaField.description}}</mat-hint>
+    <mat-error *ngIf="!formControlRef.valid">{{getErrorMessage()}}</mat-error>
 </mat-form-field>

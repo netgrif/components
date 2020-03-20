@@ -9,6 +9,7 @@ import {CasePanelExampleComponent} from './doc/case-panel-example/case-panel-exa
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
+import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-text-field.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
     {path: 'case-panel', component: CasePanelExampleComponent},
     {path: 'snack-bar', component: SnackBarExampleComponent},
     {path: 'dialog', component: DialogExampleComponent},
-    {path: 'tab-view', component: TabViewExampleComponent}
+    {path: 'tab-view', component: TabViewExampleComponent},
+    {path: 'reactive-forms', component: ReactiveTextFieldComponent}
 ];
 
 @NgModule({

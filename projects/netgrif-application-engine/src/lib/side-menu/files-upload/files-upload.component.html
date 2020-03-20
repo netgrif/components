@@ -6,7 +6,7 @@
         </button>
     </mat-toolbar>
 
-    <nae-files-upload-list [allFiles]="allFiles"></nae-files-upload-list>
+    <nae-files-upload-list [allFiles]="allFiles" [fileFieldService]="fileFieldService"></nae-files-upload-list>
 
     <button *ngIf="fileField.zipped" class="send-button" mat-raised-button color="primary" (click)="onSend()">
         <mat-icon>send</mat-icon>
