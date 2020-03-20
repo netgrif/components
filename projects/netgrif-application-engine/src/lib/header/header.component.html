@@ -15,8 +15,8 @@
                 <nae-edit-mode fxFlex="100" [headerService]="headerService"></nae-edit-mode>
             </div>
         </div>
-        <div class="header-upload-date-container" fxLayout="row" fxLayoutAlign="end center" fxFlex="10"
-             [ngSwitch]="headerService.headers.mode">
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10"
+             [ngSwitch]="headerService.headers.mode" *ngIf="!hideEditMode">
             <button mat-icon-button [matMenuTriggerFor]="headerMenu" *ngSwitchDefault>
                 <mat-icon>more_vert</mat-icon>
             </button>

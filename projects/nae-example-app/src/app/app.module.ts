@@ -16,8 +16,7 @@ import {
     QuestionDialogWithAnswerComponent,
     QuestionDialogComponent,
     TabsModule,
-    DataFieldsModule,
-    HeaderModule
+    DataFieldsModule, HeaderModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -35,6 +34,7 @@ import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
 import { CaseHeaderExampleComponent } from './doc/case-header-example/case-header-example.component';
+import { TaskHeaderExampleComponent } from './doc/task-header-example/task-header-example.component';
 
 @NgModule({
     declarations: [
@@ -51,7 +51,8 @@ import { CaseHeaderExampleComponent } from './doc/case-header-example/case-heade
         TabViewExampleComponent,
         ContentComponent,
         ReactiveTextFieldComponent,
-        CaseHeaderExampleComponent
+        CaseHeaderExampleComponent,
+        TaskHeaderExampleComponent
     ],
     imports: [
         BrowserModule,
