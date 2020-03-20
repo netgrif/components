@@ -10,7 +10,7 @@ describe('UserFieldService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
         imports: [MaterialModule],
-        providers: [MatSnackBar]
+        providers: [MatSnackBar, UserFieldService]
     });
     service = TestBed.inject(UserFieldService);
   });

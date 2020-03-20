@@ -1,5 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {User} from '../../user';
+import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {UserAssignItemComponent} from './user-assign-item.component';
 import {Component} from '@angular/core';
 
@@ -30,5 +30,5 @@ describe('UserAssignItemComponent', () => {
     template: '<nae-user-assign-item [user]="user"></nae-user-assign-item>'
 })
 class TestWrapperComponent {
-    user = new User('', '', '');
+    user = new UserValue('', '', '');
 }

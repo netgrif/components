@@ -1,4 +1,4 @@
-import {DataField} from '../../models/abstract-data-field';
+import {DataField, MaterialAppearance} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 
 export interface MultichoiceFieldValue {
@@ -11,13 +11,13 @@ export enum MultichoiceFieldView {
     LIST = 'list'
 }
 
-export class MultichoiceField  extends DataField<Array<MultichoiceFieldValue>> {
+export class MultichoiceField  extends DataField<Array<string>> {
 
-    constructor(stringId: string, title: string, values: Array<MultichoiceFieldValue>,
+    constructor(stringId: string, title: string, values: Array<string>,
                 private _choices: Array<MultichoiceFieldValue>, behavior: Behavior,
-                placeholder?: string, description?: string, public materialAppearance = 'standard',
+                placeholder?: string, description?: string, public materialAppearance = MaterialAppearance.STANDARD,
                 private _view = MultichoiceFieldView.DEFAULT) {
-        super(stringId, title, behavior, placeholder, description, values);
+        super(stringId, title, values, behavior, placeholder, description);
     }
 
     get choices(): Array<MultichoiceFieldValue> {
@@ -26,5 +26,15 @@ export class MultichoiceField  extends DataField<Array<MultichoiceFieldValue>> {
 
     get view(): MultichoiceFieldView {
         return this._view;
+    }
+
+    protected valueEquality(a: Array<string>, b: Array<string>): boolean {
+        // we assume that multichoice options are always given in the same order
+        return (a === undefined && b === undefined) || (
+            a !== undefined
+            && b !== undefined
+            && a.length === b.length
+            && a.every( (element, index) => element === b[index])
+        );
     }
 }

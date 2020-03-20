@@ -5,6 +5,7 @@ import {MaterialModule} from '../../material/material.module';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {UserAssignItemComponent} from './user-assign-list/user-assign-item/user-assign-item.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token/side-menu-injection-token.module';
 
 describe('UserAssignComponent', () => {
     let component: UserAssignComponent;
@@ -20,6 +21,9 @@ describe('UserAssignComponent', () => {
                 UserAssignComponent,
                 UserAssignListComponent,
                 UserAssignItemComponent
+            ],
+            providers: [
+                {provide: NAE_SIDE_MENU_DATA, useValue: {userFieldService: null}}
             ]
         })
             .compileComponents();

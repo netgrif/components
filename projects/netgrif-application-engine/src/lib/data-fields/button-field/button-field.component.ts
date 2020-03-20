@@ -1,16 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ButtonField} from './models/button-field';
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 
 @Component({
   selector: 'nae-button-field',
   templateUrl: './button-field.component.html',
   styleUrls: ['./button-field.component.scss']
 })
-export class ButtonFieldComponent implements OnInit {
+export class ButtonFieldComponent extends AbstractDataFieldComponent {
 
-  @Input() buttonField: ButtonField;
+  @Input() dataField: ButtonField;
 
-  ngOnInit() {
+  constructor() {
+      super();
   }
 
 }

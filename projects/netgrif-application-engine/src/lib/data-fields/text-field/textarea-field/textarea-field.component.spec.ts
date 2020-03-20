@@ -7,6 +7,7 @@ import {TextField} from '../models/text-field';
 import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormControl} from '@angular/forms';
 
 describe('TextareaFieldComponent', () => {
     let component: TextareaFieldComponent;
@@ -32,7 +33,7 @@ describe('TextareaFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-textarea-field [showLargeLayout]="label" [textAreaField]="field"> </nae-textarea-field>'
+    template: '<nae-textarea-field [showLargeLayout]="label" [textAreaField]="field" [formControlRef]="formControl"> </nae-textarea-field>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
@@ -43,4 +44,5 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     });
+    formControl = new FormControl();
 }

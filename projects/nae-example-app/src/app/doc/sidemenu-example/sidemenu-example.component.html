@@ -4,11 +4,10 @@
                        [apiModuleImport]="'SideMenuModule'"></nae-app-documentation>
 
 <ng-template #SideMenuExample>
-    <nae-side-menu-container>
-        <div class="padding-30px">
-            <button mat-button (click)="toggleSideMenu()">Open Side Menu</button>
-        </div>
-
-        <ng-template #templatePortal></ng-template>
-    </nae-side-menu-container>
+    <div class="padding-30px">
+        <button mat-button (click)="toggleSideMenu()">Open Side Menu</button>
+    </div>
+    <ng-template #templatePortal>
+        <p>Side menu content</p>
+    </ng-template>
 </ng-template>

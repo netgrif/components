@@ -1,21 +1,18 @@
 import {Injectable} from '@angular/core';
-import {User} from '../../../side-menu/user-assign/user';
+import {UserValue} from '../models/user-value';
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../snack-bar/snack-bar.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {UserField} from '../models/user-field';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class UserFieldService {
 
     public assignedUser: UserField;
 
-    constructor(private _snackBarService: SnackBarService,
-                private _sideMenuService: SideMenuService) {
+    constructor(private _snackBarService: SnackBarService, private _sideMenuService: SideMenuService) {
     }
 
-    public assignUser(user: User) {
+    public assignUser(user: UserValue) {
         // TODO: Assign user
         if (user !== undefined) {
             this.assignedUser.value = user;

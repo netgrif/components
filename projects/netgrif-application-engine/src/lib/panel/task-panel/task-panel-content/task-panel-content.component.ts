@@ -17,10 +17,10 @@ import {
 import {DateField} from '../../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../../data-fields/user-field/models/user-field';
-import {User} from '../../../side-menu/user-assign/user';
+import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {ButtonField} from '../../../data-fields/button-field/models/button-field';
 import {FileField} from '../../../data-fields/file-field/models/file-field';
-import {DataField} from '../../../data-fields/models/abstract-data-field';
+import {DataField, MaterialAppearance} from '../../../data-fields/models/abstract-data-field';
 import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
 
@@ -123,10 +123,10 @@ export class TaskPanelContentComponent implements OnInit {
                     }
                 }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
-                    item.description, item.validationJS, 'standard', type);
+                    item.description, item.validations, MaterialAppearance.STANDARD, type);
             case 'number':
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
-                    item.validationJS, item.placeholder, item.description, 'outline');
+                    item.validations, item.placeholder, item.description, MaterialAppearance.STANDARD);
             case 'enumeration':
                 let typeEnum = EnumerationFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {
@@ -140,9 +140,8 @@ export class TaskPanelContentComponent implements OnInit {
                 item.choices.forEach(it => {
                     choices.push({key: it, value: it} as EnumerationFieldValue);
                 });
-                return new EnumerationField(item.stringId, item.name,
-                    {key: item.value as string, value: item.value as string} as EnumerationFieldValue,
-                    choices, item.behavior, item.placeholder, item.description, 'standard', typeEnum);
+                return new EnumerationField(item.stringId, item.name, item.value as string,
+                    choices, item.behavior, item.placeholder, item.description, MaterialAppearance.STANDARD, typeEnum);
             case 'multichoice':
                 let typeMulti = MultichoiceFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {
@@ -150,16 +149,13 @@ export class TaskPanelContentComponent implements OnInit {
                         typeMulti = MultichoiceFieldView.LIST;
                     }
                 }
-                const values: MultichoiceFieldValue[] = [];
-                (item.value as string[]).forEach(it => {
-                    values.push({key: it, value: it} as MultichoiceFieldValue);
-                });
+                const values: string[] = item.value as string[];
                 const choicesMulti: MultichoiceFieldValue[] = [];
                 item.choices.forEach(it => {
                     choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);
                 });
                 return new MultichoiceField(item.stringId, item.name, values, choicesMulti, item.behavior,
-                    item.placeholder, item.description, 'standard', typeMulti);
+                    item.placeholder, item.description, MaterialAppearance.STANDARD, typeMulti);
             case 'date':
                 const date = new Date(item.minDate);
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder, item.description);
@@ -167,10 +163,10 @@ export class TaskPanelContentComponent implements OnInit {
                 const dateTime = new Date();
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior, item.placeholder, item.description);
             case 'user':
-                return new UserField(item.stringId, item.name, item.behavior, new User('name',
+                return new UserField(item.stringId, item.name, item.behavior, new UserValue('name',
                     'surname', 'email'), item.roles, item.placeholder, item.description);
             case 'button':
-                return new ButtonField(item.stringId, item.name, item.behavior, item.value as string,
+                return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description);
             case 'file':
                 return new FileField(item.stringId, item.name, item.behavior, undefined, item.placeholder, item.description);

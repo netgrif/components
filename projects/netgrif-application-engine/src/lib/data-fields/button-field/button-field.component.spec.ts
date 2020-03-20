@@ -37,7 +37,7 @@ describe('ButtonFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-button-field [buttonField]="field"></nae-button-field>'
+    template: '<nae-button-field [dataField]="field"></nae-button-field>'
 })
 class TestWrapperComponent {
     field = new ButtonField('', '', {

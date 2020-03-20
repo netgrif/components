@@ -4,4 +4,5 @@ export class Behavior {
     visible?: boolean;
     editable?: boolean;
     hidden?: boolean;
+    forbidden?: boolean;
 }
