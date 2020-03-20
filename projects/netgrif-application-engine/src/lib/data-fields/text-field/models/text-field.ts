@@ -31,9 +31,9 @@ export class TextField extends DataField<string> {
             if (this._validators === undefined) {
                 this._validators = [];
                 this._validators = this.resolveValidations();
-                result.push(this._validators);
+                result.push(...this._validators);
             } else {
-                result.push(this._validators);
+                result.push(...this._validators);
             }
         }
 

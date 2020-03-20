@@ -80,18 +80,18 @@ export class NumberField extends DataField<number> {
     }
 
     private validDecimal(fc: FormControl) {
-        if (fc.value % 1 !== 0) { return ({validNegative: true}); } else { return (null); }
+        if (fc.value % 1 !== 0) { return ({validDecimal: true}); } else { return (null); }
     }
 
     private validInRangeSmaller(range: number): ValidatorFn {
         return (fc: FormControl): {[key: string]: any} | null => {
-            if (fc.value > range) { return ({validInRangeSmaller: true}); } else { return (null); }
+            if (fc.value > range) { return ({validInRange: true}); } else { return (null); }
         };
     }
 
     private validInRangeBigger(range: number): ValidatorFn {
         return (fc: FormControl): {[key: string]: any} | null => {
-            if (fc.value < range) { return ({validInRangeBigger: true}); } else { return (null); }
+            if (fc.value < range) { return ({validInRange: true}); } else { return (null); }
         };
     }
 

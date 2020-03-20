@@ -13,5 +13,6 @@
                [placeholder]="dataField.placeholder"
                [required]="dataField.behavior.required">
         <mat-hint>{{dataField.description}}</mat-hint>
+        <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
 </ng-template>
