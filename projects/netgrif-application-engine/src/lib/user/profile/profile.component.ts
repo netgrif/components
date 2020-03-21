@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../models/user';
 import {UserService} from 'netgrif-application-engine';
-import Role from "../models/role";
 
 @Component({
     selector: 'nae-user-profile',
@@ -13,44 +12,36 @@ export class ProfileComponent implements OnInit {
     constructor(private userService: UserService) {
     }
 
-    private _user: User;
-    public userFirstName: string;
-    public userLastName: string;
-    public email: string;
+    public _user: User;
     public fill_percentage: number;
-    public groups: string[];
-    public systemRoles: Role[];
-    public organisations: string[];
+    isEditable = false;
 
     ngOnInit(): void {
-        this._user = new User('1', 'bla@bla', 'Jozo', 'Priez', [], [], ['aaa', 'bbb'], null);
-        this.setUser();
-    }
-
-    setUser(): void {
-
-        // this._user = this.userService.user;
-        this.userFirstName = this._user.firstName;
-        this.userLastName = this._user.lastName;
-        this.email = this._user.email;
-        this.groups = this._user.groups;
-        this.systemRoles = this._user.roles;
-        this.organisations = this._user.authorities;
+        this._user = new User('1', 'bla@bla', 'Jozo', 'Priez', ['Auth1', 'Auth2'],
+            [{
+                id: 'id1',
+                name: 'name1',
+                description: '',
+                net: 'net1'
+            }], ['aaa', 'bbb'], null);
         this.fill_percentage = this.fillPercentage();
     }
 
     fillPercentage(): number {
         let percentage = null;
-        (this.userFirstName !== undefined && this.userLastName !== undefined) ? percentage = 20 : percentage = 0;
-        if (this.email !== undefined) {
+        (this._user.firstName !== undefined && this._user.lastName !== undefined) ? percentage = 20 : percentage = 0;
+        if (this._user.email !== undefined) {
             percentage += 20;
         }
-        [this.groups, this.systemRoles, this.organisations].forEach(
+        [this._user.authorities, this._user.roles, this._user.groups].forEach(
             element => {
                 if (element !== undefined && element.length !== 0)
                     percentage += 20;
             }
         );
         return percentage;
+    }
+    changeName($event: Event) {
+        console.log($event);
     }
 }

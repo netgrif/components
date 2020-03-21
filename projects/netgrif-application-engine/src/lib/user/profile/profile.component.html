@@ -10,11 +10,11 @@
             <form class="user-profile-form">
                 <mat-form-field class="user-info-form-full-width">
                     <mat-label>First name</mat-label>
-                    <input disabled matInput [value]=userFirstName>
+                    <input matInput [disabled]="isEditable" [value]=_user.firstName>
                 </mat-form-field>
                 <mat-form-field class="user-info-form-full-width">
                     <mat-label>Last name</mat-label>
-                    <input disabled matInput [value]=userLastName>
+                    <input matInput [disabled]="isEditable" [value]=_user.lastName>
                 </mat-form-field>
             </form>
         </mat-card>
@@ -23,7 +23,7 @@
             <form class="user-profile-form">
                 <mat-form-field class="user-info-form-full-width">
                     <mat-label>Email</mat-label>
-                    <input disabled matInput [value]="email">
+                    <input disabled matInput [value]="_user.email">
                 </mat-form-field>
             </form>
         </mat-card>
@@ -31,14 +31,12 @@
     <div class="padding-8px">
         <mat-card fxLayout="row" class="padding-8px">
             <div fxFlex="50%">
-                <h2>Organizations</h2>
+                <h2>Authorities</h2>
             </div>
             <div fxFlex="50%">
                 <mat-form-field class="user-workflow-roles-chip-list">
                     <mat-chip-list>
-                        <mat-chip>Papadum</mat-chip>
-                        <mat-chip>Naan</mat-chip>
-                        <mat-chip>Dal</mat-chip>
+                        <mat-chip disabled *ngFor="let authority of _user.authorities">{{authority}}</mat-chip>
                     </mat-chip-list>
                 </mat-form-field>
             </div>
@@ -47,14 +45,12 @@
     <div class="padding-8px">
         <mat-card fxLayout="row">
             <div fxFlex="50%">
-                <h2>System Roles</h2>
+                <h2>Roles</h2>
             </div>
             <div fxFlex="50%">
                 <mat-form-field class="user-workflow-roles-chip-list">
                     <mat-chip-list>
-                        <mat-chip>Papadum</mat-chip>
-                        <mat-chip>Naan</mat-chip>
-                        <mat-chip>Dal</mat-chip>
+                        <mat-chip disabled *ngFor="let role of _user.roles">{{role.name}}</mat-chip>
                     </mat-chip-list>
                 </mat-form-field>
             </div>
@@ -63,25 +59,36 @@
     <div class="padding-8px">
         <mat-card fxLayout="row">
             <div fxFlex="50%">
-                <h2>Workflow Roles</h2>
+                <h2>Groups</h2>
             </div>
             <div fxFlex="50%">
                 <mat-form-field class="user-workflow-roles-chip-list">
-                    <mat-chip-list *ngFor="let group of groups">
-                        <h4>TOTOK</h4>
-                            <mat-chip>{{group}}</mat-chip>
+                    <mat-chip-list>
+                        <mat-chip disabled *ngFor="let group of _user.groups">{{group}}</mat-chip>
                     </mat-chip-list>
                 </mat-form-field>
             </div>
         </mat-card>
     </div>
     <div class="padding-8px">
-        <mat-card class="padding-8px">
-            <h2>Edit</h2>
+        <mat-card fxLayout="row" class="padding-8px">
+            <div fxFlex="50">
+                <div [hidden]="(isEditable === true)">
+                    <button mat-button (click)="isEditable = !isEditable">
+                        <span class="material-icons">create</span>EDIT
+                    </button>
+                </div>
+                <div [hidden]="(isEditable === false)">
+                    <button mat-button (click)="isEditable = !isEditable"><span class="material-icons cancel-edit-profile">cancel</span> CANCEL</button>
+                    <button mat-button (click)="isEditable = !isEditable"><span class="material-icons subbmit-edit-profile">check</span> SUBMIT CHANGES
+                    </button>
+                </div>
+            </div>
+            <div fxFlex="50" fxLayoutAlign="end center">
+                    <button mat-button><span class="material-icons">lock_open</span> CHANGE PASSWORD</button>
+            </div>
         </mat-card>
     </div>
-
 </div>
-
 
 

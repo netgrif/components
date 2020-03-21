@@ -9,6 +9,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatListModule} from "@angular/material/list";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {MatChipsModule} from "@angular/material/chips";
         MatListModule,
         MatGridListModule,
         MatChipsModule,
+        MatButtonModule,
     ]
 })
 export class ProfileModule {
