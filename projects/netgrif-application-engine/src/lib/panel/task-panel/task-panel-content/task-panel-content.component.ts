@@ -35,7 +35,7 @@ export class TaskPanelContentComponent implements OnInit {
     constructor(@Inject(NAE_TASK_DATA) public taskResources) {
         console.time('start');
         // TODO number of columns must come from backend (from form builder in transition)
-        this.resources = this.fillBlankSpace(Resources.data, 4);
+        this.resources = this.fillBlankSpace(taskResources.data, 4);
         console.timeEnd('start');
         this.formCols = Resources.cols;
     }

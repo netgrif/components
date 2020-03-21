@@ -202,6 +202,8 @@ function resolveClassSuffixForView(view: string): string {
             return 'Login';
         case 'tabView':
             return 'TabView';
+        case 'taskView':
+            return 'TabView';
         default:
             throw new SchematicsException(`Unknown view type '${view}'`);
     }
@@ -226,7 +228,8 @@ function createTaskView(tree: Tree, args: CreateViewArguments, addRoute: boolean
         new ImportToAdd('CardModule', '@netgrif/application-engine')]);
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push(addRouteToRoutesJson(args.path as string, className.name));
+        rules.push( addRouteToRoutesJson(args.path as string, className.name));
+        rules.push( addRouteToRoutesJson(`${args.path}/**`, className.name));
     }
     return chain(rules);
 }

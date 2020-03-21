@@ -1,5 +1,6 @@
 import {InjectionToken, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {Resources} from '../../panel/task-panel/task-panel-content/resources';
 
 @NgModule({
   declarations: [],
@@ -9,4 +10,4 @@ import { CommonModule } from '@angular/common';
 })
 export class TabDataInjectionTokenModule { }
 
-export const NAE_TASK_DATA = new InjectionToken<any[]>('NaeTaskData');
+export const NAE_TASK_DATA = new InjectionToken<Resources>('NaeTaskData');

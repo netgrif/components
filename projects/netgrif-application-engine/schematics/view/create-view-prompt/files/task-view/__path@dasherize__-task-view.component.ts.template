@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {TaskPanelData} from '@netgrif/application-engine';
 
 @Component({
-  selector: '<%= prefix %>-task-view',
+  selector: '<%= prefix %>-<%= dasherize(path) %>-task-view',
   templateUrl: './<%= dasherize(path) %>-task-view.component.html',
   styleUrls: ['./<%= dasherize(path) %>-task-view.component.scss']
 })
