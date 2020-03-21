@@ -14,7 +14,7 @@ describe('FileFieldService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
         imports: [HttpClientTestingModule, MaterialModule],
-        providers: [FileDownloadService, FileUploadService, SideMenuService, SnackBarService]
+        providers: [FileDownloadService, FileUploadService, SideMenuService, SnackBarService, FileFieldService]
     });
     service = TestBed.inject(FileFieldService);
   });

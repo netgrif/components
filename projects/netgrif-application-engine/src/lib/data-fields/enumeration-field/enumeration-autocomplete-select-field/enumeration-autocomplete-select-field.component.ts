@@ -13,17 +13,15 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 export class EnumerationAutocompleteSelectFieldComponent implements OnInit {
 
     @Input() enumerationField: EnumerationField;
+    @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
 
-    validate = new FormControl();
-    selected: string;
     options: string[];
     filteredOptions: Observable<string[]>;
 
     ngOnInit() {
-        this.selected = this.enumerationField.value.key;
         this.options = this.enumerationField.choices.map(value => value['value']);
-        this.filteredOptions = this.validate.valueChanges.pipe(
+        this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value))
         );

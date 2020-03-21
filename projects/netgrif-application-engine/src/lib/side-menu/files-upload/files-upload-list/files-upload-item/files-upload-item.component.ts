@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FileUploadModel} from '../../../../data-fields/file-field/models/file-field';
 import {FileFieldService} from '../../../../data-fields/file-field/services/file-field.service';
 
@@ -7,26 +7,21 @@ import {FileFieldService} from '../../../../data-fields/file-field/services/file
     templateUrl: './files-upload-item.component.html',
     styleUrls: ['./files-upload-item.component.scss']
 })
-export class FilesUploadItemComponent implements OnInit {
+export class FilesUploadItemComponent {
 
     @Input() public file: FileUploadModel;
-
-    constructor(private _fileFieldService: FileFieldService) {
-    }
-
-    ngOnInit() {
-    }
+    @Input() public fileFieldService: FileFieldService;
 
     public cancelFile(file: FileUploadModel) {
-        this._fileFieldService.cancelFile(file);
+        this.fileFieldService.cancelFile(file);
     }
 
     public retryFile(file: FileUploadModel) {
-        this._fileFieldService.retryFile(file);
+        this.fileFieldService.retryFile(file);
     }
 
     public onFileDownload(file: FileUploadModel) {
-        this._fileFieldService.onFileDownload(file);
+        this.fileFieldService.onFileDownload(file);
     }
 
     public shortFileName(file: FileUploadModel) {

@@ -41,10 +41,10 @@ describe('MultichoiceFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-multichoice-field [multichoiceField]="field"></nae-multichoice-field>'
+    template: '<nae-multichoice-field [dataField]="field"></nae-multichoice-field>'
 })
 class TestWrapperComponent {
-    field = new MultichoiceField('', '', [{key: '', value: ''}], [], {
+    field = new MultichoiceField('', '', [''], [], {
         required: true,
         optional: true,
         visible: true,

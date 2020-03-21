@@ -3,6 +3,6 @@
     <nae-user-assign-item
         *ngFor="let user of filteredUserList | async"
         [user]="user"
-        (click)="selected(user)">
+        (click)="select(user)">
     </nae-user-assign-item>
 <!--</mat-autocomplete>-->

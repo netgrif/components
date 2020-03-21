@@ -1,4 +1,4 @@
-import {DataField} from '../../models/abstract-data-field';
+import {DataField, MaterialAppearance} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 
 export interface EnumerationFieldValue {
@@ -12,12 +12,12 @@ export enum EnumerationFieldView {
     AUTOCOMPLETE = 'autocomplete'
 }
 
-export class EnumerationField extends DataField<EnumerationFieldValue> {
+export class EnumerationField extends DataField<string> {
 
-    constructor(stringId: string, title: string, value: EnumerationFieldValue,
+    constructor(stringId: string, title: string, value: string,
                 private _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
-                public materialAppearance = 'standard', private _view = EnumerationFieldView.DEFAULT) {
-        super(stringId, title, behavior, placeholder, description, value);
+                public materialAppearance = MaterialAppearance.STANDARD, private _view = EnumerationFieldView.DEFAULT) {
+        super(stringId, title, value, behavior, placeholder, description);
     }
 
     get choices(): Array<EnumerationFieldValue> {
