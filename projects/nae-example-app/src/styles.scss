@@ -18,14 +18,14 @@ $typography: mat-typography-config(
 @include mat-core($typography);
 
 $primary: mat-palette($mat-orange, 800, 100, 900);
-$accent: mat-palette($mat-dark-blue, 600, 100, 900);
+$accent: mat-palette($mat-orange, 600, 100, 900);
 
 $warn: mat-palette($mat-red, 600, 100, 900);
 
 $theme: mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
-@include covalent-theme($theme, $typography);
+//@include covalent-theme($theme, $typography);
 @include custom-covalent-highlight-theme();
 
 tr mat-header-row {
