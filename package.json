@@ -17,7 +17,7 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "sonar": "sonar-scanner",
-        "scriptTest": "ng generate @netgrif/application-engine:create-nae-files"
+        "scriptTest": "ng generate @netgrif/application-engine:market-resource --name=case --type=json  --address=aaa.sk"
     },
     "private": true,
     "dependencies": {

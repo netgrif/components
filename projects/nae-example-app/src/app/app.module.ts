@@ -15,7 +15,7 @@ import {
     SimpleDialogComponent,
     QuestionDialogWithAnswerComponent,
     QuestionDialogComponent,
-    TabsModule
+    TabsModule, ResourceProvider
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -24,13 +24,15 @@ import {NaeExampleAppConfigurationService} from './nae-example-app-configuration
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
-import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
-import { PanelExampleComponent } from './doc/panel-example/panel-example.component';
-import { CasePanelExampleComponent } from './doc/case-panel-example/case-panel-example.component';
-import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-example.component';
-import { DialogExampleComponent } from './doc/dialog-example/dialog-example.component';
-import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example.component';
-import { ContentComponent } from './doc/tab-view-example/content/content.component';
+import {UserAssignSidemenuExampleComponent} from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
+import {PanelExampleComponent} from './doc/panel-example/panel-example.component';
+import {CasePanelExampleComponent} from './doc/case-panel-example/case-panel-example.component';
+import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
+import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
+import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
+import {ContentComponent} from './doc/tab-view-example/content/content.component';
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -45,9 +47,11 @@ import { ContentComponent } from './doc/tab-view-example/content/content.compone
         SnackBarExampleComponent,
         DialogExampleComponent,
         TabViewExampleComponent,
-        ContentComponent
+        ContentComponent,
+        CaseResourceExampleComponent
     ],
     imports: [
+        HttpClientModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -69,7 +73,12 @@ import { ContentComponent } from './doc/tab-view-example/content/content.compone
         QuestionDialogWithAnswerComponent,
         ContentComponent
     ],
-    providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}, {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}, {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
+    providers: [{
+        provide: ConfigurationService,
+        useClass: NaeExampleAppConfigurationService
+    },
+        ResourceProvider
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
