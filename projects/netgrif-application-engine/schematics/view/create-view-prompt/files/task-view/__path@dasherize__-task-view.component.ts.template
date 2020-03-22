@@ -11,8 +11,6 @@ export class <%= classify(path) %>TaskViewComponent implements OnInit{
 
   public taskPanel: Array<TaskPanelData>;
 
-     // TODO:KED BUDE SERVICA TAK BRAT DATA ZO SPRACOVANEHO RESPONSU
-     // constructor(private _resourceService: ResourceService) { }
      constructor() {
      }
 
