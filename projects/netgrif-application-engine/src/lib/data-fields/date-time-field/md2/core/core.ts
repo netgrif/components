@@ -20,16 +20,16 @@ export * from './option';
 
 // Portals
 export {
-  Portal,
-  PortalHost,
-  BasePortalHost,
-  ComponentPortal,
-  TemplatePortal
+    Portal,
+    PortalHost,
+    BasePortalHost,
+    ComponentPortal,
+    TemplatePortal
 } from './portal/portal';
 export {
-  PortalHostDirective,
-  TemplatePortalDirective,
-  PortalModule,
+    PortalHostDirective,
+    TemplatePortalDirective,
+    PortalModule,
 } from './portal/portal-directives';
 export {DomPortalHost} from './portal/dom-portal-host';
 
@@ -44,10 +44,10 @@ export * from './ripple';
 
 // a11y
 export {
-  AriaLivePoliteness,
-  LiveAnnouncer,
-  LIVE_ANNOUNCER_ELEMENT_TOKEN,
-  LIVE_ANNOUNCER_PROVIDER,
+    AriaLivePoliteness,
+    LiveAnnouncer,
+    LIVE_ANNOUNCER_ELEMENT_TOKEN,
+    LIVE_ANNOUNCER_PROVIDER,
 } from './a11y/live-announcer';
 
 // Selection
@@ -60,9 +60,9 @@ export {isFakeMousedownFromScreenReader} from './a11y/fake-mousedown';
 export {A11yModule} from './a11y';
 
 export {
-  UniqueSelectionDispatcher,
-  UniqueSelectionDispatcherListener,
-  UNIQUE_SELECTION_DISPATCHER_PROVIDER,
+    UniqueSelectionDispatcher,
+    UniqueSelectionDispatcherListener,
+    UNIQUE_SELECTION_DISPATCHER_PROVIDER,
 } from './coordination/unique-selection-dispatcher';
 
 export {MdLineModule, MdLine, MdLineSetter} from './line/line';
@@ -96,33 +96,34 @@ export * from './datetime';
 
 // Placeholder
 export {
-  FloatPlaceholderType,
-  PlaceholderOptions,
-  MD_PLACEHOLDER_GLOBAL_OPTIONS
+    FloatPlaceholderType,
+    PlaceholderOptions,
+    MD_PLACEHOLDER_GLOBAL_OPTIONS
 } from './placeholder/placeholder-options';
 
 @NgModule({
-  imports: [
-    MdLineModule,
-    RtlModule,
-    MdRippleModule,
-    ObserveContentModule,
-    PortalModule,
-    OverlayModule,
-    A11yModule,
-    MdOptionModule,
-    MdSelectionModule,
-  ],
-  exports: [
-    MdLineModule,
-    RtlModule,
-    MdRippleModule,
-    ObserveContentModule,
-    PortalModule,
-    OverlayModule,
-    A11yModule,
-    MdOptionModule,
-    MdSelectionModule,
-  ],
+    imports: [
+        MdLineModule,
+        RtlModule,
+        MdRippleModule,
+        ObserveContentModule,
+        PortalModule,
+        OverlayModule,
+        A11yModule,
+        MdOptionModule,
+        MdSelectionModule,
+    ],
+    exports: [
+        MdLineModule,
+        RtlModule,
+        MdRippleModule,
+        ObserveContentModule,
+        PortalModule,
+        OverlayModule,
+        A11yModule,
+        MdOptionModule,
+        MdSelectionModule,
+    ],
 })
-export class MdCoreModule {}
+export class MdCoreModule {
+}
