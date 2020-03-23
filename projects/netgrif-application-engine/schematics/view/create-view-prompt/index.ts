@@ -7,6 +7,7 @@ import {
 import {
     addRouteToRoutesJson,
     addRoutingModuleImport,
+    createRoutesMap,
     getParentPath,
     Route,
     updateAppModule
@@ -36,17 +37,18 @@ interface TabViews {
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
-        checkPathValidity(schematicArguments.path, schematicArguments._routesMap);
+        checkPathValidity(tree, schematicArguments.path);
         return createView(tree, schematicArguments);
     };
 }
 
-function checkPathValidity(path: string | undefined, routeMap: Map<string, Route>) {
+function checkPathValidity(tree: Tree, path: string | undefined) {
     if (path === undefined) {
         throw new SchematicsException(`Path cannot be undefined!`);
     }
     // if the path was entered from a prompt, it might not have a parent
     const parentPath = getParentPath(path);
+    const routeMap = createRoutesMap(tree);
     if (parentPath !== '' && !routeMap.has(parentPath)) {
         throw new SchematicsException(`Parent view doesn't exist! Create a view with '${parentPath}' path first.`);
     }
@@ -81,7 +83,7 @@ function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolea
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push( addRouteToRoutesJson(args.path as string, className.name));
+        rules.push(addRouteToRoutesJson(args.path as string, className.name));
     }
     return chain(rules);
 }
@@ -116,8 +118,8 @@ function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean)
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push( addRouteToRoutesJson(args.path as string, className.name));
-        rules.push( addRouteToRoutesJson(`${args.path}/**`, className.name));
+        rules.push(addRouteToRoutesJson(args.path as string, className.name));
+        rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name));
     }
     return chain(rules);
 }
@@ -142,8 +144,8 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
                 throw new SchematicsException('TabView content Component must define both a \'class\' and a \'classPath\' attribute');
             }
 
-            if ( !tab.component.classPath.startsWith('./')) {
-               tab.component.classPath = `./${tab.component.classPath}`;
+            if (!tab.component.classPath.startsWith('./')) {
+                tab.component.classPath = `./${tab.component.classPath}`;
             }
 
             result.tabViewImports.push(
