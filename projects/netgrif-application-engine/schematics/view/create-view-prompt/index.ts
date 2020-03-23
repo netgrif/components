@@ -67,7 +67,9 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
-    rules.push(addViewToNaeJson(args));
+    if (addRoute) {
+        rules.push(addViewToNaeJson(args));
+    }
     return chain(rules);
 }
 
