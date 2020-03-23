@@ -9,10 +9,14 @@ import {TranslateService, TranslationChangeEvent} from '@ngx-translate/core';
 export class SelectLanguageService {
 
     constructor(private translate: TranslateService) {
+        translate.addLangs(['en', 'sk']);
         translate.setTranslation('en', en, true);
         translate.setTranslation('sk', sk, true);
         translate.setDefaultLang('en');
-        translate.use('en');
+
+        const browserLang = translate.getBrowserLang();
+        translate.use(browserLang.match(/en|sk/) ? browserLang : 'en');
+
         translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
             console.log('Language changed to ' + event.lang);
         });
