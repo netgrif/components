@@ -5,7 +5,7 @@ import {
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration} from '../../utilityFunctions';
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
-import {constructRoutePath, createRoutesMap, Route} from '../viewUtilityFunctions';
+import {constructRoutePath, createAppRoutesMap, Route} from '../viewUtilityFunctions';
 import {CreateViewArguments} from '../create-view-prompt/schema';
 
 export function createView(): Rule {
@@ -19,7 +19,7 @@ function getSchematicArguments(naeRoutes: { [k: string]: NaeRoute } | undefined,
     if (!naeRoutes) {
         return emptyArguments();
     }
-    const pathToRouteMap = createRoutesMap(tree);
+    const pathToRouteMap = createAppRoutesMap(tree);
     return findMissingView(pathToRouteMap, naeRoutes);
 }
 

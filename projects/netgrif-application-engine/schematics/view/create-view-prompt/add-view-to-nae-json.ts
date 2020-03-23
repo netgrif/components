@@ -4,12 +4,12 @@ import {
 } from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
 import {getNaeConfiguration} from '../../utilityFunctions';
-import {createRoutesMap} from '../viewUtilityFunctions';
+import {createAppRoutesMap} from '../viewUtilityFunctions';
 
 
 export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
-        const routesMap = createRoutesMap(tree);
+        const routesMap = createAppRoutesMap(tree);
         if (routesMap.has(createViewArguments.path as string)) {
             return tree;
         } else {

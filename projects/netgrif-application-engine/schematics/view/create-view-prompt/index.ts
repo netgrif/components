@@ -7,7 +7,7 @@ import {
 import {
     addRouteToRoutesJson,
     addRoutingModuleImport,
-    createRoutesMap,
+    createAppRoutesMap,
     getParentPath,
     Route,
     updateAppModule
@@ -49,7 +49,7 @@ function checkPathValidity(tree: Tree, path: string | undefined) {
     }
     // if the path was entered from a prompt, it might not have a parent
     const parentPath = getParentPath(path);
-    const routeMap = createRoutesMap(tree);
+    const routeMap = createAppRoutesMap(tree);
     if (parentPath !== '' && !routeMap.has(parentPath)) {
         throw new SchematicsException(`Parent view doesn't exist! Create a view with '${parentPath}' path first.`);
     }
