@@ -56,7 +56,7 @@ export interface Theme {
     name: string;
     pallets: {
         light: {
-            primary?:
+            primary:
                 string
                 | {
                 "50"?: string;
@@ -106,7 +106,7 @@ export interface Theme {
             };
             [k: string]: any;
         };
-        dark?: {
+        dark: {
             primary?:
                 string
                 | {

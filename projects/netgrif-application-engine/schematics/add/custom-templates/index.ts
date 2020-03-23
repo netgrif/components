@@ -3,15 +3,11 @@ import {
     SchematicContext,
     SchematicsException,
     Tree,
-    url,
-    applyTemplates,
-    apply,
-    move,
     chain,
-    mergeWith
 } from '@angular-devkit/schematics';
-import {Schema} from './schema';
-import {getProjectInfo} from '../../utilityFunctions';
+import {createFilesFromTemplates, getProjectInfo} from '../../utilityFunctions';
+// Javascript libka, ktoru typescript nechcel skompilovat. Problem ja internete vyrieseny takto a aj samotne readme obsahuje tento sposob.
+const PaletteGenerator = require('palette-creator');
 
 function handleJsonString(json: string, mainJsonobject: boolean, darkTheme: boolean) {
     if (mainJsonobject) {
@@ -31,7 +27,7 @@ function handleJsonString(json: string, mainJsonobject: boolean, darkTheme: bool
     return json;
 }
 
-export function customTemplates(_options: Schema): Rule {
+export function customTemplates(): Rule {
     return (tree: Tree, _context: SchematicContext) => {
 
         const naeJson = tree.read('./nae.json');
@@ -39,64 +35,111 @@ export function customTemplates(_options: Schema): Rule {
             throw new SchematicsException('Missing \'nae.json\' file');
         }
         const data = JSON.parse(naeJson.toString());
-        let correctPath = false;
-
-        const {path} = _options;
-        if (tree.exists(path) && path.includes('styles.scss')) {
-            tree.overwrite(path, '@import "./styles/templates/customThemes.scss"; ' +
-                '\n' + '@include mat-core();' + '\n' + tree.read(path));
-            correctPath = true;
-        } else if (tree.exists('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss')) {
-            tree.overwrite('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss',
-                '@import "./styles/templates/customThemes.scss;' + '\n' + '@include mat-core();' +
-                '\n' + tree.read('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss'));
-        } else {
-            throw new SchematicsException('Your typed path : ' + path + ' incorrect and no file styles.scss in src folder.');
+        if (!tree.exists('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss')) {
+            throw new SchematicsException('Cant find styles.scss file');
         }
+        let darkExists = false;
+        if (data.theme.pallets.dark.primary !== undefined) {
+            darkExists = true;
+        }
+        if (data.theme.pallets.light === undefined) {
+            throw new SchematicsException('Light theme must be specified !');
+        }
+        const primaryLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.primary, false);
+        const primaryContrastLight = (primaryLight) ? '\n' + returnContrastIfExist(data.theme.pallets.light.primary.contrast) : null;
+        const secondaryLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.secondary, false);
+        const secondaryContrastLight = (secondaryLight) ? '\n' + returnContrastIfExist(data.theme.pallets.light.secondary.contrast) : null;
+        const warnLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.warn, false);
+        const warnContrastLight = (warnLight) ? '\n' + returnContrastIfExist(data.theme.pallets.light.warn.contrast) : null;
+        const primaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.primary, false);
+        const primaryContrastDark = (primaryDark) ? '\n' + returnContrastIfExist(data.theme.pallets.dark.primary.contrast) : null;
+        const secondaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.secondary, false);
+        const secondaryContrastDark = (secondaryDark) ? '\n' + returnContrastIfExist(data.theme.pallets.dark.secondary.contrast) : null;
+        const warnDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.warn, false);
+        const warnContrastDark = (warnDark) ? '\n' + returnContrastIfExist(data.theme.pallets.dark.warn.contrast) : null;
 
-        const primaryLigt = handleJsonString(JSON.stringify(data.theme.pallets.light.primary), true, false) + '\n';
-        const primaryContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.primary.contrast.light),
-            false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.light.primary.contrast.dark), false, true);
-        const secondaryLight = handleJsonString(JSON.stringify(data.theme.pallets.light.secondary), true, false) + '\n';
-        const secondaryContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.secondary.contrast.light),
-            false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.light.secondary.contrast.dark), false, true);
-        const warnLight = handleJsonString(JSON.stringify(data.theme.pallets.light.warn), true, false) + '\n';
-        const warnContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.warn.contrast.light),
-            false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.light.warn.contrast.dark), false, true);
-        const primaryDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.primary), true, false);
-        const primaryContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.primary.contrast.light),
-            false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.dark.primary.contrast.dark), false, true);
-        const secondaryDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary), true, false);
-        const secondaryContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.light),
-            false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.dark), false, true);
-        const warnDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn), true, false);
-        const warnContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.light),
-            false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.dark), false, true);
 
-        const customTemplate = apply(
-            url('./files'),
-            [
-                applyTemplates({
-                    primaryLigt,
-                    primaryContrastLight,
-                    secondaryLight,
-                    secondaryContrastLight,
-                    warnLight,
-                    warnContrastLight,
-                    primaryDark,
-                    primaryContrastDark,
-                    secondaryDark,
-                    secondaryContrastDark,
-                    warnDark,
-                    warnContrastDark
-                }),
-                correctPath ? move(path.replace('styles.scss', '') + '/styles/templates')
-                    : move('./projects/' + getProjectInfo(tree).projectName + '/src/styles/templates')
-            ]
-        );
+        const rules = [];
+        const pathTomove = './projects/' + getProjectInfo(tree).projectName + '/src/styles/templates';
+        rules.push(createFilesFromTemplates('./files/light-theme', pathTomove, {
+            primaryLight,
+            primaryContrastLight,
+            secondaryLight,
+            secondaryContrastLight,
+            warnLight,
+            warnContrastLight
+        }));
 
-        return chain([
-            mergeWith(customTemplate)
-        ]);
+        if (darkExists) {
+            rules.push(createFilesFromTemplates('./files/dark-theme', pathTomove, {
+                primaryDark,
+                primaryContrastDark,
+                secondaryDark,
+                secondaryContrastDark,
+                warnDark,
+                warnContrastDark
+            }));
+
+        }
+        rules.push(createFilesFromTemplates('./files/custom-themes', pathTomove, {
+            darkExists
+        }));
+
+        const wholeStyleContent = tree.read('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss');
+        if (wholeStyleContent) {
+            let importsAndIncludes = '';
+            if (wholeStyleContent.toString().match('@include mat-core()') === null) {
+                importsAndIncludes += '@include mat-core();' + '\n';
+            }
+            if (wholeStyleContent.toString().match('@import "./styles/templates/custom-themes.scss;') === null) {
+                importsAndIncludes += '@import \'./styles/templates/custom-themes.scss\';' + '\n';
+            }
+            tree.overwrite('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss',
+                importsAndIncludes + tree.read('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss'));
+        }
+        return chain(rules);
     };
 }
+
+function generatePalete(hexColor: string): string {
+    let stringToReturn = '';
+    const palette = PaletteGenerator.default.getPalette(hexColor);
+    let palleteKeys: number[];
+    palleteKeys = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+    palleteKeys.forEach(value => stringToReturn += (value + ': ' + palette[value].hex + ',\n'));
+    return stringToReturn;
+}
+
+function returnPaleteIfExistOrCreate(dataTocheck: any, darkTheme: boolean) {
+    if (dataTocheck instanceof Object) {
+        return handleJsonString(JSON.stringify(dataTocheck), true, darkTheme);
+    } else if (typeof dataTocheck === 'string') {
+        return generatePalete(dataTocheck);
+    }
+    return '';
+}
+
+function returnContrastIfExist(dataTocheck: any) {
+    let contrastToReturn = '';
+    if (dataTocheck instanceof Object) {
+        if (dataTocheck.light !== undefined) {
+            contrastToReturn += handleJsonString(JSON.stringify(dataTocheck.light), false, false) + ' ';
+        }
+        if (dataTocheck.dark !== undefined) {
+            contrastToReturn += handleJsonString(JSON.stringify(dataTocheck.dark), false, true);
+        }
+    } else {
+        contrastToReturn += '50 :$light-primary-text,' +
+            ' \n 100 :$light-primary-text,' +
+            ' \n 200 :$light-primary-text,' +
+            ' \n 300 :$light-primary-text,' +
+            ' \n400 :$light-primary-text, ' +
+            '\n 500 :$light-primary-text,' +
+            ' \n 600 :$dark-primary-text,' +
+            ' \n 700 :$dark-primary-text,' +
+            ' \n 800 :$dark-primary-text,' +
+            ' \n900 :$dark-primary-text';
+    }
+    return contrastToReturn;
+}
+

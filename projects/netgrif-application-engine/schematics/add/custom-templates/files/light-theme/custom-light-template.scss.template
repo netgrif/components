@@ -1,5 +1,5 @@
 @import '~@angular/material/theming';
-$bv-light-primary: ( <%= primaryLigt %>
+$bv-light-primary: ( <%= primaryLight %>
 contrast : (
 <%= primaryContrastLight %>)
 );
