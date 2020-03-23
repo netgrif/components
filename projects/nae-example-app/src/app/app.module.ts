@@ -16,7 +16,7 @@ import {
     QuestionDialogWithAnswerComponent,
     QuestionDialogComponent,
     TabsModule,
-    DataFieldsModule
+    DataFieldsModule, ToolbarModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -33,6 +33,7 @@ import { DialogExampleComponent } from './doc/dialog-example/dialog-example.comp
 import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example.component';
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
+import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-t
         DialogExampleComponent,
         TabViewExampleComponent,
         ContentComponent,
-        ReactiveTextFieldComponent
+        ReactiveTextFieldComponent,
+        ToolbarExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -63,7 +65,8 @@ import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-t
         PanelModule,
         DialogModule,
         TabsModule,
-        DataFieldsModule
+        DataFieldsModule,
+        ToolbarModule
     ],
     entryComponents: [
         NewCaseComponent,

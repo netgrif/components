@@ -2,7 +2,7 @@
     <mat-toolbar-row fxLayout="row">
         <div class="main-toolbar-logo" fxFlex fxLayout="row">
             <a href="/">
-                <img src="assets/img/netgrif_full_white.svg" alt="Netgrif">
+                <img [src]="logoSrc" [alt]="logoAlt">
             </a>
         </div>
         <div fxFlex fxHide.gt-xs="false" fxHide.lt-md="true" fxLayout="row" fxLayoutAlign="center">
@@ -18,29 +18,29 @@
                         <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
                             language
                         </mat-icon>
-                        Language
+                        {{ 'toolbar.menu.lang' | translate }}
                     </button>
                     <button mat-menu-item>
                         <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
                             account_circle
                         </mat-icon>
-                        Profile
+                        {{ 'toolbar.menu.profile' | translate }}
                     </button>
                     <button mat-menu-item>
                         <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
                             exit_to_app
                         </mat-icon>
-                        Logout
+                        {{ 'toolbar.menu.logout' | translate }}
                     </button>
                 </mat-menu>
                 <mat-menu #languages="matMenu">
-                    <button mat-menu-item (click)="selectLanguageService.changeLanguage('english')">English
-                        <mat-icon *ngIf="selectLanguageService.languages.english" class="main-toolbar-menu-icon"
+                    <button mat-menu-item (click)="translate.use('en')">{{ 'toolbar.menu.en' | translate }}
+                        <mat-icon *ngIf="translate.currentLang === 'en'" class="main-toolbar-menu-icon"
                                   aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
                         </mat-icon>
                     </button>
-                    <button mat-menu-item (click)="selectLanguageService.changeLanguage('slovak')">Slovak
-                        <mat-icon *ngIf="selectLanguageService.languages.slovak" class="main-toolbar-menu-icon"
+                    <button mat-menu-item (click)="translate.use('sk')">{{ 'toolbar.menu.sk' | translate }}
+                        <mat-icon *ngIf="translate.currentLang === 'sk'" class="main-toolbar-menu-icon"
                                   aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
                         </mat-icon>
                     </button>
