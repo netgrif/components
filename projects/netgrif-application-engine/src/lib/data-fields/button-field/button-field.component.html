@@ -1,8 +1,25 @@
-<nae-data-field-template *ngIf="!buttonField.behavior.hidden" [title]="buttonField.title" [description]="buttonField.description" [dataFieldTemplate]="button"></nae-data-field-template>
+<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="button">
+</nae-data-field-template>
 
 <ng-template #button let-showLargeLayout="showLargeLayout">
-    <mat-label *ngIf="!showLargeLayout.value">{{buttonField.title}}</mat-label>
-    <button mat-raised-button color="primary" [disabled]="buttonField.disabled">{{buttonField.placeholder}}</button>
-    <nae-required-label *ngIf="buttonField.behavior.required" [isIn]="!buttonField.disabled"></nae-required-label>
-    <mat-hint>{{buttonField.description}}</mat-hint>
+    <div>
+        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}<nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label></mat-label>
+        <button mat-button
+                [ngClass]="{
+                'mat-raised-button': dataField.view === 'raised',
+                'mat-stroked-button': dataField.view === 'stroked',
+                'mat-flat-button': dataField.view === 'flat',
+                'mat-icon-button': dataField.view === 'icon',
+                'mat-fab': dataField.view === 'fab',
+                'mat-mini-fab': dataField.view === 'minifab'}"
+                color="primary"
+                ngDefaultControl
+                [matTooltip]="dataField.description"
+                [formControl]="formControl"
+                (click)="formControl.setValue(formControl.value + 1)">
+            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : dataField.placeholder }}
+        </button>
+    </div>
 </ng-template>

@@ -1,21 +1,20 @@
-<nae-data-field-template *ngIf="!dateField.behavior.hidden" [title]="dateField.title" [description]="dateField.description" [dataFieldTemplate]="date"></nae-data-field-template>
+<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="date">
+</nae-data-field-template>
 
 <ng-template #date let-showLargeLayout="showLargeLayout">
-    <mat-form-field [appearance]="dateField.materialAppearance" class="full-width" color="primary">
-        <div fxLayout="row">
-            <mat-label *ngIf="!showLargeLayout.value">{{dateField.title}}</mat-label>
-            <mat-datepicker-toggle [for]="datepicker"></mat-datepicker-toggle>
-            <input matInput
-                   [matDatepicker]="datepicker"
-                   [(ngModel)]="dateField.value"
-                   (click)="datepicker.open()"
-                   (keydown.enter)="datepicker.close()"
-                   [placeholder]="dateField.placeholder"
-                   [required]="dateField.behavior.required"
-                   [disabled]="dateField.disabled">
-            <mat-datepicker #datepicker>
-            </mat-datepicker>
-            <mat-hint>{{dateField.description}}</mat-hint>
-        </div>
+    <mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
+        <input matInput
+               [matDatepicker]="datepicker"
+               (click)="datepicker.open()"
+               (keydown.enter)="datepicker.close()"
+               [placeholder]="dataField.placeholder"
+               [formControl]="formControl">
+        <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker></mat-datepicker>
+        <mat-hint>{{dataField.description}}</mat-hint>
+        <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
 </ng-template>

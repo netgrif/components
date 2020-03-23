@@ -1,17 +1,18 @@
-<nae-data-field-template *ngIf="!numberField.behavior.hidden"
-                         [title]="numberField.title"
-                         [dataFieldTemplate]="dataField"
-                         [description]="numberField.description"></nae-data-field-template>
+<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="dataFieldTemplate">
 
-<ng-template #dataField let-showLargeLayout="showLargeLayout">
-    <mat-form-field [appearance]="numberField.materialAppearance" class="full-width" color="primary">
-        <mat-label *ngIf="!showLargeLayout.value">{{numberField.title}}</mat-label>
+</nae-data-field-template>
+
+<ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
+    <mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
         <input matInput
                type="number"
-               [(ngModel)]="numberField.value"
-               [placeholder]="numberField.placeholder"
-               [disabled]="numberField.disabled"
-               [required]="numberField.behavior.required">
-        <mat-hint>{{numberField.description}}</mat-hint>
+               [formControl]="formControl"
+               [placeholder]="dataField.placeholder"
+               [required]="dataField.behavior.required">
+        <mat-hint>{{dataField.description}}</mat-hint>
+        <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
 </ng-template>

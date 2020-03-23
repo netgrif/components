@@ -1,4 +1,5 @@
 import {Behavior} from '../../../data-fields/models/behavior';
+import {Validation} from '../../../data-fields/models/abstract-data-field';
 
 export interface DataFieldResource {
     stringId: string;
@@ -22,8 +23,7 @@ export interface DataFieldResource {
     };
     minValue?: number;
     minDate?: string;
-    validationJS?: string;
-    validationErrors?: any;
+    validations?: Validation[];
     subType?: string;
     formatting?: string;
     roles?: any[];

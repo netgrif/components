@@ -1,28 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TextField} from './models/text-field';
-
-export enum TextFieldType {
-    LEGACY = 'legacy',
-    STANDARD = 'standard',
-    FILL = 'fill',
-    OUTLINE = 'outline'
-}
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 
 @Component({
     selector: 'nae-text-field',
     templateUrl: './text-field.component.html',
     styleUrls: ['./text-field.component.scss']
 })
-export class TextFieldComponent implements OnInit {
+export class TextFieldComponent extends AbstractDataFieldComponent {
 
-    @Input() textField: TextField;
-
+    @Input() dataField: TextField;
 
     constructor() {
-    }
-
-    ngOnInit() {
-
+        super();
     }
 
 }
