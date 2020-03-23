@@ -1,4 +1,4 @@
-import {DataField} from '../../models/abstract-data-field';
+import {DataField, Layout} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 
 export enum ButtonFieldView {
@@ -14,8 +14,8 @@ export enum ButtonFieldView {
 export class ButtonField extends DataField<number> {
 
     constructor(stringId: string, title: string, behavior: Behavior, value?: number,
-                placeholder?: string, description?: string, private _view = ButtonFieldView.STANDARD) {
-        super(stringId, title, (value === undefined) ? 0 : value, behavior, placeholder, description);
+                placeholder?: string, description?: string, layout?: Layout, private _view = ButtonFieldView.STANDARD) {
+        super(stringId, title, (value === undefined) ? 0 : value, behavior, placeholder, description, layout);
     }
 
     get view(): ButtonFieldView {

@@ -1,5 +1,5 @@
-<mat-grid-list cols="4" rowHeight="105px">
-    <mat-grid-tile *ngFor="let item of resources"
+<mat-grid-list [cols]="formCols" rowHeight="105px">
+    <mat-grid-tile *ngFor="let item of dataSource"
                    class="border"
                    [colspan]="item.layout.cols"
                    [rowspan]="item.layout.rows"
@@ -36,7 +36,5 @@
             </nae-button-field>
 
             <div *ngSwitchCase="'blank'"></div>
-
-            <span *ngSwitchDefault>{{item.type}}</span>
     </mat-grid-tile>
 </mat-grid-list>

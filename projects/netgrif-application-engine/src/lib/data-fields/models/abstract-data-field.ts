@@ -9,6 +9,13 @@ export interface Validation {
     validationMessage: string;
 }
 
+export interface Layout {
+    x: number;
+    y: number;
+    cols: number;
+    rows: number;
+}
+
 export enum MaterialAppearance {
     LEGACY = 'legacy',
     STANDARD = 'standard',
@@ -21,7 +28,8 @@ export abstract class DataField<T> {
     private _value: BehaviorSubject<T>;
 
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
-                          private _behavior: Behavior, private _placeholder?: string, private _description?: string) {
+                          private _behavior: Behavior, private _placeholder?: string,
+                          private _description?: string, private _layout?: Layout) {
         this._value = new BehaviorSubject<T>(initialValue);
     }
 

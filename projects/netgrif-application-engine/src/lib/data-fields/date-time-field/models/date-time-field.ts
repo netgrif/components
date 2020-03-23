@@ -1,4 +1,4 @@
-import {DataField, MaterialAppearance} from '../../models/abstract-data-field';
+import {DataField, Layout, MaterialAppearance} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 
@@ -6,8 +6,8 @@ export class DateTimeField extends DataField<Date> {
     private _validators: Array<ValidatorFn>;
 
     constructor(stringId: string, title: string, value: Date, behavior: Behavior, placeholder?: string,
-                description?: string, public validations?: any, public materialAppearance = MaterialAppearance.STANDARD) {
-        super(stringId, title, value, behavior, placeholder, description);
+                description?: string, layout?: Layout, public validations?: any, public materialAppearance = MaterialAppearance.STANDARD) {
+        super(stringId, title, value, behavior, placeholder, description, layout);
     }
 
     protected valueEquality(a: Date, b: Date): boolean {

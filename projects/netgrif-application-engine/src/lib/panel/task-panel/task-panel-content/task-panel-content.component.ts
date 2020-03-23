@@ -29,59 +29,114 @@ import {GridFiller} from './grid-filler';
     templateUrl: './task-panel-content.component.html',
     styleUrls: ['./task-panel-content.component.scss']
 })
-export class TaskPanelContentComponent implements OnInit {
+export class TaskPanelContentComponent {
+    dataSource: any[];
+    formCols: number;
 
     constructor() {
-        console.time('start');
-        // TODO number of columns must come from backend (from form builder in transition)
-        this.resources = this.fillBlankSpace(Resources.data, 4);
-        console.timeEnd('start');
-        this.formCols = Resources.cols;
+        // TODO : cols from task
+        this.formCols = 5;
+        console.time('count');
+        this.dataSource = this.fillBlankSpace(Resources.data, this.formCols);
+        console.timeEnd('count');
     }
-    resources: any[];
-    formCols: number;
 
     private static newGridRow(cols: number): Array<GridFiller> {
         return [new GridFiller(0, cols - 1)];
     }
 
-    ngOnInit(): void {
-    }
-
     fillBlankSpace(resource: any[], columnCount: number): Array<GridLayoutElement> {
         const grid: Array<Array<GridFiller>> = [];
+        const returnResource = [];
 
-        resource.forEach(dataField => {
-            const itemRowEnd = dataField.layout.y + dataField.layout.rows - 1;
-            const itemColEnd = dataField.layout.x + dataField.layout.cols - 1;
-            if (itemRowEnd >= grid.length) {
-                this.addGridRows(grid, itemRowEnd + 1, columnCount);
+        resource.forEach( dataGroup => {
+            let count = 0;
+            if (dataGroup.title && dataGroup.title !== '') {
+                // TODO add title
             }
-            for (let row = dataField.layout.y; row <= itemRowEnd; row++) {
-                if (dataField.behavior.hidden) {
-                    for (const filler of grid[row]) {
-                        filler.isIntentional = false;
+            // TODO resolve alignment
+            dataGroup.fields.forEach(dataField => {
+                if (dataField.layout !== undefined) {
+                    const itemRowEnd = dataField.layout.y + dataField.layout.rows - 1;
+                    const itemColEnd = dataField.layout.x + dataField.layout.cols - 1;
+                    if (itemRowEnd >= grid.length) {
+                        this.addGridRows(grid, itemRowEnd + 1, columnCount);
+                    }
+                    for (let row = dataField.layout.y; row <= itemRowEnd; row++) {
+                        if (dataField.behavior.hidden) {
+                            for (const filler of grid[row]) {
+                                filler.isIntentional = false;
+                            }
+                        } else {
+                            const newFillers = [];
+                            for (const filler of grid[row]) {
+                                newFillers.push(...filler.fillersAfterCover(dataField.layout.x, itemColEnd));
+                            }
+                            grid[row] = newFillers;
+                        }
                     }
                 } else {
-                    const newFillers = [];
-                    for (const filler of grid[row]) {
-                        newFillers.push(...filler.fillersAfterCover(dataField.layout.x, itemColEnd));
+                    if (dataGroup.stretch) {
+                        const newRow = grid.length + 1;
+                        this.addGridRows(grid, newRow, columnCount);
+                        grid[newRow - 1] = [];
+                        if (!dataField.behavior.hidden) {
+                            returnResource.push({item: this.toClass(dataField), type: dataField.type,
+                                layout: {x: 0, y: newRow - 1, cols: columnCount, rows: 1}});
+                        }
+                    } else {
+                        let columnCenter = columnCount / 2;
+                        if ((columnCount % 2) !== 0) {
+                            columnCenter = (columnCount + 1) / 2;
+                        }
+                        if ((count % 2) === 0) {
+                            const newRow = grid.length + 1;
+                            this.addGridRows(grid, newRow, columnCount);
+                            if (dataField.behavior.hidden) {
+                                for (const filler of grid[newRow - 1]) {
+                                    filler.isIntentional = false;
+                                }
+                            } else {
+                                const newFillers = [];
+                                for (const filler of grid[newRow - 1]) {
+                                    newFillers.push(...filler.fillersAfterCover(0, columnCenter - 1));
+                                }
+                                grid[newRow - 1] = newFillers;
+                                returnResource.push({item: this.toClass(dataField), type: dataField.type,
+                                    layout: {x: 0, y: newRow - 1, cols: columnCenter , rows: 1}});
+                            }
+                            count++;
+                        } else {
+                            const row = grid.length - 1;
+                            if (dataField.behavior.hidden) {
+                                for (const filler of grid[row]) {
+                                    filler.isIntentional = false;
+                                }
+                            } else {
+                                returnResource.push({item: this.toClass(dataField), type: dataField.type,
+                                    layout: {x: columnCenter, y: row , cols: columnCount - columnCenter , rows: 1}});
+                                grid[row] = [];
+                            }
+                            count++;
+                        }
                     }
-                    grid[row] = newFillers;
                 }
-            }
+            });
         });
 
-        const returnResource = resource.filter( item => !item.behavior.hidden)
-            .map(item => ({item: this.toClass(item), type: item.type, layout: item.layout}));
+        console.log(grid);
+        resource.forEach( dataGroup => {
+            returnResource.push(...dataGroup.fields.filter(item => !item.behavior.hidden && item.layout !== undefined)
+                .map(item => ({item: this.toClass(item), type: item.type, layout: item.layout})));
+        });
         let encounterFirst = false;
-        for (let y = grid.length - 1; y > 0 ; y--) {
+        for (let y = grid.length - 1; y > 0; y--) {
             const row = grid[y];
-            row.forEach( filler => {
+            row.forEach(filler => {
                 if (!encounterFirst && !filler.isFullWidth(columnCount)) {
                     encounterFirst = true;
                 }
-                if (encounterFirst && ( filler.isIntentional || !filler.isFullWidth(columnCount))) {
+                if (encounterFirst && (filler.isIntentional || !filler.isFullWidth(columnCount))) {
                     returnResource.push(filler.convertToGridLayoutElement(y));
                 }
             });
@@ -114,7 +169,7 @@ export class TaskPanelContentComponent implements OnInit {
         switch (item.type) {
             case 'boolean':
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
-                    item.placeholder, item.description);
+                    item.placeholder, item.description, item.layout);
             case 'text':
                 let type = TextFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {
@@ -123,10 +178,10 @@ export class TaskPanelContentComponent implements OnInit {
                     }
                 }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
-                    item.description, item.validations, MaterialAppearance.STANDARD, type);
+                    item.description, item.layout, item.validations, MaterialAppearance.STANDARD, type);
             case 'number':
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
-                    item.validations, item.placeholder, item.description, MaterialAppearance.STANDARD);
+                    item.validations, item.placeholder, item.description, item.layout, MaterialAppearance.STANDARD);
             case 'enumeration':
                 let typeEnum = EnumerationFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {
@@ -141,7 +196,7 @@ export class TaskPanelContentComponent implements OnInit {
                     choices.push({key: it, value: it} as EnumerationFieldValue);
                 });
                 return new EnumerationField(item.stringId, item.name, item.value as string,
-                    choices, item.behavior, item.placeholder, item.description, MaterialAppearance.STANDARD, typeEnum);
+                    choices, item.behavior, item.placeholder, item.description, item.layout, MaterialAppearance.STANDARD, typeEnum);
             case 'multichoice':
                 let typeMulti = MultichoiceFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {
@@ -155,21 +210,22 @@ export class TaskPanelContentComponent implements OnInit {
                     choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);
                 });
                 return new MultichoiceField(item.stringId, item.name, values, choicesMulti, item.behavior,
-                    item.placeholder, item.description, MaterialAppearance.STANDARD, typeMulti);
+                    item.placeholder, item.description, item.layout, MaterialAppearance.STANDARD, typeMulti);
             case 'date':
                 const date = new Date(item.minDate);
-                return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder, item.description);
+                return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder, item.description, item.layout);
             case 'dateTime':
                 const dateTime = new Date();
-                return new DateTimeField(item.stringId, item.name, dateTime, item.behavior, item.placeholder, item.description);
+                return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
+                    item.placeholder, item.description, item.layout);
             case 'user':
                 return new UserField(item.stringId, item.name, item.behavior, new UserValue('name',
-                    'surname', 'email'), item.roles, item.placeholder, item.description);
+                    'surname', 'email'), item.roles, item.placeholder, item.description, item.layout);
             case 'button':
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
-                    item.placeholder, item.description);
+                    item.placeholder, item.description, item.layout);
             case 'file':
-                return new FileField(item.stringId, item.name, item.behavior, undefined, item.placeholder, item.description);
+                return new FileField(item.stringId, item.name, item.behavior, undefined, item.placeholder, item.description, item.layout);
         }
     }
 

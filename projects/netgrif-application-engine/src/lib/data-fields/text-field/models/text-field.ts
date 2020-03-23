@@ -1,4 +1,4 @@
-import {DataField, MaterialAppearance, Validation} from '../../models/abstract-data-field';
+import {DataField, Layout, MaterialAppearance, Validation} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 
@@ -11,9 +11,9 @@ export class TextField extends DataField<string> {
     private _validators: Array<ValidatorFn>;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior,
-                placeholder?: string, description?: string, public validations?: Validation[],
+                placeholder?: string, description?: string, layout?: Layout, public validations?: Validation[],
                 public materialAppearance = MaterialAppearance.STANDARD, private _view = TextFieldView.DEFAULT) {
-        super(stringId, title, value, behavior, placeholder, description);
+        super(stringId, title, value, behavior, placeholder, description, layout);
     }
 
     get view(): TextFieldView {

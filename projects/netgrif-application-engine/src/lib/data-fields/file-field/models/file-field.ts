@@ -1,4 +1,4 @@
-import {DataField} from '../../models/abstract-data-field';
+import {DataField, Layout} from '../../models/abstract-data-field';
 import {Subscription} from 'rxjs';
 import {Behavior} from '../../models/behavior';
 
@@ -35,9 +35,9 @@ export class FileField extends DataField<Array<File>> {
     public filesSize = 0;
 
     constructor(stringId: string, title: string, behavior: Behavior, value?: Array<File>, placeholder?: string, description?: string,
-                private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1, private _zipped: boolean = true,
-                private _allowTypes?: string | FileUploadMIMEtype | Array<FileUploadMIMEtype>) {
-        super(stringId, title, value, behavior, placeholder, description);
+                layout?: Layout, private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1,
+                private _zipped: boolean = true, private _allowTypes?: string | FileUploadMIMEtype | Array<FileUploadMIMEtype>) {
+        super(stringId, title, value, behavior, placeholder, description, layout);
     }
 
     get maxUploadSizeInBytes(): number {
