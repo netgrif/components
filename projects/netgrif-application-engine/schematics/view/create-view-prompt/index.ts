@@ -26,6 +26,7 @@ import {ClassName} from './classes/ClassName';
 import {TabViewParams} from './classes/paramsInterfaces';
 import {TabContentTemplate} from './classes/TabContentTemplate';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
+import {addViewToNaeJson} from './add-view-to-nae-json';
 
 
 interface TabViews {
@@ -55,14 +56,19 @@ function checkPathValidity(tree: Tree, path: string | undefined) {
 }
 
 function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = true): Rule {
+    const rules = [];
     switch (args.viewType) {
         case 'login':
-            return createLoginView(tree, args, addRoute);
+            rules.push(createLoginView(tree, args, addRoute));
+            break;
         case 'tabView':
-            return createTabView(tree, args, addRoute);
+            rules.push(createTabView(tree, args, addRoute));
+            break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
+    rules.push(addViewToNaeJson(args));
+    return chain(rules);
 }
 
 function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
