@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Headers} from "../../headers";
-import {AbstractHeaderService} from "../../abstract-header-service";
+import {Headers} from '../../headers';
+import {AbstractHeaderService} from '../../abstract-header-service';
+import {MatDatepickerInputEvent} from '@angular/material';
 
 @Component({
     selector: 'nae-search-mode',
@@ -21,8 +22,13 @@ export class SearchModeComponent implements OnInit {
     }
 
     public onUserKeyupSearch(columnId: string, searchedQuery: any) {
-        this.headers = this.headerService.onUserKeyupSearch(columnId, searchedQuery);
+        this.headers = this.headerService.onUserSearch(columnId, searchedQuery);
     }
+
+    public onUserDateSearch(columnId: string, event: MatDatepickerInputEvent<any>) {
+        this.headers = this.headerService.onUserSearch(columnId, event.value);
+    }
+
 
     public getIterableHeaders() {
         return {...this.headers.selected};

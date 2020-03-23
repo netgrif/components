@@ -1,13 +1,19 @@
 import {Injectable} from '@angular/core';
-import {AbstractHeaderService} from '../abstract-header-service';
 import {Headers} from '../headers';
+import {AbstractHeaderService} from '../abstract-header-service';
+import {WorkflowsPanelGroupService} from '../../workflows/workflows-panel-group/services/workflows-panel-group.service';
 
-@Injectable()
-export class CaseHeaderService extends AbstractHeaderService {
-    constructor() {
-        super('case');
+@Injectable({
+    providedIn: 'root'
+})
+export class WorkflowsHeaderService extends AbstractHeaderService {
+
+    public test$ = this.headerChange$;
+
+    constructor(public workflowPanelGroupService: WorkflowsPanelGroupService) {
+        super('workflow');
         this._headers = new Headers();
-        // TODO simulated resource remove in future
+        //TODO simulated resource remove in future
         this.petriNetReferences.push({
             author: {
                 email: 'example email',
@@ -63,8 +69,7 @@ export class CaseHeaderService extends AbstractHeaderService {
             title: 'Financial data',
             version: '1.0.0'
         });
-        // TODO simulated resource remove in future
-        // TODO simulated resource remove in future
+        //TODO simulated resource remove in future
         this._headers.selected = {
             column0: {
                 type: 'meta',
@@ -113,5 +118,14 @@ export class CaseHeaderService extends AbstractHeaderService {
             }
         };
         this.setFieldsGroupData(this.petriNetReferences);
+        this.workflowPanelGroupService.headers = this.headers;
+        this.workflowPanelGroupService.petriNetReferences = this.petriNetReferences;
+        this.test$.subscribe(value => {
+            console.log(value);
+        });
+    }
+
+    public setPanelsTitles(): void {
+        this.workflowPanelGroupService.setPanelsTitles();
     }
 }

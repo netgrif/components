@@ -15,7 +15,7 @@ export let fieldsGroup: Array<FieldsGroup> = [
             }, {
                 stringId: 'createdDate',
                 title: 'create date',
-                type: 'text'
+                type: 'date'
             }, {
                 stringId: 'author',
                 title: 'author',

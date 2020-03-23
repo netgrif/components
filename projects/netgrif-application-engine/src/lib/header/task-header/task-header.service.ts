@@ -1,53 +1,59 @@
 import {Injectable} from '@angular/core';
-import {AbstractHeaderService} from "../abstract-header-service";
-import {Headers} from "../headers";
+import {AbstractHeaderService} from '../abstract-header-service';
+import {Headers} from '../headers';
 
 @Injectable()
 export class TaskHeaderService extends AbstractHeaderService {
     constructor() {
-        super("task");
+        super('task');
         this._headers = new Headers();
-        //TODO simulated resource remove in future
+        // TODO simulated resource remove in future
+        // TODO simulated resource remove in future
         this._headers.selected = {
             column0: {
                 type: 'meta',
-                identifier: 'case',
-                title: 'Case',
+                identifier: 'title',
+                title: 'title',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column0'
+                columnId: 'column0',
+                fieldType: 'text'
             },
             column1: {
                 type: 'meta',
-                identifier: 'title',
-                title: 'Title',
+                identifier: 'author',
+                title: 'author',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column1'
+                columnId: 'column1',
+                fieldType: 'text'
             },
             column2: {
-                type: 'meta',
-                identifier: 'priority',
-                title: 'Priority',
+                type: 'immediate',
+                identifier: 'zoznam',
+                title: 'Zoznam vozidiel',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column2'
+                columnId: 'column2',
+                fieldType: 'enumeration'
             },
             column3: {
-                type: 'meta',
-                identifier: 'user',
-                title: 'User',
+                type: 'immediate',
+                identifier: 'fileName',
+                title: 'Názov súboru',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column3'
+                columnId: 'column3',
+                fieldType: 'text'
             },
             column4: {
-                type: 'meta',
-                identifier: 'assign-date',
-                title: 'Assign date',
+                type: 'immediate',
+                identifier: 'specialnemeno2',
+                title: 'Mortage prve poinne',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column4'
+                columnId: 'column4',
+                fieldType: 'text'
             }
         };
     }

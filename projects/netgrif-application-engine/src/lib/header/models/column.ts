@@ -7,4 +7,5 @@ export interface Column {
     sortMode: string;
     searchQuery: string;
     columnId: string;
+    fieldType: string;
 }

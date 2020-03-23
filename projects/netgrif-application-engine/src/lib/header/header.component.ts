@@ -1,14 +1,15 @@
 import {Component, Injector, Input, OnInit} from '@angular/core';
-import {AbstractHeaderService, HeaderType} from "./abstract-header-service";
-import {CaseHeaderService} from "./case-header/case-header.service";
-import {TaskHeaderService} from "./task-header/task-header.service";
+import {AbstractHeaderService, HeaderType} from './abstract-header-service';
+import {CaseHeaderService} from './case-header/case-header.service';
+import {TaskHeaderService} from './task-header/task-header.service';
+import {WorkflowsHeaderService} from './workflows-header/workflows-header.service';
 
 
 @Component({
     selector: 'nae-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    providers: [CaseHeaderService, TaskHeaderService]
+    providers: [CaseHeaderService, TaskHeaderService, WorkflowsHeaderService]
 })
 export class HeaderComponent implements OnInit {
 
@@ -25,15 +26,16 @@ export class HeaderComponent implements OnInit {
         this.resolveHeaderService();
     }
 
-    private resolveHeaderService(){
+    private resolveHeaderService() {
         switch (this.type) {
-            case "case":
+            case 'case':
                 this.headerService = this._injector.get(CaseHeaderService);
                 break;
-            case "task":
+            case 'task':
                 this.headerService = this._injector.get(TaskHeaderService);
-            case "workflow":
-                //TODO
+                break;
+            case 'workflow':
+                this.headerService = this._injector.get(WorkflowsHeaderService);
                 break;
         }
     }

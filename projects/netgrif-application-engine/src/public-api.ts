@@ -19,6 +19,7 @@ export * from './lib/tabs/public-api';
 export * from './lib/side-menu/public-api';
 export * from './lib/dialog/public-api';
 export * from './lib/header/public-api';
+export * from './lib/workflows/public-api';
 
 /* SERVICES */
 export * from './lib/snack-bar/snack-bar.service';

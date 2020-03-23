@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FieldsGroup} from "../../models/fields-group";
 import {Headers} from "../../headers";
-import {DataDescription} from "../../models/data-field";
+import {DataDescription} from "../../models/data-description";
 import {AbstractHeaderService} from "../../abstract-header-service";
 
 @Component({
@@ -31,7 +31,7 @@ export class EditModeComponent implements OnInit {
      * @param field Defines representation of field
      */
     public onColumnEdit(columnId: string, groupType: string, field: DataDescription) {
-        this.headers = this.headerService.onColumnEdit(columnId, groupType, field.stringId, field.title);
+        this.headers = this.headerService.onColumnEdit(columnId, groupType, field);
     }
 
     public getIterableHeaders() {
