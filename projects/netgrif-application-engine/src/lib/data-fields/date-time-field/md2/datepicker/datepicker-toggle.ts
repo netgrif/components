@@ -1,28 +1,28 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
-import { Md2Datepicker } from './datepicker';
+import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
+import {Md2Datepicker} from './datepicker';
 
 
 @Component({
-  selector: 'button[md2DatepickerToggle]',
-  template: '',
-  styleUrls: ['datepicker-toggle.scss'],
-  host: {
-    'type': 'button',
-    'class': 'md2-datepicker-toggle',
-    'aria-label': 'Open calendar',
-    '(click)': '_open($event)',
-  },
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'button[md2DatepickerToggle]',
+    template: '',
+    styleUrls: ['datepicker-toggle.scss'],
+    host: {
+        type: 'button',
+        class: 'md2-datepicker-toggle',
+        'aria-label': 'Open calendar',
+        '(click)': '_open($event)',
+    },
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Md2DatepickerToggle<D> {
-  /** Datepicker instance that the button will toggle. */
-  @Input('md2DatepickerToggle') datepicker: Md2Datepicker;
+    /** Datepicker instance that the button will toggle. */
+    @Input('md2DatepickerToggle') datepicker: Md2Datepicker;
 
-  _open(event: Event): void {
-    if (this.datepicker) {
-      this.datepicker.open();
-      event.stopPropagation();
+    _open(event: Event): void {
+        if (this.datepicker) {
+            this.datepicker.open();
+            event.stopPropagation();
+        }
     }
-  }
 }
