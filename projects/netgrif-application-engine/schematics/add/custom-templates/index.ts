@@ -42,21 +42,21 @@ export function customTemplates(): Rule {
         if (data.theme.pallets.dark.primary !== undefined) {
             darkExists = true;
         }
-        if (data.theme.pallets.light === undefined) {
+        if (data.theme.pallets.light.primary === undefined) {
             throw new SchematicsException('Light theme must be specified !');
         }
         const primaryLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.primary, false);
-        const primaryContrastLight = (primaryLight) ? '\n' + returnContrastIfExist(data.theme.pallets.light.primary.contrast) : null;
+        const primaryContrastLight = (primaryLight) ? returnContrastIfExist(data.theme.pallets.light.primary.contrast) : null;
         const secondaryLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.secondary, false);
-        const secondaryContrastLight = (secondaryLight) ? '\n' + returnContrastIfExist(data.theme.pallets.light.secondary.contrast) : null;
+        const secondaryContrastLight = (secondaryLight) ? returnContrastIfExist(data.theme.pallets.light.secondary.contrast) : null;
         const warnLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.warn, false);
-        const warnContrastLight = (warnLight) ? '\n' + returnContrastIfExist(data.theme.pallets.light.warn.contrast) : null;
+        const warnContrastLight = (warnLight) ? returnContrastIfExist(data.theme.pallets.light.warn.contrast) : null;
         const primaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.primary, false);
-        const primaryContrastDark = (primaryDark) ? '\n' + returnContrastIfExist(data.theme.pallets.dark.primary.contrast) : null;
+        const primaryContrastDark = (primaryDark) ? returnContrastIfExist(data.theme.pallets.dark.primary.contrast) : null;
         const secondaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.secondary, false);
-        const secondaryContrastDark = (secondaryDark) ? '\n' + returnContrastIfExist(data.theme.pallets.dark.secondary.contrast) : null;
+        const secondaryContrastDark = (secondaryDark) ? returnContrastIfExist(data.theme.pallets.dark.secondary.contrast) : null;
         const warnDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.warn, false);
-        const warnContrastDark = (warnDark) ? '\n' + returnContrastIfExist(data.theme.pallets.dark.warn.contrast) : null;
+        const warnContrastDark = (warnDark) ? returnContrastIfExist(data.theme.pallets.dark.warn.contrast) : null;
 
 
         const rules = [];
@@ -85,13 +85,14 @@ export function customTemplates(): Rule {
             darkExists
         }));
 
+        deleteExistingFiles(tree, pathTomove);
         const wholeStyleContent = tree.read('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss');
         if (wholeStyleContent) {
             let importsAndIncludes = '';
             if (wholeStyleContent.toString().match('@include mat-core()') === null) {
                 importsAndIncludes += '@include mat-core();' + '\n';
             }
-            if (wholeStyleContent.toString().match('@import "./styles/templates/custom-themes.scss;') === null) {
+            if (wholeStyleContent.toString().match('./styles/templates/custom-themes.scss') === null) {
                 importsAndIncludes += '@import \'./styles/templates/custom-themes.scss\';' + '\n';
             }
             tree.overwrite('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss',
@@ -105,9 +106,9 @@ function generatePalete(hexColor: string): string {
     let stringToReturn = '';
     const palette = PaletteGenerator.default.getPalette(hexColor);
     let palleteKeys: number[];
-    palleteKeys = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+    palleteKeys = [50, 100, 200, 300, 400, 500, 600, 700, 800];
     palleteKeys.forEach(value => stringToReturn += (value + ': ' + palette[value].hex + ',\n'));
-    return stringToReturn;
+    return stringToReturn + '900 : ' + palette[900].hex + ',';
 }
 
 function returnPaleteIfExistOrCreate(dataTocheck: any, darkTheme: boolean) {
@@ -141,5 +142,17 @@ function returnContrastIfExist(dataTocheck: any) {
             ' \n900 :$dark-primary-text';
     }
     return contrastToReturn;
+}
+
+function deleteExistingFiles(tree: Tree, pathTomove: string) {
+    if (tree.exists(pathTomove + '/custom-themes.scss')) {
+        tree.delete(pathTomove + '/custom-themes.scss');
+    }
+    if (tree.exists(pathTomove + '/custom-dark-template.scss')) {
+        tree.delete(pathTomove + '/custom-dark-template.scss');
+    }
+    if (tree.exists(pathTomove + '/custom-light-template.scss')) {
+        tree.delete(pathTomove + '/custom-light-template.scss');
+    }
 }
 
