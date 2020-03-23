@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'nae-app-toolbar-example',
@@ -7,15 +8,14 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ToolbarExampleComponent implements OnInit {
     readonly TITLE = 'Toolbar';
-    readonly DESCRIPTION = 'Ukážka použitia Toolbaru...';
+    readonly DESCRIPTION = 'Ukážka toolbaru...';
 
     logoSrc = 'assets/img/netgrif_full_white.svg';
     logoAlt = 'Netgrif';
 
-    constructor() {
+    constructor(public translate: TranslateService) {
     }
 
     ngOnInit(): void {
     }
-
 }

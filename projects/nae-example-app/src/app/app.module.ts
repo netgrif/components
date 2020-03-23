@@ -34,6 +34,13 @@ import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
 import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.component';
+import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
+import {HttpClient} from '@angular/common/http';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     declarations: [
@@ -66,7 +73,14 @@ import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.c
         DialogModule,
         TabsModule,
         DataFieldsModule,
-        ToolbarModule
+        ToolbarModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (HttpLoaderFactory),
+                deps: [HttpClient]
+            }
+        })
     ],
     entryComponents: [
         NewCaseComponent,
@@ -76,7 +90,12 @@ import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.c
         QuestionDialogWithAnswerComponent,
         ContentComponent
     ],
-    providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
+    providers: [
+        {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
+        TranslateService,
+        TranslatePipe,
+        TranslateStore
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
