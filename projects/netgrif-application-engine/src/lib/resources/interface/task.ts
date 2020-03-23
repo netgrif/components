@@ -15,14 +15,3 @@ export interface Task {
     stringId: string;
     _links: object;
 }
-
-
-
-export interface Authority {
-    authority: string;
-}
-
-export interface UserProcessRole {
-    roleId: string;
-    netId?: string;
-}

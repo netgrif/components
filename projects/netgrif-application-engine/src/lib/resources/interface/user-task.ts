@@ -1,4 +1,5 @@
-import {Authority, UserProcessRole} from './task';
+import {Authority} from './authority';
+import {UserProcessRole} from './user-process-role';
 
 export interface UserTask {
     email: string;

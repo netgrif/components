@@ -14,4 +14,9 @@ export * from './interface/user-task';
 export * from './interface/data-groups';
 export * from './interface/petri-net-reference';
 export * from './interface/fields';
-export * from './interface/resource-utility-functions';
+export * from './interface/authority';
+export * from './interface/link';
+export * from './interface/user-process-role';
+
+/* Utility */
+export * from './resource-utility-functions';
