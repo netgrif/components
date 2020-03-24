@@ -63,15 +63,21 @@ export function customTemplates(_options: Schema): Rule {
         const warnLight = handleJsonString(JSON.stringify(data.theme.pallets.light.warn), true, false) + '\n';
         const warnContrastLight = handleJsonString(JSON.stringify(data.theme.pallets.light.warn.contrast.light),
             false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.light.warn.contrast.dark), false, true);
-        const primaryDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.primary), true, false);
-        const primaryContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.primary.contrast.light),
-            false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.dark.primary.contrast.dark), false, true);
-        const secondaryDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary), true, false);
-        const secondaryContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.light),
-            false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.dark), false, true);
-        const warnDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn), true, false);
-        const warnContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.light),
-            false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.dark), false, true);
+        // const primaryDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.primary), true, false);
+        // const primaryContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.primary.contrast.light),
+        //     false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.dark.primary.contrast.dark), false, true);
+        // const secondaryDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary), true, false);
+        // const secondaryContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.light),
+        //     false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.dark.secondary.contrast.dark), false, true);
+        // const warnDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn), true, false);
+        // const warnContrastDark = handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.light),
+        //     false, false) + ' ' + handleJsonString(JSON.stringify(data.theme.pallets.dark.warn.contrast.dark), false, true);
+        // primaryDark,
+        // primaryContrastDark,
+        // secondaryDark,
+        // secondaryContrastDark,
+        // warnDark,
+        // warnContrastDark
 
         const customTemplate = apply(
             url('./files'),
@@ -82,13 +88,7 @@ export function customTemplates(_options: Schema): Rule {
                     secondaryLight,
                     secondaryContrastLight,
                     warnLight,
-                    warnContrastLight,
-                    primaryDark,
-                    primaryContrastDark,
-                    secondaryDark,
-                    secondaryContrastDark,
-                    warnDark,
-                    warnContrastDark
+                    warnContrastLight
                 }),
                 correctPath ? move(path.replace('styles.scss', '') + '/styles/templates')
                     : move('./projects/' + getProjectInfo(tree).projectName + '/src/styles/templates')
