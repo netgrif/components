@@ -1,7 +1,7 @@
 import {FieldBehavior} from './field-behavior';
 
 export interface ChangedFieldContainer {
-    changedFields: ChangedFields;
+    changedFields: ChangedFields2;
 }
 
 /*
@@ -20,11 +20,11 @@ response example:
 it might be better if some parent element gave only the relevant changes to each task
 
  */
-export interface ChangedFields {
-    [key: string]: Change;
+export interface ChangedFields2 {
+    [key: string]: Change2;
 }
 
-export interface Change {
+export interface Change2 {
     value?: string | number | boolean | any;
     // behavior is "cleared" and contains information only for one transition
     behavior?: FieldBehavior;
