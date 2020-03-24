@@ -16,7 +16,7 @@ import {
     QuestionDialogWithAnswerComponent,
     QuestionDialogComponent,
     TabsModule,
-    DataFieldsModule
+    DataFieldsModule, ToolbarModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -33,6 +33,14 @@ import { DialogExampleComponent } from './doc/dialog-example/dialog-example.comp
 import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example.component';
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
+import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.component';
+import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
+import {HttpClient} from '@angular/common/http';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     declarations: [
@@ -48,7 +56,8 @@ import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-t
         DialogExampleComponent,
         TabViewExampleComponent,
         ContentComponent,
-        ReactiveTextFieldComponent
+        ReactiveTextFieldComponent,
+        ToolbarExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -63,7 +72,15 @@ import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-t
         PanelModule,
         DialogModule,
         TabsModule,
-        DataFieldsModule
+        DataFieldsModule,
+        ToolbarModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (HttpLoaderFactory),
+                deps: [HttpClient]
+            }
+        })
     ],
     entryComponents: [
         NewCaseComponent,
@@ -73,7 +90,12 @@ import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-t
         QuestionDialogWithAnswerComponent,
         ContentComponent
     ],
-    providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
+    providers: [
+        {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
+        TranslateService,
+        TranslatePipe,
+        TranslateStore
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
