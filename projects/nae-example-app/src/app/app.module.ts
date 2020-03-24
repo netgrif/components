@@ -16,7 +16,9 @@ import {
     QuestionDialogWithAnswerComponent,
     QuestionDialogComponent,
     TabsModule,
-    DataFieldsModule, ToolbarModule
+    DataFieldsModule,
+    ToolbarModule,
+    HeaderModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -33,6 +35,8 @@ import { DialogExampleComponent } from './doc/dialog-example/dialog-example.comp
 import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example.component';
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
+import { CaseHeaderExampleComponent } from './doc/case-header-example/case-header-example.component';
+import { TaskHeaderExampleComponent } from './doc/task-header-example/task-header-example.component';
 import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
@@ -57,6 +61,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabViewExampleComponent,
         ContentComponent,
         ReactiveTextFieldComponent,
+        CaseHeaderExampleComponent,
+        TaskHeaderExampleComponent
+        ReactiveTextFieldComponent,
         ToolbarExampleComponent
     ],
     imports: [
@@ -72,6 +79,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         PanelModule,
         DialogModule,
         TabsModule,
+        DataFieldsModule,
+        HeaderModule
         DataFieldsModule,
         ToolbarModule,
         TranslateModule.forRoot({
