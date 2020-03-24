@@ -11,7 +11,7 @@ import {DialogExampleComponent} from './doc/dialog-example/dialog-example.compon
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
 import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-text-field.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
-import {TaskResourceExampleComponent} from "./doc/task-resource-example/task-resource-example.component";
+import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},

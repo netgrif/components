@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import { changeType, Case, Count, DataGroups, MessageResource, ResourceProvider, FileResource} from 'netgrif-application-engine';
+import { changeType, Case, Count, DataGroupsResource, MessageResource, ResourceProvider, FileResource} from 'netgrif-application-engine';
 
 
 export abstract class AbstractCaseJsonResourceService {
@@ -53,7 +53,7 @@ export abstract class AbstractCaseJsonResourceService {
      * GET
      * {{baseUrl}}/api/workflow/case/:id/data
      */
-    public getCaseData(caseID: string): Observable<Array<DataGroups>> {
+    public getCaseData(caseID: string): Observable<Array<DataGroupsResource>> {
         return this.provider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL).pipe(map(r => changeType(r, 'dataGroups')));
     }
 
@@ -103,7 +103,8 @@ export abstract class AbstractCaseJsonResourceService {
      * {{baseUrl}}/api/workflow/case/:caseId/field/:fieldId
      */
     public getOptionsEnumeration(caseId: string, fieldId: string): Observable<Case> {
-        return this.provider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
 }

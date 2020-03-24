@@ -65,7 +65,8 @@
 //      * {{baseUrl}}/api/workflow/case/:id/file/:field
 //      */
 //     public getCaseFile(caseID: string, fieldID: string): Observable<Case> { // TODO RESOURCE
-//         return this.provider.get$('workflow/case/' + caseID + '/file/' + fieldID, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+//         return this.provider.get$('workflow/case/' + caseID + '/file/' + fieldID, this.SERVER_URL)
+//         .pipe(map(r => changeType(r, undefined)));
 //     }
 //
 //
@@ -104,7 +105,8 @@
 //      * {{baseUrl}}/api/workflow/case/:caseId/field/:fieldId
 //      */
 //     public getOptionsEnumeration(caseId: string, fieldId: string): Observable<Case> {
-//         return this.provider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+//         return this.provider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL)
+//         .pipe(map(r => changeType(r, undefined)));
 //     }
 //
 // }

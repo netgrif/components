@@ -1,7 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {changeType, Count, Task, ResourceProvider, MessageResource, DataGroups, TaskReference, ChangedFieldContainer, FileResource} from 'netgrif-application-engine';
+import {
+    changeType,
+    Count,
+    Task,
+    ResourceProvider,
+    MessageResource,
+    DataGroupsResource,
+    TaskReference,
+    ChangedFieldContainer,
+    FileResource
+} from 'netgrif-application-engine';
 
 
 export abstract class AbstractTaskJsonResourceService {
@@ -115,7 +125,7 @@ export abstract class AbstractTaskJsonResourceService {
      * GET
      */
     // {{baseUrl}}/api/task/:id/data
-    public getData(taskId: string): Observable<Array<DataGroups>> {
+    public getData(taskId: string): Observable<Array<DataGroupsResource>> {
         return this.provider.get$('task/' + taskId + '/data', this.SERVER_URL).pipe(map(r => changeType(r, 'dataGroups')));
     }
 

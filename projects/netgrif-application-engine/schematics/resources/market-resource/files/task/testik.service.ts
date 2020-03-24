@@ -147,7 +147,8 @@
 //      */
 //     // {{baseUrl}}/api/task/:id/file/:field
 //     public uploadFile(taskId: string, fieldId: string, body: object): Observable<Array<Task>> {
-//         return this.provider.post$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+//         return this.provider.post$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body)
+//         .pipe(map(r => changeType(r, undefined)));
 //     }
 // }
 //

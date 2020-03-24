@@ -10,7 +10,7 @@ export interface DataFieldResource {
     behavior: Behavior;
     layout?: Layout;
     order: number;
-    value?: string | number | string[] | boolean;
+    value?: string | number | string[] | boolean | Array<number>;
     defaultValue?: string | number | string[] | boolean;
     choices?: string[];
     view?: {

@@ -63,4 +63,9 @@
             </li>
         </ul>
     </div>
+    <hr>
+    <div>
+        <button (click)="getTaskDataFields()">DATAFIELDS</button>
+        <nae-task-panel *ngIf="taskDataGroups" [resources]="taskDataGroups" [taskPanelDefinition]="taskPanelDef"></nae-task-panel>
+    </div>
 </div>

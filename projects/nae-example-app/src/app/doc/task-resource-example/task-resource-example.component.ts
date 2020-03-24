@@ -1,6 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {Count, DataGroups, MessageResource, Task} from 'netgrif-application-engine';
+import {
+    Count,
+    DataGroup,
+    DataGroupsResource,
+    MessageResource,
+    Task,
+    DataField,
+    FieldConvertorService
+} from '@netgrif/application-engine';
 import {TaskJsonResourceService} from '../../task-json-resource.service';
+import {TaskPanelDefinition} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-task-resource-example',
@@ -9,15 +18,17 @@ import {TaskJsonResourceService} from '../../task-json-resource.service';
 })
 export class TaskResourceExampleComponent implements OnInit {
 
-    constructor(private taskJsonResourceService: TaskJsonResourceService) {
-    }
-
     countvalue: Count = undefined;
     getAllTaskData: Array<Task> = undefined;
     getTaskData: MessageResource = undefined;
     deletetaskData: MessageResource = undefined;
-    taskData: Array<DataGroups> = undefined;
+    taskData: Array<DataGroupsResource> = undefined;
+    taskDataGroups: Array<DataGroup> = undefined;
+    taskPanelDef: TaskPanelDefinition;
 
+    constructor(private taskJsonResourceService: TaskJsonResourceService, private fieldConvertorService: FieldConvertorService) {
+        this.taskPanelDef = {featuredFields: [], panelIcon: 'home', panelIconField: 'home'};
+    }
 
     ngOnInit(): void {
     }
@@ -37,25 +48,45 @@ export class TaskResourceExampleComponent implements OnInit {
     }
 
     assignTask() {
-        this.taskJsonResourceService.assignTask('5e78949e750960460db342b8').subscribe(task => {
+        this.taskJsonResourceService.assignTask('5e7a0cd89ceec71789c2bc68').subscribe(task => {
             console.log(task);
             this.getTaskData = task;
         });
     }
 
     cancelTask() {
-        this.taskJsonResourceService.cancelTask('5e78949e750960460db342b8').subscribe(task => {
+        this.taskJsonResourceService.cancelTask('5e7a0cd89ceec71789c2bc68').subscribe(task => {
             console.log(task);
             this.deletetaskData = task;
         });
     }
 
     getDataTask() {
-        this.taskJsonResourceService.getData('5e78949e750960460db342b8').subscribe(task => {
+        this.taskJsonResourceService.getData('5e7a0cd89ceec71789c2bc68').subscribe(task => {
             console.log(task);
             this.taskData = task;
         });
     }
 
+    getTaskDataFields() {
+        this.taskJsonResourceService.getData('5e7a0cd89ceec71789c2bc68').subscribe(dataGroups => {
+            this.taskDataGroups = [];
+            dataGroups.forEach(group => {
+                const dataGroup: DataField<any>[] = [];
+                if (group.fields._embedded) {
+                    Object.keys(group.fields._embedded).forEach(item => {
+                        dataGroup.push(...group.fields._embedded[item].map(df => this.fieldConvertorService.toClass(df)));
+                    });
+                }
+                this.taskDataGroups.push({
+                    fields: dataGroup,
+                    stretch: group.stretch,
+                    title: group.title,
+                    cols: group.cols,
+                    alignment: group.alignment
+                });
+            });
 
+        });
+    }
 }
