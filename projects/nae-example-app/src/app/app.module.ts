@@ -34,7 +34,9 @@ import { DialogExampleComponent } from './doc/dialog-example/dialog-example.comp
 import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example.component';
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {HttpClientModule} from '@angular/common/http';
+import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
 
 @NgModule({
     declarations: [
@@ -50,7 +52,9 @@ import {HttpClientModule} from '@angular/common/http';
         DialogExampleComponent,
         TabViewExampleComponent,
         ContentComponent,
-        ReactiveTextFieldComponent
+        ReactiveTextFieldComponent,
+        CaseResourceExampleComponent,
+        TaskResourceExampleComponent
     ],
     imports: [
         HttpClientModule,

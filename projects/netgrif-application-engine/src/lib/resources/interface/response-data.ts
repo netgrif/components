@@ -1,5 +1,7 @@
+import {Page} from './page';
+
 export interface ResponseData<T> {
     _embedded: T;
     _links: object;
-    _page: object;
+    page: Page;
 }
