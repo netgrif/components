@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Headers} from "../../headers";
-import {AbstractHeaderService} from "../../abstract-header-service";
+import {Headers} from '../../headers';
+import {AbstractHeaderService} from '../../abstract-header-service';
 
 @Component({
     selector: 'nae-search-mode',

@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FieldsGroup} from "../../models/fields-group";
-import {Headers} from "../../headers";
-import {DataDescription} from "../../models/data-field";
-import {AbstractHeaderService} from "../../abstract-header-service";
+import {FieldsGroup} from '../../models/fields-group';
+import {Headers} from '../../headers';
+import {DataDescription} from '../../models/data-field';
+import {AbstractHeaderService} from '../../abstract-header-service';
 
 @Component({
     selector: 'nae-edit-mode',

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HeaderComponent } from './header.component';
+import {HeaderModule} from './header.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -8,7 +9,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+        imports: [HeaderModule, NoopAnimationsModule]
     })
     .compileComponents();
   }));
@@ -23,3 +24,4 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

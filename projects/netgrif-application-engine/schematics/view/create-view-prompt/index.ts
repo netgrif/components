@@ -7,6 +7,7 @@ import {
 import {
     addRouteToRoutesJson,
     addRoutingModuleImport,
+    createAppRoutesMap,
     getParentPath,
     Route,
     updateAppModule
@@ -25,6 +26,7 @@ import {ClassName} from './classes/ClassName';
 import {TabViewParams} from './classes/paramsInterfaces';
 import {TabContentTemplate} from './classes/TabContentTemplate';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
+import {addViewToNaeJson} from './add-view-to-nae-json';
 
 
 interface TabViews {
@@ -36,33 +38,41 @@ interface TabViews {
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
-        checkPathValidity(schematicArguments.path, schematicArguments._routesMap);
+        checkPathValidity(tree, schematicArguments.path);
         return createView(tree, schematicArguments);
     };
 }
 
-function checkPathValidity(path: string | undefined, routeMap: Map<string, Route>) {
+function checkPathValidity(tree: Tree, path: string | undefined) {
     if (path === undefined) {
         throw new SchematicsException(`Path cannot be undefined!`);
     }
     // if the path was entered from a prompt, it might not have a parent
     const parentPath = getParentPath(path);
+    const routeMap = createAppRoutesMap(tree);
     if (parentPath !== '' && !routeMap.has(parentPath)) {
         throw new SchematicsException(`Parent view doesn't exist! Create a view with '${parentPath}' path first.`);
     }
 }
 
 function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = true): Rule {
+    const rules = [];
     switch (args.viewType) {
         case 'login':
-            return createLoginView(tree, args, addRoute);
+            rules.push(createLoginView(tree, args, addRoute));
+            break;
         case 'tabView':
-            return createTabView(tree, args, addRoute);
+            rules.push(createTabView(tree, args, addRoute));
+            break;
         case 'taskView':
-            return createTaskView(tree, args, addRoute);
+            rules.push(createTaskView(tree, args, addRoute));
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
+    if (addRoute) {
+        rules.push(addViewToNaeJson(args));
+    }
+    return chain(rules);
 }
 
 function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
@@ -83,7 +93,7 @@ function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolea
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push( addRouteToRoutesJson(args.path as string, className.name));
+        rules.push(addRouteToRoutesJson(args.path as string, className.name));
     }
     return chain(rules);
 }
@@ -118,8 +128,8 @@ function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean)
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push( addRouteToRoutesJson(args.path as string, className.name));
-        rules.push( addRouteToRoutesJson(`${args.path}/**`, className.name));
+        rules.push(addRouteToRoutesJson(args.path as string, className.name));
+        rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name));
     }
     return chain(rules);
 }
@@ -144,8 +154,8 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
                 throw new SchematicsException('TabView content Component must define both a \'class\' and a \'classPath\' attribute');
             }
 
-            if ( !tab.component.classPath.startsWith('./')) {
-               tab.component.classPath = `./${tab.component.classPath}`;
+            if (!tab.component.classPath.startsWith('./')) {
+                tab.component.classPath = `./${tab.component.classPath}`;
             }
 
             result.tabViewImports.push(

@@ -71,9 +71,25 @@ export function createRouteObject(path: string, className: string): Route {
     }
     return {path: relevantPath, component: className};
 }
+
 export function constructRoutePath(pathPrefix: string, pathPart: string): string {
     return `${pathPrefix}${pathPrefix.length > 0 ? '/' : ''}${pathPart}`;
 }
+
+/**
+ * Creates a Map object with address paths as keys and corresponding Route objects as values.
+ * The source for this information is routes.json file in the application project.
+ *
+ * @param tree - schematic tree
+ * @returns Key is the whole path, with leading backslash omitted. Value is the Route object from routes.json corresponding to the path
+ */
+export function createAppRoutesMap(tree: Tree) {
+    const angularRoutes = getRoutesJsonContent(tree, getProjectInfo(tree));
+    const map = new Map<string, Route>();
+    addAllRoutesToMap(map, angularRoutes);
+    return map;
+}
+
 export function addAllRoutesToMap(map: Map<string, Route>, routes: Routes, pathPrefix: string = ''): void {
     routes.forEach(route => {
         if (route.path !== undefined) {
