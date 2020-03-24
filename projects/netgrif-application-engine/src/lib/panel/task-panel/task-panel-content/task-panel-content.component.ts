@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Resources} from './resources';
 import {DataFieldResource} from './resource-service';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
@@ -23,6 +23,7 @@ import {FileField} from '../../../data-fields/file-field/models/file-field';
 import {DataField, MaterialAppearance} from '../../../data-fields/models/abstract-data-field';
 import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
+import {NAE_TASK_DATA} from '../../../panel-list/task-data-injection-token/task-data-injection-token.module';
 
 @Component({
     selector: 'nae-task-panel-content',
@@ -33,7 +34,7 @@ export class TaskPanelContentComponent {
     dataSource: any[];
     formCols: number;
 
-    constructor() {
+    constructor(@Inject(NAE_TASK_DATA) public taskResources) {
         // TODO : cols from task
         this.formCols = 4;
         console.time('count');

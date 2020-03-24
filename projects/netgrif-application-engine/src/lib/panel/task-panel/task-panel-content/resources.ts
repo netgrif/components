@@ -618,7 +618,7 @@ export class Resources {
                         order: 0,
                         subType: 'simple',
                         defaultValue: 'Lorem ipsum'
-                    },{
+                    }, {
                         stringId: 'number',
                         type: 'number',
                         name: 'Number',
