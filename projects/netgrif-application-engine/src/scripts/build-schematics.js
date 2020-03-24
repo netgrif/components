@@ -7,13 +7,14 @@ console.log("Building schematics ...");
 
 // run the compiler
 exec(path.join('node_modules', '.bin', 'tsc -p projects', 'netgrif-application-engine', 'tsconfig.schematics.json'), (error, stdout, stderr) => {
+    if (stdout) {
+        console.log(stdout);
+    }
     if (error) {
-        console.error(`error: ${error.message}`);
-        return;
+        throw new Error(`Schematic compilation failed. Look above for compilation output. Caused by: ${error.message}`);
     }
     if (stderr) {
-        console.error(`stderr: ${stderr}`);
-        return;
+        throw new Error(`Schematic compilation failed. Look above for compilation output. Caused by: ${stderr}`);
     }
     // compilation successful
 
@@ -36,19 +37,18 @@ function copySchematicFiles() {
 function copyFiles(sourcePrefix, destinationPrefix, target, relativePath = '') {
     fs.readdir(path.join(sourcePrefix, relativePath), (error, files) => {
         if (error) {
-            console.error('Unable to read directory: '+error);
-            return;
+            throw new Error(`Reading directory failed. Caused by: ${error}`);
         }
 
         files.forEach(file => {
+            const source = path.join(sourcePrefix, relativePath, file);
             if(file === target) {
-                const source = path.join(sourcePrefix, relativePath, file);
                 const destination = path.join(destinationPrefix, relativePath, file);
-                if(isDir(file)) {
+                if(isDir(source)) {
                     // copy all content
                     ncp(source, destination, {stopOnErr: true}, (err) => {
                         if (err) {
-                            return console.error(err);
+                            throw new Error(`Recursive subdirectory copy failed. Caused by: ${err}`);
                         }
                     });
                 }
@@ -57,7 +57,7 @@ function copyFiles(sourcePrefix, destinationPrefix, target, relativePath = '') {
                     fs.copyFileSync(source, destination);
                 }
             }
-            else if (isDir(file)) {
+            else if (isDir(source)) {
                 // explore subdirectories
                 copyFiles(sourcePrefix, destinationPrefix, target, path.join(relativePath, file));
             }
@@ -65,6 +65,6 @@ function copyFiles(sourcePrefix, destinationPrefix, target, relativePath = '') {
     });
 }
 
-function isDir(name) {
-    return !name.includes('.');
+function isDir(path) {
+    return fs.lstatSync(path).isDirectory();
 }
