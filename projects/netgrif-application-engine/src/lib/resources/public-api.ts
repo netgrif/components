@@ -16,7 +16,11 @@ export * from './interface/petri-net-reference';
 export * from './interface/fields';
 export * from './interface/authority';
 export * from './interface/link';
+export * from './interface/page';
 export * from './interface/user-process-role';
+export * from './interface/changed-field-container';
+export * from './interface/file-resource';
+export * from './interface/task-reference';
 
 /* Utility */
 export * from './resource-utility-functions';

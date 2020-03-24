@@ -10,6 +10,8 @@ import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-exampl
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
 import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-text-field.component';
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {TaskResourceExampleComponent} from "./doc/task-resource-example/task-resource-example.component";
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -21,7 +23,9 @@ const routes: Routes = [
     {path: 'snack-bar', component: SnackBarExampleComponent},
     {path: 'dialog', component: DialogExampleComponent},
     {path: 'tab-view', component: TabViewExampleComponent},
-    {path: 'reactive-forms', component: ReactiveTextFieldComponent}
+    {path: 'reactive-forms', component: ReactiveTextFieldComponent},
+    {path: 'case', component: CaseResourceExampleComponent},
+    {path: 'task', component: TaskResourceExampleComponent}
 ];
 
 @NgModule({
