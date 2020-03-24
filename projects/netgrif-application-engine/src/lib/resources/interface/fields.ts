@@ -1,3 +1,5 @@
+import {FieldBehavior} from './field-behavior';
+
 export interface Fields {
     _embedded: TypeLocalisadField;
 
@@ -120,13 +122,6 @@ export interface FieldView {
     falseImage: string;
 }
 
-export interface FieldBehavior {
-    visible?: boolean;
-    editable?: boolean;
-    hidden?: boolean;
-    required?: boolean;
-
-}
 
 export interface ValidationErrors {
     between?: boolean;

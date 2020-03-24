@@ -36,7 +36,7 @@ import { ContentComponent } from './doc/tab-view-example/content/content.compone
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {HttpClientModule} from '@angular/common/http';
-import {TaskResourceExampleComponent} from "./doc/task-resource-example/task-resource-example.component";
+import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
 
 @NgModule({
     declarations: [
