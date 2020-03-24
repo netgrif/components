@@ -8,7 +8,7 @@ import {
     Injectable,
 } from '@angular/core';
 import {InteractivityChecker} from './interactivity-checker';
-import {Platform} from '../platform/platform';
+import {Platform} from '../platform';
 import {coerceBooleanProperty} from '../coercion/boolean-property';
 import {first} from 'rxjs/operators';
 
@@ -37,7 +37,7 @@ export class FocusTrap {
         }
     }
 
-    private _enabled: boolean = true;
+    private _enabled = true;
 
     constructor(
         private _element: HTMLElement,
@@ -122,17 +122,17 @@ export class FocusTrap {
      */
     private _getRegionBoundary(bound: 'start' | 'end'): HTMLElement | null {
         // Contains the deprecated version of selector, for temporary backwards comparability.
-        let markers = this._element.querySelectorAll(`[cdk-focus-region-${bound}], ` +
+        const markers = this._element.querySelectorAll(`[cdk-focus-region-${bound}], ` +
             `[cdk-focus-${bound}]`) as NodeListOf<HTMLElement>;
 
-        for (let i = 0; i < markers.length; i++) {
-            if (markers[i].hasAttribute(`cdk-focus-${bound}`)) {
+        markers.forEach(marker => {
+            if (marker.hasAttribute(`cdk-focus-${bound}`)) {
                 console.warn(`Found use of deprecated attribute 'cdk-focus-${bound}',` +
-                    ` use 'cdk-focus-region-${bound}' instead.`, markers[i]);
+                    ` use 'cdk-focus-region-${bound}' instead.`, marker);
             }
-        }
+        });
 
-        if (bound == 'start') {
+        if (bound === 'start') {
             return markers.length ? markers[0] : this._getFirstTabbableElement(this._element);
         }
         return markers.length ?
@@ -141,7 +141,7 @@ export class FocusTrap {
 
     /** Focuses the element that should be focused when the focus trap is initialized. */
     focusInitialElement() {
-        let redirectToElement = this._element.querySelector('[cdk-focus-initial]') as HTMLElement;
+        const redirectToElement = this._element.querySelector('[cdk-focus-initial]') as HTMLElement;
         if (redirectToElement) {
             redirectToElement.focus();
         } else {
@@ -151,7 +151,7 @@ export class FocusTrap {
 
     /** Focuses the first tabbable element within the focus trap region. */
     focusFirstTabbableElement() {
-        let redirectToElement = this._getRegionBoundary('start');
+        const redirectToElement = this._getRegionBoundary('start');
         if (redirectToElement) {
             redirectToElement.focus();
         }
@@ -159,7 +159,7 @@ export class FocusTrap {
 
     /** Focuses the last tabbable element within the focus trap region. */
     focusLastTabbableElement() {
-        let redirectToElement = this._getRegionBoundary('end');
+        const redirectToElement = this._getRegionBoundary('end');
         if (redirectToElement) {
             redirectToElement.focus();
         }
@@ -173,10 +173,10 @@ export class FocusTrap {
 
         // Iterate in DOM order. Note that IE doesn't have `children` for SVG so we fall
         // back to `childNodes` which includes text nodes, comments etc.
-        let children = root.children || root.childNodes;
-
+        const children = root.children || root.childNodes;
+        
         for (let i = 0; i < children.length; i++) {
-            let tabbableChild = children[i].nodeType === Node.ELEMENT_NODE ?
+            const tabbableChild = children[i].nodeType === Node.ELEMENT_NODE ?
                 this._getFirstTabbableElement(children[i] as HTMLElement) :
                 null;
 
@@ -195,10 +195,10 @@ export class FocusTrap {
         }
 
         // Iterate in reverse DOM order.
-        let children = root.children || root.childNodes;
+        const children = root.children || root.childNodes;
 
         for (let i = children.length - 1; i >= 0; i--) {
-            let tabbableChild = children[i].nodeType === Node.ELEMENT_NODE ?
+            const tabbableChild = children[i].nodeType === Node.ELEMENT_NODE ?
                 this._getLastTabbableElement(children[i] as HTMLElement) :
                 null;
 
@@ -212,7 +212,7 @@ export class FocusTrap {
 
     /** Creates an anchor element. */
     private _createAnchor(): HTMLElement {
-        let anchor = document.createElement('div');
+        const anchor = document.createElement('div');
         anchor.tabIndex = this._enabled ? 0 : -1;
         anchor.classList.add('cdk-visually-hidden');
         anchor.classList.add('cdk-focus-trap-anchor');
