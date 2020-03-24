@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HeaderComponent} from './header.component';
-import {MaterialModule} from "../material/material.module";
-import {FlexModule} from "@angular/flex-layout";
+import {MaterialModule} from '../material/material.module';
+import {FlexModule} from '@angular/flex-layout';
 import { SortModeComponent } from './header-modes/sort-mode/sort-mode.component';
 import { SearchModeComponent } from './header-modes/search-mode/search-mode.component';
 import { EditModeComponent } from './header-modes/edit-mode/edit-mode.component';
@@ -16,7 +16,9 @@ import { EditModeComponent } from './header-modes/edit-mode/edit-mode.component'
     ],
     exports: [
         HeaderComponent,
-        SortModeComponent
+        SortModeComponent,
+        SearchModeComponent,
+        EditModeComponent
     ],
     imports: [
         CommonModule,

@@ -10,8 +10,8 @@ import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-exampl
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
 import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-text-field.component';
-import {CaseHeaderExampleComponent} from "./doc/case-header-example/case-header-example.component";
-import {TaskHeaderExampleComponent} from "./doc/task-header-example/task-header-example.component";
+import {CaseHeaderExampleComponent} from './doc/case-header-example/case-header-example.component';
+import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-example.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
