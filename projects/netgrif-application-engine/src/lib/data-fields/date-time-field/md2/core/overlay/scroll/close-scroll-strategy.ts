@@ -3,7 +3,7 @@ import {OverlayRef} from '../overlay-ref';
 import {Subscription} from 'rxjs';
 import {ScrollDispatcher} from './scroll-dispatcher';
 
-
+// TODO CloseScrollStrategy sa pouziva
 /**
  * Strategy that will close the overlay as soon as the user starts scrolling.
  */

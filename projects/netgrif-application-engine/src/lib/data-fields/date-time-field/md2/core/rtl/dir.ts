@@ -7,8 +7,10 @@ import {
   EventEmitter
 } from '@angular/core';
 
+// TODO LayoutDirection sa pozuiva
 export type LayoutDirection = 'ltr' | 'rtl';
 
+// TODO Dir sa pouziva
 /**
  * Directive to listen for changes of direction of part of the DOM.
  *

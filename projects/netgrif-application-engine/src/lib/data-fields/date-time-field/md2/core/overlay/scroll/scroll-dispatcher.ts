@@ -5,6 +5,7 @@ import {Subject} from 'rxjs';
 import {Subscription, merge, fromEvent} from 'rxjs';
 import {auditTime} from 'rxjs/operators';
 
+// TODO ScrollDispatcher sa pouziva
 
 /** Time in ms to throttle the scrolling events by default. */
 export const DEFAULT_SCROLL_TIME = 20;

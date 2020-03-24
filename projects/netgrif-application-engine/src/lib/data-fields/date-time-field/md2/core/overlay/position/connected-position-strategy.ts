@@ -5,7 +5,8 @@ import {
   ConnectionPositionPair,
   OriginConnectionPosition,
   OverlayConnectionPosition,
-  ConnectedOverlayPositionChange, ScrollableViewProperties
+  ConnectedOverlayPositionChange,
+    ScrollableViewProperties
 } from './connected-position';
 import {Subject, Observable} from 'rxjs';
 import {Scrollable} from '../scroll/scrollable';
@@ -21,6 +22,8 @@ type ElementBoundingPositions = {
   bottom: number;
   left: number;
 };
+
+// TODO ConnectedPositionStrategy sa pouziva
 
 /**
  * A strategy for positioning overlays. Using this strategy, an overlay is given an

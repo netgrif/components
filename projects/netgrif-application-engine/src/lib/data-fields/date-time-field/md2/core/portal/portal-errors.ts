@@ -46,3 +46,5 @@ export function throwNullPortalHostError() {
 export function throwNoPortalAttachedError() {
   throw Error('Attempting to detach a portal that is not attached to a host');
 }
+
+// TODO VSETKO SA POUZIVA

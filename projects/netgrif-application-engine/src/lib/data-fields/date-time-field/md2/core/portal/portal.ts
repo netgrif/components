@@ -16,7 +16,7 @@ import {
 import {ComponentType} from '../overlay/generic-component-type';
 
 
-
+// TODO Portal sa pozuiva
 /**
  * A `Portal` is something that you want to render somewhere else.
  * It can be attach to / detached from a `PortalHost`.
@@ -63,7 +63,7 @@ export abstract class Portal<T> {
   }
 }
 
-
+// TODO ComponentPortal sa pouziva
 /**
  * A `ComponentPortal` is a portal that instantiates some Component upon attachment.
  */
@@ -92,7 +92,7 @@ export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
   }
 }
 
-
+// TODO TemplatePortal sa pouziva
 /**
  * A `TemplatePortal` is a portal that represents some embedded template (TemplateRef).
  */
@@ -132,7 +132,7 @@ export class TemplatePortal extends Portal<Map<string, any>> {
   }
 }
 
-
+// TODO PortalHost sa pouziva
 /**
  * A `PortalHost` is an space that can contain a single `Portal`.
  */
@@ -146,7 +146,7 @@ export interface PortalHost {
   hasAttached(): boolean;
 }
 
-
+// TODO BasePortalHost sa pouziva
 /**
  * Partial implementation of PortalHost that only deals with attaching either a
  * ComponentPortal or a TemplatePortal.

@@ -2,6 +2,7 @@ import {Directive, ElementRef, OnInit, OnDestroy, NgZone, Renderer2} from '@angu
 import {Observable, Subject} from 'rxjs';
 import {ScrollDispatcher} from './scroll-dispatcher';
 
+// TODO Scrollable sa pouziva
 
 /**
  * Sends an event when the directive's element is scrolled. Registers itself with the

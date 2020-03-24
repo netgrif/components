@@ -3,6 +3,7 @@ import {ScrollStrategy, getMdScrollStrategyAlreadyAttachedError} from './scroll-
 import {OverlayRef} from '../overlay-ref';
 import {ScrollDispatcher} from './scroll-dispatcher';
 
+// TODO RepositionScrollStrategyConfig sa pouziva
 /**
  * Config options for the RepositionScrollStrategy.
  */
@@ -10,6 +11,7 @@ export interface RepositionScrollStrategyConfig {
   scrollThrottle?: number;
 }
 
+// TODO RepositionScrollStrategy sa pouziva
 /**
  * Strategy that will update the element position as the user is scrolling.
  */

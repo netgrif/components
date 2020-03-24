@@ -122,7 +122,7 @@ export class PortalHostDirective extends BasePortalHost implements OnDestroy {
   }
 }
 
-
+// TODO PortalModule sa pouziva
 @NgModule({
   exports: [TemplatePortalDirective, PortalHostDirective],
   declarations: [TemplatePortalDirective, PortalHostDirective],

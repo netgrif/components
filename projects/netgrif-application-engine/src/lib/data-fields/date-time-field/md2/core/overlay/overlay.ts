@@ -21,6 +21,7 @@ let nextUniqueId = 0;
 /** The default state for newly created overlays. */
 let defaultState = new OverlayState();
 
+// TODO Overlay sa pouziva
 
 /**
  * Service to create Overlays. Overlays are dynamically added pieces of floating UI, meant to be

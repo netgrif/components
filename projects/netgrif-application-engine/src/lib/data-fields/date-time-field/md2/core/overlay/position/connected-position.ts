@@ -5,18 +5,21 @@ export type HorizontalConnectionPos = 'start' | 'center' | 'end';
 /** Vertical dimension of a connection point on the perimeter of the origin or overlay element. */
 export type VerticalConnectionPos = 'top' | 'center' | 'bottom';
 
-
+// TODO OriginConnectionPosition sa pouziva
 /** A connection point on the origin element. */
 export interface OriginConnectionPosition {
   originX: HorizontalConnectionPos;
   originY: VerticalConnectionPos;
 }
 
+// TODO OverlayConnectionPosition sa pouziva
 /** A connection point on the overlay element. */
 export interface OverlayConnectionPosition {
   overlayX: HorizontalConnectionPos;
   overlayY: VerticalConnectionPos;
 }
+
+// TODO ConnectionPositionPair sa pouziva
 
 /** The points of the origin element and the overlay element to connect. */
 export class ConnectionPositionPair {
@@ -62,7 +65,9 @@ export class ScrollableViewProperties {
   isOverlayClipped: boolean;
   isOverlayOutsideView: boolean;
 }
+// TODO ScrollableViewProperties sa pouziva
 
+// TODO ConnectedOverlayPositionChange sa pouziva
 /** The change event emitted by the strategy when a fallback position is used. */
 export class ConnectedOverlayPositionChange {
   constructor(public connectionPair: ConnectionPositionPair,

@@ -5,6 +5,7 @@ import {GlobalPositionStrategy} from './global-position-strategy';
 import {OverlayConnectionPosition, OriginConnectionPosition} from './connected-position';
 
 
+// TODO VSETKO SA POUZIVA
 
 /** Builder for overlay position strategy. */
 @Injectable()

@@ -4,7 +4,7 @@ import {OverlayState} from './overlay-state';
 import {ScrollStrategy} from './scroll/scroll-strategy';
 import {Observable, Subject} from 'rxjs';
 
-
+// TODO OverlayRef sa pouziva
 /**
  * Reference to an overlay that has been created with the Overlay service.
  * Used to manipulate or dispose of said overlay.

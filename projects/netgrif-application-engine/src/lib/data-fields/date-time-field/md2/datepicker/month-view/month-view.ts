@@ -12,7 +12,7 @@ import {
 import {DateLocale} from '../date-locale';
 import {DateUtil} from '../date-util';
 import {Md2CalendarCell} from '../calendar-body/calendar-body';
-import {MD_DATE_FORMATS, MdDateFormats} from '../../core/datetime/date-formats';
+import {MD_DATE_FORMATS, MdDateFormats} from '../../core/datetime';
 import {slideCalendar} from '../datepicker-animations';
 
 

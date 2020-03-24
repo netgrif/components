@@ -10,6 +10,7 @@ import {
 } from './reposition-scroll-strategy';
 
 
+// TODO ScrollStrategyOptions sa pouziva
 /**
  * Options for how an overlay will handle scrolling.
  *

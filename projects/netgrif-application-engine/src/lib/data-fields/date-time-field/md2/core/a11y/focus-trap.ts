@@ -225,7 +225,7 @@ export class FocusTrap {
   }
 }
 
-
+// TODO FocusTrapFactory sa pouziva
 /** Factory that allows easy instantiation of focus traps. */
 @Injectable()
 export class FocusTrapFactory {
@@ -239,7 +239,7 @@ export class FocusTrapFactory {
   }
 }
 
-
+// TODO FocusTrapDeprecatedDirective sa pouziva
 /**
  * Directive for trapping focus within a region.
  * @deprecated
@@ -270,7 +270,7 @@ export class FocusTrapDeprecatedDirective implements OnDestroy, AfterContentInit
   }
 }
 
-
+// TODO FocusTrapDirective sa pouziva
 /** Directive for trapping focus within a region. */
 @Directive({
   selector: '[cdkTrapFocus]',

@@ -5,6 +5,7 @@ import {InteractivityChecker} from './interactivity-checker';
 import {CommonModule} from '@angular/common';
 import {PlatformModule} from '../platform';
 
+// TODO A11yModule sa pouziva
 @NgModule({
   imports: [CommonModule, PlatformModule],
   declarations: [FocusTrapDirective, FocusTrapDeprecatedDirective],

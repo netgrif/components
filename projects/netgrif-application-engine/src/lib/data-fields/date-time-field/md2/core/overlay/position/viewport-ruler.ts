@@ -1,6 +1,7 @@
 import {Injectable, Optional, SkipSelf} from '@angular/core';
 import {ScrollDispatcher} from '../scroll/scroll-dispatcher';
 
+// TODO ViewportRuler sa pouziva
 
 /**
  * Simple utility for getting the bounds of the browser viewport.
@@ -87,6 +88,7 @@ export function VIEWPORT_RULER_PROVIDER_FACTORY(parentRuler: ViewportRuler,
   return parentRuler || new ViewportRuler(scrollDispatcher);
 }
 
+// TODO VIEWPORT_RULER_PROVIDER sa pouziva
 export const VIEWPORT_RULER_PROVIDER = {
   // If there is already a ViewportRuler available, use that. Otherwise, provide a new one.
   provide: ViewportRuler,

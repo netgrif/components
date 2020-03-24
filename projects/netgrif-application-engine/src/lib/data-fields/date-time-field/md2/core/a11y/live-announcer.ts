@@ -75,6 +75,7 @@ export function LIVE_ANNOUNCER_PROVIDER_FACTORY(
   return parentDispatcher || new LiveAnnouncer(liveElement, platform);
 }
 
+// TODO LIVE_ANNOUNCER_PROVIDER sa pouziva
 export const LIVE_ANNOUNCER_PROVIDER = {
   // If there is already a LiveAnnouncer available, use that. Otherwise, provide a new one.
   provide: LiveAnnouncer,

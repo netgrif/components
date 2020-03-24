@@ -1,6 +1,7 @@
 import {ScrollStrategy} from './scroll-strategy';
 import {ViewportRuler} from '../position/viewport-ruler';
 
+// TODO BlockScrollStrategy sa pouziva
 /**
  * Strategy that will prevent the user from scrolling while the overlay is visible.
  */

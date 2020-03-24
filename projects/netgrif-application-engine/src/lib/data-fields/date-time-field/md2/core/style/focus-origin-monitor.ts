@@ -285,7 +285,7 @@ export class FocusOriginMonitor {
   }
 }
 
-
+// TODO CdkMonitorFocus sa pouziva
 /**
  * Directive that determines how a particular element was focused (via keyboard, mouse, touch, or
  * programmatically) and adds corresponding classes to the element.
@@ -320,7 +320,7 @@ export function FOCUS_ORIGIN_MONITOR_PROVIDER_FACTORY(
   return parentDispatcher || new FocusOriginMonitor(ngZone, platform);
 }
 
-
+// TODO FOCUS_ORIGIN_MONITOR_PROVIDER sa pouziva
 export const FOCUS_ORIGIN_MONITOR_PROVIDER = {
   // If there is already a FocusOriginMonitor available, use that. Otherwise, provide a new one.
   provide: FocusOriginMonitor,

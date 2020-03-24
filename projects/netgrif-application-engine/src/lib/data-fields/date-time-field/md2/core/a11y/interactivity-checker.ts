@@ -7,6 +7,7 @@ import {Platform} from '../platform/platform';
  * supported.
  */
 
+// TODO InteractivityChecker sa pouziva
 /**
  * Utility for checking the interactivity of an element, such as whether is is focusable or
  * tabbable.

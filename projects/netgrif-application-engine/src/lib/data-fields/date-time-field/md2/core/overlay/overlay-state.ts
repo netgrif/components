@@ -2,7 +2,7 @@ import {PositionStrategy} from './position/position-strategy';
 import {LayoutDirection} from '../rtl/dir';
 import {ScrollStrategy} from './scroll/scroll-strategy';
 
-
+// TODO OverlayState sa pozuiva
 /**
  * OverlayState is a bag of values for either the initial configuration or current state of an
  * overlay.

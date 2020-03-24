@@ -318,7 +318,7 @@ export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
   }
 }
 
-
+// TODO OverlayModule sa pouziva
 @NgModule({
   imports: [PortalModule, ScrollDispatchModule],
   exports: [ConnectedOverlayDirective, OverlayOrigin, ScrollDispatchModule],

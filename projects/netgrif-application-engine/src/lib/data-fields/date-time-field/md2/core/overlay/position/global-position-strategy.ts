@@ -1,6 +1,6 @@
 import {PositionStrategy} from './position-strategy';
 
-
+// TODO GlovalPositionStrategy sa pouziva
 /**
  * A strategy for positioning overlays. Using this strategy, an overlay is given an
  * explicit position relative to the browser's viewport. We use flexbox, instead of

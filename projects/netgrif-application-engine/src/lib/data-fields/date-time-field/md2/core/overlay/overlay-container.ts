@@ -1,6 +1,6 @@
 import {Injectable, Optional, SkipSelf} from '@angular/core';
 
-
+// TODO OverlayContainer sa pouziva
 /**
  * The OverlayContainer is the container in which all overlays will load.
  * It should be provided in the root component to ensure it is properly shared.
@@ -59,6 +59,7 @@ export function OVERLAY_CONTAINER_PROVIDER_FACTORY(parentContainer: OverlayConta
   return parentContainer || new OverlayContainer();
 }
 
+// TODO OVERLAY_CONTAINER_PROVIDER sa pouziva
 export const OVERLAY_CONTAINER_PROVIDER = {
   // If there is already an OverlayContainer available, use that. Otherwise, provide a new one.
   provide: OverlayContainer,
