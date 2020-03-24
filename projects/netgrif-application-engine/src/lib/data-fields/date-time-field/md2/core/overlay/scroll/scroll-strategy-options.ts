@@ -3,14 +3,13 @@ import {CloseScrollStrategy} from './close-scroll-strategy';
 import {NoopScrollStrategy} from './noop-scroll-strategy';
 import {BlockScrollStrategy} from './block-scroll-strategy';
 import {ScrollDispatcher} from './scroll-dispatcher';
-import {ViewportRuler} from '../position/viewport-ruler';
+import {ViewportRuler} from '..';
 import {
     RepositionScrollStrategy,
     RepositionScrollStrategyConfig,
 } from './reposition-scroll-strategy';
 
 
-// TODO ScrollStrategyOptions sa pouziva
 /**
  * Options for how an overlay will handle scrolling.
  *

@@ -5,8 +5,6 @@ import {GlobalPositionStrategy} from './global-position-strategy';
 import {OverlayConnectionPosition, OriginConnectionPosition} from './connected-position';
 
 
-// TODO VSETKO SA POUZIVA
-
 /** Builder for overlay position strategy. */
 @Injectable()
 export class OverlayPositionBuilder {
@@ -22,9 +20,9 @@ export class OverlayPositionBuilder {
 
     /**
      * Creates a relative position strategy.
-     * @param elementRef
-     * @param originPos
-     * @param overlayPos
+     * @param elementRef -
+     * @param originPos -
+     * @param overlayPos -
      */
     connectedTo(
         elementRef: ElementRef,

@@ -177,7 +177,7 @@ export abstract class DateAdapter<D> {
      *     Null dates are considered equal to other null dates.
      */
     sameDate(first: D | null, second: D | null): boolean {
-        return first && second ? !this.compareDate(first, second) : first == second;
+        return first && second ? !this.compareDate(first, second) : first === second;
     }
 
     /**

@@ -1,17 +1,16 @@
 import {InjectionToken} from '@angular/core';
-// TODO POUZIVA SA VSETKO
 
-export type MdDateFormats = {
+export interface MdDateFormats {
     parse: {
         dateInput: any
-    },
+    };
     display: {
         dateInput: any,
         monthYearLabel: any,
         dateA11yLabel: any,
         monthYearA11yLabel: any,
-    }
-};
+    };
+}
 
 
 export const MD_DATE_FORMATS = new InjectionToken<MdDateFormats>('md-date-formats');

@@ -94,13 +94,13 @@ export class PortalHostDirective extends BasePortalHost implements OnDestroy {
 
         // If the portal specifies an origin, use that as the logical location of the component
         // in the application tree. Otherwise use the location of this PortalHost.
-        let viewContainerRef = portal.viewContainerRef != null ?
+        const viewContainerRef = portal.viewContainerRef != null ?
             portal.viewContainerRef :
             this._viewContainerRef;
 
-        let componentFactory =
+        const componentFactory =
             this._componentFactoryResolver.resolveComponentFactory(portal.component);
-        let ref = viewContainerRef.createComponent(
+        const ref = viewContainerRef.createComponent(
             componentFactory, viewContainerRef.length,
             portal.injector || viewContainerRef.parentInjector);
 
@@ -127,7 +127,6 @@ export class PortalHostDirective extends BasePortalHost implements OnDestroy {
     }
 }
 
-// TODO PortalModule sa pouziva
 @NgModule({
     exports: [TemplatePortalDirective, PortalHostDirective],
     declarations: [TemplatePortalDirective, PortalHostDirective],

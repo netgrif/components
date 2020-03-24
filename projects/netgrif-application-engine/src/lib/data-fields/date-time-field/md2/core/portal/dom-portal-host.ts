@@ -28,7 +28,7 @@ export class DomPortalHost extends BasePortalHost {
      * @param portal Portal to be attached
      */
     attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T> {
-        let componentFactory = this._componentFactoryResolver.resolveComponentFactory(portal.component);
+        const componentFactory = this._componentFactoryResolver.resolveComponentFactory(portal.component);
         let componentRef: ComponentRef<T>;
 
         // If the portal specifies a ViewContainerRef, we will use that as the attachment point
@@ -62,8 +62,8 @@ export class DomPortalHost extends BasePortalHost {
      * @param portal Portal to be attached.
      */
     attachTemplatePortal(portal: TemplatePortal): Map<string, any> {
-        let viewContainer = portal.viewContainerRef;
-        let viewRef = viewContainer.createEmbeddedView(portal.templateRef);
+        const viewContainer = portal.viewContainerRef;
+        const viewRef = viewContainer.createEmbeddedView(portal.templateRef);
         viewRef.detectChanges();
 
         // The method `createEmbeddedView` will add the view as a child of the viewContainer.
@@ -72,7 +72,7 @@ export class DomPortalHost extends BasePortalHost {
         viewRef.rootNodes.forEach(rootNode => this._hostDomElement.appendChild(rootNode));
 
         this.setDisposeFn((() => {
-            let index = viewContainer.indexOf(viewRef);
+            const index = viewContainer.indexOf(viewRef);
             if (index !== -1) {
                 viewContainer.remove(index);
             }

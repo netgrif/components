@@ -3,17 +3,17 @@ import {DateAdapter} from './date-adapter';
 
 // TODO(mmalerba): Remove when we no longer support safari 9.
 /** Whether the browser supports the Intl API. */
-const SUPPORTS_INTL_API = typeof Intl != 'undefined';
+const SUPPORTS_INTL_API = typeof Intl !== 'undefined';
 
 
 /** The default month names to use if Intl API is not available. */
 const DEFAULT_MONTH_NAMES = {
-    'long': [
+    long: [
         'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
         'October', 'November', 'December'
     ],
-    'short': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    'narrow': ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
+    short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
 };
 
 
@@ -23,9 +23,9 @@ const DEFAULT_DATE_NAMES = range(31, i => String(i + 1));
 
 /** The default day of the week names to use if Intl API is not available. */
 const DEFAULT_DAY_OF_WEEK_NAMES = {
-    'long': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    'short': ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    'narrow': ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+    long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 };
 
 
@@ -59,7 +59,7 @@ export class NativeDateAdapter extends DateAdapter<Date> {
 
     getMonthNames(style: 'long' | 'short' | 'narrow'): string[] {
         if (SUPPORTS_INTL_API) {
-            let dtf = new Intl.DateTimeFormat(this.locale, {month: style});
+            const dtf = new Intl.DateTimeFormat(this.locale, {month: style});
             return range(12, i => this._stripDirectionalityCharacters(dtf.format(new Date(2017, i, 1))));
         }
         return DEFAULT_MONTH_NAMES[style];
@@ -67,7 +67,7 @@ export class NativeDateAdapter extends DateAdapter<Date> {
 
     getDateNames(): string[] {
         if (SUPPORTS_INTL_API) {
-            let dtf = new Intl.DateTimeFormat(this.locale, {day: 'numeric'});
+            const dtf = new Intl.DateTimeFormat(this.locale, {day: 'numeric'});
             return range(31, i => this._stripDirectionalityCharacters(
                 dtf.format(new Date(2017, 0, i + 1))));
         }
@@ -76,7 +76,7 @@ export class NativeDateAdapter extends DateAdapter<Date> {
 
     getDayOfWeekNames(style: 'long' | 'short' | 'narrow'): string[] {
         if (SUPPORTS_INTL_API) {
-            let dtf = new Intl.DateTimeFormat(this.locale, {weekday: style});
+            const dtf = new Intl.DateTimeFormat(this.locale, {weekday: style});
             return range(7, i => this._stripDirectionalityCharacters(
                 dtf.format(new Date(2017, 0, i + 1))));
         }
@@ -85,7 +85,7 @@ export class NativeDateAdapter extends DateAdapter<Date> {
 
     getYearName(date: Date): string {
         if (SUPPORTS_INTL_API) {
-            let dtf = new Intl.DateTimeFormat(this.locale, {year: 'numeric'});
+            const dtf = new Intl.DateTimeFormat(this.locale, {year: 'numeric'});
             return this._stripDirectionalityCharacters(dtf.format(date));
         }
         return String(this.getYear(date));
@@ -112,11 +112,11 @@ export class NativeDateAdapter extends DateAdapter<Date> {
             return null;
         }
 
-        let result = this._createDateWithOverflow(year, month, date);
+        const result = this._createDateWithOverflow(year, month, date);
 
         // Check that the date wasn't above the upper bound for the month, causing the month to
         // overflow.
-        if (result.getMonth() != month) {
+        if (result.getMonth() !== month) {
             return null;
         }
 
@@ -130,13 +130,13 @@ export class NativeDateAdapter extends DateAdapter<Date> {
     parse(value: any): Date | null {
         // We have no way using the native JS Date to set the parse format or locale, so we ignore these
         // parameters.
-        let timestamp = typeof value == 'number' ? value : Date.parse(value);
+        const timestamp = typeof value === 'number' ? value : Date.parse(value);
         return isNaN(timestamp) ? null : new Date(timestamp);
     }
 
-    format(date: Date, displayFormat: Object): string {
+    format(date: Date, displayFormat: object): string {
         if (SUPPORTS_INTL_API) {
-            let dtf = new Intl.DateTimeFormat(this.locale, displayFormat);
+            const dtf = new Intl.DateTimeFormat(this.locale, displayFormat);
             return this._stripDirectionalityCharacters(dtf.format(date));
         }
         return this._stripDirectionalityCharacters(date.toDateString());
@@ -154,7 +154,7 @@ export class NativeDateAdapter extends DateAdapter<Date> {
         // month. In this case we want to go to the last day of the desired month.
         // Note: the additional + 12 % 12 ensures we end up with a positive number, since JS % doesn't
         // guarantee this.
-        if (this.getMonth(newDate) != ((this.getMonth(date) + months) % 12 + 12) % 12) {
+        if (this.getMonth(newDate) !== ((this.getMonth(date) + months) % 12 + 12) % 12) {
             newDate = this._createDateWithOverflow(this.getYear(newDate), this.getMonth(newDate), 0);
         }
 
@@ -176,7 +176,7 @@ export class NativeDateAdapter extends DateAdapter<Date> {
 
     /** Creates a date but allows the month and date to overflow. */
     private _createDateWithOverflow(year: number, month: number, date: number) {
-        let result = new Date(year, month, date);
+        const result = new Date(year, month, date);
 
         // We need to correct for the fact that JS native Date treats years in range [0, 99] as
         // abbreviations for 19xx.

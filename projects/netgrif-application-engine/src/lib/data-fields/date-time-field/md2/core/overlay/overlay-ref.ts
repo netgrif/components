@@ -1,10 +1,10 @@
 import {NgZone} from '@angular/core';
-import {PortalHost, Portal} from '../portal/portal';
+import {PortalHost, Portal} from '..';
 import {OverlayState} from './overlay-state';
-import {ScrollStrategy} from './scroll/scroll-strategy';
+import {ScrollStrategy} from './scroll';
 import {Observable, Subject} from 'rxjs';
 
-// TODO OverlayRef sa pouziva
+
 /**
  * Reference to an overlay that has been created with the Overlay service.
  * Used to manipulate or dispose of said overlay.
@@ -25,18 +25,13 @@ export class OverlayRef implements PortalHost {
         _scrollStrategy.attach(this);
     }
 
-    /** The overlay's HTML element */
-    get overlayElement(): HTMLElement {
-        return this._pane;
-    }
-
     /**
      * Attaches the overlay to a portal instance and adds the backdrop.
      * @param portal Portal instance to which to attach the overlay.
      * @returns The portal attachment result.
      */
     attach(portal: Portal<any>): any {
-        let attachResult = this._portalHost.attach(portal);
+        const attachResult = this._portalHost.attach(portal);
 
         // Update the pane element with the given state configuration.
         this._updateStackingOrder();
@@ -75,7 +70,7 @@ export class OverlayRef implements PortalHost {
         this._togglePointerEvents(false);
         this._scrollStrategy.disable();
 
-        let detachmentResult = this._portalHost.detach();
+        const detachmentResult = this._portalHost.detach();
 
         // Only emit after everything is detached.
         this._detachments.next();
@@ -116,16 +111,6 @@ export class OverlayRef implements PortalHost {
      */
     backdropClick(): Observable<void> {
         return this._backdropClick.asObservable();
-    }
-
-    /** Returns an observable that emits when the overlay has been attached. */
-    attachments(): Observable<void> {
-        return this._attachments.asObservable();
-    }
-
-    /** Returns an observable that emits when the overlay has been detached. */
-    detachments(): Observable<void> {
-        return this._detachments.asObservable();
     }
 
     /**
@@ -208,10 +193,10 @@ export class OverlayRef implements PortalHost {
 
     /** Detaches the backdrop (if any) associated with the overlay. */
     detachBackdrop(): void {
-        let backdropToDetach = this._backdropElement;
+        const backdropToDetach = this._backdropElement;
 
         if (backdropToDetach) {
-            let finishDetach = () => {
+            const finishDetach = () => {
                 // It may not be attached to anything in certain cases (e.g. unit tests).
                 if (backdropToDetach && backdropToDetach.parentNode) {
                     backdropToDetach.parentNode.removeChild(backdropToDetach);
@@ -220,7 +205,7 @@ export class OverlayRef implements PortalHost {
                 // It is possible that a new portal has been attached to this overlay since we started
                 // removing the backdrop. If that is the case, only clear the backdrop reference if it
                 // is still the same instance that we started to remove.
-                if (this._backdropElement == backdropToDetach) {
+                if (this._backdropElement === backdropToDetach) {
                     this._backdropElement = null;
                 }
             };

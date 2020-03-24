@@ -1,6 +1,5 @@
 import {PositionStrategy} from './position-strategy';
 
-// TODO GlovalPositionStrategy sa pouziva
 /**
  * A strategy for positioning overlays. Using this strategy, an overlay is given an
  * explicit position relative to the browser's viewport. We use flexbox, instead of
@@ -8,15 +7,15 @@ import {PositionStrategy} from './position-strategy';
  * element to become blurry.
  */
 export class GlobalPositionStrategy implements PositionStrategy {
-    private _cssPosition: string = 'static';
-    private _topOffset: string = '';
-    private _bottomOffset: string = '';
-    private _leftOffset: string = '';
-    private _rightOffset: string = '';
-    private _alignItems: string = '';
-    private _justifyContent: string = '';
-    private _width: string = '';
-    private _height: string = '';
+    private _cssPosition = 'static';
+    private _topOffset = '';
+    private _bottomOffset = '';
+    private _leftOffset = '';
+    private _rightOffset = '';
+    private _alignItems = '';
+    private _justifyContent = '';
+    private _width = '';
+    private _height = '';
 
     /* A lazily-created wrapper for the overlay element that is used as a flex container.  */
     private _wrapper: HTMLElement;
@@ -136,8 +135,8 @@ export class GlobalPositionStrategy implements PositionStrategy {
             this._wrapper.appendChild(element);
         }
 
-        let styles = element.style;
-        let parentStyles = (element.parentNode as HTMLElement).style;
+        const styles = element.style;
+        const parentStyles = (element.parentNode as HTMLElement).style;
 
         styles.position = this._cssPosition;
         styles.marginTop = this._topOffset;

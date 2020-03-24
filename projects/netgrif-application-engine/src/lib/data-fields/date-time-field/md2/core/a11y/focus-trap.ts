@@ -92,30 +92,6 @@ export class FocusTrap {
     }
 
     /**
-     * Waits for the zone to stabilize, then either focuses the first element that the
-     * user specified, or the first tabbable element..
-     */
-    focusInitialElementWhenReady() {
-        this._executeOnStable(() => this.focusInitialElement());
-    }
-
-    /**
-     * Waits for the zone to stabilize, then focuses
-     * the first tabbable element within the focus trap region.
-     */
-    focusFirstTabbableElementWhenReady() {
-        this._executeOnStable(() => this.focusFirstTabbableElement());
-    }
-
-    /**
-     * Waits for the zone to stabilize, then focuses
-     * the last tabbable element within the focus trap region.
-     */
-    focusLastTabbableElementWhenReady() {
-        this._executeOnStable(() => this.focusLastTabbableElement());
-    }
-
-    /**
      * Get the specified boundary element of the trapped region.
      * @param bound The boundary to get (start or end of trapped region).
      * @returns The boundary element.
@@ -137,16 +113,6 @@ export class FocusTrap {
         }
         return markers.length ?
             markers[markers.length - 1] : this._getLastTabbableElement(this._element);
-    }
-
-    /** Focuses the element that should be focused when the focus trap is initialized. */
-    focusInitialElement() {
-        const redirectToElement = this._element.querySelector('[cdk-focus-initial]') as HTMLElement;
-        if (redirectToElement) {
-            redirectToElement.focus();
-        } else {
-            this.focusFirstTabbableElement();
-        }
     }
 
     /** Focuses the first tabbable element within the focus trap region. */
@@ -174,7 +140,7 @@ export class FocusTrap {
         // Iterate in DOM order. Note that IE doesn't have `children` for SVG so we fall
         // back to `childNodes` which includes text nodes, comments etc.
         const children = root.children || root.childNodes;
-        
+
         for (let i = 0; i < children.length; i++) {
             const tabbableChild = children[i].nodeType === Node.ELEMENT_NODE ?
                 this._getFirstTabbableElement(children[i] as HTMLElement) :
@@ -218,18 +184,8 @@ export class FocusTrap {
         anchor.classList.add('cdk-focus-trap-anchor');
         return anchor;
     }
-
-    /** Executes a function when the zone is stable. */
-    private _executeOnStable(fn: () => any): void {
-        if (this._ngZone.isStable) {
-            fn();
-        } else {
-            this._ngZone.onStable.pipe(first()).subscribe(fn);
-        }
-    }
 }
 
-// TODO FocusTrapFactory sa pouziva
 /** Factory that allows easy instantiation of focus traps. */
 @Injectable()
 export class FocusTrapFactory {

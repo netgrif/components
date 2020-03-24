@@ -19,9 +19,7 @@ import {ScrollStrategyOptions} from './scroll';
 let nextUniqueId = 0;
 
 /** The default state for newly created overlays. */
-let defaultState = new OverlayState();
-
-// TODO Overlay sa pouziva
+const defaultState = new OverlayState();
 
 /**
  * Service to create Overlays. Overlays are dynamically added pieces of floating UI, meant to be
@@ -64,7 +62,7 @@ export class Overlay {
      * @returns Newly-created pane element
      */
     private _createPaneElement(): HTMLElement {
-        let pane = document.createElement('div');
+        const pane = document.createElement('div');
 
         pane.id = `cdk-overlay-${nextUniqueId++}`;
         pane.classList.add('cdk-overlay-pane');
@@ -85,11 +83,11 @@ export class Overlay {
     /**
      * Creates an OverlayRef for an overlay in the given DOM element.
      * @param pane DOM element for the overlay
-     * @param state
+     * @param state -
      */
     private _createOverlayRef(pane: HTMLElement, state: OverlayState): OverlayRef {
-        let scrollStrategy = state.scrollStrategy || this.scrollStrategies.noop();
-        let portalHost = this._createPortalHost(pane);
+        const scrollStrategy = state.scrollStrategy || this.scrollStrategies.noop();
+        const portalHost = this._createPortalHost(pane);
         return new OverlayRef(portalHost, pane, state, scrollStrategy, this._ngZone);
     }
 }

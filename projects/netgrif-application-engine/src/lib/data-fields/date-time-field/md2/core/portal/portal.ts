@@ -13,10 +13,9 @@ import {
     throwPortalHostAlreadyDisposedError,
     throwUnknownPortalTypeError
 } from './portal-errors';
-import {ComponentType} from '../overlay/generic-component-type';
+import {ComponentType} from '..';
 
 
-// TODO Portal sa pozuiva
 /**
  * A `Portal` is something that you want to render somewhere else.
  * It can be attach to / detached from a `PortalHost`.
@@ -35,12 +34,12 @@ export abstract class Portal<T> {
         }
 
         this._attachedHost = host;
-        return <T> host.attach(this);
+        return host.attach(this) as T;
     }
 
     /** Detach this portal from its host */
     detach(): void {
-        let host = this._attachedHost;
+        const host = this._attachedHost;
         if (host == null) {
             throwNoPortalAttachedError();
         }
@@ -63,7 +62,6 @@ export abstract class Portal<T> {
     }
 }
 
-// TODO ComponentPortal sa pouziva
 /**
  * A `ComponentPortal` is a portal that instantiates some Component upon attachment.
  */
@@ -92,7 +90,6 @@ export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
     }
 }
 
-// TODO TemplatePortal sa pouziva
 /**
  * A `TemplatePortal` is a portal that represents some embedded template (TemplateRef).
  */
@@ -132,7 +129,6 @@ export class TemplatePortal extends Portal<Map<string, any>> {
     }
 }
 
-// TODO PortalHost sa pouziva
 /**
  * A `PortalHost` is an space that can contain a single `Portal`.
  */
@@ -146,7 +142,6 @@ export interface PortalHost {
     hasAttached(): boolean;
 }
 
-// TODO BasePortalHost sa pouziva
 /**
  * Partial implementation of PortalHost that only deals with attaching either a
  * ComponentPortal or a TemplatePortal.
@@ -159,7 +154,7 @@ export abstract class BasePortalHost implements PortalHost {
     private _disposeFn: () => void;
 
     /** Whether this host has already been permanently disposed. */
-    private _isDisposed: boolean = false;
+    private _isDisposed = false;
 
     /** Whether this host has an attached portal. */
     hasAttached(): boolean {

@@ -32,7 +32,7 @@ import {ScrollDispatchModule} from './scroll';
 
 
 /** Default set of positions for the overlay. Follows the behavior of a dropdown. */
-let defaultPositionList = [
+const defaultPositionList = [
     new ConnectionPositionPair(
         {originX: 'start', originY: 'bottom'},
         {overlayX: 'start', overlayY: 'top'}),
@@ -65,14 +65,14 @@ export class OverlayOrigin {
 })
 export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
     private _overlayRef: OverlayRef;
-    private _templatePortal: TemplatePortal;
+    private readonly _templatePortal: TemplatePortal;
     private _hasBackdrop = false;
     private _backdropSubscription: Subscription;
     private _positionSubscription: Subscription;
-    private _offsetX: number = 0;
-    private _offsetY: number = 0;
+    private _offsetX = 0;
+    private _offsetY = 0;
     private _position: ConnectedPositionStrategy;
-    private _escapeListener: Function;
+    private _escapeListener: () => void;
 
     /** Origin for the connected overlay. */
     @Input() origin: OverlayOrigin;
@@ -125,7 +125,7 @@ export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
     @Input() scrollStrategy: ScrollStrategy = this._overlay.scrollStrategies.reposition();
 
     /** Whether the overlay is open. */
-    @Input() open: boolean = false;
+    @Input() open = false;
 
     /** Whether or not the overlay should attach a backdrop. */
     @Input()
@@ -160,11 +160,6 @@ export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
         this._templatePortal = new TemplatePortal(templateRef, viewContainerRef);
     }
 
-    /** The associated overlay reference. */
-    get overlayRef(): OverlayRef {
-        return this._overlayRef;
-    }
-
     /** The element's layout direction. */
     get dir(): LayoutDirection {
         return this._dir ? this._dir.value : 'ltr';
@@ -191,7 +186,7 @@ export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
 
     /** Builds the overlay config based on the directive's inputs */
     private _buildConfig(): OverlayState {
-        let overlayConfig = new OverlayState();
+        const overlayConfig = new OverlayState();
 
         if (this.width || this.width === 0) {
             overlayConfig.width = this.width;
@@ -318,7 +313,6 @@ export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
     }
 }
 
-// TODO OverlayModule sa pouziva
 @NgModule({
     imports: [PortalModule, ScrollDispatchModule],
     exports: [ConnectedOverlayDirective, OverlayOrigin, ScrollDispatchModule],

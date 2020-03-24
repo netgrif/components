@@ -1,4 +1,1 @@
-// TODO ComponentType sa pouziva
-export interface ComponentType<T> {
-    new(...args: any[]): T;
-}
+export type ComponentType<T> = new(...args: any[]) => T;

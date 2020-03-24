@@ -1,11 +1,10 @@
-import {ElementRef, Injectable, NgZone, Optional, SkipSelf} from '@angular/core';
+import {Injectable, NgZone, Optional, SkipSelf} from '@angular/core';
 import {Platform} from '../../platform';
 import {Scrollable} from './scrollable';
 import {Subject} from 'rxjs';
 import {Subscription, merge, fromEvent} from 'rxjs';
 import {auditTime} from 'rxjs/operators';
 
-// TODO ScrollDispatcher sa pouziva
 
 /** Time in ms to throttle the scrolling events by default. */
 export const DEFAULT_SCROLL_TIME = 20;
@@ -69,7 +68,7 @@ export class ScrollDispatcher {
 
         // In the case of a 0ms delay, use an observable without auditTime
         // since it does add a perceptible delay in processing overhead.
-        let observable = auditTimeInMs > 0 ?
+        const observable = auditTimeInMs > 0 ?
             this._scrolled.asObservable().pipe(auditTime(auditTimeInMs)) :
             this._scrolled.asObservable();
 
@@ -86,7 +85,7 @@ export class ScrollDispatcher {
 
         // Note that we need to do the subscribing from here, in order to be able to remove
         // the global event listeners once there are no more subscriptions.
-        let subscription = observable.subscribe(callback);
+        const subscription = observable.subscribe(callback);
 
         subscription.add(() => {
             this._scrolledCount--;
@@ -98,33 +97,6 @@ export class ScrollDispatcher {
         });
 
         return subscription;
-    }
-
-    /** Returns all registered Scrollables that contain the provided element. */
-    getScrollContainers(elementRef: ElementRef): Scrollable[] {
-        const scrollingContainers: Scrollable[] = [];
-
-        this.scrollableReferences.forEach((_subscription: Subscription, scrollable: Scrollable) => {
-            if (this.scrollableContainsElement(scrollable, elementRef)) {
-                scrollingContainers.push(scrollable);
-            }
-        });
-
-        return scrollingContainers;
-    }
-
-    /** Returns true if the element is contained within the provided Scrollable. */
-    scrollableContainsElement(scrollable: Scrollable, elementRef: ElementRef): boolean {
-        let element = elementRef.nativeElement;
-        let scrollableElement = scrollable.getElementRef().nativeElement;
-
-        // Traverse through the element parents until we reach null, checking if any of the elements
-        // are the scrollable's element.
-        do {
-            if (element == scrollableElement) {
-                return true;
-            }
-        } while (element = element.parentElement);
     }
 
     /** Sends a notification that a scroll event has been fired. */

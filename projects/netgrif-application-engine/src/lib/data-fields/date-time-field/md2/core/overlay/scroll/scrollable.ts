@@ -2,7 +2,6 @@ import {Directive, ElementRef, OnInit, OnDestroy, NgZone, Renderer2} from '@angu
 import {Observable, Subject} from 'rxjs';
 import {ScrollDispatcher} from './scroll-dispatcher';
 
-// TODO Scrollable sa pouziva
 
 /**
  * Sends an event when the directive's element is scrolled. Registers itself with the
@@ -14,7 +13,7 @@ import {ScrollDispatcher} from './scroll-dispatcher';
 })
 export class Scrollable implements OnInit, OnDestroy {
     private _elementScrolled: Subject<Event> = new Subject();
-    private _scrollListener: Function;
+    private _scrollListener: () => void;
 
     constructor(private _elementRef: ElementRef,
                 private _scroll: ScrollDispatcher,

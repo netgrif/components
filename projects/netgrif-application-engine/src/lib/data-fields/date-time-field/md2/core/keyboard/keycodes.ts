@@ -18,5 +18,4 @@ export const ENTER = 'Enter';
 export const SPACE = 'Space';
 export const TAB = 'Tab';
 
-// TODO ESCAPE sa pouziva
 export const ESCAPE = 'Escape';

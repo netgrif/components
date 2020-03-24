@@ -11,7 +11,7 @@ import {
     SkipSelf,
 } from '@angular/core';
 import {Observable, of, Subject} from 'rxjs';
-import {Platform} from '../platform/platform';
+import {Platform} from '../platform';
 
 
 // This is the value used by AngularJS Material. Through trial and error (on iPhone 6S) they found
@@ -22,12 +22,12 @@ export const TOUCH_BUFFER_MS = 650;
 export type FocusOrigin = 'touch' | 'mouse' | 'keyboard' | 'program';
 
 
-type MonitoredElementInfo = {
-    unlisten: Function,
-    checkChildren: boolean,
-    renderer: Renderer2,
-    subject: Subject<FocusOrigin>
-};
+interface MonitoredElementInfo {
+    unlisten: () => void;
+    checkChildren: boolean;
+    renderer: Renderer2;
+    subject: Subject<FocusOrigin>;
+}
 
 
 /** Monitors mouse and keyboard events to determine the cause of focus events. */
@@ -73,23 +73,23 @@ export class FocusOriginMonitor {
         }
         // Check if we're already monitoring this element.
         if (this._elementInfo.has(element)) {
-            let info = this._elementInfo.get(element);
+            const info = this._elementInfo.get(element);
             info.checkChildren = checkChildren;
             return info.subject.asObservable();
         }
 
         // Create monitored element info.
-        let info: MonitoredElementInfo = {
+        const info: MonitoredElementInfo = {
             unlisten: null,
-            checkChildren: checkChildren,
-            renderer: renderer,
+            checkChildren,
+            renderer,
             subject: new Subject<FocusOrigin>()
         };
         this._elementInfo.set(element, info);
 
         // Start listening. We need to listen in capture phase since focus events don't bubble.
-        let focusListener = (event: FocusEvent) => this._onFocus(event, element);
-        let blurListener = (event: FocusEvent) => this._onBlur(event, element);
+        const focusListener = (event: FocusEvent) => this._onFocus(event, element);
+        const blurListener = (event: FocusEvent) => this._onBlur(event, element);
         this._ngZone.runOutsideAngular(() => {
             element.addEventListener('focus', focusListener, true);
             element.addEventListener('blur', blurListener, true);
@@ -109,7 +109,7 @@ export class FocusOriginMonitor {
      * @param element The element to stop monitoring.
      */
     stopMonitoring(element: HTMLElement): void {
-        let elementInfo = this._elementInfo.get(element);
+        const elementInfo = this._elementInfo.get(element);
 
         if (elementInfo) {
             elementInfo.unlisten();
@@ -118,16 +118,6 @@ export class FocusOriginMonitor {
             this._setClasses(element, null);
             this._elementInfo.delete(element);
         }
-    }
-
-    /**
-     * Focuses the element via the specified focus origin.
-     * @param element The element to focus.
-     * @param origin The focus origin.
-     */
-    focusVia(element: HTMLElement, origin: FocusOrigin): void {
-        this._setOriginForCurrentEventQueue(origin);
-        element.focus();
     }
 
     /** Register necessary event listeners on the document and window. */
@@ -179,8 +169,8 @@ export class FocusOriginMonitor {
      * @param origin The focus origin.
      */
     private _setClasses(element: HTMLElement, origin: FocusOrigin): void {
-        let renderer = this._elementInfo.get(element).renderer;
-        let toggleClass = (className: string, shouldSet: boolean) => {
+        const renderer = this._elementInfo.get(element).renderer;
+        const toggleClass = (className: string, shouldSet: boolean) => {
             shouldSet ? renderer.addClass(element, className) : renderer.removeClass(element, className);
         };
 
@@ -223,7 +213,7 @@ export class FocusOriginMonitor {
         // for the first focus event after the touchstart, and then the first blur event after that
         // focus event. When that blur event fires we know that whatever follows is not a result of the
         // touchstart.
-        let focusTarget = event.target;
+        const focusTarget = event.target;
         return this._lastTouchTarget instanceof Node && focusTarget instanceof Node &&
             (focusTarget === this._lastTouchTarget || focusTarget.contains(this._lastTouchTarget));
     }
@@ -285,7 +275,6 @@ export class FocusOriginMonitor {
     }
 }
 
-// TODO CdkMonitorFocus sa pouziva
 /**
  * Directive that determines how a particular element was focused (via keyboard, mouse, touch, or
  * programmatically) and adds corresponding classes to the element.
@@ -314,13 +303,11 @@ export class CdkMonitorFocus implements OnDestroy {
     }
 }
 
-
 export function FOCUS_ORIGIN_MONITOR_PROVIDER_FACTORY(
     parentDispatcher: FocusOriginMonitor, ngZone: NgZone, platform: Platform) {
     return parentDispatcher || new FocusOriginMonitor(ngZone, platform);
 }
 
-// TODO FOCUS_ORIGIN_MONITOR_PROVIDER sa pouziva
 export const FOCUS_ORIGIN_MONITOR_PROVIDER = {
     // If there is already a FocusOriginMonitor available, use that. Otherwise, provide a new one.
     provide: FocusOriginMonitor,

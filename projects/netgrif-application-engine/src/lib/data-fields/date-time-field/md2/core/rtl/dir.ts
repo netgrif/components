@@ -7,10 +7,9 @@ import {
     EventEmitter
 } from '@angular/core';
 
-// TODO LayoutDirection sa pozuiva
+
 export type LayoutDirection = 'ltr' | 'rtl';
 
-// TODO Dir sa pouziva
 /**
  * Directive to listen for changes of direction of part of the DOM.
  *
@@ -36,9 +35,9 @@ export class Dir {
     }
 
     set dir(v: LayoutDirection) {
-        let old = this._dir;
+        const old = this._dir;
         this._dir = v;
-        if (old != this._dir) {
+        if (old !== this._dir) {
             this.dirChange.emit();
         }
     }

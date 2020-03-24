@@ -1,7 +1,5 @@
 import {Injectable, Optional, SkipSelf} from '@angular/core';
-import {ScrollDispatcher} from '../scroll/scroll-dispatcher';
-
-// TODO ViewportRuler sa pouziva
+import {ScrollDispatcher} from '../scroll';
 
 /**
  * Simple utility for getting the bounds of the browser viewport.
@@ -52,7 +50,7 @@ export class ViewportRuler {
 
     /**
      * Gets the (top, left) scroll position of the viewport.
-     * @param documentRect
+     * @param documentRect -
      */
     getViewportScrollPosition(documentRect = this._documentRect) {
         // Cache the document bounding rect so that we don't recompute it for multiple calls.
@@ -88,7 +86,6 @@ export function VIEWPORT_RULER_PROVIDER_FACTORY(parentRuler: ViewportRuler,
     return parentRuler || new ViewportRuler(scrollDispatcher);
 }
 
-// TODO VIEWPORT_RULER_PROVIDER sa pouziva
 export const VIEWPORT_RULER_PROVIDER = {
     // If there is already a ViewportRuler available, use that. Otherwise, provide a new one.
     provide: ViewportRuler,

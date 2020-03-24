@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CdkMonitorFocus, FOCUS_ORIGIN_MONITOR_PROVIDER} from './focus-origin-monitor';
 import {PlatformModule} from '../platform';
 
-// TODO StyleModule sa pouziva
+
 @NgModule({
     imports: [PlatformModule],
     declarations: [CdkMonitorFocus],
@@ -12,6 +12,4 @@ import {PlatformModule} from '../platform';
 export class StyleModule {
 }
 
-
 export * from './focus-origin-monitor';
-export * from './apply-transform';

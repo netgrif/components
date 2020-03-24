@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Platform} from '../platform/platform';
+import {Platform} from '../platform';
 
 /**
  * The InteractivityChecker leans heavily on the ally.js accessibility utilities.
@@ -7,7 +7,6 @@ import {Platform} from '../platform/platform';
  * supported.
  */
 
-// TODO InteractivityChecker sa pouziva
 /**
  * Utility for checking the interactivity of an element, such as whether is is focusable or
  * tabbable.
@@ -55,11 +54,11 @@ export class InteractivityChecker {
             return false;
         }
 
-        let frameElement = getWindow(element).frameElement as HTMLElement;
+        const frameElement = getWindow(element).frameElement as HTMLElement;
 
         if (frameElement) {
 
-            let frameType = frameElement && frameElement.nodeName.toLowerCase();
+            const frameType = frameElement && frameElement.nodeName.toLowerCase();
 
             // Frame elements inherit their tabindex onto all child elements.
             if (getTabIndexValue(frameElement) === -1) {
@@ -78,8 +77,8 @@ export class InteractivityChecker {
 
         }
 
-        let nodeName = element.nodeName.toLowerCase();
-        let tabIndexValue = getTabIndexValue(element);
+        const nodeName = element.nodeName.toLowerCase();
+        const tabIndexValue = getTabIndexValue(element);
 
         if (element.hasAttribute('contenteditable')) {
             return tabIndexValue !== -1;
@@ -147,7 +146,7 @@ function hasGeometry(element: HTMLElement): boolean {
 
 /** Gets whether an element's  */
 function isNativeFormElement(element: Node) {
-    let nodeName = element.nodeName.toLowerCase();
+    const nodeName = element.nodeName.toLowerCase();
     return nodeName === 'input' ||
         nodeName === 'select' ||
         nodeName === 'button' ||
@@ -156,7 +155,7 @@ function isNativeFormElement(element: Node) {
 
 /** Gets whether an element is an <input type="hidden">. */
 function isHiddenInput(element: HTMLElement): boolean {
-    return isInputElement(element) && element.type == 'hidden';
+    return isInputElement(element) && element.type === 'hidden';
 }
 
 /** Gets whether an element is an anchor that has an href attribute. */
@@ -166,12 +165,12 @@ function isAnchorWithHref(element: HTMLElement): boolean {
 
 /** Gets whether an element is an input element. */
 function isInputElement(element: HTMLElement): element is HTMLInputElement {
-    return element.nodeName.toLowerCase() == 'input';
+    return element.nodeName.toLowerCase() === 'input';
 }
 
 /** Gets whether an element is an anchor element. */
 function isAnchorElement(element: HTMLElement): element is HTMLAnchorElement {
-    return element.nodeName.toLowerCase() == 'a';
+    return element.nodeName.toLowerCase() === 'a';
 }
 
 /** Gets whether an element has a valid tabindex. */
@@ -180,10 +179,10 @@ function hasValidTabIndex(element: HTMLElement): boolean {
         return false;
     }
 
-    let tabIndex = element.getAttribute('tabindex');
+    const tabIndex = element.getAttribute('tabindex');
 
     // IE11 parses tabindex="" as the value "-32768"
-    if (tabIndex == '-32768') {
+    if (tabIndex === '-32768') {
         return false;
     }
 
@@ -207,8 +206,8 @@ function getTabIndexValue(element: HTMLElement): number {
 
 /** Checks whether the specified element is potentially tabbable on iOS */
 function isPotentiallyTabbableIOS(element: HTMLElement): boolean {
-    let nodeName = element.nodeName.toLowerCase();
-    let inputType = nodeName === 'input' && (element as HTMLInputElement).type;
+    const nodeName = element.nodeName.toLowerCase();
+    const inputType = nodeName === 'input' && (element as HTMLInputElement).type;
 
     return inputType === 'text'
         || inputType === 'password'
