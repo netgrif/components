@@ -17,7 +17,12 @@ import {RailControlsComponent} from './drawer-prototype/rail-controls/rail-contr
 import {UserShowcaseComponent} from './drawer-prototype/user-showcase/user-showcase.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material';
-import { NavigationTreeComponent } from './drawer-prototype/navigation-tree/navigation-tree.component';
+import {NavigationTreeComponent} from './drawer-prototype/navigation-tree/navigation-tree.component';
+import {QuickPanelComponent} from './drawer-prototype/quick-panel/quick-panel.component';
+import {LanguageSelectorComponent} from './drawer-prototype/quick-panel/language-selector/language-selector.component';
+import {InternalLinkComponent} from './drawer-prototype/quick-panel/internal-link/internal-link.component';
+import {LogoutShortcutComponent} from './drawer-prototype/quick-panel/logout-shortcut/logout-shortcut.component';
+import {UserModule} from '@netgrif/application-engine';
 
 @NgModule({
     declarations: [
@@ -29,7 +34,11 @@ import { NavigationTreeComponent } from './drawer-prototype/navigation-tree/navi
         NavigationRailComponent,
         RailControlsComponent,
         UserShowcaseComponent,
-        NavigationTreeComponent
+        NavigationTreeComponent,
+        QuickPanelComponent,
+        LanguageSelectorComponent,
+        InternalLinkComponent,
+        LogoutShortcutComponent
     ],
     imports: [
         BrowserModule,
@@ -41,7 +50,9 @@ import { NavigationTreeComponent } from './drawer-prototype/navigation-tree/navi
         CovalentModule,
         AuthenticationModule,
         HttpClientModule,
-        MatIconModule
+        MatIconModule,
+        UserModule,
+        UserModule
     ],
     providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
     bootstrap: [AppComponent]

@@ -1,0 +1,13 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" style="width: 200px;height: 62px;padding: 8px">
+    <nae-app-language-selector *ngIf="items.includes('language')" language="sk-SK"></nae-app-language-selector>
+    <nae-app-internal-link icon="settings" link="/settings"></nae-app-internal-link>
+    <nae-app-logout-shortcut></nae-app-logout-shortcut>
+
+    <button mat-icon-button [matMenuTriggerFor]="quickPanelMoreMenu">
+        <mat-icon style="text-align: center; font-size: 24px;">more_vert</mat-icon>
+    </button>
+</div>
+<mat-menu #quickPanelMoreMenu="matMenu">
+    <button mat-menu-item (click)="null" fxLayout="row" fxLayoutAlign="start center">
+    </button>
+</mat-menu>

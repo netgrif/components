@@ -25,7 +25,83 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
             },
             views: {
                 layout: 'empty',
-                routes: {}
+                routes: {
+                    dashboard: {
+                        type: '',
+                        layout: {
+                            name: ''
+                        },
+                        access: 'private',
+                        navigation: {
+                            title: 'Dashboard',
+                            icon: 'dashboard'
+                        }
+                    },
+                    cases: {
+                        type: '',
+                        layout: {
+                            name: ''
+                        },
+                        access: 'private',
+                        navigation: {
+                            title: 'Cases',
+                            icon: 'settings'
+                        },
+                        routes: {
+                            some_cases: {
+                                type: '',
+                                layout: {
+                                    name: ''
+                                },
+                                access: 'private',
+                                navigation: {
+                                    icon: 'account_circle'
+                                },
+                                routes: {
+                                    some_specifics: {
+                                        type: '',
+                                        layout: {
+                                            name: ''
+                                        },
+                                        access: 'private',
+                                        navigation: true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    task: {
+                        type: '',
+                        layout: {
+                            name: ''
+                        },
+                        access: 'private',
+                        navigation: {
+                            title: 'Tasks',
+                            icon: 'assignment'
+                        },
+                        routes: {
+                            some_tasks: {
+                                type: '',
+                                layout: {
+                                    name: ''
+                                },
+                                access: 'private',
+                                navigation: false,
+                                routes: {
+                                    some_specifics: {
+                                        type: '',
+                                        layout: {
+                                            name: ''
+                                        },
+                                        access: 'private',
+                                        navigation: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             theme: {
                 name: 'default',

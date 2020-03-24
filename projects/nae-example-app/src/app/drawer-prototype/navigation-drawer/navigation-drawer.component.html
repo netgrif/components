@@ -1,19 +1,23 @@
 <mat-sidenav-container class="drawer-container">
     <mat-sidenav #sidenav [mode]="config.mode" [(opened)]="opened" position="start"
                  [disableClose]="config.disableClose"
-                 class="drawer-content mat-elevation-z16">
-        <div fxLayout="column" fxLayoutAlign="start start" fxFlex>
-            <nae-app-user-showcase [mode]="'full'" [user]="user"></nae-app-user-showcase>
-            <span>Settings</span>
+                 class="drawer-content mat-elevation-z16" >
+        <div fxLayout="column" fxLayoutAlign="start center" fxFlex >
+<!--            <nae-app-user-showcase [mode]="'full'" [user]="user"></nae-app-user-showcase>-->
+<!--            <nae-user-card mode="full" [user]="user"></nae-user-card>-->
+            <mat-divider style="width: 90%;" inset="true"></mat-divider>
+            <nae-app-quick-panel [items]="['language','settings','logout','more']"></nae-app-quick-panel>
+            <mat-divider style="width: 90%;" inset="true"></mat-divider>
             <nae-app-navigation-tree></nae-app-navigation-tree>
-            <span>Side-footer</span>
         </div>
     </mat-sidenav>
     <mat-sidenav-content>
-        <nae-app-user-showcase style="margin: 16px;" mode="horizontal" link="/authentication" [user]="user"></nae-app-user-showcase>
-        <nae-app-user-showcase style="margin: 16px;" mode="vertical" [user]="user"></nae-app-user-showcase>
-        <nae-app-user-showcase style="margin: 16px;" mode="icon" [user]="user"></nae-app-user-showcase>
-        <nae-app-user-showcase style="margin: 16px;" mode="icon" iconStyle="small" tooltipPosition="right" [user]="user"></nae-app-user-showcase>
+<!--        <nae-app-user-showcase style="margin: 16px;" mode="horizontal" link="/authentication"-->
+<!--                               [user]="user"></nae-app-user-showcase>-->
+<!--        <nae-app-user-showcase style="margin: 16px;" mode="vertical" [user]="user"></nae-app-user-showcase>-->
+<!--        <nae-app-user-showcase style="margin: 16px;" mode="icon" [user]="user"></nae-app-user-showcase>-->
+<!--        <nae-app-user-showcase style="margin: 16px;" mode="icon" iconStyle="small" tooltipPosition="right"-->
+<!--                               [user]="user"></nae-app-user-showcase>-->
         <div *ngTemplateOutlet="mainContent"></div>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
