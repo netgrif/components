@@ -9,11 +9,11 @@ import {
     Output,
     ViewEncapsulation
 } from '@angular/core';
-import {DateLocale} from './date-locale';
-import {DateUtil} from './date-util';
-import {Md2CalendarCell} from './calendar-body';
-import {MD_DATE_FORMATS, MdDateFormats} from '../core/datetime/date-formats';
-import {slideCalendar} from './datepicker-animations';
+import {DateLocale} from '../date-locale';
+import {DateUtil} from '../date-util';
+import {Md2CalendarCell} from '../calendar-body/calendar-body';
+import {MD_DATE_FORMATS, MdDateFormats} from '../../core/datetime/date-formats';
+import {slideCalendar} from '../datepicker-animations';
 
 
 const DAYS_PER_WEEK = 7;

@@ -23,18 +23,18 @@ import {
     ValidatorFn,
     Validators,
 } from '@angular/forms';
-import {coerceBooleanProperty} from '../core/coercion/boolean-property';
-import {Overlay} from '../core/overlay/overlay';
-import {OverlayRef} from '../core/overlay/overlay-ref';
-import {ComponentPortal} from '../core/portal/portal';
-import {OverlayState} from '../core/overlay/overlay-state';
-import {Dir} from '../core/rtl/dir';
-import {PositionStrategy} from '../core/overlay/position/position-strategy';
+import {coerceBooleanProperty} from '../../core/coercion/boolean-property';
+import {Overlay} from '../../core/overlay/overlay';
+import {OverlayRef} from '../../core/overlay/overlay-ref';
+import {ComponentPortal} from '../../core/portal/portal';
+import {OverlayState} from '../../core/overlay/overlay-state';
+import {Dir} from '../../core/rtl/dir';
+import {PositionStrategy} from '../../core/overlay/position/position-strategy';
 import {Subscription} from 'rxjs';
-import {ESCAPE} from '../core/keyboard/keycodes';
-import {Md2Calendar} from './calendar';
-import {DateLocale} from './date-locale';
-import {DateUtil} from './date-util';
+import {ESCAPE} from '../../core/keyboard/keycodes';
+import {Md2Calendar} from '../calendar/calendar';
+import {DateLocale} from '../date-locale';
+import {DateUtil} from '../date-util';
 import {first} from 'rxjs/operators';
 
 /** Change event object emitted by Md2Select. */
@@ -56,8 +56,8 @@ let datepickerUid = 0;
  */
 @Component({
     selector: 'md2-datepicker-content',
-    templateUrl: 'datepicker-content.html',
-    styleUrls: ['datepicker-content.scss'],
+    templateUrl: '../datepicker-content/datepicker-content.html',
+    styleUrls: ['../datepicker-content/datepicker-content.scss'],
     host: {
         class: 'md2-datepicker-content',
         '[class.md2-datepicker-content-touch]': 'datepicker?.touchUi',

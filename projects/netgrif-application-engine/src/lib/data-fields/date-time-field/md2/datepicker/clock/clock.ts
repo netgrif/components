@@ -6,8 +6,8 @@ import {
     Input,
     Output,
 } from '@angular/core';
-import {DateUtil} from './date-util';
-import {DateLocale} from './date-locale';
+import {DateUtil} from '../date-util';
+import {DateLocale} from '../date-locale';
 
 export const CLOCK_RADIUS = 50;
 export const CLOCK_INNER_RADIUS = 27.5;

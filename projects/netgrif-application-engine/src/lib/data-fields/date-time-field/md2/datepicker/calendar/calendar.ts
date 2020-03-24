@@ -19,10 +19,10 @@ import {
     PAGE_UP,
     RIGHT_ARROW,
     UP_ARROW
-} from '../core/keyboard/keycodes';
-import {DateLocale} from './date-locale';
-import {DateUtil} from './date-util';
-import {slideCalendar} from './datepicker-animations';
+} from '../../core/keyboard/keycodes';
+import {DateLocale} from '../date-locale';
+import {DateUtil} from '../date-util';
+import {slideCalendar} from '../datepicker-animations';
 
 /**
  * A calendar that is used as part of the datepicker.

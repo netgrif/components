@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
-import {Md2Datepicker} from './datepicker';
+import {Md2Datepicker} from '../datepicker/datepicker';
 
 
 @Component({
