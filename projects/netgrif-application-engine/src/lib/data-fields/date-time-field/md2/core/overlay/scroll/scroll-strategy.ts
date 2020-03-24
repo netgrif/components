@@ -6,9 +6,9 @@ import {OverlayRef} from '../overlay-ref';
  * to handle scroll events while it is open.
  */
 export interface ScrollStrategy {
-  enable: () => void;
-  disable: () => void;
-  attach: (overlayRef: OverlayRef) => void;
+    enable: () => void;
+    disable: () => void;
+    attach: (overlayRef: OverlayRef) => void;
 }
 
 // TODO getMdScrollStrategyAlreadyAttachedError sa pouziva
@@ -16,5 +16,5 @@ export interface ScrollStrategy {
  * Returns an error to be thrown when attempting to attach an already-attached scroll strategy.
  */
 export function getMdScrollStrategyAlreadyAttachedError(): Error {
-  return Error(`Scroll strategy has already been attached.`);
+    return Error(`Scroll strategy has already been attached.`);
 }

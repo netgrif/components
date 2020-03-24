@@ -1,36 +1,37 @@
 /* stylelint-disable material/no-prefixes */
 @mixin user-select($value) {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 @mixin input-placeholder {
-  &::placeholder {
-    @content;
-  }
+    &::placeholder {
+        @content;
+    }
 
-  &::-moz-placeholder {
-    @content;
-  }
+    &::-moz-placeholder {
+        @content;
+    }
 
-  &::-webkit-input-placeholder {
-    @content;
-  }
+    &::-webkit-input-placeholder {
+        @content;
+    }
 
-  &:-ms-input-placeholder {
-    @content;
-  }
+    &:-ms-input-placeholder {
+        @content;
+    }
 }
 
 @mixin cursor-grab {
-  cursor: -webkit-grab;
-  cursor: grab;
+    cursor: -webkit-grab;
+    cursor: grab;
 }
 
 @mixin cursor-grabbing {
-  cursor: -webkit-grabbing;
-  cursor: grabbing;
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
 }
+
 /* stylelint-enable */

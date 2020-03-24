@@ -8,38 +8,38 @@ import {ScrollStrategy} from './scroll/scroll-strategy';
  * overlay.
  */
 export class OverlayState {
-  /** Strategy with which to position the overlay. */
-  positionStrategy: PositionStrategy;
+    /** Strategy with which to position the overlay. */
+    positionStrategy: PositionStrategy;
 
-  /** Strategy to be used when handling scroll events while the overlay is open. */
-  scrollStrategy: ScrollStrategy;
+    /** Strategy to be used when handling scroll events while the overlay is open. */
+    scrollStrategy: ScrollStrategy;
 
-  /** Custom class to add to the overlay pane. */
-  panelClass: string = '';
+    /** Custom class to add to the overlay pane. */
+    panelClass: string = '';
 
-  /** Whether the overlay has a backdrop. */
-  hasBackdrop: boolean = false;
+    /** Whether the overlay has a backdrop. */
+    hasBackdrop: boolean = false;
 
-  /** Custom class to add to the backdrop */
-  backdropClass: string = 'cdk-overlay-dark-backdrop';
+    /** Custom class to add to the backdrop */
+    backdropClass: string = 'cdk-overlay-dark-backdrop';
 
-  /** The width of the overlay panel. If a number is provided, pixel units are assumed. */
-  width: number | string;
+    /** The width of the overlay panel. If a number is provided, pixel units are assumed. */
+    width: number | string;
 
-  /** The height of the overlay panel. If a number is provided, pixel units are assumed. */
-  height: number | string;
+    /** The height of the overlay panel. If a number is provided, pixel units are assumed. */
+    height: number | string;
 
-  /** The min-width of the overlay panel. If a number is provided, pixel units are assumed. */
-  minWidth: number | string;
+    /** The min-width of the overlay panel. If a number is provided, pixel units are assumed. */
+    minWidth: number | string;
 
-  /** The min-height of the overlay panel. If a number is provided, pixel units are assumed. */
-  minHeight: number | string;
+    /** The min-height of the overlay panel. If a number is provided, pixel units are assumed. */
+    minHeight: number | string;
 
-  /** The direction of the text in the overlay panel. */
-  direction: LayoutDirection = 'ltr';
+    /** The direction of the text in the overlay panel. */
+    direction: LayoutDirection = 'ltr';
 
-  // TODO(jelbourn): configuration still to add
-  // - focus trap
-  // - disable pointer events
-  // - z-index
+    // TODO(jelbourn): configuration still to add
+    // - focus trap
+    // - disable pointer events
+    // - z-index
 }

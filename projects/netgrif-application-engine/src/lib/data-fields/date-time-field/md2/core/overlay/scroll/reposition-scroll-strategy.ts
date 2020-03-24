@@ -8,7 +8,7 @@ import {ScrollDispatcher} from './scroll-dispatcher';
  * Config options for the RepositionScrollStrategy.
  */
 export interface RepositionScrollStrategyConfig {
-  scrollThrottle?: number;
+    scrollThrottle?: number;
 }
 
 // TODO RepositionScrollStrategy sa pouziva
@@ -16,35 +16,36 @@ export interface RepositionScrollStrategyConfig {
  * Strategy that will update the element position as the user is scrolling.
  */
 export class RepositionScrollStrategy implements ScrollStrategy {
-  private _scrollSubscription: Subscription|null = null;
-  private _overlayRef: OverlayRef;
+    private _scrollSubscription: Subscription | null = null;
+    private _overlayRef: OverlayRef;
 
-  constructor(
-    private _scrollDispatcher: ScrollDispatcher,
-    private _config: RepositionScrollStrategyConfig) { }
-
-  attach(overlayRef: OverlayRef) {
-    if (this._overlayRef) {
-      throw getMdScrollStrategyAlreadyAttachedError();
+    constructor(
+        private _scrollDispatcher: ScrollDispatcher,
+        private _config: RepositionScrollStrategyConfig) {
     }
 
-    this._overlayRef = overlayRef;
-  }
+    attach(overlayRef: OverlayRef) {
+        if (this._overlayRef) {
+            throw getMdScrollStrategyAlreadyAttachedError();
+        }
 
-  enable() {
-    if (!this._scrollSubscription) {
-      let throttle = this._config ? this._config.scrollThrottle : 0;
-
-      this._scrollSubscription = this._scrollDispatcher.scrolled(throttle, () => {
-        this._overlayRef.updatePosition();
-      });
+        this._overlayRef = overlayRef;
     }
-  }
 
-  disable() {
-    if (this._scrollSubscription) {
-      this._scrollSubscription.unsubscribe();
-      this._scrollSubscription = null;
+    enable() {
+        if (!this._scrollSubscription) {
+            let throttle = this._config ? this._config.scrollThrottle : 0;
+
+            this._scrollSubscription = this._scrollDispatcher.scrolled(throttle, () => {
+                this._overlayRef.updatePosition();
+            });
+        }
     }
-  }
+
+    disable() {
+        if (this._scrollSubscription) {
+            this._scrollSubscription.unsubscribe();
+            this._scrollSubscription = null;
+        }
+    }
 }

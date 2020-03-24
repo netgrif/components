@@ -21,13 +21,13 @@ import {Portal, TemplatePortal, ComponentPortal, BasePortalHost} from './portal'
  * </ng-template>
  */
 @Directive({
-  selector: '[cdk-portal], [cdkPortal], [portal]',
-  exportAs: 'cdkPortal',
+    selector: '[cdk-portal], [cdkPortal], [portal]',
+    exportAs: 'cdkPortal',
 })
 export class TemplatePortalDirective extends TemplatePortal {
-  constructor(templateRef: TemplateRef<any>, viewContainerRef: ViewContainerRef) {
-    super(templateRef, viewContainerRef);
-  }
+    constructor(templateRef: TemplateRef<any>, viewContainerRef: ViewContainerRef) {
+        super(templateRef, viewContainerRef);
+    }
 }
 
 
@@ -39,92 +39,98 @@ export class TemplatePortalDirective extends TemplatePortal {
  * <ng-template [cdkPortalHost]="greeting"></ng-template>
  */
 @Directive({
-  selector: '[cdkPortalHost], [portalHost]',
-  inputs: ['portal: cdkPortalHost']
+    selector: '[cdkPortalHost], [portalHost]',
+    inputs: ['portal: cdkPortalHost']
 })
 export class PortalHostDirective extends BasePortalHost implements OnDestroy {
-  /** The attached portal. */
-  private _portal: Portal<any>;
+    /** The attached portal. */
+    private _portal: Portal<any>;
 
-  constructor(
-      private _componentFactoryResolver: ComponentFactoryResolver,
-      private _viewContainerRef: ViewContainerRef) {
-    super();
-  }
-
-  /** @deprecated */
-  @Input('portalHost')
-  get _deprecatedPortal() { return this.portal; }
-  set _deprecatedPortal(v) { this.portal = v; }
-
-  /** Portal associated with the Portal host. */
-  get portal(): Portal<any> {
-    return this._portal;
-  }
-
-  set portal(portal: Portal<any>) {
-    if (this.hasAttached()) {
-      super.detach();
+    constructor(
+        private _componentFactoryResolver: ComponentFactoryResolver,
+        private _viewContainerRef: ViewContainerRef) {
+        super();
     }
 
-    if (portal) {
-      super.attach(portal);
+    /** @deprecated */
+    @Input('portalHost')
+    get _deprecatedPortal() {
+        return this.portal;
     }
 
-    this._portal = portal;
-  }
+    set _deprecatedPortal(v) {
+        this.portal = v;
+    }
 
-  ngOnDestroy() {
-    super.dispose();
-    this._portal = null;
-  }
+    /** Portal associated with the Portal host. */
+    get portal(): Portal<any> {
+        return this._portal;
+    }
 
-  /**
-   * Attach the given ComponentPortal to this PortalHost using the ComponentFactoryResolver.
-   *
-   * @param portal Portal to be attached to the portal host.
-   */
-  attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T> {
-    portal.setAttachedHost(this);
+    set portal(portal: Portal<any>) {
+        if (this.hasAttached()) {
+            super.detach();
+        }
 
-    // If the portal specifies an origin, use that as the logical location of the component
-    // in the application tree. Otherwise use the location of this PortalHost.
-    let viewContainerRef = portal.viewContainerRef != null ?
-        portal.viewContainerRef :
-        this._viewContainerRef;
+        if (portal) {
+            super.attach(portal);
+        }
 
-    let componentFactory =
-        this._componentFactoryResolver.resolveComponentFactory(portal.component);
-    let ref = viewContainerRef.createComponent(
-        componentFactory, viewContainerRef.length,
-        portal.injector || viewContainerRef.parentInjector);
+        this._portal = portal;
+    }
 
-    super.setDisposeFn(() => ref.destroy());
-    this._portal = portal;
+    ngOnDestroy() {
+        super.dispose();
+        this._portal = null;
+    }
 
-    return ref;
-  }
+    /**
+     * Attach the given ComponentPortal to this PortalHost using the ComponentFactoryResolver.
+     *
+     * @param portal Portal to be attached to the portal host.
+     */
+    attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T> {
+        portal.setAttachedHost(this);
 
-  /**
-   * Attach the given TemplatePortal to this PortlHost as an embedded View.
-   * @param portal Portal to be attached.
-   */
-  attachTemplatePortal(portal: TemplatePortal): Map<string, any> {
-    portal.setAttachedHost(this);
+        // If the portal specifies an origin, use that as the logical location of the component
+        // in the application tree. Otherwise use the location of this PortalHost.
+        let viewContainerRef = portal.viewContainerRef != null ?
+            portal.viewContainerRef :
+            this._viewContainerRef;
 
-    this._viewContainerRef.createEmbeddedView(portal.templateRef);
-    super.setDisposeFn(() => this._viewContainerRef.clear());
+        let componentFactory =
+            this._componentFactoryResolver.resolveComponentFactory(portal.component);
+        let ref = viewContainerRef.createComponent(
+            componentFactory, viewContainerRef.length,
+            portal.injector || viewContainerRef.parentInjector);
 
-    this._portal = portal;
+        super.setDisposeFn(() => ref.destroy());
+        this._portal = portal;
 
-    // TODO(jelbourn): return locals from view
-    return new Map<string, any>();
-  }
+        return ref;
+    }
+
+    /**
+     * Attach the given TemplatePortal to this PortlHost as an embedded View.
+     * @param portal Portal to be attached.
+     */
+    attachTemplatePortal(portal: TemplatePortal): Map<string, any> {
+        portal.setAttachedHost(this);
+
+        this._viewContainerRef.createEmbeddedView(portal.templateRef);
+        super.setDisposeFn(() => this._viewContainerRef.clear());
+
+        this._portal = portal;
+
+        // TODO(jelbourn): return locals from view
+        return new Map<string, any>();
+    }
 }
 
 // TODO PortalModule sa pouziva
 @NgModule({
-  exports: [TemplatePortalDirective, PortalHostDirective],
-  declarations: [TemplatePortalDirective, PortalHostDirective],
+    exports: [TemplatePortalDirective, PortalHostDirective],
+    declarations: [TemplatePortalDirective, PortalHostDirective],
 })
-export class PortalModule {}
+export class PortalModule {
+}

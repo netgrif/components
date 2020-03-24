@@ -22,45 +22,45 @@ import {ComponentType} from '../overlay/generic-component-type';
  * It can be attach to / detached from a `PortalHost`.
  */
 export abstract class Portal<T> {
-  private _attachedHost: PortalHost;
+    private _attachedHost: PortalHost;
 
-  /** Attach this portal to a host. */
-  attach(host: PortalHost): T {
-    if (host == null) {
-      throwNullPortalHostError();
+    /** Attach this portal to a host. */
+    attach(host: PortalHost): T {
+        if (host == null) {
+            throwNullPortalHostError();
+        }
+
+        if (host.hasAttached()) {
+            throwPortalAlreadyAttachedError();
+        }
+
+        this._attachedHost = host;
+        return <T> host.attach(this);
     }
 
-    if (host.hasAttached()) {
-      throwPortalAlreadyAttachedError();
+    /** Detach this portal from its host */
+    detach(): void {
+        let host = this._attachedHost;
+        if (host == null) {
+            throwNoPortalAttachedError();
+        }
+
+        this._attachedHost = null;
+        return host.detach();
     }
 
-    this._attachedHost = host;
-    return <T> host.attach(this);
-  }
-
-  /** Detach this portal from its host */
-  detach(): void {
-    let host = this._attachedHost;
-    if (host == null) {
-      throwNoPortalAttachedError();
+    /** Whether this portal is attached to a host. */
+    get isAttached(): boolean {
+        return this._attachedHost != null;
     }
 
-    this._attachedHost = null;
-    return host.detach();
-  }
-
-  /** Whether this portal is attached to a host. */
-  get isAttached(): boolean {
-    return this._attachedHost != null;
-  }
-
-  /**
-   * Sets the PortalHost reference without performing `attach()`. This is used directly by
-   * the PortalHost when it is performing an `attach()` or `detach()`.
-   */
-  setAttachedHost(host: PortalHost) {
-    this._attachedHost = host;
-  }
+    /**
+     * Sets the PortalHost reference without performing `attach()`. This is used directly by
+     * the PortalHost when it is performing an `attach()` or `detach()`.
+     */
+    setAttachedHost(host: PortalHost) {
+        this._attachedHost = host;
+    }
 }
 
 // TODO ComponentPortal sa pouziva
@@ -68,28 +68,28 @@ export abstract class Portal<T> {
  * A `ComponentPortal` is a portal that instantiates some Component upon attachment.
  */
 export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
-  /** The type of the component that will be instantiated for attachment. */
-  component: ComponentType<T>;
+    /** The type of the component that will be instantiated for attachment. */
+    component: ComponentType<T>;
 
-  /**
-   * [Optional] Where the attached component should live in Angular's *logical* component tree.
-   * This is different from where the component *renders*, which is determined by the PortalHost.
-   * The origin is necessary when the host is outside of the Angular application context.
-   */
-  viewContainerRef: ViewContainerRef;
+    /**
+     * [Optional] Where the attached component should live in Angular's *logical* component tree.
+     * This is different from where the component *renders*, which is determined by the PortalHost.
+     * The origin is necessary when the host is outside of the Angular application context.
+     */
+    viewContainerRef: ViewContainerRef;
 
-  /** [Optional] Injector used for the instantiation of the component. */
-  injector: Injector;
+    /** [Optional] Injector used for the instantiation of the component. */
+    injector: Injector;
 
-  constructor(
-      component: ComponentType<T>,
-      viewContainerRef: ViewContainerRef = null,
-      injector: Injector = null) {
-    super();
-    this.component = component;
-    this.viewContainerRef = viewContainerRef;
-    this.injector = injector;
-  }
+    constructor(
+        component: ComponentType<T>,
+        viewContainerRef: ViewContainerRef = null,
+        injector: Injector = null) {
+        super();
+        this.component = component;
+        this.viewContainerRef = viewContainerRef;
+        this.injector = injector;
+    }
 }
 
 // TODO TemplatePortal sa pouziva
@@ -97,39 +97,39 @@ export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
  * A `TemplatePortal` is a portal that represents some embedded template (TemplateRef).
  */
 export class TemplatePortal extends Portal<Map<string, any>> {
-  /** The embedded template that will be used to instantiate an embedded View in the host. */
-  templateRef: TemplateRef<any>;
+    /** The embedded template that will be used to instantiate an embedded View in the host. */
+    templateRef: TemplateRef<any>;
 
-  /** Reference to the ViewContainer into which the template will be stamped out. */
-  viewContainerRef: ViewContainerRef;
+    /** Reference to the ViewContainer into which the template will be stamped out. */
+    viewContainerRef: ViewContainerRef;
 
-  /**
-   * Additional locals for the instantiated embedded view.
-   * These locals can be seen as "exports" for the template, such as how ngFor has
-   * index / event / odd.
-   * See https://angular.io/docs/ts/latest/api/core/EmbeddedViewRef-class.html
-   */
-  locals: Map<string, any> = new Map<string, any>();
+    /**
+     * Additional locals for the instantiated embedded view.
+     * These locals can be seen as "exports" for the template, such as how ngFor has
+     * index / event / odd.
+     * See https://angular.io/docs/ts/latest/api/core/EmbeddedViewRef-class.html
+     */
+    locals: Map<string, any> = new Map<string, any>();
 
-  constructor(template: TemplateRef<any>, viewContainerRef: ViewContainerRef) {
-    super();
-    this.templateRef = template;
-    this.viewContainerRef = viewContainerRef;
-  }
+    constructor(template: TemplateRef<any>, viewContainerRef: ViewContainerRef) {
+        super();
+        this.templateRef = template;
+        this.viewContainerRef = viewContainerRef;
+    }
 
-  get origin(): ElementRef {
-    return this.templateRef.elementRef;
-  }
+    get origin(): ElementRef {
+        return this.templateRef.elementRef;
+    }
 
-  attach(host: PortalHost, locals?: Map<string, any>): Map<string, any> {
-    this.locals = locals == null ? new Map<string, any>() : locals;
-    return super.attach(host);
-  }
+    attach(host: PortalHost, locals?: Map<string, any>): Map<string, any> {
+        this.locals = locals == null ? new Map<string, any>() : locals;
+        return super.attach(host);
+    }
 
-  detach(): void {
-    this.locals = new Map<string, any>();
-    return super.detach();
-  }
+    detach(): void {
+        this.locals = new Map<string, any>();
+        return super.detach();
+    }
 }
 
 // TODO PortalHost sa pouziva
@@ -137,13 +137,13 @@ export class TemplatePortal extends Portal<Map<string, any>> {
  * A `PortalHost` is an space that can contain a single `Portal`.
  */
 export interface PortalHost {
-  attach(portal: Portal<any>): any;
+    attach(portal: Portal<any>): any;
 
-  detach(): any;
+    detach(): any;
 
-  dispose(): void;
+    dispose(): void;
 
-  hasAttached(): boolean;
+    hasAttached(): boolean;
 }
 
 // TODO BasePortalHost sa pouziva
@@ -152,74 +152,74 @@ export interface PortalHost {
  * ComponentPortal or a TemplatePortal.
  */
 export abstract class BasePortalHost implements PortalHost {
-  /** The portal currently attached to the host. */
-  private _attachedPortal: Portal<any>;
+    /** The portal currently attached to the host. */
+    private _attachedPortal: Portal<any>;
 
-  /** A function that will permanently dispose this host. */
-  private _disposeFn: () => void;
+    /** A function that will permanently dispose this host. */
+    private _disposeFn: () => void;
 
-  /** Whether this host has already been permanently disposed. */
-  private _isDisposed: boolean = false;
+    /** Whether this host has already been permanently disposed. */
+    private _isDisposed: boolean = false;
 
-  /** Whether this host has an attached portal. */
-  hasAttached(): boolean {
-    return !!this._attachedPortal;
-  }
-
-  attach(portal: Portal<any>): any {
-    if (!portal) {
-      throwNullPortalError();
+    /** Whether this host has an attached portal. */
+    hasAttached(): boolean {
+        return !!this._attachedPortal;
     }
 
-    if (this.hasAttached()) {
-      throwPortalAlreadyAttachedError();
+    attach(portal: Portal<any>): any {
+        if (!portal) {
+            throwNullPortalError();
+        }
+
+        if (this.hasAttached()) {
+            throwPortalAlreadyAttachedError();
+        }
+
+        if (this._isDisposed) {
+            throwPortalHostAlreadyDisposedError();
+        }
+
+        if (portal instanceof ComponentPortal) {
+            this._attachedPortal = portal;
+            return this.attachComponentPortal(portal);
+        } else if (portal instanceof TemplatePortal) {
+            this._attachedPortal = portal;
+            return this.attachTemplatePortal(portal);
+        }
+
+        throwUnknownPortalTypeError();
     }
 
-    if (this._isDisposed) {
-      throwPortalHostAlreadyDisposedError();
+    abstract attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T>;
+
+    abstract attachTemplatePortal(portal: TemplatePortal): Map<string, any>;
+
+    detach(): void {
+        if (this._attachedPortal) {
+            this._attachedPortal.setAttachedHost(null);
+            this._attachedPortal = null;
+        }
+
+        this._invokeDisposeFn();
     }
 
-    if (portal instanceof ComponentPortal) {
-      this._attachedPortal = portal;
-      return this.attachComponentPortal(portal);
-    } else if (portal instanceof TemplatePortal) {
-      this._attachedPortal = portal;
-      return this.attachTemplatePortal(portal);
+    dispose() {
+        if (this.hasAttached()) {
+            this.detach();
+        }
+
+        this._invokeDisposeFn();
+        this._isDisposed = true;
     }
 
-    throwUnknownPortalTypeError();
-  }
-
-  abstract attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T>;
-
-  abstract attachTemplatePortal(portal: TemplatePortal): Map<string, any>;
-
-  detach(): void {
-    if (this._attachedPortal) {
-      this._attachedPortal.setAttachedHost(null);
-      this._attachedPortal = null;
+    setDisposeFn(fn: () => void) {
+        this._disposeFn = fn;
     }
 
-    this._invokeDisposeFn();
-  }
-
-  dispose() {
-    if (this.hasAttached()) {
-      this.detach();
+    private _invokeDisposeFn() {
+        if (this._disposeFn) {
+            this._disposeFn();
+            this._disposeFn = null;
+        }
     }
-
-    this._invokeDisposeFn();
-    this._isDisposed = true;
-  }
-
-  setDisposeFn(fn: () => void) {
-    this._disposeFn = fn;
-  }
-
-  private _invokeDisposeFn() {
-    if (this._disposeFn) {
-      this._disposeFn();
-      this._disposeFn = null;
-    }
-  }
 }

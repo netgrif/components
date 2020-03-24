@@ -16,9 +16,10 @@ export {NoopScrollStrategy} from './noop-scroll-strategy';
 export {BlockScrollStrategy} from './block-scroll-strategy';
 
 @NgModule({
-  imports: [PlatformModule],
-  exports: [Scrollable],
-  declarations: [Scrollable],
-  providers: [SCROLL_DISPATCHER_PROVIDER, ScrollStrategyOptions],
+    imports: [PlatformModule],
+    exports: [Scrollable],
+    declarations: [Scrollable],
+    providers: [SCROLL_DISPATCHER_PROVIDER, ScrollStrategyOptions],
 })
-export class ScrollDispatchModule { }
+export class ScrollDispatchModule {
+}

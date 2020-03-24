@@ -7,9 +7,10 @@ import {PlatformModule} from '../platform';
 
 // TODO A11yModule sa pouziva
 @NgModule({
-  imports: [CommonModule, PlatformModule],
-  declarations: [FocusTrapDirective, FocusTrapDeprecatedDirective],
-  exports: [FocusTrapDirective, FocusTrapDeprecatedDirective],
-  providers: [InteractivityChecker, FocusTrapFactory, LIVE_ANNOUNCER_PROVIDER]
+    imports: [CommonModule, PlatformModule],
+    declarations: [FocusTrapDirective, FocusTrapDeprecatedDirective],
+    exports: [FocusTrapDirective, FocusTrapDeprecatedDirective],
+    providers: [InteractivityChecker, FocusTrapFactory, LIVE_ANNOUNCER_PROVIDER]
 })
-export class A11yModule {}
+export class A11yModule {
+}

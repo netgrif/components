@@ -1,4 +1,3 @@
-
 import {QueryList} from '@angular/core';
 import {ListKeyManager, CanDisable} from './list-key-manager';
 
@@ -7,26 +6,26 @@ import {ListKeyManager, CanDisable} from './list-key-manager';
  * Each item must know how to focus itself and whether or not it is currently disabled.
  */
 export interface Focusable extends CanDisable {
-  focus(): void;
+    focus(): void;
 }
 
 
 export class FocusKeyManager extends ListKeyManager<Focusable> {
 
-  constructor(items: QueryList<Focusable>) {
-    super(items);
-  }
-
-  /**
-   * This method sets the active item to the item at the specified index.
-   * It also adds focuses the newly active item.
-   */
-  setActiveItem(index: number): void {
-    super.setActiveItem(index);
-
-    if (this.activeItem) {
-      this.activeItem.focus();
+    constructor(items: QueryList<Focusable>) {
+        super(items);
     }
-  }
+
+    /**
+     * This method sets the active item to the item at the specified index.
+     * It also adds focuses the newly active item.
+     */
+    setActiveItem(index: number): void {
+        super.setActiveItem(index);
+
+        if (this.activeItem) {
+            this.activeItem.focus();
+        }
+    }
 
 }

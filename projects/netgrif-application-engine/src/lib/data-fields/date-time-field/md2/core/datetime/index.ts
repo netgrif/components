@@ -12,13 +12,15 @@ export * from './native-date-formats';
 
 
 @NgModule({
-  providers: [{provide: DateAdapter, useClass: NativeDateAdapter}],
+    providers: [{provide: DateAdapter, useClass: NativeDateAdapter}],
 })
-export class NativeDateModule {}
+export class NativeDateModule {
+}
 
 
 @NgModule({
-  imports: [NativeDateModule],
-  providers: [{provide: MD_DATE_FORMATS, useValue: MD_NATIVE_DATE_FORMATS}],
+    imports: [NativeDateModule],
+    providers: [{provide: MD_DATE_FORMATS, useValue: MD_NATIVE_DATE_FORMATS}],
 })
-export class MdNativeDateModule {}
+export class MdNativeDateModule {
+}

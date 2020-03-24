@@ -1,10 +1,10 @@
 import {
-  NgModule,
-  Directive,
-  HostBinding,
-  Output,
-  Input,
-  EventEmitter
+    NgModule,
+    Directive,
+    HostBinding,
+    Output,
+    Input,
+    EventEmitter
 } from '@angular/core';
 
 // TODO LayoutDirection sa pozuiva
@@ -18,38 +18,45 @@ export type LayoutDirection = 'ltr' | 'rtl';
  * components can listen on changes of direction.
  */
 @Directive({
-  selector: '[dir]',
-  // TODO(hansl): maybe `$implicit` isn't the best option here, but for now that's the best we got.
-  exportAs: '$implicit'
+    selector: '[dir]',
+    // TODO(hansl): maybe `$implicit` isn't the best option here, but for now that's the best we got.
+    exportAs: '$implicit'
 })
 export class Dir {
-  /** Layout direction of the element. */
-  @Input('dir') _dir: LayoutDirection = 'ltr';
+    /** Layout direction of the element. */
+    @Input('dir') _dir: LayoutDirection = 'ltr';
 
-  /** Event emitted when the direction changes. */
-  @Output() dirChange = new EventEmitter<void>();
+    /** Event emitted when the direction changes. */
+    @Output() dirChange = new EventEmitter<void>();
 
-  /** @docs-private */
-  @HostBinding('attr.dir')
-  get dir(): LayoutDirection {
-    return this._dir;
-  }
-  set dir(v: LayoutDirection) {
-    let old = this._dir;
-    this._dir = v;
-    if (old != this._dir) {
-      this.dirChange.emit();
+    /** @docs-private */
+    @HostBinding('attr.dir')
+    get dir(): LayoutDirection {
+        return this._dir;
     }
-  }
 
-  /** Current layout direction of the element. */
-  get value(): LayoutDirection { return this.dir; }
-  set value(v: LayoutDirection) { this.dir = v; }
+    set dir(v: LayoutDirection) {
+        let old = this._dir;
+        this._dir = v;
+        if (old != this._dir) {
+            this.dirChange.emit();
+        }
+    }
+
+    /** Current layout direction of the element. */
+    get value(): LayoutDirection {
+        return this.dir;
+    }
+
+    set value(v: LayoutDirection) {
+        this.dir = v;
+    }
 }
 
 
 @NgModule({
-  exports: [Dir],
-  declarations: [Dir]
+    exports: [Dir],
+    declarations: [Dir]
 })
-export class RtlModule {}
+export class RtlModule {
+}

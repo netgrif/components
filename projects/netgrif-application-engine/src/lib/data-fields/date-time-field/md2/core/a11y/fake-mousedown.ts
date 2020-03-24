@@ -1,4 +1,3 @@
-
 /**
  * Screenreaders will often fire fake mousedown events when a focusable element
  * is activated using the keyboard. We can typically distinguish between these faked
@@ -7,5 +6,5 @@
  * the left mouse button), faked mousedowns will usually set the property value to 0.
  */
 export function isFakeMousedownFromScreenReader(event: MouseEvent): boolean {
-  return event.buttons === 0;
+    return event.buttons === 0;
 }

@@ -6,27 +6,28 @@ import {ListKeyManager, CanDisable} from './list-key-manager';
  * currently disabled.
  */
 export interface Highlightable extends CanDisable {
-  setActiveStyles(): void;
-  setInactiveStyles(): void;
+    setActiveStyles(): void;
+
+    setInactiveStyles(): void;
 }
 
 export class ActiveDescendantKeyManager extends ListKeyManager<Highlightable> {
 
-  /**
-   * This method sets the active item to the item at the specified index.
-   * It also adds active styles to the newly active item and removes active
-   * styles from the previously active item.
-   */
-  setActiveItem(index: number): void {
-    Promise.resolve().then(() => {
-      if (this.activeItem) {
-        this.activeItem.setInactiveStyles();
-      }
-      super.setActiveItem(index);
-      if (this.activeItem) {
-        this.activeItem.setActiveStyles();
-      }
-    });
-  }
+    /**
+     * This method sets the active item to the item at the specified index.
+     * It also adds active styles to the newly active item and removes active
+     * styles from the previously active item.
+     */
+    setActiveItem(index: number): void {
+        Promise.resolve().then(() => {
+            if (this.activeItem) {
+                this.activeItem.setInactiveStyles();
+            }
+            super.setActiveItem(index);
+            if (this.activeItem) {
+                this.activeItem.setActiveStyles();
+            }
+        });
+    }
 
 }

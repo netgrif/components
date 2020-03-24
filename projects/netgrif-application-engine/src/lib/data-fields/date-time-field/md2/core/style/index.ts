@@ -4,12 +4,13 @@ import {PlatformModule} from '../platform';
 
 // TODO StyleModule sa pouziva
 @NgModule({
-  imports: [PlatformModule],
-  declarations: [CdkMonitorFocus],
-  exports: [CdkMonitorFocus],
-  providers: [FOCUS_ORIGIN_MONITOR_PROVIDER],
+    imports: [PlatformModule],
+    declarations: [CdkMonitorFocus],
+    exports: [CdkMonitorFocus],
+    providers: [FOCUS_ORIGIN_MONITOR_PROVIDER],
 })
-export class StyleModule {}
+export class StyleModule {
+}
 
 
 export * from './focus-origin-monitor';

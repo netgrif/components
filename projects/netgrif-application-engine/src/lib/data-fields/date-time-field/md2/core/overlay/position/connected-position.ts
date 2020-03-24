@@ -1,5 +1,6 @@
 /** Horizontal dimension of a connection point on the perimeter of the origin or overlay element. */
 import {Optional} from '@angular/core';
+
 export type HorizontalConnectionPos = 'start' | 'center' | 'end';
 
 /** Vertical dimension of a connection point on the perimeter of the origin or overlay element. */
@@ -8,32 +9,32 @@ export type VerticalConnectionPos = 'top' | 'center' | 'bottom';
 // TODO OriginConnectionPosition sa pouziva
 /** A connection point on the origin element. */
 export interface OriginConnectionPosition {
-  originX: HorizontalConnectionPos;
-  originY: VerticalConnectionPos;
+    originX: HorizontalConnectionPos;
+    originY: VerticalConnectionPos;
 }
 
 // TODO OverlayConnectionPosition sa pouziva
 /** A connection point on the overlay element. */
 export interface OverlayConnectionPosition {
-  overlayX: HorizontalConnectionPos;
-  overlayY: VerticalConnectionPos;
+    overlayX: HorizontalConnectionPos;
+    overlayY: VerticalConnectionPos;
 }
 
 // TODO ConnectionPositionPair sa pouziva
 
 /** The points of the origin element and the overlay element to connect. */
 export class ConnectionPositionPair {
-  originX: HorizontalConnectionPos;
-  originY: VerticalConnectionPos;
-  overlayX: HorizontalConnectionPos;
-  overlayY: VerticalConnectionPos;
+    originX: HorizontalConnectionPos;
+    originY: VerticalConnectionPos;
+    overlayX: HorizontalConnectionPos;
+    overlayY: VerticalConnectionPos;
 
-  constructor(origin: OriginConnectionPosition, overlay: OverlayConnectionPosition) {
-    this.originX = origin.originX;
-    this.originY = origin.originY;
-    this.overlayX = overlay.overlayX;
-    this.overlayY = overlay.overlayY;
-  }
+    constructor(origin: OriginConnectionPosition, overlay: OverlayConnectionPosition) {
+        this.originX = origin.originX;
+        this.originY = origin.originY;
+        this.overlayX = overlay.overlayX;
+        this.overlayY = overlay.overlayY;
+    }
 }
 
 /**
@@ -60,16 +61,18 @@ export class ConnectionPositionPair {
  *  --------------------------
  */
 export class ScrollableViewProperties {
-  isOriginClipped: boolean;
-  isOriginOutsideView: boolean;
-  isOverlayClipped: boolean;
-  isOverlayOutsideView: boolean;
+    isOriginClipped: boolean;
+    isOriginOutsideView: boolean;
+    isOverlayClipped: boolean;
+    isOverlayOutsideView: boolean;
 }
+
 // TODO ScrollableViewProperties sa pouziva
 
 // TODO ConnectedOverlayPositionChange sa pouziva
 /** The change event emitted by the strategy when a fallback position is used. */
 export class ConnectedOverlayPositionChange {
-  constructor(public connectionPair: ConnectionPositionPair,
-              @Optional() public scrollableViewProperties: ScrollableViewProperties) {}
+    constructor(public connectionPair: ConnectionPositionPair,
+                @Optional() public scrollableViewProperties: ScrollableViewProperties) {
+    }
 }

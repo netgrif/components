@@ -3,9 +3,10 @@ import {Platform} from './platform';
 
 // TODO PlatformModule sa pouziva
 @NgModule({
-  providers: [Platform]
+    providers: [Platform]
 })
-export class PlatformModule {}
+export class PlatformModule {
+}
 
 
 export * from './platform';

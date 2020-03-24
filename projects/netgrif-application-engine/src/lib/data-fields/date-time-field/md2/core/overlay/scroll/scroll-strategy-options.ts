@@ -5,8 +5,8 @@ import {BlockScrollStrategy} from './block-scroll-strategy';
 import {ScrollDispatcher} from './scroll-dispatcher';
 import {ViewportRuler} from '../position/viewport-ruler';
 import {
-  RepositionScrollStrategy,
-  RepositionScrollStrategyConfig,
+    RepositionScrollStrategy,
+    RepositionScrollStrategyConfig,
 } from './reposition-scroll-strategy';
 
 
@@ -19,24 +19,25 @@ import {
  */
 @Injectable()
 export class ScrollStrategyOptions {
-  constructor(
-    private _scrollDispatcher: ScrollDispatcher,
-    private _viewportRuler: ViewportRuler) { }
+    constructor(
+        private _scrollDispatcher: ScrollDispatcher,
+        private _viewportRuler: ViewportRuler) {
+    }
 
-  /** Do nothing on scroll. */
-  noop = () => new NoopScrollStrategy();
+    /** Do nothing on scroll. */
+    noop = () => new NoopScrollStrategy();
 
-  /** Close the overlay as soon as the user scrolls. */
-  close = () => new CloseScrollStrategy(this._scrollDispatcher);
+    /** Close the overlay as soon as the user scrolls. */
+    close = () => new CloseScrollStrategy(this._scrollDispatcher);
 
-  /** Block scrolling. */
-  block = () => new BlockScrollStrategy(this._viewportRuler);
+    /** Block scrolling. */
+    block = () => new BlockScrollStrategy(this._viewportRuler);
 
-  /**
-   * Update the overlay's position on scroll.
-   * @param config Configuration to be used inside the scroll strategy.
-   * Allows debouncing the reposition calls.
-   */
-  reposition = (config?: RepositionScrollStrategyConfig) =>
-      new RepositionScrollStrategy(this._scrollDispatcher, config)
+    /**
+     * Update the overlay's position on scroll.
+     * @param config Configuration to be used inside the scroll strategy.
+     * Allows debouncing the reposition calls.
+     */
+    reposition = (config?: RepositionScrollStrategyConfig) =>
+        new RepositionScrollStrategy(this._scrollDispatcher, config);
 }
