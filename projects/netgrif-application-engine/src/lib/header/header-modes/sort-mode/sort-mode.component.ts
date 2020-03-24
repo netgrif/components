@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AbstractHeaderService} from "../../abstract-header-service";
-import {Headers} from "../../headers";
+import {AbstractHeaderService} from '../../abstract-header-service';
+import {Headers} from '../../headers';
 
 @Component({
     selector: 'nae-sort-mode',
@@ -34,3 +34,5 @@ export class SortModeComponent implements OnInit {
     }
 
 }
+
+

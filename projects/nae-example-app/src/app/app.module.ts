@@ -16,7 +16,9 @@ import {
     QuestionDialogWithAnswerComponent,
     QuestionDialogComponent,
     TabsModule,
-    DataFieldsModule, HeaderModule
+    DataFieldsModule,
+    ToolbarModule,
+    HeaderModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -35,6 +37,14 @@ import { ContentComponent } from './doc/tab-view-example/content/content.compone
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
 import { CaseHeaderExampleComponent } from './doc/case-header-example/case-header-example.component';
 import { TaskHeaderExampleComponent } from './doc/task-header-example/task-header-example.component';
+import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.component';
+import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
+import {HttpClient} from '@angular/common/http';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     declarations: [
@@ -53,6 +63,8 @@ import { TaskHeaderExampleComponent } from './doc/task-header-example/task-heade
         ReactiveTextFieldComponent,
         CaseHeaderExampleComponent,
         TaskHeaderExampleComponent
+        ReactiveTextFieldComponent,
+        ToolbarExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -69,6 +81,15 @@ import { TaskHeaderExampleComponent } from './doc/task-header-example/task-heade
         TabsModule,
         DataFieldsModule,
         HeaderModule
+        DataFieldsModule,
+        ToolbarModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (HttpLoaderFactory),
+                deps: [HttpClient]
+            }
+        })
     ],
     entryComponents: [
         NewCaseComponent,
@@ -78,7 +99,12 @@ import { TaskHeaderExampleComponent } from './doc/task-header-example/task-heade
         QuestionDialogWithAnswerComponent,
         ContentComponent
     ],
-    providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
+    providers: [
+        {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
+        TranslateService,
+        TranslatePipe,
+        TranslateStore
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

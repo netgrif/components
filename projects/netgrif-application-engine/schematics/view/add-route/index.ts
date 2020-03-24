@@ -16,9 +16,9 @@ export function addRouteToRoutes(schematicArguments: AddRouteArguments): Rule {
         // overwrite fails if the file doesn't exist
         const routesJsonPath = `${getProjectInfo(tree).path}/routes.json`;
         if (tree.exists(routesJsonPath)) {
-            tree.overwrite(routesJsonPath, JSON.stringify(data));
+            tree.overwrite(routesJsonPath, JSON.stringify(data, null, 4));
         } else {
-            tree.create(routesJsonPath, JSON.stringify(data));
+            tree.create(routesJsonPath, JSON.stringify(data, null, 4));
         }
     };
 }

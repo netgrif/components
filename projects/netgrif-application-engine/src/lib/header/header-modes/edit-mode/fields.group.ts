@@ -1,10 +1,10 @@
-import {FieldsGroup} from "../../models/fields-group";
+import {FieldsGroup} from '../../models/fields-group';
 
 /**
  * Definition of default meta-data available in edit mode
  * Immediate data will be added dynamically from resource
  */
-export let fieldsGroup: Array<FieldsGroup> = [
+export const fieldsGroup: Array<FieldsGroup> = [
     {
         type: 'META DATA',
         fields: [

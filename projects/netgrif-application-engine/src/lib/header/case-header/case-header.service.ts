@@ -64,7 +64,6 @@ export class CaseHeaderService extends AbstractHeaderService {
             version: '1.0.0'
         });
         // TODO simulated resource remove in future
-        // TODO simulated resource remove in future
         this._headers.selected = {
             column0: {
                 type: 'meta',
@@ -72,8 +71,7 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'title',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column0',
-                fieldType: 'text'
+                columnId: 'column0'
             },
             column1: {
                 type: 'meta',
@@ -81,8 +79,7 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'author',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column1',
-                fieldType: 'text'
+                columnId: 'column1'
             },
             column2: {
                 type: 'immediate',
@@ -90,8 +87,7 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'Zoznam vozidiel',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column2',
-                fieldType: 'enumeration'
+                columnId: 'column2'
             },
             column3: {
                 type: 'immediate',
@@ -99,8 +95,7 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'Názov súboru',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column3',
-                fieldType: 'text'
+                columnId: 'column3'
             },
             column4: {
                 type: 'immediate',
@@ -108,8 +103,7 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'Mortage prve poinne',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column4',
-                fieldType: 'text'
+                columnId: 'column4'
             }
         };
         this.setFieldsGroupData(this.petriNetReferences);

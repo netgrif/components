@@ -10,8 +10,9 @@ import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-exampl
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
 import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-text-field.component';
-import {CaseHeaderExampleComponent} from "./doc/case-header-example/case-header-example.component";
-import {TaskHeaderExampleComponent} from "./doc/task-header-example/task-header-example.component";
+import {CaseHeaderExampleComponent} from './doc/case-header-example/case-header-example.component';
+import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-example.component';
+import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -25,7 +26,8 @@ const routes: Routes = [
     {path: 'snack-bar', component: SnackBarExampleComponent},
     {path: 'dialog', component: DialogExampleComponent},
     {path: 'tab-view', component: TabViewExampleComponent},
-    {path: 'reactive-forms', component: ReactiveTextFieldComponent}
+    {path: 'reactive-forms', component: ReactiveTextFieldComponent},
+    {path: 'toolbar', component: ToolbarExampleComponent}
 ];
 
 @NgModule({

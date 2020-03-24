@@ -1,0 +1,11 @@
+{
+    "toolbar": {
+        "menu": {
+            "lang": "Language",
+            "profile": "Profile",
+            "logout": "Logout",
+            "en": "English",
+            "sk": "Slovak"
+        }
+    }
+}
