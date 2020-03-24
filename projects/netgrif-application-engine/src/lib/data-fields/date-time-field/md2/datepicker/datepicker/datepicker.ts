@@ -4,7 +4,7 @@ import {
     ComponentRef,
     ElementRef,
     EventEmitter,
-    forwardRef,
+    forwardRef, HostBinding, HostListener,
     Input,
     NgZone,
     OnDestroy,
@@ -23,17 +23,17 @@ import {
     ValidatorFn,
     Validators,
 } from '@angular/forms';
-import {coerceBooleanProperty, ComponentPortal, Dir, ESCAPE} from '../../core';
+import {coerceBooleanProperty, ComponentPortal, DirDirective, ESCAPE} from '../../core';
 import {Overlay, OverlayRef, OverlayState, PositionStrategy} from '../../core/overlay';
 import {Subscription} from 'rxjs';
-import {Md2Calendar} from '../calendar/calendar';
+import {Md2CalendarComponent} from '../calendar/calendar';
 import {DateLocale} from '../date-locale';
 import {DateUtil} from '../date-util';
 import {first} from 'rxjs/operators';
 
 /** Change event object emitted by Md2Select. */
 export class Md2DateChange {
-    constructor(public source: Md2Datepicker, public value: Date) {
+    constructor(public source: Md2DatepickerComponent, public value: Date) {
     }
 }
 
@@ -49,27 +49,26 @@ let datepickerUid = 0;
  * @docs-private
  */
 @Component({
-    selector: 'md2-datepicker-content',
+    selector: 'nae-md2-datepicker-content',
     templateUrl: '../datepicker-content/datepicker-content.html',
     styleUrls: ['../datepicker-content/datepicker-content.scss'],
-    host: {
-        class: 'md2-datepicker-content',
-        '[class.md2-datepicker-content-touch]': 'datepicker?.touchUi',
-        '(keydown)': '_handleKeydown($event)',
-    },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Md2DatepickerContent {
-    datepicker: Md2Datepicker;
+export class Md2DatepickerContentComponent {
+    datepicker: Md2DatepickerComponent;
 
-    @ViewChild(Md2Calendar) _calendar: Md2Calendar;
+    @HostBinding('attr.class') hostClass = 'md2-datepicker-content';
+    @HostBinding('attr.class.md2-datepicker-content-touch') datepickerTouched = this.datepicker && this.datepicker.touchUi;
+
+
+    @ViewChild(Md2CalendarComponent) _calendar: Md2CalendarComponent;
 
     /**
      * Handles keydown event on datepicker content.
      * @param event The event.
      */
-    _handleKeydown(event: KeyboardEvent): void {
+    @HostListener('keydown', ['$event']) _handleKeydown(event: KeyboardEvent): void {
         switch (event.key) {
             case ESCAPE:
                 this.datepicker.close();
@@ -86,33 +85,33 @@ export class Md2DatepickerContent {
 
 export const MD2_DATEPICKER_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => Md2Datepicker),
+    useExisting: forwardRef(() => Md2DatepickerComponent),
     multi: true
 };
 
 export const MD2_DATEPICKER_VALIDATORS: any = {
     provide: NG_VALIDATORS,
-    useExisting: forwardRef(() => Md2Datepicker),
+    useExisting: forwardRef(() => Md2DatepickerComponent),
     multi: true
 };
 
 /* Component responsible for managing the datepicker popup/dialog. */
 @Component({
-    selector: 'md2-datepicker',
+    selector: 'nae-md2-datepicker',
     templateUrl: 'datepicker.html',
     styleUrls: ['datepicker.scss'],
     providers: [MD2_DATEPICKER_VALUE_ACCESSOR, MD2_DATEPICKER_VALIDATORS],
     host: {
         role: 'datepicker',
         '[class.md2-datepicker-disabled]': 'disabled',
-        '[class.md2-datepicker-opened]': 'opened',
+        '[class.md2-datepicker-opened]': 'isOpened',
         '[attr.aria-label]': 'placeholder',
         '[attr.aria-required]': 'required.toString()',
         '[attr.aria-disabled]': 'disabled.toString()',
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
+export class Md2DatepickerComponent implements OnDestroy, ControlValueAccessor {
 
     @Input()
     get type() {
@@ -208,7 +207,7 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
 
     @Input()
     set isOpen(value: boolean) {
-        if (value && !this.opened) {
+        if (value && !this.isOpened) {
             this.open();
         }
     }
@@ -261,19 +260,19 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
     private _openOnFocus: boolean;
 
     /** Event emitted when the select has been opened. */
-    @Output() onOpen: EventEmitter<void> = new EventEmitter<void>();
+    @Output() opened: EventEmitter<void> = new EventEmitter<void>();
 
     /** Event emitted when the select has been closed. */
-    @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
+    @Output() closed: EventEmitter<void> = new EventEmitter<void>();
 
     /** Event emitted when the selected date has been changed by the user. */
-    @Output() change: EventEmitter<Md2DateChange> = new EventEmitter<Md2DateChange>();
+    @Output() changed: EventEmitter<Md2DateChange> = new EventEmitter<Md2DateChange>();
 
     /** Emits new selected date when selected date changes. */
     @Output() selectedChanged = new EventEmitter<Date>();
 
     /** Whether the calendar is open. */
-    opened = false;
+    isOpened = false;
 
     /** The currently selected date. */
     _selected: Date = null;
@@ -285,7 +284,7 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
     private _dialogRef: OverlayRef;
 
     /** A portal containing the calendar for this datepicker. */
-    private _calendarPortal: ComponentPortal<Md2DatepickerContent>;
+    private _calendarPortal: ComponentPortal<Md2DatepickerContentComponent>;
 
     private _inputSubscription: Subscription;
 
@@ -311,7 +310,7 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
                 private _viewContainerRef: ViewContainerRef,
                 private _locale: DateLocale,
                 private _util: DateUtil,
-                @Optional() private _dir: Dir) {
+                @Optional() private _dir: DirDirective) {
         this.id = (this.id) ? this.id : `md2-datepicker-${datepickerUid++}`;
         this._onChange = () => {};
         this._onTouched = () => {};
@@ -372,14 +371,14 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
 
     _handleFocus() {
         this._inputFocused = true;
-        if (!this.opened && this.openOnFocus) {
+        if (!this.isOpened && this.openOnFocus) {
             this.open();
         }
     }
 
     _handleBlur(event: Event) {
         this._inputFocused = false;
-        if (!this.opened) {
+        if (!this.isOpened) {
             this._onTouched(this.value);
         }
         const el: any = event.target;
@@ -553,27 +552,27 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
     /** Emits an event when the user selects a date. */
     _emitChangeEvent(): void {
         this._onChange(this.value);
-        this.change.emit(new Md2DateChange(this, this.value));
+        this.changed.emit(new Md2DateChange(this, this.value));
     }
 
     /** Open the calendar. */
     open(): void {
-        if (this.opened) {
+        if (this.isOpened) {
             return;
         }
 
         if (!this._calendarPortal) {
-            this._calendarPortal = new ComponentPortal(Md2DatepickerContent, this._viewContainerRef);
+            this._calendarPortal = new ComponentPortal(Md2DatepickerContentComponent, this._viewContainerRef);
         }
 
         this.touchUi ? this._openAsDialog() : this._openAsPopup();
-        this.opened = true;
-        this.onOpen.emit();
+        this.isOpened = true;
+        this.opened.emit();
     }
 
     /** Close the calendar. */
     close(): void {
-        if (!this.opened) {
+        if (!this.isOpened) {
             return;
         }
         if (this._popupRef && this._popupRef.hasAttached()) {
@@ -585,8 +584,8 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
         if (this._calendarPortal && this._calendarPortal.isAttached) {
             this._calendarPortal.detach();
         }
-        this.opened = false;
-        this.onClose.emit();
+        this.isOpened = false;
+        this.closed.emit();
     }
 
     /** Open the calendar as a dialog. */
@@ -596,7 +595,7 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
         }
 
         if (!this._dialogRef.hasAttached()) {
-            const componentRef: ComponentRef<Md2DatepickerContent> =
+            const componentRef: ComponentRef<Md2DatepickerContentComponent> =
                 this._dialogRef.attach(this._calendarPortal);
             componentRef.instance.datepicker = this;
         }
@@ -611,7 +610,7 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
         }
 
         if (!this._popupRef.hasAttached()) {
-            const componentRef: ComponentRef<Md2DatepickerContent> =
+            const componentRef: ComponentRef<Md2DatepickerContentComponent> =
                 this._popupRef.attach(this._calendarPortal);
             componentRef.instance.datepicker = this;
 

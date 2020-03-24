@@ -16,6 +16,5 @@ export const END = 'End';
 
 export const ENTER = 'Enter';
 export const SPACE = 'Space';
-export const TAB = 'Tab';
 
 export const ESCAPE = 'Escape';

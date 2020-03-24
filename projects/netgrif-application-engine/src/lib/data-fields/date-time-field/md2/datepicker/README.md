@@ -35,7 +35,7 @@ Datepicker allow the user to select date and time.
 ### Examples
 A datepicker would have the following markup.
 ```html
-<md2-datepicker [(ngModel)]="date"></md2-datepicker>
+<nae-md2-datepicker [(ngModel)]="date"></nae-md2-datepicker>
 ```
 
 ## md2DatepickerToggle
@@ -49,7 +49,7 @@ A datepicker would have the following markup.
 ### Examples
 A datepicker toggle button would have the following markup.
 ```html
-<md2-datepicker #birthday></md2-datepicker>
+<nae-md2-datepicker #birthday></nae-md2-datepicker>
 <button [md2DatepickerToggle]="birthday"></button>
 ```
 

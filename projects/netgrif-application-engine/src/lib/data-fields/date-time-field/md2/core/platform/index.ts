@@ -8,5 +8,4 @@ import {Platform} from './platform';
 export class PlatformModule {
 }
 
-
 export * from './platform';

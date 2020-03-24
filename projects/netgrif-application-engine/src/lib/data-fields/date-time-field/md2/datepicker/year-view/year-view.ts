@@ -21,13 +21,13 @@ import {slideCalendar} from '../datepicker-animations';
  * @docs-private
  */
 @Component({
-    selector: 'md2-year-view',
+    selector: 'nae-md2-year-view',
     templateUrl: 'year-view.html',
     animations: [slideCalendar],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Md2YearView implements AfterContentInit {
+export class Md2YearViewComponent implements AfterContentInit {
     /** The date to display in this year view (everything other than the year is ignored). */
     @Input()
     get activeDate(): Date {

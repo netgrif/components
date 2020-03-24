@@ -21,8 +21,8 @@ import {Portal, TemplatePortal, ComponentPortal, BasePortalHost} from './portal'
  * </ng-template>
  */
 @Directive({
-    selector: '[cdk-portal], [cdkPortal], [portal]',
-    exportAs: 'cdkPortal',
+    selector: '[nae-md2-cdk-portal], [naeMd2cdkPortal], [naeMd2Portal]',
+    exportAs: 'naeMd2cdkPortal',
 })
 export class TemplatePortalDirective extends TemplatePortal {
     constructor(templateRef: TemplateRef<any>, viewContainerRef: ViewContainerRef) {
@@ -36,11 +36,10 @@ export class TemplatePortalDirective extends TemplatePortal {
  * directly attached to it, enabling declarative use.
  *
  * Usage:
- * <ng-template [cdkPortalHost]="greeting"></ng-template>
+ * <ng-template [naeMd2CdkPortalHost]="greeting"></ng-template>
  */
 @Directive({
-    selector: '[cdkPortalHost], [portalHost]',
-    inputs: ['portal: cdkPortalHost']
+    selector: '[naeMd2CdkPortalHost], [naeMd2PortalHost]',
 })
 export class PortalHostDirective extends BasePortalHost implements OnDestroy {
     /** The attached portal. */
@@ -53,7 +52,7 @@ export class PortalHostDirective extends BasePortalHost implements OnDestroy {
     }
 
     /** @deprecated */
-    @Input('portalHost')
+    @Input('naeMd2PortalHost')
     get _deprecatedPortal() {
         return this.portal;
     }

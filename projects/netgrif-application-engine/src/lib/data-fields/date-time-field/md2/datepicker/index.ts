@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {StyleModule, OverlayModule, PortalModule, A11yModule} from '../core';
-import {Md2Datepicker, Md2DatepickerContent} from './datepicker/datepicker';
+import {Md2DatepickerComponent, Md2DatepickerContentComponent} from './datepicker/datepicker';
 import {Md2DatepickerToggle} from './datepicker-toggle/datepicker-toggle';
-import {Md2Calendar} from './calendar/calendar';
-import {Md2MonthView} from './month-view/month-view';
-import {Md2YearView} from './year-view/year-view';
-import {Md2CalendarBody} from './calendar-body/calendar-body';
-import {Md2Clock} from './clock/clock';
+import {Md2CalendarComponent} from './calendar/calendar';
+import {Md2MonthViewComponent} from './month-view/month-view';
+import {Md2YearViewComponent} from './year-view/year-view';
+import {Md2CalendarBodyComponent} from './calendar-body/calendar-body';
+import {Md2ClockComponent} from './clock/clock';
 import {DateLocale} from './date-locale';
 import {DateUtil} from './date-util';
 import {MatFormFieldModule, MatInputModule} from '@angular/material';
@@ -35,29 +35,29 @@ export * from './date-util';
         FlexModule,
     ],
     exports: [
-        Md2Datepicker,
+        Md2DatepickerComponent,
         Md2DatepickerToggle,
-        Md2Calendar,
-        Md2CalendarBody,
-        Md2Calendar,
-        Md2MonthView,
-        Md2YearView,
-        Md2CalendarBody,
-        Md2Clock,
+        Md2CalendarComponent,
+        Md2CalendarBodyComponent,
+        Md2CalendarComponent,
+        Md2MonthViewComponent,
+        Md2YearViewComponent,
+        Md2CalendarBodyComponent,
+        Md2ClockComponent,
     ],
     declarations: [
-        Md2Datepicker,
-        Md2DatepickerContent,
+        Md2DatepickerComponent,
+        Md2DatepickerContentComponent,
         Md2DatepickerToggle,
-        Md2Calendar,
-        Md2MonthView,
-        Md2YearView,
-        Md2CalendarBody,
-        Md2Clock,
+        Md2CalendarComponent,
+        Md2MonthViewComponent,
+        Md2YearViewComponent,
+        Md2CalendarBodyComponent,
+        Md2ClockComponent,
     ],
     providers: [DateLocale, DateUtil],
     entryComponents: [
-        Md2DatepickerContent
+        Md2DatepickerContentComponent
     ]
 })
 export class Md2DatepickerModule {

@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
-import {RtlModule} from './rtl/dir';
+import {RtlModule} from './rtl/dir.directive';
 import {PortalModule} from './portal/portal-directives';
 import {OverlayModule} from './overlay';
 import {A11yModule} from './a11y';
 
 
 // RTL
-export {Dir, LayoutDirection, RtlModule} from './rtl/dir';
+export {DirDirective, LayoutDirection, RtlModule} from './rtl/dir.directive';
 
 // Portals
 export {

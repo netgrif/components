@@ -24,13 +24,13 @@ const DAYS_PER_WEEK = 7;
  * @docs-private
  */
 @Component({
-    selector: 'md2-month-view',
+    selector: 'nae-md2-month-view',
     templateUrl: 'month-view.html',
     animations: [slideCalendar],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Md2MonthView implements AfterContentInit {
+export class Md2MonthViewComponent implements AfterContentInit {
     /** Whether the Week-number should be displayed */
     @Input() displayWeek: boolean;
 

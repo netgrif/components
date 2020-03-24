@@ -9,7 +9,7 @@ import {
     ScrollableViewProperties
 } from './connected-position';
 import {Subject, Observable} from 'rxjs';
-import {Scrollable} from '../scroll';
+import {ScrollableDirective} from '../scroll';
 
 /**
  * Container to hold the bounding positions of a particular element with respect to the viewport,
@@ -40,7 +40,7 @@ export class ConnectedPositionStrategy implements PositionStrategy {
     private _offsetY = 0;
 
     /** The Scrollable containers used to check scrollable view properties on position change. */
-    private scrollables: Scrollable[] = [];
+    private scrollables: ScrollableDirective[] = [];
 
     /** Whether the we're dealing with an RTL context */
     get _isRtl() {
@@ -128,7 +128,7 @@ export class ConnectedPositionStrategy implements PositionStrategy {
 
                 // Notify that the position has been changed along with its change properties.
                 const scrollableViewProperties = this.getScrollableViewProperties(element);
-                const positionChange = new ConnectedOverlayPositionChange(pos, scrollableViewProperties);
+                const positionChange = new ConnectedOverlayPositionChange(scrollableViewProperties);
                 this._onPositionChange.next(positionChange);
 
                 return Promise.resolve(null);
@@ -284,7 +284,7 @@ export class ConnectedPositionStrategy implements PositionStrategy {
     private getScrollableViewProperties(overlay: HTMLElement): ScrollableViewProperties {
         const originBounds = this._getElementBounds(this._origin);
         const overlayBounds = this._getElementBounds(overlay);
-        const scrollContainerBounds = this.scrollables.map((scrollable: Scrollable) => {
+        const scrollContainerBounds = this.scrollables.map((scrollable: ScrollableDirective) => {
             return this._getElementBounds(scrollable.getElementRef().nativeElement);
         });
 

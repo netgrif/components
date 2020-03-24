@@ -2,7 +2,7 @@ import {
     AfterContentInit,
     Component,
     ElementRef,
-    EventEmitter,
+    EventEmitter, HostBinding, HostListener,
     Input,
     Output,
 } from '@angular/core';
@@ -21,17 +21,13 @@ export type ClockView = 'hour' | 'minute';
  * @docs-private
  */
 @Component({
-    selector: 'md2-clock',
+    selector: 'nae-md2-clock',
     templateUrl: 'clock.html',
     styleUrls: ['clock.scss'],
-    host: {
-        role: 'clock',
-        '(mousedown)': '_handleMousedown($event)',
-    },
-    // encapsulation: ViewEncapsulation.None,
-    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Md2Clock implements AfterContentInit {
+export class Md2ClockComponent implements AfterContentInit {
+    @HostBinding('attr.role') role = 'clock';
+
     /**
      * The date to display in this clock view.
      */
@@ -158,7 +154,7 @@ export class Md2Clock implements AfterContentInit {
     }
 
     /** Handles mousedown events on the clock body. */
-    _handleMousedown(event: any) {
+    @HostListener('mousedown', ['$event']) _handleMousedown(event: any) {
         this.setTime(event);
         document.addEventListener('mousemove', this.mouseMoveListener);
         document.addEventListener('touchmove', this.mouseMoveListener);

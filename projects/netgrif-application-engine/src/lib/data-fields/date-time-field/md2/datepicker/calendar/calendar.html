@@ -41,25 +41,25 @@
             </div>
         </div>
     </div>
-    <md2-month-view *ngSwitchCase="'month'"
-                    [activeDate]="_activeDate"
-                    [selected]="selected"
-                    [displayWeek]="displayWeek"
-                    [dateFilter]="_dateFilterForViews"
-                    (selectedChange)="_dateSelected($event)">
-    </md2-month-view>
-    <md2-year-view *ngSwitchCase="'year'"
-                   [activeDate]="_activeDate"
-                   [selected]="selected"
-                   [dateFilter]="_dateFilterForViews"
-                   (selectedChange)="_monthSelected($event)">
-    </md2-year-view>
-    <md2-clock *ngSwitchDefault
-               [startView]="_clockView"
-               [interval]="timeInterval"
-               [min]="minDate"
-               [max]="maxDate"
-               [selected]="_activeDate"
-               (activeDateChange)="_onActiveDateChange($event)"
-               (selectedChange)="_timeSelected($event)"></md2-clock>
+    <nae-md2-month-view *ngSwitchCase="'month'"
+                        [activeDate]="_activeDate"
+                        [selected]="selected"
+                        [displayWeek]="displayWeek"
+                        [dateFilter]="_dateFilterForViews"
+                        (selectedChange)="_dateSelected($event)">
+    </nae-md2-month-view>
+    <nae-md2-year-view *ngSwitchCase="'year'"
+                       [activeDate]="_activeDate"
+                       [selected]="selected"
+                       [dateFilter]="_dateFilterForViews"
+                       (selectedChange)="_monthSelected($event)">
+    </nae-md2-year-view>
+    <nae-md2-clock *ngSwitchDefault
+                   [startView]="_clockView"
+                   [interval]="timeInterval"
+                   [min]="minDate"
+                   [max]="maxDate"
+                   [selected]="_activeDate"
+                   (activeDateChange)="_onActiveDateChange($event)"
+                   (selectedChange)="_timeSelected($event)"></nae-md2-clock>
 </div>

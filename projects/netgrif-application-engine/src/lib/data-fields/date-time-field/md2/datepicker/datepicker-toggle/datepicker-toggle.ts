@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
-import {Md2Datepicker} from '../datepicker/datepicker';
+import {ChangeDetectionStrategy, Component, HostBinding, HostListener, Input, ViewEncapsulation} from '@angular/core';
+import {Md2DatepickerComponent} from '../datepicker/datepicker';
 
 
 @Component({
@@ -10,16 +10,15 @@ import {Md2Datepicker} from '../datepicker/datepicker';
         type: 'button',
         class: 'md2-datepicker-toggle',
         'aria-label': 'Open calendar',
-        '(click)': '_open($event)',
     },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Md2DatepickerToggle<D> {
     /** Datepicker instance that the button will toggle. */
-    @Input('md2DatepickerToggle') datepicker: Md2Datepicker;
+    @Input('md2DatepickerToggle') datepicker: Md2DatepickerComponent;
 
-    _open(event: Event): void {
+    @HostListener('click', ['$event']) _open(event: Event): void {
         if (this.datepicker) {
             this.datepicker.open();
             event.stopPropagation();

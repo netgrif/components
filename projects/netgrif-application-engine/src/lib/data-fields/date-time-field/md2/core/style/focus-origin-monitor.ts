@@ -280,21 +280,21 @@ export class FocusOriginMonitor {
  * programmatically) and adds corresponding classes to the element.
  *
  * There are two variants of this directive:
- * 1) cdkMonitorElementFocus: does not consider an element to be focused if one of its children is
+ * 1) naeMd2CdkMonitorElementFocus: does not consider an element to be focused if one of its children is
  *    focused.
- * 2) cdkMonitorSubtreeFocus: considers an element focused if it or any of its children are focused.
+ * 2) naeMd2CdkMonitorSubtreeFocus: considers an element focused if it or any of its children are focused.
  */
 @Directive({
-    selector: '[cdkMonitorElementFocus], [cdkMonitorSubtreeFocus]',
+    selector: '[naeMd2CdkMonitorElementFocus], [naeMd2CdkMonitorSubtreeFocus]',
 })
-export class CdkMonitorFocus implements OnDestroy {
+export class CdkMonitorFocusDirective implements OnDestroy {
     @Output() cdkFocusChange = new EventEmitter<FocusOrigin>();
 
     constructor(private _elementRef: ElementRef, private _focusOriginMonitor: FocusOriginMonitor,
                 renderer: Renderer2) {
         this._focusOriginMonitor.monitor(
             this._elementRef.nativeElement, renderer,
-            this._elementRef.nativeElement.hasAttribute('cdkMonitorSubtreeFocus'))
+            this._elementRef.nativeElement.hasAttribute('naeMd2CdkMonitorSubtreeFocus'))
             .subscribe(origin => this.cdkFocusChange.emit(origin));
     }
 

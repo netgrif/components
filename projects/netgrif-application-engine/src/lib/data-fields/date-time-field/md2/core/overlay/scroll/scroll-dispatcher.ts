@@ -1,6 +1,6 @@
 import {Injectable, NgZone, Optional, SkipSelf} from '@angular/core';
 import {Platform} from '../../platform';
-import {Scrollable} from './scrollable';
+import {ScrollableDirective} from './scrollable.directive';
 import {Subject} from 'rxjs';
 import {Subscription, merge, fromEvent} from 'rxjs';
 import {auditTime} from 'rxjs/operators';
@@ -31,14 +31,14 @@ export class ScrollDispatcher {
      * Map of all the scrollable references that are registered with the service and their
      * scroll event subscriptions.
      */
-    scrollableReferences: Map<Scrollable, Subscription> = new Map();
+    scrollableReferences: Map<ScrollableDirective, Subscription> = new Map();
 
     /**
      * Registers a Scrollable with the service and listens for its scrolled events. When the
      * scrollable is scrolled, the service emits the event in its scrolled observable.
      * @param scrollable Scrollable instance to be registered.
      */
-    register(scrollable: Scrollable): void {
+    register(scrollable: ScrollableDirective): void {
         const scrollSubscription = scrollable.elementScrolled().subscribe(() => this._notify());
 
         this.scrollableReferences.set(scrollable, scrollSubscription);
@@ -48,7 +48,7 @@ export class ScrollDispatcher {
      * Deregisters a Scrollable reference and unsubscribes from its scroll event observable.
      * @param scrollable Scrollable instance to be deregistered.
      */
-    deregister(scrollable: Scrollable): void {
+    deregister(scrollable: ScrollableDirective): void {
         if (this.scrollableReferences.has(scrollable)) {
             this.scrollableReferences.get(scrollable).unsubscribe();
             this.scrollableReferences.delete(scrollable);

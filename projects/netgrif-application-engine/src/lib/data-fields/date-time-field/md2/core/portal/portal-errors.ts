@@ -2,7 +2,7 @@
  * Throws an exception when attempting to attach a null portal to a host.
  * @docs-private
  */
-export function throwNullPortalError() {
+export function throwNullPortalError(): never {
     throw Error('Must provide a portal to attach');
 }
 
@@ -10,7 +10,7 @@ export function throwNullPortalError() {
  * Throws an exception when attempting to attach a portal to a host that is already attached.
  * @docs-private
  */
-export function throwPortalAlreadyAttachedError() {
+export function throwPortalAlreadyAttachedError(): never {
     throw Error('Host already has a portal attached');
 }
 
@@ -18,7 +18,7 @@ export function throwPortalAlreadyAttachedError() {
  * Throws an exception when attempting to attach a portal to an already-disposed host.
  * @docs-private
  */
-export function throwPortalHostAlreadyDisposedError() {
+export function throwPortalHostAlreadyDisposedError(): never {
     throw Error('This PortalHost has already been disposed');
 }
 
@@ -26,7 +26,7 @@ export function throwPortalHostAlreadyDisposedError() {
  * Throws an exception when attempting to attach an unknown portal type.
  * @docs-private
  */
-export function throwUnknownPortalTypeError() {
+export function throwUnknownPortalTypeError(): never {
     throw Error('Attempting to attach an unknown Portal type. BasePortalHost accepts either' +
         'a ComponentPortal or a TemplatePortal.');
 }
@@ -35,7 +35,7 @@ export function throwUnknownPortalTypeError() {
  * Throws an exception when attempting to attach a portal to a null host.
  * @docs-private
  */
-export function throwNullPortalHostError() {
+export function throwNullPortalHostError(): never {
     throw Error('Attempting to attach a portal to a null PortalHost');
 }
 
@@ -43,6 +43,6 @@ export function throwNullPortalHostError() {
  * Throws an exception when attempting to detach a portal that is not attached.
  * @docs-privatew
  */
-export function throwNoPortalAttachedError() {
+export function throwNoPortalAttachedError(): never {
     throw Error('Attempting to detach a portal that is not attached to a host');
 }

@@ -10,7 +10,6 @@ import {
 import {InteractivityChecker} from './interactivity-checker';
 import {Platform} from '../platform';
 import {coerceBooleanProperty} from '../coercion/boolean-property';
-import {first} from 'rxjs/operators';
 
 /**
  * Class that allows for trapping focus within a DOM element.
@@ -200,51 +199,16 @@ export class FocusTrapFactory {
     }
 }
 
-// TODO FocusTrapDeprecatedDirective sa pouziva
-/**
- * Directive for trapping focus within a region.
- * @deprecated
- */
-@Directive({
-    selector: 'cdk-focus-trap',
-})
-export class FocusTrapDeprecatedDirective implements OnDestroy, AfterContentInit {
-    focusTrap: FocusTrap;
-
-    /** Whether the focus trap is active. */
-    @Input()
-    get disabled(): boolean {
-        return !this.focusTrap.enabled;
-    }
-
-    set disabled(val: boolean) {
-        this.focusTrap.enabled = !coerceBooleanProperty(val);
-    }
-
-    constructor(private _elementRef: ElementRef, private _focusTrapFactory: FocusTrapFactory) {
-        this.focusTrap = this._focusTrapFactory.create(this._elementRef.nativeElement, true);
-    }
-
-    ngOnDestroy() {
-        this.focusTrap.destroy();
-    }
-
-    ngAfterContentInit() {
-        this.focusTrap.attachAnchors();
-    }
-}
-
-// TODO FocusTrapDirective sa pouziva
 /** Directive for trapping focus within a region. */
 @Directive({
-    selector: '[cdkTrapFocus]',
-    exportAs: 'cdkTrapFocus',
+    selector: '[naeMd2CdkTrapFocus]',
+    exportAs: 'naeMd2CdkTrapFocus',
 })
 export class FocusTrapDirective implements OnDestroy, AfterContentInit {
     focusTrap: FocusTrap;
 
     /** Whether the focus trap is active. */
-    @Input('cdkTrapFocus')
+    @Input('naeMd2CdkTrapFocus')
     get enabled(): boolean {
         return this.focusTrap.enabled;
     }

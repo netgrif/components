@@ -12,5 +12,4 @@ export interface MdDateFormats {
     };
 }
 
-
 export const MD_DATE_FORMATS = new InjectionToken<MdDateFormats>('md-date-formats');

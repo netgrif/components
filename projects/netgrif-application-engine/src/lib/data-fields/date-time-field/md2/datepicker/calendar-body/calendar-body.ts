@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     EventEmitter,
+    HostBinding,
     Input,
     Output,
     ViewEncapsulation
@@ -36,7 +37,7 @@ export class Md2CalendarCell {
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Md2CalendarBody {
+export class Md2CalendarBodyComponent {
     /** The label for the table. (e.g. "Jan 2017"). */
     @Input() label: string;
 

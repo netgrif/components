@@ -23,7 +23,7 @@ import {
 } from './position/connected-position';
 import {PortalModule} from '../portal/portal-directives';
 import {ConnectedPositionStrategy} from './position/connected-position-strategy';
-import {Dir, LayoutDirection} from '../rtl/dir';
+import {DirDirective, LayoutDirection} from '../rtl/dir.directive';
 import {ScrollStrategy} from './scroll/scroll-strategy';
 import {coerceBooleanProperty} from '../coercion/boolean-property';
 import {ESCAPE} from '../keyboard/keycodes';
@@ -47,10 +47,10 @@ const defaultPositionList = [
  * ConnectedPositionStrategy.
  */
 @Directive({
-    selector: '[cdk-overlay-origin], [overlay-origin], [cdkOverlayOrigin]',
-    exportAs: 'cdkOverlayOrigin',
+    selector: '[nae-md2-cdk-overlay-origin], [nae-md2-overlay-origin], [naeMd2CdkOverlayOrigin]',
+    exportAs: 'naeMd2CdkOverlayOrigin',
 })
-export class OverlayOrigin {
+export class OverlayOriginDirective {
     constructor(public elementRef: ElementRef) {
     }
 }
@@ -60,8 +60,8 @@ export class OverlayOrigin {
  * Directive to facilitate declarative creation of an Overlay using a ConnectedPositionStrategy.
  */
 @Directive({
-    selector: '[cdk-connected-overlay], [connected-overlay], [cdkConnectedOverlay]',
-    exportAs: 'cdkConnectedOverlay'
+    selector: '[nae-md2-cdk-connected-overlay], [nae-md2-connected-overlay], [naeMd2CdkConnectedOverlay]',
+    exportAs: 'naeMd2CdkConnectedOverlay'
 })
 export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
     private _overlayRef: OverlayRef;
@@ -75,7 +75,7 @@ export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
     private _escapeListener: () => void;
 
     /** Origin for the connected overlay. */
-    @Input() origin: OverlayOrigin;
+    @Input() origin: OverlayOriginDirective;
 
     /** Registered connected position pairs. */
     @Input() positions: ConnectionPositionPair[];
@@ -156,7 +156,7 @@ export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
         private _renderer: Renderer2,
         templateRef: TemplateRef<any>,
         viewContainerRef: ViewContainerRef,
-        @Optional() private _dir: Dir) {
+        @Optional() private _dir: DirDirective) {
         this._templatePortal = new TemplatePortal(templateRef, viewContainerRef);
     }
 
@@ -315,8 +315,8 @@ export class ConnectedOverlayDirective implements OnDestroy, OnChanges {
 
 @NgModule({
     imports: [PortalModule, ScrollDispatchModule],
-    exports: [ConnectedOverlayDirective, OverlayOrigin, ScrollDispatchModule],
-    declarations: [ConnectedOverlayDirective, OverlayOrigin],
+    exports: [ConnectedOverlayDirective, OverlayOriginDirective, ScrollDispatchModule],
+    declarations: [ConnectedOverlayDirective, OverlayOriginDirective],
     providers: [OVERLAY_PROVIDERS],
 })
 export class OverlayModule {

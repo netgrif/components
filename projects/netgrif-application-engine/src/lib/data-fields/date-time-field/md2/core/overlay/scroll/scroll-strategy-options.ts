@@ -38,5 +38,5 @@ export class ScrollStrategyOptions {
      * Allows debouncing the reposition calls.
      */
     reposition = (config?: RepositionScrollStrategyConfig) =>
-        new RepositionScrollStrategy(this._scrollDispatcher, config);
+        new RepositionScrollStrategy(this._scrollDispatcher, config)
 }

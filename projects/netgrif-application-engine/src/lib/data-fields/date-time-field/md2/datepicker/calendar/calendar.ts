@@ -3,7 +3,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     ElementRef,
-    EventEmitter,
+    EventEmitter, HostBinding, HostListener,
     Input,
     NgZone,
     Output,
@@ -29,20 +29,17 @@ import {slideCalendar} from '../datepicker-animations';
  * @docs-private
  */
 @Component({
-    selector: 'md2-calendar',
+    selector: 'nae-md2-calendar',
     templateUrl: 'calendar.html',
     styleUrls: ['calendar.scss'],
-    // tslint:disable-next-line:no-host-metadata-property
-    host: {
-        '[class.md2-calendar]': 'true',
-        tabindex: '0',
-        '(keydown)': '_handleCalendarBodyKeydown($event)',
-    },
     animations: [slideCalendar],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Md2Calendar implements AfterContentInit {
+export class Md2CalendarComponent implements AfterContentInit {
+
+    @HostBinding('class.md2-calendar') md2_calendar = true;
+    @HostBinding('tabindex') tabindex = 0;
 
     /**
      * The current active date. This determines which time period is shown and which date is
@@ -233,7 +230,7 @@ export class Md2Calendar implements AfterContentInit {
     }
 
     /** Handles keydown events on the calendar body. */
-    _handleCalendarBodyKeydown(event: KeyboardEvent): void {
+    @HostListener('keydown', ['$event']) _handleCalendarBodyKeydown(event: KeyboardEvent): void {
         // TODO(mmalerba): We currently allow keyboard navigation to disabled dates, but just prevent
         // disabled ones from being selected. This may not be ideal, we should look into whether
         // navigation should skip over disabled dates, and if so, how to implement that efficiently.

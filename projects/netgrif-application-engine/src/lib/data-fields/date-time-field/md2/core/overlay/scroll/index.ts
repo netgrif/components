@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {SCROLL_DISPATCHER_PROVIDER} from './scroll-dispatcher';
-import {Scrollable} from './scrollable';
+import {ScrollableDirective} from './scrollable.directive';
 import {PlatformModule} from '../../platform';
 import {ScrollStrategyOptions} from './scroll-strategy-options';
 
-export {Scrollable} from './scrollable';
+export {ScrollableDirective} from './scrollable.directive';
 export {ScrollDispatcher} from './scroll-dispatcher';
 
 // Export pre-defined scroll strategies and interface to build custom ones.
@@ -17,8 +17,8 @@ export {BlockScrollStrategy} from './block-scroll-strategy';
 
 @NgModule({
     imports: [PlatformModule],
-    exports: [Scrollable],
-    declarations: [Scrollable],
+    exports: [ScrollableDirective],
+    declarations: [ScrollableDirective],
     providers: [SCROLL_DISPATCHER_PROVIDER, ScrollStrategyOptions],
 })
 export class ScrollDispatchModule {

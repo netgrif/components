@@ -17,19 +17,19 @@ export type LayoutDirection = 'ltr' | 'rtl';
  * components can listen on changes of direction.
  */
 @Directive({
-    selector: '[dir]',
+    selector: '[naeMd2Dir]',
     // TODO(hansl): maybe `$implicit` isn't the best option here, but for now that's the best we got.
     exportAs: '$implicit'
 })
-export class Dir {
+export class DirDirective {
     /** Layout direction of the element. */
-    @Input('dir') _dir: LayoutDirection = 'ltr';
+    @Input('naeMd2Dir') _dir: LayoutDirection = 'ltr';
 
     /** Event emitted when the direction changes. */
     @Output() dirChange = new EventEmitter<void>();
 
     /** @docs-private */
-    @HostBinding('attr.dir')
+    @HostBinding('attr.naeMd2Dir')
     get dir(): LayoutDirection {
         return this._dir;
     }
@@ -54,8 +54,8 @@ export class Dir {
 
 
 @NgModule({
-    exports: [Dir],
-    declarations: [Dir]
+    exports: [DirDirective],
+    declarations: [DirDirective]
 })
 export class RtlModule {
 }

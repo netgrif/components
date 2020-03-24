@@ -65,7 +65,6 @@ export class ScrollableViewProperties {
 
 /** The change event emitted by the strategy when a fallback position is used. */
 export class ConnectedOverlayPositionChange {
-    constructor(public connectionPair: ConnectionPositionPair,
-                @Optional() public scrollableViewProperties: ScrollableViewProperties) {
+    constructor(@Optional() public scrollableViewProperties: ScrollableViewProperties) {
     }
 }
