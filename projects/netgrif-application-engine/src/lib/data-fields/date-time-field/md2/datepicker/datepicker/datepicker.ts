@@ -6,13 +6,13 @@ import {
     EventEmitter,
     forwardRef,
     Input,
+    NgZone,
     OnDestroy,
     Optional,
     Output,
     ViewChild,
     ViewContainerRef,
     ViewEncapsulation,
-    NgZone,
 } from '@angular/core';
 import {
     AbstractControl,
@@ -23,15 +23,9 @@ import {
     ValidatorFn,
     Validators,
 } from '@angular/forms';
-import {coerceBooleanProperty} from '../../core/coercion/boolean-property';
-import {Overlay} from '../../core/overlay/overlay';
-import {OverlayRef} from '../../core/overlay/overlay-ref';
-import {ComponentPortal} from '../../core/portal/portal';
-import {OverlayState} from '../../core/overlay/overlay-state';
-import {Dir} from '../../core/rtl/dir';
-import {PositionStrategy} from '../../core/overlay/position/position-strategy';
+import {coerceBooleanProperty, ComponentPortal, Dir, ESCAPE} from '../../core';
+import {Overlay, OverlayRef, OverlayState, PositionStrategy} from '../../core/overlay';
 import {Subscription} from 'rxjs';
-import {ESCAPE} from '../../core/keyboard/keycodes';
 import {Md2Calendar} from '../calendar/calendar';
 import {DateLocale} from '../date-locale';
 import {DateUtil} from '../date-util';
@@ -109,7 +103,7 @@ export const MD2_DATEPICKER_VALIDATORS: any = {
     styleUrls: ['datepicker.scss'],
     providers: [MD2_DATEPICKER_VALUE_ACCESSOR, MD2_DATEPICKER_VALIDATORS],
     host: {
-        'role': 'datepicker',
+        role: 'datepicker',
         '[class.md2-datepicker-disabled]': 'disabled',
         '[class.md2-datepicker-opened]': 'opened',
         '[attr.aria-label]': 'placeholder',
@@ -120,12 +114,104 @@ export const MD2_DATEPICKER_VALIDATORS: any = {
 })
 export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
 
-    _onChange: (value: any) => void = () => {
-    };
-    _onTouched = () => {
-    };
-    _validatorOnChange = () => {
-    };
+    @Input()
+    get type() {
+        return this._type;
+    }
+
+    set type(value: 'date' | 'time' | 'month' | 'datetime') {
+        this._type = value || 'date';
+        this._inputValue = this._formatDate(this._value);
+    }
+
+    @Input()
+    get format() {
+        return this._format || (this.type === 'month' ? 'MMMM y' : this.type === 'date' ?
+            'dd/MM/y' : this.type === 'time' ? 'HH:mm' : this.type === 'datetime' ?
+                'dd/MM/y HH:mm' : 'dd/MM/y');
+    }
+
+    set format(value: string) {
+        if (this._format !== value) {
+            this._format = value;
+            this._inputValue = this._formatDate(this._value);
+        }
+    }
+
+    /** The minimum valid date. */
+    @Input()
+    get min(): Date {
+        return this._minDate;
+    }
+
+    set min(value: Date) {
+        this._minDate = value;
+        this._validatorOnChange(value);
+    }
+
+    /** The maximum valid date. */
+    @Input()
+    get max(): Date {
+        return this._maxDate;
+    }
+
+    set max(value: Date) {
+        this._maxDate = value;
+        this._validatorOnChange(value);
+    }
+
+    @Input() set dateFilter(filter: (date: Date | null) => boolean) {
+        this._dateFilter = filter;
+        this._validatorOnChange(this.value);
+    }
+
+    @Input()
+    get required(): boolean {
+        return this._required;
+    }
+
+    set required(value) {
+        this._required = coerceBooleanProperty(value);
+    }
+
+    @Input()
+    get disabled(): boolean {
+        return this._disabled;
+    }
+
+    set disabled(value) {
+        this._disabled = coerceBooleanProperty(value);
+    }
+
+    @Input()
+    get value() {
+        return this._value;
+    }
+
+    set value(value: Date) {
+        this._value = this.coerceDateProperty(value);
+        this._selected = this._value;
+        this.startAt = this._value;
+        setTimeout(() => {
+            this._inputValue = this._formatDate(this._value);
+        });
+    }
+
+    @Input()
+    get openOnFocus(): boolean {
+        return this._openOnFocus;
+    }
+
+    set openOnFocus(value: boolean) {
+        this._openOnFocus = coerceBooleanProperty(value);
+    }
+
+    @Input()
+    set isOpen(value: boolean) {
+        if (value && !this.opened) {
+            this.open();
+        }
+    }
 
     _inputFocused = false;
 
@@ -144,134 +230,35 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
     /** Whether the Week-number should be displayed */
     @Input() displayWeek: boolean;
 
-    @Input() tabindex: number = 0;
+    @Input() tabindex = 0;
     @Input() mode: 'auto' | 'portrait' | 'landscape' = 'auto';
     @Input() placeholder: string;
-    @Input() timeInterval: number = 1;
+    @Input() timeInterval = 1;
     @Input() id: string;
     @Input() appearance: string;
     @Input() title: string;
     @Input() showLabel: boolean;
     @Input() hint: string;
 
-    @Input()
-    get type() {
-        return this._type;
-    }
-
-    set type(value: 'date' | 'time' | 'month' | 'datetime') {
-        this._type = value || 'date';
-        this._inputValue = this._formatDate(this._value);
-    }
-
     private _type: 'date' | 'time' | 'month' | 'datetime' = 'date';
-
-    @Input()
-    get format() {
-        return this._format || (this.type === 'month' ? 'MMMM y' : this.type === 'date' ?
-            'dd/MM/y' : this.type === 'time' ? 'HH:mm' : this.type === 'datetime' ?
-                'dd/MM/y HH:mm' : 'dd/MM/y');
-    }
-
-    set format(value: string) {
-        if (this._format !== value) {
-            this._format = value;
-            this._inputValue = this._formatDate(this._value);
-        }
-    }
 
     private _format: string;
 
-    /** The minimum valid date. */
-    @Input()
-    get min(): Date {
-        return this._minDate;
-    }
-
-    set min(value: Date) {
-        this._minDate = value;
-        this._validatorOnChange();
-    }
-
     _minDate: Date;
-
-    /** The maximum valid date. */
-    @Input()
-    get max(): Date {
-        return this._maxDate;
-    }
-
-    set max(value: Date) {
-        this._maxDate = value;
-        this._validatorOnChange();
-    }
 
     _maxDate: Date;
 
-    @Input() set dateFilter(filter: (date: Date | null) => boolean) {
-        this._dateFilter = filter;
-        this._validatorOnChange();
-    }
-
     _dateFilter: (date: Date | null) => boolean;
 
-    @Input()
-    get required(): boolean {
-        return this._required;
-    }
+    private _required = false;
 
-    set required(value) {
-        this._required = coerceBooleanProperty(value);
-    }
-
-    private _required: boolean = false;
-
-    @Input()
-    get disabled(): boolean {
-        return this._disabled;
-    }
-
-    set disabled(value) {
-        this._disabled = coerceBooleanProperty(value);
-    }
-
-    private _disabled: boolean = false;
-
-    @Input()
-    get value() {
-        return this._value;
-    }
-
-    set value(value: Date) {
-        this._value = this.coerceDateProperty(value);
-        this._selected = this._value;
-        this.startAt = this._value;
-        setTimeout(() => {
-            this._inputValue = this._formatDate(this._value);
-        });
-    }
+    private _disabled = false;
 
     private _value: Date;
 
-    _inputValue: string = '';
-
-    @Input()
-    get openOnFocus(): boolean {
-        return this._openOnFocus;
-    }
-
-    set openOnFocus(value: boolean) {
-        this._openOnFocus = coerceBooleanProperty(value);
-    }
+    _inputValue = '';
 
     private _openOnFocus: boolean;
-
-    @Input()
-    set isOpen(value: boolean) {
-        if (value && !this.opened) {
-            this.open();
-        }
-    }
 
     /** Event emitted when the select has been opened. */
     @Output() onOpen: EventEmitter<void> = new EventEmitter<void>();
@@ -302,29 +289,21 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
 
     private _inputSubscription: Subscription;
 
+    _onChange: (value: any) => void;
+    _onTouched: (value: any) => void;
+    _validatorOnChange: (value: any) => void;
+
     /** The form control validator for the min date. */
-    private _minValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-        return (!this.min || !control.value ||
-            this._util.compareDate(this.min, control.value) <= 0) ?
-            null : {'md2DatepickerMin': {'min': this.min, 'actual': control.value}};
-    };
+    private readonly _minValidator: ValidatorFn;
 
     /** The form control validator for the max date. */
-    private _maxValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-        return (!this.max || !control.value ||
-            this._util.compareDate(this.max, control.value) >= 0) ?
-            null : {'md2DatepickerMax': {'max': this.max, 'actual': control.value}};
-    };
+    private readonly _maxValidator: ValidatorFn;
 
     /** The form control validator for the date filter. */
-    private _filterValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-        return !this._dateFilter || !control.value || this._dateFilter(control.value) ?
-            null : {'md2DatepickerFilter': true};
-    };
+    private readonly _filterValidator: ValidatorFn;
 
     /** The combined form control validator for this input. */
-    private _validator: ValidatorFn =
-        Validators.compose([this._minValidator, this._maxValidator, this._filterValidator]);
+    private readonly _validator: ValidatorFn;
 
     constructor(private _element: ElementRef,
                 private _overlay: Overlay,
@@ -334,6 +313,24 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
                 private _util: DateUtil,
                 @Optional() private _dir: Dir) {
         this.id = (this.id) ? this.id : `md2-datepicker-${datepickerUid++}`;
+        this._onChange = () => {};
+        this._onTouched = () => {};
+        this._validatorOnChange = () => {};
+        this._minValidator = (control: AbstractControl): ValidationErrors | null => {
+            return (!this.min || !control.value ||
+                this._util.compareDate(this.min, control.value) <= 0) ?
+                null : {md2DatepickerMin: {min: this.min, actual: control.value}};
+        };
+        this._maxValidator = (control: AbstractControl): ValidationErrors | null => {
+            return (!this.max || !control.value ||
+                this._util.compareDate(this.max, control.value) >= 0) ?
+                null : {md2DatepickerMax: {max: this.max, actual: control.value}};
+        };
+        this._filterValidator = (control: AbstractControl): ValidationErrors | null => {
+            return !this._dateFilter || !control.value || this._dateFilter(control.value) ?
+                null : {md2DatepickerFilter: true};
+        };
+        this._validator = Validators.compose([this._minValidator, this._maxValidator, this._filterValidator]);
     }
 
     ngOnDestroy() {
@@ -383,7 +380,7 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
     _handleBlur(event: Event) {
         this._inputFocused = false;
         if (!this.opened) {
-            this._onTouched();
+            this._onTouched(this.value);
         }
         const el: any = event.target;
         let date: Date = this._util.parseDate(el.value, this.format);
@@ -418,7 +415,7 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
     }
 
     private coerceDateProperty(value: any): Date {
-        let v: Date = null;
+        let v: Date;
         if (value != null && value.getTime && !isNaN(value.getTime())) {
             v = value;
         } else {
@@ -432,13 +429,16 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
                 v = isNaN(timestamp) ? null : new Date(timestamp);
             }
         }
-        const d: Date = v ? this._util.createDate(v.getFullYear(),
-            v.getMonth(),
-            v.getDate(),
-            v.getHours(),
-            v.getMinutes(),
-            v.getSeconds()) : null;
-        return d;
+        return v ?
+            this._util.createDate(
+                v.getFullYear(),
+                v.getMonth(),
+                v.getDate(),
+                v.getHours(),
+                v.getMinutes(),
+                v.getSeconds()
+            )
+            : null;
     }
 
     /**
@@ -528,7 +528,7 @@ export class Md2Datepicker implements OnDestroy, ControlValueAccessor {
 
     /**
      * Get an hour of the date in the 12-hour format
-     * @param date Date Object
+     * @param hours in 24-hour format that should be converted
      * @return hour of the date in the 12-hour format
      */
     private _getHours12(hours: number): number {

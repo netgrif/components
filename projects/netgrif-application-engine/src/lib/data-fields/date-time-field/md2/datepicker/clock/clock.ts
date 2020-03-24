@@ -108,8 +108,8 @@ export class Md2Clock implements AfterContentInit {
     @Output() activeDateChange = new EventEmitter<Date>();
 
     /** Hours and Minutes representing the clock view. */
-    _hours: Array<Object> = [];
-    _minutes: Array<Object> = [];
+    _hours: Array<ClockViewDisplay> = [];
+    _minutes: Array<ClockViewDisplay> = [];
 
     /** Whether the clock is in hour view. */
     _hourView = true;
@@ -286,4 +286,13 @@ export class Md2Clock implements AfterContentInit {
         this.activeDateChange.emit(this.activeDate);
     }
 
+}
+
+interface ClockViewDisplay {
+    value: number;
+    displayValue: string;
+    enabled: boolean;
+    top: number;
+    left: number;
+    fontSize?: string;
 }

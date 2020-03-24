@@ -8,12 +8,7 @@ import {
     trigger,
 } from '@angular/animations';
 
-/**
- * This animation fades in the background color and text content of the
- * select's options. It is time delayed to occur 100ms after the overlay
- * panel has transformed in.
- */
-export const fadeInContent: AnimationTriggerMetadata = trigger('fadeInContent', [
+trigger('fadeInContent', [
     state('showing', style({opacity: 1})),
     transition('void => showing', [
         style({opacity: 0}),

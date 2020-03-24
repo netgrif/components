@@ -40,11 +40,6 @@ export class Md2YearView implements AfterContentInit {
         if (oldActiveDate && this._activeDate &&
             !this._util.isSameYear(oldActiveDate, this._activeDate)) {
             this._init();
-            // if (oldActiveDate < this._activeDate) {
-            //  this.calendarState('right');
-            // } else {
-            //  this.calendarState('left');
-            // }
         }
     }
 

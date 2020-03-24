@@ -581,7 +581,7 @@ export class DateUtil {
      * @param minDate min
      * @param maxDate max
      */
-    isFullDateWithinRange(date: Date, minDate: Date, maxDate: Date) {
+    isFullDateWithinRange(date: Date, minDate: Date, maxDate: Date): boolean {
         minDate = this.isValidDate(minDate) ? minDate : null;
         maxDate = this.isValidDate(maxDate) ? maxDate : null;
         return (!minDate || minDate <= date) &&

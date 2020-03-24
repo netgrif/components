@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
+import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 
-const SUPPORTS_INTL_API = false; // typeof Intl != 'undefined';
-
+const SUPPORTS_INTL_API = false;
 
 /** The default month names to use if Intl API is not available. */
 const DEFAULT_MONTH_NAMES = {
@@ -140,7 +140,7 @@ export class DateLocale {
         return this.firstDayOfWeek;
     }
 
-    format(date: Date, displayFormat: Object): string {
+    format(date: Date, displayFormat: DateTimeFormatOptions): string {
         if (SUPPORTS_INTL_API) {
             const dtf = new Intl.DateTimeFormat(this.locale, displayFormat);
             return this._stripDirectionalityCharacters(dtf.format(date));

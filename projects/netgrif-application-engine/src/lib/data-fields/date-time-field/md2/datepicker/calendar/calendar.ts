@@ -19,7 +19,7 @@ import {
     PAGE_UP,
     RIGHT_ARROW,
     UP_ARROW
-} from '../../core/keyboard/keycodes';
+} from '../../core';
 import {DateLocale} from '../date-locale';
 import {DateUtil} from '../date-util';
 import {slideCalendar} from '../datepicker-animations';
@@ -133,7 +133,7 @@ export class Md2Calendar implements AfterContentInit {
             (!this.dateFilter || this.dateFilter(date)) &&
             (!this.minDate || this._util.compareDate(date, this.minDate) >= 0) &&
             (!this.maxDate || this._util.compareDate(date, this.maxDate) <= 0);
-    };
+    }
 
     ngAfterContentInit() {
         this._activeDate = this.startAt || this._util.today();
