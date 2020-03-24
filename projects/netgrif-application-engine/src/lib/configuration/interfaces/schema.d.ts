@@ -190,7 +190,6 @@ export interface View {
 }
 
 export interface Route {
-    type: string;
     layout: {
         name: string;
         params?: {
