@@ -33,6 +33,9 @@ import { DialogExampleComponent } from './doc/dialog-example/dialog-example.comp
 import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example.component';
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
+import { DateTimePickerComponent } from './doc/date-time-picker/date-time-picker.component';
+import {Md2DatepickerModule} from '../../../netgrif-application-engine/src/lib/data-fields/date-time-field/md2/datepicker';
+import {MdNativeDateModule} from '../../../netgrif-application-engine/src/lib/data-fields/date-time-field/md2/core/datetime';
 
 @NgModule({
     declarations: [
@@ -48,7 +51,8 @@ import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-t
         DialogExampleComponent,
         TabViewExampleComponent,
         ContentComponent,
-        ReactiveTextFieldComponent
+        ReactiveTextFieldComponent,
+        DateTimePickerComponent
     ],
     imports: [
         BrowserModule,
@@ -63,7 +67,9 @@ import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-t
         PanelModule,
         DialogModule,
         TabsModule,
-        DataFieldsModule
+        DataFieldsModule,
+        Md2DatepickerModule,
+        MdNativeDateModule
     ],
     entryComponents: [
         NewCaseComponent,
@@ -73,7 +79,9 @@ import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-t
         QuestionDialogWithAnswerComponent,
         ContentComponent
     ],
-    providers: [{provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}],
+    providers: [
+        {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
