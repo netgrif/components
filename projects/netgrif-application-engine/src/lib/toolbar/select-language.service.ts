@@ -14,11 +14,23 @@ export class SelectLanguageService {
         translate.setTranslation('sk', sk, true);
         translate.setDefaultLang('en');
 
-        const browserLang = translate.getBrowserLang();
-        translate.use(browserLang.match(/en|sk/) ? browserLang : 'en');
+        const lang = localStorage.getItem('Language');
+        if (lang === null) {
+            const browserLang = translate.getBrowserLang();
+            translate.use(browserLang.match(/en|sk/) ? browserLang : 'en');
+            localStorage.setItem('Language', browserLang.match(/en|sk/) ? browserLang : 'en');
+        } else {
+            translate.use(lang.match(/en|sk/) ? lang : 'en');
+            localStorage.setItem('Language', lang.match(/en|sk/) ? lang : 'en');
+        }
 
         translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
             console.log('Language changed to ' + event.lang);
         });
+    }
+
+    setLanguage(lang: string) {
+        this.translate.use(lang.match(/en|sk/) ? lang : 'en');
+        localStorage.setItem('Language', lang.match(/en|sk/) ? lang : 'en');
     }
 }

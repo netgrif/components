@@ -21,10 +21,17 @@ export class ToolbarComponent implements OnInit {
     @Input()
     public logoAlt: string;
 
-    constructor(public translate: TranslateService, private selectLangService: SelectLanguageService) {
+    constructor(private translate: TranslateService, private selectLangService: SelectLanguageService) {
     }
 
     ngOnInit() {
     }
 
+    setLang(lang: string): void {
+        this.selectLangService.setLanguage(lang);
+    }
+
+    activeLang(lang: string): boolean {
+        return this.translate.currentLang === lang;
+    }
 }
