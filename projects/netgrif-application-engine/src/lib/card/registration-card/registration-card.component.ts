@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {passwordValidator} from './password.validator';
 import {AbstractCard} from '../abstract-card';
+import {LoggerService} from '../../logger/services/logger.service';
 
 @Component({
     selector: 'nae-registration-panel',
@@ -9,24 +10,27 @@ import {AbstractCard} from '../abstract-card';
     styleUrls: ['./registration-card.component.scss']
 })
 export class RegistrationCardComponent extends AbstractCard implements OnInit {
-    hidePassword = true;
-    hideRepeatPassword = true;
 
-    constructor(private fb: FormBuilder) {
+    public hidePassword: boolean;
+    public hideRepeatPassword: boolean;
+
+    constructor(private _fb: FormBuilder, private _log: LoggerService) {
         super();
-        this.form = fb.group({
+        this.form = _fb.group({
             login: [''],
             email: ['', Validators.email],
             password: [''],
             confirmPassword: ['']
         }, {validator: passwordValidator});
+        this.hidePassword = true;
+        this.hideRepeatPassword = true;
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
     }
 
-    onSubmit(form: object) {
-        console.log(form);
+    public onSubmit(form: object): void {
+        this._log.info('Form', form);
     }
 
 }
