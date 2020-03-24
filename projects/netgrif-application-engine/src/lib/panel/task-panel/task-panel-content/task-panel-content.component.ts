@@ -35,9 +35,9 @@ export class TaskPanelContentComponent {
 
     constructor() {
         // TODO : cols from task
-        this.formCols = 5;
+        this.formCols = 4;
         console.time('count');
-        this.dataSource = this.fillBlankSpace(Resources.data, this.formCols);
+        this.dataSource = this.fillBlankSpace(Resources.data3, this.formCols);
         console.timeEnd('count');
     }
 
@@ -51,16 +51,31 @@ export class TaskPanelContentComponent {
 
         resource.forEach( dataGroup => {
             let count = 0;
+            let columnGroup;
+            if (dataGroup.cols !== undefined) {
+                columnGroup = dataGroup.cols;
+            } else {
+                columnGroup = columnCount;
+            }
             if (dataGroup.title && dataGroup.title !== '') {
-                // TODO add title
+                const row = grid.length;
+                this.addGridRows(grid,  row + 1, columnGroup);
+                const newFillers = [];
+                for (const filler of grid[row]) {
+                    newFillers.push(...filler.fillersAfterCover(0, columnGroup - 1));
+                }
+                grid[row] = newFillers;
+                returnResource.push({item: undefined, type: 'title',
+                    layout: {x: 0, y: row, cols: columnGroup , rows: 1}, title: dataGroup.title});
             }
             // TODO resolve alignment
+            dataGroup.fields.sort((a, b) => a.order - b.order);
             dataGroup.fields.forEach(dataField => {
                 if (dataField.layout !== undefined) {
                     const itemRowEnd = dataField.layout.y + dataField.layout.rows - 1;
                     const itemColEnd = dataField.layout.x + dataField.layout.cols - 1;
                     if (itemRowEnd >= grid.length) {
-                        this.addGridRows(grid, itemRowEnd + 1, columnCount);
+                        this.addGridRows(grid, itemRowEnd + 1, columnGroup);
                     }
                     for (let row = dataField.layout.y; row <= itemRowEnd; row++) {
                         if (dataField.behavior.hidden) {
@@ -76,34 +91,60 @@ export class TaskPanelContentComponent {
                         }
                     }
                 } else {
-                    if (dataGroup.stretch) {
-                        const newRow = grid.length + 1;
-                        this.addGridRows(grid, newRow, columnCount);
-                        grid[newRow - 1] = [];
+                    if (dataGroup.stretch || columnGroup === 1) {
+                        const newRow = grid.length ;
+                        this.addGridRows(grid, newRow + 1, columnGroup);
+                        grid[newRow] = [];
                         if (!dataField.behavior.hidden) {
                             returnResource.push({item: this.toClass(dataField), type: dataField.type,
-                                layout: {x: 0, y: newRow - 1, cols: columnCount, rows: 1}});
+                                layout: {x: 0, y: newRow, cols: columnGroup, rows: 1}});
                         }
                     } else {
-                        let columnCenter = columnCount / 2;
-                        if ((columnCount % 2) !== 0) {
-                            columnCenter = (columnCount + 1) / 2;
+                        let columnCenter = columnGroup / 2;
+                        if ((columnGroup % 2) !== 0) {
+                            columnCenter = (columnGroup + 1) / 2;
                         }
                         if ((count % 2) === 0) {
-                            const newRow = grid.length + 1;
-                            this.addGridRows(grid, newRow, columnCount);
+                            const newRow = grid.length;
+                            this.addGridRows(grid, newRow + 1, columnGroup);
                             if (dataField.behavior.hidden) {
-                                for (const filler of grid[newRow - 1]) {
+                                for (const filler of grid[newRow]) {
                                     filler.isIntentional = false;
                                 }
                             } else {
                                 const newFillers = [];
-                                for (const filler of grid[newRow - 1]) {
-                                    newFillers.push(...filler.fillersAfterCover(0, columnCenter - 1));
+                                if (dataGroup.alignment === 'center' && (count + 1) === dataGroup.fields.length) {
+                                    let columnStart = 0;
+                                    let columnEnd = 2;
+                                    if (columnGroup >= 3) {
+                                        columnStart = 1;
+                                        columnEnd = columnGroup - 2;
+                                    }
+                                    for (const filler of grid[newRow]) {
+                                        newFillers.push(...filler.fillersAfterCover(columnStart, columnEnd));
+                                    }
+                                    returnResource.push({
+                                        item: this.toClass(dataField), type: dataField.type,
+                                        layout: {x: columnStart, y: newRow, cols: columnGroup - columnEnd, rows: 1}
+                                    });
+                                } else if (dataGroup.alignment === 'end' && (count + 1) === dataGroup.fields.length) {
+                                    for (const filler of grid[newRow]) {
+                                        newFillers.push(...filler.fillersAfterCover(columnCenter , columnGroup - 1));
+                                    }
+                                    returnResource.push({
+                                        item: this.toClass(dataField), type: dataField.type,
+                                        layout: {x: columnCenter , y: newRow, cols: columnGroup - columnCenter, rows: 1}
+                                    });
+                                } else {
+                                    for (const filler of grid[newRow]) {
+                                        newFillers.push(...filler.fillersAfterCover(0, columnCenter - 1));
+                                    }
+                                    returnResource.push({
+                                        item: this.toClass(dataField), type: dataField.type,
+                                        layout: {x: 0, y: newRow, cols: columnCenter, rows: 1}
+                                    });
                                 }
-                                grid[newRow - 1] = newFillers;
-                                returnResource.push({item: this.toClass(dataField), type: dataField.type,
-                                    layout: {x: 0, y: newRow - 1, cols: columnCenter , rows: 1}});
+                                grid[newRow] = newFillers;
                             }
                             count++;
                         } else {
@@ -114,7 +155,7 @@ export class TaskPanelContentComponent {
                                 }
                             } else {
                                 returnResource.push({item: this.toClass(dataField), type: dataField.type,
-                                    layout: {x: columnCenter, y: row , cols: columnCount - columnCenter , rows: 1}});
+                                    layout: {x: columnCenter, y: row , cols: columnGroup - columnCenter , rows: 1}});
                                 grid[row] = [];
                             }
                             count++;

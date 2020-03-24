@@ -35,6 +35,12 @@
             <nae-button-field *ngSwitchCase="'button'" class="full-width" [dataField]="item.item" >
             </nae-button-field>
 
+            <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                <div fxFlex="20" class="line-datagroup"></div>
+                <span class="margin8px">{{item.title}}</span>
+                <div fxFlex class="line-datagroup"></div>
+            </div>
+
             <div *ngSwitchCase="'blank'"></div>
     </mat-grid-tile>
 </mat-grid-list>

@@ -1,4 +1,4 @@
-export class Behavior {
+export interface Behavior {
     required?: boolean;
     optional?: boolean;
     visible?: boolean;
