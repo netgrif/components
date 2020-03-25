@@ -6,8 +6,7 @@ import {PanelModule} from '../panel/panel.module';
 import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
 import {MaterialModule} from '../material/material.module';
-import {TaskPanelComponent} from '../panel/task-panel/task-panel.component';
-import {Resources} from '../panel/task-panel/task-panel-content/resources';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
@@ -19,9 +18,10 @@ describe('TaskListComponent', () => {
                 MatExpansionModule,
                 PanelModule,
                 MaterialModule,
+                NoopAnimationsModule,
                 CommonModule
             ],
-            declarations: [TaskListComponent, TaskPanelComponent, TestWrapperComponent]
+            declarations: [TaskListComponent, TestWrapperComponent]
         })
             .compileComponents();
 
@@ -37,22 +37,8 @@ describe('TaskListComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-task-panel' +
-        ' *ngFor="let taskPanel of taskPanels" ' +
-        '[taskPanelDefinition]="taskPanel.header"' +
-        ' [resources]="taskPanel.resource">' +
-        '</nae-task-panel>'
+    template: '<nae-task-list [taskPanels]="taskPanels"></nae-task-list>'
 })
 class TestWrapperComponent {
-    taskPanels = [{
-            header: {
-                featuredFields: ['T1', 'T2', 'T3', 'T4'],
-                panelIcon: 'home',
-                panelIconField: 'home',
-            },
-            resource: {
-                cols: 4,
-                data: Resources.data
-            }
-        }];
+    taskPanels = [];
 }

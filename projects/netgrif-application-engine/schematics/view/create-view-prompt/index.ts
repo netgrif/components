@@ -66,6 +66,7 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
             break;
         case 'taskView':
             rules.push(createTaskView(tree, args, addRoute));
+            break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }

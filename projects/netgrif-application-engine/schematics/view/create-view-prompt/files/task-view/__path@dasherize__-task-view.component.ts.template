@@ -7,7 +7,7 @@ import {Resources} from '../../../../../netgrif-application-engine/src/lib/panel
   templateUrl: './<%= dasherize(path) %>-task-view.component.html',
   styleUrls: ['./<%= dasherize(path) %>-task-view.component.scss']
 })
-export class <%= classify(path) %>TaskViewComponent implements OnInit{
+export class <%= classify(path) %>TaskViewComponent implements OnInit {
 
   public taskPanel: Array<TaskPanelData>;
 
