@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, HostBinding, HostListener, Input, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostListener, Input, ViewEncapsulation} from '@angular/core';
 import {Md2DatepickerComponent} from '../datepicker/datepicker';
 
 
@@ -14,7 +14,7 @@ import {Md2DatepickerComponent} from '../datepicker/datepicker';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Md2DatepickerToggle<D> {
+export class Md2DatepickerToggleComponent<D> {
     /** Datepicker instance that the button will toggle. */
     @Input('md2DatepickerToggle') datepicker: Md2DatepickerComponent;
 

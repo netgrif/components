@@ -28,9 +28,9 @@ Datepicker allow the user to select date and time.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `change` | `Event` | Fired when change date |
-| `onOpen` | `Event` | Fired when open the Datepicker Panel |
-| `onClose` | `Event` | Fired when close the Datepicker Panel |
+| `changed` | `Event` | Fired when change date |
+| `opened` | `Event` | Fired when open the Datepicker Panel |
+| `closed` | `Event` | Fired when close the Datepicker Panel |
 
 ### Examples
 A datepicker would have the following markup.
