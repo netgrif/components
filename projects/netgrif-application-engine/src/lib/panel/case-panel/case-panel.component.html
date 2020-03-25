@@ -1,0 +1,22 @@
+<nae-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true">
+    <ng-template #casePanelHeader>
+        <div fxLayoutAlign=" center" fxLayout="row" fxFlex="100">
+            <span fxLayoutAlign=" center" fxFlex>
+                <mat-icon class="case-panel-icon">{{panelIcon}}</mat-icon>
+                <span>{{panelIconField}}</span>
+            </span>
+            <span fxFlex *ngFor="let field of casePanelDefinition.featuredFields;">{{field}}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+            <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </mat-menu>
+        </div>
+    </ng-template>
+</nae-app-panel>

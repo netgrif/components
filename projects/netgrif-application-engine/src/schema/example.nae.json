@@ -147,11 +147,10 @@
         "en-US"
     ],
     "views": {
-        "layout": "empty",
+        "view": {},
         "routes": {
             "login": {
-                "type": "view",
-                "layout": {
+                "view": {
                     "name": "login",
                     "params": {
                         "orientation": "vertical"
@@ -161,8 +160,7 @@
                 "navigation": false
             },
             "portal": {
-                "type": "container",
-                "layout": {
+                "view": {
                     "name": "sidenav-toolbar",
                     "params": {
                         "title": "Some title",
@@ -191,13 +189,38 @@
                 "access": "private",
                 "routes": {
                     "cases": {
-                        "type": "view",
-                        "layout": {
-                            "name": "caseView",
+                        "view": {
+                            "name": "tabView",
                             "params": {
-                                "filters": [
-                                    "$filters.all-cases",
-                                    "db.case.find()"
+                                "tabs": [
+                                    {
+                                        "view": {
+                                            "name": "caseView",
+                                            "params": {
+                                                "filters": [
+                                                    "$filters.all-cases",
+                                                    "db.case.find()"
+                                                ]
+                                            }
+                                        },
+                                        "label": {
+                                            "text": "All cases"
+                                        },
+                                        "canBeDeleted": false,
+                                        "order": -1
+                                    },
+                                    {
+                                        "component": {
+                                            "class": "MyComponent",
+                                            "classPath": "my/my.component"
+                                        },
+                                        "label": {
+                                            "icon": "sentiment_satisfied_alt",
+                                            "text": "My Component tab"
+                                        },
+                                        "canBeDeleted": false,
+                                        "order": -2
+                                    }
                                 ]
                             }
                         },

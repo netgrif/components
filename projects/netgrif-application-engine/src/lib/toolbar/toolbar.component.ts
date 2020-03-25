@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {SelectLanguageService} from './select-language.service';
 
 @Component({
@@ -14,10 +15,23 @@ export class ToolbarComponent implements OnInit {
     @Input()
     public appName: string;
 
-    constructor(public selectLanguageService: SelectLanguageService) {
+    @Input()
+    public logoSrc: string;
+
+    @Input()
+    public logoAlt: string;
+
+    constructor(private translate: TranslateService, private selectLangService: SelectLanguageService) {
     }
 
     ngOnInit() {
     }
 
+    setLang(lang: string): void {
+        this.selectLangService.setLanguage(lang);
+    }
+
+    activeLang(lang: string): boolean {
+        return this.translate.currentLang === lang;
+    }
 }

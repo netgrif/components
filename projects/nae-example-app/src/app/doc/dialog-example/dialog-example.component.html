@@ -1,0 +1,10 @@
+<nae-app-documentation [liveExample]="panelExample"
+                       [mainTitle]="TITLE"
+                       [mainDescription]="DESCRIPTION"
+                       [apiModuleImport]="'PanelModule'"></nae-app-documentation>
+
+<ng-template #panelExample>
+    <button mat-raised-button (click)="simple()">Simple</button>
+    <button mat-raised-button (click)="question()">Question</button>
+    <button mat-raised-button (click)="answer()">Question with Answer</button>
+</ng-template>

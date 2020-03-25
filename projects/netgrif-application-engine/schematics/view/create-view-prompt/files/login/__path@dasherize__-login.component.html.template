@@ -1,0 +1,4 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="fill-all-space login-background">
+    <nae-login-panel class="login-card-layout" fxFlex.xs="100">
+    </nae-login-panel>
+</div>

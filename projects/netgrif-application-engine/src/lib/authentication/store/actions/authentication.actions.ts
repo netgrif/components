@@ -1,6 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 import {User} from '../../models/user';
-import Credentials from '../../models/credentials';
+import {Credentials} from '../../models/credentials';
 
 export enum AuthenticationActionTypes {
     LOGIN = '[AUTH] Login',

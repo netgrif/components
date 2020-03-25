@@ -9,6 +9,7 @@ import {CovalentCommonModule, CovalentLayoutModule, CovalentStepsModule} from '@
     declarations: [],
     imports: [
         CommonModule,
+        CovalentCommonModule,
         CovalentHighlightModule,
         CovalentMarkdownModule
     ],

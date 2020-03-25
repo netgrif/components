@@ -1,0 +1,12 @@
+<nae-app-documentation [liveExample]="panelExample"
+                       [mainTitle]="TITLE"
+                       [mainDescription]="DESCRIPTION"
+                       [apiModuleImport]="'PanelModule'"></nae-app-documentation>
+
+<ng-template #panelExample>
+    <button mat-raised-button color="primary" (click)="info()">Info</button>
+    <button mat-raised-button color="warn" (click)="err()">Error</button>
+    <button mat-raised-button color="accent" (click)="war()">Warning</button>
+    <button mat-raised-button (click)="gen()">Generic</button>
+</ng-template>
+
