@@ -1,13 +1,13 @@
 import {InjectionToken, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Resources} from '../../panel/task-panel/task-panel-content/resources';
+import {DataGroup} from '../../resources/interface/data-groups';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+    declarations: [],
+    imports: [
+        CommonModule
+    ]
 })
 export class TabDataInjectionTokenModule { }
 
-export const NAE_TASK_DATA = new InjectionToken<Resources>('NaeTaskData');
+export const NAE_TASK_DATA = new InjectionToken<Array<DataGroup>>('NaeTaskData');

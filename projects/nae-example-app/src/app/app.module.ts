@@ -17,6 +17,8 @@ import {
     QuestionDialogComponent,
     TabsModule,
     DataFieldsModule,
+    ResourceProvider
+    DataFieldsModule,
     ToolbarModule,
     HeaderModule
 } from '@netgrif/application-engine';
@@ -45,6 +47,9 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {HttpClientModule} from '@angular/common/http';
+import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
 
 @NgModule({
     declarations: [
@@ -63,10 +68,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveTextFieldComponent,
         CaseHeaderExampleComponent,
         TaskHeaderExampleComponent
-        ReactiveTextFieldComponent,
         ToolbarExampleComponent
+        CaseResourceExampleComponent,
+        TaskResourceExampleComponent
     ],
     imports: [
+        HttpClientModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -104,6 +111,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         TranslateService,
         TranslatePipe,
         TranslateStore
+    ],
+    providers: [{
+        provide: ConfigurationService,
+        useClass: NaeExampleAppConfigurationService
+    },
+        ResourceProvider
     ],
     bootstrap: [AppComponent]
 })

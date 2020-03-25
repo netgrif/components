@@ -9,6 +9,13 @@ export interface Validation {
     validationMessage: string;
 }
 
+export interface Layout {
+    x: number;
+    y: number;
+    cols: number;
+    rows: number;
+}
+
 export enum MaterialAppearance {
     LEGACY = 'legacy',
     STANDARD = 'standard',

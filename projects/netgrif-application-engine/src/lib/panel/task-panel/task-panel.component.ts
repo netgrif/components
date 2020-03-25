@@ -12,7 +12,7 @@ import {NAE_TASK_DATA} from '../../panel-list/task-data-injection-token/task-dat
 })
 export class TaskPanelComponent implements OnInit {
 
-    @Input() resources: any[];
+    @Input() resources: any;
     @Input() taskPanelDefinition: TaskPanelDefinition;
     @Input() panelContentComponent: Type<any>;
 
