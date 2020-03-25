@@ -1,5 +1,20 @@
 <nae-data-field-template *ngIf="!dataField.behavior.hidden"
-                         [dataField]="dataField">
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="fieldTemplate">
 </nae-data-field-template>
+
+<ng-template #fieldTemplate let-showLargeLayout="showLargeLayout">
+    <nae-md2-datepicker type="datetime"
+                        title="{{dataField.title}}"
+                        placeholder="{{dataField.placeholder}}"
+                        [showLabel]="!showLargeLayout.value"
+                        [disabled]="dataField.disabled"
+                        [required]="dataField.behavior.required"
+                        [openOnFocus]="true"
+                        [mode]="'portrait'"
+                        [format]="'d.M.y H:mm'"
+                        [hint]="dataField.description"
+                        [appearance]="dataField.materialAppearance"></nae-md2-datepicker>
+</ng-template>
 
 
