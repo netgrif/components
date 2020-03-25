@@ -135,7 +135,7 @@ export abstract class AbstractTaskJsonResourceService {
      */
     // {{baseUrl}}/api/task/:id/data
     public setData(taskId: string, body: object): Observable<ChangedFieldContainer> {
-        return this.provider.post$('task/' + taskId + '/data', this.SERVER_URL, body).pipe(map(r => changeType(r, 'dataGroups')));
+        return this.provider.post$('task/' + taskId + '/data', this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
     }
 
     // ------------- FILE ------------

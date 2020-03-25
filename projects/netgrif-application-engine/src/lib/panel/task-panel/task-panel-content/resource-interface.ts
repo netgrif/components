@@ -23,11 +23,3 @@ export interface DataFieldResource {
     formatting?: string;
     roles?: any[];
 }
-
-export interface DataGroupResource {
-    fields: DataFieldResource[];
-    title: string;
-    alignment: string;
-    stretch: boolean;
-    cols?: number;
-}

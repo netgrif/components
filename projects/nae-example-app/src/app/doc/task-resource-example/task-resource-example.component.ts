@@ -69,7 +69,7 @@ export class TaskResourceExampleComponent implements OnInit {
     }
 
     getTaskDataFields() {
-        this.taskJsonResourceService.getData('5e7a0cd89ceec71789c2bc68').subscribe(dataGroups => {
+        this.taskJsonResourceService.getData('5e7b171d9ceec7242f0e068f').subscribe(dataGroups => {
             this.taskDataGroups = [];
             dataGroups.forEach(group => {
                 const dataGroup: DataField<any>[] = [];
@@ -78,6 +78,15 @@ export class TaskResourceExampleComponent implements OnInit {
                         dataGroup.push(...group.fields._embedded[item].map(df => this.fieldConvertorService.toClass(df)));
                     });
                 }
+                dataGroup.forEach(field => {
+                    field.valueChanges().subscribe(valueChanged => {
+                        const body = {};
+                        body[field.stringId] = {type: this.fieldConvertorService.resolveType(field), value: valueChanged};
+                        this.taskJsonResourceService.setData('5e7b171d9ceec7242f0e068f', body).subscribe( r => {
+                            console.log(r);
+                        });
+                    });
+                });
                 this.taskDataGroups.push({
                     fields: dataGroup,
                     stretch: group.stretch,

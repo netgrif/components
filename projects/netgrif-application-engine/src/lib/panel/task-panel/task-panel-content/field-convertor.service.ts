@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {DataFieldResource} from './resource-service';
+import {Injectable} from '@angular/core';
+import {DataFieldResource} from './resource-interface';
 import {DataField, MaterialAppearance} from '../../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
 import {TextField, TextFieldView} from '../../../data-fields/text-field/models/text-field';
@@ -22,13 +22,14 @@ import {ButtonField} from '../../../data-fields/button-field/models/button-field
 import {FileField} from '../../../data-fields/file-field/models/file-field';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FieldConvertorService {
 
-  constructor() { }
+    constructor() {
+    }
 
-    toClass(item: DataFieldResource): DataField<any> {
+    public toClass(item: DataFieldResource): DataField<any> {
         switch (item.type) {
             case 'boolean':
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
@@ -95,6 +96,30 @@ export class FieldConvertorService {
                     item.placeholder, item.description, item.layout);
             case 'file':
                 return new FileField(item.stringId, item.name, item.behavior, undefined, item.placeholder, item.description, item.layout);
+        }
+    }
+
+    public resolveType(item: DataField<any>) {
+        if (item instanceof BooleanField) {
+            return 'boolean';
+        } else if (item instanceof ButtonField) {
+            return 'button';
+        } else if (item instanceof TextField) {
+            return 'text';
+        } else if (item instanceof EnumerationField) {
+            return 'enumeration';
+        } else if (item instanceof NumberField) {
+            return 'number';
+        } else if (item instanceof MultichoiceField) {
+            return 'multichoice';
+        } else if (item instanceof DateField) {
+            return 'date';
+        } else if (item instanceof DateTimeField) {
+            return 'dateTime';
+        } else if (item instanceof FileField) {
+            return 'file';
+        } else if (item instanceof UserField) {
+            return 'user';
         }
     }
 }

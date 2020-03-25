@@ -2,42 +2,29 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
 import {NAE_TASK_DATA} from '../../../panel-list/task-data-injection-token/task-data-injection-token.module';
-import {DataField} from '../../../data-fields/models/abstract-data-field';
-import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
-import {ButtonField} from '../../../data-fields/button-field/models/button-field';
-import {TextField} from '../../../data-fields/text-field/models/text-field';
-import {MultichoiceField} from '../../../data-fields/multichoice-field/models/multichoice-field';
-import {NumberField} from '../../../data-fields/number-field/models/number-field';
-import {EnumerationField} from '../../../data-fields/enumeration-field/models/enumeration-field';
-import {DateTimeField} from '../../../data-fields/date-time-field/models/date-time-field';
-import {DateField} from '../../../data-fields/date-field/models/date-field';
-import {FileField} from '../../../data-fields/file-field/models/file-field';
-import {UserField} from '../../../data-fields/user-field/models/user-field';
+import {FieldConvertorService} from './field-convertor.service';
 
 @Component({
     selector: 'nae-task-panel-content',
     templateUrl: './task-panel-content.component.html',
     styleUrls: ['./task-panel-content.component.scss']
 })
-export class TaskPanelContentComponent implements OnInit {
+export class TaskPanelContentComponent {
     dataSource: any[];
     formCols: number;
 
-    constructor(@Inject(NAE_TASK_DATA) private taskResources) {
+    constructor(@Inject(NAE_TASK_DATA) private _taskResources, private _fieldConvertor: FieldConvertorService) {
         // TODO : cols from task
         this.formCols = 4;
         console.time('count');
+        if (this._taskResources !== undefined) {
+            this.dataSource = this.fillBlankSpace(this._taskResources, this.formCols);
+        }
         console.timeEnd('count');
     }
 
     private static newGridRow(cols: number): Array<GridFiller> {
         return [new GridFiller(0, cols - 1)];
-    }
-
-    ngOnInit() {
-        if (this.taskResources !== undefined) {
-            this.dataSource = this.fillBlankSpace(this.taskResources, this.formCols);
-        }
     }
 
     fillBlankSpace(resource: any[], columnCount: number): Array<GridLayoutElement> {
@@ -94,7 +81,7 @@ export class TaskPanelContentComponent implements OnInit {
                         grid[newRow] = [];
                         if (!dataField.behavior.hidden) {
                             returnResource.push({
-                                item: dataField, type: this.resolveType(dataField),
+                                item: dataField, type: this._fieldConvertor.resolveType(dataField),
                                 layout: {x: 0, y: newRow, cols: columnGroup, rows: 1}
                             });
                         }
@@ -123,7 +110,7 @@ export class TaskPanelContentComponent implements OnInit {
                                         newFillers.push(...filler.fillersAfterCover(columnStart, columnEnd));
                                     }
                                     returnResource.push({
-                                        item: dataField, type: this.resolveType(dataField),
+                                        item: dataField, type: this._fieldConvertor.resolveType(dataField),
                                         layout: {x: columnStart, y: newRow, cols: columnGroup - columnEnd, rows: 1}
                                     });
                                 } else if (dataGroup.alignment === 'end' && (count + 1) === dataGroup.fields.length) {
@@ -131,7 +118,7 @@ export class TaskPanelContentComponent implements OnInit {
                                         newFillers.push(...filler.fillersAfterCover(columnCenter, columnGroup - 1));
                                     }
                                     returnResource.push({
-                                        item: dataField, type: this.resolveType(dataField),
+                                        item: dataField, type: this._fieldConvertor.resolveType(dataField),
                                         layout: {x: columnCenter, y: newRow, cols: columnGroup - columnCenter, rows: 1}
                                     });
                                 } else {
@@ -139,7 +126,7 @@ export class TaskPanelContentComponent implements OnInit {
                                         newFillers.push(...filler.fillersAfterCover(0, columnCenter - 1));
                                     }
                                     returnResource.push({
-                                        item: dataField, type: this.resolveType(dataField),
+                                        item: dataField, type: this._fieldConvertor.resolveType(dataField),
                                         layout: {x: 0, y: newRow, cols: columnCenter, rows: 1}
                                     });
                                 }
@@ -154,7 +141,7 @@ export class TaskPanelContentComponent implements OnInit {
                                 }
                             } else {
                                 returnResource.push({
-                                    item: dataField, type: this.resolveType(dataField),
+                                    item: dataField, type: this._fieldConvertor.resolveType(dataField),
                                     layout: {x: columnCenter, y: row, cols: columnGroup - columnCenter, rows: 1}
                                 });
                                 grid[row] = [];
@@ -169,7 +156,7 @@ export class TaskPanelContentComponent implements OnInit {
         console.log(grid);
         resource.forEach(dataGroup => {
             returnResource.push(...dataGroup.fields.filter(item => !item.behavior.hidden && item.layout !== undefined)
-                .map(item => ({item, type: this.resolveType(item), layout: item.layout})));
+                .map(item => ({item, type: this._fieldConvertor.resolveType(item), layout: item.layout})));
         });
         let encounterFirst = false;
         for (let y = grid.length - 1; y > 0; y--) {
@@ -204,30 +191,6 @@ export class TaskPanelContentComponent implements OnInit {
     private addGridRows(grid: Array<Array<GridFiller>>, newRowCount: number, columnCount: number): void {
         while (grid.length < newRowCount) {
             grid.push(TaskPanelContentComponent.newGridRow(columnCount));
-        }
-    }
-
-    private resolveType(item: DataField<any>) {
-        if (item instanceof BooleanField) {
-            return 'boolean';
-        } else if (item instanceof ButtonField) {
-            return 'button';
-        } else if (item instanceof TextField) {
-            return 'text';
-        } else if (item instanceof EnumerationField) {
-            return 'enumeration';
-        } else if (item instanceof NumberField) {
-            return 'number';
-        } else if (item instanceof MultichoiceField) {
-            return 'multichoice';
-        } else if (item instanceof DateField) {
-            return 'date';
-        } else if (item instanceof DateTimeField) {
-            return 'dateTime';
-        } else if (item instanceof FileField) {
-            return 'file';
-        } else if (item instanceof UserField) {
-            return 'user';
         }
     }
 }
