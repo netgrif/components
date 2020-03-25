@@ -9,19 +9,18 @@ export class DateTimePickerComponent {
     readonly TITLE = 'Date Time picker DEMO';
     readonly DESCRIPTION = 'Date Time picker DEMO';
 
+    private pType = 'date';
     set type(val: string) {
-        this._type = val;
+        this.pType = val;
         this.dateFormat = null;
     }
     get type() {
-        return this._type;
+        return this.pType;
     }
     isRequired = false;
     isDisabled = false;
     isOpenOnFocus = false;
     today: Date = new Date();
-
-    private _type = 'date';
 
     types: Array<any> = [
         { text: 'Date', value: 'date' },

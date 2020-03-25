@@ -25,6 +25,10 @@
                                     #dateControl="ngModel"
                                     [id]="customID"
                                     #birthday></nae-md2-datepicker>
+                <span class="error-helper" *ngIf="dateControl.touched && dateControl.errors?.required">Date is Required!</span>
+                <span class="error-helper" *ngIf="dateControl.hasError('md2DatepickerMin')">Too early!</span>
+                <span class="error-helper" *ngIf="dateControl.hasError('md2DatepickerMax')">Too late!</span>
+                <span class="error-helper" *ngIf="dateControl.hasError('md2DatepickerFilter')">Date unavailable!</span>
                 <nae-md2-datepicker name="mindate"
                                     placeholder="Choose minimum date value for the picker"
                                     [(ngModel)]="minDate"
@@ -40,10 +44,6 @@
                                     [touchUi]="touch"
                                     [format]="dateFormat"
                                     #maxDateControl="ngModel"></nae-md2-datepicker>
-                <span class="error-helper" *ngIf="dateControl.touched && dateControl.errors?.required">Date is Required!</span>
-                <span class="error-helper" *ngIf="dateControl.hasError('md2DatepickerMin')">Too early!</span>
-                <span class="error-helper" *ngIf="dateControl.hasError('md2DatepickerMax')">Too late!</span>
-                <span class="error-helper" *ngIf="dateControl.hasError('md2DatepickerFilter')">Date unavailable!</span>
                 <p> Value: {{ date }} </p>
                 <p> Touched: {{ dateControl.touched }} </p>
                 <p> Dirty: {{ dateControl.dirty }} </p>

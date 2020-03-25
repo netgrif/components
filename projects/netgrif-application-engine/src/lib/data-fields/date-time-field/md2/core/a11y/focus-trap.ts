@@ -138,11 +138,11 @@ export class FocusTrap {
 
         // Iterate in DOM order. Note that IE doesn't have `children` for SVG so we fall
         // back to `childNodes` which includes text nodes, comments etc.
-        const children = root.children || root.childNodes;
+        const children = Array.from(root.children || root.childNodes);
 
-        for (let i = 0; i < children.length; i++) {
-            const tabbableChild = children[i].nodeType === Node.ELEMENT_NODE ?
-                this._getFirstTabbableElement(children[i] as HTMLElement) :
+        for (const child of children) {
+            const tabbableChild = child.nodeType === Node.ELEMENT_NODE ?
+                this._getFirstTabbableElement(child as HTMLElement) :
                 null;
 
             if (tabbableChild) {
