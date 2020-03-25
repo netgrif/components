@@ -39,7 +39,7 @@ export class DomPortalHost extends BasePortalHost {
             componentRef = portal.viewContainerRef.createComponent(
                 componentFactory,
                 portal.viewContainerRef.length,
-                portal.injector || portal.viewContainerRef.parentInjector);
+                portal.injector || portal.viewContainerRef.injector);
 
             this.setDisposeFn(() => componentRef.destroy());
         } else {

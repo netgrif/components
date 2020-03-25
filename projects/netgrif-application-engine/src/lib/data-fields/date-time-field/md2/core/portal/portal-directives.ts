@@ -101,7 +101,7 @@ export class PortalHostDirective extends BasePortalHost implements OnDestroy {
             this._componentFactoryResolver.resolveComponentFactory(portal.component);
         const ref = viewContainerRef.createComponent(
             componentFactory, viewContainerRef.length,
-            portal.injector || viewContainerRef.parentInjector);
+            portal.injector || viewContainerRef.injector);
 
         super.setDisposeFn(() => ref.destroy());
         this._portal = portal;
