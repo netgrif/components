@@ -1,7 +1,11 @@
+.inline-control {
+    display: inline-block;
+    width: 150px;
+    margin-right: 16px;
+    padding: 16px 0;
+    vertical-align: top;
+}
+
 .error-helper {
      color: #dd2c00;
  }
-
-.input-align {
-    padding-right: 16px;
-}

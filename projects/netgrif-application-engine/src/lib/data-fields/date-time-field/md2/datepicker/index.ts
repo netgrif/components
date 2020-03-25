@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {StyleModule, OverlayModule, PortalModule, A11yModule} from '../core';
 import {Md2DatepickerComponent, Md2DatepickerContentComponent} from './datepicker/datepicker';
-import {Md2DatepickerToggleComponent} from './datepicker-toggle/datepicker-toggle';
+import {Md2DatepickerToggle} from './datepicker-toggle/datepicker-toggle';
 import {Md2CalendarComponent} from './calendar/calendar';
 import {Md2MonthViewComponent} from './month-view/month-view';
 import {Md2YearViewComponent} from './year-view/year-view';
@@ -36,7 +36,7 @@ export * from './date-util';
     ],
     exports: [
         Md2DatepickerComponent,
-        Md2DatepickerToggleComponent,
+        Md2DatepickerToggle,
         Md2CalendarComponent,
         Md2CalendarBodyComponent,
         Md2CalendarComponent,
@@ -48,7 +48,7 @@ export * from './date-util';
     declarations: [
         Md2DatepickerComponent,
         Md2DatepickerContentComponent,
-        Md2DatepickerToggleComponent,
+        Md2DatepickerToggle,
         Md2CalendarComponent,
         Md2MonthViewComponent,
         Md2YearViewComponent,

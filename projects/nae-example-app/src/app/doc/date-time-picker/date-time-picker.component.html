@@ -6,8 +6,29 @@
 <ng-template #exampleBody>
     <!-- DEMO from https://github.com/Promact/md2/blob/master/src/demo-app/datepicker/datepicker-demo.html -->
     <div class="demo-datepicker">
+        <h1>Datepicker</h1>
+        <hr />
         <div class="card">
+            <div class="header">
+                <h3 class="title">Basic Date Picker</h3>
+            </div>
             <form class="content">
+                <nae-md2-datepicker name="mindate"
+                                    placeholder="Minimum Date"
+                                    [(ngModel)]="minDate"
+                                    [mode]="mode"
+                                    [touchUi]="touch"
+                                    [format]="dateFormat"
+                                    #minDateControl="ngModel"></nae-md2-datepicker>
+                <nae-md2-datepicker name="maxdate"
+                                    placeholder="Maximum Date"
+                                    [(ngModel)]="maxDate"
+                                    [min]="minDate"
+                                    [mode]="mode"
+                                    [touchUi]="touch"
+                                    [format]="dateFormat"
+                                    #maxDateControl="ngModel"></nae-md2-datepicker>
+                <br />
                 <nae-md2-datepicker name="birthdate"
                                     placeholder="Select Date"
                                     [(ngModel)]="date"
@@ -23,61 +44,41 @@
                                     [startView]="startView"
                                     [format]="dateFormat"
                                     #dateControl="ngModel"
-                                    [id]="customID"
-                                    #birthday></nae-md2-datepicker>
+                                    [id]="customID"></nae-md2-datepicker>
+                <br />
                 <span class="error-helper" *ngIf="dateControl.touched && dateControl.errors?.required">Date is Required!</span>
                 <span class="error-helper" *ngIf="dateControl.hasError('md2DatepickerMin')">Too early!</span>
                 <span class="error-helper" *ngIf="dateControl.hasError('md2DatepickerMax')">Too late!</span>
                 <span class="error-helper" *ngIf="dateControl.hasError('md2DatepickerFilter')">Date unavailable!</span>
-                <nae-md2-datepicker name="mindate"
-                                    placeholder="Choose minimum date value for the picker"
-                                    [(ngModel)]="minDate"
-                                    [mode]="mode"
-                                    [touchUi]="touch"
-                                    [format]="dateFormat"
-                                    #minDateControl="ngModel"></nae-md2-datepicker>
-                <nae-md2-datepicker name="maxdate"
-                                    placeholder="Choose maximum date value for the picker"
-                                    [(ngModel)]="maxDate"
-                                    [min]="minDate"
-                                    [mode]="mode"
-                                    [touchUi]="touch"
-                                    [format]="dateFormat"
-                                    #maxDateControl="ngModel"></nae-md2-datepicker>
                 <p> Value: {{ date }} </p>
                 <p> Touched: {{ dateControl.touched }} </p>
                 <p> Dirty: {{ dateControl.dirty }} </p>
                 <p> Status: {{ dateControl.control?.status }} </p>
-                <div fxLayout="row">
-                    <mat-form-field class="input-align">
-                        <mat-label>Picker Type</mat-label>
-                        <mat-select [(value)]="type">
-                            <mat-option *ngFor="let t of types" [value]="t.value">{{ t.text }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="input-align">
-                        <mat-label>Picker Mode</mat-label>
-                        <mat-select [(value)]="mode">
-                            <mat-option *ngFor="let m of modes" [value]="m.value">{{ m.text }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="input-align">
-                        <mat-label>Picker Start View</mat-label>
-                        <mat-select [(value)]="startView">
-                            <mat-option *ngFor="let s of startViews" [value]="s.value">{{ s.text }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="input-align">
-                        <mat-label>Source format</mat-label>
-                        <mat-select [(value)]="dateFormat">
-                            <mat-option *ngFor="let c of dateFormats[type]" [value]="c.value">{{ c.name }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="input-align">
-                        <mat-label>Date Format</mat-label>
-                        <input matInput name="formatInput" type="text" [(ngModel)]="dateFormat">
-                    </mat-form-field>
-                    <div class="inline-control" fxLayout="column">
+                <div>
+                    <div class="inline-control">
+                        <select name="type" [(ngModel)]="type" placeholder="Picker Type">
+                            <option *ngFor="let t of types" [value]="t.value">{{ t.text }}</option>
+                        </select>
+                    </div>
+                    <div class="inline-control">
+                        <select name="mode" [(ngModel)]="mode" placeholder="Picker Mode">
+                            <option *ngFor="let m of modes" [value]="m.value">{{ m.text }}</option>
+                        </select>
+                    </div>
+                    <div class="inline-control">
+                        <select name="startView" [(ngModel)]="startView" placeholder="Picker Start View">
+                            <option *ngFor="let s of startViews" [value]="s.value">{{ s.text }}</option>
+                        </select>
+                    </div>
+                    <div class="inline-control">
+                        <select name="container" [(ngModel)]="dateFormat" placeholder="Source format">
+                            <option *ngFor="let c of dateFormats[type]" [value]="c.value">{{ c.name }}</option>
+                        </select>
+                    </div>
+                    <div class="inline-control">
+                        <input class="md2-input" name="formatInput" [(ngModel)]="dateFormat" placeholder="Date Format">
+                    </div>
+                    <div class="inline-control">
                         <label class="checkbox">
                             <input type="checkbox" name="required" [(ngModel)]="isRequired">
                             <span class="checkbox-handle"></span>Required
@@ -102,10 +103,7 @@
                 </div>
                 <div>
                     <button type="button" button="primary" (click)="setDate()">SET VALUE</button>
-                    <button type="button" button="primary" (click)="minDateControl.reset();maxDateControl.reset();dateControl.reset()">
-                        RESET
-                    </button>
-                    <button [md2DatepickerToggle]="birthday">TOGGLE PICKER</button>
+                    <button type="button" button="primary" (click)="minDateControl.reset();maxDateControl.reset();dateControl.reset()">RESET</button>
                 </div>
             </form>
         </div>
