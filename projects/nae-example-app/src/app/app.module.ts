@@ -34,8 +34,6 @@ import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
 import { DateTimePickerComponent } from './doc/date-time-picker/date-time-picker.component';
-import {Md2DatepickerModule} from '../../../netgrif-application-engine/src/lib/data-fields/date-time-field/md2/datepicker';
-import {MdNativeDateModule} from '../../../netgrif-application-engine/src/lib/data-fields/date-time-field/md2/core/datetime';
 
 @NgModule({
     declarations: [
@@ -68,8 +66,8 @@ import {MdNativeDateModule} from '../../../netgrif-application-engine/src/lib/da
         DialogModule,
         TabsModule,
         DataFieldsModule,
-        Md2DatepickerModule,
-        MdNativeDateModule
+        // Md2DatepickerModule,
+        // MdNativeDateModule
     ],
     entryComponents: [
         NewCaseComponent,
