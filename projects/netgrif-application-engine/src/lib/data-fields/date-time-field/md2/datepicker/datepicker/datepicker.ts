@@ -101,17 +101,26 @@ export const MD2_DATEPICKER_VALIDATORS: any = {
     templateUrl: 'datepicker.html',
     styleUrls: ['datepicker.scss'],
     providers: [MD2_DATEPICKER_VALUE_ACCESSOR, MD2_DATEPICKER_VALIDATORS],
-    host: {
-        role: 'datepicker',
-        '[class.md2-datepicker-disabled]': 'disabled',
-        '[class.md2-datepicker-opened]': 'isOpened',
-        '[attr.aria-label]': 'placeholder',
-        '[attr.aria-required]': 'required.toString()',
-        '[attr.aria-disabled]': 'disabled.toString()',
-    },
     encapsulation: ViewEncapsulation.None,
 })
 export class Md2DatepickerComponent implements OnDestroy, ControlValueAccessor {
+
+    @HostBinding('attr.role') role = 'datepicker';
+    @HostBinding('class.md2-datepicker-disabled') get classDisabled(): boolean {
+        return this._disabled;
+    }
+    @HostBinding('class.md2-datepicker-opened') get classOpened(): boolean {
+        return this.isOpened;
+    }
+    @HostBinding('attr.aria-label') get getPlaceholder(): string {
+        return this.placeholder;
+    }
+    @HostBinding('attr.aria-required') get requiredString(): string {
+        return this.required.toString();
+    }
+    @HostBinding('attr.aria-disabled') get disabledString(): string {
+        return this.disabled.toString();
+    }
 
     @Input()
     get type() {
@@ -557,6 +566,10 @@ export class Md2DatepickerComponent implements OnDestroy, ControlValueAccessor {
 
     /** Open the calendar. */
     open(): void {
+        if (this._disabled) {
+            return;
+        }
+
         if (this.isOpened) {
             return;
         }

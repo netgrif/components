@@ -28,16 +28,16 @@ export class Md2CalendarCell {
  * @docs-private
  */
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: '[md2-calendar-body]',
     templateUrl: 'calendar-body.html',
     styleUrls: ['calendar-body.scss'],
-    host: {
-        class: 'md2-calendar-body',
-    },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Md2CalendarBodyComponent {
+    @HostBinding('attr.class') hostClass = 'md2-calendar-body';
+
     /** The label for the table. (e.g. "Jan 2017"). */
     @Input() label: string;
 
