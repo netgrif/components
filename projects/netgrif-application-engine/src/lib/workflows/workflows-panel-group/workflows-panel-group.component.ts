@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {WorkflowsPanelGroupService} from "./services/workflows-panel-group.service";
-import {TextField} from "../../data-fields/text-field/models/text-field";
-import {WorkflowsPanelContent} from "../../panel/workflows-panel/models/workflows-panel-content";
-import {Behavior} from "../../data-fields/models/behavior";
-//TODO change uploaded to DateTimeField
+import {WorkflowsPanelGroupService} from './services/workflows-panel-group.service';
+import {TextField} from '../../data-fields/text-field/models/text-field';
+import {WorkflowsPanelContent} from '../../panel/workflows-panel/models/workflows-panel-content';
+import {Behavior} from '../../data-fields/models/behavior';
+// TODO change uploaded to DateTimeField
 interface PanelsDataGroup {
-    netIdentifier: TextField,
-    title: TextField,
-    version: TextField,
-    author: TextField,
-    uploaded: TextField
+    netIdentifier: TextField;
+    title: TextField;
+    version: TextField;
+    author: TextField;
+    uploaded: TextField;
 }
 
 @Component({
@@ -29,8 +29,8 @@ export class WorkflowsPanelGroupComponent implements OnInit {
         this.panelsDataGroup = new Map<string, PanelsDataGroup>();
         this.workflowPanelGroupService.workflowPanelDefinitions.forEach(panel => {
             this.panelsDataGroup.set(
-                panel.panelContent.netIdentifier,this.populatePanelDataGroup(panel.panelContent)
-            )
+                panel.panelContent.netIdentifier, this.populatePanelDataGroup(panel.panelContent)
+            );
         });
     }
 
@@ -38,14 +38,14 @@ export class WorkflowsPanelGroupComponent implements OnInit {
      * Populate data fields group for every petri net model
      * @param panelContent Meta information's about Petri net model
      */
-    //TODO change uploaded to DateTimeField
+    // TODO change uploaded to DateTimeField
     private populatePanelDataGroup(panelContent: WorkflowsPanelContent): PanelsDataGroup {
         return {
-            netIdentifier: new TextField('','Net identifier', panelContent.netIdentifier, this.dataFieldsBehaviour),
-            title: new TextField('','Title', panelContent.title, this.dataFieldsBehaviour),
-            version: new TextField('','Version', panelContent.version, this.dataFieldsBehaviour),
-            author: new TextField('','Author', panelContent.author, this.dataFieldsBehaviour),
-            uploaded: new TextField('','Uploaded', 'datumik', this.dataFieldsBehaviour)
+            netIdentifier: new TextField('', 'Net identifier', panelContent.netIdentifier, this.dataFieldsBehaviour),
+            title: new TextField('', 'Title', panelContent.title, this.dataFieldsBehaviour),
+            version: new TextField('', 'Version', panelContent.version, this.dataFieldsBehaviour),
+            author: new TextField('', 'Author', panelContent.author, this.dataFieldsBehaviour),
+            uploaded: new TextField('', 'Uploaded', 'datumik', this.dataFieldsBehaviour)
         };
     }
 

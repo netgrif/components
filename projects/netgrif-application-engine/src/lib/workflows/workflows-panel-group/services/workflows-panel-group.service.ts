@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import {DataDescription} from "../../../header/models/data-description";
-import {PetriNetReference} from "../../../header/models/petri-net-reference";
-import {PreferredHeaders} from "../../../header/models/preferred-headers";
-import {WorkflowPanelDefinition} from "../../../panel/workflows-panel/models/workflows-panels-definition";
-import {Headers} from "../../../header/headers";
-import {Observable} from "rxjs";
-import {HeaderChange} from "../../../header/abstract-header-service";
+import {DataDescription} from '../../../header/models/data-description';
+import {PetriNetReference} from '../../../header/models/petri-net-reference';
+import {PreferredHeaders} from '../../../header/models/preferred-headers';
+import {WorkflowPanelDefinition} from '../../../panel/workflows-panel/models/workflows-panels-definition';
+import {Headers} from '../../../header/headers';
+import {Observable} from 'rxjs';
+import {HeaderChange} from '../../../header/models/user.changes/header-change';
 
 
 
@@ -60,19 +60,19 @@ export class WorkflowsPanelGroupService {
                     author: petriNet.author.fullName,
                     uploaded: petriNet.createdDate
                 }
-            })
+            });
         });
     }
 
     private setColumnTitle(petriNet: PetriNetReference, columnId: string): string {
-        if (this.selectedHeaders[columnId].type == 'meta') {
-            if (this.selectedHeaders[columnId].identifier == 'author') {
+        if (this.selectedHeaders[columnId].type === 'meta') {
+            if (this.selectedHeaders[columnId].identifier === 'author') {
                 return petriNet[this.selectedHeaders[columnId].identifier].fullName;
             } else {
                 return petriNet[this.selectedHeaders[columnId].identifier];
             }
-        } else if (this.selectedHeaders[columnId].type == 'immediate') {
-            return this.getImmediateField(petriNet.immediateData, this.selectedHeaders[columnId].identifier)
+        } else if (this.selectedHeaders[columnId].type === 'immediate') {
+            return this.getImmediateField(petriNet.immediateData, this.selectedHeaders[columnId].identifier);
         }
     }
 
@@ -84,7 +84,7 @@ export class WorkflowsPanelGroupService {
     private getImmediateField(immediateData: Array<DataDescription>, stringId: string) {
         let title = '';
         immediateData.forEach(immediateField => {
-            if (immediateField.stringId == stringId) {
+            if (immediateField.stringId === stringId) {
                 title = immediateField.title;
                 return;
             }

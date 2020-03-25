@@ -8,6 +8,7 @@ import {SortChangeDescription} from './models/user.changes/sort-change-descripti
 import {SearchChangeDescription} from './models/user.changes/search-change-description';
 import {EditChangeDescription} from './models/user.changes/edit-change-description';
 import {HeaderChange} from './models/user.changes/header-change';
+import {DataDescription} from './models/data-description';
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 export type HeaderMode = 'sort' | 'search' | 'edit';
@@ -56,7 +57,7 @@ export class AbstractHeaderService implements OnDestroy {
         Object.keys(this.headers.selected).forEach(columnId => {
             if (columnId === active) {
                 sortChangeDescription = {
-                    columnId: columnId,
+                    columnId,
                     identifier: this.headers.selected[columnId].identifier,
                     sortMode: direction,
                     title: this.headers.selected[columnId].title,
@@ -67,9 +68,9 @@ export class AbstractHeaderService implements OnDestroy {
                 this.headers.selected[columnId].sortMode = '';
             }
         });
-        //TODO pair the search request with the back-end and then return the searched petri net models
-        this._changeHeader$.next({headerType: this.headerType, type: "sort", description: sortChangeDescription});
-        return this.headers
+        // TODO pair the search request with the back-end and then return the searched petri net models
+        this._changeHeader$.next({headerType: this.headerType, type: 'sort', description: sortChangeDescription});
+        return this.headers;
     }
 
     /**
@@ -78,19 +79,19 @@ export class AbstractHeaderService implements OnDestroy {
      * @param columnId Identifier of column where is search input placed
      * @param searchedQuery User-written value for search
      */
-    public onUserKeyupSearch(columnId: string, searchedQuery: any): Headers {
+    public onUserSearch(columnId: string, searchedQuery: any): Headers {
         this.headers.selected[columnId].searchQuery = searchedQuery;
-        let searchChangeDescription: SearchChangeDescription = {
-            columnId: columnId,
+        const searchChangeDescription: SearchChangeDescription = {
+            columnId,
             identifier: this.headers.selected[columnId].identifier,
             searchQuery: searchedQuery,
             title: this.headers.selected[columnId].title,
             type: this.headers.selected[columnId].type
         };
-        //TODO pair the search request with the back-end and then return the searched petri net models
+        // TODO pair the search request with the back-end and then return the searched petri net models
         this._changeHeader$.next({
             headerType: this.headerType,
-            type: "search",
+            type: 'search',
             description: searchChangeDescription
         });
         return this.headers;
@@ -100,35 +101,35 @@ export class AbstractHeaderService implements OnDestroy {
      * Change active header and and titles of panels
      * @param columnId Identifier of selected column
      * @param groupType Divides whether the header is from immediate or meta data
-     * @param stringId -
-     * @param title -
+     * @param field Description of data field contains title, string id and  data type
      */
-    public onColumnEdit(columnId: string, groupType: string, stringId: string, title: string): Headers {
+    public onColumnEdit(columnId: string, groupType: string, field: DataDescription): Headers {
         this._headers.selected[columnId] = {
             type: groupType === 'META DATA' ? 'meta' : 'immediate',
-            identifier: stringId,
-            title,
+            identifier: field.stringId,
+            title: field.title,
             sortMode: '',
             searchQuery: '',
-            columnId
+            columnId,
+            fieldType: field.type
         };
         // TODO pair the search request with the back-end and then return the searched petri net models
-        this.setWorkflowPanelTitles();
+        this.setPanelsTitles();
         this._changeHeader$.next({
             headerType: this.headerType,
-            type: "edit",
+            type: 'edit',
             description: {preferredHeaders: this.headers.selected}
         });
         return this._headers;
     }
 
-    public setWorkflowPanelTitles(): void {
+    public setPanelsTitles(): void {
     }
 
     /**
      * Change selected header mode there are three possible modes: SORT, SEARCH and EDIT
-     * @param newMode
-     * @param saveLastMode
+     * @param newMode -
+     * @param saveLastMode -
      */
     public changeMode(newMode: HeaderMode, saveLastMode = true): void {
         if (saveLastMode) {
@@ -140,7 +141,7 @@ export class AbstractHeaderService implements OnDestroy {
     }
 
     public confirmEditMode(): void {
-        this._headers.mode = this._headers.lastMode
+        this._headers.mode = this._headers.lastMode;
     }
 
     /**
@@ -150,14 +151,18 @@ export class AbstractHeaderService implements OnDestroy {
     public revertEditMode(): void {
         this._headers.mode = this._headers.lastMode;
         this._headers.selected = this._headers.lastSelected;
+        this.setPanelsTitles();
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._changeHeader$.next({
             headerType: this.headerType,
-            type: "edit",
+            type: 'edit',
             description: {preferredHeaders: this._headers.selected}
         });
     }
 
+    /**
+     * Provides Observable for all changes in header
+     */
     get headerChange$(): Observable<HeaderChange> {
         return this._changeHeader$.asObservable();
     }

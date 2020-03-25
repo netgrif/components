@@ -71,7 +71,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'title',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column0'
+                columnId: 'column0',
+                fieldType: 'text'
             },
             column1: {
                 type: 'meta',
@@ -79,7 +80,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'author',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column1'
+                columnId: 'column1',
+                fieldType: 'text'
             },
             column2: {
                 type: 'immediate',
@@ -87,7 +89,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'Zoznam vozidiel',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column2'
+                columnId: 'column2',
+                fieldType: 'enumeration'
             },
             column3: {
                 type: 'immediate',
@@ -95,7 +98,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'Názov súboru',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column3'
+                columnId: 'column3',
+                fieldType: 'text'
             },
             column4: {
                 type: 'immediate',
@@ -103,7 +107,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'Mortage prve poinne',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column4'
+                columnId: 'column4',
+                fieldType: 'text'
             }
         };
         this.setFieldsGroupData(this.petriNetReferences);

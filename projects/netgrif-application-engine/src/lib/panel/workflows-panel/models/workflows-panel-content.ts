@@ -1,7 +1,7 @@
 export interface WorkflowsPanelContent {
-    netIdentifier: string,
-    title: string,
-    version: string,
-    author: string,
-    uploaded: Date
+    netIdentifier: string;
+    title: string;
+    version: string;
+    author: string;
+    uploaded: Date;
 }

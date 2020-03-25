@@ -13,7 +13,7 @@ export class WorkflowsHeaderService extends AbstractHeaderService {
     constructor(public workflowPanelGroupService: WorkflowsPanelGroupService) {
         super('workflow');
         this._headers = new Headers();
-        //TODO simulated resource remove in future
+        // TODO simulated resource remove in future
         this.petriNetReferences.push({
             author: {
                 email: 'example email',
@@ -69,7 +69,7 @@ export class WorkflowsHeaderService extends AbstractHeaderService {
             title: 'Financial data',
             version: '1.0.0'
         });
-        //TODO simulated resource remove in future
+        // TODO simulated resource remove in future
         this._headers.selected = {
             column0: {
                 type: 'meta',

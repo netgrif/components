@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WorkflowPanelDefinition} from "./models/workflows-panels-definition";
-import {MatExpansionPanel} from "@angular/material/expansion";
+import {WorkflowPanelDefinition} from './models/workflows-panels-definition';
+import {MatExpansionPanel} from '@angular/material/expansion';
 
 @Component({
     selector: 'nae-workflows-panel',
@@ -30,7 +30,7 @@ export class WorkflowsPanelComponent implements OnInit {
     }
 
     public setPanelRef(panelRef: MatExpansionPanel) {
-        this.panelRef = panelRef
+        this.panelRef = panelRef;
     }
 
 }
