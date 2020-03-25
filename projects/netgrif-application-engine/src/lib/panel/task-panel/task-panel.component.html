@@ -9,7 +9,7 @@
             <span fxFlex *ngFor="let field of taskPanelDefinition.featuredFields;">{{field}}</span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
-            <button mat-icon-button (click)="show($event)" *ngIf="!showSpinner" [matMenuTriggerFor]="menu">
+            <button mat-icon-button (click)="show($event);" *ngIf="!showSpinner" [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">

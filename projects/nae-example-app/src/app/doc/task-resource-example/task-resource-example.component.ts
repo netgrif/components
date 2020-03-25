@@ -27,7 +27,7 @@ export class TaskResourceExampleComponent implements OnInit {
     taskPanelDef: TaskPanelDefinition;
 
     constructor(private taskJsonResourceService: TaskJsonResourceService, private fieldConvertorService: FieldConvertorService) {
-        this.taskPanelDef = {featuredFields: [], panelIcon: 'home', panelIconField: 'home'};
+        this.taskPanelDef = {featuredFields: [], panelIcon: 'home', panelIconField: 'home', taskId: ''};
     }
 
     ngOnInit(): void {

@@ -12,7 +12,12 @@ import {
     ChangedFieldContainer,
     FileResource
 } from 'netgrif-application-engine';
+import {HttpParams} from '@angular/common/http';
 
+export type Params =
+    HttpParams | {
+    [param: string]: string | string[];
+};
 
 export abstract class AbstractTaskJsonResourceService {
     protected constructor(protected provider: ResourceProvider, protected SERVER_URL: string) {
@@ -69,7 +74,7 @@ export abstract class AbstractTaskJsonResourceService {
      */
     // {{baseUrl}}/api/task/finish/:id
     public finishTask(taskId: string): Observable<Array<Task>> {
-        return this.provider.get$('task/count' + taskId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('task/finish/' + taskId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -77,8 +82,8 @@ export abstract class AbstractTaskJsonResourceService {
      * POST
      */
     // {{baseUrl}}/api/task/search
-    public searchTask(body: object): Observable<Array<Task>> {
-        return this.provider.post$('task/count', this.SERVER_URL, body).pipe(map(r => changeType(r, 'tasks')));
+    public searchTask(body: object, params?: Params): Observable<Array<Task>> {
+        return this.provider.post$('task/search', this.SERVER_URL, body, undefined, params).pipe(map(r => changeType(r, 'tasks')));
     }
 
     // ----------- CASE ----------

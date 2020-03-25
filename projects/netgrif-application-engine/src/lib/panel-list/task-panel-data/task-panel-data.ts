@@ -1,7 +1,7 @@
 import {TaskPanelDefinition} from '../../panel/task-panel/task-panel-definition';
-import {Resources} from '../../panel/task-panel/task-panel-content/resources';
+import {DataGroup} from '../../resources/interface/data-groups';
 
 export interface TaskPanelData {
     header: TaskPanelDefinition;
-    resource: Resources;
+    resource?: DataGroup;
 }

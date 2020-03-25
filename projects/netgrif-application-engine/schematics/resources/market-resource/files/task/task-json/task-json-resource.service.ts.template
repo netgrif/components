@@ -3,6 +3,10 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {changeType, Count, Task, ResourceProvider, MessageResource, DataGroups, TaskReference, ChangedFieldContainer, FileResource} from 'netgrif-application-engine';
 
+export type Params =
+    HttpParams | {
+    [param: string]: string | string[];
+};
 
 export abstract class AbstractTaskJsonResourceService {
     protected constructor(protected provider: ResourceProvider, protected SERVER_URL: string) {
@@ -53,23 +57,23 @@ export abstract class AbstractTaskJsonResourceService {
         return this.provider.post$('task/delegate' + taskId, this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
     }
 
-    /**
-     * Finish task
-     * GET
-     */
-    // {{baseUrl}}/api/task/finish/:id
-    public finishTask(taskId: string): Observable<Array<Task>> {
-        return this.provider.get$('task/count' + taskId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
-    }
+   /**
+    * Finish task
+    * GET
+    */
+   // {{baseUrl}}/api/task/finish/:id
+   public finishTask(taskId: string): Observable<Array<Task>> {
+       return this.provider.get$('task/finish/' + taskId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+   }
 
-    /**
-     * Generic task search
-     * POST
-     */
-    // {{baseUrl}}/api/task/search
-    public searchTask(body: object): Observable<Array<Task>> {
-        return this.provider.post$('task/count', this.SERVER_URL, body).pipe(map(r => changeType(r, 'tasks')));
-    }
+   /**
+    * Generic task search
+    * POST
+    */
+   // {{baseUrl}}/api/task/search
+   public searchTask(body: object, params?: Params): Observable<Array<Task>> {
+        return this.provider.post$('task/search', this.SERVER_URL, body, undefined, params).pipe(map(r => changeType(r, 'tasks')));
+   }
 
     // ----------- CASE ----------
 

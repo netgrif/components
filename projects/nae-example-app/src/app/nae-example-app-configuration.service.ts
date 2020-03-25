@@ -133,12 +133,9 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                             '200'
                         ]
                     }
-                },
-                dark: {
-                    primary: 'blue',
-                    secondary: 'pink'
                 }
-            }
+            },
+            dark: {}
         }
     },
     assets: [

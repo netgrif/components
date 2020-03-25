@@ -10,7 +10,7 @@ export interface DataGroupsResource {
 }
 
 export interface DataGroup {
-    fields: DataField<any>[];
+    fields: Array<DataField<any>>;
     title: string;
     alignment: string;
     stretch: boolean;

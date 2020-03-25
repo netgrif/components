@@ -3,6 +3,7 @@ import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
 import {NAE_TASK_DATA} from '../../../panel-list/task-data-injection-token/task-data-injection-token.module';
 import {FieldConvertorService} from './field-convertor.service';
+import {TaskPanelContentService} from './task-panel-content.service';
 
 @Component({
     selector: 'nae-task-panel-content',
@@ -13,14 +14,13 @@ export class TaskPanelContentComponent {
     dataSource: any[];
     formCols: number;
 
-    constructor(@Inject(NAE_TASK_DATA) private _taskResources, private _fieldConvertor: FieldConvertorService) {
+    constructor(@Inject(NAE_TASK_DATA) private _taskResources, private _fieldConvertor: FieldConvertorService,
+                private taskPanelContentService: TaskPanelContentService) {
         // TODO : cols from task
         this.formCols = 4;
-        console.time('count');
-        if (this._taskResources !== undefined) {
+        this.taskPanelContentService.$shouldCreate.subscribe(() => {
             this.dataSource = this.fillBlankSpace(this._taskResources, this.formCols);
-        }
-        console.timeEnd('count');
+        });
     }
 
     private static newGridRow(cols: number): Array<GridFiller> {

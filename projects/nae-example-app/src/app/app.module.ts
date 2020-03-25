@@ -17,10 +17,9 @@ import {
     QuestionDialogComponent,
     TabsModule,
     DataFieldsModule,
-    ResourceProvider
-    DataFieldsModule,
+    ResourceProvider,
     ToolbarModule,
-    HeaderModule
+    HeaderModule, TaskListModule, CardModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -50,6 +49,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {HttpClientModule} from '@angular/common/http';
 import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
+import { TasksTaskViewComponent } from './views/tasks/tasks-task-view.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     declarations: [
@@ -67,10 +68,11 @@ import {TaskResourceExampleComponent} from './doc/task-resource-example/task-res
         ContentComponent,
         ReactiveTextFieldComponent,
         CaseHeaderExampleComponent,
-        TaskHeaderExampleComponent
-        ToolbarExampleComponent
+        TaskHeaderExampleComponent,
+        ToolbarExampleComponent,
         CaseResourceExampleComponent,
-        TaskResourceExampleComponent
+        TaskResourceExampleComponent,
+        TasksTaskViewComponent
     ],
     imports: [
         HttpClientModule,
@@ -87,7 +89,7 @@ import {TaskResourceExampleComponent} from './doc/task-resource-example/task-res
         DialogModule,
         TabsModule,
         DataFieldsModule,
-        HeaderModule
+        HeaderModule,
         DataFieldsModule,
         ToolbarModule,
         TranslateModule.forRoot({
@@ -96,7 +98,10 @@ import {TaskResourceExampleComponent} from './doc/task-resource-example/task-res
                 useFactory: (HttpLoaderFactory),
                 deps: [HttpClient]
             }
-        })
+        }),
+        MatCardModule,
+        TaskListModule,
+        CardModule
     ],
     entryComponents: [
         NewCaseComponent,
@@ -106,17 +111,15 @@ import {TaskResourceExampleComponent} from './doc/task-resource-example/task-res
         QuestionDialogWithAnswerComponent,
         ContentComponent
     ],
-    providers: [
-        {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
-        TranslateService,
-        TranslatePipe,
-        TranslateStore
-    ],
+
     providers: [{
         provide: ConfigurationService,
         useClass: NaeExampleAppConfigurationService
     },
-        ResourceProvider
+        ResourceProvider,
+        TranslateService,
+        TranslatePipe,
+        TranslateStore
     ],
     bootstrap: [AppComponent]
 })

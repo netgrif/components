@@ -16,7 +16,7 @@ export class PanelExampleComponent implements OnInit {
     constructor(private taskService: TaskJsonResourceService, private fieldConvertorService: FieldConvertorService) {
         this.TITLE = 'Task Panel Component';
         this.DESCRIPTION = 'Description';
-        this.taskPanelDef = {featuredFields : [], panelIcon: 'home', panelIconField: 'home'};
+        this.taskPanelDef = {featuredFields : [], panelIcon: 'home', panelIconField: 'home', taskId: ''};
         this.getTaskDataFields();
     }
 

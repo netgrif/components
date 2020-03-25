@@ -4,6 +4,7 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskPanelContentComponent} from './task-panel-content/task-panel-content.component';
 import {NAE_TASK_DATA} from '../../panel-list/task-data-injection-token/task-data-injection-token.module';
+import {TaskPanelContentService} from './task-panel-content/task-panel-content.service';
 
 @Component({
     selector: 'nae-task-panel',
@@ -21,8 +22,9 @@ export class TaskPanelComponent implements OnInit {
     public panelIcon: string;
     public panelIconField: string;
     public panelRef: MatExpansionPanel;
+    public taskId: string;
 
-    constructor() {
+    constructor(private taskPanelContentService: TaskPanelContentService) {
     }
 
     ngOnInit() {
@@ -34,8 +36,9 @@ export class TaskPanelComponent implements OnInit {
         if (this.taskPanelDefinition !== undefined) {
             this.panelIcon = this.taskPanelDefinition.panelIcon;
             this.panelIconField = this.taskPanelDefinition.panelIconField;
+            this.taskId = this.taskPanelDefinition.taskId;
         } else {
-            this.taskPanelDefinition = {featuredFields: [], panelIcon: '', panelIconField: ''};
+            this.taskPanelDefinition = {featuredFields: [], panelIcon: '', panelIconField: '' , taskId: ''};
         }
         if (this.panelContentComponent === undefined) {
             this.portal = new ComponentPortal(TaskPanelContentComponent, null, injector);
@@ -45,8 +48,14 @@ export class TaskPanelComponent implements OnInit {
     }
 
     public show(event: MouseEvent): boolean {
+        console.log(this.taskId);
         event.stopPropagation();
         return false;
+    }
+
+    log() {
+        this.taskPanelContentService.$shouldCreate.emit();
+        console.log('aaaaa');
     }
 
     public setPanelRef(panelRef: MatExpansionPanel) {
