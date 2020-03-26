@@ -3,6 +3,7 @@ import {DateField} from './models/date-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {MAT_DATE_FORMATS} from '@angular/material';
 
+// https://momentjs.com/docs/#/displaying/format/
 export const DATE_FORMAT = {
     parse: {
         dateInput: 'D.M.YYYY',
