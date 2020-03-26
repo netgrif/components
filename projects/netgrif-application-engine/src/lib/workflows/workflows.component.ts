@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {SideMenuService} from '../side-menu/services/side-menu.service';
+import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
 
 
 @Component({
@@ -8,15 +10,16 @@ import {Component, OnInit} from '@angular/core';
 })
 export class WorkflowsComponent implements OnInit {
 
-    constructor() {
+    @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
+
+    constructor(private _sideMenuService: SideMenuService) {
     }
 
     ngOnInit(): void {
     }
 
-    // TODO
     public onImportNet() {
-        // this._sideMenuService.open(ImportNetComponent);
+        this._sideMenuService.open(ImportNetComponent);
     }
 
 }

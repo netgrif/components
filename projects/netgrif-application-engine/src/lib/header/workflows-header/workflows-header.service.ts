@@ -8,8 +8,6 @@ import {WorkflowsPanelGroupService} from '../../workflows/workflows-panel-group/
 })
 export class WorkflowsHeaderService extends AbstractHeaderService {
 
-    public test$ = this.headerChange$;
-
     constructor(public workflowPanelGroupService: WorkflowsPanelGroupService) {
         super('workflow');
         this._headers = new Headers();
@@ -120,9 +118,6 @@ export class WorkflowsHeaderService extends AbstractHeaderService {
         this.setFieldsGroupData(this.petriNetReferences);
         this.workflowPanelGroupService.headers = this.headers;
         this.workflowPanelGroupService.petriNetReferences = this.petriNetReferences;
-        this.test$.subscribe(value => {
-            console.log(value);
-        });
     }
 
     public setPanelsTitles(): void {

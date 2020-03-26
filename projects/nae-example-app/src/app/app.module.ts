@@ -18,7 +18,7 @@ import {
     TabsModule,
     DataFieldsModule,
     ToolbarModule,
-    HeaderModule
+    HeaderModule, WorkflowsModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -41,6 +41,7 @@ import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.c
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { WorkflowsViewExampleComponent } from './doc/workflows-view-example/workflows-view-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -62,9 +63,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         ContentComponent,
         ReactiveTextFieldComponent,
         CaseHeaderExampleComponent,
-        TaskHeaderExampleComponent
+        TaskHeaderExampleComponent,
         ReactiveTextFieldComponent,
-        ToolbarExampleComponent
+        ToolbarExampleComponent,
+        WorkflowsViewExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -80,7 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         DialogModule,
         TabsModule,
         DataFieldsModule,
-        HeaderModule
+        HeaderModule,
         DataFieldsModule,
         ToolbarModule,
         TranslateModule.forRoot({
@@ -89,7 +91,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                 useFactory: (HttpLoaderFactory),
                 deps: [HttpClient]
             }
-        })
+        }),
+        WorkflowsModule
     ],
     entryComponents: [
         NewCaseComponent,

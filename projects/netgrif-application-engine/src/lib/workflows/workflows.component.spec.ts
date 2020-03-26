@@ -2,15 +2,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WorkflowsComponent} from './workflows.component';
 import {MaterialModule} from '../material/material.module';
-import {WorkflowsPanelGroupComponent} from './workflows-panel-group/workflows-panel-group.component';
-import {SortModeComponent} from '../header/header-modes/sort-mode/sort-mode.component';
-import {SearchModeComponent} from '../header/header-modes/search-mode/search-mode.component';
-import {EditModeComponent} from '../header/header-modes/edit-mode/edit-mode.component';
-import {WorkflowsPanelComponent} from '../panel/workflows-panel/workflows-panel.component';
-import {TextFieldComponent} from '../data-fields/text-field/text-field.component';
 import {Component, Input, TemplateRef} from '@angular/core';
-import {CaseHeaderService} from '../header/case-header/case-header.service';
-import {WorkflowPanelDefinition} from '../panel/workflows-panel/models/workflows-panels-definition';
+import {SideMenuContainerComponent} from '../side-menu/side-menu-container/side-menu-container.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('WorkflowsComponent', () => {
     let component: WorkflowsComponent;
@@ -21,9 +15,10 @@ describe('WorkflowsComponent', () => {
             declarations: [
                 WorkflowsComponent,
                 HeaderStubComponent,
-                WorkflowsPanelGroupStubComponent
+                WorkflowsPanelGroupStubComponent,
+                SideMenuContainerComponent
             ],
-            imports: [MaterialModule]
+            imports: [MaterialModule, NoopAnimationsModule]
         })
             .compileComponents();
     }));

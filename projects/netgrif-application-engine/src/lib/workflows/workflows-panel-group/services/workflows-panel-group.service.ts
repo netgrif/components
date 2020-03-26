@@ -18,7 +18,6 @@ export class WorkflowsPanelGroupService {
     private selectedHeaders: PreferredHeaders;
     private _petriNetReferences: Array<PetriNetReference> = [];
     private _headers: Headers;
-    public test: Observable<HeaderChange>;
 
     constructor() {
     }
@@ -92,7 +91,4 @@ export class WorkflowsPanelGroupService {
         return title;
     }
 
-    public setTest() {
-        this.test.subscribe(value => console.log(value));
-    }
 }
