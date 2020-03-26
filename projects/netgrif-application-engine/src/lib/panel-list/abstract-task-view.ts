@@ -1,8 +1,7 @@
-
 import {Subject} from 'rxjs';
 import {OnInit} from '@angular/core';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
-import {AbstractTaskJsonResourceService} from './abstract-task-service/abstract-task.service';
+import {TaskResourceService} from './abstract-task-service/abstract-task.service';
 import {TaskPanelDefinition} from '../panel/task-panel/task-panel-definition';
 import {ChangedFields} from '../data-fields/models/changed-fields';
 
@@ -10,7 +9,7 @@ export abstract class AbstractTaskView implements OnInit {
 
     public taskPanel: Array<TaskPanelData> = [];
 
-    protected constructor(protected _taskService: AbstractTaskJsonResourceService) {
+    protected constructor(protected _taskService: TaskResourceService) {
     }
 
     ngOnInit() {

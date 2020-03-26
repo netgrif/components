@@ -1,18 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractTaskJsonResourceService, AbstractTaskView} from '@netgrif/application-engine';
-import {TaskExampleAppService} from './task-example-app.service';
-
-
+import {Component} from '@angular/core';
+import {TaskResourceService, AbstractTaskView} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-tasks-task-view',
     templateUrl: './tasks-task-view.component.html',
-    styleUrls: ['./tasks-task-view.component.scss'],
-    providers: [{provide: AbstractTaskJsonResourceService, useClass: TaskExampleAppService}]
+    styleUrls: ['./tasks-task-view.component.scss']
 })
 export class TasksTaskViewComponent extends AbstractTaskView {
 
-    constructor(protected _taskService: AbstractTaskJsonResourceService) {
-        super(_taskService);
+    constructor(taskService: TaskResourceService) {
+        super(taskService);
     }
 }

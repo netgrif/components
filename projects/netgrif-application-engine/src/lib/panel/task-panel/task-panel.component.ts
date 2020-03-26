@@ -8,7 +8,7 @@ import {FieldConvertorService} from './task-panel-content/field-convertor.servic
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
 import {TaskPanelData} from '../../panel-list/task-panel-data/task-panel-data';
-import {AbstractTaskJsonResourceService} from '../../panel-list/abstract-task-service/abstract-task.service';
+import {TaskResourceService} from '../../panel-list/abstract-task-service/abstract-task.service';
 
 @Component({
     selector: 'nae-task-panel',
@@ -28,7 +28,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     public panelRef: MatExpansionPanel;
 
     constructor(private taskPanelContentService: TaskPanelContentService, private fieldConvertorService: FieldConvertorService,
-                private log: LoggerService, private snackBar: SnackBarService, private taskService: AbstractTaskJsonResourceService) {
+                private log: LoggerService, private snackBar: SnackBarService, private taskService: TaskResourceService) {
         this.loading = false;
     }
 

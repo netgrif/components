@@ -7,7 +7,7 @@
 //     providedIn: 'root'
 // })
 //
-// export abstract class AbstractTaskJsonResourceService {
+// export abstract class TaskResourceService {
 //     protected constructor(protected provider: ResourceProvider, protected SERVER_URL: string) {
 //     }
 //
@@ -152,7 +152,7 @@
 //     }
 // }
 //
-// export class TaskJsonResourceService extends AbstractTaskJsonResourceService {
+// export class TaskJsonResourceService extends TaskResourceService {
 //     constructor(provider: ResourceProvider) {
 //         super(provider, '<%= url %>');
 //     }

@@ -9,9 +9,17 @@ import {TaskReference} from '../../resources/interface/task-reference';
 import {DataGroupsResource} from '../../resources/interface/data-groups';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {FileResource} from '../../resources/interface/file-resource';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {Injectable} from '@angular/core';
 
-export abstract class AbstractTaskJsonResourceService {
-    protected constructor(protected provider: ResourceProvider, protected SERVER_URL: string) {
+@Injectable({
+    providedIn: 'root'
+})
+export class TaskResourceService {
+    private SERVER_URL: string;
+
+    protected constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {
+        this.SERVER_URL = this._configService.get().providers.resources[0].address;
     }
 
     /**

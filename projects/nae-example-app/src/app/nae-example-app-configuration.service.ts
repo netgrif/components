@@ -22,14 +22,8 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
         },
         resources: [
             {
-                name: 'case',
-                address: 'https://backend.com/api/v3/case',
-                format: 'hal',
-                openApi: 'https://swagger.io'
-            },
-            {
-                name: 'task',
-                address: 'https://backend.com/api/v3/task',
+                name: 'backend',
+                address: 'http://localhost:8080/api/',
                 format: 'json'
             }
         ]
