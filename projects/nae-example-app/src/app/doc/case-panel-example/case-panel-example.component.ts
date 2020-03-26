@@ -12,7 +12,7 @@ export class CasePanelExampleComponent implements OnInit {
     casePanelDef: CasePanelDefinition;
 
     constructor() {
-        this.casePanelDef = {featuredFields : [], panelIcon: 'home', panelIconField: 'home'};
+        this.casePanelDef = {featuredFields : [], panelIcon: 'home', panelIconField: 'home', caseId: '5e7ce3f5ade75e39ac183f9c'};
     }
 
     ngOnInit(): void {

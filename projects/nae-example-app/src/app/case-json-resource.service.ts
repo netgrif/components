@@ -1,8 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import { changeType, Case, Count, DataGroupsResource, MessageResource, ResourceProvider, FileResource} from 'netgrif-application-engine';
+import {changeType, Case, Count, DataGroupsResource, MessageResource, ResourceProvider, FileResource} from '@netgrif/application-engine';
+import {HttpParams} from '@angular/common/http';
 
+export type Params =
+    HttpParams | {
+    [param: string]: string | string[];
+};
 
 export abstract class AbstractCaseJsonResourceService {
 
@@ -33,8 +38,8 @@ export abstract class AbstractCaseJsonResourceService {
      * POST
      * {{baseUrl}}/api/workflow/case/search
      */
-    public getCase(body: object): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/search', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+    public searchCases(body: object, params?: Params): Observable<Array<Case>> {
+        return this.provider.post$('workflow/case/search', this.SERVER_URL, body, undefined, params).pipe(map(r => changeType(r, 'cases')));
     }
 
 

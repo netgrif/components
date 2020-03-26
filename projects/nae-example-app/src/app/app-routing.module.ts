@@ -15,7 +15,6 @@ import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
-import { TasksTaskViewComponent } from './views/tasks/tasks-task-view.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -29,12 +28,10 @@ const routes: Routes = [
     {path: 'snack-bar', component: SnackBarExampleComponent},
     {path: 'dialog', component: DialogExampleComponent},
     {path: 'tab-view', component: TabViewExampleComponent},
-    {path: 'reactive-forms', component: ReactiveTextFieldComponent},
     {path: 'case', component: CaseResourceExampleComponent},
     {path: 'task', component: TaskResourceExampleComponent},
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
     {path: 'toolbar', component: ToolbarExampleComponent},
-    {path: 'task-select', component: TasksTaskViewComponent},
 ];
 
 @NgModule({

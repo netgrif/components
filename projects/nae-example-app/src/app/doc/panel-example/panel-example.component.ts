@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataField, FieldConvertorService, TaskPanelDefinition} from '@netgrif/application-engine';
-import {TaskJsonResourceService} from '../../task-json-resource.service';
+import {TaskJsonResourceService} from '../../../../../../task-json-resource.service';
 
 @Component({
   selector: 'nae-app-panel-example',

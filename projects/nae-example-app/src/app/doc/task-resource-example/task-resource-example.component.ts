@@ -8,8 +8,8 @@ import {
     DataField,
     FieldConvertorService
 } from '@netgrif/application-engine';
-import {TaskJsonResourceService} from '../../task-json-resource.service';
 import {TaskPanelDefinition} from '@netgrif/application-engine';
+import {TaskJsonResourceService} from '../../../../../../task-json-resource.service';
 
 @Component({
     selector: 'nae-app-task-resource-example',

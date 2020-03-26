@@ -36,7 +36,7 @@ export class CaseResourceExampleComponent implements OnInit {
     }
 
     getCase() {
-        this.caseJsonResourceService.getCase({}).subscribe(cazes => {
+        this.caseJsonResourceService.searchCases({}).subscribe(cazes => {
             console.log(cazes);
             this.getCaseData = cazes;
         });

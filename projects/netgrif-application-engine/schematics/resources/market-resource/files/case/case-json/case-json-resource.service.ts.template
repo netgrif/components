@@ -3,6 +3,10 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import { changeType, Case, Count, DataGroups, MessageResource, ResourceProvider, FileResource} from 'netgrif-application-engine';
 
+export type Params =
+    HttpParams | {
+    [param: string]: string | string[];
+};
 
 export abstract class AbstractCaseJsonResourceService {
 
@@ -33,7 +37,7 @@ export abstract class AbstractCaseJsonResourceService {
      * POST
      * {{baseUrl}}/api/workflow/case/search
      */
-    public getCase(body: object): Observable<Array<Case>> {
+    public searchCases(body: object, params: Params): Observable<Array<Case>> {
         return this.provider.post$('workflow/case/search', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
     }
 

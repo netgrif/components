@@ -182,7 +182,7 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
 
             result.rules.push(createView(tree, createViewArguments, false));
 
-            const newComponentName = new ClassName(`${tabViewPath}/content/${viewCounter}`, resolveClassSuffixForView(tab.view.name));
+            const newComponentName = new ClassName(`${tabViewPath}/content/${viewCounter}`, 'TabView');
 
             tabTemplate = new TabContentTemplate(newComponentName.name);
             result.tabViewImports.push(

@@ -8,6 +8,8 @@ export * from './header-modes/sort-mode/sort-mode.component';
 export * from './header-modes/edit-mode/edit-mode.component';
 export * from './header-modes/search-mode/search-mode.component';
 
+/* MODELS */
+export * from './models/public-api';
 
 /* MODULES */
 export * from './header.module';

@@ -4,7 +4,7 @@
         <div fxLayout="row" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center">SEARCH</div>
             <div fxLayoutAlign="end center">
-                <button mat-mini-fab color="primary" (click)="onNewCase()">
+                <button mat-mini-fab color="primary" (click)="onCreateNewCase()">
                     <mat-icon class="net-upload" aria-hidden="false">add</mat-icon>
                 </button>
             </div>
@@ -17,6 +17,9 @@
 
     <mat-divider class="border-width-2x"></mat-divider>
 
-    <nae-case-panel *ngFor="let casePanelDefinition of casePanelDefinitions" [casePanelDefinition]="casePanelDefinition"></nae-case-panel>
+    <nae-case-panel *ngFor="let casePanelDefinition of casePanelDefinitions"
+                    [casePanelDefinition]="casePanelDefinition"
+                    (click)="redirectToTasksOfCase(casePanelDefinition)">
+    </nae-case-panel>
 
 </div>
