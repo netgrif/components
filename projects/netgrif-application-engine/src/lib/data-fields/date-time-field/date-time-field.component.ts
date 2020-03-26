@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DateTimeField} from './models/date-time-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 
@@ -15,7 +15,7 @@ export class DateTimeFieldComponent extends AbstractDataFieldComponent {
         super();
     }
 
-    getErrorMessage() {
+    getErrorMessage(): string {
         if (this.formControl.hasError('validBetween')) {
             const tmp = this.dataField.validations.find(value => value.validationRule.includes('between')).validationRule.split(' ');
             return this.resolveErrorMessage('between', 'Entered date must be in range ' + tmp[1]);
