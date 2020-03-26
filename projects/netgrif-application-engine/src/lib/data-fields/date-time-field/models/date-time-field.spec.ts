@@ -1,8 +1,9 @@
 import { DateTimeField } from './date-time-field';
+import {moment} from '../../../moment/moment-import';
 
 describe('DatetimeField', () => {
   it('should create an instance', () => {
-    expect(new DateTimeField('', '', new Date(), {
+    expect(new DateTimeField('', '', moment(), {
         required: true,
         optional: true,
         visible: true,

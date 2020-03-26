@@ -12,8 +12,7 @@
                [required]="dataField.behavior.required"
                [placeholder]="dataField.placeholder"
                [formControl]="formControl"
-               (click)="picker.open()"
-               (keydown.enter)="picker.close()">
+               (click)="picker.open()">
         <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker
                                  [showSpinners]="true"
