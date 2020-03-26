@@ -4,24 +4,22 @@ import { <%= classify(path) %>TaskViewComponent } from './<%= dasherize(path) %>
 
 describe('<%= classify(path) %>TaskViewComponent', () => {
   let component: <%= classify(path) %>TaskViewComponent;
-  let fixture: ComponentFixture<TestWrapperComponent>;
+  let fixture: ComponentFixture<<%= classify(path) %>TaskViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ <%= classify(path) %>TaskViewComponent ]
     })
     .compileComponents();
-
-     fixture = TestBed.createComponent(TestWrapperComponent);
-     component = fixture.debugElement.children[0].componentInstance;
-     fixture.detectChanges();
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(<%= classify(path) %>TaskViewComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
-
-
-<%= prefix %>-<%= dasherize(path) %>-task-view
