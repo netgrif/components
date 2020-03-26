@@ -1,1 +1,18 @@
-<p>navigation-drawer works!</p>
+<mat-sidenav-container class="drawer-container">
+    <mat-sidenav #sidenav [mode]="config.mode" [(opened)]="opened" position="start"
+                 [disableClose]="config.disableClose"
+                 class="drawer-content mat-elevation-z16">
+        <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+            <nae-user-card *ngIf="showUser" [user]="user" mode="full"></nae-user-card>
+            <mat-divider *ngIf="showUser" style="width: 90%;" inset="true"></mat-divider>
+
+            <nae-quick-panel *ngIf="showQuickPanel" [items]="quickPanelItems"></nae-quick-panel>
+            <mat-divider *ngIf="showQuickPanel" style="width: 90%;" inset="true"></mat-divider>
+
+            <nae-navigation-tree *ngIf="navigation"></nae-navigation-tree>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
-import {DrawerControlsComponent} from './drawer-prototype/drawer-controls/drawer-controls.component';
-import {RailControlsComponent} from './drawer-prototype/rail-controls/rail-controls.component';
+import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
+import {RailExampleComponent} from './doc/rail-example/rail-example.component';
 
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
@@ -19,8 +19,8 @@ import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.com
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
-    {path: 'drawer', component: DrawerControlsComponent},
-    {path: 'rail', component: RailControlsComponent}
+    {path: 'drawer', component: DrawerExampleComponent},
+    {path: 'rail', component: RailExampleComponent},
     {path: 'new-case-sidemenu', component: CaseSidemenuExampleComponent},
     {path: 'sidemenu', component: SidemenuExampleComponent},
     {path: 'user-assign-sidemenu', component: UserAssignSidemenuExampleComponent},
