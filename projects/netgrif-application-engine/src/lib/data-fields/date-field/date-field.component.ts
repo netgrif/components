@@ -1,11 +1,27 @@
 import {Component, Input} from '@angular/core';
 import {DateField} from './models/date-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {MAT_DATE_FORMATS} from '@angular/material';
+
+export const DATE_FORMAT = {
+    parse: {
+        dateInput: 'D.M.YYYY',
+    },
+    display: {
+        dateInput: 'D.M.YYYY',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'Do MMMM YYYY',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
 
 @Component({
     selector: 'nae-date-field',
     templateUrl: './date-field.component.html',
-    styleUrls: ['./date-field.component.scss']
+    styleUrls: ['./date-field.component.scss'],
+    providers: [
+        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
+    ]
 })
 export class DateFieldComponent extends AbstractDataFieldComponent {
 
