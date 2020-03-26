@@ -1,52 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {TaskPanelData} from '@netgrif/application-engine';
-import {Resources} from '../../../../../netgrif-application-engine/src/lib/panel/task-panel/task-panel-content/resources';
+import {Component} from '@angular/core';
+import {TaskResourceService, AbstractTaskView} from '@netgrif/application-engine';
 
 @Component({
   selector: '<%= prefix %>-<%= dasherize(path) %>-task-view',
   templateUrl: './<%= dasherize(path) %>-task-view.component.html',
   styleUrls: ['./<%= dasherize(path) %>-task-view.component.scss']
 })
-export class <%= classify(path) %>TaskViewComponent implements OnInit {
+export class <%= classify(path) %>TaskViewComponent extends AbstractTaskView {
 
-  public taskPanel: Array<TaskPanelData>;
-
-     constructor() {
-     }
-
-     // TODO:TESTOVACIE DATA
-     ngOnInit() {
-         this.taskPanel = [{
-             header: {
-                 featuredFields: ['T1', 'T2', 'T3', 'T4'],
-                 panelIcon: 'home',
-                 panelIconField: 'home',
-             },
-             resource: {
-                 cols: 4,
-                 data: Resources.data
-             }
-         },{
-             header: {
-                 featuredFields: ['T1', 'T2', 'T3', 'T4'],
-                 panelIcon: 'home',
-                 panelIconField: 'home',
-             },
-             resource: {
-                 cols: 4,
-                 data: Resources.data
-             }
-         },
-             {
-                 header: {
-                     featuredFields: ['T1', 'T2', 'T3', 'T4'],
-                     panelIcon: 'home',
-                     panelIconField: 'home',
-                 },
-                 resource: {
-                     cols: 4,
-                     data: Resources.data
-                 }
-             }];
+    constructor(taskService: TaskResourceService) {
+         super(taskService);
      }
 }
