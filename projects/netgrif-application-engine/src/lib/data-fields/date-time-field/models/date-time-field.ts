@@ -11,7 +11,7 @@ export class DateTimeField extends DataField<Date> {
     }
 
     protected valueEquality(a: Date, b: Date): boolean {
-        return (a === undefined && b === undefined) || (a !== undefined && b !== undefined && a.getTime() === b.getTime());
+        return (!a && !b) || (!!a && !!b && a.getTime() === b.getTime());
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
