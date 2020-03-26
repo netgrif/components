@@ -60,6 +60,8 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
             return createTabView(tree, args, addRoute);
         case 'caseView':
             return createCaseView(tree, args, addRoute);
+        case "taskView":
+            return createTaskView(tree, args, addRoute);
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
@@ -145,7 +147,7 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
             }
 
             if ( !tab.component.classPath.startsWith('./')) {
-               tab.component.classPath = `./${tab.component.classPath}`;
+                tab.component.classPath = `./${tab.component.classPath}`;
             }
 
             result.tabViewImports.push(
@@ -194,6 +196,35 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
     });
 
     return result;
+}
+
+function createTaskView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
+    const projectInfo = getProjectInfo(tree);
+    const rules = [];
+    const classNamePrefix = convertPathToClassNamePrefix(args.path as string);
+    const classNameNoComponent = `${strings.classify(classNamePrefix)}Task`;
+    const className = `${classNameNoComponent}Component`;
+    const componentPath = `./tasks/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
+
+
+    rules.push(createFilesFromTemplates('./files/task-view', `${projectInfo.path}/tasks/${args.path}`, {
+        prefix: projectInfo.projectPrefixDasherized,
+        path: classNamePrefix,
+        dasherize: strings.dasherize,
+        classify: strings.classify
+    }));
+
+    updateAppModule(tree, className, componentPath, [
+        new ImportsToAdd("FlexModule", "@angular/flex-layout"),
+        new ImportsToAdd("CardModule", "@netgrif/application-engine")]);
+    updateRoutingModule(tree, className, componentPath);
+
+
+    rules.push(schematic('add-route', {
+        routeObject: createRouteObject(args.path as string, className),
+        path: args.path
+    }));
+    return chain(rules);
 }
 
 function createCaseView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
