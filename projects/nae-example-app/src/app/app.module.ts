@@ -33,7 +33,6 @@ import { DialogExampleComponent } from './doc/dialog-example/dialog-example.comp
 import { TabViewExampleComponent } from './doc/tab-view-example/tab-view-example.component';
 import { ContentComponent } from './doc/tab-view-example/content/content.component';
 import { ReactiveTextFieldComponent } from './doc/reactive-text-field/reactive-text-field.component';
-import { DateTimePickerComponent } from './doc/date-time-picker/date-time-picker.component';
 
 @NgModule({
     declarations: [
@@ -50,7 +49,6 @@ import { DateTimePickerComponent } from './doc/date-time-picker/date-time-picker
         TabViewExampleComponent,
         ContentComponent,
         ReactiveTextFieldComponent,
-        DateTimePickerComponent
     ],
     imports: [
         BrowserModule,
@@ -66,8 +64,6 @@ import { DateTimePickerComponent } from './doc/date-time-picker/date-time-picker
         DialogModule,
         TabsModule,
         DataFieldsModule,
-        // Md2DatepickerModule,
-        // MdNativeDateModule
     ],
     entryComponents: [
         NewCaseComponent,
