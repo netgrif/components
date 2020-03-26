@@ -9,6 +9,8 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
 import {TaskPanelData} from '../../panel-list/task-panel-data/task-panel-data';
 import {TaskResourceService} from '../../panel-list/abstract-task-service/abstract-task.service';
+import {UserAssignComponent} from '../../side-menu/user-assign/user-assign.component';
+import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
 
 @Component({
     selector: 'nae-task-panel',
@@ -28,7 +30,8 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     public panelRef: MatExpansionPanel;
 
     constructor(private taskPanelContentService: TaskPanelContentService, private fieldConvertorService: FieldConvertorService,
-                private log: LoggerService, private snackBar: SnackBarService, private taskService: TaskResourceService) {
+                private log: LoggerService, private snackBar: SnackBarService, private taskService: TaskResourceService,
+                private _sideMenuService: SideMenuService) {
         this.loading = false;
     }
 
@@ -48,8 +51,6 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
-            console.time('getSuccess');
-            console.time('getEnd');
             this.getTaskDataFields();
         });
     }
@@ -66,7 +67,6 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     public getTaskDataFields(): void {
         this.loading = true;
         this.taskService.getData(this.taskPanelData.task.stringId).subscribe(dataGroups => {
-            console.timeEnd('getSuccess');
             this.taskPanelData.task.dataGroups = [];
             dataGroups.forEach(group => {
                     const dataGroup: DataField<any>[] = [];
@@ -94,16 +94,15 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                             alignment: group.alignment
                         });
                     } else {
-                        this.log.info(`No data for task TITLE`);
+                        this.log.info(`No data for task ${this.taskPanelData.task}`);
                         this.loading = false;
                     }
                 }
             );
-            console.timeEnd('getEnd');
             this.taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
             this.loading = false;
         }, error => {
-            this.snackBar.openErrorSnackBar('Data for TITLE failed to load');
+            this.snackBar.openErrorSnackBar(`Data for ${this.taskPanelData.task} failed to load`);
             this.log.debug(error);
             this.loading = false;
         });
@@ -122,5 +121,68 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             this.log.debug(error);
             this.loading = false;
         });
+    }
+
+    assign() {
+        if (this.loading) {
+            return;
+        }
+        this.loading = true;
+        this.taskService.assignTask(this.taskPanelData.task.stringId).subscribe(response => {
+            this.loading = false;
+            if (response.success) {
+                // TODO remove some states ??
+            } else if (response.error) {
+                this.snackBar.openErrorSnackBar(response.error);
+            }
+        }, error => {
+            this.snackBar.openErrorSnackBar(`Assigning task ${this.taskPanelData.task} failed`);
+            this.log.debug(error);
+            this.loading = false;
+        });
+    }
+
+    delegate() {
+        if (this.loading) {
+            return;
+        }
+        this._sideMenuService.open(UserAssignComponent, SideMenuWidth.MEDIUM).subscribe(
+
+        );
+        // this.loading = true;
+        //
+        // this.taskService.delegateTask(user.id).subscribe(response => {
+        //     this.loading = false;
+        //     if (response.success) {
+        //         // TODO remove some states ??
+        //     } else if (response.error) {
+        //         this.snackBar.openErrorSnackBar(response.error);
+        //     }
+        // }, error => {
+        //     this.snackBar.openErrorSnackBar(`Delegating task ${this.taskPanelData.task} failed`);
+        //     this.loading = false;
+        // });
+    }
+
+    cancel() {
+        if (this.loading) {
+            return;
+        }
+        this.loading = true;
+        this.taskService.cancelTask(this.taskPanelData.task.stringId).subscribe(response => {
+            this.loading = false;
+            if (response.success) {
+                // TODO remove some states ??
+            } else if (response.error) {
+                this.snackBar.openErrorSnackBar(response.error);
+            }
+        }, error => {
+            this.snackBar.openErrorSnackBar(`Canceling assignment of task ${this.taskPanelData.task} failed`);
+            this.loading = false;
+        });
+    }
+
+    finish() {
+        this.panelRef.expanded = false;
     }
 }

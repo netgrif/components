@@ -13,13 +13,17 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="assign()">
                         <mat-icon>person</mat-icon>
                         <span>Assign</span>
                     </button>
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="delegate()">
                         <mat-icon>person_outline</mat-icon>
                         <span>Delegate</span>
+                    </button>
+                    <button mat-menu-item (click)="cancel()">
+                        <mat-icon>delete</mat-icon>
+                        <span>Cancel</span>
                     </button>
                 </mat-menu>
                 <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
@@ -32,9 +36,10 @@
                 <nae-task-panel-content></nae-task-panel-content>
             </div>
             <div class="task-panel-footer" fxLayout="row" fxFlex="20" fxLayoutAlign="end center">
-                <button mat-button>ASSIGN</button>
-                <button mat-button>DELEGATE</button>
-                <button (click)="panelRef.expanded = false;" mat-button>COLLAPSE</button>
+                <button (click)="cancel()" mat-button>CANCEL</button>
+                <button (click)="delegate()" mat-button>DELEGATE</button>
+                <button (click)="assign()" mat-button>ASSIGN</button>
+                <button (click)="finish()" mat-button>FINISH</button>
             </div>
         </div>
     </ng-template>
