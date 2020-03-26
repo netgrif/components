@@ -23,7 +23,7 @@ import {FileField} from '../../../data-fields/file-field/models/file-field';
 import {DataField, MaterialAppearance} from '../../../data-fields/models/abstract-data-field';
 import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
-import * as m from 'moment'; const moment = m; // https://github.com/ng-packagr/ng-packagr/issues/163#issuecomment-345448834
+import {moment} from '../../../moment/moment-import';
 
 @Component({
     selector: 'nae-task-panel-content',
