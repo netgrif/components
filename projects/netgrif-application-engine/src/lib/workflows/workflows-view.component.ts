@@ -5,10 +5,10 @@ import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
 
 @Component({
     selector: 'nae-workflows',
-    templateUrl: './workflows.component.html',
-    styleUrls: ['./workflows.component.scss']
+    templateUrl: './workflows-view.component.html',
+    styleUrls: ['./workflows-view.component.scss']
 })
-export class WorkflowsComponent implements OnInit {
+export class WorkflowsViewComponent implements OnInit {
 
     @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
 

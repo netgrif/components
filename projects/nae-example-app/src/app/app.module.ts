@@ -18,7 +18,7 @@ import {
     TabsModule,
     DataFieldsModule,
     ToolbarModule,
-    HeaderModule, WorkflowsModule
+    HeaderModule, ImportNetComponent
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -42,6 +42,7 @@ import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, Trans
 import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { WorkflowsViewExampleComponent } from './doc/workflows-view-example/workflows-view-example.component';
+import {WorkflowsModule} from '../../../netgrif-application-engine/src/lib/workflows/workflows.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -92,6 +93,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
+        WorkflowsModule,
+        WorkflowsModule,
         WorkflowsModule
     ],
     entryComponents: [
@@ -100,7 +103,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         SimpleDialogComponent,
         QuestionDialogComponent,
         QuestionDialogWithAnswerComponent,
-        ContentComponent
+        ContentComponent,
+        ImportNetComponent
     ],
     providers: [
         {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},

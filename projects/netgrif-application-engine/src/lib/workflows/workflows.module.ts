@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {WorkflowsComponent} from './workflows.component';
+import {WorkflowsViewComponent} from './workflows-view.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MaterialModule} from '../material/material.module';
 import {SideMenuModule} from '../side-menu/side-menu.module';
@@ -13,7 +13,7 @@ import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
 
 @NgModule({
     declarations: [
-        WorkflowsComponent,
+        WorkflowsViewComponent,
         WorkflowsPanelGroupComponent
     ],
     imports: [
@@ -26,7 +26,7 @@ import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
         DataFieldsModule
     ],
     exports: [
-        WorkflowsComponent,
+        WorkflowsViewComponent,
         WorkflowsPanelGroupComponent
     ],
     entryComponents: [
