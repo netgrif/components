@@ -19,6 +19,8 @@ import {
     DataFieldsModule,
     ToolbarModule,
     HeaderModule, ImportNetComponent
+    DataFieldsModule,
+    ResourceProvider
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -47,6 +49,9 @@ import {WorkflowsModule} from '../../../netgrif-application-engine/src/lib/workf
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {HttpClientModule} from '@angular/common/http';
+import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
 
 @NgModule({
     declarations: [
@@ -68,8 +73,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveTextFieldComponent,
         ToolbarExampleComponent,
         WorkflowsViewExampleComponent
+        ReactiveTextFieldComponent,
+        ContentComponent,
+        CaseResourceExampleComponent,
+        TaskResourceExampleComponent
     ],
     imports: [
+        HttpClientModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -105,6 +115,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         QuestionDialogWithAnswerComponent,
         ContentComponent,
         ImportNetComponent
+    ],
+    providers: [{
+        provide: ConfigurationService,
+        useClass: NaeExampleAppConfigurationService
+    },
+        ResourceProvider
     ],
     providers: [
         {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},

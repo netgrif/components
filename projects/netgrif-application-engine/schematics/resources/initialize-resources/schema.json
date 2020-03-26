@@ -1,0 +1,7 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsInitializeResources",
+    "title": "Create initialize Resources",
+    "type": "object",
+    "properties": {}
+}

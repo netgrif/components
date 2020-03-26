@@ -9,7 +9,7 @@
         "nae:normalize-coverage-summary": "node projects/netgrif-application-engine/src/scripts/normalize-file-paths.js coverage/netgrif-application-engine/coverage-summary.json",
         "nae:typedoc": "typedoc --tsconfig projects/netgrif-application-engine/tsconfig.lib.json  projects/netgrif-application-engine/src/lib",
         "nae:doc": "npm run nae:normalize-coverage-summary && compodoc",
-        "nae:local-build": "npm run nae:build && npm i dist/netgrif-application-engine --save-optional",
+        "nae:local-build": "npm run nae:build && cd projects/netgrif-application-engine && npm run build && cd ../.. && npm i dist/netgrif-application-engine --save-optional",
         "nae:prod-build": "npm run nae:full-test && npm run sonar && npm run nae:build && npm run nae:doc",
         "nae:prod-build-without-tests": "ng lint netgrif-application-engine && npm run sonar && npm run nae:build && npm run nae:doc",
         "project:start": "npm run nae:local-build && ng serve",
@@ -17,7 +17,8 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "sonar": "sonar-scanner"
+        "sonar": "sonar-scanner",
+        "scriptTest": "ng generate @netgrif/application-engine:market-resource --name=case --type=json  --address=aaa.sk"
     },
     "private": true,
     "dependencies": {
