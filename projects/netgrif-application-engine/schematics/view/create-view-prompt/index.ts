@@ -212,30 +212,26 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
 
 function createTaskView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
+    const className = new ClassName(args.path as string, resolveClassSuffixForView('taskView'));
     const rules = [];
-    const classNamePrefix = convertPathToClassNamePrefix(args.path as string);
-    const classNameNoComponent = `${strings.classify(classNamePrefix)}Task`;
-    const className = `${classNameNoComponent}Component`;
-    const componentPath = `./tasks/${args.path}/${strings.dasherize(classNameNoComponent)}.component`;
-
 
     rules.push(createFilesFromTemplates('./files/task-view', `${projectInfo.path}/tasks/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: classNamePrefix,
+        path: className.prefix,
         dasherize: strings.dasherize,
         classify: strings.classify
     }));
 
-    updateAppModule(tree, className, componentPath, [
-        new ImportsToAdd("FlexModule", "@angular/flex-layout"),
-        new ImportsToAdd("CardModule", "@netgrif/application-engine")]);
-    updateRoutingModule(tree, className, componentPath);
+    updateAppModule(tree, className.name, className.fileImportPath, [
+        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('CardModule', '@netgrif/application-engine')]);
 
 
-    rules.push(schematic('add-route', {
-        routeObject: createRouteObject(args.path as string, className),
-        path: args.path
-    }));
+    if (addRoute) {
+        addRoutingModuleImport(tree, className.name, className.fileImportPath);
+        rules.push(addRouteToRoutesJson(args.path as string, className.name));
+        rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name));
+    }
     return chain(rules);
 }
 
@@ -261,13 +257,18 @@ function createCaseView(tree: Tree, args: CreateViewArguments, addRoute: boolean
     ]);
 
     const appModule = getAppModule(tree, projectInfo.path);
-    const changes = addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, 'NewCaseComponent', '@netgrif/application-engine');
+    const changes = addEntryComponentToModule(
+        appModule.sourceFile,
+        appModule.fileEntry.path,
+        'NewCaseComponent',
+        '@netgrif/application-engine'
+    );
     commitChangesToFile(tree, appModule.fileEntry, changes);
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push( addRouteToRoutesJson(args.path as string, className.name));
-        rules.push( addRouteToRoutesJson(`${args.path}/**`, className.name));
+        rules.push(addRouteToRoutesJson(args.path as string, className.name));
+        rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name));
     }
     return chain(rules);
 }
