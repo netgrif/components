@@ -18,8 +18,8 @@ export class TaskPanelContentComponent {
                 private taskPanelContentService: TaskPanelContentService) {
         // TODO : cols from task
         this.formCols = 4;
-        this.taskPanelContentService.$shouldCreate.subscribe(() => {
-            this.dataSource = this.fillBlankSpace(this._taskResources, this.formCols);
+        this.taskPanelContentService.$shouldCreate.subscribe(data => {
+                        this.dataSource = this.fillBlankSpace(this._taskResources, this.formCols);
         });
     }
 

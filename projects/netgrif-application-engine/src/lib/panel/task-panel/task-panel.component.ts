@@ -5,6 +5,7 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskPanelContentComponent} from './task-panel-content/task-panel-content.component';
 import {NAE_TASK_DATA} from '../../panel-list/task-data-injection-token/task-data-injection-token.module';
 import {TaskPanelContentService} from './task-panel-content/task-panel-content.service';
+// import {TaskJsonResourceService} from '../../../../../nae-example-app/src/app/task-json-resource.service';
 
 @Component({
     selector: 'nae-task-panel',
@@ -23,6 +24,7 @@ export class TaskPanelComponent implements OnInit {
     public panelIconField: string;
     public panelRef: MatExpansionPanel;
     public taskId: string;
+    public panelOpenState = true;
 
     constructor(private taskPanelContentService: TaskPanelContentService) {
     }
@@ -38,7 +40,7 @@ export class TaskPanelComponent implements OnInit {
             this.panelIconField = this.taskPanelDefinition.panelIconField;
             this.taskId = this.taskPanelDefinition.taskId;
         } else {
-            this.taskPanelDefinition = {featuredFields: [], panelIcon: '', panelIconField: '' , taskId: ''};
+            this.taskPanelDefinition = {featuredFields: [], panelIcon: '', panelIconField: '', taskId: ''};
         }
         if (this.panelContentComponent === undefined) {
             this.portal = new ComponentPortal(TaskPanelContentComponent, null, injector);
@@ -48,14 +50,21 @@ export class TaskPanelComponent implements OnInit {
     }
 
     public show(event: MouseEvent): boolean {
-        console.log(this.taskId);
         event.stopPropagation();
         return false;
     }
 
-    log() {
-        this.taskPanelContentService.$shouldCreate.emit();
-        console.log('aaaaa');
+    openTask() {
+        if (this.panelOpenState) {
+            console.log('aaaaa');
+            console.log(this.taskId);
+
+            // this._taskJsonResourceService.assignTask(this.taskId);      // TODO: auto assignTask
+            // this._taskJsonResourceService.getData(this.taskId);
+            // this._taskJsonResourceService.getData(this.taskId);
+            // this.taskPanelContentService.$shouldCreate.emit();
+
+        }
     }
 
     public setPanelRef(panelRef: MatExpansionPanel) {
