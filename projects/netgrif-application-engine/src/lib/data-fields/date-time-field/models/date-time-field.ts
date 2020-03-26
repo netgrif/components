@@ -1,17 +1,18 @@
 import {DataField, MaterialAppearance} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {Moment} from 'moment';
 
-export class DateTimeField extends DataField<Date> {
+export class DateTimeField extends DataField<Moment> {
     private _validators: Array<ValidatorFn>;
 
-    constructor(stringId: string, title: string, value: Date, behavior: Behavior, placeholder?: string,
+    constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
                 description?: string, public validations?: any, public materialAppearance = MaterialAppearance.STANDARD) {
         super(stringId, title, value, behavior, placeholder, description);
     }
 
-    protected valueEquality(a: Date, b: Date): boolean {
-        return (!a && !b) || (!!a && !!b && a.getTime() === b.getTime());
+    protected valueEquality(a: Moment, b: Moment): boolean {
+        return (!a && !b) || (!!a && !!b && a.isSame(b, 'minute'));
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
