@@ -1,0 +1,22 @@
+<div class="case-view-container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+
+    <mat-card class="case-view-search-container">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <div fxLayoutAlign="start center">SEARCH</div>
+            <div fxLayoutAlign="end center">
+                <button mat-mini-fab color="primary" (click)="onNewCase()">
+                    <mat-icon class="net-upload" aria-hidden="false">add</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-divider class="border-width-2x"></mat-divider>
+
+    <nae-header #header [type]="headerType"></nae-header>
+
+    <mat-divider class="border-width-2x"></mat-divider>
+
+    <nae-case-panel *ngFor="let casePanelDefinition of casePanelDefinitions" [casePanelDefinition]="casePanelDefinition"></nae-case-panel>
+
+</div>

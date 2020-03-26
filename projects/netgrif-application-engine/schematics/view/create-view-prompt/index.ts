@@ -58,6 +58,8 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
             return createLoginView(tree, args, addRoute);
         case 'tabView':
             return createTabView(tree, args, addRoute);
+        case 'caseView':
+            return createCaseView(tree, args, addRoute);
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
@@ -194,12 +196,47 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
     return result;
 }
 
+function createCaseView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
+    const projectInfo = getProjectInfo(tree);
+    const className = new ClassName(args.path as string, resolveClassSuffixForView('caseView'));
+
+    const rules = [];
+
+    rules.push(createFilesFromTemplates('./files/caseView', `${projectInfo.path}/views/${args.path}`, {
+        prefix: projectInfo.projectPrefixDasherized,
+        path: className.prefix,
+        dasherize: strings.dasherize,
+        classify: strings.classify
+    }));
+
+    updateAppModule(tree, className.name, className.fileImportPath, [
+        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('FlexLayoutModule', '@angular/flex-layout'),
+        new ImportToAdd('MaterialModule', '@netgrif/application-engine'),
+        new ImportToAdd('HeaderModule', '@netgrif/application-engine'),
+        new ImportToAdd('PanelModule', '@netgrif/application-engine')
+    ]);
+
+    const appModule = getAppModule(tree, projectInfo.path);
+    const changes = addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, 'NewCaseComponent', '@netgrif/application-engine');
+    commitChangesToFile(tree, appModule.fileEntry, changes);
+
+    if (addRoute) {
+        addRoutingModuleImport(tree, className.name, className.fileImportPath);
+        rules.push( addRouteToRoutesJson(args.path as string, className.name));
+        rules.push( addRouteToRoutesJson(`${args.path}/**`, className.name));
+    }
+    return chain(rules);
+}
+
 function resolveClassSuffixForView(view: string): string {
     switch (view) {
         case 'login':
             return 'Login';
         case 'tabView':
             return 'TabView';
+        case 'caseView':
+            return 'CaseView';
         default:
             throw new SchematicsException(`Unknown view type '${view}'`);
     }

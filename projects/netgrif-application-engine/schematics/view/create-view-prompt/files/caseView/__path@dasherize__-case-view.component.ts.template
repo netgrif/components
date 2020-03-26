@@ -1,0 +1,32 @@
+import {Component, OnInit} from '@angular/core';
+import {SideMenuService, NewCaseComponent, HeaderType, CasePanelDefinition} from '@netgrif/application-engine';
+
+@Component({
+  selector: '<%= prefix %>-<%= dasherize(path) %>-case-view',
+  templateUrl: './<%= dasherize(path) %>-case-view.component.html',
+  styleUrls: ['./<%= dasherize(path) %>-case-view.component.scss']
+})
+export class <%= classify(path) %>CaseViewComponent {
+
+    public headerType: HeaderType = 'case';
+    public casePanelDefinitions: Array<CasePanelDefinition> = [
+        {featuredFields : [], panelIcon: 'home', panelIconField: 'Home'},
+        {featuredFields : [], panelIcon: 'add', panelIconField: 'Add'},
+        {featuredFields : [], panelIcon: 'alarm', panelIconField: 'Clock alarm'},
+        {featuredFields : [], panelIcon: 'build', panelIconField: 'Build successful'},
+        {featuredFields : [], panelIcon: 'done', panelIconField: 'Its done, its over'},
+        {featuredFields : [], panelIcon: 'code', panelIconField: 'Source code'},
+        {featuredFields : [], panelIcon: 'touch_app', panelIconField: 'Click'}
+    ];
+
+    constructor(private _sideMenuService: SideMenuService) {
+    }
+
+    ngOnInit(): void {
+    }
+
+    onNewCase() {
+        this._sideMenuService.open(NewCaseComponent)
+    }
+
+}
