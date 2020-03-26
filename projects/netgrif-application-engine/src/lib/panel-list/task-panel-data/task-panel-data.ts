@@ -1,7 +1,10 @@
 import {TaskPanelDefinition} from '../../panel/task-panel/task-panel-definition';
-import {DataGroup} from '../../resources/interface/data-groups';
+import {Task} from '../../resources/interface/task';
+import {Subject} from 'rxjs';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
 
 export interface TaskPanelData {
     header: TaskPanelDefinition;
-    resource?: DataGroup;
+    task: Task;
+    changedFields: Subject<ChangedFields>;
 }

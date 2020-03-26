@@ -1,4 +1,4 @@
-<mat-accordion>
-    <nae-task-panel *ngFor="let taskPanel of taskPanels" [taskPanelDefinition]="taskPanel.header" [resources]="taskPanel.resource">
+<mat-accordion multi="true">
+    <nae-task-panel *ngFor="let taskPanel of taskPanels" [taskPanelData]="taskPanel">
     </nae-task-panel>
 </mat-accordion>

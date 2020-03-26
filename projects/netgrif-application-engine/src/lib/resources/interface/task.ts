@@ -1,4 +1,5 @@
 import {UserTask} from './user-task';
+import {DataGroup} from './data-groups';
 
 export interface Task {
     caseId: string;
@@ -13,5 +14,6 @@ export interface Task {
     dataFocusPolicy: string;
     finishPolicy: string;
     stringId: string;
+    dataGroups: DataGroup[];
     _links: object;
 }

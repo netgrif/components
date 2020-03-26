@@ -29,7 +29,6 @@ import {AuthenticationComponent} from './doc/services/authentication/authenticat
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
-import { PanelExampleComponent } from './doc/panel-example/panel-example.component';
 import { CasePanelExampleComponent } from './doc/case-panel-example/case-panel-example.component';
 import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-example.component';
 import { DialogExampleComponent } from './doc/dialog-example/dialog-example.component';
@@ -42,15 +41,14 @@ import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.c
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {HttpClientModule} from '@angular/common/http';
+import { TasksTaskViewComponent } from './views/tasks/tasks-task-view.component';
+import { MatCardModule } from '@angular/material/card';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
-import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
-import {HttpClientModule} from '@angular/common/http';
-import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
-import { TasksTaskViewComponent } from './views/tasks/tasks-task-view.component';
-import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     declarations: [
@@ -60,7 +58,6 @@ import { MatCardModule } from '@angular/material/card';
         CaseSidemenuExampleComponent,
         SidemenuExampleComponent,
         UserAssignSidemenuExampleComponent,
-        PanelExampleComponent,
         CasePanelExampleComponent,
         SnackBarExampleComponent,
         DialogExampleComponent,
@@ -71,7 +68,6 @@ import { MatCardModule } from '@angular/material/card';
         TaskHeaderExampleComponent,
         ToolbarExampleComponent,
         CaseResourceExampleComponent,
-        TaskResourceExampleComponent,
         TasksTaskViewComponent
     ],
     imports: [
