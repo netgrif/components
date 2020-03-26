@@ -2,6 +2,9 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {ResourceProvider} from '../../resources/resource-provider.service';
+import {PetriNet} from '../../resources/interface/petri-net';
+import {changeType} from '../../resources/resource-utility-functions';
 
 
 @Injectable({

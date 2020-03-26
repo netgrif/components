@@ -4,8 +4,6 @@ import {PetriNetReference} from '../../../header/models/petri-net-reference';
 import {PreferredHeaders} from '../../../header/models/preferred-headers';
 import {WorkflowPanelDefinition} from '../../../panel/workflows-panel/models/workflows-panels-definition';
 import {Headers} from '../../../header/headers';
-import {Observable} from 'rxjs';
-import {HeaderChange} from '../../../header/models/user.changes/header-change';
 
 
 

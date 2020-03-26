@@ -31,7 +31,7 @@ const routes: Routes = [
     {path: 'tab-view', component: TabViewExampleComponent},
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
     {path: 'toolbar', component: ToolbarExampleComponent},
-    {path: 'workflows view', component: WorkflowsViewExampleComponent}
+    {path: 'workflows view', component: WorkflowsViewExampleComponent},
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
     {path: 'case', component: CaseResourceExampleComponent},
     {path: 'task', component: TaskResourceExampleComponent}
