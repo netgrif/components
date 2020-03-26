@@ -1,7 +1,0 @@
-<div class="task-tab-background">
-    <div fxLayout="column" fxLayoutGap="20px"  fxLayoutAlign="space-between stretch" class="content-margin" >
-        <mat-card class="search-panel" >TO DO SEARCH</mat-card>
-        <mat-card >TO DO FILTER</mat-card>
-
-    </div>
-</div>

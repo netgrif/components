@@ -1,0 +1,34 @@
+<div>
+    <div>
+        <button (click)="count()">COUNT</button>
+        <p *ngIf="countvalue">{{countvalue.count}}</p>
+    </div>
+    <hr>
+    <div>
+        <button (click)="getAllCase()">Get All Case</button>
+        <ul *ngIf="getAllCaseData">
+            <li *ngFor="let caze of getAllCaseData">
+                {{ caze.title }}
+                {{ caze.stringId }}
+            </li>
+        </ul>
+
+    </div>
+    <hr>
+    <div>
+        <button (click)="getCase()">Get Case</button>
+        <ul *ngIf="getCaseData">
+            <li *ngFor="let caze of getCaseData">
+                {{ caze.title }}
+                {{ caze.stringId }}
+            </li>
+        </ul>
+    </div>
+    <hr>
+    <div>
+        <button (click)="deleteCase()">Delete Case</button>
+        <p *ngIf="deleteCaseData">{{deleteCaseData.success}}</p>
+        <p *ngIf="deleteCaseData">{{deleteCaseData.error }}</p>
+    </div>
+    <hr>
+</div>
