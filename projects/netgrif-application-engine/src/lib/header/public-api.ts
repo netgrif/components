@@ -14,3 +14,4 @@ export * from './header.module';
 
 /* SERVICES */
 export * from './case-header/case-header.service';
+export * from './task-header/task-header.service';

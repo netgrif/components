@@ -26,8 +26,6 @@ describe('LoggerService', () => {
     it('should have set log level', () => {
         expect(service.level).toBeDefined();
         expect(service.level).toBe(LogLevel.ALL);
-        expect(localStorage.getItem(LocalStorageLogPublisher.DEFAULT_KEY)).toBeDefined();
-        expect(localStorage.getItem(LocalStorageLogPublisher.DEFAULT_KEY)).toContain(testString);
     });
 
     it('should call info log', () => {

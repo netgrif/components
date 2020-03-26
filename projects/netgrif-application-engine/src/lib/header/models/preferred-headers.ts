@@ -1,4 +1,4 @@
-import {Column} from "./column";
+import {Column} from './column';
 
 export interface PreferredHeaders {
     column0: Column;

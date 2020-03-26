@@ -3,28 +3,23 @@ import {
     schematic,
     Tree
 } from '@angular-devkit/schematics';
-import {getNaeConfiguration, getProjectInfo} from '../../utilityFunctions';
+import {getNaeConfiguration} from '../../utilityFunctions';
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
-import {addAllRoutesToMap, constructRoutePath, getRoutesJsonContent, Route, Routes} from '../viewUtilityFunctions';
+import {constructRoutePath, createAppRoutesMap, Route} from '../viewUtilityFunctions';
 import {CreateViewArguments} from '../create-view-prompt/schema';
 
 export function createView(): Rule {
     return (tree: Tree) => {
-        const projectInfo = getProjectInfo(tree);
         const naeConfig = getNaeConfiguration(tree);
-        const routesContent = getRoutesJsonContent(tree, projectInfo);
-        const schematicArguments = getSchematicArguments(naeConfig.views.routes, routesContent);
-        return schematic('create-view-prompt', schematicArguments);
+        return schematic('create-view-prompt', getSchematicArguments(naeConfig.views.routes, tree));
     };
 }
 
-function getSchematicArguments(naeRoutes: { [k: string]: NaeRoute } | undefined, angularRoutes: Routes): CreateViewArguments {
+function getSchematicArguments(naeRoutes: { [k: string]: NaeRoute } | undefined, tree: Tree): CreateViewArguments {
     if (!naeRoutes) {
-        return emptyArguments(new Map<string, Route>());
+        return emptyArguments();
     }
-
-    const pathToRouteMap = new Map<string, Route>();
-    addAllRoutesToMap(pathToRouteMap, angularRoutes);
+    const pathToRouteMap = createAppRoutesMap(tree);
     return findMissingView(pathToRouteMap, naeRoutes);
 }
 
@@ -39,8 +34,7 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
             return {
                 path: routePath,
                 viewType: route.view.name,
-                layoutParams: route.view.params,
-                _routesMap: existingRoutesMap
+                layoutParams: route.view.params
             };
         }
 
@@ -51,13 +45,12 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
             }
         }
     }
-    return emptyArguments(existingRoutesMap);
+    return emptyArguments();
 }
 
-function emptyArguments(routesMap: Map<string, Route>): CreateViewArguments {
+function emptyArguments(): CreateViewArguments {
     return {
         path: undefined,
-        viewType: undefined,
-        _routesMap: routesMap
+        viewType: undefined
     };
 }

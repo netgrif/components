@@ -1,9 +1,9 @@
-<div class="header-column-container"
-     fxFlex="100">
+<div
+    fxFlex="100">
     <mat-form-field *ngFor="let header of getIterableHeaders() | keyvalue" fxLayout="row" fxLayoutAlign=" center" fxFlex
-                    [fxHide.lt-lg]="header.value.columnId=='column4'"
-                    [fxHide.lt-md]="header.value.columnId=='column3' || header.value.columnId=='column4'"
-                    [fxHide.lt-sm]="header.value.columnId=='column2' || header.value.columnId=='column3' || header.value.columnId=='column4'">
+                    fxHide.lt-lg="{{header.value.columnId==='column4'}}"
+                    fxHide.lt-md="{{header.value.columnId==='column3' || header.value.columnId==='column4'}}"
+                    fxHide.lt-sm="{{header.value.columnId==='column2' || header.value.columnId==='column3' || header.value.columnId==='column4'}}">
         <mat-label>{{header.value.title}}</mat-label>
         <input matInput (keyup)="onUserKeyupSearch(header.value.columnId, $event.target['value'])">
     </mat-form-field>

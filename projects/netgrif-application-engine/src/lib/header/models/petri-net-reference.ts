@@ -1,5 +1,5 @@
-import {Author} from "./author";
-import {DataDescription} from "./data-field";
+import {Author} from './author';
+import {DataDescription} from './data-field';
 
 /**
  * Interface for representation one Petri net model
