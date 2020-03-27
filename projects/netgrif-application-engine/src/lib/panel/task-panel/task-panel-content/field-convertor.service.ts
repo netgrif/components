@@ -123,25 +123,25 @@ export class FieldConvertorService {
         }
     }
 
-    public formatValue(field: DataField<any>): any {
-        if (this.resolveType(field) === 'text' && field.value === null)
+    public formatValue(field: DataField<any>, value: any): any {
+        if (this.resolveType(field) === 'text' && value === null)
             return null;
-        if (field.value === undefined || field.value === null)
+        if (value === undefined || value === null)
             return;
         if (this.resolveType(field) === 'date') {
-            if (field.value instanceof Date) {
-                return `${field.value.getFullYear()}-${field.value.getMonth()}-${field.value.getDate()}`;
+            if (value instanceof Date) {
+                return `${value.getFullYear()}-${value.getMonth()}-${value.getDate()}`;
             }
         }
         if (this.resolveType(field) === 'user') {
-            return field.value.name;
+            return value.id;
         }
         if (this.resolveType(field) === 'dateTime') {
-            if (field.value instanceof Date) {
-                return `${field.value.getDate()}.${field.value.getMonth()}.${field.value.getFullYear()} ` +
-                    `${field.value.getHours()}:${field.value.getMinutes()}:${field.value.getSeconds()}`;
+            if (value instanceof Date) {
+                return `${value.getDate()}.${value.getMonth()}.${value.getFullYear()} ` +
+                    `${value.getHours()}:${value.getMinutes()}:${value.getSeconds()}`;
             }
         }
-        return field.value;
+        return value;
     }
 }

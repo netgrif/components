@@ -38,16 +38,32 @@ export abstract class DataField<T> {
         return this._stringId;
     }
 
+    set title(title: string) {
+        this._title = title;
+    }
+
     get title(): string {
         return this._title;
+    }
+
+    set placeholder(placeholder: string) {
+        this._placeholder = placeholder;
     }
 
     get placeholder(): string {
         return this._placeholder;
     }
 
+    set description(desc: string) {
+        this._description = desc;
+    }
+
     get description(): string {
         return this._description;
+    }
+
+    set behavior(behavior: Behavior) {
+        this._behavior = behavior;
     }
 
     get behavior(): Behavior {
@@ -60,6 +76,10 @@ export abstract class DataField<T> {
 
     set value(value: T) {
         this._value.next(value);
+    }
+
+    set layout(layout: Layout) {
+        this._layout = layout;
     }
 
     get layout(): Layout {

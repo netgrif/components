@@ -13,6 +13,7 @@ import {CaseHeaderExampleComponent} from './doc/case-header-example/case-header-
 import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-example.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {TaskViewComponent} from './doc/task-view/task-view.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [
     {path: 'case', component: CaseResourceExampleComponent},
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
     {path: 'toolbar', component: ToolbarExampleComponent},
+    {path: 'task-view', component: TaskViewComponent},
 ];
 
 @NgModule({

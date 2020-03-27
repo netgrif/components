@@ -47,6 +47,13 @@ export class UserService {
         return this._user.roles.some(r => r === role);
     }
 
+    public hasRoleById(role: string): boolean {
+        if (!role || !this._user.roles) {
+            return false;
+        }
+        return this._user.roles.some(r => r.id === role);
+    }
+
     public login(credentials: Credentials): Observable<User> {
         return this._authService.login(credentials).pipe(
             tap((authUser: User) => this._user = authUser)

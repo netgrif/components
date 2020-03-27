@@ -11,12 +11,12 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
     extends: 'nae-default',
     providers: {
         auth: {
-            address: 'https://backend.com/auth',
+            address: 'http://localhost:8080/api/',
             authentication: 'Basic',
             endpoints: {
-                login: 'http://localhost:8080/api/auth/login',
-                logout: 'http://localhost:8080/api/auth/logout',
-                signup: 'http://localhost:8080/api/auth/signup'
+                login: 'auth/login',
+                logout: 'auth/logout',
+                signup: 'api/auth/signup'
             },
             sessionBearer: 'x-auth-token'
         },

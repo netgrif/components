@@ -8,9 +8,11 @@ import {FieldConvertorService} from './task-panel-content/field-convertor.servic
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
 import {TaskPanelData} from '../../panel-list/task-panel-data/task-panel-data';
-import {TaskResourceService} from '../../panel-list/abstract-task-service/abstract-task.service';
+import {TaskResourceService} from '../../panel-list/task-resource/task-resource.service';
 import {UserAssignComponent} from '../../side-menu/user-assign/user-assign.component';
 import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
+import {UserService} from '../../user/services/user.service';
+import {AssignPolicy} from './policy';
 
 @Component({
     selector: 'nae-task-panel',
@@ -29,9 +31,9 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     public panelIconField: string;
     public panelRef: MatExpansionPanel;
 
-    constructor(private taskPanelContentService: TaskPanelContentService, private fieldConvertorService: FieldConvertorService,
-                private log: LoggerService, private snackBar: SnackBarService, private taskService: TaskResourceService,
-                private _sideMenuService: SideMenuService) {
+    constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
+                private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
+                private _sideMenuService: SideMenuService, private _userService: UserService) {
         this.loading = false;
     }
 
@@ -47,16 +49,20 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         } else {
             this.portal = new ComponentPortal(this.panelContentComponent);
         }
+        this.taskPanelData.changedFields.subscribe(chFields => {
+            this.updateFromChangedFields(chFields);
+        });
     }
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
             this.getTaskDataFields();
         });
+        this.canDo('delegate');
     }
 
-    public show(event: MouseEvent): boolean {
-        event.stopPropagation();
+    public show($event: MouseEvent): boolean {
+        $event.stopPropagation();
         return false;
     }
 
@@ -66,21 +72,21 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
 
     public getTaskDataFields(): void {
         this.loading = true;
-        this.taskService.getData(this.taskPanelData.task.stringId).subscribe(dataGroups => {
+        this._taskService.getData(this.taskPanelData.task.stringId).subscribe(dataGroups => {
             this.taskPanelData.task.dataGroups = [];
             dataGroups.forEach(group => {
                     const dataGroup: DataField<any>[] = [];
                     if (group.fields._embedded) {
                         Object.keys(group.fields._embedded).forEach(item => {
-                            dataGroup.push(...group.fields._embedded[item].map(df => this.fieldConvertorService.toClass(df)));
+                            dataGroup.push(...group.fields._embedded[item].map(df => this._fieldConvertorService.toClass(df)));
                         });
                         dataGroup.forEach(field => {
-                            field.valueChanges().subscribe(() => {
+                            field.valueChanges().subscribe(newValue => {
                                 if (field.initialized) {
                                     const body = {};
                                     body[field.stringId] = {
-                                        type: this.fieldConvertorService.resolveType(field),
-                                        value: this.fieldConvertorService.formatValue(field)
+                                        type: this._fieldConvertorService.resolveType(field),
+                                        value: this._fieldConvertorService.formatValue(field, newValue)
                                     };
                                     this.updateTaskDataFields(body);
                                 }
@@ -94,50 +100,72 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                             alignment: group.alignment
                         });
                     } else {
-                        this.log.info(`No data for task ${this.taskPanelData.task}`);
+                        this._log.info(`No data for task ${this.taskPanelData.task}`);
                         this.loading = false;
                     }
                 }
             );
-            this.taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
+            this._taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
             this.loading = false;
         }, error => {
-            this.snackBar.openErrorSnackBar(`Data for ${this.taskPanelData.task} failed to load`);
-            this.log.debug(error);
+            this._snackBar.openErrorSnackBar(`Data for ${this.taskPanelData.task} failed to load`);
+            this._log.debug(error);
             this.loading = false;
         });
     }
 
     public updateTaskDataFields(body: {}): void {
         this.loading = true;
-        this.taskService.setData(this.taskPanelData.task.stringId, body).subscribe(response => {
+        this._taskService.setData(this.taskPanelData.task.stringId, body).subscribe(response => {
             if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
-                this.taskPanelData.changedFields.next(response.changedFields); // TODO emit event and make this in parent
+                this.taskPanelData.changedFields.next(response.changedFields);
             }
-            this.snackBar.openInfoSnackBar('Data saved successfully');
+            this._snackBar.openInfoSnackBar('Data saved successfully');
             this.loading = false;
         }, error => {
-            this.snackBar.openErrorSnackBar('Saving data failed');
-            this.log.debug(error);
+            this._snackBar.openErrorSnackBar('Saving data failed');
+            this._log.debug(error);
             this.loading = false;
         });
+    }
+
+    private updateFromChangedFields(chFields): void {
+        this.taskPanelData.task.dataGroups.forEach(dataGroup => {
+            dataGroup.fields.forEach(field => {
+                if (chFields[field.stringId]) {
+                    const updatedField = chFields[field.stringId];
+                    Object.keys(updatedField).forEach(key => {
+                        if (key === 'value')
+                            field.value = this._fieldConvertorService.formatValue(field, updatedField[key]);
+                        else if (key === 'behavior' && updatedField.behavior[this.taskPanelData.task.transitionId])
+                            field.behavior = updatedField.behavior[this.taskPanelData.task.transitionId];
+                        else
+                            field[key] = updatedField[key];
+                    });
+                }
+            });
+        });
+        this._taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
     }
 
     assign() {
         if (this.loading) {
             return;
         }
+        if (this.taskPanelData.task.user) {
+            return;
+        }
         this.loading = true;
-        this.taskService.assignTask(this.taskPanelData.task.stringId).subscribe(response => {
+        this._taskService.assignTask(this.taskPanelData.task.stringId).subscribe(response => {
             this.loading = false;
             if (response.success) {
                 // TODO remove some states ??
             } else if (response.error) {
-                this.snackBar.openErrorSnackBar(response.error);
+                this._snackBar.openErrorSnackBar(response.error);
             }
         }, error => {
-            this.snackBar.openErrorSnackBar(`Assigning task ${this.taskPanelData.task} failed`);
-            this.log.debug(error);
+            this._snackBar.openErrorSnackBar(`Assigning task ${this.taskPanelData.task} failed`);
+            this._log.debug(error);
             this.loading = false;
         });
     }
@@ -168,21 +196,56 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         if (this.loading) {
             return;
         }
+        if (!this.taskPanelData.task.user || ((this.taskPanelData.task.user.email !== this._userService.user.email)
+            && !this.canDo('cancel'))) {
+            return;
+        }
         this.loading = true;
-        this.taskService.cancelTask(this.taskPanelData.task.stringId).subscribe(response => {
+        this._taskService.cancelTask(this.taskPanelData.task.stringId).subscribe(response => {
             this.loading = false;
             if (response.success) {
+                this.panelRef.expanded = false;
                 // TODO remove some states ??
             } else if (response.error) {
-                this.snackBar.openErrorSnackBar(response.error);
+                this._snackBar.openErrorSnackBar(response.error);
             }
         }, error => {
-            this.snackBar.openErrorSnackBar(`Canceling assignment of task ${this.taskPanelData.task} failed`);
+            this._snackBar.openErrorSnackBar(`Canceling assignment of task ${this.taskPanelData.task} failed`);
             this.loading = false;
         });
     }
 
     finish() {
         this.panelRef.expanded = false;
+    }
+
+    canDo(action) {
+        if (!this.taskPanelData.task.roles || !action || !(this.taskPanelData.task.roles instanceof Object)) return false;
+        return Object.keys(this.taskPanelData.task.roles).some(role =>
+            this._userService.hasRoleById(role) ? this.taskPanelData.task.roles[role][action] : false
+        );
+    }
+
+    canAssign() {
+        return this.taskPanelData.task.assignPolicy === AssignPolicy.manual && !this.taskPanelData.task.user && this.canDo('perform');
+    }
+
+    canReassign() {
+        return (this.taskPanelData.task.user && this.taskPanelData.task.user.email === this._userService.user.email)
+            && (this.canDo('delegate'));
+    }
+
+    canCancel() {
+        return (this.taskPanelData.task.assignPolicy === AssignPolicy.manual &&
+            this.taskPanelData.task.user && this.taskPanelData.task.user.email === this._userService.user.email) ||
+            (this.taskPanelData.task.user && this.canDo('cancel'));
+    }
+
+    canFinish() {
+        return this.taskPanelData.task.user && this.taskPanelData.task.user.email === this._userService.user.email;
+    }
+
+    canColapse() {
+        return this.taskPanelData.task.assignPolicy === AssignPolicy.manual;
     }
 }

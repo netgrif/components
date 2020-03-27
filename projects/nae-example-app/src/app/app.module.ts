@@ -44,6 +44,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {HttpClientModule} from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
+import { TaskViewComponent } from './doc/task-view/task-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -67,6 +68,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TaskHeaderExampleComponent,
         ToolbarExampleComponent,
         CaseResourceExampleComponent,
+        TaskViewComponent,
     ],
     imports: [
         HttpClientModule,

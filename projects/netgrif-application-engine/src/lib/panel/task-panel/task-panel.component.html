@@ -9,7 +9,7 @@
                 <span fxFlex *ngFor="let field of taskPanelData.header.featuredFields;">{{field}}</span>
             </div>
             <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
-                <button mat-icon-button (click)="show($event);" *ngIf="!loading" [matMenuTriggerFor]="menu">
+                <button mat-icon-button (click)="show($event)" *ngIf="!loading" [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
@@ -36,10 +36,12 @@
                 <nae-task-panel-content></nae-task-panel-content>
             </div>
             <div class="task-panel-footer" fxLayout="row" fxFlex="20" fxLayoutAlign="end center">
-                <button (click)="cancel()" mat-button>CANCEL</button>
-                <button (click)="delegate()" mat-button>DELEGATE</button>
-                <button (click)="assign()" mat-button>ASSIGN</button>
-                <button (click)="finish()" mat-button>FINISH</button>
+                <button *ngIf="canAssign()" (click)="assign()" mat-button>ASSIGN</button>
+                <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button>DELEGATE</button>
+                <button *ngIf="canReassign()" (click)="delegate()" mat-button>REASSIGN</button>
+                <button *ngIf="canCancel()" (click)="cancel()" mat-button>CANCEL</button>
+                <button *ngIf="canFinish()" (click)="finish()" mat-button>FINISH</button>
+                <button *ngIf="canColapse()" color="primary" (click)="assign()" mat-button>COLLAPSE</button>
             </div>
         </div>
     </ng-template>
