@@ -14,6 +14,7 @@
         "nae:prod-build-without-tests": "ng lint netgrif-application-engine && npm run sonar && npm run nae:build && npm run nae:doc",
         "project:start": "npm run nae:local-build && ng serve",
         "example-app:start": "ng serve",
+        "debug-script": "ng g @netgrif/application-engine:create-view",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
