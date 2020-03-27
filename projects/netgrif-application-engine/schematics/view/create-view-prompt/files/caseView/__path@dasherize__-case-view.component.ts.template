@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {SideMenuService, NewCaseComponent, HeaderType, CasePanelDefinition} from '@netgrif/application-engine';
 
 @Component({
@@ -6,7 +6,7 @@ import {SideMenuService, NewCaseComponent, HeaderType, CasePanelDefinition} from
   templateUrl: './<%= dasherize(path) %>-case-view.component.html',
   styleUrls: ['./<%= dasherize(path) %>-case-view.component.scss']
 })
-export class <%= classify(path) %>CaseViewComponent {
+export class <%= classify(path) %>CaseViewComponent implements AfterViewInit {
 
     public headerType: HeaderType = 'case';
     public casePanelDefinitions: Array<CasePanelDefinition> = [];
