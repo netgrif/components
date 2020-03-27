@@ -11,14 +11,14 @@ import {
     getParentPath,
     Route,
     updateAppModule
-} from '../viewUtilityFunctions';
+} from '../view-utility-functions';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
     createRelativePath,
     getAppModule,
     getProjectInfo
-} from '../../utilityFunctions';
+} from '../../utility-functions';
 import {strings} from '@angular-devkit/core';
 import {CreateViewArguments} from './schema';
 import {ImportToAdd} from './classes/ImportToAdd';
@@ -110,7 +110,7 @@ function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean)
 
     const rules = tabViews.rules;
 
-    rules.push(createFilesFromTemplates('./files/tabView', `${projectInfo.path}/views/${args.path}`, {
+    rules.push(createFilesFromTemplates('./files/tab-view', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         path: className.prefix,
         tabs: tabViews.tabTemplates,
@@ -242,7 +242,7 @@ function createCaseView(tree: Tree, args: CreateViewArguments, addRoute: boolean
 
     const rules = [];
 
-    rules.push(createFilesFromTemplates('./files/caseView', `${projectInfo.path}/views/${args.path}`, {
+    rules.push(createFilesFromTemplates('./files/case-view', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         path: className.prefix,
         dasherize: strings.dasherize,

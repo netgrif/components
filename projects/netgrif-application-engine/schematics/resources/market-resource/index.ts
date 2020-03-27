@@ -1,5 +1,5 @@
 import {Rule, Tree} from '@angular-devkit/schematics';
-import {createFilesFromTemplates, getProjectInfo} from '../../utilityFunctions';
+import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
 
 
 export function initializeMarketResources(_options: any): Rule {

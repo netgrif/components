@@ -1,5 +1,5 @@
 import {Rule, schematic, Tree} from '@angular-devkit/schematics';
-import {commitChangesToFile, getAppModule, getFileData, getProjectInfo, ProjectInfo} from '../utilityFunctions';
+import {commitChangesToFile, getAppModule, getFileData, getProjectInfo, ProjectInfo} from '../utility-functions';
 import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
 import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
 import {Change} from '@schematics/angular/utility/change';

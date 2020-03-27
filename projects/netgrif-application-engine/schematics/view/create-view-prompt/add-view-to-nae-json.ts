@@ -4,7 +4,7 @@ import {
     Tree
 } from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {getNaeConfiguration} from '../../utilityFunctions';
+import {getNaeConfiguration} from '../../utility-functions';
 
 
 export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule {

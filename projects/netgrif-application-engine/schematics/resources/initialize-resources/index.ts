@@ -4,7 +4,7 @@ import {
     schematic,
     Tree
 } from '@angular-devkit/schematics';
-import {getNaeConfiguration} from '../../utilityFunctions';
+import {getNaeConfiguration} from '../../utility-functions';
 import {Resource, Resources} from '../../../src/lib/configuration/interfaces/schema';
 
 

@@ -5,7 +5,7 @@ import {
     Tree,
     chain,
 } from '@angular-devkit/schematics';
-import {createFilesFromTemplates, getProjectInfo} from '../../utilityFunctions';
+import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
 // Javascript libka, ktoru typescript nechcel skompilovat. Problem ja internete vyrieseny takto a aj samotne readme obsahuje tento sposob.
 const PaletteGenerator = require('palette-creator');
 

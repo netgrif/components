@@ -14,7 +14,7 @@ import {FileEntry, UpdateRecorder} from '@angular-devkit/schematics/src/tree/int
 import {experimental, normalize, strings} from '@angular-devkit/core';
 import {NetgrifApplicationEngine} from '../src/lib/configuration/interfaces/schema';
 import {Change, InsertChange} from '@schematics/angular/utility/change';
-import {FileSystemNode} from './utilityClasses';
+import {FileSystemNode} from './utility-classes';
 
 export class ProjectInfo {
     /**
