@@ -14,7 +14,7 @@ export abstract class AbstractLoggerService {
 
     protected constructor(private publisherService: LogPublisherService) {
         this.publisher = publisherService;
-        this.config = {
+        this.config = { // TODO 24.03.2020 - connect with configuration service
             logWithDate: true,
             serializeParams: true,
             level: LogLevel.ALL

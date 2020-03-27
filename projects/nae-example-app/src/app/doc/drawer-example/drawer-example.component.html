@@ -1,0 +1,12 @@
+<nae-navigation-drawer #sidenav [fixed]="fixed" user="true" quickPanel="true" navigation="true"
+                       (openedChange)="openStatusChanged($event)">
+
+    <div fxLayout="column" fxLayoutAlign="start start" style="padding: 16px; height: 1000px;">
+        <button mat-stroked-button color="primary" (click)="sidenav.toggle()">Toggle sidenav</button>
+        <mat-slide-toggle color="accent"
+                          (change)="fixed = $event.checked">{{fixed ? 'Fixed' : 'Moving'}}</mat-slide-toggle>
+    </div>
+
+    <router-outlet></router-outlet>
+
+</nae-navigation-drawer>

@@ -18,11 +18,11 @@ export enum MaterialAppearance {
 
 export abstract class DataField<T> {
 
-    private _value: BehaviorSubject<T>;
+    private _value$: BehaviorSubject<T>;
 
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string, private _description?: string) {
-        this._value = new BehaviorSubject<T>(initialValue);
+        this._value$ = new BehaviorSubject<T>(initialValue);
     }
 
     get stringId(): string {
@@ -46,19 +46,19 @@ export abstract class DataField<T> {
     }
 
     get value(): T {
-        return this._value.getValue();
+        return this._value$.getValue();
     }
 
     set value(value: T) {
-        this._value.next(value);
+        this._value$.next(value);
     }
 
     get disabled(): boolean {
         return this._behavior.visible && !this._behavior.editable;
     }
 
-    public valueChanges(): Observable<T> {
-        return this._value.asObservable();
+    public valueChanges$(): Observable<T> {
+        return this._value$.asObservable();
     }
 
     public registerFormControl(formControl: FormControl): void {
@@ -67,7 +67,7 @@ export abstract class DataField<T> {
         ).subscribe( newValue => {
             this.value = newValue;
         });
-        this._value.pipe(
+        this._value$.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe( newValue => {
             formControl.setValue(newValue);

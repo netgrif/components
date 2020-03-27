@@ -15,9 +15,11 @@ export class UserService {
     private _user: User;
 
     constructor(
-                // private _store: Store<State>,
-                private _preferenceService: UserPreferenceService,
-                private _authService: AuthenticationService) {}
+        // private _store: Store<State>,
+        private _preferenceService: UserPreferenceService,
+        private _authService: AuthenticationService) {
+        this._user = this.emptyUser();
+    }
 
     get user() {
         return this._user;
@@ -55,8 +57,12 @@ export class UserService {
 
     public logout(): Observable<object> {
         return this._authService.logout().pipe(
-            tap(() => this._user = null)
+            tap(() => this._user = this.emptyUser())
         );
+    }
+
+    private emptyUser() {
+        return new User('', '', '', '', [], [], []);
     }
 
 }

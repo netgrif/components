@@ -6,17 +6,22 @@ import {
     AuthenticationModule,
     ConfigurationService,
     CovalentModule,
-    MaterialModule,
-    NewCaseComponent,
-    SideMenuModule,
-    PanelModule,
+    DataFieldsModule,
     DialogModule,
-    UserAssignComponent,
-    SimpleDialogComponent,
-    QuestionDialogWithAnswerComponent,
+    HeaderModule,
+    MaterialModule,
+    NavigationModule,
+    NewCaseComponent,
+    PanelModule,
     QuestionDialogComponent,
+    QuestionDialogWithAnswerComponent,
+    QuickPanelModule,
+    SideMenuModule,
+    SimpleDialogComponent,
     TabsModule,
     ToolbarModule,
+    UserAssignComponent,
+    UserModule
     HeaderModule,
     ImportNetComponent,
     DataFieldsModule,
@@ -27,6 +32,10 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {DocumentationComponent} from './doc/documentation/documentation.component';
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
+import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
+import {RailExampleComponent} from './doc/rail-example/rail-example.component';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {MatIconModule} from '@angular/material';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import {UserAssignSidemenuExampleComponent} from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
@@ -44,8 +53,6 @@ import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, Trans
 import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workflows-view-example.component';
-// // TODO
-// import {WorkflowsModule} from '../../../netgrif-application-engine/src/lib/workflows/workflows.module';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {HttpClientModule} from '@angular/common/http';
 import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
@@ -59,6 +66,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppComponent,
         DocumentationComponent,
         AuthenticationComponent,
+        DrawerExampleComponent,
+        RailExampleComponent,
         CaseSidemenuExampleComponent,
         SidemenuExampleComponent,
         UserAssignSidemenuExampleComponent,
@@ -76,6 +85,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ContentComponent,
         CaseResourceExampleComponent,
         TaskResourceExampleComponent
+        TaskHeaderExampleComponent,
+        ToolbarExampleComponent
     ],
     imports: [
         HttpClientModule,
@@ -87,6 +98,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         MaterialModule,
         CovalentModule,
         AuthenticationModule,
+        HttpClientModule,
+        MatIconModule,
+        UserModule,
+        QuickPanelModule,
+        NavigationModule,
         SideMenuModule,
         PanelModule,
         DialogModule,
