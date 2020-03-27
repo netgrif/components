@@ -50,7 +50,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             this.portal = new ComponentPortal(this.panelContentComponent);
         }
         this.taskPanelData.changedFields.subscribe(chFields => {
-            this.updateFromChangedFields(chFields);
+            // this.updateFromChangedFields(chFields);
         });
     }
 
