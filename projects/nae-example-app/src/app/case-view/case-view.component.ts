@@ -1,12 +1,10 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {CasePanelDefinition, HeaderComponent, NewCaseComponent, SideMenuService} from '@netgrif/application-engine';
+import {Case, CasePanelDefinition, HeaderChange, HeaderComponent, NewCaseComponent, SideMenuService} from '@netgrif/application-engine';
 import {Observable} from 'rxjs';
-import {HeaderType} from '../../../../netgrif-application-engine/src/lib/header/abstract-header-service';
-import {HeaderChange} from '../../../../netgrif-application-engine/src/lib/header/models/user.changes/header-change';
 import {CaseJsonResourceService} from '../case-json-resource.service';
-import {Case} from '../../../../netgrif-application-engine/src/lib/resources/interface/case';
 import {HttpParams} from '@angular/common/http';
 import {TaskJsonResourceService} from '../../../../../task-json-resource.service';
+import {HeaderType} from '@netgrif/application-engine/lib/header/abstract-header-service';
 
 @Component({
     selector: 'nae-app-case-view',
@@ -35,7 +33,7 @@ export class CaseViewComponent implements AfterViewInit {
             console.log(header);
             // TODO: JOZO fix Matove interfaces
             // const params = new HttpParams().set(header ? header.type : '',
-            //     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
+    //     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
             const params = new HttpParams().set('sort', 'asc');
             this._caseResourceService.searchCases({}, params)
                 .subscribe((cazes: Array<Case>) => {

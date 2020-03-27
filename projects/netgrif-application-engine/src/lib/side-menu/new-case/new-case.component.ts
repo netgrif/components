@@ -4,7 +4,6 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {SideMenuService} from '../services/side-menu.service';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {CaseJsonResourceService} from '../../../../../nae-example-app/src/app/case-json-resource.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
 
 @Component({
@@ -27,7 +26,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
     constructor(private _formBuilder: FormBuilder,
                 private sideMenuService: SideMenuService,
-                private _caseResourceService: CaseJsonResourceService,
+                // private _caseResourceService: CaseResourceService,
                 private _snackBarService: SnackBarService) {
     }
 
@@ -64,11 +63,11 @@ export class NewCaseComponent implements OnInit, OnChanges {
             color: this.colorFormGroup.value,
             netId: this.processFormGroup.getRawValue()
         };
-        this._caseResourceService.createCase(newCase)
-            .subscribe(
-                caze => this._snackBarService.openInfoSnackBar('Successful create new case'),
-                error => this._snackBarService.openErrorSnackBar(error)
-            );
+        // this._caseResourceService.createCase(newCase)
+        //     .subscribe(
+        //         caze => this._snackBarService.openInfoSnackBar('Successful create new case'),
+        //         error => this._snackBarService.openErrorSnackBar(error)
+        //     );
 
         this.sideMenuService.close();
     }
