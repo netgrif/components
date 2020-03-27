@@ -1,4 +1,4 @@
-import {DataField, MaterialAppearance} from '../../models/abstract-data-field';
+import {DataField, Layout, MaterialAppearance} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 
 export interface EnumerationFieldValue {
@@ -16,8 +16,8 @@ export class EnumerationField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string,
                 private _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
-                public materialAppearance = MaterialAppearance.STANDARD, private _view = EnumerationFieldView.DEFAULT) {
-        super(stringId, title, value, behavior, placeholder, description);
+                layout?: Layout, public materialAppearance = MaterialAppearance.STANDARD, private _view = EnumerationFieldView.DEFAULT) {
+        super(stringId, title, value, behavior, placeholder, description, layout);
     }
 
     get choices(): Array<EnumerationFieldValue> {

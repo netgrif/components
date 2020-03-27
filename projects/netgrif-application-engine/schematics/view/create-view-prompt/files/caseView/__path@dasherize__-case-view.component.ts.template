@@ -1,0 +1,72 @@
+import {Component, OnInit} from '@angular/core';
+import {SideMenuService, NewCaseComponent, HeaderType, CasePanelDefinition} from '@netgrif/application-engine';
+
+@Component({
+  selector: '<%= prefix %>-<%= dasherize(path) %>-case-view',
+  templateUrl: './<%= dasherize(path) %>-case-view.component.html',
+  styleUrls: ['./<%= dasherize(path) %>-case-view.component.scss']
+})
+export class <%= classify(path) %>CaseViewComponent {
+
+    public headerType: HeaderType = 'case';
+    public casePanelDefinitions: Array<CasePanelDefinition> = [];
+    private _changeHeader$: Observable<HeaderChange>;
+    @ViewChild('header') public caseHeaderComponent: HeaderComponent;
+
+    constructor(private _sideMenuService: SideMenuService,
+                private _caseResourceService: CaseJsonResourceService,
+                private _taskResourceService: TaskJsonResourceService) {
+        this._caseResourceService.getAllCase()
+            .subscribe((cazes: Array<Case>) => {
+                this.setCasePanelFromResource(cazes);
+            });
+    }
+
+    ngAfterViewInit(): void {
+        this._changeHeader$ = this.caseHeaderComponent.headerService.headerChange$;
+        this._changeHeader$.subscribe((header: HeaderChange) => {
+            console.log(header);
+            // TODO: JOZO fix Matove interfaces
+            // const params = new HttpParams().set(header ? header.type : '',
+            //     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
+            const params = new HttpParams().set('sort', 'asc');
+            this._caseResourceService.searchCases({}, params)
+                .subscribe((cazes: Array<Case>) => {
+                    this.setCasePanelFromResource(cazes);
+                });
+        });
+    }
+
+    public setCasePanelFromResource(cazes: Array<Case>) {
+        cazes.forEach(caze => {
+            const caseDefinition = {
+                featuredFields: [
+                    new Date(caze.creationDate[6]).toLocaleString(),
+                    caze.author.fullName,
+                    caze.visualId,
+                    ' '
+                ],
+                panelIconField: caze.title,
+                panelIcon: 'add',
+                caseId: caze.stringId
+            };
+            if (!this.casePanelDefinitions.some(caseDef => caseDef.caseId === caseDefinition.caseId)) {
+                this.casePanelDefinitions.push(caseDefinition);
+            }
+        });
+    }
+
+    public redirectToTasksOfCase(caseDefinition: CasePanelDefinition): void {
+        this._taskResourceService.searchTask({case: caseDefinition.caseId})
+            .subscribe(tasks => {
+                tasks.forEach(task => {
+                    console.log(task);
+                });
+            });
+    }
+
+    public onCreateNewCase(): void {
+        this._sideMenuService.open(NewCaseComponent);
+    }
+
+}

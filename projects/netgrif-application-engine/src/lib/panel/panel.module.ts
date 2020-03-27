@@ -24,7 +24,8 @@ import {DataFieldsModule} from '../data-fields/data-fields.module';
     exports: [
         PanelComponent,
         TaskPanelComponent,
-        CasePanelComponent
+        CasePanelComponent,
+        TaskPanelContentComponent
     ],
     entryComponents: [
         TaskPanelContentComponent

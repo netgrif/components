@@ -19,9 +19,13 @@ import {
     SideMenuModule,
     SimpleDialogComponent,
     TabsModule,
+    DataFieldsModule,
+    ResourceProvider,
     ToolbarModule,
     UserAssignComponent,
-    UserModule
+    UserModule,
+    HeaderModule,
+    TaskListModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -45,6 +49,8 @@ import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-tex
 import {CaseHeaderExampleComponent} from './doc/case-header-example/case-header-example.component';
 import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-example.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
+import {CaseViewComponent} from './case-view/case-view.component';
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
@@ -71,7 +77,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveTextFieldComponent,
         CaseHeaderExampleComponent,
         TaskHeaderExampleComponent,
-        ToolbarExampleComponent
+        ReactiveTextFieldComponent,
+        ToolbarExampleComponent,
+        CaseResourceExampleComponent,
+        TaskResourceExampleComponent,
+        CaseViewComponent,
     ],
     imports: [
         BrowserModule,
@@ -93,14 +103,16 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabsModule,
         DataFieldsModule,
         HeaderModule,
+        DataFieldsModule,
         ToolbarModule,
+        TaskListModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useFactory: (HttpLoaderFactory),
                 deps: [HttpClient]
             }
-        })
+        }),
     ],
     entryComponents: [
         NewCaseComponent,
@@ -110,8 +122,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         QuestionDialogWithAnswerComponent,
         ContentComponent
     ],
-    providers: [
-        {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
+
+    providers: [{
+        provide: ConfigurationService,
+        useClass: NaeExampleAppConfigurationService
+    },
+        ResourceProvider,
         TranslateService,
         TranslatePipe,
         TranslateStore

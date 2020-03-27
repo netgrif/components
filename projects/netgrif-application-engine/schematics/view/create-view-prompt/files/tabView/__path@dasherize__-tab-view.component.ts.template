@@ -3,7 +3,7 @@ import { Component} from '@angular/core';
 import { <%= imp.className %> } from '<%= imp.importPath %>';<% } %>
 
 @Component({
-  selector: '<%= prefix %>-tab-view',
+  selector: '<%= prefix %>-<%= dasherize(path) %>-tab-view',
   templateUrl: './<%= dasherize(path) %>-tab-view.component.html',
   styleUrls: ['./<%= dasherize(path) %>-tab-view.component.scss']
 })

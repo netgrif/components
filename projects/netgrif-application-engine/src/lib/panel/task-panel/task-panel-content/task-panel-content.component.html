@@ -1,42 +1,48 @@
-<mat-grid-list cols="4" rowHeight="105px">
-    <mat-grid-tile *ngFor="let item of resources"
-                   class="border"
-                   [colspan]="item.layout.cols"
-                   [rowspan]="item.layout.rows"
-                   [ngSwitch]="item.type">
+<div >
+    <mat-grid-list [cols]="formCols" rowHeight="105px">
+        <mat-grid-tile *ngFor="let item of dataSource"
+                       class="border"
+                       [colspan]="item.layout.cols"
+                       [rowspan]="item.layout.rows"
+                       [ngSwitch]="item.type">
 
-            <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width" [dataField]="item.item">
-            </nae-boolean-field>
+                <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width" [dataField]="item.item">
+                </nae-boolean-field>
 
-            <nae-text-field *ngSwitchCase="'text'" class="full-width" [dataField]="item.item">
-            </nae-text-field>
+                <nae-text-field *ngSwitchCase="'text'" class="full-width" [dataField]="item.item">
+                </nae-text-field>
 
-            <nae-number-field *ngSwitchCase="'number'" class="full-width" [dataField]="item.item">
-            </nae-number-field>
+                <nae-number-field *ngSwitchCase="'number'" class="full-width" [dataField]="item.item">
+                </nae-number-field>
 
-            <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width" [dataField]="item.item">
-            </nae-enumeration-field>
+                <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width" [dataField]="item.item">
+                </nae-enumeration-field>
 
-            <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width" [dataField]="item.item">
-            </nae-multichoice-field>
+                <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width" [dataField]="item.item">
+                </nae-multichoice-field>
 
-            <nae-date-field *ngSwitchCase="'date'" class="full-width" [dataField]="item.item">
-            </nae-date-field>
+                <nae-date-field *ngSwitchCase="'date'" class="full-width" [dataField]="item.item">
+                </nae-date-field>
 
-            <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width" [dataField]="item.item">
-            </nae-date-time-field>
+                <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width" [dataField]="item.item">
+                </nae-date-time-field>
 
-            <nae-file-field *ngSwitchCase="'file'" class="full-width" [dataField]="item.item">
-            </nae-file-field>
+                <nae-file-field *ngSwitchCase="'file'" class="full-width" [dataField]="item.item">
+                </nae-file-field>
 
-            <nae-user-field *ngSwitchCase="'user'" class="full-width" [dataField]="item.item">
-            </nae-user-field>
+                <nae-user-field *ngSwitchCase="'user'" class="full-width" [dataField]="item.item">
+                </nae-user-field>
 
-            <nae-button-field *ngSwitchCase="'button'" class="full-width" [dataField]="item.item" >
-            </nae-button-field>
+                <nae-button-field *ngSwitchCase="'button'" class="full-width" [dataField]="item.item" >
+                </nae-button-field>
 
-            <div *ngSwitchCase="'blank'"></div>
+                <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                    <div fxFlex="20" class="line-datagroup"></div>
+                    <span class="margin8px">{{item.title}}</span>
+                    <div fxFlex class="line-datagroup"></div>
+                </div>
 
-            <span *ngSwitchDefault>{{item.type}}</span>
-    </mat-grid-tile>
-</mat-grid-list>
+                <div *ngSwitchCase="'blank'"></div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

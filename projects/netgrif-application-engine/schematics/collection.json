@@ -49,6 +49,16 @@
             "description": "Updates routes in route module to match with those in routes.json",
             "factory": "./view/populate-route-module/index#populateRouteModule",
             "schema": "./view/populate-route-module/schema.json"
+        },
+        "initialize-resource": {
+            "description": "Generate Resource from nae.json.",
+            "factory": "./resources/initialize-resources/index#initializeResources",
+            "schema": "./resources/initialize-resources/schema.json"
+        },
+        "market-resource": {
+            "description": "Resource market",
+            "factory": "./resources/market-resource/index#initializeMarketResources",
+            "schema": "./resources/market-resource/schema.json"
         }
     }
 }

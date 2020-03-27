@@ -9,4 +9,5 @@ export interface GridLayoutElement {
         cols: number;
         rows: number;
     };
+    title?: string;
 }

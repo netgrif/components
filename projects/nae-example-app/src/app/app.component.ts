@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import sk from '../assets/i18n/sk.json';
 import en from '../assets/i18n/en.json';
-import {SelectLanguageService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-root',

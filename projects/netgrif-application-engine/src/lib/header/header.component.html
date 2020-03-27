@@ -3,7 +3,7 @@
         <div fxLayout="row" fxFlex="90" class="header-content-container"
              [ngSwitch]="headerService.headers.mode">
             <!--SORT-->
-            <div *ngSwitchCase="'sort'" fxFlex="100" fxLayout="row">
+            <div *ngSwitchCase="'sort'" fxFlex="99" fxLayout="row">
                 <nae-sort-mode fxFlex="100" [headerService]="headerService"></nae-sort-mode>
             </div>
             <!--SEARCH-->
@@ -15,7 +15,7 @@
                 <nae-edit-mode fxFlex="100" [headerService]="headerService"></nae-edit-mode>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10"
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="9.5"
              [ngSwitch]="headerService.headers.mode" *ngIf="!hideEditMode">
             <button mat-icon-button [matMenuTriggerFor]="headerMenu" *ngSwitchDefault>
                 <mat-icon>more_vert</mat-icon>

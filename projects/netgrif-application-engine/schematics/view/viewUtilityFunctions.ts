@@ -3,7 +3,6 @@ import {commitChangesToFile, getAppModule, getFileData, getProjectInfo, ProjectI
 import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
 import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
 import {Change} from '@schematics/angular/utility/change';
-
 /**
  * Mocks the `Route` interface of {@link @angular/router#Route | Angular's router package}.
  * But changes the type of the `component` attribute to `string`.

@@ -24,11 +24,17 @@ export function createNaeFiles(): Rule {
     return (tree: Tree) => {
         const rules = [];
         rules.push(createRoutesModule());
+        console.log('------------------------ initialize-configuration-service -------------------------------');
         rules.push(schematic('initialize-configuration-service', {}));
+        console.log('------------------------ custom-templates -------------------------------');
         rules.push(schematic('custom-templates', {}));
-        for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
-            rules.push(schematic('create-view', {}));
-        }
+        console.log('------------------------ initialize-resource -------------------------------');
+        rules.push(schematic('initialize-resource', {}));
+        console.log('------------------------ create-view -------------------------------');
+        getNumberOfMissingViews(tree);
+        // for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
+        //     rules.push(schematic('create-view', {}));
+        // }
         return chain(rules);
     };
 }

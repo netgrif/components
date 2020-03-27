@@ -64,6 +64,12 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
         case 'tabView':
             rules.push(createTabView(tree, args, addRoute));
             break;
+        case 'taskView':
+            rules.push(createTaskView(tree, args, addRoute));
+            break;
+        case 'caseView':
+            rules.push(createCaseView(tree, args, addRoute));
+            break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
@@ -76,7 +82,7 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
 function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
-    const className = new ClassName(args.path as string, resolveClassSuffixForView('login'));
+    const className = new ClassName(args.path as string, 'Login');
 
     rules.push(createFilesFromTemplates('./files/login', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
@@ -98,7 +104,7 @@ function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolea
 
 function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
-    const className = new ClassName(args.path as string, resolveClassSuffixForView('tabView'));
+    const className = new ClassName(args.path as string, 'TabView');
 
     const tabViews = processTabViewContents(tree, args.layoutParams as TabViewParams, args.path as string, className);
 
@@ -176,7 +182,7 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
 
             result.rules.push(createView(tree, createViewArguments, false));
 
-            const newComponentName = new ClassName(`${tabViewPath}/content/${viewCounter}`, resolveClassSuffixForView(tab.view.name));
+            const newComponentName = new ClassName(`${tabViewPath}/content/${viewCounter}`, 'TabView');
 
             tabTemplate = new TabContentTemplate(newComponentName.name);
             result.tabViewImports.push(
@@ -204,13 +210,66 @@ function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabVie
     return result;
 }
 
-function resolveClassSuffixForView(view: string): string {
-    switch (view) {
-        case 'login':
-            return 'Login';
-        case 'tabView':
-            return 'TabView';
-        default:
-            throw new SchematicsException(`Unknown view type '${view}'`);
+function createTaskView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
+    const projectInfo = getProjectInfo(tree);
+    const rules = [];
+    const className = new ClassName(args.path as string, 'TaskView');
+
+    rules.push(createFilesFromTemplates('./files/task-view', `${projectInfo.path}/views/${args.path}`, {
+        prefix: projectInfo.projectPrefixDasherized,
+        path: className.prefix,
+        dasherize: strings.dasherize,
+        classify: strings.classify
+    }));
+
+    updateAppModule(tree, className.name, className.fileImportPath, [
+        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('MaterialModule', '@netgrif/application-engine'),
+        new ImportToAdd('PanelModule', '@netgrif/application-engine'),
+        new ImportToAdd('TaskListModule', '@netgrif/application-engine'),
+        new ImportToAdd('CardModule', '@netgrif/application-engine')]);
+    if (addRoute) {
+        addRoutingModuleImport(tree, className.name, className.fileImportPath);
+        rules.push( addRouteToRoutesJson(args.path as string, className.name));
+        rules.push( addRouteToRoutesJson(`${args.path}/**`, className.name));
     }
+    return chain(rules);
+}
+
+function createCaseView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
+    const projectInfo = getProjectInfo(tree);
+    const className = new ClassName(args.path as string, 'CaseView');
+
+    const rules = [];
+
+    rules.push(createFilesFromTemplates('./files/caseView', `${projectInfo.path}/views/${args.path}`, {
+        prefix: projectInfo.projectPrefixDasherized,
+        path: className.prefix,
+        dasherize: strings.dasherize,
+        classify: strings.classify
+    }));
+
+    updateAppModule(tree, className.name, className.fileImportPath, [
+        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('FlexLayoutModule', '@angular/flex-layout'),
+        new ImportToAdd('MaterialModule', '@netgrif/application-engine'),
+        new ImportToAdd('HeaderModule', '@netgrif/application-engine'),
+        new ImportToAdd('PanelModule', '@netgrif/application-engine')
+    ]);
+
+    const appModule = getAppModule(tree, projectInfo.path);
+    const changes = addEntryComponentToModule(
+        appModule.sourceFile,
+        appModule.fileEntry.path,
+        'NewCaseComponent',
+        '@netgrif/application-engine'
+    );
+    commitChangesToFile(tree, appModule.fileEntry, changes);
+
+    if (addRoute) {
+        addRoutingModuleImport(tree, className.name, className.fileImportPath);
+        rules.push(addRouteToRoutesJson(args.path as string, className.name));
+        rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name));
+    }
+    return chain(rules);
 }
