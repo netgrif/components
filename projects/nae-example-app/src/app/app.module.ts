@@ -6,29 +6,36 @@ import {
     AuthenticationModule,
     ConfigurationService,
     CovalentModule,
-    MaterialModule,
-    NewCaseComponent,
-    SideMenuModule,
-    PanelModule,
+    DataFieldsModule,
     DialogModule,
-    UserAssignComponent,
-    SimpleDialogComponent,
-    QuestionDialogWithAnswerComponent,
+    HeaderModule,
+    MaterialModule,
+    NavigationModule,
+    NewCaseComponent,
+    PanelModule,
     QuestionDialogComponent,
+    QuestionDialogWithAnswerComponent,
+    QuickPanelModule,
+    SideMenuModule,
+    SimpleDialogComponent,
     TabsModule,
     DataFieldsModule,
-    ResourceProvider,
     ToolbarModule,
-    HeaderModule, TaskListModule, CardModule
+    HeaderModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {DocumentationComponent} from './doc/documentation/documentation.component';
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
+import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
+import {RailExampleComponent} from './doc/rail-example/rail-example.component';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {MatIconModule} from '@angular/material';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
+import { PanelExampleComponent } from './doc/panel-example/panel-example.component';
 import { CasePanelExampleComponent } from './doc/case-panel-example/case-panel-example.component';
 import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-example.component';
 import { DialogExampleComponent } from './doc/dialog-example/dialog-example.component';
@@ -39,7 +46,6 @@ import { CaseHeaderExampleComponent } from './doc/case-header-example/case-heade
 import { TaskHeaderExampleComponent } from './doc/task-header-example/task-header-example.component';
 import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -55,6 +61,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppComponent,
         DocumentationComponent,
         AuthenticationComponent,
+        DrawerExampleComponent,
+        RailExampleComponent,
         CaseSidemenuExampleComponent,
         SidemenuExampleComponent,
         UserAssignSidemenuExampleComponent,
@@ -68,7 +76,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TaskHeaderExampleComponent,
         ToolbarExampleComponent,
         CaseResourceExampleComponent,
-        TaskViewComponent,
+        TaskViewComponent
     ],
     imports: [
         HttpClientModule,
@@ -80,13 +88,17 @@ export function HttpLoaderFactory(http: HttpClient) {
         MaterialModule,
         CovalentModule,
         AuthenticationModule,
+        HttpClientModule,
+        MatIconModule,
+        UserModule,
+        QuickPanelModule,
+        NavigationModule,
         SideMenuModule,
         PanelModule,
         DialogModule,
         TabsModule,
         DataFieldsModule,
         HeaderModule,
-        DataFieldsModule,
         ToolbarModule,
         TranslateModule.forRoot({
             loader: {
