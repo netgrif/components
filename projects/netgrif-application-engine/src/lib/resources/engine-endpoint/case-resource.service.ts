@@ -1,14 +1,24 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import { changeType, Case, Count, DataGroups, MessageResource, ResourceProvider, FileResource} from 'netgrif-application-engine';
+import {ResourceProvider} from '../resource-provider.service';
+import {Count} from '../interface/count';
+import {Case} from '../interface/case';
+import {changeType, getResourceAddress} from '../resource-utility-functions';
+import {MessageResource} from '../interface/message-resource';
+import {DataGroupsResource} from '../interface/data-groups';
+import {FileResource} from '../interface/file-resource';
+import {ConfigurationService} from '../../configuration/configuration.service';
 
+@Injectable({
+    providedIn: 'root'
+})
+export class CaseResourceService {
+    private SERVER_URL: string;
 
-export abstract class AbstractCaseJsonResourceService {
-
-    protected constructor(protected provider: ResourceProvider, protected SERVER_URL: string) {
+    protected constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {
+        this.SERVER_URL = getResourceAddress('case', this._configService.get().providers.resources);
     }
-
 
     /**
      * Get count of the cases
@@ -53,7 +63,7 @@ export abstract class AbstractCaseJsonResourceService {
      * GET
      * {{baseUrl}}/api/workflow/case/:id/data
      */
-    public getCaseData(caseID: string): Observable<Array<DataGroups>> {
+    public getCaseData(caseID: string): Observable<Array<DataGroupsResource>> {
         return this.provider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL).pipe(map(r => changeType(r, 'dataGroups')));
     }
 
@@ -108,11 +118,3 @@ export abstract class AbstractCaseJsonResourceService {
 
 }
 
-@Injectable({
-    providedIn: 'root'
-})
-export class CaseJsonResourceService extends AbstractCaseJsonResourceService {
-    constructor(provider: ResourceProvider) {
-        super(provider, '<%= url %>');
-    }
-}
