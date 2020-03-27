@@ -23,6 +23,7 @@ import {FileField} from '../../../data-fields/file-field/models/file-field';
 import {DataField, MaterialAppearance} from '../../../data-fields/models/abstract-data-field';
 import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
+import {moment} from '../../../moment/moment-import';
 
 @Component({
     selector: 'nae-task-panel-content',
@@ -157,10 +158,10 @@ export class TaskPanelContentComponent implements OnInit {
                 return new MultichoiceField(item.stringId, item.name, values, choicesMulti, item.behavior,
                     item.placeholder, item.description, MaterialAppearance.STANDARD, typeMulti);
             case 'date':
-                const date = new Date(item.minDate);
+                const date = moment(item.minDate);
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder, item.description);
             case 'dateTime':
-                const dateTime = new Date();
+                const dateTime = moment();
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior, item.placeholder, item.description);
             case 'user':
                 return new UserField(item.stringId, item.name, item.behavior, new UserValue('name',

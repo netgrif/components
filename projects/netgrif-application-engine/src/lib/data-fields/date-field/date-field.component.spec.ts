@@ -7,6 +7,7 @@ import {DataFieldTemplateComponent} from '../data-field-template/data-field-temp
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {DateField} from './models/date-field';
+import {moment} from '../../moment/moment-import';
 
 describe('DateFieldComponent', () => {
     let component: DateFieldComponent;
@@ -40,7 +41,7 @@ describe('DateFieldComponent', () => {
     template: '<nae-date-field [dataField]="field"></nae-date-field>'
 })
 class TestWrapperComponent {
-    field = new DateField('', '', new Date(), {
+    field = new DateField('', '', moment(), {
         required: true,
         optional: true,
         visible: true,

@@ -102,9 +102,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        WorkflowsModule,
-        WorkflowsModule,
-        WorkflowsModule,
         WorkflowsModule
     ],
     entryComponents: [
