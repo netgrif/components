@@ -21,10 +21,8 @@ import {
     TabsModule,
     ToolbarModule,
     UserAssignComponent,
-    UserModule
-    HeaderModule,
+    UserModule,
     ImportNetComponent,
-    DataFieldsModule,
     ResourceProvider, WorkflowsModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -34,7 +32,6 @@ import {NaeExampleAppConfigurationService} from './nae-example-app-configuration
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
@@ -85,8 +82,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         ContentComponent,
         CaseResourceExampleComponent,
         TaskResourceExampleComponent
-        TaskHeaderExampleComponent,
-        ToolbarExampleComponent
     ],
     imports: [
         HttpClientModule,
