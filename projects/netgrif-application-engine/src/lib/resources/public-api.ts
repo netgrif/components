@@ -1,6 +1,8 @@
 /* SERVICES */
 export * from './resource-provider.service';
-
+export * from './engine-endpoint/case-resource.service';
+export * from './engine-endpoint/task-resource.service';
+export * from './engine-endpoint/petri-net-reference';
 
 export * from './interface/author';
 export * from './interface/immediate-data';
