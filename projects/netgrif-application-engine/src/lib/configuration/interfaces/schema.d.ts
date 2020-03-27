@@ -56,49 +56,49 @@ export interface Theme {
             primary:
                 string
                 | {
-                "50"?: string;
-                "100"?: string;
-                "200"?: string;
-                "300"?: string;
-                "400"?: string;
-                "500"?: string;
-                "600"?: string;
-                "700"?: string;
-                "800"?: string;
-                "900"?: string;
-                contrast?: { "light": string[]; "dark": string[]; };
+                '50'?: string;
+                '100'?: string;
+                '200'?: string;
+                '300'?: string;
+                '400'?: string;
+                '500'?: string;
+                '600'?: string;
+                '700'?: string;
+                '800'?: string;
+                '900'?: string;
+                contrast?: { 'light': string[]; 'dark': string[]; };
                 [k: string]: any;
             };
             secondary?:
                 string
                 | {
-                "50"?: string;
-                "100"?: string;
-                "200"?: string;
-                "300"?: string;
-                "400"?: string;
-                "500"?: string;
-                "600"?: string;
-                "700"?: string;
-                "800"?: string;
-                "900"?: string;
-                contrast?: { "light": string[]; "dark": string[]; };
+                '50'?: string;
+                '100'?: string;
+                '200'?: string;
+                '300'?: string;
+                '400'?: string;
+                '500'?: string;
+                '600'?: string;
+                '700'?: string;
+                '800'?: string;
+                '900'?: string;
+                contrast?: { 'light': string[]; 'dark': string[]; };
                 [k: string]: any;
             };
             warn?:
                 string
                 | {
-                "50"?: string;
-                "100"?: string;
-                "200"?: string;
-                "300"?: string;
-                "400"?: string;
-                "500"?: string;
-                "600"?: string;
-                "700"?: string;
-                "800"?: string;
-                "900"?: string;
-                contrast?: { "light": string[]; "dark": string[]; };
+                '50'?: string;
+                '100'?: string;
+                '200'?: string;
+                '300'?: string;
+                '400'?: string;
+                '500'?: string;
+                '600'?: string;
+                '700'?: string;
+                '800'?: string;
+                '900'?: string;
+                contrast?: { 'light': string[]; 'dark': string[]; };
                 [k: string]: any;
             };
             [k: string]: any;
@@ -107,49 +107,49 @@ export interface Theme {
             primary?:
                 string
                 | {
-                "50"?: string;
-                "100"?: string;
-                "200"?: string;
-                "300"?: string;
-                "400"?: string;
-                "500"?: string;
-                "600"?: string;
-                "700"?: string;
-                "800"?: string;
-                "900"?: string;
-                contrast?: { "light": string[]; "dark": string[]; };
+                '50'?: string;
+                '100'?: string;
+                '200'?: string;
+                '300'?: string;
+                '400'?: string;
+                '500'?: string;
+                '600'?: string;
+                '700'?: string;
+                '800'?: string;
+                '900'?: string;
+                contrast?: { 'light': string[]; 'dark': string[]; };
                 [k: string]: any;
             };
             secondary?:
                 string
                 | {
-                "50"?: string;
-                "100"?: string;
-                "200"?: string;
-                "300"?: string;
-                "400"?: string;
-                "500"?: string;
-                "600"?: string;
-                "700"?: string;
-                "800"?: string;
-                "900"?: string;
-                contrast?: { "light": string[]; "dark": string[]; };
+                '50'?: string;
+                '100'?: string;
+                '200'?: string;
+                '300'?: string;
+                '400'?: string;
+                '500'?: string;
+                '600'?: string;
+                '700'?: string;
+                '800'?: string;
+                '900'?: string;
+                contrast?: { 'light': string[]; 'dark': string[]; };
                 [k: string]: any;
             };
             warn?:
                 string
                 | {
-                "50"?: string;
-                "100"?: string;
-                "200"?: string;
-                "300"?: string;
-                "400"?: string;
-                "500"?: string;
-                "600"?: string;
-                "700"?: string;
-                "800"?: string;
-                "900"?: string;
-                contrast?: { "light": string[]; "dark": string[]; };
+                '50'?: string;
+                '100'?: string;
+                '200'?: string;
+                '300'?: string;
+                '400'?: string;
+                '500'?: string;
+                '600'?: string;
+                '700'?: string;
+                '800'?: string;
+                '900'?: string;
+                contrast?: { 'light': string[]; 'dark': string[]; };
                 [k: string]: any;
             };
             [k: string]: any;
@@ -197,16 +197,16 @@ export interface Route {
     };
     access:
         | {
-        [k: string]: any;
-    }
-        | ("public" | "private");
+            [k: string]: any;
+        }
+        | ('public' | 'private');
     navigation:
         | boolean
         | {
-        title?: string;
-        icon?: string;
-        [k: string]: any;
-    };
+            title?: string;
+            icon?: string;
+            [k: string]: any;
+        };
     routes?: {
         /**
          * This interface was referenced by `undefined`'s JSON-Schema definition
