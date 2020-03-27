@@ -3,5 +3,5 @@ export interface WorkflowsPanelContent {
     title: string;
     version: string;
     author: string;
-    uploaded: Date;
+    uploaded: Array<number>;
 }

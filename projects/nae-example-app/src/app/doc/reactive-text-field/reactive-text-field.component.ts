@@ -32,7 +32,7 @@ import {
 } from '@netgrif/application-engine';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
-import * as m from 'moment'; const moment = m; // https://github.com/ng-packagr/ng-packagr/issues/163#issuecomment-345448834
+import moment from 'moment';
 
 @Component({
     selector: 'nae-app-reactive-text-field',

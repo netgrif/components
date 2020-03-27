@@ -6,10 +6,10 @@ import {MAT_DATE_FORMATS} from '@angular/material';
 // https://momentjs.com/docs/#/displaying/format/
 export const DATE_FORMAT = {
     parse: {
-        dateInput: 'D.M.YYYY',
+        dateInput: 'D.MM.YYYY',
     },
     display: {
-        dateInput: 'D.M.YYYY',
+        dateInput: 'D.MM.YYYY',
         monthYearLabel: 'MMM YYYY',
         dateA11yLabel: 'Do MMMM YYYY',
         monthYearA11yLabel: 'MMMM YYYY',

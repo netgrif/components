@@ -1,6 +1,5 @@
-import {PetriNetReferences} from "./petri-net-references";
+import {PetriNetReference} from './petri-net-reference';
 
 export interface PetriNet {
-    petriNetReferences: Array<PetriNetReferences>;
+    petriNetReferences: Array<PetriNetReference>;
 }
-

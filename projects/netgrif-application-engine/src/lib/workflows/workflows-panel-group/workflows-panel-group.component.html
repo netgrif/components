@@ -3,28 +3,28 @@
                         [workflowPanelDefinition]="workflowPanel">
         <div fxLayout="row">
             <div fxFlex="50">
-                <nae-text-field [dataField]="panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).netIdentifier">
+                <nae-text-field [dataField]="workflowPanelGroupService.panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).netIdentifier">
                 </nae-text-field>
             </div>
             <div fxFlex="50">
-                <nae-text-field [dataField]="panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).title">
-                </nae-text-field>
-            </div>
-        </div>
-        <div fxLayout="row">
-            <div fxFlex="50">
-                <nae-text-field [dataField]="panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).version">
-                </nae-text-field>
-            </div>
-            <div fxFlex="50">
-                <nae-text-field [dataField]="panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).author">
+                <nae-text-field [dataField]="workflowPanelGroupService.panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).title">
                 </nae-text-field>
             </div>
         </div>
         <div fxLayout="row">
             <div fxFlex="50">
-                <nae-text-field [dataField]="panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).uploaded">
+                <nae-text-field [dataField]="workflowPanelGroupService.panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).version">
                 </nae-text-field>
+            </div>
+            <div fxFlex="50">
+                <nae-text-field [dataField]="workflowPanelGroupService.panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).author">
+                </nae-text-field>
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div fxFlex="50">
+                <nae-date-field [dataField]="workflowPanelGroupService.panelsDataGroup.get(workflowPanel.panelContent.netIdentifier).uploaded">
+                </nae-date-field>
             </div>
         </div>
     </nae-workflows-panel>

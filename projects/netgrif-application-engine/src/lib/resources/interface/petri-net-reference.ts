@@ -8,7 +8,7 @@ export interface PetriNetReference {
     version: string;
     initials: string;
     defaultCaseName: string;
-    createdDate: Date;
+    createdDate: Array<number>;
     author: Author;
     immediateData: Array<ImmediateData>;
 }

@@ -1,14 +1,26 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {DataDescription} from '../../../header/models/data-description';
-import {PetriNetReference} from '../../../header/models/petri-net-reference';
 import {PreferredHeaders} from '../../../header/models/preferred-headers';
 import {WorkflowPanelDefinition} from '../../../panel/workflows-panel/models/workflows-panels-definition';
 import {Headers} from '../../../header/headers';
+import {PetriNetReference} from '../../../resources/interface/petri-net-reference';
+import {TextField} from '../../../data-fields/text-field/models/text-field';
+import {WorkflowsPanelContent} from '../../../panel/workflows-panel/models/workflows-panel-content';
+import {Behavior} from '../../../data-fields/models/behavior';
+import {DateField} from '../../../data-fields/date-field/models/date-field';
+import {moment} from '../../../moment/moment-import';
+import {Moment} from 'moment';
 
-
+export interface PanelsDataGroup {
+    netIdentifier: TextField;
+    title: TextField;
+    version: TextField;
+    author: TextField;
+    uploaded: DateField;
+}
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class WorkflowsPanelGroupService {
 
@@ -16,6 +28,8 @@ export class WorkflowsPanelGroupService {
     private selectedHeaders: PreferredHeaders;
     private _petriNetReferences: Array<PetriNetReference> = [];
     private _headers: Headers;
+    public panelsDataGroup: Map<string, PanelsDataGroup>;
+    private dataFieldsBehaviour: Behavior = {visible: true, editable: false};
 
     constructor() {
     }
@@ -35,6 +49,18 @@ export class WorkflowsPanelGroupService {
 
     set headers(value: Headers) {
         this._headers = value;
+    }
+
+    static resolveFieldType(fieldType: string, fieldTitle: object): string {
+        if (fieldType === 'date') {
+            return WorkflowsPanelGroupService.parseDate(fieldTitle as Array<number>).format('D.MM.YYYY');
+        } else {
+            return fieldTitle.toString();
+        }
+    }
+
+    private static parseDate(date: Array<number>): Moment {
+        return moment(`${date[0]}-${date[1]}-${date[2]}`);
     }
 
     /**
@@ -66,7 +92,9 @@ export class WorkflowsPanelGroupService {
             if (this.selectedHeaders[columnId].identifier === 'author') {
                 return petriNet[this.selectedHeaders[columnId].identifier].fullName;
             } else {
-                return petriNet[this.selectedHeaders[columnId].identifier];
+                return WorkflowsPanelGroupService.resolveFieldType(
+                    this.selectedHeaders[columnId].fieldType,
+                    petriNet[this.selectedHeaders[columnId].identifier]);
             }
         } else if (this.selectedHeaders[columnId].type === 'immediate') {
             return this.getImmediateField(petriNet.immediateData, this.selectedHeaders[columnId].identifier);
@@ -82,11 +110,35 @@ export class WorkflowsPanelGroupService {
         let title = '';
         immediateData.forEach(immediateField => {
             if (immediateField.stringId === stringId) {
-                title = immediateField.title;
+                title = WorkflowsPanelGroupService.resolveFieldType(immediateField.type, immediateField.title);
                 return;
             }
         });
         return title;
+    }
+
+    public populateDataFields(): void {
+        this.panelsDataGroup = new Map<string, PanelsDataGroup>();
+        this.workflowPanelDefinitions.forEach(panel => {
+            this.panelsDataGroup.set(
+                panel.panelContent.netIdentifier, this.populatePanelDataGroup(panel.panelContent)
+            );
+        });
+    }
+
+    /**
+     * Populate data fields group for every petri net model
+     * @param panelContent Meta information's about Petri net model
+     */
+    // TODO change uploaded to DateTimeField
+    private populatePanelDataGroup(panelContent: WorkflowsPanelContent): PanelsDataGroup {
+        return {
+            netIdentifier: new TextField('', 'Net identifier', panelContent.netIdentifier, this.dataFieldsBehaviour),
+            title: new TextField('', 'Title', panelContent.title, this.dataFieldsBehaviour),
+            version: new TextField('', 'Version', panelContent.version, this.dataFieldsBehaviour),
+            author: new TextField('', 'Author', panelContent.author, this.dataFieldsBehaviour),
+            uploaded: new DateField('', 'Uploaded', WorkflowsPanelGroupService.parseDate(panelContent.uploaded), this.dataFieldsBehaviour)
+        };
     }
 
 }

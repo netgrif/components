@@ -8,71 +8,15 @@ import {WorkflowsPanelGroupService} from '../../workflows/workflows-panel-group/
 })
 export class WorkflowsHeaderService extends AbstractHeaderService {
 
-    constructor(public workflowPanelGroupService: WorkflowsPanelGroupService) {
+    constructor() {
         super('workflow');
         this._headers = new Headers();
-        // TODO simulated resource remove in future
-        this.petriNetReferences.push({
-            author: {
-                email: 'example email',
-                fullName: 'Jozef Machac'
-            },
-            createdDate: new Date(),
-            defaultCaseName: 'Som default case name',
-            identifier: 'mortgage',
-            immediateData: [{
-                stringId: 'specialnemeno',
-                title: 'Mortage prve poinne',
-                type: 'file'
-            }, {
-                stringId: 'specialnemeno2',
-                title: 'Mortage prve poinne',
-                type: 'text'
-            }, {
-                stringId: 'specialnemeno3',
-                title: 'Typ',
-                type: 'enumeration'
-            }],
-            initials: 'QQQ',
-            stringId: 'stringId123231231',
-            title: 'Financial data',
-            version: '1.0.0'
-        }, {
-            author: {
-                email: 'example email',
-                fullName: 'Martin Miklovic'
-            },
-            createdDate: new Date(),
-            defaultCaseName: 'Som default case name',
-            identifier: 'address',
-            immediateData: [{
-                stringId: 'zoznam',
-                title: 'Zoznam vozidiel',
-                type: 'file'
-            }, {
-                stringId: 'fileName',
-                title: 'Názov súboru',
-                type: 'text'
-            }, {
-                stringId: 'typ',
-                title: 'Typ',
-                type: 'enumeration'
-            }, {
-                stringId: 'IDSet',
-                title: 'ID set',
-                type: 'enumeration'
-            }],
-            initials: 'RRR',
-            stringId: 'stringId123231231',
-            title: 'Financial data',
-            version: '1.0.0'
-        });
         // TODO simulated resource remove in future
         this._headers.selected = {
             column0: {
                 type: 'meta',
-                identifier: 'title',
-                title: 'title',
+                identifier: 'initials',
+                title: 'initials',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column0',
@@ -80,47 +24,40 @@ export class WorkflowsHeaderService extends AbstractHeaderService {
             },
             column1: {
                 type: 'meta',
-                identifier: 'author',
-                title: 'author',
+                identifier: 'title',
+                title: 'title',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column1',
                 fieldType: 'text'
             },
             column2: {
-                type: 'immediate',
-                identifier: 'zoznam',
-                title: 'Zoznam vozidiel',
+                type: 'meta',
+                identifier: 'version',
+                title: 'version',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column2',
                 fieldType: 'enumeration'
             },
             column3: {
-                type: 'immediate',
-                identifier: 'fileName',
-                title: 'Názov súboru',
+                type: 'meta',
+                identifier: 'author',
+                title: 'author',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column3',
                 fieldType: 'text'
             },
             column4: {
-                type: 'immediate',
-                identifier: 'specialnemeno2',
-                title: 'Mortage prve poinne',
+                type: 'meta',
+                identifier: 'createdDate',
+                title: 'Upload date',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column4',
-                fieldType: 'text'
+                fieldType: 'date'
             }
         };
-        this.setFieldsGroupData(this.petriNetReferences);
-        this.workflowPanelGroupService.headers = this.headers;
-        this.workflowPanelGroupService.petriNetReferences = this.petriNetReferences;
-    }
-
-    public setPanelsTitles(): void {
-        this.workflowPanelGroupService.setPanelsTitles();
     }
 }

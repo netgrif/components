@@ -1,7 +1,6 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
 import {fieldsGroup} from './header-modes/edit-mode/fields.group';
-import {PetriNetReference} from './models/petri-net-reference';
 import {Headers} from './headers';
 import {OnDestroy} from '@angular/core';
 import {SortChangeDescription} from './models/user.changes/sort-change-description';
@@ -9,6 +8,7 @@ import {SearchChangeDescription} from './models/user.changes/search-change-descr
 import {EditChangeDescription} from './models/user.changes/edit-change-description';
 import {HeaderChange} from './models/user.changes/header-change';
 import {DataDescription} from './models/data-description';
+import {PetriNetReference} from '../resources/interface/petri-net-reference';
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 export type HeaderMode = 'sort' | 'search' | 'edit';
@@ -26,6 +26,13 @@ export class AbstractHeaderService implements OnDestroy {
         this._changeHeader$ = new BehaviorSubject<HeaderChange>(null);
         this.petriNetReferences = [];
         this.headerType = headerType;
+    }
+
+    /**
+     * Provides Observable for all changes in header
+     */
+    get headerChange$(): Observable<HeaderChange> {
+        return this._changeHeader$.asObservable();
     }
 
     get headers(): Headers {
@@ -114,7 +121,6 @@ export class AbstractHeaderService implements OnDestroy {
             fieldType: field.type
         };
         // TODO pair the search request with the back-end and then return the searched petri net models
-        this.setPanelsTitles();
         this._changeHeader$.next({
             headerType: this.headerType,
             type: 'edit',
@@ -158,13 +164,6 @@ export class AbstractHeaderService implements OnDestroy {
             type: 'edit',
             description: {preferredHeaders: this._headers.selected}
         });
-    }
-
-    /**
-     * Provides Observable for all changes in header
-     */
-    get headerChange$(): Observable<HeaderChange> {
-        return this._changeHeader$.asObservable();
     }
 
     ngOnDestroy(): void {
