@@ -51,6 +51,10 @@ import {CaseViewComponent} from './case-view/case-view.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {HttpClientModule} from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { TaskViewComponent } from './doc/task-view/task-view.component';
 import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -67,7 +71,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         CaseSidemenuExampleComponent,
         SidemenuExampleComponent,
         UserAssignSidemenuExampleComponent,
-        PanelExampleComponent,
         CasePanelExampleComponent,
         SnackBarExampleComponent,
         DialogExampleComponent,
@@ -79,6 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveTextFieldComponent,
         ToolbarExampleComponent,
         CaseResourceExampleComponent,
+        TaskViewComponent,
         TaskResourceExampleComponent,
         CaseViewComponent,
     ],

@@ -78,19 +78,19 @@ export class FieldConvertorService {
             case 'date':
                 let date;
                 if (item.value) {
-                    date = new Date(item.value[0], item.value[1], item.value[2]);
+                    date = new Date(item.value[0], item.value[1] - 1, item.value[2]);
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder, item.description, item.layout);
             case 'dateTime':
                 let dateTime;
                 if (item.value) {
-                    dateTime = new Date(item.value[0], item.value[1], item.value[2], item.value[3], item.value[4]);
+                    dateTime = new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]);
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
                     item.placeholder, item.description, item.layout);
             case 'user':
-                return new UserField(item.stringId, item.name, item.behavior, new UserValue('name',
-                    'surname', 'email'), item.roles, item.placeholder, item.description, item.layout);
+                return new UserField(item.stringId, item.name, item.behavior, undefined,
+                    item.roles, item.placeholder, item.description, item.layout);
             case 'button':
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout);
@@ -99,7 +99,7 @@ export class FieldConvertorService {
         }
     }
 
-    public resolveType(item: DataField<any>) {
+    public resolveType(item: DataField<any>): string {
         if (item instanceof BooleanField) {
             return 'boolean';
         } else if (item instanceof ButtonField) {
@@ -121,5 +121,27 @@ export class FieldConvertorService {
         } else if (item instanceof UserField) {
             return 'user';
         }
+    }
+
+    public formatValue(field: DataField<any>, value: any): any {
+        if (this.resolveType(field) === 'text' && value === null)
+            return null;
+        if (value === undefined || value === null)
+            return;
+        if (this.resolveType(field) === 'date') {
+            if (value instanceof Date) {
+                return `${value.getFullYear()}-${value.getMonth()}-${value.getDate()}`;
+            }
+        }
+        if (this.resolveType(field) === 'user') {
+            return value.id;
+        }
+        if (this.resolveType(field) === 'dateTime') {
+            if (value instanceof Date) {
+                return `${value.getDate()}.${value.getMonth()}.${value.getFullYear()} ` +
+                    `${value.getHours()}:${value.getMinutes()}:${value.getSeconds()}`;
+            }
+        }
+        return value;
     }
 }
