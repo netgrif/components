@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CaseJsonResourceService} from '../../case-json-resource.service';
-import {Case, Count, MessageResource, UserService} from 'netgrif-application-engine';
+import {Case, CaseResourceService, Count, MessageResource} from 'netgrif-application-engine';
 
 @Component({
     selector: 'nae-app-case-resource-example',
@@ -9,7 +8,7 @@ import {Case, Count, MessageResource, UserService} from 'netgrif-application-eng
 })
 export class CaseResourceExampleComponent implements OnInit {
 
-    constructor(private caseJsonResourceService: CaseJsonResourceService) {
+    constructor(private caseJsonResourceService: CaseResourceService) {
     }
 
     countvalue: Count = undefined;
