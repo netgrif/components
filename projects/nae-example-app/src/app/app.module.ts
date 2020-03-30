@@ -124,10 +124,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ContentComponent,
         ImportNetComponent
     ],
-    providers: [{
-        provide: ConfigurationService,
-        useClass: NaeExampleAppConfigurationService
-    },
+    providers: [
+        {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
         TranslateService,
         TranslatePipe,
         TranslateStore,

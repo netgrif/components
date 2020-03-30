@@ -9,7 +9,7 @@ function getCurrentBranch() {
 sonarqubeScanner(
     {
         serverUrl: 'https://sonar.netgrif.com',
-        token: "486f3c5d62fcebdde7c7445a6f2d3616a5c6a7ec",
+        token: "a77040433bc2c05b8139a35fcf696b362cefa908",
         options: {
             'sonar.projectKey': 'Engine-frontend',
             'sonar.projectName':'NETGRIF Application Engine - Frontend',
