@@ -10,6 +10,7 @@
             "dom",
             "es2018"
         ],
+        "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "esModuleInterop": true
     },
