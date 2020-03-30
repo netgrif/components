@@ -15,6 +15,7 @@ import {CaseHeaderExampleComponent} from './doc/case-header-example/case-header-
 import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-example.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {TaskViewComponent} from './doc/task-view/task-view.component';
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
     {path: 'toolbar', component: ToolbarExampleComponent},
     {path: 'task-view', component: TaskViewComponent},
+    {path: 'cases', component: CaseViewComponent},
 ];
 
 @NgModule({

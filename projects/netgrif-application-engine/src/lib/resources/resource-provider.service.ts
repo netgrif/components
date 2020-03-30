@@ -57,37 +57,42 @@ export abstract class AbstractResourceProvider {
         }
     }
 
-    public get<T>(endpoint?: string, url ?: string, headers ?: Headers, params ?: Params,
+    public get<T>(endpoint?: string, url ?: string, params ?: Params, headers ?: Headers,
                   responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.get<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             {
                 headers,
                 params,
+                responseType,
+                observe
             });
     }
 
-    public post<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers, params ?: Params,
+    public post<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
                    responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.post<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             body,
             {
                 headers,
                 params,
+                responseType,
+                observe
             });
     }
 
-    public put<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers, params ?: Params,
+    public put<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
                   responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.put<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             body,
             {
                 headers,
                 params,
-
+                responseType,
+                observe
             });
     }
 
-    public delete<T>(endpoint?: string, url?: string, headers ?: Headers, params ?: Params,
+    public delete<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers,
                      responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.delete<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url), {
             headers,
@@ -110,25 +115,24 @@ export class ResourceProvider extends AbstractResourceProvider {
     private auth = new HttpHeaders()
         .set('Authorization', 'Basic c3VwZXJAbmV0Z3JpZi5jb206cGFzc3dvcmQ=');
 
-    public get$<T>(endpoint?: string, url ?: string, headers ?: Headers, params ?: Params, responseType ?: ResponseType,
+    public get$<T>(endpoint?: string, url ?: string, params ?: Params, headers ?: Headers, responseType ?: ResponseType,
                    observe ?: Observe): Observable<T> {
-        return this.get(endpoint, url, this.auth, params, responseType, observe);
+        return this.get(endpoint, url, params, this.auth, responseType, observe);
     }
 
-
-    public post$<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers, params ?: Params,
+    public post$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
                     responseType ?: ResponseType, observe ?: Observe): Observable<T> {
-        return this.post(endpoint, url, body, this.auth, params, responseType, observe);
+        return this.post(endpoint, url, body, params, this.auth, responseType, observe);
     }
 
-    public put$<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers, params ?: Params,
+    public put$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
                    responseType ?: ResponseType, observe ?: Observe): Observable<T> {
-        return this.put(endpoint, url, body, this.auth, params, responseType, observe);
+        return this.put(endpoint, url, body, params, this.auth, responseType, observe);
     }
 
-    public delete$<T>(endpoint?: string, url?: string, headers ?: Headers, params ?: Params, responseType ?: ResponseType,
+    public delete$<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers, responseType ?: ResponseType,
                       observe ?: Observe): Observable<T> {
-        return this.delete(endpoint, url, this.auth, params, responseType, observe);
+        return this.delete(endpoint, url, params, this.auth, responseType, observe);
     }
 
 }

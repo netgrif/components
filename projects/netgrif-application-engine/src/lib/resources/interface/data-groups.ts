@@ -16,4 +16,3 @@ export interface DataGroup {
     stretch: boolean;
     cols?: number;
 }
-

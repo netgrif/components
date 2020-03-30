@@ -1,9 +1,14 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {Case, CasePanelDefinition, HeaderChange, HeaderComponent, NewCaseComponent, SideMenuService} from '@netgrif/application-engine';
+import {
+    Case,
+    CasePanelDefinition, CaseResourceService,
+    HeaderChange,
+    HeaderComponent,
+    NewCaseComponent,
+    SideMenuService, TaskResourceService,
+} from 'netgrif-application-engine';
 import {Observable} from 'rxjs';
-import {CaseJsonResourceService} from '../case-json-resource.service';
 import {HttpParams} from '@angular/common/http';
-import {TaskJsonResourceService} from '../../../../../task-json-resource.service';
 import {HeaderType} from '@netgrif/application-engine/lib/header/abstract-header-service';
 
 @Component({
@@ -19,8 +24,8 @@ export class CaseViewComponent implements AfterViewInit {
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
     constructor(private _sideMenuService: SideMenuService,
-                private _caseResourceService: CaseJsonResourceService,
-                private _taskResourceService: TaskJsonResourceService) {
+                private _caseResourceService: CaseResourceService,
+                private _taskResourceService: TaskResourceService) {
         this._caseResourceService.getAllCase()
             .subscribe((cazes: Array<Case>) => {
                 this.setCasePanelFromResource(cazes);
@@ -31,10 +36,16 @@ export class CaseViewComponent implements AfterViewInit {
         this._changeHeader$ = this.caseHeaderComponent.headerService.headerChange$;
         this._changeHeader$.subscribe((header: HeaderChange) => {
             console.log(header);
+            let params = new HttpParams();
+            // header.type
+            // header.description.identifier
+            // header.description.sortMode
             // TODO: JOZO fix Matove interfaces
             // const params = new HttpParams().set(header ? header.type : '',
-    //     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
-            const params = new HttpParams().set('sort', 'asc');
+            //     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
+            if (header !== null && header.type === 'sort') {
+                params = new HttpParams().set('sort', header.description['identifier'] + ',' + header.description['sortMode']);
+            }
             this._caseResourceService.searchCases({}, params)
                 .subscribe((cazes: Array<Case>) => {
                     this.setCasePanelFromResource(cazes);
@@ -52,7 +63,7 @@ export class CaseViewComponent implements AfterViewInit {
                     ' '
                 ],
                 panelIconField: caze.title,
-                panelIcon: 'add',
+                panelIcon: 'home',
                 caseId: caze.stringId
             };
             if (!this.casePanelDefinitions.some(caseDef => caseDef.caseId === caseDefinition.caseId)) {
