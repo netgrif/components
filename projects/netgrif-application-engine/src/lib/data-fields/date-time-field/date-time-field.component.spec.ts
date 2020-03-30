@@ -6,7 +6,7 @@ import {DataFieldTemplateComponent} from '../data-field-template/data-field-temp
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {DateTimeField} from './models/date-time-field';
-import {moment} from '../../moment/moment-import';
+import moment from 'moment';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 
 describe('DatetimeFieldComponent', () => {

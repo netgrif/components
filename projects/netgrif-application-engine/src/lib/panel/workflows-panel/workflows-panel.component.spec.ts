@@ -45,7 +45,7 @@ class TestWrapperComponent {
     public caseDef: WorkflowPanelDefinition = {
         panelContent: {
             netIdentifier: 'id',
-            uploaded: new Date(),
+            uploaded: [30, 3, 2020, 21, 17, 50],
             author: 'tes',
             version: 'q',
             title: 'e'

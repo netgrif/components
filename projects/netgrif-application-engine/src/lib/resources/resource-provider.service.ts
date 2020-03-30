@@ -42,7 +42,9 @@ export abstract class AbstractResourceProvider {
                 if (endpoint.includes(url)) {
                     return endpoint;
                 } else {
-                    return url.includes('https://') ? 'https://' + endpoint.replace(/(^\w+:|^)\/\//, '') : 'http://' + endpoint.replace(/(^\w+:|^)\/\//, '');
+                    return url.includes('https://') ? 'https://' +
+                        endpoint.replace(/(^\w+:|^)\/\//, '') : 'http://' +
+                        endpoint.replace(/(^\w+:|^)\/\//, '');
                 }
             } else {
                 return endpoint;
@@ -56,7 +58,8 @@ export abstract class AbstractResourceProvider {
         }
     }
 
-    public get<T>(endpoint?: string, url ?: string, headers ?: Headers, params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public get<T>(endpoint?: string, url ?: string, headers ?: Headers,
+                  params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.get<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             {
                 headers,
@@ -64,7 +67,8 @@ export abstract class AbstractResourceProvider {
             });
     }
 
-    public post<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers, params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public post<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers,
+                   params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.post<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             body,
             {
@@ -73,7 +77,8 @@ export abstract class AbstractResourceProvider {
             });
     }
 
-    public put<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers, params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public put<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers,
+                  params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.put<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             body,
             {
@@ -83,7 +88,8 @@ export abstract class AbstractResourceProvider {
             });
     }
 
-    public delete<T>(endpoint?: string, url?: string, headers ?: Headers, params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public delete<T>(endpoint?: string, url?: string, headers ?: Headers,
+                     params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.delete<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url), {
             headers,
             params,
@@ -105,20 +111,24 @@ export class ResourceProvider extends AbstractResourceProvider {
     private auth = new HttpHeaders()
         .set('Authorization', 'Basic c3VwZXJAbmV0Z3JpZi5jb206cGFzc3dvcmQ=');
 
-    public get$<T>(endpoint?: string, url ?: string, headers ?: Headers, params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public get$<T>(endpoint?: string, url ?: string, headers ?: Headers,
+                   params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.get(endpoint, url, this.auth, params, responseType, observe);
     }
 
 
-    public post$<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers, params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public post$<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers,
+                    params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.post(endpoint, url, body, this.auth, params, responseType, observe);
     }
 
-    public put$<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers, params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public put$<T>(endpoint?: string, url ?: string, body ?: object, headers ?: Headers,
+                   params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.put(endpoint, url, body, this.auth, params, responseType, observe);
     }
 
-    public delete$<T>(endpoint?: string, url?: string, headers ?: Headers, params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public delete$<T>(endpoint?: string, url?: string, headers ?: Headers,
+                      params ?: Params, responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.delete(endpoint, url, this.auth, params, responseType, observe);
     }
 

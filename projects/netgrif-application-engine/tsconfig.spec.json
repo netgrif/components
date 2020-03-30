@@ -8,7 +8,8 @@
         ],
         "target": "ES5",
         "resolveJsonModule": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true
     },
     "files": [
         "src/test.ts"

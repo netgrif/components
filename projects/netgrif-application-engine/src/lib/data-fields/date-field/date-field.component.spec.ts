@@ -7,7 +7,7 @@ import {DataFieldTemplateComponent} from '../data-field-template/data-field-temp
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {DateField} from './models/date-field';
-import {moment} from '../../moment/moment-import';
+import moment from 'moment';
 
 describe('DateFieldComponent', () => {
     let component: DateFieldComponent;

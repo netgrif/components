@@ -8,7 +8,7 @@ import {TextField} from '../../../data-fields/text-field/models/text-field';
 import {WorkflowsPanelContent} from '../../../panel/workflows-panel/models/workflows-panel-content';
 import {Behavior} from '../../../data-fields/models/behavior';
 import {DateField} from '../../../data-fields/date-field/models/date-field';
-import {moment} from '../../../moment/moment-import';
+import moment from 'moment';
 import {Moment} from 'moment';
 
 export interface PanelsDataGroup {
