@@ -10,18 +10,20 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
         super({
             providers: {
                 auth: {
-                    address: 'http://localhost:8080/api',
+                    address: 'http://localhost:8080/api/',
                     authentication: 'Basic',
                     endpoints: {
-                        login: 'http://localhost:8080/api/auth/login',
-                        logout: 'http://localhost:8080/api/auth/logout'
-                    }
+                        login: 'auth/login',
+                        logout: 'auth/logout',
+                        signup: 'auth/signup'
+                    },
+                    sessionBearer: 'x-auth-token'
                 },
-                resources: {
+                resources: [{
                     name: 'main',
-                    address: 'http://localhost:8080/api',
+                    address: 'http://localhost:8080/api/',
                     format: 'json'
-                }
+                }]
             },
             views: {
                 layout: 'empty',

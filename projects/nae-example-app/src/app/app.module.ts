@@ -19,9 +19,11 @@ import {
     SideMenuModule,
     SimpleDialogComponent,
     TabsModule,
-    DataFieldsModule,
     ToolbarModule,
-    HeaderModule
+    TaskListModule,
+    CardModule,
+    UserAssignComponent,
+    ResourceProvider
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -35,7 +37,6 @@ import {MatIconModule} from '@angular/material';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import { UserAssignSidemenuExampleComponent } from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
-import { PanelExampleComponent } from './doc/panel-example/panel-example.component';
 import { CasePanelExampleComponent } from './doc/case-panel-example/case-panel-example.component';
 import { SnackBarExampleComponent } from './doc/snack-bar-example/snack-bar-example.component';
 import { DialogExampleComponent } from './doc/dialog-example/dialog-example.component';
@@ -48,9 +49,9 @@ import { ToolbarExampleComponent } from './doc/toolbar-example/toolbar-example.c
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
-import {HttpClientModule} from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { TaskViewComponent } from './doc/task-view/task-view.component';
+import {UserModule} from '../../../netgrif-application-engine/src/lib/user/user.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
