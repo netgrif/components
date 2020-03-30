@@ -24,6 +24,7 @@ import {
     UserAssignComponent,
     UserModule,
     TaskListModule,
+    CardModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -52,9 +53,9 @@ import {CaseResourceExampleComponent} from './doc/case-resource-example/case-res
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
-import {HttpClientModule} from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { TaskViewComponent } from './doc/task-view/task-view.component';
+import {UserModule} from '../../../netgrif-application-engine/src/lib/user/user.module';
 import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
