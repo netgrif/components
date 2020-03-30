@@ -35,32 +35,32 @@ export function createTabView(
     const params = args.layoutParams as TabViewParams;
     // const injectedData: any = undefined;  // TODO: Kubo
 
-    const tabViews: TabViews = {
-        rules: [],
-        tabTemplates: [],
-        tabViewImports: [],
-        entryComponentsImports: [],
-    };
+    // const tabViews: TabViews = {
+    //     rules: [],
+    //     tabTemplates: [],
+    //     tabViewImports: [],
+    //     entryComponentsImports: [],
+    // };
 
-    if (params.defaultTaskView) {
-        pushTabViews(tabViews, processTabViewContents(
-            tree,
-            params,
-            args.path as string,
-            className,
-            createViewFunctionRef
-        ));
+    // if (params.defaultTaskView) {
+    //     pushTabViews(tabViews, processTabViewContents(
+    //         tree,
+    //         params,
+    //         args.path as string,
+    //         className,
+    //         createViewFunctionRef
+    //     ));
+    //
+    //
+    // }
 
-
-    }
-
-    pushTabViews(tabViews, processTabViewContents(
+    const tabViews = processTabViewContents(
         tree,
         params,
         args.path as string,
         className,
         createViewFunctionRef
-    ));
+    );
 
     const rules = tabViews.rules;
 
@@ -171,9 +171,9 @@ function processTabViewContents(
     return result;
 }
 
-function pushTabViews(destination: TabViews, source: TabViews): TabViews {
-    for (const attribute of Object.keys(destination) ) {
-        (destination[attribute] as Array<any>).push(...(source[attribute] as Array<any>));
-    }
-    return destination;
-}
+// function pushTabViews(destination: TabViews, source: TabViews): TabViews {
+//     for (const attribute of Object.keys(destination) ) {
+//         (destination[attribute] as Array<any>).push(...(source[attribute] as Array<any>));
+//     }
+//     return destination;
+// }
