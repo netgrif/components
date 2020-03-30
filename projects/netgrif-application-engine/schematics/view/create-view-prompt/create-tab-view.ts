@@ -26,14 +26,35 @@ export function createTabView(
 
     const projectInfo = getProjectInfo(tree);
     const className = new ClassName(args.path as string, 'TabView');
+    const params = args.layoutParams as TabViewParams;
+    const injectedData: any = undefined;
 
-    const tabViews = processTabViewContents(
+    const tabViews: TabViews = {
+        rules: [],
+        tabTemplates: [],
+        tabViewImports: [],
+        entryComponentsImports: [],
+    };
+
+    if (params.defaultTaskView) {
+        pushTabViews(tabViews, processTabViewContents(
+            tree,
+            params,
+            args.path as string,
+            className,
+            createViewFunctionRef
+        ));
+
+
+    }
+
+    pushTabViews(tabViews, processTabViewContents(
         tree,
-        args.layoutParams as TabViewParams,
+        params,
         args.path as string,
         className,
         createViewFunctionRef
-    );
+    ));
 
     const rules = tabViews.rules;
 
@@ -142,4 +163,11 @@ function processTabViewContents(
     });
 
     return result;
+}
+
+function pushTabViews(destination: TabViews, source: TabViews): TabViews {
+    for (const attribute of Object.keys(destination) ) {
+        (destination[attribute] as Array<any>).push(...(source[attribute] as Array<any>));
+    }
+    return destination;
 }
