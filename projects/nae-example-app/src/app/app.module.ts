@@ -47,7 +47,7 @@ import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-tex
 import {CaseHeaderExampleComponent} from './doc/case-header-example/case-header-example.component';
 import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-example.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
-import {CaseViewComponent} from './case-view/case-view.component';
+import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';

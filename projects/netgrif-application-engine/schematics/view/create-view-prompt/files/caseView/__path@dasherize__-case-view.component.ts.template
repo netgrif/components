@@ -56,7 +56,7 @@ export class <%= classify(path) %>CaseViewComponent implements AfterViewInit {
         });
     }
 
-    public redirectToTasksOfCase(caseDefinition: CasePanelDefinition): void {
+    public redirectToTasksOfCase(caseDefinition: CasePanelDefinition): void { 
         this._taskResourceService.searchTask({case: caseDefinition.caseId})
             .subscribe(tasks => {
                 tasks.forEach(task => {

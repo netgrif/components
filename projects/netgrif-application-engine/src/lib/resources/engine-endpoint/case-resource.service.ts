@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {ResourceProvider} from '../resource-provider.service';
+import {Params, ResourceProvider} from '../resource-provider.service';
 import {Count} from '../interface/count';
 import {Case} from '../interface/case';
 import {changeType, getResourceAddress} from '../resource-utility-functions';
@@ -43,8 +43,8 @@ export class CaseResourceService {
      * POST
      * {{baseUrl}}/api/workflow/case/search
      */
-    public getCase(body: object): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/search', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+    public searchCases(body: object, params?: Params): Observable<Array<Case>> {
+        return this.provider.post$('workflow/case/search', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'cases')));
     }
 
 
