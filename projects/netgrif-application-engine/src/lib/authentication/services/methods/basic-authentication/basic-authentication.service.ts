@@ -14,7 +14,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
     }
 
     login(credentials: Credentials = {username: '', password: ''}): Observable<User> {
-        const url = this._config.get().providers.auth.endpoints['login'];
+        const url = this._config.get().providers.auth.address + this._config.get().providers.auth.endpoints['login'];
         if (!url) {
             throwError(new Error('Login URL is not defined in the config [nae.providers.auth.endpoints.login]'));
         }
@@ -33,7 +33,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
     }
 
     logout(): Observable<object> {
-        const url = this._config.get().providers.auth.endpoints['logout'];
+        const url = this._config.get().providers.auth.address + this._config.get().providers.auth.endpoints['logout'];
         if (!url) {
             throw new Error('Logout URL is not defined in the config [nae.providers.auth.endpoints.logout]');
         }

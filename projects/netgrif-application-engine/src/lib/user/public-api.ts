@@ -1,8 +1,12 @@
 /* MODULES */
+export * from './user.module';
 
-// MODELS
+/* MODELS */
 export * from './models/public-api';
 
-// SERVICES
+/* SERVICES */
 export * from './services/user.service';
 export * from './services/user-preference.service';
+
+/* COMPONENTS */
+export * from './components/user-card/user-card.component';

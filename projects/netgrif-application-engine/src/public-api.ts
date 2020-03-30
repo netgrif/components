@@ -18,6 +18,8 @@ export * from './lib/toolbar/public-api';
 export * from './lib/tabs/public-api';
 export * from './lib/side-menu/public-api';
 export * from './lib/dialog/public-api';
+export * from './lib/header/public-api';
+export * from './lib/navigation/public-api';
 
 /* SERVICES */
 export * from './lib/snack-bar/snack-bar.service';

@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+<% if (primaryDark) { %>
+$bv-dark-primary: ( <%= primaryDark %>
+contrast : (<%= primaryContrastDark %>)
+);
+<% } %>
+<% if (secondaryDark) { %>
+$bv-dark-secondary: ( <%= secondaryDark %>
+contrast : (<%= secondaryContrastDark %>)
+);
+<% } %>
+<% if (warnDark) { %>
+$bv-dark-warn: (  <%= warnDark %>
+contrast : (<%= warnContrastDark %>)
+);
+<% } %>
+

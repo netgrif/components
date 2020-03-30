@@ -10,7 +10,9 @@
             "dom",
             "es2018"
         ],
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
