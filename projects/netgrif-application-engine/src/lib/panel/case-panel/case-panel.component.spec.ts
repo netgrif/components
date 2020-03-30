@@ -38,7 +38,7 @@ describe('CasePanelComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-case-panel [casePanelDefinition]="caseDef"> </nae-case-panel>'
+    template: '<nae-case-panel [featuredFields]="caseDef"> </nae-case-panel>'
 })
 class TestWrapperComponent {
     caseDef =  {featuredFields : [], panelIcon: 'home', panelIconField: 'home'};
