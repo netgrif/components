@@ -1,7 +1,14 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SearchModeComponent} from './search-mode.component';
-import {MatFormFieldModule, MatInputModule, MatSelectModule, MatSortModule} from '@angular/material';
+import {
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatSortModule
+} from '@angular/material';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
@@ -21,7 +28,9 @@ describe('SearchModeComponent', () => {
                 MatSortModule,
                 NoopAnimationsModule,
                 MatSelectModule,
-                MatFormFieldModule
+                MatFormFieldModule,
+                MatDatepickerModule,
+                MatNativeDateModule
             ],
             providers: [CaseHeaderService]
         })

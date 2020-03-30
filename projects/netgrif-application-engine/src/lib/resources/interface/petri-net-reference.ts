@@ -1,9 +1,6 @@
 import {Author} from './author';
-import {DataDescription} from './data-field';
+import {ImmediateData} from './immediate-data';
 
-/**
- * Interface for representation one Petri net model
- */
 export interface PetriNetReference {
     stringId: string;
     title: string;
@@ -11,7 +8,8 @@ export interface PetriNetReference {
     version: string;
     initials: string;
     defaultCaseName: string;
-    createdDate: Date;
+    createdDate: Array<number>;
     author: Author;
-    immediateData: Array<DataDescription>;
+    immediateData: Array<ImmediateData>;
 }
+

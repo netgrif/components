@@ -15,7 +15,8 @@ export class TaskHeaderService extends AbstractHeaderService {
                 title: 'Case',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column0'
+                columnId: 'column0',
+                fieldType: 'text'
             },
             column1: {
                 type: 'meta',
@@ -23,7 +24,8 @@ export class TaskHeaderService extends AbstractHeaderService {
                 title: 'Title',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column1'
+                columnId: 'column1',
+                fieldType: 'text'
             },
             column2: {
                 type: 'meta',
@@ -31,7 +33,8 @@ export class TaskHeaderService extends AbstractHeaderService {
                 title: 'Priority',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column2'
+                columnId: 'column2',
+                fieldType: 'enumeration'
             },
             column3: {
                 type: 'meta',
@@ -39,7 +42,8 @@ export class TaskHeaderService extends AbstractHeaderService {
                 title: 'User',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column3'
+                columnId: 'column3',
+                fieldType: 'text'
             },
             column4: {
                 type: 'meta',
@@ -47,7 +51,8 @@ export class TaskHeaderService extends AbstractHeaderService {
                 title: 'Assign date',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column4'
+                columnId: 'column4',
+                fieldType: 'text'
             }
         };
     }

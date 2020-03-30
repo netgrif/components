@@ -1,0 +1,16 @@
+<nae-side-menu-container>
+    <div class="workflow-container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+        <div>
+            <button mat-fab color="primary" class="upload-petri-net" (click)="onImportNet()">
+                <mat-icon>cloud_upload</mat-icon>
+            </button>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center" class="workflow-header">
+            <nae-header #workflowsHeader fxFlex="99" type="workflow"></nae-header>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center" class="workflow-panels-container">
+            <nae-workflows-panel-group fxFlex="99"></nae-workflows-panel-group>
+        </div>
+    </div>
+    <ng-template #templatePortal></ng-template>
+</nae-side-menu-container>

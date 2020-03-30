@@ -1,7 +1,7 @@
+import {DataDescription} from './data-description';
 /**
  * Interface for representation data groups in select in workflow header edit mode
  */
-import {DataDescription} from './data-field';
 
 
 export interface FieldsGroup {

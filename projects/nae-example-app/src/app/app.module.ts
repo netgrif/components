@@ -21,7 +21,9 @@ import {
     TabsModule,
     ToolbarModule,
     UserAssignComponent,
-    UserModule
+    UserModule,
+    ImportNetComponent,
+    ResourceProvider, WorkflowsModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -30,7 +32,6 @@ import {NaeExampleAppConfigurationService} from './nae-example-app-configuration
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
@@ -46,7 +47,12 @@ import {CaseHeaderExampleComponent} from './doc/case-header-example/case-header-
 import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-example.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
+import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workflows-view-example.component';
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {HttpClientModule} from '@angular/common/http';
+import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -71,9 +77,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveTextFieldComponent,
         CaseHeaderExampleComponent,
         TaskHeaderExampleComponent,
-        ToolbarExampleComponent
+        ToolbarExampleComponent,
+        WorkflowsViewExampleComponent,
+        ContentComponent,
+        CaseResourceExampleComponent,
+        TaskResourceExampleComponent
     ],
     imports: [
+        HttpClientModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -93,6 +104,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabsModule,
         DataFieldsModule,
         HeaderModule,
+        DataFieldsModule,
         ToolbarModule,
         TranslateModule.forRoot({
             loader: {
@@ -100,7 +112,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                 useFactory: (HttpLoaderFactory),
                 deps: [HttpClient]
             }
-        })
+        }),
+        WorkflowsModule
     ],
     entryComponents: [
         NewCaseComponent,
@@ -108,13 +121,15 @@ export function HttpLoaderFactory(http: HttpClient) {
         SimpleDialogComponent,
         QuestionDialogComponent,
         QuestionDialogWithAnswerComponent,
-        ContentComponent
+        ContentComponent,
+        ImportNetComponent
     ],
     providers: [
         {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
         TranslateService,
         TranslatePipe,
-        TranslateStore
+        TranslateStore,
+        ResourceProvider
     ],
     bootstrap: [AppComponent]
 })

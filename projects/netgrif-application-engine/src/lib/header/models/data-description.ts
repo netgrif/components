@@ -3,7 +3,7 @@
  */
 export interface DataDescription {
     stringId: string;
-    title: string;
+    title: any;
     /**
      *  Defines what data type is field
      */

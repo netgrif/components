@@ -16,6 +16,9 @@ import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-tex
 import {CaseHeaderExampleComponent} from './doc/case-header-example/case-header-example.component';
 import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-example.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
+import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workflows-view-example.component';
+import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {TaskResourceExampleComponent} from "./doc/task-resource-example/task-resource-example.component";
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -32,7 +35,11 @@ const routes: Routes = [
     {path: 'dialog', component: DialogExampleComponent},
     {path: 'tab-view', component: TabViewExampleComponent},
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
-    {path: 'toolbar', component: ToolbarExampleComponent}
+    {path: 'toolbar', component: ToolbarExampleComponent},
+    {path: 'workflows view', component: WorkflowsViewExampleComponent},
+    {path: 'reactive-forms', component: ReactiveTextFieldComponent},
+    {path: 'case', component: CaseResourceExampleComponent},
+    {path: 'task', component: TaskResourceExampleComponent}
 ];
 
 @NgModule({
