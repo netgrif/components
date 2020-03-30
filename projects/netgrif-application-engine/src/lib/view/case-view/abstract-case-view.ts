@@ -6,7 +6,6 @@ import {HeaderComponent} from '../../header/header.component';
 import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {HeaderType} from '../../header/abstract-header-service';
-import {CasePanelDefinition} from '../../panel/case-panel/case-panel-definition';
 import {HeaderChange} from '../../header/models/user.changes/header-change';
 
 
@@ -18,7 +17,7 @@ export abstract class AbstractCaseView {
 
     protected constructor(private _sideMenuService: SideMenuService,
                           private _caseResourceService: CaseResourceService,
-                          private baseFilter: string = '{}') {
+                          private _baseFilter: string = '{}') {
         this._caseResourceService.getAllCase()
             .subscribe((cases: Array<Case>) => {
                 this.setCasePanelFromResource(cases);
@@ -63,5 +62,5 @@ export abstract class AbstractCaseView {
         });
     }
 
-    protected abstract handleCaseClick(): void;
+    protected abstract handleCaseClick(caseId: string): void;
 }
