@@ -1,9 +1,9 @@
 import {Subject} from 'rxjs';
 import {OnInit} from '@angular/core';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
-import {TaskResourceService} from './task-resource/task-resource.service';
 import {TaskPanelDefinition} from '../panel/task-panel/task-panel-definition';
 import {ChangedFields} from '../data-fields/models/changed-fields';
+import {TaskResourceService} from '../resources/engine-endpoint/task-resource.service';
 
 export abstract class AbstractTaskView implements OnInit {
 

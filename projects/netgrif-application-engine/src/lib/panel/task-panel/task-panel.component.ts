@@ -8,11 +8,11 @@ import {FieldConvertorService} from './task-panel-content/field-convertor.servic
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
 import {TaskPanelData} from '../../panel-list/task-panel-data/task-panel-data';
-import {TaskResourceService} from '../../panel-list/task-resource/task-resource.service';
 import {UserAssignComponent} from '../../side-menu/user-assign/user-assign.component';
 import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
 import {UserService} from '../../user/services/user.service';
 import {AssignPolicy} from './policy';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 
 @Component({
     selector: 'nae-task-panel',

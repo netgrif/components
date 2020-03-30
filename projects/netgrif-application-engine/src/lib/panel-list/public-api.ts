@@ -9,4 +9,4 @@ export * from './task-panel-data/task-panel-data';
 export * from './abstract-task-view';
 
 /* SERVICES */
-export * from './task-resource/task-resource.service';
+// export * from './task-resource/task-resource.service';

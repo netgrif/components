@@ -1,6 +1,12 @@
 import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {commitChangesToFile, createFilesFromTemplates, createRelativePath, getAppModule, getProjectInfo} from '../../utility-functions';
+import {
+    commitChangesToFile,
+    createFilesFromTemplates,
+    createRelativePath,
+    getAppModule,
+    getProjectInfo
+} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {TabViewParams} from './classes/paramsInterfaces';
 import {strings} from '@angular-devkit/core';
@@ -27,7 +33,7 @@ export function createTabView(
     const projectInfo = getProjectInfo(tree);
     const className = new ClassName(args.path as string, 'TabView');
     const params = args.layoutParams as TabViewParams;
-    const injectedData: any = undefined;
+    // const injectedData: any = undefined;  // TODO: Kubo
 
     const tabViews: TabViews = {
         rules: [],
