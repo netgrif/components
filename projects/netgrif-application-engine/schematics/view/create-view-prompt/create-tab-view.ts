@@ -17,10 +17,10 @@ import {TabContentTemplate} from './classes/TabContentTemplate';
 
 
 interface TabViews {
-    rules: Array<Rule>;
-    tabTemplates: Array<TabContentTemplate>;
-    tabViewImports: Array<ImportToAdd>;
-    entryComponentsImports: Array<ImportToAdd>;
+    'rules': Array<Rule>;
+    'tabTemplates': Array<TabContentTemplate>;
+    'tabViewImports': Array<ImportToAdd>;
+    'entryComponentsImports': Array<ImportToAdd>;
 }
 
 export function createTabView(
@@ -172,8 +172,10 @@ function processTabViewContents(
 }
 
 function pushTabViews(destination: TabViews, source: TabViews): TabViews {
-    for (const attribute of Object.keys(destination) ) {
-        (destination[attribute] as Array<any>).push(...(source[attribute] as Array<any>));
-    }
+    // iteration trough Object.keys() caused a type compilation error
+    destination.entryComponentsImports.push(...source.entryComponentsImports);
+    destination.tabViewImports.push(...source.tabViewImports);
+    destination.tabTemplates.push(...source.tabTemplates);
+    destination.rules.push(...source.rules);
     return destination;
 }
