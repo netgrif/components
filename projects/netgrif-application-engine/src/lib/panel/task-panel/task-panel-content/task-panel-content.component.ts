@@ -23,7 +23,7 @@ import {FileField} from '../../../data-fields/file-field/models/file-field';
 import {DataField, MaterialAppearance} from '../../../data-fields/models/abstract-data-field';
 import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
-import {moment} from '../../../moment/moment-import';
+import moment from 'moment';
 
 @Component({
     selector: 'nae-task-panel-content',
