@@ -138,11 +138,12 @@ pipeline {
         //          message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
 
         junit 'coverage/netgrif-application-engine/JUNITX-test-report.xml'
-        archiveArtifacts artifacts: 'dist/netgrif-application-engine', fingerprint: true
     }
 
     success {
         bitbucketStatusNotify(buildState: 'SUCCESSFUL')
+        zip(archive: true, zipFile: 'nae-frontend-dist.zip', dir: 'dist/netgrif-application-engine')
+        archiveArtifacts artifacts: 'dist/netgrif-application-engine/nae-frontend-dist.zip', fingerprint: true
     }
 
     unstable {
