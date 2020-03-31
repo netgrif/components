@@ -11,7 +11,7 @@ export interface InjectedTabbedCaseViewData extends InjectedTabData {
     tabViewOrder: number;
 }
 
-abstract class TabbedCaseView extends AbstractCaseView {
+export abstract class TabbedCaseView extends AbstractCaseView {
 
     protected constructor(_sideMenuService: SideMenuService,
                           _caseResourceService: CaseResourceService,
@@ -25,7 +25,7 @@ abstract class TabbedCaseView extends AbstractCaseView {
         this._injectedTabData.tabGroupRef.openTab({
             label: {
                 text: clickedCase.title,
-                icon: clickedCase.icon ? clickedCase.icon : 'storage'
+                icon: clickedCase.icon ? clickedCase.icon : 'check_box'
             },
             canBeDeleted: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
