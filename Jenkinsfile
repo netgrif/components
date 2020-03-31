@@ -31,14 +31,14 @@ pipeline {
             sh 'npm run ng lint netgrif-application-engine'
           }
         }
-
-        stage('Sonar') {
-            steps {
-                echo 'Sent to SonarQube analysis'
-                sh 'npm run nae:sonar'
-            }
-        }
       }
+    }
+
+    stage('Sonar') {
+        steps {
+            echo 'Sent to SonarQube analysis'
+            sh 'npm run nae:sonar'
+        }
     }
 
     stage('Build') {
