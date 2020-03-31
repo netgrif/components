@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
+    CaseResourceService,
+    SideMenuService,
+    HeaderComponent,
     AbstractCaseView,
     Case,
-    CaseResourceService,
-    HeaderComponent,
-    SideMenuService,
 } from 'netgrif-application-engine';
 
 @Component({

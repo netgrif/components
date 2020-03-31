@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CaseResourceService,
+    SideMenuService,
     HeaderComponent,
     InjectedTabbedCaseViewData,
     NAE_TAB_DATA,
-    SideMenuService,
     TabbedCaseView,
 } from 'netgrif-application-engine';
 
