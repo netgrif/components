@@ -132,14 +132,14 @@ pipeline {
   }
 
   post {
-    always {
+    //always {
         //slackSend channel: '#ops-room',
         //          color: 'good',
         //          message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
 
         //junit 'coverage/netgrif-application-engine/JUNITX-test-report.xml'
         //archiveArtifacts artifacts: 'dist/netgrif-application-engine', fingerprint: true
-    }
+    //}
 
     success {
         bitbucketStatusNotify(buildState: 'SUCCESSFUL')
