@@ -1,15 +1,15 @@
-import {ResourceProvider} from '../../resources/resource-provider.service';
+import {ResourceProvider} from '../../../resources/resource-provider.service';
 import {Observable} from 'rxjs';
-import {Count} from '../../resources/interface/count';
-import {changeType} from '../../resources/resource-utility-functions';
+import {Count} from '../../../resources/interface/count';
+import {changeType} from '../../../resources/resource-utility-functions';
 import {map} from 'rxjs/operators';
-import {MessageResource} from '../../resources/interface/message-resource';
-import {Task} from '../../resources/interface/task';
-import {TaskReference} from '../../resources/interface/task-reference';
-import {DataGroupsResource} from '../../resources/interface/data-groups';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
-import {FileResource} from '../../resources/interface/file-resource';
-import {ConfigurationService} from '../../configuration/configuration.service';
+import {MessageResource} from '../../../resources/interface/message-resource';
+import {Task} from '../../../resources/interface/task';
+import {TaskReference} from '../../../resources/interface/task-reference';
+import {DataGroupsResource} from '../../../resources/interface/data-groups';
+import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
+import {FileResource} from '../../../resources/interface/file-resource';
+import {ConfigurationService} from '../../../configuration/configuration.service';
 import {Injectable} from '@angular/core';
 
 @Injectable({

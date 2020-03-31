@@ -7,6 +7,7 @@ import { TaskPanelComponent } from './task-panel/task-panel.component';
 import { CasePanelComponent } from './case-panel/case-panel.component';
 import { TaskPanelContentComponent } from './task-panel/task-panel-content/task-panel-content.component';
 import {DataFieldsModule} from '../data-fields/data-fields.module';
+import {TaskListComponent} from './task-panel-list/task-list.component';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import {DataFieldsModule} from '../data-fields/data-fields.module';
         TaskPanelComponent,
         CasePanelComponent,
         TaskPanelContentComponent,
+        TaskListComponent
     ],
     imports: [
         CommonModule,
@@ -25,7 +27,8 @@ import {DataFieldsModule} from '../data-fields/data-fields.module';
         PanelComponent,
         TaskPanelComponent,
         CasePanelComponent,
-        TaskPanelContentComponent
+        TaskPanelContentComponent,
+        TaskListComponent
     ],
     entryComponents: [
         TaskPanelContentComponent

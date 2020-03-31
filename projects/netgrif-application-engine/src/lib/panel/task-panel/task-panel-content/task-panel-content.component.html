@@ -1,4 +1,4 @@
-<div >
+<div *ngIf="!loading && dataSource.length !== 0">
     <mat-grid-list [cols]="formCols" rowHeight="105px">
         <mat-grid-tile *ngFor="let item of dataSource"
                        class="border"
@@ -46,3 +46,13 @@
         </mat-grid-tile>
     </mat-grid-list>
 </div>
+
+<div *ngIf="!loading && dataSource.length === 0" fxLayout="column" fxLayoutAlign="center center">
+    <mat-icon>block</mat-icon>
+    <span>This task has no data. Finish to continue.</span>
+</div>
+
+<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner color="primary"></mat-spinner>
+</div>
+

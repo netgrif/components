@@ -20,7 +20,6 @@ import {
     SimpleDialogComponent,
     TabsModule,
     ToolbarModule,
-    TaskListModule,
     CardModule,
     UserAssignComponent,
     ResourceProvider
@@ -109,7 +108,6 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         }),
         MatCardModule,
-        TaskListModule,
         CardModule
     ],
     entryComponents: [
