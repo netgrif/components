@@ -10,7 +10,7 @@ import {AbstractTaskView, TaskViewService} from '@netgrif/application-engine';
 export class TaskViewComponent extends AbstractTaskView {
 
     constructor(taskViewService: TaskViewService) {
-        super(taskViewService);
+        super(taskViewService, '{}');
     }
 
 }

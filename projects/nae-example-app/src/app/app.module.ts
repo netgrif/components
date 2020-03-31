@@ -53,7 +53,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TaskViewComponent} from './doc/task-view/task-view.component';
 import {TabbedCaseViewComponent} from './doc/tabbed-case-view/tabbed-case-view/tabbed-case-view.component';
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
-import {Content2Component} from './doc/tabbed-case-view/tabbed-task-view/content-2.component';
+import {TabbedTaskViewComponent} from './doc/tabbed-case-view/tabbed-task-view/tabbed-task-view.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -85,7 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         CaseViewComponent,
         TabbedCaseViewComponent,
         TabbedViewsExampleComponent,
-        Content2Component
+        TabbedTaskViewComponent,
     ],
     imports: [
         BrowserModule,
@@ -127,7 +127,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         QuestionDialogWithAnswerComponent,
         ContentComponent,
         TabbedCaseViewComponent,
-        Content2Component,
+        TabbedTaskViewComponent,
     ],
 
     providers: [{

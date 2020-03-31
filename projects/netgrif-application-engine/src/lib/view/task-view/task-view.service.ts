@@ -11,18 +11,24 @@ export class TaskViewService {
     taskData: Subject<Array<TaskPanelData>>;
     changedFields: Subject<ChangedFields>;
     loading: Subject<boolean>;
+    private _activeFilter: string;
 
     constructor(protected _taskService: TaskResourceService) {
         this.taskArray = [];
         this.taskData = new Subject<Array<TaskPanelData>>();
         this.loading = new Subject<boolean>();
         this.changedFields = new Subject<ChangedFields>();
+        this._activeFilter = '{}';
     }
 
-    loadTasks(body = {}) {
+    public set activeFilter(newFilter: string) {
+        this._activeFilter = newFilter;
+    }
+
+    loadTasks() {
         this.taskArray = [];
         this.loading.next(true);
-        this._taskService.searchTask(body).subscribe(tasks => {
+        this._taskService.searchTask(JSON.parse(this._activeFilter)).subscribe(tasks => {
             if (tasks instanceof Array) {
                 tasks.forEach(task => {
                     const header: TaskPanelDefinition = {

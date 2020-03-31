@@ -10,7 +10,7 @@ export abstract class AbstractTaskView implements OnInit {
     public changedFields: Subject<ChangedFields>;
     public loading: boolean;
 
-    protected constructor(private taskViewService: TaskViewService) {
+    protected constructor(protected taskViewService: TaskViewService, baseFilter: string) {
         this.taskPanel = [];
         this.taskViewService.taskData.subscribe( data => {
             this.taskPanel = data;
@@ -23,6 +23,7 @@ export abstract class AbstractTaskView implements OnInit {
         this.taskViewService.loading.subscribe( load => {
             this.loading = load;
         });
+        this.taskViewService.activeFilter = baseFilter;
     }
 
     ngOnInit() {

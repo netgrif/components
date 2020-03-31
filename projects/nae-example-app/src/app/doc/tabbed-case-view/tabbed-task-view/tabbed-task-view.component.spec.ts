@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContentComponent2 } from './content-component2.component';
+import { TabbedTaskViewComponent } from './tabbed-task-view.component';
 
-describe('ContentComponent', () => {
-  let component: ContentComponent2;
-  let fixture: ComponentFixture<ContentComponent2>;
+describe('TaskViewComponent', () => {
+  let component: TabbedTaskViewComponent;
+  let fixture: ComponentFixture<TabbedTaskViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentComponent2 ]
+      declarations: [ TabbedTaskViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContentComponent2);
+    fixture = TestBed.createComponent(TabbedTaskViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

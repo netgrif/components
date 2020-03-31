@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TabContent} from '@netgrif/application-engine';
 import {TabbedCaseViewComponent} from './tabbed-case-view/tabbed-case-view.component';
-import {Content2Component} from './tabbed-task-view/content-2.component';
+import {TabbedTaskViewComponent} from './tabbed-task-view/tabbed-task-view.component';
 
 @Component({
     selector: 'nae-app-tabbed-views-example',
@@ -21,7 +21,7 @@ export class TabbedViewsExampleComponent implements OnInit {
             canBeDeleted: false,
             tabContentComponent: TabbedCaseViewComponent,
             injectedObject: {
-                tabViewComponent: Content2Component,
+                tabViewComponent: TabbedTaskViewComponent,
                 tabViewOrder: 0
             }
         }
