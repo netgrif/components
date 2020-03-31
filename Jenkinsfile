@@ -143,7 +143,7 @@ pipeline {
     success {
         bitbucketStatusNotify(buildState: 'SUCCESSFUL')
         zip(archive: true, zipFile: 'nae-frontend-dist.zip', dir: 'dist/netgrif-application-engine')
-        archiveArtifacts artifacts: 'dist/netgrif-application-engine/nae-frontend-dist.zip', fingerprint: true
+        // archiveArtifacts artifacts: 'dist/netgrif-application-engine/nae-frontend-dist.zip', fingerprint: true
     }
 
     unstable {
