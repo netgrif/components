@@ -35,7 +35,7 @@ const routes: Routes = [
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
     {path: 'toolbar', component: ToolbarExampleComponent},
     {path: 'task-view', component: TaskViewComponent},
-    {path: 'cases', component: CaseViewComponent},
+    {path: 'case-view', component: CaseViewComponent},
 ];
 
 @NgModule({

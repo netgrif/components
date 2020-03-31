@@ -12,15 +12,15 @@ import {HeaderChange} from '../../header/models/user.changes/header-change';
 export abstract class AbstractCaseView {
 
     public headerType: HeaderType = 'case';
-    public casePanelDefinitions: Array<CasePanelDefinition> = [];
+    public cases: Array<Case> = [];
     private _changeHeader$: Observable<HeaderChange>;
 
-    protected constructor(private _sideMenuService: SideMenuService,
-                          private _caseResourceService: CaseResourceService,
-                          private _baseFilter: string = '{}') {
+    protected constructor(protected _sideMenuService: SideMenuService,
+                          protected _caseResourceService: CaseResourceService,
+                          protected _baseFilter: string = '{}') {
         this._caseResourceService.getAllCase()
-            .subscribe((cases: Array<Case>) => {
-                this.setCasePanelFromResource(cases);
+            .subscribe((newCases: Array<Case>) => {
+                this.updateCases(newCases);
             });
     }
 
@@ -37,30 +37,17 @@ export abstract class AbstractCaseView {
             //     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
             const params = new HttpParams().set('sort', 'asc');
             this._caseResourceService.searchCases({}, params)
-                .subscribe((cases: Array<Case>) => {
-                    this.setCasePanelFromResource(cases);
+                .subscribe((newCases: Array<Case>) => {
+                    this.updateCases(newCases);
                 });
         });
     }
 
-    protected setCasePanelFromResource(cases: Array<Case>): void {
-        cases.forEach(case_ => {
-            if (!this.casePanelDefinitions.some(caseDef => caseDef.caseId === case_.stringId)) {
-                const caseDefinition = {
-                    featuredFields: [
-                        new Date(case_.creationDate[6]).toLocaleString(),
-                        case_.author.fullName,
-                        case_.visualId,
-                        ' '
-                    ],
-                    panelIconField: case_.title,
-                    panelIcon: 'add',
-                    caseId: case_.stringId
-                };
-                this.casePanelDefinitions.push(caseDefinition);
-            }
-        });
+    protected updateCases(newCases: Array<Case>): void {
+        // TODO is just replacing the existing cases with new ones a good idea? Is there some data, we might loose?
+        this.cases.splice(0, this.cases.length);
+        this.cases.push(...newCases);
     }
 
-    protected abstract handleCaseClick(caseId: string): void;
+    public abstract handleCaseClick(clickedCase: Case): void;
 }

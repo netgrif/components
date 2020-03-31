@@ -14,7 +14,7 @@ export class CasePanelComponent implements OnInit {
     public panelIcon: string;
     public panelIconField: string;
 
-    private _featuredFieldsValues: Array<string> = [];
+    public _featuredFieldsValues: Array<string> = [];
 
     constructor() {
     }
