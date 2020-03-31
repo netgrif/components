@@ -21,10 +21,9 @@ import {
     TabsModule,
     ResourceProvider,
     ToolbarModule,
-    TaskListModule,
     CardModule,
     UserAssignComponent,
-    ResourceProvider
+    UserModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -34,7 +33,7 @@ import {AuthenticationComponent} from './doc/services/authentication/authenticat
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {MatIconModule} from '@angular/material';
+import {MatCardModule, MatIconModule} from '@angular/material';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import {UserAssignSidemenuExampleComponent} from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
@@ -51,7 +50,7 @@ import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { TaskViewComponent } from './doc/task-view/task-view.component';
+import {TaskViewComponent} from './doc/task-view/task-view.component';
 import {TabbedCaseViewComponent} from './doc/tabbed-case-view/tabbed-case-view/tabbed-case-view.component';
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 import {Content2Component} from './doc/tabbed-case-view/tabbed-task-view/content-2.component';
@@ -110,7 +109,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         HeaderModule,
         DataFieldsModule,
         ToolbarModule,
-        TaskListModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

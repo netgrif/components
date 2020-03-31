@@ -23,7 +23,6 @@ export function createTaskView(tree: Tree, args: CreateViewArguments, addRoute: 
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('MaterialModule', '@netgrif/application-engine'),
         new ImportToAdd('PanelModule', '@netgrif/application-engine'),
-        new ImportToAdd('TaskListModule', '@netgrif/application-engine'),
         new ImportToAdd('CardModule', '@netgrif/application-engine')]);
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
