@@ -1,8 +1,6 @@
 import {Subject} from 'rxjs';
 import {OnInit} from '@angular/core';
 import {TaskPanelData} from '../panel/task-panel-list/task-panel-data/task-panel-data';
-import {TaskResourceService} from '../panel/task-panel-list/task-resource/task-resource.service';
-import {TaskPanelDefinition} from '../panel/task-panel/task-panel-definition';
 import {ChangedFields} from '../data-fields/models/changed-fields';
 import {TaskViewService} from './task-view.service';
 
