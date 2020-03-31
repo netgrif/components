@@ -1,7 +1,7 @@
 import {NewCaseComponent} from '../../side-menu/new-case/new-case.component';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {Case} from '../../resources/interface/case';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {HeaderComponent} from '../../header/header.component';
 import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
@@ -13,6 +13,7 @@ export abstract class AbstractCaseView {
 
     public headerType: HeaderType = 'case';
     public cases: Array<Case> = [];
+    public featuredFields$: BehaviorSubject<Array<string>>;
     private _changeHeader$: Observable<HeaderChange>;
 
     protected constructor(protected _sideMenuService: SideMenuService,
@@ -22,6 +23,8 @@ export abstract class AbstractCaseView {
             .subscribe((newCases: Array<Case>) => {
                 this.updateCases(newCases);
             });
+        // TODO initial header layout from configuration/preferences
+        this.featuredFields$ = new BehaviorSubject<Array<string>>([]);
     }
 
     public createNewCase(): void {
@@ -40,6 +43,7 @@ export abstract class AbstractCaseView {
                 .subscribe((newCases: Array<Case>) => {
                     this.updateCases(newCases);
                 });
+            // TODO if headers changed their content (different columns should be shown) update featured fields stream
         });
     }
 
