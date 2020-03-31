@@ -74,7 +74,7 @@ pipeline {
                  }
             }
 
-            /*stage('Publish docs') {
+            stage('Publish docs') {
                 steps {
                     echo 'Uploading documentation via sshPublisher'
                     sshPublisher(
@@ -83,7 +83,7 @@ pipeline {
                                 configName: 'monitor.netgrif.com',
                                 transfers: [
                                     sshTransfer(
-                                        cleanRemote: false,
+                                        cleanRemote: true,
                                         excludes: '',
                                         execCommand: '',
                                         execTimeout: 120000,
@@ -91,7 +91,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: '/var/www/html/developer/engine-frontend',
+                                        remoteDirectory: '/var/www/html/developer/projects/engine-frontend',
                                         remoteDirectorySDF: false,
                                         removePrefix: 'docs/compodoc',
                                         sourceFiles: 'docs/compodoc/**')],
@@ -99,18 +99,18 @@ pipeline {
                                 useWorkspaceInPromotion: false,
                                 verbose: true)])
                 }
-            }*/
+            }
 
-            /*stage('Publish reports') {
+            stage('Publish test reports') {
                 steps {
-                    echo 'Uploading documentation via sshPublisher'
+                    echo 'Uploading test reports via sshPublisher'
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
                                 configName: 'monitor.netgrif.com',
                                 transfers: [
                                     sshTransfer(
-                                        cleanRemote: false,
+                                        cleanRemote: true,
                                         excludes: '',
                                         execCommand: '',
                                         execTimeout: 120000,
@@ -118,7 +118,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: '/var/www/html/developer/engine-frontend/coverage',
+                                        remoteDirectory: '/var/www/html/developer/projects/engine-frontend/coverage',
                                         remoteDirectorySDF: false,
                                         removePrefix: 'coverage/netgrif-application-engine',
                                         sourceFiles: 'coverage/netgrif-application-engine/**')],
@@ -126,20 +126,20 @@ pipeline {
                                 useWorkspaceInPromotion: false,
                                 verbose: true)])
                 }
-            }*/
+            }
         }
      }
   }
 
   post {
-    //always {
+    always {
         //slackSend channel: '#ops-room',
         //          color: 'good',
         //          message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
 
-        //junit 'coverage/netgrif-application-engine/JUNITX-test-report.xml'
-        //archiveArtifacts artifacts: 'dist/netgrif-application-engine', fingerprint: true
-    //}
+        junit 'coverage/netgrif-application-engine/JUNITX-test-report.xml'
+        archiveArtifacts artifacts: 'dist/netgrif-application-engine', fingerprint: true
+    }
 
     success {
         bitbucketStatusNotify(buildState: 'SUCCESSFUL')
