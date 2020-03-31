@@ -1,0 +1,29 @@
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {
+    CaseResourceService,
+    SideMenuService,
+    HeaderComponent,
+    AbstractCaseView,
+    Case,
+} from '@netgrif/application-engine';
+
+@Component({
+  selector: '<%= prefix %>-<%= dasherize(path) %>-case-view',
+  templateUrl: './<%= dasherize(path) %>-case-view.component.html',
+  styleUrls: ['./<%= dasherize(path) %>-case-view.component.scss']
+})
+export class <%= classify(path) %>CaseViewComponent extends AbstractCaseView implements AfterViewInit {
+
+    @ViewChild('header') public caseHeaderComponent: HeaderComponent;
+
+    constructor(sideMenuService: SideMenuService, caseResourceService: CaseResourceService) {
+        super(sideMenuService, caseResourceService, '{}');
+    }
+
+    ngAfterViewInit(): void {
+        this.initializeHeader(this.caseHeaderComponent);
+    }
+
+    public handleCaseClick(clickedCase: Case): void {}
+
+}

@@ -5,7 +5,7 @@ import {
     HeaderComponent,
     AbstractCaseView,
     Case,
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-case-view',

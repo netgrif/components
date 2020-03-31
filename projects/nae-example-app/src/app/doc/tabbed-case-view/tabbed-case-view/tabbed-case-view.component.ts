@@ -6,7 +6,7 @@ import {
     InjectedTabbedCaseViewData,
     NAE_TAB_DATA,
     TabbedCaseView,
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-tabbed-case-view',
