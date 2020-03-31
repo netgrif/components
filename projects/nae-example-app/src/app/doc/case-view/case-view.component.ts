@@ -1,88 +1,35 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
+    AbstractCaseView,
     Case,
-    CasePanelDefinition, CaseResourceService,
-    HeaderChange,
+    CaseResourceService,
     HeaderComponent,
-    NewCaseComponent,
-    SideMenuService, TaskResourceService,
+    SideMenuService,
 } from 'netgrif-application-engine';
-import {Observable} from 'rxjs';
-import {HttpParams} from '@angular/common/http';
-import {HeaderType} from '@netgrif/application-engine/lib/header/abstract-header-service';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
     selector: 'nae-app-case-view',
     templateUrl: './case-view.component.html',
     styleUrls: ['./case-view.component.scss']
 })
-export class CaseViewComponent implements AfterViewInit {
+export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {
 
-    public headerType: HeaderType = 'case';
-    public casePanelDefinitions: Array<CasePanelDefinition> = [];
-    private _changeHeader$: Observable<HeaderChange>;
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
+    featuredFields$: BehaviorSubject<Array<string>>;
 
-    constructor(private _sideMenuService: SideMenuService,
-                private _caseResourceService: CaseResourceService,
-                private _taskResourceService: TaskResourceService) {
-        this._caseResourceService.getAllCase()
-            .subscribe((cazes: Array<Case>) => {
-                this.setCasePanelFromResource(cazes);
-            });
+    constructor(_sideMenuService: SideMenuService,
+                _caseResourceService: CaseResourceService) {
+        super(_sideMenuService, _caseResourceService, '{}');
+        this.featuredFields$ = new BehaviorSubject<Array<string>>(['number', 'text', 'boolean']);
     }
 
     ngAfterViewInit(): void {
-        this._changeHeader$ = this.caseHeaderComponent.headerService.headerChange$;
-        this._changeHeader$.subscribe((header: HeaderChange) => {
-            console.log(header);
-            let params = new HttpParams();
-            // header.type
-            // header.description.identifier
-            // header.description.sortMode
-            // TODO: JOZO fix Matove interfaces
-            // const params = new HttpParams().set(header ? header.type : '',
-            //     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
-            if (header !== null && header.type === 'sort') {
-                params = new HttpParams().set('sort', header.description['identifier'] + ',' + header.description['sortMode']);
-            }
-            this._caseResourceService.searchCases({}, params)
-                .subscribe((cazes: Array<Case>) => {
-                    this.setCasePanelFromResource(cazes);
-                });
-        });
+        this.initializeHeader(this.caseHeaderComponent);
     }
 
-    public setCasePanelFromResource(cazes: Array<Case>) {
-        cazes.forEach(caze => {
-            const caseDefinition = {
-                featuredFields: [
-                    new Date(caze.creationDate[6]).toLocaleString(),
-                    caze.author.fullName,
-                    caze.visualId,
-                    ' '
-                ],
-                panelIconField: caze.title,
-                panelIcon: 'home',
-                caseId: caze.stringId
-            };
-            if (!this.casePanelDefinitions.some(caseDef => caseDef.caseId === caseDefinition.caseId)) {
-                this.casePanelDefinitions.push(caseDefinition);
-            }
-        });
-    }
-
-    public redirectToTasksOfCase(caseDefinition: CasePanelDefinition): void {
-        this._taskResourceService.searchTask({case: caseDefinition.caseId})
-            .subscribe(tasks => {
-                tasks.forEach(task => {
-                    console.log(task);
-                });
-            });
-    }
-
-    public onCreateNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent);
+    public handleCaseClick(clickedCase: Case): void {
+        console.log(clickedCase.stringId);
     }
 
 }
