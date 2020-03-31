@@ -2,7 +2,7 @@
 export * from './case-view/abstract-case-view';
 export * from './case-view/tabbedCaseView';
 
-export * from './abstract-task-view';
+export * from './task-view/abstract-task-view';
 
 /* SERVICES */
-export * from './task-view.service';
+export * from './task-view/task-view.service';

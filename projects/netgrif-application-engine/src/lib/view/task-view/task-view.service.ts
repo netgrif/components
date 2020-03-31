@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {TaskPanelDefinition} from '../panel/task-panel/task-panel-definition';
+import {TaskPanelDefinition} from '../../panel/task-panel/task-panel-definition';
 import {Subject} from 'rxjs';
-import {TaskPanelData} from '../panel/task-panel-list/task-panel-data/task-panel-data';
-import {ChangedFields} from '../data-fields/models/changed-fields';
-import {TaskResourceService} from '../resources/engine-endpoint/task-resource.service';
+import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 
 @Injectable()
 export class TaskViewService {

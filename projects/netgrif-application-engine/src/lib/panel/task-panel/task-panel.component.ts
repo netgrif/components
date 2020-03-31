@@ -14,7 +14,7 @@ import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu
 import {UserService} from '../../user/services/user.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {Subject} from 'rxjs';
-import {TaskViewService} from '../../view/task-view.service';
+import {TaskViewService} from '../../view/task-view/task-view.service';
 
 @Component({
     selector: 'nae-task-panel',
