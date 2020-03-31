@@ -11,10 +11,13 @@ export interface Task {
     user: UserTask;
     roles: object;
     startDate: Array<number>;
+    finishDate: Array<number>;
     assignPolicy: AssignPolicy;
     dataFocusPolicy: DataFocusPolicy;
     finishPolicy: FinishPolicy;
     stringId: string;
+    cols: number;
     dataGroups: DataGroup[];
     _links: object;
+    dataSize?: number;
 }

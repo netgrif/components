@@ -8,7 +8,8 @@ import {TaskPanelData} from './task-panel-data/task-panel-data';
     styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit {
-   @Input() taskPanels: Array<TaskPanelData>;
+    @Input() taskPanels: Array<TaskPanelData>;
+    @Input() loading: boolean;
 
     constructor() {
     }

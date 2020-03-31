@@ -2,10 +2,10 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TaskListComponent} from './task-list.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {PanelModule} from '../panel/panel.module';
+import {PanelModule} from '../panel.module';
 import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
-import {MaterialModule} from '../material/material.module';
+import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TaskListComponent', () => {
