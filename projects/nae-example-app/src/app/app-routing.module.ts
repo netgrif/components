@@ -17,6 +17,7 @@ import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.com
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {TaskViewComponent} from './doc/task-view/task-view.component';
+import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -36,6 +37,7 @@ const routes: Routes = [
     {path: 'toolbar', component: ToolbarExampleComponent},
     {path: 'task-view', component: TaskViewComponent},
     {path: 'case-view', component: CaseViewComponent},
+    {path: 'tabbed-views', component: TabbedViewsExampleComponent}
 ];
 
 @NgModule({

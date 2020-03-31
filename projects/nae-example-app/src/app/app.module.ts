@@ -23,6 +23,7 @@ import {
     ToolbarModule,
     UserAssignComponent,
     TaskListModule,
+    UserModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -50,7 +51,9 @@ import {CaseResourceExampleComponent} from './doc/case-resource-example/case-res
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { TaskViewComponent } from './doc/task-view/task-view.component';
-import {UserModule} from '../../../netgrif-application-engine/src/lib/user/user.module';
+import {TabbedCaseViewComponent} from './doc/tabbed-case-view/tabbed-case-view/tabbed-case-view.component';
+import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
+import {Content2Component} from './doc/tabbed-case-view/tabbed-task-view/content-2.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -80,6 +83,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         CaseResourceExampleComponent,
         TaskViewComponent,
         CaseViewComponent,
+        TabbedCaseViewComponent,
+        TabbedViewsExampleComponent,
+        Content2Component
     ],
     imports: [
         BrowserModule,
@@ -118,7 +124,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         SimpleDialogComponent,
         QuestionDialogComponent,
         QuestionDialogWithAnswerComponent,
-        ContentComponent
+        ContentComponent,
+        TabbedCaseViewComponent,
+        Content2Component,
     ],
 
     providers: [{
