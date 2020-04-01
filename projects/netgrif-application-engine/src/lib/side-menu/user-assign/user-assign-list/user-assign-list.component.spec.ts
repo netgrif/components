@@ -6,7 +6,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {Component} from '@angular/core';
-import {CovalentCommonModule} from '@covalent/core';
+import {CovalentCommonModule} from '@covalent/core/common';
 
 describe('UserAssignListComponent', () => {
     let component: UserAssignListComponent;

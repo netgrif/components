@@ -20,6 +20,7 @@ export * from './lib/side-menu/public-api';
 export * from './lib/dialog/public-api';
 export * from './lib/header/public-api';
 export * from './lib/resources/public-api';
+export * from './lib/workflows/public-api';
 export * from './lib/navigation/public-api';
 export * from './lib/view/public-api';
 

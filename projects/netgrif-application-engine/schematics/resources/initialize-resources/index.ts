@@ -1,8 +1,6 @@
 import {chain, Rule, schematic, Tree} from '@angular-devkit/schematics';
-
 import {getNaeConfiguration} from '../../utilityFunctions';
-
-import {Resource, Resources} from '@netgrif/application-engine/lib/configuration/interfaces/schema';
+import {Resource, Resources} from '../../../src/lib/configuration/interfaces/schema';
 
 
 function createResouce(resource: Resource) {

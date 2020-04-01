@@ -3,8 +3,10 @@ import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
 import {FieldConvertorService} from './field-convertor.service';
 import {TaskPanelContentService} from './task-panel-content.service';
+import moment from 'moment';
 
 export const NAE_TASK_COLS = new InjectionToken<number>('NaeTaskCols');
+
 
 @Component({
     selector: 'nae-task-panel-content',

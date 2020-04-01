@@ -1,10 +1,15 @@
-<div
-    fxFlex="100">
+<div class="header-column-container"
+     fxFlex="100">
     <mat-form-field *ngFor="let header of getIterableHeaders() | keyvalue" fxLayout="row" fxLayoutAlign=" center" fxFlex
-                    fxHide.lt-lg="{{header.value.columnId==='column4'}}"
-                    fxHide.lt-md="{{header.value.columnId==='column3' || header.value.columnId==='column4'}}"
-                    fxHide.lt-sm="{{header.value.columnId==='column2' || header.value.columnId==='column3' || header.value.columnId==='column4'}}">
-        <mat-label>{{header.value.title}}</mat-label>
-        <input matInput (keyup)="onUserKeyupSearch(header.value.columnId, $event.target['value'])">
+                    [fxHide.lt-lg]="header.value.columnId=='column4'"
+                    [fxHide.lt-md]="header.value.columnId=='column3' || header.value.columnId=='column4'"
+                    [fxHide.lt-sm]="header.value.columnId=='column2' || header.value.columnId=='column3' || header.value.columnId=='column4'">
+        <mat-label *ngIf="header.value.fieldType!='date'" >{{header.value.title}}</mat-label>
+        <mat-label *ngIf="header.value.fieldType=='date'">Choose a date</mat-label>
+        <input *ngIf="header.value.fieldType=='date'" matInput [matDatepicker]="picker" (dateChange)="onUserSearch(header.value.columnId,  $event)">
+        <mat-datepicker-toggle *ngIf="header.value.fieldType=='date'" matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <input *ngIf="header.value.fieldType!='date'" matInput
+               (keyup)="onUserSearch(header.value.columnId, $event.target['value'])">
     </mat-form-field>
 </div>

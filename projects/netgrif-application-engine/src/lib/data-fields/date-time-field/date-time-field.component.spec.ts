@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {DateTimeFieldComponent} from './date-time-field.component';
 import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
@@ -7,6 +6,8 @@ import {DataFieldTemplateComponent} from '../data-field-template/data-field-temp
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {DateTimeField} from './models/date-time-field';
+import moment from 'moment';
+import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 
 describe('DatetimeFieldComponent', () => {
     let component: DateTimeFieldComponent;
@@ -14,12 +15,16 @@ describe('DatetimeFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule],
+            imports: [
+                MaterialModule,
+                AngularResizedEventModule,
+                NgxMatDatetimePickerModule,
+            ],
             declarations: [
                 DateTimeFieldComponent,
                 DataFieldTemplateComponent,
                 RequiredLabelComponent,
-                TestWrapperComponent
+                TestWrapperComponent,
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
@@ -39,7 +44,7 @@ describe('DatetimeFieldComponent', () => {
     template: '<nae-date-time-field [dataField]="field"></nae-date-time-field>'
 })
 class TestWrapperComponent {
-    field = new DateTimeField('', '', new Date(), {
+    field = new DateTimeField('', '', moment(), {
         required: true,
         optional: true,
         visible: true,

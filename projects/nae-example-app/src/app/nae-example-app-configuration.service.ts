@@ -8,6 +8,7 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
 
     constructor() {
         super({
+            extends: 'nae-default',
             providers: {
                 auth: {
                     address: 'http://localhost:8080/api/',
@@ -117,7 +118,33 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
 
                 }
             },
-            assets: []
+            assets: [],
+            filters: {
+                'all-cases': {
+                    title: 'All Cases',
+                    access: 'public',
+                    query: 'select * from case where title like ${some-param}'
+                }
+            },
+            i18n: [
+                'sk-SK',
+                'en-US'
+            ],
+            views: {
+                layout: 'empty',
+                routes: {}
+            },
+            defaults: {
+                log: {
+                    level: 'INFO',
+                    logWithDate: true,
+                    serializeExtraParams: true,
+                    includeLogLevel: true,
+                    publishers: [
+                        'console'
+                    ]
+                }
+            }
         });
     }
 }
