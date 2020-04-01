@@ -14,7 +14,6 @@ export class PanelComponent implements OnInit, AfterViewInit {
     @Input() panelContent: TemplateRef<object>;
     @Output() stopLoading: EventEmitter<object> = new EventEmitter();
     @Output() getExpansionPanelRef: EventEmitter<MatExpansionPanel> = new EventEmitter();
-    @Output() clickedToPanel: EventEmitter<MouseEvent> = new EventEmitter();
     @ViewChild('matExpansionPanel') matExpansionPanel;
 
     constructor() {
@@ -35,10 +34,7 @@ export class PanelComponent implements OnInit, AfterViewInit {
         this.stopLoading.emit();
     }
 
-    expandPanel($event) {
-        $event.stopPropagation();
-        $event.preventDefault();
-        this.clickedToPanel.emit($event);
+    expandPanel() {
         if (this.preventExpand) {
             this.matExpansionPanel.close();
         }

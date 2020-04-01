@@ -63,19 +63,16 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        // this.panelRef.opened.subscribe(() => {
-        //     this.buildAssignPolicy(true);
-        // });
-        // this.panelRef.closed.subscribe( () => {
-        //     this.buildAssignPolicy(false);
-        // });
-    }
-
-    clickPanel($event) {
-        if (this.loading) {
-            return;
-        }
-        this.buildAssignPolicy(this.panelRef.expanded);
+        this.panelRef.opened.subscribe(() => {
+            if (!this.loading) {
+                this.buildAssignPolicy(true);
+            }
+        });
+        this.panelRef.closed.subscribe( () => {
+            if (!this.loading) {
+                this.buildAssignPolicy(false);
+            }
+        });
     }
 
     public show($event: MouseEvent): boolean {
