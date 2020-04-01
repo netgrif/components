@@ -111,7 +111,7 @@ export function resolveClassSuffixForView(view: string): string {
         case 'tabView':
             return 'TabView';
         case 'taskView':
-            return 'TabView';
+            return 'TaskView';
         case 'caseView':
             return 'CaseView';
         default:
