@@ -1,8 +1,10 @@
-import {Rule, schematic, Tree} from '@angular-devkit/schematics';
+import {Rule, schematic, Tree, SchematicsException} from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getFileData, getProjectInfo, ProjectInfo} from '../utility-functions';
 import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
 import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
 import {Change} from '@schematics/angular/utility/change';
+
+
 /**
  * Mocks the `Route` interface of {@link @angular/router#Route | Angular's router package}.
  * But changes the type of the `component` attribute to `string`.
@@ -100,4 +102,19 @@ export function addAllRoutesToMap(map: Map<string, Route>, routes: Routes, pathP
             }
         }
     });
+}
+
+export function resolveClassSuffixForView(view: string): string {
+    switch (view) {
+        case 'login':
+            return 'Login';
+        case 'tabView':
+            return 'TabView';
+        case 'taskView':
+            return 'TabView';
+        case 'caseView':
+            return 'CaseView';
+        default:
+            throw new SchematicsException(`Unknown view type '${view}'`);
+    }
 }

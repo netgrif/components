@@ -3,14 +3,14 @@ import {CreateViewArguments} from './schema';
 import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
-import {addRouteToRoutesJson, addRoutingModuleImport, updateAppModule} from '../view-utility-functions';
+import {addRouteToRoutesJson, addRoutingModuleImport, resolveClassSuffixForView, updateAppModule} from '../view-utility-functions';
 import {ImportToAdd} from './classes/ImportToAdd';
 import {TabbedView} from './tabbed-view';
 
 
 export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedView, addRoute: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
-    const className = new ClassName(args.path as string, 'TaskView');
+    const className = new ClassName(args.path as string, resolveClassSuffixForView(args.viewType as string));
     const rules = [];
 
     const templateParams = {

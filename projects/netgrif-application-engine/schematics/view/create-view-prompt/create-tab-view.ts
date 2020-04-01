@@ -4,7 +4,7 @@ import {commitChangesToFile, createFilesFromTemplates, createRelativePath, getAp
 import {ClassName} from './classes/ClassName';
 import {EmbeddedView, TabViewParams} from './classes/paramsInterfaces';
 import {strings} from '@angular-devkit/core';
-import {addRouteToRoutesJson, addRoutingModuleImport, updateAppModule} from '../view-utility-functions';
+import {addRouteToRoutesJson, addRoutingModuleImport, resolveClassSuffixForView, updateAppModule} from '../view-utility-functions';
 import {ImportToAdd} from './classes/ImportToAdd';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {TabContentTemplate} from './classes/TabContentTemplate';
@@ -194,7 +194,7 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
 
     result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
 
-    const newComponentName = new ClassName(newViewPath, 'TabView');
+    const newComponentName = new ClassName(newViewPath, resolveClassSuffixForView(embeddedView.view.name));
 
     result.tabViewImports.push(
         new ImportToAdd(newComponentName.name, createRelativePath(hostClassName.fileImportPath, newComponentName.fileImportPath))

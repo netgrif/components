@@ -3,14 +3,14 @@ import {CreateViewArguments} from './schema';
 import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
-import {addRouteToRoutesJson, addRoutingModuleImport, updateAppModule} from '../view-utility-functions';
+import {addRouteToRoutesJson, addRoutingModuleImport, resolveClassSuffixForView, updateAppModule} from '../view-utility-functions';
 import {ImportToAdd} from './classes/ImportToAdd';
 
 
 export function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
-    const className = new ClassName(args.path as string, 'Login');
+    const className = new ClassName(args.path as string, resolveClassSuffixForView(args.viewType as string));
 
     rules.push(createFilesFromTemplates('./files/login', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,

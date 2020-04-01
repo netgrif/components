@@ -3,7 +3,7 @@ import {CreateViewArguments} from './schema';
 import {commitChangesToFile, createFilesFromTemplates, getAppModule, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
-import {addRouteToRoutesJson, addRoutingModuleImport, updateAppModule} from '../view-utility-functions';
+import {addRouteToRoutesJson, addRoutingModuleImport, resolveClassSuffixForView, updateAppModule} from '../view-utility-functions';
 import {ImportToAdd} from './classes/ImportToAdd';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {TabbedView} from './tabbed-view';
@@ -11,7 +11,7 @@ import {TabbedView} from './tabbed-view';
 
 export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedView, addRoute: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
-    const className = new ClassName(args.path as string, 'CaseView');
+    const className = new ClassName(args.path as string, resolveClassSuffixForView(args.viewType as string));
     const rules = [];
 
     const templateParams = {
