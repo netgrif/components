@@ -83,7 +83,7 @@ export abstract class AbstractTaskJsonResourceService {
      */
     // {{baseUrl}}/api/task/search
     public searchTask(body: object, params?: Params): Observable<Array<Task>> {
-        return this.provider.post$('task/search', this.SERVER_URL, body, undefined, params).pipe(map(r => changeType(r, 'tasks')));
+        return this.provider.post$('task/search', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'tasks')));
     }
 
     // ----------- CASE ----------

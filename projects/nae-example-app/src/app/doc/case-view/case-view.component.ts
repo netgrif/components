@@ -42,7 +42,8 @@ export class CaseViewComponent implements AfterViewInit {
             // header.description.sortMode
             // TODO: JOZO fix Matove interfaces
             // const params = new HttpParams().set(header ? header.type : '',
-            //     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
+            //     header.description.sortMode &&
+            //     header.description.identifier ? header.description.sortMode + header.description.identifier : '');
             if (header !== null && header.type === 'sort') {
                 params = new HttpParams().set('sort', header.description['identifier'] + ',' + header.description['sortMode']);
             }
@@ -54,22 +55,24 @@ export class CaseViewComponent implements AfterViewInit {
     }
 
     public setCasePanelFromResource(cazes: Array<Case>) {
-        cazes.forEach(caze => {
-            const caseDefinition = {
-                featuredFields: [
-                    new Date(caze.creationDate[6]).toLocaleString(),
-                    caze.author.fullName,
-                    caze.visualId,
-                    ' '
-                ],
-                panelIconField: caze.title,
-                panelIcon: 'home',
-                caseId: caze.stringId
-            };
-            if (!this.casePanelDefinitions.some(caseDef => caseDef.caseId === caseDefinition.caseId)) {
-                this.casePanelDefinitions.push(caseDefinition);
-            }
-        });
+        if (cazes.length > 0) {
+            cazes.forEach(caze => {
+                const caseDefinition = {
+                    featuredFields: [
+                        new Date(caze.creationDate[6]).toLocaleString(),
+                        caze.author.fullName,
+                        caze.visualId,
+                        ' '
+                    ],
+                    panelIconField: caze.title,
+                    panelIcon: 'home',
+                    caseId: caze.stringId
+                };
+                if (!this.casePanelDefinitions.some(caseDef => caseDef.caseId === caseDefinition.caseId)) {
+                    this.casePanelDefinitions.push(caseDefinition);
+                }
+            });
+        }
     }
 
     public redirectToTasksOfCase(caseDefinition: CasePanelDefinition): void {

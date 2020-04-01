@@ -1,50 +1,59 @@
 <mat-toolbar color="primary">New Case</mat-toolbar>
 <mat-vertical-stepper linear #stepper>
-    <mat-step [stepControl]="processFormGroup" errorMessage="Process is required.">
-        <form [formGroup]="processFormGroup">
+    <mat-step [stepControl] ="processFormControl"  errorMessage="Process is required.">
             <ng-template matStepLabel>Choose process</ng-template>
             <mat-form-field>
-                <input matInput placeholder="Process" formControlName="firstCtrl" required [matAutocomplete]="auto">
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+
+                <input type="text" matInput [formControl]="processFormControl" [matAutocomplete]="auto" required>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                        {{option}}
+                        {{option.viewValue}}
                     </mat-option>
                 </mat-autocomplete>
+
+<!--                <input matInput placeholder="Process" formControlName="firstCtrl" required [matAutocomplete]="auto">-->
+<!--                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">-->
+<!--                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">-->
+<!--                        {{option}}-->
+<!--                    </mat-option>-->
+<!--                </mat-autocomplete>-->
             </mat-form-field>
             <div>
                 <button mat-button matStepperNext>Next</button>
             </div>
-        </form>
     </mat-step>
-    <mat-step [stepControl]="titleFormGroup" errorMessage="Title is required.">
-        <form [formGroup]="titleFormGroup">
+    <mat-step  [stepControl]="titleFormControl"errorMessage="Title is required.">
             <ng-template matStepLabel>Fill out case title</ng-template>
             <mat-form-field>
-                <input matInput placeholder="Title" formControlName="secondCtrl" required>
+                <input matInput placeholder="Title" [formControl]="titleFormControl" required>
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
             </div>
-        </form>
     </mat-step>
-    <mat-step [stepControl]="colorFormGroup" errorMessage="Color is required.">
-        <form [formGroup]="colorFormGroup">
+    <mat-step [stepControl]="selectedColorControl" errorMessage="Color is required.">
+        <mat-form-field>
             <ng-template matStepLabel>Choose case color</ng-template>
-            <mat-form-field>
                 <mat-label>Color</mat-label>
-                <mat-select formControlName="thirdCtrl" required>
-                    <mat-option *ngFor="let color of colors" [value]="color">
-                        {{color}}
-                    </mat-option>
-                </mat-select>
+                <mat-select [formControl]="selectedColorControl" required>
+                        <mat-option *ngFor="let color of colors" [value]="color.value">
+                            {{color.viewValue}}
+                        </mat-option>
+                    </mat-select>
+<!--                </mat-form-field>                -->
+<!--                <mat-select formControlName="thirdCtrl" required>-->
+<!--                    <mat-option *ngFor="let color of colors" [value]="color">-->
+<!--                        {{color}}-->
+<!--                    </mat-option>-->
+<!--                </mat-select>-->
                     <mat-error>You must make a selection</mat-error>
-            </mat-form-field>
-            <div>
+        </mat-form-field>
+
+        <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
             </div>
-        </form>
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>Done</ng-template>
