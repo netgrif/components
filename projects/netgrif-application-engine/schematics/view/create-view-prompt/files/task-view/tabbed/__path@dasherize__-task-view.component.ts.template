@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {InjectedTabbedTaskViewData, NAE_TAB_DATA, TabbedTaskView, TaskViewService} from '@netgrif/application-engine';
 
 
