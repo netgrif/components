@@ -1,10 +1,10 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" style="width: 200px;height: 62px;padding: 8px">
+<div fxLayout="row" fxLayoutAlign="space-between center" class="quick-panel">
     <nae-language-selector *ngIf="items.includes('language')" language="sk-SK"></nae-language-selector>
     <nae-internal-link *ngIf="items.includes('settings')" icon="settings" link="/settings"></nae-internal-link>
     <nae-logout-shortcut *ngIf="items.includes('logout')"></nae-logout-shortcut>
 
     <button mat-icon-button [matMenuTriggerFor]="quickPanelMoreMenu">
-        <mat-icon style="text-align: center; font-size: 24px;">more_vert</mat-icon>
+        <mat-icon class="quick-panel-more-icon">more_vert</mat-icon>
     </button>
 </div>
 <mat-menu #quickPanelMoreMenu="matMenu">
