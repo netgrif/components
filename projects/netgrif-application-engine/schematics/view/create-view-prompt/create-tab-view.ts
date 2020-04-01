@@ -48,11 +48,11 @@ export function createTabView(
 
     if (!!params.defaultTaskView) {
         for (let i = 1; i < tabViews.tabTemplates.length; i++) {
-            if (tabViews.tabTemplates[i].injectedObject !== undefined) {
-                // tabbed case view
-                const injectedData = tabViews.tabTemplates[i].injectedObject;
+            if (tabViews.tabViewImports[i].className.endsWith('CaseViewComponent')) {
+                const injectedData = {} as any;
                 injectedData.tabViewComponent = tabViews.tabViewImports[0].className;
                 injectedData.tabViewOrder = params.defaultTaskView.order;
+                tabViews.tabTemplates[i].injectedObject = injectedData;
             }
         }
         // we don't want to generate the default tab view as a tab
@@ -201,7 +201,7 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
     );
     result.entryComponentsImports.push(new ImportToAdd(newComponentName.name, newComponentName.fileImportPath));
 
-    return new TabContentTemplate(newComponentName.name, createViewArguments.viewType === 'caseView');
+    return new TabContentTemplate(newComponentName.name);
 }
 
 function pushTabViews(destination: TabViews, source: TabViews): TabViews {

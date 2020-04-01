@@ -6,13 +6,6 @@ export class TabContentTemplate {
     public order: number;
     public injectedObject: any;
 
-    constructor(public tabContentComponent: string, isTabbedCaseView = false) {
-        if (isTabbedCaseView) {
-            this.injectedObject = {
-                tabViewComponent: undefined,
-                tabViewOrder: undefined
-            };
-        }
-    }
+    constructor(public tabContentComponent: string) {}
 
 }
