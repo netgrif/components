@@ -63,9 +63,19 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.panelRef.opened.subscribe(() => {
-            this.buildAssignPolicy(!this.panelRef.expanded);
-        });
+        // this.panelRef.opened.subscribe(() => {
+        //     this.buildAssignPolicy(true);
+        // });
+        // this.panelRef.closed.subscribe( () => {
+        //     this.buildAssignPolicy(false);
+        // });
+    }
+
+    clickPanel($event) {
+        if (this.loading) {
+            return;
+        }
+        this.buildAssignPolicy(this.panelRef.expanded);
     }
 
     public show($event: MouseEvent): boolean {
@@ -94,13 +104,8 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                             });
                             dataGroup.forEach(field => {
                                 field.valueChanges().subscribe(newValue => {
-                                    if (field.initialized) {
-                                        const body = {};
-                                        body[field.stringId] = {
-                                            type: this._fieldConvertorService.resolveType(field),
-                                            value: this._fieldConvertorService.formatValue(field, newValue)
-                                        };
-                                        this.updateTaskDataFields(body);
+                                    if (field.initialized && field.valid && field.changed) {
+                                        this.updateTaskDataFields();
                                     }
                                 });
                             });
@@ -135,18 +140,53 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         });
     }
 
-    public updateTaskDataFields(body: {}): void {
+    public updateTaskDataFields(afterAction = new Subject<boolean>()): void {
+        if (this.taskPanelData.task.dataSize <= 0) {
+            return;
+        }
+
+        if (afterAction.observers.length === 0) {
+            afterAction.subscribe( bool => {
+                this.buildDataFocusPolicy(bool);
+            });
+        }
+
+        const body = {};
+        this.taskPanelData.task.dataGroups.forEach( dataGroup => {
+            dataGroup.fields.forEach( field => {
+                if (field.initialized && field.valid && field.changed) {
+                    body[field.stringId] = {
+                        type: this._fieldConvertorService.resolveType(field),
+                        value: this._fieldConvertorService.formatValue(field, field.value)
+                    };
+                }
+            });
+        });
+
+        if (Object.keys(body).length === 0) {
+            afterAction.next(true);
+            return;
+        }
+
         this.loading = true;
         this._taskService.setData(this.taskPanelData.task.stringId, body).subscribe(response => {
             if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
                 this.taskPanelData.changedFields.next(response.changedFields);
             }
+            Object.keys(body).forEach(id => {
+                this.taskPanelData.task.dataGroups.forEach( dataGroup => {
+                    dataGroup.fields.find(f => f.stringId === id).changed = false;
+                });
+            });
             this._snackBar.openInfoSnackBar('Data saved successfully');
             this.loading = false;
+            afterAction.next(true);
         }, error => {
             this._snackBar.openErrorSnackBar('Saving data failed');
             this._log.debug(error);
             this.loading = false;
+            afterAction.next(false);
+            this._taskViewService.loadTasks();
         });
     }
 
@@ -268,12 +308,63 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     }
 
     finish(afterAction = new Subject<boolean>()) {
-        this.panelRef.expanded = false;
+        const after = new Subject<boolean>();
+        if (this.taskPanelData.task.dataSize <= 0) {
+            after.subscribe( boolean => {
+                if (this.taskPanelData.task.dataSize <= 0 || this.validateTaskData()) {
+                    this.sendFinishTaskRequest(afterAction);
+                    this.collapse();
+                }
+                after.complete();
+            });
+            this.getTaskDataFields(after);
+        } else {
+            if (this.validateTaskData()) {
+                after.subscribe( boolean => {
+                    this.sendFinishTaskRequest(afterAction);
+                    this.collapse();
+                    after.complete();
+                });
+                this.updateTaskDataFields(after);
+            }
+        }
+    }
+
+    private sendFinishTaskRequest(afterAction: Subject<boolean>) {
+        if (this.loading) {
+            return;
+        }
+        this.loading = true;
+        this._taskService.finishTask(this.taskPanelData.task.stringId).subscribe( response => {
+            this.loading = false;
+            if (response.success) {
+                this.removeStateData();
+                afterAction.next(true);
+            } else if (response.error) {
+                this._snackBar.openErrorSnackBar(response.error);
+                afterAction.next(false);
+            }
+        }, error => {
+            this._snackBar.openErrorSnackBar(`Finishing task ${this.taskPanelData.task} failed`);
+            this.loading = false;
+            afterAction.next(false);
+        });
+    }
+
+    private validateTaskData() {
+        return !this.taskPanelData.task.dataGroups.some( group => {
+            group.fields.some( field => !field.valid);
+        });
     }
 
     collapse() {
         this.panelRef.close();
         this.panelRef.expanded = false;
+    }
+
+    expand() {
+        this.panelRef.open();
+        this.panelRef.expanded = true;
     }
 
     canDo(action) {
@@ -361,10 +452,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 afterLoad.complete();
             });
             this.getTaskDataFields(afterLoad);
-        } else {
-            this.collapse();
         }
-
     }
 
     private buildFinishPolicy(success: boolean): void {
@@ -384,6 +472,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 // TODO finish task
                 this.collapse();
             } else {
+                this.expand();
                 this.buildDataFocusPolicy(true);
             }
         }
@@ -391,6 +480,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
 
     private manualFinishPolicy(success: boolean): void {
         if (success) {
+            this.expand();
             this.buildDataFocusPolicy(true);
         } else {
             this.getTaskDataFields();

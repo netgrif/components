@@ -19,6 +19,7 @@ import {DateTimeField} from '../../../data-fields/date-time-field/models/date-ti
 import {UserField} from '../../../data-fields/user-field/models/user-field';
 import {ButtonField} from '../../../data-fields/button-field/models/button-field';
 import {FileField} from '../../../data-fields/file-field/models/file-field';
+import {UserValue} from '../../../data-fields/user-field/models/user-value';
 
 @Injectable({
     providedIn: 'root'
@@ -88,6 +89,7 @@ export class FieldConvertorService {
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
                     item.placeholder, item.description, item.layout);
             case 'user':
+                // TODO INITIALIZE USER WITH ID
                 return new UserField(item.stringId, item.name, item.behavior, undefined,
                     item.roles, item.placeholder, item.description, item.layout);
             case 'button':

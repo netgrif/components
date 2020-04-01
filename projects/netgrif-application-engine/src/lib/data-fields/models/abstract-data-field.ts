@@ -26,12 +26,16 @@ export enum MaterialAppearance {
 export abstract class DataField<T> {
     private _value: BehaviorSubject<T>;
     private _initialized: boolean;
+    private _valid: boolean;
+    private _changed: boolean;
 
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._initialized = false;
+        this._valid = true;
+        this._changed = false;
     }
 
     get stringId(): string {
@@ -75,6 +79,9 @@ export abstract class DataField<T> {
     }
 
     set value(value: T) {
+        if (!this.valueEquality(this._value.getValue(), value)) {
+            this._changed = true;
+        }
         this._value.next(value);
     }
 
@@ -94,6 +101,18 @@ export abstract class DataField<T> {
         return this._initialized;
     }
 
+    get valid(): boolean {
+        return this._valid;
+    }
+
+    set changed(set: boolean) {
+        this._changed = set;
+    }
+
+    get changed(): boolean {
+        return this._changed;
+    }
+
     public valueChanges(): Observable<T> {
         return this._value.asObservable();
     }
@@ -103,14 +122,17 @@ export abstract class DataField<T> {
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
             this.value = newValue;
+            this._valid = formControl.valid;
         });
         this._value.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
             formControl.setValue(newValue);
+            this._valid = formControl.valid;
         });
         this.updateFormControlState(formControl);
         this._initialized = true;
+        this._changed = false;
     }
 
     public updateFormControlState(formControl: FormControl): void {
