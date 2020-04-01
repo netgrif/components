@@ -36,8 +36,6 @@ export class PanelComponent implements OnInit, AfterViewInit {
     }
 
     expandPanel($event) {
-        $event.stopPropagation();
-        $event.preventDefault();
         this.clickedToPanel.emit($event);
         if (this.preventExpand) {
             this.matExpansionPanel.close();
