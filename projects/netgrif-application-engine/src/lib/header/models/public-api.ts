@@ -1,5 +1,4 @@
 export * from './column';
-export * from './data-field';
 export * from './preferred-headers';
 
 export * from './user.changes/header-change';

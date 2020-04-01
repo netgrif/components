@@ -19,7 +19,6 @@ import {TaskViewComponent} from './doc/task-view/task-view.component';
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workflows-view-example.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
-import {TaskResourceExampleComponent} from "./doc/task-resource-example/task-resource-example.component";
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -35,7 +34,6 @@ const routes: Routes = [
     {path: 'dialog', component: DialogExampleComponent},
     {path: 'tab-view', component: TabViewExampleComponent},
     {path: 'case', component: CaseResourceExampleComponent},
-    {path: 'task', component: TaskResourceExampleComponent},
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
     {path: 'toolbar', component: ToolbarExampleComponent},
     {path: 'task-view', component: TaskViewComponent},

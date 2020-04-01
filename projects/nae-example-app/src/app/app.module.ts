@@ -25,7 +25,6 @@ import {
     UserAssignComponent,
     UserModule,
     ImportNetComponent,
-    ResourceProvider,
     WorkflowsModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -52,16 +51,12 @@ import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.com
 import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TaskViewComponent} from './doc/task-view/task-view.component';
 import {TabbedCaseViewComponent} from './doc/tabbed-case-view/tabbed-case-view/tabbed-case-view.component';
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 import {TabbedTaskViewComponent} from './doc/tabbed-case-view/tabbed-task-view/tabbed-task-view.component';
 import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workflows-view-example.component';
-import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
-import {HttpClientModule} from '@angular/common/http';
-import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -96,7 +91,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         WorkflowsViewExampleComponent,
         ContentComponent,
         CaseResourceExampleComponent,
-        TaskResourceExampleComponent
     ],
     imports: [
         BrowserModule,
