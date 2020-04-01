@@ -30,7 +30,7 @@ import { WorkflowsPanelComponent } from './workflows-panel/workflows-panel.compo
         TaskPanelComponent,
         CasePanelComponent,
         TaskPanelContentComponent,
-        TaskListComponent
+        TaskListComponent,
         CasePanelComponent,
         WorkflowsPanelComponent
     ],

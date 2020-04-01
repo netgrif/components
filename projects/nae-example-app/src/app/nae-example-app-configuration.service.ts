@@ -130,10 +130,6 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                 'sk-SK',
                 'en-US'
             ],
-            views: {
-                layout: 'empty',
-                routes: {}
-            },
             defaults: {
                 log: {
                     level: 'INFO',
