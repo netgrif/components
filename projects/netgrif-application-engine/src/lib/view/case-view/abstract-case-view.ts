@@ -35,9 +35,9 @@ export abstract class AbstractCaseView {
         this._changeHeader$ = caseHeaderComponent.headerService.headerChange$;
         this._changeHeader$.subscribe((header: HeaderChange) => {
             console.log(header);
-            // TODO: JOZO fix Matove interfaces
-            // const params = new HttpParams().set(header ? header.type : '',
-            //     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
+// TODO: JOZO fix Matove interfaces
+// const params = new HttpParams().set(header ? header.type : '',
+//     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
             const params = new HttpParams().set('sort', 'asc');
             this._caseResourceService.searchCases({}, params)
                 .subscribe((newCases: Array<Case>) => {
