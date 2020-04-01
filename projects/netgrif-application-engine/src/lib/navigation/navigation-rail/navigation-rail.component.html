@@ -4,24 +4,24 @@
                  (mouseenter)="expandOnHover && open()"
                  (mouseleave)="expandOnHover && close()">
 
-        <div class="rail-collapsed" [@transform]="expanded ? 'expand' : 'collapse'">
+        <div [@transform]="expanded ? 'expand' : 'collapse'">
 
             <div fxLayout="column" fxLayoutAlign="start start" fxFlex>
                 <div fxLayout="row">
                     <mat-icon>account_circle</mat-icon>
-                    <span *ngIf="expanded" style="margin-left: 8px;">User</span>
+                    <span *ngIf="expanded" class="margin-left-default">User</span>
                 </div>
                 <div fxLayout="row">
                     <mat-icon>assignment</mat-icon>
-                    <span *ngIf="expanded" style="margin-left: 8px;">Report</span>
+                    <span *ngIf="expanded" class="margin-left-default">Report</span>
                 </div>
                 <div fxLayout="row">
                     <mat-icon>bug_report</mat-icon>
-                    <span *ngIf="expanded" style="margin-left: 8px;">Bugs</span>
+                    <span *ngIf="expanded" class="margin-left-default">Bugs</span>
                 </div>
                 <div fxLayout="row">
                     <mat-icon>fingerprint</mat-icon>
-                    <span *ngIf="expanded" style="margin-left: 8px;">Security</span>
+                    <span *ngIf="expanded" class="margin-left-default">Security</span>
                 </div>
             </div>
 
