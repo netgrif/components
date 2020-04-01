@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FileField, FileUploadModel} from '../../data-fields/file-field/models/file-field';
 import {FileFieldService} from '../../data-fields/file-field/services/file-field.service';
-import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token/side-menu-injection-token.module';
+import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token.module';
 
 export interface FilesUploadInjectedData {
     fileFieldService: FileFieldService;

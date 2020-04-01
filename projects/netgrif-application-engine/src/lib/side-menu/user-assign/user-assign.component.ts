@@ -3,7 +3,7 @@ import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {UserFieldService} from '../../data-fields/user-field/services/user-field.service';
-import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token/side-menu-injection-token.module';
+import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token.module';
 
 export interface UserAssignInjectedData {
     userFieldService: UserFieldService;

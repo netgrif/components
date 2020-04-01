@@ -11,7 +11,7 @@ import {SideMenuService} from '../services/side-menu.service';
 export class SideMenuContainerComponent implements AfterViewInit {
 
     @ViewChild('rightSideMenu') public sideMenu: MatSidenav;
-    public portalWrapper = new PortalWrapper();
+    public portalWrapper = new PortalWrapper(null);
 
 
     public constructor(private _sideMenuService: SideMenuService) { }

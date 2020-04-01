@@ -1,37 +1,28 @@
 import {Injectable, Injector, StaticProvider, TemplateRef, Type} from '@angular/core';
-import {MatDrawerToggleResult, MatSidenav} from '@angular/material';
+import {MatDrawerToggleResult} from '@angular/material';
 import {ComponentPortal, ComponentType, TemplatePortal} from '@angular/cdk/portal';
 import {from, Observable} from 'rxjs';
-import {PortalWrapper} from '../models/portal-wrapper';
-import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token/side-menu-injection-token.module';
-
-export enum SideMenuWidth {
-    SMALL = 'side-menu-width-small',
-    MEDIUM = 'side-menu-width-medium',
-    LARGE = 'side-menu-width-large'
-}
+import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token.module';
+import {SideMenuSize} from '../models/side-menu-size';
+import {SideMenuContainerComponent} from '../side-menu-container/side-menu-container.component';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SideMenuService {
 
-    private _sideMenu: MatSidenav;
-    private _portalWrapper: PortalWrapper;
+    private _sideMenuComponent: SideMenuContainerComponent;
+    private _opened: boolean;
 
-    constructor() {}
-
-    /**
-     * Setter for _sideMenu.
-     *
-     * @param sideMenu - sidemenu
-     */
-    public setSideMenu(sideMenu: MatSidenav) {
-        this._sideMenu = sideMenu;
+    constructor() {
+        this._opened = false;
     }
 
-    public setPortal(portal: PortalWrapper) {
-        this._portalWrapper = portal;
+    public registerSideMenu(menu: SideMenuContainerComponent): void {
+        if (this._sideMenuComponent) {
+            throw new Error('SideMenuContainerComponen has been already registered!');
+        }
+        this._sideMenuComponent = menu;
     }
 
     /**
@@ -40,8 +31,13 @@ export class SideMenuService {
      * @returns Observable<MatDrawerToggleResult>
      */
     public open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
-                   width: SideMenuWidth = SideMenuWidth.MEDIUM,
+                   width: SideMenuSize = SideMenuSize.MEDIUM,
                    injectionData?: any): Observable<MatDrawerToggleResult> {
+        if (this._opened) {
+            throw new Error('Side menu has been already opened with another conent');
+        }
+
+
         this._portalWrapper.width = width;
         this._createView(componentOrTemplateRef, injectionData);
         return from(this._sideMenu.open());
