@@ -5,7 +5,7 @@ export interface TabViewParams {
     defaultTaskView?: EmbeddedView;
 }
 
-interface EmbeddedView {
+export interface EmbeddedView {
     view?: {
         name: string,
         params?: NaeRoute['layout']['params']

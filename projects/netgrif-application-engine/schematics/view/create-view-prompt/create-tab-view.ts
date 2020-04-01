@@ -1,16 +1,10 @@
 import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {
-    commitChangesToFile,
-    createFilesFromTemplates,
-    createRelativePath,
-    getAppModule,
-    getProjectInfo
-} from '../../utility-functions';
+import {commitChangesToFile, createFilesFromTemplates, createRelativePath, getAppModule, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
-import {TabViewParams} from './classes/paramsInterfaces';
+import {EmbeddedView, TabViewParams} from './classes/paramsInterfaces';
 import {strings} from '@angular-devkit/core';
-import {addRouteToRoutesJson, addRoutingModuleImport, Route, updateAppModule} from '../view-utility-functions';
+import {addRouteToRoutesJson, addRoutingModuleImport, updateAppModule} from '../view-utility-functions';
 import {ImportToAdd} from './classes/ImportToAdd';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {TabContentTemplate} from './classes/TabContentTemplate';
@@ -33,25 +27,14 @@ export function createTabView(
     const projectInfo = getProjectInfo(tree);
     const className = new ClassName(args.path as string, 'TabView');
     const params = args.layoutParams as TabViewParams;
-    // const injectedData: any = undefined;  // TODO: Kubo
 
-    const tabViews: TabViews = {
-        rules: [],
-        tabTemplates: [],
-        tabViewImports: [],
-        entryComponentsImports: [],
-    };
+    const tabViews = newTabViews();
+    let viewCounterStart = 0;
 
-    if (params.defaultTaskView) {
-        pushTabViews(tabViews, processTabViewContents(
-            tree,
-            params,
-            args.path as string,
-            className,
-            createViewFunctionRef
-        ));
-
-
+    if (!!params.defaultTaskView) {
+        processEmbeddedView(params.defaultTaskView, tabViews, className, args.path as string,
+                            viewCounterStart, tree, createViewFunctionRef);
+        viewCounterStart++;
     }
 
     pushTabViews(tabViews, processTabViewContents(
@@ -59,8 +42,22 @@ export function createTabView(
         params,
         args.path as string,
         className,
-        createViewFunctionRef
+        createViewFunctionRef,
+        viewCounterStart
     ));
+
+    if (!!params.defaultTaskView) {
+        for (let i = 1; i < tabViews.tabTemplates.length; i++) {
+            if (tabViews.tabTemplates[i].injectedObject !== undefined) {
+                // tabbed case view
+                const injectedData = tabViews.tabTemplates[i].injectedObject;
+                injectedData.tabViewComponent = tabViews.tabViewImports[0].className;
+                injectedData.tabViewOrder = params.defaultTaskView.order;
+            }
+        }
+        // we don't want to generate the default tab view as a tab
+        tabViews.tabTemplates.splice(0, 1);
+    }
 
     const rules = tabViews.rules;
 
@@ -95,80 +92,119 @@ export function createTabView(
 function processTabViewContents(
     tree: Tree,
     tabViewParams: TabViewParams,
-    tabViewPath: string,
-    tabClassName: ClassName,
-    createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
+    hostViewPath: string,
+    hostClassName: ClassName,
+    createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
+    viewCounterStartValue: number = 0
 ): TabViews {
 
-    const result: TabViews = {
-        rules: [],
-        tabTemplates: [],
-        tabViewImports: [],
-        entryComponentsImports: []
-    };
+    const result = newTabViews();
 
     if (tabViewParams.tabs === undefined) {
         return result;
     }
 
-    let viewCounter = 0;
+    let viewCounter = viewCounterStartValue;
     tabViewParams.tabs.forEach(tab => {
-        let tabTemplate: TabContentTemplate;
-        if (tab.component !== undefined) {
-            if (tab.component.class === undefined || tab.component.classPath === undefined) {
-                throw new SchematicsException('TabView content Component must define both a \'class\' and a \'classPath\' attribute');
-            }
-
-            if (!tab.component.classPath.startsWith('./')) {
-                tab.component.classPath = `./${tab.component.classPath}`;
-            }
-
-            result.tabViewImports.push(
-                new ImportToAdd(tab.component.class, createRelativePath(tabClassName.fileImportPath, tab.component.classPath))
-            );
-            result.entryComponentsImports.push(new ImportToAdd(tab.component.class, tab.component.classPath));
-
-            tabTemplate = new TabContentTemplate(tab.component.class);
-        } else if (tab.view !== undefined) {
-            if (tab.view.name === undefined) {
-                throw new SchematicsException('TabView content View must define a \'name\' attribute');
-            }
-            const createViewArguments = {
-                path: `${tabViewPath}/content/${viewCounter}`,
-                viewType: tab.view.name,
-                layoutParams: tab.view.params,
-                // this attribute is required in the interface, but the method doesn't use it
-                _routesMap: null as unknown as Map<string, Route>
-            };
-
-            result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
-
-            const newComponentName = new ClassName(`${tabViewPath}/content/${viewCounter}`, 'TabView');
-
-            tabTemplate = new TabContentTemplate(newComponentName.name);
-            result.tabViewImports.push(
-                new ImportToAdd(newComponentName.name, createRelativePath(tabClassName.fileImportPath, newComponentName.fileImportPath))
-            );
-            result.entryComponentsImports.push(new ImportToAdd(newComponentName.name, newComponentName.fileImportPath));
-
-            viewCounter++;
-        } else {
-            throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
-        }
-
-        if (tab.canBeDeleted !== undefined) {
-            tabTemplate.canBeDeleted = tab.canBeDeleted;
-        }
-        if (tab.label !== undefined) {
-            tabTemplate.icon = tab.label.icon as string;
-            tabTemplate.text = tab.label.text as string;
-        }
-        tabTemplate.order = tab.order as number;
-
-        result.tabTemplates.push(tabTemplate);
+        processEmbeddedView(tab, result, hostClassName, hostViewPath, viewCounter, tree, createViewFunctionRef);
+        viewCounter++;
     });
 
     return result;
+}
+
+function processEmbeddedView(embeddedView: EmbeddedView,
+                             result: TabViews,
+                             hostClassName: ClassName,
+                             hostViewPath: string,
+                             viewNumber: number,
+                             tree: Tree,
+                             createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
+): void {
+    let tabTemplate: TabContentTemplate;
+    if (embeddedView.component !== undefined) {
+        tabTemplate = processEmbeddedComponent(embeddedView, result, hostClassName);
+    } else if (embeddedView.view !== undefined) {
+        tabTemplate = processEmbeddedNewView(embeddedView,
+                                             result,
+                                             hostClassName,
+                                             `${hostViewPath}/content/${viewNumber}`,
+                                             tree,
+                                             createViewFunctionRef);
+    } else {
+        throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
+    }
+
+    if (embeddedView.canBeDeleted !== undefined) {
+        tabTemplate.canBeDeleted = embeddedView.canBeDeleted;
+    }
+    if (embeddedView.label !== undefined) {
+        tabTemplate.icon = embeddedView.label.icon as string;
+        tabTemplate.text = embeddedView.label.text as string;
+    }
+    tabTemplate.order = embeddedView.order as number;
+
+    result.tabTemplates.push(tabTemplate);
+}
+
+function processEmbeddedComponent(embeddedComponent: EmbeddedView, result: TabViews, hostClassName: ClassName): TabContentTemplate {
+    if (!embeddedComponent.component) {
+        throw new SchematicsException('processEmbeddedComponent can\'t be called with EmbeddedView object' +
+            ' that doesn\'t contain the \'component\' attribute!');
+    }
+
+    if (embeddedComponent.component.class === undefined || embeddedComponent.component.classPath === undefined) {
+        throw new SchematicsException('TabView content Component must define both a \'class\' and a \'classPath\' attribute');
+    }
+
+    if (!embeddedComponent.component.classPath.startsWith('./')) {
+        embeddedComponent.component.classPath = `./${embeddedComponent.component.classPath}`;
+    }
+
+    result.tabViewImports.push(new ImportToAdd(embeddedComponent.component.class,
+                                               createRelativePath(hostClassName.fileImportPath, embeddedComponent.component.classPath))
+    );
+    result.entryComponentsImports.push(new ImportToAdd(embeddedComponent.component.class, embeddedComponent.component.classPath));
+
+    return new TabContentTemplate(embeddedComponent.component.class);
+}
+
+function processEmbeddedNewView(embeddedView: EmbeddedView,
+                                result: TabViews,
+                                hostClassName: ClassName,
+                                newViewPath: string,
+                                tree: Tree,
+                                createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
+): TabContentTemplate {
+    if (!embeddedView.view) {
+        throw new SchematicsException('processEmbeddedNewView can\'t be called with EmbeddedView object' +
+            ' that doesn\'t contain the \'view\' attribute!');
+    }
+
+    if (embeddedView.view.name === undefined) {
+        throw new SchematicsException('TabView content View must define a \'name\' attribute');
+    }
+
+    if (!embeddedView.view.params) {
+        embeddedView.view.params = {};
+    }
+
+    const createViewArguments = {
+        path: newViewPath,
+        viewType: embeddedView.view.name,
+        layoutParams: Object.assign(embeddedView.view.params, {isTabbed: true})
+    };
+
+    result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
+
+    const newComponentName = new ClassName(newViewPath, 'TabView');
+
+    result.tabViewImports.push(
+        new ImportToAdd(newComponentName.name, createRelativePath(hostClassName.fileImportPath, newComponentName.fileImportPath))
+    );
+    result.entryComponentsImports.push(new ImportToAdd(newComponentName.name, newComponentName.fileImportPath));
+
+    return new TabContentTemplate(newComponentName.name, createViewArguments.viewType === 'caseView');
 }
 
 function pushTabViews(destination: TabViews, source: TabViews): TabViews {
@@ -178,4 +214,13 @@ function pushTabViews(destination: TabViews, source: TabViews): TabViews {
     destination.tabTemplates.push(...source.tabTemplates);
     destination.rules.push(...source.rules);
     return destination;
+}
+
+function newTabViews(): TabViews {
+    return {
+        rules: [],
+        tabTemplates: [],
+        tabViewImports: [],
+        entryComponentsImports: []
+    };
 }

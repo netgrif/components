@@ -17,7 +17,11 @@ export class <%= classify(path) %>TabViewComponent {
             },<% } %>
             canBeDeleted: <%= tab.canBeDeleted %>,
             tabContentComponent: <%= tab.tabContentComponent %>,<% if (tab.order !== undefined) { %>
-            order: <%= tab.order %><% } %>
+            order: <%= tab.order %>,<% } %><% if (!!tab.injectedObject) { %>
+            injectedObject: {
+                tabViewComponent: <%= tab.injectedObject.tabViewComponent %>,
+                tabViewOrder: <%= tab.injectedObject.tabViewOrder %>
+            }<% } %>
         },<% } %>
     ];
 

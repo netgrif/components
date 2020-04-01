@@ -30,6 +30,7 @@ export abstract class TabbedCaseView extends AbstractCaseView {
             canBeDeleted: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
             injectedObject: {
+                // TODO Filters
                 baseFilter: `{"case":"${clickedCase.stringId}"}`
             },
             order: this._injectedTabData.tabViewOrder
