@@ -3,7 +3,7 @@ export interface ImmediateData {
     /**
      * TODO Doesn't actually exist
      */
-    title: string;
+    title: any;
     type: string;
     value?: any;
 }

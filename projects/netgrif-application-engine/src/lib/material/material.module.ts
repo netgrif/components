@@ -12,13 +12,14 @@ import {
     MatDatepickerModule,
     MatDialogModule,
     MatDividerModule,
-    MatExpansionModule, MatFormFieldModule,
+    MatExpansionModule,
+    MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatNativeDateModule, MatOptionModule,
+    MatOptionModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
@@ -46,6 +47,7 @@ import {PortalModule} from '@angular/cdk/portal';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
 
 
 @NgModule({
@@ -79,7 +81,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
         MatInputModule,
         MatListModule,
         MatMenuModule,
-        MatNativeDateModule,
+        MatMomentDateModule,
         MatPaginatorModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,

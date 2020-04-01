@@ -29,9 +29,9 @@ export class MultichoiceField  extends DataField<Array<string>> {
 
     protected valueEquality(a: Array<string>, b: Array<string>): boolean {
         // we assume that multichoice options are always given in the same order
-        return (a === undefined && b === undefined) || (
-            a !== undefined
-            && b !== undefined
+        return (!a && !b) || (
+            !!a
+            && !!b
             && a.length === b.length
             && a.every( (element, index) => element === b[index])
         );

@@ -58,9 +58,9 @@ export class FileField extends DataField<Array<File>> {
 
     protected valueEquality(a: Array<File>, b: Array<File>): boolean {
         // we assume that files are always given in the same order
-        return (a === undefined && b === undefined) || (
-            a !== undefined
-            && b !== undefined
+        return (!a && !b) || (
+            !!a
+            && !!b
             && a.length === b.length
             && a.every( (element, index) => element.name === b[index].name)
         );

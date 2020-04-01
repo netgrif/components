@@ -20,8 +20,8 @@ export class SearchModeComponent implements OnInit {
         this.headers = this.headerService.headers;
     }
 
-    public onUserKeyupSearch(columnId: string, searchedQuery: any) {
-        this.headers = this.headerService.onUserKeyupSearch(columnId, searchedQuery);
+    public onUserSearch(columnId: string, searchedQuery: any) {
+        this.headers = this.headerService.onUserSearch(columnId, searchedQuery);
     }
 
     public getIterableHeaders() {

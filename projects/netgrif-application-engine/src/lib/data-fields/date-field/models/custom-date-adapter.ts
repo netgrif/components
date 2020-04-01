@@ -1,6 +1,8 @@
-import { NativeDateAdapter } from '@angular/material';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {Injectable} from '@angular/core';
 
-export class CustomDateAdapter extends NativeDateAdapter {
+@Injectable()
+export class CustomDateAdapter extends MomentDateAdapter {
     getFirstDayOfWeek(): number {
         return 1;
     }

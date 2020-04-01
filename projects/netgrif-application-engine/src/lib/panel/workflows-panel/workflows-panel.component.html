@@ -1,0 +1,21 @@
+<nae-app-panel [panelHeader]="casePanelHeader" [panelContent]="taskPanelContent" (getExpansionPanelRef)="setPanelRef($event)">
+    <ng-template #casePanelHeader>
+        <div fxLayoutAlign=" center" fxLayout="row" fxFlex="90">
+            <span fxFlex >{{workflowPanelDefinition.column0}}</span>
+            <span fxFlex >{{workflowPanelDefinition.column1}}</span>
+            <span fxFlex fxHide.lt-sm>{{workflowPanelDefinition.column2}}</span>
+            <span fxFlex fxHide.lt-md>{{workflowPanelDefinition.column3}}</span>
+            <span fxFlex fxHide.lt-lg>{{workflowPanelDefinition.column4}}</span>
+        </div>
+    </ng-template>
+    <ng-template #taskPanelContent>
+        <div class="panel-main-content" fxLayout="column">
+            <div class="workflow-panel-body" fxFlex="80">
+                <ng-content></ng-content>
+            </div>
+            <div class="workflow-panel-footer" fxLayout="row" fxFlex="20" fxLayoutAlign="end center">
+                <button (click)="panelRef.expanded = false;" mat-button>COLLAPSE</button>
+            </div>
+        </div>
+    </ng-template>
+</nae-app-panel>

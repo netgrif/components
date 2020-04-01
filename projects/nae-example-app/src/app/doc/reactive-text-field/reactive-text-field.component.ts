@@ -32,6 +32,7 @@ import {
 } from '@netgrif/application-engine';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
+import moment from 'moment';
 
 @Component({
     selector: 'nae-app-reactive-text-field',
@@ -71,11 +72,11 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     // DATE FIELD
     @ViewChild('dateFieldComponent') naeDateField: DateFieldComponent;
-    dateField = new DateField('dateFieldId', 'Reactive date field', new Date('2020-03-09'), {visible: true, editable: true});
+    dateField = new DateField('dateFieldId', 'Reactive date field', moment('2020-03-09'), {visible: true, editable: true});
 
     // DATE TIME FIELD
     @ViewChild('dateTimeFieldComponent') naeDateTimeField: DateTimeFieldComponent;
-    dateTimeField = new DateTimeField('dateTimeFieldId', 'Reactive date time field', new Date('2020-03-09'),
+    dateTimeField = new DateTimeField('dateTimeFieldId', 'Reactive date time field', moment('2020-03-09'),
         {visible: true, editable: true});
 
     // ENUM SELECT FIELD

@@ -32,6 +32,8 @@ import {FileDownloadService} from './file-field/services/download/file-download.
 import {ReactiveFormsModule} from '@angular/forms';
 import {DateAdapter} from '@angular/material';
 import {CustomDateAdapter} from './date-field/models/custom-date-adapter';
+import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
+import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 
 @NgModule({
     declarations: [
@@ -75,7 +77,9 @@ import {CustomDateAdapter} from './date-field/models/custom-date-adapter';
         AngularResizedEventModule,
         HttpClientModule,
         SideMenuModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgxMatDatetimePickerModule,
+        NgxMatMomentModule,
     ],
     providers: [
         FileUploadService,

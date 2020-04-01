@@ -8,62 +8,6 @@ export class CaseHeaderService extends AbstractHeaderService {
         super('case');
         this._headers = new Headers();
         // TODO simulated resource remove in future
-        this.petriNetReferences.push({
-            author: {
-                email: 'example email',
-                fullName: 'Jozef Machac'
-            },
-            createdDate: new Date(),
-            defaultCaseName: 'Som default case name',
-            identifier: 'mortgage',
-            immediateData: [{
-                stringId: 'specialnemeno',
-                title: 'Mortage prve poinne',
-                type: 'file'
-            }, {
-                stringId: 'specialnemeno2',
-                title: 'Mortage prve poinne',
-                type: 'text'
-            }, {
-                stringId: 'specialnemeno3',
-                title: 'Typ',
-                type: 'enumeration'
-            }],
-            initials: 'QQQ',
-            stringId: 'stringId123231231',
-            title: 'Financial data',
-            version: '1.0.0'
-        }, {
-            author: {
-                email: 'example email',
-                fullName: 'Martin Miklovic'
-            },
-            createdDate: new Date(),
-            defaultCaseName: 'Som default case name',
-            identifier: 'address',
-            immediateData: [{
-                stringId: 'zoznam',
-                title: 'Zoznam vozidiel',
-                type: 'file'
-            }, {
-                stringId: 'fileName',
-                title: 'Názov súboru',
-                type: 'text'
-            }, {
-                stringId: 'typ',
-                title: 'Typ',
-                type: 'enumeration'
-            }, {
-                stringId: 'IDSet',
-                title: 'ID set',
-                type: 'enumeration'
-            }],
-            initials: 'RRR',
-            stringId: 'stringId123231231',
-            title: 'Financial data',
-            version: '1.0.0'
-        });
-        // TODO simulated resource remove in future
         this._headers.selected = {
             column0: {
                 type: 'meta',
@@ -71,7 +15,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'title',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column0'
+                columnId: 'column0',
+                fieldType: 'text'
             },
             column1: {
                 type: 'meta',
@@ -79,7 +24,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'author',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column1'
+                columnId: 'column1',
+                fieldType: 'text'
             },
             column2: {
                 type: 'immediate',
@@ -87,7 +33,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'Zoznam vozidiel',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column2'
+                columnId: 'column2',
+                fieldType: 'enumeration'
             },
             column3: {
                 type: 'immediate',
@@ -95,7 +42,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'Názov súboru',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column3'
+                columnId: 'column3',
+                fieldType: 'text'
             },
             column4: {
                 type: 'immediate',
@@ -103,7 +51,8 @@ export class CaseHeaderService extends AbstractHeaderService {
                 title: 'Mortage prve poinne',
                 sortMode: '',
                 searchQuery: '',
-                columnId: 'column4'
+                columnId: 'column4',
+                fieldType: 'text'
             }
         };
         this.setFieldsGroupData(this.petriNetReferences);

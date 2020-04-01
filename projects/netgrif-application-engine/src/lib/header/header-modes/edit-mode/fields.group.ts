@@ -9,20 +9,25 @@ export const fieldsGroup: Array<FieldsGroup> = [
         type: 'META DATA',
         fields: [
             {
+                stringId: 'initials',
+                title: 'initials',
+                type: 'text'
+            },
+            {
                 stringId: 'title',
                 title: 'title',
                 type: 'text'
             }, {
                 stringId: 'createdDate',
                 title: 'create date',
-                type: 'text'
+                type: 'date'
             }, {
                 stringId: 'author',
                 title: 'author',
                 type: 'text'
             }, {
-                stringId: 'visual ID',
-                title: 'visual-id',
+                stringId: 'version',
+                title: 'version',
                 type: 'text'
             }]
     },
