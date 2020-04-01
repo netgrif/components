@@ -8,7 +8,7 @@ export class DateTimeField extends DataField<Moment> {
 
     constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, public validations?: any, public materialAppearance = MaterialAppearance.STANDARD) {
-        super(stringId, title, value, behavior, placeholder, description);
+        super(stringId, title, value, behavior, placeholder, description, layout);
     }
 
     protected valueEquality(a: Moment, b: Moment): boolean {

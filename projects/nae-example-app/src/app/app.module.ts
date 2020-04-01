@@ -19,10 +19,10 @@ import {
     SideMenuModule,
     SimpleDialogComponent,
     TabsModule,
-    ResourceProvider,
     ToolbarModule,
     CardModule,
     UserAssignComponent,
+    ResourceProvider,
     UserModule,
     ImportNetComponent,
     WorkflowsModule,
@@ -123,7 +123,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         }),
         MatCardModule,
         CardModule,
-        WorkflowsModule
+        WorkflowsModule,
     ],
     entryComponents: [
         NewCaseComponent,

@@ -1,4 +1,4 @@
-<nae-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
+<nae-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader" (clickedToPanel)="clickPanel($event)"
                (stopLoading)="loading=false" (getExpansionPanelRef)="setPanelRef($event)">
     <ng-template #taskPanelHeader>
             <div fxLayoutAlign=" center" fxLayout="row" fxFlex="100">
