@@ -6,7 +6,9 @@ describe('TaskPanelContentService', () => {
   let service: TaskPanelContentService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+        providers: [TaskPanelContentService]
+    });
     service = TestBed.inject(TaskPanelContentService);
   });
 

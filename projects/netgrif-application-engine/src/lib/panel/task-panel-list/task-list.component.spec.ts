@@ -21,7 +21,7 @@ describe('TaskListComponent', () => {
                 NoopAnimationsModule,
                 CommonModule
             ],
-            declarations: [TaskListComponent, TestWrapperComponent]
+            declarations: [TestWrapperComponent]
         })
             .compileComponents();
 

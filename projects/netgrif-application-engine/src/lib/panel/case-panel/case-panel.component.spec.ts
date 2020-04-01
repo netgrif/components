@@ -8,6 +8,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
+import {of} from 'rxjs';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -38,8 +39,9 @@ describe('CasePanelComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-case-panel [featuredFields]="caseDef"> </nae-case-panel>'
+    template: '<nae-case-panel [featuredFields$]="featuredFields" [case_]="case_"> </nae-case-panel>'
 })
 class TestWrapperComponent {
-    caseDef =  {featuredFields : [], panelIcon: 'home', panelIconField: 'home'};
+    featuredFields =  of([]);
+    case_ = {};
 }
