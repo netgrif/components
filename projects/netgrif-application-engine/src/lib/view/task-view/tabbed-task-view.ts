@@ -12,6 +12,6 @@ export interface InjectedTabbedTaskViewData extends InjectedTabData {
 export abstract class TabbedTaskView extends AbstractTaskView {
     protected constructor(taskViewService: TaskViewService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTaskViewData) {
-        super(taskViewService, _injectedTabData.baseFilter);
+        super(taskViewService, !!_injectedTabData.baseFilter ? _injectedTabData.baseFilter : '{}');
     }
 }

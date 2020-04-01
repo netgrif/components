@@ -5,6 +5,7 @@ import {Inject, Type} from '@angular/core';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token.module';
 import {InjectedTabData} from '../../tabs/interfaces';
 import {Case} from '../../resources/interface/case';
+import {LoggerService} from '../../logger/services/logger.service';
 
 export interface InjectedTabbedCaseViewData extends InjectedTabData {
     tabViewComponent: Type<any>;
@@ -13,27 +14,37 @@ export interface InjectedTabbedCaseViewData extends InjectedTabData {
 
 export abstract class TabbedCaseView extends AbstractCaseView {
 
-    protected constructor(_sideMenuService: SideMenuService,
-                          _caseResourceService: CaseResourceService,
+    private readonly _correctlyInjected;
+
+    protected constructor(sideMenuService: SideMenuService,
+                          caseResourceService: CaseResourceService,
+                          protected _loggerService: LoggerService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
-                          _baseFilter: string = '{}',
+                          baseFilter: string = '{}',
                           protected _autoswitchToTaskTab: boolean = true) {
-        super(_sideMenuService, _caseResourceService, _baseFilter);
+
+        super(sideMenuService, caseResourceService, baseFilter);
+        this._correctlyInjected = !!this._injectedTabData.tabViewComponent && !!this._injectedTabData.tabViewOrder;
+        if (!this._correctlyInjected) {
+            this._loggerService.warn('TabbedCaseView must inject a filled object of type InjectedTabbedCaseViewData to work properly!');
+        }
     }
 
     public handleCaseClick(clickedCase: Case): void {
-        this._injectedTabData.tabGroupRef.openTab({
-            label: {
-                text: clickedCase.title,
-                icon: clickedCase.icon ? clickedCase.icon : 'check_box'
-            },
-            canBeDeleted: true,
-            tabContentComponent: this._injectedTabData.tabViewComponent,
-            injectedObject: {
-                // TODO Filters
-                baseFilter: `{"case":"${clickedCase.stringId}"}`
-            },
-            order: this._injectedTabData.tabViewOrder
-        }, this._autoswitchToTaskTab);
+        if (this._correctlyInjected) {
+            this._injectedTabData.tabGroupRef.openTab({
+                label: {
+                    text: clickedCase.title,
+                    icon: clickedCase.icon ? clickedCase.icon : 'check_box'
+                },
+                canBeDeleted: true,
+                tabContentComponent: this._injectedTabData.tabViewComponent,
+                injectedObject: {
+                    // TODO Filters
+                    baseFilter: `{"case":"${clickedCase.stringId}"}`
+                },
+                order: this._injectedTabData.tabViewOrder
+            }, this._autoswitchToTaskTab);
+        }
     }
 }

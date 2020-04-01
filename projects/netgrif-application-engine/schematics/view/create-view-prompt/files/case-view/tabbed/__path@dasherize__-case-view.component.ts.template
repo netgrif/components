@@ -6,6 +6,7 @@ import {
     InjectedTabbedCaseViewData,
     NAE_TAB_DATA,
     TabbedCaseView,
+    LoggerService,
 } from '@netgrif/application-engine';
 
 @Component({
@@ -19,8 +20,9 @@ export class <%= classify(path) %>CaseViewComponent extends TabbedCaseView imple
 
     constructor(sideMenuService: SideMenuService,
                 caseResourceService: CaseResourceService,
+                loggerService: LoggerService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(sideMenuService, caseResourceService, injectedTabData, '{}');
+        super(sideMenuService, caseResourceService, loggerService, injectedTabData, '{}');
     }
 
     ngAfterViewInit(): void {

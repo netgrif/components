@@ -6,6 +6,7 @@ import {
     InjectedTabbedCaseViewData,
     NAE_TAB_DATA,
     TabbedCaseView,
+    LoggerService,
 } from '@netgrif/application-engine';
 
 @Component({
@@ -17,10 +18,11 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    constructor(_sideMenuService: SideMenuService,
-                _caseResourceService: CaseResourceService,
-                @Inject(NAE_TAB_DATA) _injectedTabData: InjectedTabbedCaseViewData) {
-        super(_sideMenuService, _caseResourceService, _injectedTabData, '{}');
+    constructor(sideMenuService: SideMenuService,
+                caseResourceService: CaseResourceService,
+                loggerService: LoggerService,
+                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
+        super(sideMenuService, caseResourceService, loggerService, injectedTabData, '{}');
     }
 
     ngAfterViewInit(): void {
