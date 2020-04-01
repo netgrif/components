@@ -185,14 +185,11 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
         throw new SchematicsException('TabView content View must define a \'name\' attribute');
     }
 
-    if (!embeddedView.view.params) {
-        embeddedView.view.params = {};
-    }
-
     const createViewArguments = {
         path: newViewPath,
         viewType: embeddedView.view.name,
-        layoutParams: Object.assign(embeddedView.view.params, {isTabbed: true})
+        layoutParams: embeddedView.view.params,
+        isTabbed: true
     };
 
     result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
