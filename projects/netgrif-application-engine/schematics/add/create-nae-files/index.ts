@@ -10,14 +10,14 @@ import {
     getAppModule,
     getNaeConfiguration,
     getProjectInfo
-} from '../../utilityFunctions';
+} from '../../utility-functions';
 import {addImportToModule} from '@schematics/angular/utility/ast-utils';
 import {
     addAllRoutesToMap,
     constructRoutePath,
     getRoutesJsonContent,
     Route
-} from '../../view/viewUtilityFunctions';
+} from '../../view/view-utility-functions';
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
 
 export function createNaeFiles(): Rule {

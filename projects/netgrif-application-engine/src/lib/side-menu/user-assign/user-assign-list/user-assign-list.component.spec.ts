@@ -43,10 +43,6 @@ describe('UserAssignListComponent', () => {
 })
 class TestWrapperComponent {
     users = [
-        new UserValue(
-            'Fero',
-            'Galamboši',
-            'ferinko123@gmail.com'
-        )
+        new UserValue('', '', '', '')
     ];
 }

@@ -4,7 +4,8 @@ export class TabContentTemplate {
     public text: string;
     public canBeDeleted = true;
     public order: number;
+    public injectedObject: any;
 
-    constructor(public tabContentComponent: string) { }
+    constructor(public tabContentComponent: string) {}
 
 }

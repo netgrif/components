@@ -11,11 +11,12 @@ export interface Case {
     title: string;
     color: string;
     creationDate: DateTimeFormat;
-    immediateData: ImmediateData;
+    immediateData: Array<ImmediateData>;
     author: Author;
     resetArcTokens: object;
     stringId: string;
     petriNetId: string;
+    icon: string;
 }
 
 

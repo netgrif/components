@@ -4,6 +4,7 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {SideMenuService} from '../services/side-menu.service';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {SnackBarService} from '../../snack-bar/snack-bar.service';
 
 @Component({
     selector: 'nae-new-case',
@@ -23,7 +24,10 @@ export class NewCaseComponent implements OnInit, OnChanges {
     colors: string[] = ['Black', 'Blue', 'Red', 'Yellow'];
     filteredOptions: Observable<string[]>;
 
-    constructor(private _formBuilder: FormBuilder, private sideMenuService: SideMenuService) {
+    constructor(private _formBuilder: FormBuilder,
+                private sideMenuService: SideMenuService,
+                // private _caseResourceService: CaseResourceService,
+                private _snackBarService: SnackBarService) {
     }
 
     ngOnInit() {
@@ -52,7 +56,18 @@ export class NewCaseComponent implements OnInit, OnChanges {
     }
 
     public createNewCase(): void {
-        // TODO: create new case
+        // TODO: inject resource service - JOZO
+        console.log(this.titleFormGroup.getRawValue());
+        const newCase = {
+            title: this.titleFormGroup.getRawValue(),
+            color: this.colorFormGroup.value,
+            netId: this.processFormGroup.getRawValue()
+        };
+        // this._caseResourceService.createCase(newCase)
+        //     .subscribe(
+        //         caze => this._snackBarService.openInfoSnackBar('Successful create new case'),
+        //         error => this._snackBarService.openErrorSnackBar(error)
+        //     );
 
         this.sideMenuService.close();
     }

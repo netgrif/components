@@ -20,10 +20,12 @@ import {
     SimpleDialogComponent,
     TabsModule,
     ToolbarModule,
+    CardModule,
     UserAssignComponent,
+    ResourceProvider,
     UserModule,
     ImportNetComponent,
-    ResourceProvider, WorkflowsModule
+    WorkflowsModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -32,11 +34,11 @@ import {NaeExampleAppConfigurationService} from './nae-example-app-configuration
 import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
-import {MatIconModule} from '@angular/material';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {MatCardModule, MatIconModule} from '@angular/material';
 import {CaseSidemenuExampleComponent} from './doc/case-sidemenu-example/case-sidemenu-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import {UserAssignSidemenuExampleComponent} from './doc/user-assign-sidemenu-example/user-assign-sidemenu-example.component';
-import {PanelExampleComponent} from './doc/panel-example/panel-example.component';
 import {CasePanelExampleComponent} from './doc/case-panel-example/case-panel-example.component';
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
@@ -46,13 +48,15 @@ import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-tex
 import {CaseHeaderExampleComponent} from './doc/case-header-example/case-header-example.component';
 import {TaskHeaderExampleComponent} from './doc/task-header-example/task-header-example.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
-import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workflows-view-example.component';
+import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
-import {HttpClientModule} from '@angular/common/http';
-import {TaskResourceExampleComponent} from './doc/task-resource-example/task-resource-example.component';
+import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {TaskViewComponent} from './doc/task-view/task-view.component';
+import {TabbedCaseViewComponent} from './doc/tabbed-case-view/tabbed-case-view/tabbed-case-view.component';
+import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
+import {TabbedTaskViewComponent} from './doc/tabbed-case-view/tabbed-task-view/tabbed-task-view.component';
+import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workflows-view-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -68,7 +72,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         CaseSidemenuExampleComponent,
         SidemenuExampleComponent,
         UserAssignSidemenuExampleComponent,
-        PanelExampleComponent,
         CasePanelExampleComponent,
         SnackBarExampleComponent,
         DialogExampleComponent,
@@ -77,14 +80,19 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveTextFieldComponent,
         CaseHeaderExampleComponent,
         TaskHeaderExampleComponent,
+        ReactiveTextFieldComponent,
         ToolbarExampleComponent,
+        CaseResourceExampleComponent,
+        TaskViewComponent,
+        CaseViewComponent,
+        TabbedCaseViewComponent,
+        TabbedViewsExampleComponent,
+        TabbedTaskViewComponent,
         WorkflowsViewExampleComponent,
         ContentComponent,
         CaseResourceExampleComponent,
-        TaskResourceExampleComponent
     ],
     imports: [
-        HttpClientModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -113,7 +121,9 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        WorkflowsModule
+        MatCardModule,
+        CardModule,
+        WorkflowsModule,
     ],
     entryComponents: [
         NewCaseComponent,
@@ -122,14 +132,18 @@ export function HttpLoaderFactory(http: HttpClient) {
         QuestionDialogComponent,
         QuestionDialogWithAnswerComponent,
         ContentComponent,
-        ImportNetComponent
+        TabbedCaseViewComponent,
+        TabbedTaskViewComponent,
+        ImportNetComponent,
     ],
-    providers: [
-        {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
+    providers: [{
+            provide: ConfigurationService,
+            useClass: NaeExampleAppConfigurationService
+        },
+        ResourceProvider,
         TranslateService,
         TranslatePipe,
         TranslateStore,
-        ResourceProvider
     ],
     bootstrap: [AppComponent]
 })

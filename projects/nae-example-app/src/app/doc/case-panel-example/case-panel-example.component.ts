@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CasePanelDefinition} from '@netgrif/application-engine';
+import {Case} from 'netgrif-application-engine';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
     selector: 'nae-app-case-panel-example',
@@ -9,10 +10,29 @@ import {CasePanelDefinition} from '@netgrif/application-engine';
 export class CasePanelExampleComponent implements OnInit {
     readonly TITLE = 'Case panel';
     readonly DESCRIPTION = 'Ukážka použitia case panelu...';
-    casePanelDef: CasePanelDefinition;
+    case_: Case;
+    featuredFields$: BehaviorSubject<Array<string>>;
 
     constructor() {
-        this.casePanelDef = {featuredFields : [], panelIcon: 'home', panelIconField: 'home'};
+        this.case_ = {
+            lastModified: null,
+            visualId: null,
+            petriNetObjectId: null,
+            processIdentifier: null,
+            title: 'Case title',
+            icon: 'nature',
+            immediateData: [
+                {stringId: 'a', title: '', type: '', value: 5},
+                {stringId: 'b', title: '', type: '', value: 'Text'}
+            ],
+            color: 'purple',
+            creationDate: null,
+            author: null,
+            resetArcTokens: null,
+            stringId: null,
+            petriNetId: null
+        };
+        this.featuredFields$ = new BehaviorSubject<Array<string>>(['a', 'b']);
     }
 
     ngOnInit(): void {

@@ -3,9 +3,9 @@ import {
     schematic,
     Tree
 } from '@angular-devkit/schematics';
-import {getNaeConfiguration} from '../../utilityFunctions';
+import {getNaeConfiguration} from '../../utility-functions';
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
-import {constructRoutePath, createAppRoutesMap, Route} from '../viewUtilityFunctions';
+import {constructRoutePath, createAppRoutesMap, Route} from '../view-utility-functions';
 import {CreateViewArguments} from '../create-view-prompt/schema';
 
 export function createView(): Rule {
@@ -33,8 +33,8 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
         if (!existingRoutesMap.has(routePath)) {
             return {
                 path: routePath,
-                viewType: route.view.name,
-                layoutParams: route.view.params
+                viewType: route.layout.name,
+                layoutParams: route.layout.params
             };
         }
 

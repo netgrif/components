@@ -2,10 +2,9 @@
     <ng-template #casePanelHeader>
         <div fxLayoutAlign=" center" fxLayout="row" fxFlex="100">
             <span fxLayoutAlign=" center" fxFlex>
-                <mat-icon class="case-panel-icon">{{panelIcon}}</mat-icon>
-                <span>{{panelIconField}}</span>
+                <mat-icon class="case-panel-icon">{{case_.icon ? case_.icon : 'label'}}</mat-icon>
             </span>
-            <span fxFlex *ngFor="let field of casePanelDefinition.featuredFields;">{{field}}</span>
+            <span fxFlex *ngFor="let value of _featuredFieldsValues;">{{value}}</span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
             <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">

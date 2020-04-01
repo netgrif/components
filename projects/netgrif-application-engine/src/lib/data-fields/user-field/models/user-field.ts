@@ -1,11 +1,11 @@
-import {DataField} from '../../models/abstract-data-field';
+import {DataField, Layout} from '../../models/abstract-data-field';
 import {UserValue} from './user-value';
 import {Behavior} from '../../models/behavior';
 
 export class UserField extends DataField<UserValue> {
     constructor(stringId: string, title: string, behavior: Behavior, value: UserValue, private _roles: Array<string>,
-                placeholder?: string, description?: string) {
-        super(stringId, title, value, behavior, placeholder, description);
+                placeholder?: string, description?: string, layout?: Layout) {
+        super(stringId, title, value, behavior, placeholder, description, layout);
     }
 
     get roles(): Array<string> {

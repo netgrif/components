@@ -50,12 +50,12 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // TEXT FIELD
     @ViewChild('textFieldComponent') naeTextField: TextFieldComponent;
     textField = new TextField('textFieldId', 'Reactive text field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
-        [{validationRule: 'telNumber', validationMessage: 'dasdsad' }] );
+                undefined, [{validationRule: 'telNumber', validationMessage: 'dasdsad' }] );
 
     // TEXT AREA FIELD
     @ViewChild('textAreaFieldComponent') naeTextAreaField: TextFieldComponent;
     textAreaField = new TextField('textAreaFieldId', 'Reactive text area field', 'hello world', {visible: true, editable: true},
-        undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
+        undefined, undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
 
     // BOOLEAN FIELD
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
@@ -64,7 +64,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // BUTTON FIELD
     @ViewChild('buttonFieldComponent') naeButtonField: ButtonFieldComponent;
     buttonField = new ButtonField('buttonFieldId', 'Reactive button field',
-        {visible: true, editable: true}, undefined,  undefined, 'test', ButtonFieldView.STROKED);
+        {visible: true, editable: true}, undefined,  undefined, 'test', undefined, ButtonFieldView.STROKED);
 
     // NUMBER FIELD
     @ViewChild('numberFieldComponent') naeNumberField: NumberFieldComponent;
@@ -88,19 +88,19 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     @ViewChild('enumListFieldComponent') naeEnumListField: EnumerationFieldComponent;
     enumListField = new EnumerationField('enumListFieldId', 'Reactive enum list field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', MaterialAppearance.STANDARD, EnumerationFieldView.LIST);
+        '', '', undefined, MaterialAppearance.STANDARD, EnumerationFieldView.LIST);
 
     // ENUM AUTO COMPLETE FIELD
     @ViewChild('enumAutoFieldComponent') naeEnumAutoField: EnumerationFieldComponent;
     enumAutoField = new EnumerationField('enumAutoFieldId', 'Reactive enum autocomplete field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', MaterialAppearance.STANDARD, EnumerationFieldView.AUTOCOMPLETE);
+        '', '', undefined, MaterialAppearance.STANDARD, EnumerationFieldView.AUTOCOMPLETE);
 
     // MULTICHOICE LIST FIELD
     @ViewChild('multichoiceListFieldComponent') naeMultichoiceListField: MultichoiceFieldComponent;
     multichoiceListField = new MultichoiceField('multichoiceListFieldId', 'Reactive multichoice list field', ['a', 'b'],
         [{key: 'a', value: 'Alice'}, {key: 'b', value: 'Bob'}, {key: 'c', value: 'Claire'}], {visible: true, editable: true},
-        undefined, undefined, undefined, MultichoiceFieldView.LIST);
+        undefined, undefined, undefined, undefined, MultichoiceFieldView.LIST);
 
     // MULTICHOICE SELECT FIELD
     @ViewChild('multichoiceSelectFieldComponent') naeMultichoiceSelectField: MultichoiceFieldComponent;
@@ -110,12 +110,12 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // FILE FIELD
     @ViewChild('fileFieldComponent') naeFileField: FileFieldComponent;
     fileField = new FileField('fileFieldId', 'Reactive file field',  {visible: true, editable: true},
-        undefined, undefined, undefined, undefined, 10, false);
+        undefined, undefined, undefined, undefined, undefined, 10, false);
 
     // USER FIELD
     @ViewChild('userFieldComponent') naeUserField: UserFieldComponent;
     userField = new UserField('userFieldId', 'Reactive user field',  {visible: true, editable: true},
-        new UserValue('Name', 'Surname', 'surname@netgrif.com'), []);
+        new UserValue('4', 'Name', 'Surname', 'surname@netgrif.com'), []);
 
     changeStream = new Subject<ChangedFields>();
 
