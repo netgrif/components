@@ -20,4 +20,5 @@ export interface Task {
     dataGroups: DataGroup[];
     _links: object;
     dataSize?: number;
+    icon?: string;
 }

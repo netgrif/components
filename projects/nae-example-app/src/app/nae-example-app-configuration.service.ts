@@ -22,11 +22,6 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                     },
                     resources: [
                         {
-                            name: 'main',
-                            address: 'http://localhost:8080/api/',
-                            format: 'json'
-                        },
-                        {
                             name: 'case',
                             address: 'http://localhost:8080/api/',
                             format: 'hal',
@@ -34,6 +29,11 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                         },
                         {
                             name: 'task',
+                            address: 'http://localhost:8080/api/',
+                            format: 'json'
+                        },
+                        {
+                            name: 'petrinet',
                             address: 'http://localhost:8080/api/',
                             format: 'json'
                         }

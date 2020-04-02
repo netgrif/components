@@ -6,16 +6,13 @@ import {
     AbstractCaseView,
     Case,
 } from '@netgrif/application-engine';
-
 @Component({
     selector: 'nae-app-case-view',
     templateUrl: './case-view.component.html',
     styleUrls: ['./case-view.component.scss']
 })
 export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {
-
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
-
     constructor(_sideMenuService: SideMenuService,
                 _caseResourceService: CaseResourceService) {
         super(_sideMenuService, _caseResourceService, '{}');
@@ -28,5 +25,4 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
     public handleCaseClick(clickedCase: Case): void {
         console.log(clickedCase.stringId);
     }
-
 }

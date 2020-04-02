@@ -1,5 +1,5 @@
 import {Behavior} from './behavior';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
@@ -14,6 +14,13 @@ export interface Layout {
     y: number;
     cols: number;
     rows: number;
+    template: TemplateAppearance;
+    appearance: MaterialAppearance;
+}
+
+export enum TemplateAppearance {
+    MATERIAL = 'material',
+    NETGRIF = 'netgrif',
 }
 
 export enum MaterialAppearance {
@@ -28,6 +35,8 @@ export abstract class DataField<T> {
     private _initialized: boolean;
     private _valid: boolean;
     private _changed: boolean;
+    private _update: Subject<void>;
+    private _block: Subject<boolean>;
 
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
@@ -36,6 +45,8 @@ export abstract class DataField<T> {
         this._initialized = false;
         this._valid = true;
         this._changed = false;
+        this._update = new Subject<void>();
+        this._block = new Subject<boolean>();
     }
 
     get stringId(): string {
@@ -113,6 +124,14 @@ export abstract class DataField<T> {
         return this._changed;
     }
 
+    set block(set: boolean) {
+        this._block.next(set);
+    }
+
+    public update(): void {
+        this._update.next();
+    }
+
     public valueChanges(): Observable<T> {
         return this._value.asObservable();
     }
@@ -121,14 +140,14 @@ export abstract class DataField<T> {
         formControl.valueChanges.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
-            this.value = newValue;
             this._valid = formControl.valid;
+            this.value = newValue;
         });
         this._value.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
-            formControl.setValue(newValue);
             this._valid = formControl.valid;
+            formControl.setValue(newValue);
         });
         this.updateFormControlState(formControl);
         this._initialized = true;
@@ -137,9 +156,19 @@ export abstract class DataField<T> {
 
     public updateFormControlState(formControl: FormControl): void {
         formControl.setValue(this.value);
-        this.behavior.editable ? formControl.enable() : formControl.disable();
-        formControl.clearValidators();
-        formControl.setValidators(this.resolveFormControlValidators());
+        this._update.subscribe(() => {
+            this.disabled ? formControl.disable() : formControl.enable();
+            formControl.clearValidators();
+            formControl.setValidators(this.resolveFormControlValidators());
+        });
+        this._block.subscribe(bool => {
+            if (bool) {
+                formControl.disable();
+            } else {
+                this.disabled ? formControl.disable() : formControl.enable();
+            }
+        });
+        this.update();
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
