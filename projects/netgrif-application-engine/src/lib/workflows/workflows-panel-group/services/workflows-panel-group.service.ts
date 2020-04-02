@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {DataDescription} from '../../../header/models/data-description';
 import {PreferredHeaders} from '../../../header/models/preferred-headers';
 import {WorkflowPanelDefinition} from '../../../panel/workflows-panel/models/workflows-panels-definition';
-import {Headers} from '../../../header/headers';
+import {HeaderState} from '../../../header/headerState';
 import {PetriNetReference} from '../../../resources/interface/petri-net-reference';
 import {TextField} from '../../../data-fields/text-field/models/text-field';
 import {WorkflowsPanelContent} from '../../../panel/workflows-panel/models/workflows-panel-content';
@@ -27,7 +27,7 @@ export class WorkflowsPanelGroupService {
     public workflowPanelDefinitions = new Array<WorkflowPanelDefinition>();
     private selectedHeaders: PreferredHeaders;
     private _petriNetReferences: Array<PetriNetReference> = [];
-    private _headers: Headers;
+    private _headers: HeaderState;
     public panelsDataGroup: Map<string, PanelsDataGroup>;
     private dataFieldsBehaviour: Behavior = {visible: true, editable: false};
 
@@ -43,11 +43,11 @@ export class WorkflowsPanelGroupService {
         this.setPanelsTitles();
     }
 
-    get headers(): Headers {
+    get headers(): HeaderState {
         return this._headers;
     }
 
-    set headers(value: Headers) {
+    set headers(value: HeaderState) {
         this._headers = value;
     }
 
@@ -67,7 +67,7 @@ export class WorkflowsPanelGroupService {
      * Set the workflow panel titles according to the active headers
      */
     public setPanelsTitles() {
-        this.selectedHeaders = this.headers.selected;
+        this.selectedHeaders = this.headers.selectedHeaders;
         this.workflowPanelDefinitions = [];
         this.petriNetReferences.forEach(petriNet => {
             this.workflowPanelDefinitions.push({

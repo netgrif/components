@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
-import {Headers} from '../headers';
+import {HeaderState} from '../headerState';
 import {HeaderType} from '../models/header-type';
 
 @Injectable()
 export class TaskHeaderService extends AbstractHeaderService {
     constructor() {
         super(HeaderType.TASK);
-        this._headers = new Headers();
+        this._headerState = new HeaderState();
         // TODO simulated resource remove in future
-        this._headers.selected = {
+        this._headerState.selectedHeaders = {
             column0: {
                 type: 'meta',
                 identifier: 'case',

@@ -4,9 +4,9 @@ import {HeaderMode} from './models/header-mode';
 /**
  * Keeps the current stage of the header
  */
-export class Headers {
+export class HeaderState {
     public mode: HeaderMode = HeaderMode.SORT;
     public lastMode: HeaderMode = HeaderMode.SORT;
-    public selected: PreferredHeaders;
-    public lastSelected: PreferredHeaders;
+    public selectedHeaders: PreferredHeaders;
+    public lastSelectedHeaders: PreferredHeaders;
 }

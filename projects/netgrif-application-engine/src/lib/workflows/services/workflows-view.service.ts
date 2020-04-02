@@ -3,7 +3,7 @@ import {PetriNetResourceService} from './petri-net-resource.service';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {WorkflowsPanelGroupService} from '../workflows-panel-group/services/workflows-panel-group.service';
 import {WorkflowsHeaderService} from '../../header/workflows-header/workflows-header.service';
-import {Headers} from '../../header/headers';
+import {HeaderState} from '../../header/headerState';
 
 
 @Injectable({
@@ -20,14 +20,14 @@ export class WorkflowsViewService {
     }
 
     private setPetriNetReferences(petriNetReferences: Array<PetriNetReference>) {
-        this.workflowsPanelGroupService.headers = this.workflowsHeaderService.headers;
+        this.workflowsPanelGroupService.headers = this.workflowsHeaderService.headerState;
         this.workflowsHeaderService.petriNetReferences = petriNetReferences;
         this.workflowsHeaderService.setPanelsTitles();
         this.workflowsPanelGroupService.petriNetReferences = petriNetReferences;
         this.workflowsPanelGroupService.populateDataFields();
     }
 
-    public setPanelTitles(headers: Headers) {
+    public setPanelTitles(headers: HeaderState) {
         this.workflowsPanelGroupService.headers = headers;
         this.workflowsPanelGroupService.setPanelsTitles();
     }

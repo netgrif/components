@@ -1,7 +1,7 @@
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
 import {fieldsGroup} from './header-modes/edit-mode/fields.group';
-import {Headers} from './headers';
+import {HeaderState} from './headerState';
 import {OnDestroy} from '@angular/core';
 import {SortChangeDescription} from './models/user-changes/sort-change-description';
 import {SearchChangeDescription} from './models/user-changes/search-change-description';
@@ -16,13 +16,13 @@ export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescri
 
 
 export class AbstractHeaderService implements OnDestroy {
-    protected _headers: Headers;
-    protected _changeHeader$: BehaviorSubject<HeaderChange>;
+    protected _headerState: HeaderState;
+    protected _headerChange$: Subject<HeaderChange>;
     public petriNetReferences: Array<PetriNetReference>;
     public fieldsGroup: Array<FieldsGroup> = fieldsGroup;
 
     constructor(private _headerType: HeaderType) {
-        this._changeHeader$ = new BehaviorSubject<HeaderChange>(null);
+        this._headerChange$ = new Subject<HeaderChange>();
         this.petriNetReferences = [];
     }
 
@@ -30,11 +30,11 @@ export class AbstractHeaderService implements OnDestroy {
      * Provides Observable for all changes in header
      */
     get headerChange$(): Observable<HeaderChange> {
-        return this._changeHeader$.asObservable();
+        return this._headerChange$.asObservable();
     }
 
-    get headers(): Headers {
-        return this._headers;
+    get headerState(): HeaderState {
+        return this._headerState;
     }
 
     get headerType(): HeaderType {
@@ -53,25 +53,25 @@ export class AbstractHeaderService implements OnDestroy {
      * @param active Represents column identifier
      * @param direction Represent one of sort modes: asd, desc and ''
      */
-    public onSortModeEdit({active, direction}): Headers {
+    public onSortModeEdit({active, direction}): HeaderState {
         let sortChangeDescription: SortChangeDescription;
-        Object.keys(this.headers.selected).forEach(columnId => {
+        Object.keys(this.headerState.selectedHeaders).forEach(columnId => {
             if (columnId === active) {
                 sortChangeDescription = {
                     columnId,
-                    identifier: this.headers.selected[columnId].identifier,
+                    identifier: this.headerState.selectedHeaders[columnId].identifier,
                     sortMode: direction,
-                    title: this.headers.selected[columnId].title,
-                    type: this.headers.selected[columnId].type
+                    title: this.headerState.selectedHeaders[columnId].title,
+                    type: this.headerState.selectedHeaders[columnId].type
                 };
-                this.headers.selected[columnId].sortMode = direction;
+                this.headerState.selectedHeaders[columnId].sortMode = direction;
             } else {
-                this.headers.selected[columnId].sortMode = '';
+                this.headerState.selectedHeaders[columnId].sortMode = '';
             }
         });
         // TODO pair the search request with the back-end and then return the searched petri net models
-        this._changeHeader$.next({headerType: this.headerType, type: HeaderMode.SORT, description: sortChangeDescription});
-        return this.headers;
+        this._headerChange$.next({headerType: this.headerType, type: HeaderMode.SORT, description: sortChangeDescription});
+        return this.headerState;
     }
 
     /**
@@ -80,22 +80,22 @@ export class AbstractHeaderService implements OnDestroy {
      * @param columnId Identifier of column where is search input placed
      * @param searchedQuery User-written value for search
      */
-    public onUserSearch(columnId: string, searchedQuery: any): Headers {
-        this.headers.selected[columnId].searchQuery = searchedQuery;
+    public onUserSearch(columnId: string, searchedQuery: any): HeaderState {
+        this.headerState.selectedHeaders[columnId].searchQuery = searchedQuery;
         const searchChangeDescription: SearchChangeDescription = {
             columnId,
-            identifier: this.headers.selected[columnId].identifier,
+            identifier: this.headerState.selectedHeaders[columnId].identifier,
             searchQuery: searchedQuery,
-            title: this.headers.selected[columnId].title,
-            type: this.headers.selected[columnId].type
+            title: this.headerState.selectedHeaders[columnId].title,
+            type: this.headerState.selectedHeaders[columnId].type
         };
         // TODO pair the search request with the back-end and then return the searched petri net models
-        this._changeHeader$.next({
+        this._headerChange$.next({
             headerType: this.headerType,
             type: HeaderMode.SEARCH,
             description: searchChangeDescription
         });
-        return this.headers;
+        return this.headerState;
     }
 
     /**
@@ -104,8 +104,8 @@ export class AbstractHeaderService implements OnDestroy {
      * @param groupType Divides whether the header is from immediate or meta data
      * @param field Description of data field contains title, string id and  data type
      */
-    public onColumnEdit(columnId: string, groupType: string, field: DataDescription): Headers {
-        this._headers.selected[columnId] = {
+    public onColumnEdit(columnId: string, groupType: string, field: DataDescription): HeaderState {
+        this._headerState.selectedHeaders[columnId] = {
             type: groupType === 'META DATA' ? 'meta' : 'immediate',
             identifier: field.stringId,
             title: field.title,
@@ -115,12 +115,12 @@ export class AbstractHeaderService implements OnDestroy {
             fieldType: field.type
         };
         // TODO pair the search request with the back-end and then return the searched petri net models
-        this._changeHeader$.next({
+        this._headerChange$.next({
             headerType: this.headerType,
             type: HeaderMode.EDIT,
-            description: {preferredHeaders: this.headers.selected}
+            description: {preferredHeaders: this.headerState.selectedHeaders}
         });
-        return this._headers;
+        return this._headerState;
     }
 
     public setPanelsTitles(): void {
@@ -133,15 +133,15 @@ export class AbstractHeaderService implements OnDestroy {
      */
     public changeMode(newMode: HeaderMode, saveLastMode = true): void {
         if (saveLastMode) {
-            this._headers.lastMode = this._headers.mode;
-            this._headers.lastSelected = {...this._headers.selected};
+            this._headerState.lastMode = this._headerState.mode;
+            this._headerState.lastSelectedHeaders = {...this._headerState.selectedHeaders};
         }
 
-        this._headers.mode = newMode;
+        this._headerState.mode = newMode;
     }
 
     public confirmEditMode(): void {
-        this._headers.mode = this._headers.lastMode;
+        this._headerState.mode = this._headerState.lastMode;
     }
 
     /**
@@ -149,18 +149,18 @@ export class AbstractHeaderService implements OnDestroy {
      * Last mode in header is reloaded as well. Possible reloaded modes: sort or search
      */
     public revertEditMode(): void {
-        this._headers.mode = this._headers.lastMode;
-        this._headers.selected = this._headers.lastSelected;
+        this._headerState.mode = this._headerState.lastMode;
+        this._headerState.selectedHeaders = this._headerState.lastSelectedHeaders;
         this.setPanelsTitles();
         // TODO pair the search request with the back-end and then return the searched petri net models
-        this._changeHeader$.next({
+        this._headerChange$.next({
             headerType: this.headerType,
             type: HeaderMode.EDIT,
-            description: {preferredHeaders: this._headers.selected}
+            description: {preferredHeaders: this._headerState.selectedHeaders}
         });
     }
 
     ngOnDestroy(): void {
-        this._changeHeader$.complete();
+        this._headerChange$.complete();
     }
 }

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FieldsGroup} from '../../models/fields-group';
-import {Headers} from '../../headers';
+import {HeaderState} from '../../headerState';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {DataDescription} from '../../models/data-description';
 
@@ -12,7 +12,7 @@ import {DataDescription} from '../../models/data-description';
 export class EditModeComponent implements OnInit {
 
     public fieldsGroup: Array<FieldsGroup>;
-    public headers: Headers;
+    public headers: HeaderState;
     @Input()
     public headerService: AbstractHeaderService;
 
@@ -20,7 +20,7 @@ export class EditModeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.headers = this.headerService.headers;
+        this.headers = this.headerService.headerState;
         this.fieldsGroup = this.headerService.fieldsGroup;
     }
 
@@ -35,7 +35,7 @@ export class EditModeComponent implements OnInit {
     }
 
     public getIterableHeaders() {
-        return {...this.headers.selected};
+        return {...this.headers.selectedHeaders};
     }
 
 }
