@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HeaderState} from '../headerState';
+import {HeaderState} from '../header-state';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 
@@ -12,7 +12,7 @@ export class WorkflowsHeaderService extends AbstractHeaderService {
         super(HeaderType.WORKFLOW);
         this._headerState = new HeaderState();
         // TODO simulated resource remove in future
-        this._headerState.selectedHeaders = {
+        this._headerState.selectedHeaders$ = {
             column0: {
                 type: 'meta',
                 identifier: 'initials',

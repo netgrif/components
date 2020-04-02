@@ -53,7 +53,6 @@ export class CasePanelComponent implements OnInit {
                     return this.case_.author.fullName;
                 case 'creationDate':
                     return toMoment(this.case_.creationDate).format();
-                    // return moment.unix(this.case_.creationDate[this.case_.creationDate.length - 1]).format();
             }
         }
         if (selectedHeader.workflowId === this.case_.processIdentifier) {

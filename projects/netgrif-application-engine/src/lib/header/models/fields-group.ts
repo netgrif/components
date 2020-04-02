@@ -6,10 +6,9 @@ import {DataDescription} from './data-description';
  */
 export interface FieldsGroup {
     /**
-     * Type defines the title for the division of meta data and immediate data.
-     * For meta data is used title "META DATA".
-     * For immediate data is used Petri net identifier where data belongs.
+     * Meta data use title "META DATA".
+     * Immediate data use identifier of their Petri net.
      */
-    type: string;
+    groupTitle: string;
     fields: Array<DataDescription>;
 }

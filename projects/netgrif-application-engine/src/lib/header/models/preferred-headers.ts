@@ -1,9 +1,9 @@
-import {Column} from './column';
+import {HeaderColumn} from './header-column';
 
 export interface PreferredHeaders {
-    column0: Column;
-    column1: Column;
-    column2: Column;
-    column3: Column;
-    column4: Column;
+    column0: HeaderColumn;
+    column1: HeaderColumn;
+    column2: HeaderColumn;
+    column3: HeaderColumn;
+    column4: HeaderColumn;
 }

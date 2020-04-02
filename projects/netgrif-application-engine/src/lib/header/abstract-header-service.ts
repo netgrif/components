@@ -1,7 +1,7 @@
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
 import {fieldsGroup} from './header-modes/edit-mode/fields.group';
-import {HeaderState} from './headerState';
+import {HeaderState} from './header-state';
 import {OnDestroy} from '@angular/core';
 import {SortChangeDescription} from './models/user-changes/sort-change-description';
 import {SearchChangeDescription} from './models/user-changes/search-change-description';
@@ -11,7 +11,7 @@ import {DataDescription} from './models/data-description';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
-import {SelectedHeaderField} from './models/selected-header-field';
+import {Column} from 'netgrif-application-engine';
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 
@@ -19,7 +19,6 @@ export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescri
 export class AbstractHeaderService implements OnDestroy {
     protected _headerState: HeaderState;
     protected _headerChange$: Subject<HeaderChange>;
-    protected _selectedFields$: BehaviorSubject<Array<SelectedHeaderField>>;
     public petriNetReferences: Array<PetriNetReference>;
     public fieldsGroup: Array<FieldsGroup> = fieldsGroup;
 
@@ -28,13 +27,13 @@ export class AbstractHeaderService implements OnDestroy {
         this.petriNetReferences = [];
 
         // TODO load user preference headers
-        this._selectedFields$ = new BehaviorSubject([
-            new SelectedHeaderField('meta', 'visualId'),
-            new SelectedHeaderField('meta', 'title'),
-            new SelectedHeaderField('meta', 'author'),
-            new SelectedHeaderField('meta', 'creationDate'),
-            null
-        ]);
+        // this._selectedFields$ = new BehaviorSubject([
+        //     new SelectedHeaderField('meta', 'visualId'),
+        //     new SelectedHeaderField('meta', 'title'),
+        //     new SelectedHeaderField('meta', 'author'),
+        //     new SelectedHeaderField('meta', 'creationDate'),
+        //     null
+        // ]);
     }
 
     /**
@@ -44,8 +43,8 @@ export class AbstractHeaderService implements OnDestroy {
         return this._headerChange$.asObservable();
     }
 
-    get selectedFields$(): Observable<Array<SelectedHeaderField>> {
-        return this._selectedFields$.asObservable();
+    get selectedHeaders$(): Observable<Array<Column>> {
+        return this._headerState.selectedHeaders$;
     }
 
     get headerState(): HeaderState {
@@ -58,7 +57,7 @@ export class AbstractHeaderService implements OnDestroy {
 
     public setFieldsGroupData(petriNetReferences: Array<PetriNetReference>) {
         petriNetReferences.forEach(petriNet => {
-            this.fieldsGroup.push({type: petriNet.identifier, fields: petriNet.immediateData});
+            this.fieldsGroup.push({groupTitle: petriNet.identifier, fields: petriNet.immediateData});
         });
     }
 
@@ -70,18 +69,18 @@ export class AbstractHeaderService implements OnDestroy {
      */
     public onSortModeEdit({active, direction}): HeaderState {
         let sortChangeDescription: SortChangeDescription;
-        Object.keys(this.headerState.selectedHeaders).forEach(columnId => {
+        Object.keys(this.headerState.selectedHeaders$).forEach(columnId => {
             if (columnId === active) {
                 sortChangeDescription = {
                     columnId,
-                    identifier: this.headerState.selectedHeaders[columnId].identifier,
+                    identifier: this.headerState.selectedHeaders$[columnId].identifier,
                     sortMode: direction,
-                    title: this.headerState.selectedHeaders[columnId].title,
-                    type: this.headerState.selectedHeaders[columnId].type
+                    title: this.headerState.selectedHeaders$[columnId].title,
+                    type: this.headerState.selectedHeaders$[columnId].type
                 };
-                this.headerState.selectedHeaders[columnId].sortMode = direction;
+                this.headerState.selectedHeaders$[columnId].sortMode = direction;
             } else {
-                this.headerState.selectedHeaders[columnId].sortMode = '';
+                this.headerState.selectedHeaders$[columnId].sortMode = '';
             }
         });
         // TODO pair the search request with the back-end and then return the searched petri net models
@@ -96,13 +95,13 @@ export class AbstractHeaderService implements OnDestroy {
      * @param searchedQuery User-written value for search
      */
     public onUserSearch(columnId: string, searchedQuery: any): HeaderState {
-        this.headerState.selectedHeaders[columnId].searchQuery = searchedQuery;
+        this.headerState.selectedHeaders$[columnId].searchQuery = searchedQuery;
         const searchChangeDescription: SearchChangeDescription = {
             columnId,
-            identifier: this.headerState.selectedHeaders[columnId].identifier,
+            identifier: this.headerState.selectedHeaders$[columnId].identifier,
             searchQuery: searchedQuery,
-            title: this.headerState.selectedHeaders[columnId].title,
-            type: this.headerState.selectedHeaders[columnId].type
+            title: this.headerState.selectedHeaders$[columnId].title,
+            type: this.headerState.selectedHeaders$[columnId].type
         };
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._headerChange$.next({
@@ -120,7 +119,7 @@ export class AbstractHeaderService implements OnDestroy {
      * @param field Description of data field contains title, string id and  data type
      */
     public onColumnEdit(columnId: string, groupType: string, field: DataDescription): HeaderState {
-        this._headerState.selectedHeaders[columnId] = {
+        this._headerState.selectedHeaders$[columnId] = {
             type: groupType === 'META DATA' ? 'meta' : 'immediate',
             identifier: field.stringId,
             title: field.title,
@@ -133,7 +132,7 @@ export class AbstractHeaderService implements OnDestroy {
         this._headerChange$.next({
             headerType: this.headerType,
             type: HeaderMode.EDIT,
-            description: {preferredHeaders: this.headerState.selectedHeaders}
+            description: {preferredHeaders: this.headerState.selectedHeaders$}
         });
         return this._headerState;
     }
@@ -149,7 +148,7 @@ export class AbstractHeaderService implements OnDestroy {
     public changeMode(newMode: HeaderMode, saveLastMode = true): void {
         if (saveLastMode) {
             this._headerState.lastMode = this._headerState.mode;
-            this._headerState.lastSelectedHeaders = {...this._headerState.selectedHeaders};
+            this._headerState.lastSelectedHeaders = {...this._headerState.selectedHeaders$};
         }
 
         this._headerState.mode = newMode;
@@ -165,13 +164,13 @@ export class AbstractHeaderService implements OnDestroy {
      */
     public revertEditMode(): void {
         this._headerState.mode = this._headerState.lastMode;
-        this._headerState.selectedHeaders = this._headerState.lastSelectedHeaders;
+        this._headerState.selectedHeaders$ = this._headerState.lastSelectedHeaders;
         this.setPanelsTitles();
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._headerChange$.next({
             headerType: this.headerType,
             type: HeaderMode.EDIT,
-            description: {preferredHeaders: this._headerState.selectedHeaders}
+            description: {preferredHeaders: this._headerState.selectedHeaders$}
         });
     }
 

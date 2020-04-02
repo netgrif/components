@@ -3,7 +3,7 @@ import {PetriNetResourceService} from './petri-net-resource.service';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {WorkflowsPanelGroupService} from '../workflows-panel-group/services/workflows-panel-group.service';
 import {WorkflowsHeaderService} from '../../header/workflows-header/workflows-header.service';
-import {HeaderState} from '../../header/headerState';
+import {HeaderState} from '../../header/header-state';
 
 
 @Injectable({

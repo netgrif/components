@@ -6,7 +6,7 @@ import {FieldsGroup} from '../../models/fields-group';
  */
 export const fieldsGroup: Array<FieldsGroup> = [
     {
-        type: 'META DATA',
+        groupTitle: 'META DATA',
         fields: [
             {
                 stringId: 'initials',
@@ -32,6 +32,6 @@ export const fieldsGroup: Array<FieldsGroup> = [
             }]
     },
     {
-        type: 'ALL DATA VARIABLES', fields: []
+        groupTitle: 'ALL DATA VARIABLES', fields: []
     }
 ];

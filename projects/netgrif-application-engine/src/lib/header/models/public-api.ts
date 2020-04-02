@@ -1,4 +1,4 @@
-export * from './column';
+export * from './header-column';
 export * from './preferred-headers';
 export * from './header-mode';
 export * from './header-type';

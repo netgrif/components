@@ -1,4 +1,4 @@
-import {DataType} from '../column';
+import {HeaderColumnType} from '../header-column';
 
 /**
  * Definition of emitted data when user changes sort mode on column
@@ -8,5 +8,5 @@ export interface SortChangeDescription {
     identifier: string;
     title: string;
     sortMode: string;
-    type: DataType;
+    type: HeaderColumnType;
 }

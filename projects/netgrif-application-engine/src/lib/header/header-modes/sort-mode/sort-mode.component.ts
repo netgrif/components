@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
-import {HeaderState} from '../../headerState';
+import {HeaderState} from '../../header-state';
 
 @Component({
     selector: 'nae-sort-mode',
@@ -30,7 +30,7 @@ export class SortModeComponent implements OnInit {
     }
 
     public getIterableHeaders() {
-        return Object.values(this.headers.selectedHeaders);
+        return Object.values(this.headers.selectedHeaders$);
     }
 
 }

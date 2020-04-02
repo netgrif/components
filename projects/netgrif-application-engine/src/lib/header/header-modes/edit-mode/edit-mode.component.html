@@ -1,14 +1,14 @@
 <div class="header-column-container"
      fxLayout="row"
      fxFlex="100">
-    <mat-form-field *ngFor="let header of getIterableHeaders() | keyvalue" fxLayout="row" fxLayoutAlign=" center" fxFlex
+    <mat-form-field *ngFor="let header of this.headers.selectedHeaders$; let i = index" fxLayout="row" fxLayoutAlign=" center" fxFlex
                     [fxHide.lt-lg]="header.value.columnId=='column4'"
                     [fxHide.lt-md]="header.value.columnId=='column3' || header.value.columnId=='column4'"
                     [fxHide.lt-sm]="header.value.columnId=='column2' || header.value.columnId=='column3' || header.value.columnId=='column4'">
         <mat-label>{{header.value.title}}</mat-label>
         <mat-select [(value)]="header.value.selected"
                     (selectionChange)="onColumnEdit(header.value.columnId, $event.value.group.type, $event.value.id)">
-            <mat-optgroup *ngFor="let group of fieldsGroup" [label]="group.type">
+            <mat-optgroup *ngFor="let group of fieldsGroup" [label]="group.groupTitle">
                 <mat-option *ngFor="let field of group.fields" [value]="{group: group, id:field}">
                     {{field.title}}
                 </mat-option>
