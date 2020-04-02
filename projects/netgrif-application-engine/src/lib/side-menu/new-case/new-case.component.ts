@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {SideMenuService} from '../services/side-menu.service';
@@ -28,10 +28,10 @@ export class NewCaseComponent implements OnInit {
     selectedColorControl = new FormControl('', Validators.required);
 
     colors: Form[] = [
-        {value: 'color-0', viewValue: 'Black'},
-        {value: 'color-1', viewValue: 'Blue'},
-        {value: 'color-2', viewValue: 'Yellow'},
-        {value: 'color-3', viewValue: 'Red'}
+        {value: 'color-fg-deep-purple-600', viewValue: 'Purple'},
+        {value: 'color-fg-amber-500', viewValue: 'Yellow'},
+        {value: 'color-fg-deep-orange-500', viewValue: 'Orange'},
+        {value: 'color-fg-brown-500', viewValue: 'Brown'}
     ];
     options: Array<Form>  = [];
     filteredOptions: Observable<Array<Form>>;
@@ -48,7 +48,6 @@ export class NewCaseComponent implements OnInit {
         this._petriNetService.getAll().subscribe(petriNets => {
             if (petriNets) {
                 petriNets.petriNetReferences.forEach(petriNet => {
-                    console.log(petriNet.title);
                     this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
                 });
             }
@@ -60,12 +59,6 @@ export class NewCaseComponent implements OnInit {
                 );
         });
 
-
-
-// this.filteredOptions = this.processFormGroup.get('firstCtrl').valueChanges.pipe(
-        //     startWith(''),
-        //     map(value => this._filter(value))
-        // );
     }
 
     displayFn(process: Form): string {
@@ -73,15 +66,7 @@ export class NewCaseComponent implements OnInit {
     }
 
 
-    // ngOnChanges(changes: SimpleChanges): void {
-    //     this.filteredOptions = this.processFormGroup.get('firstCtrl').valueChanges.pipe(
-    //         startWith(''),
-    //         map(value => this._filter(value))
-    //     );
-    // }
-
     public createNewCase(): void {
-        // TODO: inject resource service - JOZO
         const newCase = {
             title: this.titleFormControl.value,
             color: this.selectedColorControl.value,
