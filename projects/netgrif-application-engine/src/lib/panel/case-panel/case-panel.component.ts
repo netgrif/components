@@ -37,7 +37,6 @@ export class CasePanelComponent implements OnInit {
         for (let i = 1; i < selectedHeaderFields.length; i++) {
             this._featuredFieldsValues.push(this.getFeaturedValue(selectedHeaderFields[i]));
         }
-        console.log(this._featuredFieldsValues);
     }
 
     private getFeaturedValue(selectedHeader: SelectedHeaderField): string {
