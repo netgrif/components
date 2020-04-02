@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {Headers} from '../headers';
+import {HeaderType} from '../models/header-type';
 
 @Injectable()
 export class CaseHeaderService extends AbstractHeaderService {
     constructor() {
-        super('case');
+        super(HeaderType.CASE);
         this._headers = new Headers();
         // TODO simulated resource remove in future
         this._headers.selected = {

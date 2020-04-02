@@ -1,12 +1,12 @@
 import {PreferredHeaders} from './models/preferred-headers';
-import {HeaderMode} from './abstract-header-service';
+import {HeaderMode} from './models/header-mode';
 
 /**
  * Keeps the current stage of the header
  */
 export class Headers {
-    public mode: HeaderMode = 'sort';
-    public lastMode: HeaderMode = 'sort';
+    public mode: HeaderMode = HeaderMode.SORT;
+    public lastMode: HeaderMode = HeaderMode.SORT;
     public selected: PreferredHeaders;
     public lastSelected: PreferredHeaders;
 }

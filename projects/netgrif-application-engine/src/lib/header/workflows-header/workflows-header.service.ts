@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Headers} from '../headers';
 import {AbstractHeaderService} from '../abstract-header-service';
-import {WorkflowsPanelGroupService} from '../../workflows/workflows-panel-group/services/workflows-panel-group.service';
+import {HeaderType} from '../models/header-type';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +9,7 @@ import {WorkflowsPanelGroupService} from '../../workflows/workflows-panel-group/
 export class WorkflowsHeaderService extends AbstractHeaderService {
 
     constructor() {
-        super('workflow');
+        super(HeaderType.WORKFLOW);
         this._headers = new Headers();
         // TODO simulated resource remove in future
         this._headers.selected = {

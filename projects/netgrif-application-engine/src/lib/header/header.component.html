@@ -30,17 +30,17 @@
             </div>
             <mat-menu #headerMenu="matMenu">
                 <button mat-menu-item
-                        (click)="headerService.changeMode('sort', false)">
+                        (click)="headerService.changeMode(headerModeEnum.SORT, false)">
                     <mat-icon>sort</mat-icon>
                     Ordering mode
                 </button>
                 <button mat-menu-item
-                        (click)="headerService.changeMode('search', false)">
+                        (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
                     <mat-icon>search</mat-icon>
                     Search mode
                 </button>
                 <button mat-menu-item
-                        (click)="headerService.changeMode('edit')">
+                        (click)="headerService.changeMode(headerModeEnum.EDIT)">
                     <mat-icon>edit</mat-icon>
                     Enable edit mode
                 </button>

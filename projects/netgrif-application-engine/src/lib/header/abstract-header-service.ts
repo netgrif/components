@@ -9,10 +9,10 @@ import {EditChangeDescription} from './models/user-changes/edit-change-descripti
 import {HeaderChange} from './models/user-changes/header-change';
 import {DataDescription} from './models/data-description';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
+import {HeaderType} from './models/header-type';
+import {HeaderMode} from './models/header-mode';
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
-export type HeaderMode = 'sort' | 'search' | 'edit';
-export type HeaderType = 'workflow' | 'case' | 'task';
 
 
 export class AbstractHeaderService implements OnDestroy {
@@ -20,12 +20,10 @@ export class AbstractHeaderService implements OnDestroy {
     protected _changeHeader$: BehaviorSubject<HeaderChange>;
     public petriNetReferences: Array<PetriNetReference>;
     public fieldsGroup: Array<FieldsGroup> = fieldsGroup;
-    private _headerType: HeaderType;
 
-    constructor(headerType: HeaderType) {
+    constructor(private _headerType: HeaderType) {
         this._changeHeader$ = new BehaviorSubject<HeaderChange>(null);
         this.petriNetReferences = [];
-        this.headerType = headerType;
     }
 
     /**
@@ -72,7 +70,7 @@ export class AbstractHeaderService implements OnDestroy {
             }
         });
         // TODO pair the search request with the back-end and then return the searched petri net models
-        this._changeHeader$.next({headerType: this.headerType, type: 'sort', description: sortChangeDescription});
+        this._changeHeader$.next({headerType: this.headerType, type: HeaderMode.SORT, description: sortChangeDescription});
         return this.headers;
     }
 
@@ -94,14 +92,14 @@ export class AbstractHeaderService implements OnDestroy {
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._changeHeader$.next({
             headerType: this.headerType,
-            type: 'search',
+            type: HeaderMode.SEARCH,
             description: searchChangeDescription
         });
         return this.headers;
     }
 
     /**
-     * Change active header and and titles of panels
+     * Change active header and titles of panels
      * @param columnId Identifier of selected column
      * @param groupType Divides whether the header is from immediate or meta data
      * @param field Description of data field contains title, string id and  data type
@@ -119,7 +117,7 @@ export class AbstractHeaderService implements OnDestroy {
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._changeHeader$.next({
             headerType: this.headerType,
-            type: 'edit',
+            type: HeaderMode.EDIT,
             description: {preferredHeaders: this.headers.selected}
         });
         return this._headers;
@@ -157,7 +155,7 @@ export class AbstractHeaderService implements OnDestroy {
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._changeHeader$.next({
             headerType: this.headerType,
-            type: 'edit',
+            type: HeaderMode.EDIT,
             description: {preferredHeaders: this._headers.selected}
         });
     }

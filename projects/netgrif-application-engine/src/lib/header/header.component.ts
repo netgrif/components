@@ -1,8 +1,10 @@
 import {Component, Injector, Input, OnInit} from '@angular/core';
-import {AbstractHeaderService, HeaderType} from './abstract-header-service';
+import {AbstractHeaderService} from './abstract-header-service';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {TaskHeaderService} from './task-header/task-header.service';
 import {WorkflowsHeaderService} from './workflows-header/workflows-header.service';
+import {HeaderType} from './models/header-type';
+import {HeaderMode} from './models/header-mode';
 
 
 @Component({
@@ -13,11 +15,10 @@ import {WorkflowsHeaderService} from './workflows-header/workflows-header.servic
 })
 export class HeaderComponent implements OnInit {
 
-    @Input()
-    type: HeaderType = 'case';
-    @Input()
-    hideEditMode = false;
+    @Input() type: HeaderType = HeaderType.CASE;
+    @Input() hideEditMode = false;
     public headerService: AbstractHeaderService;
+    public readonly headerModeEnum = HeaderMode;
 
     constructor(private _injector: Injector) {
     }
