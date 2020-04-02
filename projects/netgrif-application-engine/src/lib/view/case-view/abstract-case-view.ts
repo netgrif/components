@@ -57,6 +57,7 @@ export abstract class AbstractCaseView {
         // TODO is just replacing the existing cases with new ones a good idea? Is there some data, we might loose?
         this.cases.splice(0, this.cases.length);
         this.cases.push(...newCases);
+        this.featuredFields$.next(['visualId', 'title', 'author', 'creationDate', '']);
     }
 
     public abstract handleCaseClick(clickedCase: Case): void;
