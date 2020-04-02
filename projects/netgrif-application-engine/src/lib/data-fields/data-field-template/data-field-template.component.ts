@@ -21,7 +21,14 @@ export class DataFieldTemplateComponent {
     }
 
     evaluateTemplateCondition(event: ResizedEvent): void {
-        this._showLargeLayout.value = event.newWidth >= this.layoutChangeWidthBreakpoint &&
-            (this.dataField.layout && this.dataField.layout.template === TemplateAppearance.NETGRIF);
+        this._showLargeLayout.value = event.newWidth >= this.layoutChangeWidthBreakpoint && this.evaluateTemplate();
+    }
+
+    private evaluateTemplate() {
+        if ( this.dataField.layout) {
+            return this.dataField.layout.template === TemplateAppearance.NETGRIF;
+        } else {
+            return true;
+        }
     }
 }

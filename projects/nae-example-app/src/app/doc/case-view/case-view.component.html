@@ -1,5 +1,4 @@
 <div class="case-view-container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
-
     <mat-card class="case-view-search-container">
         <div fxLayout="row" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center">SEARCH</div>
@@ -11,16 +10,11 @@
         </div>
     </mat-card>
 
-    <mat-divider class="border-width-2x"></mat-divider>
-
-    <nae-header #header [type]="headerType"></nae-header>
-
-    <mat-divider class="border-width-2x"></mat-divider>
+    <nae-header #header [type]="headerType" class="case-header-padding"></nae-header>
 
     <nae-case-panel *ngFor="let case_ of cases"
                     [case_]="case_"
                     [featuredFields$]="featuredFields$"
                     (click)="handleCaseClick(case_)">
     </nae-case-panel>
-
 </div>
