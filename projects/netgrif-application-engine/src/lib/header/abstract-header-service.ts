@@ -32,7 +32,8 @@ export class AbstractHeaderService implements OnDestroy {
             new SelectedHeaderField('meta', 'visualId'),
             new SelectedHeaderField('meta', 'title'),
             new SelectedHeaderField('meta', 'author'),
-            new SelectedHeaderField('meta', 'creationDate')
+            new SelectedHeaderField('meta', 'creationDate'),
+            null
         ]);
     }
 

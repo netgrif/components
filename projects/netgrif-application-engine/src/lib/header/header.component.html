@@ -12,7 +12,7 @@
                 <nae-edit-mode fxFlex="100" [headerService]="headerService"></nae-edit-mode>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="9.5"
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10"
              [ngSwitch]="headerService.headerState.mode" *ngIf="!hideEditMode">
             <button *ngSwitchDefault mat-icon-button [matMenuTriggerFor]="headerMenu">
                 <mat-icon>more_vert</mat-icon>

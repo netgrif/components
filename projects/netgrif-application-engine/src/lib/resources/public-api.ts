@@ -25,5 +25,7 @@ export * from './interface/file-resource';
 export * from './interface/task-reference';
 export * from './interface/field-behavior';
 
+export * from './types/nae-date-type';
+
 /* Utility */
 export * from './resource-utility-functions';
