@@ -1,4 +1,4 @@
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
 import {fieldsGroup} from './header-modes/edit-mode/fields.group';
 import {HeaderState} from './headerState';
@@ -11,6 +11,7 @@ import {DataDescription} from './models/data-description';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
+import {SelectedHeaderField} from './models/selected-header-field';
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 
@@ -18,12 +19,21 @@ export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescri
 export class AbstractHeaderService implements OnDestroy {
     protected _headerState: HeaderState;
     protected _headerChange$: Subject<HeaderChange>;
+    protected _selectedFields$: BehaviorSubject<Array<SelectedHeaderField>>;
     public petriNetReferences: Array<PetriNetReference>;
     public fieldsGroup: Array<FieldsGroup> = fieldsGroup;
 
     constructor(private _headerType: HeaderType) {
         this._headerChange$ = new Subject<HeaderChange>();
         this.petriNetReferences = [];
+
+        // TODO load user preference headers
+        this._selectedFields$ = new BehaviorSubject([
+            new SelectedHeaderField('meta', 'visualId'),
+            new SelectedHeaderField('meta', 'title'),
+            new SelectedHeaderField('meta', 'author'),
+            new SelectedHeaderField('meta', 'creationDate')
+        ]);
     }
 
     /**
@@ -31,6 +41,10 @@ export class AbstractHeaderService implements OnDestroy {
      */
     get headerChange$(): Observable<HeaderChange> {
         return this._headerChange$.asObservable();
+    }
+
+    get selectedFields$(): Observable<Array<SelectedHeaderField>> {
+        return this._selectedFields$.asObservable();
     }
 
     get headerState(): HeaderState {

@@ -2,6 +2,7 @@ export * from './column';
 export * from './preferred-headers';
 export * from './header-mode';
 export * from './header-type';
+export * from './selected-header-field';
 
 export * from './user-changes/header-change';
 export * from './user-changes/sort-change-description';
