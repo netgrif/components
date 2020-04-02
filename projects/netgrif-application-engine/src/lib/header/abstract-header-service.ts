@@ -3,10 +3,10 @@ import {FieldsGroup} from './models/fields-group';
 import {fieldsGroup} from './header-modes/edit-mode/fields.group';
 import {Headers} from './headers';
 import {OnDestroy} from '@angular/core';
-import {SortChangeDescription} from './models/user.changes/sort-change-description';
-import {SearchChangeDescription} from './models/user.changes/search-change-description';
-import {EditChangeDescription} from './models/user.changes/edit-change-description';
-import {HeaderChange} from './models/user.changes/header-change';
+import {SortChangeDescription} from './models/user-changes/sort-change-description';
+import {SearchChangeDescription} from './models/user-changes/search-change-description';
+import {EditChangeDescription} from './models/user-changes/edit-change-description';
+import {HeaderChange} from './models/user-changes/header-change';
 import {DataDescription} from './models/data-description';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
 
@@ -41,10 +41,6 @@ export class AbstractHeaderService implements OnDestroy {
 
     get headerType(): HeaderType {
         return this._headerType;
-    }
-
-    set headerType(value: HeaderType) {
-        this._headerType = value;
     }
 
     public setFieldsGroupData(petriNetReferences: Array<PetriNetReference>) {

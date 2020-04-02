@@ -4,7 +4,7 @@ import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
 import {WorkflowsViewService} from './services/workflows-view.service';
 import {HeaderComponent} from '../header/header.component';
 import {Observable} from 'rxjs';
-import {HeaderChange} from '../header/models/user.changes/header-change';
+import {HeaderChange} from '../header/models/user-changes/header-change';
 
 @Component({
     selector: 'nae-workflows',

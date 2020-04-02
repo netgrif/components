@@ -3,7 +3,7 @@
         <div fxLayout="row" fxFlex="90" class="header-content-container"
              [ngSwitch]="headerService.headers.mode">
             <!--SORT-->
-            <div *ngSwitchCase="'sort'" fxFlex="99" fxLayout="row">
+            <div *ngSwitchCase="'sort'" fxFlex="100" fxLayout="row">
                 <nae-sort-mode fxFlex="100" [headerService]="headerService"></nae-sort-mode>
             </div>
             <!--SEARCH-->

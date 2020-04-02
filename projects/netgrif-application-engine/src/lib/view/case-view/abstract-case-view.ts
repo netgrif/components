@@ -6,7 +6,7 @@ import {HeaderComponent} from '../../header/header.component';
 import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {HeaderType} from '../../header/abstract-header-service';
-import {HeaderChange} from '../../header/models/user.changes/header-change';
+import {HeaderChange} from '../../header/models/user-changes/header-change';
 
 
 export abstract class AbstractCaseView {

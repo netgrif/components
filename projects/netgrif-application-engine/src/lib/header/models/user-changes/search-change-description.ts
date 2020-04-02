@@ -1,12 +1,12 @@
 import {DataType} from '../column';
 
 /**
- * Definition of emitted data when user change sort mode on column
+ * Definition of emitted data when user types in search input
  */
-export interface SortChangeDescription {
+export interface SearchChangeDescription {
     columnId: string;
     identifier: string;
     title: string;
-    sortMode: string;
+    searchQuery: string;
     type: DataType;
 }
