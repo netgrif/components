@@ -32,11 +32,13 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     public panelIcon: string;
     public panelIconField: string;
     public panelRef: MatExpansionPanel;
+    private _updating: boolean;
 
     constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
                 private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
                 private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService) {
         this.loading = false;
+        this._updating = false;
     }
 
     ngOnInit() {
@@ -142,6 +144,11 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             return;
         }
 
+        if (this._updating) {
+            afterAction.next(true);
+            return;
+        }
+
         if (afterAction.observers.length === 0) {
             afterAction.subscribe(bool => {
                 this.buildDataFocusPolicy(bool);
@@ -166,6 +173,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         }
 
         this.loading = true;
+        this._updating = true;
         this._taskService.setData(this.taskPanelData.task.stringId, body).subscribe(response => {
             if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
                 this.taskPanelData.changedFields.next(response.changedFields);
@@ -180,6 +188,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             });
             this._snackBar.openInfoSnackBar('Data saved successfully');
             this.loading = false;
+            this._updating = false;
             afterAction.next(true);
         }, error => {
             this._snackBar.openErrorSnackBar('Saving data failed');
@@ -198,6 +207,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                     Object.keys(updatedField).forEach(key => {
                         if (key === 'value') {
                             field.value = this._fieldConvertorService.formatValue(field, updatedField[key]);
+                            field.changed = false;
                         } else if (key === 'behavior' && updatedField.behavior[this.taskPanelData.task.transitionId]) {
                             field.behavior = updatedField.behavior[this.taskPanelData.task.transitionId];
                         } else {
