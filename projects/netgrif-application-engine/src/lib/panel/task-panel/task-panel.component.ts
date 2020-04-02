@@ -58,7 +58,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             this.portal = new ComponentPortal(this.panelContentComponent, null, injector);
         }
         this.taskPanelData.changedFields.subscribe(chFields => {
-            // this.updateFromChangedFields(chFields);
+            this.updateFromChangedFields(chFields);
         });
     }
 
@@ -172,7 +172,10 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             }
             Object.keys(body).forEach(id => {
                 this.taskPanelData.task.dataGroups.forEach( dataGroup => {
-                    dataGroup.fields.find(f => f.stringId === id).changed = false;
+                    const changed = dataGroup.fields.find(f => f.stringId === id);
+                    if (changed !== undefined) {
+                        changed.changed = false;
+                    }
                 });
             });
             this._snackBar.openInfoSnackBar('Data saved successfully');
@@ -349,9 +352,9 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     }
 
     private validateTaskData() {
-        return !this.taskPanelData.task.dataGroups.some( group => {
-            group.fields.some( field => !field.valid);
-        });
+        return !this.taskPanelData.task.dataGroups.some( group =>
+            group.fields.some( field => !field.valid)
+        );
     }
 
     collapse() {

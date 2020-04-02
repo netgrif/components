@@ -25,7 +25,7 @@ export class TaskViewService {
         this._activeFilter = newFilter;
     }
 
-    loadTasks(body = {}) {
+    loadTasks() {
         if (this.loading.getValue()) {
             return;
         }
@@ -38,7 +38,7 @@ export class TaskViewService {
                 tasks.forEach(task => {
                     const header: TaskPanelDefinition = {
                         panelIconField: task.caseTitle,
-                        panelIcon: 'home',
+                        panelIcon: task.icon === undefined ? 'label' : task.icon,
                         featuredFields: [
                             task.title,
                             0,

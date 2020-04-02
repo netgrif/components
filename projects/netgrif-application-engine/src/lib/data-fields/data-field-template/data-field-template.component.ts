@@ -1,7 +1,7 @@
 import {Component, Input, TemplateRef} from '@angular/core';
 import {ResizedEvent} from 'angular-resize-event';
 import {WrappedBoolean} from './models/wrapped-boolean';
-import {DataField} from '../models/abstract-data-field';
+import {DataField, TemplateAppearance} from '../models/abstract-data-field';
 
 @Component({
     selector: 'nae-data-field-template',
@@ -21,6 +21,7 @@ export class DataFieldTemplateComponent {
     }
 
     evaluateTemplateCondition(event: ResizedEvent): void {
-        this._showLargeLayout.value = event.newWidth >= this.layoutChangeWidthBreakpoint;
+        this._showLargeLayout.value = event.newWidth >= this.layoutChangeWidthBreakpoint &&
+            (this.dataField.layout && this.dataField.layout.template === TemplateAppearance.NETGRIF);
     }
 }

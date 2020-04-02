@@ -14,6 +14,13 @@ export interface Layout {
     y: number;
     cols: number;
     rows: number;
+    template: TemplateAppearance;
+    appearance: MaterialAppearance;
+}
+
+export enum TemplateAppearance {
+    MATERIAL = 'material',
+    NETGRIF = 'netgrif',
 }
 
 export enum MaterialAppearance {
