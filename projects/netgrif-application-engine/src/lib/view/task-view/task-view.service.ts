@@ -4,6 +4,7 @@ import {BehaviorSubject, Subject} from 'rxjs';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {UserService} from '../../user/services/user.service';
 
 @Injectable()
 export class TaskViewService {
@@ -13,7 +14,7 @@ export class TaskViewService {
     loading: BehaviorSubject<boolean>;
     private _activeFilter: string;
 
-    constructor(protected _taskService: TaskResourceService) {
+    constructor(protected _taskService: TaskResourceService, private _userService: UserService) {
         this.taskArray = [];
         this.taskData = new Subject<Array<TaskPanelData>>();
         this.loading = new BehaviorSubject<boolean>(false);
@@ -82,6 +83,7 @@ export class TaskViewService {
                         this.taskArray[i].task[key] = tasks[index][key];
                     }
                 });
+                this.blockFields(!(this.taskArray[i].task.user && this.taskArray[i].task.user.email === this._userService.user.email), i);
                 this.taskArray[i].changedFields = this.changedFields;
                 tasks.splice(index, 1);
             }
@@ -93,5 +95,15 @@ export class TaskViewService {
 
     private parseDate(date: Array<number>) {
         return new Date(date[0], date[1] - 1, date[2], date[3], date[4]);
+    }
+
+    private blockFields(bool: boolean, index: number) {
+        if (this.taskArray[index].task.dataGroups) {
+            this.taskArray[index].task.dataGroups.forEach( group => {
+                group.fields.forEach(field => {
+                    field.block = bool;
+                });
+            });
+        }
     }
 }

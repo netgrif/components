@@ -75,6 +75,9 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 this.buildAssignPolicy(false);
             }
         });
+        this.panelRef.afterExpand.subscribe(() => {
+            this.blockFields(!this.canFinish());
+        });
     }
 
     public show($event: MouseEvent): boolean {
@@ -213,6 +216,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                         } else {
                             field[key] = updatedField[key];
                         }
+                        field.update();
                     });
                 }
             });
@@ -362,8 +366,12 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private validateTaskData() {
-        return !this.taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
+    private validateTaskData(): boolean {
+        const valid = !this.taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
+        if (!valid) {
+            this._snackBar.openErrorSnackBar('Some fields have invalid values');
+        }
+        return valid;
     }
 
     collapse() {
@@ -480,7 +488,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     private autoNoDataFinishPolicy(success: boolean): void {
         if (success) {
             if (this.taskPanelData.task.dataSize <= 0) {
-                // TODO finish task
+                this.processTask('finish');
                 this.collapse();
             } else {
                 this.expand();
@@ -507,6 +515,16 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     private autoRequiredDataFocusPolicy(success: boolean) {
         if (success) {
             // TODO focus next()
+        }
+    }
+
+    private blockFields(bool: boolean) {
+        if (this.taskPanelData.task.dataGroups) {
+            this.taskPanelData.task.dataGroups.forEach( group => {
+                group.fields.forEach(field => {
+                    field.block = bool;
+                });
+            });
         }
     }
 }

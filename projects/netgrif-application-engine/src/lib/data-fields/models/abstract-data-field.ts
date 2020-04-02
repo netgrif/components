@@ -155,9 +155,9 @@ export abstract class DataField<T> {
     }
 
     public updateFormControlState(formControl: FormControl): void {
+        formControl.setValue(this.value);
         this._update.subscribe(() => {
-            formControl.setValue(this.value);
-            this.behavior.editable ? formControl.enable() : formControl.disable();
+            this.disabled ? formControl.disable() : formControl.enable();
             formControl.clearValidators();
             formControl.setValidators(this.resolveFormControlValidators());
         });
@@ -165,7 +165,7 @@ export abstract class DataField<T> {
             if (bool) {
                 formControl.disable();
             } else {
-                this.behavior.editable ? formControl.enable() : formControl.disable();
+                this.disabled ? formControl.disable() : formControl.enable();
             }
         });
         this.update();
