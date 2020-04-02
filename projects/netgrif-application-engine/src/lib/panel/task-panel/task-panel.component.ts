@@ -68,7 +68,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 this.buildAssignPolicy(true);
             }
         });
-        this.panelRef.closed.subscribe( () => {
+        this.panelRef.closed.subscribe(() => {
             if (!this.loading) {
                 this.buildAssignPolicy(false);
             }
@@ -143,14 +143,14 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         }
 
         if (afterAction.observers.length === 0) {
-            afterAction.subscribe( bool => {
+            afterAction.subscribe(bool => {
                 this.buildDataFocusPolicy(bool);
             });
         }
 
         const body = {};
-        this.taskPanelData.task.dataGroups.forEach( dataGroup => {
-            dataGroup.fields.forEach( field => {
+        this.taskPanelData.task.dataGroups.forEach(dataGroup => {
+            dataGroup.fields.forEach(field => {
                 if (field.initialized && field.valid && field.changed) {
                     body[field.stringId] = {
                         type: this._fieldConvertorService.resolveType(field),
@@ -171,7 +171,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 this.taskPanelData.changedFields.next(response.changedFields);
             }
             Object.keys(body).forEach(id => {
-                this.taskPanelData.task.dataGroups.forEach( dataGroup => {
+                this.taskPanelData.task.dataGroups.forEach(dataGroup => {
                     dataGroup.fields.find(f => f.stringId === id).changed = false;
                 });
             });
@@ -193,12 +193,13 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 if (chFields[field.stringId]) {
                     const updatedField = chFields[field.stringId];
                     Object.keys(updatedField).forEach(key => {
-                        if (key === 'value')
+                        if (key === 'value') {
                             field.value = this._fieldConvertorService.formatValue(field, updatedField[key]);
-                        else if (key === 'behavior' && updatedField.behavior[this.taskPanelData.task.transitionId])
+                        } else if (key === 'behavior' && updatedField.behavior[this.taskPanelData.task.transitionId]) {
                             field.behavior = updatedField.behavior[this.taskPanelData.task.transitionId];
-                        else
+                        } else {
                             field[key] = updatedField[key];
+                        }
                     });
                 }
             });
@@ -208,7 +209,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
 
     processTask(type: string) {
         const after = new Subject<boolean>();
-        after.subscribe( bool => {
+        after.subscribe(bool => {
             if (bool) {
                 this._taskViewService.loadTasks();
             }
@@ -307,7 +308,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     finish(afterAction = new Subject<boolean>()) {
         const after = new Subject<boolean>();
         if (this.taskPanelData.task.dataSize <= 0) {
-            after.subscribe( boolean => {
+            after.subscribe(boolean => {
                 if (this.taskPanelData.task.dataSize <= 0 || this.validateTaskData()) {
                     this.sendFinishTaskRequest(afterAction);
                     this.collapse();
@@ -317,7 +318,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             this.getTaskDataFields(after);
         } else {
             if (this.validateTaskData()) {
-                after.subscribe( boolean => {
+                after.subscribe(boolean => {
                     this.sendFinishTaskRequest(afterAction);
                     this.collapse();
                     after.complete();
@@ -332,7 +333,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             return;
         }
         this.loading = true;
-        this._taskService.finishTask(this.taskPanelData.task.stringId).subscribe( response => {
+        this._taskService.finishTask(this.taskPanelData.task.stringId).subscribe(response => {
             this.loading = false;
             if (response.success) {
                 this.removeStateData();
@@ -349,9 +350,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     }
 
     private validateTaskData() {
-        return !this.taskPanelData.task.dataGroups.some( group => {
-            group.fields.some( field => !field.valid);
-        });
+        return !this.taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
     }
 
     collapse() {
@@ -365,7 +364,9 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     }
 
     canDo(action) {
-        if (!this.taskPanelData.task.roles || !action || !(this.taskPanelData.task.roles instanceof Object)) return false;
+        if (!this.taskPanelData.task.roles || !action || !(this.taskPanelData.task.roles instanceof Object)) {
+            return false;
+        }
         return Object.keys(this.taskPanelData.task.roles).some(role =>
             this._userService.hasRoleById(role) ? this.taskPanelData.task.roles[role][action] : false
         );
@@ -414,11 +415,11 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     private autoAssignPolicy(success: boolean): void {
         const after = new Subject<boolean>();
         if (success) {
-            after.subscribe( bool => {
+            after.subscribe(bool => {
                 this._taskViewService.loadTasks();
                 if (bool) {
                     const afterLoad = new Subject<boolean>();
-                    afterLoad.subscribe( boolean => {
+                    afterLoad.subscribe(boolean => {
                         if (boolean) {
                             this.buildFinishPolicy(true);
                         }
@@ -430,7 +431,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             });
             this.assign(after);
         } else {
-            after.subscribe( bool => {
+            after.subscribe(bool => {
                 this._taskViewService.loadTasks();
                 this.collapse();
                 after.complete();
@@ -442,7 +443,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     private manualAssignPolicy(success: boolean): void {
         if (success) {
             const afterLoad = new Subject<boolean>();
-            afterLoad.subscribe( boolean => {
+            afterLoad.subscribe(boolean => {
                 if (boolean) {
                     this.buildFinishPolicy(true);
                 }
@@ -485,8 +486,8 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     }
 
     private buildDataFocusPolicy(success: boolean) {
-        if (this.taskPanelData.task.dataFocusPolicy === DataFocusPolicy.autoRequired ) {
-                this.autoRequiredDataFocusPolicy(success);
+        if (this.taskPanelData.task.dataFocusPolicy === DataFocusPolicy.autoRequired) {
+            this.autoRequiredDataFocusPolicy(success);
         }
     }
 
