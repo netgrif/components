@@ -18,17 +18,17 @@ export function changeType<T>(r: any, propertiesParams: string): T {
 
 
 export function getResourceAddress(name: string, resourcesArray: any): string {
-    let url = '';
+    let URL = '';
     if (resourcesArray instanceof Array) {
         resourcesArray.forEach(resource => {
             if (resource.name === name) {
-                url = resource.address;
+                URL = resource.address;
             }
         });
     } else {
         if (resourcesArray.name === name) {
-            url =  resourcesArray.address;
+            URL = resourcesArray.address;
         }
     }
-    return url;
+    return URL;
 }
