@@ -14,14 +14,19 @@ export abstract class AbstractCaseView {
     public headerType: HeaderType = 'case';
     public cases: Array<Case> = [];
     public featuredFields$: BehaviorSubject<Array<string>>;
+    public loading: boolean;
     private _changeHeader$: Observable<HeaderChange>;
 
     protected constructor(protected _sideMenuService: SideMenuService,
                           protected _caseResourceService: CaseResourceService,
                           protected _baseFilter: string = '{}') {
+        this.loading = true;
         this._caseResourceService.getAllCase()
             .subscribe((newCases: Array<Case>) => {
-                this.updateCases(newCases);
+                if (newCases instanceof Array) {
+                    this.updateCases(newCases);
+                }
+                this.loading = false;
             });
         // TODO initial header layout from configuration/preferences
         this.featuredFields$ = new BehaviorSubject<Array<string>>([]);
