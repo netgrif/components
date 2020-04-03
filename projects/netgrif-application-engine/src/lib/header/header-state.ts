@@ -28,6 +28,10 @@ export class HeaderState implements OnDestroy {
         this._lastSelectedHeaders = this._selectedHeaders$.getValue();
     }
 
+    public restoreLastMode(): void {
+        this.mode = this._lastMode;
+    }
+
     public restoreLastState(): void {
         this.mode = this._lastMode;
         this._selectedHeaders$.next(this._lastSelectedHeaders);

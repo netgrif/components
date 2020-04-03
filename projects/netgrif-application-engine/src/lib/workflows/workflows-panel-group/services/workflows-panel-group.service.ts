@@ -67,24 +67,24 @@ export class WorkflowsPanelGroupService {
      * Set the workflow panel titles according to the active headers
      */
     public setPanelsTitles() {
-        this.selectedHeaders = this.headers.selectedHeaders$;
-        this.workflowPanelDefinitions = [];
-        this.petriNetReferences.forEach(petriNet => {
-            this.workflowPanelDefinitions.push({
-                column0: this.setColumnTitle(petriNet, 'column0'),
-                column1: this.setColumnTitle(petriNet, 'column1'),
-                column2: this.setColumnTitle(petriNet, 'column2'),
-                column3: this.setColumnTitle(petriNet, 'column3'),
-                column4: this.setColumnTitle(petriNet, 'column4'),
-                panelContent: {
-                    netIdentifier: petriNet.identifier,
-                    title: petriNet.title,
-                    version: petriNet.version,
-                    author: petriNet.author.fullName,
-                    uploaded: petriNet.createdDate
-                }
-            });
-        });
+        // this.selectedHeaders = this.headers.selectedHeaders$;
+        // this.workflowPanelDefinitions = [];
+        // this.petriNetReferences.forEach(petriNet => {
+        //     this.workflowPanelDefinitions.push({
+        //         column0: this.setColumnTitle(petriNet, 'column0'),
+        //         column1: this.setColumnTitle(petriNet, 'column1'),
+        //         column2: this.setColumnTitle(petriNet, 'column2'),
+        //         column3: this.setColumnTitle(petriNet, 'column3'),
+        //         column4: this.setColumnTitle(petriNet, 'column4'),
+        //         panelContent: {
+        //             netIdentifier: petriNet.identifier,
+        //             title: petriNet.title,
+        //             version: petriNet.version,
+        //             author: petriNet.author.fullName,
+        //             uploaded: petriNet.createdDate
+        //         }
+        //     });
+        // });
     }
 
     private setColumnTitle(petriNet: PetriNetReference, columnId: string): string {

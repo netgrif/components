@@ -21,7 +21,6 @@ export class WorkflowsViewService {
 
     private setPetriNetReferences(petriNetReferences: Array<PetriNetReference>) {
         this.workflowsPanelGroupService.headers = this.workflowsHeaderService.headerState;
-        this.workflowsHeaderService.petriNetReferences = petriNetReferences;
         this.workflowsHeaderService.setPanelsTitles();
         this.workflowsPanelGroupService.petriNetReferences = petriNetReferences;
         this.workflowsPanelGroupService.populateDataFields();

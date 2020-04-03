@@ -21,7 +21,7 @@ export class EditModeComponent implements OnInit {
 
     ngOnInit(): void {
         this.headers = this.headerService.headerState;
-        this.fieldsGroup = this.headerService.headerFieldOptions;
+        this.fieldsGroup = this.headerService.fieldsGroup;
     }
 
     /**

@@ -11,6 +11,7 @@ import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {HeaderColumn, HeaderColumnType} from './models/header-column';
+import {SortDirection} from '@angular/material';
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 
@@ -79,7 +80,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
      * @param active Represents column identifier
      * @param direction Represent one of sort modes: asd, desc and ''
      */
-    public onSortModeEdit({active, direction}): HeaderState {
+    public sortHeaderChanged(active: string, direction: SortDirection): HeaderState {
         let sortChangeDescription: SortChangeDescription;
         Object.keys(this.headerState.selectedHeaders$).forEach(columnId => {
             if (columnId === active) {
@@ -144,7 +145,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerChange$.next({
             headerType: this.headerType,
             type: HeaderMode.EDIT,
-            description: {preferredHeaders: this.headerState.selectedHeaders$}
+            description: {preferredHeaders: null /*this.headerState.selectedHeaders$ */}
         });
         return this._headerState;
     }
@@ -159,15 +160,14 @@ export abstract class AbstractHeaderService implements OnDestroy {
      */
     public changeMode(newMode: HeaderMode, saveLastMode = true): void {
         if (saveLastMode) {
-            this._headerState.lastMode = this._headerState.mode;
-            this._headerState.lastSelectedHeaders = {...this._headerState.selectedHeaders$};
+            this._headerState.saveState();
         }
 
         this._headerState.mode = newMode;
     }
 
     public confirmEditMode(): void {
-        this._headerState.mode = this._headerState.lastMode;
+        this._headerState.restoreLastMode();
     }
 
     /**
@@ -175,14 +175,13 @@ export abstract class AbstractHeaderService implements OnDestroy {
      * Last mode in header is reloaded as well. Possible reloaded modes: sort or search
      */
     public revertEditMode(): void {
-        this._headerState.mode = this._headerState.lastMode;
-        this._headerState.selectedHeaders$ = this._headerState.lastSelectedHeaders;
+        this._headerState.restoreLastState();
         this.setPanelsTitles();
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._headerChange$.next({
             headerType: this.headerType,
             type: HeaderMode.EDIT,
-            description: {preferredHeaders: this._headerState.selectedHeaders$}
+            description: {preferredHeaders: null /*this._headerState.selectedHeaders$*/}
         });
     }
 

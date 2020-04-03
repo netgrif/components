@@ -31,7 +31,7 @@ export abstract class AbstractCaseView {
     }
 
     protected initializeHeader(caseHeaderComponent: HeaderComponent): void {
-        caseHeaderComponent.headerService.selectedHeaders$.subscribe(featuredFields => this.featuredFields$.next(featuredFields));
+        // caseHeaderComponent.headerService.selectedHeaders$.subscribe(featuredFields => this.featuredFields$.next(featuredFields));
         // TODO sort cases on header change
         // this._changeHeader$ = caseHeaderComponent.headerService.headerChange$;
         // this._changeHeader$.subscribe((header: HeaderChange) => {
