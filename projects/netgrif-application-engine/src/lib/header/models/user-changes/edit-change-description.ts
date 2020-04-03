@@ -1,8 +1,8 @@
-import {PreferredHeaders} from '../preferred-headers';
+import {HeaderColumn} from '../header-column';
 
 /**
  * Definition of emitted data when preferred headers are edited
  */
 export interface EditChangeDescription {
-    preferredHeaders: PreferredHeaders;
+    preferredHeaders: Array<HeaderColumn>;
 }

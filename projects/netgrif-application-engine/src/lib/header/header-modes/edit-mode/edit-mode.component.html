@@ -1,15 +1,14 @@
 <div class="header-column-container"
      fxLayout="row"
      fxFlex="100">
-    <mat-form-field *ngFor="let header of this.headers.selectedHeaders$; let i = index" fxLayout="row" fxLayoutAlign=" center" fxFlex
-                    [fxHide.lt-lg]="header.value.columnId=='column4'"
-                    [fxHide.lt-md]="header.value.columnId=='column3' || header.value.columnId=='column4'"
-                    [fxHide.lt-sm]="header.value.columnId=='column2' || header.value.columnId=='column3' || header.value.columnId=='column4'">
-        <mat-label>{{header.value.title}}</mat-label>
-        <mat-select [(value)]="header.value.selected"
-                    (selectionChange)="onColumnEdit(header.value.columnId, $event.value.group.type, $event.value.id)">
-            <mat-optgroup *ngFor="let group of fieldsGroup" [label]="group.groupTitle">
-                <mat-option *ngFor="let field of group.fields" [value]="{group: group, id:field}">
+    <mat-form-field *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index" fxLayout="row" fxLayoutAlign=" center" fxFlex
+                    [fxHide.lt-lg]="i >= 4"
+                    [fxHide.lt-md]="i >= 3"
+                    [fxHide.lt-sm]="i >= 2">
+        <mat-label>{{!!header? header.title : 'Select new header'}}</mat-label>
+        <mat-select (selectionChange)="headerColumnSelected(i, $event.value)">
+            <mat-optgroup *ngFor="let group of this.headerService.fieldsGroup" [label]="group.groupTitle">
+                <mat-option *ngFor="let field of group.fields" [value]="field">
                     {{field.title}}
                 </mat-option>
             </mat-optgroup>

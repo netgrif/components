@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {HeaderState} from '../../header-state';
+import {Component, Input} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 
 @Component({
@@ -7,24 +6,15 @@ import {AbstractHeaderService} from '../../abstract-header-service';
     templateUrl: './search-mode.component.html',
     styleUrls: ['./search-mode.component.scss']
 })
-export class SearchModeComponent implements OnInit {
+export class SearchModeComponent {
 
-    public headers: HeaderState;
     @Input()
     public headerService: AbstractHeaderService;
 
     constructor() {
     }
 
-    ngOnInit(): void {
-        this.headers = this.headerService.headerState;
-    }
-
-    public onUserSearch(columnId: string, searchedQuery: any) {
-        this.headers = this.headerService.onUserSearch(columnId, searchedQuery);
-    }
-
-    public getIterableHeaders() {
-        return {...this.headers.selectedHeaders$};
+    public headerSearchInputChanged(columnIndex: number, searchInput: any) {
+        this.headerService.headerSearchInputChanged(columnIndex, searchInput);
     }
 }

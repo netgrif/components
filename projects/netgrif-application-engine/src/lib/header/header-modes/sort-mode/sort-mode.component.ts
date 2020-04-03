@@ -16,7 +16,8 @@ export class SortModeComponent {
     }
 
     public sortHeaderChanged(sortEvent: Sort): void {
-        this.headerService.sortHeaderChanged(sortEvent.active, sortEvent.direction);
+        const firstDash = sortEvent.active.indexOf('-');
+        this.headerService.sortHeaderChanged(sortEvent.active.substr(firstDash, sortEvent.active.length), sortEvent.direction);
     }
 
 }

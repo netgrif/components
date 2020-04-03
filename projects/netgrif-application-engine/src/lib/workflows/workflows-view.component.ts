@@ -28,8 +28,8 @@ export class WorkflowsViewComponent implements AfterViewInit {
     }
 
     private onHeaderChange(headerChange: HeaderChange): void {
-        if (headerChange != null && headerChange.type === 'edit')
-            this._workflowsViewService.setPanelTitles(this.workflowsHeader.headerService.headerState);
+        // if (headerChange != null && headerChange.type === 'edit')
+            // this._workflowsViewService.setPanelTitles(this.workflowsHeader.headerService.headerState);
     }
 
     public onImportNet() {
