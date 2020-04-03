@@ -147,7 +147,7 @@ pipeline {
     }
 
     unstable {
-        bitbucketStatusNotify(buildState: 'FAILED')
+        bitbucketStatusNotify(buildState: 'SUCCESSFUL')
     }
 
     failure {
