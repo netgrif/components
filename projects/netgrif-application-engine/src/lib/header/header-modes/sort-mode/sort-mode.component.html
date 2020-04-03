@@ -1,4 +1,4 @@
-<div matSort (matSortChange)="onSortModeEdit($event)" fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
+<div matSort (matSortChange)="onSortModeEdit($event)" fxFlex="100" fxLayout="row" fxLayoutAlign=" center" class="header-column-container">
     <div *ngFor="let header of getIterableHeaders()" fxFlex
          fxHide.lt-lg="{{header.columnId==='column4'}}"
          fxHide.lt-md="{{header.columnId==='column3' || header.columnId==='column4'}}"

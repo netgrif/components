@@ -7,6 +7,7 @@ import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {HeaderType} from '../../header/abstract-header-service';
 import {HeaderChange} from '../../header/models/user.changes/header-change';
+import {SortChangeDescription} from '../../header/models/user.changes/sort-change-description';
 
 
 export abstract class AbstractCaseView {
@@ -15,7 +16,6 @@ export abstract class AbstractCaseView {
     public cases: Array<Case> = [];
     public featuredFields$: BehaviorSubject<Array<string>>;
     public loading: boolean;
-    private _changeHeader$: Observable<HeaderChange>;
 
     protected constructor(protected _sideMenuService: SideMenuService,
                           protected _caseResourceService: CaseResourceService,
@@ -35,14 +35,20 @@ export abstract class AbstractCaseView {
     }
 
     protected initializeHeader(caseHeaderComponent: HeaderComponent): void {
-        this._changeHeader$ = caseHeaderComponent.headerService.headerChange$;
-        this._changeHeader$.subscribe((header: HeaderChange) => {
-            console.log(header);
+        caseHeaderComponent.headerService.headerChange$.subscribe((header: HeaderChange) => {
+            if (!header) {
+                return;
+            }
             // TODO: JOZO fix Matove interfaces
+            let params: HttpParams = new HttpParams();
+            if (header.mode === 'sort') {
+                const desc = header.description as SortChangeDescription;
+                params = params.set(header.mode, desc.sortMode + desc.identifier);
+            }
             // const params = new HttpParams().set(header ? header.type : '',
             //     header.description.sortMode && header.description.identifier ?
             //     header.description.sortMode + header.description.identifier : '');
-            const params = new HttpParams().set('sort', 'asc');
+            // const params = new HttpParams().set('sort', 'asc');
             this._caseResourceService.searchCases({}, params)
                 .subscribe((newCases: Array<Case>) => {
                     this.updateCases(newCases);

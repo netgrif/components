@@ -35,7 +35,7 @@ export class CasePanelComponent implements OnInit {
             if (immediate) {
                 if (immediate instanceof Array) {
                     this._featuredFieldsValues.push(
-                        new Date(immediate[0], immediate[0] - 1, immediate[2], immediate[3], immediate[4]).toString());
+                        new Date(immediate[0], immediate[1] - 1, immediate[2], immediate[3], immediate[4]).toString());
                 } else if (id === 'author') {
                     this._featuredFieldsValues.push(immediate.fullName);
                 } else {
