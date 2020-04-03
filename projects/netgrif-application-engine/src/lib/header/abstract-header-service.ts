@@ -80,25 +80,24 @@ export abstract class AbstractHeaderService implements OnDestroy {
      * @param active Represents column identifier
      * @param direction Represent one of sort modes: asd, desc and ''
      */
-    public sortHeaderChanged(active: string, direction: SortDirection): HeaderState {
+    public sortHeaderChanged(active: string, direction: SortDirection) {
         let sortChangeDescription: SortChangeDescription;
-        Object.keys(this.headerState.selectedHeaders$).forEach(columnId => {
-            if (columnId === active) {
+        let foundFirstMatch = false; // column can feature in the header in multiple positions => we don't want to send multiple events
+        this.headerState.selectedHeaders.forEach(header => {
+            if (header.uniqueId === active && !foundFirstMatch) {
                 sortChangeDescription = {
-                    columnId,
-                    identifier: this.headerState.selectedHeaders$[columnId].identifier,
-                    sortMode: direction,
-                    title: this.headerState.selectedHeaders$[columnId].title,
-                    type: this.headerState.selectedHeaders$[columnId].type
+                    sortDirection: direction,
+                    columnType: header.type,
+                    fieldIdentifier: header.fieldIdentifier,
+                    petriNetIdentifier: header.petriNetIdentifier
                 };
-                this.headerState.selectedHeaders$[columnId].sortMode = direction;
+                header.sortDirection = direction;
+                foundFirstMatch = true;
             } else {
-                this.headerState.selectedHeaders$[columnId].sortMode = '';
+                header.sortDirection = '';
             }
         });
-        // TODO pair the search request with the back-end and then return the searched petri net models
         this._headerChange$.next({headerType: this.headerType, type: HeaderMode.SORT, description: sortChangeDescription});
-        return this.headerState;
     }
 
     /**

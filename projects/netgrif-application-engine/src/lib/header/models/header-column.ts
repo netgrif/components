@@ -1,3 +1,5 @@
+import {SortDirection} from '@angular/material';
+
 export enum HeaderColumnType {
     META = 'meta',
     IMMEDIATE = 'immediate',
@@ -5,7 +7,7 @@ export enum HeaderColumnType {
 
 export class HeaderColumn {
 
-    public sortMode: string;
+    public sortDirection: SortDirection;
     public searchInput: any;
 
     constructor(public type: HeaderColumnType,

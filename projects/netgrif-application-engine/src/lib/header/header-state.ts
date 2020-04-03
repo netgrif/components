@@ -19,6 +19,10 @@ export class HeaderState implements OnDestroy {
         return this._selectedHeaders$.asObservable();
     }
 
+    public get selectedHeaders(): Array<HeaderColumn> {
+        return this._selectedHeaders$.getValue();
+    }
+
     constructor(initialHeaders: Array<HeaderColumn>) {
         this._selectedHeaders$ = new BehaviorSubject<Array<HeaderColumn>>(initialHeaders);
     }
