@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import Role from '../models/role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
@@ -13,12 +13,21 @@ import {UserPreferenceService} from './user-preference.service';
 export class UserService {
 
     private _user: User;
+    private _loginCalled: boolean;
 
     constructor(
         // private _store: Store<State>,
         private _preferenceService: UserPreferenceService,
         private _authService: AuthenticationService) {
         this._user = this.emptyUser();
+        this._loginCalled = false;
+        this._authService.authenticated$.subscribe(auth => {
+            if (auth && !this._loginCalled) {
+                this.getUser();
+            } else if (!auth) {
+                this._user = this.emptyUser();
+            }
+        });
     }
 
     get user() {
@@ -57,8 +66,12 @@ export class UserService {
     }
 
     public login(credentials: Credentials): Observable<User> {
+        this._loginCalled = true;
         return this._authService.login(credentials).pipe(
-            tap((authUser: User) => this._user = authUser)
+            tap((authUser: User) => {
+                this._user = authUser;
+                this._loginCalled = false;
+            })
         );
     }
 
@@ -70,6 +83,10 @@ export class UserService {
 
     private emptyUser() {
         return new User('', '', '', '', [], [], []);
+    }
+
+    private getUser(): Observable<object> {
+        return of([]); // TODO call resource service
     }
 
 }

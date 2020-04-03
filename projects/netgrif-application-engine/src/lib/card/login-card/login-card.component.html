@@ -1,40 +1,49 @@
-<div fxLayout="column" fxLayoutAlign="stretch">
-    <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="15px">
-        <mat-card fxFlex="99">
-            <div fxLayout="column" fxLayoutGap="25px">
-                <form [formGroup]="form"
-                      (ngSubmit)="onSubmit(form.value)">
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-form-field fxFlex="96">
-                            <input matInput placeholder="Login" formControlName="login" minlength="4" required>
-                            <mat-error *ngIf="form.controls['login'].hasError('minlength')">
-                                The login name must have at least 4 letters
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-form-field fxFlex="96">
-                            <input matInput placeholder="Enter your password"
-                                   [type]="hidePassword ? 'password' : 'text'"
-                                   formControlName="password" required>
-                            <button mat-icon-button matSuffix
-                                    (click)="hidePassword = !hidePassword"
-                                    [attr.aria-label]="'Hide password'"
-                                    [attr.aria-pressed]="hidePassword">
-                                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+<div fxLayout="row" fxLayoutAlign="center center" class="fill-all-space login-background">
+    <div fxLayout="column" fxLayoutAlign="stretch">
+        <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="15px">
+            <mat-card fxFlex="99">
+                <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="25px">
+                    <form [formGroup]="form"
+                          (ngSubmit)="onSubmit()">
+                        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+                            <mat-icon color="primary">account_circle</mat-icon>
+                            <mat-form-field fxFlex="96">
+                                <input matInput placeholder="Login" formControlName="login" minlength="4" required>
+                                <mat-error *ngIf="form.controls['login'].hasError('minlength')">
+                                    The login name must have at least 4 letters
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+                            <mat-icon color="primary">vpn_key</mat-icon>
+                            <mat-form-field fxFlex="96">
+                                <input matInput placeholder="Enter your password"
+                                       [type]="hidePassword ? 'password' : 'text'"
+                                       formControlName="password" required>
+                                <button mat-icon-button matSuffix type="button"
+                                        (click)="hidePassword = !hidePassword"
+                                        (keypress)="false"
+                                        [attr.aria-label]="'Hide password'"
+                                        [attr.aria-pressed]="hidePassword">
+                                    <mat-icon
+                                        [color]="hidePassword ? undefined : 'accent'">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" style="margin-top:16px;">
+                            <button color="primary" type="submit" mat-raised-button fxFlex="50" fxFlex.xs="70">
+                                Login
                             </button>
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row" class="forgotten-password">
-                        <a fxFlexOffset="2">Forgotten password?</a>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="left" fxLayoutAlign.xs="center">
-                        <button mat-raised-button fxFlexOffset="2" fxFlex="35" fxFlex.xs="70">
-                            Sign up
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </mat-card>
+                        </div>
+                    </form>
+                    <!--          <mat-divider style="margin-top: 16px;margin-bottom: 8px;"></mat-divider>-->
+                    <!--          <span style="margin: 0px;">Cannot login? </span>-->
+                    <!--          <div fxLayout="row" fxLayout="center center" fxLayoutGap="5" style="padding: 8px;min-width: 360px;">-->
+                    <!--            <button mat-flat-button fxFlex="40">Reset password</button>-->
+                    <!--            <button mat-stroked-button color="accent" fxFlex="40">Sign Up</button>-->
+                    <!--          </div>-->
+                </div>
+            </mat-card>
+        </div>
     </div>
 </div>

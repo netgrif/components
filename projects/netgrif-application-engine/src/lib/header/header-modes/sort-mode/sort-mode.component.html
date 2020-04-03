@@ -1,4 +1,4 @@
-<div matSort (matSortChange)="sortHeaderChanged($event)" fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
+<div matSort (matSortChange)="sortHeaderChanged($event)" fxFlex="100" fxLayout="row" fxLayoutAlign=" center" class="header-column-container">
     <div *ngFor="let header of headerService.headerState.selectedHeaders$ | async; let i = index" fxFlex>
         <div *ngIf="!!header; then thenBlock else elseBlock" fxFlex></div>
         <ng-template #thenBlock>

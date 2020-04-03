@@ -1,14 +1,20 @@
-import {DataField, Layout, MaterialAppearance} from '../../models/abstract-data-field';
+import {DataField, Layout} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Moment} from 'moment';
 
 export class DateField extends DataField<Moment> {
     private _validators: Array<ValidatorFn>;
+    public materialAppearance: string;
 
     constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, public validations?: any, public materialAppearance = MaterialAppearance.STANDARD) {
+                description?: string, layout?: Layout, public validations?: any) {
         super(stringId, title, value, behavior, placeholder, description, layout);
+        if (layout) {
+            this.materialAppearance = this.layout.appearance;
+        } else {
+            this.materialAppearance = 'legacy';
+        }
     }
 
     protected valueEquality(a: Moment, b: Moment): boolean {

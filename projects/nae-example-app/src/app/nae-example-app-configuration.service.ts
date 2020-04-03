@@ -18,14 +18,9 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                             logout: 'auth/logout',
                             signup: 'auth/signup'
                         },
-                        sessionBearer: 'x-auth-token'
+                        sessionBearer: 'X-Auth-Token'
                     },
                     resources: [
-                        {
-                            name: 'main',
-                            address: 'http://localhost:8080/api/',
-                            format: 'json'
-                        },
                         {
                             name: 'case',
                             address: 'http://localhost:8080/api/',
@@ -34,6 +29,11 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                         },
                         {
                             name: 'task',
+                            address: 'http://localhost:8080/api/',
+                            format: 'json'
+                        },
+                        {
+                            name: 'petrinet',
                             address: 'http://localhost:8080/api/',
                             format: 'json'
                         }
