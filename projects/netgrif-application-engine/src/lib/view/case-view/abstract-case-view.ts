@@ -49,9 +49,11 @@ export abstract class AbstractCaseView {
             //     header.description.sortMode && header.description.identifier ?
             //     header.description.sortMode + header.description.identifier : '');
             // const params = new HttpParams().set('sort', 'asc');
+            this.loading = true;
             this._caseResourceService.searchCases({}, params)
                 .subscribe((newCases: Array<Case>) => {
                     this.updateCases(newCases);
+                    this.loading = false;
                 });
             // TODO if headers changed their content (different columns should be shown) update featured fields stream
         });

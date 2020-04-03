@@ -155,11 +155,11 @@ export abstract class DataField<T> {
     }
 
     public updateFormControlState(formControl: FormControl): void {
-        formControl.setValue(this.value);
         this._update.subscribe(() => {
             this.disabled ? formControl.disable() : formControl.enable();
             formControl.clearValidators();
             formControl.setValidators(this.resolveFormControlValidators());
+            this._valid = formControl.valid;
         });
         this._block.subscribe(bool => {
             if (bool) {
@@ -169,6 +169,8 @@ export abstract class DataField<T> {
             }
         });
         this.update();
+        formControl.setValue(this.value);
+        this._valid = formControl.valid;
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
