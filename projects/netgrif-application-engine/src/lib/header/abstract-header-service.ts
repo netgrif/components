@@ -1,6 +1,5 @@
 import {Observable, Subject} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
-import {fieldsGroup} from './header-modes/edit-mode/fields.group';
 import {HeaderState} from './header-state';
 import {OnDestroy} from '@angular/core';
 import {SortChangeDescription} from './models/user-changes/sort-change-description';
@@ -11,29 +10,24 @@ import {DataDescription} from './models/data-description';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
-import {Column} from 'netgrif-application-engine';
+import {HeaderColumn, HeaderColumnType} from './models/header-column';
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 
+const MAX_HEADER_COLUMNS = 5;
 
-export class AbstractHeaderService implements OnDestroy {
+export abstract class AbstractHeaderService implements OnDestroy {
+
+    public fieldsGroup: Array<FieldsGroup>;
+
     protected _headerState: HeaderState;
     protected _headerChange$: Subject<HeaderChange>;
-    public petriNetReferences: Array<PetriNetReference>;
-    public fieldsGroup: Array<FieldsGroup> = fieldsGroup;
 
-    constructor(private _headerType: HeaderType) {
+    protected constructor(private _headerType: HeaderType) {
         this._headerChange$ = new Subject<HeaderChange>();
-        this.petriNetReferences = [];
+        this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
+        this.initializeHeaderState();
 
-        // TODO load user preference headers
-        // this._selectedFields$ = new BehaviorSubject([
-        //     new SelectedHeaderField('meta', 'visualId'),
-        //     new SelectedHeaderField('meta', 'title'),
-        //     new SelectedHeaderField('meta', 'author'),
-        //     new SelectedHeaderField('meta', 'creationDate'),
-        //     null
-        // ]);
     }
 
     /**
@@ -43,7 +37,7 @@ export class AbstractHeaderService implements OnDestroy {
         return this._headerChange$.asObservable();
     }
 
-    get selectedHeaders$(): Observable<Array<Column>> {
+    get selectedHeaders$(): Observable<Array<HeaderColumn>> {
         return this._headerState.selectedHeaders$;
     }
 
@@ -55,11 +49,29 @@ export class AbstractHeaderService implements OnDestroy {
         return this._headerType;
     }
 
-    public setFieldsGroupData(petriNetReferences: Array<PetriNetReference>) {
-        petriNetReferences.forEach(petriNet => {
-            this.fieldsGroup.push({groupTitle: petriNet.identifier, fields: petriNet.immediateData});
+    private initializeHeaderState(): void {
+        const defaultHeaders = [].fill(null, 0, MAX_HEADER_COLUMNS);
+        for (let i = 0; i < this.fieldsGroup[0].fields.length && i < MAX_HEADER_COLUMNS; i++) {
+            defaultHeaders[i] = this.fieldsGroup[0].fields[i];
+        }
+        this._headerState = new HeaderState(defaultHeaders);
+    }
+
+    public setAllowedNets(allowedNets: Array<PetriNetReference>) {
+        allowedNets.forEach(allowedNet => {
+            const fieldsGroup: FieldsGroup = {
+                groupTitle: allowedNet.title,
+                fields: []
+            };
+            allowedNet.immediateData.forEach(immediate => {
+                fieldsGroup.fields.push(
+                    new HeaderColumn(HeaderColumnType.IMMEDIATE, immediate.stringId, immediate.title, immediate.type, allowedNet.identifier)
+                );
+            });
         });
     }
+
+    protected abstract createMetaHeaders(): Array<HeaderColumn>;
 
     /**
      * Change sort mode for selected column all other column are set to default sort mode

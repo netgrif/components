@@ -5,6 +5,7 @@ import {TaskHeaderService} from './task-header/task-header.service';
 import {WorkflowsHeaderService} from './workflows-header/workflows-header.service';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
+import {PetriNetReference} from '../resources/interface/petri-net-reference';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit {
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
+    @Input() allowedNets: Array<PetriNetReference> = [];
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 
@@ -25,6 +27,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.resolveHeaderService();
+        this.headerService.setAllowedNets(this.allowedNets);
     }
 
     private resolveHeaderService() {

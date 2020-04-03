@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HeaderState} from '../header-state';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
+import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 
 @Injectable({
     providedIn: 'root'
@@ -10,54 +10,15 @@ export class WorkflowsHeaderService extends AbstractHeaderService {
 
     constructor() {
         super(HeaderType.WORKFLOW);
-        this._headerState = new HeaderState();
-        // TODO simulated resource remove in future
-        this._headerState.selectedHeaders$ = {
-            column0: {
-                type: 'meta',
-                identifier: 'initials',
-                title: 'initials',
-                sortMode: '',
-                searchQuery: '',
-                columnId: 'column0',
-                fieldType: 'text'
-            },
-            column1: {
-                type: 'meta',
-                identifier: 'title',
-                title: 'title',
-                sortMode: '',
-                searchQuery: '',
-                columnId: 'column1',
-                fieldType: 'text'
-            },
-            column2: {
-                type: 'meta',
-                identifier: 'version',
-                title: 'version',
-                sortMode: '',
-                searchQuery: '',
-                columnId: 'column2',
-                fieldType: 'enumeration'
-            },
-            column3: {
-                type: 'meta',
-                identifier: 'author',
-                title: 'author',
-                sortMode: '',
-                searchQuery: '',
-                columnId: 'column3',
-                fieldType: 'text'
-            },
-            column4: {
-                type: 'meta',
-                identifier: 'createdDate',
-                title: 'Upload date',
-                sortMode: '',
-                searchQuery: '',
-                columnId: 'column4',
-                fieldType: 'date'
-            }
-        };
+    }
+
+    protected createMetaHeaders(): Array<HeaderColumn> {
+        return [
+            new HeaderColumn(HeaderColumnType.META, 'initials', 'Initials', 'text'),
+            new HeaderColumn(HeaderColumnType.META, 'title', 'Title', 'text'),
+            new HeaderColumn(HeaderColumnType.META, 'version', 'Version', 'text'),
+            new HeaderColumn(HeaderColumnType.META, 'author', 'Author', 'text'),
+            new HeaderColumn(HeaderColumnType.META, 'createdDate', 'Upload date', 'date'),
+        ];
     }
 }

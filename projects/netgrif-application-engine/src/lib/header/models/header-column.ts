@@ -3,12 +3,16 @@ export enum HeaderColumnType {
     IMMEDIATE = 'immediate',
 }
 
-export interface HeaderColumn {
-    type: HeaderColumnType;
-    fieldIdentifier: string;
-    title: string;
-    sortMode: string;
-    searchInput: string;
-    fieldType: string;
-    petriNetIdentifier?: string;
+export class HeaderColumn {
+
+    public sortMode: string;
+    public searchInput: any;
+
+    constructor(public type: HeaderColumnType,
+                public fieldIdentifier: string,
+                public title: string,
+                public fieldType: string,
+                public petriNetIdentifier?: string
+                ) { }
+
 }

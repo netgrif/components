@@ -1,7 +1,7 @@
 import {HeaderMode} from './models/header-mode';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Column} from 'netgrif-application-engine';
 import {OnDestroy} from '@angular/core';
+import {HeaderColumn} from './models/header-column';
 
 
 /**
@@ -12,15 +12,15 @@ export class HeaderState implements OnDestroy {
     public mode: HeaderMode = HeaderMode.SORT;
 
     private _lastMode: HeaderMode = HeaderMode.SORT;
-    private _selectedHeaders$: BehaviorSubject<Array<Column>>;
-    private _lastSelectedHeaders: Array<Column>;
+    private _selectedHeaders$: BehaviorSubject<Array<HeaderColumn>>;
+    private _lastSelectedHeaders: Array<HeaderColumn>;
 
-    public get selectedHeaders$(): Observable<Array<Column>> {
+    public get selectedHeaders$(): Observable<Array<HeaderColumn>> {
         return this._selectedHeaders$.asObservable();
     }
 
-    constructor(initialHeaders: Array<Column>) {
-        this._selectedHeaders$ = new BehaviorSubject<Array<Column>>(initialHeaders);
+    constructor(initialHeaders: Array<HeaderColumn>) {
+        this._selectedHeaders$ = new BehaviorSubject<Array<HeaderColumn>>(initialHeaders);
     }
 
     public saveState(): void {
