@@ -7,7 +7,9 @@ import {CaseResourceService} from '../../resources/engine-endpoint/case-resource
 import {HeaderChange} from '../../header/models/user-changes/header-change';
 import {HeaderType} from '../../header/models/header-type';
 import {SelectedHeaderField} from '../../header/models/selected-header-field';
-import {SortChangeDescription} from '../../header/models/user.changes/sort-change-description';
+import {SortChangeDescription} from '../../header/models/user-changes/sort-change-description';
+import {HttpParams} from '@angular/common/http';
+import {HeaderMode} from '../../header/models/header-mode';
 
 
 export abstract class AbstractCaseView {
@@ -40,11 +42,12 @@ export abstract class AbstractCaseView {
             if (!header) {
                 return;
             }
-            // TODO: JOZO fix Matove interfaces
             let params: HttpParams = new HttpParams();
-            if (header.mode === 'sort') {
+            if (header.mode === HeaderMode.SORT) {
                 const desc = header.description as SortChangeDescription;
-                params = params.set(header.mode, desc.sortMode + desc.identifier);
+                if (desc.sortDirection !== '') {
+                    params = params.set(header.mode, `${desc.fieldIdentifier},${desc.sortDirection}`);
+                }
             }
             // const params = new HttpParams().set(header ? header.type : '',
             //     header.description.sortMode && header.description.identifier ?

@@ -3,7 +3,7 @@ import {HeaderMode} from '../header-mode';
 import {HeaderType} from '../header-type';
 
 export interface HeaderChange {
-    type: HeaderMode;
+    mode: HeaderMode;
     description: HeaderChangeDescription;
     headerType: HeaderType;
 }
