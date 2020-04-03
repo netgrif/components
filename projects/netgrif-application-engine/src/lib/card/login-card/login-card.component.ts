@@ -11,7 +11,7 @@ import {Credentials} from '../../authentication/models/credentials';
 export class LoginCardComponent extends AbstractCard implements OnInit {
 
     hidePassword = true;
-    @Output() public submit: EventEmitter<Credentials>;
+    @Output() public login: EventEmitter<Credentials>;
 
     constructor(private fb: FormBuilder) {
         super();
@@ -28,6 +28,6 @@ export class LoginCardComponent extends AbstractCard implements OnInit {
         if (!this.form.valid) {
             return;
         }
-        this.submit.emit({username: this.form.controls['login'].value, password: this.form.controls['password'].value});
+        this.login.emit({username: this.form.controls['login'].value, password: this.form.controls['password'].value});
     }
 }
