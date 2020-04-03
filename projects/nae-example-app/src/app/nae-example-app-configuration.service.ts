@@ -18,7 +18,7 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                             logout: 'auth/logout',
                             signup: 'auth/signup'
                         },
-                        sessionBearer: 'x-auth-token'
+                        sessionBearer: 'X-Auth-Token'
                     },
                     resources: [
                         {

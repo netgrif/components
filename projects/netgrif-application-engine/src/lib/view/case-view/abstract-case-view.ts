@@ -23,9 +23,7 @@ export abstract class AbstractCaseView {
         this.loading = true;
         this._caseResourceService.getAllCase()
             .subscribe((newCases: Array<Case>) => {
-                if (newCases instanceof Array) {
-                    this.updateCases(newCases);
-                }
+                this.updateCases(newCases);
                 this.loading = false;
             });
         // TODO initial header layout from configuration/preferences
@@ -56,8 +54,10 @@ export abstract class AbstractCaseView {
     protected updateCases(newCases: Array<Case>): void {
         // TODO is just replacing the existing cases with new ones a good idea? Is there some data, we might loose?
         this.cases.splice(0, this.cases.length);
-        this.cases.push(...newCases);
         this.featuredFields$.next(['visualId', 'title', 'author', 'creationDate', '']);
+        if (!!newCases && Array.isArray(newCases)) {
+            this.cases.push(...newCases);
+        }
     }
 
     public abstract handleCaseClick(clickedCase: Case): void;
