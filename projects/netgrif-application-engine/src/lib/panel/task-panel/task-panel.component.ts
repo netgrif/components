@@ -391,6 +391,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         const valid = !this.taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
         if (!valid) {
             this._snackBar.openErrorSnackBar('Some fields have invalid values');
+            this.taskPanelData.task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
         }
         return valid;
     }
