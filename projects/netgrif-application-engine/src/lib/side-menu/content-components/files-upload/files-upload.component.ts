@@ -1,7 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FileField, FileUploadModel} from '../../data-fields/file-field/models/file-field';
-import {FileFieldService} from '../../data-fields/file-field/services/file-field.service';
-import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token.module';
+import {FileField} from '../../../data-fields/file-field/models/file-field';
+import {FileFieldService} from '../../../data-fields/file-field/services/file-field.service';
+import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
+import {SideMenuControl} from '../../models/side-menu-control';
+import {FileUploadModel} from './models/file-upload-model';
 
 export interface FilesUploadInjectedData {
     fileFieldService: FileFieldService;
@@ -20,8 +22,8 @@ export class FilesUploadComponent implements OnInit {
 
     private readonly _fileFieldService: FileFieldService;
 
-    constructor(@Inject(NAE_SIDE_MENU_DATA) injectedData: FilesUploadInjectedData) {
-        this._fileFieldService = injectedData.fileFieldService;
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) injectedData: SideMenuControl) {
+        // this._fileFieldService = injectedData.fileFieldService;
         this.allFiles = this._fileFieldService.allFiles;
         this.fileField = this._fileFieldService.fileField;
     }

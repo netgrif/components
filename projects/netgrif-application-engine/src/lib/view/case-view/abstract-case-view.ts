@@ -1,4 +1,4 @@
-import {NewCaseComponent} from '../../side-menu/new-case/new-case.component';
+import {NewCaseComponent} from '../../side-menu/content-components/new-case/new-case.component';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {Case} from '../../resources/interface/case';
 import {BehaviorSubject, Observable} from 'rxjs';

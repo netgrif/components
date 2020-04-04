@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {UserValue} from '../../data-fields/user-field/models/user-value';
+import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
-import {UserFieldService} from '../../data-fields/user-field/services/user-field.service';
-import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token.module';
+import {UserFieldService} from '../../../data-fields/user-field/services/user-field.service';
+import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
+import {SideMenuControl} from '../../models/side-menu-control';
 
 export interface UserAssignInjectedData {
     userFieldService: UserFieldService;
@@ -24,8 +25,8 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
     private _currentUser: UserValue;
     private _userFieldService: UserFieldService;
 
-    constructor(@Inject(NAE_SIDE_MENU_DATA) injectedData: UserAssignInjectedData) {
-        this._userFieldService = injectedData.userFieldService;
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) injectedData: SideMenuControl) {
+        // this._userFieldService = injectedData.userFieldService;
 
         // TODO load users
         this.users = [

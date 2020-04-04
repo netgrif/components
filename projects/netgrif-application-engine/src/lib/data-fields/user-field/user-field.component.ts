@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserField} from './models/user-field';
-import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
-import {UserAssignComponent, UserAssignInjectedData} from '../../side-menu/user-assign/user-assign.component';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {UserAssignComponent, UserAssignInjectedData} from '../../side-menu/content-components/user-assign/user-assign.component';
 import {UserFieldService} from './services/user-field.service';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 
 @Component({
     selector: 'nae-user-field',
@@ -29,7 +30,7 @@ export class UserFieldComponent extends AbstractDataFieldComponent implements On
             userFieldService: this._userFieldService
         };
 
-        this._sideMenuService.open(UserAssignComponent, SideMenuWidth.MEDIUM, data);
+        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM, data);
     }
 
 }

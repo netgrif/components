@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {UserValue} from '../../../data-fields/user-field/models/user-value';
+import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';

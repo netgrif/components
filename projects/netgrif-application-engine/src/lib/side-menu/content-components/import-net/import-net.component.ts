@@ -3,18 +3,18 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {HttpClient, HttpErrorResponse, HttpEventType, HttpRequest} from '@angular/common/http';
 import {catchError, last, map, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {FileUploadModel} from './file-upload-model';
+import {FileUploadModel} from '../files-upload/models/file-upload-model';
 import {FormControl} from '@angular/forms';
 
 @Component({
-  selector: 'nae-import-net',
-  templateUrl: './import-net.component.html',
-  styleUrls: ['./import-net.component.scss'],
+    selector: 'nae-import-net',
+    templateUrl: './import-net.component.html',
+    styleUrls: ['./import-net.component.scss'],
     animations: [
         trigger('fadeInOut', [
-            state('in', style({ opacity: 100 })),
+            state('in', style({opacity: 100})),
             transition('* => void', [
-                animate(300, style({ opacity: 0 }))
+                animate(300, style({opacity: 0}))
             ])
         ])
     ]
@@ -33,7 +33,8 @@ export class ImportNetComponent implements OnInit {
     public releaseTypes: string[] = ['Major', 'Minor', 'Patch'];
     public releaseTypeControl = new FormControl(this.releaseTypes[0]);
 
-    constructor(private _http: HttpClient) { }
+    constructor(private _http: HttpClient) {
+    }
 
     ngOnInit() {
     }
@@ -44,8 +45,10 @@ export class ImportNetComponent implements OnInit {
             // tslint:disable-next-line:prefer-for-of
             for (let index = 0; index < fileUpload.files.length; index++) {
                 const file = fileUpload.files[index];
-                this.files.push({ data: file, state: 'in',
-                    inProgress: false, progress: 0, canRetry: false, canCancel: true });
+                this.files.push({
+                    data: file, state: 'in',
+                    inProgress: false, progress: 0, canRetry: false, canCancel: true, successfullyUploaded: false
+                });
             }
             this.uploadFiles();
         };
@@ -64,7 +67,7 @@ export class ImportNetComponent implements OnInit {
 
     private uploadFile(file: FileUploadModel) {
         const fd = new FormData();
-        fd.append(this.param, file.data);
+        fd.append(this.param, file.data as File);
 
         const req = new HttpRequest('POST', this.target, fd, {
             reportProgress: true
@@ -81,7 +84,8 @@ export class ImportNetComponent implements OnInit {
                         return event;
                 }
             }),
-            tap(message => { }),
+            tap(message => {
+            }),
             last(),
             catchError((error: HttpErrorResponse) => {
                 file.inProgress = false;

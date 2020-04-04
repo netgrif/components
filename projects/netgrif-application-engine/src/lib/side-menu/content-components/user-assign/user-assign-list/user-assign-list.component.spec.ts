@@ -2,9 +2,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {UserAssignListComponent} from './user-assign-list.component';
 import {UserAssignItemComponent} from './user-assign-item/user-assign-item.component';
-import {MaterialModule} from '../../../material/material.module';
+import {MaterialModule} from '../../../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {UserValue} from '../../../data-fields/user-field/models/user-value';
+import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {Component} from '@angular/core';
 import {CovalentCommonModule} from '@covalent/core/common';
 

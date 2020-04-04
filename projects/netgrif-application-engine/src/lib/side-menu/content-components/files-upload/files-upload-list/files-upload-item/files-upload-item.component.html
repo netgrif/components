@@ -7,7 +7,7 @@
                               'file-name-download': file.successfullyUploaded,
                               'file-name-upload': !file.successfullyUploaded
               }">{{shortFileName(file)}}</span>
-        <span class="file-size">{{file.data.file.size | decimalBytes }}</span>
+        <span class="file-size">{{fileSize | decimalBytes }}</span>
         <mat-progress-bar color="primary" [value]="file.progress" class="progress-bar-size"></mat-progress-bar>
         <mat-icon (click)="retryFile(file)" *ngIf="file.canRetry" class="retry-upload-file-icon">restore_page</mat-icon>
         <mat-icon (click)="cancelFile(file)" *ngIf="file.canCancel" class="cancel-file-icon">close</mat-icon>

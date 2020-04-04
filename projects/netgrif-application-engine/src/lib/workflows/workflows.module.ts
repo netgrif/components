@@ -8,7 +8,7 @@ import { WorkflowsPanelGroupComponent } from './workflows-panel-group/workflows-
 import {HeaderModule} from '../header/header.module';
 import {PanelModule} from '../panel/panel.module';
 import {DataFieldsModule} from '../data-fields/data-fields.module';
-import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
+import {ImportNetComponent} from '../side-menu/content-components/import-net/import-net.component';
 
 
 @NgModule({
