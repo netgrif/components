@@ -37,6 +37,7 @@ export abstract class DataField<T> {
     private _changed: boolean;
     private _update: Subject<void>;
     private _block: Subject<boolean>;
+    private _touch: Subject<boolean>;
 
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
@@ -47,6 +48,7 @@ export abstract class DataField<T> {
         this._changed = false;
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
+        this._touch = new Subject<boolean>();
     }
 
     get stringId(): string {
@@ -128,6 +130,10 @@ export abstract class DataField<T> {
         this._block.next(set);
     }
 
+    set touch(set: boolean) {
+        this._touch.next(set);
+    }
+
     public update(): void {
         this._update.next();
     }
@@ -155,11 +161,11 @@ export abstract class DataField<T> {
     }
 
     public updateFormControlState(formControl: FormControl): void {
-        formControl.setValue(this.value);
         this._update.subscribe(() => {
             this.disabled ? formControl.disable() : formControl.enable();
             formControl.clearValidators();
             formControl.setValidators(this.resolveFormControlValidators());
+            this._valid = formControl.valid;
         });
         this._block.subscribe(bool => {
             if (bool) {
@@ -168,7 +174,16 @@ export abstract class DataField<T> {
                 this.disabled ? formControl.disable() : formControl.enable();
             }
         });
+        this._touch.subscribe(bool => {
+            if (bool) {
+                formControl.markAsTouched();
+            } else {
+                formControl.markAsUntouched();
+            }
+        });
         this.update();
+        formControl.setValue(this.value);
+        this._valid = formControl.valid;
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
