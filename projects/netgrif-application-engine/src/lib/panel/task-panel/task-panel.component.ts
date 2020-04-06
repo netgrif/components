@@ -15,6 +15,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/task-view.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {take} from 'rxjs/operators';
 
 @Component({
     selector: 'nae-task-panel',
@@ -33,12 +34,14 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     public panelIconField: string;
     public panelRef: MatExpansionPanel;
     private _updating: boolean;
+    private _queue: Subject<boolean>;
 
     constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
                 private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
                 private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService) {
         this.loading = false;
         this._updating = false;
+        this._queue = new Subject<boolean>();
     }
 
     ngOnInit() {
@@ -192,11 +195,18 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             this._snackBar.openInfoSnackBar('Data saved successfully');
             this.loading = false;
             this._updating = false;
+            if (this._queue.observers.length !== 0) {
+                this._queue.next(true);
+            }
             afterAction.next(true);
         }, error => {
             this._snackBar.openErrorSnackBar('Saving data failed');
             this._log.debug(error);
             this.loading = false;
+            this._updating = false;
+            if (this._queue.observers.length !== 0) {
+                this._queue.next(false);
+            }
             afterAction.next(false);
             this._taskViewService.loadTasks();
         });
@@ -336,8 +346,19 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         } else {
             if (this.validateTaskData()) {
                 after.subscribe(boolean => {
-                    this.sendFinishTaskRequest(afterAction);
-                    this.collapse();
+                    if (boolean) {
+                        if (this._updating) {
+                            this._queue.pipe(take(1)).subscribe( bool => {
+                                if (bool) {
+                                    this.sendFinishTaskRequest(afterAction);
+                                    this.collapse();
+                                }
+                            });
+                        } else {
+                            this.sendFinishTaskRequest(afterAction);
+                            this.collapse();
+                        }
+                    }
                     after.complete();
                 });
                 this.updateTaskDataFields(after);
@@ -370,6 +391,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         const valid = !this.taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
         if (!valid) {
             this._snackBar.openErrorSnackBar('Some fields have invalid values');
+            this.taskPanelData.task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
         }
         return valid;
     }
