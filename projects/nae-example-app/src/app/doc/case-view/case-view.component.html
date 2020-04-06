@@ -12,9 +12,9 @@
 
     <nae-header #header [type]="headerType" class="case-header-padding"></nae-header>
 
-    <nae-case-panel *ngFor="let case_ of cases"
+    <nae-case-panel *ngFor="let case_ of cases$ | async"
                     [case_]="case_"
-                    [featuredFields$]="featuredFields$"
+                    [selectedHeaders$]="selectedHeaders$.asObservable()"
                     (click)="handleCaseClick(case_)">
     </nae-case-panel>
 </div>

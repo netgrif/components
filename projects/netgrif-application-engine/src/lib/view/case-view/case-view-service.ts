@@ -21,6 +21,7 @@ export class CaseViewService {
                 protected _caseResourceService: CaseResourceService) {
         this._baseFilter = '{}';
         this._loading$ = new BehaviorSubject<boolean>(false);
+        this._cases$ = new Subject<Array<Case>>();
         this._lastHeaderSearchState = {
             columnType: undefined,
             fieldIdentifier: '',

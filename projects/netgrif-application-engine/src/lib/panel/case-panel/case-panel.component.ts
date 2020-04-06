@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
-import {SelectedHeaderField} from '../../header/models/selected-header-field';
 import {toMoment} from '../../resources/types/nae-date-type';
+import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 
 @Component({
     selector: 'nae-case-panel',
@@ -12,7 +12,7 @@ import {toMoment} from '../../resources/types/nae-date-type';
 export class CasePanelComponent implements OnInit {
 
     @Input() public case_: Case;
-    @Input() public featuredFields$: Observable<Array<SelectedHeaderField>>;
+    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public panelIcon: string;
     public panelIconField: string;
 
@@ -23,7 +23,7 @@ export class CasePanelComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.featuredFields$.subscribe(newFeaturedFields => this.resolveFeaturedFieldsValues(newFeaturedFields));
+        this.selectedHeaders$.subscribe(newSelectedHeaders => this.resolveFeaturedFieldsValues(newSelectedHeaders));
     }
 
     public show(event: MouseEvent): boolean {
@@ -31,7 +31,7 @@ export class CasePanelComponent implements OnInit {
         return false;
     }
 
-    private resolveFeaturedFieldsValues(selectedHeaderFields: Array<SelectedHeaderField>): void {
+    private resolveFeaturedFieldsValues(selectedHeaderFields: Array<HeaderColumn>): void {
         this._featuredFieldsValues.splice(0, this._featuredFieldsValues.length);
         this._firstFeaturedValue = this.getFeaturedValue(selectedHeaderFields[0]);
         for (let i = 1; i < selectedHeaderFields.length; i++) {
@@ -39,15 +39,15 @@ export class CasePanelComponent implements OnInit {
         }
     }
 
-    private getFeaturedValue(selectedHeader: SelectedHeaderField): string {
+    private getFeaturedValue(selectedHeader: HeaderColumn): string {
         if (!selectedHeader) {
            return '';
         }
-        if (selectedHeader.workflowId === 'meta') {
-            switch (selectedHeader.fieldId) {
+        if (selectedHeader.type === HeaderColumnType.META) {
+            switch (selectedHeader.fieldIdentifier) {
                 case 'visualId':
                     return this.case_.visualId;
-                case 'title':
+                case 'titleSortable':
                     return this.case_.title;
                 case 'author':
                     return this.case_.author.fullName;
@@ -55,8 +55,8 @@ export class CasePanelComponent implements OnInit {
                     return toMoment(this.case_.creationDate).format();
             }
         }
-        if (selectedHeader.workflowId === this.case_.processIdentifier) {
-            const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldId);
+        if (selectedHeader.petriNetIdentifier === this.case_.processIdentifier) {
+            const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
             if (immediate && immediate.value !== undefined) {
                 // TODO rendering of non string values
                 return immediate.value;
