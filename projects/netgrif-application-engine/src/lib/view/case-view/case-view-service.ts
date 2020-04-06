@@ -5,6 +5,9 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {SortChangeDescription} from '../../header/models/user-changes/sort-change-description';
 import {Case} from '../../resources/interface/case';
+import {NewCaseComponent} from '../../side-menu/new-case/new-case.component';
+import {HeaderChange} from '../../header/models/user-changes/header-change';
+import {HeaderMode} from '../../header/models/header-mode';
 
 @Injectable()
 export class CaseViewService {
@@ -18,6 +21,11 @@ export class CaseViewService {
                 protected _caseResourceService: CaseResourceService) {
         this._baseFilter = '{}';
         this._loading$ = new BehaviorSubject<boolean>(false);
+        this._lastHeaderSearchState = {
+            columnType: undefined,
+            fieldIdentifier: '',
+            sortDirection: '',
+        };
     }
 
     public get loading(): boolean {
@@ -34,7 +42,10 @@ export class CaseViewService {
 
     public set baseFilter(newFilter: string) {
         this._baseFilter = newFilter;
-        this.loadCases();
+    }
+
+    public get cases$(): Observable<Array<Case>> {
+        return this._cases$.asObservable();
     }
 
     public loadCases(): void {
@@ -56,6 +67,25 @@ export class CaseViewService {
 
     protected updateCases(newCases: Array<Case>): void {
         this._cases$.next(newCases);
+    }
+
+    public createNewCase(): void {
+        this._sideMenuService.open(NewCaseComponent);
+    }
+
+    public registerHeaderChange(headerChange$: Observable<HeaderChange>): void {
+        headerChange$.subscribe((header: HeaderChange) => {
+            if (!header) {
+                return;
+            }
+            if (header.mode === HeaderMode.SORT || header.mode === HeaderMode.SEARCH) {
+                if (header.mode === HeaderMode.SORT) {
+                    this._lastHeaderSearchState = header.description as SortChangeDescription;
+                }
+                // TODO we might not need to search all the time, do some filtering
+                this.loadCases();
+            }
+        });
     }
 
 }
