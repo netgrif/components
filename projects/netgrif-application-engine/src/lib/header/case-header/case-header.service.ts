@@ -14,7 +14,7 @@ export class CaseHeaderService extends AbstractHeaderService {
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),
             new HeaderColumn(HeaderColumnType.META, 'titleSortable', 'Title', 'text'),
             new HeaderColumn(HeaderColumnType.META, 'author', 'Author', 'text'),
-            new HeaderColumn(HeaderColumnType.META, 'creationDate', 'Creation date', 'text'),
+            new HeaderColumn(HeaderColumnType.META, 'creationDateSortable', 'Creation date', 'text'),
         ];
     }
 }

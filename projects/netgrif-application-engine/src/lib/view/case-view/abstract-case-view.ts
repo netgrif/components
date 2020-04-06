@@ -11,17 +11,16 @@ export abstract class AbstractCaseView {
     public readonly headerType: HeaderType = HeaderType.CASE;
     public selectedHeaders$: ReplaySubject<Array<HeaderColumn>>;
     public cases$: BehaviorSubject<Array<Case>>;
-    public loading: boolean;
 
     protected constructor(protected _caseViewService: CaseViewService,
                           baseFilter: string = '{}') {
-        this.loading = true;
         this.selectedHeaders$ = new ReplaySubject<Array<HeaderColumn>>(1);
         this.cases$ = new BehaviorSubject<Array<Case>>([]);
         this._caseViewService.baseFilter = baseFilter;
         this._caseViewService.cases$.subscribe(newCases => {
             this.cases$.next(newCases);
         });
+        this._caseViewService.loadCases();
     }
 
     public createNewCase(): void {

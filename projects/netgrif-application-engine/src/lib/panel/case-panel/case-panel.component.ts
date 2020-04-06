@@ -51,7 +51,7 @@ export class CasePanelComponent implements OnInit {
                     return this.case_.title;
                 case 'author':
                     return this.case_.author.fullName;
-                case 'creationDate':
+                case 'creationDateSortable':
                     return toMoment(this.case_.creationDate).format();
             }
         }
