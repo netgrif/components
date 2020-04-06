@@ -18,11 +18,6 @@ const MAX_HEADER_COLUMNS = 5;
 
 export abstract class AbstractHeaderService implements OnDestroy {
 
-    public fieldsGroup: Array<FieldsGroup>;
-
-    protected _headerState: HeaderState;
-    protected _headerChange$: Subject<HeaderChange>;
-
     protected constructor(private _headerType: HeaderType) {
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
@@ -49,6 +44,15 @@ export abstract class AbstractHeaderService implements OnDestroy {
         return this._headerType;
     }
 
+    public fieldsGroup: Array<FieldsGroup>;
+
+    protected _headerState: HeaderState;
+    protected _headerChange$: Subject<HeaderChange>;
+
+    private static uniqueNetFieldID(netId: string, fieldId: string): string {
+        return `${netId}-${fieldId}`;
+    }
+
     private initializeHeaderState(): void {
         const defaultHeaders = [];
         for (let i = 0; i < MAX_HEADER_COLUMNS; i++) {
@@ -61,6 +65,12 @@ export abstract class AbstractHeaderService implements OnDestroy {
     }
 
     public setAllowedNets(allowedNets: Array<PetriNetReference>) {
+        /* TODO by simply replacing the select options with new object, we don't loose the old references.
+             Columns with headers from nets that are no longer allowed should have their value cleared.
+             Columns with valid values that are not metadata should have their selection remapped to the new objects.
+         */
+
+        const fieldsGroups: Array<FieldsGroup> = [];
         allowedNets.forEach(allowedNet => {
             const fieldsGroup: FieldsGroup = {
                 groupTitle: allowedNet.title,
@@ -71,7 +81,11 @@ export abstract class AbstractHeaderService implements OnDestroy {
                     new HeaderColumn(HeaderColumnType.IMMEDIATE, immediate.stringId, immediate.title, immediate.type, allowedNet.identifier)
                 );
             });
+            fieldsGroups.push(fieldsGroup);
         });
+
+        this.fieldsGroup.slice(1, this.fieldsGroup.length - 1);
+        this.fieldsGroup.push(...fieldsGroups);
     }
 
     protected abstract createMetaHeaders(): Array<HeaderColumn>;

@@ -6,6 +6,7 @@ import {WorkflowsHeaderService} from './workflows-header/workflows-header.servic
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
-    @Input() allowedNets: Array<PetriNetReference> = [];
+    @Input() allowedNets$: Observable<Array<PetriNetReference>> = new Observable<Array<PetriNetReference>>();
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 
@@ -27,7 +28,9 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.resolveHeaderService();
-        this.headerService.setAllowedNets(this.allowedNets);
+        this.allowedNets$.subscribe(newAllowedNets => {
+            this.headerService.setAllowedNets(newAllowedNets);
+        });
     }
 
     private resolveHeaderService() {
