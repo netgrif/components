@@ -22,6 +22,7 @@ import {CaseResourceExampleComponent} from './doc/case-resource-example/case-res
 import {LoginCardComponent} from './doc/cards/login-card/login-card.component';
 import {PasswordCardComponent} from './doc/cards/password-card/password-card.component';
 import {RegisterCardComponent} from './doc/cards/register-card/register-card.component';
+import {CovalentTextEditorComponent} from './doc/covalent-text-editor/covalent-text-editor.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -41,6 +42,7 @@ const routes: Routes = [
     {path: 'tab-view', component: TabViewExampleComponent},
     {path: 'case', component: CaseResourceExampleComponent},
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
+    {path: 'rich-text', component: CovalentTextEditorComponent},
     {path: 'toolbar', component: ToolbarExampleComponent},
     {path: 'task-view', component: TaskViewComponent},
     {path: 'case-view', component: CaseViewComponent},

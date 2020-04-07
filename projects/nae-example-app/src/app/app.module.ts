@@ -60,6 +60,7 @@ import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workfl
 import { LoginCardComponent } from './doc/cards/login-card/login-card.component';
 import { PasswordCardComponent } from './doc/cards/password-card/password-card.component';
 import { RegisterCardComponent } from './doc/cards/register-card/register-card.component';
+import { CovalentTextEditorComponent } from './doc/covalent-text-editor/covalent-text-editor.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -97,6 +98,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         LoginCardComponent,
         PasswordCardComponent,
         RegisterCardComponent,
+        CovalentTextEditorComponent,
     ],
     imports: [
         BrowserModule,

@@ -34,6 +34,8 @@ import {DateAdapter} from '@angular/material';
 import {CustomDateAdapter} from './date-field/models/custom-date-adapter';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
+import { RichTextareaFieldComponent } from './text-field/rich-textarea-field/rich-textarea-field.component';
+import {CovalentTextEditorModule} from '@covalent/text-editor';
 
 @NgModule({
     declarations: [
@@ -56,6 +58,7 @@ import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
         ButtonFieldComponent,
         DataFieldTemplateComponent,
         RequiredLabelComponent,
+        RichTextareaFieldComponent,
     ],
     exports: [
         TextFieldComponent,
