@@ -1,25 +1,20 @@
 <div class="case-view-container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
-
     <mat-card class="case-view-search-container">
         <div fxLayout="row" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center">SEARCH</div>
             <div fxLayoutAlign="end center">
-                <button mat-mini-fab color="primary" (click)="onCreateNewCase()">
+                <button mat-mini-fab color="primary" (click)="createNewCase()">
                     <mat-icon class="net-upload" aria-hidden="false">add</mat-icon>
                 </button>
             </div>
         </div>
     </mat-card>
 
-    <mat-divider class="border-width-2x"></mat-divider>
+    <nae-header #header [type]="headerType" [allowedNets$]="allowedNets$" class="case-header-padding"></nae-header>
 
-    <nae-header #header [type]="headerType"></nae-header>
-
-    <mat-divider class="border-width-2x"></mat-divider>
-
-    <nae-case-panel *ngFor="let casePanelDefinition of casePanelDefinitions"
-                    [casePanelDefinition]="casePanelDefinition"
-                    (click)="redirectToTasksOfCase(casePanelDefinition)">
+    <nae-case-panel *ngFor="let case_ of cases$ | async"
+                    [case_]="case_"
+                    [selectedHeaders$]="selectedHeaders$.asObservable()"
+                    (click)="handleCaseClick(case_)">
     </nae-case-panel>
-
 </div>

@@ -1,11 +1,17 @@
 import {Component, Input} from '@angular/core';
 import {DateTimeField} from './models/date-time-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {DATE_TIME_FORMAT} from '../../moment/time-formats';
+import {NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
+
 
 @Component({
     selector: 'nae-date-time-field',
     templateUrl: './date-time-field.component.html',
-    styleUrls: ['./date-time-field.component.scss']
+    styleUrls: ['./date-time-field.component.scss'],
+    providers: [
+        {provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT}
+    ]
 })
 export class DateTimeFieldComponent extends AbstractDataFieldComponent {
 
@@ -15,7 +21,7 @@ export class DateTimeFieldComponent extends AbstractDataFieldComponent {
         super();
     }
 
-    getErrorMessage() {
+    getErrorMessage(): string {
         if (this.formControl.hasError('validBetween')) {
             const tmp = this.dataField.validations.find(value => value.validationRule.includes('between')).validationRule.split(' ');
             return this.resolveErrorMessage('between', 'Entered date must be in range ' + tmp[1]);

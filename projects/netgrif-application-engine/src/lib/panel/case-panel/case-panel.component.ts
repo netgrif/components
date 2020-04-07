@@ -1,5 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CasePanelDefinition} from './case-panel-definition';
+import {Observable} from 'rxjs';
+import {Case} from '../../resources/interface/case';
+import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
+import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
+import {CaseMetaField} from '../../header/case-header/case-header.service';
+import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 
 @Component({
     selector: 'nae-case-panel',
@@ -8,21 +13,65 @@ import {CasePanelDefinition} from './case-panel-definition';
 })
 export class CasePanelComponent implements OnInit {
 
-    @Input() casePanelDefinition: CasePanelDefinition;
+    @Input() public case_: Case;
+    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public panelIcon: string;
     public panelIconField: string;
+
+    public _firstFeaturedValue: string;
+    public _featuredFieldsValues: Array<string> = [];
 
     constructor() {
     }
 
     ngOnInit() {
-        this.panelIcon = this.casePanelDefinition.panelIcon;
-        this.panelIconField = this.casePanelDefinition.panelIconField;
+        this.selectedHeaders$.subscribe(newSelectedHeaders => this.resolveFeaturedFieldsValues(newSelectedHeaders));
     }
 
     public show(event: MouseEvent): boolean {
         event.stopPropagation();
         return false;
+    }
+
+    private resolveFeaturedFieldsValues(selectedHeaderFields: Array<HeaderColumn>): void {
+        this._featuredFieldsValues.splice(0, this._featuredFieldsValues.length);
+        this._firstFeaturedValue = this.getFeaturedValue(selectedHeaderFields[0]);
+        for (let i = 1; i < selectedHeaderFields.length; i++) {
+            this._featuredFieldsValues.push(this.getFeaturedValue(selectedHeaderFields[i]));
+        }
+    }
+
+    private getFeaturedValue(selectedHeader: HeaderColumn): string {
+        if (!selectedHeader) {
+           return '';
+        }
+        if (selectedHeader.type === HeaderColumnType.META) {
+            switch (selectedHeader.fieldIdentifier) {
+                case CaseMetaField.VISUAL_ID:
+                    return this.case_.visualId;
+                case CaseMetaField.TITLE:
+                    return this.case_.title;
+                case CaseMetaField.AUTHOR:
+                    return this.case_.author.fullName;
+                case CaseMetaField.CREATION_DATE:
+                    return toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING);
+            }
+        }
+        if (selectedHeader.petriNetIdentifier === this.case_.processIdentifier) {
+            const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
+            if (immediate && immediate.value !== undefined) {
+                switch (immediate.type) {
+                    case 'date':
+                        return toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING);
+                    case 'dateTime':
+                        return toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING);
+                    default:
+                        // TODO rendering of other non string values
+                        return immediate.value;
+                }
+            }
+        }
+        return '';
     }
 
 }

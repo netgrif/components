@@ -42,8 +42,9 @@ export abstract class AbstractResourceProvider {
                 if (endpoint.includes(url)) {
                     return endpoint;
                 } else {
-                    return url.includes('https://') ? 'https://' + endpoint.replace(/(^\w+:|^)\/\//, '')
-                        : 'http://' + endpoint.replace(/(^\w+:|^)\/\//, '');
+                    return url.includes('https://') ? 'https://' +
+                        endpoint.replace(/(^\w+:|^)\/\//, '') : 'http://' +
+                        endpoint.replace(/(^\w+:|^)\/\//, '');
                 }
             } else {
                 return endpoint;
@@ -112,27 +113,24 @@ export class ResourceProvider extends AbstractResourceProvider {
         super(httpClient);
     }
 
-    private auth = new HttpHeaders()
-        .set('Authorization', 'Basic c3VwZXJAbmV0Z3JpZi5jb206cGFzc3dvcmQ=');
-
     public get$<T>(endpoint?: string, url ?: string, params ?: Params, headers ?: Headers, responseType ?: ResponseType,
                    observe ?: Observe): Observable<T> {
-        return this.get(endpoint, url, params, this.auth, responseType, observe);
+        return this.get(endpoint, url, params, headers, responseType, observe);
     }
 
     public post$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
                     responseType ?: ResponseType, observe ?: Observe): Observable<T> {
-        return this.post(endpoint, url, body, params, this.auth, responseType, observe);
+        return this.post(endpoint, url, body, params, headers, responseType, observe);
     }
 
     public put$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
                    responseType ?: ResponseType, observe ?: Observe): Observable<T> {
-        return this.put(endpoint, url, body, params, this.auth, responseType, observe);
+        return this.put(endpoint, url, body, params, headers, responseType, observe);
     }
 
     public delete$<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers, responseType ?: ResponseType,
                       observe ?: Observe): Observable<T> {
-        return this.delete(endpoint, url, params, this.auth, responseType, observe);
+        return this.delete(endpoint, url, params, headers, responseType, observe);
     }
 
 }

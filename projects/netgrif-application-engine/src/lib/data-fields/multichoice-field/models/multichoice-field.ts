@@ -12,11 +12,17 @@ export enum MultichoiceFieldView {
 }
 
 export class MultichoiceField  extends DataField<Array<string>> {
+    public materialAppearance: string;
 
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
-                public materialAppearance = MaterialAppearance.STANDARD, private _view = MultichoiceFieldView.DEFAULT) {
+                private _view = MultichoiceFieldView.DEFAULT) {
         super(stringId, title, values, behavior, placeholder, description, layout);
+        if (layout) {
+            this.materialAppearance = this.layout.appearance;
+        } else {
+            this.materialAppearance = 'legacy';
+        }
     }
 
     get choices(): Array<MultichoiceFieldValue> {
@@ -29,9 +35,9 @@ export class MultichoiceField  extends DataField<Array<string>> {
 
     protected valueEquality(a: Array<string>, b: Array<string>): boolean {
         // we assume that multichoice options are always given in the same order
-        return (a === undefined && b === undefined) || (
-            a !== undefined
-            && b !== undefined
+        return (!a && !b) || (
+            !!a
+            && !!b
             && a.length === b.length
             && a.every( (element, index) => element === b[index])
         );

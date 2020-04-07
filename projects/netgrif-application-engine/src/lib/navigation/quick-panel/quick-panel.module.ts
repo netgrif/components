@@ -9,8 +9,18 @@ import {MaterialModule} from '../../material/material.module';
 
 
 @NgModule({
-    declarations: [QuickPanelComponent, LogoutShortcutComponent, LanguageSelectorComponent, InternalLinkComponent],
-    exports: [QuickPanelComponent, LogoutShortcutComponent, LanguageSelectorComponent, InternalLinkComponent],
+    declarations: [
+        QuickPanelComponent,
+        LogoutShortcutComponent,
+        LanguageSelectorComponent,
+        InternalLinkComponent
+    ],
+    exports: [
+        QuickPanelComponent,
+        LogoutShortcutComponent,
+        LanguageSelectorComponent,
+        InternalLinkComponent
+    ],
     imports: [
         CommonModule,
         RouterModule,

@@ -2,9 +2,10 @@ import {Route as NaeRoute} from '../../../../src/lib/configuration/interfaces/sc
 
 export interface TabViewParams {
     tabs: Array<EmbeddedView>;
+    defaultTaskView?: EmbeddedView;
 }
 
-interface EmbeddedView {
+export interface EmbeddedView {
     view?: {
         name: string,
         params?: NaeRoute['layout']['params']

@@ -1,21 +1,22 @@
 import {Author} from './author';
 import {PetriNetObjectId} from './petri-net-object-id';
 import {ImmediateData} from './immediate-data';
-import DateTimeFormat = Intl.DateTimeFormat;
+import {NaeDate} from '../types/nae-date-type';
 
 export interface Case {
-    lastModified: DateTimeFormat;
+    lastModified: NaeDate;
     visualId: string;
     petriNetObjectId: PetriNetObjectId;
     processIdentifier: string;
     title: string;
     color: string;
-    creationDate: DateTimeFormat;
-    immediateData: ImmediateData;
+    creationDate: NaeDate;
+    immediateData: Array<ImmediateData>;
     author: Author;
     resetArcTokens: object;
     stringId: string;
     petriNetId: string;
+    icon: string;
 }
 
 

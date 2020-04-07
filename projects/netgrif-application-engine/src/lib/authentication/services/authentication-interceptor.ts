@@ -3,12 +3,11 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {SessionService} from '../session/services/session.service';
-import {AuthenticationService} from './authentication/authentication.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
-    constructor(private _session: SessionService, private _auth: AuthenticationService) {
+    constructor(private _session: SessionService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -29,7 +28,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
                 if (errorEvent instanceof HttpErrorResponse && errorEvent.status === 401) {
                     console.debug('Authentication token is invalid. Clearing stream');
                     this._session.clear();
-                    this._auth.authenticated$.next(false);
                 }
                 return throwError(errorEvent);
             })

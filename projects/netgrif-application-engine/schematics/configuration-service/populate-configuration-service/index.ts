@@ -3,7 +3,7 @@ import {
     Tree,
 } from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
-import {createFilesFromTemplates, getNaeConfigurationString, getProjectInfo} from '../../utilityFunctions';
+import {createFilesFromTemplates, getNaeConfigurationString, getProjectInfo} from '../../utility-functions';
 
 export function populateConfigurationService(): Rule {
     return (tree: Tree) => {

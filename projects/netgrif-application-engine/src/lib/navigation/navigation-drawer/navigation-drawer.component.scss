@@ -1,5 +1,5 @@
 .drawer-container {
-
+    height: 100%;
 }
 
 .drawer-content {
@@ -9,4 +9,8 @@
 
 .mat-drawer-side {
     border-right: 0;
+}
+
+mat-divider.drawer-divider {
+    width: 90%;
 }

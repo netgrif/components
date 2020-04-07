@@ -8,10 +8,11 @@
         <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
         <input matInput
                [matDatepicker]="datepicker"
-               (click)="datepicker.open()"
-               (keydown.enter)="datepicker.close()"
+               [required]="dataField.behavior.required"
                [placeholder]="dataField.placeholder"
-               [formControl]="formControl">
+               [formControl]="formControl"
+               (click)="datepicker.open()"
+               (keydown.enter)="datepicker.close()">
         <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
         <mat-datepicker #datepicker></mat-datepicker>
         <mat-hint>{{dataField.description}}</mat-hint>

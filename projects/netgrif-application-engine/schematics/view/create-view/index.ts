@@ -3,9 +3,9 @@ import {
     schematic,
     Tree
 } from '@angular-devkit/schematics';
-import {getNaeConfiguration} from '../../utilityFunctions';
+import {getNaeConfiguration} from '../../utility-functions';
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
-import {constructRoutePath, createAppRoutesMap, Route} from '../viewUtilityFunctions';
+import {constructRoutePath, createAppRoutesMap, Route} from '../view-utility-functions';
 import {CreateViewArguments} from '../create-view-prompt/schema';
 
 export function createView(): Rule {

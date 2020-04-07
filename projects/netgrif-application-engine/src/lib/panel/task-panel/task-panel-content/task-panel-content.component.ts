@@ -1,9 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, InjectionToken} from '@angular/core';
 import {GridLayoutElement} from './grid-layout-element';
 import {GridFiller} from './grid-filler';
-import {NAE_TASK_DATA} from '../../../panel-list/task-data-injection-token/task-data-injection-token.module';
 import {FieldConvertorService} from './field-convertor.service';
 import {TaskPanelContentService} from './task-panel-content.service';
+
+export const NAE_TASK_COLS = new InjectionToken<number>('NaeTaskCols');
 
 @Component({
     selector: 'nae-task-panel-content',
@@ -13,13 +14,26 @@ import {TaskPanelContentService} from './task-panel-content.service';
 export class TaskPanelContentComponent {
     dataSource: any[];
     formCols: number;
+    loading: boolean;
 
-    constructor(@Inject(NAE_TASK_DATA) private _taskResources, private _fieldConvertor: FieldConvertorService,
-                private taskPanelContentService: TaskPanelContentService) {
-        // TODO : cols from task
-        this.formCols = 4;
+    constructor(private _fieldConvertor: FieldConvertorService,
+                private taskPanelContentService: TaskPanelContentService,
+                @Inject(NAE_TASK_COLS) public taskCols) {
+        this.loading = true;
+        if (taskCols === undefined) {
+            this.formCols = 4;
+        } else {
+            this.formCols = this.taskCols;
+        }
         this.taskPanelContentService.$shouldCreate.subscribe(data => {
-                        this.dataSource = this.fillBlankSpace(this._taskResources, this.formCols);
+            console.time('time');
+            if (data.length !== 0) {
+                this.dataSource = this.fillBlankSpace(data, this.formCols);
+            } else {
+                this.dataSource = [];
+            }
+            console.timeEnd('time');
+            this.loading = false;
         });
     }
 
@@ -52,7 +66,6 @@ export class TaskPanelContentComponent {
                     layout: {x: 0, y: row, cols: columnGroup, rows: 1}, title: dataGroup.title
                 });
             }
-            // TODO resolve alignment
             dataGroup.fields.sort((a, b) => a.order - b.order);
             dataGroup.fields.forEach(dataField => {
                 if (dataField.layout !== undefined) {
@@ -152,8 +165,6 @@ export class TaskPanelContentComponent {
                 }
             });
         });
-
-        console.log(grid);
         resource.forEach(dataGroup => {
             returnResource.push(...dataGroup.fields.filter(item => !item.behavior.hidden && item.layout !== undefined)
                 .map(item => ({item, type: this._fieldConvertor.resolveType(item), layout: item.layout})));

@@ -113,7 +113,8 @@ export class CaseResourceService {
      * {{baseUrl}}/api/workflow/case/:caseId/field/:fieldId
      */
     public getOptionsEnumeration(caseId: string, fieldId: string): Observable<Case> {
-        return this.provider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL)
+                            .pipe(map(r => changeType(r, undefined)));
     }
 
 }

@@ -2,8 +2,8 @@ import {
     Rule, SchematicsException,
     Tree,
 } from '@angular-devkit/schematics';
-import {fileEntryToTsSource, getProjectInfo} from '../../utilityFunctions';
-import {getRoutesJsonContent} from '../viewUtilityFunctions';
+import {fileEntryToTsSource, getProjectInfo} from '../../utility-functions';
+import {getRoutesJsonContent} from '../view-utility-functions';
 import {Route} from '@angular/router';
 import {findNodes} from '@schematics/angular/utility/ast-utils';
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';

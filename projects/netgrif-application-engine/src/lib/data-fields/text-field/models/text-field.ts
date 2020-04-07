@@ -9,11 +9,16 @@ export enum TextFieldView {
 
 export class TextField extends DataField<string> {
     private _validators: Array<ValidatorFn>;
+    public materialAppearance: string;
 
-    constructor(stringId: string, title: string, value: string, behavior: Behavior,
-                placeholder?: string, description?: string, layout?: Layout, public validations?: Validation[],
-                public materialAppearance = MaterialAppearance.STANDARD, private _view = TextFieldView.DEFAULT) {
+    constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
+                description?: string, layout?: Layout, public validations?: Validation[], private _view = TextFieldView.DEFAULT) {
         super(stringId, title, value, behavior, placeholder, description, layout);
+        if (layout) {
+            this.materialAppearance = this.layout.appearance;
+        } else {
+            this.materialAppearance = 'legacy';
+        }
     }
 
     get view(): TextFieldView {

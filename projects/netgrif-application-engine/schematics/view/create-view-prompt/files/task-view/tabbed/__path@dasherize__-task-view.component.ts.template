@@ -1,0 +1,17 @@
+import {Component, Inject} from '@angular/core';
+import {InjectedTabbedTaskViewData, NAE_TAB_DATA, TabbedTaskView, TaskViewService} from '@netgrif/application-engine';
+
+
+@Component({
+    selector: '<%= prefix %>-<%= dasherize(path) %>-task-view',
+    templateUrl: './<%= dasherize(path) %>-task-view.component.html',
+    styleUrls: ['./<%= dasherize(path) %>-task-view.component.scss'],
+    providers: [TaskViewService]
+})
+export class <%= classify(path) %>TaskViewComponent extends TabbedTaskView {
+
+    constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewData) {
+        super(taskViewService, injectedTabData);
+    }
+
+}

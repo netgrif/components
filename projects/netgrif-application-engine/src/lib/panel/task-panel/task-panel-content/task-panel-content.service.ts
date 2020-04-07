@@ -1,13 +1,12 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {DataGroup} from '../../../resources/interface/data-groups';
+import {Subject} from 'rxjs';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class TaskPanelContentService {
-    $shouldCreate: EventEmitter<DataGroup>;
+    $shouldCreate: Subject<DataGroup[]>;
 
     constructor() {
-        this.$shouldCreate = new EventEmitter<DataGroup>();
+        this.$shouldCreate = new Subject<DataGroup[]>();
     }
 }

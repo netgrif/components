@@ -1,6 +1,9 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
+process = require('process');
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+
 module.exports = function(config) {
     config.set({
         basePath: "",
@@ -16,18 +19,20 @@ module.exports = function(config) {
             require("karma-junit-reporter"),
             require("@angular-devkit/build-angular/plugins/karma"),
         ],
+
         client: {
             clearContext: false, // leave Jasmine Spec Runner output visible in browser
         },
+
         coverageIstanbulReporter: {
             dir: require("path").join(__dirname, "../../coverage/netgrif-application-engine"),
-            reports: ["html", "text-summary", "json-summary"],
+            reports: ["html", "text-summary", "json-summary", "lcov"],
             fixWebpackSourcePaths: true,
         },
         nyanReporter: {
             suppressErrorReport: false, // default is false
             suppressErrorHighlighting: false, // default is false
-            numberOfRainbowLines: 33, // default is 4
+            numberOfRainbowLines: 4, // default is 4
             renderOnRunCompleteOnly: true, // default is false
         },
         junitReporter: {
@@ -38,14 +43,29 @@ module.exports = function(config) {
             nameFormatter: undefined, // function (browser, result) to customize the name attribute in xml testcase element
             classNameFormatter: undefined, // function (browser, result) to customize the classname attribute in xml testcase element
             properties: {}, // key value pair of properties to add to the <properties> section of the report
-            xmlVersion: "1", // use '1' if reporting to be per SonarQube 6.2 XML format
+            xmlVersion: null, // use '1' if reporting to be per SonarQube 6.2 XML format
         },
+
+        customLaunchers: {
+            ChromeHeadlessCI: {
+                base: 'ChromeHeadless',
+                flags: [
+                    '--no-sandbox',
+                    '--headless',
+                    '--disable-gpu',
+                    '--disable-translate',
+                    '--disable-extensions',
+                    '--disable-dev-shm-usage'
+                ]
+            }
+        },
+
         reporters: ["progress", "kjhtml", "coverage-istanbul", "nyan", "junit"],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['ChromeHeadless'],
+        browsers: ['ChromeHeadlessCI'],
         singleRun: true,
         restartOnFileChange: true,
     });

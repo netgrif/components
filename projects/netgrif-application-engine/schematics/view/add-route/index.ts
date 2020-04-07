@@ -3,8 +3,8 @@ import {
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
-import {getRoutesJsonContent, Route} from '../viewUtilityFunctions';
-import {getProjectInfo} from '../../utilityFunctions';
+import {getRoutesJsonContent, Route} from '../view-utility-functions';
+import {getProjectInfo} from '../../utility-functions';
 import {AddRouteArguments} from '../create-view/schema';
 
 export function addRouteToRoutes(schematicArguments: AddRouteArguments): Rule {

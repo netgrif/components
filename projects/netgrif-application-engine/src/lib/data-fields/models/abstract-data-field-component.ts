@@ -12,7 +12,7 @@ export abstract class AbstractDataFieldComponent implements OnInit {
     private readonly _formControl: FormControl;
 
     protected constructor() {
-        this._formControl = new FormControl();
+        this._formControl = new FormControl('', { updateOn: 'blur' });
     }
 
     ngOnInit(): void {

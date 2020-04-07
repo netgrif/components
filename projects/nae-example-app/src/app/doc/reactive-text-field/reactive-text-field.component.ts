@@ -32,6 +32,7 @@ import {
 } from '@netgrif/application-engine';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
+import moment from 'moment';
 
 @Component({
     selector: 'nae-app-reactive-text-field',
@@ -54,7 +55,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // TEXT AREA FIELD
     @ViewChild('textAreaFieldComponent') naeTextAreaField: TextFieldComponent;
     textAreaField = new TextField('textAreaFieldId', 'Reactive text area field', 'hello world', {visible: true, editable: true},
-        undefined, undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
+        undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
 
     // BOOLEAN FIELD
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
@@ -71,11 +72,11 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     // DATE FIELD
     @ViewChild('dateFieldComponent') naeDateField: DateFieldComponent;
-    dateField = new DateField('dateFieldId', 'Reactive date field', new Date('2020-03-09'), {visible: true, editable: true});
+    dateField = new DateField('dateFieldId', 'Reactive date field', moment('2020-03-09'), {visible: true, editable: true});
 
     // DATE TIME FIELD
     @ViewChild('dateTimeFieldComponent') naeDateTimeField: DateTimeFieldComponent;
-    dateTimeField = new DateTimeField('dateTimeFieldId', 'Reactive date time field', new Date('2020-03-09'),
+    dateTimeField = new DateTimeField('dateTimeFieldId', 'Reactive date time field', moment('2020-03-09'),
         {visible: true, editable: true});
 
     // ENUM SELECT FIELD
@@ -87,19 +88,19 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     @ViewChild('enumListFieldComponent') naeEnumListField: EnumerationFieldComponent;
     enumListField = new EnumerationField('enumListFieldId', 'Reactive enum list field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', undefined, MaterialAppearance.STANDARD, EnumerationFieldView.LIST);
+        '', '', undefined, EnumerationFieldView.LIST);
 
     // ENUM AUTO COMPLETE FIELD
     @ViewChild('enumAutoFieldComponent') naeEnumAutoField: EnumerationFieldComponent;
     enumAutoField = new EnumerationField('enumAutoFieldId', 'Reactive enum autocomplete field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', undefined, MaterialAppearance.STANDARD, EnumerationFieldView.AUTOCOMPLETE);
+        '', '', undefined, EnumerationFieldView.AUTOCOMPLETE);
 
     // MULTICHOICE LIST FIELD
     @ViewChild('multichoiceListFieldComponent') naeMultichoiceListField: MultichoiceFieldComponent;
     multichoiceListField = new MultichoiceField('multichoiceListFieldId', 'Reactive multichoice list field', ['a', 'b'],
         [{key: 'a', value: 'Alice'}, {key: 'b', value: 'Bob'}, {key: 'c', value: 'Claire'}], {visible: true, editable: true},
-        undefined, undefined, undefined, undefined, MultichoiceFieldView.LIST);
+        undefined, undefined, undefined, MultichoiceFieldView.LIST);
 
     // MULTICHOICE SELECT FIELD
     @ViewChild('multichoiceSelectFieldComponent') naeMultichoiceSelectField: MultichoiceFieldComponent;
@@ -114,7 +115,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // USER FIELD
     @ViewChild('userFieldComponent') naeUserField: UserFieldComponent;
     userField = new UserField('userFieldId', 'Reactive user field',  {visible: true, editable: true},
-        new UserValue('Name', 'Surname', 'surname@netgrif.com'), []);
+        new UserValue('4', 'Name', 'Surname', 'surname@netgrif.com'), []);
 
     changeStream = new Subject<ChangedFields>();
 

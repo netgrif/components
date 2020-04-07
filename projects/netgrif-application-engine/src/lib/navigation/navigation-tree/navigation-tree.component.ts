@@ -109,6 +109,9 @@ export class NavigationTreeComponent implements OnInit {
     }
 
     private resolveLevels(nodes: NavigationNode[], parentLevel?: number): void {
+        if (!nodes) {
+            return;
+        }
         const currentLevel = parentLevel === null || parentLevel === undefined ? 0 : parentLevel + 1;
         nodes.forEach(node => {
             node.level = currentLevel;

@@ -30,16 +30,19 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
         // TODO load users
         this.users = [
             new UserValue(
+                '4',
                 'Fero',
                 'Galamboši',
                 'ferinko123@gmail.com'
             ),
             new UserValue(
+                '4',
                 'Laco',
                 'Kováč',
                 'kovy789@centrum.sk'
             ),
             new UserValue(
+                '4',
                 'Maťo',
                 'Novák',
                 'martin456@yahoo.com'

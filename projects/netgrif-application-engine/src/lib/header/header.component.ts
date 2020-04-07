@@ -1,28 +1,36 @@
 import {Component, Injector, Input, OnInit} from '@angular/core';
-import {AbstractHeaderService, HeaderType} from './abstract-header-service';
+import {AbstractHeaderService} from './abstract-header-service';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {TaskHeaderService} from './task-header/task-header.service';
+import {WorkflowsHeaderService} from './workflows-header/workflows-header.service';
+import {HeaderType} from './models/header-type';
+import {HeaderMode} from './models/header-mode';
+import {PetriNetReference} from '../resources/interface/petri-net-reference';
+import {Observable} from 'rxjs';
 
 
 @Component({
     selector: 'nae-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    providers: [CaseHeaderService, TaskHeaderService]
+    providers: [CaseHeaderService, TaskHeaderService, WorkflowsHeaderService]
 })
 export class HeaderComponent implements OnInit {
 
-    @Input()
-    type: HeaderType = 'case';
-    @Input()
-    hideEditMode = false;
+    @Input() type: HeaderType = HeaderType.CASE;
+    @Input() hideEditMode = false;
+    @Input() allowedNets$: Observable<Array<PetriNetReference>> = new Observable<Array<PetriNetReference>>();
     public headerService: AbstractHeaderService;
+    public readonly headerModeEnum = HeaderMode;
 
     constructor(private _injector: Injector) {
     }
 
     ngOnInit(): void {
         this.resolveHeaderService();
+        this.allowedNets$.subscribe(newAllowedNets => {
+            this.headerService.setAllowedNets(newAllowedNets);
+        });
     }
 
     private resolveHeaderService() {
@@ -34,7 +42,7 @@ export class HeaderComponent implements OnInit {
                 this.headerService = this._injector.get(TaskHeaderService);
                 break;
             case 'workflow':
-                // TODO
+                this.headerService = this._injector.get(WorkflowsHeaderService);
                 break;
         }
     }

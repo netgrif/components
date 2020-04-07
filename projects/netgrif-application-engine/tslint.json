@@ -20,6 +20,7 @@
             "allow-leading-underscore",
             "allow-pascal-case"
         ],
-        "no-string-literal": false
+        "no-string-literal": false,
+        "no-input-rename": false
     }
 }

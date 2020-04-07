@@ -1,0 +1,17 @@
+import {Component} from '@angular/core';
+import {AbstractTaskView, TaskViewService} from '@netgrif/application-engine';
+
+
+@Component({
+    selector: '<%= prefix %>-<%= dasherize(path) %>-task-view',
+    templateUrl: './<%= dasherize(path) %>-task-view.component.html',
+    styleUrls: ['./<%= dasherize(path) %>-task-view.component.scss'],
+    providers: [TaskViewService]
+})
+export class <%= classify(path) %>TaskViewComponent extends AbstractTaskView {
+
+    constructor(taskViewService: TaskViewService) {
+        super(taskViewService, '{}');
+    }
+
+}

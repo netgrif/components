@@ -9,7 +9,7 @@ import {
     url
 } from '@angular-devkit/schematics';
 import {normalize, strings} from '@angular-devkit/core';
-import {getNaeConfigurationString, getProjectInfo} from "../../utilityFunctions";
+import {getNaeConfigurationString, getProjectInfo} from '../../utility-functions';
 
 export function createConfigurationService(): Rule {
     return (tree: Tree) => {
@@ -17,8 +17,8 @@ export function createConfigurationService(): Rule {
 
         const naeConfig = getNaeConfigurationString(tree);
 
-        if(tree.exists(projectInfo.path+"/"+projectInfo.projectNameDasherized+"-configuration.service.ts")) {
-            tree.delete(projectInfo.path+"/"+projectInfo.projectNameDasherized+"-configuration.service.ts")
+        if (tree.exists(projectInfo.path + '/' + projectInfo.projectNameDasherized + '-configuration.service.ts')) {
+            tree.delete(projectInfo.path + '/' + projectInfo.projectNameDasherized + '-configuration.service.ts');
         }
 
 

@@ -39,5 +39,4 @@ export class PanelComponent implements OnInit, AfterViewInit {
             this.matExpansionPanel.close();
         }
     }
-
 }

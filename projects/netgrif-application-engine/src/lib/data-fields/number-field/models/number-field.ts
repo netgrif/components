@@ -4,10 +4,16 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 
 export class NumberField extends DataField<number> {
     private _validators: Array<ValidatorFn>;
+    public materialAppearance: string;
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[],
-                placeholder?: string, description?: string, layout?: Layout, public materialAppearance = MaterialAppearance.STANDARD) {
+                placeholder?: string, description?: string, layout?: Layout) {
         super(stringId, title, value, behavior, placeholder, description, layout);
+        if (layout) {
+            this.materialAppearance = this.layout.appearance;
+        } else {
+            this.materialAppearance = 'legacy';
+        }
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

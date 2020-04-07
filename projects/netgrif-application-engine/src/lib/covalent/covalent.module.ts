@@ -2,7 +2,9 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CovalentHighlightModule} from '@covalent/highlight';
 import {CovalentMarkdownModule} from '@covalent/markdown';
-import {CovalentCommonModule, CovalentLayoutModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentCommonModule} from '@covalent/core/common';
+import {CovalentLayoutModule} from '@covalent/core/layout';
+import {CovalentStepsModule} from '@covalent/core/steps';
 
 
 @NgModule({

@@ -1,11 +1,17 @@
 import {Component, Input} from '@angular/core';
 import {DateField} from './models/date-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {DATE_FORMAT} from '../../moment/time-formats';
+
 
 @Component({
     selector: 'nae-date-field',
     templateUrl: './date-field.component.html',
-    styleUrls: ['./date-field.component.scss']
+    styleUrls: ['./date-field.component.scss'],
+    providers: [
+        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
+    ]
 })
 export class DateFieldComponent extends AbstractDataFieldComponent {
 
