@@ -7,19 +7,27 @@ export abstract class PanelWithHeaderBinding implements OnInit {
     public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
     public featuredFieldsValues: Array<string> = [];
+    protected _lastSelectedHeaders: Array<HeaderColumn>;
 
     protected constructor() {
     }
 
     ngOnInit(): void {
-        this.selectedHeaders$.subscribe(newSelectedHeaders => this.resolveFeaturedFieldsValues(newSelectedHeaders));
+        this.selectedHeaders$.subscribe(newSelectedHeaders => {
+            this._lastSelectedHeaders = newSelectedHeaders;
+            this.resolveFeaturedFieldsValues();
+        });
     }
 
-    protected resolveFeaturedFieldsValues(selectedHeaderFields: Array<HeaderColumn>): void {
+    protected resolveFeaturedFieldsValues(): void {
+        if (!this._lastSelectedHeaders) {
+            return;
+        }
+
         this.featuredFieldsValues.splice(0, this.featuredFieldsValues.length);
-        this.firstFeaturedValue = this.getFeaturedValue(selectedHeaderFields[0]);
-        for (let i = 1; i < selectedHeaderFields.length; i++) {
-            this.featuredFieldsValues.push(this.getFeaturedValue(selectedHeaderFields[i]));
+        this.firstFeaturedValue = this.getFeaturedValue(this._lastSelectedHeaders[0]);
+        for (let i = 1; i < this._lastSelectedHeaders.length; i++) {
+            this.featuredFieldsValues.push(this.getFeaturedValue(this._lastSelectedHeaders[i]));
         }
     }
 

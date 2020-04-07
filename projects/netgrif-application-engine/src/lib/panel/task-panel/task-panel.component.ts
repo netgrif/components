@@ -52,6 +52,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     ngOnInit() {
         super.ngOnInit();
+        this._taskViewService.taskData.subscribe( () => this.resolveFeaturedFieldsValues());
+
         const providers: StaticProvider[] = [
             {provide: NAE_TASK_COLS, useValue: this.taskPanelData.task.cols},
             {provide: TaskPanelContentService, useValue: this._taskPanelContentService}

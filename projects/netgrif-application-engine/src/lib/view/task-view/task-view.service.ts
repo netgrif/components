@@ -5,7 +5,6 @@ import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../user/services/user.service';
 import {SortableView} from '../abstract/sortable-view';
-import {HttpParams} from '@angular/common/http';
 
 
 @Injectable()
