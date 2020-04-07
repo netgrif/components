@@ -15,23 +15,23 @@
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item *ngIf="canAssign()" (click)="processTask('assign')">
                         <mat-icon>person</mat-icon>
-                        <span>Assign</span>
+                        <span>{{ 'tasks.view.assign' | translate}}</span>
                     </button>
                     <button mat-menu-item *ngIf="canDo('delegate')" (click)="processTask('delegate')">
                         <mat-icon>person_outline</mat-icon>
-                        <span>Delegate</span>
+                        <span>{{ 'tasks.view.delegate' | translate}}</span>
                     </button>
                     <button mat-menu-item *ngIf="canDo('delegate')" (click)="processTask('delegate')">
                         <mat-icon>person_add</mat-icon>
-                        <span>Reassign</span>
+                        <span>{{ 'tasks.view.reassign' | translate}}</span>
                     </button>
                     <button mat-menu-item *ngIf="canCancel()" (click)="processTask('cancel')">
                         <mat-icon>cancel</mat-icon>
-                        <span>Cancel</span>
+                        <span>{{ 'tasks.view.cancel' | translate}}</span>
                     </button>
                     <button mat-menu-item *ngIf="canFinish()" (click)="processTask('finish')">
                         <mat-icon>done</mat-icon>
-                        <span>Finish</span>
+                        <span>{{ 'tasks.view.finish' | translate}}</span>
                     </button>
                 </mat-menu>
                 <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
@@ -39,17 +39,17 @@
     </ng-template>
     <ng-template #taskPanelContent>
         <div class="panel-main-content" fxLayout="column">
-            <div class="task-panel-body" fxFlex="80">
+            <div class="task-panel-body" fxFlex="100">
                 <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>
-            <div class="task-panel-footer" fxLayout="row" fxFlex="20" fxLayoutAlign="end center">
-                <button *ngIf="canAssign()" (click)="processTask('assign')" mat-button>ASSIGN</button>
-                <button *ngIf="canDo('delegate')" (click)="processTask('delegate')" mat-button>DELEGATE</button>
-                <button *ngIf="canReassign()" (click)="processTask('delegate')" mat-button>REASSIGN</button>
-                <button *ngIf="canCancel()" (click)="processTask('cancel')" mat-button>CANCEL</button>
-                <button *ngIf="canFinish()" (click)="processTask('finish')" mat-button>FINISH</button>
-                <button *ngIf="canColapse()" color="primary" (click)="collapse()" mat-button>COLLAPSE</button>
-            </div>
+            <mat-action-row>
+                <button *ngIf="canAssign()" (click)="processTask('assign')" mat-button>{{ 'tasks.view.assign' | translate | uppercase }}</button>
+                <button *ngIf="canDo('delegate')" (click)="processTask('delegate')" mat-button>{{ 'tasks.view.delegate' | translate | uppercase }}</button>
+                <button *ngIf="canReassign()" (click)="processTask('delegate')" mat-button>{{ 'tasks.view.reassign' | translate | uppercase }}</button>
+                <button *ngIf="canCancel()" (click)="processTask('cancel')" mat-button>{{ 'tasks.view.cancel' | translate | uppercase }}</button>
+                <button *ngIf="canFinish()" (click)="processTask('finish')" mat-button>{{ 'tasks.view.finish' | translate | uppercase }}</button>
+                <button *ngIf="canColapse()" color="primary" (click)="collapse()" mat-button>{{ 'tasks.view.collapse' | translate | uppercase }}</button>
+            </mat-action-row>
         </div>
     </ng-template>
 </nae-app-panel>

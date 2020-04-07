@@ -14,11 +14,12 @@ export class RegistrationCardComponent extends AbstractCard implements OnInit {
     public hidePassword: boolean;
     public hideRepeatPassword: boolean;
 
-    constructor(private _fb: FormBuilder, private _log: LoggerService) {
+    constructor(private _fb: FormBuilder) {
         super();
         this.form = _fb.group({
-            login: [''],
             email: ['', Validators.email],
+            name: [''],
+            surname: [''],
             password: [''],
             confirmPassword: ['']
         }, {validator: passwordValidator});
@@ -29,8 +30,8 @@ export class RegistrationCardComponent extends AbstractCard implements OnInit {
     public ngOnInit(): void {
     }
 
-    public onSubmit(form: object): void {
-        this._log.info('Form', form);
+    public onSubmit(): void {
+
     }
 
 }

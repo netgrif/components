@@ -12,6 +12,8 @@ export class LoginCardComponent extends AbstractCard implements OnInit {
 
     hidePassword = true;
     @Output() public login: EventEmitter<Credentials>;
+    @Output() public resetPassword: EventEmitter<void>;
+    @Output() public signUp: EventEmitter<void>;
 
     constructor(private fb: FormBuilder) {
         super();
@@ -30,5 +32,13 @@ export class LoginCardComponent extends AbstractCard implements OnInit {
             return;
         }
         this.login.emit({username: this.form.controls['login'].value, password: this.form.controls['password'].value});
+    }
+
+    resetEmit() {
+        this.resetPassword.emit();
+    }
+
+    signUpEmit() {
+        this.signUp.emit();
     }
 }

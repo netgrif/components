@@ -19,15 +19,15 @@ export class SnackBarService {
   constructor(private _snackBar: MatSnackBar) { }
 
     openInfoSnackBar(message: string, verticalPosition = SnackBarVerticalPosition.BOTTOM,
-                     horizontalPosition = SnackBarHorizontalPosition.CENTER, duration?: number, config?: object) {
-        return this._snackBar.open(message, '✅', Object.assign({
+                     horizontalPosition = SnackBarHorizontalPosition.CENTER, duration = 4000, config?: object) {
+        return this._snackBar.open(message, '✔', Object.assign({
             duration,
             horizontalPosition,
             verticalPosition
         }, config));
     }
     openErrorSnackBar(message: string, verticalPosition = SnackBarVerticalPosition.BOTTOM,
-                      horizontalPosition = SnackBarHorizontalPosition.CENTER, duration?: number, config?: object) {
+                      horizontalPosition = SnackBarHorizontalPosition.CENTER, duration = 4000, config?: object) {
         return this._snackBar.open(message, '❌', Object.assign({
             duration,
             horizontalPosition,
@@ -35,15 +35,15 @@ export class SnackBarService {
         }, config));
     }
     openWarningSnackBar(message: string, verticalPosition = SnackBarVerticalPosition.BOTTOM,
-                        horizontalPosition = SnackBarHorizontalPosition.CENTER, duration?: number, config?: object) {
-        return this._snackBar.open(message, '❕', Object.assign({
+                        horizontalPosition = SnackBarHorizontalPosition.CENTER, duration = 4000, config?: object) {
+        return this._snackBar.open(message, '!', Object.assign({
             duration,
             horizontalPosition,
             verticalPosition
         }, config));
     }
     openGenericSnackBar(message: string, action: string, verticalPosition = SnackBarVerticalPosition.BOTTOM,
-                        horizontalPosition = SnackBarHorizontalPosition.CENTER, duration?: number, config?: object) {
+                        horizontalPosition = SnackBarHorizontalPosition.CENTER, duration = 4000, config?: object) {
         return this._snackBar.open(message, action, Object.assign({
             duration,
             horizontalPosition,
