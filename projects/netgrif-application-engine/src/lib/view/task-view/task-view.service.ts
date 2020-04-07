@@ -34,7 +34,7 @@ export class TaskViewService extends SortableView {
         }
         this.loading.next(true);
 
-        // TODO task sorting is currently not supported
+        // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation
         this._taskService.searchTask(JSON.parse(this._activeFilter)).subscribe(tasks => {
             if (tasks instanceof Array) {
                 if (this.taskArray.length) {
