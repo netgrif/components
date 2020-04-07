@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
-import {toMoment} from '../../resources/types/nae-date-type';
+import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {CaseMetaField} from '../../header/case-header/case-header.service';
+import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 
 @Component({
     selector: 'nae-case-panel',
@@ -53,14 +54,21 @@ export class CasePanelComponent implements OnInit {
                 case CaseMetaField.AUTHOR:
                     return this.case_.author.fullName;
                 case CaseMetaField.CREATION_DATE:
-                    return toMoment(this.case_.creationDate).format();
+                    return toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING);
             }
         }
         if (selectedHeader.petriNetIdentifier === this.case_.processIdentifier) {
             const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
             if (immediate && immediate.value !== undefined) {
-                // TODO rendering of non string values
-                return immediate.value;
+                switch (immediate.type) {
+                    case 'date':
+                        return toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING);
+                    case 'dateTime':
+                        return toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING);
+                    default:
+                        // TODO rendering of other non string values
+                        return immediate.value;
+                }
             }
         }
         return '';
