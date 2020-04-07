@@ -8,6 +8,8 @@ import {Case} from '../../resources/interface/case';
 import {NewCaseComponent} from '../../side-menu/new-case/new-case.component';
 import {HeaderChange} from '../../header/models/user-changes/header-change';
 import {HeaderMode} from '../../header/models/header-mode';
+import {HeaderColumnType} from '../../header/models/header-column';
+import {CaseMetaField} from '../../header/case-header/case-header.service';
 
 @Injectable()
 export class CaseViewService {
@@ -57,13 +59,28 @@ export class CaseViewService {
 
         let params: HttpParams = new HttpParams();
         if (this._lastHeaderSearchState.sortDirection !== '') {
-            params = params.set('sort', `${this._lastHeaderSearchState.fieldIdentifier},${this._lastHeaderSearchState.sortDirection}`);
+            params = params.set('sort', `${this.getSortId()},${this._lastHeaderSearchState.sortDirection}`);
         }
         this._caseResourceService.searchCases(JSON.parse(this._baseFilter), params)
             .subscribe((newCases: Array<Case>) => {
                 this.updateCases(newCases);
                 this.setLoading(false);
             });
+    }
+
+    protected getSortId(): string {
+        if (this._lastHeaderSearchState.columnType === HeaderColumnType.META) {
+            switch (this._lastHeaderSearchState.fieldIdentifier) {
+                case CaseMetaField.TITLE:
+                    return 'titleSortable';
+                case CaseMetaField.CREATION_DATE:
+                    return 'creationDateSortable';
+                default:
+                    return this._lastHeaderSearchState.fieldIdentifier;
+            }
+        } else {
+            return `dataSet.${this._lastHeaderSearchState.fieldIdentifier}.sortable`;
+        }
     }
 
     protected updateCases(newCases: Array<Case>): void {

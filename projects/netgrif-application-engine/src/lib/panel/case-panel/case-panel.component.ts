@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
+import {CaseMetaField} from '../../header/case-header/case-header.service';
 
 @Component({
     selector: 'nae-case-panel',
@@ -45,13 +46,13 @@ export class CasePanelComponent implements OnInit {
         }
         if (selectedHeader.type === HeaderColumnType.META) {
             switch (selectedHeader.fieldIdentifier) {
-                case 'visualId':
+                case CaseMetaField.VISUAL_ID:
                     return this.case_.visualId;
-                case 'titleSortable':
+                case CaseMetaField.TITLE:
                     return this.case_.title;
-                case 'author':
+                case CaseMetaField.AUTHOR:
                     return this.case_.author.fullName;
-                case 'creationDateSortable':
+                case CaseMetaField.CREATION_DATE:
                     return toMoment(this.case_.creationDate).format();
             }
         }
