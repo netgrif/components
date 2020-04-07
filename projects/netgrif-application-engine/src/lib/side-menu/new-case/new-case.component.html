@@ -1,9 +1,8 @@
 <mat-toolbar color="primary">New Case</mat-toolbar>
 <mat-vertical-stepper linear #stepper>
-    <mat-step [stepControl]="processFormControl" errorMessage="Process is required.">
+     <mat-step *ngIf="options.length>1" [stepControl]="processFormControl" errorMessage="Process is required.">
         <ng-template matStepLabel>Choose process</ng-template>
         <mat-form-field>
-
             <input type="text" matInput [formControl]="processFormControl" [matAutocomplete]="auto" required>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
