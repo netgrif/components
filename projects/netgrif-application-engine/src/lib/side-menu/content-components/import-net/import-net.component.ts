@@ -1,10 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {HttpClient, HttpErrorResponse, HttpEventType, HttpRequest} from '@angular/common/http';
 import {catchError, last, map, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {FileUploadModel} from '../files-upload/models/file-upload-model';
 import {FormControl} from '@angular/forms';
+import {SideMenuControl} from '../../models/side-menu-control';
+import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 
 @Component({
     selector: 'nae-import-net',
@@ -23,9 +25,9 @@ export class ImportNetComponent implements OnInit {
     /** Name used in form which will be sent in HTTP request. */
     @Input() param = 'file';
     /** Target URL for file uploading. */
-    @Input() target = 'https://file.io';
-    /** File extension that accepted, same as 'accept' of <input type="file" />.By the default, it's set to 'image/*'. */
-    @Input() accept = 'image/*';
+    @Input() target;
+    /** File extension that accepted, same as 'accept' of <input type="file" />. */
+    @Input() accept = 'text/xml';
     /** Allow you to add handler after its completion. Bubble up response text from remote. */
     @Output() $complete = new EventEmitter<string>();
 
@@ -33,13 +35,13 @@ export class ImportNetComponent implements OnInit {
     public releaseTypes: string[] = ['Major', 'Minor', 'Patch'];
     public releaseTypeControl = new FormControl(this.releaseTypes[0]);
 
-    constructor(private _http: HttpClient) {
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl, private _http: HttpClient) {
     }
 
     ngOnInit() {
     }
 
-    onFileUpload() {
+    public onFileUpload() {
         const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
         fileUpload.onchange = () => {
             // tslint:disable-next-line:prefer-for-of
@@ -55,14 +57,21 @@ export class ImportNetComponent implements OnInit {
         fileUpload.click();
     }
 
-    cancelFile(file: FileUploadModel) {
+    public cancelFile(file: FileUploadModel) {
         file.sub.unsubscribe();
         this.removeFileFromArray(file);
     }
 
-    retryFile(file: FileUploadModel) {
+    public retryFile(file: FileUploadModel) {
         this.uploadFile(file);
         file.canRetry = false;
+    }
+
+    public close(): void {
+        this._sideMenuControl.close({
+            opened: false,
+            message: 'Net was uploaded'
+        });
     }
 
     private uploadFile(file: FileUploadModel) {

@@ -1,10 +1,12 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {SideMenuService} from '../../services/side-menu.service';
+import {STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {SnackBarService} from '../../../snack-bar/snack-bar.service';
+import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
+import {SideMenuControl} from '../../models/side-menu-control';
+
 
 @Component({
     selector: 'nae-new-case',
@@ -16,60 +18,67 @@ import {SnackBarService} from '../../../snack-bar/snack-bar.service';
 })
 export class NewCaseComponent implements OnInit, OnChanges {
 
-    processFormGroup: FormGroup;
-    titleFormGroup: FormGroup;
-    colorFormGroup: FormGroup;
+    public processFormGroup: FormGroup;
+    public titleFormGroup: FormGroup;
+    public colorFormGroup: FormGroup;
 
-    options: string[] = ['Process1', 'Process2', 'Process3'];
-    colors: string[] = ['Black', 'Blue', 'Red', 'Yellow'];
-    filteredOptions: Observable<string[]>;
+    public options: Array<string>;
+    public colors: Array<string>;
+    public filteredOptions: Observable<Array<string>>;
 
-    constructor(private _formBuilder: FormBuilder,
-                private sideMenuService: SideMenuService,
-                // private _caseResourceService: CaseResourceService,
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
+                private _formBuilder: FormBuilder,
                 private _snackBarService: SnackBarService) {
+        this.options = [];
+        this.colors = [];
     }
 
     ngOnInit() {
         this.processFormGroup = new FormGroup({
-            firstCtrl: new FormControl('', Validators.required)
+            processFormControl: new FormControl('', Validators.required)
         });
 
         this.titleFormGroup = this._formBuilder.group({
-            secondCtrl: ['', Validators.required]
+            titleFormControl: ['', Validators.required]
         });
         this.colorFormGroup = this._formBuilder.group({
-            thirdCtrl: ['', Validators.required]
+            colorFormControl: ['', Validators.required]
         });
 
-        this.filteredOptions = this.processFormGroup.get('firstCtrl').valueChanges.pipe(
+        this.filteredOptions = this.processFormGroup.get('processFormControl').valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value))
         );
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.filteredOptions = this.processFormGroup.get('firstCtrl').valueChanges.pipe(
+        this.filteredOptions = this.processFormGroup.get('processFormControl').valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value))
         );
     }
 
+    public stepChange($event: StepperSelectionEvent): void {
+        this._sideMenuControl.publish({
+            opened: true,
+            message: 'Active step has changed',
+            data: $event
+        });
+    }
+
     public createNewCase(): void {
         // TODO: inject resource service - JOZO
-        console.log(this.titleFormGroup.getRawValue());
         const newCase = {
             title: this.titleFormGroup.getRawValue(),
             color: this.colorFormGroup.value,
             netId: this.processFormGroup.getRawValue()
         };
-        // this._caseResourceService.createCase(newCase)
-        //     .subscribe(
-        //         caze => this._snackBarService.openInfoSnackBar('Successful create new case'),
-        //         error => this._snackBarService.openErrorSnackBar(error)
-        //     );
 
-        this.sideMenuService.close();
+        this._sideMenuControl.close({
+            opened: false,
+            message: 'Confirm new case setup',
+            data: newCase
+        });
     }
 
     /**

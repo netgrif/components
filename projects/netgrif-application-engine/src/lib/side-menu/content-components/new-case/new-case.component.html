@@ -1,10 +1,11 @@
 <mat-toolbar color="primary">New Case</mat-toolbar>
-<mat-vertical-stepper linear #stepper>
+<mat-vertical-stepper linear #stepper (selectionChange)="stepChange($event)">
     <mat-step [stepControl]="processFormGroup" errorMessage="Process is required.">
         <form [formGroup]="processFormGroup">
             <ng-template matStepLabel>Choose process</ng-template>
             <mat-form-field>
-                <input matInput placeholder="Process" formControlName="firstCtrl" required [matAutocomplete]="auto">
+                <input matInput placeholder="Process" formControlName="processFormControl" required
+                       [matAutocomplete]="auto">
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                         {{option}}
@@ -20,7 +21,7 @@
         <form [formGroup]="titleFormGroup">
             <ng-template matStepLabel>Fill out case title</ng-template>
             <mat-form-field>
-                <input matInput placeholder="Title" formControlName="secondCtrl" required>
+                <input matInput placeholder="Title" formControlName="titleFormControl" required>
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
@@ -33,12 +34,12 @@
             <ng-template matStepLabel>Choose case color</ng-template>
             <mat-form-field>
                 <mat-label>Color</mat-label>
-                <mat-select formControlName="thirdCtrl" required>
+                <mat-select formControlName="colorFormControl" required>
                     <mat-option *ngFor="let color of colors" [value]="color">
                         {{color}}
                     </mat-option>
                 </mat-select>
-                    <mat-error>You must make a selection</mat-error>
+                <mat-error>You must make a selection</mat-error>
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious>Back</button>

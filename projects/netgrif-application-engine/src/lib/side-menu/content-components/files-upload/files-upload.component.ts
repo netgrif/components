@@ -5,9 +5,6 @@ import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {FileUploadModel} from './models/file-upload-model';
 
-export interface FilesUploadInjectedData {
-    fileFieldService: FileFieldService;
-}
 
 @Component({
     selector: 'nae-files-upload',
@@ -23,7 +20,7 @@ export class FilesUploadComponent implements OnInit {
     private readonly _fileFieldService: FileFieldService;
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) injectedData: SideMenuControl) {
-        // this._fileFieldService = injectedData.fileFieldService;
+        this._fileFieldService = injectedData.data as FileFieldService;
         this.allFiles = this._fileFieldService.allFiles;
         this.fileField = this._fileFieldService.fileField;
     }

@@ -1,4 +1,4 @@
-import {Observable, Subject} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {SideMenuEvent} from './side-menu-event';
 import {SideMenuInjectionData} from './side-menu-injection-data';
 import {MatDrawerToggleResult} from '@angular/material';
@@ -8,8 +8,8 @@ export class SideMenuControl {
 
     private _event$: Subject<SideMenuEvent>;
 
-    constructor(bindingsFunction: (event$: Subject<SideMenuEvent>) => void,
-                sideMenuOpenedStateChange: Observable<boolean>,
+    constructor(bindingsFunction: (event$: Subject<SideMenuEvent>) => void = () => {},
+                sideMenuOpenedStateChange: Observable<boolean> = of(true),
                 private sideMenuCloseFunction: () => Observable<MatDrawerToggleResult>,
                 private readonly _injectionData?: SideMenuInjectionData) {
         this._event$ = new Subject<SideMenuEvent>();

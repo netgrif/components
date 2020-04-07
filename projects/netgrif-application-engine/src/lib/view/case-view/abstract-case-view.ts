@@ -7,6 +7,7 @@ import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {HeaderType} from '../../header/abstract-header-service';
 import {HeaderChange} from '../../header/models/user.changes/header-change';
+import {LoggerService} from '../../logger/services/logger.service';
 
 
 export abstract class AbstractCaseView {
@@ -18,17 +19,27 @@ export abstract class AbstractCaseView {
 
     protected constructor(protected _sideMenuService: SideMenuService,
                           protected _caseResourceService: CaseResourceService,
+                          protected _log: LoggerService,
                           protected _baseFilter: string = '{}') {
-        this._caseResourceService.getAllCase()
-            .subscribe((newCases: Array<Case>) => {
-                this.updateCases(newCases);
-            });
+        this.loadCases();
         // TODO initial header layout from configuration/preferences
         this.featuredFields$ = new BehaviorSubject<Array<string>>([]);
     }
 
     public createNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent);
+        this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
+            this._log.debug($event.message, $event.data);
+            if ($event.data) {
+                this.loadCases();
+            }
+        });
+    }
+
+    public loadCases(): void {
+        this._caseResourceService.getAllCase()
+            .subscribe((newCases: Array<Case>) => {
+                this.updateCases(newCases);
+            });
     }
 
     protected initializeHeader(caseHeaderComponent: HeaderComponent): void {

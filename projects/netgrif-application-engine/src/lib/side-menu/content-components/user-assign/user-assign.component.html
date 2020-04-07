@@ -3,14 +3,14 @@
     <div class="user-assign-search-container">
         <mat-icon class="search-icon">search</mat-icon>
         <mat-form-field class="user-assign-search" color="primary">
-            <input matInput placeholder="Choose user" [value]="control.value" [formControl]="control" #inputSearch>
-            <button mat-button *ngIf="control.value" matSuffix mat-icon-button (click)="control.setValue('')">
+            <input matInput placeholder="Choose user" [value]="formControl.value" [formControl]="formControl" #inputSearch>
+            <button mat-button *ngIf="formControl.value" matSuffix mat-icon-button (click)="formControl.setValue('')">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
     </div>
     <nae-user-assign-list class="list"
-        [control]="control"
+        [control]="formControl"
         [userList]="users"
         (userSelected)="userWasSelected($event)">
     </nae-user-assign-list>

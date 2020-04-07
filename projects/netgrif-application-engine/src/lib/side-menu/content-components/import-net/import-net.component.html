@@ -2,20 +2,6 @@
 
 <div fxLayout="column" class="container">
 
-    <mat-form-field color="accent">
-        <mat-label>Release</mat-label>
-        <mat-select [formControl]="releaseTypeControl">
-            <mat-option *ngFor="let type of releaseTypes" [value]="type">
-                {{type}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <button mat-button color="accent" (click)="onFileUpload()">
-        <mat-icon>file_upload</mat-icon>
-        UPLOAD
-    </button>
-
     <ul>
         <li *ngFor="let file of files" [@fadeInOut]="file.state">
             <mat-progress-bar color="warn" [value]="file.progress"></mat-progress-bar>
@@ -33,5 +19,23 @@
 
     <input type="file" id="fileUpload" name="fileUpload" multiple="multiple"
            accept="{{accept}}" style="display:none;"/>
+
+    <mat-form-field color="accent">
+        <mat-label>Release</mat-label>
+        <mat-select [formControl]="releaseTypeControl">
+            <mat-option *ngFor="let type of releaseTypes" [value]="type">
+                {{type}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" (click)="onFileUpload()">
+        <mat-icon>file_upload</mat-icon>
+        Upload
+    </button>
+
+    <button mat-flat-button (click)="close()">
+        Done
+    </button>
 
 </div>
