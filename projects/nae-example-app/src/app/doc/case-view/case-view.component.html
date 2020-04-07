@@ -14,7 +14,7 @@
 
     <nae-case-panel *ngFor="let case_ of cases$ | async"
                     [case_]="case_"
-                    [selectedHeaders$]="selectedHeaders$.asObservable()"
+                    [selectedHeaders$]="selectedHeaders$"
                     (click)="handleCaseClick(case_)">
     </nae-case-panel>
 </div>

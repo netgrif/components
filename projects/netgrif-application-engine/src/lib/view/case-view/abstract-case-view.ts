@@ -1,20 +1,18 @@
 import {Case} from '../../resources/interface/case';
-import {BehaviorSubject, ReplaySubject} from 'rxjs';
-import {HeaderComponent} from '../../header/header.component';
+import {BehaviorSubject} from 'rxjs';
 import {HeaderType} from '../../header/models/header-type';
 import {CaseViewService} from './case-view-service';
-import {HeaderColumn} from '../../header/models/header-column';
+import {ViewWithHeaders} from '../abstract/view-with-headers';
 
 
-export abstract class AbstractCaseView {
+export abstract class AbstractCaseView extends ViewWithHeaders {
 
     public readonly headerType: HeaderType = HeaderType.CASE;
-    public selectedHeaders$: ReplaySubject<Array<HeaderColumn>>;
     public cases$: BehaviorSubject<Array<Case>>;
 
     protected constructor(protected _caseViewService: CaseViewService,
                           baseFilter: string = '{}') {
-        this.selectedHeaders$ = new ReplaySubject<Array<HeaderColumn>>(1);
+        super(_caseViewService);
         this.cases$ = new BehaviorSubject<Array<Case>>([]);
         this._caseViewService.baseFilter = baseFilter;
         this._caseViewService.cases$.subscribe(newCases => {
@@ -25,11 +23,6 @@ export abstract class AbstractCaseView {
 
     public createNewCase(): void {
         this._caseViewService.createNewCase();
-    }
-
-    protected initializeHeader(caseHeaderComponent: HeaderComponent): void {
-        caseHeaderComponent.headerService.selectedHeaders$.subscribe(selectedHeaders => this.selectedHeaders$.next(selectedHeaders));
-        this._caseViewService.registerHeaderChange(caseHeaderComponent.headerService.headerChange$);
     }
 
     public abstract handleCaseClick(clickedCase: Case): void;

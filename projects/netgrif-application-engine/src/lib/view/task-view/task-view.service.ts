@@ -5,9 +5,11 @@ import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-pa
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../user/services/user.service';
+import {SortableView} from '../abstract/sortable-view';
+
 
 @Injectable()
-export class TaskViewService {
+export class TaskViewService extends SortableView {
     taskArray: Array<TaskPanelData>;
     taskData: Subject<Array<TaskPanelData>>;
     changedFields: Subject<ChangedFields>;
@@ -15,6 +17,7 @@ export class TaskViewService {
     private _activeFilter: string;
 
     constructor(protected _taskService: TaskResourceService, private _userService: UserService) {
+        super();
         this.taskArray = [];
         this.taskData = new Subject<Array<TaskPanelData>>();
         this.loading = new BehaviorSubject<boolean>(false);
@@ -31,6 +34,8 @@ export class TaskViewService {
             return;
         }
         this.loading.next(true);
+
+
         this._taskService.searchTask(JSON.parse(this._activeFilter)).subscribe(tasks => {
             if (tasks instanceof Array) {
                 if (this.taskArray.length) {
@@ -105,5 +110,18 @@ export class TaskViewService {
                 });
             });
         }
+    }
+
+    public reload(): void {
+        this.loadTasks();
+    }
+
+    protected getMetaFieldSortId(): string {
+        // TODO Tasks were not sortable on old frontend sorting might require elastic mapping changes on backend
+        return this._lastHeaderSearchState.fieldIdentifier;
+    }
+
+    protected getDefaultSortParam(): string {
+        return 'priority,desc';
     }
 }

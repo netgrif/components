@@ -6,7 +6,7 @@ import {HeaderMode} from '../../header/models/header-mode';
 import {HttpParams} from '@angular/common/http';
 
 
-export abstract class SortableViewService {
+export abstract class SortableView {
 
     protected _lastHeaderSearchState: SortChangeDescription;
 

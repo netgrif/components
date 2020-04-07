@@ -6,10 +6,10 @@ import {HttpParams} from '@angular/common/http';
 import {Case} from '../../resources/interface/case';
 import {NewCaseComponent} from '../../side-menu/new-case/new-case.component';
 import {CaseMetaField} from '../../header/case-header/case-header.service';
-import {SortableViewService} from '../abstract/sortable-view-service';
+import {SortableView} from '../abstract/sortable-view';
 
 @Injectable()
-export class CaseViewService extends SortableViewService {
+export class CaseViewService extends SortableView {
 
     protected _loading$: BehaviorSubject<boolean>;
     protected _baseFilter: string;
