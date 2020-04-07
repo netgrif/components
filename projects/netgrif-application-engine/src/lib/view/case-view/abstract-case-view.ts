@@ -1,4 +1,4 @@
-import {NewCaseComponent} from '../../side-menu/new-case/new-case.component';
+import {NewCaseComponent} from '../../side-menu/content-components/new-case/new-case.component';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {Case} from '../../resources/interface/case';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -7,6 +7,7 @@ import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {HeaderType} from '../../header/abstract-header-service';
 import {HeaderChange} from '../../header/models/user.changes/header-change';
+import {LoggerService} from '../../logger/services/logger.service';
 import {SortChangeDescription} from '../../header/models/user.changes/sort-change-description';
 
 
@@ -19,19 +20,29 @@ export abstract class AbstractCaseView {
 
     protected constructor(protected _sideMenuService: SideMenuService,
                           protected _caseResourceService: CaseResourceService,
+                          protected _log: LoggerService,
                           protected _baseFilter: string = '{}') {
+        this.loadCases();
+        // TODO initial header layout from configuration/preferences
+        this.featuredFields$ = new BehaviorSubject<Array<string>>([]);
+    }
+
+    public createNewCase(): void {
+        this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
+            this._log.debug($event.message, $event.data);
+            if ($event.data) {
+                this.loadCases();
+            }
+        });
+    }
+
+    public loadCases(): void {
         this.loading = true;
         this._caseResourceService.getAllCase()
             .subscribe((newCases: Array<Case>) => {
                 this.updateCases(newCases);
                 this.loading = false;
             });
-        // TODO initial header layout from configuration/preferences
-        this.featuredFields$ = new BehaviorSubject<Array<string>>([]);
-    }
-
-    public createNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent);
     }
 
     protected initializeHeader(caseHeaderComponent: HeaderComponent): void {

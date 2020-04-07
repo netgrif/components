@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {SideMenuService} from '../side-menu/services/side-menu.service';
-import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
+import {ImportNetComponent} from '../side-menu/content-components/import-net/import-net.component';
 import {WorkflowsViewService} from './services/workflows-view.service';
 import {HeaderComponent} from '../header/header.component';
 import {Observable} from 'rxjs';
