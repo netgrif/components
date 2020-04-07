@@ -22,6 +22,8 @@ export class LoginCardComponent extends AbstractCard implements OnInit {
             password: ['']
         });
         this.login = new EventEmitter<Credentials>();
+        this.resetPassword = new EventEmitter<void>();
+        this.signUp = new EventEmitter<void>();
     }
 
     ngOnInit() {

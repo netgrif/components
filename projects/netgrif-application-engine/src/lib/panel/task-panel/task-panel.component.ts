@@ -293,20 +293,25 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         if (this.loading) {
             return;
         }
-        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM);
+        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM).onClose.subscribe( event => {
+            console.log(event);
+        });
         // this.loading = true;
         //
         // this.taskService.delegateTask(user.id).subscribe(response => {
         //     this.loading = false;
         //     if (response.success) {
-        //         // TODO remove some states ??
+        //         this.removeStateData();
+        //         afterAction.next(true);
         //     } else if (response.error) {
         //         this.snackBar.openErrorSnackBar(response.error);
+        //             afterAction.next(false);
         //     }
         // }, error => {
         //     this.snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
         //      ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
         //     this.loading = false;
+        //      afterAction.next(false);
         // });
     }
 

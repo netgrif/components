@@ -3,24 +3,14 @@ import {TestBed} from '@angular/core/testing';
 import {SelectLanguageService} from './select-language.service';
 import {MaterialModule} from '../material/material.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
-import {HttpLoaderFactory} from './toolbar.module';
-import {HttpClient} from '@angular/common/http';
+import {TranslateLibModule} from '../translate/translate-lib.module';
 
 describe('SelectLanguageService', () => {
   let service: SelectLanguageService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-        imports: [MaterialModule, HttpClientTestingModule,
-            TranslateModule.forChild({
-                loader: {
-                    provide: TranslateLoader,
-                    useFactory: (HttpLoaderFactory),
-                    deps: [HttpClient]
-                }
-            })],
-        providers: [TranslateService, TranslatePipe, TranslateStore, HttpClient],
+        imports: [MaterialModule, HttpClientTestingModule, TranslateLibModule],
     });
     service = TestBed.inject(SelectLanguageService);
   });
