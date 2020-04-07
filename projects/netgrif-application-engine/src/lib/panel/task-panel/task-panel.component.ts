@@ -8,8 +8,8 @@ import {FieldConvertorService} from './task-panel-content/field-convertor.servic
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {UserAssignComponent} from '../../side-menu/user-assign/user-assign.component';
-import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
+import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {UserService} from '../../user/services/user.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {Subject} from 'rxjs';
@@ -17,6 +17,7 @@ import {TaskViewService} from '../../view/task-view/task-view.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 
 @Component({
     selector: 'nae-task-panel',
@@ -292,9 +293,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         if (this.loading) {
             return;
         }
-        this._sideMenuService.open(UserAssignComponent, SideMenuWidth.MEDIUM).subscribe(
-
-        );
+        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM);
         // this.loading = true;
         //
         // this.taskService.delegateTask(user.id).subscribe(response => {

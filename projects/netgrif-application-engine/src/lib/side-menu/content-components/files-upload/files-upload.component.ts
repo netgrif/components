@@ -1,0 +1,43 @@
+import {Component, Inject, OnInit} from '@angular/core';
+import {FileField} from '../../../data-fields/file-field/models/file-field';
+import {FileFieldService} from '../../../data-fields/file-field/services/file-field.service';
+import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
+import {SideMenuControl} from '../../models/side-menu-control';
+import {FileUploadModel} from './models/file-upload-model';
+
+
+@Component({
+    selector: 'nae-files-upload',
+    templateUrl: './files-upload.component.html',
+    styleUrls: ['./files-upload.component.scss']
+})
+export class FilesUploadComponent implements OnInit {
+
+    public multiple: string;
+    public fileField: FileField;
+    public allFiles: Array<FileUploadModel> = [];
+
+    private readonly _fileFieldService: FileFieldService;
+
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) injectedData: SideMenuControl) {
+        this._fileFieldService = injectedData.data as FileFieldService;
+        this.allFiles = this._fileFieldService.allFiles;
+        this.fileField = this._fileFieldService.fileField;
+    }
+
+    ngOnInit() {
+        this.multiple = this.fileField.maxUploadFiles > 1 ? 'multiple' : undefined;
+    }
+
+    public onFileUpload() {
+        this._fileFieldService.fileUpload();
+    }
+
+    public onSend() {
+        this._fileFieldService.onSend();
+    }
+
+    get fileFieldService(): FileFieldService {
+        return this._fileFieldService;
+    }
+}

@@ -23,7 +23,7 @@ export abstract class TabbedCaseView extends AbstractCaseView {
                           baseFilter: string = '{}',
                           protected _autoswitchToTaskTab: boolean = true) {
 
-        super(sideMenuService, caseResourceService, baseFilter);
+        super(sideMenuService, caseResourceService, _loggerService, baseFilter);
         this._correctlyInjected = !!this._injectedTabData.tabViewComponent && this._injectedTabData.tabViewOrder !== undefined;
         if (!this._correctlyInjected) {
             this._loggerService.warn('TabbedCaseView must inject a filled object of type InjectedTabbedCaseViewData to work properly!');

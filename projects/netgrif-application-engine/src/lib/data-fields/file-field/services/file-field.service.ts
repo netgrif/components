@@ -1,14 +1,11 @@
 import {ElementRef, Injectable} from '@angular/core';
 import * as JSZip from 'jszip';
-import {FileField, FileUploadModel} from '../models/file-field';
+import {FileField, FileUploadDataModel} from '../models/file-field';
 import {FileUploadService} from './upload/file-upload.service';
 import {FileDownloadService} from './download/file-download.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
-import {
-    SnackBarHorizontalPosition,
-    SnackBarService,
-    SnackBarVerticalPosition
-} from '../../../snack-bar/snack-bar.service';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../snack-bar/snack-bar.service';
+import {FileUploadModel} from '../../../side-menu/content-components/files-upload/models/file-upload-model';
 
 @Injectable()
 export class FileFieldService {
@@ -21,7 +18,7 @@ export class FileFieldService {
                 private _fileDownloadService: FileDownloadService,
                 private _sideMenuService: SideMenuService,
                 private _snackBarService: SnackBarService) {
-        this._fileUploadService.fileUploadCompleted.subscribe( () => {
+        this._fileUploadService.fileUploadCompleted.subscribe(() => {
             this.fileField.value = this.resolveFilesArray();
         });
     }
@@ -30,7 +27,7 @@ export class FileFieldService {
         // ZIPPING
         const zip = new JSZip();
         this.allFiles.forEach(file => {
-            zip.folder('fileFieldZipFolder').file(file.data.file.name);
+            zip.folder('fileFieldZipFolder').file((file.data as FileUploadDataModel).file.name);
         });
         this._fileUploadService.uploadFile(zip.files);
         this._sideMenuService.close();
@@ -48,8 +45,9 @@ export class FileFieldService {
     }
 
     public onFileDownload(file: FileUploadModel) {
-        if (!file.successfullyUploaded)
+        if (!file.successfullyUploaded) {
             return;
+        }
         this._fileDownloadService.downloadFile(file);
     }
 
@@ -80,12 +78,14 @@ export class FileFieldService {
                     canRetry: false, canCancel: true,
                     successfullyUploaded: false
                 };
-                if (this.allFiles.find(f => f.data.file.name === fileUploadModel.data.file.name)) {
+                if (this.allFiles.find(f => (f.data as FileUploadDataModel).file.name === fileUploadModel.data.file.name)) {
                     this._snackBarService.openWarningSnackBar('You cannot upload two of the same files',
                         SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
                     return;
                 }
-                if (this.maxUploadSizeControl(fileUploadModel)) return;
+                if (this.maxUploadSizeControl(fileUploadModel)) {
+                    return;
+                }
 
                 this.allFiles.push(fileUploadModel);
                 // One by one upload file
@@ -99,7 +99,7 @@ export class FileFieldService {
     }
 
     private maxUploadSizeControl(file: FileUploadModel) {
-        this.fileField.filesSize += file.data.file.size;
+        this.fileField.filesSize += (file.data as FileUploadDataModel).file.size;
         if (this.fileField.filesSize > this.fileField.maxUploadSizeInBytes) {
             this._snackBarService.openWarningSnackBar('Files size exceeded allowed limit',
                 SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
@@ -109,6 +109,6 @@ export class FileFieldService {
     }
 
     private resolveFilesArray(): Array<File> {
-        return this.allFiles.filter(f => f.successfullyUploaded).map(f => f.data.file);
+        return this.allFiles.filter(f => f.successfullyUploaded).map(f => (f.data as FileUploadDataModel).file);
     }
 }

@@ -1,37 +1,36 @@
-import {Injectable, Injector, StaticProvider, TemplateRef, Type} from '@angular/core';
-import {MatDrawerToggleResult, MatSidenav} from '@angular/material';
+import {Injectable, Injector, TemplateRef, Type} from '@angular/core';
+import {MatDrawerToggleResult} from '@angular/material';
 import {ComponentPortal, ComponentType, TemplatePortal} from '@angular/cdk/portal';
-import {from, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
+import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token.module';
+import {SideMenuSize} from '../models/side-menu-size';
+import {SideMenuContainerComponent} from '../side-menu-container/side-menu-container.component';
 import {PortalWrapper} from '../models/portal-wrapper';
-import {NAE_SIDE_MENU_DATA} from '../side-menu-injection-token/side-menu-injection-token.module';
-
-export enum SideMenuWidth {
-    SMALL = 'side-menu-width-small',
-    MEDIUM = 'side-menu-width-medium',
-    LARGE = 'side-menu-width-large'
-}
+import {SideMenuRef} from '../models/side-menu-ref';
+import {SideMenuInjectionData} from '../models/side-menu-injection-data';
+import {SideMenuControl} from '../models/side-menu-control';
+import {SideMenuEvent} from '../models/side-menu-event';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SideMenuService {
 
-    private _sideMenu: MatSidenav;
-    private _portalWrapper: PortalWrapper;
+    private _sideMenuComponent: SideMenuContainerComponent;
+    private _controlObject: SideMenuControl;
 
-    constructor() {}
-
-    /**
-     * Setter for _sideMenu.
-     *
-     * @param sideMenu - sidemenu
-     */
-    public setSideMenu(sideMenu: MatSidenav) {
-        this._sideMenu = sideMenu;
+    constructor() {
     }
 
-    public setPortal(portal: PortalWrapper) {
-        this._portalWrapper = portal;
+    public registerSideMenu(menu: SideMenuContainerComponent): void {
+        if (this._sideMenuComponent) {
+            throw new Error('SideMenuContainerComponent has been already registered!');
+        }
+        this._sideMenuComponent = menu;
+    }
+
+    public isOpened(): boolean {
+        return this._sideMenuComponent.isOpened();
     }
 
     /**
@@ -40,24 +39,35 @@ export class SideMenuService {
      * @returns Observable<MatDrawerToggleResult>
      */
     public open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
-                   width: SideMenuWidth = SideMenuWidth.MEDIUM,
-                   injectionData?: any): Observable<MatDrawerToggleResult> {
-        this._portalWrapper.width = width;
-        this._createView(componentOrTemplateRef, injectionData);
-        return from(this._sideMenu.open());
+                   width: SideMenuSize = SideMenuSize.MEDIUM,
+                   injectionData?: SideMenuInjectionData): SideMenuRef {
+        if (this._sideMenuComponent.isOpened()) {
+            throw new Error('Side menu has been already opened with another content');
+        }
+
+        let ref: SideMenuRef = new SideMenuRef(null);
+        this._controlObject = new SideMenuControl(((event) => {
+            ref = new SideMenuRef(event);
+        }), this._sideMenuComponent.openedChange(), this._sideMenuComponent.close, injectionData);
+
+        const wrapper = this._createPortal(componentOrTemplateRef, width, this._controlObject);
+        this._sideMenuComponent.open(wrapper).subscribe((opened) => {
+            if (opened === 'open') {
+                this._controlObject.publish({opened: true});
+            }
+        });
+        return ref;
     }
 
-    private _createView<T>(template: ComponentType<T> | TemplateRef<T>, injectionData?: any) {
+    private _createPortal<T>(template: ComponentType<T> | TemplateRef<T>,
+                             size: SideMenuSize,
+                             controlObject: SideMenuControl): PortalWrapper {
         if (template instanceof TemplateRef) {
-            this._portalWrapper.portal = new TemplatePortal(template, null);
+            return new PortalWrapper(new TemplatePortal(template, null), size);
         }
         if (template instanceof Type) {
-            const providers: Array<StaticProvider> = [];
-            if (injectionData !== undefined) {
-                providers.push({provide: NAE_SIDE_MENU_DATA, useValue: injectionData});
-            }
-            const injector = Injector.create({providers});
-            this._portalWrapper.portal = new ComponentPortal(template, null, injector);
+            const injector = Injector.create({providers: [{provide: NAE_SIDE_MENU_CONTROL, useValue: controlObject}]});
+            return new PortalWrapper(new ComponentPortal(template, null, injector), size);
         }
     }
 
@@ -66,8 +76,8 @@ export class SideMenuService {
      *
      * @returns Observable<MatDrawerToggleResult>
      */
-    public close(): Observable<MatDrawerToggleResult> {
-        return from(this._sideMenu.close());
+    public close(closeEvent?: SideMenuEvent): Observable<MatDrawerToggleResult> {
+        return this._controlObject.close(closeEvent);
     }
 
     /**
@@ -77,7 +87,7 @@ export class SideMenuService {
      *
      * @returns open or close side menu
      */
-    public toggle(isOpen?: boolean): Observable<MatDrawerToggleResult> {
-        return from(this._sideMenu.toggle(isOpen));
-    }
+    // public toggle(isOpen?: boolean): Observable<MatDrawerToggleResult> {
+    //     return from(this._sideMenu.toggle(isOpen));
+    // }
 }
