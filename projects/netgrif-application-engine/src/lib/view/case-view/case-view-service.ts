@@ -60,6 +60,8 @@ export class CaseViewService {
         let params: HttpParams = new HttpParams();
         if (this._lastHeaderSearchState.sortDirection !== '') {
             params = params.set('sort', `${this.getSortId()},${this._lastHeaderSearchState.sortDirection}`);
+        } else {
+            params = params.set('sort', `stringId,desc`);
         }
         this._caseResourceService.searchCases(JSON.parse(this._baseFilter), params)
             .subscribe((newCases: Array<Case>) => {
