@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">New Case</mat-toolbar>
-<mat-vertical-stepper linear #stepper>
-     <mat-step *ngIf="options.length>1" [stepControl]="processFormControl" errorMessage="Process is required.">
+<mat-vertical-stepper *ngIf="filtersLoaded | async" linear #stepper>
+    <mat-step  [stepControl]="processFormControl" errorMessage="Process is required.">
         <ng-template matStepLabel>Choose process</ng-template>
         <mat-form-field>
             <input type="text" matInput [formControl]="processFormControl" [matAutocomplete]="auto" required>
@@ -14,6 +14,43 @@
             <button mat-button matStepperNext>Next</button>
         </div>
     </mat-step>
+    <mat-step [stepControl]="titleFormControl" errorMessage="Title is required.">
+        <ng-template matStepLabel>Fill out case title</ng-template>
+        <mat-form-field>
+            <input matInput placeholder="Title" [formControl]="titleFormControl" required>
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="selectedColorControl" errorMessage="Color is required.">
+        <mat-form-field>
+            <ng-template matStepLabel>Choose case color</ng-template>
+            <mat-label>Color</mat-label>
+            <mat-select [formControl]="selectedColorControl" required>
+                <mat-option *ngFor="let color of colors" [value]="color.value">
+                    {{color.viewValue}}
+                </mat-option>
+            </mat-select>
+            <mat-error>You must make a selection</mat-error>
+        </mat-form-field>
+
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button mat-button (click)="createNewCase()">Create</button>
+        </div>
+    </mat-step>
+</mat-vertical-stepper>
+<mat-vertical-stepper *ngIf="!(filtersLoaded | async)" linear #stepper>
     <mat-step [stepControl]="titleFormControl" errorMessage="Title is required.">
         <ng-template matStepLabel>Fill out case title</ng-template>
         <mat-form-field>

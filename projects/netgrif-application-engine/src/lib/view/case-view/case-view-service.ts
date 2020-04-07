@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
@@ -90,8 +90,17 @@ export class CaseViewService {
     }
 
     public createNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent);
+        this._sideMenuService.open(NewCaseComponent, SideMenuWidth.MEDIUM, []); // TODO: Filter sieti [] alebo ['Nazov']
     }
+    // USER?
+    // public hasAutority(): boolean {
+    //     if (!this.authorityToCreate || !this._user || !this._user.authorities) return false;
+    //     if (this.authorityToCreate instanceof Array) {
+    //         return this.authorityToCreate.some(a => this._user.authorities.some(u => u === a));
+    //     }
+    // }
+
+
 
     public registerHeaderChange(headerChange$: Observable<HeaderChange>): void {
         headerChange$.subscribe((header: HeaderChange) => {

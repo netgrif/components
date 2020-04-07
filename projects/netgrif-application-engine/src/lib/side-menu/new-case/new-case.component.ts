@@ -36,6 +36,7 @@ export class NewCaseComponent implements OnInit {
     ];
     options: Array<Form> = [];
     filteredOptions: Observable<Array<Form>>;
+    filtersLoaded: Promise<boolean>;
 
     constructor(private _formBuilder: FormBuilder,
                 private sideMenuService: SideMenuService,
@@ -62,6 +63,14 @@ export class NewCaseComponent implements OnInit {
                     petriNets.petriNetReferences.forEach(petriNet => {
                         this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
                     });
+
+                }
+
+                if (this.options.length > 1) {
+                    this.filtersLoaded = Promise.resolve(true);
+
+                } else {
+                    this.filtersLoaded = Promise.resolve(false);
 
                 }
 
