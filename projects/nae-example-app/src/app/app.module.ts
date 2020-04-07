@@ -31,7 +31,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {DocumentationComponent} from './doc/documentation/documentation.component';
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
-import {AuthenticationComponent} from './doc/services/authentication/authentication.component';
+import {AuthenticationComponent} from './doc/authentication/authentication.component';
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';

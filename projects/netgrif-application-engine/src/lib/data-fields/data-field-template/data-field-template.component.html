@@ -14,8 +14,10 @@
 
     <!-- Small layout -->
     <ng-template #elseTemplate>
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100" class="cell-padding fill-all-space">
-            <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+        <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space">
+            <div fxFlex="100" class="cell-padding">
+                <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+            </div>
         </div>
     </ng-template>
 </div>

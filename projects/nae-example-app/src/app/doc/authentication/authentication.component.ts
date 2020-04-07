@@ -20,6 +20,7 @@ export class AuthenticationComponent implements OnInit {
     };
 
     constructor(private userService: UserService, private log: LoggerService) {
+        this.userString = JSON.stringify(userService.user, undefined, 2);
     }
 
     ngOnInit(): void {

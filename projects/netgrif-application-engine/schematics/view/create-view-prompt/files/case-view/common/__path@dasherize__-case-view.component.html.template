@@ -11,11 +11,7 @@
         </div>
     </mat-card>
 
-    <mat-divider class="border-width-2x"></mat-divider>
-
-    <nae-header #header [type]="headerType"></nae-header>
-
-    <mat-divider class="border-width-2x"></mat-divider>
+    <nae-header #header [type]="headerType" class="case-header-padding"></nae-header>
 
     <nae-case-panel *ngFor="let case_ of cases"
                     [case_]="case_"
@@ -23,4 +19,12 @@
                     (click)="handleCaseClick(case_)">
     </nae-case-panel>
 
+    <div *ngIf="!loading && cases.length === 0" fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon>storage</mat-icon>
+        <span class="font-size-20">There are any cases satisfying specified filter</span>
+    </div>
+
+    <div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center">
+        <mat-spinner color="primary"></mat-spinner>
+    </div>
 </div>

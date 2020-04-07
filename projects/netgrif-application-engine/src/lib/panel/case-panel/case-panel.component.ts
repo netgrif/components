@@ -31,10 +31,16 @@ export class CasePanelComponent implements OnInit {
     private resolveFeaturedFieldsValues(immediateDataIds: Array<string>): void {
         this._featuredFieldsValues.splice(0, this._featuredFieldsValues.length);
         immediateDataIds.forEach(id => {
-            const immediate = this.case_.immediateData.find(it => it.stringId === id);
-            if (immediate && immediate.value !== undefined) {
-                // TODO rendering of non string values
-                this._featuredFieldsValues.push(immediate.value);
+            const immediate = this.case_[id];
+            if (immediate) {
+                if (immediate instanceof Array) {
+                    this._featuredFieldsValues.push(
+                        new Date(immediate[0], immediate[1] - 1, immediate[2], immediate[3], immediate[4]).toString());
+                } else if (id === 'author') {
+                    this._featuredFieldsValues.push(immediate.fullName);
+                } else {
+                    this._featuredFieldsValues.push(immediate);
+                }
             } else {
                 this._featuredFieldsValues.push('');
             }

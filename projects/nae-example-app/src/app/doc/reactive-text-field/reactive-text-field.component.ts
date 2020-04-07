@@ -55,7 +55,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // TEXT AREA FIELD
     @ViewChild('textAreaFieldComponent') naeTextAreaField: TextFieldComponent;
     textAreaField = new TextField('textAreaFieldId', 'Reactive text area field', 'hello world', {visible: true, editable: true},
-        undefined, undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
+        undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
 
     // BOOLEAN FIELD
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
@@ -88,19 +88,19 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     @ViewChild('enumListFieldComponent') naeEnumListField: EnumerationFieldComponent;
     enumListField = new EnumerationField('enumListFieldId', 'Reactive enum list field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', undefined, MaterialAppearance.STANDARD, EnumerationFieldView.LIST);
+        '', '', undefined, EnumerationFieldView.LIST);
 
     // ENUM AUTO COMPLETE FIELD
     @ViewChild('enumAutoFieldComponent') naeEnumAutoField: EnumerationFieldComponent;
     enumAutoField = new EnumerationField('enumAutoFieldId', 'Reactive enum autocomplete field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', undefined, MaterialAppearance.STANDARD, EnumerationFieldView.AUTOCOMPLETE);
+        '', '', undefined, EnumerationFieldView.AUTOCOMPLETE);
 
     // MULTICHOICE LIST FIELD
     @ViewChild('multichoiceListFieldComponent') naeMultichoiceListField: MultichoiceFieldComponent;
     multichoiceListField = new MultichoiceField('multichoiceListFieldId', 'Reactive multichoice list field', ['a', 'b'],
         [{key: 'a', value: 'Alice'}, {key: 'b', value: 'Bob'}, {key: 'c', value: 'Claire'}], {visible: true, editable: true},
-        undefined, undefined, undefined, undefined, MultichoiceFieldView.LIST);
+        undefined, undefined, undefined, MultichoiceFieldView.LIST);
 
     // MULTICHOICE SELECT FIELD
     @ViewChild('multichoiceSelectFieldComponent') naeMultichoiceSelectField: MultichoiceFieldComponent;

@@ -11,8 +11,8 @@ export class CaseHeaderService extends AbstractHeaderService {
         this._headers.selected = {
             column0: {
                 type: 'meta',
-                identifier: 'title',
-                title: 'title',
+                identifier: 'visualId',
+                title: 'Visual ID',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column0',
@@ -20,35 +20,35 @@ export class CaseHeaderService extends AbstractHeaderService {
             },
             column1: {
                 type: 'meta',
-                identifier: 'author',
-                title: 'author',
+                identifier: 'title',
+                title: 'Title',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column1',
                 fieldType: 'text'
             },
             column2: {
-                type: 'immediate',
-                identifier: 'zoznam',
-                title: 'Zoznam vozidiel',
+                type: 'meta',
+                identifier: 'author',
+                title: 'Author',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column2',
-                fieldType: 'enumeration'
+                fieldType: 'text'
             },
             column3: {
-                type: 'immediate',
-                identifier: 'fileName',
-                title: 'Názov súboru',
+                type: 'meta',
+                identifier: 'creation',
+                title: 'Creation Date',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column3',
                 fieldType: 'text'
             },
             column4: {
-                type: 'immediate',
-                identifier: 'specialnemeno2',
-                title: 'Mortage prve poinne',
+                type: 'meta',
+                identifier: '',
+                title: '',
                 sortMode: '',
                 searchQuery: '',
                 columnId: 'column4',

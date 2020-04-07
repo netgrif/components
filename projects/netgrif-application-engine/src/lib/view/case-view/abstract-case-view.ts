@@ -8,6 +8,7 @@ import {CaseResourceService} from '../../resources/engine-endpoint/case-resource
 import {HeaderType} from '../../header/abstract-header-service';
 import {HeaderChange} from '../../header/models/user.changes/header-change';
 import {LoggerService} from '../../logger/services/logger.service';
+import {SortChangeDescription} from '../../header/models/user.changes/sort-change-description';
 
 
 export abstract class AbstractCaseView {
@@ -15,7 +16,7 @@ export abstract class AbstractCaseView {
     public headerType: HeaderType = 'case';
     public cases: Array<Case> = [];
     public featuredFields$: BehaviorSubject<Array<string>>;
-    private _changeHeader$: Observable<HeaderChange>;
+    public loading: boolean;
 
     protected constructor(protected _sideMenuService: SideMenuService,
                           protected _caseResourceService: CaseResourceService,
@@ -36,23 +37,34 @@ export abstract class AbstractCaseView {
     }
 
     public loadCases(): void {
+        this.loading = true;
         this._caseResourceService.getAllCase()
             .subscribe((newCases: Array<Case>) => {
                 this.updateCases(newCases);
+                this.loading = false;
             });
     }
 
     protected initializeHeader(caseHeaderComponent: HeaderComponent): void {
-        this._changeHeader$ = caseHeaderComponent.headerService.headerChange$;
-        this._changeHeader$.subscribe((header: HeaderChange) => {
-            console.log(header);
-// TODO: JOZO fix Matove interfaces
-// const params = new HttpParams().set(header ? header.type : '',
-//     header.description.sortMode && header.description.identifier ? header.description.sortMode + header.description.identifier : '');
-            const params = new HttpParams().set('sort', 'asc');
+        caseHeaderComponent.headerService.headerChange$.subscribe((header: HeaderChange) => {
+            if (!header) {
+                return;
+            }
+            // TODO: JOZO fix Matove interfaces
+            let params: HttpParams = new HttpParams();
+            if (header.mode === 'sort') {
+                const desc = header.description as SortChangeDescription;
+                params = params.set(header.mode, desc.sortMode + desc.identifier);
+            }
+            // const params = new HttpParams().set(header ? header.type : '',
+            //     header.description.sortMode && header.description.identifier ?
+            //     header.description.sortMode + header.description.identifier : '');
+            // const params = new HttpParams().set('sort', 'asc');
+            this.loading = true;
             this._caseResourceService.searchCases({}, params)
                 .subscribe((newCases: Array<Case>) => {
                     this.updateCases(newCases);
+                    this.loading = false;
                 });
             // TODO if headers changed their content (different columns should be shown) update featured fields stream
         });
@@ -61,7 +73,10 @@ export abstract class AbstractCaseView {
     protected updateCases(newCases: Array<Case>): void {
         // TODO is just replacing the existing cases with new ones a good idea? Is there some data, we might loose?
         this.cases.splice(0, this.cases.length);
-        this.cases.push(...newCases);
+        this.featuredFields$.next(['visualId', 'title', 'author', 'creationDate', '']);
+        if (!!newCases && Array.isArray(newCases)) {
+            this.cases.push(...newCases);
+        }
     }
 
     public abstract handleCaseClick(clickedCase: Case): void;

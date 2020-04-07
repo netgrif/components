@@ -4,11 +4,10 @@
         <form [formGroup]="processFormGroup">
             <ng-template matStepLabel>Choose process</ng-template>
             <mat-form-field>
-                <input matInput placeholder="Process" formControlName="processFormControl" required
-                       [matAutocomplete]="auto">
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <input matInput placeholder="Process" formControlName="processFormControl" required [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                        {{option}}
+                        {{option.viewValue}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
@@ -35,11 +34,11 @@
             <mat-form-field>
                 <mat-label>Color</mat-label>
                 <mat-select formControlName="colorFormControl" required>
-                    <mat-option *ngFor="let color of colors" [value]="color">
-                        {{color}}
+                    <mat-option *ngFor="let color of colors" [value]="color.value">
+                        {{color.viewValue}}
                     </mat-option>
                 </mat-select>
-                <mat-error>You must make a selection</mat-error>
+                    <mat-error>You must make a selection</mat-error>
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious>Back</button>

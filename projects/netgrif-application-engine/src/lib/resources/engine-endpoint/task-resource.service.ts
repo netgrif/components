@@ -64,7 +64,7 @@ export class TaskResourceService {
      */
     // {{baseUrl}}/api/task/delegate/:id
     public delegateTask(taskId: string, body: object): Observable<MessageResource> {
-        return this.provider.post$('task/delegate' + taskId, this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+        return this.provider.post$('task/delegate/' + taskId, this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -73,7 +73,7 @@ export class TaskResourceService {
      */
     // {{baseUrl}}/api/task/finish/:id
     public finishTask(taskId: string): Observable<MessageResource> {
-        return this.provider.get$('task/finish' + taskId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('task/finish/' + taskId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
     }
 
     /**

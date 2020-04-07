@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Case, CaseResourceService, Count, MessageResource} from 'netgrif-application-engine';
+import {Case, CaseResourceService, Count, MessageResource, UserService} from 'netgrif-application-engine';
 
 @Component({
     selector: 'nae-app-case-resource-example',

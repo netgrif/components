@@ -33,19 +33,20 @@ function fixLcovFileNames() {
         const indexOfSF = content.indexOf('SF:');
         if (indexOfSF === -1)
             return;
-
         console.log('Found SF segment');
+
+        console.log('Sanitizing path to Linux convention');
+        content = content.replace(/\\/g, '/');
+
         if (content.substring(indexOfSF + 3, indexOfSF + (sources.length + 3)) !== sources) {
             console.log(`File path 'SF' does not start with '${sources}'`);
             const indexOfProject = content.indexOf(sources, indexOfSF);
             if (indexOfProject !== -1) {
                 const unwanted = content.substring(indexOfSF + 3, indexOfProject);
                 console.log(`Removing string ${unwanted}`);
-                content = content.replace(unwanted, '');
+                content = content.replace(new RegExp(unwanted, 'g'), '');
             }
         }
-        console.log('Sanitizing path to Linux convention');
-        content = content.replace(/\\/g, '/');
 
         console.log('Writing file');
         fs.writeFileSync(filePath, content);
@@ -54,7 +55,7 @@ function fixLcovFileNames() {
     }
 }
 
-//fixLcovFileNames();
+fixLcovFileNames();
 sonarqubeScanner(
     {
         serverUrl: 'https://sonar.netgrif.com',

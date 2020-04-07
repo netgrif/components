@@ -1,7 +1,7 @@
 <nae-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true">
     <ng-template #casePanelHeader>
         <div fxLayoutAlign=" center" fxLayout="row" fxFlex="100">
-            <span fxLayoutAlign=" center" fxFlex>
+            <span fxLayoutAlign="start center">
                 <mat-icon class="case-panel-icon">{{case_.icon ? case_.icon : 'label'}}</mat-icon>
             </span>
             <span fxFlex *ngFor="let value of _featuredFieldsValues;">{{value}}</span>

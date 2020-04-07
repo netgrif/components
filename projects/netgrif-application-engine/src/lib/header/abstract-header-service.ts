@@ -76,7 +76,7 @@ export class AbstractHeaderService implements OnDestroy {
             }
         });
         // TODO pair the search request with the back-end and then return the searched petri net models
-        this._changeHeader$.next({headerType: this.headerType, type: 'sort', description: sortChangeDescription});
+        this._changeHeader$.next({headerType: this.headerType, mode: 'sort', description: sortChangeDescription});
         return this.headers;
     }
 
@@ -98,7 +98,7 @@ export class AbstractHeaderService implements OnDestroy {
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._changeHeader$.next({
             headerType: this.headerType,
-            type: 'search',
+            mode: 'search',
             description: searchChangeDescription
         });
         return this.headers;
@@ -123,7 +123,7 @@ export class AbstractHeaderService implements OnDestroy {
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._changeHeader$.next({
             headerType: this.headerType,
-            type: 'edit',
+            mode: 'edit',
             description: {preferredHeaders: this.headers.selected}
         });
         return this._headers;
@@ -161,7 +161,7 @@ export class AbstractHeaderService implements OnDestroy {
         // TODO pair the search request with the back-end and then return the searched petri net models
         this._changeHeader$.next({
             headerType: this.headerType,
-            type: 'edit',
+            mode: 'edit',
             description: {preferredHeaders: this._headers.selected}
         });
     }

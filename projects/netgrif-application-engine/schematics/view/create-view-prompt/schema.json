@@ -14,7 +14,6 @@
             "type": "string",
             "enum": [
                 "login",
-                "sidenav-toolbar",
                 "tabView",
                 "caseView",
                 "taskView"
@@ -24,7 +23,6 @@
                 "message": "select a view type",
                 "items": [
                     "login",
-                    "sidenav-toolbar",
                     "tabView",
                     "caseView",
                     "taskView"

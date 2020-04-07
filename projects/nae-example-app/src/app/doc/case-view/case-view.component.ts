@@ -1,15 +1,19 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {AbstractCaseView, Case, CaseResourceService, HeaderComponent, LoggerService, SideMenuService,} from '@netgrif/application-engine';
-
+import {
+    CaseResourceService,
+    SideMenuService,
+    HeaderComponent,
+    AbstractCaseView,
+    Case,
+    LoggerService
+} from '@netgrif/application-engine';
 @Component({
     selector: 'nae-app-case-view',
     templateUrl: './case-view.component.html',
     styleUrls: ['./case-view.component.scss']
 })
 export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {
-
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
-
     constructor(_sideMenuService: SideMenuService,
                 _caseResourceService: CaseResourceService,
                 log: LoggerService) {
@@ -23,5 +27,4 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
     public handleCaseClick(clickedCase: Case): void {
         console.log(clickedCase.stringId);
     }
-
 }
