@@ -1,31 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
-import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
+import {HeaderColumn} from '../../header/models/header-column';
 import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
+import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
+
 
 @Component({
     selector: 'nae-case-panel',
     templateUrl: './case-panel.component.html',
     styleUrls: ['./case-panel.component.scss']
 })
-export class CasePanelComponent implements OnInit {
+export class CasePanelComponent extends PanelWithHeaderBinding {
 
     @Input() public case_: Case;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
-    public panelIcon: string;
-    public panelIconField: string;
-
-    public _firstFeaturedValue: string;
-    public _featuredFieldsValues: Array<string> = [];
 
     constructor() {
-    }
-
-    ngOnInit() {
-        this.selectedHeaders$.subscribe(newSelectedHeaders => this.resolveFeaturedFieldsValues(newSelectedHeaders));
+        super();
     }
 
     public show(event: MouseEvent): boolean {
@@ -33,45 +27,32 @@ export class CasePanelComponent implements OnInit {
         return false;
     }
 
-    private resolveFeaturedFieldsValues(selectedHeaderFields: Array<HeaderColumn>): void {
-        this._featuredFieldsValues.splice(0, this._featuredFieldsValues.length);
-        this._firstFeaturedValue = this.getFeaturedValue(selectedHeaderFields[0]);
-        for (let i = 1; i < selectedHeaderFields.length; i++) {
-            this._featuredFieldsValues.push(this.getFeaturedValue(selectedHeaderFields[i]));
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
+        switch (selectedHeader.fieldIdentifier) {
+            case CaseMetaField.VISUAL_ID:
+                return this.case_.visualId;
+            case CaseMetaField.TITLE:
+                return this.case_.title;
+            case CaseMetaField.AUTHOR:
+                return this.case_.author.fullName;
+            case CaseMetaField.CREATION_DATE:
+                return toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING);
         }
     }
 
-    private getFeaturedValue(selectedHeader: HeaderColumn): string {
-        if (!selectedHeader) {
-           return '';
-        }
-        if (selectedHeader.type === HeaderColumnType.META) {
-            switch (selectedHeader.fieldIdentifier) {
-                case CaseMetaField.VISUAL_ID:
-                    return this.case_.visualId;
-                case CaseMetaField.TITLE:
-                    return this.case_.title;
-                case CaseMetaField.AUTHOR:
-                    return this.case_.author.fullName;
-                case CaseMetaField.CREATION_DATE:
-                    return toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING);
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): string {
+        const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
+        if (immediate && immediate.value !== undefined) {
+            switch (immediate.type) {
+                case 'date':
+                    return toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING);
+                case 'dateTime':
+                    return toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING);
+                default:
+                    // TODO rendering of other non string values
+                    return immediate.value;
             }
         }
-        if (selectedHeader.petriNetIdentifier === this.case_.processIdentifier) {
-            const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
-            if (immediate && immediate.value !== undefined) {
-                switch (immediate.type) {
-                    case 'date':
-                        return toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING);
-                    case 'dateTime':
-                        return toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING);
-                    default:
-                        // TODO rendering of other non string values
-                        return immediate.value;
-                }
-            }
-        }
-        return '';
     }
 
 }

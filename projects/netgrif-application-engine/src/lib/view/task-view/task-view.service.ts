@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {TaskPanelDefinition} from '../../panel/task-panel/task-panel-definition';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../user/services/user.service';
 import {SortableView} from '../abstract/sortable-view';
+import {HttpParams} from '@angular/common/http';
 
 
 @Injectable()
@@ -35,25 +35,14 @@ export class TaskViewService extends SortableView {
         }
         this.loading.next(true);
 
-
+        // TODO task sorting is currently not supported
         this._taskService.searchTask(JSON.parse(this._activeFilter)).subscribe(tasks => {
             if (tasks instanceof Array) {
                 if (this.taskArray.length) {
                     tasks = this.resolveUpdate(tasks);
                 }
                 tasks.forEach(task => {
-                    const header: TaskPanelDefinition = {
-                        panelIconField: task.caseTitle,
-                        panelIcon: task.icon === undefined ? 'label' : task.icon,
-                        featuredFields: [
-                            task.title,
-                            0,
-                            task.user !== undefined ? task.user.fullName : '',
-                            task.startDate !== undefined ? this.parseDate(task.startDate) : ''],
-                        taskId: task.stringId
-                    };
                     this.taskArray.push({
-                        header,
                         task,
                         changedFields: this.changedFields
                     });
@@ -71,18 +60,6 @@ export class TaskViewService extends SortableView {
             if (index === -1)
                 tasksToDelete.push(i);
             else {
-                const header: TaskPanelDefinition = {
-                    panelIconField: tasks[index].caseTitle,
-                    panelIcon: 'home',
-                    featuredFields: [
-                        tasks[index].title,
-                        0,
-                        tasks[index].user !== undefined ? tasks[index].user.fullName : '',
-                        tasks[index].startDate !== undefined ? this.parseDate(tasks[index].startDate) : ''
-                    ],
-                    taskId: tasks[index].stringId
-                };
-                this.taskArray[i].header = header;
                 Object.keys(this.taskArray[i].task).forEach( key => {
                     if (tasks[index][key] !== undefined) {
                         this.taskArray[i].task[key] = tasks[index][key];
@@ -96,10 +73,6 @@ export class TaskViewService extends SortableView {
         tasksToDelete.sort((a, b) => b - a);
         tasksToDelete.forEach(index => tasks.splice(index, 1));
         return tasks;
-    }
-
-    private parseDate(date: Array<number>) {
-        return new Date(date[0], date[1] - 1, date[2], date[3], date[4]);
     }
 
     private blockFields(bool: boolean, index: number) {

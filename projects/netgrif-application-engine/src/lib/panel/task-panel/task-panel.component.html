@@ -1,41 +1,46 @@
 <nae-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
                (stopLoading)="loading=false" (getExpansionPanelRef)="setPanelRef($event)">
     <ng-template #taskPanelHeader>
-            <div fxLayoutAlign=" center" fxLayout="row" fxFlex="100">
-            <span fxLayoutAlign=" center" fxFlex>
-                <mat-icon class="task-panel-icon">{{panelIcon}}</mat-icon>
-                <span>{{panelIconField}}</span>
-            </span>
-                <span fxFlex *ngFor="let field of taskPanelData.header.featuredFields;">{{field}}</span>
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="90">
+            <div fxLayout="start center" fxFlex>
+                <mat-icon class="case-panel-icon">{{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
+                {{firstFeaturedValue}}
             </div>
-            <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
-                <button mat-icon-button (click)="show($event)" *ngIf="!loading" [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
+            <div *ngFor="let value of featuredFieldsValues; let i = index" fxLayout="start center" fxFlex
+                 [fxHide.lt-lg]="i >= 3"
+                 [fxHide.lt-md]="i >= 2"
+                 [fxHide.lt-sm]="i >= 1">
+                {{value}}
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+            <button mat-icon-button (click)="show($event)" *ngIf="!loading" [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item *ngIf="canAssign()" (click)="processTask('assign')">
+                    <mat-icon>person</mat-icon>
+                    <span>Assign</span>
                 </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngIf="canAssign()" (click)="processTask('assign')">
-                        <mat-icon>person</mat-icon>
-                        <span>Assign</span>
-                    </button>
-                    <button mat-menu-item *ngIf="canDo('delegate')" (click)="processTask('delegate')">
-                        <mat-icon>person_outline</mat-icon>
-                        <span>Delegate</span>
-                    </button>
-                    <button mat-menu-item *ngIf="canDo('delegate')" (click)="processTask('delegate')">
-                        <mat-icon>person_add</mat-icon>
-                        <span>Reassign</span>
-                    </button>
-                    <button mat-menu-item *ngIf="canCancel()" (click)="processTask('cancel')">
-                        <mat-icon>cancel</mat-icon>
-                        <span>Cancel</span>
-                    </button>
-                    <button mat-menu-item *ngIf="canFinish()" (click)="processTask('finish')">
-                        <mat-icon>done</mat-icon>
-                        <span>Finish</span>
-                    </button>
-                </mat-menu>
-                <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
-            </div>
+                <button mat-menu-item *ngIf="canDo('delegate')" (click)="processTask('delegate')">
+                    <mat-icon>person_outline</mat-icon>
+                    <span>Delegate</span>
+                </button>
+                <button mat-menu-item *ngIf="canDo('delegate')" (click)="processTask('delegate')">
+                    <mat-icon>person_add</mat-icon>
+                    <span>Reassign</span>
+                </button>
+                <button mat-menu-item *ngIf="canCancel()" (click)="processTask('cancel')">
+                    <mat-icon>cancel</mat-icon>
+                    <span>Cancel</span>
+                </button>
+                <button mat-menu-item *ngIf="canFinish()" (click)="processTask('finish')">
+                    <mat-icon>done</mat-icon>
+                    <span>Finish</span>
+                </button>
+            </mat-menu>
+            <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
+        </div>
     </ng-template>
     <ng-template #taskPanelContent>
         <div class="panel-main-content" fxLayout="column">

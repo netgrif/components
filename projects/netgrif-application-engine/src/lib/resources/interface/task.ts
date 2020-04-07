@@ -21,4 +21,5 @@ export interface Task {
     _links: object;
     dataSize?: number;
     icon?: string;
+    priority?: number;
 }

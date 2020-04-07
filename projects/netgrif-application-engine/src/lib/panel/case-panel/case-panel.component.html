@@ -3,9 +3,9 @@
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="90">
             <div fxLayout="start center" fxFlex>
                 <mat-icon class="case-panel-icon">{{case_.icon ? case_.icon : 'label'}}</mat-icon>
-                {{_firstFeaturedValue}}
+                {{firstFeaturedValue}}
             </div>
-            <div *ngFor="let value of _featuredFieldsValues; let i = index" fxLayout="start center" fxFlex
+            <div *ngFor="let value of featuredFieldsValues; let i = index" fxLayout="start center" fxFlex
                  [fxHide.lt-lg]="i >= 3"
                  [fxHide.lt-md]="i >= 2"
                  [fxHide.lt-sm]="i >= 1">

@@ -1,5 +1,7 @@
 <mat-accordion multi="true" *ngIf="taskPanels.length !== 0">
-    <nae-task-panel *ngFor="let taskPanel of taskPanels" [taskPanelData]="taskPanel">
+    <nae-task-panel *ngFor="let taskPanel of taskPanels"
+                    [taskPanelData]="taskPanel"
+                    [selectedHeaders$]="selectedHeaders$">
     </nae-task-panel>
 </mat-accordion>
 
