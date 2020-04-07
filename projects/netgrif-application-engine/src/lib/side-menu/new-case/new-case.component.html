@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">New Case</mat-toolbar>
-<mat-vertical-stepper *ngIf="filtersLoaded | async" linear #stepper>
+<mat-vertical-stepper *ngIf="processOne | async" linear #stepper>
     <mat-step  [stepControl]="processFormControl" errorMessage="Process is required.">
         <ng-template matStepLabel>Choose process</ng-template>
         <mat-form-field>
@@ -50,14 +50,13 @@
         </div>
     </mat-step>
 </mat-vertical-stepper>
-<mat-vertical-stepper *ngIf="!(filtersLoaded | async)" linear #stepper>
+<mat-vertical-stepper *ngIf="!(processOne | async)" linear #stepper>
     <mat-step [stepControl]="titleFormControl" errorMessage="Title is required.">
         <ng-template matStepLabel>Fill out case title</ng-template>
         <mat-form-field>
             <input matInput placeholder="Title" [formControl]="titleFormControl" required>
         </mat-form-field>
         <div>
-            <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
         </div>
     </mat-step>

@@ -36,7 +36,7 @@ export class NewCaseComponent implements OnInit {
     ];
     options: Array<Form> = [];
     filteredOptions: Observable<Array<Form>>;
-    filtersLoaded: Promise<boolean>;
+    processOne: Promise<boolean>;
 
     constructor(private _formBuilder: FormBuilder,
                 private sideMenuService: SideMenuService,
@@ -66,11 +66,11 @@ export class NewCaseComponent implements OnInit {
 
                 }
 
-                if (this.options.length > 1) {
-                    this.filtersLoaded = Promise.resolve(true);
+                if (this.options.length === 1) {
+                    this.processOne = Promise.resolve(true);
 
                 } else {
-                    this.filtersLoaded = Promise.resolve(false);
+                    this.processOne = Promise.resolve(false);
 
                 }
 
