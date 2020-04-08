@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WorkflowPanelGroupComponent} from './workflow-panel-group.component';
 import {MatExpansionModule, MatFormFieldModule, MatTooltipModule} from '@angular/material';
-import {WorkflowsPanelComponent} from '../../panel/workflows-panel/workflows-panel.component';
+import {WorkflowPanelComponent} from '../../panel/workflow-panel/workflow-panel.component';
 import {TextFieldComponent} from '../../data-fields/text-field/text-field.component';
 import {PanelComponent} from '../../panel/panel.component';
 import {DataFieldTemplateComponent} from '../../data-fields/data-field-template/data-field-template.component';
@@ -21,7 +21,7 @@ describe('WorkflowsPanelGroupComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 WorkflowPanelGroupComponent,
-                WorkflowsPanelComponent,
+                WorkflowPanelComponent,
                 TextFieldComponent,
                 PanelComponent,
                 DataFieldTemplateComponent,

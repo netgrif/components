@@ -3,11 +3,11 @@ import {WorkflowPanelDefinition} from './models/workflows-panels-definition';
 import {MatExpansionPanel} from '@angular/material/expansion';
 
 @Component({
-    selector: 'nae-workflows-panel',
-    templateUrl: './workflows-panel.component.html',
-    styleUrls: ['./workflows-panel.component.scss']
+    selector: 'nae-workflow-panel',
+    templateUrl: './workflow-panel.component.html',
+    styleUrls: ['./workflow-panel.component.scss']
 })
-export class WorkflowsPanelComponent implements OnInit {
+export class WorkflowPanelComponent implements OnInit {
 
     @Input() workflowPanelDefinition: WorkflowPanelDefinition;
     public panelRef: MatExpansionPanel;

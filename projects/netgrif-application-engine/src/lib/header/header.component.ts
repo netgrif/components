@@ -2,7 +2,7 @@ import {Component, Injector, Input, OnInit} from '@angular/core';
 import {AbstractHeaderService} from './abstract-header-service';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {TaskHeaderService} from './task-header/task-header.service';
-import {WorkflowsHeaderService} from './workflows-header/workflows-header.service';
+import {WorkflowHeaderService} from './workflow-header/workflow-header.service';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
@@ -13,7 +13,7 @@ import {Observable} from 'rxjs';
     selector: 'nae-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    providers: [CaseHeaderService, TaskHeaderService, WorkflowsHeaderService]
+    providers: [CaseHeaderService, TaskHeaderService, WorkflowHeaderService]
 })
 export class HeaderComponent implements OnInit {
 
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
                 this.headerService = this._injector.get(TaskHeaderService);
                 break;
             case 'workflow':
-                this.headerService = this._injector.get(WorkflowsHeaderService);
+                this.headerService = this._injector.get(WorkflowHeaderService);
                 break;
         }
     }

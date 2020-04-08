@@ -15,7 +15,7 @@ export enum WorkflowMetaField {
 @Injectable({
     providedIn: 'root'
 })
-export class WorkflowsHeaderService extends AbstractHeaderService {
+export class WorkflowHeaderService extends AbstractHeaderService {
 
     constructor() {
         super(HeaderType.WORKFLOW);

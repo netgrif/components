@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {WorkflowsPanelComponent} from './workflows-panel.component';
+import {WorkflowPanelComponent} from './workflow-panel.component';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {MaterialModule} from '../../material/material.module';
@@ -11,7 +11,7 @@ import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {WorkflowPanelDefinition} from './models/workflows-panels-definition';
 
 describe('WorkflowsPanelComponent', () => {
-    let component: WorkflowsPanelComponent;
+    let component: WorkflowPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(async(() => {
@@ -23,7 +23,7 @@ describe('WorkflowsPanelComponent', () => {
                 BrowserAnimationsModule,
                 DataFieldsModule
             ],
-            declarations: [WorkflowsPanelComponent, PanelComponent, TestWrapperComponent],
+            declarations: [WorkflowPanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA]
         })
             .compileComponents();

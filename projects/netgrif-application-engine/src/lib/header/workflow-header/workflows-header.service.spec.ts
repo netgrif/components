@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WorkflowsHeaderService } from './workflows-header.service';
+import { WorkflowHeaderService } from './workflow-header.service';
 
 describe('WorkflowsHeaderService', () => {
-  let service: WorkflowsHeaderService;
+  let service: WorkflowHeaderService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(WorkflowsHeaderService);
+    service = TestBed.inject(WorkflowHeaderService);
   });
 
   it('should be created', () => {

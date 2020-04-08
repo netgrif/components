@@ -1,5 +1,5 @@
 <mat-accordion [multi]="true">
-    <nae-workflows-panel *ngFor="let workflowPanel of workflowPanelGroupService.workflowPanelDefinitions"
+    <nae-workflow-panel *ngFor="let workflowPanel of workflowPanelGroupService.workflowPanelDefinitions"
                         [workflowPanelDefinition]="workflowPanel">
         <div fxLayout="row">
             <div fxFlex="50">
@@ -27,5 +27,5 @@
                 </nae-date-field>
             </div>
         </div>
-    </nae-workflows-panel>
+    </nae-workflow-panel>
 </mat-accordion>

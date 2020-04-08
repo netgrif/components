@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {WorkflowPanelGroupService} from '../workflow-panel-group/services/workflow-panel-group.service';
-import {WorkflowsHeaderService} from '../../header/workflows-header/workflows-header.service';
+import {WorkflowHeaderService} from '../../header/workflow-header/workflow-header.service';
 import {HeaderState} from '../../header/header-state';
 import {SortableView} from '../../view/abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource-service';
@@ -12,7 +12,7 @@ import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net
 })
 export class WorkflowViewService extends SortableView {
 
-    constructor(public workflowsHeaderService: WorkflowsHeaderService,
+    constructor(public workflowsHeaderService: WorkflowHeaderService,
                 public petriNetResourceService: PetriNetResourceService,
                 public workflowsPanelGroupService: WorkflowPanelGroupService) {
         super();
