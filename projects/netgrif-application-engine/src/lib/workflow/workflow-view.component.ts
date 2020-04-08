@@ -5,6 +5,9 @@ import {WorkflowViewService} from './services/workflow-view.service';
 import {HeaderComponent} from '../header/header.component';
 import {ViewWithHeaders} from '../view/abstract/view-with-headers';
 import {WorkflowPanelGroupService} from './workflow-panel-group/services/workflow-panel-group.service';
+import {HeaderType} from '../header/models/header-type';
+import {PetriNetReference} from '../resources/interface/petri-net-reference';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -15,10 +18,15 @@ import {WorkflowPanelGroupService} from './workflow-panel-group/services/workflo
 })
 export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewInit {
 
+    public readonly headerType: HeaderType.WORKFLOW;
     @ViewChild('header') public workflowHeader: HeaderComponent;
 
     constructor(private _sideMenuService: SideMenuService, private _workflowViewService: WorkflowViewService) {
         super(_workflowViewService);
+    }
+
+    public get workflows$(): Observable<Array<PetriNetReference>> {
+        return this._workflowViewService.workflows$;
     }
 
     ngAfterViewInit(): void {

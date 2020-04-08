@@ -5,9 +5,12 @@
         </button>
     </div>
     <div fxLayout="row" fxLayoutAlign="center" class="workflow-header">
-        <nae-header #header fxFlex="99" type="workflow"></nae-header>
+        <nae-header #header fxFlex="100" [type]="headerType"></nae-header>
     </div>
     <div fxLayout="row" fxLayoutAlign="center" class="workflow-panels-container">
-        <nae-workflow-panel-group fxFlex="99"></nae-workflow-panel-group>
+        <mat-accordion [multi]="true" fxFlex="100">
+            <nae-workflow-panel *ngFor="let workflow of workflows$ | async" [workflow]="workflow" [selectedHeaders$]="selectedHeaders$">
+            </nae-workflow-panel>
+        </mat-accordion>
     </div>
 </div>

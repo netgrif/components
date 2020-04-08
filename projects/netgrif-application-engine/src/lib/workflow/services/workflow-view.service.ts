@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {PetriNetReference} from '../../resources/interface/petri-net-reference';
-import {WorkflowPanelGroupService} from '../workflow-panel-group/services/workflow-panel-group.service';
-import {WorkflowHeaderService} from '../../header/workflow-header/workflow-header.service';
 import {SortableView} from '../../view/abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource-service';
+import {Observable, ReplaySubject} from 'rxjs';
+import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 
 
 @Injectable({
@@ -11,20 +10,20 @@ import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net
 })
 export class WorkflowViewService extends SortableView {
 
-    constructor(public workflowsHeaderService: WorkflowHeaderService,
-                public petriNetResourceService: PetriNetResourceService,
-                public workflowsPanelGroupService: WorkflowPanelGroupService) {
+    private _workflows$: ReplaySubject<Array<PetriNetReference>>;
+
+    constructor(public petriNetResourceService: PetriNetResourceService) {
         super();
+        this._workflows$ = new ReplaySubject<Array<PetriNetReference>>(1);
     }
 
-    protected setPetriNetReferences(petriNetReferences: Array<PetriNetReference>) {
-        this.workflowsHeaderService.setPanelsTitles();
-        this.workflowsPanelGroupService.petriNetReferences = petriNetReferences;
+    public get workflows$(): Observable<Array<PetriNetReference>> {
+        return this._workflows$.asObservable();
     }
 
     public reload(): void {
         // TODO 8.4.2020 - allow filtering of petri nets in workflow view
-        this.petriNetResourceService.getAll().subscribe(petriNet => this.setPetriNetReferences(petriNet.petriNetReferences));
+        this.petriNetResourceService.getAll().subscribe(petriNet => this._workflows$.next(petriNet.petriNetReferences));
     }
 
     protected getMetaFieldSortId(): string {

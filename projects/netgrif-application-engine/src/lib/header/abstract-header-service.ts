@@ -12,6 +12,7 @@ import {HeaderMode} from './models/header-mode';
 import {HeaderColumn, HeaderColumnType} from './models/header-column';
 import {SortDirection} from '@angular/material';
 
+
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 
 const MAX_HEADER_COLUMNS = 5;
