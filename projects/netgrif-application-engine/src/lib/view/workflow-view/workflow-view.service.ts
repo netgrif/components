@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {SortableView} from '../../view/abstract/sortable-view';
+import {SortableView} from '../abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource-service';
 import {Observable, ReplaySubject} from 'rxjs';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';

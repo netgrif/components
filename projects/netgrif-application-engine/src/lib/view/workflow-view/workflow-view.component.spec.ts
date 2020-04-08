@@ -1,9 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WorkflowViewComponent} from './workflow-view.component';
-import {MaterialModule} from '../material/material.module';
+import {MaterialModule} from '../../material/material.module';
 import {Component, Input, TemplateRef} from '@angular/core';
-import {SideMenuContainerComponent} from '../side-menu/side-menu-container/side-menu-container.component';
+import {SideMenuContainerComponent} from '../../side-menu/side-menu-container/side-menu-container.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 

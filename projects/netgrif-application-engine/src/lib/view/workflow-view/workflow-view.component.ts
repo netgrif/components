@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {SideMenuService} from '../side-menu/services/side-menu.service';
-import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
-import {WorkflowViewService} from './services/workflow-view.service';
-import {HeaderComponent} from '../header/header.component';
-import {ViewWithHeaders} from '../view/abstract/view-with-headers';
-import {HeaderType} from '../header/models/header-type';
-import {PetriNetReference} from '../resources/interface/petri-net-reference';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {ImportNetComponent} from '../../side-menu/import-net/import-net.component';
+import {WorkflowViewService} from './workflow-view.service';
+import {HeaderComponent} from '../../header/header.component';
+import {ViewWithHeaders} from '../abstract/view-with-headers';
+import {HeaderType} from '../../header/models/header-type';
+import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {Observable} from 'rxjs';
 
 
