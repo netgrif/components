@@ -5,9 +5,7 @@ import {Observable, ReplaySubject} from 'rxjs';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class WorkflowViewService extends SortableView {
 
     private _workflows$: ReplaySubject<Array<PetriNetReference>>;

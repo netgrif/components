@@ -25,7 +25,7 @@ import {
     ResourceProvider,
     UserModule,
     ImportNetComponent,
-    WorkflowModule,
+    WorkflowViewModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -57,6 +57,8 @@ import {TabbedCaseViewComponent} from './doc/tabbed-case-view/tabbed-case-view/t
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 import {TabbedTaskViewComponent} from './doc/tabbed-case-view/tabbed-task-view/tabbed-task-view.component';
 import {WorkflowViewExampleComponent} from './doc/workflow-view-example/workflow-view-example.component';
+
+
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -123,7 +125,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         }),
         MatCardModule,
         CardModule,
-        WorkflowModule,
+        WorkflowViewModule,
     ],
     entryComponents: [
         NewCaseComponent,

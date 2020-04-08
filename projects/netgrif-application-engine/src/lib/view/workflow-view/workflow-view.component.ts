@@ -13,6 +13,7 @@ import {Observable} from 'rxjs';
     selector: 'nae-workflow-view',
     templateUrl: './workflow-view.component.html',
     styleUrls: ['./workflow-view.component.scss'],
+    providers: [WorkflowViewService]
 })
 export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewInit {
 
