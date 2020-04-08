@@ -21,6 +21,7 @@ export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewI
 
     constructor(private _sideMenuService: SideMenuService, private _workflowViewService: WorkflowViewService) {
         super(_workflowViewService);
+        this._workflowViewService.reload();
     }
 
     public get workflows$(): Observable<Array<PetriNetReference>> {
