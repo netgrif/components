@@ -48,8 +48,13 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
                     return toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING);
                 case 'dateTime':
                     return toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING);
+                case 'enumeration':
+                    return immediate.value.defaultValue;
+                case 'multichoice':
+                    return immediate.value.map(it => it.defaultValue).join(', ');
                 default:
-                    // TODO rendering of other non string values
+                    // TODO 8.4.2020 - File field value rendering once file field works
+                    // TODO 8.4.2020 - User field value rendering once user field works
                     return immediate.value;
             }
         }
