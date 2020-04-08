@@ -4,7 +4,6 @@ import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
 import {WorkflowViewService} from './services/workflow-view.service';
 import {HeaderComponent} from '../header/header.component';
 import {ViewWithHeaders} from '../view/abstract/view-with-headers';
-import {WorkflowPanelGroupService} from './workflow-panel-group/services/workflow-panel-group.service';
 import {HeaderType} from '../header/models/header-type';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {Observable} from 'rxjs';
@@ -14,7 +13,6 @@ import {Observable} from 'rxjs';
     selector: 'nae-workflow-view',
     templateUrl: './workflow-view.component.html',
     styleUrls: ['./workflow-view.component.scss'],
-    providers: [WorkflowPanelGroupService]
 })
 export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewInit {
 
