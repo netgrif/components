@@ -16,7 +16,7 @@ import {Observable} from 'rxjs';
 })
 export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewInit {
 
-    public readonly headerType: HeaderType.WORKFLOW;
+    public readonly headerType = HeaderType.WORKFLOW;
     @ViewChild('header') public workflowHeader: HeaderComponent;
 
     constructor(private _sideMenuService: SideMenuService, private _workflowViewService: WorkflowViewService) {

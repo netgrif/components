@@ -12,9 +12,7 @@ export enum WorkflowMetaField {
     CREATION_DATE = 'createdDate',
 }
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class WorkflowHeaderService extends AbstractHeaderService {
 
     constructor() {

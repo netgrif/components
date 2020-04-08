@@ -23,7 +23,6 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this.initializeHeaderState();
-
     }
 
     /**
