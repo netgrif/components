@@ -43,6 +43,6 @@ describe('WorkflowsComponent', () => {
 class HeaderStubComponent {
 }
 
-@Component({selector: 'nae-workflows-panel-group', template: ''})
+@Component({selector: 'nae-workflow-panel-group', template: ''})
 class WorkflowsPanelGroupStubComponent {
 }

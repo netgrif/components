@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {WorkflowsPanelGroupComponent} from './workflows-panel-group.component';
+import {WorkflowPanelGroupComponent} from './workflow-panel-group.component';
 import {MatExpansionModule, MatFormFieldModule, MatTooltipModule} from '@angular/material';
 import {WorkflowsPanelComponent} from '../../panel/workflows-panel/workflows-panel.component';
 import {TextFieldComponent} from '../../data-fields/text-field/text-field.component';
@@ -14,13 +14,13 @@ import {MaterialModule} from '../../material/material.module';
 import {DataFieldsModule} from '../../data-fields/data-fields.module';
 
 describe('WorkflowsPanelGroupComponent', () => {
-    let component: WorkflowsPanelGroupComponent;
-    let fixture: ComponentFixture<WorkflowsPanelGroupComponent>;
+    let component: WorkflowPanelGroupComponent;
+    let fixture: ComponentFixture<WorkflowPanelGroupComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                WorkflowsPanelGroupComponent,
+                WorkflowPanelGroupComponent,
                 WorkflowsPanelComponent,
                 TextFieldComponent,
                 PanelComponent,
@@ -39,7 +39,7 @@ describe('WorkflowsPanelGroupComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(WorkflowsPanelGroupComponent);
+        fixture = TestBed.createComponent(WorkflowPanelGroupComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

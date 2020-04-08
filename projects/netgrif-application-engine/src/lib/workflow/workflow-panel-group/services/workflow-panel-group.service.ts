@@ -22,7 +22,7 @@ export interface PanelsDataGroup {
 @Injectable({
     providedIn: 'root'
 })
-export class WorkflowsPanelGroupService {
+export class WorkflowPanelGroupService {
 
     public workflowPanelDefinitions = new Array<WorkflowPanelDefinition>();
     private selectedHeaders: PreferredHeaders;
@@ -53,7 +53,7 @@ export class WorkflowsPanelGroupService {
 
     static resolveFieldType(fieldType: string, fieldTitle: object): string {
         if (fieldType === 'date') {
-            return WorkflowsPanelGroupService.parseDate(fieldTitle as Array<number>).format('D.MM.YYYY');
+            return WorkflowPanelGroupService.parseDate(fieldTitle as Array<number>).format('D.MM.YYYY');
         } else {
             return fieldTitle.toString();
         }
@@ -92,7 +92,7 @@ export class WorkflowsPanelGroupService {
             if (this.selectedHeaders[columnId].identifier === 'author') {
                 return petriNet[this.selectedHeaders[columnId].identifier].fullName;
             } else {
-                return WorkflowsPanelGroupService.resolveFieldType(
+                return WorkflowPanelGroupService.resolveFieldType(
                     this.selectedHeaders[columnId].fieldType,
                     petriNet[this.selectedHeaders[columnId].identifier]);
             }
@@ -110,7 +110,7 @@ export class WorkflowsPanelGroupService {
         let title = '';
         immediateData.forEach(immediateField => {
             if (immediateField.stringId === stringId) {
-                title = WorkflowsPanelGroupService.resolveFieldType(immediateField.type, immediateField.title);
+                title = WorkflowPanelGroupService.resolveFieldType(immediateField.type, immediateField.title);
                 return;
             }
         });
@@ -137,7 +137,7 @@ export class WorkflowsPanelGroupService {
             title: new TextField('', 'Title', panelContent.title, this.dataFieldsBehaviour),
             version: new TextField('', 'Version', panelContent.version, this.dataFieldsBehaviour),
             author: new TextField('', 'Author', panelContent.author, this.dataFieldsBehaviour),
-            uploaded: new DateField('', 'Uploaded', WorkflowsPanelGroupService.parseDate(panelContent.uploaded), this.dataFieldsBehaviour)
+            uploaded: new DateField('', 'Uploaded', WorkflowPanelGroupService.parseDate(panelContent.uploaded), this.dataFieldsBehaviour)
         };
     }
 

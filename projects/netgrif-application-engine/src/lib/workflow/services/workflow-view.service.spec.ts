@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WorkflowsViewService } from './workflows-view.service';
+import { WorkflowViewService } from './workflow-view.service';
 
 describe('WorkflowsViewService', () => {
-  let service: WorkflowsViewService;
+  let service: WorkflowViewService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(WorkflowsViewService);
+    service = TestBed.inject(WorkflowViewService);
   });
 
   // it('should be created', () => {

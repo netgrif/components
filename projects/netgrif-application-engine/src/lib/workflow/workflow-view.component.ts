@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {SideMenuService} from '../side-menu/services/side-menu.service';
 import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
-import {WorkflowsViewService} from './services/workflows-view.service';
+import {WorkflowViewService} from './services/workflow-view.service';
 import {HeaderComponent} from '../header/header.component';
 import {ViewWithHeaders} from '../view/abstract/view-with-headers';
 
@@ -15,15 +15,12 @@ export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewI
 
     @ViewChild('header') public workflowHeader: HeaderComponent;
 
-    constructor(private _sideMenuService: SideMenuService, private _workflowViewService: WorkflowsViewService) {
+    constructor(private _sideMenuService: SideMenuService, private _workflowViewService: WorkflowViewService) {
         super(_workflowViewService);
     }
 
     ngAfterViewInit(): void {
-        this._changeHeader = this.workflowHeader.headerService.headerChange$;
-        this._changeHeader
-            .subscribe(headerChange =>
-                this.onHeaderChange(headerChange));
+        this.initializeHeader(this.workflowHeader);
     }
 
     public importNet() {
