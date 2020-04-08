@@ -39,7 +39,7 @@ const routes: Routes = [
     {path: 'task-view', component: TaskViewComponent},
     {path: 'case-view', component: CaseViewComponent},
     {path: 'tabbed-views', component: TabbedViewsExampleComponent},
-    {path: 'workflows view', component: WorkflowsViewExampleComponent},
+    {path: 'workflow view', component: WorkflowsViewExampleComponent},
 ];
 
 @NgModule({

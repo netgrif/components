@@ -7,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class WorkflowsViewExampleComponent implements OnInit {
     readonly TITLE = 'Workflows view';
-    readonly DESCRIPTION = 'Ukážka použitia workflows view...';
+    readonly DESCRIPTION = 'Ukážka použitia workflow view...';
     constructor() {
     }
 

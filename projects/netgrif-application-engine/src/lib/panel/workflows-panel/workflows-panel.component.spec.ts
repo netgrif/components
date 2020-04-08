@@ -39,7 +39,7 @@ describe('WorkflowsPanelComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-workflows-panel [workflowPanelDefinition]="caseDef"> </nae-workflows-panel>'
+    template: '<nae-workflow-panel [workflowPanelDefinition]="caseDef"> </nae-workflow-panel>'
 })
 class TestWrapperComponent {
     public caseDef: WorkflowPanelDefinition = {
