@@ -6,7 +6,6 @@ import {UserField} from './models/user-field';
 import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {UserFieldService} from './services/user-field.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
@@ -18,7 +17,7 @@ describe('UserFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, HttpClientTestingModule],
             declarations: [UserFieldComponent, TestWrapperComponent],
-            providers: [UserFieldService, SideMenuService],
+            providers: [SideMenuService],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();

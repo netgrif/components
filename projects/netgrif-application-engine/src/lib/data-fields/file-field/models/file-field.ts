@@ -1,5 +1,4 @@
 import {DataField, Layout} from '../../models/abstract-data-field';
-import {Subscription} from 'rxjs';
 import {Behavior} from '../../models/behavior';
 
 export enum FileUploadMIMEtype {
@@ -13,18 +12,7 @@ export enum FileUploadMIMEtype {
     XLS_XLSX = '.xls,.xlsx'
 }
 
-export interface FileUploadModel {
-    data: FileUploadDataModel;
-    state: string;
-    inProgress: boolean;
-    progress: number;
-    canRetry: boolean;
-    canCancel: boolean;
-    successfullyUploaded: boolean;
-    sub?: Subscription;
-}
-
-interface FileUploadDataModel {
+export interface FileUploadDataModel {
     file: File;
     name: string;
     extension: string;
@@ -62,7 +50,7 @@ export class FileField extends DataField<Array<File>> {
             !!a
             && !!b
             && a.length === b.length
-            && a.every( (element, index) => element.name === b[index].name)
+            && a.every((element, index) => element.name === b[index].name)
         );
     }
 }

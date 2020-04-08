@@ -8,8 +8,8 @@ import {FieldConvertorService} from './task-panel-content/field-convertor.servic
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {UserAssignComponent} from '../../side-menu/user-assign/user-assign.component';
-import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
+import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {UserService} from '../../user/services/user.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {Observable, Subject} from 'rxjs';
@@ -21,6 +21,8 @@ import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
+import {TranslateService} from '@ngx-translate/core';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 
 
 @Component({
@@ -43,7 +45,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
                 private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
-                private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService) {
+                private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService,
+                private _translate: TranslateService) {
         super();
         this.loading = false;
         this._updating = false;
@@ -126,7 +129,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                             });
                             this.taskPanelData.task.dataSize += dataGroup.length;
                         } else {
-                            this._log.info(`No data for task ${this.taskPanelData.task}`);
+                            this._log.info(this._translate.instant('tasks.snackbar.noData') + ' ' + this.taskPanelData.task);
                             this.loading = false;
                             afterAction.next(true);
                         }
@@ -135,13 +138,14 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 this.loading = false;
                 afterAction.next(true);
             } else {
-                this._log.info(`No data group for task ${this.taskPanelData.task}`);
+                this._log.info(this._translate.instant('tasks.snackbar.noGroup') + ' ' + this.taskPanelData.task);
                 this.loading = false;
                 afterAction.next(false);
             }
             this._taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
         }, error => {
-            this._snackBar.openErrorSnackBar(`Data for ${this.taskPanelData.task} failed to load`);
+            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
+             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
             this._log.debug(error);
             this.loading = false;
             afterAction.next(false);
@@ -195,7 +199,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                     }
                 });
             });
-            this._snackBar.openInfoSnackBar('Data saved successfully');
+            this._snackBar.openInfoSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
             this.loading = false;
             this._updating = false;
             if (this._queue.observers.length !== 0) {
@@ -203,7 +207,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             }
             afterAction.next(true);
         }, error => {
-            this._snackBar.openErrorSnackBar('Saving data failed');
+            this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
             this._log.debug(error);
             this.loading = false;
             this._updating = false;
@@ -280,7 +284,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 afterAction.next(false);
             }
         }, error => {
-            this._snackBar.openErrorSnackBar(`Assigning task ${this.taskPanelData.task} failed`);
+            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
+             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this._log.debug(error);
             this.loading = false;
             afterAction.next(false);
@@ -291,21 +296,25 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         if (this.loading) {
             return;
         }
-        this._sideMenuService.open(UserAssignComponent, SideMenuWidth.MEDIUM).subscribe(
-
-        );
+        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM).onClose.subscribe( event => {
+            console.log(event);
+        });
         // this.loading = true;
         //
         // this.taskService.delegateTask(user.id).subscribe(response => {
         //     this.loading = false;
         //     if (response.success) {
-        //         // TODO remove some states ??
+        //         this.removeStateData();
+        //         afterAction.next(true);
         //     } else if (response.error) {
         //         this.snackBar.openErrorSnackBar(response.error);
+        //             afterAction.next(false);
         //     }
         // }, error => {
-        //     this.snackBar.openErrorSnackBar(`Delegating task ${this.taskPanelData.task} failed`);
+        //     this.snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
+        //      ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
         //     this.loading = false;
+        //      afterAction.next(false);
         // });
     }
 
@@ -329,7 +338,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 afterAction.next(false);
             }
         }, error => {
-            this._snackBar.openErrorSnackBar(`Canceling assignment of task ${this.taskPanelData.task} failed`);
+            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
+             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.loading = false;
             afterAction.next(false);
         });
@@ -384,7 +394,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 afterAction.next(false);
             }
         }, error => {
-            this._snackBar.openErrorSnackBar(`Finishing task ${this.taskPanelData.task} failed`);
+            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
+             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.loading = false;
             afterAction.next(false);
         });
@@ -393,7 +404,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     private validateTaskData(): boolean {
         const valid = !this.taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
         if (!valid) {
-            this._snackBar.openErrorSnackBar('Some fields have invalid values');
+            this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
             this.taskPanelData.task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
         }
         return valid;

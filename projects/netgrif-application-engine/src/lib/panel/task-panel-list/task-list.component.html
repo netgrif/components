@@ -7,7 +7,7 @@
 
 <div *ngIf="!loading && taskPanels.length === 0" fxLayout="column" fxLayoutAlign="center center">
     <mat-icon>check_box</mat-icon>
-    <span class="font-size-20">There are any tasks satisfying this filter</span>
+    <span class="font-size-20">{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
 </div>
 
 <div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center">

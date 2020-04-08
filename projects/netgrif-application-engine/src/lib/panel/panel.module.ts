@@ -9,6 +9,8 @@ import { TaskPanelContentComponent } from './task-panel/task-panel-content/task-
 import {DataFieldsModule} from '../data-fields/data-fields.module';
 import {TaskListComponent} from './task-panel-list/task-list.component';
 import { WorkflowPanelComponent } from './workflow-panel/workflow-panel.component';
+import {TranslateLibModule} from '../translate/translate-lib.module';
+
 
 @NgModule({
     declarations: [
@@ -24,6 +26,7 @@ import { WorkflowPanelComponent } from './workflow-panel/workflow-panel.componen
         MaterialModule,
         FlexModule,
         DataFieldsModule,
+        TranslateLibModule
     ],
     exports: [
         PanelComponent,

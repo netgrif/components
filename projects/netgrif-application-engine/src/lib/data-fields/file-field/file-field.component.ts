@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FileField} from './models/file-field';
 import {FileFieldService} from './services/file-field.service';
-import {FilesUploadComponent, FilesUploadInjectedData} from '../../side-menu/files-upload/files-upload.component';
-import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
+import {FilesUploadComponent} from '../../side-menu/content-components/files-upload/files-upload.component';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 
 @Component({
     selector: 'nae-file-field',
@@ -35,15 +36,11 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
     }
 
     public onFileUpload() {
-        const data: FilesUploadInjectedData = {
-            fileFieldService: this._fileFieldService
-        };
-
         if (this._fileFieldService.allFiles.length !== 0) {
-            this._sideMenuService.open(FilesUploadComponent, SideMenuWidth.LARGE, data);
+            this._sideMenuService.open(FilesUploadComponent, SideMenuSize.LARGE, this._fileFieldService);
         } else {
             this._fileFieldService.fileUpload();
-            this._sideMenuService.open(FilesUploadComponent, SideMenuWidth.LARGE, data);
+            this._sideMenuService.open(FilesUploadComponent, SideMenuSize.LARGE, this._fileFieldService);
         }
     }
 

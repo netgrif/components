@@ -5,7 +5,7 @@
     <input placeholder="{{data.placeholder}}" matInput [(ngModel)]="data.result" (ngModelChange)="disableButton = data.result.trim().length === 0">
 </mat-form-field>
 
-<mat-dialog-actions align="end">
+<mat-dialog-actions fxLayoutAlign="end">
     <button mat-raised-button (click)="onClose()">Close</button>
-    <button mat-raised-button [disabled]="disableButton" [mat-dialog-close]="data.result">Submit</button>
+    <button mat-raised-button color="primary" [disabled]="disableButton" [mat-dialog-close]="data.result">Submit</button>
 </mat-dialog-actions>

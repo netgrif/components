@@ -19,9 +19,15 @@ import {TaskViewComponent} from './doc/task-view/task-view.component';
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 import {WorkflowViewExampleComponent} from './doc/workflow-view-example/workflow-view-example.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
+import {LoginCardComponent} from './doc/cards/login-card/login-card.component';
+import {PasswordCardComponent} from './doc/cards/password-card/password-card.component';
+import {RegisterCardComponent} from './doc/cards/register-card/register-card.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
+    {path: 'login-card', component: LoginCardComponent},
+    {path: 'pass-card', component: PasswordCardComponent},
+    {path: 'reg-card', component: RegisterCardComponent},
     {path: 'drawer', component: DrawerExampleComponent},
     {path: 'rail', component: RailExampleComponent},
     {path: 'new-case-sidemenu', component: CaseSidemenuExampleComponent},

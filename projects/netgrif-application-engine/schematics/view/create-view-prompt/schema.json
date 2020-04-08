@@ -13,6 +13,7 @@
             "description": "type of the created view",
             "type": "string",
             "enum": [
+                "emptyView",
                 "login",
                 "tabView",
                 "caseView",
@@ -22,6 +23,7 @@
                 "type": "list",
                 "message": "select a view type",
                 "items": [
+                    "emptyView",
                     "login",
                     "tabView",
                     "caseView",

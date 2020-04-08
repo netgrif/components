@@ -1,16 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ToolbarComponent} from './toolbar.component';
 import {MaterialModule} from '../material/material.module';
-import {
-    TranslateLoader,
-    TranslateModule,
-    TranslatePipe,
-    TranslateService,
-    TranslateStore
-} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
-import {HttpLoaderFactory} from './toolbar.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TranslateLibModule} from '../translate/translate-lib.module';
 
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent;
@@ -18,15 +10,7 @@ describe('ToolbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [MaterialModule, HttpClientTestingModule,
-            TranslateModule.forChild({
-                loader: {
-                    provide: TranslateLoader,
-                    useFactory: (HttpLoaderFactory),
-                    deps: [HttpClient]
-                }
-            })],
-        providers: [TranslateService, TranslatePipe, TranslateStore, HttpClient],
+        imports: [MaterialModule, HttpClientTestingModule, TranslateLibModule],
       declarations: [ ToolbarComponent ]
     })
     .compileComponents();

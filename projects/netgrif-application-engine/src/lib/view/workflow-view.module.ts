@@ -6,7 +6,7 @@ import {SideMenuModule} from '../side-menu/side-menu.module';
 import {HeaderModule} from '../header/header.module';
 import {PanelModule} from '../panel/panel.module';
 import {DataFieldsModule} from '../data-fields/data-fields.module';
-import {ImportNetComponent} from '../side-menu/import-net/import-net.component';
+import {ImportNetComponent} from '../side-menu/content-components/import-net/import-net.component';
 import {WorkflowViewComponent} from './workflow-view/workflow-view.component';
 
 
