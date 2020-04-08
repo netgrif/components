@@ -5,8 +5,8 @@ import {SimpleDialogComponent} from './simple-dialog/simple-dialog.component';
 import {QuestionDialogWithAnswerComponent} from './question-dialog-with-answer/question-dialog-with-answer.component';
 
 export enum DialogType {
-    INFO = 'info',
-    SUCCESS = 'success',
+    PRIMARY = 'primary',
+    ACCENT = 'accent',
     WARNING = 'warn'
 }
 
@@ -18,7 +18,7 @@ export class DialogService {
     constructor(private dialog: MatDialog) {
     }
 
-    openSimpleDialog(title: string, content: string, type = DialogType.INFO, configMatDialog?: object) {
+    openSimpleDialog(title: string, content: string, type = DialogType.PRIMARY, configMatDialog?: object) {
         return this.dialog.open(SimpleDialogComponent,
             Object.assign({
                 data: {

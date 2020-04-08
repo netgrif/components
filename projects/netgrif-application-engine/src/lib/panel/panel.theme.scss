@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+@mixin panel-component($theme) {
+    $primary: map-get($theme, primary);
+    .panel-color:hover {
+        background: mat-color($primary) !important;
+        color: white !important;
+    }
+}

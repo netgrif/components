@@ -1,8 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {passwordValidator} from './password.validator';
 import {AbstractCard} from '../abstract-card';
-import {LoggerService} from '../../logger/services/logger.service';
+import {Credentials} from '../../authentication/models/credentials';
+
+export interface Register {
+    email: string;
+    name: string;
+    surname: string;
+    password: string;
+}
 
 @Component({
     selector: 'nae-registration-panel',
@@ -13,24 +20,35 @@ export class RegistrationCardComponent extends AbstractCard implements OnInit {
 
     public hidePassword: boolean;
     public hideRepeatPassword: boolean;
+    @Output() public register: EventEmitter<Register>;
 
-    constructor(private _fb: FormBuilder, private _log: LoggerService) {
+    constructor(private _fb: FormBuilder) {
         super();
         this.form = _fb.group({
-            login: [''],
             email: ['', Validators.email],
+            name: [''],
+            surname: [''],
             password: [''],
             confirmPassword: ['']
         }, {validator: passwordValidator});
         this.hidePassword = true;
         this.hideRepeatPassword = true;
+        this.register = new EventEmitter<Register>();
     }
 
     public ngOnInit(): void {
     }
 
-    public onSubmit(form: object): void {
-        this._log.info('Form', form);
+    public onSubmit(): void {
+        if (!this.form.valid) {
+            return;
+        }
+        this.register.emit({
+            email: this.form.controls['email'].value,
+            name: this.form.controls['name'].value,
+            surname: this.form.controls['surname'].value,
+            password: this.form.controls['password'].value
+        });
     }
 
 }

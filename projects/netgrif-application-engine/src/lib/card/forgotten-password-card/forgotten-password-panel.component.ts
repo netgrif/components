@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractCard} from '../abstract-card';
+import {Credentials} from '../../authentication/models/credentials';
 
 @Component({
     selector: 'nae-forgotten-password-panel',
@@ -9,18 +10,23 @@ import {AbstractCard} from '../abstract-card';
 })
 export class ForgottenPasswordCardComponent extends AbstractCard implements OnInit {
 
+    @Output() public email: EventEmitter<string>;
+
     constructor(private fb: FormBuilder) {
         super();
         this.form = fb.group({
-            login: [''],
             email: ['', Validators.email]
         });
+        this.email = new EventEmitter<string>();
     }
 
     ngOnInit() {
     }
 
-    onSubmit(form: object) {
-        console.log(form);
+    onSubmit() {
+        if (!this.form.valid) {
+            return;
+        }
+        this.email.emit(this.form.controls['email'].value);
     }
 }

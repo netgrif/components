@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DialogService} from '@netgrif/application-engine';
+import {DialogService, DialogType} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-dialog-example',
@@ -9,22 +9,36 @@ import {DialogService} from '@netgrif/application-engine';
 export class DialogExampleComponent implements OnInit {
     readonly TITLE = 'Dialog';
     readonly DESCRIPTION = 'Ukážka použitia dialogu...';
+    public questionResult: string;
+    public answerResult: string;
+    public colors: Array<object>;
 
     constructor(private dialogService: DialogService) {
+        this.colors = [
+            {value: 'primary', viewValue: 'Primary'},
+            {value: 'accent', viewValue: 'Accent'},
+            {value: 'warn', viewValue: 'Warn'}
+            ];
     }
 
     ngOnInit(): void {
     }
 
-    simple() {
-        this.dialogService.openSimpleDialog('dialog title', 'dialog content');
+    simple(message: string, select: string) {
+        this.dialogService.openSimpleDialog('Simple info dialog title', message, select as DialogType);
     }
 
-    question() {
-        this.dialogService.openQuestionDialog('question title', 'How are you?', 'nay', 'yay');
+    question(question: string, pos: string, neg: string) {
+        this.dialogService.openQuestionDialog('Question dialog title', question, neg, pos)
+            .afterClosed().subscribe( result => {
+                this.questionResult = result;
+        });
     }
 
-    answer() {
-        this.dialogService.openQuestionWithAnswerDialog('qustion title', 'Question?', 'placeholder');
+    answer(question: string, placeholder: string) {
+        this.dialogService.openQuestionWithAnswerDialog('Question with answer dialog title', question, placeholder)
+            .afterClosed().subscribe( result => {
+            this.answerResult = result;
+        });
     }
 }

@@ -22,6 +22,7 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl) {
         this.users = [];
         // TODO load users
+        // TODO BUG - when you click assign without selected user , menu send closed event but its never closed and error appear in console
     }
 
     ngOnInit() {

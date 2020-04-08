@@ -49,7 +49,7 @@
 
 <div *ngIf="!loading && dataSource.length === 0" fxLayout="column" fxLayoutAlign="center center">
     <mat-icon>block</mat-icon>
-    <span>This task has no data. Finish to continue.</span>
+    <span>{{ 'tasks.view.noData' | translate}}</span>
 </div>
 
 <div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center">

@@ -3,6 +3,7 @@
 
 @import '~@covalent/markdown/markdown-theme';
 @import 'custom-highlight-theme';
+@import '~@netgrif/application-engine/nae-theme';
 
 html, body {
     height: 100%;
@@ -27,6 +28,8 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 //@include covalent-theme($theme, $typography);
 @include custom-covalent-highlight-theme();
+
+@include nae-lib-theme($theme);
 
 tr mat-header-row {
     background-color: green;

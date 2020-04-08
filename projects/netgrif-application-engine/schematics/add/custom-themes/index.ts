@@ -1,6 +1,5 @@
 import {
     Rule,
-    SchematicContext,
     SchematicsException,
     Tree,
     chain,
@@ -27,15 +26,16 @@ function handleJsonString(json: string, mainJsonobject: boolean, darkTheme: bool
     return json;
 }
 
-export function customTemplates(): Rule {
-    return (tree: Tree, _context: SchematicContext) => {
+export function customThemes(): Rule {
+    return (tree: Tree) => {
+        const path = getProjectInfo(tree).path;
 
         const naeJson = tree.read('./nae.json');
         if (naeJson === null) {
             throw new SchematicsException('Missing \'nae.json\' file');
         }
         const data = JSON.parse(naeJson.toString());
-        if (!tree.exists('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss')) {
+        if (!tree.exists(path + '/../styles.scss')) {
             throw new SchematicsException('Cant find styles.scss file');
         }
         let darkExists = false;
@@ -60,7 +60,7 @@ export function customTemplates(): Rule {
 
 
         const rules = [];
-        const pathTomove = './projects/' + getProjectInfo(tree).projectName + '/src/styles/templates';
+        const pathTomove = path + '/../styles/templates';
         rules.push(createFilesFromTemplates('./files/light-theme', pathTomove, {
             primaryLight,
             primaryContrastLight,
@@ -86,7 +86,7 @@ export function customTemplates(): Rule {
         }));
 
         deleteExistingFiles(tree, pathTomove);
-        const wholeStyleContent = tree.read('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss');
+        const wholeStyleContent = tree.read(path + '/../styles.scss');
         if (wholeStyleContent) {
             let importsAndIncludes = '';
             if (wholeStyleContent.toString().match('@include mat-core()') === null) {
@@ -95,8 +95,8 @@ export function customTemplates(): Rule {
             if (wholeStyleContent.toString().match('./styles/templates/custom-themes.scss') === null) {
                 importsAndIncludes += '@import \'./styles/templates/custom-themes.scss\';' + '\n';
             }
-            tree.overwrite('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss',
-                importsAndIncludes + tree.read('./projects/' + getProjectInfo(tree).projectName + '/src/styles.scss'));
+            tree.overwrite(path + '/../styles.scss',
+                importsAndIncludes + tree.read(path + '/../styles.scss'));
         }
         return chain(rules);
     };

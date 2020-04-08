@@ -4,7 +4,58 @@
                        [apiModuleImport]="'PanelModule'"></nae-app-documentation>
 
 <ng-template #panelExample>
-    <button mat-raised-button (click)="simple()">Simple</button>
-    <button mat-raised-button (click)="question()">Question</button>
-    <button mat-raised-button (click)="answer()">Question with Answer</button>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+
+        <div fxLayout="column" fxLayoutAlign="space-around start" class="padding16px">
+            <mat-form-field>
+                <mat-label>Set message</mat-label>
+                <input #input1 matInput value="Info!">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Select button color</mat-label>
+                <mat-select #colorSelect value="primary">
+                    <mat-option *ngFor="let color of colors" [value]="color.value">
+                        {{color.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button (click)="simple(input1.value, colorSelect.value)">Open Simple primary Dialog</button>
+        </div>
+
+        <mat-divider [vertical]="true" class="height100"></mat-divider>
+
+        <div fxLayout="column" fxLayoutAlign="space-around start" class="padding16px">
+            <mat-form-field>
+                <mat-label>Set question</mat-label>
+                <input #input2 matInput value="Are you developer?">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Set positive button text</mat-label>
+                <input #inputPositive matInput value="Yes">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Set negative button text</mat-label>
+                <input #inputNegative matInput value="No">
+            </mat-form-field>
+            <button mat-raised-button (click)="question(input2.value, inputPositive.value, inputNegative.value)">Open Question Dialog</button>
+            <p>Question result: {{questionResult}}</p>
+        </div>
+
+        <mat-divider [vertical]="true" class="height100"></mat-divider>
+
+        <div fxLayout="column" fxLayoutAlign="space-around start" class="padding16px">
+            <mat-form-field>
+                <mat-label>Set question</mat-label>
+                <input #input3 matInput value="How is your car's brand?">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Set placeholder</mat-label>
+                <input #inputPlaceholder matInput value="Write answer">
+            </mat-form-field>
+            <button mat-raised-button (click)="answer(input3.value, inputPlaceholder.value)">Open Question/Answer Dialog</button>
+            <p>Answer: {{answerResult}}</p>
+        </div>
+
+    </div>
 </ng-template>

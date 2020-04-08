@@ -5,6 +5,9 @@ import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-pa
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../user/services/user.service';
+import {SnackBarService} from '../../snack-bar/snack-bar.service';
+import {TranslateService} from '@ngx-translate/core';
+import {SelectLanguageService} from '../../toolbar/select-language.service';
 
 @Injectable()
 export class TaskViewService {
@@ -14,7 +17,9 @@ export class TaskViewService {
     loading: BehaviorSubject<boolean>;
     private _activeFilter: string;
 
-    constructor(protected _taskService: TaskResourceService, private _userService: UserService) {
+    constructor(protected _taskService: TaskResourceService, private _userService: UserService,
+                private _snackBarService: SnackBarService, private _translate: TranslateService,
+                private _selectLanguage: SelectLanguageService) { // need for translations
         this.taskArray = [];
         this.taskData = new Subject<Array<TaskPanelData>>();
         this.loading = new BehaviorSubject<boolean>(false);
@@ -53,9 +58,17 @@ export class TaskViewService {
                         changedFields: this.changedFields
                     });
                 });
+            } else {
+                this._snackBarService.openInfoSnackBar(this._translate.instant('tasks.snackbar.noTasksFound'));
             }
             this.loading.next(false);
             this.taskData.next(this.taskArray);
+        }, error => {
+            this._snackBarService.openErrorSnackBar(
+                this._translate.instant('tasks.snackbar.errorTaskSearch') + ' ' +
+                this._translate.instant('tasks.snackbar.failedToLoad')
+            );
+            this.loading.next(false);
         });
     }
 

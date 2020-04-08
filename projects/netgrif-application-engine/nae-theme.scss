@@ -1,0 +1,5 @@
+@import 'src/lib/panel/panel.theme';
+
+@mixin nae-lib-theme($app-theme) {
+    @include panel-component($app-theme);
+}
