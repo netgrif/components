@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'nae-app-workflows-view-example',
-    templateUrl: './workflows-view-example.component.html',
-    styleUrls: ['./workflows-view-example.component.scss']
+    templateUrl: './workflow-view-example.component.html',
+    styleUrls: ['./workflow-view-example.component.scss']
 })
-export class WorkflowsViewExampleComponent implements OnInit {
+export class WorkflowViewExampleComponent implements OnInit {
     readonly TITLE = 'Workflows view';
     readonly DESCRIPTION = 'Ukážka použitia workflow view...';
     constructor() {

@@ -7,7 +7,7 @@ import {ViewWithHeaders} from '../view/abstract/view-with-headers';
 
 
 @Component({
-    selector: 'nae-workflows',
+    selector: 'nae-workflow-view',
     templateUrl: './workflow-view.component.html',
     styleUrls: ['./workflow-view.component.scss']
 })

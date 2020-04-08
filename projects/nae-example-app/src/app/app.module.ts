@@ -56,7 +56,7 @@ import {TaskViewComponent} from './doc/task-view/task-view.component';
 import {TabbedCaseViewComponent} from './doc/tabbed-case-view/tabbed-case-view/tabbed-case-view.component';
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 import {TabbedTaskViewComponent} from './doc/tabbed-case-view/tabbed-task-view/tabbed-task-view.component';
-import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workflows-view-example.component';
+import {WorkflowViewExampleComponent} from './doc/workflow-view-example/workflow-view-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -88,7 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabbedCaseViewComponent,
         TabbedViewsExampleComponent,
         TabbedTaskViewComponent,
-        WorkflowsViewExampleComponent,
+        WorkflowViewExampleComponent,
         ContentComponent,
         CaseResourceExampleComponent,
     ],
