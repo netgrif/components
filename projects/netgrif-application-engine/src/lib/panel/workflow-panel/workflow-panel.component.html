@@ -1,20 +1,46 @@
-<nae-app-panel [panelHeader]="casePanelHeader" [panelContent]="taskPanelContent" (getExpansionPanelRef)="setPanelRef($event)">
-    <ng-template #casePanelHeader>
-        <div fxLayoutAlign=" center" fxLayout="row" fxFlex="90">
-            <span fxFlex >{{workflowPanelDefinition.column0}}</span>
-            <span fxFlex >{{workflowPanelDefinition.column1}}</span>
-            <span fxFlex fxHide.lt-sm>{{workflowPanelDefinition.column2}}</span>
-            <span fxFlex fxHide.lt-md>{{workflowPanelDefinition.column3}}</span>
-            <span fxFlex fxHide.lt-lg>{{workflowPanelDefinition.column4}}</span>
+<nae-app-panel [panelHeader]="header" [panelContent]="content" (getExpansionPanelRef)="setPanelRef($event)">
+    <ng-template #header>
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="90">
+            <div *ngFor="let value of featuredFieldsValues; let i = index" fxLayout="start center" fxFlex
+                 [fxHide.lt-lg]="i >= 4"
+                 [fxHide.lt-md]="i >= 3"
+                 [fxHide.lt-sm]="i >= 2">
+                {{value}}
+            </div>
         </div>
     </ng-template>
-    <ng-template #taskPanelContent>
+    <ng-template #content>
         <div class="panel-main-content" fxLayout="column">
             <div class="workflow-panel-body" fxFlex="80">
-                <ng-content></ng-content>
+                <div fxLayout="row">
+                    <div fxFlex="50">
+                        <nae-text-field [dataField]="panelContent.netIdentifier">
+                        </nae-text-field>
+                    </div>
+                    <div fxFlex="50">
+                        <nae-text-field [dataField]="panelContent.title">
+                        </nae-text-field>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50">
+                        <nae-text-field [dataField]="panelContent.version">
+                        </nae-text-field>
+                    </div>
+                    <div fxFlex="50">
+                        <nae-text-field [dataField]="panelContent.author">
+                        </nae-text-field>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50">
+                        <nae-date-time-field [dataField]="panelContent.uploaded">
+                        </nae-date-time-field>
+                    </div>
+                </div>
             </div>
             <div class="workflow-panel-footer" fxLayout="row" fxFlex="20" fxLayoutAlign="end center">
-                <button (click)="panelRef.expanded = false;" mat-button>COLLAPSE</button>
+                <button (click)="panelRef.expanded = false" mat-button>COLLAPSE</button>
             </div>
         </div>
     </ng-template>

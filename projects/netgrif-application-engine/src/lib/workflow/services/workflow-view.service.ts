@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {WorkflowPanelGroupService} from '../workflow-panel-group/services/workflow-panel-group.service';
 import {WorkflowHeaderService} from '../../header/workflow-header/workflow-header.service';
-import {HeaderState} from '../../header/header-state';
 import {SortableView} from '../../view/abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource-service';
 
@@ -16,22 +15,15 @@ export class WorkflowViewService extends SortableView {
                 public petriNetResourceService: PetriNetResourceService,
                 public workflowsPanelGroupService: WorkflowPanelGroupService) {
         super();
-        this.reload();
     }
 
     protected setPetriNetReferences(petriNetReferences: Array<PetriNetReference>) {
-        // this.workflowsPanelGroupService.headers = this.workflowsHeaderService.headerState;
         this.workflowsHeaderService.setPanelsTitles();
         this.workflowsPanelGroupService.petriNetReferences = petriNetReferences;
-        this.workflowsPanelGroupService.populateDataFields();
-    }
-
-    public setPanelTitles(headers: HeaderState) {
-        this.workflowsPanelGroupService.headers = headers;
-        this.workflowsPanelGroupService.setPanelsTitles();
     }
 
     public reload(): void {
+        // TODO 8.4.2020 - allow filtering of petri nets in workflow view
         this.petriNetResourceService.getAll().subscribe(petriNet => this.setPetriNetReferences(petriNet.petriNetReferences));
     }
 
