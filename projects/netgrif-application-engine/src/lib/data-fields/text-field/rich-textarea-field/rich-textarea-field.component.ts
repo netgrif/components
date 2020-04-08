@@ -13,8 +13,19 @@ export class RichTextareaFieldComponent implements OnInit {
     @Input() textAreaField: TextField;
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
+    options: any;
 
     constructor() {
+        this.options = {
+            autoDownloadFontAwesome: true,
+            minHeight: '95px',
+            toolbar: ['bold', 'italic', 'heading', 'strikethrough', '|', 'code', 'quote', 'unordered-list', 'ordered-list', '|',
+                'link', 'image', 'table', '|', 'horizontal-rule', 'preview', '|', 'guide'],
+            shortcuts: {
+                toggleSideBySide: null,
+                toggleFullScreen: null
+            }
+        };
     }
 
     ngOnInit(): void {
