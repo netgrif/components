@@ -4,9 +4,11 @@ import {CaseResourceService} from '../../resources/engine-endpoint/case-resource
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../resources/interface/case';
-import {NewCaseComponent} from '../../side-menu/new-case/new-case.component';
+import {NewCaseComponent} from '../../side-menu/content-components/new-case/new-case.component';
 import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {SortableView} from '../abstract/sortable-view';
+import {LoggerService} from '../../logger/services/logger.service';
+
 
 @Injectable()
 export class CaseViewService extends SortableView {
@@ -16,7 +18,8 @@ export class CaseViewService extends SortableView {
     protected _cases$: Subject<Array<Case>>;
 
     constructor(protected _sideMenuService: SideMenuService,
-                protected _caseResourceService: CaseResourceService) {
+                protected _caseResourceService: CaseResourceService,
+                protected _log: LoggerService) {
         super();
         this._baseFilter = '{}';
         this._loading$ = new BehaviorSubject<boolean>(false);
@@ -63,7 +66,12 @@ export class CaseViewService extends SortableView {
     }
 
     public createNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent);
+        this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
+            this._log.debug($event.message, $event.data);
+            if ($event.data) {
+                this.loadCases();
+            }
+        });
     }
 
     protected getDefaultSortParam(): string {

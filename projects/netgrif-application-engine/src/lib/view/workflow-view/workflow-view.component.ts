@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {ImportNetComponent} from '../../side-menu/import-net/import-net.component';
+import {ImportNetComponent} from '../../side-menu/content-components/import-net/import-net.component';
 import {WorkflowViewService} from './workflow-view.service';
 import {HeaderComponent} from '../../header/header.component';
 import {ViewWithHeaders} from '../abstract/view-with-headers';
