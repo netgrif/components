@@ -1,16 +1,18 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { WorkflowHeaderService } from './workflow-header.service';
+import {WorkflowHeaderService} from './workflow-header.service';
 
-describe('WorkflowsHeaderService', () => {
-  let service: WorkflowHeaderService;
+describe('WorkflowHeaderService', () => {
+    let service: WorkflowHeaderService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(WorkflowHeaderService);
-  });
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [WorkflowHeaderService]
+        });
+        service = TestBed.inject(WorkflowHeaderService);
+    });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });

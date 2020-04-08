@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {WorkflowPanelComponent} from './workflow-panel.component';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
@@ -8,9 +7,11 @@ import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsModule} from '../../data-fields/data-fields.module';
-import {WorkflowPanelDefinition} from './models/workflows-panels-definition';
+import {of} from 'rxjs';
+import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 
-describe('WorkflowsPanelComponent', () => {
+
+describe('WorkflowPanelComponent', () => {
     let component: WorkflowPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
@@ -39,21 +40,22 @@ describe('WorkflowsPanelComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-workflow-panel [workflowPanelDefinition]="caseDef"> </nae-workflow-panel>'
+    template: '<nae-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nae-workflow-panel>'
 })
 class TestWrapperComponent {
-    public caseDef: WorkflowPanelDefinition = {
-        panelContent: {
-            netIdentifier: 'id',
-            uploaded: [30, 3, 2020, 21, 17, 50],
-            author: 'tes',
-            version: 'q',
-            title: 'e'
+    public selectedHeaders = of([]);
+    public workflow: PetriNetReference = {
+        author: {
+            email: '',
+            fullName: '',
         },
-        column0: '0',
-        column1: '1',
-        column2: '2',
-        column3: '3',
-        column4: '4',
+        createdDate: [2020, 4, 8],
+        defaultCaseName: '',
+        identifier: '',
+        immediateData: undefined,
+        initials: '',
+        stringId: '',
+        title: '',
+        version: ''
     };
 }
