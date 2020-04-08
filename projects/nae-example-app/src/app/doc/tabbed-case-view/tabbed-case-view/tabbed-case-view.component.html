@@ -11,7 +11,7 @@
         </div>
     </mat-card>
 
-    <nae-header #header [type]="headerType" class="case-header-padding"></nae-header>
+    <nae-header #header [type]="headerType" [allowedNets$]="allowedNets$" class="case-header-padding"></nae-header>
 
     <nae-case-panel *ngFor="let case_ of cases$ | async"
                     [case_]="case_"
