@@ -5,7 +5,7 @@
 /* MODULES */
 export * from './panel.module';
 export * from './task-panel/task-panel-definition';
-export * from './workflows-panel/workflows-panel.component';
+export * from './workflow-panel/workflow-panel.component';
 
 /* SERVICES */
 export * from './task-panel/task-panel-content/field-convertor.service';

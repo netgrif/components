@@ -1,6 +1,6 @@
 <mat-expansion-panel [disabled]="expansionDisabled" hideToggle (afterExpand)="emitExpand()"
                      (afterCollapse)="emitCollapse()" #matExpansionPanel>
-    <mat-expansion-panel-header (click)="expandPanel()" class="panel-color">
+    <mat-expansion-panel-header (click)="expandPanel()" class="panel-color header-padding">
         <mat-panel-description *ngTemplateOutlet="panelHeader">
         </mat-panel-description>
     </mat-expansion-panel-header>

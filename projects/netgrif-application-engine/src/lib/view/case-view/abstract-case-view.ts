@@ -1,82 +1,28 @@
-import {NewCaseComponent} from '../../side-menu/content-components/new-case/new-case.component';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {Case} from '../../resources/interface/case';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {HeaderComponent} from '../../header/header.component';
-import {HttpParams} from '@angular/common/http';
-import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
-import {HeaderType} from '../../header/abstract-header-service';
-import {HeaderChange} from '../../header/models/user.changes/header-change';
-import {LoggerService} from '../../logger/services/logger.service';
-import {SortChangeDescription} from '../../header/models/user.changes/sort-change-description';
+import {BehaviorSubject} from 'rxjs';
+import {HeaderType} from '../../header/models/header-type';
+import {CaseViewService} from './case-view-service';
+import {ViewWithHeaders} from '../abstract/view-with-headers';
 
 
-export abstract class AbstractCaseView {
+export abstract class AbstractCaseView extends ViewWithHeaders {
 
-    public headerType: HeaderType = 'case';
-    public cases: Array<Case> = [];
-    public featuredFields$: BehaviorSubject<Array<string>>;
-    public loading: boolean;
+    public readonly headerType: HeaderType = HeaderType.CASE;
+    public cases$: BehaviorSubject<Array<Case>>;
 
-    protected constructor(protected _sideMenuService: SideMenuService,
-                          protected _caseResourceService: CaseResourceService,
-                          protected _log: LoggerService,
-                          protected _baseFilter: string = '{}') {
-        this.loadCases();
-        // TODO initial header layout from configuration/preferences
-        this.featuredFields$ = new BehaviorSubject<Array<string>>([]);
+    protected constructor(protected _caseViewService: CaseViewService,
+                          baseFilter: string = '{}') {
+        super(_caseViewService);
+        this.cases$ = new BehaviorSubject<Array<Case>>([]);
+        this._caseViewService.baseFilter = baseFilter;
+        this._caseViewService.cases$.subscribe(newCases => {
+            this.cases$.next(newCases);
+        });
+        this._caseViewService.loadCases();
     }
 
     public createNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
-            this._log.debug($event.message, $event.data);
-            if ($event.data) {
-                this.loadCases();
-            }
-        });
-    }
-
-    public loadCases(): void {
-        this.loading = true;
-        this._caseResourceService.getAllCase()
-            .subscribe((newCases: Array<Case>) => {
-                this.updateCases(newCases);
-                this.loading = false;
-            });
-    }
-
-    protected initializeHeader(caseHeaderComponent: HeaderComponent): void {
-        caseHeaderComponent.headerService.headerChange$.subscribe((header: HeaderChange) => {
-            if (!header) {
-                return;
-            }
-            // TODO: JOZO fix Matove interfaces
-            let params: HttpParams = new HttpParams();
-            if (header.mode === 'sort') {
-                const desc = header.description as SortChangeDescription;
-                params = params.set(header.mode, desc.sortMode + desc.identifier);
-            }
-            // const params = new HttpParams().set(header ? header.type : '',
-            //     header.description.sortMode && header.description.identifier ?
-            //     header.description.sortMode + header.description.identifier : '');
-            // const params = new HttpParams().set('sort', 'asc');
-            this.loading = true;
-            this._caseResourceService.searchCases({}, params)
-                .subscribe((newCases: Array<Case>) => {
-                    this.updateCases(newCases);
-                    this.loading = false;
-                });
-            // TODO if headers changed their content (different columns should be shown) update featured fields stream
-        });
-    }
-
-    protected updateCases(newCases: Array<Case>): void {
-        // TODO is just replacing the existing cases with new ones a good idea? Is there some data, we might loose?
-        this.cases.splice(0, this.cases.length);
-        this.featuredFields$.next(['visualId', 'title', 'author', 'creationDate', '']);
-        if (!!newCases && Array.isArray(newCases)) {
-            this.cases.push(...newCases);
-        }
+        this._caseViewService.createNewCase();
     }
 
     public abstract handleCaseClick(clickedCase: Case): void;

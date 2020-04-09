@@ -1,15 +1,23 @@
 <div class="header-column-container"
      fxFlex="100">
-    <mat-form-field *ngFor="let header of getIterableHeaders() | keyvalue" fxLayout="row" fxLayoutAlign=" center" fxFlex
-                    [fxHide.lt-lg]="header.value.columnId=='column4'"
-                    [fxHide.lt-md]="header.value.columnId=='column3' || header.value.columnId=='column4'"
-                    [fxHide.lt-sm]="header.value.columnId=='column2' || header.value.columnId=='column3' || header.value.columnId=='column4'">
-        <mat-label *ngIf="header.value.fieldType!='date'" >{{header.value.title}}</mat-label>
-        <mat-label *ngIf="header.value.fieldType=='date'">Choose a date</mat-label>
-        <input *ngIf="header.value.fieldType=='date'" matInput [matDatepicker]="picker" (dateChange)="onUserSearch(header.value.columnId,  $event)">
-        <mat-datepicker-toggle *ngIf="header.value.fieldType=='date'" matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <input *ngIf="header.value.fieldType!='date'" matInput
-               (keyup)="onUserSearch(header.value.columnId, $event.target['value'])">
-    </mat-form-field>
+    <ng-template ngFor let-header [ngForOf]="this.headerService.selectedHeaders$ | async" let-i="index">
+        <div *ngIf="!!header; then thenBlock else elseBlock" fxFlex></div>
+        <ng-template #thenBlock>
+            <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex
+                            [fxHide.lt-lg]="i >= 4"
+                            [fxHide.lt-md]="i >= 3"
+                            [fxHide.lt-sm]="i >= 2">
+                <mat-label *ngIf="header.fieldType === 'date'">Choose a date</mat-label>
+                <input *ngIf="header.fieldType === 'date'" matInput [matDatepicker]="picker" (dateChange)="headerSearchInputChanged(i,  $event)">
+                <mat-datepicker-toggle *ngIf="header.fieldType === 'date'" matPrefix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+
+                <mat-label *ngIf="header.fieldType !== 'date'" >{{header.title}}</mat-label>
+                <input *ngIf="header.fieldType !== 'date'" matInput (keyup)="headerSearchInputChanged(i, $event.target['value'])">
+            </mat-form-field>
+        </ng-template>
+        <ng-template #elseBlock>
+            <div fxFlex></div>
+        </ng-template>
+    </ng-template>
 </div>
