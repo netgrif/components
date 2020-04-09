@@ -5,9 +5,12 @@ import {
     NAE_TAB_DATA,
     TabbedCaseView,
     LoggerService,
-    CaseViewService, PetriNetReference, PetriNetResourceService,
+    CaseViewService,
+    ProcessService,
+    Net,
 } from '@netgrif/application-engine';
-import {ReplaySubject} from 'rxjs';
+import {ReplaySubject, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Component({
     selector: 'nae-app-tabbed-case-view',
@@ -18,16 +21,16 @@ import {ReplaySubject} from 'rxjs';
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
-    public allowedNets$: ReplaySubject<Array<PetriNetReference>>;
+    public allowedNets$: ReplaySubject<Array<Net>>;
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData,
-                petriNetResourceService: PetriNetResourceService) {
+                processService: ProcessService) {
         super(caseViewService, loggerService, injectedTabData, '{}');
-        this.allowedNets$ = new ReplaySubject<Array<PetriNetReference>>(1);
-        petriNetResourceService.getAll().subscribe(result => {
-            this.allowedNets$.next(result.petriNetReferences);
+        this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
+        processService.loadNets().pipe(catchError( err => throwError(err))).subscribe(result => {
+            this.allowedNets$.next(result);
         });
     }
 

@@ -11,6 +11,7 @@ import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TextField} from '../../data-fields/text-field/models/text-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {Behavior} from '../../data-fields/models/behavior';
+import {Net} from '../../process/net';
 
 
 export interface WorkflowPanelContent {
@@ -28,7 +29,7 @@ export interface WorkflowPanelContent {
 })
 export class WorkflowPanelComponent extends PanelWithHeaderBinding implements OnInit {
 
-    @Input() public workflow: PetriNetReference;
+    @Input() public workflow: Net;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;

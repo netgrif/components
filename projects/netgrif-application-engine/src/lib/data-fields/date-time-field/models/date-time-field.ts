@@ -11,6 +11,7 @@ export class DateTimeField extends AbstractTimeInstanceField {
     }
 
     protected valueEquality(a: Moment, b: Moment): boolean {
+        // TODO BUG 9.4. 2020 - Cannot read property 'isEqual' of undefined
         return this.isEqual(a, b, 'minute');
     }
 }
