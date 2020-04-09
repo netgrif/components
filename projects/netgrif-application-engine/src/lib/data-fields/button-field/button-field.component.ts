@@ -10,6 +10,7 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 export class ButtonFieldComponent extends AbstractDataFieldComponent {
 
   @Input() dataField: ButtonField;
+  // TODO BUG - disabled donwt workink on init, due ngDefaultControl
 
   constructor() {
       super();

@@ -6,39 +6,39 @@
                        [rowspan]="item.layout.rows"
                        [ngSwitch]="item.type">
 
-                <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width" [dataField]="item.item">
+                <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item">
                 </nae-boolean-field>
 
-                <nae-text-field *ngSwitchCase="'text'" class="full-width" [dataField]="item.item">
+                <nae-text-field *ngSwitchCase="'text'" class="full-width-auto" [dataField]="item.item">
                 </nae-text-field>
 
-                <nae-number-field *ngSwitchCase="'number'" class="full-width" [dataField]="item.item">
+                <nae-number-field *ngSwitchCase="'number'" class="full-width-auto" [dataField]="item.item">
                 </nae-number-field>
 
-                <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width" [dataField]="item.item">
+                <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width-auto" [dataField]="item.item">
                 </nae-enumeration-field>
 
-                <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width" [dataField]="item.item">
+                <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width-auto" [dataField]="item.item">
                 </nae-multichoice-field>
 
-                <nae-date-field *ngSwitchCase="'date'" class="full-width" [dataField]="item.item">
+                <nae-date-field *ngSwitchCase="'date'" class="full-width-auto" [dataField]="item.item">
                 </nae-date-field>
 
-                <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width" [dataField]="item.item">
+                <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item">
                 </nae-date-time-field>
 
-                <nae-file-field *ngSwitchCase="'file'" class="full-width" [dataField]="item.item">
+                <nae-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item">
                 </nae-file-field>
 
-                <nae-user-field *ngSwitchCase="'user'" class="full-width" [dataField]="item.item">
+                <nae-user-field *ngSwitchCase="'user'" class="full-width-auto" [dataField]="item.item">
                 </nae-user-field>
 
-                <nae-button-field *ngSwitchCase="'button'" class="full-width" [dataField]="item.item" >
+                <nae-button-field *ngSwitchCase="'button'" class="full-width-auto" [dataField]="item.item" >
                 </nae-button-field>
 
-                <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width-auto">
                     <div fxFlex="20" class="line-datagroup"></div>
-                    <span class="margin8px">{{item.title}}</span>
+                    <span class="margin-default">{{item.title}}</span>
                     <div fxFlex class="line-datagroup"></div>
                 </div>
 
