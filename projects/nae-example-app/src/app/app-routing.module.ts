@@ -17,7 +17,7 @@ import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.com
 import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {TaskViewComponent} from './doc/task-view/task-view.component';
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
-import {WorkflowsViewExampleComponent} from './doc/workflows-view-example/workflows-view-example.component';
+import {WorkflowViewExampleComponent} from './doc/workflow-view-example/workflow-view-example.component';
 import {CaseResourceExampleComponent} from './doc/case-resource-example/case-resource-example.component';
 import {LoginCardComponent} from './doc/cards/login-card/login-card.component';
 import {PasswordCardComponent} from './doc/cards/password-card/password-card.component';
@@ -45,7 +45,7 @@ const routes: Routes = [
     {path: 'task-view', component: TaskViewComponent},
     {path: 'case-view', component: CaseViewComponent},
     {path: 'tabbed-views', component: TabbedViewsExampleComponent},
-    {path: 'workflows view', component: WorkflowsViewExampleComponent},
+    {path: 'workflow view', component: WorkflowViewExampleComponent},
 ];
 
 @NgModule({
