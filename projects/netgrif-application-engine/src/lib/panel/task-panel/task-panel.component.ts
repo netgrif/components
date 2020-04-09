@@ -12,11 +12,18 @@ import {UserAssignComponent} from '../../side-menu/content-components/user-assig
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {UserService} from '../../user/services/user.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/task-view.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {take} from 'rxjs/operators';
+import {HeaderColumn} from '../../header/models/header-column';
+import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
+import {TaskMetaField} from '../../header/task-header/task-header.service';
+import {toMoment} from '../../resources/types/nae-date-type';
+import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
+import {TranslateService} from '@ngx-translate/core';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+
 
 @Component({
     selector: 'nae-task-panel',
@@ -24,40 +31,38 @@ import {SideMenuSize} from '../../side-menu/models/side-menu-size';
     styleUrls: ['./task-panel.component.scss'],
     providers: [TaskPanelContentService]
 })
-export class TaskPanelComponent implements OnInit, AfterViewInit {
+export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
 
     @Input() taskPanelData: TaskPanelData;
     @Input() panelContentComponent: Type<any>;
+    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
 
     public portal: ComponentPortal<any>;
     public loading: boolean;
-    public panelIcon: string;
-    public panelIconField: string;
     public panelRef: MatExpansionPanel;
     private _updating: boolean;
     private _queue: Subject<boolean>;
 
     constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
                 private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
-                private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService) {
+                private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService,
+                private _translate: TranslateService) {
+        super();
         this.loading = false;
         this._updating = false;
         this._queue = new Subject<boolean>();
     }
 
     ngOnInit() {
+        super.ngOnInit();
+        this._taskViewService.taskData.subscribe( () => this.resolveFeaturedFieldsValues());
+
         const providers: StaticProvider[] = [
             {provide: NAE_TASK_COLS, useValue: this.taskPanelData.task.cols},
             {provide: TaskPanelContentService, useValue: this._taskPanelContentService}
         ];
         const injector = Injector.create({providers});
 
-        if (this.taskPanelData.header !== undefined) {
-            this.panelIcon = this.taskPanelData.header.panelIcon;
-            this.panelIconField = this.taskPanelData.header.panelIconField;
-        } else {
-            this.taskPanelData.header = {featuredFields: [], panelIcon: '', panelIconField: '', taskId: ''};
-        }
         if (this.panelContentComponent === undefined) {
             this.portal = new ComponentPortal(TaskPanelContentComponent, null, injector);
         } else {
@@ -124,7 +129,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                             });
                             this.taskPanelData.task.dataSize += dataGroup.length;
                         } else {
-                            this._log.info(`No data for task ${this.taskPanelData.task}`);
+                            this._log.info(this._translate.instant('tasks.snackbar.noData') + ' ' + this.taskPanelData.task);
                             this.loading = false;
                             afterAction.next(true);
                         }
@@ -133,13 +138,14 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 this.loading = false;
                 afterAction.next(true);
             } else {
-                this._log.info(`No data group for task ${this.taskPanelData.task}`);
+                this._log.info(this._translate.instant('tasks.snackbar.noGroup') + ' ' + this.taskPanelData.task);
                 this.loading = false;
                 afterAction.next(false);
             }
             this._taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
         }, error => {
-            this._snackBar.openErrorSnackBar(`Data for ${this.taskPanelData.task} failed to load`);
+            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
+             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
             this._log.debug(error);
             this.loading = false;
             afterAction.next(false);
@@ -193,7 +199,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                     }
                 });
             });
-            this._snackBar.openInfoSnackBar('Data saved successfully');
+            this._snackBar.openInfoSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
             this.loading = false;
             this._updating = false;
             if (this._queue.observers.length !== 0) {
@@ -201,7 +207,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             }
             afterAction.next(true);
         }, error => {
-            this._snackBar.openErrorSnackBar('Saving data failed');
+            this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
             this._log.debug(error);
             this.loading = false;
             this._updating = false;
@@ -278,7 +284,8 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 afterAction.next(false);
             }
         }, error => {
-            this._snackBar.openErrorSnackBar(`Assigning task ${this.taskPanelData.task} failed`);
+            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
+             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this._log.debug(error);
             this.loading = false;
             afterAction.next(false);
@@ -289,19 +296,25 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
         if (this.loading) {
             return;
         }
-        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM);
+        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM).onClose.subscribe( event => {
+            console.log(event);
+        });
         // this.loading = true;
         //
         // this.taskService.delegateTask(user.id).subscribe(response => {
         //     this.loading = false;
         //     if (response.success) {
-        //         // TODO remove some states ??
+        //         this.removeStateData();
+        //         afterAction.next(true);
         //     } else if (response.error) {
         //         this.snackBar.openErrorSnackBar(response.error);
+        //             afterAction.next(false);
         //     }
         // }, error => {
-        //     this.snackBar.openErrorSnackBar(`Delegating task ${this.taskPanelData.task} failed`);
+        //     this.snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
+        //      ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
         //     this.loading = false;
+        //      afterAction.next(false);
         // });
     }
 
@@ -325,7 +338,8 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 afterAction.next(false);
             }
         }, error => {
-            this._snackBar.openErrorSnackBar(`Canceling assignment of task ${this.taskPanelData.task} failed`);
+            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
+             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.loading = false;
             afterAction.next(false);
         });
@@ -380,7 +394,8 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
                 afterAction.next(false);
             }
         }, error => {
-            this._snackBar.openErrorSnackBar(`Finishing task ${this.taskPanelData.task} failed`);
+            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
+             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.loading = false;
             afterAction.next(false);
         });
@@ -389,7 +404,7 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
     private validateTaskData(): boolean {
         const valid = !this.taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
         if (!valid) {
-            this._snackBar.openErrorSnackBar('Some fields have invalid values');
+            this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
             this.taskPanelData.task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
         }
         return valid;
@@ -548,4 +563,33 @@ export class TaskPanelComponent implements OnInit, AfterViewInit {
             });
         }
     }
+
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
+        const task = this.taskPanelData.task;
+        switch (selectedHeader.fieldIdentifier) {
+            case TaskMetaField.CASE:
+                return task.caseTitle;
+            case TaskMetaField.TITLE:
+                return task.title;
+            case TaskMetaField.PRIORITY:
+                // TODO priority
+                if (!task.priority || task.priority < 2) {
+                    return 'high';
+                }
+                if (task.priority === 2) {
+                    return 'medium';
+                }
+                return 'low';
+            case TaskMetaField.USER:
+                return task.user ? task.user.fullName : '';
+            case TaskMetaField.ASSIGN_DATE:
+                return task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '';
+        }
+    }
+
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): string {
+        this._log.warn('Immediate data in task panel headers are currently not supported');
+        return '';
+    }
+
 }

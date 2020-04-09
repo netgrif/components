@@ -103,7 +103,7 @@ export interface Theme {
             };
             [k: string]: any;
         };
-        dark: {
+        dark?: {
             primary?:
                 string
                 | {

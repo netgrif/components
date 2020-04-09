@@ -2,19 +2,8 @@ import {Component, Input} from '@angular/core';
 import {DateField} from './models/date-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {MAT_DATE_FORMATS} from '@angular/material';
+import {DATE_FORMAT} from '../../moment/time-formats';
 
-// https://momentjs.com/docs/#/displaying/format/
-export const DATE_FORMAT = {
-    parse: {
-        dateInput: 'D.MM.YYYY',
-    },
-    display: {
-        dateInput: 'D.MM.YYYY',
-        monthYearLabel: 'MMM YYYY',
-        dateA11yLabel: 'Do MMMM YYYY',
-        monthYearA11yLabel: 'MMMM YYYY',
-    },
-};
 
 @Component({
     selector: 'nae-date-field',

@@ -39,9 +39,9 @@ describe('CasePanelComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-case-panel [featuredFields$]="featuredFields" [case_]="case_"> </nae-case-panel>'
+    template: '<nae-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nae-case-panel>'
 })
 class TestWrapperComponent {
-    featuredFields =  of([]);
+    selectedHeaders =  of([]);
     case_ = {};
 }

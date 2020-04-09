@@ -1,15 +1,11 @@
-import {DataDescription} from './data-description';
-/**
- * Interface for representation data groups in select in workflow header edit mode
- */
+import {HeaderColumn} from './header-column';
 
 
 export interface FieldsGroup {
     /**
-     * Type defines the title for the division of meta data and immediate data.
-     * For meta data is used title "META DATA".
-     * For immediate data is used Petri net identifier where data belongs.
+     * Meta data use title "META DATA".
+     * Immediate data use identifier of their Petri net.
      */
-    type: string;
-    fields: Array<DataDescription>;
+    groupTitle: string;
+    fields: Array<HeaderColumn>;
 }

@@ -1,0 +1,7 @@
+@import 'src/lib/panel/panel.theme';
+@import 'src/lib/data-fields/data-field.theme';
+
+@mixin nae-lib-theme($app-theme) {
+    @include panel-component($app-theme);
+    @include data-field-component();
+}

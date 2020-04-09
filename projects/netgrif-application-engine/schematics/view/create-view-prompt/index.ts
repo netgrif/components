@@ -14,6 +14,7 @@ import {createLoginView} from './create-login-view';
 import {createTabView} from './create-tab-view';
 import {createTaskView} from './create-task-view';
 import {createCaseView} from './create-case-view';
+import {createEmptyView} from './create-empty-view';
 
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
@@ -49,6 +50,9 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
             break;
         case 'caseView':
             rules.push(createCaseView(tree, args, addRoute));
+            break;
+        case 'emptyView':
+            rules.push(createEmptyView(tree, args, addRoute));
             break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
