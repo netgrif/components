@@ -31,8 +31,8 @@ export function createLoginView(tree: Tree, args: CreateViewArguments, addRoute:
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        addAuthGuardImport(tree, args.access);
         rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
+        addAuthGuardImport(tree, args.access);
     }
     return chain(rules);
 }
