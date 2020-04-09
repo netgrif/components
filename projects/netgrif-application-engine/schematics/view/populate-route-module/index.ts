@@ -31,7 +31,8 @@ function getRoutesFromJson(data: Array<Route>, dataToReturn: string[]): string[]
 }
 
 function removeQuotesOnRout(phrase: string): string {
-    const match = phrase.match(/.component":(.\w+.)/g);
+    phrase = phrase.replace('"path"', 'path');
+    const match = phrase.match(/.component":(.\w+.)|(.canActivate":(\["AuthenticationGuardService"\]))/g);
     if (match === null) {
         return phrase;
     }

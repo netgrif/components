@@ -15,6 +15,7 @@ import {createTabView} from './create-tab-view';
 import {createTaskView} from './create-task-view';
 import {createCaseView} from './create-case-view';
 import {createSidenavOrToolbarView} from './create-sidenav-or-toolbar-view';
+import {createEmptyView} from './create-empty-view';
 
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
@@ -50,6 +51,9 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
             break;
         case 'caseView':
             rules.push(createCaseView(tree, args, addRoute));
+            break;
+        case 'emptyView':
+            rules.push(createEmptyView(tree, args, addRoute));
             break;
         case 'toolbarView':
             rules.push(createSidenavOrToolbarView(tree, {

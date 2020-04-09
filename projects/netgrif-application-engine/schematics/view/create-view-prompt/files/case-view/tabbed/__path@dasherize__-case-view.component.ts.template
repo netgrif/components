@@ -1,28 +1,27 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    CaseResourceService,
-    SideMenuService,
     HeaderComponent,
     InjectedTabbedCaseViewData,
     NAE_TAB_DATA,
     TabbedCaseView,
     LoggerService,
+    CaseViewService,
 } from '@netgrif/application-engine';
 
 @Component({
   selector: '<%= prefix %>-<%= dasherize(path) %>-case-view',
   templateUrl: './<%= dasherize(path) %>-case-view.component.html',
-  styleUrls: ['./<%= dasherize(path) %>-case-view.component.scss']
+  styleUrls: ['./<%= dasherize(path) %>-case-view.component.scss'],
+  providers: [CaseViewService],
 })
 export class <%= classify(path) %>CaseViewComponent extends TabbedCaseView implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    constructor(sideMenuService: SideMenuService,
-                caseResourceService: CaseResourceService,
+    constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(sideMenuService, caseResourceService, loggerService, injectedTabData, '{}');
+        super(caseViewService, loggerService, injectedTabData, '{}');
     }
 
     ngAfterViewInit(): void {

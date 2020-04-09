@@ -1,10 +1,9 @@
-<div fxLayout="row" fxLayoutAlign="center center" class="fill-all-space login-background">
+<div fxLayout="row" fxLayoutAlign="center center">
     <div fxLayout="column" fxLayoutAlign="stretch">
-        <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="15px">
-            <mat-card fxFlex="99">
-                <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="25px">
-                    <form [formGroup]="form"
-                          (ngSubmit)="onSubmit()">
+        <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="16px">
+            <mat-card fxFlex="100">
+                <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="24px">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
                         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
                             <mat-icon color="primary">account_circle</mat-icon>
                             <mat-form-field fxFlex="96">
@@ -30,18 +29,19 @@
                                 </button>
                             </mat-form-field>
                         </div>
-                        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" style="margin-top:16px;">
+                        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-2x">
                             <button color="primary" type="submit" mat-raised-button fxFlex="50" fxFlex.xs="70">
                                 Login
                             </button>
                         </div>
                     </form>
-                    <!--          <mat-divider style="margin-top: 16px;margin-bottom: 8px;"></mat-divider>-->
-                    <!--          <span style="margin: 0px;">Cannot login? </span>-->
-                    <!--          <div fxLayout="row" fxLayout="center center" fxLayoutGap="5" style="padding: 8px;min-width: 360px;">-->
-                    <!--            <button mat-flat-button fxFlex="40">Reset password</button>-->
-                    <!--            <button mat-stroked-button color="accent" fxFlex="40">Sign Up</button>-->
-                    <!--          </div>-->
+
+                    <mat-divider class="position"></mat-divider>
+
+                    <div fxLayout="row" class="width-100" fxLayoutAlign="end" fxLayoutGap="16px">
+                        <button mat-stroked-button (click)="resetEmit()" fxFlex="60">Reset password</button>
+                        <button mat-stroked-button (click)="signUpEmit()" color="accent" fxFlex="40">Sign Up</button>
+                    </div>
                 </div>
             </mat-card>
         </div>

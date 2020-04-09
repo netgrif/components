@@ -39,6 +39,11 @@ export class FieldConvertorService {
                 if (item.subType !== undefined && item.subType === 'area') {
                     type = TextFieldView.TEXTAREA;
                 }
+                if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'editor') {
+                    type = TextFieldView.RICHTEXTAREA;
+                } else  if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
+                    type = TextFieldView.TEXTAREA;
+                }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, type);
             case 'number':

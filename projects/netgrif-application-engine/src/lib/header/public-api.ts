@@ -18,4 +18,4 @@ export * from './header.module';
 export * from './case-header/case-header.service';
 export * from './task-header/task-header.service';
 export * from './abstract-header-service';
-export * from './workflows-header/workflows-header.service';
+export * from './workflow-header/workflow-header.service';

@@ -1,20 +1,27 @@
 import {Injectable} from '@angular/core';
-import {TaskPanelDefinition} from '../../panel/task-panel/task-panel-definition';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../user/services/user.service';
+import {SnackBarService} from '../../snack-bar/snack-bar.service';
+import {TranslateService} from '@ngx-translate/core';
+import {SelectLanguageService} from '../../toolbar/select-language.service';
+import {SortableView} from '../abstract/sortable-view';
+
 
 @Injectable()
-export class TaskViewService {
+export class TaskViewService extends SortableView {
     taskArray: Array<TaskPanelData>;
     taskData: Subject<Array<TaskPanelData>>;
     changedFields: Subject<ChangedFields>;
     loading: BehaviorSubject<boolean>;
     private _activeFilter: string;
 
-    constructor(protected _taskService: TaskResourceService, private _userService: UserService) {
+    constructor(protected _taskService: TaskResourceService, private _userService: UserService,
+                private _snackBarService: SnackBarService, private _translate: TranslateService,
+                private _selectLanguage: SelectLanguageService) { // need for translations
+        super();
         this.taskArray = [];
         this.taskData = new Subject<Array<TaskPanelData>>();
         this.loading = new BehaviorSubject<boolean>(false);
@@ -31,31 +38,30 @@ export class TaskViewService {
             return;
         }
         this.loading.next(true);
+
+        // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation
         this._taskService.searchTask(JSON.parse(this._activeFilter)).subscribe(tasks => {
             if (tasks instanceof Array) {
                 if (this.taskArray.length) {
                     tasks = this.resolveUpdate(tasks);
                 }
                 tasks.forEach(task => {
-                    const header: TaskPanelDefinition = {
-                        panelIconField: task.caseTitle,
-                        panelIcon: task.icon === undefined ? 'label' : task.icon,
-                        featuredFields: [
-                            task.title,
-                            0,
-                            task.user !== undefined ? task.user.fullName : '',
-                            task.startDate !== undefined ? this.parseDate(task.startDate) : ''],
-                        taskId: task.stringId
-                    };
                     this.taskArray.push({
-                        header,
                         task,
                         changedFields: this.changedFields
                     });
                 });
+            } else {
+                this._snackBarService.openInfoSnackBar(this._translate.instant('tasks.snackbar.noTasksFound'));
             }
             this.loading.next(false);
             this.taskData.next(this.taskArray);
+        }, error => {
+            this._snackBarService.openErrorSnackBar(
+                this._translate.instant('tasks.snackbar.errorTaskSearch') + ' ' +
+                this._translate.instant('tasks.snackbar.failedToLoad')
+            );
+            this.loading.next(false);
         });
     }
 
@@ -66,18 +72,6 @@ export class TaskViewService {
             if (index === -1)
                 tasksToDelete.push(i);
             else {
-                const header: TaskPanelDefinition = {
-                    panelIconField: tasks[index].caseTitle,
-                    panelIcon: 'home',
-                    featuredFields: [
-                        tasks[index].title,
-                        0,
-                        tasks[index].user !== undefined ? tasks[index].user.fullName : '',
-                        tasks[index].startDate !== undefined ? this.parseDate(tasks[index].startDate) : ''
-                    ],
-                    taskId: tasks[index].stringId
-                };
-                this.taskArray[i].header = header;
                 Object.keys(this.taskArray[i].task).forEach( key => {
                     if (tasks[index][key] !== undefined) {
                         this.taskArray[i].task[key] = tasks[index][key];
@@ -93,10 +87,6 @@ export class TaskViewService {
         return tasks;
     }
 
-    private parseDate(date: Array<number>) {
-        return new Date(date[0], date[1] - 1, date[2], date[3], date[4]);
-    }
-
     private blockFields(bool: boolean, index: number) {
         if (this.taskArray[index].task.dataGroups) {
             this.taskArray[index].task.dataGroups.forEach( group => {
@@ -105,5 +95,18 @@ export class TaskViewService {
                 });
             });
         }
+    }
+
+    public reload(): void {
+        this.loadTasks();
+    }
+
+    protected getMetaFieldSortId(): string {
+        // TODO Tasks were not sortable on old frontend sorting might require elastic mapping changes on backend
+        return this._lastHeaderSearchState.fieldIdentifier;
+    }
+
+    protected getDefaultSortParam(): string {
+        return 'priority,desc';
     }
 }

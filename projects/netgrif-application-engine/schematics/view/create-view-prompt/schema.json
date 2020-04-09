@@ -13,6 +13,7 @@
             "description": "type of the created view",
             "type": "string",
             "enum": [
+                "emptyView",
                 "login",
                 "tabView",
                 "caseView",
@@ -25,6 +26,7 @@
                 "type": "list",
                 "message": "select a view type",
                 "items": [
+                    "emptyView",
                     "login",
                     "tabView",
                     "caseView",
@@ -32,6 +34,18 @@
                     "sidenavView",
                     "toolbarView",
                     "sidenavAndToolbarView"
+                ]
+            }
+        },
+        "access": {
+            "description": "access type",
+            "type": "string",
+            "x-prompt": {
+                "type": "list",
+                "message": "select a access type",
+                "items": [
+                    "public",
+                    "private"
                 ]
             }
         }

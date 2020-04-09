@@ -10,10 +10,10 @@
             "factory": "./add/create-nae-files/index#createNaeFiles",
             "schema": "./add/create-nae-files/schema.json"
         },
-        "custom-templates": {
+        "custom-themes": {
             "description": "Generate a project custom themes from nae.json.",
-            "factory": "./add/custom-templates/index#customTemplates",
-            "schema": "./add/custom-templates/schema.json"
+            "factory": "./add/custom-themes/index#customThemes",
+            "schema": "./add/custom-themes/schema.json"
         },
         "before-build": {
             "description": "Is run before each build to fill all the project classes with the most recent state of various configurations.",

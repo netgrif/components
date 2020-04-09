@@ -7,7 +7,7 @@ import {SnackBarService} from '../../../snack-bar/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-reference';
+import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource-service';
 
 
 interface Form {
@@ -29,13 +29,8 @@ export class NewCaseComponent implements OnInit, OnChanges {
     titleFormGroup: FormGroup;
     colorFormGroup: FormGroup;
 
-    colors: Form[] = [
-        {value: 'color-fg-deep-purple-600', viewValue: 'Purple'},
-        {value: 'color-fg-amber-500', viewValue: 'Yellow'},
-        {value: 'color-fg-deep-orange-500', viewValue: 'Orange'},
-        {value: 'color-fg-brown-500', viewValue: 'Brown'}
-    ];
-    options: Array<Form> = [];
+    colors: Array<Form>;
+    options: Array<Form>;
     filteredOptions: Observable<Array<Form>>;
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
@@ -44,7 +39,12 @@ export class NewCaseComponent implements OnInit, OnChanges {
                 private _caseResourceService: CaseResourceService,
                 private  _petriNetService: PetriNetResourceService) {
         this.options = [];
-        this.colors = [];
+        this.colors = [
+            {value: 'color-fg-deep-purple-600', viewValue: 'Purple'},
+            {value: 'color-fg-amber-500', viewValue: 'Yellow'},
+            {value: 'color-fg-deep-orange-500', viewValue: 'Orange'},
+            {value: 'color-fg-brown-500', viewValue: 'Brown'}
+        ];
     }
 
     ngOnInit() {

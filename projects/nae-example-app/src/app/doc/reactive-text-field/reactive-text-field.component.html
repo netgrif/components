@@ -189,6 +189,23 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
+            <nae-text-field #textRichFieldComponent [dataField]="textRichField" [changedFields]="changeStream"></nae-text-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <input type="text" formControlName="textRichFieldValue">
+            <mat-checkbox formControlName="textRichFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="textRichFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="textRichFieldHidden">hidden</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+    field value: {{textRichField.value}}<br>
+    field errors: {{textRichFieldComponent.formControl.errors | json}}<br>
+
+    <mat-divider></mat-divider>
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
             <nae-number-field #numberFieldComponent [dataField]="numberField" [changedFields]="changeStream"></nae-number-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">

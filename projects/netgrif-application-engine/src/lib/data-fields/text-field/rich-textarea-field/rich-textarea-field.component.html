@@ -1,0 +1,9 @@
+<div class="height-100">
+    <td-text-editor *ngIf="!formControlRef.disabled" [(ngModel)]="textAreaField.value" [options]="options"></td-text-editor>
+
+    <input type="hidden" [formControl]="formControlRef">
+
+    <div class="border" *ngIf="formControlRef.disabled">
+        <td-markdown>{{textAreaField.value}}</td-markdown>
+    </div>
+</div>

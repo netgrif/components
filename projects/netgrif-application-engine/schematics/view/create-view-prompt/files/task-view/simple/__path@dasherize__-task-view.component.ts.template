@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {AbstractTaskView, TaskViewService} from '@netgrif/application-engine';
 
 
@@ -8,10 +8,15 @@ import {AbstractTaskView, TaskViewService} from '@netgrif/application-engine';
     styleUrls: ['./<%= dasherize(path) %>-task-view.component.scss'],
     providers: [TaskViewService]
 })
-export class <%= classify(path) %>TaskViewComponent extends AbstractTaskView {
+export class <%= classify(path) %>TaskViewComponent extends AbstractTaskView implements AfterViewInit {
+
+    @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
     constructor(taskViewService: TaskViewService) {
         super(taskViewService, '{}');
     }
 
+    ngAfterViewInit(): void {
+        this.initializeHeader(this.taskHeaderComponent);
+    }
 }

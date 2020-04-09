@@ -5,22 +5,18 @@ import {CovalentMarkdownModule} from '@covalent/markdown';
 import {CovalentCommonModule} from '@covalent/core/common';
 import {CovalentLayoutModule} from '@covalent/core/layout';
 import {CovalentStepsModule} from '@covalent/core/steps';
+import {CovalentTextEditorModule} from '@covalent/text-editor';
 
 
 @NgModule({
     declarations: [],
-    imports: [
-        CommonModule,
-        CovalentCommonModule,
-        CovalentHighlightModule,
-        CovalentMarkdownModule
-    ],
     exports: [
         CovalentHighlightModule,
         CovalentMarkdownModule,
         CovalentLayoutModule,
         CovalentStepsModule,
-        CovalentCommonModule
+        CovalentCommonModule,
+        CovalentTextEditorModule,
     ]
 })
 export class CovalentModule {

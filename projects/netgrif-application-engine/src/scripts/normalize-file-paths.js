@@ -17,6 +17,12 @@ function error(str) {
     console.info(formatLog(str, "\x1b[31m"));
 }
 
+function sanitizeArgv(argv) {
+    if (Array.isArray(argv))
+        return argv.map(arg => arg.toString());
+    return argv.toString();
+}
+
 commander
     .version("0.0.1", "-v, --version")
     .usage("[OPTIONS] <value>")
@@ -47,7 +53,7 @@ commander
         log("Writing file");
         fs.writeFileSync(value, JSON.stringify(newObj));
     })
-    .parse(process.argv);
+    .parse(sanitizeArgv(process.argv));
 
 if (process.argv.length <= 2) {
     console.log("Nothing to do here");
