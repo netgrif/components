@@ -9,6 +9,7 @@ export enum TextFieldView {
 }
 
 export class TextField extends DataField<string> {
+
     private _validators: Array<ValidatorFn>;
     public materialAppearance: string;
 
