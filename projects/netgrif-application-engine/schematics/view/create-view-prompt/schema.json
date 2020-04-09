@@ -28,6 +28,18 @@
                     "taskView"
                 ]
             }
+        },
+        "access": {
+            "description": "access type",
+            "type": "string",
+            "x-prompt": {
+                "type": "list",
+                "message": "select a access type",
+                "items": [
+                    "public",
+                    "private"
+                ]
+            }
         }
     },
     "required": [

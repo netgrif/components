@@ -3,7 +3,13 @@ import {CreateViewArguments} from './schema';
 import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
-import {addRouteToRoutesJson, addRoutingModuleImport, resolveClassSuffixForView, updateAppModule} from '../view-utility-functions';
+import {
+    addAuthGuardImport,
+    addRouteToRoutesJson,
+    addRoutingModuleImport,
+    resolveClassSuffixForView,
+    updateAppModule
+} from '../view-utility-functions';
 import {ImportToAdd} from './classes/ImportToAdd';
 import {TabbedView} from './tabbed-view';
 
@@ -38,7 +44,8 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push( addRouteToRoutesJson(args.path as string, className.name));
+        rules.push( addRouteToRoutesJson(args.path as string, className.name, args.access));
+        addAuthGuardImport(tree, args.access);
     }
     return chain(rules);
 }
