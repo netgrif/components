@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {TextField} from '../models/text-field';
-import {FormControl} from '@angular/forms';
+import {FormControl, NgModel} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
 @Component({
@@ -29,9 +29,5 @@ export class RichTextareaFieldComponent implements OnInit {
     }
 
     ngOnInit(): void {
-    }
-
-    blurLog() {
-        console.log('blur');
     }
 }

@@ -84,7 +84,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
             fieldsGroups.push(fieldsGroup);
         });
 
-        this.fieldsGroup.slice(1, this.fieldsGroup.length - 1);
+        this.fieldsGroup = this.fieldsGroup.slice(1, this.fieldsGroup.length - 1);
         this.fieldsGroup.push(...fieldsGroups);
     }
 

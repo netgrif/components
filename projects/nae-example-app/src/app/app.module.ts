@@ -37,7 +37,6 @@ import {RailExampleComponent} from './doc/rail-example/rail-example.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MatCardModule, MatIconModule} from '@angular/material';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
-import {CasePanelExampleComponent} from './doc/case-panel-example/case-panel-example.component';
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
@@ -56,6 +55,7 @@ import { LoginCardComponent } from './doc/cards/login-card/login-card.component'
 import { PasswordCardComponent } from './doc/cards/password-card/password-card.component';
 import { RegisterCardComponent } from './doc/cards/register-card/register-card.component';
 import { HeadersComponent } from './doc/headers/headers.component';
+import { PanelsComponent } from './doc/panels/panels.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -70,7 +70,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         DrawerExampleComponent,
         RailExampleComponent,
         SidemenuExampleComponent,
-        CasePanelExampleComponent,
         SnackBarExampleComponent,
         DialogExampleComponent,
         TabViewExampleComponent,
@@ -86,7 +85,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         LoginCardComponent,
         PasswordCardComponent,
         RegisterCardComponent,
-        HeadersComponent
+        HeadersComponent,
+        PanelsComponent
     ],
     imports: [
         BrowserModule,

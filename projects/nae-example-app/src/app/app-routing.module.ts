@@ -4,7 +4,6 @@ import {AuthenticationComponent} from './doc/authentication/authentication.compo
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
-import {CasePanelExampleComponent} from './doc/case-panel-example/case-panel-example.component';
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
@@ -18,6 +17,7 @@ import {LoginCardComponent} from './doc/cards/login-card/login-card.component';
 import {PasswordCardComponent} from './doc/cards/password-card/password-card.component';
 import {RegisterCardComponent} from './doc/cards/register-card/register-card.component';
 import {HeadersComponent} from './doc/headers/headers.component';
+import {PanelsComponent} from './doc/panels/panels.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -28,12 +28,12 @@ const routes: Routes = [
     {path: 'rail', component: RailExampleComponent},
     {path: 'headers', component: HeadersComponent},
     {path: 'sidemenu', component: SidemenuExampleComponent},
-    {path: 'case-panel', component: CasePanelExampleComponent},
     {path: 'snack-bar', component: SnackBarExampleComponent},
     {path: 'dialog', component: DialogExampleComponent},
     {path: 'tab-view', component: TabViewExampleComponent},
     {path: 'reactive-forms', component: ReactiveTextFieldComponent},
     {path: 'toolbar', component: ToolbarExampleComponent},
+    {path: 'panels', component: PanelsComponent},
     {path: 'task-view', component: TaskViewComponent},
     {path: 'case-view', component: CaseViewComponent},
     {path: 'tabbed-views', component: TabbedViewsExampleComponent},
