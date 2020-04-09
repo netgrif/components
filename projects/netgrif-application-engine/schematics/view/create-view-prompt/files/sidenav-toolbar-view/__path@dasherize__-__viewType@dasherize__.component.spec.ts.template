@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { <%= classify(path) %><%= fileName %>Component } from './<%= dasherize(path) %>-<%= viewType %>.component';
+
+describe('<%= classify(path) %><%= fileName %>Component', () => {
+  let component: <%= classify(path) %><%= fileName %>Component;
+  let fixture: ComponentFixture<<%= classify(path) %><%= fileName %>Component>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ <%= classify(path) %><%= fileName %>Component ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(<%= classify(path) %><%= fileName %>Component);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
