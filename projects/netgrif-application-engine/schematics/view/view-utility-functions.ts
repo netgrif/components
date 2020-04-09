@@ -114,6 +114,8 @@ export function resolveClassSuffixForView(view: string): string {
             return 'TaskView';
         case 'caseView':
             return 'CaseView';
+        case 'emptyView':
+            return 'EmptyView';
         default:
             throw new SchematicsException(`Unknown view type '${view}'`);
     }
