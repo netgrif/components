@@ -1,7 +1,7 @@
+@import "projects/netgrif-application-engine/src/styles/core";
 
 .full-showcase-container {
     width: 200px;
-    margin-bottom: 16px;
 
     .user-banner {
         height: 100px;
@@ -11,16 +11,7 @@
 
     .user-avatar-large {
         margin-top: -32px;
-        margin-bottom: 8px;
     }
-}
-
-.full-width {
-    width: 100%;
-}
-
-.full-height {
-    height: 100%;
 }
 
 .user-avatar-large {
@@ -37,7 +28,6 @@
 
 .full-showcase-text {
     text-align: center;
-    padding: 8px;
 
     span {
         &:first-child {
@@ -53,7 +43,6 @@
 
 .horizontal-showcase-container {
     height: 80px;
-    padding: 8px;
     border: 1px solid #fd971f;
     border-radius: 6px;
 
@@ -64,7 +53,6 @@
 
 .vertical-showcase-container {
     width: 160px;
-    padding: 8px;
     border: 1px solid #f0ad4e;
     border-radius: 6px;
     white-space: pre-line;
