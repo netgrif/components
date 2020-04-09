@@ -1,6 +1,6 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TextField} from '../models/text-field';
-import {FormControl, NgModel} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
 @Component({
@@ -14,6 +14,7 @@ export class RichTextareaFieldComponent implements OnInit {
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
     options: any;
+    // TODO BUG: update on blur dont working, switch back to update on ngModel
 
     constructor() {
         this.options = {
