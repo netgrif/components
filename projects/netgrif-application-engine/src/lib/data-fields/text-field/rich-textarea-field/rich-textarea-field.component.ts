@@ -31,4 +31,7 @@ export class RichTextareaFieldComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    blurLog() {
+        console.log('blur');
+    }
 }
