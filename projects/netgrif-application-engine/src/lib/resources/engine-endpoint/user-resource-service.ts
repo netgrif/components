@@ -60,7 +60,7 @@ export class UserResourceService {
      * POST
      * {{baseUrl}}/api/user/role
      */
-    public getAllWithRole(body: object, params?: Params): Observable<User> { // TODO OBJECT
+    public getAllWithRole(body: object, params?: Params): Observable<Array<User>> {
         return this.provider.post$('user/role', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'users')));
     }
 
@@ -87,7 +87,7 @@ export class UserResourceService {
      * GET
      * {{baseUrl}}/api/user/preferences
      */
-    public getPreferences(params?: Params): Observable<any> { // TODO OBJECT - Spytat sa
+    public getPreferences(params?: Params): Observable<any> { // TODO OBJECT
         return this.provider.get$('user/preferences', this.SERVER_URL, params).pipe(map(r => changeType(r, undefined)));
     }
 
