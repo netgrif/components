@@ -4,7 +4,13 @@ import {commitChangesToFile, createFilesFromTemplates, createRelativePath, getAp
 import {ClassName} from './classes/ClassName';
 import {EmbeddedView, TabViewParams} from './classes/paramsInterfaces';
 import {strings} from '@angular-devkit/core';
-import {addRouteToRoutesJson, addRoutingModuleImport, resolveClassSuffixForView, updateAppModule} from '../view-utility-functions';
+import {
+    addAuthGuardImport,
+    addRouteToRoutesJson,
+    addRoutingModuleImport,
+    resolveClassSuffixForView,
+    updateAppModule
+} from '../view-utility-functions';
 import {ImportToAdd} from './classes/ImportToAdd';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {TabContentTemplate} from './classes/TabContentTemplate';
@@ -83,8 +89,9 @@ export function createTabView(
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push(addRouteToRoutesJson(args.path as string, className.name));
-        rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name));
+        rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
+        rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name, args.access));
+        addAuthGuardImport(tree, args.access);
     }
     return chain(rules);
 }
