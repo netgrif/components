@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DashboardParams} from './dashboard-params';
+import {DashboardCardTypes} from '../cards/model/dashboard-card-types';
 
 
 @Component({
@@ -10,6 +11,7 @@ import {DashboardParams} from './dashboard-params';
 export class DashboardContentComponent {
 
     @Input() public params: DashboardParams;
+    public cardTypes = DashboardCardTypes;
 
     constructor() {
     }

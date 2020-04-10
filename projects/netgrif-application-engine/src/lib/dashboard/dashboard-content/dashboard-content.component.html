@@ -1,5 +1,9 @@
 <mat-grid-list [cols]="params.columns" rowHeight="210px">
-    <mat-grid-tile *ngFor="let card of params.cards">
-
+    <mat-grid-tile *ngFor="let card of params.cards"
+                   [colspan]="card.width"
+                   [rowspan]="card.height"
+                   [ngSwitch]="card.type">
+        <nae-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card"></nae-count-card>
+        <div *ngSwitchCase="cardTypes.BLANK"></div>
     </mat-grid-tile>
 </mat-grid-list>
