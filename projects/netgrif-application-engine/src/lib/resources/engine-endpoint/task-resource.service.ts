@@ -157,6 +157,7 @@ export class TaskResourceService {
      */
     // {{baseUrl}}/api/task/:id/file/:field
     public uploadFile(taskId: string, fieldId: string, body: object): Observable<any> {
-        return this.provider.postEvent$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+        return this.provider.postEvent$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, undefined)));
     }
 }

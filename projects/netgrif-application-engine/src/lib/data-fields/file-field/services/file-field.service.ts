@@ -31,7 +31,7 @@ export class FileFieldService {
         this.allFiles.forEach(file => {
             zip.folder('fileFieldZipFolder').file((file.data as FileUploadDataModel).file.name);
         });
-        this._fileUploadService.uploadFile(zip.files, this.fileField);
+        this._fileUploadService.uploadFile(zip.files);
         this._sideMenuService.close();
     }
 
@@ -43,7 +43,7 @@ export class FileFieldService {
     public retryFile(file: FileUploadModel) {
         file.canRetry = false;
         file.successfullyUploaded = false;
-        this._fileUploadService.uploadFile(file, this.fileField);
+        this._fileUploadService.uploadFile(file);
     }
 
     public onFileDownload(file: FileUploadModel) {
@@ -70,6 +70,7 @@ export class FileFieldService {
             }
             Array.from(this.fileUploadEl.nativeElement.files).forEach(file => {
                 const fileUploadModel = {
+                    stringId: this.fileField.stringId,
                     data: {
                         file,
                         name: file.name.substr(0, file.name.lastIndexOf('.')),
@@ -92,7 +93,7 @@ export class FileFieldService {
                 this.allFiles.push(fileUploadModel);
                 // One by one upload file
                 if (!this.fileField.zipped) {
-                    this._fileUploadService.uploadFile(fileUploadModel, this.fileField);
+                    this._fileUploadService.uploadFile(fileUploadModel);
                 }
             });
             this.fileUploadEl.nativeElement.value = '';

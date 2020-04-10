@@ -1,23 +1,20 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
+import {HttpEventType} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/snack-bar.service';
 import {FileUploadModel} from '../../../../side-menu/content-components/files-upload/models/file-upload-model';
-import {FileField, FileUploadDataModel} from '../../models/file-field';
-import {ConfigurationService} from '../../../../configuration/configuration.service';
+import {FileUploadDataModel} from '../../models/file-field';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
 
 @Injectable()
 export class FileUploadService {
 
-    public taskId = '5e8f9c3275096024c842f585';
-    public fileId = 'file';
+    public taskId: string;
 
     private _complete = new EventEmitter<string>();
 
     constructor(private _taskResource: TaskResourceService,
-                private _configService: ConfigurationService,
                 private _snackBarService: SnackBarService) {
     }
 
@@ -25,12 +22,12 @@ export class FileUploadService {
         return this._complete.asObservable();
     }
 
-    public uploadFile(file: FileUploadModel, fileField: FileField) {
+    public uploadFile(file: FileUploadModel) {
         const fd = new FormData();
         fd.append('file', (file.data as FileUploadDataModel).file);
 
         file.inProgress = true;
-        file.sub = this._taskResource.uploadFile(this.taskId, this.fileId, fd).pipe(
+        file.sub = this._taskResource.uploadFile('5e90b517ade75e1830b07c83', 'cv_file', fd).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.UploadProgress:
