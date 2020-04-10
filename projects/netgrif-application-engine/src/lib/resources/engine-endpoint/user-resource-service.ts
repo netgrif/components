@@ -5,6 +5,8 @@ import {Params, ResourceProvider} from '../resource-provider.service';
 import {changeType, getResourceAddress} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {MessageResource} from '../interface/message-resource';
+import {User} from '../interface/user';
+import {Authority} from '../interface/authority';
 
 @Injectable({
     providedIn: 'root'
@@ -40,8 +42,8 @@ export class UserResourceService {
      * GET
      * {{baseUrl}}/api/user/authority
      */
-    public getAllAuthorities(): Observable<any> { // TODO OBJECT
-        return this.provider.get$('user/authority', this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+    public getAllAuthorities(): Observable<Array<Authority>> {
+        return this.provider.get$('user/authority', this.SERVER_URL).pipe(map(r => changeType(r, 'authorities')));
     }
 
     /**
@@ -49,8 +51,8 @@ export class UserResourceService {
      * GET
      * {{baseUrl}}/api/user
      */
-    public getAll(params?: Params): Observable<any> { // TODO OBJECT
-        return this.provider.get$('user', this.SERVER_URL, params).pipe(map(r => changeType(r, undefined)));
+    public getAll(params?: Params): Observable<Array<User>> {
+        return this.provider.get$('user', this.SERVER_URL, params).pipe(map(r => changeType(r, 'users')));
     }
 
     /**
@@ -58,8 +60,8 @@ export class UserResourceService {
      * POST
      * {{baseUrl}}/api/user/role
      */
-    public getAllWithRole(body: object, params?: Params): Observable<any> { // TODO OBJECT
-        return this.provider.post$('user/role', this.SERVER_URL, body, params).pipe(map(r => changeType(r, undefined)));
+    public getAllWithRole(body: object, params?: Params): Observable<User> { // TODO OBJECT
+        return this.provider.post$('user/role', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'users')));
     }
 
     /**
@@ -67,7 +69,7 @@ export class UserResourceService {
      * GET
      * {{baseUrl}}/api/user/me
      */
-    public getLoggedUser(params?: Params): Observable<any> { // TODO OBJECT
+    public getLoggedUser(params?: Params): Observable<User> {
         return this.provider.get$('user/me', this.SERVER_URL, params).pipe(map(r => changeType(r, undefined)));
     }
 
@@ -76,7 +78,7 @@ export class UserResourceService {
      * GET
      * {{baseUrl}}/api/user/{id}
      */
-    public getUser(userId: string, params?: Params): Observable<any> { // TODO OBJECT
+    public getUser(userId: string, params?: Params): Observable<User> {
         return this.provider.get$('user/' + userId, this.SERVER_URL, params).pipe(map(r => changeType(r, undefined)));
     }
 
@@ -85,7 +87,7 @@ export class UserResourceService {
      * GET
      * {{baseUrl}}/api/user/preferences
      */
-    public getPreferences(params?: Params): Observable<any> { // TODO OBJECT
+    public getPreferences(params?: Params): Observable<any> { // TODO OBJECT - Spytat sa
         return this.provider.get$('user/preferences', this.SERVER_URL, params).pipe(map(r => changeType(r, undefined)));
     }
 
@@ -103,8 +105,8 @@ export class UserResourceService {
      * POST
      * {{baseUrl}}/api/user/search
      */
-    public search(body: object, params?: Params): Observable<any> { // TODO Object
-        return this.provider.post$('user/search', this.SERVER_URL, body, params).pipe(map(r => changeType(r, undefined)));
+    public search(body: object, params?: Params): Observable<Array<User>> {
+        return this.provider.post$('user/search', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'users')));
     }
 
     /**
@@ -112,7 +114,7 @@ export class UserResourceService {
      * POST
      * {{baseUrl}}/api/user/{id}
      */
-    public updateUser(userId: string, body: object, params?: Params): Observable<any> { // TODO Object
+    public updateUser(userId: string, body: object, params?: Params): Observable<User> {
         return this.provider.post$('/api/user/' + userId, this.SERVER_URL, body, params).pipe(map(r => changeType(r, undefined)));
     }
 
