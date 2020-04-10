@@ -1,5 +1,5 @@
 import {Component, Inject, InjectionToken} from '@angular/core';
-import {GridLayoutElement} from './grid-layout-element';
+import {DatafieldGridLayoutElement} from './datafield-grid-layout-element';
 import {GridFiller} from './grid-filler';
 import {FieldConvertorService} from './field-convertor.service';
 import {TaskPanelContentService} from './task-panel-content.service';
@@ -41,7 +41,7 @@ export class TaskPanelContentComponent {
         return [new GridFiller(0, cols - 1)];
     }
 
-    fillBlankSpace(resource: any[], columnCount: number): Array<GridLayoutElement> {
+    fillBlankSpace(resource: any[], columnCount: number): Array<DatafieldGridLayoutElement> {
         const grid: Array<Array<GridFiller>> = [];
         const returnResource = [];
 

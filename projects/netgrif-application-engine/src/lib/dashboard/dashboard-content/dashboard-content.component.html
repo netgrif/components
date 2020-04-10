@@ -1,7 +1,7 @@
 <mat-grid-list [cols]="params.columns" rowHeight="210px">
     <mat-grid-tile *ngFor="let card of params.cards"
-                   [colspan]="card.width"
-                   [rowspan]="card.height"
+                   [colspan]="card.layout.cols"
+                   [rowspan]="card.layout.rows"
                    [ngSwitch]="card.type">
         <nae-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card"></nae-count-card>
         <div *ngSwitchCase="cardTypes.BLANK"></div>

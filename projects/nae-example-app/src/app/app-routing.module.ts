@@ -18,6 +18,7 @@ import {PasswordCardComponent} from './doc/cards/password-card/password-card.com
 import {RegisterCardComponent} from './doc/cards/register-card/register-card.component';
 import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
+import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -38,6 +39,7 @@ const routes: Routes = [
     {path: 'case-view', component: CaseViewComponent},
     {path: 'tabbed-views', component: TabbedViewsExampleComponent},
     {path: 'workflow-view', component: WorkflowViewExampleComponent},
+    {path: 'dashboard-view', component: DashboardExampleComponent},
 ];
 
 @NgModule({

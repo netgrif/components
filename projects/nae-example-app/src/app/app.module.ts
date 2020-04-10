@@ -25,7 +25,7 @@ import {
     ResourceProvider,
     UserModule,
     ImportNetComponent,
-    WorkflowViewModule,
+    WorkflowViewModule, DashboardModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -56,6 +56,7 @@ import { PasswordCardComponent } from './doc/cards/password-card/password-card.c
 import { RegisterCardComponent } from './doc/cards/register-card/register-card.component';
 import { HeadersComponent } from './doc/headers/headers.component';
 import { PanelsComponent } from './doc/panels/panels.component';
+import { DashboardExampleComponent } from './doc/dashboard-example/dashboard-example.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -86,7 +87,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         PasswordCardComponent,
         RegisterCardComponent,
         HeadersComponent,
-        PanelsComponent
+        PanelsComponent,
+        DashboardExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -120,6 +122,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatCardModule,
         CardModule,
         WorkflowViewModule,
+        DashboardModule,
     ],
     entryComponents: [
         NewCaseComponent,

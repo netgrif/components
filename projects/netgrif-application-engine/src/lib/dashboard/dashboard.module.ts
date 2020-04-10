@@ -10,6 +10,9 @@ import { CountCardComponent } from './cards/count-card/count-card.component';
         DashboardContentComponent,
         CountCardComponent,
     ],
+    exports: [
+        DashboardContentComponent
+    ],
     imports: [
         CommonModule,
         MaterialModule
