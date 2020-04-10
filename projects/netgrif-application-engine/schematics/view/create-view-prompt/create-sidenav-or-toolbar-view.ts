@@ -2,6 +2,7 @@ import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {
+    addAuthGuardImport,
     addRouteToRoutesJson,
     addRoutingModuleImport,
     resolveClassSuffixForView, updateAppModule
@@ -39,7 +40,9 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
 
     if (sidenavOptions.addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push(addRouteToRoutesJson(sidenavOptions.createViewArguments.path as string, className.name));
+        rules.push(addRouteToRoutesJson(sidenavOptions.createViewArguments.path as string,
+            className.name, sidenavOptions.createViewArguments.access));
+        addAuthGuardImport(tree, sidenavOptions.createViewArguments.access);
     }
     return chain(rules);
 
