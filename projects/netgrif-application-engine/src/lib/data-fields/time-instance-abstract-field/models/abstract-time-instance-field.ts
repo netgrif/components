@@ -14,7 +14,7 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
         this.materialAppearance = !!layout ? this.layout.appearance : 'legacy';
     }
 
-    protected isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {
+    public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {
         return (!a && !b) || (!!a && !!b && a.isSame(b, granularity));
     }
 
