@@ -6,6 +6,8 @@ import {FileDownloadService} from './download/file-download.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../snack-bar/snack-bar.service';
 import {FileUploadModel} from '../../../side-menu/content-components/files-upload/models/file-upload-model';
+import {FilesUploadComponent} from '../../../side-menu/content-components/files-upload/files-upload.component';
+import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 
 @Injectable()
 export class FileFieldService {
@@ -29,7 +31,7 @@ export class FileFieldService {
         this.allFiles.forEach(file => {
             zip.folder('fileFieldZipFolder').file((file.data as FileUploadDataModel).file.name);
         });
-        this._fileUploadService.uploadFile(zip.files);
+        this._fileUploadService.uploadFile(zip.files, this.fileField);
         this._sideMenuService.close();
     }
 
@@ -41,7 +43,7 @@ export class FileFieldService {
     public retryFile(file: FileUploadModel) {
         file.canRetry = false;
         file.successfullyUploaded = false;
-        this._fileUploadService.uploadFile(file);
+        this._fileUploadService.uploadFile(file, this.fileField);
     }
 
     public onFileDownload(file: FileUploadModel) {
@@ -90,10 +92,13 @@ export class FileFieldService {
                 this.allFiles.push(fileUploadModel);
                 // One by one upload file
                 if (!this.fileField.zipped) {
-                    this._fileUploadService.uploadFile(fileUploadModel);
+                    this._fileUploadService.uploadFile(fileUploadModel, this.fileField);
                 }
             });
             this.fileUploadEl.nativeElement.value = '';
+            if (!this._sideMenuService.isOpened()) {
+                this._sideMenuService.open(FilesUploadComponent, SideMenuSize.LARGE, this);
+            }
         };
         this.fileUploadEl.nativeElement.click();
     }

@@ -40,7 +40,6 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
             this._sideMenuService.open(FilesUploadComponent, SideMenuSize.LARGE, this._fileFieldService);
         } else {
             this._fileFieldService.fileUpload();
-            this._sideMenuService.open(FilesUploadComponent, SideMenuSize.LARGE, this._fileFieldService);
         }
     }
 
