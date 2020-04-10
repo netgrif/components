@@ -25,7 +25,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/{id}/authority/assign
      */
     public assignAuthority(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this.provider.post$('user/' + userId + '/authority/assign', this.SERVER_URL, body, params).pipe(map(r => changeType(r, undefined)));
+        return this.provider.post$('user/' + userId + '/authority/assign', this.SERVER_URL, body, params)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -34,7 +35,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/{id}/role/assign
      */
     public assignRoles(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this.provider.post$('user/' + userId + '/role/assign', this.SERVER_URL, body, params).pipe(map(r => changeType(r, undefined)));
+        return this.provider.post$('user/' + userId + '/role/assign', this.SERVER_URL, body, params)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -43,7 +45,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/authority
      */
     public getAllAuthorities(): Observable<Array<Authority>> {
-        return this.provider.get$('user/authority', this.SERVER_URL).pipe(map(r => changeType(r, 'authorities')));
+        return this.provider.get$('user/authority', this.SERVER_URL)
+            .pipe(map(r => changeType(r, 'authorities')));
     }
 
     /**
@@ -52,7 +55,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user
      */
     public getAll(params?: Params): Observable<Array<User>> {
-        return this.provider.get$('user', this.SERVER_URL, params).pipe(map(r => changeType(r, 'users')));
+        return this.provider.get$('user', this.SERVER_URL, params)
+            .pipe(map(r => changeType(r, 'users')));
     }
 
     /**
@@ -61,7 +65,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/role
      */
     public getAllWithRole(body: object, params?: Params): Observable<Array<User>> {
-        return this.provider.post$('user/role', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'users')));
+        return this.provider.post$('user/role', this.SERVER_URL, body, params)
+            .pipe(map(r => changeType(r, 'users')));
     }
 
     /**
@@ -70,7 +75,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/me
      */
     public getLoggedUser(params?: Params): Observable<User> {
-        return this.provider.get$('user/me', this.SERVER_URL, params).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('user/me', this.SERVER_URL, params)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -79,7 +85,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/{id}
      */
     public getUser(userId: string, params?: Params): Observable<User> {
-        return this.provider.get$('user/' + userId, this.SERVER_URL, params).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('user/' + userId, this.SERVER_URL, params)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -88,7 +95,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/preferences
      */
     public getPreferences(params?: Params): Observable<any> { // TODO OBJECT
-        return this.provider.get$('user/preferences', this.SERVER_URL, params).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('user/preferences', this.SERVER_URL, params)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -97,7 +105,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/preferences
      */
     public setPreferences(body: object, params?: Params): Observable<MessageResource> {
-        return this.provider.post$('user/preferences', this.SERVER_URL, body, params).pipe(map(r => changeType(r, undefined)));
+        return this.provider.post$('user/preferences', this.SERVER_URL, body, params)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -106,7 +115,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/search
      */
     public search(body: object, params?: Params): Observable<Array<User>> {
-        return this.provider.post$('user/search', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'users')));
+        return this.provider.post$('user/search', this.SERVER_URL, body, params)
+            .pipe(map(r => changeType(r, 'users')));
     }
 
     /**
@@ -115,7 +125,8 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/{id}
      */
     public updateUser(userId: string, body: object, params?: Params): Observable<User> {
-        return this.provider.post$('/api/user/' + userId, this.SERVER_URL, body, params).pipe(map(r => changeType(r, undefined)));
+        return this.provider.post$('/api/user/' + userId, this.SERVER_URL, body, params)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
 }
