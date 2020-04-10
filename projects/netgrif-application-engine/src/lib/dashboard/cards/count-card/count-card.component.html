@@ -1,3 +1,10 @@
 <div fxLayout="column" fxFlexAlign="center center">
     <span>{{card.title}}</span>
+    <div *ngIf="loading; then spinner else result"></div>
+    <ng-template #spinner>
+        <mat-spinner color="primary"></mat-spinner>
+    </ng-template>
+    <ng-template #result>
+        <span>{{count}}</span>
+    </ng-template>
 </div>

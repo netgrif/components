@@ -14,13 +14,20 @@ export class CountCardComponent implements OnInit {
 
     @Input() public card: CountCard;
     private _countService: CountService;
+    public loading: boolean;
+    public count: number;
 
     constructor(private _injector: Injector) {
+        this.loading = true;
     }
 
     ngOnInit(): void {
         this.resolveResourceService();
-
+        // TODO 10.4.2020 - don't pass filters as strings
+        this._countService.count(JSON.parse(this.card.filter)).subscribe(result => {
+            this.count = result.count;
+            this.loading = false;
+        });
     }
 
     private resolveResourceService() {
