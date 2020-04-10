@@ -26,7 +26,10 @@ export class ProcessService {
 
         return this._petriNetResource.getAll().pipe(
             map( nets => {
-                return nets.petriNetReferences.map( r => new Net(r));
+                if (nets instanceof Array) {
+                    return nets.map( net => new Net(net));
+                }
+                return [];
             }),
             tap(nets => {
                 nets.forEach( net => {

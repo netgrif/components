@@ -9,6 +9,7 @@ import Transition from '../../process/transition';
 import {HttpParams} from '@angular/common/http';
 import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
+import {Net} from '../../process/net';
 
 @Injectable({
     providedIn: 'root'
@@ -26,8 +27,8 @@ export class PetriNetResourceService {
      * GET
      * {{baseUrl}}/api/petrinet
      */
-    public getAll(): Observable<PetriNet> {
-        return this.provider.get$('petrinet', this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+    public getAll(): Observable<Array<Net>> {
+        return this.provider.get$('petrinet', this.SERVER_URL).pipe(map(r => changeType(r, 'petriNetReferences')));
     }
 
     /**
@@ -62,7 +63,7 @@ export class PetriNetResourceService {
     /**
      * Get Roles References Using
      * GET
-     * {{baseUrl}}/api/petrinet/{id}/transactions
+     * {{baseUrl}}/api/petrinet/{id}/roles
      */
     public getPetriNetRoles(NetID: string): Observable<Array<NetRole>> {
         return this.provider.get$('/petrinet/' + NetID + '/roles', this.SERVER_URL)
