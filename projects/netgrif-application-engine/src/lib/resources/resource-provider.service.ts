@@ -58,8 +58,8 @@ export abstract class AbstractResourceProvider {
         }
     }
 
-    public get<T>(endpoint?: string, url ?: string, params ?: Params, headers ?: Headers,
-                  responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public get$<T>(endpoint?: string, url ?: string, params ?: Params, headers ?: Headers,
+                   responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.get<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             {
                 headers,
@@ -69,8 +69,8 @@ export abstract class AbstractResourceProvider {
             });
     }
 
-    public post<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
-                   responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public post$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
+                    responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.post<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             body,
             {
@@ -81,8 +81,18 @@ export abstract class AbstractResourceProvider {
             });
     }
 
-    public put<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
-                  responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public postEvent$(endpoint?: string, url ?: string, body ?: object, params ?: Params): Observable<any> {
+        return this.httpClient.post(AbstractResourceProvider.sanitizeUrl(endpoint, url),
+            body,
+            {
+                params,
+                reportProgress: true,
+                observe: 'events'
+            });
+    }
+
+    public put$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
+                   responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.put<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             body,
             {
@@ -93,8 +103,8 @@ export abstract class AbstractResourceProvider {
             });
     }
 
-    public delete<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers,
-                     responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+    public delete$<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers,
+                      responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.delete<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url), {
             headers,
             params,
@@ -111,26 +121,6 @@ export abstract class AbstractResourceProvider {
 export class ResourceProvider extends AbstractResourceProvider {
     constructor(httpClient: HttpClient) {
         super(httpClient);
-    }
-
-    public get$<T>(endpoint?: string, url ?: string, params ?: Params, headers ?: Headers, responseType ?: ResponseType,
-                   observe ?: Observe): Observable<T> {
-        return this.get(endpoint, url, params, headers, responseType, observe);
-    }
-
-    public post$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
-                    responseType ?: ResponseType, observe ?: Observe): Observable<T> {
-        return this.post(endpoint, url, body, params, headers, responseType, observe);
-    }
-
-    public put$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
-                   responseType ?: ResponseType, observe ?: Observe): Observable<T> {
-        return this.put(endpoint, url, body, params, headers, responseType, observe);
-    }
-
-    public delete$<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers, responseType ?: ResponseType,
-                      observe ?: Observe): Observable<T> {
-        return this.delete(endpoint, url, params, headers, responseType, observe);
     }
 
 }
