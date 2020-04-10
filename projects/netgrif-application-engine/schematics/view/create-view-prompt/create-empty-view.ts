@@ -26,7 +26,7 @@ export function createEmptyView(tree: Tree, args: CreateViewArguments, addRoute:
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push(addRouteToRoutesJson(args.path as string, className.name));
+        rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
         addAuthGuardImport(tree, args.access);
     }
     return chain(rules);

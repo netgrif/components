@@ -16,6 +16,7 @@ import {createTaskView} from './create-task-view';
 import {createCaseView} from './create-case-view';
 import {createSidenavOrToolbarView} from './create-sidenav-or-toolbar-view';
 import {createEmptyView} from './create-empty-view';
+import {checkJsonParamsForSidenav} from './create-sidenav-prompt';
 
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
@@ -63,13 +64,7 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
             break;
         case 'sidenavView':
         case 'sidenavAndToolbarView':
-            rules.push(schematic('create-sidenav-prompt', {
-                    user: undefined,
-                    quickPanel: undefined,
-                    navigation: undefined,
-                    createViewArguments: args,
-                    addRoute
-                }
+            rules.push(schematic('create-sidenav-prompt', checkJsonParamsForSidenav(args, addRoute)
             ));
             break;
         default:
