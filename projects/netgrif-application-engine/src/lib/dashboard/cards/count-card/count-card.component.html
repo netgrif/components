@@ -1,10 +1,9 @@
-<div fxLayout="column" fxFlexAlign="center center">
+<mat-card fxLayout="column" fxLayoutAlign="center center" class="dashboard-card">
     <span>{{card.title}}</span>
-    <div *ngIf="loading; then spinner else result"></div>
-    <ng-template #spinner>
+    <ng-template [ngIf]="loading" [ngIfElse]="result">
         <mat-spinner color="primary"></mat-spinner>
     </ng-template>
     <ng-template #result>
-        <span>{{count}}</span>
+        <span class="number">{{count}}</span>
     </ng-template>
-</div>
+</mat-card>

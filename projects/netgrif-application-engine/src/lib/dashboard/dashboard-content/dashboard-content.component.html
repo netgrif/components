@@ -3,7 +3,7 @@
                    [colspan]="card.layout.cols"
                    [rowspan]="card.layout.rows"
                    [ngSwitch]="card.type">
-        <nae-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card"></nae-count-card>
+        <nae-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card" class="full-size"></nae-count-card>
         <div *ngSwitchCase="cardTypes.BLANK"></div>
     </mat-grid-tile>
 </mat-grid-list>
