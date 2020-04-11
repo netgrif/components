@@ -4,6 +4,7 @@
                    [rowspan]="card.layout.rows"
                    [ngSwitch]="card.type">
         <nae-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card" class="full-size"></nae-count-card>
+        <nae-iframe-card *ngSwitchCase="cardTypes.IFRAME" [card]="card" class="full-size"></nae-iframe-card>
         <div *ngSwitchCase="cardTypes.BLANK"></div>
     </mat-grid-tile>
 </mat-grid-list>

@@ -21,6 +21,15 @@ export class DashboardExampleComponent implements OnInit {
                 rows: 1,
                 cols: 1
             }
+        }, {
+            type: DashboardCardTypes.IFRAME,
+            url: 'https://netgrif.com/',
+            layout: {
+                x: 0,
+                y: 0,
+                rows: 1,
+                cols: 1
+            }
         }]
     };
 

@@ -25,7 +25,8 @@ import {
     ResourceProvider,
     UserModule,
     ImportNetComponent,
-    WorkflowViewModule, DashboardModule,
+    WorkflowViewModule,
+    DashboardModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -57,7 +58,6 @@ import { RegisterCardComponent } from './doc/cards/register-card/register-card.c
 import { HeadersComponent } from './doc/headers/headers.component';
 import { PanelsComponent } from './doc/panels/panels.component';
 import { DashboardExampleComponent } from './doc/dashboard-example/dashboard-example.component';
-import {DashboardModule} from 'netgrif-application-engine';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
