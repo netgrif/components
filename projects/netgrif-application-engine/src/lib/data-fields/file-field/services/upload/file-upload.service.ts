@@ -2,7 +2,11 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {HttpEventType} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/snack-bar.service';
+import {
+    SnackBarHorizontalPosition,
+    SnackBarService,
+    SnackBarVerticalPosition
+} from '../../../../snack-bar/snack-bar.service';
 import {FileUploadModel} from '../../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {FileUploadDataModel} from '../../models/file-field';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';

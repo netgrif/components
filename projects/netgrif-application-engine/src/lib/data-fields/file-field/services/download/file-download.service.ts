@@ -20,8 +20,7 @@ export class FileDownloadService {
 
     constructor(private _taskResourceService: TaskResourceService,
                 private _snackBarService: SnackBarService,
-                private _logger: LoggerService,
-                private _http: HttpClient) {
+                private _logger: LoggerService) {
     }
 
     public downloadFile(file: FileUploadModel) {
@@ -31,7 +30,7 @@ export class FileDownloadService {
                     const blob = new Blob([fileResource], {type: 'application/octet-stream'});
                     const url = window.URL.createObjectURL(blob);
                     const linkElement = document.createElement('a');
-                    console.log('aa');
+
                     linkElement.setAttribute('href', url);
                     linkElement.setAttribute('download', (file.data as FileUploadDataModel).file.name);
 
