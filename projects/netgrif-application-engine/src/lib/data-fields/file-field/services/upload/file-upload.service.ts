@@ -10,7 +10,8 @@ import {TaskResourceService} from '../../../../resources/engine-endpoint/task-re
 @Injectable()
 export class FileUploadService {
 
-    public taskId: string;
+    public taskId = '5e8f9c3275096024c842f585';
+    public fileId = 'file';
 
     private _complete = new EventEmitter<string>();
 
@@ -27,7 +28,7 @@ export class FileUploadService {
         fd.append('file', (file.data as FileUploadDataModel).file);
 
         file.inProgress = true;
-        file.sub = this._taskResource.uploadFile('5e90b517ade75e1830b07c83', 'cv_file', fd).pipe(
+        file.sub = this._taskResource.uploadFile(this.taskId, this.fileId, fd).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.UploadProgress:

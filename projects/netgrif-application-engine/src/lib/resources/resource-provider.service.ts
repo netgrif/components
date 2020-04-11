@@ -69,6 +69,14 @@ export abstract class AbstractResourceProvider {
             });
     }
 
+    public getEvent$(endpoint?: string, url ?: string, params ?: Params): Observable<any> {
+        return this.httpClient.get(AbstractResourceProvider.sanitizeUrl(endpoint, url),
+            {
+                params,
+                responseType: 'blob'
+            });
+    }
+
     public post$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
                     responseType ?: ResponseType, observe ?: Observe): Observable<T> {
         return this.httpClient.post<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),

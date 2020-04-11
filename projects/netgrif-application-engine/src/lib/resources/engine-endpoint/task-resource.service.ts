@@ -147,8 +147,8 @@ export class TaskResourceService {
      * GET
      */
     // {{baseUrl}}/api/task/:id/file/:field
-    public downloadFile(taskId: string, fieldId: string): Observable<FileResource> {
-        return this.provider.get$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+    public downloadFile(taskId: string, fieldId: string): Observable<any> {
+        return this.provider.getEvent$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
     }
 
     /**
