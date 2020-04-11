@@ -10,5 +10,6 @@ export class FileUploadModel {
     canRetry: boolean;
     canCancel: boolean;
     successfullyUploaded: boolean;
+    downloading: boolean;
     sub?: Subscription;
 }

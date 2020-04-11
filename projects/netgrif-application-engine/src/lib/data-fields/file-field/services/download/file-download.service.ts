@@ -19,6 +19,7 @@ export class FileDownloadService {
     }
 
     public downloadFile(file: FileUploadModel) {
+        file.downloading = true;
         this.download()
             .subscribe(fileResource => {
                     const blob = new Blob([fileResource], {type: 'application/octet-stream'});
@@ -33,6 +34,7 @@ export class FileDownloadService {
                         bubbles: true,
                         cancelable: false
                     });
+                    file.downloading = false;
                     linkElement.dispatchEvent(clickEvent);
                     const successMessage: string = (file.data as FileUploadDataModel).file.name + ' successfully download';
                     this._logger.info(successMessage);
@@ -40,6 +42,7 @@ export class FileDownloadService {
                         SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
                 },
                 (error) => {
+                    file.downloading = false;
                     this._logger.error(error);
                     this._snackBarService.openErrorSnackBar((file.data as FileUploadDataModel).file.name + ' download failed',
                         SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);

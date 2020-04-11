@@ -48,7 +48,7 @@ export class ImportNetComponent implements OnInit {
             for (let index = 0; index < fileUpload.files.length; index++) {
                 const file = fileUpload.files[index];
                 this.files.push({
-                    stringId: 'petriNetId',
+                    stringId: 'petriNetId', downloading: false,
                     data: file, state: 'in',
                     inProgress: false, progress: 0, canRetry: false, canCancel: true, successfullyUploaded: false
                 });

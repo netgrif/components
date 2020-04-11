@@ -76,7 +76,7 @@ export class FileFieldService {
                         name: file.name.substr(0, file.name.lastIndexOf('.')),
                         extension: file.name.substr(file.name.lastIndexOf('.') + 1)
                     },
-                    state: 'in',
+                    state: 'in', downloading: false,
                     inProgress: false, progress: 0,
                     canRetry: false, canCancel: true,
                     successfullyUploaded: false
