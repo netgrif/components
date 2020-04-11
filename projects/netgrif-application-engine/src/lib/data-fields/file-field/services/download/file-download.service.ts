@@ -1,36 +1,41 @@
 import {Injectable} from '@angular/core';
 import {FileUploadModel} from '../../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
-import {HttpClient, HttpEventType} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
 import {FileUploadDataModel} from '../../models/file-field';
-import {
-    SnackBarHorizontalPosition,
-    SnackBarService,
-    SnackBarVerticalPosition
-} from '../../../../snack-bar/snack-bar.service';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/snack-bar.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
-import {catchError, map} from 'rxjs/operators';
 
 @Injectable()
 export class FileDownloadService {
 
-    public taskId = '5e8f9c3275096024c842f585';
-    public fileId = 'file';
+    public taskId: string;
 
     constructor(private _taskResourceService: TaskResourceService,
                 private _snackBarService: SnackBarService,
                 private _logger: LoggerService) {
     }
 
+    /**
+     * Download file from backend GET endpoint '/task/taskId/file/fileId' via TaskResourceService.
+     * After successful response from backend:
+     *      - create 'a' element
+     *      - set url attribute
+     *      - set a name for the file to be downloaded
+     *      - trigger a click event on created 'a' element - starting download process
+     *      - notification to the user of a successful download
+     *      - info log with LoggerService
+     * After unsuccessful response from backend:
+     *      - notification to the user of a unsuccessful download
+     *      - error log with LoggerService
+     */
     public downloadFile(file: FileUploadModel) {
         file.downloading = true;
-        this.download()
+        this._taskResourceService.downloadFile(this.taskId, file.stringId)
             .subscribe(fileResource => {
                     const blob = new Blob([fileResource], {type: 'application/octet-stream'});
                     const url = window.URL.createObjectURL(blob);
-                    const linkElement = document.createElement('a');
 
+                    const linkElement = document.createElement('a');
                     linkElement.setAttribute('href', url);
                     linkElement.setAttribute('download', (file.data as FileUploadDataModel).file.name);
 
@@ -52,9 +57,5 @@ export class FileDownloadService {
                     this._snackBarService.openErrorSnackBar((file.data as FileUploadDataModel).file.name + ' download failed',
                         SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
                 });
-    }
-
-    download(): Observable<Blob> {
-        return this._taskResourceService.downloadFile(this.taskId, this.fileId);
     }
 }

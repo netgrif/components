@@ -2,24 +2,21 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {HttpEventType} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {
-    SnackBarHorizontalPosition,
-    SnackBarService,
-    SnackBarVerticalPosition
-} from '../../../../snack-bar/snack-bar.service';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/snack-bar.service';
 import {FileUploadModel} from '../../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {FileUploadDataModel} from '../../models/file-field';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
+import {LoggerService} from '../../../../logger/services/logger.service';
 
 @Injectable()
 export class FileUploadService {
 
-    public taskId = '5e8f9c3275096024c842f585';
-    public fileId = 'file';
+    public taskId: string;
 
     private _complete = new EventEmitter<string>();
 
     constructor(private _taskResource: TaskResourceService,
+                private _logger: LoggerService,
                 private _snackBarService: SnackBarService) {
     }
 
@@ -27,39 +24,45 @@ export class FileUploadService {
         return this._complete.asObservable();
     }
 
-    public uploadFile(file: FileUploadModel) {
+    /**
+     * Upload file as FileUploadModel instance to backend endpoint '/task/taskId/file/fileId' via TaskResourceService
+     * fileUploadModel
+     */
+    public uploadFile(fileUploadModel: FileUploadModel) {
         const fd = new FormData();
-        fd.append('file', (file.data as FileUploadDataModel).file);
+        const file = (fileUploadModel.data as FileUploadDataModel).file;
+        fd.append('file', file);
 
-        file.inProgress = true;
-        file.sub = this._taskResource.uploadFile(this.taskId, this.fileId, fd).pipe(
-            map(event => {
-                switch (event.type) {
-                    case HttpEventType.UploadProgress:
-                        file.progress = Math.round(event.loaded * 100 / event.total);
-                        break;
-                    case HttpEventType.Response:
-                        return event;
-                }
-            }),
-            catchError((error) => {
-                file.inProgress = false;
-                file.canRetry = true;
-                console.log(error);
-                this._snackBarService.openErrorSnackBar((file.data as FileUploadDataModel).file.name + ' upload failed',
-                    SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
-                return of(`${file.data.name} upload failed.`);
-            })
-        ).subscribe(
-            (event: any) => {
-                if (typeof (event) === 'object') {
-                    file.successfullyUploaded = true;
-                    this._snackBarService.openInfoSnackBar((file.data as FileUploadDataModel).file.name + ' upload successful',
+        fileUploadModel.inProgress = true;
+        fileUploadModel.sub = this._taskResource.uploadFile(this.taskId, fileUploadModel.stringId, fd)
+            .pipe(
+                map(event => {
+                    switch (event.type) {
+                        case HttpEventType.UploadProgress:
+                            fileUploadModel.progress = Math.round(event.loaded * 100 / event.total);
+                            break;
+                        case HttpEventType.Response:
+                            return event;
+                    }
+                }),
+                catchError((error) => {
+                    fileUploadModel.inProgress = false;
+                    fileUploadModel.canRetry = true;
+                    this._logger.error(file.name + 'upload failed: ' + error);
+                    this._snackBarService.openErrorSnackBar(file.name + ' upload failed',
                         SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
-                    this._complete.emit(event.body);
+                    return of(`${file.name} upload failed.`);
+                })
+            ).subscribe(
+                (event: any) => {
+                    if (typeof (event) === 'object') {
+                        fileUploadModel.successfullyUploaded = true;
+                        this._logger.info(file.name + ' has been successfully uploaded');
+                        this._snackBarService.openInfoSnackBar(file.name + ' upload successful',
+                            SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+                        this._complete.emit(event.body);
+                    }
                 }
-            }
-        );
-
+            );
     }
 }
