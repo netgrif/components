@@ -39,25 +39,32 @@ export function customThemes(): Rule {
             throw new SchematicsException('Cant find styles.scss file');
         }
         let darkExists = false;
-        if (data.theme.pallets.dark.primary !== undefined) {
+        if (data.theme.pallets.dark !== undefined && data.theme.pallets.dark.primary !== undefined) {
             darkExists = true;
         }
         if (data.theme.pallets.light.primary === undefined) {
             throw new SchematicsException('Light theme must be specified !');
         }
+        let primaryDark: string | null = '';
+        let primaryContrastDark: string | null = '';
+        let secondaryDark: string | null = '';
+        let secondaryContrastDark: string | null = '';
+        let warnDark: string | null = '';
+        let warnContrastDark: string | null = '';
         const primaryLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.primary, false);
         const primaryContrastLight = (primaryLight) ? returnContrastIfExist(data.theme.pallets.light.primary.contrast) : null;
         const secondaryLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.secondary, false);
         const secondaryContrastLight = (secondaryLight) ? returnContrastIfExist(data.theme.pallets.light.secondary.contrast) : null;
         const warnLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.warn, false);
         const warnContrastLight = (warnLight) ? returnContrastIfExist(data.theme.pallets.light.warn.contrast) : null;
-        const primaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.primary, false);
-        const primaryContrastDark = (primaryDark) ? returnContrastIfExist(data.theme.pallets.dark.primary.contrast) : null;
-        const secondaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.secondary, false);
-        const secondaryContrastDark = (secondaryDark) ? returnContrastIfExist(data.theme.pallets.dark.secondary.contrast) : null;
-        const warnDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.warn, false);
-        const warnContrastDark = (warnDark) ? returnContrastIfExist(data.theme.pallets.dark.warn.contrast) : null;
-
+        if (darkExists) {
+            primaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.primary, true);
+            primaryContrastDark = (primaryDark) ? returnContrastIfExist(data.theme.pallets.dark.primary.contrast) : null;
+            secondaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.secondary, true);
+            secondaryContrastDark = (secondaryDark) ? returnContrastIfExist(data.theme.pallets.dark.secondary.contrast) : null;
+            warnDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.warn, true);
+            warnContrastDark = (warnDark) ? returnContrastIfExist(data.theme.pallets.dark.warn.contrast) : null;
+        }
 
         const rules = [];
         const pathTomove = path + '/../styles/templates';

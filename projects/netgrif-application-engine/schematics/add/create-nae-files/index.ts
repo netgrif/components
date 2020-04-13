@@ -24,17 +24,12 @@ export function createNaeFiles(): Rule {
     return (tree: Tree) => {
         const rules = [];
         rules.push(createRoutesModule());
-        console.log('------------------------ initialize-configuration-service -------------------------------');
         rules.push(schematic('initialize-configuration-service', {}));
-        console.log('------------------------ custom-templates -------------------------------');
-        rules.push(schematic('custom-templates', {}));
-        console.log('------------------------ initialize-resource -------------------------------');
-        rules.push(schematic('initialize-resource', {}));
-        console.log('------------------------ create-view -------------------------------');
-        getNumberOfMissingViews(tree);
-        // for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
-        //     rules.push(schematic('create-view', {}));
-        // }
+        rules.push(schematic('custom-themes', {}));
+        rules.push(updateAppComponentHTML());
+        for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
+            rules.push(schematic('create-view', {}));
+        }
         return chain(rules);
     };
 }
@@ -76,4 +71,12 @@ function findNumberOfMissingViews(existingRoutesMap: Map<string, Route>,
         }
     }
     return counter;
+}
+
+function updateAppComponentHTML(): Rule {
+    return (tree: Tree) => {
+        const pathToComponent = getProjectInfo(tree).path + '/app.component.html';
+        const content: string = '<nae-side-menu>' + '\n' + tree.read(pathToComponent) + '</nae-side-menu>';
+        tree.overwrite(pathToComponent, content);
+    };
 }

@@ -1,7 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractCard} from '../abstract-card';
-import {Credentials} from '../../authentication/models/credentials';
 
 @Component({
     selector: 'nae-forgotten-password-panel',

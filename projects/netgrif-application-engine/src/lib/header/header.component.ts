@@ -7,6 +7,7 @@ import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {Observable} from 'rxjs';
+import {Net} from '../process/net';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class HeaderComponent implements OnInit {
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
-    @Input() allowedNets$: Observable<Array<PetriNetReference>> = new Observable<Array<PetriNetReference>>();
+    @Input() allowedNets$: Observable<Array<Net>> = new Observable<Array<Net>>();
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 

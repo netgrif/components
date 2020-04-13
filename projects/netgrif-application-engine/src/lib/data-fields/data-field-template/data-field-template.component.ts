@@ -25,10 +25,9 @@ export class DataFieldTemplateComponent {
     }
 
     private evaluateTemplate() {
-        if ( this.dataField.layout) {
-            return this.dataField.layout.template === TemplateAppearance.NETGRIF;
-        } else {
+        if (!this.dataField) {
             return true;
         }
+        return !!this.dataField.layout ? this.dataField.layout.template === TemplateAppearance.NETGRIF : true;
     }
 }

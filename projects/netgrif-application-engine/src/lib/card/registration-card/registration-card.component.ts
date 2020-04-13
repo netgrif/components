@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {passwordValidator} from './password.validator';
 import {AbstractCard} from '../abstract-card';
-import {Credentials} from '../../authentication/models/credentials';
 
 export interface Register {
     email: string;
