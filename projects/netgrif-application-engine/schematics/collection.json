@@ -54,6 +54,11 @@
             "description": "Resource market",
             "factory": "./resources/market-resource/index#initializeMarketResources",
             "schema": "./resources/market-resource/schema.json"
+        },
+        "create-sidenav-prompt": {
+            "description": "Adds extension to sidenav based on user inputs.",
+            "factory": "./view/create-view-prompt/create-sidenav-prompt#chooseSideNavType",
+            "schema": "./view/create-view-prompt/files/sidenav-toolbar-files/schema.json"
         }
     }
 }

@@ -1,0 +1,8 @@
+<% if (isToolbar) { %>
+<nae-toolbar></nae-toolbar>
+<% } %>
+<% if (isSideNav) { %>
+<%= drawerType %>
+    <router-outlet></router-outlet>
+</nae-navigation-drawer>
+<% } %>
