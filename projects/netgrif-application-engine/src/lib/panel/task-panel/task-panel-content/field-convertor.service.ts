@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DataFieldResource} from './resource-interface';
-import {DataField, MaterialAppearance} from '../../../data-fields/models/abstract-data-field';
+import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
 import {TextField, TextFieldView} from '../../../data-fields/text-field/models/text-field';
 import {NumberField} from '../../../data-fields/number-field/models/number-field';

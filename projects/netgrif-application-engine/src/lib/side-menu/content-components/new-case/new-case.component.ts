@@ -8,6 +8,7 @@ import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource-service';
+import {ProcessService} from '../../../process/process.service';
 
 
 interface Form {
@@ -37,7 +38,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
                 private _formBuilder: FormBuilder,
                 private _snackBarService: SnackBarService,
                 private _caseResourceService: CaseResourceService,
-                private  _petriNetService: PetriNetResourceService) {
+                private _processService: ProcessService) {
         this.options = [];
         this.colors = [
             {value: 'color-fg-deep-purple-600', viewValue: 'Purple'},
@@ -64,9 +65,9 @@ export class NewCaseComponent implements OnInit, OnChanges {
             map(value => this._filter(value))
         );
 
-        this._petriNetService.getAll().subscribe(petriNets => {
+        this._processService.loadNets().subscribe(petriNets => {
             if (petriNets) {
-                petriNets.petriNetReferences.forEach(petriNet => {
+                petriNets.forEach(petriNet => {
                     this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
                 });
             }

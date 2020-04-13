@@ -9,10 +9,14 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
 
     public readonly headerType: HeaderType = HeaderType.CASE;
     public cases$: BehaviorSubject<Array<Case>>;
+    public loading: boolean;
 
     protected constructor(protected _caseViewService: CaseViewService,
                           baseFilter: string = '{}') {
         super(_caseViewService);
+        this._caseViewService.loading$.subscribe( loading => {
+            this.loading = loading;
+        });
         this.cases$ = new BehaviorSubject<Array<Case>>([]);
         this._caseViewService.baseFilter = baseFilter;
         this._caseViewService.cases$.subscribe(newCases => {
