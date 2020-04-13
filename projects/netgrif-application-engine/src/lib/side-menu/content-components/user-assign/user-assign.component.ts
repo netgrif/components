@@ -4,6 +4,9 @@ import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource-service';
+import {SnackBarService} from '../../../snack-bar/snack-bar.service';
+import {LoggerService} from '../../../logger/services/logger.service';
 
 @Component({
     selector: 'nae-user-assign',
@@ -18,11 +21,13 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
     public users: Array<UserValue>;
     public formControl = new FormControl();
     private _currentUser: UserValue;
+    public _loading: boolean;
 
-    constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl) {
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
+                private _userResourceService: UserResourceService,
+                private _snackBar: SnackBarService, private _log: LoggerService) {
         this.users = [];
-        // TODO load users
-        // TODO BUG - when you click assign without selected user , menu send closed event but its never closed and error appear in console
+        this.loadUsers();
     }
 
     ngOnInit() {
@@ -42,11 +47,32 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
     }
 
     public assign(): void {
-        this._sideMenuControl.close({
-            opened: false,
-            message: 'Selected user was confirmed',
-            data: this._currentUser
-        });
+        if (this._currentUser !== undefined) {
+            this._sideMenuControl.close({
+                opened: false,
+                message: 'Selected user was confirmed',
+                data: this._currentUser
+            });
+        }
     }
 
+    private loadUsers() {
+        if (this._loading) {
+            return;
+        }
+
+        this._loading = true;
+        this._userResourceService.getAll().subscribe( result => {
+            if (result instanceof Array) {
+                this.users = result.map( user => new UserValue(user.id, user.name, user.surname, user.email));
+            } else {
+                this._snackBar.openInfoSnackBar('There are no users :)');
+            }
+            this._loading = false;
+        }, error => {
+            this._snackBar.openErrorSnackBar('Users failed to load');
+            this._log.error(error);
+            this._loading = false;
+        });
+    }
 }

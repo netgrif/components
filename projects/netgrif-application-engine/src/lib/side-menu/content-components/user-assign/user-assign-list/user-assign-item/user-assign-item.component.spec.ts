@@ -30,5 +30,5 @@ describe('UserAssignItemComponent', () => {
     template: '<nae-user-assign-item [user]="user"></nae-user-assign-item>'
 })
 class TestWrapperComponent {
-    user = new UserValue('', '', '', '');
+    user = new UserValue(0, '', '', '');
 }

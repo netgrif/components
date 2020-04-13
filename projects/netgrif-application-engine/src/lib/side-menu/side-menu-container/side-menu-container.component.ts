@@ -31,6 +31,7 @@ export class SideMenuContainerComponent implements AfterViewInit {
     }
 
     public close(): Observable<MatDrawerToggleResult> {
+        // TODO BUG 10.4. 2020 - this.sideMenu is undefined, this pointing to SideMenuControl instead of SideMenuContainerComponent
         return fromPromise(this.sideMenu.close()).pipe(
             tap((result) => {
                 if (result === 'close') {

@@ -2,10 +2,10 @@ export class UserValue {
 
     private _selected: boolean;
 
-    constructor(private _id: string, private _name: string, private _surname: string, private _email: string) {
+    constructor(private _id: number, private _name: string, private _surname: string, private _email: string) {
     }
 
-    get id(): string {
+    get id(): number {
         return this._id;
     }
 

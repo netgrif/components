@@ -8,6 +8,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {Observable} from 'rxjs';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('UserAssignComponent', () => {
     let component: UserAssignComponent;
@@ -18,7 +19,8 @@ describe('UserAssignComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                BrowserAnimationsModule
+                BrowserAnimationsModule,
+                HttpClientTestingModule
             ],
             declarations: [
                 UserAssignComponent,
