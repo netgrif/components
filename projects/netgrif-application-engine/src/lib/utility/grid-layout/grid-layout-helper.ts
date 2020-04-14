@@ -3,7 +3,7 @@ import {GridElementWithItem} from './model/grid-element-with-item';
 import {GridElement} from './model/grid-element';
 import {LoggerService} from '../../logger/services/logger.service';
 
-
+// TODO REFACTOR 14.4. - refactor task panel content to use this generic algorithm implementation instead of a custom one
 export class GridLayoutHelper {
 
     constructor(private _log: LoggerService) {
