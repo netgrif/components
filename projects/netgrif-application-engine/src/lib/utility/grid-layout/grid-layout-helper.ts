@@ -6,7 +6,8 @@ import {LoggerService} from '../../logger/services/logger.service';
 
 export class GridLayoutHelper {
 
-    constructor(private _log: LoggerService) {}
+    constructor(private _log: LoggerService) {
+    }
 
     private static addGridRows(grid: Array<Array<GridFiller>>, newRowCount: number, columnCount: number): void {
         while (grid.length < newRowCount) {
@@ -18,7 +19,9 @@ export class GridLayoutHelper {
         return [new GridFiller(0, cols - 1)];
     }
 
-    public fillBlankSpace(gridElements: Array<GridElement>, columnCount: number): Array<GridElementWithItem> {
+    public fillBlankSpace(gridElements: Array<GridElement>,
+                          columnCount: number,
+                          elementVisibilityCondition: (element: any) => boolean = () => true): Array<GridElementWithItem> {
         const grid: Array<Array<GridFiller>> = [];
 
         gridElements.forEach(element => {
@@ -28,24 +31,38 @@ export class GridLayoutHelper {
                 GridLayoutHelper.addGridRows(grid, elementRowEnd + 1, columnCount);
             }
             for (let row = element.layout.y; row <= elementRowEnd; row++) {
-                const newFillers = [];
-                for (const filler of grid[row]) {
-                    newFillers.push(...filler.fillersAfterCover(element.layout.x, elementColEnd));
+                if (!elementVisibilityCondition(element)) {
+                    for (const filler of grid[row]) {
+                        filler.isIntentional = false;
+                    }
+                } else {
+                    const newFillers = [];
+                    for (const filler of grid[row]) {
+                        newFillers.push(...filler.fillersAfterCover(element.layout.x, elementColEnd));
+                    }
+                    grid[row] = newFillers;
                 }
-                grid[row] = newFillers;
             }
         });
 
-        const result: Array<GridElementWithItem> = gridElements.map( item => ({
-            item,
-            type: item.type,
-            layout: item.layout
-        }));
-        grid.forEach( (row, y) => {
-            row.forEach( filler => {
-                result.push(filler.convertToGridElement(y));
+        const result: Array<GridElementWithItem> = gridElements.filter(element => elementVisibilityCondition(element))
+            .map(element => ({
+                item: element,
+                type: element.type,
+                layout: element.layout
+            }));
+        let encounteredFirst = false;
+        for (let y = grid.length - 1; y > 0; y--) {
+            const row = grid[y];
+            row.forEach(filler => {
+                if (!encounteredFirst && !filler.isFullWidth(columnCount)) {
+                    encounteredFirst = true;
+                }
+                if (encounteredFirst && (filler.isIntentional || !filler.isFullWidth(columnCount))) {
+                    result.push(filler.convertToGridElement(y));
+                }
             });
-        });
+        }
 
         return result.sort((a, b) => {
             if (a.layout.y < b.layout.y) {
