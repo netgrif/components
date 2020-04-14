@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ConfigurationService, DashboardParams} from 'netgrif-application-engine';
+import {ConfigurationService, DashboardParams} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-dashboard-example',

@@ -20,7 +20,8 @@
                 "taskView",
                 "sidenavView",
                 "toolbarView",
-                "sidenavAndToolbarView"
+                "sidenavAndToolbarView",
+                "dashboard"
             ],
             "x-prompt": {
                 "type": "list",
@@ -33,7 +34,8 @@
                     "taskView",
                     "sidenavView",
                     "toolbarView",
-                    "sidenavAndToolbarView"
+                    "sidenavAndToolbarView",
+                    "dashboard"
                 ]
             }
         },
