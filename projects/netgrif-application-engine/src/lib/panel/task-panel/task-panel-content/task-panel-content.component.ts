@@ -170,7 +170,7 @@ export class TaskPanelContentComponent {
                 .map(item => ({item, type: this._fieldConvertor.resolveType(item), layout: item.layout})));
         });
         let encounterFirst = false;
-        for (let y = grid.length - 1; y > 0; y--) {
+        for (let y = grid.length - 1; y >= 0; y--) {
             const row = grid[y];
             row.forEach(filler => {
                 if (!encounterFirst && !filler.isFullWidth(columnCount)) {

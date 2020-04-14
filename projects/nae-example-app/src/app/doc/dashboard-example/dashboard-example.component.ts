@@ -25,8 +25,8 @@ export class DashboardExampleComponent implements OnInit {
             type: DashboardCardTypes.IFRAME,
             url: 'https://netgrif.com/',
             layout: {
-                x: 0,
-                y: 0,
+                x: 1,
+                y: 1,
                 rows: 1,
                 cols: 1
             }

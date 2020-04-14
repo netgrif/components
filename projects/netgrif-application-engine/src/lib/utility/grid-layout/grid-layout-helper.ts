@@ -52,7 +52,7 @@ export class GridLayoutHelper {
                 layout: element.layout
             }));
         let encounteredFirst = false;
-        for (let y = grid.length - 1; y > 0; y--) {
+        for (let y = grid.length - 1; y >= 0; y--) {
             const row = grid[y];
             row.forEach(filler => {
                 if (!encounteredFirst && !filler.isFullWidth(columnCount)) {
