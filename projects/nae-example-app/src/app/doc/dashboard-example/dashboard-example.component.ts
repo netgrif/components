@@ -25,6 +25,17 @@ export class DashboardExampleComponent implements OnInit {
             type: DashboardCardTypes.IFRAME,
             url: 'https://netgrif.com/',
             layout: {
+                x: 2,
+                y: 0,
+                rows: 2,
+                cols: 2
+            }
+        }, {
+            type: DashboardCardTypes.COUNT,
+            title: 'All cases',
+            resourceType: 'case',
+            filter: '{}',
+            layout: {
                 x: 1,
                 y: 1,
                 rows: 1,
