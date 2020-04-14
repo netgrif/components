@@ -11,7 +11,7 @@ import {DashboardCardTypes} from '../cards/model/dashboard-card-types';
 export class DashboardContentComponent implements OnInit {
 
     @Input() public params: DashboardParams;
-    public cardTypes = DashboardCardTypes;
+    public readonly cardTypes = DashboardCardTypes;
 
     constructor() {
     }

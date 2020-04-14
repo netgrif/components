@@ -1,7 +1,7 @@
 import {DashboardCardTypes} from './dashboard-card-types';
-import {GridItem} from '../../../data-fields/models/grid-item';
+import {GridElement} from '../../../utility/grid-layout/model/grid-element';
 
 
-export interface DashboardCard extends GridItem {
+export interface DashboardCard extends GridElement {
     type: DashboardCardTypes;
 }

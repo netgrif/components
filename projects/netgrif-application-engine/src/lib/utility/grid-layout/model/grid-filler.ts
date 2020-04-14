@@ -1,4 +1,4 @@
-import {DatafieldGridLayoutElement} from './datafield-grid-layout-element';
+import {GridElement} from './grid-element';
 
 export class GridFiller {
     public isIntentional = true;
@@ -31,9 +31,8 @@ export class GridFiller {
         }
     }
 
-    convertToGridLayoutElement(y: number): DatafieldGridLayoutElement {
+    convertToGridElement(y: number): GridElement {
         return {
-            item: undefined,
             type: 'blank',
             layout: {
                 x: this.start,

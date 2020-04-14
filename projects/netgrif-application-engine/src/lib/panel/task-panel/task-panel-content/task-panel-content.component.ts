@@ -1,6 +1,6 @@
 import {Component, Inject, InjectionToken} from '@angular/core';
 import {DatafieldGridLayoutElement} from './datafield-grid-layout-element';
-import {GridFiller} from './grid-filler';
+import {GridFiller} from '../../../utility/grid-layout/model/grid-filler';
 import {FieldConvertorService} from './field-convertor.service';
 import {TaskPanelContentService} from './task-panel-content.service';
 
@@ -177,7 +177,7 @@ export class TaskPanelContentComponent {
                     encounterFirst = true;
                 }
                 if (encounterFirst && (filler.isIntentional || !filler.isFullWidth(columnCount))) {
-                    returnResource.push(filler.convertToGridLayoutElement(y));
+                    returnResource.push(filler.convertToGridElement(y));
                 }
             });
         }

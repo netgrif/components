@@ -1,8 +1,7 @@
 import {DataField} from '../../../data-fields/models/abstract-data-field';
-import {GridItem} from '../../../data-fields/models/grid-item';
+import {GridElementWithItem} from '../../../utility/grid-layout/model/grid-element-with-item';
 
-export interface DatafieldGridLayoutElement extends GridItem{
+export interface DatafieldGridLayoutElement extends GridElementWithItem {
     item: DataField<any>;
-    type: string;
     title?: string;
 }

@@ -3,7 +3,7 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
-import {GridLayout} from './grid-item';
+import {GridLayout} from '../../utility/grid-layout/model/grid-element';
 
 export interface Validation {
     validationRule: string;

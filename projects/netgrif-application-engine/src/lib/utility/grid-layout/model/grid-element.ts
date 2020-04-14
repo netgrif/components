@@ -1,5 +1,6 @@
-export interface GridItem {
+export interface GridElement {
     layout: GridLayout;
+    type: string;
 }
 
 export interface GridLayout {
