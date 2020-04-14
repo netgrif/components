@@ -11,6 +11,6 @@ export class DateTimeField extends AbstractTimeInstanceField {
     }
 
     protected valueEquality(a: Moment, b: Moment): boolean {
-        return this.isEqual(a, b, 'minute');
+        return AbstractTimeInstanceField.isEqual(a, b, 'minute');
     }
 }

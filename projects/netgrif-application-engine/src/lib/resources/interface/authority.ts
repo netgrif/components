@@ -1,3 +1,3 @@
 export interface Authority {
-    authority: string;
+    authority: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_SYSTEMADMIN' | string;
 }

@@ -3,25 +3,27 @@ import {SortableView} from '../abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource-service';
 import {Observable, ReplaySubject} from 'rxjs';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
+import {ProcessService} from '../../process/process.service';
+import {Net} from '../../process/net';
 
 
 @Injectable()
 export class WorkflowViewService extends SortableView {
 
-    private _workflows$: ReplaySubject<Array<PetriNetReference>>;
+    private _workflows$: ReplaySubject<Array<Net>>;
 
-    constructor(public petriNetResourceService: PetriNetResourceService) {
+    constructor(private _processService: ProcessService) {
         super();
-        this._workflows$ = new ReplaySubject<Array<PetriNetReference>>(1);
+        this._workflows$ = new ReplaySubject<Array<Net>>(1);
     }
 
-    public get workflows$(): Observable<Array<PetriNetReference>> {
+    public get workflows$(): Observable<Array<Net>> {
         return this._workflows$.asObservable();
     }
 
     public reload(): void {
         // TODO 8.4.2020 - allow filtering of petri nets in workflow view
-        this.petriNetResourceService.getAll().subscribe(petriNet => this._workflows$.next(petriNet.petriNetReferences));
+        this._processService.loadNets().subscribe(petriNet => this._workflows$.next(petriNet));
     }
 
     protected getMetaFieldSortId(): string {

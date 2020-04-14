@@ -1,5 +1,3 @@
-import {Resource} from '../configuration/interfaces/schema';
-
 export function changeType<T>(r: any, propertiesParams: string): T {
     if (r.hasOwnProperty('_embedded')) {
         if (propertiesParams) {

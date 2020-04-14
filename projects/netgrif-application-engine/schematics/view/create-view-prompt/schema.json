@@ -17,7 +17,10 @@
                 "login",
                 "tabView",
                 "caseView",
-                "taskView"
+                "taskView",
+                "sidenavView",
+                "toolbarView",
+                "sidenavAndToolbarView"
             ],
             "x-prompt": {
                 "type": "list",
@@ -27,7 +30,10 @@
                     "login",
                     "tabView",
                     "caseView",
-                    "taskView"
+                    "taskView",
+                    "sidenavView",
+                    "toolbarView",
+                    "sidenavAndToolbarView"
                 ]
             }
         },

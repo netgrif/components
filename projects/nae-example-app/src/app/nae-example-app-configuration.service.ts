@@ -36,6 +36,11 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                             name: 'petrinet',
                             address: 'http://localhost:8080/api/',
                             format: 'json'
+                        },
+                        {
+                            name: 'user',
+                            address: 'http://localhost:8080/api/',
+                            format: 'json'
                         }
                     ]
                 },

@@ -22,6 +22,7 @@ export * from './lib/header/public-api';
 export * from './lib/resources/public-api';
 export * from './lib/navigation/public-api';
 export * from './lib/view/public-api';
+export * from './lib/process/public-api';
 export * from './lib/dashboard/public-api';
 
 /* SERVICES */

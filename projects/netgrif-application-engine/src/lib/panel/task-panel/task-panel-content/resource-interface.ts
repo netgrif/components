@@ -1,5 +1,6 @@
 import {Behavior} from '../../../data-fields/models/behavior';
 import {Layout, Validation} from '../../../data-fields/models/abstract-data-field';
+import {UserValue} from '../../../data-fields/user-field/models/user-value';
 
 export interface DataFieldResource {
     stringId: string;
@@ -10,7 +11,7 @@ export interface DataFieldResource {
     behavior: Behavior;
     layout?: Layout;
     order: number;
-    value?: string | number | string[] | boolean | Array<number>;
+    value?: string | number | string[] | boolean | Array<number> | any;
     defaultValue?: string | number | string[] | boolean;
     choices?: string[];
     view?: {

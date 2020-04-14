@@ -4,12 +4,11 @@ import {
     AbstractCaseView,
     CaseViewService,
     Case,
-    PetriNetResourceService,
-    PetriNetReference,
+    ProcessService,
+    Net,
 } from '@netgrif/application-engine';
-import {ReplaySubject} from 'rxjs';
-
-
+import {ReplaySubject, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Component({
     selector: 'nae-app-case-view',
@@ -20,13 +19,13 @@ import {ReplaySubject} from 'rxjs';
 export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
-    public allowedNets$: ReplaySubject<Array<PetriNetReference>>;
+    public allowedNets$: ReplaySubject<Array<Net>>;
 
-    constructor(caseViewService: CaseViewService, petriNetResourceService: PetriNetResourceService) {
+    constructor(caseViewService: CaseViewService, processService: ProcessService) {
         super(caseViewService, '{}');
-        this.allowedNets$ = new ReplaySubject<Array<PetriNetReference>>(1);
-        petriNetResourceService.getAll().subscribe(result => {
-            this.allowedNets$.next(result.petriNetReferences);
+        this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
+        processService.loadNets().pipe(catchError( err => throwError(err))).subscribe(result => {
+            this.allowedNets$.next(result);
         });
     }
 
