@@ -2,6 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {TabContent} from '../interfaces';
 import {TabView} from '../classes/tab-view';
 
+/**
+ * Component that renders a tab view.
+ *
+ * See {@link TabView} for the class that holds the logic for this view.
+ */
 @Component({
     selector: 'nae-tab-view',
     templateUrl: './tab-view.component.html',
@@ -9,12 +14,19 @@ import {TabView} from '../classes/tab-view';
 })
 export class TabViewComponent implements OnInit {
 
-    @Input() initialTabs: Array<TabContent>;
-    tabGroup: TabView;
+    /**
+     * Tabs that are opened initially in the view
+     */
+    @Input() public initialTabs: Array<TabContent>;
+    public tabView: TabView;
 
-    initializeTabLambda = (index: number) => {this.tabGroup.initializeTab(index); };
+    /**
+     * @ignore
+     * lambda function that is passed to the {@link TabCreationDetectorComponent}s
+     */
+    public initializeTabLambda = (index: number) => {this.tabView.initializeTab(index); };
 
     ngOnInit(): void {
-        this.tabGroup = new TabView(this.initialTabs);
+        this.tabView = new TabView(this.initialTabs);
     }
 }

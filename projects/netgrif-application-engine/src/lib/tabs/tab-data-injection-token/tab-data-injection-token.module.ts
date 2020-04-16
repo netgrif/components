@@ -2,8 +2,10 @@ import {InjectionToken, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {InjectedTabData} from '../interfaces';
 
+/**
+ * Declares the `NAE_TAB_DATA` injection token.
+ */
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule
   ]
