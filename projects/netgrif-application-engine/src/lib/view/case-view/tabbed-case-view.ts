@@ -30,7 +30,7 @@ export abstract class TabbedCaseView extends AbstractCaseView {
 
     public handleCaseClick(clickedCase: Case): void {
         if (this._correctlyInjected) {
-            this._injectedTabData.tabGroupRef.openTab({
+            this._injectedTabData.tabViewRef.openTab({
                 label: {
                     text: clickedCase.title,
                     icon: clickedCase.icon ? clickedCase.icon : 'check_box'

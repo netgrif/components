@@ -17,7 +17,7 @@ export class TabViewExampleComponent implements OnInit {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeDeleted: false,
+            canBeClosed: false,
             tabContentComponent: ContentComponent
         },
         {
@@ -25,7 +25,7 @@ export class TabViewExampleComponent implements OnInit {
                 text: 'injected data',
                 icon: 'nature'
             },
-            canBeDeleted: false,
+            canBeClosed: false,
             tabContentComponent: ContentComponent,
             injectedObject: {
                 text: 'I am injected'

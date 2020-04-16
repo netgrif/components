@@ -3,7 +3,7 @@ import {Type} from '@angular/core';
 /**
  * Stores information about content of one opened tab in tab view.
  *
- * See {@link TabGroup} for more information about the usage of this interface.
+ * See {@link TabView} for more information about the usage of this interface.
  */
 export interface TabContent {
     /**
@@ -75,14 +75,14 @@ export interface InjectedTabData {
     /**
      * Reference to the parent tab view allowing some control over it from the tab content component.
      */
-    tabGroupRef: TabGroupInterface;
+    tabViewRef: TabViewInterface;
 }
 
 
 /**
  * Methods of parent tab view, that tabs can access.
  */
-export interface TabGroupInterface {
+export interface TabViewInterface {
     /**
      * Opens a new tab with the provided content.
      * @param tabContent - content of the new tab

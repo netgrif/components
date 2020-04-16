@@ -1,4 +1,4 @@
-import {TabContent, TabGroupInterface} from '../interfaces';
+import {TabContent, TabViewInterface} from '../interfaces';
 import {OpenedTab} from './opened-tab';
 import {Injector, StaticProvider} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
@@ -6,13 +6,13 @@ import {FormControl} from '@angular/forms';
 import {orderBy} from 'natural-orderby';
 import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token.module';
 
-export class TabGroup implements TabGroupInterface {
+export class TabView implements TabViewInterface {
 
     openedTabs: Array<OpenedTab>;
     selectedIndex = new FormControl(0);
 
     private nextId = 0;
-    private tabGroupInterface: TabGroupInterface = {
+    private tabGroupInterface: TabViewInterface = {
         openTab: (tabContent: TabContent, autoswitch: boolean = false) => this.openTab(tabContent, autoswitch),
         switchToTabIndex: (index: number) => this.switchToTabIndex(index),
         switchToTabUniqueId: (uniqueId: string) => this.switchToTabUniqueId(uniqueId),
