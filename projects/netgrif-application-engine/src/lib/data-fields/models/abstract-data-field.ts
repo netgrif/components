@@ -3,53 +3,7 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
-import {GridLayout} from '../../utility/grid-layout/model/grid-element';
-
-export interface Validation {
-    validationRule: string;
-    validationMessage: string;
-}
-
-/**
- * Layout information for the data field.
- */
-export interface Layout extends GridLayout {
-    /**
-     * Determines how much space the form field occupies.
-     */
-    template: TemplateAppearance;
-    /**
-     * Determines the appearance of the form field.
-     */
-    appearance: MaterialAppearance;
-}
-
-/**
- * Preferred layout of the displayed data field.
- *
- * `MATERIAL` - displays the material form field at 100% width of the available space.
- *
- * `NETGRIF` - displays the field at 100% width if the total width is bellow a given threshold (by default 250px).
- * Displays the field title on the left and the form filed on the right sharing the width 50:50 otherwise.
- * The form filed still uses material design with this setting.
- */
-export enum TemplateAppearance {
-    MATERIAL = 'material',
-    NETGRIF = 'netgrif',
-}
-
-/**
- * Appearance of rendered material form field.
- *
- * See [Material documentation]{@link https://material.angular.io/components/form-field/overview#form-field-appearance-variants}
- * for more information.
- */
-export enum MaterialAppearance {
-    LEGACY = 'legacy',
-    STANDARD = 'standard',
-    FILL = 'fill',
-    OUTLINE = 'outline'
-}
+import {Layout} from './layout';
 
 /**
  * Holds the logic common to all data field Model objects.

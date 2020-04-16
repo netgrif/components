@@ -1,7 +1,7 @@
-import {Layout} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Moment} from 'moment';
 import {AbstractTimeInstanceField} from '../../time-instance-abstract-field/models/abstract-time-instance-field';
+import {Layout} from '../../models/layout';
 
 export class DateField extends AbstractTimeInstanceField {
 

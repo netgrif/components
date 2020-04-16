@@ -1,6 +1,7 @@
-import {DataField, Layout} from '../../models/abstract-data-field';
+import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {ValidatorFn, Validators} from '@angular/forms';
+import {Layout} from '../../models/layout';
 
 export class BooleanField extends DataField<boolean> {
 

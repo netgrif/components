@@ -1,7 +1,8 @@
-import {DataField, Layout} from '../../models/abstract-data-field';
+import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import moment, {Moment} from 'moment';
+import {Layout} from '../../models/layout';
 
 export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 

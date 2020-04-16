@@ -19,7 +19,7 @@ export abstract class AbstractDataFieldComponent implements OnInit {
     @Input() dataField: DataField<any>;
     /**
      * @ignore
-     * The {@link FormControl} object that should be used to control any rendered forms.
+     * See [formControl]{@link AbstractDataFieldComponent#formControl}
      */
     private readonly _formControl: FormControl;
 
@@ -46,6 +46,9 @@ export abstract class AbstractDataFieldComponent implements OnInit {
         }
     }
 
+    /**
+     * The [FormControl]{@link https://angular.io/api/forms/FormControl} object that should be used to control any rendered forms.
+     */
     public get formControl(): FormControl {
         return this._formControl;
     }

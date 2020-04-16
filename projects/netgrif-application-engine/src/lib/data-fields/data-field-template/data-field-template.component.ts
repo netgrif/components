@@ -1,7 +1,8 @@
 import {Component, Input, TemplateRef} from '@angular/core';
 import {ResizedEvent} from 'angular-resize-event';
 import {WrappedBoolean} from './models/wrapped-boolean';
-import {DataField, TemplateAppearance} from '../models/abstract-data-field';
+import {DataField} from '../models/abstract-data-field';
+import {TemplateAppearance} from '../models/template-appearance';
 
 /**
  * Provides a responsive layout to data fields where their appearance can change based on the width of space they have available.
