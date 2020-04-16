@@ -29,9 +29,10 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
                 processService: ProcessService) {
         super(caseViewService, loggerService, injectedTabData, '{}');
         this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        processService.loadNets().pipe(catchError( err => throwError(err))).subscribe(result => {
-            this.allowedNets$.next(result);
-        });
+        // TODO 16.4. 2020 initialize allowedNets by filter
+        // processService.loadNets().pipe(catchError( err => throwError(err))).subscribe(result => {
+        //     this.allowedNets$.next(result);
+        // });
     }
 
     ngAfterViewInit(): void {

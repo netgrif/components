@@ -24,9 +24,10 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
     constructor(caseViewService: CaseViewService, processService: ProcessService) {
         super(caseViewService, '{}');
         this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        processService.loadNets().pipe(catchError( err => throwError(err))).subscribe(result => {
-            this.allowedNets$.next(result);
-        });
+        // TODO 16.4. 2020 initialize allowedNets by filter
+        // processService.getNet('leukemia').subscribe( result => {
+        //     console.log(result);
+        // });
     }
 
     ngAfterViewInit(): void {
