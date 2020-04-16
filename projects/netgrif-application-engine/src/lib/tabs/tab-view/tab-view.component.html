@@ -11,7 +11,7 @@
                 </button>
             </div>
         </ng-template>
-<!--        lazy loading of tab contents is disabled for now-->
+<!--        TODO 16.4.2020 - lazy loading of tab contents is disabled for now -->
 <!--        <ng-template matTabContent>-->
             <nae-tab-creation-detector [initializeTabFunction]="initializeTabLambda" [tabIndex]="i"></nae-tab-creation-detector>
             <ng-template [ngIf]="tab.isTabInitialized">
