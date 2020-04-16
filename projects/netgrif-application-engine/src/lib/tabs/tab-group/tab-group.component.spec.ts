@@ -41,7 +41,7 @@ class TestWrapperComponent {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeDeleted: false,
+            canBeClosed: false,
             tabContentComponent: TestComponent
         }
     ];

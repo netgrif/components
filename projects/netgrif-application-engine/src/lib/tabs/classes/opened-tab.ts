@@ -8,7 +8,7 @@ export class OpenedTab implements TabContent {
         icon?: string;
         text?: string;
     };
-    canBeDeleted: boolean;
+    canBeClosed: boolean;
     tabContentComponent: Type<any>;
     injectedObject: object = {};
     order = 0;

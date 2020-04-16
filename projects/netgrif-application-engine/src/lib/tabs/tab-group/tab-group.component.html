@@ -6,7 +6,7 @@
                     <mat-icon class="icon-margin-right" *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
                     <span>{{tab.label.text}}</span>
                 </div>
-                <button mat-icon-button *ngIf="tab.canBeDeleted" (click)="tabGroup.closeTabIndex(i)">
+                <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabGroup.closeTabIndex(i)">
                     <mat-icon>clear</mat-icon>
                 </button>
             </div>

@@ -8,7 +8,7 @@ describe('OpenedTab', () => {
             text: 'tab title',
             icon: 'home'
         },
-        canBeDeleted: false,
+        canBeClosed: false,
         tabContentComponent: TabTestComponent
     }, 'id')).toBeTruthy();
   });

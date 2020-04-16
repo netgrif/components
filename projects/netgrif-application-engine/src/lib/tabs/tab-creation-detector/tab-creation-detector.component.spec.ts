@@ -45,7 +45,7 @@ class TestWrapperComponent implements OnInit {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeDeleted: false,
+            canBeClosed: false,
             tabContentComponent: TestComponent
         }
     ];

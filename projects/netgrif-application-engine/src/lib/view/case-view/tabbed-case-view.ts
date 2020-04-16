@@ -35,7 +35,7 @@ export abstract class TabbedCaseView extends AbstractCaseView {
                     text: clickedCase.title,
                     icon: clickedCase.icon ? clickedCase.icon : 'check_box'
                 },
-                canBeDeleted: true,
+                canBeClosed: true,
                 tabContentComponent: this._injectedTabData.tabViewComponent,
                 injectedObject: {
                     // TODO Filters

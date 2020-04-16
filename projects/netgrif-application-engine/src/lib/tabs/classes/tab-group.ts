@@ -58,7 +58,7 @@ export class TabGroup implements TabGroupInterface {
 
     public closeTabIndex(index: number): void {
         this.checkIndexRange(index);
-        if (!this.openedTabs[index].canBeDeleted) {
+        if (!this.openedTabs[index].canBeClosed) {
             throw new Error(`Tab at index ${index} can't be closed`);
         }
         this.openedTabs.splice(index, 1);
@@ -66,7 +66,7 @@ export class TabGroup implements TabGroupInterface {
 
     public closeTabUniqueId(uniqueId: string): void {
         const index = this.getTabIndex(uniqueId);
-        if (!this.openedTabs[index].canBeDeleted) {
+        if (!this.openedTabs[index].canBeClosed) {
             throw new Error(`Tab with ID ${uniqueId} can't be closed`);
         }
         this.openedTabs.splice(index, 1);
