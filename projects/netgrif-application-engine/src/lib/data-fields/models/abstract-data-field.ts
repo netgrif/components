@@ -10,16 +10,40 @@ export interface Validation {
     validationMessage: string;
 }
 
+/**
+ * Layout information for the data field.
+ */
 export interface Layout extends GridLayout {
+    /**
+     * Determines how much space the form field occupies.
+     */
     template: TemplateAppearance;
+    /**
+     * Determines the appearance of the form field.
+     */
     appearance: MaterialAppearance;
 }
 
+/**
+ * Preferred layout of the displayed data field.
+ *
+ * `MATERIAL` - displays the material form field at 100% width of the available space.
+ *
+ * `NETGRIF` - displays the field at 100% width if the total width is bellow a given threshold (by default 250px).
+ * Displays the field title on the left and the form filed on the right sharing the width 50:50 otherwise.
+ * The form filed still uses material design with this setting.
+ */
 export enum TemplateAppearance {
     MATERIAL = 'material',
     NETGRIF = 'netgrif',
 }
 
+/**
+ * Appearance of rendered material form field.
+ *
+ * See [Material documentation]{@link https://material.angular.io/components/form-field/overview#form-field-appearance-variants}
+ * for more information.
+ */
 export enum MaterialAppearance {
     LEGACY = 'legacy',
     STANDARD = 'standard',
@@ -27,15 +51,62 @@ export enum MaterialAppearance {
     OUTLINE = 'outline'
 }
 
+/**
+ * Holds the logic common to all data field Model objects.
+ * @typeparam T - type of the `value` property of the data field
+ */
 export abstract class DataField<T> {
+    /**
+     * @ignore
+     * Current value of the data field
+     */
     private _value: BehaviorSubject<T>;
+    /**
+     * @ignore
+     * Whether the data field Model object was initialized.
+     *
+     * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
+     */
     private _initialized: boolean;
+    /**
+     * @ignore
+     * Whether the field fulfills all of it's validators.
+     */
     private _valid: boolean;
+    /**
+     * @ignore
+     * Whether the `value` of the field changed recently. The flag is cleared when changes are received from backend.
+     */
     private _changed: boolean;
+    /**
+     * @ignore
+     * Data field subscribes this stream.
+     * The data field updates it's Validators, validity and enabled/disabled according to it's behavior.
+     */
     private _update: Subject<void>;
+    /**
+     * @ignore
+     * Data field subscribes this stream. When a `true` value is received the data field disables itself.
+     * When a `false`value is received data field disables/enables itself based on it's behavior.
+     */
     private _block: Subject<boolean>;
+    /**
+     * @ignore
+     * Data field subscribes this stream. Sets the state of the data field to "touched" or "untouched" (`true`/`false`).
+     * Validity of the data field is not checked in an "untouched" state.
+     * All fields are touched before a task is finished to check their validity.
+     */
     private _touch: Subject<boolean>;
 
+    /**
+     * @param _stringId - ID of the data field from backend
+     * @param _title - displayed title of the data field from backend
+     * @param initialValue - initial value of the data field
+     * @param _behavior - data field behavior
+     * @param _placeholder - placeholder displayed in the datafield
+     * @param _description - tooltip of the datafield
+     * @param _layout - information regarding the component rendering
+     */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout) {
@@ -183,6 +254,17 @@ export abstract class DataField<T> {
         this._valid = formControl.valid;
     }
 
+    /**
+     * Creates Validator objects based on field `behavior`. Only the `required` behavior is resolved by default.
+     * Required is resolved as `Validators.required`.
+     * If you need to resolve additional Validators or need a different resolution for the `required` Validator override this method.
+     *
+     * See {@link Behavior} for information about data field behavior.
+     *
+     * See {@link ValidatorFn} and {@link Validators} for information about Validators.
+     *
+     * Alternatively see [Form Validation guide]{@link https://angular.io/guide/form-validation#reactive-form-validation} from Angular.
+     */
     protected resolveFormControlValidators(): Array<ValidatorFn> {
         const result = [];
         if (this.behavior.required) {
@@ -191,10 +273,23 @@ export abstract class DataField<T> {
         return result;
     }
 
+    /**
+     * Determines if two values of the data field are equal.
+     *
+     * `a === b` equality is used by default. If you want different behavior override this method.
+     * @param a - first compared value
+     * @param b - second compared value
+     */
     protected valueEquality(a: T, b: T): boolean {
         return a === b;
     }
 
+    /**
+     * Updates the state of this data field model object.
+     * @param change - object describing the changes - returned from backend
+     *
+     * Also see {@link ChangedFields}.
+     */
     public applyChange(change: Change): void {
         Object.keys(change).forEach(changedAttribute => {
             switch (changedAttribute) {

@@ -2,6 +2,8 @@ import {Behavior} from './behavior';
 
 /**
  * Map that contains the infromation about changes to all data fields of a Case. Keys are data field IDs.
+ *
+ * See [TaskResourceService.setData()]{@link TaskResourceService#setData}.
  */
 export interface ChangedFields {
     [key: string]: Change;
