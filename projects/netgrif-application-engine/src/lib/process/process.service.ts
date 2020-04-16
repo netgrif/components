@@ -108,38 +108,4 @@ export class ProcessService {
             })
         );
     }
-
-    //
-    // loadNets(force = false): Observable<Array<Net>> {
-    //     if (!force && this._nets.getValue().length > 0) {
-    //         return this._nets.asObservable();
-    //     }
-    //
-    //     return this._petriNetResource.getAll().pipe(
-    //         map( nets => {
-    //             if (nets instanceof Array) {
-    //                 return nets.map( net => new Net(net));
-    //             }
-    //             return [];
-    //         }),
-    //         tap(nets => {
-    //             nets.forEach( net => {
-    //                 this.loadTransitions(net.stringId).subscribe(trans => net.transitions = trans);
-    //                 this.loadTransactions(net.stringId).subscribe(trans => net.transactions = trans);
-    //                 this.loadRoles(net.stringId).subscribe(roles => net.roles = roles);
-    //             });
-    //             this._nets.next(nets);
-    //             return of(nets);
-    //         }, error => {
-    //             this._log.error('Failed to parse Petri net resources');
-    //             this._log.info(error);
-    //             return throwError(error);
-    //         }),
-    //         catchError(err => {
-    //             this._log.error('Failed to load Petri nets');
-    //             this._log.info(err);
-    //             return throwError(err);
-    //         })
-    //     );
-    // }
 }
