@@ -52,12 +52,12 @@ import {TabbedCaseViewComponent} from './doc/tabbed-case-view/tabbed-case-view/t
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 import {TabbedTaskViewComponent} from './doc/tabbed-case-view/tabbed-task-view/tabbed-task-view.component';
 import {WorkflowViewExampleComponent} from './doc/workflow-view-example/workflow-view-example.component';
-import { LoginCardComponent } from './doc/cards/login-card/login-card.component';
-import { PasswordCardComponent } from './doc/cards/password-card/password-card.component';
-import { RegisterCardComponent } from './doc/cards/register-card/register-card.component';
-import { HeadersComponent } from './doc/headers/headers.component';
-import { PanelsComponent } from './doc/panels/panels.component';
-import { DashboardExampleComponent } from './doc/dashboard-example/dashboard-example.component';
+import {LoginCardComponent} from './doc/cards/login-card/login-card.component';
+import {PasswordCardComponent} from './doc/cards/password-card/password-card.component';
+import {RegisterCardComponent} from './doc/cards/register-card/register-card.component';
+import {HeadersComponent} from './doc/headers/headers.component';
+import {PanelsComponent} from './doc/panels/panels.component';
+import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -123,7 +123,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatCardModule,
         CardModule,
         WorkflowViewModule,
-        DashboardModule,
         DashboardModule,
     ],
     entryComponents: [
