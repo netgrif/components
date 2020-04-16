@@ -1,5 +1,8 @@
 import {Authority} from './authority';
 
+/**
+ * Object from Backend
+ */
 export interface User {
     id: number;
     email: string;
@@ -15,18 +18,27 @@ export interface User {
 
 }
 
+/**
+ * Object from Backend
+ */
 export interface Group {
     id: number;
     members: Array<any>;
     childGroups: Array<any>;
 }
 
+/**
+ * Object from Backend
+ */
 export interface ProcessRole {
     stringId: string;
     name?: string;
     description?: string;
 }
 
+/**
+ * Object from Backend
+ */
 export interface UserProcessRole {
     roleId: string;
 }

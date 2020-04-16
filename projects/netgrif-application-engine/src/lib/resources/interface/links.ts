@@ -1,3 +1,6 @@
+/**
+ * Object from Backend
+ */
 export interface Links {
     self: Url;
     identifier: Url;
@@ -6,6 +9,9 @@ export interface Links {
     file: Url;
 }
 
+/**
+ * Object from Backend
+ */
 export interface Url {
     href: string;
 }

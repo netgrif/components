@@ -1,8 +1,9 @@
+/**
+ * Object from Backend
+ */
 export interface ImmediateData {
     stringId: string;
-    /**
-     * TODO Doesn't actually exist
-     */
+    // TODO Doesn't actually exist
     title: any;
     type: string;
     value?: any;

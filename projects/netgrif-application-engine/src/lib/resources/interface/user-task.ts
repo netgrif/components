@@ -1,6 +1,9 @@
 import {Authority} from './authority';
 import {UserProcessRole} from './user-process-role';
 
+/**
+ * Object from Backend
+ */
 export interface UserTask {
     email: string;
     name: string;

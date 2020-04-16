@@ -2,6 +2,9 @@ import {UserTask} from './user-task';
 import {DataGroup} from './data-groups';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-panel/policy';
 
+/**
+ * Object from Backend
+ */
 export interface Task {
     caseId: string;
     transitionId: string;

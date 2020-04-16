@@ -1,5 +1,8 @@
 import {FieldBehavior} from './field-behavior';
 
+/**
+ * Spring Boot Role
+ */
 export interface ChangedFieldContainer {
     changedFields: ChangedFields2;
 }
@@ -26,7 +29,9 @@ export interface ChangedFields2 {
 
 export interface Change2 {
     value?: string | number | boolean | any;
-    // behavior is "cleared" and contains information only for one transition
+    /**
+     * Behavior is "cleared" and contains information only for one transition
+     */
     behavior?: FieldBehavior;
     [key: string]: any;
 }
