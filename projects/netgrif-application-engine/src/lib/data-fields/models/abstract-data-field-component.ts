@@ -7,6 +7,7 @@ import {filter, map} from 'rxjs/operators';
 
 export abstract class AbstractDataFieldComponent implements OnInit {
 
+    // TODO BUG 16.4.2020 - changedFields are not used for their intended purpose. Consider removing it altogether.
     @Input() changedFields: Observable<ChangedFields>;
     @Input() dataField: DataField<any>;
     private readonly _formControl: FormControl;
