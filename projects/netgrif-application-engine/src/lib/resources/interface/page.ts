@@ -1,3 +1,6 @@
+/**
+ * Object from Backend
+ */
 export interface Page {
     size: number;
     totalElements: number;

@@ -1,10 +1,14 @@
 import {FieldBehavior} from './field-behavior';
-
+/**
+ * @ignore
+ */
 export interface Fields {
     _embedded: TypeLocalisadField;
 
 }
-
+/**
+ * Object from Backend
+ */
 export interface TypeLocalisadField {
     localisedBooleanFields?: Array<LocalisedBooleanFields>;
     localisedTextFields?: Array<LocalisedTextFields>;
@@ -16,7 +20,9 @@ export interface TypeLocalisadField {
     localisedDateFields?: Array<LocalisedDateFields>;
 
 }
-
+/**
+ * Object from Backend
+ */
 export interface LocalisedBooleanFields {
     stringId: string;
     type: string;
@@ -27,7 +33,9 @@ export interface LocalisedBooleanFields {
     view: FieldView;
     defaultValue?: boolean;
 }
-
+/**
+ * Object from Backend
+ */
 export interface LocalisedTextFields {
     stringId: string;
     type: string;
@@ -37,7 +45,9 @@ export interface LocalisedTextFields {
     order: number;
     subType: string;
 }
-
+/**
+ * Object from Backend
+ */
 export interface LocalisedNumberFields {
     stringId: string;
     type: string;
@@ -50,7 +60,9 @@ export interface LocalisedNumberFields {
     validationErrors?: ValidationErrors;
     defaultValue?: number;
 }
-
+/**
+ * Object from Backend
+ */
 export interface LocalisedEnumerationFields {
     stringId: string;
     type: string;
@@ -61,7 +73,9 @@ export interface LocalisedEnumerationFields {
     choices: Array<string>;
     defaultValue?: string;
 }
-
+/**
+ * Object from Backend
+ */
 export interface LocalisedMultichoiceFields {
     stringId: string;
     type: string;
@@ -74,7 +88,9 @@ export interface LocalisedMultichoiceFields {
     choices: Array<string> | string;
     defaultValue?: Array<string> | string;
 }
-
+/**
+ * Object from Backend
+ */
 export interface LocalisedDateFields {
     stringId: string;
     type: string;
@@ -88,7 +104,9 @@ export interface LocalisedDateFields {
     validationJS?: string;
     validationErrors?: ValidationErrors;
 }
-
+/**
+ * Object from Backend
+ */
 export interface LocalisedFields {
     stringId: string;
     type: string;
@@ -99,7 +117,9 @@ export interface LocalisedFields {
     value: FileFieldValue | Array<number>;
     order: number;
 }
-
+/**
+ * Object from Backend
+ */
 export interface LocalisedUserFields {
     stringId: string;
     type: string;
@@ -111,7 +131,9 @@ export interface LocalisedUserFields {
     roles: Array<string>;
 
 }
-
+/**
+ * Object from Backend
+ */
 export interface FileFieldValue {
     name: string;
     path: string;

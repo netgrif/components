@@ -1,3 +1,6 @@
+/**
+ * Object from Backend
+ */
 export interface FieldBehavior {
     required?: boolean;
     optional?: boolean;

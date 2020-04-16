@@ -1,3 +1,6 @@
+/**
+ * Object from Backend
+ */
 export interface UserProcessRole {
     roleId: string;
     netId?: string;

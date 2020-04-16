@@ -1,6 +1,9 @@
 import {Author} from './author';
 import {ImmediateData} from './immediate-data';
 
+/**
+ * Object from Backend
+ */
 export interface PetriNetReference {
     stringId: string;
     title: string;

@@ -1,6 +1,9 @@
 import {Author} from './author';
 import {Links} from './links';
 
+/**
+ * Object from Backend
+ */
 export interface PetriNetReferences {
     stringId: string;
     title: string;

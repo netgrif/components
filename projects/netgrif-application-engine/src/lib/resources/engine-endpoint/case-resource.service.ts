@@ -15,16 +15,24 @@ import {CountService} from '../abstract-endpoint/count-service';
     providedIn: 'root'
 })
 export class CaseResourceService implements CountService {
+    /**
+     * @ignore
+     */
     private SERVER_URL: string;
 
+    /**
+     * @ignore
+     */
     protected constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {
         this.SERVER_URL = getResourceAddress('case', this._configService.get().providers.resources);
     }
 
     /**
      * Get count of the cases
-     * POST
-     * {{baseUrl}}/api/workflow/case/count
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/case/count
      */
     public count(body: object): Observable<Count> {
         return this.provider.post$('workflow/case/count', this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
@@ -32,90 +40,116 @@ export class CaseResourceService implements CountService {
 
     /**
      * Get all cases of the system
-     * GET
-     * {{baseUrl}}/api/workflow/all
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/all
      */
     public getAllCase(): Observable<Array<Case>> {
-        return this.provider.get$('workflow/all', this.SERVER_URL).pipe(map(r => changeType(r, 'cases')));
+        return this.provider.get$('workflow/all', this.SERVER_URL)
+            .pipe(map(r => changeType(r, 'cases')));
     }
 
     /**
      * Generic case search
-     * POST
-     * {{baseUrl}}/api/workflow/case/search
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/case/search
      */
     public searchCases(body: object, params?: Params): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/search', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'cases')));
+        return this.provider.post$('workflow/case/search', this.SERVER_URL, body, params)
+            .pipe(map(r => changeType(r, 'cases')));
     }
 
 
     /**
      * Delete case
-     * DELETE
-     * {{baseUrl}}/api/workflow/case/:id
+     *
+     * **Request Type:** DELETE
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/case/:id
      */
     public deleteCase(caseID: string): Observable<MessageResource> {
-        return this.provider.delete$('workflow/case/' + caseID, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.delete$('workflow/case/' + caseID, this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
 
     /**
      * Get all case data
-     * GET
-     * {{baseUrl}}/api/workflow/case/:id/data
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/case/:id/data
      */
     public getCaseData(caseID: string): Observable<Array<DataGroupsResource>> {
-        return this.provider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL).pipe(map(r => changeType(r, 'dataGroups')));
+        return this.provider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL)
+            .pipe(map(r => changeType(r, 'dataGroups')));
     }
 
 
     /**
      * Download case file field value
-     * GET
-     * {{baseUrl}}/api/workflow/case/:id/file/:field
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/case/:id/file/:field
      */
     public getCaseFile(caseID: string, fieldID: string): Observable<FileResource> {
-        return this.provider.get$('workflow/case/' + caseID + '/file/' + fieldID, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('workflow/case/' + caseID + '/file/' + fieldID, this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
 
     /**
      * Create new case
-     * POST
-     * {{baseUrl}}/api/workflow/case
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/case
      */
     public createCase(body: object): Observable<Case> {
-        return this.provider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+        return this.provider.post$('workflow/case/', this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
      * Get all cases by user that created them
-     * POST
-     * {{baseUrl}}/api/workflow/case/author/:id
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/case/author/:id
      */
     public getAllCaseUser(body: object): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+        return this.provider.post$('workflow/case/', this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, 'cases')));
     }
 
 
     /**
      * Generic case search with QueryDSL predicate
-     * POST
-     * {{baseUrl}}/api/workflow/case/search2
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/case/search2
      */
     public getCasesQueryDSL(body: object): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+        return this.provider.post$('workflow/case/', this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, 'cases')));
     }
 
 
     /**
      * Get options for enumeration or multiple-choice data field
-     * GET
-     * {{baseUrl}}/api/workflow/case/:caseId/field/:fieldId
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/workflow/case/:caseId/field/:fieldId
      */
     public getOptionsEnumeration(caseId: string, fieldId: string): Observable<Case> {
         return this.provider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL)
-                            .pipe(map(r => changeType(r, undefined)));
+            .pipe(map(r => changeType(r, undefined)));
     }
 
 }
