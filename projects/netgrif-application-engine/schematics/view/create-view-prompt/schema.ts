@@ -2,7 +2,7 @@ import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schem
 
 export interface CreateViewArguments {
     path: string | undefined;
-    viewType: NaeRoute['type'] | undefined;
+    viewType: NaeRoute['layout']['name'] | undefined;
     layoutParams?: NaeRoute['layout']['params'];
     access?: { [k: string]: any; } | ('public' | 'private');
 }
