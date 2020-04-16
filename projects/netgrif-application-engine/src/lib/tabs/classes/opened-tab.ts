@@ -5,7 +5,7 @@ import {Type} from '@angular/core';
 /**
  * Holds the information of tab opened in a tab view.
  *
- * See {@link TabGroup} for more information.
+ * See {@link TabView} for more information.
  */
 export class OpenedTab implements TabContent {
 
@@ -38,7 +38,7 @@ export class OpenedTab implements TabContent {
      * @ignore
      * Whether the tab was initialized after it's creation.
      *
-     * See [TabGroup.initializeTab()]{@link TabGroup#initializeTab} for more information.
+     * See [TabGroup.initializeTab()]{@link TabView#initializeTab} for more information.
      */
     public isTabInitialized = false;
 

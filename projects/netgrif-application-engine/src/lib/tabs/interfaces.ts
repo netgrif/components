@@ -81,39 +81,32 @@ export interface InjectedTabData {
 
 /**
  * Methods of parent tab view, that tabs can access.
+ *
+ * See {@link TabView} for more information.
  */
 export interface TabViewInterface {
     /**
-     * Opens a new tab with the provided content.
-     * @param tabContent - content of the new tab
-     * @param autoswitch - whether the newly opened tab should be switched to. Defaults to `false`.
-     * @returns the `tabUniqueId` of the newly opened tab
+     * See [TabView.openTab]{@link TabView#openTab}
      */
     openTab(tabContent: TabContent, autoswitch?: boolean): string;
 
     /**
-     * Switches to a tab with the given `index`. Throws an error if the `index` is invalid.
-     * @param index - index of the tab that should be switched to
+     * See [TabView.switchToTabIndex]{@link TabView#switchToTabIndex}
      */
     switchToTabIndex(index: number): void;
 
     /**
-     * Switches to a tab with the given `uniqueId`. Throws an error if the `uniqueId` is invalid.
-     * @param uniqueId - id of the tab that should be switched to
+     * See [TabView.uniqueId]{@link TabView#uniqueId}
      */
     switchToTabUniqueId(uniqueId: string): void;
 
     /**
-     * Closes the tab with the given `index`. Throws an error if the `index` is invalid.
-     * Throws an error if the tab has it's `canBeClosed` property set to `false`.
-     * @param index - index of the tab that should be closed
+     * See [TabView.closeTabIndex]{@link TabView#closeTabIndex}
      */
     closeTabIndex(index: number): void;
 
     /**
-     * Closes the tab with the given `uniqueId`. Throws an error if the `uniqueId` is invalid.
-     * Throws an error if the tab has it's `canBeClosed` property set to `false`.
-     * @param uniqueId - id of the tab that should be closed
+     * See [TabView.closeTabUniqueId]{@link TabView#closeTabUniqueId}
      */
     closeTabUniqueId(uniqueId: string): void;
 }
