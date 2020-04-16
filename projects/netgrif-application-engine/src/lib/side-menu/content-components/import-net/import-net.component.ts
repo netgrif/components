@@ -1,12 +1,19 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {HttpClient, HttpErrorResponse, HttpEventType, HttpRequest} from '@angular/common/http';
-import {catchError, last, map, tap} from 'rxjs/operators';
+import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
+import {catchError, last, map} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {FileUploadModel} from '../files-upload/models/file-upload-model';
 import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
+import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource-service';
+import {LoggerService} from '../../../logger/services/logger.service';
+import {MessageResource} from '../../../resources/interface/message-resource';
+
+interface FileList {
+    [key: string]: FileUploadModel;
+}
 
 @Component({
     selector: 'nae-import-net',
@@ -21,45 +28,57 @@ import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
         ])
     ]
 })
-export class ImportNetComponent implements OnInit {
-    /** Name used in form which will be sent in HTTP request. */
-    @Input() param = 'file';
-    /** Target URL for file uploading. */
-    @Input() target;
-    /** File extension that accepted, same as 'accept' of <input type="file" />. */
-    @Input() accept = 'text/xml';
-    /** Allow you to add handler after its completion. Bubble up response text from remote. */
-    @Output() $complete = new EventEmitter<string>();
+export class ImportNetComponent implements OnInit, AfterViewInit {
 
-    public files: Array<FileUploadModel> = [];
+    public files: FileList = {};
     public releaseTypes: string[] = ['Major', 'Minor', 'Patch'];
     public releaseTypeControl = new FormControl(this.releaseTypes[0]);
 
-    constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl, private _http: HttpClient) {
+    private _fileInput: HTMLInputElement;
+
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
+                private _petriNetResource: PetriNetResourceService,
+                private _log: LoggerService) {
     }
 
     ngOnInit() {
     }
 
-    public onFileUpload() {
-        const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-        fileUpload.onchange = () => {
-            // tslint:disable-next-line:prefer-for-of
-            for (let index = 0; index < fileUpload.files.length; index++) {
-                const file = fileUpload.files[index];
-                this.files.push({
-                    data: file, state: 'in',
-                    inProgress: false, progress: 0, canRetry: false, canCancel: true, successfullyUploaded: false
-                });
+    ngAfterViewInit(): void {
+        this._fileInput = document.getElementById('sidemenu-fileUpload') as HTMLInputElement;
+        this._fileInput.onchange = () => {
+            for (const fileIndex of Array.from(Array(this._fileInput.files.length).keys())) {
+                const file = this._fileInput.files[fileIndex];
+                if (this.files[file.name]) {
+                    const knownFile = this.files[file.name].data as File;
+                    if (knownFile.type !== file.type || knownFile.lastModified !== file.lastModified) {
+                        this.files[file.name] = this.setupFile(file);
+                    }
+                } else {
+                    this.files[file.name] = this.setupFile(file);
+                }
             }
             this.uploadFiles();
         };
-        fileUpload.click();
+    }
+
+    get fileList(): Array<FileUploadModel> {
+        return Object.values(this.files);
+    }
+
+    get isAllFinished(): boolean {
+        return Object.values(this.files).every(file => !file.inProgress && file.progress === 100);
+    }
+
+    public onProcessFileChosen() {
+        if (this._fileInput) {
+            this._fileInput.click();
+        }
     }
 
     public cancelFile(file: FileUploadModel) {
         file.sub.unsubscribe();
-        this.removeFileFromArray(file);
+        this.removeFile(file);
     }
 
     public retryFile(file: FileUploadModel) {
@@ -70,20 +89,44 @@ export class ImportNetComponent implements OnInit {
     public close(): void {
         this._sideMenuControl.close({
             opened: false,
-            message: 'Net was uploaded'
+            message: 'All process files were processed',
+            data: this.fileList
         });
     }
 
-    private uploadFile(file: FileUploadModel) {
-        const fd = new FormData();
-        fd.append(this.param, file.data as File);
+    private setupFile(file: File): FileUploadModel {
+        return {
+            data: file, state: 'in',
+            inProgress: false, progress: 0, canRetry: false, canCancel: true, successfullyUploaded: false
+        };
+    }
 
-        const req = new HttpRequest('POST', this.target, fd, {
-            reportProgress: true
+    private uploadFiles() {
+        this._fileInput.value = '';
+
+        this.fileList.filter(fileModel => !fileModel.successfullyUploaded && fileModel.progress === 0).forEach(file => {
+            this.uploadFile(file);
         });
+    }
+
+    private removeFile(file: FileUploadModel) {
+        if (this.files[file.data.name]) {
+            delete this.files[file.data.name];
+            this._sideMenuControl.publish({
+                opened: true,
+                message: 'Process ' + file.data.name + ' was deleted from the list',
+                data: file
+            });
+        }
+    }
+
+    private uploadFile(file: FileUploadModel) {
+        const fileFormData = new FormData();
+        fileFormData.append('file', file.data as File);
+        fileFormData.append('meta', JSON.stringify({releaseType: this.releaseTypeControl.value.toString().toUpperCase()}));
 
         file.inProgress = true;
-        file.sub = this._http.request(req).pipe(
+        file.sub = this._petriNetResource.importPetriNet(fileFormData).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.UploadProgress:
@@ -91,9 +134,9 @@ export class ImportNetComponent implements OnInit {
                         break;
                     case HttpEventType.Response:
                         return event;
+                    default:
+                        return event;
                 }
-            }),
-            tap(message => {
             }),
             last(),
             catchError((error: HttpErrorResponse) => {
@@ -102,29 +145,25 @@ export class ImportNetComponent implements OnInit {
                 return of(`${file.data.name} upload failed.`);
             })
         ).subscribe(
-            (event: any) => {
-                if (typeof (event) === 'object') {
-                    this.removeFileFromArray(file);
-                    this.$complete.emit(event.body);
+            (event: HttpEvent<MessageResource>) => {
+                if (event.type === HttpEventType.Response) {
+                    const response = event.body;
+                    file.inProgress = false;
+                    if (response.success || !response.error) {
+                        file.successfullyUploaded = true;
+                    }
+                    if (response.error) {
+                        file.successfullyUploaded = false;
+                        this._log.error('Importing process file has failed!', response.error);
+                    }
+                    this._sideMenuControl.publish({
+                        opened: true,
+                        message: 'Process ' + file.data.name + ' successfully uploaded',
+                        data: file
+                    });
                 }
             }
         );
-    }
-
-    private uploadFiles() {
-        const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-        fileUpload.value = '';
-
-        this.files.forEach(file => {
-            this.uploadFile(file);
-        });
-    }
-
-    private removeFileFromArray(file: FileUploadModel) {
-        const index = this.files.indexOf(file);
-        if (index > -1) {
-            this.files.splice(index, 1);
-        }
     }
 
 }

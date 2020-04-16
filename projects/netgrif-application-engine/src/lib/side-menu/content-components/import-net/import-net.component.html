@@ -2,10 +2,13 @@
 
 <div fxLayout="column" class="container">
 
-    <ul>
-        <li *ngFor="let file of files" [@fadeInOut]="file.state">
-            <mat-progress-bar color="warn" [value]="file.progress"></mat-progress-bar>
-            <span id="file-label">
+    <ul class="file-list">
+        <li *ngFor="let file of fileList" [@fadeInOut]="file.state">
+            <mat-progress-bar color="accent" [value]="file.progress"></mat-progress-bar>
+            <span class="file-list-label">
+                <mat-icon *ngIf="!file.inProgress && file.progress === 100 && file.successfullyUploaded" class="done-icon">
+                    done
+                </mat-icon>
                 {{file.data.name}}
                 <a title="Retry" (click)="retryFile(file)" *ngIf="file.canRetry">
                     <mat-icon>refresh</mat-icon>
@@ -17,10 +20,10 @@
         </li>
     </ul>
 
-    <input type="file" id="fileUpload" name="fileUpload" multiple="multiple"
-           accept="{{accept}}" style="display:none;"/>
+    <input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple"
+           accept="text/xml" style="display:none;"/>
 
-    <mat-form-field color="accent">
+    <mat-form-field color="primary">
         <mat-label>Release</mat-label>
         <mat-select [formControl]="releaseTypeControl">
             <mat-option *ngFor="let type of releaseTypes" [value]="type">
@@ -29,12 +32,12 @@
         </mat-select>
     </mat-form-field>
 
-    <button mat-raised-button color="accent" (click)="onFileUpload()">
+    <button mat-raised-button color="primary" (click)="onProcessFileChosen()">
         <mat-icon>file_upload</mat-icon>
-        Upload
+        Choose a process file
     </button>
 
-    <button mat-flat-button (click)="close()">
+    <button *ngIf="isAllFinished" mat-flat-button (click)="close()">
         Done
     </button>
 

@@ -6,7 +6,7 @@ import {Params, ResourceProvider} from '../resource-provider.service';
 import {changeType, getResourceAddress} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
-import {HttpParams} from '@angular/common/http';
+import {HttpEvent, HttpParams} from '@angular/common/http';
 import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
 import {Net} from '../../process/net';
@@ -109,9 +109,8 @@ export class PetriNetResourceService {
      * POST
      * {{baseUrl}}/api/petrinet/import
      */
-    public importPetriNet(body: object, params?: Params): Observable<MessageResource> {
-        return this.provider.post$('petrinet/import', this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, undefined)));
+    public importPetriNet(body: FormData, params?: Params): Observable<HttpEvent<MessageResource>> {
+        return this.provider.upload$('petrinet/import', this.SERVER_URL, body, params, undefined, undefined);
     }
 
 

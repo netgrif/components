@@ -3,9 +3,13 @@ import {Observable, of} from 'rxjs';
 import Role from '../models/role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
+import {User as UserResource} from '../../resources/interface/user';
+import {User as AuthUser} from '../../authentication/models/user';
 import {tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserPreferenceService} from './user-preference.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource-service';
+import {UserTransformer} from '../../authentication/models/user.transformer';
 
 @Injectable({
     providedIn: 'root'
@@ -18,12 +22,13 @@ export class UserService {
     constructor(
         // private _store: Store<State>,
         private _preferenceService: UserPreferenceService,
-        private _authService: AuthenticationService) {
+        private _authService: AuthenticationService,
+        private _userResource: UserResourceService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._authService.authenticated$.subscribe(auth => {
             if (auth && !this._loginCalled) {
-                this.getUser();
+                this.loadUser();
             } else if (!auth) {
                 this._user = this.emptyUser();
             }
@@ -85,8 +90,13 @@ export class UserService {
         return new User('', '', '', '', [], [], []);
     }
 
-    private getUser(): Observable<object> {
-        return of([]); // TODO call resource service
+    private loadUser(): void {
+        this._userResource.getLoggedUser().subscribe((user: UserResource) => {
+            if (user) {
+                const backendUser = {...user, id: user.id.toString()};
+                this._user = new UserTransformer().transform(backendUser as AuthUser);
+            }
+        });
     }
 
 }

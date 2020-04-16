@@ -227,6 +227,9 @@ export interface Services {
         publishers?: any[];
         [k: string]: any;
     };
+    auth?: {
+        logoutRedirect?: string;
+    };
 
     [k: string]: any;
 }
