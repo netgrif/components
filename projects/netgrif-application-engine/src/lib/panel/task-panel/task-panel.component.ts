@@ -23,6 +23,7 @@ import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
 
 
 @Component({
@@ -219,7 +220,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         });
     }
 
-    private updateFromChangedFields(chFields): void {
+    private updateFromChangedFields(chFields: ChangedFields): void {
         this.taskPanelData.task.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
                 if (chFields[field.stringId]) {

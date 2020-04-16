@@ -1,7 +1,8 @@
-import {FieldBehavior} from './field-behavior';
 /**
  * @ignore
  */
+import {Behavior} from '../../data-fields/models/behavior';
+
 export interface Fields {
     _embedded: TypeLocalisadField;
 
@@ -27,7 +28,7 @@ export interface LocalisedBooleanFields {
     stringId: string;
     type: string;
     name: string;
-    behavior: FieldBehavior;
+    behavior: Behavior;
     value: boolean;
     order: number;
     view: FieldView;
@@ -40,7 +41,7 @@ export interface LocalisedTextFields {
     stringId: string;
     type: string;
     name: string;
-    behavior: FieldBehavior;
+    behavior: Behavior;
     value: string;
     order: number;
     subType: string;
@@ -52,7 +53,7 @@ export interface LocalisedNumberFields {
     stringId: string;
     type: string;
     name: string;
-    behavior: FieldBehavior;
+    behavior: Behavior;
     value: number;
     order: number;
     minValue?: number;
@@ -67,7 +68,7 @@ export interface LocalisedEnumerationFields {
     stringId: string;
     type: string;
     name: string;
-    behavior: FieldBehavior;
+    behavior: Behavior;
     value: string;
     order: number;
     choices: Array<string>;
@@ -82,7 +83,7 @@ export interface LocalisedMultichoiceFields {
     name: string;
     description: string;
     placeholder: string;
-    behavior: FieldBehavior;
+    behavior: Behavior;
     value: Array<string> | string;
     order: number;
     choices: Array<string> | string;
@@ -97,7 +98,7 @@ export interface LocalisedDateFields {
     name: string;
     description?: string;
     placeholder?: string;
-    behavior: FieldBehavior;
+    behavior: Behavior;
     value: Array<number> | number | Date;
     order: number;
     minDate?: string;
@@ -113,7 +114,7 @@ export interface LocalisedFields {
     name: string;
     description: string;
     placeholder: string;
-    behavior: FieldBehavior;
+    behavior: Behavior;
     value: FileFieldValue | Array<number>;
     order: number;
 }
@@ -126,7 +127,7 @@ export interface LocalisedUserFields {
     name: string;
     description: string;
     placeholder: string;
-    behavior: FieldBehavior;
+    behavior: Behavior;
     order: number;
     roles: Array<string>;
 
