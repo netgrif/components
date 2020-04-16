@@ -21,7 +21,9 @@ export class LogoutShortcutComponent implements OnInit {
         this._user.logout().subscribe(() => {
             this._log.debug('User is logged out');
             if (this._config.get().services && this._config.get().services.auth && this._config.get().services.auth.logoutRedirect) {
-                this._router.navigateByUrl(this._config.get().services.auth.logoutRedirect);
+                const redirectPath = this._config.get().services.auth.logoutRedirect;
+                this._log.info('Redirecting to ' + redirectPath);
+                this._router.navigateByUrl(redirectPath);
             }
         });
     }

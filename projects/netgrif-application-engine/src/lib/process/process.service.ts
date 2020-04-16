@@ -19,7 +19,7 @@ export class ProcessService {
         this._nets = {};
     }
 
-    getNet(identifier: string): Observable<Net> {
+    public getNet(identifier: string): Observable<Net> {
         if (this._nets[identifier] !== undefined) {
             return of(this._nets[identifier]);
         }

@@ -75,16 +75,16 @@ export class NewCaseComponent implements OnInit, OnChanges {
             this._sideMenuControl.data['filter'] !== undefined &&
             this._sideMenuControl.data['filter'] instanceof Array) {
             this._sideMenuControl.data['filter'].forEach(filter => {
-                this._processService.getNet(filter).subscribe( net => {
+                this._processService.getNet(filter).subscribe(net => {
                     this.options.push({value: net.stringId, viewValue: net.title});
                     this.filterOptions();
                 });
             });
         } else {
             this._petriNetResource.getAll().pipe(
-                map( nets => {
+                map(nets => {
                     if (nets instanceof Array) {
-                        return nets.map( net => new Net(net));
+                        return nets.map(net => new Net(net));
                     }
                     return [];
                 }),
@@ -130,15 +130,14 @@ export class NewCaseComponent implements OnInit, OnChanges {
     }
 
     public createNewCase(): void {
-        // TODO: inject resource service - JOZO
         const newCase = {
-            title: this.titleFormGroup.value,
-            color: this.colorFormGroup.value,
-            netId: this.processFormGroup.value.value
+            title: this.titleFormGroup.value.titleFormControl,
+            color: this.colorFormGroup.value.colorFormControl,
+            netId: this.processFormGroup.value.processFormControl.value
         };
         this._caseResourceService.createCase(newCase)
             .subscribe(
-                caze => this._snackBarService.openInfoSnackBar('Successful create new case'),
+                caze => this._snackBarService.openInfoSnackBar('Successful create new case ' + caze.title),
                 error => this._snackBarService.openErrorSnackBar(error)
             );
 

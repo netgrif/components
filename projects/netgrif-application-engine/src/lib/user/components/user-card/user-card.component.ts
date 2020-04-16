@@ -29,11 +29,8 @@ export class UserCardComponent implements OnInit, AfterViewInit {
             const userService: UserService = this._injector.get(UserService);
             if (userService) {
                 this.user = userService.user;
+                userService.user$.subscribe(user => this.user = user);
             }
-            const authService: AuthenticationService = this._injector.get(AuthenticationService);
-            authService.authenticated$.subscribe(authenticated => {
-                this.user = userService.user;
-            });
         }
     }
 
