@@ -88,9 +88,9 @@ export class PetriNetResourceService {
      * GET
      * {{baseUrl}}/api/petrinet/{identifier}/{version}
      */
-    public getOne(identifier: string, version: string, params?: Params): Observable<PetriNet> {
+    public getOne(identifier: string, version: string, params?: Params): Observable<Net> {
         return this.provider.get$('petrinet/' + identifier + '/' + version, this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, undefined)));
+            .pipe(map(r => changeType(r, 'petriNetReferences')));
     }
 
     /**

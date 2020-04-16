@@ -6,9 +6,10 @@ import {
     Case,
     ProcessService,
     Net,
+    ConfigurationService,
+    CaseParams
 } from '@netgrif/application-engine';
-import {ReplaySubject, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {ReplaySubject} from 'rxjs';
 
 @Component({
     selector: 'nae-app-case-view',
@@ -20,13 +21,30 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
     public allowedNets$: ReplaySubject<Array<Net>>;
+    public params: CaseParams;
 
-    constructor(caseViewService: CaseViewService, processService: ProcessService) {
+    constructor(caseViewService: CaseViewService, processService: ProcessService, configService: ConfigurationService) {
         super(caseViewService, '{}');
         this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        processService.loadNets().pipe(catchError( err => throwError(err))).subscribe(result => {
-            this.allowedNets$.next(result);
-        });
+        // TODO 16.4. 2020 initialize allowedNets by filter
+        // processService.getNet('leukemia').subscribe( result => {
+        //     console.log(result);
+        // });
+        const view = configService.getViewByPath('<%= webPath %>');
+        if (view && view.layout && view.layout.params) {
+            this.params = view.layout.params as CaseParams;
+            if (this.params.allowedNets !== undefined) {
+                const nets = [];
+                this.params.allowedNets.forEach(netId => {
+                    processService.getNet(netId).subscribe(net => {
+                        nets.push(net);
+                        if (nets.length === this.params.allowedNets.length) {
+                            this.allowedNets$.next(nets);
+                        }
+                    });
+                });
+            }
+        }
     }
 
     ngAfterViewInit(): void {

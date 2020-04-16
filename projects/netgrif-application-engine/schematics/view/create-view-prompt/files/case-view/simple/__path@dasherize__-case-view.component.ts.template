@@ -18,6 +18,7 @@ export class <%= classify(path) %>CaseViewComponent extends AbstractCaseView imp
 
     constructor(caseViewService: CaseViewService) {
         super(caseViewService, '{}');
+        // TODO implement allowedNets
     }
 
     ngAfterViewInit(): void {
