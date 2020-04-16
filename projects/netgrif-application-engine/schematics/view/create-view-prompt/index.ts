@@ -17,6 +17,7 @@ import {createCaseView} from './create-case-view';
 import {createSidenavOrToolbarView} from './create-sidenav-or-toolbar-view';
 import {createEmptyView} from './create-empty-view';
 import {checkJsonParamsForSidenav} from './create-sidenav-prompt';
+import {createDashboardView} from './create-dashboard-view';
 
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
@@ -55,6 +56,9 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
             break;
         case 'emptyView':
             rules.push(createEmptyView(tree, args, addRoute));
+            break;
+        case 'dashboard':
+            rules.push(createDashboardView(tree, args, addRoute));
             break;
         case 'toolbarView':
             rules.push(createSidenavOrToolbarView(tree, {

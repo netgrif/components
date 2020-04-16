@@ -4,7 +4,6 @@ import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
 import {Observable} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
-import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-header.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';

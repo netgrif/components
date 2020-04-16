@@ -9,11 +9,12 @@ import {MessageResource} from '../interface/message-resource';
 import {DataGroupsResource} from '../interface/data-groups';
 import {FileResource} from '../interface/file-resource';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {CountService} from '../abstract-endpoint/count-service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CaseResourceService {
+export class CaseResourceService implements CountService {
     private SERVER_URL: string;
 
     protected constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {
@@ -25,7 +26,7 @@ export class CaseResourceService {
      * POST
      * {{baseUrl}}/api/workflow/case/count
      */
-    public countCase(body: object): Observable<Count> {
+    public count(body: object): Observable<Count> {
         return this.provider.post$('workflow/case/count', this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
     }
 
