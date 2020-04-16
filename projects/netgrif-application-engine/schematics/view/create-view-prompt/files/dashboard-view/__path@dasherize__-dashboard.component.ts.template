@@ -1,0 +1,18 @@
+import {Component} from '@angular/core';
+import {ConfigurationService, DashboardParams} from '@netgrif/application-engine';
+
+
+@Component({
+  selector: '<%= prefix %>-<%= dasherize(path) %>-dashboard',
+  templateUrl: './<%= dasherize(path) %>-dashboard.component.html',
+  styleUrls: ['./<%= dasherize(path) %>-dashboard.component.scss']
+})
+export class <%= classify(path) %>DashboardComponent {
+
+  public params: DashboardParams;
+
+      constructor(private _config: ConfigurationService) {
+          this.params = this._config.getViewByPath('<%= webPath %>').layout.params as DashboardParams;
+      }
+
+}

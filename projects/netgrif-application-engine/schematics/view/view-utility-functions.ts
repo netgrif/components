@@ -135,6 +135,8 @@ export function resolveClassSuffixForView(view: string): string {
             return 'ToolbarView';
         case 'sidenavAndToolbarView':
             return 'SidenavAndToolbarView';
+        case 'dashboard':
+            return 'Dashboard';
         default:
             throw new SchematicsException(`Unknown view type '${view}'`);
     }

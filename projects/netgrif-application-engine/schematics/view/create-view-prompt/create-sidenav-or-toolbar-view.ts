@@ -34,7 +34,7 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             isSideNav,
             isToolbar,
             drawerType,
-            fileName: resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType)
+            fileName: resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string)
         }));
     updateAppModule(tree, className.name, className.fileImportPath, []);
 
