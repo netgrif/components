@@ -142,8 +142,8 @@ function processEmbeddedView(embeddedView: EmbeddedView,
         throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
     }
 
-    if (embeddedView.canBeDeleted !== undefined) {
-        tabTemplate.canBeDeleted = embeddedView.canBeDeleted;
+    if (embeddedView.canBeClosed !== undefined) {
+        tabTemplate.canBeDeleted = embeddedView.canBeClosed;
     }
     if (embeddedView.label !== undefined) {
         tabTemplate.icon = embeddedView.label.icon as string;
