@@ -3,6 +3,9 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {passwordValidator} from './password.validator';
 import {AbstractCard} from '../abstract-card';
 
+/**
+ * Represents the values ​​that are emitted after the form is submitted
+ */
 export interface Register {
     email: string;
     name: string;
@@ -10,6 +13,9 @@ export interface Register {
     password: string;
 }
 
+/**
+ * Provides registration card
+ */
 @Component({
     selector: 'nae-registration-panel',
     templateUrl: './registration-card.component.html',
@@ -17,10 +23,24 @@ export interface Register {
 })
 export class RegistrationCardComponent extends AbstractCard implements OnInit {
 
-    public hidePassword: boolean;
-    public hideRepeatPassword: boolean;
+    /**
+     * Event emitted when user submit form
+     */
     @Output() public register: EventEmitter<Register>;
 
+    /**
+     * @ignore
+     */
+    public hidePassword: boolean;
+
+    /**
+     * @ignore
+     */
+    public hideRepeatPassword: boolean;
+
+    /**
+     * @ignore
+     */
     constructor(private _fb: FormBuilder) {
         super();
         this.form = _fb.group({
@@ -35,9 +55,16 @@ export class RegistrationCardComponent extends AbstractCard implements OnInit {
         this.register = new EventEmitter<Register>();
     }
 
+    /**
+     * @ignore
+     */
     public ngOnInit(): void {
     }
 
+    /**
+     * Check if user's email and password are valid
+     * and then emits filled form
+     */
     public onSubmit(): void {
         if (!this.form.valid) {
             return;
@@ -49,5 +76,4 @@ export class RegistrationCardComponent extends AbstractCard implements OnInit {
             password: this.form.controls['password'].value
         });
     }
-
 }
