@@ -4,9 +4,8 @@ import {TaskSearchRequestBody} from './task-search-request-body';
 import {CaseSearchRequestBody} from './case-search-request-body';
 import {FilterType} from './filter-type';
 
-export abstract class Filter {
 
-    protected _filterData: any;
+export abstract class Filter {
 
     protected constructor(protected readonly _id: string, protected readonly _type: FilterType) {
     }
@@ -44,4 +43,13 @@ export abstract class Filter {
      */
     public abstract get requestBody():
         TaskSearchRequestBody | CaseSearchRequestBody | Array<TaskSearchRequestBody> | Array<CaseSearchRequestBody>;
+
+    /**
+     * Creates a deep copy of a simple object.
+     * @param obj object that should be copied
+     * @returns a deep copy of the argument
+     */
+    protected deepCopy(obj: object): object {
+        return JSON.parse(JSON.stringify(obj));
+    }
 }
