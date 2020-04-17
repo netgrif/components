@@ -23,7 +23,7 @@ export class LogoutShortcutComponent implements OnInit {
             if (this._config.get().services && this._config.get().services.auth && this._config.get().services.auth.logoutRedirect) {
                 const redirectPath = this._config.get().services.auth.logoutRedirect;
                 this._log.info('Redirecting to ' + redirectPath);
-                this._router.navigateByUrl(redirectPath);
+                this._router.navigate([redirectPath]);
             }
         });
     }
