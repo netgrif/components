@@ -5,6 +5,8 @@ import {Filter} from './models/filter';
 import {LoggerService} from '../logger/services/logger.service';
 import {MergedFilter} from './models/merged-filter';
 import {SimpleFilter} from './models/simple-filter';
+import {MergeOperator} from './models/merge-operator';
+import {FilterType} from './models/filter-type';
 
 @Injectable({
     providedIn: 'root'
@@ -39,13 +41,13 @@ export class FilterRepository {
                 }
                 this.warnIfFilterExists(filterId);
 
-                const filter = new MergedFilter(filterId, configFilter.type,
-                    configFilter.query, configFilter.mergeOperator, configFilter.title);
+                const filter = new MergedFilter(filterId, configFilter.type as FilterType,
+                    configFilter.query, configFilter.mergeOperator as MergeOperator, configFilter.title);
                 this._filters.set(filterId, filter);
 
             } else {
                 this.warnIfFilterExists(filterId);
-                const filter = new SimpleFilter(filterId, configFilter.type, configFilter.query, configFilter.title);
+                const filter = new SimpleFilter(filterId, configFilter.type as FilterType, configFilter.query, configFilter.title);
                 this._filters.set(filterId, filter);
             }
         });
