@@ -21,7 +21,7 @@ export class FilesUploadComponent {
      */
     public fileField: FileField;
     /**
-     * Array all successful uploaded files in file field.
+     * Array all choose files in file field.
      */
     public allFiles: Array<FileUploadModel> = [];
 

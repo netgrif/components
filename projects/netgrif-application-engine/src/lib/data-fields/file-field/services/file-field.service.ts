@@ -16,7 +16,7 @@ import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 @Injectable()
 export class FileFieldService {
     /**
-     * Array all successful uploaded files in file field.
+     * Array all choose files in file field.
      */
     public allFiles: Array<FileUploadModel> = [];
     /**
