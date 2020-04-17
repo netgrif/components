@@ -10,8 +10,8 @@ export class MergedFilter extends Filter {
     private readonly _filters: Array<CaseSearchRequestBody> | Array<TaskSearchRequestBody>;
 
     constructor(id: string, type: FilterType, filterBodies: Array<CaseSearchRequestBody> | Array<TaskSearchRequestBody>,
-                protected _operator: MergeOperator) {
-        super(id, type);
+                protected _operator: MergeOperator, title?: string) {
+        super(id, type, title);
         this._filters = [];
         filterBodies.forEach(body => {
             this._filters.push(this.deepCopy(body));
@@ -19,7 +19,7 @@ export class MergedFilter extends Filter {
     }
 
     clone(): Filter {
-        return new MergedFilter(this.id, this.type, this._filters, this._operator);
+        return new MergedFilter(this.id, this.type, this._filters, this._operator, this.title);
     }
 
     merge(filter: Filter, operator: MergeOperator): MergedFilter {

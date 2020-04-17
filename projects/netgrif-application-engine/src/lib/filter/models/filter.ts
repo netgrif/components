@@ -7,7 +7,7 @@ import {FilterType} from './filter-type';
 
 export abstract class Filter {
 
-    protected constructor(protected readonly _id: string, protected readonly _type: FilterType) {
+    protected constructor(protected readonly _id: string, protected readonly _type: FilterType, protected readonly _title: string = '') {
     }
 
     /**
@@ -22,6 +22,15 @@ export abstract class Filter {
      */
     public get type(): FilterType {
         return this._type;
+    }
+
+    /**
+     * Human readable filter title.
+     *
+     * Defaults to empty string.
+     */
+    public get title(): string {
+        return this._title;
     }
 
     /**
