@@ -1,6 +1,7 @@
 import {UserTask} from './user-task';
 import {DataGroup} from './data-groups';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-panel/policy';
+import {TaskLayout} from './task-layout';
 
 export interface Task {
     caseId: string;
@@ -16,7 +17,7 @@ export interface Task {
     dataFocusPolicy: DataFocusPolicy;
     finishPolicy: FinishPolicy;
     stringId: string;
-    cols: number;
+    layout: TaskLayout;
     dataGroups: DataGroup[];
     _links: object;
     dataSize?: number;

@@ -58,9 +58,13 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     ngOnInit() {
         super.ngOnInit();
         this._taskViewService.taskData.subscribe(() => this.resolveFeaturedFieldsValues());
+        let cols: number;
+        if (this.taskPanelData.task && this.taskPanelData.task.layout && this.taskPanelData.task.layout.cols) {
+            cols = this.taskPanelData.task.layout.cols;
+        }
 
         const providers: StaticProvider[] = [
-            {provide: NAE_TASK_COLS, useValue: this.taskPanelData.task.cols},
+            {provide: NAE_TASK_COLS, useValue: cols},
             {provide: TaskPanelContentService, useValue: this._taskPanelContentService}
         ];
         const injector = Injector.create({providers});
@@ -126,7 +130,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                                 fields: dataGroup,
                                 stretch: group.stretch,
                                 title: group.title,
-                                cols: group.cols,
+                                layout: group.layout,
                                 alignment: group.alignment
                             });
                             this.taskPanelData.task.dataSize += dataGroup.length;
