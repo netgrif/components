@@ -5,9 +5,15 @@ import {TaskSearchRequestBody} from './task-search-request-body';
 import {CaseSearchRequestBody} from './case-search-request-body';
 import {FilterType} from './filter-type';
 
-
+/**
+ * Holds backend search request data and allows limited manipulation with it.
+ */
 export class SimpleFilter extends Filter {
 
+    /**
+     * @ignore
+     * Stores the underlying filter data
+     */
     private readonly _filter: CaseSearchRequestBody | TaskSearchRequestBody;
 
     /**
@@ -21,16 +27,25 @@ export class SimpleFilter extends Filter {
         this._filter = this.deepCopy(filterBody);
     }
 
+    /**
+     * See [Filter.clone()]{@link Filter#clone}
+     */
     clone(): Filter {
         return new SimpleFilter(this.id, this.type, this._filter, this.title);
     }
 
+    /**
+     * See [Filter.merge()]{@link Filter#merge}
+     */
     merge(filter: Filter, operator: MergeOperator): MergedFilter {
         const temp = new MergedFilter(this.id, this.type, [this._filter], operator, this.title);
         return temp.merge(filter, operator);
     }
 
-    get requestBody(): TaskSearchRequestBody | CaseSearchRequestBody {
+    /**
+     * See [Filter.getRequestBody()]{@link Filter#getRequestBody}
+     */
+    getRequestBody(): TaskSearchRequestBody | CaseSearchRequestBody {
         return this.deepCopy(this._filter) as CaseSearchRequestBody | TaskSearchRequestBody;
     }
 }

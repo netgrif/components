@@ -8,6 +8,13 @@ import {SimpleFilter} from './models/simple-filter';
 import {MergeOperator} from './models/merge-operator';
 import {FilterType} from './models/filter-type';
 
+/**
+ * Allows access to filters defined in nae.json during runtime.
+ *
+ * Filters are always returned as copies to avoid unintended side effects when operating on them.
+ *
+ * Also see {@link Filter}.
+ */
 @Injectable({
     providedIn: 'root'
 })

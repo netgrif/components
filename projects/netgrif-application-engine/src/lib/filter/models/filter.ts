@@ -4,9 +4,17 @@ import {TaskSearchRequestBody} from './task-search-request-body';
 import {CaseSearchRequestBody} from './case-search-request-body';
 import {FilterType} from './filter-type';
 
-
+/**
+ * Abstraction of backend search requests that defines a limited set of operations on them.
+ */
 export abstract class Filter {
 
+    /**
+     * If no name is provided the filter will be identified by it's ID when necessary.
+     * @param _id identifier of the filter
+     * @param _type type of resources that the filter can query
+     * @param _title human readable filter name
+     */
     protected constructor(protected readonly _id: string, protected readonly _type: FilterType, protected readonly _title: string = '') {
     }
 
@@ -50,7 +58,7 @@ export abstract class Filter {
     /**
      * @returns search request body specified by this filter. Type of the result is determined by the `type` of the Filter instance.
      */
-    public abstract get requestBody():
+    public abstract getRequestBody():
         TaskSearchRequestBody | CaseSearchRequestBody | Array<TaskSearchRequestBody> | Array<CaseSearchRequestBody>;
 
     /**

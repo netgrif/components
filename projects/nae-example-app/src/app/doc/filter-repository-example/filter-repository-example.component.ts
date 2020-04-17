@@ -17,15 +17,15 @@ export class FilterRepositoryExampleComponent implements OnInit {
 
     constructor(private filterRepository: FilterRepository) {
         filterRepository.getCaseFilterList().forEach( filterId => {
-            this.caseFilters.push(JSON.stringify(filterRepository.getFilter(filterId).requestBody, null, 4));
+            this.caseFilters.push(JSON.stringify(filterRepository.getFilter(filterId).getRequestBody(), null, 4));
         });
         filterRepository.getTaskFilterList().forEach( filterId => {
-            this.taskFilters.push(JSON.stringify(filterRepository.getFilter(filterId).requestBody, null, 4));
+            this.taskFilters.push(JSON.stringify(filterRepository.getFilter(filterId).getRequestBody(), null, 4));
         });
         this.merged = JSON.stringify(
             filterRepository.getFilter('all-cases').merge(
                 filterRepository.getFilter('data-cases'), MergeOperator.AND
-            ).requestBody
+            ).getRequestBody()
         );
     }
 

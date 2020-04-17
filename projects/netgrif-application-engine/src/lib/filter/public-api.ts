@@ -1,6 +1,3 @@
-/* MODULES */
-export * from './filter.module';
-
 /* SERVICES */
 export * from './filter.repository';
 
