@@ -87,4 +87,31 @@ export class FilterRepository {
         this._filters.set(filter.id, filter.clone());
     }
 
+    /**
+     * @returns list of case filter identifiers stored in the repository
+     */
+    public getCaseFilterList(): Array<string> {
+        return this.getFilterList(filter => filter.type === FilterType.CASE);
+    }
+
+    /**
+     * @returns list of task filter identifiers stored in the repository
+     */
+    public getTaskFilterList(): Array<string> {
+        return this.getFilterList(filter => filter.type === FilterType.TASK);
+    }
+
+    /**
+     * @param predicate condition that must be fulfilled by the filters in the repository in order to be included in the result
+     * @returns list of filter identifiers that fulfill the given predicate
+     */
+    protected getFilterList(predicate: (f: Filter) => boolean): Array<string> {
+        const result = [];
+        this._filters.forEach(filter => {
+            if (predicate(filter)) {
+                result.push(filter.id);
+            }
+        });
+        return result;
+    }
 }
