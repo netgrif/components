@@ -9,14 +9,38 @@ import {FileUploadModel} from '../../../side-menu/content-components/files-uploa
 import {FilesUploadComponent} from '../../../side-menu/content-components/files-upload/files-upload.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 
+/**
+ * Links communication between
+ * [FileFieldComponent]{@link FileFieldComponent} and [FilesUploadComponent]{@link FilesUploadComponent}
+ */
 @Injectable()
 export class FileFieldService {
-
+    /**
+     * Array all successful uploaded files in file field
+     */
     public allFiles: Array<FileUploadModel> = [];
+    /**
+     * Reference to file upload input element
+     * Represent hidden file picker
+     */
     public fileUploadEl: ElementRef<HTMLInputElement>;
+    /**
+     * Reference to image element
+     * which must be set from [FileFieldComponent]{@link FileFieldComponent}
+     */
     public imageEl: ElementRef<HTMLImageElement>;
+    /**
+     * Holds all information from a Petri Net
+     */
     public fileField: FileField;
 
+    /**
+     * After complete file upload set value for file field
+     * @param _fileUploadService provides upload file to backend
+     * @param _fileDownloadService provides download file from backend
+     * @param _sideMenuService open right side menu
+     * @param _snackBarService Notify user about exceeded validations
+     */
     constructor(private _fileUploadService: FileUploadService,
                 private _fileDownloadService: FileDownloadService,
                 private _sideMenuService: SideMenuService,
@@ -38,17 +62,30 @@ export class FileFieldService {
         this._sideMenuService.close();
     }
 
+    /**
+     * Remove file from uploaded files in file field
+     * @param file Selected file for remove
+     */
     public cancelFile(file: FileUploadModel) {
         file.sub.unsubscribe();
         this.removeFileFromArray(file);
     }
 
+    /**
+     * Retry upload file to backend and reset
+     * [FileUploadModel]{@link FileUploadModel} upload properties
+     * @param file Selected file for re-upload
+     */
     public retryFile(file: FileUploadModel) {
         file.canRetry = false;
         file.successfullyUploaded = false;
         this._fileUploadService.uploadFile(file);
     }
 
+    /**
+     * Check if file is successfully uploaded and then download it
+     * @param file Selected file for download
+     */
     public onFileDownload(file: FileUploadModel) {
         if (!file.successfullyUploaded) {
             return;
@@ -73,6 +110,10 @@ export class FileFieldService {
         this.imageEl.nativeElement.alt = this.fileField.value ? this.fileField.value[0].name : '';
     }
 
+    /**
+     * Remove file from allFiles array
+     * @param file Selected file for remove
+     */
     private removeFileFromArray(file: FileUploadModel) {
         const index = this.allFiles.indexOf(file);
         if (index > -1) {
@@ -122,6 +163,11 @@ export class FileFieldService {
         this.fileUploadEl.nativeElement.click();
     }
 
+    /**
+     * Create [FileUploadModel]{@link FileUploadModel} object
+     * based on whether the file is already uploaded or new
+     * @returns FileUploadModel
+     */
     public createFileUploadModel(file: File, isSuccessfullyUploaded = false): FileUploadModel {
         return {
             stringId: this.fileField.stringId,
@@ -137,6 +183,9 @@ export class FileFieldService {
         };
     }
 
+    /**
+     * Control max upload size validation set in Petri Net
+     */
     private maxUploadSizeControl(file: FileUploadModel): boolean {
         this.fileField.filesSize += (file.data as FileUploadDataModel).file.size;
         if (this.fileField.filesSize > this.fileField.maxUploadSizeInBytes) {
@@ -147,6 +196,9 @@ export class FileFieldService {
         return false;
     }
 
+    /**
+     * Returns successfully uploaded files as File
+     */
     private resolveFilesArray(): Array<File> {
         return this.allFiles.filter(f => f.successfullyUploaded).map(f => (f.data as FileUploadDataModel).file);
     }

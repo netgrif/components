@@ -5,11 +5,25 @@ import {FileUploadDataModel} from '../../models/file-field';
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/snack-bar.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 
+/**
+ * Provides to download a file from the backend and set some
+ * [FileUploadModel]{@link FileUploadModel} download properties for this file
+ */
 @Injectable()
 export class FileDownloadService {
-
+    /**
+     * Task mongo string id:
+     *  - is used for get correct file from backend
+     *  - must be set before downloading
+     */
     public taskId: string;
 
+    /**
+     * Only injected services
+     * @param _taskResourceService Provides to download a file from the backend
+     * @param _snackBarService Used for notify user about ratio download file
+     * @param _logger Log result of ratio download file
+     */
     constructor(private _taskResourceService: TaskResourceService,
                 private _snackBarService: SnackBarService,
                 private _logger: LoggerService) {
@@ -19,8 +33,11 @@ export class FileDownloadService {
      * Download file from backend GET endpoint '/task/taskId/file/fileId' via TaskResourceService.
      *  - Notify user of a successful download
      *  - Log info
+     *  - Download file
+     *  - Catch errors
+     *  @param file Selected file to download
      */
-    public downloadFile(file: FileUploadModel) {
+    public downloadFile(file: FileUploadModel): void {
         file.downloading = true;
         this._taskResourceService.downloadFile(this.taskId, file.stringId)
             .subscribe(fileResponse => {
@@ -37,7 +54,7 @@ export class FileDownloadService {
     }
 
     /**
-     * Download file from backend as Blob by a element link
+     * Download file from backend as `Blob` by a element link
      */
     private _downloadFileByLink(fileBlob: Blob, file: FileUploadModel): void {
         const blob = new Blob([fileBlob], {type: 'application/octet-stream'});
