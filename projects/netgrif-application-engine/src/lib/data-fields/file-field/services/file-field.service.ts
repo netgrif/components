@@ -11,34 +11,35 @@ import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 
 /**
  * Links communication between
- * [FileFieldComponent]{@link FileFieldComponent} and [FilesUploadComponent]{@link FilesUploadComponent}
+ * [FileFieldComponent]{@link FileFieldComponent} and [FilesUploadComponent]{@link FilesUploadComponent}.
  */
 @Injectable()
 export class FileFieldService {
     /**
-     * Array all successful uploaded files in file field
+     * Array all successful uploaded files in file field.
      */
     public allFiles: Array<FileUploadModel> = [];
     /**
-     * Reference to file upload input element
-     * Represent hidden file picker
+     * Reference to file upload input element.
+     *
+     * Represent hidden file picker.
      */
     public fileUploadEl: ElementRef<HTMLInputElement>;
     /**
      * Reference to image element
-     * which must be set from [FileFieldComponent]{@link FileFieldComponent}
+     * which must be set from [FileFieldComponent]{@link FileFieldComponent}.
      */
     public imageEl: ElementRef<HTMLImageElement>;
     /**
-     * Holds all information from a Petri Net
+     * Holds all information from a Petri Net.
      */
     public fileField: FileField;
 
     /**
-     * After complete file upload set value for file field
-     * @param _fileUploadService provides upload file to backend
-     * @param _fileDownloadService provides download file from backend
-     * @param _sideMenuService open right side menu
+     * After complete file upload set value for file field.
+     * @param _fileUploadService Provides upload file to backend
+     * @param _fileDownloadService Provides download file from backend
+     * @param _sideMenuService Open right side menu
      * @param _snackBarService Notify user about exceeded validations
      */
     constructor(private _fileUploadService: FileUploadService,
@@ -51,7 +52,7 @@ export class FileFieldService {
     }
 
     /**
-     * All select files after click send zipped to backend on send button
+     * All select files after click send zipped to backend on send button.
      */
     public onSend() {
         const zip = new JSZip();
@@ -63,7 +64,7 @@ export class FileFieldService {
     }
 
     /**
-     * Remove file from uploaded files in file field
+     * Remove file from uploaded files in file field.
      * @param file Selected file for remove
      */
     public cancelFile(file: FileUploadModel) {
@@ -73,7 +74,7 @@ export class FileFieldService {
 
     /**
      * Retry upload file to backend and reset
-     * [FileUploadModel]{@link FileUploadModel} upload properties
+     * [FileUploadModel]{@link FileUploadModel} upload properties.
      * @param file Selected file for re-upload
      */
     public retryFile(file: FileUploadModel) {
@@ -83,7 +84,7 @@ export class FileFieldService {
     }
 
     /**
-     * Check if file is successfully uploaded and then download it
+     * Check if file is successfully uploaded and then download it.
      * @param file Selected file for download
      */
     public onFileDownload(file: FileUploadModel) {
@@ -111,7 +112,7 @@ export class FileFieldService {
     }
 
     /**
-     * Remove file from allFiles array
+     * Remove file from allFiles array.
      * @param file Selected file for remove
      */
     private removeFileFromArray(file: FileUploadModel) {
@@ -123,9 +124,11 @@ export class FileFieldService {
     }
 
     /**
-     * Add choose file or files from file picker to addFiles after all validations
-     * Open side menu if it is closed
-     * Set file field image source url if select file is image and is the only one in addFiles
+     * Add choose file or files from file picker to addFiles after all validations.
+     *
+     * Open side menu if it is closed.
+     *
+     * Set file field image source url if select file is image and is the only one in addFiles.
      */
     public fileUpload() {
         this.fileUploadEl.nativeElement.onchange = () => {
@@ -165,7 +168,7 @@ export class FileFieldService {
 
     /**
      * Create [FileUploadModel]{@link FileUploadModel} object
-     * based on whether the file is already uploaded or new
+     * based on whether the file is already uploaded or new.
      * @returns FileUploadModel
      */
     public createFileUploadModel(file: File, isSuccessfullyUploaded = false): FileUploadModel {
@@ -184,7 +187,7 @@ export class FileFieldService {
     }
 
     /**
-     * Control max upload size validation set in Petri Net
+     * Control max upload size validation set in Petri Net.
      */
     private maxUploadSizeControl(file: FileUploadModel): boolean {
         this.fileField.filesSize += (file.data as FileUploadDataModel).file.size;
@@ -197,7 +200,7 @@ export class FileFieldService {
     }
 
     /**
-     * Returns successfully uploaded files as File
+     * Returns successfully uploaded files as File.
      */
     private resolveFilesArray(): Array<File> {
         return this.allFiles.filter(f => f.successfullyUploaded).map(f => (f.data as FileUploadDataModel).file);

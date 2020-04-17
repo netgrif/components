@@ -7,7 +7,7 @@ import {LoggerService} from '../../../../logger/services/logger.service';
 
 /**
  * Provides to download a file from the backend and set some
- * [FileUploadModel]{@link FileUploadModel} download properties for this file
+ * [FileUploadModel]{@link FileUploadModel} download properties for this file.
  */
 @Injectable()
 export class FileDownloadService {
@@ -19,7 +19,7 @@ export class FileDownloadService {
     public taskId: string;
 
     /**
-     * Only injected services
+     * Only injected services.
      * @param _taskResourceService Provides to download a file from the backend
      * @param _snackBarService Used for notify user about ratio download file
      * @param _logger Log result of ratio download file
@@ -54,7 +54,7 @@ export class FileDownloadService {
     }
 
     /**
-     * Download file from backend as `Blob` by a element link
+     * Download file from backend as `Blob` by a element link.
      */
     private _downloadFileByLink(fileBlob: Blob, file: FileUploadModel): void {
         const blob = new Blob([fileBlob], {type: 'application/octet-stream'});

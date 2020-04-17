@@ -8,32 +8,55 @@ import {FileUploadDataModel} from '../../models/file-field';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 
+/**
+ * Provides to upload a file to the backend and set some
+ * [FileUploadModel]{@link FileUploadModel} upload properties for this file.
+ */
 @Injectable()
 export class FileUploadService {
-
+    /**
+     * Task mongo string id:
+     *  - is used for set correct file with file string id to backend
+     *  - must be set before uploading
+     */
     public taskId: string;
 
     private _complete = new EventEmitter<string>();
 
-    constructor(private _taskResource: TaskResourceService,
+    /**
+     * Only injected services.
+     * @param _taskResourceService Provides to upload a file to the backend
+     * @param _snackBarService Used for notify user about ratio upload file
+     * @param _logger Log result of ratio upload file
+     */
+    constructor(private _taskResourceService: TaskResourceService,
                 private _logger: LoggerService,
                 private _snackBarService: SnackBarService) {
     }
 
+    /**
+     * Returns information about completed file upload as stream.
+     */
     public get fileUploadCompleted(): Observable<string> {
         return this._complete.asObservable();
     }
 
     /**
-     * Upload file as FileUploadModel instance to backend endpoint '/task/taskId/file/fileId' via TaskResourceService
+     * Upload file as FileUploadModel instance to backend endpoint '/task/taskId/file/fileId' via TaskResourceService.
+     *  - Notify user of a successful upload
+     *  - Log info
+     *  - Upload file
+     *  - Calculate size of upload progress bar
+     *  - Catch errors
+     *  @param fileUploadModel Selected file to upload
      */
     public uploadFile(fileUploadModel: FileUploadModel) {
-        const fd = new FormData();
         const file = (fileUploadModel.data as FileUploadDataModel).file;
+        const fd = new FormData();
         fd.append('file', file);
 
         fileUploadModel.inProgress = true;
-        fileUploadModel.sub = this._taskResource.uploadFile(this.taskId, fileUploadModel.stringId, fd)
+        fileUploadModel.sub = this._taskResourceService.uploadFile(this.taskId, fileUploadModel.stringId, fd)
             .pipe(
                 map(event => {
                     switch (event.type) {
