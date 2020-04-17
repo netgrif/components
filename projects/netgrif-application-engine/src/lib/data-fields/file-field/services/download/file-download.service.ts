@@ -17,45 +17,53 @@ export class FileDownloadService {
 
     /**
      * Download file from backend GET endpoint '/task/taskId/file/fileId' via TaskResourceService.
-     * After successful response from backend:
-     *      - create 'a' element
-     *      - set url attribute
-     *      - set a name for the file to be downloaded
-     *      - trigger a click event on created 'a' element - starting download process
-     *      - notification to the user of a successful download
-     *      - info log with LoggerService
-     * After unsuccessful response from backend:
-     *      - notification to the user of a unsuccessful download
-     *      - error log with LoggerService
+     *  - Notify user of a successful download
+     *  - Log info
      */
     public downloadFile(file: FileUploadModel) {
         file.downloading = true;
         this._taskResourceService.downloadFile(this.taskId, file.stringId)
-            .subscribe(fileResource => {
-                    const blob = new Blob([fileResource], {type: 'application/octet-stream'});
-                    const url = window.URL.createObjectURL(blob);
+            .subscribe(fileResponse => {
+                    this._downloadFileByLink(fileResponse, file);
 
-                    const linkElement = document.createElement('a');
-                    linkElement.setAttribute('href', url);
-                    linkElement.setAttribute('download', (file.data as FileUploadDataModel).file.name);
-
-                    const clickEvent = new MouseEvent('click', {
-                        view: window,
-                        bubbles: true,
-                        cancelable: false
-                    });
                     file.downloading = false;
-                    linkElement.dispatchEvent(clickEvent);
-                    const successMessage: string = (file.data as FileUploadDataModel).file.name + ' successfully download';
+                    const successMessage = (file.data as FileUploadDataModel).file.name + ' successfully download';
                     this._logger.info(successMessage);
                     this._snackBarService.openInfoSnackBar(successMessage,
                         SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
                 },
-                (error) => {
-                    file.downloading = false;
-                    this._logger.error(error);
-                    this._snackBarService.openErrorSnackBar((file.data as FileUploadDataModel).file.name + ' download failed',
-                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
-                });
+                (error) => this._handleDownloadFileErrors(error, file)
+            );
+    }
+
+    /**
+     * Download file from backend as Blob by a element link
+     */
+    private _downloadFileByLink(fileBlob: Blob, file: FileUploadModel): void {
+        const blob = new Blob([fileBlob], {type: 'application/octet-stream'});
+        const url = window.URL.createObjectURL(blob);
+
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', url);
+        linkElement.setAttribute('download', (file.data as FileUploadDataModel).file.name);
+
+        const clickEvent = new MouseEvent('click', {
+            view: window,
+            bubbles: true,
+            cancelable: false
+        });
+        linkElement.dispatchEvent(clickEvent);
+    }
+
+    /**
+     * Handle error after unsuccessful response from backend.
+     *  - Notify user of a unsuccessful download
+     *  - Log error
+     */
+    private _handleDownloadFileErrors(error: any, file: FileUploadModel): void {
+        file.downloading = false;
+        this._logger.error(error);
+        this._snackBarService.openErrorSnackBar((file.data as FileUploadDataModel).file.name + ' download failed',
+            SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
     }
 }

@@ -26,7 +26,6 @@ export class FileUploadService {
 
     /**
      * Upload file as FileUploadModel instance to backend endpoint '/task/taskId/file/fileId' via TaskResourceService
-     * fileUploadModel
      */
     public uploadFile(fileUploadModel: FileUploadModel) {
         const fd = new FormData();
@@ -57,6 +56,7 @@ export class FileUploadService {
                 (event: any) => {
                     if (typeof (event) === 'object') {
                         fileUploadModel.successfullyUploaded = true;
+                        fileUploadModel.state = undefined;
                         this._logger.info(file.name + ' has been successfully uploaded');
                         this._snackBarService.openInfoSnackBar(file.name + ' upload successful',
                             SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);

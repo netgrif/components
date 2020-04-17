@@ -27,7 +27,7 @@ export class FileFieldService {
     }
 
     /**
-     * Send zipped all select files after click on send button
+     * All select files after click send zipped to backend on send button
      */
     public onSend() {
         const zip = new JSZip();
@@ -70,7 +70,7 @@ export class FileFieldService {
                 this.imageEl.nativeElement.src = reader.result;
             }
         };
-        this.imageEl.nativeElement.alt = this.fileField.value[0].name;
+        this.imageEl.nativeElement.alt = this.fileField.value ? this.fileField.value[0].name : '';
     }
 
     private removeFileFromArray(file: FileUploadModel) {
