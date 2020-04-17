@@ -32,7 +32,7 @@ describe('AbstractTabComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-tab-group [initialTabs]="tabs"></nae-tab-group>'
+    template: '<nae-tab-view [initialTabs]="tabs"></nae-tab-view>'
 })
 class TestWrapperComponent {
     tabs: Array<TabContent> = [
