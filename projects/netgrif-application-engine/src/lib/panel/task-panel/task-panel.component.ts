@@ -23,6 +23,8 @@ import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
+import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 
 
 @Component({
@@ -230,6 +232,18 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                             field.changed = false;
                         } else if (key === 'behavior' && updatedField.behavior[this.taskPanelData.task.transitionId]) {
                             field.behavior = updatedField.behavior[this.taskPanelData.task.transitionId];
+                        } else if (key === 'choices') {
+                            const newChoices: EnumerationFieldValue[] = [];
+                            if (updatedField.choices instanceof Array) {
+                                updatedField.choices.forEach(it => {
+                                    newChoices.push({key: it, value: it} as EnumerationFieldValue);
+                                });
+                            } else {
+                                Object.keys(updatedField.choices).forEach( choice => {
+                                    newChoices.push({key: choice, value: updatedField.choices[key]} as EnumerationFieldValue);
+                                });
+                            }
+                            (field as EnumerationField | MultichoiceField).choices = newChoices;
                         } else {
                             field[key] = updatedField[key];
                         }
