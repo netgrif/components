@@ -6,7 +6,11 @@ import {
     TabbedCaseView,
     LoggerService,
     CaseViewService,
+    ProcessService,
+    Net, CaseParams, ConfigurationService,
 } from '@netgrif/application-engine';
+import {ReplaySubject, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Component({
     selector: 'nae-app-tabbed-case-view',
@@ -17,11 +21,32 @@ import {
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
+    public allowedNets$: ReplaySubject<Array<Net>>;
+    public params: CaseParams;
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
-                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
+                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData,
+                processService: ProcessService,
+                configService: ConfigurationService) {
         super(caseViewService, loggerService, injectedTabData, '{}');
+        this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
+        // TODO 16.4. 2020 initialize allowedNets by filter
+        const view = configService.getViewByPath('<%= webPath %>');
+        if (view && view.layout && view.layout.params) {
+            this.params = view.layout.params as CaseParams;
+            if (this.params.allowedNets !== undefined) {
+                const nets = [];
+                this.params.allowedNets.forEach(netId => {
+                    processService.getNet(netId).subscribe(net => {
+                        nets.push(net);
+                        if (nets.length === this.params.allowedNets.length) {
+                            this.allowedNets$.next(nets);
+                        }
+                    });
+                });
+            }
+        }
     }
 
     ngAfterViewInit(): void {

@@ -7,7 +7,7 @@ import {HeaderColumn} from '../../models/header-column';
     templateUrl: './edit-mode.component.html',
     styleUrls: ['./edit-mode.component.scss']
 })
-export class EditModeComponent{
+export class EditModeComponent {
 
     @Input() public headerService: AbstractHeaderService;
 

@@ -1,4 +1,4 @@
-import {DataField, Layout, MaterialAppearance} from '../../models/abstract-data-field';
+import {DataField, Layout} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 
 export interface MultichoiceFieldValue {

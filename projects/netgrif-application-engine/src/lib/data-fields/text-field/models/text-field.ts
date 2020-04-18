@@ -1,13 +1,15 @@
-import {DataField, Layout, MaterialAppearance, Validation} from '../../models/abstract-data-field';
+import {DataField, Layout, Validation} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 
 export enum TextFieldView {
     DEFAULT = 'default',
-    TEXTAREA = 'textarea'
+    TEXTAREA = 'textarea',
+    RICHTEXTAREA = 'richtextarea'
 }
 
 export class TextField extends DataField<string> {
+
     private _validators: Array<ValidatorFn>;
     public materialAppearance: string;
 
@@ -73,7 +75,7 @@ export class TextField extends DataField<string> {
     }
 
     private validTelNumber(fc: FormControl) {
-        if (!(new RegExp(/^(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)$/).test(fc.value))) {
+        if (!(new RegExp(/^(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)$/).test(fc.value))) {
             return ({validTelNumber: true});
         } else {
             return (null);

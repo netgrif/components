@@ -1,7 +1,7 @@
 <mat-sidenav-container class="drawer-container">
     <mat-sidenav #sidenav [mode]="config.mode" [(opened)]="opened" position="start"
                  [disableClose]="config.disableClose"
-                 class="drawer-content mat-elevation-z16">
+                 class="drawer-content mat-elevation-z10">
         <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
             <nae-user-card *ngIf="showUser" [user]="user" mode="full"></nae-user-card>
             <mat-divider *ngIf="showUser" class="drawer-divider"></mat-divider>

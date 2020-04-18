@@ -12,6 +12,7 @@ import {HeaderMode} from './models/header-mode';
 import {HeaderColumn, HeaderColumnType} from './models/header-column';
 import {SortDirection} from '@angular/material';
 
+
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 
 const MAX_HEADER_COLUMNS = 5;
@@ -22,7 +23,6 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this.initializeHeaderState();
-
     }
 
     /**
@@ -84,7 +84,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
             fieldsGroups.push(fieldsGroup);
         });
 
-        this.fieldsGroup.slice(1, this.fieldsGroup.length - 1);
+        this.fieldsGroup.splice(1, this.fieldsGroup.length - 1);
         this.fieldsGroup.push(...fieldsGroups);
     }
 

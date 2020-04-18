@@ -7,5 +7,22 @@
             "en": "Anglický",
             "sk": "Slovenský"
         }
+    },
+    "tasks": {
+        "snackbar": {
+            "noTasksFound": "Nenašli sa žiadne úlohy",
+            "failedToLoad": "sa nepodarilo načítať",
+            "errorTaskSearch": "Úlohy na task/search"
+        },
+        "view": {
+            "noTasksSatisfyingThisFilter": "Pre tento filter nie sú vyhovujúce žiadne úlohy",
+            "collapse": "Skryť",
+            "assign": "Priradiť",
+            "reassign": "Preradiť",
+            "delegate": "Delegovať",
+            "finish": "Dokončiť",
+            "cancel": "Zrušiť",
+            "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie."
+        }
     }
 }

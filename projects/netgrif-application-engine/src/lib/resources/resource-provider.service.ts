@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 
@@ -103,6 +103,18 @@ export abstract class AbstractResourceProvider {
         });
     }
 
+    public upload<T>(endpoint?: string, url?: string, body?: FormData, params?: Params, headers?: Headers,
+                     responseType?: ResponseType): Observable<HttpEvent<T>> {
+        return this.httpClient.post<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
+            body, {
+                headers,
+                params,
+                responseType,
+                observe: 'events',
+                reportProgress: true
+            });
+    }
+
 }
 
 @Injectable({
@@ -131,6 +143,11 @@ export class ResourceProvider extends AbstractResourceProvider {
     public delete$<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers, responseType ?: ResponseType,
                       observe ?: Observe): Observable<T> {
         return this.delete(endpoint, url, params, headers, responseType, observe);
+    }
+
+    public upload$<T>(endpoint?: string, url ?: string, body ?: FormData, params ?: Params, headers ?: Headers,
+                      responseType ?: ResponseType): Observable<HttpEvent<T>> {
+        return this.upload<T>(endpoint, url, body, params, headers, responseType);
     }
 
 }

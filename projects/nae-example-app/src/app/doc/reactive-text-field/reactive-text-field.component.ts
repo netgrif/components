@@ -17,7 +17,6 @@ import {
     EnumerationFieldView,
     FileField,
     FileFieldComponent,
-    MaterialAppearance,
     MultichoiceField,
     MultichoiceFieldComponent,
     MultichoiceFieldView,
@@ -26,9 +25,9 @@ import {
     TextField,
     TextFieldComponent,
     TextFieldView,
-    UserValue,
     UserField,
-    UserFieldComponent
+    UserFieldComponent,
+    UserValue
 } from '@netgrif/application-engine';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
@@ -50,12 +49,17 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // TEXT FIELD
     @ViewChild('textFieldComponent') naeTextField: TextFieldComponent;
     textField = new TextField('textFieldId', 'Reactive text field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
-                undefined, [{validationRule: 'telNumber', validationMessage: 'dasdsad' }] );
+                undefined, undefined );
 
     // TEXT AREA FIELD
     @ViewChild('textAreaFieldComponent') naeTextAreaField: TextFieldComponent;
     textAreaField = new TextField('textAreaFieldId', 'Reactive text area field', 'hello world', {visible: true, editable: true},
         undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
+
+    // RICH TEXT FIELD
+    @ViewChild('textFieldComponent') naeTextRichField: TextFieldComponent;
+    textRichField = new TextField('textRichFieldId', 'Reactive text rich field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
+        undefined, undefined, TextFieldView.RICHTEXTAREA );
 
     // BOOLEAN FIELD
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
@@ -115,13 +119,14 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // USER FIELD
     @ViewChild('userFieldComponent') naeUserField: UserFieldComponent;
     userField = new UserField('userFieldId', 'Reactive user field',  {visible: true, editable: true},
-        new UserValue('4', 'Name', 'Surname', 'surname@netgrif.com'), []);
+        new UserValue(0, 'Name', 'Surname', 'surname@netgrif.com'), []);
 
     changeStream = new Subject<ChangedFields>();
 
     changeGroupControl = this.formBuilder.group({
         ...this.constructFormBuilderObject('text', this.textField),
         ...this.constructFormBuilderObject('textArea', this.textAreaField),
+        ...this.constructFormBuilderObject('textRich', this.textRichField),
         ...this.constructFormBuilderObject('boolean', this.booleanField),
         ...this.constructFormBuilderObject('button', this.buttonField),
         ...this.constructFormBuilderObject('number', this.numberField),
@@ -143,6 +148,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         const fields = [
             {stringId: this.textField.stringId, component: this.naeTextField},
             {stringId: this.textAreaField.stringId, component: this.naeTextAreaField},
+            {stringId: this.textRichField.stringId, component: this.naeTextRichField},
             {stringId: this.booleanField.stringId, component: this.naeBooleanField},
             {stringId: this.buttonField.stringId, component: this.naeButtonField},
             {stringId: this.numberField.stringId, component: this.naeNumberField},
@@ -168,6 +174,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         this.changeStream.next({
             textFieldId: this.constructChangeObject('text'),
             textAreaFieldId: this.constructChangeObject('textArea'),
+            textRichFieldId: this.constructChangeObject('textRich'),
             booleanFieldId: this.constructChangeObject('boolean'),
             buttonFieldId: this.constructChangeObject('button'),
             numberFieldId: this.constructChangeObject('number'),

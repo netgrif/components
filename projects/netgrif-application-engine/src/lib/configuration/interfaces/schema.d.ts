@@ -103,7 +103,7 @@ export interface Theme {
             };
             [k: string]: any;
         };
-        dark: {
+        dark?: {
             primary?:
                 string
                 | {
@@ -226,6 +226,9 @@ export interface Services {
         includeLogLevel?: boolean;
         publishers?: any[];
         [k: string]: any;
+    };
+    auth?: {
+        logoutRedirect?: string;
     };
 
     [k: string]: any;

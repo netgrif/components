@@ -3,6 +3,7 @@ import {commitChangesToFile, getAppModule, getFileData, getProjectInfo, ProjectI
 import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
 import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
 import {Change} from '@schematics/angular/utility/change';
+import {CreateViewArguments} from './create-view-prompt/schema';
 
 
 /**
@@ -13,6 +14,7 @@ export interface Route {
     component: string;
     path: string;
     children?: Array<Route>;
+    canActivate?: any[];
 }
 
 export declare type Routes = Route[];
@@ -58,20 +60,31 @@ export function addRoutingModuleImport(tree: Tree, className: string, componentP
     commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);
 }
 
-export function addRouteToRoutesJson(path: string, className: string): Rule {
+export function addRouteToRoutesJson(path: string, className: string, access?: CreateViewArguments['access']): Rule {
     return schematic('add-route', {
-        routeObject: createRouteObject(path, className),
+        routeObject: createRouteObject(path, className, access),
         path
     });
 }
 
-export function createRouteObject(path: string, className: string): Route {
+export function createRouteObject(path: string, className: string,
+                                  access?: CreateViewArguments['access']): Route {
     const index = path.lastIndexOf('/');
     let relevantPath = path;
     if (index !== -1) {
         relevantPath = path.substring(index + 1);
     }
-    return {path: relevantPath, component: className};
+    if (access === 'private') {
+        return {path: relevantPath, component: className, canActivate: ['AuthenticationGuardService']};
+    } else {
+        return {path: relevantPath, component: className};
+    }
+}
+
+export function addAuthGuardImport(tree: Tree, access: CreateViewArguments['access']) {
+    // TODO 9.4.2020 - Add condition if access is object
+    if (access === 'private')
+        addRoutingModuleImport(tree, 'AuthenticationGuardService', '@netgrif/application-engine');
 }
 
 export function constructRoutePath(pathPrefix: string, pathPart: string): string {
@@ -114,6 +127,16 @@ export function resolveClassSuffixForView(view: string): string {
             return 'TaskView';
         case 'caseView':
             return 'CaseView';
+        case 'emptyView':
+            return 'EmptyView';
+        case 'sidenavView':
+            return 'SidenavView';
+        case 'toolbarView':
+            return 'ToolbarView';
+        case 'sidenavAndToolbarView':
+            return 'SidenavAndToolbarView';
+        case 'dashboard':
+            return 'Dashboard';
         default:
             throw new SchematicsException(`Unknown view type '${view}'`);
     }

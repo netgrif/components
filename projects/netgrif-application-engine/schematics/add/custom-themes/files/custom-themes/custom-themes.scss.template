@@ -1,0 +1,37 @@
+@import '~@angular/material/theming';
+@import 'custom-light-template.scss';
+<% if (darkExists) { %>
+@import 'custom-dark-template.scss';
+<% } %>
+@import '~@netgrif/application-engine/nae-theme';
+
+
+$custom-light-theme: mat-light-theme(
+        <% if (primaryLight) { %>
+         mat-palette($bv-light-primary),
+        <% } %>
+        <% if (secondaryLight) { %>
+         mat-palette($bv-light-secondary),
+        <% } %>
+        <% if (warnLight) { %>
+         mat-palette($bv-light-warn));
+        <% } %>
+@include angular-material-theme($custom-light-theme);
+@include nae-lib-theme($custom-light-theme);
+
+
+<% if (darkExists) { %>
+.custom-dark-theme {
+     $custom-dark-theme: mat-dark-theme(
+        <% if (primaryDark) { %>
+         mat-palette($bv-dark-primary),
+        <% } %>
+        <% if (secondaryDark) { %>
+         mat-palette($bv-dark-secondary),
+        <% } %>
+        <% if (warnDark) { %>
+         mat-palette($bv-dark-warn));
+        <% } %>
+     @include angular-material-theme($custom-dark-theme);
+}
+<% } %>

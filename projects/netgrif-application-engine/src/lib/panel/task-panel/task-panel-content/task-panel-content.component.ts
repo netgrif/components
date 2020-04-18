@@ -1,6 +1,6 @@
 import {Component, Inject, InjectionToken} from '@angular/core';
-import {GridLayoutElement} from './grid-layout-element';
-import {GridFiller} from './grid-filler';
+import {DatafieldGridLayoutElement} from './datafield-grid-layout-element';
+import {GridFiller} from '../../../utility/grid-layout/model/grid-filler';
 import {FieldConvertorService} from './field-convertor.service';
 import {TaskPanelContentService} from './task-panel-content.service';
 
@@ -41,7 +41,7 @@ export class TaskPanelContentComponent {
         return [new GridFiller(0, cols - 1)];
     }
 
-    fillBlankSpace(resource: any[], columnCount: number): Array<GridLayoutElement> {
+    fillBlankSpace(resource: any[], columnCount: number): Array<DatafieldGridLayoutElement> {
         const grid: Array<Array<GridFiller>> = [];
         const returnResource = [];
 
@@ -170,14 +170,14 @@ export class TaskPanelContentComponent {
                 .map(item => ({item, type: this._fieldConvertor.resolveType(item), layout: item.layout})));
         });
         let encounterFirst = false;
-        for (let y = grid.length - 1; y > 0; y--) {
+        for (let y = grid.length - 1; y >= 0; y--) {
             const row = grid[y];
             row.forEach(filler => {
                 if (!encounterFirst && !filler.isFullWidth(columnCount)) {
                     encounterFirst = true;
                 }
                 if (encounterFirst && (filler.isIntentional || !filler.isFullWidth(columnCount))) {
-                    returnResource.push(filler.convertToGridLayoutElement(y));
+                    returnResource.push(filler.convertToGridElement(y));
                 }
             });
         }

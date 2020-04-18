@@ -1,60 +1,72 @@
-<div fxLayout="column" fxLayoutAlign="stretch">
-    <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="16px">
-        <mat-card fxFlex="100">
-            <div fxLayout="column" fxLayoutGap="24px">
-                <form [formGroup]="form"
-                      (ngSubmit)="onSubmit(form.value)">
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-form-field fxFlex="96">
-                            <input matInput placeholder="Login" formControlName="login" minlength="4" required>
-                            <mat-error *ngIf="form.controls['login'].hasError('minlength')">
-                                The login name must have at least 4 letters
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-form-field fxFlex="96">
-                            <input matInput placeholder="Enter your email" formControlName="email" required>
-                            <mat-error *ngIf="form.controls['email'].hasError('email')">
-                                Not a valid email
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-form-field fxFlex="96">
-                            <input matInput placeholder="Enter your password"
-                                   [type]="hidePassword ? 'password' : 'text'"
-                                   formControlName="password" required>
-                            <button mat-icon-button matSuffix
-                                    (click)="hidePassword = !hidePassword"
-                                    [attr.aria-label]="'Hide password'"
-                                    [attr.aria-pressed]="hidePassword">
-                                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout="column" fxLayoutAlign="stretch">
+        <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="16px">
+            <mat-card fxFlex="100">
+                <div fxLayout="column" fxLayoutGap="24px">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+                            <mat-icon color="primary">email</mat-icon>
+                            <mat-form-field fxFlex="96">
+                                <input matInput placeholder="Enter your email" formControlName="email" required>
+                                <mat-error *ngIf="form.controls['email'].hasError('email')">
+                                    Not a valid email
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+                            <mat-icon color="primary">account_circle</mat-icon>
+                            <mat-form-field fxFlex="96">
+                                <input matInput placeholder="Name" formControlName="name" required>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+                            <mat-icon color="primary">account_circle_outline</mat-icon>
+                            <mat-form-field fxFlex="96">
+                                <input matInput placeholder="Surname" formControlName="surname" required>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+                            <mat-icon color="primary">vpn_key</mat-icon>
+                            <mat-form-field fxFlex="96">
+                                <input matInput placeholder="Enter your password"
+                                       [type]="hidePassword ? 'password' : 'text'"
+                                       formControlName="password" required>
+                                <button mat-icon-button matSuffix type="button"
+                                        (click)="hidePassword = !hidePassword"
+                                        (keypress)="false"
+                                        [attr.aria-label]="'Hide password'"
+                                        [attr.aria-pressed]="hidePassword">
+                                    <mat-icon
+                                        [color]="hidePassword ? undefined : 'accent'">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+                            <mat-icon color="primary">vpn_key</mat-icon>
+                            <mat-form-field fxFlex="96">
+                                <input matInput placeholder="Repeat your password"
+                                       [type]="hideRepeatPassword ? 'password' : 'text'"
+                                       formControlName="confirmPassword" required>
+                                <button mat-icon-button matSuffix type="button"
+                                        (click)="hideRepeatPassword = !hideRepeatPassword"
+                                        (keypress)="false"
+                                        [attr.aria-label]="'Hide password'"
+                                        [attr.aria-pressed]="hideRepeatPassword">
+                                    <mat-icon
+                                        [color]="hideRepeatPassword ? undefined : 'accent'">{{hideRepeatPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center">
+                            <button fxFlexOffset="8px" fxFlexOffset.xs="0" mat-raised-button class="register-button"
+                                    fxFlex="35" fxFlex.xs="70" color="primary">
+                                Register
                             </button>
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-form-field fxFlex="96">
-                            <input matInput placeholder="Repeat your password"
-                                   [type]="hideRepeatPassword ? 'password' : 'text'"
-                                   formControlName="confirmPassword" required>
-                            <mat-error *ngIf="form.controls['confirmPassword'].hasError('mismatchedPassword')">
-                                Passwords do not match
-                            </mat-error>
-                            <button mat-icon-button matSuffix (click)="hideRepeatPassword = !hideRepeatPassword"
-                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideRepeatPassword">
-                                <mat-icon>{{hideRepeatPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="left" fxLayoutAlign.xs="center">
-                        <button fxFlexOffset="2" fxFlexOffset.xs="0" mat-raised-button class="register-button"
-                                fxFlex="35" fxFlex.xs="70">Register
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </mat-card>
+                        </div>
+                    </form>
+                </div>
+            </mat-card>
+        </div>
     </div>
 </div>
 

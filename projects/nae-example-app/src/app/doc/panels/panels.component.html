@@ -1,0 +1,15 @@
+<nae-app-documentation [liveExample]="panelExample"
+                       [mainTitle]="TITLE"
+                       [mainDescription]="DESCRIPTION"
+                       [apiModuleImport]="'PanelModule'"></nae-app-documentation>
+
+<ng-template #panelExample>
+    <h1>Case Panel</h1>
+
+    <nae-case-panel [case_]="case_" [selectedHeaders$]="featuredFields$">
+    </nae-case-panel>
+
+    <h1>Workflow Panel</h1>
+
+    <nae-workflow-panel [workflow]="workflow" [selectedHeaders$]="workflowFields$"></nae-workflow-panel>
+</ng-template>

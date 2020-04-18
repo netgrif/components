@@ -34,7 +34,8 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
             return {
                 path: routePath,
                 viewType: route.layout.name,
-                layoutParams: route.layout.params
+                layoutParams: route.layout.params,
+                access: route.access,
             };
         }
 

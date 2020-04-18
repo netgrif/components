@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DataFieldResource} from './resource-interface';
-import {DataField, MaterialAppearance} from '../../../data-fields/models/abstract-data-field';
+import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
 import {TextField, TextFieldView} from '../../../data-fields/text-field/models/text-field';
 import {NumberField} from '../../../data-fields/number-field/models/number-field';
@@ -20,6 +20,7 @@ import {UserField} from '../../../data-fields/user-field/models/user-field';
 import {ButtonField} from '../../../data-fields/button-field/models/button-field';
 import {FileField} from '../../../data-fields/file-field/models/file-field';
 import moment from 'moment';
+import {UserValue} from '../../../data-fields/user-field/models/user-value';
 
 @Injectable({
     providedIn: 'root'
@@ -37,6 +38,11 @@ export class FieldConvertorService {
             case 'text':
                 let type = TextFieldView.DEFAULT;
                 if (item.subType !== undefined && item.subType === 'area') {
+                    type = TextFieldView.TEXTAREA;
+                }
+                if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'editor') {
+                    type = TextFieldView.RICHTEXTAREA;
+                } else  if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
                     type = TextFieldView.TEXTAREA;
                 }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
@@ -87,8 +93,11 @@ export class FieldConvertorService {
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
                     item.placeholder, item.description, item.layout);
             case 'user':
-                // TODO INITIALIZE USER WITH ID
-                return new UserField(item.stringId, item.name, item.behavior, undefined,
+                let user;
+                if (item.value) {
+                    user = new UserValue(item.value.id, item.name, item.value.surname, item.value.email);
+                }
+                return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout);
             case 'button':
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,

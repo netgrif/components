@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ConfigurationService} from '@netgrif/application-engine';
+import {ConfigurationService, DashboardCardTypes} from '@netgrif/application-engine';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +36,11 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                             name: 'petrinet',
                             address: 'http://localhost:8080/api/',
                             format: 'json'
+                        },
+                        {
+                            name: 'user',
+                            address: 'http://localhost:8080/api/',
+                            format: 'json'
                         }
                     ]
                 },
@@ -43,9 +48,43 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                     layout: 'empty',
                     routes: {
                         dashboard: {
-                            type: '',
                             layout: {
-                                name: ''
+                                name: 'dashboard',
+                                params: {
+                                    columns: 4,
+                                    cards: [{
+                                        type: DashboardCardTypes.COUNT,
+                                        title: 'All tasks',
+                                        resourceType: 'task',
+                                        filter: '{}',
+                                        layout: {
+                                            x: 0,
+                                            y: 0,
+                                            rows: 1,
+                                            cols: 1
+                                        }
+                                    }, {
+                                        type: DashboardCardTypes.IFRAME,
+                                        url: 'https://netgrif.com/',
+                                        layout: {
+                                            x: 2,
+                                            y: 0,
+                                            rows: 2,
+                                            cols: 2
+                                        }
+                                    }, {
+                                        type: DashboardCardTypes.COUNT,
+                                        title: 'All cases',
+                                        resourceType: 'case',
+                                        filter: '{}',
+                                        layout: {
+                                            x: 1,
+                                            y: 1,
+                                            rows: 1,
+                                            cols: 1
+                                        }
+                                    }]
+                                }
                             },
                             access: 'private',
                             navigation: {
@@ -120,15 +159,110 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                     }
                 },
                 theme: {
-                    name: 'default',
+                    name: 'example-classico',
                     pallets: {
                         light: {
-                            primary: 'blue'
+                            primary: {
+                                50: '',
+                                100: '',
+                                200: '',
+                                300: '',
+                                400: '',
+                                500: '',
+                                600: '',
+                                700: '',
+                                800: '',
+                                900: '',
+                                A100: '',
+                                A200: '',
+                                A400: '',
+                                A700: '',
+                                contrast: {
+                                    light: [
+                                        '300',
+                                        '400',
+                                        '500',
+                                        '600',
+                                        '700',
+                                        '800',
+                                        '900'
+                                    ],
+                                    dark: [
+                                        '50',
+                                        '100',
+                                        '200'
+                                    ]
+                                }
+                            },
+                            secondary: {
+                                50: '',
+                                100: '',
+                                200: '',
+                                300: '',
+                                400: '',
+                                500: '',
+                                600: '',
+                                700: '',
+                                800: '',
+                                900: '',
+                                A100: '',
+                                A200: '',
+                                A400: '',
+                                A700: '',
+                                contrast: {
+                                    light: [
+                                        '300',
+                                        '400',
+                                        '500',
+                                        '600',
+                                        '700',
+                                        '800',
+                                        '900'
+                                    ],
+                                    dark: [
+                                        '50',
+                                        '100',
+                                        '200'
+                                    ]
+                                }
+                            },
+                            warn: {
+                                50: '',
+                                100: '',
+                                200: '',
+                                300: '',
+                                400: '',
+                                500: '',
+                                600: '',
+                                700: '',
+                                800: '',
+                                900: '',
+                                A100: '',
+                                A200: '',
+                                A400: '',
+                                A700: '',
+                                contrast: {
+                                    light: [
+                                        '300',
+                                        '400',
+                                        '500',
+                                        '600',
+                                        '700',
+                                        '800',
+                                        '900'
+                                    ],
+                                    dark: [
+                                        '50',
+                                        '100',
+                                        '200'
+                                    ]
+                                }
+                            }
                         },
                         dark: {
-                            primary: 'blue'
+                            primary: 'blue',
+                            secondary: 'pink'
                         }
-
                     }
                 },
                 assets: [
