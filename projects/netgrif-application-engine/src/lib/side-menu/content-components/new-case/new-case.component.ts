@@ -1,7 +1,7 @@
 import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent} from '@angular/cdk/stepper';
-import {catchError, map, startWith} from 'rxjs/operators';
+import {catchError, map, startWith, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {SnackBarService} from '../../../snack-bar/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
@@ -11,6 +11,8 @@ import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-
 import {ProcessService} from '../../../process/process.service';
 import {Net} from '../../../process/net';
 import {LoggerService} from '../../../logger/services/logger.service';
+import {SideMenuService} from '../../services/side-menu.service';
+import {SideMenuInjectionData} from '../../models/side-menu-injection-data';
 
 
 interface Form {
@@ -28,13 +30,20 @@ interface Form {
 })
 export class NewCaseComponent implements OnInit, OnChanges {
 
-    processFormGroup: FormGroup;
-    titleFormGroup: FormGroup;
-    colorFormGroup: FormGroup;
+    processFormControl = new FormControl('', Validators.required);
+    titleFormControl = new FormControl('', Validators.required);
+    selectedColorControl = new FormControl('', Validators.required);
 
-    colors: Array<Form>;
-    options: Array<Form>;
+    colors: Form[] = [
+        {value: 'color-fg-deep-purple-600', viewValue: 'Purple'},
+        {value: 'color-fg-amber-500', viewValue: 'Yellow'},
+        {value: 'color-fg-deep-orange-500', viewValue: 'Orange'},
+        {value: 'color-fg-brown-500', viewValue: 'Brown'}
+    ];
+    options: Array<Form> = [];
     filteredOptions: Observable<Array<Form>>;
+    processOne: Promise<boolean>;
+    allowedNets: SideMenuInjectionData = [];
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
                 private _formBuilder: FormBuilder,
@@ -43,82 +52,45 @@ export class NewCaseComponent implements OnInit, OnChanges {
                 private _processService: ProcessService,
                 private _petriNetResource: PetriNetResourceService,
                 private _log: LoggerService) {
-        this.options = [];
-        this.colors = [
-            {value: 'color-fg-deep-purple-600', viewValue: 'Purple'},
-            {value: 'color-fg-amber-500', viewValue: 'Yellow'},
-            {value: 'color-fg-deep-orange-500', viewValue: 'Orange'},
-            {value: 'color-fg-brown-500', viewValue: 'Brown'}
-        ];
-    }
-
-    ngOnInit() {
-        this.processFormGroup = new FormGroup({
-            processFormControl: new FormControl('', Validators.required)
-        });
-
-        this.titleFormGroup = this._formBuilder.group({
-            titleFormControl: ['', Validators.required]
-        });
-        this.colorFormGroup = this._formBuilder.group({
-            colorFormControl: ['', Validators.required]
-        });
-
-        this.filteredOptions = this.processFormGroup.get('processFormControl').valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value))
-        );
-
-        console.log(this._sideMenuControl.data);
-        // TODO 16.4. 2020 take all allowed nets by filter from processService
-        if (this._sideMenuControl.data !== undefined &&
-            this._sideMenuControl.data['filter'] !== undefined &&
-            this._sideMenuControl.data['filter'] instanceof Array) {
-            this._sideMenuControl.data['filter'].forEach(filter => {
-                this._processService.getNet(filter).subscribe(net => {
-                    this.options.push({value: net.stringId, viewValue: net.title});
-                    this.filterOptions();
-                });
-            });
-        } else {
-            this._petriNetResource.getAll().pipe(
-                map(nets => {
-                    if (nets instanceof Array) {
-                        return nets.map(net => new Net(net));
-                    }
-                    return [];
-                }),
-                catchError(err => {
-                    this._log.error('Failed to load Petri nets', err);
-                    throw err;
-                })
-            ).subscribe(petriNets => {
-                petriNets.forEach(petriNet => {
-                    this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
-                });
-                this.filterOptions();
-            });
+        if (this._sideMenuControl.data) {
+            this.allowedNets = this._sideMenuControl.data;
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        this.filteredOptions = this.processFormGroup.get('processFormControl').valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value))
-        );
-    }
+    ngOnInit() {
+        this._petriNetResource.getAll2().subscribe(petriNets => {
+            if (petriNets) {
+                if (Array.isArray(this.allowedNets) && this.allowedNets.length) {
+                    petriNets.forEach(petriNet => {
+                        if (this.allowedNets.includes(petriNet.stringId)
+                            || this.allowedNets.includes(petriNet.title)
+                            || this.allowedNets.includes(petriNet.identifier))
+                            this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
+                    });
+                } else {
+                    petriNets.forEach(petriNet => {
+                        this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
+                    });
 
-    displayFn(process: Form): string {
-        return process && process.viewValue ? process.viewValue : '';
-    }
+                }
 
-    private filterOptions() {
-        this.filteredOptions = this.processFormGroup.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => typeof value === 'string' ? value : value.viewValue),
-                map(name => name ? this._filter(name) : this.options.slice())
-            );
+                if (this.options.length === 1) {
+                    this.processOne = Promise.resolve(true);
+
+                } else {
+                    this.processOne = Promise.resolve(false);
+
+                }
+
+                this.filteredOptions = this.processFormControl.valueChanges
+                    .pipe(
+                        startWith(''),
+                        map(value => typeof value === 'string' ? value : value.viewValue),
+                        map(name => name ? this._filter(name) : this.options.slice()),
+                        tap(() => this.options.length === 1 ? this.processFormControl.setValue(this.options[0]) : undefined)
+                    );
+            }
+        });
     }
 
     public stepChange($event: StepperSelectionEvent): void {
@@ -129,23 +101,30 @@ export class NewCaseComponent implements OnInit, OnChanges {
         });
     }
 
+    displayFn(process: Form): string {
+        return process && process.viewValue ? process.viewValue : '';
+    }
+
+
     public createNewCase(): void {
         const newCase = {
-            title: this.titleFormGroup.value.titleFormControl,
-            color: this.colorFormGroup.value.colorFormControl,
-            netId: this.processFormGroup.value.processFormControl.value
+            title: this.titleFormControl.value,
+            color: this.selectedColorControl.value,
+            netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
         };
+
         this._caseResourceService.createCase(newCase)
             .subscribe(
-                caze => this._snackBarService.openInfoSnackBar('Successful create new case ' + caze.title),
+                caze => {
+                    this._snackBarService.openInfoSnackBar('Successful create new case ' + newCase.title),
+                        this._sideMenuControl.close({
+                            opened: false,
+                            message: 'Confirm new case setup',
+                            data: newCase
+                        });
+                },
                 error => this._snackBarService.openErrorSnackBar(error)
             );
-
-        this._sideMenuControl.close({
-            opened: false,
-            message: 'Confirm new case setup',
-            data: newCase
-        });
     }
 
     /**
@@ -158,5 +137,8 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
         return this.options.filter(option => option.viewValue.toLowerCase().normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
     }
 }

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
@@ -9,6 +10,9 @@ import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {SortableView} from '../abstract/sortable-view';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
+import {HeaderMode} from '../../header/models/header-mode';
+import {HeaderChange} from '../../header/models/user-changes/header-change';
+import {SortChangeDescription} from '../../header/models/user-changes/sort-change-description';
 
 
 @Injectable()
@@ -75,16 +79,6 @@ export class CaseViewService extends SortableView {
         this._cases$.next(newCases);
     }
 
-    // public createNewCase(): void {
-    //     // TODO 16.4. 2020 Add filter to injected data for newCase Component to get there allowedNets
-    //     this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
-    //         this._log.debug($event.message, $event.data);
-    //         if ($event.data) {
-    //             this.loadCases();
-    //         }
-    //     });
-    // }
-
     protected getDefaultSortParam(): string {
         return 'stringId,desc';
     }
@@ -100,9 +94,19 @@ export class CaseViewService extends SortableView {
         }
     }
 
+    /**
+     * injectionData [] no filter
+     * ['AA'] Title or ID
+     */
     public createNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent, SideMenuWidth.MEDIUM, []); // TODO: Filter sieti [] alebo ['Nazov']
+        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, []).onClose.subscribe($event => {
+            this._log.debug($event.message, $event.data);
+            if ($event.data) {
+                this.loadCases();
+            }
+        });
     }
+
     // USER?
     // public hasAutority(): boolean {
     //     if (!this.authorityToCreate || !this._user || !this._user.authorities) return false;
@@ -110,7 +114,6 @@ export class CaseViewService extends SortableView {
     //         return this.authorityToCreate.some(a => this._user.authorities.some(u => u === a));
     //     }
     // }
-
 
 
     public registerHeaderChange(headerChange$: Observable<HeaderChange>): void {
@@ -126,6 +129,8 @@ export class CaseViewService extends SortableView {
                 this.loadCases();
             }
         });
+    }
+
     public reload(): void {
         this.loadCases();
     }

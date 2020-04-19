@@ -11,6 +11,7 @@ import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
 import {Net} from '../../process/net';
 import {MessageResource} from '../interface/message-resource';
+import {PetriNetReference} from '../interface/petri-net-reference';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,10 @@ export class PetriNetResourceService {
      * {{baseUrl}}/api/petrinet
      */
     public getAll(): Observable<Array<Net>> {
+        return this.provider.get$('petrinet', this.SERVER_URL)
+            .pipe(map(r => changeType(r, 'petriNetReferences')));
+    }
+    public getAll2(): Observable<Array<PetriNetReference>> {
         return this.provider.get$('petrinet', this.SERVER_URL)
             .pipe(map(r => changeType(r, 'petriNetReferences')));
     }
