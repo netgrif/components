@@ -1,9 +1,5 @@
 @import '~@angular/material/theming';
 
-@mixin side-menu($theme) {
-
-}
-
 @mixin side-menu-typography($typography-config) {
     .side-menu-root {
         font: {
