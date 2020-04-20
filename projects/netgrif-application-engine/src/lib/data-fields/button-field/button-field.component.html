@@ -21,5 +21,6 @@
                 (click)="formControl.setValue(formControl.value + 1)">
             {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : dataField.placeholder }}
         </button>
+        <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>

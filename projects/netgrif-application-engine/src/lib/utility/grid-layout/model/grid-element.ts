@@ -3,9 +3,12 @@ export interface GridElement {
     type: string;
 }
 
-export interface GridLayout {
+export interface GridLayout extends BasicLayout {
     x: number;
     y: number;
+}
+
+export interface BasicLayout {
     rows: number;
     cols: number;
 }

@@ -3,17 +3,23 @@ import {ButtonField} from './models/button-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 
 @Component({
-  selector: 'nae-button-field',
-  templateUrl: './button-field.component.html',
-  styleUrls: ['./button-field.component.scss']
+    selector: 'nae-button-field',
+    templateUrl: './button-field.component.html',
+    styleUrls: ['./button-field.component.scss']
 })
 export class ButtonFieldComponent extends AbstractDataFieldComponent {
 
-  @Input() dataField: ButtonField;
-  // TODO BUG - disabled donwt workink on init, due ngDefaultControl
+    @Input() dataField: ButtonField;
 
-  constructor() {
-      super();
-  }
+    // TODO BUG - disabled dont working on init, due ngDefaultControl
 
+    constructor() {
+        super();
+    }
+
+    public getErrorMessage() {
+        if (this.formControl.hasError('required')) {
+            return 'This field is required!';
+        }
+    }
 }

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {Case, HeaderColumn, HeaderColumnType, PetriNetReference} from '@netgrif/application-engine';
+import {Case,
+    HeaderColumn,
+    HeaderColumnType,
+    PetriNetReference,
+    WorkflowMetaField,
+    Author
+} from '@netgrif/application-engine';
 import {BehaviorSubject} from 'rxjs';
-import {WorkflowMetaField} from '../../../../../netgrif-application-engine/src/lib/header/workflow-header/workflow-header.service';
-import {Author} from '../../../../../netgrif-application-engine/src/lib/resources/interface/author';
-import {ImmediateData} from '../../../../../netgrif-application-engine/src/lib/resources/interface/immediate-data';
 
 @Component({
   selector: 'nae-app-panels',

@@ -9,6 +9,9 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
 
     // TODO correct locale (date format and first day of the week)
     public buildErrorMessage(dataField: AbstractTimeInstanceField) {
+        if (this.formControl.hasError('required')) {
+            return 'This field is required!';
+        }
         if (this.formControl.hasError('validBetween')) {
             const tmp = dataField.validations.find(value => value.validationRule.includes('between')).validationRule.split(' ');
             return this.resolveErrorMessage(dataField, 'between', 'Entered date must be in range ' + tmp[1]);

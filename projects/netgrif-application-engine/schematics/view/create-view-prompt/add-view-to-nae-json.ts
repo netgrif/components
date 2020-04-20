@@ -31,16 +31,16 @@ export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule
         }
 
         if (parentRoute.routes === undefined) {
-           parentRoute.routes = {};
+            parentRoute.routes = {};
         }
 
         if (parentRoute.routes[pathSegments[pathSegments.length - 1]] === undefined) {
             parentRoute.routes[pathSegments[pathSegments.length - 1]] = {
                 layout: {
                     name: createViewArguments.viewType as string,
-                    params: {}
+                    params: (createViewArguments.layoutParams === undefined) ? {} : createViewArguments.layoutParams
                 },
-                access: 'public',
+                access: createViewArguments.access,
                 navigation: true
             };
 
