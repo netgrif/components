@@ -28,8 +28,10 @@
     "side-menu": {
         "filter-selector": {
             "choose-filter": "Zvoľte filter",
+            "search-filter": "Vyhľadať filter",
             "case-filters": "Filtre prípadov",
-            "task-filters": "Filtre úloh"
+            "task-filters": "Filtre úloh",
+            "select": "Zvoliť"
         }
     }
 }

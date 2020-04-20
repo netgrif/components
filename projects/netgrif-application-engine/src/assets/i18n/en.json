@@ -39,8 +39,10 @@
     "side-menu": {
         "filter-selector": {
             "choose-filter": "Choose a filter",
+            "search-filter": "Search filters",
             "case-filters": "Case filters",
-            "task-filters": "Task filters"
+            "task-filters": "Task filters",
+            "select": "Select"
         }
     }
 }

@@ -8,6 +8,7 @@ import {FilteredArray} from './model/filtered-array';
 import {FilterType} from '../../../filter/models/filter-type';
 import {SelectLanguageService} from '../../../toolbar/select-language.service';
 import {MatSelectionList, MatSelectionListChange} from '@angular/material';
+import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'nae-filter-selector',
@@ -16,48 +17,57 @@ import {MatSelectionList, MatSelectionListChange} from '@angular/material';
 })
 export class FilterSelectorComponent {
 
-    public cases: FilteredArray<Filter>;
-    public tasks: FilteredArray<Filter>;
+    public caseFilters: FilteredArray<Filter>;
+    public taskFilters: FilteredArray<Filter>;
+
+    public searchFormControl: FormControl;
 
     private _selectedFilter: Filter;
 
     @ViewChild('caseFilterList') caseFilterList: MatSelectionList;
     @ViewChild('taskFilterList') taskFilterList: MatSelectionList;
 
-    private _filterPredicate = (item: Filter, data: string) => item.title ? item.title.includes(data) : item.id.includes(data);
+    private _filterPredicate = (item: Filter, data: string) => {
+        return item.title
+        ? item.title.toLocaleLowerCase().includes(data.toLocaleLowerCase())
+        : item.id.toLocaleLowerCase().includes(data.toLocaleLowerCase());
+    }
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
                 private _filterRepository: FilterRepository, private _i18n: SelectLanguageService) {
         const filterConstraints = _sideMenuControl.data as FilterSelectorInjectionData;
 
-        let cases = [];
-        let tasks = [];
+        let caseFilters = [];
+        let taskFilters = [];
         if (filterConstraints && filterConstraints.filterIdsConstraint) {
             const filters = this._filterRepository.getFilters(filterConstraints.filterIdsConstraint);
             filters.forEach(filter => {
                 if (filter.type === FilterType.CASE &&
                     (!filterConstraints.filterTypeConstraint || filterConstraints.filterTypeConstraint === FilterType.CASE)) {
-                    cases.push(filter);
+                    caseFilters.push(filter);
                 } else if (filter.type === FilterType.TASK &&
                     (!filterConstraints.filterTypeConstraint || filterConstraints.filterTypeConstraint === FilterType.TASK)) {
-                    tasks.push(filter);
+                    taskFilters.push(filter);
                 }
             });
         } else {
             if (!filterConstraints ||
                 !filterConstraints.filterTypeConstraint ||
                 filterConstraints.filterTypeConstraint === FilterType.CASE) {
-                cases = this._filterRepository.getFilters(this._filterRepository.getCaseFilterList());
+                caseFilters = this._filterRepository.getFilters(this._filterRepository.getCaseFilterList());
             }
             if (!filterConstraints ||
                 !filterConstraints.filterTypeConstraint ||
                 filterConstraints.filterTypeConstraint === FilterType.TASK) {
-                tasks = this._filterRepository.getFilters(this._filterRepository.getTaskFilterList());
+                taskFilters = this._filterRepository.getFilters(this._filterRepository.getTaskFilterList());
             }
         }
 
-        this.cases = new FilteredArray<Filter>(cases, this._filterPredicate);
-        this.tasks = new FilteredArray<Filter>(tasks, this._filterPredicate);
+        this.caseFilters = new FilteredArray<Filter>(caseFilters, this._filterPredicate);
+        this.taskFilters = new FilteredArray<Filter>(taskFilters, this._filterPredicate);
+
+        this.searchFormControl = new FormControl();
+        this.searchFormControl.valueChanges.subscribe(newValue => this.filterFilters(newValue));
     }
 
     public filterSelected(filter: Filter): void {
@@ -80,26 +90,37 @@ export class FilterSelectorComponent {
     }
 
     public caseFilterSelected(event: MatSelectionListChange): void {
-        this.filterSelected(event.option.value);
-        if (this.taskFilterList) {
-           this.taskFilterList.deselectAll();
-        }
-        // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML, once Covalent supports material 9.1.0 or above
         if (event.option.selected) {
+            this.filterSelected(event.option.value);
+            if (this.taskFilterList) {
+                this.taskFilterList.deselectAll();
+            }
+            // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML,
+            //  once Covalent supports material 9.1.0 or above
             this.caseFilterList.deselectAll();
             event.option.selected = true;
+        } else {
+            this.filterSelected(undefined);
         }
     }
 
     public taskFilterSelected(event: MatSelectionListChange): void {
-        this.filterSelected(event.option.value);
-        if (this.caseFilterList) {
-            this.caseFilterList.deselectAll();
-        }
-        // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML, once Covalent supports material 9.1.0 or above
         if (event.option.selected) {
+            this.filterSelected(event.option.value);
+            if (this.caseFilterList) {
+                this.caseFilterList.deselectAll();
+            }
+            // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML,
+            //  once Covalent supports material 9.1.0 or above
             this.taskFilterList.deselectAll();
             event.option.selected = true;
+        } else {
+            this.filterSelected(undefined);
         }
+    }
+
+    public filterFilters(newValue: string): void {
+        this.caseFilters.filter(newValue);
+        this.taskFilters.filter(newValue);
     }
 }
