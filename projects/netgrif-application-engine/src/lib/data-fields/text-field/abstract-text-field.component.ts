@@ -7,6 +7,9 @@ export abstract class AbstractTextFieldComponent {
     }
 
     protected buildErrorMessage(textField: TextField, formControlRef: FormControl) {
+        if (formControlRef.hasError('required')) {
+            return 'This field is required!';
+        }
         if (formControlRef.hasError('minlength')) {
             return this.resolveErrorMessage(textField, 'length',
                 'Entered text must be at the most ' + formControlRef.errors.minlength.requiredLength);

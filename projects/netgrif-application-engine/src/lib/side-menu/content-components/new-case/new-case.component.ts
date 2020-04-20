@@ -137,15 +137,16 @@ export class NewCaseComponent implements OnInit, OnChanges {
         };
         this._caseResourceService.createCase(newCase)
             .subscribe(
-                caze => this._snackBarService.openInfoSnackBar('Successful create new case ' + caze.title),
+                caze => {
+                    this._snackBarService.openInfoSnackBar('Successful create new case ' + caze.title);
+                    this._sideMenuControl.close({
+                        opened: false,
+                        message: 'Confirm new case setup',
+                        data: newCase
+                    });
+                },
                 error => this._snackBarService.openErrorSnackBar(error)
             );
-
-        this._sideMenuControl.close({
-            opened: false,
-            message: 'Confirm new case setup',
-            data: newCase
-        });
     }
 
     /**
