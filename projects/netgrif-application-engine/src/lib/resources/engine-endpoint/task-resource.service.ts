@@ -33,6 +33,10 @@ export class TaskResourceService implements CountService {
             .pipe(map(r => changeType(r, undefined)));
     }
 
+    public count(body: object): Observable<Count> {
+        return this.countTask(body);
+    }
+
     /**
      * Get all tasks
      * GET

@@ -121,8 +121,8 @@ export abstract class AbstractResourceProvider {
         });
     }
 
-    public upload<T>(endpoint?: string, url?: string, body?: FormData, params?: Params, headers?: Headers,
-                     responseType?: ResponseType): Observable<HttpEvent<T>> {
+    public upload$<T>(endpoint?: string, url?: string, body?: FormData, params?: Params, headers?: Headers,
+                      responseType?: ResponseType): Observable<HttpEvent<T>> {
         return this.httpClient.post<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             body, {
                 headers,
