@@ -1,11 +1,11 @@
 <div class="fill-all-space">
-    <h1>Choose a filter</h1>
+    <h1>{{ 'side-menu.filter-selector.choose-filter' | translate}}</h1>
     <div *ngIf="cases.filtered.length > 0">
-        <h2>Case filters</h2>
+        <h2>{{ 'side-menu.filter-selector.case-filters' | translate}}</h2>
         <nae-filter-selector-list-item *ngFor="let filter of cases.filtered" [filter]="filter"></nae-filter-selector-list-item>
     </div>
     <div *ngIf="tasks.filtered.length > 0">
-        <h2>Task filters</h2>
+        <h2>{{ 'side-menu.filter-selector.task-filters' | translate}}</h2>
         <nae-filter-selector-list-item *ngFor="let filter of tasks.filtered" [filter]="filter"></nae-filter-selector-list-item>
     </div>
 </div>

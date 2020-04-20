@@ -6,6 +6,7 @@ import {Filter} from '../../../filter/models/filter';
 import {FilterSelectorInjectionData} from './model/filter-selector-injection-data';
 import {FilteredArray} from './model/filtered-array';
 import {FilterType} from '../../../filter/models/filter-type';
+import {SelectLanguageService} from '../../../toolbar/select-language.service';
 
 @Component({
     selector: 'nae-filter-selector',
@@ -17,10 +18,12 @@ export class FilterSelectorComponent {
     public cases: FilteredArray<Filter>;
     public tasks: FilteredArray<Filter>;
 
+    private _selectedFilter: Filter;
+
     private _filterPredicate = (item: Filter, data: string) => item.title ? item.title.includes(data) : item.id.includes(data);
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
-                private _filterRepository: FilterRepository) {
+                private _filterRepository: FilterRepository, private _i18n: SelectLanguageService) {
         const filterConstraints = _sideMenuControl.data as FilterSelectorInjectionData;
 
         let cases = [];
@@ -51,6 +54,25 @@ export class FilterSelectorComponent {
 
         this.cases = new FilteredArray<Filter>(cases, this._filterPredicate);
         this.tasks = new FilteredArray<Filter>(tasks, this._filterPredicate);
+    }
+
+    public filterSelected(filter: Filter): void {
+        this._selectedFilter = filter;
+        this._sideMenuControl.publish({
+            opened: true,
+            message: 'New selected filter',
+            data: this._selectedFilter
+        });
+    }
+
+    public filterSelectionConfirmed(): void {
+        if (this._selectedFilter !== undefined) {
+            this._sideMenuControl.close({
+                opened: false,
+                message: 'Selected filter was confirmed',
+                data: this._selectedFilter
+            });
+        }
     }
 
 }

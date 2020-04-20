@@ -35,5 +35,12 @@
             "cancel": "Cancel",
             "noData": "This task has no data. Finish to continue."
         }
+    },
+    "side-menu": {
+        "filter-selector": {
+            "choose-filter": "Choose a filter",
+            "case-filters": "Case filters",
+            "task-filters": "Task filters"
+        }
     }
 }
