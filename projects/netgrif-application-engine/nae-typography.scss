@@ -1,0 +1,31 @@
+@import 'src/lib/side-menu/side-menu.theme';
+
+@function nae-typography-level(
+    $font-size,
+    $line-height: $font-size,
+    $font-weight: 400
+) {
+    @return (
+        font-size: $font-size,
+        line-height: $line-height,
+        font-weight: $font-weight
+    );
+}
+
+@function nae-typography-config(
+    $font-family: 'Roboto, monospace',
+    $headline: nae-typography-level(32px, 48px, 700)
+) {
+    @return (
+        font-family: $font-family,
+        headline: $headline
+    );
+}
+
+@mixin nae-typography($typography-config: null) {
+    @if $typography-config == null {
+        $typography-config: nae-typography-config();
+    }
+
+    @include side-menu-typography($typography-config);
+}
