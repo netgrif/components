@@ -1,11 +1,10 @@
-// TODO BUG 20.4.2020 - make typography work in portaled components such as side menus and dialogs. Solution inspired by terra data
-//@import "nae-typography";
+@import "nae-typography";
 @import 'src/lib/panel/panel.theme';
 @import 'src/lib/data-fields/data-field.theme';
 @import 'src/lib/side-menu/side-menu.theme';
 
 @mixin nae-lib-theme($app-theme, $app-typography-config) {
-    //@include nae-typography($app-typography-config);
+    @include nae-typography($app-typography-config);
     @include panel-component($app-theme);
     @include side-menu($app-theme);
     @include data-field-component();
