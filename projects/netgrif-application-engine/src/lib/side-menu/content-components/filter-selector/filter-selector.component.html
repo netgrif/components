@@ -1,12 +1,19 @@
+<mat-toolbar color="primary">{{ 'side-menu.filter-selector.choose-filter' | translate}}</mat-toolbar>
 <div class="filter-selector-root side-menu-root">
-    <h1>{{ 'side-menu.filter-selector.choose-filter' | translate}}</h1>
     <div *ngIf="cases.filtered.length > 0">
-        <h2>{{ 'side-menu.filter-selector.case-filters' | translate}}</h2>
-
-        <nae-filter-selector-list-item *ngFor="let filter of cases.filtered" [filter]="filter"></nae-filter-selector-list-item>
+        <h2 class="header-padding">{{ 'side-menu.filter-selector.case-filters' | translate}}</h2>
+        <mat-selection-list (selectionChange)="caseFilterSelected($event)" #caseFilterList>
+            <mat-list-option *ngFor="let filter of cases.filtered" [value]="filter">
+                <nae-filter-selector-list-item [filter]="filter"></nae-filter-selector-list-item>
+            </mat-list-option>
+        </mat-selection-list>
     </div>
     <div *ngIf="tasks.filtered.length > 0">
-        <h2>{{ 'side-menu.filter-selector.task-filters' | translate}}</h2>
-        <nae-filter-selector-list-item *ngFor="let filter of tasks.filtered" [filter]="filter"></nae-filter-selector-list-item>
+        <h2 class="header-padding">{{ 'side-menu.filter-selector.task-filters' | translate}}</h2>
+        <mat-selection-list (selectionChange)="taskFilterSelected($event)" #taskFilterList>
+            <mat-list-option *ngFor="let filter of tasks.filtered" [value]="filter">
+                <nae-filter-selector-list-item [filter]="filter"></nae-filter-selector-list-item>
+            </mat-list-option>
+        </mat-selection-list>
     </div>
 </div>

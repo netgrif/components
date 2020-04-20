@@ -31,6 +31,7 @@ export class SidemenuExampleComponent implements OnInit {
     }
 
     public toggleFilterSideMenu() {
-        this.sideMenuService.open(FilterSelectorComponent);
+        const ref = this.sideMenuService.open(FilterSelectorComponent);
+        ref.onEvent.subscribe($event => console.log($event));
     }
 }

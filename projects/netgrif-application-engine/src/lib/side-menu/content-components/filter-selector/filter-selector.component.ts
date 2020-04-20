@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {FilterRepository} from '../../../filter/filter.repository';
@@ -7,6 +7,7 @@ import {FilterSelectorInjectionData} from './model/filter-selector-injection-dat
 import {FilteredArray} from './model/filtered-array';
 import {FilterType} from '../../../filter/models/filter-type';
 import {SelectLanguageService} from '../../../toolbar/select-language.service';
+import {MatSelectionList, MatSelectionListChange} from '@angular/material';
 
 @Component({
     selector: 'nae-filter-selector',
@@ -19,6 +20,9 @@ export class FilterSelectorComponent {
     public tasks: FilteredArray<Filter>;
 
     private _selectedFilter: Filter;
+
+    @ViewChild('caseFilterList') caseFilterList: MatSelectionList;
+    @ViewChild('taskFilterList') taskFilterList: MatSelectionList;
 
     private _filterPredicate = (item: Filter, data: string) => item.title ? item.title.includes(data) : item.id.includes(data);
 
@@ -75,4 +79,27 @@ export class FilterSelectorComponent {
         }
     }
 
+    public caseFilterSelected(event: MatSelectionListChange): void {
+        this.filterSelected(event.option.value);
+        if (this.taskFilterList) {
+           this.taskFilterList.deselectAll();
+        }
+        // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML, once Covalent supports material 9.1.0 or above
+        if (event.option.selected) {
+            this.caseFilterList.deselectAll();
+            event.option.selected = true;
+        }
+    }
+
+    public taskFilterSelected(event: MatSelectionListChange): void {
+        this.filterSelected(event.option.value);
+        if (this.caseFilterList) {
+            this.caseFilterList.deselectAll();
+        }
+        // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML, once Covalent supports material 9.1.0 or above
+        if (event.option.selected) {
+            this.taskFilterList.deselectAll();
+            event.option.selected = true;
+        }
+    }
 }
