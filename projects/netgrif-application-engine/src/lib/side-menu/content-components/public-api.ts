@@ -15,3 +15,4 @@ export * from './filter-selector/filter-selector.component';
 
 /* MODELS */
 export * from './files-upload/models/file-upload-model';
+export * from './filter-selector/model/filter-selector-injection-data';
