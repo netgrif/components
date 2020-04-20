@@ -1,27 +1,27 @@
-import { TestBed } from '@angular/core/testing';
-
-import { WorkflowViewService } from './workflow-view.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {CaseViewService} from './case-view-service';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {DashboardCardTypes} from '@netgrif/application-engine';
+import {MaterialModule} from '../../material/material.module';
 
-describe('WorkflowsViewService', () => {
-  let service: WorkflowViewService;
+describe('CaseViewService', () => {
+    let service: CaseViewService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
-        providers: [
-            WorkflowViewService,
-            {provide: ConfigurationService, useClass: TestConfigurationService},
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule, MaterialModule],
+            providers: [
+                CaseViewService,
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+                ]
+        });
+        service = TestBed.inject(CaseViewService);
     });
-    service = TestBed.inject(WorkflowViewService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });
 
 class TestConfigurationService extends ConfigurationService {

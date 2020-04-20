@@ -1,27 +1,28 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { WorkflowViewService } from './workflow-view.service';
+import {HttpClient} from '@angular/common/http';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ConfigurationService} from '../../configuration/configuration.service';
+import {ProcessService} from './process.service';
+import {ConfigurationService} from '../configuration/configuration.service';
 import {DashboardCardTypes} from '@netgrif/application-engine';
 
-describe('WorkflowsViewService', () => {
-  let service: WorkflowViewService;
+describe('ProcessService', () => {
+    let service: ProcessService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
-        providers: [
-            WorkflowViewService,
-            {provide: ConfigurationService, useClass: TestConfigurationService},
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [
+                HttpClient,
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ]
+        });
+        service = TestBed.inject(ProcessService);
     });
-    service = TestBed.inject(WorkflowViewService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
 });
 
 class TestConfigurationService extends ConfigurationService {

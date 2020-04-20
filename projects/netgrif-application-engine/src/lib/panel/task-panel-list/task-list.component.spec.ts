@@ -7,6 +7,7 @@ import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
@@ -19,7 +20,8 @@ describe('TaskListComponent', () => {
                 PanelModule,
                 MaterialModule,
                 NoopAnimationsModule,
-                CommonModule
+                CommonModule,
+                HttpClientTestingModule
             ],
             declarations: [TestWrapperComponent]
         })

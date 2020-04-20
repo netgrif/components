@@ -1,27 +1,30 @@
-import { TestBed } from '@angular/core/testing';
-
-import { WorkflowViewService } from './workflow-view.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {DashboardCardTypes} from '@netgrif/application-engine';
+import {MaterialModule} from '../../material/material.module';
+import {TaskViewService} from './task-view.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
-describe('WorkflowsViewService', () => {
-  let service: WorkflowViewService;
+describe('TaskViewService', () => {
+    let service: TaskViewService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
-        providers: [
-            WorkflowViewService,
-            {provide: ConfigurationService, useClass: TestConfigurationService},
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
+            providers: [
+                TaskViewService,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                AuthenticationMethodService
+            ]
+        });
+        service = TestBed.inject(TaskViewService);
     });
-    service = TestBed.inject(WorkflowViewService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });
 
 class TestConfigurationService extends ConfigurationService {

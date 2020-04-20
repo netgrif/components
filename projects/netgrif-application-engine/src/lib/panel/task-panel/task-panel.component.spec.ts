@@ -1,28 +1,82 @@
-import { TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { WorkflowViewService } from './workflow-view.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {PanelModule} from '../panel.module';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {MaterialModule} from '../../material/material.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TaskPanelComponent} from './task-panel.component';
+import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
+import {Observable, of, Subject} from 'rxjs';
+import {HeaderColumn} from '../../header/models/header-column';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {DashboardCardTypes} from '@netgrif/application-engine';
+import {AuthenticationModule} from '../../authentication/authentication.module';
+import {TaskViewService} from '../../view/task-view/task-view.service';
 
-describe('WorkflowsViewService', () => {
-  let service: WorkflowViewService;
+describe('TaskPanelComponent', () => {
+    let component: TaskPanelComponent;
+    let fixture: ComponentFixture<TestWrapperComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
-        providers: [
-            WorkflowViewService,
-            {provide: ConfigurationService, useClass: TestConfigurationService},
-        ]
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                MatExpansionModule,
+                PanelModule,
+                MaterialModule,
+                NoopAnimationsModule,
+                CommonModule,
+                AuthenticationModule
+            ],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                TaskViewService
+            ],
+            declarations: [TestWrapperComponent]
+        })
+            .compileComponents();
+
+        fixture = TestBed.createComponent(TestWrapperComponent);
+        component = fixture.debugElement.children[0].componentInstance;
+        fixture.detectChanges();
+    }));
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
     });
-    service = TestBed.inject(WorkflowViewService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
 });
+
+@Component({
+    selector: 'nae-test-wrapper',
+    template: '<nae-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></nae-task-panel>'
+})
+class TestWrapperComponent {
+    taskPanel: TaskPanelData = {
+        task: {
+            caseId: 'string',
+            transitionId: 'string',
+            title: 'string',
+            caseColor: 'string',
+            caseTitle: 'string',
+            user: undefined,
+            roles: {},
+            startDate: undefined,
+            finishDate: undefined,
+            assignPolicy: AssignPolicy.manual,
+            dataFocusPolicy: DataFocusPolicy.manual,
+            finishPolicy: FinishPolicy.manual,
+            stringId: 'string',
+            cols: undefined,
+            dataGroups: [],
+            _links: {}
+        },
+        changedFields: new Subject<ChangedFields>()
+    };
+    selectedHeaders$ = new Observable<Array<HeaderColumn>>();
+}
 
 class TestConfigurationService extends ConfigurationService {
     constructor() {

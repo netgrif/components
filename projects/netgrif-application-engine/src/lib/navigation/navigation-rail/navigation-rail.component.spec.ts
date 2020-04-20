@@ -7,6 +7,7 @@ import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelModule} from '../quick-panel/quick-panel.module';
 import {UserModule} from '../../user/user.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('NavigationRailComponent', () => {
     let component: NavigationRailComponent;
@@ -22,7 +23,8 @@ describe('NavigationRailComponent', () => {
                 FlexModule,
                 FlexLayoutModule,
                 QuickPanelModule,
-                UserModule
+                UserModule,
+                BrowserAnimationsModule
             ],
         })
             .compileComponents();
@@ -34,7 +36,7 @@ describe('NavigationRailComponent', () => {
         fixture.detectChanges();
     });
 
-    // it('should create', () => {
-    //     expect(component).toBeTruthy();
-    // });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

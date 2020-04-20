@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {asyncScheduler, Observable, of, Subject} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {Net} from './net';
 import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource-service';
 import {LoggerService} from '../logger/services/logger.service';
 import Transition from './transition';
 import Transaction from './transaction';
 import NetRole from './netRole';
-import {catchError, map, mergeMap, publish, tap} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'

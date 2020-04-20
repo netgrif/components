@@ -4,24 +4,24 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
-// describe('UserService', () => {
-//   let service: UserService;
-//
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//         providers: [
-//             AuthenticationMethodService,
-//             HttpClientTestingModule,
-//             {provide: ConfigurationService, useClass: TestConfigService}
-//         ]
-//     });
-//     service = TestBed.inject(UserService);
-//   });
-//
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-// });
+describe('UserService', () => {
+  let service: UserService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule],
+        providers: [
+            AuthenticationMethodService,
+            {provide: ConfigurationService, useClass: TestConfigService}
+        ]
+    });
+    service = TestBed.inject(UserService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
 
 class TestConfigService extends ConfigurationService {
     constructor() {

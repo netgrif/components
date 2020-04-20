@@ -69,9 +69,9 @@ export class NewCaseComponent implements OnInit, OnChanges {
             map(value => this._filter(value))
         );
 
-        console.log(this._sideMenuControl.data);
         // TODO 16.4. 2020 take all allowed nets by filter from processService
-        if (this._sideMenuControl.data !== undefined &&
+        if (this._sideMenuControl &&
+            this._sideMenuControl.data !== undefined &&
             this._sideMenuControl.data['filter'] !== undefined &&
             this._sideMenuControl.data['filter'] instanceof Array) {
             this._sideMenuControl.data['filter'].forEach(filter => {

@@ -15,7 +15,7 @@ describe('ResourceProviderService', () => {
     service = TestBed.inject(ResourceProvider);
   });
 
-  // it('should be created', () => {
-  //   expect(service).toBeTruthy();
-  // });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 });
