@@ -10,6 +10,18 @@ import {SelectLanguageService} from '../../../toolbar/select-language.service';
 import {MatSelectionList, MatSelectionListChange} from '@angular/material';
 import {FormControl} from '@angular/forms';
 
+/**
+ * Allows user to choose a filter from the filter repository.
+ *
+ * Publishes events to the {@link SideMenuControl} object when:
+ *
+ * - filter is selected by the user. Message: `New selected filter`, Data: is either the selected filter or `undefined` if the user
+ * deselected the filter
+ *
+ * - filter selection is confirmed by the user. Message: `Selected filter was confirmed`, Data: the selected filter. If the user didn't
+ * select any filter this event will not be published.
+ *
+ */
 @Component({
     selector: 'nae-filter-selector',
     templateUrl: './filter-selector.component.html',
@@ -17,22 +29,61 @@ import {FormControl} from '@angular/forms';
 })
 export class FilterSelectorComponent {
 
+    /**
+     * @ignore
+     * Case filters bound to HTML
+     */
     public caseFilters: FilteredArray<Filter>;
+    /**
+     * @ignore
+     * Task filters bound to html
+     */
     public taskFilters: FilteredArray<Filter>;
 
+    /**
+     * @ignore
+     * `FormControl` for the search input
+     */
     public searchFormControl: FormControl;
 
+    /**
+     * @ignore
+     * Currently selected filter. `undefined` if no filter is selected.
+     */
     private _selectedFilter: Filter;
 
+    /**
+     * @ignore
+     * Reference to the `mat-selection-list` component, that holds the list of case filters.
+     */
     @ViewChild('caseFilterList') caseFilterList: MatSelectionList;
+    /**
+     * @ignore
+     * Reference to the `mat-selection-list` component, that holds the list of task filters.
+     */
     @ViewChild('taskFilterList') taskFilterList: MatSelectionList;
 
-    private _filterPredicate = (item: Filter, data: string) => {
+    /**
+     * @ignore
+     * Stores the predicate used for filtering of filters with {@linkFilteredArray}.
+     * @param item some filter from the list
+     * @param searchInput value the user is searching for
+     */
+    private _filterPredicate = (item: Filter, searchInput: string) => {
         return item.title
-        ? item.title.toLocaleLowerCase().includes(data.toLocaleLowerCase())
-        : item.id.toLocaleLowerCase().includes(data.toLocaleLowerCase());
+        ? item.title.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
+        : item.id.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase());
     }
 
+    /**
+     * Retrieves the {@link Filter} objects from the {@link FilterRepository} and instantiates tis component.
+     *
+     * Filters that are available for selection can be set using the injected data. See {@link FilterSelectorInjectionData}
+     * for more information.
+     * @param _sideMenuControl -
+     * @param _filterRepository -
+     * @param _i18n -
+     */
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
                 private _filterRepository: FilterRepository, private _i18n: SelectLanguageService) {
         const filterConstraints = _sideMenuControl.data as FilterSelectorInjectionData;
@@ -70,6 +121,11 @@ export class FilterSelectorComponent {
         this.searchFormControl.valueChanges.subscribe(newValue => this.filterFilters(newValue));
     }
 
+    /**
+     * @ignore
+     * Changes the currently selected filter and publishes an event about this to the output stream in {@link SideMenuControl}.
+     * @param filter the newly selected filter
+     */
     public filterSelected(filter: Filter): void {
         this._selectedFilter = filter;
         this._sideMenuControl.publish({
@@ -79,6 +135,10 @@ export class FilterSelectorComponent {
         });
     }
 
+    /**
+     * @ignore
+     * Closes the side menu and publishes an event with the currently selected filter.
+     */
     public filterSelectionConfirmed(): void {
         if (this._selectedFilter !== undefined) {
             this._sideMenuControl.close({
@@ -89,6 +149,11 @@ export class FilterSelectorComponent {
         }
     }
 
+    /**
+     * @ignore
+     * Clears selection of task filters and ensures that only one case filter can be selected at once.
+     * @param event list change event published byt the material component
+     */
     public caseFilterSelected(event: MatSelectionListChange): void {
         if (event.option.selected) {
             this.filterSelected(event.option.value);
@@ -104,6 +169,11 @@ export class FilterSelectorComponent {
         }
     }
 
+    /**
+     * @ignore
+     * Clears selection of case filters and ensures that only one task filter can be selected at once.
+     * @param event list change event published byt the material component
+     */
     public taskFilterSelected(event: MatSelectionListChange): void {
         if (event.option.selected) {
             this.filterSelected(event.option.value);
@@ -119,6 +189,11 @@ export class FilterSelectorComponent {
         }
     }
 
+    /**
+     * @ignore
+     * Filters both lists of filters based on user search input.
+     * @param newValue user search input value
+     */
     public filterFilters(newValue: string): void {
         this.caseFilters.filter(newValue);
         this.taskFilters.filter(newValue);
