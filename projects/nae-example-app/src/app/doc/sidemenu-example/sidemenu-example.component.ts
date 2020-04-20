@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {NewCaseComponent, SideMenuService, UserAssignComponent} from '@netgrif/application-engine';
+import {NewCaseComponent, SideMenuService, UserAssignComponent, FilterSelectorComponent} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-sidemenu-example',
@@ -28,5 +28,9 @@ export class SidemenuExampleComponent implements OnInit {
 
     public toggleUserSideMenu() {
         this.sideMenuService.open(UserAssignComponent);
+    }
+
+    public toggleFilterSideMenu() {
+        this.sideMenuService.open(FilterSelectorComponent);
     }
 }

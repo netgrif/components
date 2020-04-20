@@ -27,6 +27,7 @@ import {
     ImportNetComponent,
     WorkflowViewModule,
     DashboardModule,
+    FilterSelectorComponent,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -137,6 +138,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabbedCaseViewComponent,
         TabbedTaskViewComponent,
         ImportNetComponent,
+        FilterSelectorComponent,
     ],
     providers: [{
             provide: ConfigurationService,

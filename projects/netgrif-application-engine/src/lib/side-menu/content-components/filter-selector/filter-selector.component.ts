@@ -25,7 +25,7 @@ export class FilterSelectorComponent {
 
         let cases = [];
         let tasks = [];
-        if (filterConstraints.filterIdsConstraint) {
+        if (filterConstraints && filterConstraints.filterIdsConstraint) {
             const filters = this._filterRepository.getFilters(filterConstraints.filterIdsConstraint);
             filters.forEach(filter => {
                 if (filter.type === FilterType.CASE &&
@@ -37,10 +37,14 @@ export class FilterSelectorComponent {
                 }
             });
         } else {
-            if ( !filterConstraints.filterTypeConstraint || filterConstraints.filterTypeConstraint === FilterType.CASE) {
+            if (!filterConstraints ||
+                !filterConstraints.filterTypeConstraint ||
+                filterConstraints.filterTypeConstraint === FilterType.CASE) {
                 cases = this._filterRepository.getFilters(this._filterRepository.getCaseFilterList());
             }
-            if ( !filterConstraints.filterTypeConstraint || filterConstraints.filterTypeConstraint === FilterType.TASK) {
+            if (!filterConstraints ||
+                !filterConstraints.filterTypeConstraint ||
+                filterConstraints.filterTypeConstraint === FilterType.TASK) {
                 tasks = this._filterRepository.getFilters(this._filterRepository.getTaskFilterList());
             }
         }
