@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import Role from '../models/role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';

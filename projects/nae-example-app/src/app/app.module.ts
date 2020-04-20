@@ -58,6 +58,7 @@ import {RegisterCardComponent} from './doc/cards/register-card/register-card.com
 import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
+import { FilterRepositoryExampleComponent } from './doc/filter-repository-example/filter-repository-example.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -89,7 +90,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         RegisterCardComponent,
         HeadersComponent,
         PanelsComponent,
-        DashboardExampleComponent
+        DashboardExampleComponent,
+        FilterRepositoryExampleComponent
     ],
     imports: [
         BrowserModule,
