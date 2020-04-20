@@ -70,6 +70,10 @@ function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = t
         case 'sidenavAndToolbarView':
             rules.push(schematic('create-sidenav-prompt', checkJsonParamsForSidenav(args, addRoute)
             ));
+            /**Pridane kvoli tomu ze nechcem aby sa pushol addViewToNaeJson tu ale az po tom co schematic
+             *  cez promp vyplni potrebne argumenty
+             */
+            addRoute = false;
             break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
