@@ -121,4 +121,20 @@ export class FilterRepository {
         });
         return result;
     }
+
+    /**
+     * @param filterIds list of ids of filters that should be returned
+     * @returns list of copies of specified filters. If some of the filters don't exist in the repository, they won't be included
+     * and the array will contain less elements than the input array.
+     */
+    public getFilters(filterIds: Array<string>): Array<Filter> {
+        const result = [];
+        filterIds.forEach(id => {
+            const filter = this.getFilter(id);
+            if (filter !== undefined) {
+               result.push(filter);
+            }
+        });
+        return result;
+    }
 }
