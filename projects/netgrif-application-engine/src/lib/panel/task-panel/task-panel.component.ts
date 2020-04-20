@@ -23,6 +23,8 @@ import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
+import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 
 
 @Component({
@@ -55,7 +57,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     ngOnInit() {
         super.ngOnInit();
-        this._taskViewService.taskData.subscribe( () => this.resolveFeaturedFieldsValues());
+        this._taskViewService.taskData.subscribe(() => this.resolveFeaturedFieldsValues());
 
         const providers: StaticProvider[] = [
             {provide: NAE_TASK_COLS, useValue: this.taskPanelData.task.cols},
@@ -192,7 +194,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 this.taskPanelData.changedFields.next(response.changedFields);
             }
             Object.keys(body).forEach(id => {
-                this.taskPanelData.task.dataGroups.forEach( dataGroup => {
+                this.taskPanelData.task.dataGroups.forEach(dataGroup => {
                     const changed = dataGroup.fields.find(f => f.stringId === id);
                     if (changed !== undefined) {
                         changed.changed = false;
@@ -230,6 +232,18 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                             field.changed = false;
                         } else if (key === 'behavior' && updatedField.behavior[this.taskPanelData.task.transitionId]) {
                             field.behavior = updatedField.behavior[this.taskPanelData.task.transitionId];
+                        } else if (key === 'choices') {
+                            const newChoices: EnumerationFieldValue[] = [];
+                            if (updatedField.choices instanceof Array) {
+                                updatedField.choices.forEach(it => {
+                                    newChoices.push({key: it, value: it} as EnumerationFieldValue);
+                                });
+                            } else {
+                                Object.keys(updatedField.choices).forEach( choice => {
+                                    newChoices.push({key: choice, value: updatedField.choices[key]} as EnumerationFieldValue);
+                                });
+                            }
+                            (field as EnumerationField | MultichoiceField).choices = newChoices;
                         } else {
                             field[key] = updatedField[key];
                         }
@@ -296,26 +310,29 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         if (this.loading) {
             return;
         }
-        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM).onClose.subscribe( event => {
+        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM).onClose.subscribe(event => {
             console.log(event);
+            if (event.data !== undefined) {
+                this.loading = true;
+
+                this._taskService.delegateTask(this.taskPanelData.task.stringId, event.data.id).subscribe(response => {
+                    this.loading = false;
+                    if (response.success) {
+                        this.removeStateData();
+                        afterAction.next(true);
+                    } else if (response.error) {
+                        this._snackBar.openErrorSnackBar(response.error);
+                        afterAction.next(false);
+                    }
+                }, error => {
+                    this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
+                     ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
+                    this.loading = false;
+                    afterAction.next(false);
+                });
+            }
         });
-        // this.loading = true;
-        //
-        // this.taskService.delegateTask(user.id).subscribe(response => {
-        //     this.loading = false;
-        //     if (response.success) {
-        //         this.removeStateData();
-        //         afterAction.next(true);
-        //     } else if (response.error) {
-        //         this.snackBar.openErrorSnackBar(response.error);
-        //             afterAction.next(false);
-        //     }
-        // }, error => {
-        //     this.snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
-        //      ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-        //     this.loading = false;
-        //      afterAction.next(false);
-        // });
+
     }
 
     cancel(afterAction = new Subject<boolean>()) {
@@ -361,7 +378,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 after.subscribe(boolean => {
                     if (boolean) {
                         if (this._updating) {
-                            this._queue.pipe(take(1)).subscribe( bool => {
+                            this._queue.pipe(take(1)).subscribe(bool => {
                                 if (bool) {
                                     this.sendFinishTaskRequest(afterAction);
                                     this.collapse();
@@ -556,7 +573,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     private blockFields(bool: boolean) {
         if (this.taskPanelData.task.dataGroups) {
-            this.taskPanelData.task.dataGroups.forEach( group => {
+            this.taskPanelData.task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
                     field.block = bool;
                 });

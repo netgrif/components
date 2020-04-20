@@ -39,25 +39,32 @@ export function customThemes(): Rule {
             throw new SchematicsException('Cant find styles.scss file');
         }
         let darkExists = false;
-        if (data.theme.pallets.dark.primary !== undefined) {
+        if (data.theme.pallets.dark !== undefined && data.theme.pallets.dark.primary !== undefined) {
             darkExists = true;
         }
         if (data.theme.pallets.light.primary === undefined) {
             throw new SchematicsException('Light theme must be specified !');
         }
-        const primaryLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.primary, false);
+        let primaryDark: string | null = '';
+        let primaryContrastDark: string | null = '';
+        let secondaryDark: string | null = '';
+        let secondaryContrastDark: string | null = '';
+        let warnDark: string | null = '';
+        let warnContrastDark: string | null = '';
+        const primaryLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.primary, false);
         const primaryContrastLight = (primaryLight) ? returnContrastIfExist(data.theme.pallets.light.primary.contrast) : null;
-        const secondaryLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.secondary, false);
+        const secondaryLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.secondary, false);
         const secondaryContrastLight = (secondaryLight) ? returnContrastIfExist(data.theme.pallets.light.secondary.contrast) : null;
-        const warnLight = returnPaleteIfExistOrCreate(data.theme.pallets.light.warn, false);
+        const warnLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.warn, false);
         const warnContrastLight = (warnLight) ? returnContrastIfExist(data.theme.pallets.light.warn.contrast) : null;
-        const primaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.primary, false);
-        const primaryContrastDark = (primaryDark) ? returnContrastIfExist(data.theme.pallets.dark.primary.contrast) : null;
-        const secondaryDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.secondary, false);
-        const secondaryContrastDark = (secondaryDark) ? returnContrastIfExist(data.theme.pallets.dark.secondary.contrast) : null;
-        const warnDark = returnPaleteIfExistOrCreate(data.theme.pallets.dark.warn, false);
-        const warnContrastDark = (warnDark) ? returnContrastIfExist(data.theme.pallets.dark.warn.contrast) : null;
-
+        if (darkExists) {
+            primaryDark = returnPaletteIfExistOrCreate(data.theme.pallets.dark.primary, true);
+            primaryContrastDark = (primaryDark) ? returnContrastIfExist(data.theme.pallets.dark.primary.contrast) : null;
+            secondaryDark = returnPaletteIfExistOrCreate(data.theme.pallets.dark.secondary, true);
+            secondaryContrastDark = (secondaryDark) ? returnContrastIfExist(data.theme.pallets.dark.secondary.contrast) : null;
+            warnDark = returnPaletteIfExistOrCreate(data.theme.pallets.dark.warn, true);
+            warnContrastDark = (warnDark) ? returnContrastIfExist(data.theme.pallets.dark.warn.contrast) : null;
+        }
 
         const rules = [];
         const pathTomove = path + '/../styles/templates';
@@ -89,6 +96,9 @@ export function customThemes(): Rule {
         const wholeStyleContent = tree.read(path + '/../styles.scss');
         if (wholeStyleContent) {
             let importsAndIncludes = '';
+            if (!wholeStyleContent.toString().match('~@angular/material/theming')) {
+                importsAndIncludes += '@import \'~@angular/material/theming\';\n';
+            }
             if (wholeStyleContent.toString().match('@include mat-core()') === null) {
                 importsAndIncludes += '@include mat-core();' + '\n';
             }
@@ -102,20 +112,20 @@ export function customThemes(): Rule {
     };
 }
 
-function generatePalete(hexColor: string): string {
+function generatePalette(hexColor: string): string {
     let stringToReturn = '';
     const palette = PaletteGenerator.default.getPalette(hexColor);
-    let palleteKeys: number[];
-    palleteKeys = [50, 100, 200, 300, 400, 500, 600, 700, 800];
-    palleteKeys.forEach(value => stringToReturn += (value + ': ' + palette[value].hex + ',\n'));
+    let paletteKeys: number[];
+    paletteKeys = [50, 100, 200, 300, 400, 500, 600, 700, 800];
+    paletteKeys.forEach(value => stringToReturn += (value + ': ' + palette[value].hex + ',\n'));
     return stringToReturn + '900 : ' + palette[900].hex + ',';
 }
 
-function returnPaleteIfExistOrCreate(dataTocheck: any, darkTheme: boolean) {
+function returnPaletteIfExistOrCreate(dataTocheck: any, darkTheme: boolean) {
     if (dataTocheck instanceof Object) {
         return handleJsonString(JSON.stringify(dataTocheck), true, darkTheme);
     } else if (typeof dataTocheck === 'string') {
-        return generatePalete(dataTocheck);
+        return generatePalette(dataTocheck);
     }
     return '';
 }

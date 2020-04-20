@@ -21,5 +21,6 @@
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="multiple"
                accept="{{dataField.allowTypes}}" class="invisible-input"/>
         <input type="hidden" [formControl]="formControl" [multiple]="multiple" accept="{{dataField.allowTypes}}">
+        <mat-error *ngIf="!formControl.valid && formControl.touched">{{'This field is required!'}}</mat-error>
     </div>
 </ng-template>

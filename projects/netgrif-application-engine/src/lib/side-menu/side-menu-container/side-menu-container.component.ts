@@ -30,11 +30,11 @@ export class SideMenuContainerComponent implements AfterViewInit {
         return fromPromise(this.sideMenu.open());
     }
 
-    public close(): Observable<MatDrawerToggleResult> {
-        return fromPromise(this.sideMenu.close()).pipe(
+    public close(context: SideMenuContainerComponent): Observable<MatDrawerToggleResult> {
+        return fromPromise(context.sideMenu.close()).pipe(
             tap((result) => {
                 if (result === 'close') {
-                    this.portalWrapper = this.portalWrapper = new PortalWrapper<any>(null, null);
+                    context.portalWrapper = context.portalWrapper = new PortalWrapper<any>(null, null);
                 }
             })
         );

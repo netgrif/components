@@ -29,7 +29,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 //@include covalent-theme($theme, $typography);
 @include custom-covalent-highlight-theme();
 
-@include nae-lib-theme($theme);
+@include nae-lib-theme($theme, $typography);
 
 tr mat-header-row {
     background-color: green;

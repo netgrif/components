@@ -38,9 +38,9 @@ export class AuthenticationComponent implements OnInit {
     }
 
     logout() {
-        if (!this.authenticated) {
-            return;
-        }
+        // if (!this.authenticated) {
+        //     return;
+        // }
         this.userService.logout().subscribe(response => {
             this.log.info('User logged out from the server');
             this.authenticated = false;

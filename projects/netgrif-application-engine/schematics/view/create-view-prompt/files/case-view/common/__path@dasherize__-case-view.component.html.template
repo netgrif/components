@@ -19,7 +19,7 @@
                     (click)="handleCaseClick(case_)">
     </nae-case-panel>
 
-    <div *ngIf="!loading && cases.length === 0" fxLayout="column" fxLayoutAlign="center center">
+    <div *ngIf="!loading && (cases$ | async)?.length === 0" fxLayout="column" fxLayoutAlign="center center">
         <mat-icon>storage</mat-icon>
         <span class="font-size-20">There are any cases satisfying specified filter</span>
     </div>

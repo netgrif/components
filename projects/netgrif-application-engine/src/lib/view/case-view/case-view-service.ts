@@ -8,6 +8,7 @@ import {NewCaseComponent} from '../../side-menu/content-components/new-case/new-
 import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {SortableView} from '../abstract/sortable-view';
 import {LoggerService} from '../../logger/services/logger.service';
+import {SnackBarService} from '../../snack-bar/snack-bar.service';
 
 
 @Injectable()
@@ -19,7 +20,8 @@ export class CaseViewService extends SortableView {
 
     constructor(protected _sideMenuService: SideMenuService,
                 protected _caseResourceService: CaseResourceService,
-                protected _log: LoggerService) {
+                protected _log: LoggerService,
+                protected _snackBarService: SnackBarService) {
         super();
         this._baseFilter = '{}';
         this._loading$ = new BehaviorSubject<boolean>(false);
@@ -56,7 +58,15 @@ export class CaseViewService extends SortableView {
         params = this.addSortParams(params);
         this._caseResourceService.searchCases(JSON.parse(this._baseFilter), params)
             .subscribe((newCases: Array<Case>) => {
-                this.updateCases(newCases);
+                if (newCases instanceof Array) {
+                    this.updateCases(newCases);
+                } else {
+                    this._snackBarService.openInfoSnackBar('No resource for cases was found');
+                }
+                this.setLoading(false);
+            }, error => {
+                this._snackBarService.openErrorSnackBar('Getting cases failed');
+                this._log.error(error);
                 this.setLoading(false);
             });
     }
@@ -66,6 +76,7 @@ export class CaseViewService extends SortableView {
     }
 
     public createNewCase(): void {
+        // TODO 16.4. 2020 Add filter to injected data for newCase Component to get there allowedNets
         this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {

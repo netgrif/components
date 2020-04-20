@@ -17,7 +17,11 @@
                 "login",
                 "tabView",
                 "caseView",
-                "taskView"
+                "taskView",
+                "sidenavView",
+                "toolbarView",
+                "sidenavAndToolbarView",
+                "dashboard"
             ],
             "x-prompt": {
                 "type": "list",
@@ -27,7 +31,23 @@
                     "login",
                     "tabView",
                     "caseView",
-                    "taskView"
+                    "taskView",
+                    "sidenavView",
+                    "toolbarView",
+                    "sidenavAndToolbarView",
+                    "dashboard"
+                ]
+            }
+        },
+        "access": {
+            "description": "access type",
+            "type": "string",
+            "x-prompt": {
+                "type": "list",
+                "message": "select a access type",
+                "items": [
+                    "public",
+                    "private"
                 ]
             }
         }

@@ -48,7 +48,7 @@ export class SideMenuService {
         let ref: SideMenuRef = new SideMenuRef(null);
         this._controlObject = new SideMenuControl(((event) => {
             ref = new SideMenuRef(event);
-        }), this._sideMenuComponent.openedChange(), this._sideMenuComponent.close, injectionData);
+        }), this._sideMenuComponent.openedChange(), () => this._sideMenuComponent.close(this._sideMenuComponent), injectionData);
 
         const wrapper = this._createPortal(componentOrTemplateRef, width, this._controlObject);
         this._sideMenuComponent.open(wrapper).subscribe((opened) => {

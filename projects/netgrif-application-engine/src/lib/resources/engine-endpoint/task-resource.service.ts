@@ -10,12 +10,13 @@ import {TaskReference} from '../interface/task-reference';
 import {DataGroupsResource} from '../interface/data-groups';
 import {Task} from '../interface/task';
 import {ChangedFieldContainer} from '../interface/changed-field-container';
-
+import {FileResource} from '../interface/file-resource';
+import {CountService} from '../abstract-endpoint/count-service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskResourceService {
+export class TaskResourceService implements CountService {
     private SERVER_URL: string;
 
     protected constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {

@@ -5,9 +5,12 @@ import {
     NAE_TAB_DATA,
     TabbedCaseView,
     LoggerService,
-    CaseViewService, PetriNetReference, PetriNetResourceService,
+    CaseViewService,
+    ProcessService,
+    Net, CaseParams, ConfigurationService,
 } from '@netgrif/application-engine';
-import {ReplaySubject} from 'rxjs';
+import {ReplaySubject, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Component({
     selector: 'nae-app-tabbed-case-view',
@@ -18,17 +21,32 @@ import {ReplaySubject} from 'rxjs';
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
-    public allowedNets$: ReplaySubject<Array<PetriNetReference>>;
+    public allowedNets$: ReplaySubject<Array<Net>>;
+    public params: CaseParams;
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData,
-                petriNetResourceService: PetriNetResourceService) {
+                processService: ProcessService,
+                configService: ConfigurationService) {
         super(caseViewService, loggerService, injectedTabData, '{}');
-        this.allowedNets$ = new ReplaySubject<Array<PetriNetReference>>(1);
-        petriNetResourceService.getAll().subscribe(result => {
-            this.allowedNets$.next(result.petriNetReferences);
-        });
+        this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
+        // TODO 16.4. 2020 initialize allowedNets by filter
+        const view = configService.getViewByPath('<%= webPath %>');
+        if (view && view.layout && view.layout.params) {
+            this.params = view.layout.params as CaseParams;
+            if (this.params.allowedNets !== undefined) {
+                const nets = [];
+                this.params.allowedNets.forEach(netId => {
+                    processService.getNet(netId).subscribe(net => {
+                        nets.push(net);
+                        if (nets.length === this.params.allowedNets.length) {
+                            this.allowedNets$.next(nets);
+                        }
+                    });
+                });
+            }
+        }
     }
 
     ngAfterViewInit(): void {

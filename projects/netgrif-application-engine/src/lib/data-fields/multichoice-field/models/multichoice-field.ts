@@ -1,5 +1,6 @@
-import {DataField, Layout, MaterialAppearance} from '../../models/abstract-data-field';
+import {DataField, Layout} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
+import {EnumerationFieldValue} from '../../enumeration-field/models/enumeration-field';
 
 export interface MultichoiceFieldValue {
     key: string;
@@ -25,8 +26,16 @@ export class MultichoiceField  extends DataField<Array<string>> {
         }
     }
 
+    set choices(choices: Array<MultichoiceFieldValue>) {
+        this._choices = choices;
+    }
+
     get choices(): Array<MultichoiceFieldValue> {
         return this._choices;
+    }
+
+    set view(view: MultichoiceFieldView) {
+        this._view = view;
     }
 
     get view(): MultichoiceFieldView {

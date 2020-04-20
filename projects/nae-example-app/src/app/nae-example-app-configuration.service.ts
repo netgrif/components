@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ConfigurationService} from '@netgrif/application-engine';
+import {ConfigurationService, DashboardCardTypes} from '@netgrif/application-engine';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +36,11 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                             name: 'petrinet',
                             address: 'http://localhost:8080/api/',
                             format: 'json'
+                        },
+                        {
+                            name: 'user',
+                            address: 'http://localhost:8080/api/',
+                            format: 'json'
                         }
                     ]
                 },
@@ -43,9 +48,43 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                     layout: 'empty',
                     routes: {
                         dashboard: {
-                            type: '',
                             layout: {
-                                name: ''
+                                name: 'dashboard',
+                                params: {
+                                    columns: 4,
+                                    cards: [{
+                                        type: DashboardCardTypes.COUNT,
+                                        title: 'All tasks',
+                                        resourceType: 'task',
+                                        filter: '{}',
+                                        layout: {
+                                            x: 0,
+                                            y: 0,
+                                            rows: 1,
+                                            cols: 1
+                                        }
+                                    }, {
+                                        type: DashboardCardTypes.IFRAME,
+                                        url: 'https://netgrif.com/',
+                                        layout: {
+                                            x: 2,
+                                            y: 0,
+                                            rows: 2,
+                                            cols: 2
+                                        }
+                                    }, {
+                                        type: DashboardCardTypes.COUNT,
+                                        title: 'All cases',
+                                        resourceType: 'case',
+                                        filter: '{}',
+                                        layout: {
+                                            x: 1,
+                                            y: 1,
+                                            rows: 1,
+                                            cols: 1
+                                        }
+                                    }]
+                                }
                             },
                             access: 'private',
                             navigation: {
@@ -233,7 +272,24 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                     'all-cases': {
                         title: 'All Cases',
                         access: 'public',
-                        query: 'select * from case where title like ${some-param}'
+                        query: {},
+                        type: 'Case'
+                    },
+                    'all-tasks': {
+                        title: 'All Tasks',
+                        access: 'public',
+                        query: {},
+                        type: 'Task'
+                    },
+                    'data-cases': {
+                        title: 'Data Cases',
+                        access: 'public',
+                        query: {
+                            petriNet: {
+                                identifier: 'data'
+                            }
+                        },
+                        type: 'Case'
                     }
                 },
                 i18n: [

@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 
@@ -119,6 +119,18 @@ export abstract class AbstractResourceProvider {
             responseType,
             observe
         });
+    }
+
+    public upload<T>(endpoint?: string, url?: string, body?: FormData, params?: Params, headers?: Headers,
+                     responseType?: ResponseType): Observable<HttpEvent<T>> {
+        return this.httpClient.post<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
+            body, {
+                headers,
+                params,
+                responseType,
+                observe: 'events',
+                reportProgress: true
+            });
     }
 
 }

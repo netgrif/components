@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine",
-    "version": "4.0.0-alpha.6",
+    "version": "4.0.0-beta.1",
     "scripts": {
         "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
         "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/netgrif-application-engine/ && cp --parents schematics/*/*/schema.json ../../dist/netgrif-application-engine/",
@@ -34,6 +34,8 @@
         "Lukáš Rezák <rezak@netgrif.com>"
     ],
     "peerDependencies": {
+        "@angular-material-components/datetime-picker": "^2.0.2",
+        "@angular-material-components/moment-adapter": "^2.0.1",
         "@angular/animations": "^9.0.5",
         "@angular/cdk": "~8.2.3",
         "@angular/common": "^9.0.5",
@@ -42,12 +44,14 @@
         "@angular/flex-layout": "^9.0.0-beta.29",
         "@angular/forms": "^9.0.5",
         "@angular/material": "~8.2.3",
+        "@angular/material-moment-adapter": "^9.2.0",
         "@angular/platform-browser": "^9.0.5",
         "@angular/platform-browser-dynamic": "^9.0.5",
         "@angular/router": "^9.0.5",
         "@covalent/core": "^2.1.1",
         "@covalent/highlight": "^2.1.1",
         "@covalent/markdown": "^2.1.1",
+        "@covalent/text-editor": "^3.0.1",
         "@ngx-translate/core": "^12.1.2",
         "@ngx-translate/http-loader": "^4.0.0",
         "@schematics/angular": "^9.0.5",

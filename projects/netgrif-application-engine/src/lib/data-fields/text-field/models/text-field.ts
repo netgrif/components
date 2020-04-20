@@ -9,6 +9,7 @@ export enum TextFieldView {
 }
 
 export class TextField extends DataField<string> {
+
     private _validators: Array<ValidatorFn>;
     public materialAppearance: string;
 
@@ -74,7 +75,7 @@ export class TextField extends DataField<string> {
     }
 
     private validTelNumber(fc: FormControl) {
-        if (!(new RegExp(/^(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)$/).test(fc.value))) {
+        if (!(new RegExp(/^(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)$/).test(fc.value))) {
             return ({validTelNumber: true});
         } else {
             return (null);

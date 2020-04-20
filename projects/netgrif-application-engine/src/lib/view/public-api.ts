@@ -5,8 +5,10 @@ export * from './case-view/tabbed-case-view';
 export * from './task-view/abstract-task-view';
 export * from './task-view/tabbed-task-view';
 
+export * from './case-view/case-params';
+
 /* SERVICES */
-export  * from './case-view/case-view-service';
+export * from './case-view/case-view-service';
 export * from './task-view/task-view.service';
 export * from './workflow-view/workflow-view.service';
 

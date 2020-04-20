@@ -16,6 +16,9 @@ export class NumberFieldComponent extends AbstractDataFieldComponent {
     }
 
     getErrorMessage() {
+        if (this.formControl.hasError('required')) {
+            return 'This field is required!';
+        }
         if (this.formControl.hasError('validOdd')) {
             return this.resolveErrorMessage('odd', 'Entered number must be odd');
         }

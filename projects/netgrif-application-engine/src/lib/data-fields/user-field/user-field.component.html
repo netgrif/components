@@ -22,7 +22,7 @@
             <mat-icon>person_add</mat-icon>
             Select user
         </button>
-
+        <mat-error *ngIf="!formControl.valid && formControl.touched">{{'This field is required!'}}</mat-error>
     </div>
 
 </ng-template>

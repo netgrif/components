@@ -6,7 +6,7 @@
             <mat-form-field>
                 <input matInput placeholder="Process" formControlName="processFormControl" required [matAutocomplete]="auto">
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.value">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                         {{option.viewValue}}
                     </mat-option>
                 </mat-autocomplete>
