@@ -28,8 +28,9 @@ export class TaskResourceService implements CountService {
      *  POST
      *  {{baseUrl}}/api/task/count
      */
-    public count(body: object): Observable<Count> {
-        return this.provider.post$('task/count', this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+    public countTask(body: object): Observable<Count> {
+        return this.provider.post$('task/count', this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -38,7 +39,8 @@ export class TaskResourceService implements CountService {
      * {{baseUrl}}/api/task
      */
     public getAllTask(): Observable<Array<Task>> {
-        return this.provider.get$('task', this.SERVER_URL).pipe(map(r => changeType(r, 'tasks')));
+        return this.provider.get$('task', this.SERVER_URL)
+            .pipe(map(r => changeType(r, 'tasks')));
     }
 
     /**
@@ -47,7 +49,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/assign/:id
     public assignTask(taskId: string): Observable<MessageResource> {
-        return this.provider.get$('task/assign/' + taskId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('task/assign/' + taskId, this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -56,7 +59,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/cancel/:id
     public cancelTask(taskId: string): Observable<MessageResource> {
-        return this.provider.get$('task/cancel/' + taskId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('task/cancel/' + taskId, this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -65,7 +69,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/delegate/:id
     public delegateTask(taskId: string, body: object): Observable<MessageResource> {
-        return this.provider.post$('task/delegate/' + taskId, this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+        return this.provider.post$('task/delegate/' + taskId, this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -74,7 +79,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/finish/:id
     public finishTask(taskId: string): Observable<MessageResource> {
-        return this.provider.get$('task/finish/' + taskId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('task/finish/' + taskId, this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -83,7 +89,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/search
     public searchTask(body: object): Observable<Array<Task>> {
-        return this.provider.post$('task/search', this.SERVER_URL, body).pipe(map(r => changeType(r, 'tasks')));
+        return this.provider.post$('task/search', this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, 'tasks')));
     }
 
     // ----------- CASE ----------
@@ -93,7 +100,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/case
     public getAllTasksByCases(body: object): Observable<Array<Task>> { // TODO: ??
-        return this.provider.post$('task/case', this.SERVER_URL, body).pipe(map(r => changeType(r, 'tasks')));
+        return this.provider.post$('task/case', this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, 'tasks')));
     }
 
     /**
@@ -102,7 +110,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/case/:id
     public getAllTasksByCase(caseId: string): Observable<Array<TaskReference>> {
-        return this.provider.get$('task/case/' + caseId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('task/case/' + caseId, this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     // ----------- MY Task ----------
@@ -112,7 +121,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/my
     public getAllMyTasks(): Observable<Array<Task>> {
-        return this.provider.get$('task/my', this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('task/my', this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -121,7 +131,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/my/finished
     public getAllFinishedTask(): Observable<Array<Task>> {
-        return this.provider.get$('task/my/finished', this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('task/my/finished', this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -130,7 +141,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/:id/data
     public getData(taskId: string): Observable<Array<DataGroupsResource>> {
-        return this.provider.get$('task/' + taskId + '/data', this.SERVER_URL).pipe(map(r => changeType(r, 'dataGroups')));
+        return this.provider.get$('task/' + taskId + '/data', this.SERVER_URL)
+            .pipe(map(r => changeType(r, 'dataGroups')));
     }
 
     /**
@@ -139,7 +151,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/:id/data
     public setData(taskId: string, body: object): Observable<ChangedFieldContainer> {
-        return this.provider.post$('task/' + taskId + '/data', this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+        return this.provider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     // ------------- FILE ------------
@@ -148,8 +161,9 @@ export class TaskResourceService implements CountService {
      * GET
      */
     // {{baseUrl}}/api/task/:id/file/:field
-    public downloadFile(taskId: string, fieldId: string): Observable<FileResource> {
-        return this.provider.get$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+    public downloadFile(taskId: string, fieldId: string): Observable<Blob> {
+        return this.provider.getBlob$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL)
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -157,7 +171,8 @@ export class TaskResourceService implements CountService {
      * POST
      */
     // {{baseUrl}}/api/task/:id/file/:field
-    public uploadFile(taskId: string, fieldId: string, body: object): Observable<MessageResource> {
-        return this.provider.post$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+    public uploadFile(taskId: string, fieldId: string, body: object): Observable<any> {
+        return this.provider.postEvent$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body)
+            .pipe(map(r => changeType(r, undefined)));
     }
 }

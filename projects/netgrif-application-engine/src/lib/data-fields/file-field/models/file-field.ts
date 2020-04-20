@@ -1,6 +1,9 @@
 import {DataField, Layout} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 
+/**
+ * Supported types of files a user can select through a file picker.
+ */
 export enum FileUploadMIMEtype {
     IMAGE = 'image/*',
     VIDEO = 'video/*',
@@ -12,16 +15,31 @@ export enum FileUploadMIMEtype {
     XLS_XLSX = '.xls,.xlsx'
 }
 
+/**
+ * Extended structure for file by name and extension.
+ */
 export interface FileUploadDataModel {
     file: File;
     name: string;
     extension: string;
 }
 
+/**
+ * Holds information represent file field implements in Petri Net
+ */
 export class FileField extends DataField<Array<File>> {
-
+    /**
+     * Specifies the size of all uploaded files in bytes.
+     *
+     * It is an indicator for checking the oversized size in the Petri Net.
+     */
     public filesSize = 0;
 
+    /**
+     * Create new instance for file field with all his properties.
+     *
+     * Placeholder is a substitute for the value name if not set value.
+     */
     constructor(stringId: string, title: string, behavior: Behavior, value?: Array<File>, placeholder?: string, description?: string,
                 layout?: Layout, private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1,
                 private _zipped: boolean = true, private _allowTypes?: string | FileUploadMIMEtype | Array<FileUploadMIMEtype>) {
@@ -44,8 +62,10 @@ export class FileField extends DataField<Array<File>> {
         return this._allowTypes instanceof Array ? this._allowTypes.toString() : this._allowTypes;
     }
 
+    /**
+     * We assume that files are always given in the same order.
+     */
     protected valueEquality(a: Array<File>, b: Array<File>): boolean {
-        // we assume that files are always given in the same order
         return (!a && !b) || (
             !!a
             && !!b

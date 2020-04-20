@@ -1,9 +1,11 @@
 <div fxLayout="row" fxLayoutAlign=" center">
-    <mat-icon *ngIf="!file.successfullyUploaded">description</mat-icon>
-    <mat-icon *ngIf="file.successfullyUploaded">done</mat-icon>
+    <mat-icon *ngIf="!file.successfullyUploaded && !file.downloading">description</mat-icon>
+    <mat-icon *ngIf="file.successfullyUploaded && !file.downloading">done</mat-icon>
+    <mat-spinner *ngIf="file.downloading" class="spinner-position" color="primary" diameter="20" strokeWidth="1.5"></mat-spinner>
     <span (click)="onFileDownload(file)" class="file-name"
           [ngClass]="{
                           'file-name-download': file.successfullyUploaded,
+                          'file-name-downloading': file.downloading,
                           'file-name-upload': !file.successfullyUploaded
           }">{{shortFileName(file)}}</span>
     <span class="file-size">{{fileSize | decimalBytes }}</span>
