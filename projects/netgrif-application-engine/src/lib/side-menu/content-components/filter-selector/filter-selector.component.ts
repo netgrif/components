@@ -11,7 +11,7 @@ import {MatSelectionList, MatSelectionListChange} from '@angular/material';
 import {FormControl} from '@angular/forms';
 
 /**
- * Allows user to choose a filter from the filter repository.
+ * Allows user to choose a {@link Filter} from the {@link FilterRepository}.
  *
  * Publishes events to the {@link SideMenuControl} object when:
  *
@@ -76,7 +76,7 @@ export class FilterSelectorComponent {
     }
 
     /**
-     * Retrieves the {@link Filter} objects from the {@link FilterRepository} and instantiates tis component.
+     * Retrieves the {@link Filter} objects from the {@link FilterRepository} and instantiates this component.
      *
      * Filters that are available for selection can be set using the injected data. See {@link FilterSelectorInjectionData}
      * for more information.
