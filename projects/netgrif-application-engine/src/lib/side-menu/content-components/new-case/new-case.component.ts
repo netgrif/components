@@ -1,7 +1,7 @@
 import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent} from '@angular/cdk/stepper';
-import {catchError, map, startWith, tap} from 'rxjs/operators';
+import {catchError, finalize, map, startWith, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {SnackBarService} from '../../../snack-bar/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
@@ -58,10 +58,14 @@ export class NewCaseComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
+        if (this.allowedNets.length === 0) {
+            this._snackBarService.openErrorSnackBar('No allowed Nets'),
+                this._sideMenuControl.close({
+                    opened: false
+                });
+        }
         this.allowedNets.forEach(id => {
-            console.log(id);
             this._processService.getNet(id).subscribe(petriNet => {
-                console.log(petriNet.title + ' ' + petriNet.identifier);
                 this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
             });
         });
@@ -72,8 +76,8 @@ export class NewCaseComponent implements OnInit, OnChanges {
                 map(name => name ? this._filter(name) : this.options.slice()),
                 tap(() => this.options.length === 1 ? this.processFormControl.setValue(this.options[0]) : undefined)
             );
-        this.processOne = Promise.resolve(this.options.length === 1);
 
+        this.processOne = Promise.resolve(this.options.length === 1);
     }
 
     public stepChange($event: StepperSelectionEvent): void {
@@ -98,7 +102,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
         this._caseResourceService.createCase(newCase)
             .subscribe(
-                caze => {
+                () => {
                     this._snackBarService.openInfoSnackBar('Successful create new case ' + newCase.title),
                         this._sideMenuControl.close({
                             opened: false,

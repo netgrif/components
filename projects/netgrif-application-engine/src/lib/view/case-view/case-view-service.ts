@@ -95,11 +95,11 @@ export class CaseViewService extends SortableView {
     }
 
     /**
-     * injectionData [] no filter
-     * ['AA'] identifier
+     * injectionData identifier[]
      */
+    // TODO AllowedNets
     public createNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, ['CCC', 'AA']).onClose.subscribe($event => {
+        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, ['AA', 'CCC']).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.loadCases();
@@ -107,7 +107,8 @@ export class CaseViewService extends SortableView {
         });
     }
 
-    // USER?
+
+    // TODO: hasAutority create new Case
     // public hasAutority(): boolean {
     //     if (!this.authorityToCreate || !this._user || !this._user.authorities) return false;
     //     if (this.authorityToCreate instanceof Array) {
