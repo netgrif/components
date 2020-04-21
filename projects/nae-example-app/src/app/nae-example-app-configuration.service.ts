@@ -272,7 +272,24 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                     'all-cases': {
                         title: 'All Cases',
                         access: 'public',
-                        query: 'select * from case where title like ${some-param}'
+                        query: {},
+                        type: 'Case'
+                    },
+                    'all-tasks': {
+                        title: 'All Tasks',
+                        access: 'public',
+                        query: {},
+                        type: 'Task'
+                    },
+                    'data-cases': {
+                        title: 'Data Cases',
+                        access: 'public',
+                        query: {
+                            petriNet: {
+                                identifier: 'data'
+                            }
+                        },
+                        type: 'Case'
                     }
                 },
                 i18n: [

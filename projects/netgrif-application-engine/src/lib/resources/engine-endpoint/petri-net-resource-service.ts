@@ -111,7 +111,7 @@ export class PetriNetResourceService {
      * {{baseUrl}}/api/petrinet/import
      */
     public importPetriNet(body: FormData, params?: Params): Observable<HttpEvent<MessageResource>> {
-        return this.provider.upload$('petrinet/import', this.SERVER_URL, body, params, undefined, undefined);
+        return this.provider.upload$('petrinet/import', this.SERVER_URL, body, params);
     }
 
 

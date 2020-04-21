@@ -8,4 +8,5 @@
     <mat-radio-button class="example-radio-button" *ngFor="let option of enumerationField.choices" [value]="option.key">
         {{option.value}}
     </mat-radio-button>
+    <mat-error *ngIf="!formControlRef.valid && formControlRef.touched">{{'This field is required!'}}</mat-error>
 </mat-radio-group>
