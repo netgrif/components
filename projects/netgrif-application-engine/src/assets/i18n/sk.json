@@ -24,5 +24,14 @@
             "cancel": "Zrušiť",
             "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie."
         }
+    },
+    "side-menu": {
+        "filter-selector": {
+            "choose-filter": "Zvoľte filter",
+            "search-filter": "Vyhľadať filter",
+            "case-filters": "Filtre prípadov",
+            "task-filters": "Filtre úloh",
+            "select": "Zvoliť"
+        }
     }
 }

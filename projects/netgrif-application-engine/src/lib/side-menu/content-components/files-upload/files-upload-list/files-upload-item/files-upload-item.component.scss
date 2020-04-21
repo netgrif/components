@@ -16,6 +16,10 @@ li {
     text-decoration-line: underline;
 }
 
+.file-name-downloading {
+    padding-left: 24px;
+}
+
 .file-name-upload {
     cursor: default;
     font-weight: normal;
@@ -30,6 +34,10 @@ li {
 
 .progress-bar-size {
     height: 8px;
+}
+
+.spinner-position {
+    position: fixed;
 }
 
 .retry-upload-file-icon {

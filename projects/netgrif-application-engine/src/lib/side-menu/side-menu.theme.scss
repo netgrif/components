@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+@mixin side-menu-typography($typography-config) {
+    .side-menu-root {
+        font: {
+            family: unquote(map-get($typography-config, font-family));
+        }
+    }
+}

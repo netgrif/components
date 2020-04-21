@@ -27,6 +27,8 @@ import {
     ImportNetComponent,
     WorkflowViewModule,
     DashboardModule,
+    FilterSelectorComponent,
+    FilesUploadComponent
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -58,6 +60,7 @@ import {RegisterCardComponent} from './doc/cards/register-card/register-card.com
 import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
+import { FilterRepositoryExampleComponent } from './doc/filter-repository-example/filter-repository-example.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -89,7 +92,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         RegisterCardComponent,
         HeadersComponent,
         PanelsComponent,
-        DashboardExampleComponent
+        DashboardExampleComponent,
+        FilterRepositoryExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -126,6 +130,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         DashboardModule,
     ],
     entryComponents: [
+        FilesUploadComponent,
         NewCaseComponent,
         UserAssignComponent,
         SimpleDialogComponent,
@@ -135,6 +140,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabbedCaseViewComponent,
         TabbedTaskViewComponent,
         ImportNetComponent,
+        FilterSelectorComponent,
     ],
     providers: [{
             provide: ConfigurationService,

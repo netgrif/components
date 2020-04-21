@@ -2,6 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {UserValue} from '../../../../../data-fields/user-field/models/user-value';
 import {UserAssignItemComponent} from './user-assign-item.component';
 import {Component} from '@angular/core';
+import {MaterialModule} from '../../../../../material/material.module';
 
 describe('UserAssignItemComponent', () => {
     let component: UserAssignItemComponent;
@@ -9,6 +10,7 @@ describe('UserAssignItemComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [MaterialModule],
             declarations: [
                 UserAssignItemComponent,
                 TestWrapperComponent

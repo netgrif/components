@@ -96,7 +96,7 @@ export class ImportNetComponent implements OnInit, AfterViewInit {
 
     private setupFile(file: File): FileUploadModel {
         return {
-            data: file, state: 'in',
+            data: file, state: 'in', stringId: '', downloading: false,
             inProgress: false, progress: 0, canRetry: false, canCancel: true, successfullyUploaded: false
         };
     }

@@ -5,7 +5,14 @@
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
     <div>
-        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}<nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label><br></mat-label>
+        <div class="file-field-image-wrapper">
+            <img #imageEl src="" alt="" class="file-field-image">
+        </div>
+        <mat-label *ngIf="!showLargeLayout.value">
+            {{dataField.title}}
+            <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label>
+            <br>
+        </mat-label>
         <button mat-stroked-button class="margin-bottom-10px" color="primary" (click)="onFileUpload()"
                 [disabled]="dataField.disabled">
             <mat-icon>file_upload</mat-icon>
