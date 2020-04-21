@@ -58,39 +58,22 @@ export class NewCaseComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this._petriNetResource.getAll2().subscribe(petriNets => {
-            if (petriNets) {
-                if (Array.isArray(this.allowedNets) && this.allowedNets.length) {
-                    petriNets.forEach(petriNet => {
-                        if (this.allowedNets.includes(petriNet.stringId)
-                            || this.allowedNets.includes(petriNet.title)
-                            || this.allowedNets.includes(petriNet.identifier))
-                            this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
-                    });
-                } else {
-                    petriNets.forEach(petriNet => {
-                        this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
-                    });
-
-                }
-
-                if (this.options.length === 1) {
-                    this.processOne = Promise.resolve(true);
-
-                } else {
-                    this.processOne = Promise.resolve(false);
-
-                }
-
-                this.filteredOptions = this.processFormControl.valueChanges
-                    .pipe(
-                        startWith(''),
-                        map(value => typeof value === 'string' ? value : value.viewValue),
-                        map(name => name ? this._filter(name) : this.options.slice()),
-                        tap(() => this.options.length === 1 ? this.processFormControl.setValue(this.options[0]) : undefined)
-                    );
-            }
+        this.allowedNets.forEach(id => {
+            console.log(id);
+            this._processService.getNet(id).subscribe(petriNet => {
+                console.log(petriNet.title + ' ' + petriNet.identifier);
+                this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
+            });
         });
+        this.filteredOptions = this.processFormControl.valueChanges
+            .pipe(
+                startWith(''),
+                map(value => typeof value === 'string' ? value : value.viewValue),
+                map(name => name ? this._filter(name) : this.options.slice()),
+                tap(() => this.options.length === 1 ? this.processFormControl.setValue(this.options[0]) : undefined)
+            );
+        this.processOne = Promise.resolve(this.options.length === 1);
+
     }
 
     public stepChange($event: StepperSelectionEvent): void {

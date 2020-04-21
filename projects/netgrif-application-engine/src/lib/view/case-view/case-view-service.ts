@@ -96,10 +96,10 @@ export class CaseViewService extends SortableView {
 
     /**
      * injectionData [] no filter
-     * ['AA'] Title or ID
+     * ['AA'] identifier
      */
     public createNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, []).onClose.subscribe($event => {
+        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, ['CCC', 'AA']).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.loadCases();
