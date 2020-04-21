@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TestConfigurationService} from '../../../utility/tests/test-config';
 
 describe('FilterSelectorComponent', () => {
     let component: FilterSelectorComponent;
@@ -43,8 +44,3 @@ describe('FilterSelectorComponent', () => {
     });
 });
 
-class TestConfigurationService extends ConfigurationService {
-    constructor() {
-        super({assets: [], providers: undefined, theme: undefined, views: undefined});
-    }
-}

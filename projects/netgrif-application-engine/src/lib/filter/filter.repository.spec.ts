@@ -2,6 +2,7 @@ import {TestBed} from '@angular/core/testing';
 
 import {FilterRepository} from './filter.repository';
 import {ConfigurationService} from '../configuration/configuration.service';
+import {TestConfigurationService} from '../utility/tests/test-config';
 
 describe('FilterRepository', () => {
     let service: FilterRepository;
@@ -18,8 +19,3 @@ describe('FilterRepository', () => {
     });
 });
 
-class TestConfigurationService extends ConfigurationService {
-    constructor() {
-        super({assets: [], providers: undefined, theme: undefined, views: undefined});
-    }
-}

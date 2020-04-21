@@ -28,4 +28,20 @@ describe('RegistrationPanelComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should submit', () => {
+        component.form.controls['email'].setValue('mail');
+        component.form.controls['name'].setValue('name');
+        component.form.controls['surname'].setValue('surname');
+        component.form.controls['password'].setValue('pass');
+        component.register.subscribe( event => {
+            expect(event).toEqual({
+                email: 'mail',
+                name: 'name',
+                surname: 'surname',
+                password: 'pass'
+            });
+        });
+        component.onSubmit();
+    });
 });

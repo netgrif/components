@@ -28,4 +28,13 @@ describe('LoginPanelComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should submit', () => {
+        component.form.controls['login'].setValue('login');
+        component.form.controls['password'].setValue('pass');
+        component.login.subscribe( event => {
+            expect(event).toEqual({username: 'login', password: 'pass'});
+        });
+        component.onSubmit();
+    });
 });

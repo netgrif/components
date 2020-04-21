@@ -1,4 +1,4 @@
-import {Layout} from '../../models/abstract-data-field';
+import {Layout, Validation} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Moment} from 'moment';
 import {AbstractTimeInstanceField} from '../../time-instance-abstract-field/models/abstract-time-instance-field';
@@ -6,7 +6,7 @@ import {AbstractTimeInstanceField} from '../../time-instance-abstract-field/mode
 export class DateField extends AbstractTimeInstanceField {
 
     constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: any) {
+                description?: string, layout?: Layout, validations?: Array<Validation>) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations);
     }
 

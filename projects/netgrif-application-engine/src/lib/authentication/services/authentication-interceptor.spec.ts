@@ -1,49 +1,25 @@
 import {TestBed} from '@angular/core/testing';
-import {AuthenticationService} from './authentication.service';
-import {ConfigurationService} from '../../../configuration/configuration.service';
-import {AuthenticationMethodService} from '../authentication-method.service';
-import {Credentials} from '../../models/credentials';
-import {Observable, of} from 'rxjs';
-import {User} from '../../models/user';
+import {AuthenticationInterceptor} from './authentication-interceptor';
+import {AuthenticationMethodService} from './authentication-method.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
 
-describe('AuthenticationService', () => {
-    let service: AuthenticationService;
+describe('AuthenticationInterceptor', () => {
+    let service: AuthenticationInterceptor;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigService},
-                {provide: AuthenticationMethodService, useClass: MyAuth},
+                AuthenticationMethodService,
+                AuthenticationInterceptor,
             ]});
-        service = TestBed.inject(AuthenticationService);
+        service = TestBed.inject(AuthenticationInterceptor);
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
-
-    it('should be not authenticated now', () => {
-        expect(service.isAuthenticated()).toBe(false);
-    });
-
-    it('should logout', () => {
-        expect(service.logout().subscribe()).toBeTruthy();
-    });
-
-    it('should login', () => {
-        expect(service.login({username: '', password: ''}).subscribe()).toBeTruthy();
-    });
 });
-
-class MyAuth extends AuthenticationMethodService {
-    login(credentials: Credentials): Observable<User> {
-        return of(undefined);
-    }
-
-    logout(): Observable<object> {
-        return of(undefined);
-    }
-}
 
 class TestConfigService extends ConfigurationService {
     constructor() {

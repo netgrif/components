@@ -8,6 +8,8 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {DateTimeField} from './models/date-time-field';
 import moment from 'moment';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
+import {BehaviorSubject} from 'rxjs';
+import {ChangedFields} from '../models/changed-fields';
 
 describe('DatetimeFieldComponent', () => {
     let component: DateTimeFieldComponent;
@@ -37,19 +39,24 @@ describe('DatetimeFieldComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should get error message', () => {
+        expect(component.getErrorMessage()).toEqual('This is custom message!');
+    });
 });
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-date-time-field [dataField]="field"></nae-date-time-field>'
+    template: '<nae-date-time-field [dataField]="field" [changedFields]="changedFields"></nae-date-time-field>'
 })
 class TestWrapperComponent {
-    field = new DateTimeField('', '', moment(), {
+    field = new DateTimeField('', '', moment('2020-03-09'), {
         required: true,
         optional: true,
         visible: true,
         editable: true,
         hidden: true
-    });
+    }, undefined, undefined, undefined, [{validationRule: 'between today,future', validationMessage: 'This is custom message!'}]);
+    changedFields = new BehaviorSubject<ChangedFields>({behavior: {editable: true}});
 }
 

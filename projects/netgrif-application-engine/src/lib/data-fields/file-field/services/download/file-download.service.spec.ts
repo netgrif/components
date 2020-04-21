@@ -1,13 +1,19 @@
 import {TestBed} from '@angular/core/testing';
 import {FileDownloadService} from './file-download.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ConfigurationService} from '../../../../configuration/configuration.service';
+import {MaterialModule} from '../../../../material/material.module';
+import {TestConfigurationService} from '../../../../utility/tests/test-config';
 
 describe('FileDownloadService', () => {
     let service: FileDownloadService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule, MaterialModule],
             providers: [
-                FileDownloadService
+                FileDownloadService,
+                {provide: ConfigurationService, useClass: TestConfigurationService}
             ]});
         service = TestBed.inject(FileDownloadService);
     });

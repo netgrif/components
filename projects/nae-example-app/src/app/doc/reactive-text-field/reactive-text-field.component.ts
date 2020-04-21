@@ -80,8 +80,9 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     // DATE TIME FIELD
     @ViewChild('dateTimeFieldComponent') naeDateTimeField: DateTimeFieldComponent;
-    dateTimeField = new DateTimeField('dateTimeFieldId', 'Reactive date time field', moment('2020-03-09'),
-        {visible: true, editable: true});
+    dateTimeField = new DateTimeField('dateTimeFieldId', 'Reactive date time field', moment(new Date()),
+        {visible: true, editable: true}, undefined, undefined, undefined,
+        [{validationRule: 'between past,today', validationMessage: 'This is custom message!'}]);
 
     // ENUM SELECT FIELD
     @ViewChild('enumSelectFieldComponent') naeEnumSelectField: EnumerationFieldComponent;

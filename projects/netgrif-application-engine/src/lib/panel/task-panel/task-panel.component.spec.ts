@@ -8,14 +8,16 @@ import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TaskPanelComponent} from './task-panel.component';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable, of, Subject} from 'rxjs';
-import {HeaderColumn} from '../../header/models/header-column';
+import {of, Subject} from 'rxjs';
+import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {DashboardCardTypes} from '@netgrif/application-engine';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {TaskViewService} from '../../view/task-view/task-view.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {TaskMetaField} from '../../header/task-header/task-header.service';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
@@ -33,7 +35,8 @@ describe('TaskPanelComponent', () => {
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                TaskViewService
+                TaskViewService,
+                {provide: TaskResourceService, useClass: MyResources}
             ],
             declarations: [TestWrapperComponent]
         })
@@ -46,6 +49,20 @@ describe('TaskPanelComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should call show function', () => {
+        expect(component.show(new MouseEvent('type'))).toBeFalse();
+    });
+
+    it('should call getTaskDataFields and updateTaskDataFields functions', () => {
+        component.getTaskDataFields();
+        component.updateTaskDataFields();
+        expect(component.taskPanelData.task.dataGroups.length).toEqual(1);
+    });
+
+    it('should process assign', () => {
+        component.processTask('assign');
     });
 });
 
@@ -75,294 +92,74 @@ class TestWrapperComponent {
         },
         changedFields: new Subject<ChangedFields>()
     };
-    selectedHeaders$ = new Observable<Array<HeaderColumn>>();
+    selectedHeaders$ = of([
+        new HeaderColumn(HeaderColumnType.META, TaskMetaField.CASE, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.META, TaskMetaField.TITLE, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.META, TaskMetaField.PRIORITY, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.META, TaskMetaField.USER, 'string', 'string'),
+    ]);
 }
 
-class TestConfigurationService extends ConfigurationService {
-    constructor() {
-        super({
-            extends: 'nae-default',
-            providers: {
-                auth: {
-                    address: 'http://localhost:8080/api/',
-                    authentication: 'Basic',
-                    endpoints: {
-                        login: 'auth/login',
-                        logout: 'auth/logout',
-                        signup: 'auth/signup'
-                    },
-                    sessionBearer: 'X-Auth-Token'
-                },
-                resources: [
-                    {
-                        name: 'case',
-                        address: 'http://localhost:8080/api/',
-                        format: 'hal',
-                        openApi: 'https://swagger.io'
-                    },
-                    {
-                        name: 'task',
-                        address: 'http://localhost:8080/api/',
-                        format: 'json'
-                    },
-                    {
-                        name: 'petrinet',
-                        address: 'http://localhost:8080/api/',
-                        format: 'json'
-                    },
-                    {
-                        name: 'user',
-                        address: 'http://localhost:8080/api/',
-                        format: 'json'
-                    }
-                ]
-            },
-            views: {
-                layout: 'empty',
-                routes: {
-                    dashboard: {
-                        layout: {
-                            name: 'dashboard',
-                            params: {
-                                columns: 4,
-                                cards: [{
-                                    type: DashboardCardTypes.COUNT,
-                                    title: 'All tasks',
-                                    resourceType: 'task',
-                                    filter: '{}',
-                                    layout: {
-                                        x: 0,
-                                        y: 0,
-                                        rows: 1,
-                                        cols: 1
-                                    }
-                                }, {
-                                    type: DashboardCardTypes.IFRAME,
-                                    url: 'https://netgrif.com/',
-                                    layout: {
-                                        x: 2,
-                                        y: 0,
-                                        rows: 2,
-                                        cols: 2
-                                    }
-                                }, {
-                                    type: DashboardCardTypes.COUNT,
-                                    title: 'All cases',
-                                    resourceType: 'case',
-                                    filter: '{}',
-                                    layout: {
-                                        x: 1,
-                                        y: 1,
-                                        rows: 1,
-                                        cols: 1
-                                    }
-                                }]
-                            }
+class MyResources {
+
+    getData(stringId) {
+        return of([{
+            fields : {
+                _embedded : {
+                    localisedNumberFields : [ {
+                        stringId : 'number',
+                        type : 'number',
+                        name : 'Number',
+                        description : 'Number field description',
+                        placeholder : 'Number field placeholder',
+                        behavior : {
+                            editable : true
                         },
-                        access: 'private',
-                        navigation: {
-                            title: 'Dashboard',
-                            icon: 'dashboard'
-                        }
-                    },
-                    cases: {
-                        type: '',
-                        layout: {
-                            name: ''
-                        },
-                        access: 'private',
-                        navigation: {
-                            title: 'Cases',
-                            icon: 'settings'
-                        },
-                        routes: {
-                            some_cases: {
-                                type: '',
-                                layout: {
-                                    name: ''
-                                },
-                                access: 'private',
-                                navigation: {
-                                    icon: 'account_circle'
-                                },
-                                routes: {
-                                    some_specifics: {
-                                        type: '',
-                                        layout: {
-                                            name: ''
-                                        },
-                                        access: 'private',
-                                        navigation: true
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    task: {
-                        type: '',
-                        layout: {
-                            name: ''
-                        },
-                        access: 'private',
-                        navigation: {
-                            title: 'Tasks',
-                            icon: 'assignment'
-                        },
-                        routes: {
-                            some_tasks: {
-                                type: '',
-                                layout: {
-                                    name: ''
-                                },
-                                access: 'private',
-                                navigation: false,
-                                routes: {
-                                    some_specifics: {
-                                        type: '',
-                                        layout: {
-                                            name: ''
-                                        },
-                                        access: 'private',
-                                        navigation: true
-                                    }
-                                }
-                            }
-                        }
-                    }
+                        value : 10.0,
+                        order : 0,
+                        validations : [ {
+                            validationRule : 'inrange 0,inf'
+                        }, {
+                            validationRule : 'inrange 0,inf',
+                            validationMessage : 'Number field validation message'
+                        } ],
+                        defaultValue : 10.0
+                    } ]
                 }
             },
-            theme: {
-                name: 'example-classico',
-                pallets: {
-                    light: {
-                        primary: {
-                            50: '',
-                            100: '',
-                            200: '',
-                            300: '',
-                            400: '',
-                            500: '',
-                            600: '',
-                            700: '',
-                            800: '',
-                            900: '',
-                            A100: '',
-                            A200: '',
-                            A400: '',
-                            A700: '',
-                            contrast: {
-                                light: [
-                                    '300',
-                                    '400',
-                                    '500',
-                                    '600',
-                                    '700',
-                                    '800',
-                                    '900'
-                                ],
-                                dark: [
-                                    '50',
-                                    '100',
-                                    '200'
-                                ]
-                            }
-                        },
-                        secondary: {
-                            50: '',
-                            100: '',
-                            200: '',
-                            300: '',
-                            400: '',
-                            500: '',
-                            600: '',
-                            700: '',
-                            800: '',
-                            900: '',
-                            A100: '',
-                            A200: '',
-                            A400: '',
-                            A700: '',
-                            contrast: {
-                                light: [
-                                    '300',
-                                    '400',
-                                    '500',
-                                    '600',
-                                    '700',
-                                    '800',
-                                    '900'
-                                ],
-                                dark: [
-                                    '50',
-                                    '100',
-                                    '200'
-                                ]
-                            }
-                        },
-                        warn: {
-                            50: '',
-                            100: '',
-                            200: '',
-                            300: '',
-                            400: '',
-                            500: '',
-                            600: '',
-                            700: '',
-                            800: '',
-                            900: '',
-                            A100: '',
-                            A200: '',
-                            A400: '',
-                            A700: '',
-                            contrast: {
-                                light: [
-                                    '300',
-                                    '400',
-                                    '500',
-                                    '600',
-                                    '700',
-                                    '800',
-                                    '900'
-                                ],
-                                dark: [
-                                    '50',
-                                    '100',
-                                    '200'
-                                ]
-                            }
-                        }
-                    },
-                    dark: {
-                        primary: 'blue',
-                        secondary: 'pink'
-                    }
-                }
-            },
-            assets: [
-                '../../../assets'
-            ],
-            filters: {
-                'all-cases': {
-                    title: 'All Cases',
-                    access: 'public',
-                    query: 'select * from case where title like ${some-param}'
-                }
-            },
-            i18n: [
-                'sk-SK',
-                'en-US'
-            ],
-            defaults: {
-                log: {
-                    level: 'INFO',
-                    logWithDate: true,
-                    serializeExtraParams: true,
-                    includeLogLevel: true,
-                    publishers: [
-                        'console'
-                    ]
-                }
-            }
+            alignment : 'start',
+            stretch : true
+        }]);
+    }
+
+    setData(stringId) {
+        return of({changedFields: {}});
+    }
+
+    assignTask(stringId) {
+        return of({success: 'Success'});
+    }
+
+    searchTask() {
+        return of({
+            caseId: 'string',
+            transitionId: 'string',
+            title: 'string',
+            caseColor: 'string',
+            caseTitle: 'string',
+            user: undefined,
+            roles: {},
+            startDate: undefined,
+            finishDate: undefined,
+            assignPolicy: AssignPolicy.manual,
+            dataFocusPolicy: DataFocusPolicy.manual,
+            finishPolicy: FinishPolicy.manual,
+            stringId: 'string',
+            cols: undefined,
+            dataGroups: [],
+            _links: {}
         });
     }
 }
+
+

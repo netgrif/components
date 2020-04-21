@@ -1,6 +1,6 @@
 import {DataField, Layout, Validation} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
-import {ValidatorFn, Validators} from '@angular/forms';
+import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 
 export class BooleanField extends DataField<boolean> {
 
@@ -36,10 +36,14 @@ export class BooleanField extends DataField<boolean> {
 
         this.validations.forEach(item => {
             if (item.validationRule.includes('requiredTrue')) {
-                result.push(Validators.requiredTrue);
+                result.push(this.requiredTrue);
             }
         });
 
         return result;
+    }
+
+    private requiredTrue(control: AbstractControl): ValidationErrors | null {
+        return control.value === true ? null : {requiredTrue: true};
     }
 }

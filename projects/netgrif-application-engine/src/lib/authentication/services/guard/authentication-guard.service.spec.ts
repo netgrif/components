@@ -15,13 +15,19 @@ describe('AuthenticationGuardService', () => {
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigService},
                 AuthenticationMethodService,
-                AuthenticationService
+                AuthenticationService,
+                AuthenticationGuardService
             ]});
         service = TestBed.inject(AuthenticationGuardService);
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    it('should resolve login path', () => {
+        const test = new TestConfigService();
+        expect(service.resolveLoginPath(test.get().views.routes, AuthenticationGuardService.LOGIN_COMPONENT)).toBe(null);
     });
 });
 
@@ -45,7 +51,25 @@ class TestConfigService extends ConfigurationService {
             },
             views: {
                 layout: 'empty',
-                routes: {}
+                routes: {
+                    some_tasks: {
+                        type: '',
+                        layout: {
+                            name: ''
+                        },
+                        access: 'private',
+                        navigation: false,
+                        routes: {
+                            some_specifics: {
+                                type: '',
+                                layout: {
+                                    name: ''
+                                },
+                                access: 'private',
+                                navigation: true
+                            }
+                        }
+                    }}
             },
             theme: {
                 name: 'default',

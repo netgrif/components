@@ -35,6 +35,6 @@ export class RichTextareaFieldComponent extends AbstractTextFieldComponent imple
     }
 
     public getErrorMessage() {
-        this.buildErrorMessage(this.textAreaField, this.formControlRef);
+        return this.buildErrorMessage(this.textAreaField, this.formControlRef);
     }
 }

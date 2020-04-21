@@ -36,7 +36,7 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
             case CaseMetaField.AUTHOR:
                 return this.case_.author.fullName;
             case CaseMetaField.CREATION_DATE:
-                return toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING);
+                return toMoment(this.case_.creationDate as NaeDate).format(DATE_TIME_FORMAT_STRING);
         }
     }
 
