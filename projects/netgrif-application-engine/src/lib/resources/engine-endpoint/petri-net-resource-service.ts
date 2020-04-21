@@ -33,10 +33,6 @@ export class PetriNetResourceService {
         return this.provider.get$('petrinet', this.SERVER_URL)
             .pipe(map(r => changeType(r, 'petriNetReferences')));
     }
-    public getAll2(): Observable<Array<PetriNetReference>> {
-        return this.provider.get$('petrinet', this.SERVER_URL)
-            .pipe(map(r => changeType(r, 'petriNetReferences')));
-    }
 
     /**
      * Get Data Field References Using

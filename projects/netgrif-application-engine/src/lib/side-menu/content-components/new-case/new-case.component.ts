@@ -67,6 +67,13 @@ export class NewCaseComponent implements OnInit, OnChanges {
         this.allowedNets.forEach(id => {
             this._processService.getNet(id).subscribe(petriNet => {
                 this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
+                this.filteredOptions = this.processFormControl.valueChanges
+                    .pipe(
+                        startWith(''),
+                        map(value => typeof value === 'string' ? value : value.viewValue),
+                        map(name => name ? this._filter(name) : this.options.slice()),
+                    );
+
             });
         });
         this.filteredOptions = this.processFormControl.valueChanges
