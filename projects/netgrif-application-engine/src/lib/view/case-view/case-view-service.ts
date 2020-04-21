@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
@@ -9,6 +10,9 @@ import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {SortableView} from '../abstract/sortable-view';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
+import {HeaderMode} from '../../header/models/header-mode';
+import {HeaderChange} from '../../header/models/user-changes/header-change';
+import {SortChangeDescription} from '../../header/models/user-changes/sort-change-description';
 
 
 @Injectable()
@@ -75,16 +79,6 @@ export class CaseViewService extends SortableView {
         this._cases$.next(newCases);
     }
 
-    public createNewCase(): void {
-        // TODO 16.4. 2020 Add filter to injected data for newCase Component to get there allowedNets
-        this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
-            this._log.debug($event.message, $event.data);
-            if ($event.data) {
-                this.loadCases();
-            }
-        });
-    }
-
     protected getDefaultSortParam(): string {
         return 'stringId,desc';
     }
@@ -98,6 +92,44 @@ export class CaseViewService extends SortableView {
             default:
                 return this._lastHeaderSearchState.fieldIdentifier;
         }
+    }
+
+    /**
+     * injectionData identifier[]
+     */
+    // TODO AllowedNets
+    public createNewCase(): void {
+        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, ['AA', 'CCC']).onClose.subscribe($event => {
+            this._log.debug($event.message, $event.data);
+            if ($event.data) {
+                this.loadCases();
+            }
+        });
+    }
+
+
+    // TODO: hasAutority create new Case
+    // public hasAutority(): boolean {
+    //     if (!this.authorityToCreate || !this._user || !this._user.authorities) return false;
+    //     if (this.authorityToCreate instanceof Array) {
+    //         return this.authorityToCreate.some(a => this._user.authorities.some(u => u === a));
+    //     }
+    // }
+
+
+    public registerHeaderChange(headerChange$: Observable<HeaderChange>): void {
+        headerChange$.subscribe((header: HeaderChange) => {
+            if (!header) {
+                return;
+            }
+            if (header.mode === HeaderMode.SORT || header.mode === HeaderMode.SEARCH) {
+                if (header.mode === HeaderMode.SORT) {
+                    this._lastHeaderSearchState = header.description as SortChangeDescription;
+                }
+                // TODO we might not need to search all the time, do some filtering
+                this.loadCases();
+            }
+        });
     }
 
     public reload(): void {
