@@ -134,10 +134,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        this.filteredOptions = this.processFormGroup.get('processFormControl').valueChanges.pipe(
+        this.filteredOptions = this.processFormControl.get('processFormControl').valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value))
         );
