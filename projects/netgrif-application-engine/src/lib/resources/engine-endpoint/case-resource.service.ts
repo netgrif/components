@@ -49,6 +49,8 @@ export class CaseResourceService implements CountService {
      * Generic case search
      * POST
      * {{baseUrl}}/api/workflow/case/search
+     * @param filter filter used to search cases. Must be of type `CASE`.
+     * @param params request parameters, that can be used for sorting of results.
      */
     public searchCases(filter: Filter, params?: Params): Observable<Array<Case>> {
         if (filter.type !== FilterType.CASE) {

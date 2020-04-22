@@ -94,7 +94,7 @@ export class TaskResourceService implements CountService {
     /**
      * Searches tasks trough the Elastic endpoint.
      * POST
-     * @param filter filter used to search the tasks. Must be of `TASK`
+     * @param filter filter used to search the tasks. Must be of type `TASK`.
      */
     // {{baseUrl}}/api/task/search_es
     public searchTask(filter: Filter): Observable<Array<Task>> {
