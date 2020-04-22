@@ -13,6 +13,7 @@ import {ChangedFieldContainer} from '../interface/changed-field-container';
 import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
+import {TaskGetRequestBody} from '../interface/task-get-request-body';
 
 @Injectable({
     providedIn: 'root'
@@ -108,10 +109,10 @@ export class TaskResourceService implements CountService {
     /**
      * Searches tasks trough the Mongo endpoint.
      * POST
-     * @param body request body
+     * @param body search request body
      */
     // {{baseUrl}}/api/task/search
-    public getTasks(body: object): Observable<Array<Task>> {
+    public getTasks(body: TaskGetRequestBody): Observable<Array<Task>> {
         return this.provider.post$('task/search', this.SERVER_URL, body)
             .pipe(map(r => changeType(r, 'tasks')));
     }
