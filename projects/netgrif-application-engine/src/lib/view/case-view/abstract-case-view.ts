@@ -3,6 +3,9 @@ import {BehaviorSubject} from 'rxjs';
 import {HeaderType} from '../../header/models/header-type';
 import {CaseViewService} from './case-view-service';
 import {ViewWithHeaders} from '../abstract/view-with-headers';
+import {FilterType} from '../../filter/models/filter-type';
+import {SimpleFilter} from '../../filter/models/simple-filter';
+import {Filter} from '../../filter/models/filter';
 
 
 export abstract class AbstractCaseView extends ViewWithHeaders {
@@ -12,7 +15,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     public loading: boolean;
 
     protected constructor(protected _caseViewService: CaseViewService,
-                          baseFilter: string = '{}') {
+                          baseFilter: Filter = new SimpleFilter('', FilterType.CASE, {})) {
         super(_caseViewService);
         this._caseViewService.loading$.subscribe( loading => {
             this.loading = loading;
