@@ -13,3 +13,4 @@ export * from './models/filter-type';
 /* INTERFACES */
 export * from './models/case-search-request-body';
 export * from './models/task-search-request-body';
+export * from './models/merged-filter-params';

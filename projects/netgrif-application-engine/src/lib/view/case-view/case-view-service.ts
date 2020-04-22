@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
@@ -10,16 +9,16 @@ import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {SortableView} from '../abstract/sortable-view';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
-import {HeaderMode} from '../../header/models/header-mode';
-import {HeaderChange} from '../../header/models/user-changes/header-change';
-import {SortChangeDescription} from '../../header/models/user-changes/sort-change-description';
+import {Filter} from '../../filter/models/filter';
+import {SimpleFilter} from '../../filter/models/simple-filter';
+import {FilterType} from '../../filter/models/filter-type';
 
 
 @Injectable()
 export class CaseViewService extends SortableView {
 
     protected _loading$: BehaviorSubject<boolean>;
-    protected _baseFilter: string;
+    protected _baseFilter: Filter;
     protected _cases$: Subject<Array<Case>>;
 
     constructor(protected _sideMenuService: SideMenuService,
@@ -27,7 +26,7 @@ export class CaseViewService extends SortableView {
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService) {
         super();
-        this._baseFilter = '{}';
+        this._baseFilter = new SimpleFilter('', FilterType.CASE, {});
         this._loading$ = new BehaviorSubject<boolean>(false);
         this._cases$ = new Subject<Array<Case>>();
     }
@@ -44,8 +43,8 @@ export class CaseViewService extends SortableView {
         return this._loading$.asObservable();
     }
 
-    public set baseFilter(newFilter: string) {
-        this._baseFilter = newFilter;
+    public set baseFilter(newFilter: Filter) {
+        this._baseFilter = newFilter.clone();
     }
 
     public get cases$(): Observable<Array<Case>> {
@@ -60,7 +59,7 @@ export class CaseViewService extends SortableView {
 
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
-        this._caseResourceService.searchCases(JSON.parse(this._baseFilter), params)
+        this._caseResourceService.searchCases(this._baseFilter, params)
             .subscribe((newCases: Array<Case>) => {
                 if (newCases instanceof Array) {
                     this.updateCases(newCases);
@@ -79,6 +78,16 @@ export class CaseViewService extends SortableView {
         this._cases$.next(newCases);
     }
 
+    public createNewCase(): void {
+        // TODO 16.4. 2020 Add filter to injected data for newCase Component to get there allowedNets
+        this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
+            this._log.debug($event.message, $event.data);
+            if ($event.data) {
+                this.loadCases();
+            }
+        });
+    }
+
     protected getDefaultSortParam(): string {
         return 'stringId,desc';
     }
@@ -92,44 +101,6 @@ export class CaseViewService extends SortableView {
             default:
                 return this._lastHeaderSearchState.fieldIdentifier;
         }
-    }
-
-    /**
-     * injectionData identifier[]
-     */
-    // TODO AllowedNets
-    public createNewCase(): void {
-        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, ['AA', 'CCC']).onClose.subscribe($event => {
-            this._log.debug($event.message, $event.data);
-            if ($event.data) {
-                this.loadCases();
-            }
-        });
-    }
-
-
-    // TODO: hasAutority create new Case
-    // public hasAutority(): boolean {
-    //     if (!this.authorityToCreate || !this._user || !this._user.authorities) return false;
-    //     if (this.authorityToCreate instanceof Array) {
-    //         return this.authorityToCreate.some(a => this._user.authorities.some(u => u === a));
-    //     }
-    // }
-
-
-    public registerHeaderChange(headerChange$: Observable<HeaderChange>): void {
-        headerChange$.subscribe((header: HeaderChange) => {
-            if (!header) {
-                return;
-            }
-            if (header.mode === HeaderMode.SORT || header.mode === HeaderMode.SEARCH) {
-                if (header.mode === HeaderMode.SORT) {
-                    this._lastHeaderSearchState = header.description as SortChangeDescription;
-                }
-                // TODO we might not need to search all the time, do some filtering
-                this.loadCases();
-            }
-        });
     }
 
     public reload(): void {

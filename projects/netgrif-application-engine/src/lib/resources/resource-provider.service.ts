@@ -10,10 +10,11 @@ export type Headers =
     [header: string]: string | string[];
 };
 
-export type Params =
-    HttpParams | {
+export type Params = HttpParams | ObjectParams;
+
+export interface ObjectParams {
     [param: string]: string | string[];
-};
+}
 
 export type ResponseType = 'json';
 
@@ -56,6 +57,42 @@ export abstract class AbstractResourceProvider {
                 throw Error('No define endpoint');
             }
         }
+    }
+
+    /**
+     * Combines two instances of {@link Params} type into one.
+     * If a parameter is declared in both instances uses the value of the `highPriorityParams` in the result.
+     * @param highPriorityParams parameters with the higher priority
+     * @param lowPriorityParams parameters with the lower priority
+     * @returns combination of botch parameters. Uses the value of the higher priority parameters if the keys are in conflict.
+     */
+    public static combineParams(highPriorityParams: Params, lowPriorityParams: Params): HttpParams {
+        const importantParams = highPriorityParams instanceof HttpParams ?
+            ResourceProvider.convertHttpParamsToObjectParams(highPriorityParams) :
+            highPriorityParams;
+        const params = lowPriorityParams instanceof HttpParams ?
+            ResourceProvider.convertHttpParamsToObjectParams(lowPriorityParams) :
+            {...lowPriorityParams};
+        Object.assign(params, importantParams);
+        return new HttpParams({fromObject: params});
+    }
+
+    /**
+     * Converts {@link HttpParams} instance into a simple object.
+     * @param params instance to convert
+     * @returns simple object with keys and values from the input argument
+     */
+    public static convertHttpParamsToObjectParams(params: HttpParams): ObjectParams {
+        const result = {};
+        params.keys().forEach(key => {
+            const values = params.getAll(key);
+            if (values.length === 1) {
+                result[key] = values[0];
+            } else {
+                result[key] = values;
+            }
+        });
+        return result;
     }
 
     public get$<T>(endpoint?: string, url ?: string, params ?: Params, headers ?: Headers,

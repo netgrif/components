@@ -3,6 +3,8 @@ import {MergeOperator} from './merge-operator';
 import {TaskSearchRequestBody} from './task-search-request-body';
 import {CaseSearchRequestBody} from './case-search-request-body';
 import {FilterType} from './filter-type';
+import {Params} from '../../resources/resource-provider.service';
+import {MergedFilterParams} from './merged-filter-params';
 
 /**
  * Represents an union or an intersection of {@link SimpleFilter}s and allows limited manipulation with it.
@@ -70,5 +72,17 @@ export class MergedFilter extends Filter {
      */
     getRequestBody(): Array<TaskSearchRequestBody> | Array<CaseSearchRequestBody> {
         return this.deepCopy(this._filters) as Array<CaseSearchRequestBody> | Array<TaskSearchRequestBody>;
+    }
+
+    /**
+     * Returns the necessary request params for the filter.
+     * @returns params with `operation` set to either `AND` or `OR` based on this object's `_operator` property.
+     *
+     * See {@link MergedFilterParams} for more information.
+     */
+    getRequestParams(): MergedFilterParams & Params {
+        return {
+            operation: this._operator
+        };
     }
 }

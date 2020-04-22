@@ -3,6 +3,7 @@ import {MergedFilter} from './merged-filter';
 import {TaskSearchRequestBody} from './task-search-request-body';
 import {CaseSearchRequestBody} from './case-search-request-body';
 import {FilterType} from './filter-type';
+import {Params} from '../../resources/resource-provider.service';
 
 /**
  * Abstraction of backend search requests that defines a limited set of operations on them.
@@ -60,6 +61,15 @@ export abstract class Filter {
      */
     public abstract getRequestBody():
         TaskSearchRequestBody | CaseSearchRequestBody | Array<TaskSearchRequestBody> | Array<CaseSearchRequestBody>;
+
+    /**
+     * Returns the necessary request params for the filter. Default implementation returns an empty object.
+     * The params are added on top of the request when sending it to the backend by the respective service methods.
+     * @returns an empty object `{}`
+     */
+    public getRequestParams(): Params {
+        return {};
+    }
 
     /**
      * Creates a deep copy of a simple object.

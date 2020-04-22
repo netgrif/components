@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">New Case</mat-toolbar>
-<mat-vertical-stepper *ngIf="!(processOne | async)" linear #stepper>
+<mat-vertical-stepper *ngIf="(processOne | async) === false" linear #stepper>
     <mat-step  [stepControl]="processFormControl" errorMessage="Process is required.">
         <ng-template matStepLabel>Choose process</ng-template>
         <mat-form-field>

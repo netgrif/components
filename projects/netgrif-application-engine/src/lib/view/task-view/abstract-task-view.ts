@@ -4,6 +4,7 @@ import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-pa
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskViewService} from './task-view.service';
 import {ViewWithHeaders} from '../abstract/view-with-headers';
+import {Filter} from '../../filter/models/filter';
 
 
 export abstract class AbstractTaskView extends ViewWithHeaders implements OnInit {
@@ -12,7 +13,7 @@ export abstract class AbstractTaskView extends ViewWithHeaders implements OnInit
     public changedFields: Subject<ChangedFields>;
     public loading: boolean;
 
-    protected constructor(protected taskViewService: TaskViewService, baseFilter: string) {
+    protected constructor(protected taskViewService: TaskViewService, baseFilter: Filter) {
         super(taskViewService);
         this.taskPanel = [];
         this.taskViewService.taskData.subscribe( data => {
