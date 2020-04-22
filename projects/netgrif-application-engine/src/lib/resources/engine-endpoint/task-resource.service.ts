@@ -10,8 +10,10 @@ import {TaskReference} from '../interface/task-reference';
 import {DataGroupsResource} from '../interface/data-groups';
 import {Task} from '../interface/task';
 import {ChangedFieldContainer} from '../interface/changed-field-container';
-import {FileResource} from '../interface/file-resource';
 import {CountService} from '../abstract-endpoint/count-service';
+import {Filter} from '../../filter/models/filter';
+import {FilterType} from '../../filter/models/filter-type';
+import {TaskGetRequestBody} from '../interface/task-get-request-body';
 
 @Injectable({
     providedIn: 'root'
@@ -28,13 +30,16 @@ export class TaskResourceService implements CountService {
      *  POST
      *  {{baseUrl}}/api/task/count
      */
-    public countTask(body: object): Observable<Count> {
-        return this.provider.post$('task/count', this.SERVER_URL, body)
+    public countTask(filter: Filter): Observable<Count> {
+        if (filter.type !== FilterType.TASK) {
+            throw new Error('Provided filter doesn\'t have type TASK');
+        }
+        return this.provider.post$('task/count', this.SERVER_URL, filter.getRequestBody(), filter.getRequestParams())
             .pipe(map(r => changeType(r, undefined)));
     }
 
-    public count(body: object): Observable<Count> {
-        return this.countTask(body);
+    public count(filter: Filter): Observable<Count> {
+        return this.countTask(filter);
     }
 
     /**
@@ -88,11 +93,26 @@ export class TaskResourceService implements CountService {
     }
 
     /**
-     * Generic task search
+     * Searches tasks trough the Elastic endpoint.
      * POST
+     * @param filter filter used to search the tasks. Must be of type `TASK`.
+     */
+    // {{baseUrl}}/api/task/search_es
+    public searchTask(filter: Filter): Observable<Array<Task>> {
+        if (filter.type !== FilterType.TASK) {
+            throw new Error('Provided filter doesn\'t have type TASK');
+        }
+        return this.provider.post$('task/search_es', this.SERVER_URL, filter.getRequestBody(), filter.getRequestParams())
+            .pipe(map(r => changeType(r, 'tasks')));
+    }
+
+    /**
+     * Searches tasks trough the Mongo endpoint.
+     * POST
+     * @param body search request body
      */
     // {{baseUrl}}/api/task/search
-    public searchTask(body: object): Observable<Array<Task>> {
+    public getTasks(body: TaskGetRequestBody): Observable<Array<Task>> {
         return this.provider.post$('task/search', this.SERVER_URL, body)
             .pipe(map(r => changeType(r, 'tasks')));
     }

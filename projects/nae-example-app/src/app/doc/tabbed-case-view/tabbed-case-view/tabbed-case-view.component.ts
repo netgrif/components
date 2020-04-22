@@ -1,16 +1,19 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
+    CaseParams,
+    CaseViewService,
+    ConfigurationService,
+    FilterType,
     HeaderComponent,
     InjectedTabbedCaseViewData,
-    NAE_TAB_DATA,
-    TabbedCaseView,
     LoggerService,
-    CaseViewService,
+    NAE_TAB_DATA,
+    Net,
     ProcessService,
-    Net, CaseParams, ConfigurationService,
+    SimpleFilter,
+    TabbedCaseView,
 } from '@netgrif/application-engine';
-import {ReplaySubject, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {ReplaySubject} from 'rxjs';
 
 @Component({
     selector: 'nae-app-tabbed-case-view',
@@ -29,7 +32,7 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData,
                 processService: ProcessService,
                 configService: ConfigurationService) {
-        super(caseViewService, loggerService, injectedTabData, '{}');
+        super(caseViewService, loggerService, injectedTabData, new SimpleFilter('', FilterType.CASE, {}));
         this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
         // TODO 16.4. 2020 initialize allowedNets by filter
         const view = configService.getViewByPath('<%= webPath %>');

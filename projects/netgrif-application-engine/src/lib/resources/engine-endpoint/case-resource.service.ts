@@ -10,6 +10,8 @@ import {DataGroupsResource} from '../interface/data-groups';
 import {FileResource} from '../interface/file-resource';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {CountService} from '../abstract-endpoint/count-service';
+import {Filter} from '../../filter/models/filter';
+import {FilterType} from '../../filter/models/filter-type';
 
 @Injectable({
     providedIn: 'root'
@@ -26,8 +28,12 @@ export class CaseResourceService implements CountService {
      * POST
      * {{baseUrl}}/api/workflow/case/count
      */
-    public count(body: object): Observable<Count> {
-        return this.provider.post$('workflow/case/count', this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+    public count(filter: Filter): Observable<Count> {
+        if (filter.type !== FilterType.CASE) {
+            throw new Error('Provided filter doesn\'t have type CASE');
+        }
+        return this.provider.post$('workflow/case/count', this.SERVER_URL, filter.getRequestBody(), filter.getRequestParams())
+            .pipe(map(r => changeType(r, undefined)));
     }
 
     /**
@@ -43,9 +49,16 @@ export class CaseResourceService implements CountService {
      * Generic case search
      * POST
      * {{baseUrl}}/api/workflow/case/search
+     * @param filter filter used to search cases. Must be of type `CASE`.
+     * @param params request parameters, that can be used for sorting of results.
      */
-    public searchCases(body: object, params?: Params): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/search', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'cases')));
+    public searchCases(filter: Filter, params?: Params): Observable<Array<Case>> {
+        if (filter.type !== FilterType.CASE) {
+            throw new Error('Provided filter doesn\'t have type CASE');
+        }
+        params = ResourceProvider.combineParams(filter.getRequestParams(), params);
+        return this.provider.post$('workflow/case/search', this.SERVER_URL, filter.getRequestBody(), params)
+            .pipe(map(r => changeType(r, 'cases')));
     }
 
 
