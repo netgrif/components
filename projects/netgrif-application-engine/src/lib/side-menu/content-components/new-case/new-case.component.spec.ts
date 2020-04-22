@@ -9,6 +9,7 @@ import {SideMenuControl} from '../../models/side-menu-control';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {of} from 'rxjs';
 
 describe('NewCaseComponent', () => {
     let component: NewCaseComponent;
@@ -23,13 +24,13 @@ describe('NewCaseComponent', () => {
                 HttpClientTestingModule
             ],
             declarations: [NewCaseComponent],
-            providers: [{
-                provide: NAE_SIDE_MENU_CONTROL, factory: () => {
-                        return new SideMenuControl(undefined, undefined, undefined, []);
-                    }
+            providers: [
+                {
+                    provide: NAE_SIDE_MENU_CONTROL,
+                    useValue: new SideMenuControl(undefined, undefined, () => of('close'), [])
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
-                ]
+            ]
         })
             .compileComponents();
     }));

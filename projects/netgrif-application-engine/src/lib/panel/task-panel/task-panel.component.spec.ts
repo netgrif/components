@@ -262,7 +262,7 @@ class MyResources {
         }
     }
 
-    searchTask() {
+    searchTask(filter) {
         return of([{
             caseId: 'string',
             transitionId: 'string',

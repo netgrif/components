@@ -36,7 +36,7 @@ export class TaskViewService extends SortableView {
         this._activeFilter = newFilter.clone();
     }
 
-    loadTasks() {
+    public loadTasks() {
         if (this.loading.getValue()) {
             return;
         }
@@ -68,7 +68,7 @@ export class TaskViewService extends SortableView {
         });
     }
 
-    resolveUpdate(tasks) {
+    private resolveUpdate(tasks) {
         const tasksToDelete = []; // saved are only indexes for work later
         this.taskArray.forEach((item, i) => {
             const index = tasks.findIndex(r => r.caseId === item.task.caseId && r.transitionId === item.task.transitionId);
