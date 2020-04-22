@@ -22,7 +22,9 @@ export interface ChangedFields {
 export interface Change {
     value?: string | number | boolean | any;
     // behavior is "cleared" and contains information only for one transition
-    behavior?: Behavior;
+    behavior?: {
+        [key: string]: Behavior
+    };
 
     [key: string]: any;
 }
