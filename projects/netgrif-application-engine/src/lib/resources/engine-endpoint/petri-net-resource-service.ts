@@ -11,7 +11,6 @@ import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
 import {Net} from '../../process/net';
 import {MessageResource} from '../interface/message-resource';
-import {PetriNetReference} from '../interface/petri-net-reference';
 
 @Injectable({
     providedIn: 'root'
