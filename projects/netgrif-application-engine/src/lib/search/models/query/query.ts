@@ -1,7 +1,7 @@
 import {BooleanOperator} from '../boolean-operator';
 
 /**
- * Abstraction of queries from their string form, so that their implementation can be replaced as needed.
+ * Abstraction of queries, so that their implementation can be replaced as needed.
  */
 export class Query {
     /**

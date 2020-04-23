@@ -44,12 +44,15 @@ export class ClausePredicate extends Predicate {
      * Removes the {@link Predicate} at the given `index` from this clause and updates this {@link Predicate}'s {@link Query}.
      * If the `index` is invalid does nothing.
      * @param index index of the {@link Predicate} in this clause that should be removed
+     * @returns whether a predicate was removed, or not
      */
-    public removePredicate(index: number): void {
+    public removePredicate(index: number): boolean {
         if (index >= 0 && index < this._predicates.length) {
             this._predicates.splice(index, 1);
             this.updateQuery();
+            return true;
         }
+        return false;
     }
 
     /**

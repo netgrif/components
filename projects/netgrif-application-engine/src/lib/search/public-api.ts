@@ -9,3 +9,6 @@ export * from './models/predicate/clause-predicate';
 
 /* Enums */
 export * from './models/boolean-operator';
+
+/* Services */
+export * from './search-service/search.service';
