@@ -3,6 +3,7 @@ import {MergedFilter} from './merged-filter';
 import {TaskSearchRequestBody} from './task-search-request-body';
 import {CaseSearchRequestBody} from './case-search-request-body';
 import {FilterType} from './filter-type';
+import {SimpleFilter} from './simple-filter';
 import {Params} from '../../resources/resource-provider.service';
 
 /**
@@ -17,6 +18,14 @@ export abstract class Filter {
      * @param _title human readable filter name
      */
     protected constructor(protected readonly _id: string, protected readonly _type: FilterType, protected readonly _title: string = '') {
+    }
+
+    /**
+     * Create empty filter of provided type
+     * @param type type of resources that the filter can query
+     */
+    public static empty(type: FilterType): Filter {
+        return new SimpleFilter('', type, {});
     }
 
     /**
