@@ -1,7 +1,11 @@
 import {TestBed} from '@angular/core/testing';
 
-import {CaseHeaderService} from './case-header.service';
+import {CaseHeaderService, CaseMetaField} from './case-header.service';
 import {HeaderType} from '../models/header-type';
+import {HeaderMode} from '../models/header-mode';
+import {SearchChangeDescription} from '../models/user-changes/search-change-description';
+import {HeaderColumn, HeaderColumnType} from '@netgrif/application-engine';
+import {EditChangeDescription} from '../models/user-changes/edit-change-description';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -19,10 +23,6 @@ describe('CaseHeaderService', () => {
         expect(service.headerType).toEqual(HeaderType.CASE);
     });
 
-    it('get header change', () => {
-        expect(service.headerChange$.subscribe()).toBeTruthy();
-    });
-
     it('set allowed nets', () => {
         service.setAllowedNets([{
             stringId: 'string',
@@ -36,5 +36,60 @@ describe('CaseHeaderService', () => {
             immediateData: [{stringId: 'string', title: 'string', type: 'string'}]
         }]);
         expect(service.fieldsGroup.length).toEqual(2);
+    });
+
+    it('call sort header changed', () => {
+        service.headerChange$.subscribe(res => {
+            expect(res).toEqual({headerType: HeaderType.CASE, mode: HeaderMode.SORT, description: undefined});
+        });
+        service.sortHeaderChanged('', 'asc');
+    });
+
+    it('call search input changed', () => {
+        service.headerChange$.subscribe(res => {
+            expect(res).toEqual({
+                headerType: HeaderType.CASE, mode: HeaderMode.SEARCH, description:
+                    {
+                        fieldIdentifier: 'visualId', searchInput: 'hladaj', type: 'meta',
+                        petriNetIdentifier: undefined
+                    } as SearchChangeDescription
+            });
+        });
+        service.headerSearchInputChanged(0, 'hladaj');
+    });
+
+    it('call column selected', () => {
+        service.headerChange$.subscribe(res => {
+            expect(res.headerType).toEqual(HeaderType.CASE);
+            expect(res.mode).toEqual(HeaderMode.EDIT);
+            expect((res.description as EditChangeDescription).preferredHeaders.length).toEqual(5);
+        });
+        service.headerColumnSelected(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
+
+        service.headerChange$.subscribe(res => {
+            expect(res.headerType).toEqual(HeaderType.CASE);
+            expect(res.mode).toEqual(HeaderMode.EDIT);
+            expect((res.description as EditChangeDescription).preferredHeaders.length).toEqual(0);
+        });
+        service.revertEditMode();
+    });
+
+    it('call search input changed', () => {
+        service.headerChange$.subscribe(res => {
+            expect(res).toEqual({
+                headerType: HeaderType.CASE, mode: HeaderMode.SEARCH,
+                description: {fieldIdentifier: 'visualId', searchInput: 'hladaj', type: 'meta',
+                        petriNetIdentifier: undefined} as SearchChangeDescription
+            });
+        });
+        service.headerSearchInputChanged(0, 'hladaj');
+    });
+
+    it('call change mode', () => {
+        const headerState = service.headerState;
+
+        service.changeMode(HeaderMode.EDIT, true);
+        service.confirmEditMode();
+        expect(service.headerState.mode).toEqual(headerState.mode);
     });
 });

@@ -14,12 +14,20 @@ import {MaterialModule} from '../material/material.module';
         QuestionDialogWithAnswerComponent
     ],
     exports: [
+        SimpleDialogComponent,
+        QuestionDialogComponent,
+        QuestionDialogWithAnswerComponent
     ],
     imports: [
         CommonModule,
         MaterialModule,
         FormsModule,
         FlexLayoutModule
+    ],
+    entryComponents: [
+        SimpleDialogComponent,
+        QuestionDialogComponent,
+        QuestionDialogWithAnswerComponent
     ]
 })
 export class DialogModule { }

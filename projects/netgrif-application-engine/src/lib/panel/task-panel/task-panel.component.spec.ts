@@ -8,7 +8,7 @@ import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TaskPanelComponent} from './task-panel.component';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {of, Subject, throwError} from 'rxjs';
+import {Observable, of, Subject, throwError} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
@@ -20,10 +20,13 @@ import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {map} from 'rxjs/operators';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource-service';
+import {User} from '../../resources/interface/user';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
+    let autoDataSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -39,6 +42,7 @@ describe('TaskPanelComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 TaskViewService,
                 {provide: TaskResourceService, useClass: MyResources},
+                {provide: UserResourceService, useClass: MyUserResources},
                 SideMenuService
             ],
             declarations: [TestWrapperComponent]
@@ -48,6 +52,8 @@ describe('TaskPanelComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
+
+        autoDataSpy = spyOn<any>(component, 'autoRequiredDataFocusPolicy');
     }));
 
     it('should create', () => {
@@ -70,20 +76,22 @@ describe('TaskPanelComponent', () => {
 
     it('should open and close panel, test policies', () => {
         component.taskPanelData.task.stringId = 'true';
-        component.taskPanelData.task.assignPolicy = AssignPolicy.manual;
-        component.taskPanelData.task.dataFocusPolicy = DataFocusPolicy.manual;
-        component.taskPanelData.task.finishPolicy = FinishPolicy.manual;
-        component.panelRef.open();
-        component.panelRef.close();
 
+        component.taskPanelData.task.finishPolicy = FinishPolicy.autoNoData;
+        component.taskPanelData.task.dataFocusPolicy = DataFocusPolicy.autoRequired;
         component.taskPanelData.task.assignPolicy = AssignPolicy.auto;
         component.panelRef.open();
         component.panelRef.close();
 
-        component.taskPanelData.task.finishPolicy = FinishPolicy.autoNoData;
-        component.taskPanelData.task.dataFocusPolicy = DataFocusPolicy.autoRequired;
+        component.taskPanelData.task.assignPolicy = AssignPolicy.manual;
         component.panelRef.open();
         component.panelRef.close();
+
+        component.taskPanelData.task.dataFocusPolicy = DataFocusPolicy.manual;
+        component.taskPanelData.task.finishPolicy = FinishPolicy.manual;
+        component.panelRef.open();
+        component.panelRef.close();
+        expect(autoDataSpy).toHaveBeenCalled();
     });
 
     it('should process tasks', () => {
@@ -128,7 +136,7 @@ describe('TaskPanelComponent', () => {
         expect(component.taskPanelData.task.startDate).toBe(undefined);
     });
 
-    it('should test assign', () => {
+    it('should test assign', async () => {
         component.taskPanelData.task.stringId = 'true';
         component.taskPanelData.task.startDate = [2020, 1, 1, 1, 1];
         const afterTrue = new Subject<boolean>();
@@ -136,37 +144,37 @@ describe('TaskPanelComponent', () => {
             expect(res).toBeTrue();
             expect(component.taskPanelData.task.startDate).toBe(undefined);
         });
-        component.assign(afterTrue);
+        await component.assign(afterTrue);
 
         component.taskPanelData.task.stringId = 'false';
         const afterFalse = new Subject<boolean>();
         afterFalse.subscribe( res => expect(res).toBeFalse());
-        component.assign(afterFalse);
+        await component.assign(afterFalse);
 
         component.taskPanelData.task.stringId = 'error';
         const afterErr = new Subject<boolean>();
         afterErr.subscribe( res => expect(res).toBeFalse());
-        component.assign(afterErr);
+        await component.assign(afterErr);
     });
 
-    it('should test finish', () => {
+    it('should test finish', async () => {
         component.taskPanelData.task.stringId = 'true';
         const afterTrue = new Subject<boolean>();
         afterTrue.subscribe( res => {
             expect(res).toBeTrue();
         });
-        component.finish(afterTrue);
+        await component.finish(afterTrue);
 
         component.taskPanelData.task.stringId = 'false';
         const afterFalse = new Subject<boolean>();
         afterFalse.subscribe( res => expect(res).toBeFalse());
-        component.finish(afterFalse);
+        await component.finish(afterFalse);
 
         component.taskPanelData.task.stringId = 'error';
         component.taskPanelData.task.dataSize = 0;
         const afterErr = new Subject<boolean>();
         afterErr.subscribe( res => expect(res).toBeFalse());
-        component.finish(afterErr);
+        await component.finish(afterErr);
     });
 
 });
@@ -284,4 +292,19 @@ class MyResources {
     }
 }
 
+class MyUserResources {
+    getLoggedUser(params): Observable<User> {
+        return of({
+            id: 5,
+            email: 'string',
+            name: 'string',
+            surname: 'string',
+            fullName: 'string',
+            groups: [],
+            authorities: [],
+            processRoles: [],
+            _links: {},
+        });
+    }
+}
 

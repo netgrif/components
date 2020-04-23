@@ -1,10 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {QuestionDialogComponent} from './question-dialog.component';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {DialogModule} from '../dialog.module';
 
 describe(' QuestionDialogComponent', () => {
     let component: QuestionDialogComponent;
@@ -12,7 +13,7 @@ describe(' QuestionDialogComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, DialogTestModule, BrowserAnimationsModule],
+            imports: [MaterialModule, DialogModule, BrowserAnimationsModule],
             declarations: [],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },
@@ -32,14 +33,3 @@ describe(' QuestionDialogComponent', () => {
         expect(component).toBeTruthy();
     });
 });
-
-@NgModule({
-    imports: [MatDialogModule],
-    declarations: [QuestionDialogComponent],
-    exports: [QuestionDialogComponent],
-    entryComponents: [
-        QuestionDialogComponent
-    ],
-})
-class DialogTestModule {
-}

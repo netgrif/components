@@ -1,13 +1,11 @@
-import {TestBed} from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {HttpClient} from '@angular/common/http';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {BasicAuthenticationService} from './basic-authentication.service';
 import {AuthenticationModule} from '../../../authentication.module';
 import {AuthenticationMethodService} from '../../authentication-method.service';
-import {Credentials} from '../../../models/credentials';
-import {Observable, of} from 'rxjs';
-import {User} from '../../../models/user';
+import {TestConfigurationService} from '../../../../utility/tests/test-config';
 
 describe('BasicAuthenticationService', () => {
     let service: BasicAuthenticationService;
@@ -16,11 +14,12 @@ describe('BasicAuthenticationService', () => {
         TestBed.configureTestingModule({
             imports: [AuthenticationModule, HttpClientTestingModule],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigService},
-                {provide: AuthenticationMethodService, useClass: MyAuth},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                AuthenticationMethodService,
                 HttpClient,
                 BasicAuthenticationService
-            ]});
+            ]
+        });
         service = TestBed.inject(BasicAuthenticationService);
     });
 
@@ -28,60 +27,26 @@ describe('BasicAuthenticationService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should logout', () => {
-        expect(service.logout().subscribe()).toBeTruthy();
-    });
+    it('should login and logout', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.login({username: 'name', password: 'pass'}).subscribe(res => {
+                expect(res.id).toEqual('id');
+            });
 
-    it('should login', () => {
-        expect(service.login({username: '', password: ''}).subscribe()).toBeTruthy();
-    });
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/login');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
+
+            service.logout().subscribe(res => {
+                expect(res['success']).toEqual('success');
+            });
+
+            const req = httpMock.expectOne('http://localhost:8080/api/auth/logout');
+            expect(req.request.method).toEqual('POST');
+
+            req.flush({success: 'success'});
+        })
+    );
 });
 
-class MyAuth extends AuthenticationMethodService {
-    login(credentials: Credentials): Observable<User> {
-        return of(undefined);
-    }
-
-    logout(): Observable<object> {
-        return of(undefined);
-    }
-}
-
-class TestConfigService extends ConfigurationService {
-    constructor() {
-        super({
-            providers: {
-                auth: {
-                    address: 'http://localhost:8080/api',
-                    authentication: 'Basic',
-                    endpoints: {
-                        login: 'http://localhost:8080/api/auth/login',
-                        logout: 'http://localhost:8080/api/auth/logout'
-                    }
-                },
-                resources: {
-                    name: 'main',
-                    address: 'http://localhost:8080/api',
-                    format: 'json'
-                }
-            },
-            views: {
-                layout: 'empty',
-                routes: {}
-            },
-            theme: {
-                name: 'default',
-                pallets: {
-                    light: {
-                        primary: 'blue'
-                    },
-                    dark: {
-                        primary: 'blue'
-                    }
-
-                }
-            },
-            assets: []
-        });
-    }
-}

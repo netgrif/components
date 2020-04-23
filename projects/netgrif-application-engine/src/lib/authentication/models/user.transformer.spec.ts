@@ -18,6 +18,6 @@ describe('UserTransformer', () => {
             processRoles: [{stringId: 'string', description: 'desc', name: 'name'}],
             userProcessRoles: [{netId: 'netid', roleId: 'roleid'}],
             _links: {}
-        })).toBeTruthy();
+        }).fullName).toEqual('string string');
     });
 });

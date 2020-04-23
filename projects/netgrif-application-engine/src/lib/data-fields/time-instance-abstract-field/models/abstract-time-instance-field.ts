@@ -26,11 +26,10 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
         }
 
         if (this.validations) {
-            if (!this._validators) {
-                this._validators = [];
-                this._validators = this.resolveValidations();
+            if (this._validators) {
                 result.push(...this._validators);
             } else {
+                this._validators = this.resolveValidations();
                 result.push(...this._validators);
             }
         }

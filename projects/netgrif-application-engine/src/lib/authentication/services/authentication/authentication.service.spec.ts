@@ -5,6 +5,7 @@ import {AuthenticationMethodService} from '../authentication-method.service';
 import {Credentials} from '../../models/credentials';
 import {Observable, of} from 'rxjs';
 import {User} from '../../models/user';
+import {TestConfigurationService} from '../../../utility/tests/test-config';
 
 describe('AuthenticationService', () => {
     let service: AuthenticationService;
@@ -12,7 +13,7 @@ describe('AuthenticationService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MyAuth},
             ]});
         service = TestBed.inject(AuthenticationService);
@@ -22,64 +23,26 @@ describe('AuthenticationService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should be not authenticated now', () => {
-        expect(service.isAuthenticated()).toBe(false);
-    });
-
     it('should logout', () => {
-        expect(service.logout().subscribe()).toBeTruthy();
+        service.logout().subscribe(res => {
+            expect(res).toEqual(undefined);
+        });
     });
 
     it('should login', () => {
-        expect(service.login({username: '', password: ''}).subscribe()).toBeTruthy();
+        service.login({username: '', password: ''}).subscribe( res => {
+            expect(res.id).toEqual('id');
+            expect(service.isAuthenticated()).toBe(true);
+        });
     });
 });
 
 class MyAuth extends AuthenticationMethodService {
     login(credentials: Credentials): Observable<User> {
-        return of(undefined);
+        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
     }
 
     logout(): Observable<object> {
         return of(undefined);
-    }
-}
-
-class TestConfigService extends ConfigurationService {
-    constructor() {
-        super({
-            providers: {
-                auth: {
-                    address: 'http://localhost:8080/api',
-                    authentication: 'Basic',
-                    endpoints: {
-                        login: 'http://localhost:8080/api/auth/login',
-                        logout: 'http://localhost:8080/api/auth/logout'
-                    }
-                },
-                resources: {
-                    name: 'main',
-                    address: 'http://localhost:8080/api',
-                    format: 'json'
-                }
-            },
-            views: {
-                layout: 'empty',
-                routes: {}
-            },
-            theme: {
-                name: 'default',
-                pallets: {
-                    light: {
-                        primary: 'blue'
-                    },
-                    dark: {
-                        primary: 'blue'
-                    }
-
-                }
-            },
-            assets: []
-        });
     }
 }

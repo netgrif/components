@@ -1,12 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 import {UserService} from './user.service';
-import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Credentials} from '../../authentication/models/credentials';
 import {Observable, of} from 'rxjs';
-import {User} from '../../authentication/models/user';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {User} from '../models/user';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 
 describe('UserService', () => {
     let service: UserService;
@@ -17,7 +18,7 @@ describe('UserService', () => {
             providers: [
                 AuthenticationMethodService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: MyAuth},
+                {provide: AuthenticationService, useClass: MyAuth},
             ]
         });
         service = TestBed.inject(UserService);
@@ -30,6 +31,8 @@ describe('UserService', () => {
     it('should login', () => {
         service.login({password: '', username: ''}).subscribe(res => {
             expect(res.id).toEqual('id');
+            expect(service.hasAuthority('ADMIN')).toBeTrue();
+            expect(service.hasRoleById('id')).toBeTrue();
         });
     });
 
@@ -40,15 +43,15 @@ describe('UserService', () => {
     });
 
     it('should check authorities and roles', () => {
-        expect(service.hasRole({id: 'id', name: 'id'})).toBeFalse();
-        expect(service.hasAuthority('ADMIN')).toBeFalse();
-        expect(service.hasRoleById('id')).toBeFalse();
+        expect(service.hasRole({id: 'ids', name: 'ids'})).toBeFalse();
+        expect(service.hasAuthority('USER')).toBeFalse();
+        expect(service.hasRoleById('ids')).toBeFalse();
     });
 });
 
-class MyAuth extends AuthenticationMethodService {
+class MyAuth extends AuthenticationService {
     login(credentials: Credentials): Observable<User> {
-        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
+        return of(new User('id', 'mail', 'name', 'surname', ['ADMIN'], [{id: 'id', name: 'id'}]));
     }
 
     logout(): Observable<object> {

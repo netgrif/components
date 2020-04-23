@@ -34,7 +34,10 @@ describe('NumberFieldComponent', () => {
     });
 
     it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom message!');
+        expect(component.getErrorMessage()).toEqual('This is custom odd message!');
+
+        component.dataField.value = 5;
+        expect(component.getErrorMessage()).toEqual('Entered number must be even');
     });
 });
 
@@ -49,8 +52,8 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     }, [
-        {validationRule: 'odd', validationMessage: 'This is custom message!'},
-        {validationRule: 'even', validationMessage: 'This is custom message!'},
+        {validationRule: 'odd', validationMessage: 'This is custom odd message!'},
+        {validationRule: 'even', validationMessage: ''},
         {validationRule: 'positive', validationMessage: 'This is custom message!'},
         {validationRule: 'negative', validationMessage: 'This is custom message!'},
         {validationRule: 'decimal', validationMessage: 'This is custom message!'},

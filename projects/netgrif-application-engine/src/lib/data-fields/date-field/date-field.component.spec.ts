@@ -51,6 +51,9 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, [{validationRule: 'weekend', validationMessage: 'This is custom message!'}]);
+    }, undefined, undefined, undefined, [
+        {validationRule: 'weekend', validationMessage: 'This is custom message!'},
+        {validationRule: 'workday', validationMessage: 'This is custom message!'}
+        ]);
 }
 

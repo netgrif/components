@@ -28,10 +28,11 @@ describe('ForgottenPasswordPanelComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should submit', () => {
-        component.form.controls['email'].setValue('login');
+    it('should submit', (done) => {
+        component.form.controls['email'].setValue('login@login.sk');
         component.email.subscribe( event => {
-            expect(event).toEqual({email: 'login'});
+            expect(event).toEqual('login@login.sk');
+            done();
         });
         component.onSubmit();
     });

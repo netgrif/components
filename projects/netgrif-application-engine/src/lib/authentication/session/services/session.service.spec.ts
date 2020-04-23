@@ -2,13 +2,14 @@ import {TestBed} from '@angular/core/testing';
 
 import {SessionService} from './session.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
+import {TestConfigurationService} from '../../../utility/tests/test-config';
 
 describe('SessionService', () => {
     let service: SessionService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [{provide: ConfigurationService, useClass: TestConfigService}]
+            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(SessionService);
     });
@@ -18,42 +19,3 @@ describe('SessionService', () => {
     });
 });
 
-
-class TestConfigService extends ConfigurationService {
-    constructor() {
-        super({
-            providers: {
-                auth: {
-                    address: 'http://localhost:8080/api',
-                    authentication: 'Basic',
-                    endpoints: {
-                        login: 'http://localhost:8080/api/auth/login',
-                        logout: 'http://localhost:8080/api/auth/logout'
-                    }
-                },
-                resources: {
-                    name: 'main',
-                    address: 'http://localhost:8080/api',
-                    format: 'json'
-                }
-            },
-            views: {
-                layout: 'empty',
-                routes: {}
-            },
-            theme: {
-                name: 'default',
-                pallets: {
-                    light: {
-                        primary: 'blue'
-                    },
-                    dark: {
-                        primary: 'blue'
-                    }
-
-                }
-            },
-            assets: []
-        });
-    }
-}

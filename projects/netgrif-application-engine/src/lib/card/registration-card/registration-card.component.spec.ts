@@ -30,16 +30,17 @@ describe('RegistrationPanelComponent', () => {
     });
 
     it('should submit', () => {
-        component.form.controls['email'].setValue('mail');
+        component.form.controls['email'].setValue('mail@mail.sk');
         component.form.controls['name'].setValue('name');
         component.form.controls['surname'].setValue('surname');
-        component.form.controls['password'].setValue('pass');
+        component.form.controls['password'].setValue('passwd');
+        component.form.controls['confirmPassword'].setValue('passwd');
         component.register.subscribe( event => {
             expect(event).toEqual({
-                email: 'mail',
+                email: 'mail@mail.sk',
                 name: 'name',
                 surname: 'surname',
-                password: 'pass'
+                password: 'passwd'
             });
         });
         component.onSubmit();

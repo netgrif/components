@@ -39,4 +39,20 @@ describe('NavigationRailComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should open, close and toggle', () => {
+        let count = 0;
+        component.expandChange.subscribe(res  => {
+            if (count % 2 === 0) {
+                expect(res).toEqual(true);
+            } else {
+                expect(res).toEqual(false);
+            }
+            count++;
+        });
+
+        component.open();
+        component.close();
+        component.toggle();
+    });
 });

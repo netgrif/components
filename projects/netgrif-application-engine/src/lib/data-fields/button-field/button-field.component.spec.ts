@@ -32,6 +32,11 @@ describe('ButtonFieldComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should get error message', () => {
+        component.dataField.value = undefined;
+        expect(component.getErrorMessage()).toEqual('This field is required!');
+    });
 });
 
 @Component({
@@ -41,10 +46,6 @@ describe('ButtonFieldComponent', () => {
 class TestWrapperComponent {
     field = new ButtonField('', '', {
         required: true,
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
     });
 }
 

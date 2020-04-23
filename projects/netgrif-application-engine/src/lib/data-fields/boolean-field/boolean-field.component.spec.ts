@@ -34,7 +34,7 @@ describe('BooleanFieldComponent', () => {
     });
 
     it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('this is my sen');
+        expect(component.getErrorMessage()).toEqual('this is custom message');
     });
 });
 
@@ -48,5 +48,5 @@ class TestWrapperComponent {
     }, undefined,
         undefined,
         undefined,
-        [{validationRule: 'requiredTrue', validationMessage: 'this is my sen'}]);
+        [{validationRule: 'requiredTrue', validationMessage: 'this is custom message'}]);
 }

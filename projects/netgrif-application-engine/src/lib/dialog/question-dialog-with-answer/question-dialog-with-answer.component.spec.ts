@@ -1,10 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {QuestionDialogWithAnswerComponent} from './question-dialog-with-answer.component';
+import {DialogModule} from '../dialog.module';
 
 describe('QuestionDialogWithAnswerComponent', () => {
     let component: QuestionDialogWithAnswerComponent;
@@ -12,7 +13,7 @@ describe('QuestionDialogWithAnswerComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, DialogTestModule, BrowserAnimationsModule],
+            imports: [MaterialModule, DialogModule, BrowserAnimationsModule],
             declarations: [],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },
@@ -32,14 +33,3 @@ describe('QuestionDialogWithAnswerComponent', () => {
         expect(component).toBeTruthy();
     });
 });
-
-@NgModule({
-    imports: [MatDialogModule, MaterialModule],
-    declarations: [QuestionDialogWithAnswerComponent],
-    exports: [QuestionDialogWithAnswerComponent],
-    entryComponents: [
-        QuestionDialogWithAnswerComponent
-    ],
-})
-class DialogTestModule {
-}

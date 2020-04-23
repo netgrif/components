@@ -40,4 +40,18 @@ describe('NavigationDrawerComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should open, close and toggle', async () => {
+        await component.open().then(res  => {
+            expect(res).toEqual('open');
+        });
+
+        await component.close().then(res  => {
+            expect(res).toEqual('open');
+        });
+
+        await component.toggle().then(res  => {
+            expect(res).toEqual('open');
+        });
+    });
 });
