@@ -25,6 +25,7 @@ export * from './lib/view/public-api';
 export * from './lib/process/public-api';
 export * from './lib/dashboard/public-api';
 export * from './lib/filter/public-api';
+export * from './lib/search/public-api';
 
 /* SERVICES */
 export * from './lib/snack-bar/snack-bar.service';
