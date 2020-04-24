@@ -1,18 +1,35 @@
+import {EscapeResult} from '../escape-result';
 import {Query} from '../query/query';
+import {BooleanOperator} from '../boolean-operator';
+import {WrapResult} from '../wrap-result';
 
 export abstract class Operator {
 
     /**
+     * Reserved characters for Elasticsearch queries. These characters can be escaped with a `\` character.
+     */
+    private static readonly ESCAPABLE_CHARACTERS = new Set (
+        ['+', '-', '=', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\', '/']);
+
+    /**
+     * Reserved characters for Elasticsearch queries. These characters cannot be escaped and must be removed from queries.
+     */
+    private static readonly UNESCAPABLE_CHARACTERS = new Set(['<', '>']);
+
+    /**
      * Determines the arity of the operator, that is the number of arguments/operands it takes.
      */
-    private static readonly NUMBER_OF_OPERANDS: number;
+    private readonly _numberOfOperands: number;
 
     /**
      * The operator symbol that is used to generate the query.
      */
-    private static readonly OPERATOR: string;
+    private readonly _operatorSymbols: string;
 
-    private static readonly
+    protected constructor(numberOfOperands: number, operatorSymbols: string) {
+        this._numberOfOperands = numberOfOperands;
+        this._operatorSymbols = operatorSymbols;
+    }
 
     /**
      * Escapes all escapable Elasticsearch symbols. Removes all unescapable Elasticsearch symbols.
@@ -20,9 +37,24 @@ export abstract class Operator {
      * For a list of symbols see Elasticsearch's Query string query
      * [documentation]{@link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters}
      * @param input user input that should have special characters escaped
+     * @returns user input with the escapable characters escaped and the unescapable characters removed
      */
-    public static escapeInput(input: string): string {
-
+    public static escapeInput(input: string): EscapeResult {
+        if (typeof input === 'string') {
+            let escaped = false;
+            let output = '';
+            for (let i = 0; i < input.length; i++) {
+                if (Operator.UNESCAPABLE_CHARACTERS.has(input.charAt(i)))
+                    continue;
+                if (Operator.ESCAPABLE_CHARACTERS.has(input.charAt(i))) {
+                    output += '\\';
+                    escaped = true;
+                }
+                output += input.charAt(i);
+            }
+            return {value: output, wasEscaped: escaped};
+        }
+        return {value: input, wasEscaped: false};
     }
 
     /**
@@ -39,9 +71,46 @@ export abstract class Operator {
     }
 
     /**
-     *
+     * Applies the provided function to all keywords and combines the resulting queries with an `OR` operator.
+     * @param elasticKeywords keywords that the function is call on
+     * @param queryConstructor function that generates a `Query` object for each keyword
      */
-    public abstract createQuery(elasticKeywords: Array<string>, args: Array<string>): Query {
+    public static forEachKeyword(elasticKeywords: Array<string>, queryConstructor: (keyword: string) => Query): Query {
+        const simpleQueries = [];
+        elasticKeywords.forEach(keyword => {
+            simpleQueries.push(queryConstructor(keyword));
+        });
+        return Query.combineQueries(simpleQueries, BooleanOperator.OR);
+    }
 
+    /**
+     * If the value contains a space character, or if `force` is set to `true`.
+     * @param input user input that should be wrapped with double quotes
+     * @param forceWrap if set to `true` the value will be wrapped regardless of it's content
+     */
+    public static wrapInputWithQuotes(input: string, forceWrap = false): WrapResult {
+        if (typeof input === 'string' && (input.includes(' ') || forceWrap))
+            return {value: `"${input}"`, wasWrapped: true};
+        else
+            return {value: input, wasWrapped: false};
+    }
+
+    /**
+     * Simple implementationof query generation. Will not be suitable for all Operator derivatives.
+     *
+     * Escapes the first argument from the `args` array, calls the [query()]{@link Operator#query} function for each `keyword` and combines
+     * the results with an `OR` operator.
+     * @returns query that wos constructed with the given arguments and keywords
+     */
+    public createQuery(elasticKeywords: Array<string>, args: Array<string>): Query {
+        if (args.length === 0) {
+            return Query.emptyQuery();
+        }
+        return Operator.forEachKeyword(elasticKeywords, (keyword: string) => {
+            const escapedValue = Operator.escapeInput(args[0]);
+            const wrappedValue = Operator.wrapInputWithQuotes(escapedValue.value, escapedValue.wasEscaped);
+            const queryString = Operator.query(keyword, wrappedValue.value, this._operatorSymbols);
+            return new Query(queryString);
+        });
     }
 }

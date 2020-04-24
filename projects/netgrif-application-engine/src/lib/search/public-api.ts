@@ -10,6 +10,10 @@ export * from './models/predicate/clause-predicate';
 
 export * from './models/operator/operator';
 
+/* Interfaces */
+export * from './models/escape-result';
+export * from './models/wrap-result';
+
 /* Enums */
 export * from './models/boolean-operator';
 
