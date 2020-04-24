@@ -8,9 +8,11 @@ import {TestConfigurationService} from '../utility/tests/test-config';
 import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource-service';
 import {of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {LoggerService} from '../logger/services/logger.service';
 
 describe('ProcessService', () => {
     let service: ProcessService;
+    let logSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -23,6 +25,7 @@ describe('ProcessService', () => {
             ]
         });
         service = TestBed.inject(ProcessService);
+        logSpy = spyOn(TestBed.inject(LoggerService), 'error');
     });
 
     it('should be created', () => {
@@ -39,10 +42,18 @@ describe('ProcessService', () => {
         service.getNet('false').subscribe(res => {
             expect(res.stringId).toEqual('false');
         });
+
         service.getNet('error1').subscribe();
+        expect(logSpy).toHaveBeenCalled();
+
         service.getNet('error2').subscribe();
+        expect(logSpy).toHaveBeenCalled();
+
         service.getNet('error3').subscribe();
+        expect(logSpy).toHaveBeenCalled();
+
         service.getNet('err').subscribe();
+        expect(logSpy).toHaveBeenCalled();
     });
 });
 

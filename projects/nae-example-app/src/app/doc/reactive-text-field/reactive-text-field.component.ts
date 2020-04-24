@@ -206,7 +206,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         return result;
     }
 
-    private constructChangeObject(prefix: string, includeValue: boolean = true): Change {
+    private constructChangeObject(prefix: string, includeValue: boolean = true): any {
         const result = {
             behavior: {
                 required: this.changeGroupControl.get(`${prefix}FieldRequired`).value,

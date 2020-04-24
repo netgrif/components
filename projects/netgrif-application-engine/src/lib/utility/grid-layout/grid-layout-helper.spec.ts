@@ -1,8 +1,8 @@
 import {GridLayoutHelper} from './grid-layout-helper';
-import {DashboardParams} from '@netgrif/application-engine';
 import {DashboardCardTypes} from '../../dashboard/cards/model/dashboard-card-types';
 import {LoggerService} from '../../logger/services/logger.service';
 import {LogPublisherService} from '../../logger/services/log-publisher.service';
+import {DashboardParams} from '../../dashboard/dashboard-content/dashboard-params';
 
 describe('GridLayoutHelper', () => {
     it('should create an instance', () => {

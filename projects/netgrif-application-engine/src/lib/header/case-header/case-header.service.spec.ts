@@ -4,8 +4,8 @@ import {CaseHeaderService, CaseMetaField} from './case-header.service';
 import {HeaderType} from '../models/header-type';
 import {HeaderMode} from '../models/header-mode';
 import {SearchChangeDescription} from '../models/user-changes/search-change-description';
-import {HeaderColumn, HeaderColumnType} from '@netgrif/application-engine';
 import {EditChangeDescription} from '../models/user-changes/edit-change-description';
+import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;

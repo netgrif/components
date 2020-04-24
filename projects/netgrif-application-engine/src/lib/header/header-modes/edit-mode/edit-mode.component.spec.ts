@@ -6,7 +6,7 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CaseHeaderService, CaseMetaField} from '../../case-header/case-header.service';
 import {Component} from '@angular/core';
-import {HeaderColumn, HeaderColumnType} from '@netgrif/application-engine';
+import {HeaderColumn, HeaderColumnType} from '../../models/header-column';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
