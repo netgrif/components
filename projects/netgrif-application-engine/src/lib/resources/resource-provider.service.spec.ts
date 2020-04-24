@@ -5,17 +5,21 @@ import {HttpClient} from '@angular/common/http';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('ResourceProviderService', () => {
-  let service: ResourceProvider;
+    let service: ResourceProvider;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
-        providers: [ HttpClient]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [HttpClient]
+        });
+        service = TestBed.inject(ResourceProvider);
     });
-    service = TestBed.inject(ResourceProvider);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

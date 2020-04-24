@@ -45,4 +45,8 @@ describe('UserCardComponent', () => {
     it('should return user banner', () => {
         expect(component.userBanner).toEqual('assets/default-user-background.jpg');
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

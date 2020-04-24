@@ -55,6 +55,10 @@ describe('ProcessService', () => {
         service.getNet('err').subscribe();
         expect(logSpy).toHaveBeenCalled();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 class MyPetriNetResource {

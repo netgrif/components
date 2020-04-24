@@ -5,24 +5,28 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 
 describe('ToolbarComponent', () => {
-  let component: ToolbarComponent;
-  let fixture: ComponentFixture<ToolbarComponent>;
+    let component: ToolbarComponent;
+    let fixture: ComponentFixture<ToolbarComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-        imports: [MaterialModule, HttpClientTestingModule, TranslateLibModule],
-      declarations: [ ToolbarComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [MaterialModule, HttpClientTestingModule, TranslateLibModule],
+            declarations: [ToolbarComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ToolbarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ToolbarComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

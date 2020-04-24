@@ -54,4 +54,8 @@ describe('NavigationDrawerComponent', () => {
             expect(res).toEqual('open');
         });
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

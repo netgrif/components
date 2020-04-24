@@ -12,7 +12,9 @@ export class TestConfigurationService extends ConfigurationService {
                     endpoints: {
                         login: 'auth/login',
                         logout: 'auth/logout',
-                        signup: 'auth/signup'
+                        signup: 'auth/signup',
+                        verify: 'auth/token/verify',
+                        invite: 'auth/invite'
                     },
                     sessionBearer: 'X-Auth-Token'
                 },

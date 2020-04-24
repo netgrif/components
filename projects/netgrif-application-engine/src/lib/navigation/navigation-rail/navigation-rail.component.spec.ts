@@ -55,4 +55,8 @@ describe('NavigationRailComponent', () => {
         component.close();
         component.toggle();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

@@ -41,4 +41,8 @@ describe('SideMenuContainerComponent', () => {
         });
         service.close({opened: false});
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

@@ -50,4 +50,8 @@ describe('LogPublisherService', () => {
         expect(console.clear).toHaveBeenCalled();
         expect(localStorage.getItem(LocalStorageLogPublisher.DEFAULT_KEY)).toBeFalsy();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

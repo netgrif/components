@@ -8,6 +8,9 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {FileUploadService} from '../../../../../data-fields/file-field/services/upload/file-upload.service';
 import {FileDownloadService} from '../../../../../data-fields/file-field/services/download/file-download.service';
+import {ConfigurationService} from '../../../../../configuration/configuration.service';
+import {TestConfigurationService} from '../../../../../utility/tests/test-config';
+import {FileUploadModel} from '../../models/file-upload-model';
 
 describe('FilesUploadItemComponent', () => {
     let component: FilesUploadItemComponent;
@@ -26,7 +29,11 @@ describe('FilesUploadItemComponent', () => {
                 FlexModule,
                 FormsModule
             ],
-            providers: [FileUploadService, FileDownloadService]
+            providers: [
+                FileUploadService,
+                FileDownloadService,
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -34,9 +41,14 @@ describe('FilesUploadItemComponent', () => {
         fixture.detectChanges();
     }));
 
+    // TODO 24.4.2020 - NOT POSSIBLE TO TEST because of not covered errors in filefield
     // it('should create', () => {
     //     expect(component).toBeTruthy();
     // });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
@@ -45,9 +57,28 @@ describe('FilesUploadItemComponent', () => {
     providers: [FileFieldService]
 })
 class TestWrapperComponent {
-    file = undefined;
+    blb: Blob;
+    arr: Array<Blob>;
+    data: File;
+    file: FileUploadModel;
     service: FileFieldService;
+
     constructor(private _fileFieldService: FileFieldService) {
         this.service = this._fileFieldService;
+        this.blb = new Blob(['fucking tests'], { type: 'application/txt' });
+        this.arr = new Array<Blob>();
+        this.arr.push(this.blb);
+        this.data = new File(this.arr, 'name.txt');
+        this.file = {
+            stringId: 'string',
+            data: this.data,
+            state: 'string',
+            inProgress: false,
+            progress: 80,
+            canRetry: false,
+            canCancel: false,
+            successfullyUploaded: false,
+            downloading: false,
+        };
     }
 }

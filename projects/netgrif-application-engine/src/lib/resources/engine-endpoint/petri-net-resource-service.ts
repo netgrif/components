@@ -79,7 +79,7 @@ export class PetriNetResourceService {
      * {{baseUrl}}/api/petrinet/{netId}/file
      */
     public getNetFile(netId: string, params?: Params): Observable<any> {  // TODO: response
-        return this.provider.get$('petrinet/' + netId + 'file', this.SERVER_URL, params)
+        return this.provider.get$('petrinet/' + netId + '/file', this.SERVER_URL, params)
             .pipe(map(r => changeType(r, undefined)));
     }
 

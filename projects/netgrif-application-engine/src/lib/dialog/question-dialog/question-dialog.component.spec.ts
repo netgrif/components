@@ -32,4 +32,8 @@ describe(' QuestionDialogComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

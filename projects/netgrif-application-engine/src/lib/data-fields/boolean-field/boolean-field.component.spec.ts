@@ -36,6 +36,10 @@ describe('BooleanFieldComponent', () => {
     it('should get error message', () => {
         expect(component.getErrorMessage()).toEqual('this is custom message');
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

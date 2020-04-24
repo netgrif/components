@@ -53,6 +53,10 @@ describe('SearchModeComponent', () => {
         component.headerSearchInputChanged(0, 'hladaj');
         expect(headerSpy).toHaveBeenCalledWith(0, 'hladaj');
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

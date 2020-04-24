@@ -1,6 +1,5 @@
-import {TestBed} from '@angular/core/testing';
-
 import {FilterRepository} from './filter.repository';
+import {TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
 import {SimpleFilter} from './models/simple-filter';
@@ -29,6 +28,10 @@ describe('FilterRepository', () => {
         service.saveFilter(new SimpleFilter('id', FilterType.TASK, {}));
         expect(logSpy).toHaveBeenCalledWith(`Filter with id 'id' already exists in the repository and will be replaced!`);
         expect(service.getFilter('id')).toEqual(new SimpleFilter('id', FilterType.TASK, {}));
+    });
+
+    afterAll(() => {
+         TestBed.resetTestingModule();
     });
 });
 

@@ -44,4 +44,8 @@ describe('NewCaseComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

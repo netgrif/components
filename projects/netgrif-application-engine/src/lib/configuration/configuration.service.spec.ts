@@ -18,6 +18,13 @@ describe('ConfigurationService', () => {
         expect(service).toBeTruthy();
     });
 
+    it('should get config', () => {
+        service.getAsync().subscribe(conf => {
+            expect(conf).toEqual(service.get());
+        })
+
+    });
+
     it('should get providers', () => {
         expect(service.get().providers).toEqual({
             auth: {
@@ -26,7 +33,9 @@ describe('ConfigurationService', () => {
                 endpoints: {
                     login: 'auth/login',
                     logout: 'auth/logout',
-                    signup: 'auth/signup'
+                    signup: 'auth/signup',
+                    verify: 'auth/token/verify',
+                    invite: 'auth/invite'
                 },
                 sessionBearer: 'X-Auth-Token'
             },
@@ -104,4 +113,7 @@ describe('ConfigurationService', () => {
         });
     });
 
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

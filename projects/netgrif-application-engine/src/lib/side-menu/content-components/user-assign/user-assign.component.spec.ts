@@ -46,4 +46,8 @@ describe('UserAssignComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

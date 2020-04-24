@@ -23,20 +23,20 @@ describe('CaseHeaderService', () => {
         expect(service.headerType).toEqual(HeaderType.CASE);
     });
 
-    it('set allowed nets', () => {
-        service.setAllowedNets([{
-            stringId: 'string',
-            title: 'string',
-            identifier: 'string',
-            version: 'string',
-            initials: 'string',
-            defaultCaseName: 'string',
-            createdDate: [2020, 1, 1, 10, 0],
-            author: {email: 'email', fullName: 'fullName'},
-            immediateData: [{stringId: 'string', title: 'string', type: 'string'}]
-        }]);
-        expect(service.fieldsGroup.length).toEqual(2);
-    });
+    // it('set allowed nets', () => {
+    //     service.setAllowedNets([{
+    //         stringId: 'string',
+    //         title: 'string',
+    //         identifier: 'string',
+    //         version: 'string',
+    //         initials: 'string',
+    //         defaultCaseName: 'string',
+    //         createdDate: [2020, 1, 1, 10, 0],
+    //         author: {email: 'email', fullName: 'fullName'},
+    //         immediateData: [{stringId: 'string', title: 'string', type: 'string'}]
+    //     }]);
+    //     expect(service.fieldsGroup.length).toEqual(2);
+    // });
 
     it('call sort header changed', () => {
         service.headerChange$.subscribe(res => {
@@ -91,5 +91,9 @@ describe('CaseHeaderService', () => {
         service.changeMode(HeaderMode.EDIT, true);
         service.confirmEditMode();
         expect(service.headerState.mode).toEqual(headerState.mode);
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
     });
 });

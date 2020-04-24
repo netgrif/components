@@ -38,6 +38,10 @@ describe('SortModeComponent', () => {
         component.sortHeaderChanged({active: '', direction: 'asc'});
         expect(headerSpy).toHaveBeenCalledWith('', 'asc');
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

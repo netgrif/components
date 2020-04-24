@@ -48,5 +48,9 @@ describe('BasicAuthenticationService', () => {
             req.flush({success: 'success'});
         })
     );
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 

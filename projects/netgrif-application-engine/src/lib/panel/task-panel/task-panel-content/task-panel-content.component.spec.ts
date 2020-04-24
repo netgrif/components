@@ -85,8 +85,8 @@ describe('TaskPanelContentComponent', () => {
                 fields: [
                     new BooleanField('', '', true, {editable: true},
                         undefined, undefined, {
-                        x: 0,
-                        y: 10,
+                        x: 1,
+                        y: 12,
                         cols: 2,
                         rows: 1,
                         appearance: MaterialAppearance.OUTLINE,
@@ -95,7 +95,7 @@ describe('TaskPanelContentComponent', () => {
                     new BooleanField('', '', true, {hidden: true},
                         undefined, undefined, {
                             x: 0,
-                            y: 11,
+                            y: 13,
                             cols: 2,
                             rows: 1,
                             appearance: MaterialAppearance.OUTLINE,
@@ -107,7 +107,11 @@ describe('TaskPanelContentComponent', () => {
                 stretch: false,
                 cols: 3
             },
-        ], 4).length).toEqual(19);
+        ], 4).length).toEqual(20);
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
     });
 });
 

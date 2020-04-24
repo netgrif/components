@@ -39,6 +39,10 @@ describe('NumberFieldComponent', () => {
         component.dataField.value = 5;
         expect(component.getErrorMessage()).toEqual('Entered number must be even');
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

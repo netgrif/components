@@ -45,4 +45,8 @@ describe('AuthenticationInterceptor', () => {
     afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
         mock.verify();
     }));
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

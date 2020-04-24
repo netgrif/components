@@ -50,6 +50,10 @@ describe('LogoutShortcutComponent', () => {
         component.logout();
         expect(logSpy).toHaveBeenCalledWith('User is logged out');
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 class MyUserService {

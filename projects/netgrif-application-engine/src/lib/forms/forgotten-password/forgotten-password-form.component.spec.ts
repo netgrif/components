@@ -29,11 +29,15 @@ describe('ForgottenPasswordPanelComponent', () => {
     });
 
     it('should submit', (done) => {
-        component.form.controls['email'].setValue('login@login.sk');
-        component.email.subscribe( event => {
-            expect(event).toEqual('login@login.sk');
+        component.rootFormGroup.controls['email'].setValue('login@login.sk');
+        component.formSubmit.subscribe( event => {
+            expect(event).toEqual({ email: 'login@login.sk' });
             done();
         });
         component.onSubmit();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
     });
 });

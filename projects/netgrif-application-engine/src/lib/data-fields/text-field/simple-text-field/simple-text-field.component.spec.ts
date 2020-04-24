@@ -32,6 +32,10 @@ describe('SimpleTextFieldComponent', () => {
     it('should get error message', () => {
         expect(component.getErrorMessage()).toEqual('This is custom message!');
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

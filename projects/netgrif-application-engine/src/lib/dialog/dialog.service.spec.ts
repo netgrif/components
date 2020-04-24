@@ -35,4 +35,8 @@ describe('DialogService', () => {
         service.openQuestionWithAnswerDialog('string', 'string', 'placeholder');
         expect(dialogSpy).toHaveBeenCalled();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

@@ -135,4 +135,8 @@ describe('FieldConvertorService', () => {
         dataField.value = undefined;
         expect(service.resolveType(service.toClass(dataField))).toEqual('file');
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

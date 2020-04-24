@@ -112,6 +112,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
     private initFileFieldImage() {
         this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId)
             .subscribe(fileBlob => {
+                // @ts-ignore
                 const file: File = new File([fileBlob], this.name);
                 if (!file.type.includes('image')) {
                     return;
@@ -123,6 +124,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
                 //  for blob or file type as arguments to setImageSourceUrl function in FileFieldService
                 //  this._fileFieldService.setImageSourceUrl(fileBlob)
                 const reader = new FileReader();
+                // @ts-ignore
                 reader.readAsDataURL(fileBlob);
                 reader.onloadend = () => {
                     if (typeof reader.result === 'string') {

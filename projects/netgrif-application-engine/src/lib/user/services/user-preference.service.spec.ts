@@ -63,4 +63,8 @@ describe('UserPreferenceService', () => {
             expect(res).toEqual(header);
         });
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

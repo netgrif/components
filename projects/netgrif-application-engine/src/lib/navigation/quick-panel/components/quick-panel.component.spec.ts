@@ -38,6 +38,10 @@ describe('QuickPanelComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

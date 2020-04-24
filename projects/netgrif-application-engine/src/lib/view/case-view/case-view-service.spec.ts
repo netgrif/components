@@ -5,8 +5,9 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {of} from 'rxjs';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-panel/policy';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {SimpleFilter} from '../../filter/models/simple-filter';
+import {FilterType} from '../../filter/models/filter-type';
 
 describe('CaseViewService', () => {
     let service: CaseViewService;
@@ -28,9 +29,25 @@ describe('CaseViewService', () => {
     });
 
     it('should load cases', () => {
+        service.baseFilter = new SimpleFilter('', FilterType.TASK, {});
         service.loadCases();
+        service.cases$.subscribe(res => {
+            expect(res.length).toEqual(0)
+        });
+
+        service.reload();
+        service.cases$.subscribe(res => {
+            expect(res.length).toEqual(0)
+        });
+
+        service.loading$.subscribe(res => {
+            expect(res).toBeFalse();
+        });
     });
-});
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });});
 
 class MyResources {
     searchCases(filter, params) {

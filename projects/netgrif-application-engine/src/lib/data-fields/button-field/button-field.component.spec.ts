@@ -37,6 +37,10 @@ describe('ButtonFieldComponent', () => {
         component.dataField.value = undefined;
         expect(component.getErrorMessage()).toEqual('This field is required!');
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

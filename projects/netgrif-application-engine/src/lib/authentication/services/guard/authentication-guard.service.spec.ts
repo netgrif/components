@@ -30,4 +30,8 @@ describe('AuthenticationGuardService', () => {
         const test = new TestConfigurationService();
         expect(service.resolveLoginPath(test.get().views.routes, AuthenticationGuardService.LOGIN_COMPONENT)).toBe(null);
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

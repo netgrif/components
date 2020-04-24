@@ -39,6 +39,10 @@ describe('TaskViewService', () => {
         service.reload();
         expect(service.taskArray.length).toEqual(1);
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 class MyResources {

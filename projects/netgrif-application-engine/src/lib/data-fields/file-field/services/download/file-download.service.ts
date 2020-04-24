@@ -41,6 +41,7 @@ export class FileDownloadService {
         file.downloading = true;
         this._taskResourceService.downloadFile(this.taskId, file.stringId)
             .subscribe(fileResponse => {
+                    // @ts-ignore
                     this._downloadFileByLink(fileResponse, file);
 
                     file.downloading = false;

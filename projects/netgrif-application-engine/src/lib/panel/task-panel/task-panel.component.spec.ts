@@ -177,6 +177,9 @@ describe('TaskPanelComponent', () => {
         await component.finish(afterErr);
     });
 
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

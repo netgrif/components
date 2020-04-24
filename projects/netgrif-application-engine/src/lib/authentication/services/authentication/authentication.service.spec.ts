@@ -35,6 +35,10 @@ describe('AuthenticationService', () => {
             expect(service.isAuthenticated()).toBe(true);
         });
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 class MyAuth extends AuthenticationMethodService {

@@ -47,6 +47,10 @@ describe('UserService', () => {
         expect(service.hasAuthority('USER')).toBeFalse();
         expect(service.hasRoleById('ids')).toBeFalse();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 class MyAuth extends AuthenticationService {
