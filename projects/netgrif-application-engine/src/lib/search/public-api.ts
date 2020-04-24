@@ -15,3 +15,4 @@ export * from './models/boolean-operator';
 
 /* Services */
 export * from './search-service/search.service';
+export * from './operator-service/operator.service';
