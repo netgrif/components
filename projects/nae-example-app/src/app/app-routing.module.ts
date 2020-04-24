@@ -13,9 +13,9 @@ import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {TaskViewComponent} from './doc/task-view/task-view.component';
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 import {WorkflowViewExampleComponent} from './doc/workflow-view-example/workflow-view-example.component';
-import {LoginCardComponent} from './doc/cards/login-card/login-card.component';
-import {PasswordCardComponent} from './doc/cards/password-card/password-card.component';
-import {RegisterCardComponent} from './doc/cards/register-card/register-card.component';
+import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
+import {PasswordFormComponent} from './doc/forms/password-form/password-form.component';
+import {RegisterFormComponent} from './doc/forms/register-form/register-form.component';
 import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
@@ -23,9 +23,9 @@ import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
-    {path: 'login-card', component: LoginCardComponent},
-    {path: 'pass-card', component: PasswordCardComponent},
-    {path: 'reg-card', component: RegisterCardComponent},
+    {path: 'login', component: LoginFormComponent},
+    {path: 'reset-password', component: PasswordFormComponent},
+    {path: 'registration', component: RegisterFormComponent},
     {path: 'drawer', component: DrawerExampleComponent},
     {path: 'rail', component: RailExampleComponent},
     {path: 'headers', component: HeadersComponent},

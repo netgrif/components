@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {NullStorage} from '../NullStorage';
+import {NullStorage} from '../null-storage';
 
 @Injectable({
     providedIn: 'root'

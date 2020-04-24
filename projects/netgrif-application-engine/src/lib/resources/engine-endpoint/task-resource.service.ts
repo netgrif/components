@@ -14,6 +14,7 @@ import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TaskGetRequestBody} from '../interface/task-get-request-body';
+import {HttpEvent} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -185,9 +186,8 @@ export class TaskResourceService implements CountService {
      * GET
      */
     // {{baseUrl}}/api/task/:id/file/:field
-    public downloadFile(taskId: string, fieldId: string): Observable<Blob> {
-        return this.provider.getBlob$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL)
-            .pipe(map(r => changeType(r, undefined)));
+    public downloadFile(taskId: string, fieldId: string): Observable<HttpEvent<Blob>> {
+        return this.provider.getBlob$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL);
     }
 
     /**
@@ -195,8 +195,7 @@ export class TaskResourceService implements CountService {
      * POST
      */
     // {{baseUrl}}/api/task/:id/file/:field
-    public uploadFile(taskId: string, fieldId: string, body: object): Observable<any> {
-        return this.provider.postEvent$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body)
-            .pipe(map(r => changeType(r, undefined)));
+    public uploadFile(taskId: string, fieldId: string, body: object): Observable<HttpEvent<ChangedFieldContainer>> {
+        return this.provider.postWithEvent$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body);
     }
 }

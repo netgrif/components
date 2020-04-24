@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 import {PetriNet} from '../interface/petri-net';
 import {Params, ResourceProvider} from '../resource-provider.service';
 import {changeType, getResourceAddress} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
-import {HttpEvent, HttpParams} from '@angular/common/http';
+import {HttpEvent, HttpEventType, HttpParams} from '@angular/common/http';
 import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
 import {Net} from '../../process/net';
@@ -110,7 +110,15 @@ export class PetriNetResourceService {
      * {{baseUrl}}/api/petrinet/import
      */
     public importPetriNet(body: FormData, params?: Params): Observable<HttpEvent<MessageResource>> {
-        return this.provider.upload$('petrinet/import', this.SERVER_URL, body, params);
+        return this.provider.postWithEvent$('petrinet/import', this.SERVER_URL, body, params).pipe(
+            switchMap(event => { // TODO more fancy logic for progress and response parsing
+                if (event.type === HttpEventType.UploadProgress) {
+                    return of(event);
+                } else {
+                    return of(event);
+                }
+            })
+        );
     }
 
 
