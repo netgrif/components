@@ -96,7 +96,7 @@ export abstract class Operator {
     }
 
     /**
-     * Simple implementationof query generation. Will not be suitable for all Operator derivatives.
+     * Simple implementation of query generation. Will not be suitable for all Operator derivatives.
      *
      * Escapes the first argument from the `args` array, calls the [query()]{@link Operator#query} function for each `keyword` and combines
      * the results with an `OR` operator.
