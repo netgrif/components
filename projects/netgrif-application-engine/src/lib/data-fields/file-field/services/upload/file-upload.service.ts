@@ -2,7 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {HttpEventType} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/snack-bar.service';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/services/snack-bar.service';
 import {FileUploadModel} from '../../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {FileUploadDataModel} from '../../models/file-field';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
@@ -72,7 +72,7 @@ export class FileUploadService {
                     fileUploadModel.canRetry = true;
                     this._logger.error(file.name + 'upload failed: ' + error);
                     this._snackBarService.openErrorSnackBar(file.name + ' upload failed',
-                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1);
                     return of(`${file.name} upload failed.`);
                 })
             ).subscribe(
@@ -81,8 +81,8 @@ export class FileUploadService {
                         fileUploadModel.successfullyUploaded = true;
                         fileUploadModel.state = undefined;
                         this._logger.info(file.name + ' has been successfully uploaded');
-                        this._snackBarService.openInfoSnackBar(file.name + ' upload successful',
-                            SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+                        this._snackBarService.openGenericSnackBar(file.name + ' upload successful', 'library_add_check',
+                            SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1);
                         this._complete.emit(event.body);
                     }
                 }
