@@ -74,7 +74,11 @@ export class SearchService {
      * Reads the current query from the predicate tree, combines it with the base Filter and updates the active Filter.
      */
     protected updateActiveFilter(): void {
-        const predicateFilter = new SimpleFilter('', this._baseFilter.type, {query: this._rootPredicate.query.value});
-        this._activeFilter.next(this._baseFilter.merge(predicateFilter, MergeOperator.AND));
+        if (!this._rootPredicate.query.isEmpty) {
+            const predicateFilter = new SimpleFilter('', this._baseFilter.type, {query: this._rootPredicate.query.value});
+            this._activeFilter.next(this._baseFilter.merge(predicateFilter, MergeOperator.AND));
+        } else {
+            this._activeFilter.next(this._baseFilter.clone());
+        }
     }
 }

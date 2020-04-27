@@ -6,12 +6,16 @@ import {BooleanOperator} from '../boolean-operator';
 export class Query {
     /**
      * @param _value see [value]{@link Query#value} for the specification of this attribute.
+     * @param _empty use `true` if the Query object represents an empty query
      */
-    constructor(private _value: string) {
+    constructor(private _value: string, private _empty = false) {
+        if (!this._value || this._value === '') {
+            this._empty = true;
+        }
     }
 
     /**
-     * Returns an Elastic search Query string query wrapped in braces.
+     * @returns an Elastic search Query string query wrapped in braces.
      *
      * See Elasticsearch's
      * [documentation]{@link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html}
@@ -22,6 +26,13 @@ export class Query {
     }
 
     /**
+     * @returns whether this Query object represents an empty query or not
+     */
+    public get isEmpty(): boolean {
+        return this._empty;
+    }
+
+    /**
      * Combines multiple queries into one with the provided operator.
      * @param queries queries that should be combined. Empty queries in the input array are ignored.
      * @param operator operator that is used to combine the queries
@@ -29,7 +40,7 @@ export class Query {
      * [empty query]{@link Query#emptyQuery} will be returned.
      */
     public static combineQueries(queries: Array<Query>, operator: BooleanOperator): Query {
-        const realQueries = queries.filter(q => q.value !== '');
+        const realQueries = queries.filter(q => !q.isEmpty);
         if (realQueries.length === 0) {
             return Query.emptyQuery();
         }
@@ -44,6 +55,6 @@ export class Query {
      * Returns a `Query` with it's `value` set to an empty string.
      */
     public static emptyQuery(): Query {
-        return new Query('');
+        return new Query('', true);
     }
 }
