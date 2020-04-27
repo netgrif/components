@@ -3,10 +3,16 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {Query} from '../query/query';
 
 /**
- * THe top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
+ * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
  * Holds state information about the query construction process.
  *
  * As opposed to {@link Operator}s Categories are not stateless and shouldn't be shared between multiple search GUI instances.
+ *
+ * You can use {@link CategoryFactoryService} to get instances of Category classes.
+ *
+ * If you want to make your own Category class you have to make sure that the constructor takes {@link OperatorService} as it's first
+ * argument and {@link LoggerService} as it's second argument. Alternatively you can make your own implementation of the
+ * {@link CategoryFactoryService} so, that your style of constructors is supported.
  */
 export abstract class Category {
 
@@ -18,10 +24,12 @@ export abstract class Category {
     /**
      * @param _elasticKeywords Elasticsearch keywords that should be queried by queries generated with this category
      * @param _allowedOperators Operators that can be used to generated queries on the above keywords
+     * @param translationPath path to the translation string
      * @param _log used to record information about incorrect use of this class
      */
     protected constructor(private readonly _elasticKeywords: Array<string>,
                           private readonly _allowedOperators: Array<Operator>,
+                          public readonly translationPath: string,
                           private _log: LoggerService) {
     }
 

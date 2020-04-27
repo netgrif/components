@@ -24,6 +24,7 @@ export * from './models/boolean-operator';
 /* Services */
 export * from './search-service/search.service';
 export * from './operator-service/operator.service';
+export * from './category-factory/category-factory.service';
 
 /* Components */
 export * from './search-component/search.component';

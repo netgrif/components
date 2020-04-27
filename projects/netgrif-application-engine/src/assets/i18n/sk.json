@@ -33,5 +33,12 @@
             "task-filters": "Filtre úloh",
             "select": "Zvoliť"
         }
+    },
+    "search": {
+        "category": {
+            "case": {
+                "title": "Názov prípadu"
+            }
+        }
     }
 }

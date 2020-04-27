@@ -1,6 +1,8 @@
 <mat-form-field>
     <input type="text" matInput [formControl]="formControl" [matAutocomplete]="searchAutocomplete">
-    <mat-autocomplete #searchAutocomplete="matAutocomplete">
-
+    <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection">
+        <mat-option *ngFor="let category of filteredOptions | async" [value]="category">
+            {{category.translationPath | translate}}
+        </mat-option>
     </mat-autocomplete>
 </mat-form-field>

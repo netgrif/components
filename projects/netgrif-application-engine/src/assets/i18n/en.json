@@ -44,5 +44,12 @@
             "task-filters": "Task filters",
             "select": "Select"
         }
+    },
+    "search": {
+        "category": {
+            "case": {
+                "title": "Case title"
+            }
+        }
     }
 }
