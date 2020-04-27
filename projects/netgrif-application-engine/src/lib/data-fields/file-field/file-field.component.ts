@@ -110,27 +110,27 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
      * Initialize file field image from backend if it is image type.
      */
     private initFileFieldImage() {
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId)
-            .subscribe(fileBlob => {
-                const file: File = new File([fileBlob], this.name);
-                if (!file.type.includes('image')) {
-                    return;
-                }
-                this._fileFieldService.allFiles = [];
-                this._fileFieldService.allFiles.push(this._fileFieldService.createFileUploadModel(file, true));
-
-                // TODO: 11.4.2020 unify image element assignment URL
-                //  for blob or file type as arguments to setImageSourceUrl function in FileFieldService
-                //  this._fileFieldService.setImageSourceUrl(fileBlob)
-                const reader = new FileReader();
-                reader.readAsDataURL(fileBlob);
-                reader.onloadend = () => {
-                    if (typeof reader.result === 'string') {
-                        this.imageEl.nativeElement.src = reader.result;
-                        this.imageEl.nativeElement.alt = this.name;
-                    }
-                };
-            });
+        // this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId)
+        //     .subscribe(fileBlob => {
+        //         const file: File = new File([fileBlob], this.name);
+        //         if (!file.type.includes('image')) {
+        //             return;
+        //         }
+        //         this._fileFieldService.allFiles = [];
+        //         this._fileFieldService.allFiles.push(this._fileFieldService.createFileUploadModel(file, true));
+        //
+        //         // TODO: 11.4.2020 unify image element assignment URL
+        //         //  for blob or file type as arguments to setImageSourceUrl function in FileFieldService
+        //         //  this._fileFieldService.setImageSourceUrl(fileBlob)
+        //         const reader = new FileReader();
+        //         reader.readAsDataURL(fileBlob);
+        //         reader.onloadend = () => {
+        //             if (typeof reader.result === 'string') {
+        //                 this.imageEl.nativeElement.src = reader.result;
+        //                 this.imageEl.nativeElement.alt = this.name;
+        //             }
+        //         };
+        //     });
     }
 
 }

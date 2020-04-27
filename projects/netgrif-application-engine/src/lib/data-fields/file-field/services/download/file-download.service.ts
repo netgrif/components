@@ -39,18 +39,18 @@ export class FileDownloadService {
      */
     public downloadFile(file: FileUploadModel): void {
         file.downloading = true;
-        this._taskResourceService.downloadFile(this.taskId, file.stringId)
-            .subscribe(fileResponse => {
-                    this._downloadFileByLink(fileResponse, file);
-
-                    file.downloading = false;
-                    const successMessage = (file.data as FileUploadDataModel).file.name + ' successfully download';
-                    this._logger.info(successMessage);
-                    this._snackBarService.openInfoSnackBar(successMessage,
-                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
-                },
-                (error) => this._handleDownloadFileErrors(error, file)
-            );
+        // this._taskResourceService.downloadFile(this.taskId, file.stringId)
+        //     .subscribe(fileResponse => {
+        //             this._downloadFileByLink(fileResponse, file);
+        //
+        //             file.downloading = false;
+        //             const successMessage = (file.data as FileUploadDataModel).file.name + ' successfully download';
+        //             this._logger.info(successMessage);
+        //             this._snackBarService.openInfoSnackBar(successMessage,
+        //                 SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+        //         },
+        //         (error) => this._handleDownloadFileErrors(error, file)
+        //     );
     }
 
     /**

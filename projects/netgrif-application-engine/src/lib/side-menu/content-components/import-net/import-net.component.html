@@ -3,17 +3,21 @@
 <div fxLayout="column" class="container">
 
     <ul class="file-list">
-        <li *ngFor="let file of fileList" [@fadeInOut]="file.state">
+        <li *ngFor="let file of fileList" [@fadeInOut]="'in'">
             <mat-progress-bar color="accent" [value]="file.progress"></mat-progress-bar>
             <span class="file-list-label">
-                <mat-icon *ngIf="!file.inProgress && file.progress === 100 && file.successfullyUploaded" class="done-icon">
+                <mat-progress-spinner *ngIf="file.inProgress && file.uploaded" class="margin-right-default" color="accent" mode="indeterminate" diameter="20"></mat-progress-spinner>
+                <mat-icon *ngIf="!file.inProgress && file.uploaded && file.completed" class="done-icon margin-right-default">
                     done
                 </mat-icon>
+                <mat-icon *ngIf="!file.inProgress && !file.completed &&  file.error" class="done-icon margin-right-default">
+                    error
+                </mat-icon>
                 {{file.data.name}}
-                <a title="Retry" (click)="retryFile(file)" *ngIf="file.canRetry">
+                <a title="Retry" (click)="retryFile(file)" *ngIf="!file.inProgress && file.error">
                     <mat-icon>refresh</mat-icon>
                 </a>
-                <a title="Cancel" (click)="cancelFile(file)" *ngIf="file.canCancel">
+                <a title="Cancel" (click)="cancelFile(file)" *ngIf="file.inProgress">
                     <mat-icon>cancel</mat-icon>
                 </a>
             </span>
@@ -21,7 +25,7 @@
     </ul>
 
     <input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple"
-           accept="text/xml" style="display:none;"/>
+           accept="text/xml" class="display-none"/>
 
     <mat-form-field color="primary">
         <mat-label>Release</mat-label>

@@ -9,12 +9,11 @@ import {FileUploadDataModel} from '../../../../data-fields/file-field/models/fil
 export class FileUploadModel {
     stringId: string;
     data: File | FileUploadDataModel;
-    state: string;
     inProgress: boolean;
     progress: number;
-    canRetry: boolean;
-    canCancel: boolean;
-    successfullyUploaded: boolean;
+    completed: boolean;
+    error?: boolean;
+    uploaded?: boolean;
     downloading: boolean;
     sub?: Subscription;
 }

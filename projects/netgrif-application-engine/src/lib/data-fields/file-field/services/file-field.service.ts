@@ -78,8 +78,7 @@ export class FileFieldService {
      * @param file Selected file for re-upload
      */
     public retryFile(file: FileUploadModel) {
-        file.canRetry = false;
-        file.successfullyUploaded = false;
+        file.completed = false;
         this._fileUploadService.uploadFile(file);
     }
 
@@ -88,7 +87,7 @@ export class FileFieldService {
      * @param file Selected file for download
      */
     public onFileDownload(file: FileUploadModel) {
-        if (!file.successfullyUploaded) {
+        if (!file.completed) {
             return;
         }
         this._fileDownloadService.downloadFile(file);
@@ -179,10 +178,9 @@ export class FileFieldService {
                 name: file.name.substr(0, file.name.lastIndexOf('.')),
                 extension: file.name.substr(file.name.lastIndexOf('.') + 1)
             },
-            state: 'in', downloading: false,
+            downloading: false,
             inProgress: false, progress: isSuccessfullyUploaded ? 100 : 0,
-            canRetry: false, canCancel: true,
-            successfullyUploaded: isSuccessfullyUploaded
+            completed: isSuccessfullyUploaded
         };
     }
 
@@ -203,7 +201,7 @@ export class FileFieldService {
      * Returns successfully uploaded files as File.
      */
     private resolveFilesArray(): Array<File> {
-        return this.allFiles.filter(f => f.successfullyUploaded).map(f => (f.data as FileUploadDataModel).file);
+        return this.allFiles.filter(f => f.completed).map(f => (f.data as FileUploadDataModel).file);
     }
 
 }

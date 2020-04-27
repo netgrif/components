@@ -1,8 +1,5 @@
 import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
-import {catchError, last, map} from 'rxjs/operators';
-import {of} from 'rxjs';
 import {FileUploadModel} from '../files-upload/models/file-upload-model';
 import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
@@ -10,6 +7,8 @@ import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource-service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {MessageResource} from '../../../resources/interface/message-resource';
+import {ProgressType, ProviderProgress} from '../../../resources/resource-provider.service';
+import {SnackBarService} from '../../../snack-bar/snack-bar.service';
 
 interface FileList {
     [key: string]: FileUploadModel;
@@ -38,7 +37,8 @@ export class ImportNetComponent implements OnInit, AfterViewInit {
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
                 private _petriNetResource: PetriNetResourceService,
-                private _log: LoggerService) {
+                private _log: LoggerService,
+                private _snackbar: SnackBarService) {
     }
 
     ngOnInit() {
@@ -83,7 +83,6 @@ export class ImportNetComponent implements OnInit, AfterViewInit {
 
     public retryFile(file: FileUploadModel) {
         this.uploadFile(file);
-        file.canRetry = false;
     }
 
     public close(): void {
@@ -96,15 +95,14 @@ export class ImportNetComponent implements OnInit, AfterViewInit {
 
     private setupFile(file: File): FileUploadModel {
         return {
-            data: file, state: 'in', stringId: '', downloading: false,
-            inProgress: false, progress: 0, canRetry: false, canCancel: true, successfullyUploaded: false
+            data: file, stringId: '', downloading: false, inProgress: false, progress: 0, completed: false, uploaded: false
         };
     }
 
     private uploadFiles() {
         this._fileInput.value = '';
 
-        this.fileList.filter(fileModel => !fileModel.successfullyUploaded && fileModel.progress === 0).forEach(file => {
+        this.fileList.filter(fileModel => !fileModel.completed && fileModel.progress === 0).forEach(file => {
             this.uploadFile(file);
         });
     }
@@ -126,44 +124,31 @@ export class ImportNetComponent implements OnInit, AfterViewInit {
         fileFormData.append('meta', JSON.stringify({releaseType: this.releaseTypeControl.value.toString().toUpperCase()}));
 
         file.inProgress = true;
-        file.sub = this._petriNetResource.importPetriNet(fileFormData).pipe(
-            map(event => {
-                switch (event.type) {
-                    case HttpEventType.UploadProgress:
-                        file.progress = Math.round(event.loaded * 100 / event.total);
-                        break;
-                    case HttpEventType.Response:
-                        return event;
-                    default:
-                        return event;
+        file.completed = false;
+        file.error = false;
+        file.sub = this._petriNetResource.importPetriNet(fileFormData).subscribe(response => {
+            if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
+                file.progress = (response as ProviderProgress).progress;
+                if (file.progress === 100) {
+                    file.uploaded = true;
                 }
-            }),
-            last(),
-            catchError((error: HttpErrorResponse) => {
+            } else {
+                this._log.info((response as MessageResource).success);
                 file.inProgress = false;
-                file.canRetry = true;
-                return of(`${file.data.name} upload failed.`);
-            })
-        ).subscribe(
-            (event: HttpEvent<MessageResource>) => {
-                if (event.type === HttpEventType.Response) {
-                    const response = event.body;
-                    file.inProgress = false;
-                    if (response.success || !response.error) {
-                        file.successfullyUploaded = true;
-                    }
-                    if (response.error) {
-                        file.successfullyUploaded = false;
-                        this._log.error('Importing process file has failed!', response.error);
-                    }
-                    this._sideMenuControl.publish({
-                        opened: true,
-                        message: 'Process ' + file.data.name + ' successfully uploaded',
-                        data: file
-                    });
-                }
+                file.completed = true;
+                this._sideMenuControl.publish({
+                    opened: true,
+                    message: 'Process ' + file.data.name + ' successfully uploaded',
+                    data: file
+                });
             }
-        );
+        }, error => {
+            file.inProgress = false;
+            file.completed = false;
+            file.error = true;
+            this._log.error('Importing process file has failed!', error);
+            this._snackbar.openErrorSnackBar('Uploading process file has failed');
+        });
     }
 
 }
