@@ -477,13 +477,10 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private buildAssignPolicy(success: boolean): void {
-        switch (this.taskPanelData.task.assignPolicy) {
-            case AssignPolicy.auto:
-                this.autoAssignPolicy(success);
-                break;
-            default:
-                this.manualAssignPolicy(success);
-                break;
+        if (this.taskPanelData.task.assignPolicy === AssignPolicy.auto) {
+            this.autoAssignPolicy(success);
+        } else {
+            this.manualAssignPolicy(success);
         }
     }
 
@@ -529,13 +526,10 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private buildFinishPolicy(success: boolean): void {
-        switch (this.taskPanelData.task.finishPolicy) {
-            case FinishPolicy.autoNoData:
-                this.autoNoDataFinishPolicy(success);
-                break;
-            default:
-                this.manualFinishPolicy(success);
-                break;
+        if (this.taskPanelData.task.finishPolicy === FinishPolicy.autoNoData) {
+            this.autoNoDataFinishPolicy(success);
+        } else {
+            this.manualFinishPolicy(success);
         }
     }
 

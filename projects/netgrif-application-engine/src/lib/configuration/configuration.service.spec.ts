@@ -21,8 +21,7 @@ describe('ConfigurationService', () => {
     it('should get config', () => {
         service.getAsync().subscribe(conf => {
             expect(conf).toEqual(service.get());
-        })
-
+        });
     });
 
     it('should get providers', () => {

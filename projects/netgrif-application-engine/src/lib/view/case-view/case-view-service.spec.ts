@@ -32,12 +32,12 @@ describe('CaseViewService', () => {
         service.baseFilter = new SimpleFilter('', FilterType.TASK, {});
         service.loadCases();
         service.cases$.subscribe(res => {
-            expect(res.length).toEqual(0)
+            expect(res.length).toEqual(0);
         });
 
         service.reload();
         service.cases$.subscribe(res => {
-            expect(res.length).toEqual(0)
+            expect(res.length).toEqual(0);
         });
 
         service.loading$.subscribe(res => {
@@ -47,7 +47,8 @@ describe('CaseViewService', () => {
 
     afterAll(() => {
         TestBed.resetTestingModule();
-    });});
+    });
+});
 
 class MyResources {
     searchCases(filter, params) {

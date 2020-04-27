@@ -1,5 +1,5 @@
 import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpProgressEvent, HttpResponse} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {MessageResource} from './interface/message-resource';
 

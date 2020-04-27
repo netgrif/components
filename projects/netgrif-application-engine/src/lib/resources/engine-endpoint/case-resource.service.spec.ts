@@ -143,7 +143,7 @@ describe('CaseResourceService', () => {
 
     it('should getOptionsEnumeration', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
-            service.getOptionsEnumeration('id','id').subscribe(res => {
+            service.getOptionsEnumeration('id', 'id').subscribe(res => {
                 expect(res.stringId).toEqual('id');
             });
 

@@ -13,7 +13,7 @@ describe('SnackBarService', () => {
             imports: [MaterialModule]
         });
         service = TestBed.inject(SnackBarService);
-        snackSpy = spyOn(TestBed.inject(MatSnackBar), 'open')
+        snackSpy = spyOn(TestBed.inject(MatSnackBar), 'open');
     });
 
     it('should be created', () => {
@@ -31,7 +31,8 @@ describe('SnackBarService', () => {
         expect(snackSpy).toHaveBeenCalledWith('warn', '!', { duration: 4000, horizontalPosition: 'center', verticalPosition: 'bottom' });
 
         service.openGenericSnackBar('gen', 'action');
-        expect(snackSpy).toHaveBeenCalledWith( 'gen', 'action', { duration: 4000, horizontalPosition: 'center', verticalPosition: 'bottom' });
+        expect(snackSpy).toHaveBeenCalledWith( 'gen', 'action',
+            { duration: 4000, horizontalPosition: 'center', verticalPosition: 'bottom' });
     });
 
     afterAll(() => {
