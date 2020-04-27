@@ -31,7 +31,8 @@ import {
     LoginFormModule,
     ForgottenPasswordFormModule,
     RegistrationFormModule,
-    SignUpModule
+    SignUpModule,
+    SearchModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -134,6 +135,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         LoginFormModule,
         ForgottenPasswordFormModule,
         RegistrationFormModule,
+        SearchModule,
+        SearchModule,
     ],
     entryComponents: [
         FilesUploadComponent,
