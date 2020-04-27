@@ -1,0 +1,48 @@
+{
+    "toolbar": {
+        "menu": {
+            "lang": "Language",
+            "profile": "Profile",
+            "logout": "Logout",
+            "en": "English",
+            "sk": "Slovak"
+        }
+    },
+    "tasks": {
+        "snackbar": {
+            "noTasksFound": "No tasks found",
+            "failedToLoad": "failed to load",
+            "errorTaskSearch": "Tasks on task/search",
+            "noData": "No data for task",
+            "noGroup": "No data group for task",
+            "dataFor": "Data for",
+            "dataSaved": "Data saved successfully",
+            "failedSave": "Saving data failed",
+            "assignTask": "Assigning task",
+            "delegateTask": "Delegating task",
+            "cancelTask": "Canceling assignment of task",
+            "finishTask": "Finishing task",
+            "invalidData": "Some fields have invalid values",
+            "failed": "failed"
+        },
+        "view": {
+            "noTasksSatisfyingThisFilter": "There are any tasks satisfying this filter",
+            "collapse": "Collapse",
+            "assign": "Assign",
+            "reassign": "Reassign",
+            "delegate": "Delegate",
+            "finish": "Finish",
+            "cancel": "Cancel",
+            "noData": "This task has no data. Finish to continue."
+        }
+    },
+    "side-menu": {
+        "filter-selector": {
+            "choose-filter": "Choose a filter",
+            "search-filter": "Search filters",
+            "case-filters": "Case filters",
+            "task-filters": "Task filters",
+            "select": "Select"
+        }
+    }
+}

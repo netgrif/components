@@ -1,17 +1,26 @@
-<nae-data-field-template *ngIf="!fileField.behavior.hidden"
-                         [dataField]="fileField"
-                         [dataFieldTemplate]="dataField">
+<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="dataFieldTemplate">
 </nae-data-field-template>
 
-<ng-template #dataField let-showLargeLayout="showLargeLayout">
+<ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
     <div>
-        <mat-label *ngIf="!showLargeLayout.value">{{fileField.title}}<nae-required-label *ngIf="fileField.behavior.required" [isIn]="!fileField.disabled"></nae-required-label><br></mat-label>
+        <div class="file-field-image-wrapper">
+            <img #imageEl src="" alt="" class="file-field-image">
+        </div>
+        <mat-label *ngIf="!showLargeLayout.value">
+            {{dataField.title}}
+            <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label>
+            <br>
+        </mat-label>
         <button mat-stroked-button class="margin-bottom-10px" color="primary" (click)="onFileUpload()"
-                [disabled]="fileField.disabled">
+                [disabled]="dataField.disabled">
             <mat-icon>file_upload</mat-icon>
             {{name}}
         </button>
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="multiple"
-               accept="{{fileField.allowTypes}}" class="invisible-input"/>
+               accept="{{dataField.allowTypes}}" class="invisible-input"/>
+        <input type="hidden" [formControl]="formControl" [multiple]="multiple" accept="{{dataField.allowTypes}}">
+        <mat-error *ngIf="!formControl.valid && formControl.touched">{{'This field is required!'}}</mat-error>
     </div>
 </ng-template>

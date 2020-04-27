@@ -1,206 +1,87 @@
 import {
     chain,
-    Rule,
+    Rule, schematic,
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
 import {
-    addRouteToRoutesJson,
-    addRoutingModuleImport,
+    createAppRoutesMap,
     getParentPath,
-    Route,
-    updateAppModule
-} from '../viewUtilityFunctions';
-import {
-    commitChangesToFile,
-    createFilesFromTemplates,
-    createRelativePath,
-    getAppModule,
-    getProjectInfo
-} from '../../utilityFunctions';
-import {strings} from '@angular-devkit/core';
+} from '../view-utility-functions';
 import {CreateViewArguments} from './schema';
-import {ImportToAdd} from './classes/ImportToAdd';
-import {ClassName} from './classes/ClassName';
-import {TabViewParams} from './classes/paramsInterfaces';
-import {TabContentTemplate} from './classes/TabContentTemplate';
-import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
+import {addViewToNaeJson} from './add-view-to-nae-json';
+import {createLoginView} from './create-login-view';
+import {createTabView} from './create-tab-view';
+import {createTaskView} from './create-task-view';
+import {createCaseView} from './create-case-view';
+import {createSidenavOrToolbarView} from './create-sidenav-or-toolbar-view';
+import {createEmptyView} from './create-empty-view';
+import {checkJsonParamsForSidenav} from './create-sidenav-prompt';
+import {createDashboardView} from './create-dashboard-view';
 
-
-interface TabViews {
-    rules: Array<Rule>;
-    tabTemplates: Array<TabContentTemplate>;
-    tabViewImports: Array<ImportToAdd>;
-    entryComponentsImports: Array<ImportToAdd>;
-}
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
-        checkPathValidity(schematicArguments.path, schematicArguments._routesMap);
+        checkPathValidity(tree, schematicArguments.path);
         return createView(tree, schematicArguments);
     };
 }
 
-function checkPathValidity(path: string | undefined, routeMap: Map<string, Route>) {
+function checkPathValidity(tree: Tree, path: string | undefined) {
     if (path === undefined) {
         throw new SchematicsException(`Path cannot be undefined!`);
     }
     // if the path was entered from a prompt, it might not have a parent
     const parentPath = getParentPath(path);
+    const routeMap = createAppRoutesMap(tree);
     if (parentPath !== '' && !routeMap.has(parentPath)) {
         throw new SchematicsException(`Parent view doesn't exist! Create a view with '${parentPath}' path first.`);
     }
 }
 
 function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = true): Rule {
+    const rules = [];
     switch (args.viewType) {
         case 'login':
-            return createLoginView(tree, args, addRoute);
+            rules.push(createLoginView(tree, args, addRoute));
+            break;
         case 'tabView':
-            return createTabView(tree, args, addRoute);
+            rules.push(createTabView(tree, args, addRoute, createViewRef));
+            break;
+        case 'taskView':
+            rules.push(createTaskView(tree, args, addRoute));
+            break;
+        case 'caseView':
+            rules.push(createCaseView(tree, args, addRoute));
+            break;
+        case 'emptyView':
+            rules.push(createEmptyView(tree, args, addRoute));
+            break;
+        case 'dashboard':
+            rules.push(createDashboardView(tree, args, addRoute));
+            break;
+        case 'toolbarView':
+            rules.push(createSidenavOrToolbarView(tree, {
+                createViewArguments: args,
+                addRoute
+            }));
+            break;
+        case 'sidenavView':
+        case 'sidenavAndToolbarView':
+            rules.push(schematic('create-sidenav-prompt', checkJsonParamsForSidenav(args, addRoute)
+            ));
+            /**Pridane kvoli tomu ze nechcem aby sa pushol addViewToNaeJson tu ale az po tom co schematic
+             *  cez promp vyplni potrebne argumenty
+             */
+            addRoute = false;
+            break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
-}
-
-function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
-    const projectInfo = getProjectInfo(tree);
-    const rules = [];
-    const className = new ClassName(args.path as string, resolveClassSuffixForView('login'));
-
-    rules.push(createFilesFromTemplates('./files/login', `${projectInfo.path}/views/${args.path}`, {
-        prefix: projectInfo.projectPrefixDasherized,
-        path: className.prefix,
-        dasherize: strings.dasherize,
-        classify: strings.classify
-    }));
-
-    updateAppModule(tree, className.name, className.fileImportPath, [
-        new ImportToAdd('FlexModule', '@angular/flex-layout'),
-        new ImportToAdd('CardModule', '@netgrif/application-engine')]);
-
     if (addRoute) {
-        addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push( addRouteToRoutesJson(args.path as string, className.name));
+        rules.push(addViewToNaeJson(args));
     }
     return chain(rules);
 }
 
-function createTabView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
-    const projectInfo = getProjectInfo(tree);
-    const className = new ClassName(args.path as string, resolveClassSuffixForView('tabView'));
-
-    const tabViews = processTabViewContents(tree, args.layoutParams as TabViewParams, args.path as string, className);
-
-    const rules = tabViews.rules;
-
-    rules.push(createFilesFromTemplates('./files/tabView', `${projectInfo.path}/views/${args.path}`, {
-        prefix: projectInfo.projectPrefixDasherized,
-        path: className.prefix,
-        tabs: tabViews.tabTemplates,
-        imports: tabViews.tabViewImports,
-        dasherize: strings.dasherize,
-        classify: strings.classify
-    }));
-
-    updateAppModule(tree, className.name, className.fileImportPath, [
-        new ImportToAdd('FlexModule', '@angular/flex-layout'),
-        new ImportToAdd('TabsModule', '@netgrif/application-engine')]);
-
-    tabViews.entryComponentsImports.forEach(imp => {
-        // the tree/fileEntry gets updated with every iteration, so we need to get the current state every time
-        const appModule = getAppModule(tree, projectInfo.path);
-        const changes = addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, imp.className, imp.importPath);
-        commitChangesToFile(tree, appModule.fileEntry, changes);
-    });
-
-    if (addRoute) {
-        addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push( addRouteToRoutesJson(args.path as string, className.name));
-        rules.push( addRouteToRoutesJson(`${args.path}/**`, className.name));
-    }
-    return chain(rules);
-}
-
-function processTabViewContents(tree: Tree, tabViewParams: TabViewParams, tabViewPath: string, tabClassName: ClassName): TabViews {
-    const result: TabViews = {
-        rules: [],
-        tabTemplates: [],
-        tabViewImports: [],
-        entryComponentsImports: []
-    };
-
-    if (tabViewParams.tabs === undefined) {
-        return result;
-    }
-
-    let viewCounter = 0;
-    tabViewParams.tabs.forEach(tab => {
-        let tabTemplate: TabContentTemplate;
-        if (tab.component !== undefined) {
-            if (tab.component.class === undefined || tab.component.classPath === undefined) {
-                throw new SchematicsException('TabView content Component must define both a \'class\' and a \'classPath\' attribute');
-            }
-
-            if ( !tab.component.classPath.startsWith('./')) {
-               tab.component.classPath = `./${tab.component.classPath}`;
-            }
-
-            result.tabViewImports.push(
-                new ImportToAdd(tab.component.class, createRelativePath(tabClassName.fileImportPath, tab.component.classPath))
-            );
-            result.entryComponentsImports.push(new ImportToAdd(tab.component.class, tab.component.classPath));
-
-            tabTemplate = new TabContentTemplate(tab.component.class);
-        } else if (tab.view !== undefined) {
-            if (tab.view.name === undefined) {
-                throw new SchematicsException('TabView content View must define a \'name\' attribute');
-            }
-            const createViewArguments = {
-                path: `${tabViewPath}/content/${viewCounter}`,
-                viewType: tab.view.name,
-                layoutParams: tab.view.params,
-                // this attribute is required in the interface, but the method doesn't use it
-                _routesMap: null as unknown as Map<string, Route>
-            };
-
-            result.rules.push(createView(tree, createViewArguments, false));
-
-            const newComponentName = new ClassName(`${tabViewPath}/content/${viewCounter}`, resolveClassSuffixForView(tab.view.name));
-
-            tabTemplate = new TabContentTemplate(newComponentName.name);
-            result.tabViewImports.push(
-                new ImportToAdd(newComponentName.name, createRelativePath(tabClassName.fileImportPath, newComponentName.fileImportPath))
-            );
-            result.entryComponentsImports.push(new ImportToAdd(newComponentName.name, newComponentName.fileImportPath));
-
-            viewCounter++;
-        } else {
-            throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
-        }
-
-        if (tab.canBeDeleted !== undefined) {
-            tabTemplate.canBeDeleted = tab.canBeDeleted;
-        }
-        if (tab.label !== undefined) {
-            tabTemplate.icon = tab.label.icon as string;
-            tabTemplate.text = tab.label.text as string;
-        }
-        tabTemplate.order = tab.order as number;
-
-        result.tabTemplates.push(tabTemplate);
-    });
-
-    return result;
-}
-
-function resolveClassSuffixForView(view: string): string {
-    switch (view) {
-        case 'login':
-            return 'Login';
-        case 'tabView':
-            return 'TabView';
-        default:
-            throw new SchematicsException(`Unknown view type '${view}'`);
-    }
-}
+const createViewRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule = createView;

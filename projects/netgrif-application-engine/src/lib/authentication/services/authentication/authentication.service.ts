@@ -7,18 +7,24 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {catchError, map, tap} from 'rxjs/operators';
 import {User} from '../../../user/models/user';
 import {UserTransformer} from '../../models/user.transformer';
+import {SessionService} from '../../session/services/session.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
 
-    private static readonly IDENTIFICATION_ATTRIBUTE = 'username'; // TODO change for ID
+    private static readonly IDENTIFICATION_ATTRIBUTE = 'id';
 
     private _authenticated$: BehaviorSubject<boolean>;
 
-    constructor(private _auth: AuthenticationMethodService, private _config: ConfigurationService) {
+    constructor(private _auth: AuthenticationMethodService,
+                private _config: ConfigurationService,
+                private _sessionService: SessionService) {
         this._authenticated$ = new BehaviorSubject<boolean>(false);
+        this._sessionService.session$.subscribe(token => {
+            this._authenticated$.next(!!token && token.length !== 0);
+        });
     }
 
     login(credentials: Credentials): Observable<User> {
@@ -36,7 +42,10 @@ export class AuthenticationService {
 
     logout(): Observable<object> {
         return this._auth.logout().pipe(
-            tap(() => this._authenticated$.next(false)),
+            tap(() => {
+                this._authenticated$.next(false);
+                this._sessionService.clear();
+            }),
             catchError(error => {
                 console.error(error);
                 return of(error);
@@ -48,7 +57,7 @@ export class AuthenticationService {
         return this._authenticated$.getValue();
     }
 
-    get authenticated$(): BehaviorSubject<boolean> {
-        return this._authenticated$;
+    get authenticated$(): Observable<boolean> {
+        return this._authenticated$.asObservable();
     }
 }

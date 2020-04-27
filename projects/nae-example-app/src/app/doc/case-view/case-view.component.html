@@ -1,0 +1,29 @@
+<div class="case-view-container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+    <mat-card class="case-view-search-container">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <div fxLayoutAlign="start center">SEARCH</div>
+            <div fxLayoutAlign="end center">
+                <button mat-mini-fab color="primary" (click)="createNewCase()">
+                    <mat-icon class="net-upload" aria-hidden="false">add</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+
+    <nae-header #header [type]="headerType" [allowedNets$]="allowedNets$" class="case-header-padding"></nae-header>
+
+    <nae-case-panel *ngFor="let case_ of cases$ | async"
+                    [case_]="case_"
+                    [selectedHeaders$]="selectedHeaders$"
+                    (click)="handleCaseClick(case_)">
+    </nae-case-panel>
+
+    <div *ngIf="!loading && (cases$ | async)?.length === 0" fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon>storage</mat-icon>
+        <span class="font-size-20">There are any cases satisfying specified filter</span>
+    </div>
+
+    <div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center">
+        <mat-spinner color="primary"></mat-spinner>
+    </div>
+</div>

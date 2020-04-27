@@ -1,10 +1,16 @@
-import {DataField} from '../../models/abstract-data-field';
+import {Layout} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
+import {Moment} from 'moment';
+import {AbstractTimeInstanceField} from '../../time-instance-abstract-field/models/abstract-time-instance-field';
 
-export class DateTimeField extends DataField<Date> {
+export class DateTimeField extends AbstractTimeInstanceField {
 
-    constructor(stringId: string, title: string, value: Date, behavior: Behavior, placeholder?: string,
-                description?: string, public validations?: any, public materialAppearance = 'standard') {
-        super(stringId, title, behavior, placeholder, description, value);
+    constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
+                description?: string, layout?: Layout, validations?: any) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations);
+    }
+
+    protected valueEquality(a: Moment, b: Moment): boolean {
+        return AbstractTimeInstanceField.isEqual(a, b, 'minute');
     }
 }

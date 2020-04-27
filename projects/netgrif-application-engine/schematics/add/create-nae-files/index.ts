@@ -10,14 +10,14 @@ import {
     getAppModule,
     getNaeConfiguration,
     getProjectInfo
-} from '../../utilityFunctions';
+} from '../../utility-functions';
 import {addImportToModule} from '@schematics/angular/utility/ast-utils';
 import {
     addAllRoutesToMap,
     constructRoutePath,
     getRoutesJsonContent,
     Route
-} from '../../view/viewUtilityFunctions';
+} from '../../view/view-utility-functions';
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
 
 export function createNaeFiles(): Rule {
@@ -25,7 +25,8 @@ export function createNaeFiles(): Rule {
         const rules = [];
         rules.push(createRoutesModule());
         rules.push(schematic('initialize-configuration-service', {}));
-        rules.push(schematic('custom-templates', {}));
+        rules.push(schematic('custom-themes', {}));
+        rules.push(updateAppComponentHTML());
         for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
             rules.push(schematic('create-view', {}));
         }
@@ -70,4 +71,12 @@ function findNumberOfMissingViews(existingRoutesMap: Map<string, Route>,
         }
     }
     return counter;
+}
+
+function updateAppComponentHTML(): Rule {
+    return (tree: Tree) => {
+        const pathToComponent = getProjectInfo(tree).path + '/app.component.html';
+        const content: string = '<nae-side-menu>' + '\n' + tree.read(pathToComponent) + '</nae-side-menu>';
+        tree.overwrite(pathToComponent, content);
+    };
 }

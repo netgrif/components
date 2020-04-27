@@ -1,18 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TextField} from '../models/text-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {FormControl} from '@angular/forms';
+import {AbstractTextFieldComponent} from '../abstract-text-field.component';
 
 @Component({
-  selector: 'nae-textarea-field',
-  templateUrl: './textarea-field.component.html',
-  styleUrls: ['./textarea-field.component.scss']
+    selector: 'nae-textarea-field',
+    templateUrl: './textarea-field.component.html',
+    styleUrls: ['./textarea-field.component.scss']
 })
-export class TextareaFieldComponent implements OnInit {
+export class TextareaFieldComponent extends AbstractTextFieldComponent {
 
-  @Input() textAreaField: TextField;
-  @Input() showLargeLayout: WrappedBoolean;
+    @Input() textAreaField: TextField;
+    @Input() formControlRef: FormControl;
+    @Input() showLargeLayout: WrappedBoolean;
 
-  ngOnInit() {
-  }
+    constructor() {
+        super();
+    }
 
+    public getErrorMessage() {
+        this.buildErrorMessage(this.textAreaField, this.formControlRef);
+    }
 }

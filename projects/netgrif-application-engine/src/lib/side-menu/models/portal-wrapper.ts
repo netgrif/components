@@ -1,6 +1,14 @@
 import {Portal} from '@angular/cdk/portal';
-import {SideMenuWidth} from '../services/side-menu.service';
+import {SideMenuSize} from './side-menu-size';
 
-export class PortalWrapper {
-    constructor(public portal: Portal<any> = null, public width?: SideMenuWidth) {}
+export class PortalWrapper<T = any> {
+    constructor(private _portal: Portal<T>, private _width?: SideMenuSize) {}
+
+    get portal(): Portal<T> {
+        return this._portal;
+    }
+
+    get size(): SideMenuSize {
+        return this._width;
+    }
 }

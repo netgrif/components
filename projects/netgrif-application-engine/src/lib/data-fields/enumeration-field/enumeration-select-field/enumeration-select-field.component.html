@@ -1,14 +1,11 @@
 <mat-form-field [appearance]="enumerationField.materialAppearance" class="full-width" color="primary">
     <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}</mat-label>
-    <mat-select [(value)]="selected"
-                [formControl]="validate"
-                [placeholder]="enumerationField.placeholder"
-                [required]="enumerationField.behavior.required"
-                [disabled]="enumerationField.disabled">
+    <mat-select [formControl]="formControlRef"
+                [placeholder]="enumerationField.placeholder">
         <mat-option *ngFor="let option of enumerationField.choices" [value]="option.key">
             {{option.value}}
         </mat-option>
     </mat-select>
     <mat-hint>{{enumerationField.description}}</mat-hint>
-    <mat-error *ngIf="validate.hasError('required')">You must make a selection</mat-error>
+    <mat-error *ngIf="!formControlRef.valid && formControlRef.touched">{{'This field is required!'}}</mat-error>
 </mat-form-field>

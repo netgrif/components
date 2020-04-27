@@ -1,0 +1,17 @@
+<div matSort (matSortChange)="sortHeaderChanged($event)" fxFlex="100" fxLayout="row" fxLayoutAlign=" center" class="header-column-container">
+    <div *ngFor="let header of headerService.headerState.selectedHeaders$ | async; let i = index" fxFlex>
+        <div *ngIf="!!header; then thenBlock else elseBlock" fxFlex></div>
+        <ng-template #thenBlock>
+            <div fxFlex
+                 [fxHide.lt-lg]="i >= 4"
+                 [fxHide.lt-md]="i >= 3"
+                 [fxHide.lt-sm]="i >= 2"
+                 mat-sort-header="{{i}}-{{header.uniqueId}}">
+            {{header.title}}
+            </div>
+        </ng-template>
+        <ng-template #elseBlock>
+            <div fxFlex></div>
+        </ng-template>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.drawer-container {
+    height: 100%;
+}
+
+.drawer-content {
+    width: 200px;
+    min-width: 200px;
+}
+
+.mat-drawer-side {
+    border-right: 0;
+}
+
+mat-divider.drawer-divider {
+    width: 90%;
+}

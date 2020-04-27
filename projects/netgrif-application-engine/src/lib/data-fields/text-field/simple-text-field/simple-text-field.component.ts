@@ -1,28 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {Component, Input} from '@angular/core';
+import {FormControl} from '@angular/forms';
 import {TextField} from '../models/text-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {AbstractTextFieldComponent} from '../abstract-text-field.component';
 
 @Component({
     selector: 'nae-simple-text-field',
     templateUrl: './simple-text-field.component.html',
     styleUrls: ['./simple-text-field.component.scss']
 })
-export class SimpleTextFieldComponent implements OnInit {
+export class SimpleTextFieldComponent extends AbstractTextFieldComponent {
 
-    email = new FormControl('', [Validators.required, Validators.email]);
     @Input() textField: TextField;
+    @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
 
     constructor() {
+        super();
     }
 
-    ngOnInit() {
-
-    }
-
-    getErrorMessage() {
-        return this.email.hasError('required') ? 'You must enter a value' :
-            this.email.hasError('email') ? 'Not a valid email' : '';
+    public getErrorMessage() {
+        this.buildErrorMessage(this.textField, this.formControlRef);
     }
 }

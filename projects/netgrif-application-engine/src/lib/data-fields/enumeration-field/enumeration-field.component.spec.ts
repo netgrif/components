@@ -45,10 +45,10 @@ describe('EnumerationFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-enumeration-field [enumerationField]="field"></nae-enumeration-field>'
+    template: '<nae-enumeration-field [dataField]="field"></nae-enumeration-field>'
 })
 class TestWrapperComponent {
-    field = new EnumerationField('', '', {key: '', value: ''}, [], {
+    field = new EnumerationField('', '', '', [], {
         required: true,
         optional: true,
         visible: true,

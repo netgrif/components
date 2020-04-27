@@ -10,10 +10,10 @@
             "factory": "./add/create-nae-files/index#createNaeFiles",
             "schema": "./add/create-nae-files/schema.json"
         },
-        "custom-templates": {
+        "custom-themes": {
             "description": "Generate a project custom themes from nae.json.",
-            "factory": "./add/custom-templates/index#customTemplates",
-            "schema": "./add/custom-templates/schema.json"
+            "factory": "./add/custom-themes/index#customThemes",
+            "schema": "./add/custom-themes/schema.json"
         },
         "before-build": {
             "description": "Is run before each build to fill all the project classes with the most recent state of various configurations.",
@@ -49,6 +49,16 @@
             "description": "Updates routes in route module to match with those in routes.json",
             "factory": "./view/populate-route-module/index#populateRouteModule",
             "schema": "./view/populate-route-module/schema.json"
+        },
+        "market-resource": {
+            "description": "Resource market",
+            "factory": "./resources/market-resource/index#initializeMarketResources",
+            "schema": "./resources/market-resource/schema.json"
+        },
+        "create-sidenav-prompt": {
+            "description": "Adds extension to sidenav based on user inputs.",
+            "factory": "./view/create-view-prompt/create-sidenav-prompt#chooseSideNavType",
+            "schema": "./view/create-view-prompt/files/sidenav-toolbar-files/schema.json"
         }
     }
 }

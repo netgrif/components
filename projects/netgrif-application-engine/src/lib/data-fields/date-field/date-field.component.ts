@@ -1,21 +1,27 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {DateField} from './models/date-field';
-import {FormControl} from '@angular/forms';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {DATE_FORMAT} from '../../moment/time-formats';
+import {AbstractTimeInstanceFieldComponent} from '../time-instance-abstract-field/abstract-time-instance-field.component';
+
 
 @Component({
     selector: 'nae-date-field',
     templateUrl: './date-field.component.html',
-    styleUrls: ['./date-field.component.scss']
+    styleUrls: ['./date-field.component.scss'],
+    providers: [
+        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
+    ]
 })
-export class DateFieldComponent implements OnInit {
+export class DateFieldComponent extends AbstractTimeInstanceFieldComponent {
 
-    @Input() public dateField: DateField;
+    @Input() public dataField: DateField;
 
-    public validate: FormControl;
-
-    ngOnInit() {
-        this.validate = new FormControl(this.dateField.value);
+    constructor() {
+        super();
     }
 
-    // TODO correct locale (date format and first day of the week)
+    getErrorMessage() {
+        return this.buildErrorMessage(this.dataField);
+    }
 }

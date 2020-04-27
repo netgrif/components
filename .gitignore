@@ -8,6 +8,10 @@
 /bazel-out
 package-lock.json
 /docs
+/.scannerwork
+
+# netgrif schematics input file
+nae.json
 
 # dependencies
 /node_modules

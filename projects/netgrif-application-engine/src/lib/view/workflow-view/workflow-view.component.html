@@ -1,0 +1,16 @@
+<div class="workflow-container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+    <div>
+        <button mat-fab color="primary" class="upload-petri-net" (click)="importNet()">
+            <mat-icon>cloud_upload</mat-icon>
+        </button>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center" class="workflow-header">
+        <nae-header #header fxFlex="100" [type]="headerType"></nae-header>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center" class="workflow-panels-container">
+        <mat-accordion [multi]="true" fxFlex="100">
+            <nae-workflow-panel *ngFor="let workflow of workflows$ | async" [workflow]="workflow" [selectedHeaders$]="selectedHeaders$">
+            </nae-workflow-panel>
+        </mat-accordion>
+    </div>
+</div>

@@ -1,11 +1,12 @@
+
 import {
     chain,
     Rule,
     Tree,
     schematic
 } from '@angular-devkit/schematics';
-import {commitChangesToFile, getAppModule, getProjectInfo} from '../../utilityFunctions';
-import { addProviderToModule } from '../../modifiedLibraryFunctions';
+import {commitChangesToFile, getAppModule, getProjectInfo} from '../../utility-functions';
+import { addProviderToModule } from '../../modified-library-functions';
 import {insertImport} from '@schematics/angular/utility/ast-utils';
 
 export function initializeConfigurationService(): Rule {

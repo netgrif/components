@@ -13,21 +13,41 @@
             "description": "type of the created view",
             "type": "string",
             "enum": [
+                "emptyView",
                 "login",
-                "sidenav-toolbar",
                 "tabView",
                 "caseView",
-                "taskView"
+                "taskView",
+                "sidenavView",
+                "toolbarView",
+                "sidenavAndToolbarView",
+                "dashboard"
             ],
             "x-prompt": {
                 "type": "list",
                 "message": "select a view type",
                 "items": [
+                    "emptyView",
                     "login",
-                    "sidenav-toolbar",
                     "tabView",
                     "caseView",
-                    "taskView"
+                    "taskView",
+                    "sidenavView",
+                    "toolbarView",
+                    "sidenavAndToolbarView",
+                    "dashboard"
+                ]
+            }
+        },
+        "access": {
+            "description": "access type",
+            "type": "string",
+            "x-prompt": {
+                "type": "list",
+                "message": "select a access type",
+                "items": [
+                    "public",
+                    "private"
                 ]
             }
         }

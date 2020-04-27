@@ -1,0 +1,17 @@
+<div class="header-column-container"
+     fxLayout="row"
+     fxFlex="100">
+    <mat-form-field *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index" fxLayout="row" fxLayoutAlign=" center" fxFlex
+                    [fxHide.lt-lg]="i >= 4"
+                    [fxHide.lt-md]="i >= 3"
+                    [fxHide.lt-sm]="i >= 2">
+        <mat-label *ngIf="!header">Select new header</mat-label>
+        <mat-select [value]="header" (selectionChange)="headerColumnSelected(i, $event.value)">
+            <mat-optgroup *ngFor="let group of this.headerService.fieldsGroup" [label]="group.groupTitle">
+                <mat-option *ngFor="let field of group.fields" [value]="field">
+                    {{field.title}}
+                </mat-option>
+            </mat-optgroup>
+        </mat-select>
+    </mat-form-field>
+</div>

@@ -3,8 +3,8 @@ import {
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
-import {getRoutesJsonContent, Route} from '../viewUtilityFunctions';
-import {getProjectInfo} from '../../utilityFunctions';
+import {getRoutesJsonContent, Route} from '../view-utility-functions';
+import {getProjectInfo} from '../../utility-functions';
 import {AddRouteArguments} from '../create-view/schema';
 
 export function addRouteToRoutes(schematicArguments: AddRouteArguments): Rule {
@@ -12,7 +12,14 @@ export function addRouteToRoutes(schematicArguments: AddRouteArguments): Rule {
         const paths: string[] = schematicArguments.path.split('/');
         const data: Route[] = getRoutesJsonContent(tree, getProjectInfo(tree));
         (paths.length === 1) ? data.push(schematicArguments.routeObject) : updateRoutes(data, schematicArguments.routeObject, 0, paths);
-        tree.overwrite(getProjectInfo(tree).path + '/routes.json', JSON.stringify(data));
+
+        // overwrite fails if the file doesn't exist
+        const routesJsonPath = `${getProjectInfo(tree).path}/routes.json`;
+        if (tree.exists(routesJsonPath)) {
+            tree.overwrite(routesJsonPath, JSON.stringify(data, null, 4));
+        } else {
+            tree.create(routesJsonPath, JSON.stringify(data, null, 4));
+        }
     };
 }
 

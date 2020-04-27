@@ -1,10 +1,9 @@
 <mat-selection-list color="primary"
-                    [(ngModel)]="selected"
-                    [formControl]="validate"
-                    [disabled]="multichoiceField.disabled"
+                    [formControl]="formControlRef"
                     [required]="multichoiceField.behavior.required">
     <mat-label *ngIf="!showLargeLayout.value">{{multichoiceField.title}}<nae-required-label *ngIf="multichoiceField.behavior.required" [isIn]="true"></nae-required-label><br></mat-label>
     <mat-list-option *ngFor="let option of multichoiceField.choices" [value]="option.key">
         {{option.value}}
     </mat-list-option>
+    <mat-error *ngIf="!formControlRef.valid && formControlRef.touched">{{'This field is required!'}}</mat-error>
 </mat-selection-list>

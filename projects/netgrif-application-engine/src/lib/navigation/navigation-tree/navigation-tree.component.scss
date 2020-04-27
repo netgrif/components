@@ -1,0 +1,38 @@
+.nested-tree-invisible {
+    display: none;
+}
+
+.darker-background {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.bottom-shadow {
+    -webkit-box-shadow: 0 2px 4px -4px rgba(0, 0, 0, 0.2), 0px 4px 5px -3px rgba(0, 0, 0, 0.14), 0px 6px 10px -5px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 4px -4px rgba(0, 0, 0, 0.2), 0px 4px 5px -3px rgba(0, 0, 0, 0.14), 0px 6px 10px -5px rgba(0, 0, 0, 0.12);
+}
+
+.tree-dimension {
+    width: 200px;
+}
+
+.tree-node {
+    cursor: pointer;
+    padding: 4px;
+
+    mat-icon.tree-node-icon {
+        line-height: 40px;
+        height: 40px;
+        width: 24px;
+        margin-right: 4px;
+    }
+
+    .margin-component {
+        width: 8px;
+        margin-right: 4px;
+    }
+}
+
+.nested-tree-expansion-icon {
+    width: 24px;
+}
+

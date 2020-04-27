@@ -4,11 +4,30 @@
                        [apiModuleImport]="'SideMenuModule'"></nae-app-documentation>
 
 <ng-template #SideMenuExample>
-    <nae-side-menu-container>
-        <div class="padding-30px">
-            <button mat-button (click)="toggleSideMenu()">Open Side Menu</button>
-        </div>
+    <h1>My content SideMenu</h1>
+    <div class="padding-30px">
+        <button mat-button (click)="toggleSideMenu()">Open Side Menu</button>
+    </div>
+    <ng-template #templatePortal>
+        <p>Side menu content</p>
+    </ng-template>
 
-        <ng-template #templatePortal></ng-template>
-    </nae-side-menu-container>
+    <mat-divider></mat-divider>
+
+    <h1>New Case SideMenu</h1>
+    <div class="padding-30px">
+        <button mat-button (click)="toggleCaseSideMenu()">Open Case Side Menu</button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h1>User Assign SideMenu</h1>
+    <div class="padding-30px">
+        <button mat-button (click)="toggleUserSideMenu()">Open Side Menu</button>
+    </div>
+
+    <h1>Filter Selector SideMenu</h1>
+    <div class="padding-30px">
+        <button mat-button (click)="toggleFilterSideMenu()">Open Side Menu</button>
+    </div>
 </ng-template>

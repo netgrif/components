@@ -1,43 +1,136 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FileField} from './models/file-field';
 import {FileFieldService} from './services/file-field.service';
-import {FilesUploadComponent} from '../../side-menu/files-upload/files-upload.component';
-import {SideMenuService, SideMenuWidth} from '../../side-menu/services/side-menu.service';
+import {FilesUploadComponent} from '../../side-menu/content-components/files-upload/files-upload.component';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 
+/**
+ * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
+ */
 @Component({
     selector: 'nae-file-field',
     templateUrl: './file-field.component.html',
-    styleUrls: ['./file-field.component.scss']
+    styleUrls: ['./file-field.component.scss'],
+    providers: [FileFieldService]
 })
-export class FileFieldComponent implements OnInit, AfterViewInit {
-
+export class FileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit {
+    /**
+     * Decisions between choose one or multiple files.
+     */
     public multiple: string;
+    /**
+     * Keep display name.
+     */
     public name: string;
 
-    @Input() public fileField: FileField;
+    /**
+     * Task mongo string id is binding property from parent component.
+     */
+    @Input() public taskId: string;
+    /**
+     * Binding property as instance from parent component.
+     */
+    @Input() public dataField: FileField;
+    /**
+     * File picker element reference from component template that is initialized after view init.
+     */
     @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
+    /**
+     * Image field view element reference from component template that is initialized after view init.
+     */
+    @ViewChild('imageEl') public imageEl: ElementRef<HTMLImageElement>;
 
+    /**
+     * Only inject services.
+     * @param _fileFieldService Handles communication between components
+     * @param _sideMenuService Open right side menu
+     * @param _taskResourceService Provides to download a file from the backend
+     */
     constructor(private _fileFieldService: FileFieldService,
-                private _sideMenuService: SideMenuService) {
+                private _sideMenuService: SideMenuService,
+                private _taskResourceService: TaskResourceService) {
+        super();
     }
 
+    /**
+     * Set :
+     *  - File field to [FileFieldService]{@link FileFieldService}
+     *  - Choice between one or multiple files
+     *  - Display name
+     */
     ngOnInit() {
-        this._fileFieldService.fileField = this.fileField;
-        this.multiple = this.fileField.maxUploadFiles > 1 ? 'multiple' : undefined;
-        this.name = this.fileField.value ? this.fileField.value.name : this.fileField.placeholder;
+        super.ngOnInit();
+        this._fileFieldService.fileField = this.dataField;
+        this.multiple = this.dataField.maxUploadFiles > 1 ? 'multiple' : undefined;
+        this.name = this.constructDisplayName();
     }
 
+    /**
+     * Set file picker and image elements to [FileFieldService]{@link FileFieldService}.
+     *
+     * Initialize file image.
+     */
     ngAfterViewInit(): void {
         this._fileFieldService.fileUploadEl = this.fileUploadEl;
+        this._fileFieldService.imageEl = this.imageEl;
+        this.initFileFieldImage();
     }
 
+    /**
+     * Call after click on file field.
+     *
+     * If file field has no file uploaded
+     * [FilesUploadComponent]{@link FilesUploadComponent} via [SideMenu]{@link SideMenuService} opens.
+     *
+     * Otherwise opens a file picker from which the user can select files.
+     */
     public onFileUpload() {
         if (this._fileFieldService.allFiles.length !== 0) {
-            this._sideMenuService.open(FilesUploadComponent, SideMenuWidth.LARGE);
+            this._sideMenuService.open(FilesUploadComponent, SideMenuSize.LARGE, this._fileFieldService);
         } else {
             this._fileFieldService.fileUpload();
-            this._sideMenuService.open(FilesUploadComponent, SideMenuWidth.LARGE);
         }
+    }
+
+    /**
+     * Construct display name.
+     */
+    private constructDisplayName(): string {
+        if (this.dataField.value !== undefined) {
+            return this.dataField.value.map(file => file.name).join(', ');
+        } else {
+            return this.dataField.placeholder;
+        }
+    }
+
+    /**
+     * Initialize file field image from backend if it is image type.
+     */
+    private initFileFieldImage() {
+        // this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId)
+        //     .subscribe(fileBlob => {
+        //         const file: File = new File([fileBlob], this.name);
+        //         if (!file.type.includes('image')) {
+        //             return;
+        //         }
+        //         this._fileFieldService.allFiles = [];
+        //         this._fileFieldService.allFiles.push(this._fileFieldService.createFileUploadModel(file, true));
+        //
+        //         // TODO: 11.4.2020 unify image element assignment URL
+        //         //  for blob or file type as arguments to setImageSourceUrl function in FileFieldService
+        //         //  this._fileFieldService.setImageSourceUrl(fileBlob)
+        //         const reader = new FileReader();
+        //         reader.readAsDataURL(fileBlob);
+        //         reader.onloadend = () => {
+        //             if (typeof reader.result === 'string') {
+        //                 this.imageEl.nativeElement.src = reader.result;
+        //                 this.imageEl.nativeElement.alt = this.name;
+        //             }
+        //         };
+        //     });
     }
 
 }

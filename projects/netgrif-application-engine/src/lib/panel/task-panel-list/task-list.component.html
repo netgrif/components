@@ -1,0 +1,15 @@
+<mat-accordion multi="true" *ngIf="taskPanels.length !== 0">
+    <nae-task-panel *ngFor="let taskPanel of taskPanels"
+                    [taskPanelData]="taskPanel"
+                    [selectedHeaders$]="selectedHeaders$">
+    </nae-task-panel>
+</mat-accordion>
+
+<div *ngIf="!loading && taskPanels.length === 0" fxLayout="column" fxLayoutAlign="center center">
+    <mat-icon>check_box</mat-icon>
+    <span class="font-size-20">{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+</div>
+
+<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner color="primary"></mat-spinner>
+</div>

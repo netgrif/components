@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsCreateViewPromptAboutSidenav",
+    "title": "Create new View with sidenav",
+    "type": "object",
+    "properties": {
+        "user": {
+            "type": "boolean",
+            "x-prompt": "Would you like the user extension in sidenav?"
+        },
+        "quickPanel": {
+            "type": "boolean",
+            "x-prompt": "Would you like the quickPanel extension in sidenav?"
+        },
+        "navigation": {
+            "type": "boolean",
+            "x-prompt": "Would you like the navigation extension in sidenav?"
+        }
+    },
+    "required": [
+        "user",
+        "quickPanel",
+        "navigation"
+    ]
+}

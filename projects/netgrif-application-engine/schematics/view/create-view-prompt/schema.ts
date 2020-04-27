@@ -1,9 +1,8 @@
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
-import {Route} from '../viewUtilityFunctions';
 
 export interface CreateViewArguments {
     path: string | undefined;
-    viewType: NaeRoute['type'] | undefined;
+    viewType: NaeRoute['layout']['name'] | undefined;
     layoutParams?: NaeRoute['layout']['params'];
-    _routesMap: Map<string, Route>;
+    access?: { [k: string]: any; } | ('public' | 'private');
 }

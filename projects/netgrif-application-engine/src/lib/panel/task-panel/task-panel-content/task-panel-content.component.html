@@ -1,42 +1,58 @@
-<mat-grid-list cols="4" rowHeight="105px">
-    <mat-grid-tile *ngFor="let item of resources"
-                   class="border"
-                   [colspan]="item.layout.cols"
-                   [rowspan]="item.layout.rows"
-                   [ngSwitch]="item.type">
+<div *ngIf="!loading && dataSource.length !== 0">
+    <mat-grid-list [cols]="formCols" rowHeight="105px">
+        <mat-grid-tile *ngFor="let item of dataSource"
+                       class="border"
+                       [colspan]="item.layout.cols"
+                       [rowspan]="item.layout.rows"
+                       [ngSwitch]="item.type">
 
-            <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width" [booleanField]="item.item">
-            </nae-boolean-field>
+                <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item">
+                </nae-boolean-field>
 
-            <nae-text-field *ngSwitchCase="'text'" class="full-width" [textField]="item.item">
-            </nae-text-field>
+                <nae-text-field *ngSwitchCase="'text'" class="full-width-auto" [dataField]="item.item">
+                </nae-text-field>
 
-            <nae-number-field *ngSwitchCase="'number'" class="full-width" [numberField]="item.item">
-            </nae-number-field>
+                <nae-number-field *ngSwitchCase="'number'" class="full-width-auto" [dataField]="item.item">
+                </nae-number-field>
 
-            <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width" [enumerationField]="item.item">
-            </nae-enumeration-field>
+                <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width-auto" [dataField]="item.item">
+                </nae-enumeration-field>
 
-            <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width" [multichoiceField]="item.item">
-            </nae-multichoice-field>
+                <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width-auto" [dataField]="item.item">
+                </nae-multichoice-field>
 
-            <nae-date-field *ngSwitchCase="'date'" class="full-width" [dateField]="item.item">
-            </nae-date-field>
+                <nae-date-field *ngSwitchCase="'date'" class="full-width-auto" [dataField]="item.item">
+                </nae-date-field>
 
-            <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width" [dateTimeField]="item.item">
-            </nae-date-time-field>
+                <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item">
+                </nae-date-time-field>
 
-            <nae-file-field *ngSwitchCase="'file'" class="full-width" [fileField]="item.item">
-            </nae-file-field>
+                <nae-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item">
+                </nae-file-field>
 
-            <nae-user-field *ngSwitchCase="'user'" class="full-width" [userField]="item.item">
-            </nae-user-field>
+                <nae-user-field *ngSwitchCase="'user'" class="full-width-auto" [dataField]="item.item">
+                </nae-user-field>
 
-            <nae-button-field *ngSwitchCase="'button'" class="full-width" [buttonField]="item.item" >
-            </nae-button-field>
+                <nae-button-field *ngSwitchCase="'button'" class="full-width-auto" [dataField]="item.item" >
+                </nae-button-field>
 
-            <div *ngSwitchCase="'blank'"></div>
+                <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width-auto">
+                    <div fxFlex="20" class="line-datagroup"></div>
+                    <span class="margin-default">{{item.title}}</span>
+                    <div fxFlex class="line-datagroup"></div>
+                </div>
 
-            <span *ngSwitchDefault>{{item.type}}</span>
-    </mat-grid-tile>
-</mat-grid-list>
+                <div *ngSwitchCase="'blank'"></div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+
+<div *ngIf="!loading && dataSource.length === 0" fxLayout="column" fxLayoutAlign="center center">
+    <mat-icon>block</mat-icon>
+    <span>{{ 'tasks.view.noData' | translate}}</span>
+</div>
+
+<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner color="primary"></mat-spinner>
+</div>
+

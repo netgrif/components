@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+@mixin data-field-component() {
+    .editor-preview > h1 {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .editor-preview > h2 {
+        border-bottom: 1px solid #eee;
+    }
+}
+

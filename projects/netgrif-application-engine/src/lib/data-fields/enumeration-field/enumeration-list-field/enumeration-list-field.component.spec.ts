@@ -7,6 +7,7 @@ import {EnumerationField} from '../models/enumeration-field';
 import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormControl} from '@angular/forms';
 
 describe('EnumerationListFieldComponent', () => {
     let component: EnumerationListFieldComponent;
@@ -32,15 +33,17 @@ describe('EnumerationListFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-enumeration-list-field [showLargeLayout]="label" [enumerationField]="field"></nae-enumeration-list-field>'
+    template: '<nae-enumeration-list-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</nae-enumeration-list-field>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
-    field = new EnumerationField('', '', {key: '', value: ''}, [], {
+    field = new EnumerationField('', '', '', [], {
         required: true,
         optional: true,
         visible: true,
         editable: true,
         hidden: true
     });
+    form = new FormControl();
 }

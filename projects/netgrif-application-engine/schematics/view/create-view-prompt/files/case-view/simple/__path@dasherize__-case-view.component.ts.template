@@ -1,0 +1,32 @@
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {
+    HeaderComponent,
+    AbstractCaseView,
+    CaseViewService,
+    Case,
+    SimpleFilter,
+    FilterType,
+} from '@netgrif/application-engine';
+
+@Component({
+  selector: '<%= prefix %>-<%= dasherize(path) %>-case-view',
+  templateUrl: './<%= dasherize(path) %>-case-view.component.html',
+  styleUrls: ['./<%= dasherize(path) %>-case-view.component.scss'],
+  providers: [CaseViewService],
+})
+export class <%= classify(path) %>CaseViewComponent extends AbstractCaseView implements AfterViewInit {
+
+    @ViewChild('header') public caseHeaderComponent: HeaderComponent;
+
+    constructor(caseViewService: CaseViewService) {
+        super(caseViewService, new SimpleFilter('', FilterType.CASE, {}));
+        // TODO implement allowedNets
+    }
+
+    ngAfterViewInit(): void {
+        this.initializeHeader(this.caseHeaderComponent);
+    }
+
+    public handleCaseClick(clickedCase: Case): void {}
+
+}
