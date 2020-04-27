@@ -6,9 +6,24 @@ import {DataField} from '../../data-fields/models/abstract-data-field';
  */
 export interface DataGroupsResource {
     fields: Fields;
+    /**
+     * Name datagroup
+     */
     title: string;
+    /**
+     * Desing alignment
+     * ***Example:*** start
+     */
     alignment: string;
+    /**
+     * Desing stretch
+     *
+     * ***Example:*** true
+     */
     stretch: boolean;
+    /**
+     * Desing
+     */
     cols?: number;
 }
 
@@ -16,9 +31,27 @@ export interface DataGroupsResource {
  * Object from Backend
  */
 export interface DataGroup {
+    /**
+     * Array [DataField]{@link DataField}
+     */
     fields: Array<DataField<any>>;
+    /**
+     * Name datagroup
+     */
     title: string;
+    /**
+     * Desing alignment
+     * ***Example:*** start
+     */
     alignment: string;
+    /**
+     * Desing stretch
+     *
+     * ***Example:*** true
+     */
     stretch: boolean;
+    /**
+     * Desing
+     */
     cols?: number;
 }

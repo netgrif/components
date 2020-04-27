@@ -6,7 +6,16 @@ import {Link} from './link';
  * Answer error or success
  */
 export interface MessageResource {
+    /**
+     * Error message
+     */
     error?: string;
+    /**
+     * @ignore
+     */
     links?: Link;
+    /**
+     * Success Message
+     */
     success?: string;
 }

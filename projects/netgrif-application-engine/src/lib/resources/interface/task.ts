@@ -6,20 +6,52 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-pane
  * Object from Backend
  */
 export interface Task {
+    /**
+     * Mongo ID Case
+     *
+     * ***Example:*** 5e904fd80a975a7f87b2c2fd
+     */
     caseId: string;
+    /**
+     * Case ID- mongo ID
+     *
+     * ***Example:*** 5e904fd80a975a7f87b2c2fd
+     */
     transitionId: string;
     title: string;
     caseColor: string;
     caseTitle: string;
+    /**
+     * See [UserTask]{@link UserTask#}
+     */
     user: UserTask;
+    /**
+     * ***Example:***
+     *
+     *    "5e43f6a30a975a7f87551385": {
+     *      "perform": true
+     *    }
+     */
     roles: object;
     startDate: Array<number>;
     finishDate: Array<number>;
+    /**
+     * See [AssignPolicy]{@link AssignPolicy#}
+     */
     assignPolicy: AssignPolicy;
+    /**
+     * See [DataFocusPolicy]{@link DataFocusPolicy#}
+     */
     dataFocusPolicy: DataFocusPolicy;
+    /**
+     * See [FinishPolicy]{@link FinishPolicy#}
+     */
     finishPolicy: FinishPolicy;
     stringId: string;
     cols: number;
+    /**
+     * Array [DataGroup]{@link DataGroup#}
+     */
     dataGroups: DataGroup[];
     _links: object;
     dataSize?: number;

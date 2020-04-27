@@ -11,23 +11,59 @@ export interface Fields {
  * Object from Backend
  */
 export interface TypeLocalisadField {
+    /**
+     * Array [LocalisedBooleanFields]{@link LocalisedBooleanFields}
+     */
     localisedBooleanFields?: Array<LocalisedBooleanFields>;
+    /**
+     * Array [LocalisedTextFields]{@link LocalisedTextFields}
+     */
     localisedTextFields?: Array<LocalisedTextFields>;
+    /**
+     * Array [LocalisedNumberFields]{@link LocalisedNumberFields}
+     */
     localisedNumberFields?: Array<LocalisedNumberFields>;
+    /**
+     * Array [LocalisedEnumerationFields]{@link LocalisedEnumerationFields}
+     */
     localisedEnumerationFields?: Array<LocalisedEnumerationFields>;
+    /**
+     * Array [LocalisedMultichoiceFields]{@link LocalisedMultichoiceFields}
+     */
     localisedMultichoiceFields?: Array<LocalisedMultichoiceFields>;
+    /**
+     * Array [LocalisedFields]{@link LocalisedFields}
+     */
     localisedFields?: Array<LocalisedFields>;
+    /**
+     * Array [LocalisedUserFields]{@link LocalisedUserFields}
+     */
     localisedUserFields?: Array<LocalisedUserFields>;
+    /**
+     * Array [LocalisedDateFields]{@link LocalisedDateFields}
+     */
     localisedDateFields?: Array<LocalisedDateFields>;
 
 }
 /**
- * Object from Backend
+ * Boolean Field
  */
 export interface LocalisedBooleanFields {
+    /**
+     * ID
+     */
     stringId: string;
+    /**
+     * Type of field
+     */
     type: string;
+    /**
+     * Name
+     */
     name: string;
+    /**
+     * [Behavior]{@link Behavior}
+     */
     behavior: Behavior;
     value: boolean;
     order: number;
@@ -35,7 +71,7 @@ export interface LocalisedBooleanFields {
     defaultValue?: boolean;
 }
 /**
- * Object from Backend
+ * Text Field
  */
 export interface LocalisedTextFields {
     stringId: string;
@@ -47,7 +83,7 @@ export interface LocalisedTextFields {
     subType: string;
 }
 /**
- * Object from Backend
+ * Number Field
  */
 export interface LocalisedNumberFields {
     stringId: string;
@@ -62,7 +98,7 @@ export interface LocalisedNumberFields {
     defaultValue?: number;
 }
 /**
- * Object from Backend
+ * Enumeration Field
  */
 export interface LocalisedEnumerationFields {
     stringId: string;
@@ -75,7 +111,7 @@ export interface LocalisedEnumerationFields {
     defaultValue?: string;
 }
 /**
- * Object from Backend
+ * Multichoice Field
  */
 export interface LocalisedMultichoiceFields {
     stringId: string;
@@ -90,7 +126,7 @@ export interface LocalisedMultichoiceFields {
     defaultValue?: Array<string> | string;
 }
 /**
- * Object from Backend
+ * Date Field
  */
 export interface LocalisedDateFields {
     stringId: string;
@@ -106,7 +142,7 @@ export interface LocalisedDateFields {
     validationErrors?: ValidationErrors;
 }
 /**
- * Object from Backend
+ * Field
  */
 export interface LocalisedFields {
     stringId: string;
@@ -119,7 +155,7 @@ export interface LocalisedFields {
     order: number;
 }
 /**
- * Object from Backend
+ * User Field
  */
 export interface LocalisedUserFields {
     stringId: string;
