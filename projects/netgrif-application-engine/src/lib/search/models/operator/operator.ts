@@ -3,6 +3,13 @@ import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {WrapResult} from '../wrap-result';
 
+/**
+ * Represents the low level abstraction of query generation that is responsible for the creation of queries themselves.
+ *
+ * Operators are ment to be stateless and held as singleton instances, as they can be shared without any issues.
+ * This library uses the {@link OperatorService} to store the singleton instances, but you can use your own solution,
+ * or instantiate them multiple times if you prefer.
+ */
 export abstract class Operator {
 
     /**

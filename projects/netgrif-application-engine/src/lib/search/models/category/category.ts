@@ -5,6 +5,8 @@ import {Query} from '../query/query';
 /**
  * THe top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
  * Holds state information about the query construction process.
+ *
+ * As opposed to {@link Operator}s Categories are not stateless and shouldn't be shared between multiple search GUI instances.
  */
 export abstract class Category {
 
