@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
+import {Observable, throwError} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 import {PetriNet} from '../interface/petri-net';
-import {Params, ResourceProvider} from '../resource-provider.service';
+import {Params, ProgressType, ProviderProgress, ResourceProvider} from '../resource-provider.service';
 import {changeType, getResourceAddress} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
-import {HttpEvent, HttpEventType, HttpParams} from '@angular/common/http';
+import {HttpEventType, HttpParams} from '@angular/common/http';
 import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
 import {Net} from '../../process/net';
@@ -109,15 +109,19 @@ export class PetriNetResourceService {
      * POST
      * {{baseUrl}}/api/petrinet/import
      */
-    public importPetriNet(body: FormData, params?: Params): Observable<HttpEvent<MessageResource>> {
-        return this.provider.postWithEvent$('petrinet/import', this.SERVER_URL, body, params).pipe(
-            switchMap(event => { // TODO more fancy logic for progress and response parsing
-                if (event.type === HttpEventType.UploadProgress) {
-                    return of(event);
-                } else {
-                    return of(event);
+    public importPetriNet(body: FormData, params?: Params): Observable<ProviderProgress | MessageResource> {
+        return this.provider.postWithEvent$<MessageResource>('petrinet/import', this.SERVER_URL, body, params).pipe(
+            map(event => {
+                switch (event.type) {
+                    case HttpEventType.UploadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return ResourceProvider.processMessageResource(event);
+                    default:
+                        return undefined;
                 }
-            })
+            }),
+            filter(value => !!value)
         );
     }
 

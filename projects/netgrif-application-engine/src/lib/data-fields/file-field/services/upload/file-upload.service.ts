@@ -56,36 +56,36 @@ export class FileUploadService {
         fd.append('file', file);
 
         fileUploadModel.inProgress = true;
-        fileUploadModel.sub = this._taskResourceService.uploadFile(this.taskId, fileUploadModel.stringId, fd)
-            .pipe(
-                map(event => {
-                    switch (event.type) {
-                        case HttpEventType.UploadProgress:
-                            fileUploadModel.progress = Math.round(event.loaded * 100 / event.total);
-                            break;
-                        case HttpEventType.Response:
-                            return event;
-                    }
-                }),
-                catchError((error) => {
-                    fileUploadModel.inProgress = false;
-                    fileUploadModel.canRetry = true;
-                    this._logger.error(file.name + 'upload failed: ' + error);
-                    this._snackBarService.openErrorSnackBar(file.name + ' upload failed',
-                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
-                    return of(`${file.name} upload failed.`);
-                })
-            ).subscribe(
-                (event: any) => {
-                    if (typeof (event) === 'object') {
-                        fileUploadModel.successfullyUploaded = true;
-                        fileUploadModel.state = undefined;
-                        this._logger.info(file.name + ' has been successfully uploaded');
-                        this._snackBarService.openInfoSnackBar(file.name + ' upload successful',
-                            SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
-                        this._complete.emit(event.body);
-                    }
-                }
-            );
+        // fileUploadModel.sub = this._taskResourceService.uploadFile(this.taskId, fileUploadModel.stringId, fd)
+        //     .pipe(
+        //         map(event => {
+        //             switch (event.type) {
+        //                 case HttpEventType.UploadProgress:
+        //                     fileUploadModel.progress = Math.round(event.loaded * 100 / event.total);
+        //                     break;
+        //                 case HttpEventType.Response:
+        //                     return event;
+        //             }
+        //         }),
+        //         catchError((error) => {
+        //             fileUploadModel.inProgress = false;
+        //             fileUploadModel.canRetry = true;
+        //             this._logger.error(file.name + 'upload failed: ' + error);
+        //             this._snackBarService.openErrorSnackBar(file.name + ' upload failed',
+        //                 SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+        //             return of(`${file.name} upload failed.`);
+        //         })
+        //     ).subscribe(
+        //         (event: any) => {
+        //             if (typeof (event) === 'object') {
+        //                 fileUploadModel.successfullyUploaded = true;
+        //                 fileUploadModel.state = undefined;
+        //                 this._logger.info(file.name + ' has been successfully uploaded');
+        //                 this._snackBarService.openInfoSnackBar(file.name + ' upload successful',
+        //                     SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+        //                 this._complete.emit(event.body);
+        //             }
+        //         }
+        //     );
     }
 }

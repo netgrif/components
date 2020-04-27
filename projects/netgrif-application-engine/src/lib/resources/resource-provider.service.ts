@@ -1,6 +1,7 @@
-import {HttpClient, HttpEvent, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpProgressEvent, HttpResponse} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
 import {Injectable} from '@angular/core';
+import {MessageResource} from './interface/message-resource';
 
 
 export type Headers =
@@ -10,11 +11,23 @@ export type Headers =
 
 export type Params = HttpParams | ObjectParams;
 
+export type ResponseType = 'json' | 'hal';
+
 export interface ObjectParams {
     [param: string]: string | string[];
 }
 
-export type ResponseType = 'json' | 'hal';
+export enum ProgressType {
+    UPLOAD = 'upload',
+    DOWNLOAD = 'download'
+}
+
+export interface ProviderProgress {
+    type: ProgressType;
+    loaded: number;
+    total?: number;
+    progress?: number;
+}
 
 
 export abstract class AbstractResourceProvider {
@@ -91,6 +104,24 @@ export abstract class AbstractResourceProvider {
             }
         });
         return result;
+    }
+
+    public static getProgress(event: HttpProgressEvent): ProviderProgress {
+        return {
+            type: event.type === HttpEventType.UploadProgress ? ProgressType.UPLOAD : ProgressType.DOWNLOAD,
+            loaded: event.loaded,
+            total: event.total,
+            progress: event.loaded && event.total ? Math.round(event.loaded * 100 / event.total) : undefined
+        };
+    }
+
+    public static processMessageResource(response: MessageResource | HttpResponse<MessageResource>): MessageResource {
+        const resource: MessageResource = (response as HttpResponse<MessageResource>).type === HttpEventType.Response ?
+            (response as HttpResponse<MessageResource>).body : response as MessageResource;
+        if (!!resource && resource.error) {
+            throw new Error(resource.error);
+        }
+        return resource;
     }
 
     public get$<T>(endpoint?: string, url ?: string, params ?: Params, headers ?: Headers,
