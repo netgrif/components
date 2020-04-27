@@ -1,25 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateviewsEmptyViewComponent } from './createviews-empty-view.component';
+import { <%= classify(path) %>EmptyViewComponent } from './<%= dasherize(path) %>-empty-view.component';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
-describe('CreateviewsEmptyViewComponent', () => {
-   let component: CreateviewsEmptyViewComponent;
-   let fixture: ComponentFixture<CreateviewsEmptyViewComponent>;
+describe('<%= classify(path) %>EmptyViewComponent', () => {
+   let component: <%= classify(path) %>EmptyViewComponent;
+       let fixture: ComponentFixture<<%= classify(path) %>EmptyViewComponent>;
 
-   beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        declarations: [ CreateviewsEmptyViewComponent ]
-      })
-      .compileComponents();
-    }));
+       beforeEach(async(() => {
+           TestBed.configureTestingModule({
+               declarations: [<%= classify(path) %>EmptyViewComponent],
+               schemas: [CUSTOM_ELEMENTS_SCHEMA]
+           }).compileComponents();
+       }));
 
-   beforeEach(() => {
-      fixture = TestBed.createComponent(CreateviewsEmptyViewComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
+       beforeEach(() => {
+           fixture = TestBed.createComponent(<%= classify(path) %>EmptyViewComponent);
+           component = fixture.componentInstance;
+           fixture.detectChanges();
+       });
 
-   it('should create', () => {
-      expect(component).toBeTruthy();
-    });
+       it('should create', () => {
+           expect(component).toBeTruthy();
+       });
 });

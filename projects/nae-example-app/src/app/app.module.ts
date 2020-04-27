@@ -31,7 +31,8 @@ import {
     LoginFormModule,
     ForgottenPasswordFormModule,
     RegistrationFormModule,
-    SignUpModule
+    SignUpModule,
+    SideMenuContentModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -64,7 +65,6 @@ import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/filter-repository-example.component';
-
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -134,6 +134,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         LoginFormModule,
         ForgottenPasswordFormModule,
         RegistrationFormModule,
+        SideMenuContentModule
     ],
     entryComponents: [
         FilesUploadComponent,
@@ -146,7 +147,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabbedCaseViewComponent,
         TabbedTaskViewComponent,
         ImportNetComponent,
-        FilterSelectorComponent,
+        FilterSelectorComponent
     ],
     providers: [{
         provide: ConfigurationService,
