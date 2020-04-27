@@ -20,7 +20,7 @@ import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {map} from 'rxjs/operators';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource-service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {User} from '../../resources/interface/user';
 
 describe('TaskPanelComponent', () => {

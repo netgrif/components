@@ -8,7 +8,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {SideMenuImportNetModule} from './side-menu-import-net.module';
 import {ImportNetComponent} from './import-net.component';
-import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource-service';
+import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 
 describe('ImportNetComponent', () => {
     let component: ImportNetComponent;

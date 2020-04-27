@@ -7,7 +7,7 @@ import {SnackBarService} from '../../../snack-bar/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource-service';
+import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {ProcessService} from '../../../process/process.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SideMenuInjectionData} from '../../models/side-menu-injection-data';

@@ -5,7 +5,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ProcessService} from './process.service';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
-import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource-service';
+import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource.service';
 import {of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LoggerService} from '../logger/services/logger.service';

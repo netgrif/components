@@ -4,7 +4,7 @@ import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource-service';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 import {SnackBarService} from '../../../snack-bar/snack-bar.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 

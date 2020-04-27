@@ -2,7 +2,7 @@ import {inject, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {PetriNetResourceService} from './petri-net-resource-service';
+import {PetriNetResourceService} from './petri-net-resource.service';
 
 describe('PetriNetResourceService', () => {
     let service: PetriNetResourceService;
