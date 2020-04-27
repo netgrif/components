@@ -48,13 +48,12 @@ describe('ImportNetComponent', () => {
     it('should test functions', () => {
         component.onProcessFileChosen();
         component.retryFile({
-            data: new File([], 'name'), state: 'in', stringId: '', downloading: false,
-            inProgress: false, progress: 0, canRetry: false, canCancel: true, successfullyUploaded: false
+            data: new File([], 'name'),  stringId: '', downloading: false,
+            inProgress: false, progress: 0, completed: true,
         });
         component.cancelFile({
-            data: new File([], 'name'), state: 'in', stringId: '', downloading: false,
-            inProgress: false, progress: 0, canRetry: false, canCancel: true, successfullyUploaded: false,
-            sub: new Subject().subscribe()
+            data: new File([], 'name'), stringId: '', downloading: false,
+            inProgress: false, progress: 0, completed: true, sub: new Subject().subscribe()
         });
         component.close();
         expect(sideMenuCloseSpy).toHaveBeenCalled();

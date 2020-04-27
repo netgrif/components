@@ -72,12 +72,9 @@ class TestWrapperComponent {
         this.file = {
             stringId: 'string',
             data: this.data,
-            state: 'string',
             inProgress: false,
             progress: 80,
-            canRetry: false,
-            canCancel: false,
-            successfullyUploaded: false,
+            completed: false,
             downloading: false,
         };
     }
