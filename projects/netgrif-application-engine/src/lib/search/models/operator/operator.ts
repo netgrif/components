@@ -33,7 +33,7 @@ export abstract class Operator {
      */
     private readonly _operatorSymbols: string;
 
-    protected constructor(numberOfOperands: number, operatorSymbols: string) {
+    protected constructor(numberOfOperands: number, operatorSymbols: string = '') {
         this._numberOfOperands = numberOfOperands;
         this._operatorSymbols = operatorSymbols;
     }

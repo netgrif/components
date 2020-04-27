@@ -1,0 +1,16 @@
+import {Operator} from './operator';
+import {Query} from '../query/query';
+
+export class Substring extends Operator {
+    constructor() {
+        super(1);
+    }
+
+    createQuery(elasticKeywords: Array<string>, args: Array<string>): Query {
+        // TODO IMPROVEMENT 27.4.2020 - we could use regular expressions to search for substrings which would solve the unintuitive
+        //  behavior that occurs when we search for strings that contain spaces. We need to escape the input string in a special way
+        //  if we choose to do this
+        const escapedValue = Operator.escapeInput(args[0]).value;
+        return Operator.forEachKeyword(elasticKeywords, keyword => new Query(`${keyword}:*${escapedValue}*`));
+    }
+}

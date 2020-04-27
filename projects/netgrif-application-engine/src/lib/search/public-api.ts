@@ -9,8 +9,10 @@ export * from './models/predicate/elementary-predicate';
 export * from './models/predicate/clause-predicate';
 
 export * from './models/operator/operator';
+export * from './models/operator/substring';
 
 export * from './models/category/category';
+export * from './models/category/case/case-title';
 
 /* Interfaces */
 export * from './models/escape-result';
