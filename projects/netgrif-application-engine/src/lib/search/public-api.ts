@@ -10,6 +10,8 @@ export * from './models/predicate/clause-predicate';
 
 export * from './models/operator/operator';
 
+export * from './models/category/category';
+
 /* Interfaces */
 export * from './models/escape-result';
 export * from './models/wrap-result';
