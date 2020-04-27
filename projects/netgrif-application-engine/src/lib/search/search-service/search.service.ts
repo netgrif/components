@@ -14,7 +14,7 @@ import {MergeOperator} from '../../filter/models/merge-operator';
 export class SearchService {
 
     /**
-     * Filter that is applied to the view, even if the user doesn't search anything.
+     * {@link Filter} that is applied to the view, even if the user doesn't search anything.
      */
     protected _baseFilter: Filter;
     /**
@@ -22,9 +22,13 @@ export class SearchService {
      */
     protected _rootPredicate: ClausePredicate;
     /**
-     * Holds the Filter that is currently being applied to the view.
+     * Holds the {@link Filter} that is currently being applied to the view.
      */
     protected _activeFilter: BehaviorSubject<Filter>;
+    /**
+     * Holds the full text {@link Filter} if set, `undefined` otherwise.
+     */
+    protected _fullTextFilter: SimpleFilter | undefined;
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
@@ -71,12 +75,41 @@ export class SearchService {
     }
 
     /**
-     * Reads the current query from the predicate tree, combines it with the base Filter and updates the active Filter.
+     * Adds a {@link Filter} with the [fullText]{@link CaseSearchRequestBody#fullText} attribute set to the provided value.
+     * If full text filter is already set, it will be replaced.
+     * @param searchedSubstring value that should be searched on all full text fields
+     */
+    public addFullTextFilter(searchedSubstring: string): void {
+        this._fullTextFilter = new SimpleFilter('', this._baseFilter.type, {fullText: searchedSubstring});
+        this.updateActiveFilter();
+    }
+
+    /**
+     * Clears the full text filter.
+     */
+    public removeFullTextFilter(): void {
+        this._fullTextFilter = undefined;
+        this.updateActiveFilter();
+    }
+
+    /**
+     * Reads the current query from the predicate tree, combines it with the base Filter and full text Filter (if set)
+     * and updates the active Filter.
      */
     protected updateActiveFilter(): void {
+        let additionalFilter: Filter;
         if (!this._rootPredicate.query.isEmpty) {
-            const predicateFilter = new SimpleFilter('', this._baseFilter.type, {query: this._rootPredicate.query.value});
-            this._activeFilter.next(this._baseFilter.merge(predicateFilter, MergeOperator.AND));
+            additionalFilter = new SimpleFilter('', this._baseFilter.type, {query: this._rootPredicate.query.value});
+        }
+        if (this._fullTextFilter) {
+            if (additionalFilter) {
+                additionalFilter = additionalFilter.merge(this._fullTextFilter, MergeOperator.AND);
+            } else {
+                additionalFilter = this._fullTextFilter;
+            }
+        }
+        if (additionalFilter) {
+            this._activeFilter.next(this._baseFilter.merge(additionalFilter, MergeOperator.AND));
         } else {
             this._activeFilter.next(this._baseFilter.clone());
         }
