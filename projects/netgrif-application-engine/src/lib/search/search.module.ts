@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchComponent } from './search-component/search.component';
+import {MaterialModule} from '../material/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { SearchComponent } from './search-component/search.component';
         SearchComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        MaterialModule
     ]
 })
 export class SearchModule { }
