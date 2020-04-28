@@ -4,7 +4,7 @@ import {Behavior} from '../../models/behavior';
 /**
  * Supported types of files a user can select through a file picker.
  */
-export enum FileUploadMIMEtype {
+export enum FileUploadMIMEType {
     IMAGE = 'image/*',
     VIDEO = 'video/*',
     AUDIO = 'audio/*',
@@ -42,7 +42,7 @@ export class FileField extends DataField<Array<File>> {
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: Array<File>, placeholder?: string, description?: string,
                 layout?: Layout, private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1,
-                private _zipped: boolean = true, private _allowTypes?: string | FileUploadMIMEtype | Array<FileUploadMIMEtype>) {
+                private _zipped: boolean = true, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
         super(stringId, title, value, behavior, placeholder, description, layout);
     }
 
