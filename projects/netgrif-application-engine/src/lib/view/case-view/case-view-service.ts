@@ -8,7 +8,7 @@ import {NewCaseComponent} from '../../side-menu/content-components/new-case/new-
 import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {SortableView} from '../abstract/sortable-view';
 import {LoggerService} from '../../logger/services/logger.service';
-import {SnackBarService} from '../../snack-bar/snack-bar.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {Filter} from '../../filter/models/filter';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
@@ -64,7 +64,7 @@ export class CaseViewService extends SortableView {
                 if (newCases instanceof Array) {
                     this.updateCases(newCases);
                 } else {
-                    this._snackBarService.openInfoSnackBar('No resource for cases was found');
+                    this._snackBarService.openWarningSnackBar('No resource for cases was found');
                 }
                 this.setLoading(false);
             }, error => {

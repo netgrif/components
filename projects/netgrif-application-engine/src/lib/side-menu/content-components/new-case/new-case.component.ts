@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {SnackBarService} from '../../../snack-bar/snack-bar.service';
+import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
@@ -108,7 +108,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
         this._caseResourceService.createCase(newCase)
             .subscribe(
                 () => {
-                    this._snackBarService.openInfoSnackBar('Successful create new case ' + newCase.title);
+                    this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
                     this._sideMenuControl.close({
                         opened: false,
                         message: 'Confirm new case setup',
