@@ -17,6 +17,7 @@ export * from './models/category/case/case-title';
 /* Interfaces */
 export * from './models/escape-result';
 export * from './models/wrap-result';
+export * from './models/chips/simple-search-chip';
 
 /* Enums */
 export * from './models/boolean-operator';

@@ -1,15 +1,22 @@
-<mat-form-field>
-    <input type="text" matInput
-           [formControl]="formControl"
-           [matAutocomplete]="searchAutocomplete"
-           (keydown.enter)="$event.target.blur()"
-           (blur)="confirmUserInput()">
-    <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection">
-        <mat-option *ngFor="let category of filteredOptions | async" [value]="category">
-            {{category.translationPath | translate}}
-        </mat-option>
-    </mat-autocomplete>
-</mat-form-field>
-<button mat-icon-button (click)="confirmUserInput()">
-    <mat-icon>search</mat-icon>
-</button>
+<div fxLayout="row" fxLayoutAlign="start center">
+    <mat-chip-list selectable="false">
+        <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true" (removed)="removeChip(i)">
+            {{chip.text}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+    <mat-form-field>
+        <input type="text" matInput
+               [formControl]="formControl"
+               [matAutocomplete]="searchAutocomplete"
+               (keydown.enter)="$event.target.blur();confirmUserInput()">
+        <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection">
+            <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
+                {{category.translationPath | translate}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <button mat-icon-button (click)="confirmUserInput()">
+        <mat-icon>search</mat-icon>
+    </button>
+</div>

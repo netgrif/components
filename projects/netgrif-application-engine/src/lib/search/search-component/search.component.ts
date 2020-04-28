@@ -8,6 +8,7 @@ import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {SelectLanguageService} from '../../toolbar/select-language.service';
 import {SearchService} from '../search-service/search.service';
+import {SimpleSearchChip} from '../models/chips/simple-search-chip';
 
 @Component({
     selector: 'nae-search',
@@ -25,13 +26,25 @@ export class SearchComponent {
      * @ignore
      * Array that holds all the available [Categories]{@link Category}
      */
-    private readonly _options: Array<Category>;
+    private readonly _searchCategories: Array<Category>;
     /**
      * @ignore
      * Observable that contains [Categories]{@link Category} that match user input. It updates it's content every time user input changes.
      */
-    public filteredOptions: Observable<Array<Category>>;
-
+    public filteredCategories: Observable<Array<Category>>;
+    /**
+     * @ignore
+     * Array that holds constructed search chips.
+     * If [_selectedCategory]{@link SearchComponent#_selectedCategory} has a value set,
+     * then the last entry in the array is an incomplete chip.
+     */
+    public searchChips: Array<SimpleSearchChip> = [];
+    /**
+     * @ignore
+     * Stores the state of the search GUI.
+     * If some category is selected, then the next input completes it and adds a new Predicate to the search.
+     * If not then the next input creates a fulltext search, or selects a new category.
+     */
     private _selectedCategory: Category;
     /**
      * @ignore
@@ -46,11 +59,13 @@ export class SearchComponent {
                 private _translate: TranslateService,
                 private _searchService: SearchService,
                 private _: SelectLanguageService) {
-        this._options = [this._categoryFactory.get(CaseTitle)];
-        this.filteredOptions = this.formControl.valueChanges.pipe(
+        // TODO customisable categories
+        this._searchCategories = [this._categoryFactory.get(CaseTitle)];
+        this.selectDefaultOperators();
+        this.filteredCategories = this.formControl.valueChanges.pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : this.categoryName(value)),
-            map(categoryName => categoryName ? this._filterOptions(categoryName) : this._options.slice())
+            map(categoryName => this._filterOptions(categoryName))
         );
     }
 
@@ -61,8 +76,12 @@ export class SearchComponent {
      * @returns [Categories]{@link Category} that start with the user input. Case insensitive. Based on locale translation.
      */
     private _filterOptions(userInput: string): Array<Category> {
-        const value = userInput.toLocaleLowerCase();
-        return this._options.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value));
+        if (!this._selectedCategory) {
+            const value = userInput.toLocaleLowerCase();
+            return this._searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value));
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -91,16 +110,51 @@ export class SearchComponent {
      * The Search GUI must move to it's next state based on it's current state.
      */
     public confirmUserInput(): void {
+        const inputValue = this.formControl.value;
         if (!this._selectedCategory) {
-            const inputValue = this.formControl.value;
-            if ( !(inputValue instanceof Category)) {
+            if (!(inputValue instanceof Category)) {
                 // full text search
                 if (inputValue === '') {
                     this._searchService.removeFullTextFilter();
                 } else {
                     this._searchService.addFullTextFilter(inputValue);
                 }
+            } else {
+                // start new chip
+                this._selectedCategory = inputValue;
+                this.searchChips.push({text: `${this.categoryName(inputValue)}: `});
+                this.formControl.setValue('');
             }
+        } else {
+            if (inputValue === '') {
+                return;
+            }
+            this._searchService.addPredicate(this._selectedCategory.generatePredicate([inputValue]));
+            this.searchChips[this.searchChips.length - 1].text += inputValue;
+            this._selectedCategory = undefined;
+            this.formControl.setValue('');
         }
+    }
+
+    /**
+     * @ignore
+     * Removes a chip at the given index and affects the state of the input and filter accordingly.
+     * @param index index of the chip that should be removed. No bounds checks are performed!
+     */
+    public removeChip(index: number): void {
+        if (!!this._selectedCategory && index === this.searchChips.length - 1) {
+            this._selectedCategory = undefined;
+        } else {
+            this._searchService.removePredicate(index);
+        }
+        this.searchChips.splice(index, 1);
+    }
+
+    /**
+     * @ignore
+     * Iterates over all Categories and selects their default Operator.
+     */
+    private selectDefaultOperators(): void {
+        this._searchCategories.forEach(category => {category.selectDefaultOperator()});
     }
 }
