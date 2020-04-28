@@ -4,6 +4,11 @@ import {UserCardComponent} from './user-card.component';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {MaterialModule} from '../../../material/material.module';
+import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
+import {ConfigurationService} from '../../../configuration/configuration.service';
+import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('UserCardComponent', () => {
     let component: UserCardComponent;
@@ -15,7 +20,13 @@ describe('UserCardComponent', () => {
             imports: [
                 CommonModule,
                 RouterModule,
-                MaterialModule
+                MaterialModule,
+                HttpClientTestingModule,
+                RouterTestingModule.withRoutes([]),
+            ],
+            providers: [
+                AuthenticationMethodService,
+                {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
         })
             .compileComponents();
@@ -27,7 +38,15 @@ describe('UserCardComponent', () => {
         fixture.detectChanges();
     });
 
-    // it('should create', () => {
-    //     expect(component).toBeTruthy();
-    // });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should return user banner', () => {
+        expect(component.userBanner).toEqual('assets/default-user-background.jpg');
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

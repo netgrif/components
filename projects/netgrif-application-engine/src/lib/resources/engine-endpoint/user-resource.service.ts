@@ -125,7 +125,7 @@ export class UserResourceService {
      * {{baseUrl}}/api/user/{id}
      */
     public updateUser(userId: string, body: object, params?: Params): Observable<User> {
-        return this.provider.post$('/api/user/' + userId, this.SERVER_URL, body, params)
+        return this.provider.post$('user/' + userId, this.SERVER_URL, body, params)
             .pipe(map(r => changeType(r, undefined)));
     }
 

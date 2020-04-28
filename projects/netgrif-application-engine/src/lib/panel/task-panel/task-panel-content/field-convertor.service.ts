@@ -107,7 +107,7 @@ export class FieldConvertorService {
             case 'user':
                 let user;
                 if (item.value) {
-                    user = new UserValue(item.value.id, item.name, item.value.surname, item.value.email);
+                    user = new UserValue(item.value.id, item.value.name, item.value.surname, item.value.email);
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout);

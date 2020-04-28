@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {PetriNet} from '../interface/petri-net';
-import {Params, ProgressType, ProviderProgress, ResourceProvider} from '../resource-provider.service';
+import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
 import {changeType, getResourceAddress} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
@@ -79,7 +79,7 @@ export class PetriNetResourceService {
      * {{baseUrl}}/api/petrinet/{netId}/file
      */
     public getNetFile(netId: string, params?: Params): Observable<any> {  // TODO: response
-        return this.provider.get$('petrinet/' + netId + 'file', this.SERVER_URL, params)
+        return this.provider.get$('petrinet/' + netId + '/file', this.SERVER_URL, params)
             .pipe(map(r => changeType(r, undefined)));
     }
 

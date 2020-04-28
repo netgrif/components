@@ -1,6 +1,6 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
 import {
@@ -23,7 +23,9 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
         prefix: projectInfo.projectPrefixDasherized,
         path: className.prefix,
         dasherize: strings.dasherize,
-        classify: strings.classify
+        classify: strings.classify,
+        configName: projectInfo.projectNameClassified,
+        configImportPath: createRelativePath(className.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     };
 
     const commonPathPrefix = './files/task-view/';
@@ -38,8 +40,7 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
     updateAppModule(tree, className.name, className.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('MaterialModule', '@netgrif/application-engine'),
-        new ImportToAdd('PanelModule', '@netgrif/application-engine'),
-        new ImportToAdd('CardModule', '@netgrif/application-engine')
+        new ImportToAdd('PanelModule', '@netgrif/application-engine')
     ]);
 
     if (addRoute) {

@@ -1,25 +1,31 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardExampleComponent } from './dashboard-example.component';
+import { <%= classify(path) %>DashboardComponent } from './<%= dasherize(path) %>-dashboard.component';
+import {DashboardModule, MaterialModule, ConfigurationService} from '@netgrif/application-engine';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
 
-describe('DashboardExampleComponent', () => {
-  let component: DashboardExampleComponent;
-  let fixture: ComponentFixture<DashboardExampleComponent>;
+describe('<%= classify(path) %>DashboardComponent', () => {
+     let component: <%= classify(path) %>DashboardComponent;
+     let fixture: ComponentFixture<<%= classify(path) %>DashboardComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DashboardExampleComponent ]
-    })
-    .compileComponents();
-  }));
+     beforeEach(async(() => {
+         TestBed.configureTestingModule({
+             imports: [DashboardModule, MaterialModule, HttpClientTestingModule],
+             declarations: [<%= classify(path) %>DashboardComponent],
+             providers: [
+                 {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService}
+             ]
+         }).compileComponents();
+     }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardExampleComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+     beforeEach(() => {
+         fixture = TestBed.createComponent(<%= classify(path) %>DashboardComponent);
+         component = fixture.componentInstance;
+         fixture.detectChanges();
+     });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+     it('should create', () => {
+         expect(component).toBeTruthy();
+     });
 });

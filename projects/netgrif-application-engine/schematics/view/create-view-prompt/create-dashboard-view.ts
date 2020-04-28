@@ -1,6 +1,6 @@
 import {Rule, Tree, chain} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {
     addAuthGuardImport,
@@ -23,7 +23,9 @@ export function createDashboardView(tree: Tree, args: CreateViewArguments, addRo
         path: className.prefix,
         webPath: args.path,
         dasherize: strings.dasherize,
-        classify: strings.classify
+        classify: strings.classify,
+        configName: projectInfo.projectNameClassified,
+        configImportPath: createRelativePath(className.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     }));
 
     updateAppModule(tree, className.name, className.fileImportPath, [

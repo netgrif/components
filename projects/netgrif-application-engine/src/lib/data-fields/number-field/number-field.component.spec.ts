@@ -32,6 +32,17 @@ describe('NumberFieldComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should get error message', () => {
+        expect(component.getErrorMessage()).toEqual('This is custom odd message!');
+
+        component.dataField.value = 5;
+        expect(component.getErrorMessage()).toEqual('Entered number must be even');
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
@@ -39,11 +50,19 @@ describe('NumberFieldComponent', () => {
     template: '<nae-number-field [dataField]="field"></nae-number-field>'
 })
 class TestWrapperComponent {
-    field = new NumberField('', '', 5, {
-        required: true,
+    field = new NumberField('', '', 4, {
         optional: true,
         visible: true,
         editable: true,
         hidden: true
-    });
+    }, [
+        {validationRule: 'odd', validationMessage: 'This is custom odd message!'},
+        {validationRule: 'even', validationMessage: ''},
+        {validationRule: 'positive', validationMessage: 'This is custom message!'},
+        {validationRule: 'negative', validationMessage: 'This is custom message!'},
+        {validationRule: 'decimal', validationMessage: 'This is custom message!'},
+        {validationRule: 'inrange inf,0', validationMessage: 'This is custom message!'},
+        {validationRule: 'inrange 0,inf', validationMessage: 'This is custom message!'},
+        {validationRule: 'inrange -5,0', validationMessage: 'This is custom message!'},
+    ]);
 }

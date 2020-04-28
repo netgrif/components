@@ -6,16 +6,25 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 
 describe('SelectLanguageService', () => {
-  let service: SelectLanguageService;
+    let service: SelectLanguageService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-        imports: [MaterialModule, HttpClientTestingModule, TranslateLibModule],
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [MaterialModule, HttpClientTestingModule, TranslateLibModule],
+        });
+        service = TestBed.inject(SelectLanguageService);
     });
-    service = TestBed.inject(SelectLanguageService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
+
+    it('should set lang', () => {
+        service.setLanguage('en');
+        expect(localStorage.getItem('Language')).toEqual('en');
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

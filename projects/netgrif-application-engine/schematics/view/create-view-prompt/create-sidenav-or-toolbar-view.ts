@@ -1,5 +1,5 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {
     addAuthGuardImport,
@@ -35,7 +35,9 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             isSideNav,
             isToolbar,
             drawerType,
-            fileName: resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string)
+            fileName: resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string),
+            configName: projectInfo.projectNameClassified,
+            configImportPath: createRelativePath(className.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
         }));
     updateAppModule(tree, className.name, className.fileImportPath, []);
 

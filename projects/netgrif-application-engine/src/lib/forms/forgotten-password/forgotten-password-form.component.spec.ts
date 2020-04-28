@@ -7,25 +7,38 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SignUpModule} from '../../authentication/sign-up/sign-up.module';
 
 describe('ForgottenPasswordPanelComponent', () => {
-    // let component: ForgottenPasswordFormComponent;
-    // let fixture: ComponentFixture<ForgottenPasswordFormComponent>;
-    //
-    // beforeEach(async(() => {
-    //     TestBed.configureTestingModule({
-    //         imports: [MaterialModule, FlexLayoutModule, BrowserAnimationsModule, SignUpModule],
-    //         declarations: [ForgottenPasswordFormComponent],
-    //         providers: [FormBuilder]
-    //     })
-    //         .compileComponents();
-    // }));
-    //
-    // beforeEach(() => {
-    //     fixture = TestBed.createComponent(ForgottenPasswordFormComponent);
-    //     component = fixture.componentInstance;
-    //     fixture.detectChanges();
-    // });
-    //
-    // it('should create', () => {
-    //     expect(component).toBeTruthy();
-    // });
+    let component: ForgottenPasswordFormComponent;
+    let fixture: ComponentFixture<ForgottenPasswordFormComponent>;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [MaterialModule, FlexLayoutModule, BrowserAnimationsModule],
+            declarations: [ForgottenPasswordFormComponent],
+            providers: [FormBuilder]
+        })
+            .compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ForgottenPasswordFormComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should submit', (done) => {
+        component.rootFormGroup.controls['email'].setValue('login@login.sk');
+        component.formSubmit.subscribe( event => {
+            expect(event).toEqual({ email: 'login@login.sk' });
+            done();
+        });
+        component.onSubmit();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

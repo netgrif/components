@@ -4,7 +4,7 @@ import {FileUploadModel} from '../files-upload/models/file-upload-model';
 import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
-import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource-service';
+import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {ProgressType, ProviderProgress} from '../../../resources/resource-provider.service';

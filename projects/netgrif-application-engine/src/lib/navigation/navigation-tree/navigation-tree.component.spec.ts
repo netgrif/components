@@ -2,11 +2,14 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NavigationTreeComponent} from './navigation-tree.component';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
 import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelModule} from '../quick-panel/quick-panel.module';
 import {UserModule} from '../../user/user.module';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TestConfigurationService} from '../../utility/tests/test-config';
 
 describe('NavigationTreeComponent', () => {
     let component: NavigationTreeComponent;
@@ -15,14 +18,18 @@ describe('NavigationTreeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [NavigationTreeComponent],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ],
             imports: [
                 CommonModule,
-                RouterModule,
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
                 QuickPanelModule,
-                UserModule
+                UserModule,
+                RouterTestingModule.withRoutes([]),
+                HttpClientTestingModule,
             ]
         })
             .compileComponents();
@@ -34,7 +41,11 @@ describe('NavigationTreeComponent', () => {
         fixture.detectChanges();
     });
 
-    // it('should create', () => {
-    //     expect(component).toBeTruthy();
-    // });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

@@ -1,6 +1,6 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
 import {
@@ -22,12 +22,14 @@ export function createLoginView(tree: Tree, args: CreateViewArguments, addRoute:
         prefix: projectInfo.projectPrefixDasherized,
         path: className.prefix,
         dasherize: strings.dasherize,
-        classify: strings.classify
+        classify: strings.classify,
+        configName: projectInfo.projectNameClassified,
+        configImportPath: createRelativePath(className.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     }));
 
     updateAppModule(tree, className.name, className.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
-        new ImportToAdd('CardModule', '@netgrif/application-engine')]);
+        new ImportToAdd('LoginFormModule', '@netgrif/application-engine')]);
 
     if (addRoute) {
         addRoutingModuleImport(tree, className.name, className.fileImportPath);

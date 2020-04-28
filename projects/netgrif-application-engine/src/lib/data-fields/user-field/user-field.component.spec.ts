@@ -29,6 +29,10 @@ describe('UserFieldComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

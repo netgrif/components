@@ -29,6 +29,14 @@ describe('TextareaFieldComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should get error message', () => {
+        expect(component.getErrorMessage()).toEqual('This is custom message!');
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
@@ -43,6 +51,10 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    });
+    }, undefined, undefined, undefined, [{validationRule: 'length 5', validationMessage: 'This is custom message!'}]);
     formControl = new FormControl();
+
+    constructor() {
+        this.field.registerFormControl(this.formControl);
+    }
 }

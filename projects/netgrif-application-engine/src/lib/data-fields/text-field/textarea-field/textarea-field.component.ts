@@ -20,6 +20,6 @@ export class TextareaFieldComponent extends AbstractTextFieldComponent {
     }
 
     public getErrorMessage() {
-        this.buildErrorMessage(this.textAreaField, this.formControlRef);
+        return this.buildErrorMessage(this.textAreaField, this.formControlRef);
     }
 }

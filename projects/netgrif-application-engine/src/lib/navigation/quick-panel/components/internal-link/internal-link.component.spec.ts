@@ -3,10 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {InternalLinkComponent} from './internal-link.component';
 import {MaterialModule} from '../../../../material/material.module';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
-import {QuickPanelModule} from '../../quick-panel.module';
-import {UserModule} from '../../../../user/user.module';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('InternalLinkComponent', () => {
     let component: InternalLinkComponent;
@@ -17,7 +14,7 @@ describe('InternalLinkComponent', () => {
             declarations: [InternalLinkComponent],
             imports: [
                 CommonModule,
-                RouterModule,
+                RouterTestingModule,
                 MaterialModule
             ]
         })
@@ -30,7 +27,11 @@ describe('InternalLinkComponent', () => {
         fixture.detectChanges();
     });
 
-    // it('should create', () => {
-    //     expect(component).toBeTruthy();
-    // });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

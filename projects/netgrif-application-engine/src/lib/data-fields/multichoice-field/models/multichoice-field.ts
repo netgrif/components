@@ -1,6 +1,5 @@
 import {DataField, Layout} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
-import {EnumerationFieldValue} from '../../enumeration-field/models/enumeration-field';
 
 export interface MultichoiceFieldValue {
     key: string;

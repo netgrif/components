@@ -7,6 +7,8 @@ import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelModule} from '../quick-panel/quick-panel.module';
 import {UserModule} from '../../user/user.module';
+import {NavigationTreeComponent} from '../navigation-tree/navigation-tree.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('NavigationDrawerComponent', () => {
     let component: NavigationDrawerComponent;
@@ -14,7 +16,7 @@ describe('NavigationDrawerComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [NavigationDrawerComponent],
+            declarations: [NavigationDrawerComponent, NavigationTreeComponent],
             imports: [
                 CommonModule,
                 RouterModule,
@@ -22,7 +24,8 @@ describe('NavigationDrawerComponent', () => {
                 FlexModule,
                 FlexLayoutModule,
                 QuickPanelModule,
-                UserModule
+                UserModule,
+                BrowserAnimationsModule
             ],
         })
             .compileComponents();
@@ -34,7 +37,25 @@ describe('NavigationDrawerComponent', () => {
         fixture.detectChanges();
     });
 
-    // it('should create', () => {
-    //     expect(component).toBeTruthy();
-    // });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should open, close and toggle', async () => {
+        await component.open().then(res  => {
+            expect(res).toEqual('open');
+        });
+
+        await component.close().then(res  => {
+            expect(res).toEqual('open');
+        });
+
+        await component.toggle().then(res  => {
+            expect(res).toEqual('open');
+        });
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

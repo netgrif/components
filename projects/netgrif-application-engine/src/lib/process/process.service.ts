@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, of, Subject} from 'rxjs';
 import {Net} from './net';
-import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource-service';
+import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../logger/services/logger.service';
 import Transition from './transition';
 import Transaction from './transaction';
