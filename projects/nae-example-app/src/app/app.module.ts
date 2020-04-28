@@ -35,7 +35,8 @@ import {
     LoginFormModule,
     ForgottenPasswordFormModule,
     RegistrationFormModule,
-    SignUpModule
+    SignUpModule,
+    ProfileModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -68,6 +69,7 @@ import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/filter-repository-example.component';
+import { ProfileComponent } from './doc/profile/profile.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -100,7 +102,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         HeadersComponent,
         PanelsComponent,
         DashboardExampleComponent,
-        FilterRepositoryExampleComponent
+        FilterRepositoryExampleComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,
@@ -138,6 +141,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         LoginFormModule,
         ForgottenPasswordFormModule,
         RegistrationFormModule,
+        ProfileModule
     ],
     entryComponents: [
         FilesUploadComponent,
