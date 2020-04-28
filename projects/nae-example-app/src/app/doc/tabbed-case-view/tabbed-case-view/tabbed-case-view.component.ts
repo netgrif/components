@@ -32,7 +32,7 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData,
                 processService: ProcessService,
                 configService: ConfigurationService) {
-        super(caseViewService, loggerService, injectedTabData, new SimpleFilter('', FilterType.CASE, {}));
+        super(caseViewService, loggerService, injectedTabData);
         this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
         // TODO 16.4. 2020 initialize allowedNets by filter
         const view = configService.getViewByPath('<%= webPath %>');

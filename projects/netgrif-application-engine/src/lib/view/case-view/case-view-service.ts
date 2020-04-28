@@ -10,25 +10,26 @@ import {SortableView} from '../abstract/sortable-view';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/snack-bar.service';
 import {Filter} from '../../filter/models/filter';
-import {SimpleFilter} from '../../filter/models/simple-filter';
-import {FilterType} from '../../filter/models/filter-type';
+import {SearchService} from '../../search/search-service/search.service';
 
 
 @Injectable()
 export class CaseViewService extends SortableView {
 
     protected _loading$: BehaviorSubject<boolean>;
-    protected _baseFilter: Filter;
     protected _cases$: Subject<Array<Case>>;
 
     constructor(protected _sideMenuService: SideMenuService,
                 protected _caseResourceService: CaseResourceService,
                 protected _log: LoggerService,
-                protected _snackBarService: SnackBarService) {
+                protected _snackBarService: SnackBarService,
+                protected _searchService: SearchService) {
         super();
-        this._baseFilter = new SimpleFilter('', FilterType.CASE, {});
         this._loading$ = new BehaviorSubject<boolean>(false);
         this._cases$ = new Subject<Array<Case>>();
+        this._searchService.activeFilter$.subscribe( () => {
+            this.reload();
+        });
     }
 
     public get loading(): boolean {
@@ -43,10 +44,6 @@ export class CaseViewService extends SortableView {
         return this._loading$.asObservable();
     }
 
-    public set baseFilter(newFilter: Filter) {
-        this._baseFilter = newFilter.clone();
-    }
-
     public get cases$(): Observable<Array<Case>> {
         return this._cases$.asObservable();
     }
@@ -59,7 +56,7 @@ export class CaseViewService extends SortableView {
 
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
-        this._caseResourceService.searchCases(this._baseFilter, params)
+        this._caseResourceService.searchCases(this._searchService.activeFilter, params)
             .subscribe((newCases: Array<Case>) => {
                 if (newCases instanceof Array) {
                     this.updateCases(newCases);

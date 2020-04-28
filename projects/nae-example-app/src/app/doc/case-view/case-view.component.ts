@@ -36,7 +36,7 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
     public params: CaseParams;
 
     constructor(caseViewService: CaseViewService, processService: ProcessService, configService: ConfigurationService) {
-        super(caseViewService, new SimpleFilter('', FilterType.CASE, {}));
+        super(caseViewService);
         this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
         // TODO 16.4. 2020 initialize allowedNets by filter
         // processService.getNet('leukemia').subscribe( result => {
