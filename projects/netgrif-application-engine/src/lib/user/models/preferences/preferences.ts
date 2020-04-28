@@ -5,17 +5,23 @@ import {PreferenceHeaders} from './preference-headers';
  * Header preferences are strings in format: <petrinet identifier>-<datafield id>
  */
 export interface Preferences {
-    taskFilters: PreferenceFilters;
+    taskFilters: {
+        [viewId: string]: PreferenceFilters
+    };
     taskHeaders: {
         [viewId: string]: PreferenceHeaders
     };
 
-    caseFilters: PreferenceFilters;
+    caseFilters: {
+        [viewId: string]: PreferenceFilters
+    };
     caseHeaders: {
         [viewId: string]: PreferenceHeaders
     };
 
-    workflowFilters: PreferenceFilters;
+    workflowFilters: {
+        [viewId: string]: PreferenceFilters
+    };
     workflowHeaders: {
         [viewId: string]: PreferenceHeaders
     };
