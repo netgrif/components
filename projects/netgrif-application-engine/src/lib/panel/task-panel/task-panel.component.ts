@@ -6,7 +6,7 @@ import {TaskPanelContentService} from './task-panel-content/task-panel-content.s
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConvertorService} from './task-panel-content/field-convertor.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {SnackBarService} from '../../snack-bar/snack-bar.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
 import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
@@ -202,7 +202,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                     }
                 });
             });
-            this._snackBar.openInfoSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
+            this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
             this.loading = false;
             this._updating = false;
             if (this._queue.observers.length !== 0) {

@@ -17,18 +17,18 @@ export class SnackBarExampleComponent implements OnInit {
     }
 
     info() {
-        this.snackBarService.openInfoSnackBar('info message');
+        this.snackBarService.openSuccessSnackBar('Success message');
     }
 
     err() {
-        this.snackBarService.openErrorSnackBar('error message');
+        this.snackBarService.openErrorSnackBar('Error message');
     }
 
     war() {
-        this.snackBarService.openWarningSnackBar('warning message');
+        this.snackBarService.openWarningSnackBar('Warning message');
     }
 
     gen() {
-        this.snackBarService.openGenericSnackBar('generic message', ':)');
+        this.snackBarService.openGenericSnackBar('Generic user assigned message', 'how_to_reg');
     }
 }

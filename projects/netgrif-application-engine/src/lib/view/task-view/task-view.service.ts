@@ -4,7 +4,7 @@ import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-pa
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../user/services/user.service';
-import {SnackBarService} from '../../snack-bar/snack-bar.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {SelectLanguageService} from '../../toolbar/select-language.service';
 import {SortableView} from '../abstract/sortable-view';
@@ -55,7 +55,7 @@ export class TaskViewService extends SortableView {
                     });
                 });
             } else {
-                this._snackBarService.openInfoSnackBar(this._translate.instant('tasks.snackbar.noTasksFound'));
+                this._snackBarService.openWarningSnackBar(this._translate.instant('tasks.snackbar.noTasksFound'));
             }
             this.loading.next(false);
             this.taskData.next(this.taskArray);

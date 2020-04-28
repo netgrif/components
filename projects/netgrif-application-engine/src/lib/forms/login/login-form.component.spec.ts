@@ -13,6 +13,7 @@ import {NullAuthenticationService} from '../../authentication/services/methods/n
 import {Credentials} from '../../authentication/models/credentials';
 import {Observable, of} from 'rxjs';
 import {User} from '../../authentication/models/user';
+import {SignUpModule} from '../../authentication/sign-up/sign-up.module';
 
 describe('LoginPanelComponent', () => {
     let component: LoginFormComponent;
