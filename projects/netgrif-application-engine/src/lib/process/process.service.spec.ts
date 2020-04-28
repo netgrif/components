@@ -9,6 +9,7 @@ import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-re
 import {of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LoggerService} from '../logger/services/logger.service';
+import {AuthenticationModule} from '../authentication/authentication.module';
 
 describe('ProcessService', () => {
     let service: ProcessService;
@@ -16,7 +17,10 @@ describe('ProcessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [
+                HttpClientTestingModule,
+                AuthenticationModule
+            ],
             providers: [
                 HttpClient,
                 {provide: ConfigurationService, useClass: TestConfigurationService},

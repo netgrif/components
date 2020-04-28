@@ -36,8 +36,7 @@ import {
     ForgottenPasswordFormModule,
     RegistrationFormModule,
     SignUpModule,
-    SideMenuContentModule
-    SignUpModule,
+    SideMenuContentModule,
     ProfileModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -142,7 +141,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         LoginFormModule,
         ForgottenPasswordFormModule,
         RegistrationFormModule,
-        SideMenuContentModule
+        SideMenuContentModule,
         ProfileModule
     ],
     entryComponents: [
@@ -156,7 +155,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabbedCaseViewComponent,
         TabbedTaskViewComponent,
         ImportNetComponent,
-        FilterSelectorComponent
         FilterSelectorComponent,
         GenericSnackBarComponent,
         SuccessSnackBarComponent,

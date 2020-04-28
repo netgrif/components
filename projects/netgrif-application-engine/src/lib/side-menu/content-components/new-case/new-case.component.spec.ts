@@ -10,6 +10,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {of} from 'rxjs';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 
 describe('NewCaseComponent', () => {
     let component: NewCaseComponent;
@@ -21,7 +22,8 @@ describe('NewCaseComponent', () => {
                 CommonModule,
                 MaterialModule,
                 BrowserAnimationsModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                SnackBarModule
             ],
             declarations: [NewCaseComponent],
             providers: [
