@@ -1,5 +1,9 @@
 <mat-form-field>
-    <input type="text" matInput [formControl]="formControl" [matAutocomplete]="searchAutocomplete" (keydown.enter)="confirmUserInput()">
+    <input type="text" matInput
+           [formControl]="formControl"
+           [matAutocomplete]="searchAutocomplete"
+           (keydown.enter)="$event.target.blur()"
+           (blur)="confirmUserInput()">
     <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection">
         <mat-option *ngFor="let category of filteredOptions | async" [value]="category">
             {{category.translationPath | translate}}

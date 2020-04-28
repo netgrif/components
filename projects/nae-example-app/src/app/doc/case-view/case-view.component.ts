@@ -9,15 +9,25 @@ import {
     HeaderComponent,
     Net,
     ProcessService,
+    SearchService,
     SimpleFilter
 } from '@netgrif/application-engine';
 import {ReplaySubject} from 'rxjs';
+
+const searchServiceFactory = () => {
+    // TODO load/use base filter somehow
+    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
+};
 
 @Component({
     selector: 'nae-app-case-view',
     templateUrl: './case-view.component.html',
     styleUrls: ['./case-view.component.scss'],
-    providers: [CaseViewService],
+    providers: [
+        CaseViewService,
+        {   provide: SearchService,
+            useFactory: searchServiceFactory}
+    ],
 })
 export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {
 
