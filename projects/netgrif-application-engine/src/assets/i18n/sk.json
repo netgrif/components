@@ -37,7 +37,9 @@
     "search": {
         "category": {
             "case": {
-                "title": "Názov prípadu"
+                "title": "Názov prípadu",
+                "visualId": "Vizuálne ID prípadu",
+                "author": "Autor prípadu"
             }
         }
     }

@@ -9,6 +9,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {SelectLanguageService} from '../../toolbar/select-language.service';
 import {SearchService} from '../search-service/search.service';
 import {SimpleSearchChip} from '../models/chips/simple-search-chip';
+import {CaseVisualId} from '../models/category/case/case-visual-id';
+import {CaseAuthor} from '../models/category/case/case-author';
 
 @Component({
     selector: 'nae-search',
@@ -60,7 +62,11 @@ export class SearchComponent {
                 private _searchService: SearchService,
                 private _: SelectLanguageService) {
         // TODO customisable categories
-        this._searchCategories = [this._categoryFactory.get(CaseTitle)];
+        this._searchCategories = [
+            this._categoryFactory.get(CaseTitle),
+            this._categoryFactory.get(CaseVisualId),
+            this._categoryFactory.get(CaseAuthor),
+        ];
         this.selectDefaultOperators();
         this.filteredCategories = this.formControl.valueChanges.pipe(
             startWith(''),

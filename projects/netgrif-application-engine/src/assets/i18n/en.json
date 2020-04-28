@@ -48,7 +48,9 @@
     "search": {
         "category": {
             "case": {
-                "title": "Case title"
+                "title": "Case title",
+                "visualId": "Case visual ID",
+                "author": "Case author"
             }
         }
     }
