@@ -8,7 +8,7 @@ import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-
 import {LoggerService} from '../../../logger/services/logger.service';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {ProgressType, ProviderProgress} from '../../../resources/resource-provider.service';
-import {SnackBarService} from '../../../snack-bar/snack-bar.service';
+import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 
 interface FileList {
     [key: string]: FileUploadModel;
