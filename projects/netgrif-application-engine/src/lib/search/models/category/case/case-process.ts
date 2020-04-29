@@ -16,6 +16,7 @@ export class CaseProcess extends AutocompleteCategory {
             [operators.getOperator(Equals)],
             'search.category.case.process',
             logger);
+        this.createOptions();
     }
 
     get options(): Array<SearchAutocompleteOption> {

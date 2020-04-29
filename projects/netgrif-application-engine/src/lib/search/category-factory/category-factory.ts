@@ -1,7 +1,8 @@
-import {Injectable, Type} from '@angular/core';
+import {Injectable, Optional, Type} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OperatorService} from '../operator-service/operator.service';
 import {Category} from '../models/category/category';
+import {CaseViewService} from '../../view/case-view/case-view-service';
 
 /**
  * Can be used to generate {@link Category} class instances.
@@ -10,12 +11,12 @@ import {Category} from '../models/category/category';
  * second argument. You can extend this class to support your Categories, but make sure that an injection token for this classes name
  * is still provided for the library components that use it.
  */
-@Injectable({
-  providedIn: 'root'
-})
-export class CategoryFactoryService {
+@Injectable()
+export class CategoryFactory {
 
-  constructor(protected _operators: OperatorService, protected _log: LoggerService) { }
+  constructor(protected _operators: OperatorService,
+              protected _log: LoggerService,
+              @Optional() protected _caseViewService: CaseViewService) { }
 
     /**
      * Create an instance of {@link Category} class.
@@ -23,6 +24,6 @@ export class CategoryFactoryService {
      * @returns a new instance of the provided class
      */
   public get(categoryClass: Type<Category>): Category {
-      return new categoryClass(this._operators, this._log);
+      return new categoryClass(this._operators, this._log, this._caseViewService);
   }
 }

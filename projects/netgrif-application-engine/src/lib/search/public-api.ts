@@ -31,7 +31,7 @@ export * from './models/category/search-input-type';
 /* Services */
 export * from './search-service/search.service';
 export * from './operator-service/operator.service';
-export * from './category-factory/category-factory.service';
+export * from './category-factory/category-factory';
 
 /* Components */
 export * from './search-component/search.component';

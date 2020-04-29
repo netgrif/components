@@ -14,7 +14,6 @@ export abstract class AutocompleteCategory extends Category {
                           translationPath: string,
                           log: LoggerService) {
         super(elasticKeywords, allowedOperators, translationPath, SearchInputType.AUTOCOMPLETE, log);
-        this.createOptions();
     }
 
     /**
@@ -24,6 +23,8 @@ export abstract class AutocompleteCategory extends Category {
 
     /**
      * Populates the [_options]{@link AutocompleteCategory#_options} field with options for this category.
+     *
+     * You must call this method yourself in an appropriate place of Category creation.
      */
     protected abstract createOptions(): void;
 
