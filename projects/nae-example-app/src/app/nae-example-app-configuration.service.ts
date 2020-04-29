@@ -155,6 +155,16 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                                     }
                                 }
                             }
+                        },
+                        case: {
+                            layout: {
+                                name: 'CaseView',
+                                params: {
+                                    allowedNets: ['data-test']
+                                }
+                            },
+                            access: 'private',
+                            navigation: {}
                         }
                     }
                 },

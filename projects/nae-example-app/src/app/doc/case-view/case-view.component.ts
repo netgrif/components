@@ -11,7 +11,7 @@ import {
 } from '@netgrif/application-engine';
 
 const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
-    return factory.create('');
+    return factory.create('case');
 };
 
 const searchServiceFactory = () => {

@@ -18,7 +18,7 @@ import {
 import {ReplaySubject} from 'rxjs';
 
 const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
-    return factory.create('');
+    return factory.create('case');
 };
 
 const searchServiceFactory = () => {
