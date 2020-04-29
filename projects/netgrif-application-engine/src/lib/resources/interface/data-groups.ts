@@ -1,12 +1,13 @@
 import {Fields} from './fields';
 import {DataField} from '../../data-fields/models/abstract-data-field';
+import {DataGroupLayout} from './data-group-layout';
 
 export interface DataGroupsResource {
     fields: Fields;
     title: string;
     alignment: string;
     stretch: boolean;
-    cols?: number;
+    layout?: DataGroupLayout;
 }
 
 export interface DataGroup {
@@ -14,5 +15,5 @@ export interface DataGroup {
     title: string;
     alignment: string;
     stretch: boolean;
-    cols?: number;
+    layout?: DataGroupLayout;
 }
