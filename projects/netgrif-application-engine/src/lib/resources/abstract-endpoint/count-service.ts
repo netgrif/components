@@ -1,7 +1,8 @@
 import {Observable} from 'rxjs';
 import {Count} from '../interface/count';
+import {Filter} from '../../filter/models/filter';
 
 
 export interface CountService {
-    count: (body: object) => Observable<Count>;
+    count: (body: Filter) => Observable<Count>;
 }

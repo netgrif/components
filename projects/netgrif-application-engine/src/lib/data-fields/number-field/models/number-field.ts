@@ -26,11 +26,10 @@ export class NumberField extends DataField<number> {
         }
 
         if (this.validations) {
-            if (this._validators === undefined) {
-                this._validators = [];
-                this._validators = this.resolveValidations();
+            if (this._validators) {
                 result.push(...this._validators);
             } else {
+                this._validators = this.resolveValidations();
                 result.push(...this._validators);
             }
         }

@@ -1,5 +1,5 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {
     addAuthGuardImport,
@@ -9,6 +9,7 @@ import {
 } from '../view-utility-functions';
 import {strings} from '@angular-devkit/core';
 import {SidenavPromptOptions} from './files/sidenav-toolbar-files/sidenav-prompt-options';
+import {addViewToNaeJson} from './add-view-to-nae-json';
 
 
 export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPromptOptions): Rule {
@@ -34,7 +35,9 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             isSideNav,
             isToolbar,
             drawerType,
-            fileName: resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string)
+            fileName: resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string),
+            configName: projectInfo.projectNameClassified,
+            configImportPath: createRelativePath(className.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
         }));
     updateAppModule(tree, className.name, className.fileImportPath, []);
 
@@ -44,6 +47,16 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             className.name, sidenavOptions.createViewArguments.access));
         addAuthGuardImport(tree, sidenavOptions.createViewArguments.access);
     }
+    if (sidenavOptions.addRoute) {
+        sidenavOptions.createViewArguments.layoutParams = {
+            user: sidenavOptions.user,
+            quickPanel: sidenavOptions.quickPanel,
+            navigation: sidenavOptions.navigation,
+        };
+        rules.push(addViewToNaeJson(sidenavOptions.createViewArguments));
+    }
+
+
     return chain(rules);
 
     function checkArgsToCreateAppropriateView() {

@@ -35,7 +35,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
     logout(): Observable<object> {
         const url = this._config.get().providers.auth.address + this._config.get().providers.auth.endpoints['logout'];
         if (!url) {
-            throw new Error('Logout URL is not defined in the config [nae.providers.auth.endpoints.logout]');
+            throwError(new Error('Logout URL is not defined in the config [nae.providers.auth.endpoints.logout]'));
         }
 
         return this._http.post(url, {});

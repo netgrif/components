@@ -23,4 +23,5 @@ export interface User {
     authorities?: Array<Authority>;
     processRoles?: Array<ProcessRole>;
     userProcessRoles?: Array<UserProcessRole>;
+    _links?: any;
 }

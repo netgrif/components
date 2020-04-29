@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {ButtonFieldComponent} from './button-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {ButtonField} from './models/button-field';
@@ -33,6 +32,15 @@ describe('ButtonFieldComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should get error message', () => {
+        component.dataField.value = undefined;
+        expect(component.getErrorMessage()).toEqual('This field is required!');
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
@@ -42,10 +50,6 @@ describe('ButtonFieldComponent', () => {
 class TestWrapperComponent {
     field = new ButtonField('', '', {
         required: true,
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
     });
 }
 

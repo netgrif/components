@@ -1,38 +1,30 @@
 import {Behavior} from './behavior';
 
 /**
- * Map that contains the infromation about changes to all data fields of a Case. Keys are data field IDs.
+ * response example:
+ *  {"changedFields": {
+ *      "text_1":{"behavior":{"1":{"editable":true}}},
+ *     "text_0":{"behavior":{"1":{"visible":true}}},
+ *      "text_3":{"behavior":{"1":{"editable":true,"optional":true}}},
+ *      "text_2":{"behavior":{"1":{"editable":true,"required":true}}},
+ *      "text_5":{"behavior":{"1":{"forbidden":true}}},
+ *      "text_4":{"behavior":{"1":{"hidden":true}}}
+ *  }}
  *
- * See [TaskResourceService.setData()]{@link TaskResourceService#setData}.
+ *  1 ==> transition ID
+ *
+ *  it might be better if some parent element gave only the relevant changes to each task
  */
 export interface ChangedFields {
     [key: string]: Change;
 }
 
-/**
- * Describes changes made to the state of one data field of a Case by the backend.
- * State of the respective fields should be changed accordingly.
- */
 export interface Change {
-    /**
-     * New value for the field.
-     */
     value?: string | number | boolean | any;
-    /**
-     * New behavior for the field
-     */
-    behavior?: Behaviors;
+    // behavior  contains information about transition id
+    behavior?: {
+        [key: string]: Behavior
+    };
 
-    /**
-     * @ignore
-     */
     [key: string]: any;
-}
-
-/**
- * Map that contains the information about behavior change for each transition in the underlying PetriNet model.
- * Keys are Transition IDs.
- */
-export interface Behaviors {
-    [key: string]: Behavior;
 }

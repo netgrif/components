@@ -26,8 +26,16 @@ export class MultichoiceField  extends DataField<Array<string>> {
         }
     }
 
+    set choices(choices: Array<MultichoiceFieldValue>) {
+        this._choices = choices;
+    }
+
     get choices(): Array<MultichoiceFieldValue> {
         return this._choices;
+    }
+
+    set view(view: MultichoiceFieldView) {
+        this._view = view;
     }
 
     get view(): MultichoiceFieldView {

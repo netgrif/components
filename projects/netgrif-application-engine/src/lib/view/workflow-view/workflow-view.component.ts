@@ -36,7 +36,9 @@ export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewI
     public importNet() {
         // TODO 9.4. 2020 - Import net, after import net call loadNets(true) from process service
         this._sideMenuService.open(ImportNetComponent).onClose.subscribe( event => {
-            console.log(event);
+            if (event.data !== undefined) {
+                this._workflowViewService.reload();
+            }
         });
     }
 

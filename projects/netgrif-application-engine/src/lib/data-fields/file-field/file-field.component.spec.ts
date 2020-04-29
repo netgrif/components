@@ -11,6 +11,8 @@ import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {FileUploadService} from './services/upload/file-upload.service';
 import {FileDownloadService} from './services/download/file-download.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
 
 describe('FileFieldComponent', () => {
     let component: FileFieldComponent;
@@ -20,7 +22,13 @@ describe('FileFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, HttpClientTestingModule],
             declarations: [FileFieldComponent, TestWrapperComponent],
-            providers: [FileFieldService, SideMenuService, FileUploadService, FileDownloadService],
+            providers: [
+                FileFieldService,
+                SideMenuService,
+                FileUploadService,
+                FileDownloadService,
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
@@ -31,6 +39,10 @@ describe('FileFieldComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
     });
 });
 
@@ -47,5 +59,4 @@ class TestWrapperComponent {
         hidden: true
     });
 }
-
 

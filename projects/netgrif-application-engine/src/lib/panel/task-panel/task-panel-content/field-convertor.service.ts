@@ -34,7 +34,7 @@ export class FieldConvertorService {
         switch (item.type) {
             case 'boolean':
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
-                    item.placeholder, item.description, item.layout);
+                    item.placeholder, item.description, item.layout, item.validations);
             case 'text':
                 let type = TextFieldView.DEFAULT;
                 if (item.subType !== undefined && item.subType === 'area') {
@@ -59,12 +59,18 @@ export class FieldConvertorService {
                         typeEnum = EnumerationFieldView.AUTOCOMPLETE;
                     }
                 }
-                const choices: EnumerationFieldValue[] = [];
-                item.choices.forEach(it => {
-                    choices.push({key: it, value: it} as EnumerationFieldValue);
-                });
+                const enumChoices: EnumerationFieldValue[] = [];
+                if (item.choices instanceof Array) {
+                    item.choices.forEach(it => {
+                        enumChoices.push({key: it, value: it} as EnumerationFieldValue);
+                    });
+                } else {
+                    Object.keys(item.choices).forEach( key => {
+                        enumChoices.push({key, value: item.choices[key]} as EnumerationFieldValue);
+                    });
+                }
                 return new EnumerationField(item.stringId, item.name, item.value as string,
-                    choices, item.behavior, item.placeholder, item.description, item.layout, typeEnum);
+                    enumChoices, item.behavior, item.placeholder, item.description, item.layout, typeEnum);
             case 'multichoice':
                 let typeMulti = MultichoiceFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {
@@ -74,9 +80,15 @@ export class FieldConvertorService {
                 }
                 const values: string[] = item.value as string[];
                 const choicesMulti: MultichoiceFieldValue[] = [];
-                item.choices.forEach(it => {
-                    choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);
-                });
+                if (item.choices instanceof Array) {
+                    item.choices.forEach(it => {
+                        choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);
+                    });
+                } else {
+                    Object.keys(item.choices).forEach( key => {
+                        choicesMulti.push({key, value: item.choices[key]} as MultichoiceFieldValue);
+                    });
+                }
                 return new MultichoiceField(item.stringId, item.name, values, choicesMulti, item.behavior,
                     item.placeholder, item.description, item.layout, typeMulti);
             case 'date':
@@ -95,7 +107,7 @@ export class FieldConvertorService {
             case 'user':
                 let user;
                 if (item.value) {
-                    user = new UserValue(item.value.id, item.name, item.value.surname, item.value.email);
+                    user = new UserValue(item.value.id, item.value.name, item.value.surname, item.value.email);
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout);

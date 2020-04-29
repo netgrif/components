@@ -1,14 +1,16 @@
 <div fxLayout="row" fxLayoutAlign=" center">
-    <mat-icon *ngIf="!file.successfullyUploaded">description</mat-icon>
-    <mat-icon *ngIf="file.successfullyUploaded">done</mat-icon>
+    <mat-icon *ngIf="!file.completed && !file.downloading">description</mat-icon>
+    <mat-icon *ngIf="file.completed && !file.downloading">done</mat-icon>
+    <mat-spinner *ngIf="file.downloading" class="spinner-position" color="primary" diameter="20" strokeWidth="1.5"></mat-spinner>
     <span (click)="onFileDownload(file)" class="file-name"
           [ngClass]="{
-                          'file-name-download': file.successfullyUploaded,
-                          'file-name-upload': !file.successfullyUploaded
+                          'file-name-download': file.completed,
+                          'file-name-downloading': file.downloading,
+                          'file-name-upload': !file.completed
           }">{{shortFileName(file)}}</span>
     <span class="file-size">{{fileSize | decimalBytes }}</span>
     <mat-progress-bar color="primary" [value]="file.progress" class="progress-bar-size"></mat-progress-bar>
-    <mat-icon (click)="retryFile(file)" *ngIf="file.canRetry" class="retry-upload-file-icon">restore_page</mat-icon>
-    <mat-icon (click)="cancelFile(file)" *ngIf="file.canCancel" class="cancel-file-icon">close</mat-icon>
+    <mat-icon (click)="retryFile(file)" *ngIf="file" class="retry-upload-file-icon">restore_page</mat-icon>
+    <mat-icon (click)="cancelFile(file)" *ngIf="file" class="cancel-file-icon">close</mat-icon>
 </div>
 

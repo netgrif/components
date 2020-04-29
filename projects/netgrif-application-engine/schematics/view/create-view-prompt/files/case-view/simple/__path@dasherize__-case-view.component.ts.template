@@ -4,6 +4,8 @@ import {
     AbstractCaseView,
     CaseViewService,
     Case,
+    SimpleFilter,
+    FilterType,
 } from '@netgrif/application-engine';
 
 @Component({
@@ -17,7 +19,8 @@ export class <%= classify(path) %>CaseViewComponent extends AbstractCaseView imp
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
     constructor(caseViewService: CaseViewService) {
-        super(caseViewService, '{}');
+        super(caseViewService, new SimpleFilter('', FilterType.CASE, {}));
+        // TODO implement allowedNets
     }
 
     ngAfterViewInit(): void {

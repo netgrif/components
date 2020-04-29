@@ -10,7 +10,7 @@ import {AuthenticationModule} from '../../authentication.module';
 })
 export class AuthenticationGuardService implements CanActivate {
 
-    public static readonly LOGIN_COMPONENT = 'loginview';
+    public static readonly LOGIN_COMPONENT = 'login';
 
     private readonly _loginUrl: string;
 

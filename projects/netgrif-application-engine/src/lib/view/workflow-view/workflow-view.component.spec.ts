@@ -2,27 +2,39 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WorkflowViewComponent} from './workflow-view.component';
 import {MaterialModule} from '../../material/material.module';
-import {Component, Input, TemplateRef} from '@angular/core';
-import {SideMenuContainerComponent} from '../../side-menu/side-menu-container/side-menu-container.component';
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {PanelModule} from '../../panel/panel.module';
+import {SideMenuContentModule} from '../../side-menu/content-components/side-menu-content.module';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {HeaderModule} from '../../header/header.module';
+import {WorkflowHeaderService} from '../../header/workflow-header/workflow-header.service';
 
-describe('WorkflowsComponent', () => {
+describe('WorkflowViewComponent', () => {
     let component: WorkflowViewComponent;
     let fixture: ComponentFixture<WorkflowViewComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                WorkflowViewComponent,
-                HeaderStubComponent,
-                WorkflowsPanelGroupStubComponent,
-                SideMenuContainerComponent
+                WorkflowViewComponent
             ],
             imports: [
                 MaterialModule,
                 NoopAnimationsModule,
-                HttpClientModule
+                HttpClientModule,
+                PanelModule,
+                HeaderModule,
+                HttpClientTestingModule,
+                SideMenuContentModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                WorkflowHeaderService
             ]
         })
             .compileComponents();
@@ -34,15 +46,11 @@ describe('WorkflowsComponent', () => {
         fixture.detectChanges();
     });
 
-    // it('should create', () => {
-    //     expect(component).toBeTruthy();
-    // });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
-
-@Component({selector: 'nae-header', template: ''})
-class HeaderStubComponent {
-}
-
-@Component({selector: 'nae-workflow-panel-group', template: ''})
-class WorkflowsPanelGroupStubComponent {
-}

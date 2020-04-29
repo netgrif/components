@@ -27,11 +27,10 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
         }
 
         if (this.validations) {
-            if (!this._validators) {
-                this._validators = [];
-                this._validators = this.resolveValidations();
+            if (this._validators) {
                 result.push(...this._validators);
             } else {
+                this._validators = this.resolveValidations();
                 result.push(...this._validators);
             }
         }
@@ -50,13 +49,13 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
                 const start = this.parseDate(ranges[0]);
                 const end = this.parseDate(ranges[1]);
 
-                if (!start && !end) {
-                    if (start === 'past' && this.isValidDate(end)) {
-                        result.push(this.validFromPast(end as Date));
-                    } else if (end === 'future' && this.isValidDate(start)) {
-                        result.push(this.validToFuture(start as Date));
-                    } else if (this.isValidDate(start) && this.isValidDate(end)) {
-                        result.push(this.validBetween(start as Date, end as Date));
+                if (start && end) {
+                    if (start === 'past' && moment(end).isValid()) {
+                        result.push(this.validFromPast(moment(end)));
+                    } else if (end === 'future' && moment(start).isValid()) {
+                        result.push(this.validToFuture(moment(start)));
+                    } else if (moment(start).isValid() && moment(end).isValid()) {
+                        result.push(this.validBetween(moment(start), moment(end)));
                     }
                 }
             } else if (item.validationRule.includes('workday')) {
@@ -69,25 +68,25 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
         return result;
     }
 
-    protected validFromPast(range: Date): ValidatorFn {
+    protected validFromPast(range: Moment): ValidatorFn {
         return (fc: FormControl): { [key: string]: any } | null => fc.value > range ? {validBetween: true} : null;
     }
 
-    protected validToFuture(range: Date): ValidatorFn {
+    protected validToFuture(range: Moment): ValidatorFn {
         return (fc: FormControl): { [key: string]: any } | null => fc.value < range ? {validBetween: true} : null;
     }
 
-    protected validBetween(first: Date, second: Date): ValidatorFn {
+    protected validBetween(first: Moment, second: Moment): ValidatorFn {
         return (fc: FormControl): { [key: string]: any } | null => fc.value < first || fc.value > second ? {validBetween: true} : null;
     }
 
     protected validWorkday(fc: FormControl) {
-        const dayOfWeek = fc.value.getDay();
+        const dayOfWeek = fc.value.weekday();
         return dayOfWeek === 6 || dayOfWeek === 0 ? {validWorkday: true} : null;
     }
 
     protected validWeekend(fc: FormControl) {
-        const dayOfWeek = fc.value.getDay();
+        const dayOfWeek = fc.value.weekday();
         return dayOfWeek >= 1 && dayOfWeek <= 5 && dayOfWeek !== 0 ? {validWeekend: true} : null;
     }
 
@@ -95,16 +94,12 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
         if (date.includes('past')) {
             return 'past';
         } else if (date.includes('today')) {
-            return new Date();
+            return moment(new Date());
         } else if (date.includes('future')) {
             return 'future';
         } else {
-            const newDate = new Date(date);
-            return this.isValidDate(newDate) ? newDate : null;
+            const newDate = moment(new Date(date));
+            return newDate.isValid ? newDate : null;
         }
-    }
-
-    protected isValidDate(d) {
-        return d instanceof Date && !isNaN(d.getTime());
     }
 }

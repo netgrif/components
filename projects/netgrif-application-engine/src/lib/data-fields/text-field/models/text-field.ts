@@ -37,11 +37,10 @@ export class TextField extends DataField<string> {
         }
 
         if (this.validations) {
-            if (this._validators === undefined) {
-                this._validators = [];
-                this._validators = this.resolveValidations();
+            if (this._validators) {
                 result.push(...this._validators);
             } else {
+                this._validators = this.resolveValidations();
                 result.push(...this._validators);
             }
         }
@@ -77,7 +76,7 @@ export class TextField extends DataField<string> {
     }
 
     private validTelNumber(fc: FormControl) {
-        if (!(new RegExp(/^(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)$/).test(fc.value))) {
+        if (!(new RegExp(/^(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)$/).test(fc.value))) {
             return ({validTelNumber: true});
         } else {
             return (null);

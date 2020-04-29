@@ -18,15 +18,26 @@ import {
     QuickPanelModule,
     SideMenuModule,
     SimpleDialogComponent,
+    GenericSnackBarComponent,
+    SuccessSnackBarComponent,
+    WarningSnackBarComponent,
+    ErrorSnackBarComponent,
     TabsModule,
     ToolbarModule,
-    CardModule,
     UserAssignComponent,
     ResourceProvider,
     UserModule,
     ImportNetComponent,
     WorkflowViewModule,
     DashboardModule,
+    FilterSelectorComponent,
+    FilesUploadComponent,
+    LoginFormModule,
+    ForgottenPasswordFormModule,
+    RegistrationFormModule,
+    SignUpModule,
+    SideMenuContentModule,
+    ProfileModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -52,13 +63,14 @@ import {TabbedCaseViewComponent} from './doc/tabbed-case-view/tabbed-case-view/t
 import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-example.component';
 import {TabbedTaskViewComponent} from './doc/tabbed-case-view/tabbed-task-view/tabbed-task-view.component';
 import {WorkflowViewExampleComponent} from './doc/workflow-view-example/workflow-view-example.component';
-import {LoginCardComponent} from './doc/cards/login-card/login-card.component';
-import {PasswordCardComponent} from './doc/cards/password-card/password-card.component';
-import {RegisterCardComponent} from './doc/cards/register-card/register-card.component';
+import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
+import {PasswordFormComponent} from './doc/forms/password-form/password-form.component';
+import {RegisterFormComponent} from './doc/forms/register-form/register-form.component';
 import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
-
+import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/filter-repository-example.component';
+import { ProfileComponent } from './doc/profile/profile.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -84,12 +96,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabbedTaskViewComponent,
         WorkflowViewExampleComponent,
         ContentComponent,
-        LoginCardComponent,
-        PasswordCardComponent,
-        RegisterCardComponent,
+        LoginFormComponent,
+        PasswordFormComponent,
+        RegisterFormComponent,
         HeadersComponent,
         PanelsComponent,
-        DashboardExampleComponent
+        DashboardExampleComponent,
+        FilterRepositoryExampleComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,
@@ -100,6 +114,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MaterialModule,
         CovalentModule,
         AuthenticationModule,
+        SignUpModule,
         HttpClientModule,
         MatIconModule,
         UserModule,
@@ -121,11 +136,16 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         }),
         MatCardModule,
-        CardModule,
         WorkflowViewModule,
         DashboardModule,
+        LoginFormModule,
+        ForgottenPasswordFormModule,
+        RegistrationFormModule,
+        SideMenuContentModule,
+        ProfileModule
     ],
     entryComponents: [
+        FilesUploadComponent,
         NewCaseComponent,
         UserAssignComponent,
         SimpleDialogComponent,
@@ -135,11 +155,16 @@ export function HttpLoaderFactory(http: HttpClient) {
         TabbedCaseViewComponent,
         TabbedTaskViewComponent,
         ImportNetComponent,
+        FilterSelectorComponent,
+        GenericSnackBarComponent,
+        SuccessSnackBarComponent,
+        WarningSnackBarComponent,
+        ErrorSnackBarComponent,
     ],
     providers: [{
-            provide: ConfigurationService,
-            useClass: NaeExampleAppConfigurationService
-        },
+        provide: ConfigurationService,
+        useClass: NaeExampleAppConfigurationService
+    },
         ResourceProvider,
         TranslateService,
         TranslatePipe,

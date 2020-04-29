@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabbedCaseViewComponent } from './case-view.component';
+import { TabbedCaseViewComponent } from './tabbed-case-view.component';
 
 describe('CaseViewComponent', () => {
   let component: TabbedCaseViewComponent;

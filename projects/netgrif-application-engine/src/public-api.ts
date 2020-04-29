@@ -13,7 +13,7 @@ export * from './lib/authentication/public-api';
 export * from './lib/user/public-api';
 export * from './lib/panel/public-api';
 export * from './lib/configuration/public-api';
-export * from './lib/card/public-api';
+export * from './lib/forms/public-api';
 export * from './lib/toolbar/public-api';
 export * from './lib/tabs/public-api';
 export * from './lib/side-menu/public-api';
@@ -24,6 +24,5 @@ export * from './lib/navigation/public-api';
 export * from './lib/view/public-api';
 export * from './lib/process/public-api';
 export * from './lib/dashboard/public-api';
-
-/* SERVICES */
-export * from './lib/snack-bar/snack-bar.service';
+export * from './lib/filter/public-api';
+export * from './lib/snack-bar/public-api';

@@ -8,68 +8,46 @@ import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
+import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {of} from 'rxjs';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 
 describe('NewCaseComponent', () => {
-    // let component: NewCaseComponent;
-    // let fixture: ComponentFixture<NewCaseComponent>;
-    //
-    // beforeEach(async(() => {
-    //     TestBed.configureTestingModule({
-    //         imports: [
-    //             CommonModule,
-    //             MaterialModule,
-    //             BrowserAnimationsModule,
-    //             HttpClientTestingModule
-    //         ],
-    //         declarations: [NewCaseComponent],
-    //         providers: [{
-    //             provide: NAE_SIDE_MENU_CONTROL, factory: () => {
-    //                 return new SideMenuControl(null, null, null);
-    //             }
-    //         },
-    //             {
-    //                 provide: ConfigurationService, factory: () => {
-    //                     return new (class TempConfig extends ConfigurationService {
-    //                         constructor() {
-    //                             super({
-    //                                 providers: {
-    //                                     auth: {
-    //                                         address: 'string',
-    //                                         authentication: 'string'
-    //                                     },
-    //                                     resources: {
-    //                                         name: 'string',
-    //                                         address: 'string',
-    //                                         format: 'string'
-    //                                     }
-    //                                 }, theme: {
-    //                                     name: '',
-    //                                     pallets: {
-    //                                         light: {
-    //                                             primary: ''
-    //                                         },
-    //                                         dark: {}
-    //                                     }
-    //                                 }, assets: [],
-    //                                 views: {
-    //                                     layout: 'string'
-    //                                 }
-    //                             });
-    //                         }
-    //                     })();
-    //                 }
-    //             }]
-    //     })
-    //         .compileComponents();
-    // }));
-    //
-    // beforeEach(() => {
-    //     fixture = TestBed.createComponent(NewCaseComponent);
-    //     component = fixture.componentInstance;
-    //     fixture.detectChanges();
-    // });
-    //
-    // it('should create', () => {
-    //     expect(component).toBeTruthy();
-    // });
+    let component: NewCaseComponent;
+    let fixture: ComponentFixture<NewCaseComponent>;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CommonModule,
+                MaterialModule,
+                BrowserAnimationsModule,
+                HttpClientTestingModule,
+                SnackBarModule
+            ],
+            declarations: [NewCaseComponent],
+            providers: [
+                {
+                    provide: NAE_SIDE_MENU_CONTROL,
+                    useValue: new SideMenuControl(undefined, undefined, () => of('close'), [])
+                },
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ]
+        })
+            .compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(NewCaseComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });

@@ -26,8 +26,16 @@ export class EnumerationField extends DataField<string> {
         }
     }
 
+    set choices(choices: Array<EnumerationFieldValue>) {
+         this._choices = choices;
+    }
+
     get choices(): Array<EnumerationFieldValue> {
         return this._choices;
+    }
+
+    set view(view: EnumerationFieldView) {
+        this._view = view;
     }
 
     get view(): EnumerationFieldView {

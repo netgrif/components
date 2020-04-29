@@ -186,7 +186,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerChange$.next({
             headerType: this.headerType,
             mode: HeaderMode.EDIT,
-            description: {preferredHeaders: null /*this._headerState.selectedHeaders$*/}
+            description: {preferredHeaders: this._headerState.selectedHeaders}
         });
     }
 

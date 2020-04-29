@@ -1,6 +1,12 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {commitChangesToFile, createFilesFromTemplates, getAppModule, getProjectInfo} from '../../utility-functions';
+import {
+    commitChangesToFile,
+    createFilesFromTemplates,
+    createRelativePath,
+    getAppModule,
+    getProjectInfo
+} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
 import {
@@ -19,16 +25,18 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
     const projectInfo = getProjectInfo(tree);
     const className = new ClassName(args.path as string, resolveClassSuffixForView(args.viewType as string));
     const rules = [];
+    const destinationPath = `${projectInfo.path}/views/${args.path}`;
 
     const templateParams = {
         prefix: projectInfo.projectPrefixDasherized,
         path: className.prefix,
         dasherize: strings.dasherize,
-        classify: strings.classify
+        classify: strings.classify,
+        configName: projectInfo.projectNameClassified,
+        configImportPath: createRelativePath(className.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     };
 
     const commonPathPrefix = './files/case-view/';
-    const destinationPath = `${projectInfo.path}/views/${args.path}`;
     rules.push(createFilesFromTemplates(`${commonPathPrefix}common`, destinationPath, templateParams));
     if (!!args.isTabbed) {
         rules.push(createFilesFromTemplates(`${commonPathPrefix}tabbed`, destinationPath, templateParams));

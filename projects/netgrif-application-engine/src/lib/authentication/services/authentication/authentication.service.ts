@@ -14,7 +14,7 @@ import {SessionService} from '../../session/services/session.service';
 })
 export class AuthenticationService {
 
-    private static readonly IDENTIFICATION_ATTRIBUTE = 'username'; // TODO change for ID
+    private static readonly IDENTIFICATION_ATTRIBUTE = 'id';
 
     private _authenticated$: BehaviorSubject<boolean>;
 

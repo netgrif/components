@@ -6,6 +6,8 @@ import {
     TabbedCaseView,
     LoggerService,
     CaseViewService,
+    SimpleFilter,
+    FilterType,
 } from '@netgrif/application-engine';
 
 @Component({
@@ -21,7 +23,8 @@ export class <%= classify(path) %>CaseViewComponent extends TabbedCaseView imple
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(caseViewService, loggerService, injectedTabData, '{}');
+        super(caseViewService, loggerService, injectedTabData, new SimpleFilter('', FilterType.CASE, {}));
+        // TODO implement allowedNets
     }
 
     ngAfterViewInit(): void {

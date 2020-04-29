@@ -10,6 +10,7 @@ import {DataFieldsModule} from '../data-fields/data-fields.module';
 import {TaskListComponent} from './task-panel-list/task-list.component';
 import { WorkflowPanelComponent } from './workflow-panel/workflow-panel.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
+import {SnackBarModule} from '../snack-bar/snack-bar.module';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
         MaterialModule,
         FlexModule,
         DataFieldsModule,
-        TranslateLibModule
+        TranslateLibModule,
+        SnackBarModule
     ],
     exports: [
         PanelComponent,

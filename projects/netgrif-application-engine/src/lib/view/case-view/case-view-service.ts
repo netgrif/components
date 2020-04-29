@@ -8,14 +8,17 @@ import {NewCaseComponent} from '../../side-menu/content-components/new-case/new-
 import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {SortableView} from '../abstract/sortable-view';
 import {LoggerService} from '../../logger/services/logger.service';
-import {SnackBarService} from '../../snack-bar/snack-bar.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {Filter} from '../../filter/models/filter';
+import {SimpleFilter} from '../../filter/models/simple-filter';
+import {FilterType} from '../../filter/models/filter-type';
 
 
 @Injectable()
 export class CaseViewService extends SortableView {
 
     protected _loading$: BehaviorSubject<boolean>;
-    protected _baseFilter: string;
+    protected _baseFilter: Filter;
     protected _cases$: Subject<Array<Case>>;
 
     constructor(protected _sideMenuService: SideMenuService,
@@ -23,7 +26,7 @@ export class CaseViewService extends SortableView {
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService) {
         super();
-        this._baseFilter = '{}';
+        this._baseFilter = new SimpleFilter('', FilterType.CASE, {});
         this._loading$ = new BehaviorSubject<boolean>(false);
         this._cases$ = new Subject<Array<Case>>();
     }
@@ -40,8 +43,8 @@ export class CaseViewService extends SortableView {
         return this._loading$.asObservable();
     }
 
-    public set baseFilter(newFilter: string) {
-        this._baseFilter = newFilter;
+    public set baseFilter(newFilter: Filter) {
+        this._baseFilter = newFilter.clone();
     }
 
     public get cases$(): Observable<Array<Case>> {
@@ -56,12 +59,12 @@ export class CaseViewService extends SortableView {
 
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
-        this._caseResourceService.searchCases(JSON.parse(this._baseFilter), params)
+        this._caseResourceService.searchCases(this._baseFilter, params)
             .subscribe((newCases: Array<Case>) => {
                 if (newCases instanceof Array) {
                     this.updateCases(newCases);
                 } else {
-                    this._snackBarService.openInfoSnackBar('No resource for cases was found');
+                    this._snackBarService.openWarningSnackBar('No resource for cases was found');
                 }
                 this.setLoading(false);
             }, error => {
@@ -76,6 +79,7 @@ export class CaseViewService extends SortableView {
     }
 
     public createNewCase(): void {
+        // TODO 16.4. 2020 Add filter to injected data for newCase Component to get there allowedNets
         this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
