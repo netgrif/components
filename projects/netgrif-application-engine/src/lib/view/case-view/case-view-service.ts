@@ -14,6 +14,7 @@ import {Net} from '../../process/net';
 import {CaseParams} from 'netgrif-application-engine';
 import {ProcessService} from '../../process/process.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 
 
 @Injectable()
@@ -106,8 +107,7 @@ export class CaseViewService extends SortableView {
     }
 
     public createNewCase(): void {
-        // TODO 16.4. 2020 Add filter to injected data for newCase Component to get there allowedNets
-        this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
+        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.loadCases();
