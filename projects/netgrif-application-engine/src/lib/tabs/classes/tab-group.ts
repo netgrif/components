@@ -73,7 +73,7 @@ export class TabGroup implements TabGroupInterface {
     }
 
     public initializeTab(index: number): void {
-        // TODO BUG 16.4.2020 - index is never checked - use checkIndexRange method same as in other functions in this class
+        this.checkIndexRange(index);
         const tab = this.openedTabs[index];
         if (!tab.isTabInitialized) {
             Object.assign(tab.injectedObject, {

@@ -29,9 +29,6 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
         super(caseViewService, new SimpleFilter('', FilterType.CASE, {}));
         this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
         // TODO 16.4. 2020 initialize allowedNets by filter
-        // processService.getNet('leukemia').subscribe( result => {
-        //     console.log(result);
-        // });
         const view = configService.getViewByPath('<%= webPath %>');
         if (view && view.layout && view.layout.params) {
             this.params = view.layout.params as CaseParams;

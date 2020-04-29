@@ -202,7 +202,10 @@ class TestWrapperComponent {
             dataFocusPolicy: DataFocusPolicy.manual,
             finishPolicy: FinishPolicy.manual,
             stringId: 'string',
-            cols: undefined,
+            layout: {
+                cols: undefined,
+                rows: undefined
+            },
             dataGroups: [],
             _links: {}
         },

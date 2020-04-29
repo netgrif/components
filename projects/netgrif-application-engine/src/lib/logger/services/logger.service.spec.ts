@@ -9,7 +9,9 @@ describe('LoggerService', () => {
     let service: LoggerService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            providers: []
+        });
         service = TestBed.inject(LoggerService);
 
         spyOn(console, 'log').and.callThrough();

@@ -48,7 +48,7 @@ export class TaskPanelContentComponent {
         resource.forEach(dataGroup => {
             let count = 0;
             let columnGroup;
-            if (dataGroup.layout.cols !== undefined) {
+            if (dataGroup.layout && dataGroup.layout.cols !== undefined) {
                 columnGroup = dataGroup.layout.cols;
             } else {
                 columnGroup = columnCount;

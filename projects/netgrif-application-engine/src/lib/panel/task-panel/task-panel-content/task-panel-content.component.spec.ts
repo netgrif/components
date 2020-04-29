@@ -52,7 +52,9 @@ describe('TaskPanelContentComponent', () => {
                 title: 'string',
                 alignment: 'end',
                 stretch: false,
-                cols: 4
+                layout: {
+                    cols: 4
+                }
             }, {
                 fields: [
                     new BooleanField('', '', true, {editable: true}),
@@ -80,7 +82,9 @@ describe('TaskPanelContentComponent', () => {
                 title: 'string',
                 alignment: 'start',
                 stretch: false,
-                cols: 3
+                layout: {
+                    cols: 4
+                }
             }, {
                 fields: [
                     new BooleanField('', '', true, {editable: true},
@@ -105,7 +109,9 @@ describe('TaskPanelContentComponent', () => {
                 title: '',
                 alignment: 'start',
                 stretch: false,
-                cols: 3
+                layout: {
+                    cols: 4
+                }
             },
         ], 4).length).toEqual(20);
     });
