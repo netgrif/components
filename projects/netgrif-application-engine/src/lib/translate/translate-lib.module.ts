@@ -1,9 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {SelectLanguageService} from '../toolbar/select-language.service';
+import {AuthenticationInterceptor} from '../authentication/services/authentication-interceptor';
+import {TranslateInterceptor} from './translate-interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -22,7 +24,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         })
     ],
     exports: [TranslateModule],
-    providers: [TranslateService, TranslatePipe, TranslateStore, SelectLanguageService]
+    providers: [
+        TranslateService,
+        TranslatePipe,
+        TranslateStore,
+        SelectLanguageService,
+        {provide: HTTP_INTERCEPTORS, useClass: TranslateInterceptor, multi: true},
+    ]
 })
 export class TranslateLibModule {
 }

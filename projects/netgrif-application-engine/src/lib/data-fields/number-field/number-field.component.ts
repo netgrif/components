@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {NumberField} from './models/number-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {TranslateService} from '@ngx-translate/core';
+import {SelectLanguageService} from '../../toolbar/select-language.service';
 
 @Component({
   selector: 'nae-number-field',
@@ -11,32 +13,32 @@ export class NumberFieldComponent extends AbstractDataFieldComponent {
 
     @Input() public dataField: NumberField;
 
-    constructor() {
+    constructor(private _translate: TranslateService, private _select: SelectLanguageService) {
         super();
     }
 
     getErrorMessage() {
         if (this.formControl.hasError('required')) {
-            return 'This field is required!';
+            return this._translate.instant('dataField.validations.required');
         }
         if (this.formControl.hasError('validOdd')) {
-            return this.resolveErrorMessage('odd', 'Entered number must be odd');
+            return this.resolveErrorMessage('odd', this._translate.instant('dataField.validations.odd'));
         }
         if (this.formControl.hasError('validEven')) {
-            return this.resolveErrorMessage('even', 'Entered number must be even');
+            return this.resolveErrorMessage('even', this._translate.instant('dataField.validations.even'));
         }
         if (this.formControl.hasError('validPositive')) {
-            return this.resolveErrorMessage('positive', 'Entered number must be positive');
+            return this.resolveErrorMessage('positive', this._translate.instant('dataField.validations.positive'));
         }
         if (this.formControl.hasError('validNegative')) {
-            return this.resolveErrorMessage('negative', 'Entered number must be negative');
+            return this.resolveErrorMessage('negative', this._translate.instant('dataField.validations.negative'));
         }
         if (this.formControl.hasError('validDecimal')) {
-            return this.resolveErrorMessage('decimal', 'Entered number must be decimal');
+            return this.resolveErrorMessage('decimal', this._translate.instant('dataField.validations.decimal'));
         }
         if (this.formControl.hasError('validInRange')) {
             const tmp = this.dataField.validations.find(value => value.validationRule.includes('inrange')).validationRule.split(' ');
-            return this.resolveErrorMessage('inrange', 'Entered number must be in range ' + tmp[1]);
+            return this.resolveErrorMessage('inrange', this._translate.instant('dataField.validations.inrange') + tmp[1]);
         }
         return '';
     }

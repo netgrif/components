@@ -6,6 +6,8 @@ import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('ButtonFieldComponent', () => {
     let component: ButtonFieldComponent;
@@ -13,7 +15,7 @@ describe('ButtonFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule],
+            imports: [MaterialModule, AngularResizedEventModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [
                 ButtonFieldComponent,
                 DataFieldTemplateComponent,

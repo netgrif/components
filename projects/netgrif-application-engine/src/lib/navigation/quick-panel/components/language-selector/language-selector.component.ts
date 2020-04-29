@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {SelectLanguageService} from '../../../../toolbar/select-language.service';
 
 @Component({
     selector: 'nae-language-selector',
@@ -15,14 +16,14 @@ export class LanguageSelectorComponent implements OnInit {
     public langMenuItems = [
         {
             key: 'sk-SK',
-            value: 'Slovak'
+            value: 'sk'
         },
         {
-            key: 'en-GB',
-            value: 'English'
+            key: 'en-US',
+            value: 'en'
         }];
 
-    constructor() {
+    constructor(private _select: SelectLanguageService) {
     }
 
     ngOnInit(): void {
@@ -39,4 +40,8 @@ export class LanguageSelectorComponent implements OnInit {
         return languageCode.toLowerCase();
     }
 
+    setLang(lang: string) {
+        this.language = lang;
+        this._select.setLanguage(lang);
+    }
 }

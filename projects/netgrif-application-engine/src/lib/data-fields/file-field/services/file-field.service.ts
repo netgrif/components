@@ -8,6 +8,8 @@ import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} f
 import {FileUploadModel} from '../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {FilesUploadComponent} from '../../../side-menu/content-components/files-upload/files-upload.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
+import {TranslateService} from '@ngx-translate/core';
+import {SelectLanguageService} from '../../../toolbar/select-language.service';
 
 /**
  * Links communication between
@@ -41,11 +43,15 @@ export class FileFieldService {
      * @param _fileDownloadService Provides download file from backend
      * @param _sideMenuService Open right side menu
      * @param _snackBarService Notify user about exceeded validations
+     * @param _translate for translations
+     * @param _select Initialize languages
      */
     constructor(private _fileUploadService: FileUploadService,
                 private _fileDownloadService: FileDownloadService,
                 private _sideMenuService: SideMenuService,
-                private _snackBarService: SnackBarService) {
+                private _snackBarService: SnackBarService,
+                private _translate: TranslateService,
+                private _select: SelectLanguageService) {
         this._fileUploadService.fileUploadCompleted.subscribe(() => {
             this.fileField.value = this.resolveFilesArray();
         });
@@ -132,7 +138,7 @@ export class FileFieldService {
     public fileUpload() {
         this.fileUploadEl.nativeElement.onchange = () => {
             if ((this.allFiles.length + this.fileUploadEl.nativeElement.files.length) > this.fileField.maxUploadFiles) {
-                this._snackBarService.openWarningSnackBar('You choose more files as you allowed',
+                this._snackBarService.openWarningSnackBar(this._translate.instant('dataField.snackBar.moreFiles'),
                     SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2);
                 return;
             }
@@ -140,7 +146,7 @@ export class FileFieldService {
                 const fileUploadModel = this.createFileUploadModel(file);
                 if (this.allFiles.find(
                     f => (f.data as FileUploadDataModel).file.name === (fileUploadModel.data as FileUploadDataModel).file.name)) {
-                    this._snackBarService.openWarningSnackBar('You cannot upload two of the same files',
+                    this._snackBarService.openWarningSnackBar(this._translate.instant('dataField.snackBar.sameFiles'),
                         SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2);
                     return;
                 }
@@ -190,7 +196,7 @@ export class FileFieldService {
     private maxUploadSizeControl(file: FileUploadModel): boolean {
         this.fileField.filesSize += (file.data as FileUploadDataModel).file.size;
         if (this.fileField.filesSize > this.fileField.maxUploadSizeInBytes) {
-            this._snackBarService.openWarningSnackBar('Files size exceeded allowed limit',
+            this._snackBarService.openWarningSnackBar(this._translate.instant('dataField.snackBar.fileSize'),
                 SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2);
             return true;
         }

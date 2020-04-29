@@ -20,8 +20,8 @@ describe('SelectLanguageService', () => {
     });
 
     it('should set lang', () => {
-        service.setLanguage('en');
-        expect(localStorage.getItem('Language')).toEqual('en');
+        service.setLanguage('en-US');
+        expect(localStorage.getItem('Language')).toEqual('en-US');
     });
 
     afterAll(() => {

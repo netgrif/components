@@ -4,6 +4,8 @@ import {TaskResourceService} from '../../../../resources/engine-endpoint/task-re
 import {FileUploadDataModel} from '../../models/file-field';
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/services/snack-bar.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
+import {TranslateService} from '@ngx-translate/core';
+import {SelectLanguageService} from '../../../../toolbar/select-language.service';
 
 /**
  * Provides to download a file from the backend and set some
@@ -23,10 +25,14 @@ export class FileDownloadService {
      * @param _taskResourceService Provides to download a file from the backend
      * @param _snackBarService Used for notify user about ratio download file
      * @param _logger Log result of ratio download file
+     * @param _translate Used for translate snackbar errors
+     * @param _select initialize languages
      */
     constructor(private _taskResourceService: TaskResourceService,
                 private _snackBarService: SnackBarService,
-                private _logger: LoggerService) {
+                private _logger: LoggerService,
+                private _translate: TranslateService,
+                private _select: SelectLanguageService) {
     }
 
     /**
@@ -80,7 +86,8 @@ export class FileDownloadService {
     private _handleDownloadFileErrors(error: any, file: FileUploadModel): void {
         file.downloading = false;
         this._logger.error(error);
-        this._snackBarService.openErrorSnackBar((file.data as FileUploadDataModel).file.name + ' download failed',
+        this._snackBarService.openErrorSnackBar((file.data as FileUploadDataModel).file.name +
+            this._translate.instant('dataField.snackBar.downloadFail'),
             SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1);
     }
 }

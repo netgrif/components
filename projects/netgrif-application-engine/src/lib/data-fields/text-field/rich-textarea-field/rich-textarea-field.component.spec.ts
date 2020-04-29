@@ -9,6 +9,8 @@ import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CovalentModule} from '../../../covalent/covalent.module';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('RichTextareaFieldComponent', () => {
     let component: RichTextareaFieldComponent;
@@ -16,7 +18,8 @@ describe('RichTextareaFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, CovalentModule, BrowserAnimationsModule],
+            imports: [MaterialModule, AngularResizedEventModule, CovalentModule,
+                BrowserAnimationsModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [RichTextareaFieldComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })

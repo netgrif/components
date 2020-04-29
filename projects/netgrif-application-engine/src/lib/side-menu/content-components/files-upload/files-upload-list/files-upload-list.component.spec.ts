@@ -11,6 +11,8 @@ import {Component} from '@angular/core';
 import {FileFieldService} from '../../../../data-fields/file-field/services/file-field.service';
 import {FilesUploadListComponent} from './files-upload-list.component';
 import {FilesUploadItemComponent} from './files-upload-item/files-upload-item.component';
+import {TranslateLibModule} from '../../../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('FilesUploadListComponent', () => {
     let component: FilesUploadListComponent;
@@ -28,7 +30,9 @@ describe('FilesUploadListComponent', () => {
                 CovalentModule,
                 FlexLayoutModule,
                 FlexModule,
-                FormsModule
+                FormsModule,
+                TranslateLibModule,
+                HttpClientTestingModule
             ],
             providers: [
                 FileUploadService,

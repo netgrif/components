@@ -13,6 +13,7 @@ import {FileDownloadService} from './services/download/file-download.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('FileFieldComponent', () => {
     let component: FileFieldComponent;
@@ -20,7 +21,7 @@ describe('FileFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, HttpClientTestingModule],
+            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, HttpClientTestingModule, TranslateLibModule],
             declarations: [FileFieldComponent, TestWrapperComponent],
             providers: [
                 FileFieldService,

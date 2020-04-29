@@ -4,13 +4,14 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../../../material/material.module';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 
 describe('FileUploadService', () => {
     let service: FileUploadService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule],
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
             providers: [
                 FileUploadService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}

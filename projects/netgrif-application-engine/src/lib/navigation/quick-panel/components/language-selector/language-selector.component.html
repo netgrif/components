@@ -1,9 +1,9 @@
 <mat-menu #languageMenu="matMenu">
-    <button *ngFor="let lang of langMenuItems" mat-menu-item (click)="language = lang.key" fxLayout="row"
+    <button *ngFor="let lang of langMenuItems" mat-menu-item (click)="setLang(lang.key)" fxLayout="row"
             fxLayoutAlign="start center" [style.backgroundColor]="lang.key === language ? 'rgba(253,151,31,0.1)':''">
         <img src="https://www.countryflags.io/{{flagCode(lang.key)}}/flat/32.png" alt="Country icon"
              class="icon-small-dimensions">
-        <span class="margin-left-default">{{lang.value}}</span>
+        <span class="margin-left-default">{{'toolbar.menu.' + lang.value | translate}}</span>
     </button>
 </mat-menu>
 

@@ -10,6 +10,8 @@ import moment from 'moment';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {BehaviorSubject} from 'rxjs';
 import {ChangedFields} from '../models/changed-fields';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('DatetimeFieldComponent', () => {
     let component: DateTimeFieldComponent;
@@ -21,6 +23,7 @@ describe('DatetimeFieldComponent', () => {
                 MaterialModule,
                 AngularResizedEventModule,
                 NgxMatDatetimePickerModule,
+                TranslateLibModule, HttpClientTestingModule
             ],
             declarations: [
                 DateTimeFieldComponent,
