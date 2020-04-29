@@ -7,6 +7,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {SelectLanguageService} from '../../toolbar/select-language.service';
 import {SearchService} from '../search-service/search.service';
 import {SimpleSearchChip} from '../models/chips/simple-search-chip';
+import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
+import {AutocompleteCategory} from '../models/category/autocomplete-category';
+import {SearchInputType} from '../models/category/search-input-type';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
@@ -32,7 +35,7 @@ export class SearchComponent implements OnInit {
      * @ignore
      * Observable that contains [Categories]{@link Category} that match user input. It updates it's content every time user input changes.
      */
-    public filteredCategories: Observable<Array<Category>>;
+    public filteredOptions: Observable<Array<Category> | Array<SearchAutocompleteOption>>;
     /**
      * @ignore
      * Array that holds constructed search chips.
@@ -52,17 +55,17 @@ export class SearchComponent implements OnInit {
      * Lambda that is used to preserve `this` reference in HTML binding.
      *
      * See [_renderSelection()]{@link SearchComponent#_renderSelection} for information about the function.
-     * @param category the {@link Category} object that was selected in the autocomplete list.
+     * @param object the {@link Category} or {@link SearchAutocompleteOption} object that was selected in the autocomplete list.
      */
-    public renderSelection = (category: Category) => this._renderSelection(category);
+    public renderSelection = (object: Category | SearchAutocompleteOption) => this._renderSelection(object);
 
     constructor(private _translate: TranslateService,
                 private _searchService: SearchService,
                 private _: SelectLanguageService) {
-        this.filteredCategories = this.formControl.valueChanges.pipe(
+        this.filteredOptions = this.formControl.valueChanges.pipe(
             startWith(''),
-            map(value => typeof value === 'string' ? value : this.categoryName(value)),
-            map(categoryName => this._filterOptions(categoryName))
+            map(value => typeof value === 'string' ? value : this.objectName(value)),
+            map(inputText => this._filterOptions(inputText))
         );
     }
 
@@ -80,12 +83,28 @@ export class SearchComponent implements OnInit {
      * @param userInput string entered by the user
      * @returns [Categories]{@link Category} that start with the user input. Case insensitive. Based on locale translation.
      */
-    private _filterOptions(userInput: string): Array<Category> {
+    private _filterOptions(userInput: string): Array<Category> | Array<SearchAutocompleteOption> {
         if (!this._selectedCategory) {
             const value = userInput.toLocaleLowerCase();
             return this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value));
         } else {
+            if (this._selectedCategory instanceof AutocompleteCategory) {
+                return this._selectedCategory.filterOptions(userInput);
+            }
             return [];
+        }
+    }
+
+    /**
+     * @ignore
+     * @param object autocomplete object who's name we want to get
+     * @returns the name of the provided object
+     */
+    private objectName(object: Category | SearchAutocompleteOption): string {
+        if (object instanceof Category) {
+            return this.categoryName(object);
+        } else {
+            return object.text;
         }
     }
 
@@ -100,13 +119,13 @@ export class SearchComponent implements OnInit {
 
     /**
      * @ignore
-     * Transforms a {@link Category} object into it's name. Used for displaying user selection in the input field, when an autocomplete
-     * option is selected.
-     * @param category object we want to transform. It might not exist if user input doesn't match any autocomplete option
+     * Transforms a {@link Category} or {@link SearchAutocompleteOption} object into it's name.
+     * Used for displaying user selection in the input field, when an autocomplete option is selected.
+     * @param object the object we want to transform. It might not exist if user input doesn't match any autocomplete option
      * @returns translated category name if the {@link Category} exists, empty string otherwise
      */
-    private _renderSelection(category: Category): string {
-        return category ? this.categoryName(category) : '';
+    private _renderSelection(object: Category | SearchAutocompleteOption): string {
+        return object ? this.objectName(object) : '';
     }
 
     /**
@@ -134,11 +153,25 @@ export class SearchComponent implements OnInit {
             if (inputValue === '') {
                 return;
             }
-            this._searchService.addPredicate(this._selectedCategory.generatePredicate([inputValue]));
-            this.searchChips[this.searchChips.length - 1].text += inputValue;
+            if (this._selectedCategory.inputType === SearchInputType.AUTOCOMPLETE) {
+                this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));
+                this.appendTextToLastChip(inputValue.text);
+            } else {
+                this._searchService.addPredicate(this._selectedCategory.generatePredicate([inputValue]));
+                this.appendTextToLastChip(inputValue);
+            }
             this._selectedCategory = undefined;
             this.formControl.setValue('');
         }
+    }
+
+    /**
+     * @ignore
+     * Appends the provided text to the text of the last chip
+     * @param text text that should be appended
+     */
+    private appendTextToLastChip(text: string): void {
+        this.searchChips[this.searchChips.length - 1].text += text;
     }
 
     /**
@@ -160,6 +193,8 @@ export class SearchComponent implements OnInit {
      * Iterates over all Categories and selects their default Operator.
      */
     private selectDefaultOperators(): void {
-        this.searchCategories.forEach(category => {category.selectDefaultOperator(); });
+        this.searchCategories.forEach(category => {
+            category.selectDefaultOperator();
+        });
     }
 }

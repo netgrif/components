@@ -11,8 +11,8 @@
                [matAutocomplete]="searchAutocomplete"
                (keydown.enter)="$event.target.blur();confirmUserInput()">
         <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection">
-            <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
-                {{category.translationPath | translate}}
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.translationPath ? (option.translationPath | translate) : option.text}}
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
