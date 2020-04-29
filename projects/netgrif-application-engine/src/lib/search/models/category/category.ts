@@ -2,6 +2,7 @@ import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
+import {SearchInputType} from './search-input-type';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -20,18 +21,20 @@ export abstract class Category {
     /**
      * The operator that is currently selected for this category. It is used to save state of the search GUI.
      */
-    private _selectedOperator: Operator;
+    protected _selectedOperator: Operator;
 
     /**
      * @param _elasticKeywords Elasticsearch keywords that should be queried by queries generated with this category
      * @param _allowedOperators Operators that can be used to generated queries on the above keywords
      * @param translationPath path to the translation string
+     * @param inputType input field type that should be used to enter values for this category
      * @param _log used to record information about incorrect use of this class
      */
-    protected constructor(private readonly _elasticKeywords: Array<string>,
-                          private readonly _allowedOperators: Array<Operator>,
+    protected constructor(protected readonly _elasticKeywords: Array<string>,
+                          protected readonly _allowedOperators: Array<Operator>,
                           public readonly translationPath: string,
-                          private _log: LoggerService) {
+                          public readonly inputType: SearchInputType,
+                          protected _log: LoggerService) {
     }
 
     /**

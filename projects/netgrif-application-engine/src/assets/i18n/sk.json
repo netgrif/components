@@ -39,7 +39,8 @@
             "case": {
                 "title": "Názov prípadu",
                 "visualId": "Vizuálne ID prípadu",
-                "author": "Autor prípadu"
+                "author": "Autor prípadu",
+                "process": "Proces prípadu"
             }
         }
     }
