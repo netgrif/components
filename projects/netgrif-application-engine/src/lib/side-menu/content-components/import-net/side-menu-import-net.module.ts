@@ -19,7 +19,8 @@ import {FormsModule} from '@angular/forms';
         FlexModule,
         FormsModule
     ],
-    exports: [ImportNetComponent]
+    exports: [ImportNetComponent],
+    entryComponents: [ImportNetComponent]
 })
 export class SideMenuImportNetModule {
 }

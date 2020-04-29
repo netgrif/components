@@ -21,7 +21,8 @@ import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
         FormsModule,
         SnackBarModule
     ],
-    exports: [NewCaseComponent]
+    exports: [NewCaseComponent],
+    entryComponents: [NewCaseComponent]
 })
 export class SideMenuNewCaseModule {
 }

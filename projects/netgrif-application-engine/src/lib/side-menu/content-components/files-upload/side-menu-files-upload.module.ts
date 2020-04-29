@@ -23,7 +23,8 @@ import {FormsModule} from '@angular/forms';
         FlexModule,
         FormsModule
     ],
-    exports: [FilesUploadComponent]
+    exports: [FilesUploadComponent],
+    entryComponents: [FilesUploadComponent]
 })
 export class SideMenuFilesUploadModule {
 }
