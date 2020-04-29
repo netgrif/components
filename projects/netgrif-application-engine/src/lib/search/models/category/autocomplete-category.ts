@@ -14,6 +14,11 @@ export abstract class AutocompleteCategory extends Category {
                           translationPath: string,
                           log: LoggerService) {
         super(elasticKeywords, allowedOperators, translationPath, SearchInputType.AUTOCOMPLETE, log);
+        // timeout is used to bypass javascript object initialization bugs.
+        // Injected properties of inherited classes were not set in the function call.
+        setTimeout(() => {
+            this.createOptions();
+        });
     }
 
     /**
