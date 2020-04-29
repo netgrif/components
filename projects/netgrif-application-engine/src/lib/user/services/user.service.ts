@@ -8,7 +8,7 @@ import {User as AuthUser} from '../../authentication/models/user';
 import {tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserPreferenceService} from './user-preference.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource-service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
 
 @Injectable({

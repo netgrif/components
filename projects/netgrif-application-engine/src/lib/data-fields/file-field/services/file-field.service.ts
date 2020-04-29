@@ -4,7 +4,7 @@ import {FileField, FileUploadDataModel} from '../models/file-field';
 import {FileUploadService} from './upload/file-upload.service';
 import {FileDownloadService} from './download/file-download.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../snack-bar/snack-bar.service';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../snack-bar/services/snack-bar.service';
 import {FileUploadModel} from '../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {FilesUploadComponent} from '../../../side-menu/content-components/files-upload/files-upload.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
@@ -78,8 +78,7 @@ export class FileFieldService {
      * @param file Selected file for re-upload
      */
     public retryFile(file: FileUploadModel) {
-        file.canRetry = false;
-        file.successfullyUploaded = false;
+        file.completed = false;
         this._fileUploadService.uploadFile(file);
     }
 
@@ -88,7 +87,7 @@ export class FileFieldService {
      * @param file Selected file for download
      */
     public onFileDownload(file: FileUploadModel) {
-        if (!file.successfullyUploaded) {
+        if (!file.completed) {
             return;
         }
         this._fileDownloadService.downloadFile(file);
@@ -134,7 +133,7 @@ export class FileFieldService {
         this.fileUploadEl.nativeElement.onchange = () => {
             if ((this.allFiles.length + this.fileUploadEl.nativeElement.files.length) > this.fileField.maxUploadFiles) {
                 this._snackBarService.openWarningSnackBar('You choose more files as you allowed',
-                    SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
+                    SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2);
                 return;
             }
             Array.from(this.fileUploadEl.nativeElement.files).forEach(file => {
@@ -142,7 +141,7 @@ export class FileFieldService {
                 if (this.allFiles.find(
                     f => (f.data as FileUploadDataModel).file.name === (fileUploadModel.data as FileUploadDataModel).file.name)) {
                     this._snackBarService.openWarningSnackBar('You cannot upload two of the same files',
-                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
+                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2);
                     return;
                 }
                 if (this.maxUploadSizeControl(fileUploadModel)) {
@@ -179,10 +178,9 @@ export class FileFieldService {
                 name: file.name.substr(0, file.name.lastIndexOf('.')),
                 extension: file.name.substr(file.name.lastIndexOf('.') + 1)
             },
-            state: 'in', downloading: false,
+            downloading: false,
             inProgress: false, progress: isSuccessfullyUploaded ? 100 : 0,
-            canRetry: false, canCancel: true,
-            successfullyUploaded: isSuccessfullyUploaded
+            completed: isSuccessfullyUploaded
         };
     }
 
@@ -193,7 +191,7 @@ export class FileFieldService {
         this.fileField.filesSize += (file.data as FileUploadDataModel).file.size;
         if (this.fileField.filesSize > this.fileField.maxUploadSizeInBytes) {
             this._snackBarService.openWarningSnackBar('Files size exceeded allowed limit',
-                SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2000);
+                SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2);
             return true;
         }
         return false;
@@ -203,7 +201,7 @@ export class FileFieldService {
      * Returns successfully uploaded files as File.
      */
     private resolveFilesArray(): Array<File> {
-        return this.allFiles.filter(f => f.successfullyUploaded).map(f => (f.data as FileUploadDataModel).file);
+        return this.allFiles.filter(f => f.completed).map(f => (f.data as FileUploadDataModel).file);
     }
 
 }

@@ -1,25 +1,48 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { <%= classify(path) %>__pathDasherize__CaseViewComponent } from './<%= dasherize(path) %>-case-view.component';
+import { <%= classify(path) %>CaseViewComponent } from './<%= dasherize(path) %>-case-view.component';
+import {
+    CaseHeaderService,
+    ConfigurationService,
+    HeaderModule,
+    MaterialModule,
+    NAE_TAB_DATA
+} from '@netgrif/application-engine';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('<%= classify(path) %>__pathDasherize__CaseViewComponent', () => {
-  let component: <%= classify(path) %>__pathDasherize__CaseViewComponent;
-  let fixture: ComponentFixture<<%= classify(path) %>__pathDasherize__CaseViewComponent>;
+describe('<%= classify(path) %>CaseViewComponent', () => {
+    let component: <%= classify(path) %>CaseViewComponent;
+    let fixture: ComponentFixture<<%= classify(path) %>CaseViewComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ <%= classify(path) %>__pathDasherize__CaseViewComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                MaterialModule,
+                HttpClientTestingModule,
+                HeaderModule,
+                BrowserAnimationsModule
+            ],
+            providers: [
+                {provide: NAE_TAB_DATA, useValue: {tabViewComponent: undefined, tabViewOrder: 1}},
+                {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService},
+                CaseHeaderService
+                ],
+            declarations: [<%= classify(path) %>CaseViewComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(<%= classify(path) %>__pathDasherize__CaseViewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(<%= classify(path) %>CaseViewComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

@@ -1,17 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {PetriNet} from '../interface/petri-net';
-import {Params, ResourceProvider} from '../resource-provider.service';
+import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
 import {changeType, getResourceAddress} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
-import {HttpEvent, HttpParams} from '@angular/common/http';
+import {HttpEventType, HttpParams} from '@angular/common/http';
 import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
 import {Net} from '../../process/net';
 import {MessageResource} from '../interface/message-resource';
-import {PetriNetReference} from '../interface/petri-net-reference';
 
 @Injectable({
     providedIn: 'root'
@@ -80,7 +79,7 @@ export class PetriNetResourceService {
      * {{baseUrl}}/api/petrinet/{netId}/file
      */
     public getNetFile(netId: string, params?: Params): Observable<any> {  // TODO: response
-        return this.provider.get$('petrinet/' + netId + 'file', this.SERVER_URL, params)
+        return this.provider.get$('petrinet/' + netId + '/file', this.SERVER_URL, params)
             .pipe(map(r => changeType(r, undefined)));
     }
 
@@ -110,8 +109,20 @@ export class PetriNetResourceService {
      * POST
      * {{baseUrl}}/api/petrinet/import
      */
-    public importPetriNet(body: FormData, params?: Params): Observable<HttpEvent<MessageResource>> {
-        return this.provider.upload$('petrinet/import', this.SERVER_URL, body, params);
+    public importPetriNet(body: FormData, params?: Params): Observable<ProviderProgress | MessageResource> {
+        return this.provider.postWithEvent$<MessageResource>('petrinet/import', this.SERVER_URL, body, params).pipe(
+            map(event => {
+                switch (event.type) {
+                    case HttpEventType.UploadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return ResourceProvider.processMessageResource(event);
+                    default:
+                        return undefined;
+                }
+            }),
+            filter(value => !!value)
+        );
     }
 
 

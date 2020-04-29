@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {FileUploadModel} from '../../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
 import {FileUploadDataModel} from '../../models/file-field';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/snack-bar.service';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/services/snack-bar.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 
 /**
@@ -39,18 +39,18 @@ export class FileDownloadService {
      */
     public downloadFile(file: FileUploadModel): void {
         file.downloading = true;
-        this._taskResourceService.downloadFile(this.taskId, file.stringId)
-            .subscribe(fileResponse => {
-                    this._downloadFileByLink(fileResponse, file);
-
-                    file.downloading = false;
-                    const successMessage = (file.data as FileUploadDataModel).file.name + ' successfully download';
-                    this._logger.info(successMessage);
-                    this._snackBarService.openInfoSnackBar(successMessage,
-                        SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
-                },
-                (error) => this._handleDownloadFileErrors(error, file)
-            );
+        // this._taskResourceService.downloadFile(this.taskId, file.stringId)
+        //     .subscribe(fileResponse => {
+        //             this._downloadFileByLink(fileResponse, file);
+        //
+        //             file.downloading = false;
+        //             const successMessage = (file.data as FileUploadDataModel).file.name + ' successfully download';
+        //             this._logger.info(successMessage);
+        //             this._snackBarService.openInfoSnackBar(successMessage,
+        //                 SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+        //         },
+        //         (error) => this._handleDownloadFileErrors(error, file)
+        //     );
     }
 
     /**
@@ -81,6 +81,6 @@ export class FileDownloadService {
         file.downloading = false;
         this._logger.error(error);
         this._snackBarService.openErrorSnackBar((file.data as FileUploadDataModel).file.name + ' download failed',
-            SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1000);
+            SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1);
     }
 }

@@ -1,16 +1,17 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {EditModeComponent} from './edit-mode.component';
-import {MatFormFieldModule, MatSelectModule, MatSortModule} from '@angular/material';
+import {MatSelectModule, MatSortModule} from '@angular/material';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {SortModeComponent} from '../sort-mode/sort-mode.component';
-import {CaseHeaderService} from '../../case-header/case-header.service';
+import {CaseHeaderService, CaseMetaField} from '../../case-header/case-header.service';
 import {Component} from '@angular/core';
+import {HeaderColumn, HeaderColumnType} from '../../models/header-column';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
+    let headerSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -25,10 +26,20 @@ describe('EditModeComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
+        headerSpy = spyOn(TestBed.inject(CaseHeaderService), 'headerColumnSelected');
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should call headerColumnSelected', () => {
+        component.headerColumnSelected(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
+        expect(headerSpy).toHaveBeenCalledWith(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
     });
 });
 

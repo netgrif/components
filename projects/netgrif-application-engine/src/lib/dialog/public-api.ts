@@ -7,4 +7,4 @@ export * from './question-dialog-with-answer/question-dialog-with-answer.compone
 export * from './dialog.module';
 
 // SERVICES
-export * from './dialog.service';
+export * from './services/dialog.service';

@@ -1,0 +1,142 @@
+import {inject, TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {PetriNetResourceService} from './petri-net-resource.service';
+
+describe('PetriNetResourceService', () => {
+    let service: PetriNetResourceService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
+        });
+        service = TestBed.inject(PetriNetResourceService);
+    });
+
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
+
+    it('should getAll', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.getAll().subscribe(res => {
+                expect(res.length).toEqual(0);
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush([]);
+        })
+    );
+
+    it('should getDataPetriNet', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.getDataPetriNet({}).subscribe(res => {
+                expect(res.length).toEqual(0);
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/data');
+            expect(reqLog.request.method).toEqual('POST');
+
+            reqLog.flush([]);
+        })
+    );
+
+    it('should getPetriNetTranstions', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.getPetriNetTranstions('id').subscribe(res => {
+                expect(res.length).toEqual(0);
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/transitions?ids=id');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush([]);
+        })
+    );
+
+    it('should getPetriNetTransactions', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.getPetriNetTransactions('id').subscribe(res => {
+                expect(res.length).toEqual(0);
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/id/transactions');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush([]);
+        })
+    );
+
+    it('should getNetFile', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.getNetFile('id').subscribe(res => {
+                expect(res.length).toEqual(0);
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/id/file');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush([]);
+        })
+    );
+
+    it('should getPetriNetRoles', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.getPetriNetRoles('id').subscribe(res => {
+                expect(res.length).toEqual(0);
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/id/roles');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush([]);
+        })
+    );
+
+    it('should getOne', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.getOne('id', 'vers').subscribe(res => {
+                expect(res.stringId).toEqual('string');
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/id/vers');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush({stringId: 'string'});
+        })
+    );
+
+    it('should getOneById', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.getOneById('id').subscribe(res => {
+                expect(res.petriNetReferences[0].stringId).toEqual('string');
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/id');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush({petriNetReferences: [{stringId: 'string'}]});
+        })
+    );
+
+    it('should searchPetriNets', inject([HttpTestingController],
+        (httpMock: HttpTestingController) => {
+            service.searchPetriNets({}).subscribe(res => {
+                expect(res.petriNetReferences[0].stringId).toEqual('string');
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/search');
+            expect(reqLog.request.method).toEqual('POST');
+
+            reqLog.flush({petriNetReferences: [{stringId: 'string'}]});
+        })
+    );
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
+});

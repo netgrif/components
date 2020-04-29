@@ -9,6 +9,8 @@ import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
+import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
+import {CaseMetaField} from '../../header/case-header/case-header.service';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -35,6 +37,14 @@ describe('CasePanelComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('show', () => {
+        expect(component.show(new MouseEvent('type'))).toEqual(false);
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
@@ -42,6 +52,29 @@ describe('CasePanelComponent', () => {
     template: '<nae-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nae-case-panel>'
 })
 class TestWrapperComponent {
-    selectedHeaders =  of([]);
-    case_ = {};
+    selectedHeaders =  of([
+        new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', 'netid'),
+    ]);
+    case_ = {
+        stringId: 'string',
+        title: 'string',
+        identifier: 'string',
+        version: 'string',
+        initials: 'string',
+        defaultCaseName: 'string',
+        createdDate: [2020, 1, 1, 10, 10],
+        author: {email: 'email', fullName: 'fullName'},
+        immediateData: [
+            {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
+            {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
+            {stringId: 'dateTime', title: 'string', type: 'dateTime', value: [2020, 1, 1, 10, 10]},
+            {stringId: 'enum', title: 'string', type: 'enumeration', value: { defaultValue: 'dasd'}},
+        ]
+    };
 }

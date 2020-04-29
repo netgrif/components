@@ -73,7 +73,8 @@ export function createTabView(
         tabs: tabViews.tabTemplates,
         imports: tabViews.tabViewImports,
         dasherize: strings.dasherize,
-        classify: strings.classify
+        classify: strings.classify,
+        modulePath: createRelativePath(className.fileImportPath, './app.module')
     }));
 
     updateAppModule(tree, className.name, className.fileImportPath, [

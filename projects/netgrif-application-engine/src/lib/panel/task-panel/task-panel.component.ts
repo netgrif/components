@@ -6,7 +6,7 @@ import {TaskPanelContentService} from './task-panel-content/task-panel-content.s
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConvertorService} from './task-panel-content/field-convertor.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {SnackBarService} from '../../snack-bar/snack-bar.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
 import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
@@ -25,6 +25,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
 
 
 @Component({
@@ -191,7 +192,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         this._updating = true;
         this._taskService.setData(this.taskPanelData.task.stringId, body).subscribe(response => {
             if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
-                this.taskPanelData.changedFields.next(response.changedFields);
+                this.taskPanelData.changedFields.next(response.changedFields as ChangedFields);
             }
             Object.keys(body).forEach(id => {
                 this.taskPanelData.task.dataGroups.forEach(dataGroup => {
@@ -201,7 +202,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                     }
                 });
             });
-            this._snackBar.openInfoSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
+            this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
             this.loading = false;
             this._updating = false;
             if (this._queue.observers.length !== 0) {
@@ -476,13 +477,10 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private buildAssignPolicy(success: boolean): void {
-        switch (this.taskPanelData.task.assignPolicy) {
-            case AssignPolicy.auto:
-                this.autoAssignPolicy(success);
-                break;
-            default:
-                this.manualAssignPolicy(success);
-                break;
+        if (this.taskPanelData.task.assignPolicy === AssignPolicy.auto) {
+            this.autoAssignPolicy(success);
+        } else {
+            this.manualAssignPolicy(success);
         }
     }
 
@@ -528,13 +526,10 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private buildFinishPolicy(success: boolean): void {
-        switch (this.taskPanelData.task.finishPolicy) {
-            case FinishPolicy.autoNoData:
-                this.autoNoDataFinishPolicy(success);
-                break;
-            default:
-                this.manualFinishPolicy(success);
-                break;
+        if (this.taskPanelData.task.finishPolicy === FinishPolicy.autoNoData) {
+            this.autoNoDataFinishPolicy(success);
+        } else {
+            this.manualFinishPolicy(success);
         }
     }
 

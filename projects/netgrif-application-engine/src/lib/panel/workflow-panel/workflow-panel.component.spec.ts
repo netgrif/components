@@ -9,6 +9,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {of} from 'rxjs';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
+import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
+import {CaseMetaField} from '../../header/case-header/case-header.service';
+import {WorkflowMetaField} from '../../header/workflow-header/workflow-header.service';
 
 
 describe('WorkflowPanelComponent', () => {
@@ -36,6 +39,14 @@ describe('WorkflowPanelComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('show', () => {
+        expect(component.show(new MouseEvent('type'))).toEqual(false);
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
@@ -43,7 +54,13 @@ describe('WorkflowPanelComponent', () => {
     template: '<nae-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nae-workflow-panel>'
 })
 class TestWrapperComponent {
-    public selectedHeaders = of([]);
+    public selectedHeaders = of([
+        new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.AUTHOR, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.INITIALS, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.TITLE, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.VERSION, 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'string'),
+    ]);
     public workflow: PetriNetReference = {
         author: {
             email: '',

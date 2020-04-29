@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {QuestionDialogComponent} from './question-dialog/question-dialog.component';
-import {SimpleDialogComponent} from './simple-dialog/simple-dialog.component';
-import {QuestionDialogWithAnswerComponent} from './question-dialog-with-answer/question-dialog-with-answer.component';
+import {QuestionDialogComponent} from '../question-dialog/question-dialog.component';
+import {SimpleDialogComponent} from '../simple-dialog/simple-dialog.component';
+import {QuestionDialogWithAnswerComponent} from '../question-dialog-with-answer/question-dialog-with-answer.component';
 
 export enum DialogType {
     PRIMARY = 'primary',

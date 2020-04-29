@@ -34,6 +34,14 @@ describe('DateFieldComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should get error message', () => {
+        expect(component.getErrorMessage()).toEqual('This is custom message!');
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
@@ -41,12 +49,15 @@ describe('DateFieldComponent', () => {
     template: '<nae-date-field [dataField]="field"></nae-date-field>'
 })
 class TestWrapperComponent {
-    field = new DateField('', '', moment(), {
+    field = new DateField('', '', moment(new Date()), {
         required: true,
         optional: true,
         visible: true,
         editable: true,
         hidden: true
-    });
+    }, undefined, undefined, undefined, [
+        {validationRule: 'weekend', validationMessage: 'This is custom message!'},
+        {validationRule: 'workday', validationMessage: 'This is custom message!'}
+        ]);
 }
 

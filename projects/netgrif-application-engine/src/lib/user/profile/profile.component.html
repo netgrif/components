@@ -1,0 +1,201 @@
+<div *ngIf="!user">
+    <div fxLayout="row" fxFlex="50" fxLayoutAlign="center center">
+        <mat-card fxLayoutAlign="center center">
+            <h1>You are not logged in!</h1>
+        </mat-card>
+    </div>
+</div>
+<div *ngIf="user" fxLayout="column" fxLayoutAlign="center start">
+    <div [style.backgroundImage]="'url('+userBanner+')'" fxLayout="row" class="full-width banner mat-elevation-z6"
+         matRipple fxLayoutAlign="start center">
+        <div class="user-avatar-large mat-elevation-z6 margin-banner" matRipple>
+            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
+        </div>
+        <h1 class="white-name">{{user.fullName}}</h1>
+    </div>
+    <div fxLayout="row" fxFlex fxLayoutAlign="center end" class="full-width div-background">
+        <mat-tab-group fxFlex="80" mat-stretch-tabs class="tab-group margin-bottom-x2 mat-elevation-z4">
+            <mat-tab class="tab">
+                <ng-template mat-tab-label>
+                    <mat-icon class="margin-right-x2">info</mat-icon>
+                    General Informations
+                </ng-template>
+
+                <div fxLayout="row">
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Personal Information</h2>
+                            </div>
+                            <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>First name</mat-label>
+                                    <input matInput disabled [value]=user.firstName>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>Last name</mat-label>
+                                    <input matInput disabled [value]=user.lastName>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>Email</mat-label>
+                                    <input disabled matInput [value]="user.email">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Authorities</h2>
+                            </div>
+                            <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field appearance="outline" class="user-chip-list">
+                                    <mat-chip-list disabled>
+                                        <mat-chip color="primary" *ngFor="let authority of user.authorities">{{authority}}</mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Roles</h2>
+                            </div>
+                            <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field appearance="outline" class="user-chip-list">
+                                    <mat-chip-list disabled>
+                                        <mat-chip color="primary" *ngFor="let role of user.roles">{{role.name}}</mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Groups</h2>
+                            </div>
+                            <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field appearance="outline" class="user-chip-list">
+                                    <mat-chip-list disabled>
+                                        <mat-chip color="primary" *ngFor="let group of user.groups">{{group}}</mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="margin-right-x2">build</mat-icon>
+                    Preferences
+                </ng-template>
+
+                <div fxLayout="row">
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Case headers</h2>
+                            </div>
+                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.caseHeaders)" appearance="outline" class="user-chip-list">
+                                    <mat-label>{{key}}</mat-label>
+                                    <mat-chip-list  disabled>
+                                        <mat-chip color="primary" *ngFor="let header of obj.keys(user.preferences.caseHeaders[key])">{{user.preferences.caseHeaders[key][header].title}}</mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Case filters</h2>
+                            </div>
+                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.caseFilters)" appearance="outline" class="user-chip-list">
+                                    <mat-label>{{key}}</mat-label>
+                                    <mat-chip-list  disabled>
+                                        <mat-chip color="primary" *ngFor="let filter of user.preferences.caseFilters[key]">{{filter}}</mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Task headers</h2>
+                            </div>
+                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.taskHeaders)" appearance="outline" class="user-chip-list">
+                                    <mat-label>{{key}}</mat-label>
+                                    <mat-chip-list  disabled>
+                                        <mat-chip color="primary" *ngFor="let header of obj.keys(user.preferences.taskHeaders[key])">{{user.preferences.taskHeaders[key][header].title}}</mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Task filters</h2>
+                            </div>
+                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.taskFilters)" appearance="outline" class="user-chip-list">
+                                    <mat-label>{{key}}</mat-label>
+                                    <mat-chip-list  disabled>
+                                        <mat-chip color="primary" *ngFor="let filter of obj.keys(user.preferences.taskFilters[key])">{{filter}}</mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Workflow headers</h2>
+                            </div>
+                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.workflowHeaders)" appearance="outline" class="user-chip-list">
+                                    <mat-label>{{key}}</mat-label>
+                                    <mat-chip-list  disabled>
+                                        <mat-chip color="primary" *ngFor="let header of obj.keys(user.preferences.workflowHeaders[key])">{{user.preferences.workflowHeaders[key][header].title}}</mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="50" class="padding-x2" fxLayout="column">
+                        <div fxLayout="column" class="full-height border">
+                            <div fxLayoutAlign="center start" class="card-title" matRipple>
+                                <h2>Workflow filters</h2>
+                            </div>
+                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
+                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.workflowFilters)" appearance="outline" class="user-chip-list">
+                                    <mat-label>{{key}}</mat-label>
+                                    <mat-chip-list  disabled>
+                                        <mat-chip color="primary" *ngFor="let filter of obj.keys(user.preferences.workflowFilters[key])">{{filter}}</mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+

@@ -20,6 +20,6 @@ export class SimpleTextFieldComponent extends AbstractTextFieldComponent {
     }
 
     public getErrorMessage() {
-        this.buildErrorMessage(this.textField, this.formControlRef);
+        return this.buildErrorMessage(this.textField, this.formControlRef);
     }
 }

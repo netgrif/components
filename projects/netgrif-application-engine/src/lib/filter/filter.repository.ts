@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {Filter as ConfigFilter} from '../configuration/interfaces/schema';
-import {Filter} from './models/filter';
 import {LoggerService} from '../logger/services/logger.service';
-import {MergedFilter} from './models/merged-filter';
-import {SimpleFilter} from './models/simple-filter';
 import {MergeOperator} from './models/merge-operator';
 import {FilterType} from './models/filter-type';
-
+import {SimpleFilter} from './models/simple-filter';
+import {Filter} from './models/filter';
+import {MergedFilter} from './models/merged-filter';
 /**
  * Allows access to filters defined in nae.json during runtime.
  *

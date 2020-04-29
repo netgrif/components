@@ -17,6 +17,7 @@ import {CaseHeaderService} from '../../case-header/case-header.service';
 describe('SearchModeComponent', () => {
     let component: SearchModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
+    let headerSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -41,10 +42,20 @@ describe('SearchModeComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
+        headerSpy = spyOn(TestBed.inject(CaseHeaderService), 'headerSearchInputChanged');
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should call search header', () => {
+        component.headerSearchInputChanged(0, 'hladaj');
+        expect(headerSpy).toHaveBeenCalledWith(0, 'hladaj');
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
     });
 });
 

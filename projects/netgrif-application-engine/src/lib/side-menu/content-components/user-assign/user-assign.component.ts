@@ -4,9 +4,9 @@ import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource-service';
-import {SnackBarService} from '../../../snack-bar/snack-bar.service';
+import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {LoggerService} from '../../../logger/services/logger.service';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 
 @Component({
     selector: 'nae-user-assign',
@@ -66,7 +66,7 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
             if (result instanceof Array) {
                 this.users = result.map( user => new UserValue(user.id, user.name, user.surname, user.email));
             } else {
-                this._snackBar.openInfoSnackBar('There are no users :)');
+                this._snackBar.openWarningSnackBar('There are no users :)');
             }
             this._loading = false;
         }, error => {

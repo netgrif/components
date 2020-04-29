@@ -5,6 +5,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {CovalentModule} from '../../../covalent/covalent.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {FormsModule} from '@angular/forms';
         CovalentModule,
         FlexLayoutModule,
         FlexModule,
-        FormsModule
+        FormsModule,
+        SnackBarModule
     ],
     exports: [NewCaseComponent]
 })

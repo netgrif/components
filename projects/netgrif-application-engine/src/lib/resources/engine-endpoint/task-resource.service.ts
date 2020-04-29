@@ -1,11 +1,11 @@
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Injectable} from '@angular/core';
-import {ResourceProvider} from '../resource-provider.service';
+import {ProviderProgress, ResourceProvider} from '../resource-provider.service';
 import {Observable} from 'rxjs';
 import {Count} from '../interface/count';
 import {changeType, getResourceAddress} from '../resource-utility-functions';
 import {MessageResource} from '../interface/message-resource';
-import {map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {TaskReference} from '../interface/task-reference';
 import {DataGroupsResource} from '../interface/data-groups';
 import {Task} from '../interface/task';
@@ -14,6 +14,7 @@ import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TaskGetRequestBody} from '../interface/task-get-request-body';
+import {HttpEvent, HttpEventType} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -30,16 +31,16 @@ export class TaskResourceService implements CountService {
      *  POST
      *  {{baseUrl}}/api/task/count
      */
-    public countTask(filter: Filter): Observable<Count> {
-        if (filter.type !== FilterType.TASK) {
+    public countTask(filterParam: Filter): Observable<Count> {
+        if (filterParam.type !== FilterType.TASK) {
             throw new Error('Provided filter doesn\'t have type TASK');
         }
-        return this.provider.post$('task/count', this.SERVER_URL, filter.getRequestBody(), filter.getRequestParams())
+        return this.provider.post$('task/count', this.SERVER_URL, filterParam.getRequestBody(), filterParam.getRequestParams())
             .pipe(map(r => changeType(r, undefined)));
     }
 
-    public count(filter: Filter): Observable<Count> {
-        return this.countTask(filter);
+    public count(filterParam: Filter): Observable<Count> {
+        return this.countTask(filterParam);
     }
 
     /**
@@ -95,14 +96,14 @@ export class TaskResourceService implements CountService {
     /**
      * Searches tasks trough the Elastic endpoint.
      * POST
-     * @param filter filter used to search the tasks. Must be of type `TASK`.
+     * @param filterParam filter used to search the tasks. Must be of type `TASK`.
      */
     // {{baseUrl}}/api/task/search_es
-    public searchTask(filter: Filter): Observable<Array<Task>> {
-        if (filter.type !== FilterType.TASK) {
+    public searchTask(filterParam: Filter): Observable<Array<Task>> {
+        if (filterParam.type !== FilterType.TASK) {
             throw new Error('Provided filter doesn\'t have type TASK');
         }
-        return this.provider.post$('task/search_es', this.SERVER_URL, filter.getRequestBody(), filter.getRequestParams())
+        return this.provider.post$('task/search_es', this.SERVER_URL, filterParam.getRequestBody(), filterParam.getRequestParams())
             .pipe(map(r => changeType(r, 'tasks')));
     }
 
@@ -185,9 +186,20 @@ export class TaskResourceService implements CountService {
      * GET
      */
     // {{baseUrl}}/api/task/:id/file/:field
-    public downloadFile(taskId: string, fieldId: string): Observable<Blob> {
-        return this.provider.getBlob$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL)
-            .pipe(map(r => changeType(r, undefined)));
+    public downloadFile(taskId: string, fieldId: string): Observable<ProviderProgress | Blob> {
+        return this.provider.getBlob$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL).pipe(
+            map(event => {
+                switch (event.type) {
+                    case HttpEventType.DownloadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return event.body;
+                    default:
+                        return undefined;
+                }
+            }),
+            filter(value => !!value)
+        );
     }
 
     /**
@@ -195,8 +207,19 @@ export class TaskResourceService implements CountService {
      * POST
      */
     // {{baseUrl}}/api/task/:id/file/:field
-    public uploadFile(taskId: string, fieldId: string, body: object): Observable<any> {
-        return this.provider.postEvent$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body)
-            .pipe(map(r => changeType(r, undefined)));
+    public uploadFile(taskId: string, fieldId: string, body: object): Observable<ProviderProgress | ChangedFieldContainer> {
+        return this.provider.postWithEvent$<ChangedFieldContainer>('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body).pipe(
+            map(event => {
+                switch (event.type) {
+                    case HttpEventType.UploadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return event.body;
+                    default:
+                        return undefined;
+                }
+            }),
+            filter(value => !!value)
+        );
     }
 }

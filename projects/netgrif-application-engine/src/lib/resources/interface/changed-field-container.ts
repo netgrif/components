@@ -2,6 +2,7 @@ import {FieldBehavior} from './field-behavior';
 
 export interface ChangedFieldContainer {
     changedFields: ChangedFields2;
+    isSave?: boolean;
 }
 
 /*
@@ -28,5 +29,6 @@ export interface Change2 {
     value?: string | number | boolean | any;
     // behavior is "cleared" and contains information only for one transition
     behavior?: FieldBehavior;
+
     [key: string]: any;
 }

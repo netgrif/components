@@ -1,9 +1,8 @@
-import {HttpClient, HttpEvent, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpProgressEvent, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
+import {MessageResource} from './interface/message-resource';
 
-
-export type Observe = 'body';
 
 export type Headers =
     HttpHeaders | {
@@ -12,11 +11,23 @@ export type Headers =
 
 export type Params = HttpParams | ObjectParams;
 
+export type ResponseType = 'json' | 'hal';
+
 export interface ObjectParams {
     [param: string]: string | string[];
 }
 
-export type ResponseType = 'json';
+export enum ProgressType {
+    UPLOAD = 'upload',
+    DOWNLOAD = 'download'
+}
+
+export interface ProviderProgress {
+    type: ProgressType;
+    loaded: number;
+    total?: number;
+    progress?: number;
+}
 
 
 export abstract class AbstractResourceProvider {
@@ -95,81 +106,92 @@ export abstract class AbstractResourceProvider {
         return result;
     }
 
+    public static getProgress(event: HttpProgressEvent): ProviderProgress {
+        return {
+            type: event.type === HttpEventType.UploadProgress ? ProgressType.UPLOAD : ProgressType.DOWNLOAD,
+            loaded: event.loaded,
+            total: event.total,
+            progress: event.loaded && event.total ? Math.round(event.loaded * 100 / event.total) : undefined
+        };
+    }
+
+    public static processMessageResource(response: MessageResource | HttpResponse<MessageResource>): MessageResource {
+        const resource: MessageResource = (response as HttpResponse<MessageResource>).type === HttpEventType.Response ?
+            (response as HttpResponse<MessageResource>).body : response as MessageResource;
+        if (!!resource && resource.error) {
+            throw new Error(resource.error);
+        }
+        return resource;
+    }
+
     public get$<T>(endpoint?: string, url ?: string, params ?: Params, headers ?: Headers,
-                   responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+                   responseType ?: ResponseType): Observable<T> {
         return this.httpClient.get<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             {
                 headers,
                 params,
-                responseType,
-                observe
+                responseType: 'json',
+                observe: 'body'
             });
     }
 
-    public getBlob$(endpoint?: string, url ?: string, params ?: Params): Observable<any> {
+    public getBlob$(endpoint?: string, url ?: string, params ?: Params, headers?: Headers): Observable<HttpEvent<Blob>> {
         return this.httpClient.get(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             {
                 params,
-                responseType: 'blob'
+                headers,
+                observe: 'events',
+                responseType: 'blob',
+                reportProgress: true
             });
     }
 
     public post$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
-                    responseType ?: ResponseType, observe ?: Observe): Observable<T> {
+                    responseType ?: ResponseType): Observable<T> {
         return this.httpClient.post<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
             body,
             {
                 headers,
                 params,
-                responseType,
-                observe
+                responseType: 'json',
+                observe: 'body'
             });
     }
 
-    public postEvent$(endpoint?: string, url ?: string, body ?: object, params ?: Params): Observable<any> {
-        return this.httpClient.post(AbstractResourceProvider.sanitizeUrl(endpoint, url),
-            body,
-            {
-                params,
-                reportProgress: true,
-                observe: 'events'
-            });
-    }
-
-    public put$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
-                   responseType ?: ResponseType, observe ?: Observe): Observable<T> {
-        return this.httpClient.put<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
-            body,
-            {
-                headers,
-                params,
-                responseType,
-                observe
-            });
-    }
-
-    public delete$<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers,
-                      responseType ?: ResponseType, observe ?: Observe): Observable<T> {
-        return this.httpClient.delete<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url), {
-            headers,
-            params,
-            responseType,
-            observe
-        });
-    }
-
-    public upload$<T>(endpoint?: string, url?: string, body?: FormData, params?: Params, headers?: Headers,
-                      responseType?: ResponseType): Observable<HttpEvent<T>> {
+    public postWithEvent$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers?: Headers,
+                             responseType ?: ResponseType): Observable<HttpEvent<T>> {
         return this.httpClient.post<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
-            body, {
-                headers,
+            body,
+            {
                 params,
-                responseType,
+                headers,
+                responseType: 'json',
                 observe: 'events',
                 reportProgress: true
             });
     }
 
+    public put$<T>(endpoint?: string, url ?: string, body ?: object, params ?: Params, headers ?: Headers,
+                   responseType ?: ResponseType): Observable<T> {
+        return this.httpClient.put<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url),
+            body,
+            {
+                headers,
+                params,
+                responseType: 'json',
+                observe: 'body'
+            });
+    }
+
+    public delete$<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers,
+                      responseType ?: ResponseType): Observable<T> {
+        return this.httpClient.delete<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url), {
+            headers,
+            params,
+            responseType: 'json',
+            observe: 'body'
+        });
+    }
 }
 
 @Injectable({
