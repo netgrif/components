@@ -2,6 +2,7 @@ import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CaseParams,
     CaseViewService,
+    CaseViewServiceFactory,
     ConfigurationService,
     FilterType,
     HeaderComponent,
@@ -10,16 +11,32 @@ import {
     NAE_TAB_DATA,
     Net,
     ProcessService,
+    SearchService,
     SimpleFilter,
     TabbedCaseView,
 } from '@netgrif/application-engine';
 import {ReplaySubject} from 'rxjs';
 
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.create('');
+};
+
+const searchServiceFactory = () => {
+    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
+};
+
 @Component({
     selector: 'nae-app-tabbed-case-view',
     templateUrl: './tabbed-case-view.component.html',
     styleUrls: ['./tabbed-case-view.component.scss'],
-    providers: [CaseViewService]
+    providers: [
+        CaseViewServiceFactory,
+        {   provide: SearchService,
+            useFactory: searchServiceFactory},
+        {   provide: CaseViewService,
+            useFactory: localCaseViewServiceFactory,
+            deps: [CaseViewServiceFactory]},
+    ]
 })
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
 

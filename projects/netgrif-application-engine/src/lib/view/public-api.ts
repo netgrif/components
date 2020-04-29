@@ -11,6 +11,7 @@ export * from './abstract/sortable-view';
 
 /* SERVICES */
 export * from './case-view/case-view-service';
+export * from './case-view/case-view-service-factory';
 export * from './task-view/task-view.service';
 export * from './workflow-view/workflow-view.service';
 

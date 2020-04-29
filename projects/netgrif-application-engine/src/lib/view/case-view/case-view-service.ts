@@ -11,7 +11,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../search/search-service/search.service';
 import {Net} from '../../process/net';
-import {CaseParams} from 'netgrif-application-engine';
+import {CaseParams} from './case-params';
 import {ProcessService} from '../../process/process.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
