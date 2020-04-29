@@ -4,21 +4,61 @@ import {ImmediateData} from '../resources/interface/immediate-data';
 import Transition from './transition';
 import Transaction from './transaction';
 import NetRole from './netRole';
-
+/**
+ * @ignore
+ */
 export class Net {
+    /**
+     * @ignore
+     */
     private _stringId: string;
+    /**
+     * @ignore
+     */
     private _title: string;
+    /**
+     * @ignore
+     */
     private _identifier: string;
+    /**
+     * @ignore
+     */
     private _version: string;
+    /**
+     * @ignore
+     */
     private _initials: string;
+    /**
+     * @ignore
+     */
     private _defaultCaseName: string;
+    /**
+     * @ignore
+     */
     private _createdDate: Array<number>;
+    /**
+     * @ignore
+     */
     private _author: Author;
+    /**
+     * @ignore
+     */
     private _immediateData: Array<ImmediateData>;
+    /**
+     * @ignore
+     */
     private _transitions: Array<Transition>;
+    /**
+     * @ignore
+     */
     private _transactions: Array<Transaction>;
+    /**
+     * @ignore
+     */
     private _roles: Array<NetRole>;
-
+    /**
+     * @ignore
+     */
     constructor(net: PetriNetReference) {
         this._stringId = net.stringId;
         this._title = net.title;

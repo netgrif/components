@@ -1,14 +1,14 @@
+import {Behavior} from '../../data-fields/models/behavior';
+
 /**
  * @ignore
  */
-import {Behavior} from '../../data-fields/models/behavior';
-
 export interface Fields {
     _embedded: TypeLocalisadField;
 
 }
 /**
- * Object from Backend
+ * Type Field
  */
 export interface TypeLocalisadField {
     /**
@@ -73,10 +73,21 @@ export interface LocalisedBooleanFields {
 /**
  * Text Field
  */
-export interface LocalisedTextFields {
+export interface LocalisedTextFields {    /**
+     * ID
+     */
     stringId: string;
+    /**
+     * Type of field
+     */
     type: string;
+    /**
+     * Name
+     */
     name: string;
+    /**
+     * [Behavior]{@link Behavior}
+     */
     behavior: Behavior;
     value: string;
     order: number;
@@ -86,9 +97,21 @@ export interface LocalisedTextFields {
  * Number Field
  */
 export interface LocalisedNumberFields {
+    /**
+     * ID
+     */
     stringId: string;
+    /**
+     * Type of field
+     */
     type: string;
+    /**
+     * Name
+     */
     name: string;
+    /**
+     * [Behavior]{@link Behavior}
+     */
     behavior: Behavior;
     value: number;
     order: number;
@@ -101,9 +124,21 @@ export interface LocalisedNumberFields {
  * Enumeration Field
  */
 export interface LocalisedEnumerationFields {
+    /**
+     * ID
+     */
     stringId: string;
+    /**
+     * Type of field
+     */
     type: string;
+    /**
+     * Name
+     */
     name: string;
+    /**
+     * [Behavior]{@link Behavior}
+     */
     behavior: Behavior;
     value: string;
     order: number;

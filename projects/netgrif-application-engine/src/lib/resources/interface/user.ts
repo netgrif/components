@@ -1,14 +1,32 @@
 import {Authority} from './authority';
 
 /**
- * Object from Backend
+ * User Object
  */
 export interface User {
+    /**
+     * MySQL ID
+     */
     id: number;
+    /**
+     * Email
+     */
     email: string;
+    /**
+     * @ignore
+     */
     password?: string;
+    /**
+     * First Name
+     */
     name: string;
+    /**
+     * Last Name
+     */
     surname: string;
+    /**
+     * First Name + " " + Last Name
+     */
     fullName: string;
     /**
      * Array [Group]{@link Group}
