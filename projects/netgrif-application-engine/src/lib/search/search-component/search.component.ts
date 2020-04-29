@@ -1,23 +1,23 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../models/category/category';
 import {Observable} from 'rxjs';
-import {CategoryFactoryService} from '../category-factory/category-factory.service';
-import {CaseTitle} from '../models/category/case/case-title';
 import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {SelectLanguageService} from '../../toolbar/select-language.service';
 import {SearchService} from '../search-service/search.service';
 import {SimpleSearchChip} from '../models/chips/simple-search-chip';
-import {CaseVisualId} from '../models/category/case/case-visual-id';
-import {CaseAuthor} from '../models/category/case/case-author';
 
+/**
+ * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
+ * Categories must be provided externally.
+ */
 @Component({
     selector: 'nae-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss']
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
 
     /**
      * @ignore
@@ -25,10 +25,9 @@ export class SearchComponent {
      */
     public formControl = new FormControl();
     /**
-     * @ignore
      * Array that holds all the available [Categories]{@link Category}
      */
-    private readonly _searchCategories: Array<Category>;
+    @Input() public searchCategories: Array<Category>;
     /**
      * @ignore
      * Observable that contains [Categories]{@link Category} that match user input. It updates it's content every time user input changes.
@@ -57,22 +56,22 @@ export class SearchComponent {
      */
     public renderSelection = (category: Category) => this._renderSelection(category);
 
-    constructor(private _categoryFactory: CategoryFactoryService,
-                private _translate: TranslateService,
+    constructor(private _translate: TranslateService,
                 private _searchService: SearchService,
                 private _: SelectLanguageService) {
-        // TODO customisable categories
-        this._searchCategories = [
-            this._categoryFactory.get(CaseTitle),
-            this._categoryFactory.get(CaseVisualId),
-            this._categoryFactory.get(CaseAuthor),
-        ];
-        this.selectDefaultOperators();
         this.filteredCategories = this.formControl.valueChanges.pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : this.categoryName(value)),
             map(categoryName => this._filterOptions(categoryName))
         );
+    }
+
+    /**
+     * @ignore
+     * Selects the default operators on the provided categories
+     */
+    public ngOnInit(): void {
+        this.selectDefaultOperators();
     }
 
     /**
@@ -84,7 +83,7 @@ export class SearchComponent {
     private _filterOptions(userInput: string): Array<Category> {
         if (!this._selectedCategory) {
             const value = userInput.toLocaleLowerCase();
-            return this._searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value));
+            return this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value));
         } else {
             return [];
         }
@@ -161,6 +160,6 @@ export class SearchComponent {
      * Iterates over all Categories and selects their default Operator.
      */
     private selectDefaultOperators(): void {
-        this._searchCategories.forEach(category => {category.selectDefaultOperator()});
+        this.searchCategories.forEach(category => {category.selectDefaultOperator(); });
     }
 }

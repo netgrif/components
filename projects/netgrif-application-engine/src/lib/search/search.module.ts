@@ -1,16 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SearchComponent } from './search-component/search.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {SearchComponent} from './search-component/search.component';
 import {MaterialModule} from '../material/material.module';
 import {TranslateLibModule} from '../translate/translate-lib.module';
+import {CaseSearchComponent} from './search-component/case-search/case-search.component';
 
 
 @NgModule({
     declarations: [
-        SearchComponent
+        SearchComponent,
+        CaseSearchComponent,
     ],
     exports: [
-        SearchComponent
+        SearchComponent,
+        CaseSearchComponent,
     ],
     imports: [
         CommonModule,
@@ -18,4 +21,5 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
         TranslateLibModule,
     ]
 })
-export class SearchModule { }
+export class SearchModule {
+}
