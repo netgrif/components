@@ -2,17 +2,12 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractCaseView,
     Case,
-    CaseParams,
     CaseViewService,
-    ConfigurationService,
     FilterType,
     HeaderComponent,
-    Net,
-    ProcessService,
     SearchService,
     SimpleFilter
 } from '@netgrif/application-engine';
-import {ReplaySubject} from 'rxjs';
 
 const searchServiceFactory = () => {
     // TODO load/use base filter somehow
@@ -32,31 +27,9 @@ const searchServiceFactory = () => {
 export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
-    public allowedNets$: ReplaySubject<Array<Net>>;
-    public params: CaseParams;
 
     constructor(caseViewService: CaseViewService) {
         super(caseViewService);
-        this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        // TODO 16.4. 2020 initialize allowedNets by filter
-        // processService.getNet('leukemia').subscribe( result => {
-        //     console.log(result);
-        // });
-        const view = configService.getViewByPath('<%= webPath %>');
-        if (view && view.layout && view.layout.params) {
-            this.params = view.layout.params as CaseParams;
-            if (this.params.allowedNets !== undefined) {
-                const nets = [];
-                this.params.allowedNets.forEach(netId => {
-                    processService.getNet(netId).subscribe(net => {
-                        nets.push(net);
-                        if (nets.length === this.params.allowedNets.length) {
-                            this.allowedNets$.next(nets);
-                        }
-                    });
-                });
-            }
-        }
     }
 
     ngAfterViewInit(): void {
