@@ -8,6 +8,8 @@ import {RequiredLabelComponent} from '../required-label/required-label.component
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {DateField} from './models/date-field';
 import moment from 'moment';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('DateFieldComponent', () => {
     let component: DateFieldComponent;
@@ -15,7 +17,7 @@ describe('DateFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule],
+            imports: [MaterialModule, AngularResizedEventModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [
                 DateFieldComponent,
                 DataFieldTemplateComponent,

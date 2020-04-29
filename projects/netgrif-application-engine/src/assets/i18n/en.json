@@ -44,5 +44,31 @@
             "task-filters": "Task filters",
             "select": "Select"
         }
+    },
+    "dataField": {
+        "validations": {
+            "required": "This field is required!",
+            "requiredTrue": "Entered value must be true",
+            "odd": "Entered number must be odd",
+            "even": "Entered number must be even",
+            "positive": "Entered number must be positive",
+            "negative": "Entered number must be negative",
+            "decimal": "Entered number must be decimal",
+            "inrange": "Entered number must be in range ",
+            "length": "Entered text must be at the most ",
+            "pattern": "Entered text is in wrong format",
+            "phone": "Entered text must be in telephone number format",
+            "email": "Entered test must be in email format",
+            "dateRange": "Entered date must be in range ",
+            "weekend": "Entered date must be weekend day",
+            "workday": "Entered date must be week day"
+
+        },
+        "snackBar": {
+            "downloadFail": " download failed",
+            "moreFiles": "You choose more files as you allowed",
+            "sameFiles": "You cannot upload two of the same files",
+            "fileSize": "Files size exceeded allowed limit"
+        }
     }
 }

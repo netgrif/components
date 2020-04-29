@@ -1,27 +1,28 @@
 import {FormControl} from '@angular/forms';
 import {TextField} from './models/text-field';
+import {TranslateService} from '@ngx-translate/core';
 
 export abstract class AbstractTextFieldComponent {
 
-    protected constructor() {
+    protected constructor(protected _translate: TranslateService) {
     }
 
     protected buildErrorMessage(textField: TextField, formControlRef: FormControl) {
         if (formControlRef.hasError('required')) {
-            return 'This field is required!';
+            return this._translate.instant('dataField.validations.required');
         }
         if (formControlRef.hasError('minlength')) {
             return this.resolveErrorMessage(textField, 'length',
-                'Entered text must be at the most ' + formControlRef.errors.minlength.requiredLength);
+                this._translate.instant('dataField.validations.length') + formControlRef.errors.minlength.requiredLength);
         }
         if (formControlRef.hasError('pattern')) {
-            return this.resolveErrorMessage(textField, 'regex', 'Entered text is in wrong format');
+            return this.resolveErrorMessage(textField, 'regex', this._translate.instant('dataField.validations.pattern'));
         }
         if (formControlRef.hasError('validTelNumber')) {
-            return this.resolveErrorMessage(textField, 'telNumber', 'Entered text must be in telephone number format');
+            return this.resolveErrorMessage(textField, 'telNumber', this._translate.instant('dataField.validations.phone'));
         }
         if (formControlRef.hasError('email')) {
-            return this.resolveErrorMessage(textField, 'email', 'Entered test must be in email format');
+            return this.resolveErrorMessage(textField, 'email', this._translate.instant('dataField.validations.email'));
         }
         return '';
     }

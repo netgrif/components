@@ -6,6 +6,7 @@ import {LanguageSelectorComponent} from './components/language-selector/language
 import {InternalLinkComponent} from './components/internal-link/internal-link.component';
 import {RouterModule} from '@angular/router';
 import {MaterialModule} from '../../material/material.module';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {MaterialModule} from '../../material/material.module';
     imports: [
         CommonModule,
         RouterModule,
-        MaterialModule
+        MaterialModule,
+        TranslateLibModule
     ]
 })
 export class QuickPanelModule {

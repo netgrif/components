@@ -8,6 +8,7 @@ import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('UserFieldComponent', () => {
     let component: UserFieldComponent;
@@ -15,7 +16,7 @@ describe('UserFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, HttpClientTestingModule],
+            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, HttpClientTestingModule, TranslateLibModule],
             declarations: [UserFieldComponent, TestWrapperComponent],
             providers: [SideMenuService],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]

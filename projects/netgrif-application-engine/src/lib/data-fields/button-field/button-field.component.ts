@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {ButtonField} from './models/button-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {TranslateService} from '@ngx-translate/core';
+import {SelectLanguageService} from '../../toolbar/select-language.service';
 
 @Component({
     selector: 'nae-button-field',
@@ -13,13 +15,13 @@ export class ButtonFieldComponent extends AbstractDataFieldComponent {
 
     // TODO BUG - disabled dont working on init, due ngDefaultControl
 
-    constructor() {
+    constructor(private _translate: TranslateService, private _select: SelectLanguageService) {
         super();
     }
 
     public getErrorMessage() {
         if (this.formControl.hasError('required')) {
-            return 'This field is required!';
+            return this._translate.instant('dataField.validations.required');
         }
     }
 }

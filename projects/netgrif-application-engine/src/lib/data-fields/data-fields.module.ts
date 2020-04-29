@@ -35,6 +35,8 @@ import {CustomDateAdapter} from './date-field/models/custom-date-adapter';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-textarea-field.component';
+import {TranslateLibModule} from '../translate/translate-lib.module';
+import {SelectLanguageService} from '../toolbar/select-language.service';
 
 @NgModule({
     declarations: [
@@ -82,11 +84,13 @@ import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-
         ReactiveFormsModule,
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
+        TranslateLibModule
     ],
     providers: [
         FileUploadService,
         FileDownloadService,
-        {provide: DateAdapter, useClass: CustomDateAdapter}
+        {provide: DateAdapter, useClass: CustomDateAdapter},
+        SelectLanguageService
     ]
 })
 export class DataFieldsModule {

@@ -7,6 +7,8 @@ import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('EnumerationSelectFieldComponent', () => {
     let component: EnumerationSelectFieldComponent;
@@ -14,7 +16,7 @@ describe('EnumerationSelectFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule],
+            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [EnumerationSelectFieldComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })

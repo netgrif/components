@@ -10,6 +10,8 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core
 import {MultichoiceSelectFieldComponent} from './multichoice-select-field/multichoice-select-field.component';
 import {MultichoiceListFieldComponent} from './multichoice-list-field/multichoice-list-field.component';
 import {MultichoiceField} from './models/multichoice-field';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('MultichoiceFieldComponent', () => {
     let component: MultichoiceFieldComponent;
@@ -17,7 +19,7 @@ describe('MultichoiceFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule],
+            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [
                 DataFieldTemplateComponent,
                 MultichoiceFieldComponent,
