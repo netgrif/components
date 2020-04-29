@@ -40,7 +40,8 @@
                 "title": "Názov prípadu",
                 "visualId": "Vizuálne ID prípadu",
                 "author": "Autor prípadu",
-                "process": "Proces prípadu"
+                "process": "Proces prípadu",
+                "role": "Procesná rola"
             }
         }
     }

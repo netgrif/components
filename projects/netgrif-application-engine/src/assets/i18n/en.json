@@ -51,7 +51,8 @@
                 "title": "Case title",
                 "visualId": "Case visual ID",
                 "author": "Case author",
-                "process": "Case process"
+                "process": "Case process",
+                "role": "Process role"
             }
         }
     }

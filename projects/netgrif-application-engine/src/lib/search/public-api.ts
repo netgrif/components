@@ -18,6 +18,7 @@ export * from './models/category/case/case-title';
 export * from './models/category/case/case-visual-id';
 export * from './models/category/case/case-author';
 export * from './models/category/case/case-process';
+export * from './models/category/case/case-role';
 
 /* Interfaces */
 export * from './models/escape-result';
@@ -35,3 +36,4 @@ export * from './category-factory/category-factory';
 
 /* Components */
 export * from './search-component/search.component';
+export * from './search-component/case-search/case-search.component';
