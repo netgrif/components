@@ -8,7 +8,8 @@ import {CaseViewService} from '../../view/case-view/case-view-service';
  * Can be used to generate {@link Category} class instances.
  *
  * Can only generate instances of Categories that take {@link OperatorService} as their first argument, {@link LoggerService} as their
- * second argument.  You can extend this class to support your Categories, but make sure that an injection token for this classes name
+ * second argument and {@link CaseViewService} is passed as the third, if it's provided. `null` is passed as the third argument otherwise.
+ * You can extend this class to support your Categories, but make sure that an injection token for this classes name
  * is still provided for the library components that use it.
  */
 @Injectable()
