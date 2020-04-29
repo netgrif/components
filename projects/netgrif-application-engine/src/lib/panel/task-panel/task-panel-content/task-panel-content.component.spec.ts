@@ -52,7 +52,10 @@ describe('TaskPanelContentComponent', () => {
                 title: 'string',
                 alignment: 'end',
                 stretch: false,
-                cols: 4
+                layout: {
+                    cols: 4,
+                    rows: undefined
+                }
             }, {
                 fields: [
                     new BooleanField('', '', true, {editable: true}),
@@ -80,18 +83,18 @@ describe('TaskPanelContentComponent', () => {
                 title: 'string',
                 alignment: 'start',
                 stretch: false,
-                cols: 3
+                layout: {cols: 3, rows: undefined}
             }, {
                 fields: [
                     new BooleanField('', '', true, {editable: true},
                         undefined, undefined, {
-                        x: 1,
-                        y: 12,
-                        cols: 2,
-                        rows: 1,
-                        appearance: MaterialAppearance.OUTLINE,
-                        template: TemplateAppearance.NETGRIF,
-                    } ),
+                            x: 1,
+                            y: 12,
+                            cols: 2,
+                            rows: 1,
+                            appearance: MaterialAppearance.OUTLINE,
+                            template: TemplateAppearance.NETGRIF,
+                        }),
                     new BooleanField('', '', true, {hidden: true},
                         undefined, undefined, {
                             x: 0,
@@ -100,12 +103,12 @@ describe('TaskPanelContentComponent', () => {
                             rows: 1,
                             appearance: MaterialAppearance.OUTLINE,
                             template: TemplateAppearance.NETGRIF,
-                        } )
+                        })
                 ],
                 title: '',
                 alignment: 'start',
                 stretch: false,
-                cols: 3
+                layout: {cols: 3, rows: undefined}
             },
         ], 4).length).toEqual(20);
     });
