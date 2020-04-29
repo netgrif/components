@@ -1,1 +1,1 @@
-<nae-tab-group [initialTabs]="tabs"></nae-tab-group>
+<nae-tab-view [initialTabs]="tabs"></nae-tab-view>

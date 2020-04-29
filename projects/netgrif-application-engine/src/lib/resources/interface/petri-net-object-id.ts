@@ -1,3 +1,6 @@
+/**
+ * Object from Backend
+ */
 export interface PetriNetObjectId {
     timestamp: number;
     machineIdentifier: number;

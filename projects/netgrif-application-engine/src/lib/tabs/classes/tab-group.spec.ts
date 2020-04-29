@@ -1,18 +1,18 @@
-import {TabGroup} from './tab-group';
 import {TabTestComponent} from './opened-tab.spec';
+import {TabView} from './tab-view';
 
 describe('TabGroup', () => {
     it('should create an instance', () => {
-        expect(new TabGroup([])).toBeTruthy();
+        expect(new TabView([])).toBeTruthy();
     });
 
     it('should play with tabs', () => {
-        const tabs = new TabGroup([{
+        const tabs = new TabView([{
             label: {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeDeleted: true,
+            canBeClosed: true,
             tabContentComponent: TabTestComponent
         }]);
         tabs.openTab({
@@ -20,7 +20,7 @@ describe('TabGroup', () => {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeDeleted: false,
+            canBeClosed: false,
             tabContentComponent: TabTestComponent
         }, true);
 
@@ -35,7 +35,7 @@ describe('TabGroup', () => {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeDeleted: true,
+            canBeClosed: true,
             tabContentComponent: TabTestComponent
         }, false);
         tabs.initializeTab(2);

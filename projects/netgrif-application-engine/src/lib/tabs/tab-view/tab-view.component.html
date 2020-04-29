@@ -1,12 +1,12 @@
-<mat-tab-group [selectedIndex]="tabGroup.selectedIndex.value" (selectedIndexChange)="tabGroup.selectedIndex.setValue($event)">
-    <mat-tab *ngFor="let tab of tabGroup.openedTabs; let i=index">
+<mat-tab-group [selectedIndex]="tabView.selectedIndex.value" (selectedIndexChange)="tabView.selectedIndex.setValue($event)">
+    <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index">
         <ng-template mat-tab-label>
             <div fxLayout="row" fxLayoutAlign="start center">
                 <div fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon class="icon-margin-right" *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
                     <span>{{tab.label.text}}</span>
                 </div>
-                <button mat-icon-button *ngIf="tab.canBeDeleted" (click)="tabGroup.closeTabIndex(i)">
+                <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabView.closeTabIndex(i)">
                     <mat-icon>clear</mat-icon>
                 </button>
             </div>

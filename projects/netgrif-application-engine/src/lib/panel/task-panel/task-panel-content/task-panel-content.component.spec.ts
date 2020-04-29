@@ -7,8 +7,9 @@ import {MaterialModule} from '../../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
 import {TaskPanelContentService} from './task-panel-content.service';
-import {MaterialAppearance, TemplateAppearance} from '../../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
+import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
+import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
 
 describe('TaskPanelContentComponent', () => {
     let component: TaskPanelContentComponent;

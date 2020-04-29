@@ -1,12 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 
 import {FieldConvertorService} from './field-convertor.service';
-import {
-    Layout,
-    MaterialAppearance,
-    TemplateAppearance,
-    Validation
-} from '../../../data-fields/models/abstract-data-field';
+import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
+import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
 
 describe('FieldConvertorService', () => {
     let service: FieldConvertorService;
