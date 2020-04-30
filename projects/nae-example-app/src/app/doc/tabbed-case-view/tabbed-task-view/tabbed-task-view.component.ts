@@ -3,15 +3,25 @@ import {
     HeaderComponent,
     InjectedTabbedTaskViewData,
     NAE_TAB_DATA,
+    SearchService,
     TabbedTaskView,
     TaskViewService
 } from '@netgrif/application-engine';
+
+const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
+    return new SearchService(injectedTabData.baseFilter);
+}
 
 @Component({
     selector: 'nae-app-tabbed-task-view',
     templateUrl: './tabbed-task-view.component.html',
     styleUrls: ['./tabbed-task-view.component.scss'],
-    providers: [TaskViewService]
+    providers: [
+        TaskViewService,
+        {   provide: SearchService,
+            useFactory: searchServiceFactory,
+            deps: [NAE_TAB_DATA]},
+    ]
 })
 export class TabbedTaskViewComponent extends TabbedTaskView implements AfterViewInit {
 
