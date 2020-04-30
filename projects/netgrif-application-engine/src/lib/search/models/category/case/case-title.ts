@@ -4,7 +4,7 @@ import {Substring} from '../../operator/substring';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {SearchInputType} from '../search-input-type';
 
-export class CaseTitle extends Category {
+export class CaseTitle extends Category<string> {
 
     constructor(operators: OperatorService, logger: LoggerService) {
         super(['title'],

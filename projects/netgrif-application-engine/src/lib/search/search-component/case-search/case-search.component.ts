@@ -5,6 +5,7 @@ import {CaseTitle} from '../../models/category/case/case-title';
 import {CaseVisualId} from '../../models/category/case/case-visual-id';
 import {CaseAuthor} from '../../models/category/case/case-author';
 import {CaseProcess} from '../../models/category/case/case-process';
+import {CaseRole} from '../../models/category/case/case-role';
 
 @Component({
     selector: 'nae-case-search',
@@ -16,7 +17,7 @@ import {CaseProcess} from '../../models/category/case/case-process';
 })
 export class CaseSearchComponent {
 
-    public searchCategories: Array<Category>;
+    public searchCategories: Array<Category<any>>;
 
     constructor(private _categoryFactory: CategoryFactory) {
         this.searchCategories = [
@@ -24,6 +25,7 @@ export class CaseSearchComponent {
             this._categoryFactory.get(CaseVisualId),
             this._categoryFactory.get(CaseAuthor),
             this._categoryFactory.get(CaseProcess),
+            this._categoryFactory.get(CaseRole),
         ];
     }
 

@@ -30,12 +30,12 @@ export class SearchComponent implements OnInit {
     /**
      * Array that holds all the available [Categories]{@link Category}
      */
-    @Input() public searchCategories: Array<Category>;
+    @Input() public searchCategories: Array<Category<any>>;
     /**
      * @ignore
      * Observable that contains [Categories]{@link Category} that match user input. It updates it's content every time user input changes.
      */
-    public filteredOptions: Observable<Array<Category> | Array<SearchAutocompleteOption>>;
+    public filteredOptions: Observable<Array<Category<any>> | Array<SearchAutocompleteOption>>;
     /**
      * @ignore
      * Array that holds constructed search chips.
@@ -49,7 +49,7 @@ export class SearchComponent implements OnInit {
      * If some category is selected, then the next input completes it and adds a new Predicate to the search.
      * If not then the next input creates a fulltext search, or selects a new category.
      */
-    private _selectedCategory: Category;
+    private _selectedCategory: Category<any>;
     /**
      * @ignore
      * Lambda that is used to preserve `this` reference in HTML binding.
@@ -57,7 +57,7 @@ export class SearchComponent implements OnInit {
      * See [_renderSelection()]{@link SearchComponent#_renderSelection} for information about the function.
      * @param object the {@link Category} or {@link SearchAutocompleteOption} object that was selected in the autocomplete list.
      */
-    public renderSelection = (object: Category | SearchAutocompleteOption) => this._renderSelection(object);
+    public renderSelection = (object: Category<any> | SearchAutocompleteOption) => this._renderSelection(object);
 
     constructor(private _translate: TranslateService,
                 private _searchService: SearchService,
@@ -83,7 +83,7 @@ export class SearchComponent implements OnInit {
      * @param userInput string entered by the user
      * @returns [Categories]{@link Category} that start with the user input. Case insensitive. Based on locale translation.
      */
-    private _filterOptions(userInput: string): Array<Category> | Array<SearchAutocompleteOption> {
+    private _filterOptions(userInput: string): Array<Category<any>> | Array<SearchAutocompleteOption> {
         if (!this._selectedCategory) {
             const value = userInput.toLocaleLowerCase();
             return this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value));
@@ -100,7 +100,7 @@ export class SearchComponent implements OnInit {
      * @param object autocomplete object who's name we want to get
      * @returns the name of the provided object
      */
-    private objectName(object: Category | SearchAutocompleteOption): string {
+    private objectName(object: Category<any> | SearchAutocompleteOption): string {
         if (object instanceof Category) {
             return this.categoryName(object);
         } else {
@@ -113,7 +113,7 @@ export class SearchComponent implements OnInit {
      * @param category Category, who's name we want to get
      * @returns the translated name of the provided {@link Category} object
      */
-    private categoryName(category: Category): string {
+    private categoryName(category: Category<any>): string {
         return this._translate.instant(category.translationPath) as string;
     }
 
@@ -124,7 +124,7 @@ export class SearchComponent implements OnInit {
      * @param object the object we want to transform. It might not exist if user input doesn't match any autocomplete option
      * @returns translated category name if the {@link Category} exists, empty string otherwise
      */
-    private _renderSelection(object: Category | SearchAutocompleteOption): string {
+    private _renderSelection(object: Category<any> | SearchAutocompleteOption): string {
         return object ? this.objectName(object) : '';
     }
 

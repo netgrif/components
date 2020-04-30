@@ -24,6 +24,7 @@ export * from './models/category/case/case-role';
 export * from './models/escape-result';
 export * from './models/wrap-result';
 export * from './models/chips/simple-search-chip';
+export * from './category-factory/optional-dependencies';
 
 /* Enums */
 export * from './models/boolean-operator';
