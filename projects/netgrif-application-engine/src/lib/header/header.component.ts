@@ -19,7 +19,6 @@ export class HeaderComponent implements OnInit {
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
-    @Input() allowedNets$: Observable<Array<Net>> = new Observable<Array<Net>>();
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 
@@ -28,9 +27,6 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.resolveHeaderService();
-        this.allowedNets$.subscribe(newAllowedNets => {
-            this.headerService.setAllowedNets(newAllowedNets);
-        });
     }
 
     private resolveHeaderService() {
