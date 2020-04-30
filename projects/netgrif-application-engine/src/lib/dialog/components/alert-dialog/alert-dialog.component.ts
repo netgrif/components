@@ -1,6 +1,8 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractDialog} from '../models/abstract-dialog';
+import {AbstractDialog} from '../../models/abstract-dialog';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {DialogData} from '../../models/DialogData';
+import {DialogResult} from '../../models/DialogResult';
 
 /**
  * Simple modal dialog with its own layout (which only shows information) based on a material design
@@ -8,18 +10,22 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
  */
 @Component({
     selector: 'nae-simple-dialog',
-    templateUrl: './simple-dialog.component.html',
-    styleUrls: ['./simple-dialog.component.scss']
+    templateUrl: './alert-dialog.component.html',
+    styleUrls: ['./alert-dialog.component.scss']
 })
-export class SimpleDialogComponent extends AbstractDialog<SimpleDialogComponent> {
+export class AlertDialogComponent extends AbstractDialog<AlertDialogComponent> {
     /**
      * Only injecting.
      * @param dialogRef Reference to a dialog opened via the MatDialog service.
      * @param data Injected data that was passed in to a dialog.
      */
-    constructor(public dialogRef: MatDialogRef<SimpleDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: any) {
+    constructor(public dialogRef: MatDialogRef<AlertDialogComponent, DialogResult>,
+                @Inject(MAT_DIALOG_DATA) public data: DialogData) {
         super(dialogRef, data);
+    }
+
+    onClose() {
+        this.dialogRef.close({});
     }
 
 }

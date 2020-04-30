@@ -1,15 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {MaterialModule} from '../../material/material.module';
+import {MaterialModule} from '../../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {QuestionDialogComponent} from './question-dialog.component';
+import {ConfirmDialogComponent} from './confirm-dialog.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {DialogModule} from '../dialog.module';
+import {DialogModule} from '../../dialog.module';
 
-describe(' QuestionDialogComponent', () => {
-    let component: QuestionDialogComponent;
-    let fixture: ComponentFixture<QuestionDialogComponent>;
+describe(' ConfirmDialogComponent', () => {
+    let component: ConfirmDialogComponent;
+    let fixture: ComponentFixture<ConfirmDialogComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -24,7 +24,7 @@ describe(' QuestionDialogComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(QuestionDialogComponent);
+        fixture = TestBed.createComponent(ConfirmDialogComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

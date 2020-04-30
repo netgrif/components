@@ -1,15 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {MaterialModule} from '../../material/material.module';
+import {MaterialModule} from '../../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {SimpleDialogComponent} from './simple-dialog.component';
-import {DialogModule} from '../dialog.module';
+import {PromptDialogComponent} from './prompt-dialog.component';
+import {DialogModule} from '../../dialog.module';
 
-describe('SimpleDialogComponent', () => {
-    let component: SimpleDialogComponent;
-    let fixture: ComponentFixture<SimpleDialogComponent>;
+describe('QuestionDialogWithAnswerComponent', () => {
+    let component: PromptDialogComponent;
+    let fixture: ComponentFixture<PromptDialogComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -24,7 +24,7 @@ describe('SimpleDialogComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SimpleDialogComponent);
+        fixture = TestBed.createComponent(PromptDialogComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -37,4 +37,3 @@ describe('SimpleDialogComponent', () => {
         TestBed.resetTestingModule();
     });
 });
-

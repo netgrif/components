@@ -7,6 +7,7 @@ export interface Fields {
     _embedded: TypeLocalisadField;
 
 }
+
 /**
  * Type Field
  */
@@ -45,6 +46,7 @@ export interface TypeLocalisadField {
     localisedDateFields?: Array<LocalisedDateFields>;
 
 }
+
 /**
  * Boolean Field
  */
@@ -70,10 +72,12 @@ export interface LocalisedBooleanFields {
     view: FieldView;
     defaultValue?: boolean;
 }
+
 /**
  * Text Field
  */
-export interface LocalisedTextFields {    /**
+export interface LocalisedTextFields {
+    /**
      * ID
      */
     stringId: string;
@@ -93,6 +97,7 @@ export interface LocalisedTextFields {    /**
     order: number;
     subType: string;
 }
+
 /**
  * Number Field
  */
@@ -120,6 +125,7 @@ export interface LocalisedNumberFields {
     validationErrors?: ValidationErrors;
     defaultValue?: number;
 }
+
 /**
  * Enumeration Field
  */
@@ -145,6 +151,7 @@ export interface LocalisedEnumerationFields {
     choices: Array<string>;
     defaultValue?: string;
 }
+
 /**
  * Multichoice Field
  */
@@ -160,6 +167,7 @@ export interface LocalisedMultichoiceFields {
     choices: Array<string> | string;
     defaultValue?: Array<string> | string;
 }
+
 /**
  * Date Field
  */
@@ -176,6 +184,7 @@ export interface LocalisedDateFields {
     validationJS?: string;
     validationErrors?: ValidationErrors;
 }
+
 /**
  * Field
  */
@@ -189,6 +198,7 @@ export interface LocalisedFields {
     value: FileFieldValue | Array<number>;
     order: number;
 }
+
 /**
  * User Field
  */
@@ -203,6 +213,7 @@ export interface LocalisedUserFields {
     roles: Array<string>;
 
 }
+
 /**
  * Object from Backend
  */

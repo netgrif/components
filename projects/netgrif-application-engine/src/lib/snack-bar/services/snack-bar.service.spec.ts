@@ -6,7 +6,6 @@ import {MaterialModule} from '../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SuccessSnackBarComponent} from '../components/success-snack-bar/success-snack-bar.component';
-import {SnackBarModule} from '../snack-bar.module';
 import {ErrorSnackBarComponent} from '../components/error-snack-bar/error-snack-bar.component';
 import {WarningSnackBarComponent} from '../components/warning-snack-bar/warning-snack-bar.component';
 import {GenericSnackBarComponent} from '../components/generic-snack-bar/generic-snack-bar.component';
@@ -21,7 +20,6 @@ describe('SnackBarService', () => {
             message: 'info',
             matIconName: 'done'
         },
-        duration: 4000,
         horizontalPosition: 'center',
         verticalPosition: 'bottom'
     };
@@ -61,7 +59,8 @@ describe('SnackBarService', () => {
         service.openSuccessSnackBar('info');
         expect(snackSpy).toHaveBeenCalledWith(SuccessSnackBarComponent, {
             ...testConfig,
-            data: Object.assign(testConfig.data, {message: 'info', matIconName: 'done'})
+            data: Object.assign(testConfig.data, {message: 'info', matIconName: 'done'}),
+            duration: 4000
         });
     });
 
@@ -77,7 +76,8 @@ describe('SnackBarService', () => {
         service.openWarningSnackBar('warn');
         expect(snackSpy).toHaveBeenCalledWith(WarningSnackBarComponent, {
             ...testConfig,
-            data: Object.assign(testConfig.data, {message: 'warn', matIconName: 'priority_high'})
+            data: Object.assign(testConfig.data, {message: 'warn', matIconName: 'priority_high'}),
+            duration: 4000
         });
     });
 
@@ -85,7 +85,8 @@ describe('SnackBarService', () => {
         service.openGenericSnackBar('gen', 'done');
         expect(snackSpy).toHaveBeenCalledWith(GenericSnackBarComponent, {
             ...testConfig,
-            data: Object.assign(testConfig.data, {message: 'gen', matIconName: 'done'})
+            data: Object.assign(testConfig.data, {message: 'gen', matIconName: 'done'}),
+            duration: 4000
         });
     });
 

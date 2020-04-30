@@ -1,2 +1,3 @@
-// tslint:disable-next-line
-export interface PreferenceFilters {}
+export interface PreferenceFilters {
+    [k: string]: any;
+}
