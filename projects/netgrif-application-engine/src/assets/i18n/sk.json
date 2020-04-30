@@ -43,6 +43,9 @@
                 "process": "Proces prípadu",
                 "role": "Procesná rola",
                 "task": "Úloha prípadu"
+            },
+            "task": {
+                "assignee": "Riešiteľ úlohy"
             }
         }
     }

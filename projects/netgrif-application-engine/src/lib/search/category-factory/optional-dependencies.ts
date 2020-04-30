@@ -1,5 +1,6 @@
 import {CaseViewService} from '../../view/case-view/case-view-service';
 import {CategoryFactory} from './category-factory';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 
 /**
  * Other dependencies that the {@link CategoryFactory} provides to the [Categories]{@link Category} it creates.
@@ -16,4 +17,8 @@ export interface OptionalDependencies {
      * within a net to that net.
      */
     categoryFactory: CategoryFactory;
+    /**
+     * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
+     */
+    userResourceService: UserResourceService | null;
 }

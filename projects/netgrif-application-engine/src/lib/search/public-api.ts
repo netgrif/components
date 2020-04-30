@@ -20,6 +20,7 @@ export * from './models/category/case/case-author';
 export * from './models/category/case/case-process';
 export * from './models/category/case/case-role';
 export * from './models/category/case/case-task';
+export * from './models/category/task/task-assignee';
 
 /* Interfaces */
 export * from './models/escape-result';
@@ -39,3 +40,4 @@ export * from './category-factory/category-factory';
 /* Components */
 export * from './search-component/search.component';
 export * from './search-component/case-search/case-search.component';
+export * from './search-component/task-search/task-search.component';

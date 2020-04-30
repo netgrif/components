@@ -13,7 +13,7 @@ export abstract class AbstractTaskView extends ViewWithHeaders implements OnInit
     public changedFields: Subject<ChangedFields>;
     public loading: boolean;
 
-    protected constructor(protected taskViewService: TaskViewService, baseFilter: Filter) {
+    protected constructor(protected taskViewService: TaskViewService) {
         super(taskViewService);
         this.taskPanel = [];
         this.taskViewService.taskData.subscribe( data => {
@@ -27,7 +27,6 @@ export abstract class AbstractTaskView extends ViewWithHeaders implements OnInit
         this.taskViewService.loading.subscribe( load => {
             this.loading = load;
         });
-        this.taskViewService.activeFilter = baseFilter;
     }
 
     ngOnInit() {

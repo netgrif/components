@@ -145,6 +145,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         SearchModule,
         SideMenuContentModule,
         ProfileModule,
+        SearchModule,
     ],
     entryComponents: [
         FilesUploadComponent,

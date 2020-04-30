@@ -54,6 +54,9 @@
                 "process": "Case process",
                 "role": "Process role",
                 "task": "Case task"
+            },
+            "task": {
+                "assignee": "Task assignee"
             }
         }
     }

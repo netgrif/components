@@ -11,6 +11,14 @@ import {FilterType} from './filter-type';
 export class SimpleFilter extends Filter {
 
     /**
+     * Create empty filter of provided type
+     * @param type type of resources that the filter can query
+     */
+    public static empty(type: FilterType): Filter {
+        return new SimpleFilter('', type, {});
+    }
+
+    /**
      * @ignore
      * Stores the underlying filter data
      */
