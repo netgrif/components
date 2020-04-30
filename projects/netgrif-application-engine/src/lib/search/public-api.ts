@@ -19,6 +19,7 @@ export * from './models/category/case/case-visual-id';
 export * from './models/category/case/case-author';
 export * from './models/category/case/case-process';
 export * from './models/category/case/case-role';
+export * from './models/category/case/case-task';
 
 /* Interfaces */
 export * from './models/escape-result';
