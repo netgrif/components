@@ -206,7 +206,7 @@
                                         "label": {
                                             "text": "All cases"
                                         },
-                                        "canBeDeleted": false,
+                                        "canBeClosed": false,
                                         "order": -1
                                     },
                                     {
@@ -218,7 +218,7 @@
                                             "icon": "sentiment_satisfied_alt",
                                             "text": "My Component tab"
                                         },
-                                        "canBeDeleted": false,
+                                        "canBeClosed": false,
                                         "order": -2
                                     }
                                 ]

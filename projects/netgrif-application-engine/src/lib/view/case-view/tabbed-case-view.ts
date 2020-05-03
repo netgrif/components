@@ -33,12 +33,12 @@ export abstract class TabbedCaseView extends AbstractCaseView {
 
     public handleCaseClick(clickedCase: Case): void {
         if (this._correctlyInjected) {
-            this._injectedTabData.tabGroupRef.openTab({
+            this._injectedTabData.tabViewRef.openTab({
                 label: {
                     text: clickedCase.title,
                     icon: clickedCase.icon ? clickedCase.icon : 'check_box'
                 },
-                canBeDeleted: true,
+                canBeClosed: true,
                 tabContentComponent: this._injectedTabData.tabViewComponent,
                 injectedObject: {
                     baseFilter: new SimpleFilter('', FilterType.TASK, {case: `${clickedCase.stringId}`})

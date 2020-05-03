@@ -50,7 +50,7 @@ export class SnackBarService {
                 message,
                 matIconName: 'error'
             },
-            duration: durationInSeconds * 1000,
+            // duration: durationInSeconds * 1000, // Error has to be acknowledged to be closed
             horizontalPosition,
             verticalPosition
         }, config));

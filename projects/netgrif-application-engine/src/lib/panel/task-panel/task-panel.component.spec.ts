@@ -69,7 +69,7 @@ describe('TaskPanelComponent', () => {
         component.updateTaskDataFields();
         expect(component.taskPanelData.task.dataGroups.length).toEqual(1);
 
-        component.taskPanelData.changedFields.next({number: { value: 10, behavior: {string: {editable: true}}}});
+        component.taskPanelData.changedFields.next({number: {value: 10, behavior: {string: {editable: true}}}});
         expect(component.taskPanelData.task.dataGroups[0].fields[0].value).toEqual(10);
         expect(component.taskPanelData.task.dataGroups[0].fields[0].behavior).toEqual({editable: true});
     });
@@ -140,7 +140,7 @@ describe('TaskPanelComponent', () => {
         component.taskPanelData.task.stringId = 'true';
         component.taskPanelData.task.startDate = [2020, 1, 1, 1, 1];
         const afterTrue = new Subject<boolean>();
-        afterTrue.subscribe( res => {
+        afterTrue.subscribe(res => {
             expect(res).toBeTrue();
             expect(component.taskPanelData.task.startDate).toBe(undefined);
         });
@@ -148,32 +148,32 @@ describe('TaskPanelComponent', () => {
 
         component.taskPanelData.task.stringId = 'false';
         const afterFalse = new Subject<boolean>();
-        afterFalse.subscribe( res => expect(res).toBeFalse());
+        afterFalse.subscribe(res => expect(res).toBeFalse());
         await component.assign(afterFalse);
 
         component.taskPanelData.task.stringId = 'error';
         const afterErr = new Subject<boolean>();
-        afterErr.subscribe( res => expect(res).toBeFalse());
+        afterErr.subscribe(res => expect(res).toBeFalse());
         await component.assign(afterErr);
     });
 
     it('should test finish', async () => {
         component.taskPanelData.task.stringId = 'true';
         const afterTrue = new Subject<boolean>();
-        afterTrue.subscribe( res => {
+        afterTrue.subscribe(res => {
             expect(res).toBeTrue();
         });
         await component.finish(afterTrue);
 
         component.taskPanelData.task.stringId = 'false';
         const afterFalse = new Subject<boolean>();
-        afterFalse.subscribe( res => expect(res).toBeFalse());
+        afterFalse.subscribe(res => expect(res).toBeFalse());
         await component.finish(afterFalse);
 
         component.taskPanelData.task.stringId = 'error';
         component.taskPanelData.task.dataSize = 0;
         const afterErr = new Subject<boolean>();
-        afterErr.subscribe( res => expect(res).toBeFalse());
+        afterErr.subscribe(res => expect(res).toBeFalse());
         await component.finish(afterErr);
     });
 
@@ -224,31 +224,41 @@ class MyResources {
 
     getData(stringId) {
         return of([{
-            fields : {
-                _embedded : {
-                    localisedNumberFields : [ {
-                        stringId : 'number',
-                        type : 'number',
-                        name : 'Number',
-                        description : 'Number field description',
-                        placeholder : 'Number field placeholder',
-                        behavior : {
-                            editable : true
+            fields: {
+                _embedded: {
+                    localisedNumberFields: [{
+                        stringId: 'number',
+                        type: 'number',
+                        name: 'Number',
+                        description: 'Number field description',
+                        placeholder: 'Number field placeholder',
+                        behavior: {
+                            editable: true
                         },
-                        value : 10.0,
-                        order : 0,
-                        validations : [ {
-                            validationRule : 'inrange 0,inf'
+                        value: 10.0,
+                        order: 0,
+                        validations: [{
+                            validationRule: 'inrange 0,inf'
                         }, {
-                            validationRule : 'inrange 0,inf',
-                            validationMessage : 'Number field validation message'
-                        } ],
-                        defaultValue : 10.0
-                    } ]
+                            validationRule: 'inrange 0,inf',
+                            validationMessage: 'Number field validation message'
+                        }],
+                        defaultValue: 10.0,
+                        layout: {
+                            x: 1,
+                            y: 1,
+                            cols: 1,
+                            rows: 1
+                        }
+                    }]
                 }
             },
-            alignment : 'start',
-            stretch : true
+            alignment: 'start',
+            stretch: true,
+            layout: {
+                row: 2,
+                cols: 2
+            }
         }]);
     }
 
@@ -262,7 +272,9 @@ class MyResources {
         } else if (stringId === 'false') {
             return of({error: 'error'});
         } else if (stringId === 'error') {
-            return of({error: 'error'}).pipe(map( res => { throw throwError(res); }));
+            return of({error: 'error'}).pipe(map(res => {
+                throw throwError(res);
+            }));
         }
     }
 
@@ -272,7 +284,9 @@ class MyResources {
         } else if (stringId === 'false') {
             return of({error: 'error'});
         } else if (stringId === 'error') {
-            return of({error: 'error'}).pipe(map( res => { throw throwError(res); }));
+            return of({error: 'error'}).pipe(map(res => {
+                throw throwError(res);
+            }));
         }
     }
 
@@ -291,7 +305,10 @@ class MyResources {
             dataFocusPolicy: DataFocusPolicy.manual,
             finishPolicy: FinishPolicy.manual,
             stringId: 'string',
-            cols: undefined,
+            layout: {
+                cols: undefined,
+                rows: undefined
+            },
             dataGroups: [],
             _links: {}
         }]);

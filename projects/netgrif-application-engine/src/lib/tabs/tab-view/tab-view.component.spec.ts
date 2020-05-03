@@ -1,5 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {TabGroupComponent} from './tab-group.component';
+import {TabViewComponent} from './tab-view.component';
 import {MaterialModule} from '../../material/material.module';
 import {TabCreationDetectorComponent} from '../tab-creation-detector/tab-creation-detector.component';
 import {Component, NgModule} from '@angular/core';
@@ -7,13 +7,13 @@ import {TabContent} from '../interfaces';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractTabComponent', () => {
-    let component: TabGroupComponent;
+    let component: TabViewComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, TabTestModule, BrowserAnimationsModule],
-            declarations: [TabGroupComponent,
+            declarations: [TabViewComponent,
                 TabCreationDetectorComponent,
                 TestWrapperComponent,
             ]
@@ -36,7 +36,7 @@ describe('AbstractTabComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-tab-group [initialTabs]="tabs"></nae-tab-group>'
+    template: '<nae-tab-view [initialTabs]="tabs"></nae-tab-view>'
 })
 class TestWrapperComponent {
     tabs: Array<TabContent> = [
@@ -45,7 +45,7 @@ class TestWrapperComponent {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeDeleted: false,
+            canBeClosed: false,
             tabContentComponent: TestComponent
         }
     ];

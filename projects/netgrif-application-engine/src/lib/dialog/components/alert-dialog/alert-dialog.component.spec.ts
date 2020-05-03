@@ -1,15 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {MaterialModule} from '../../material/material.module';
+import {MaterialModule} from '../../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {QuestionDialogWithAnswerComponent} from './question-dialog-with-answer.component';
-import {DialogModule} from '../dialog.module';
+import {AlertDialogComponent} from './alert-dialog.component';
+import {DialogModule} from '../../dialog.module';
 
-describe('QuestionDialogWithAnswerComponent', () => {
-    let component: QuestionDialogWithAnswerComponent;
-    let fixture: ComponentFixture<QuestionDialogWithAnswerComponent>;
+describe('SimpleDialogComponent', () => {
+    let component: AlertDialogComponent;
+    let fixture: ComponentFixture<AlertDialogComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -24,7 +24,7 @@ describe('QuestionDialogWithAnswerComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(QuestionDialogWithAnswerComponent);
+        fixture = TestBed.createComponent(AlertDialogComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -37,3 +37,4 @@ describe('QuestionDialogWithAnswerComponent', () => {
         TestBed.resetTestingModule();
     });
 });
+

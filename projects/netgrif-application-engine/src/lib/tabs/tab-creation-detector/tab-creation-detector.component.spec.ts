@@ -2,9 +2,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TabCreationDetectorComponent} from './tab-creation-detector.component';
 import {Component, NgModule, OnInit} from '@angular/core';
 import {TabContent} from '../interfaces';
-import {TabGroup} from '../classes/tab-group';
 import {MaterialModule} from '../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TabView} from '../classes/tab-view';
 describe('TabCreationDetectorComponent', () => {
     let component: TabCreationDetectorComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
@@ -42,14 +42,14 @@ describe('TabCreationDetectorComponent', () => {
     template: '<nae-tab-creation-detector [initializeTabFunction]="initializeTabLambda" [tabIndex]="0"></nae-tab-creation-detector>'
 })
 class TestWrapperComponent implements OnInit {
-    tabGroup: TabGroup;
+    tabGroup: TabView;
     tabs: Array<TabContent> = [
         {
             label: {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeDeleted: false,
+            canBeClosed: false,
             tabContentComponent: TestComponent
         }
     ];
@@ -58,7 +58,7 @@ class TestWrapperComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.tabGroup = new TabGroup(this.tabs);
+        this.tabGroup = new TabView(this.tabs);
     }
 }
 

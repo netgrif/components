@@ -1,6 +1,7 @@
-import {DataField, Layout} from '../../models/abstract-data-field';
+import {DataField} from '../../models/abstract-data-field';
 import {UserValue} from './user-value';
 import {Behavior} from '../../models/behavior';
+import {Layout} from '../../models/layout';
 
 export class UserField extends DataField<UserValue> {
     constructor(stringId: string, title: string, behavior: Behavior, value: UserValue, private _roles: Array<string>,

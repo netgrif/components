@@ -23,16 +23,16 @@ describe('DialogService', () => {
     });
 
     it('should call simple dialog', () => {
-        service.openSimpleDialog('string', 'string');
+        service.openAlertDialog('string', 'string');
         expect(dialogSpy).toHaveBeenCalled();
     });
 
     it('should call question dialog', () => {
-        service.openQuestionDialog('string', 'string', 'yay', 'nay');
+        service.openConfirmDialog('string', 'string', 'yay', 'nay');
         expect(dialogSpy).toHaveBeenCalled();
     });
     it('should call dialog with answer', () => {
-        service.openQuestionWithAnswerDialog('string', 'string', 'placeholder');
+        service.openPromptDialog('string', 'string', 'placeholder');
         expect(dialogSpy).toHaveBeenCalled();
     });
 

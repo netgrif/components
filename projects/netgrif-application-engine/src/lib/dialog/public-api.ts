@@ -1,7 +1,7 @@
 // COMPONENTS
-export * from './simple-dialog/simple-dialog.component';
-export * from './question-dialog/question-dialog.component';
-export * from './question-dialog-with-answer/question-dialog-with-answer.component';
+export * from './components/alert-dialog/alert-dialog.component';
+export * from './components/confirm-dialog/confirm-dialog.component';
+export * from './components/prompt-dialog/prompt-dialog.component';
 
 // MODULES
 export * from './dialog.module';

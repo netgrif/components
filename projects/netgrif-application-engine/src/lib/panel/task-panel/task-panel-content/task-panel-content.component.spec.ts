@@ -9,6 +9,8 @@ import {CommonModule} from '@angular/common';
 import {TaskPanelContentService} from './task-panel-content.service';
 import {MaterialAppearance, TemplateAppearance} from '../../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
+import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
+import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
 
 describe('TaskPanelContentComponent', () => {
     let component: TaskPanelContentComponent;
@@ -53,7 +55,8 @@ describe('TaskPanelContentComponent', () => {
                 alignment: 'end',
                 stretch: false,
                 layout: {
-                    cols: 4
+                    cols: 4,
+                    rows: undefined
                 }
             }, {
                 fields: [
@@ -82,20 +85,18 @@ describe('TaskPanelContentComponent', () => {
                 title: 'string',
                 alignment: 'start',
                 stretch: false,
-                layout: {
-                    cols: 4
-                }
+                layout: {cols: 3, rows: undefined}
             }, {
                 fields: [
                     new BooleanField('', '', true, {editable: true},
                         undefined, undefined, {
-                        x: 1,
-                        y: 12,
-                        cols: 2,
-                        rows: 1,
-                        appearance: MaterialAppearance.OUTLINE,
-                        template: TemplateAppearance.NETGRIF,
-                    } ),
+                            x: 1,
+                            y: 12,
+                            cols: 2,
+                            rows: 1,
+                            appearance: MaterialAppearance.OUTLINE,
+                            template: TemplateAppearance.NETGRIF,
+                        }),
                     new BooleanField('', '', true, {hidden: true},
                         undefined, undefined, {
                             x: 0,
@@ -104,14 +105,12 @@ describe('TaskPanelContentComponent', () => {
                             rows: 1,
                             appearance: MaterialAppearance.OUTLINE,
                             template: TemplateAppearance.NETGRIF,
-                        } )
+                        })
                 ],
                 title: '',
                 alignment: 'start',
                 stretch: false,
-                layout: {
-                    cols: 4
-                }
+                layout: {cols: 3, rows: undefined}
             },
         ], 4).length).toEqual(20);
     });
