@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {LogEntry, LogEntryConfiguration} from '../models/log-entry';
 import {LogPublisherService} from './log-publisher.service';
 import {LogLevel} from './log-level';
+import {ConfigurationService} from '../../configuration/configuration.service';
 
 export interface LoggerConfiguration extends LogEntryConfiguration {
     level?: LogLevel;
@@ -12,13 +13,17 @@ export abstract class AbstractLoggerService {
     protected readonly config: LoggerConfiguration;
     protected readonly publisher: LogPublisherService;
 
-    protected constructor(private publisherService: LogPublisherService) {
+    protected constructor(private publisherService: LogPublisherService, _config: ConfigurationService) {
         this.publisher = publisherService;
-        this.config = { // TODO 24.03.2020 - connect with configuration service @mladoniczky
+        this.config = {
             logWithDate: true,
             serializeParams: true,
             level: LogLevel.ALL
         };
+        const servicesConfig = _config.get().services;
+        if (servicesConfig && servicesConfig.log) {
+            this.config = Object.assign(this.config, servicesConfig.log);
+        }
     }
 
     get level() {
@@ -63,7 +68,7 @@ export abstract class AbstractLoggerService {
 })
 export class LoggerService extends AbstractLoggerService {
 
-    constructor(publisherService: LogPublisherService) {
-        super(publisherService);
+    constructor(publisherService: LogPublisherService, config: ConfigurationService) {
+        super(publisherService, config);
     }
 }
