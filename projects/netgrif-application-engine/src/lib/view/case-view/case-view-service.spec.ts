@@ -29,7 +29,6 @@ describe('CaseViewService', () => {
     });
 
     it('should load cases', () => {
-        service.baseFilter = new SimpleFilter('', FilterType.TASK, {});
         service.loadCases();
         service.cases$.subscribe(res => {
             expect(res.length).toEqual(0);

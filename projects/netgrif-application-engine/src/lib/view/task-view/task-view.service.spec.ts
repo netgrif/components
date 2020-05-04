@@ -33,7 +33,6 @@ describe('TaskViewService', () => {
     });
 
     it('should load tasks', () => {
-        service.activeFilter = new SimpleFilter('id', FilterType.TASK, {});
         service.loadTasks();
         expect(service.taskArray.length).toEqual(1);
         service.reload();
