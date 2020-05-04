@@ -8,7 +8,6 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
         super();
     }
 
-    // TODO correct locale (date format and first day of the week)
     public buildErrorMessage(dataField: AbstractTimeInstanceField) {
         if (this.formControl.hasError('required')) {
             return this._translate.instant('dataField.validations.required');

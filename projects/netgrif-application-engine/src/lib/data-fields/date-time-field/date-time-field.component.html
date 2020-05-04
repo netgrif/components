@@ -6,7 +6,6 @@
 <ng-template #fieldTemplate let-showLargeLayout="showLargeLayout">
     <mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
         <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-<!-- TODO: 26.3.2020 min/max date from backend -->
         <input matInput
                [ngxMatDatetimePicker]="picker"
                [required]="dataField.behavior.required"

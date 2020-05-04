@@ -10,8 +10,9 @@ import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {of} from 'rxjs';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
-import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-header.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
 
 
 describe('WorkflowPanelComponent', () => {
@@ -28,7 +29,8 @@ describe('WorkflowPanelComponent', () => {
                 DataFieldsModule
             ],
             declarations: [WorkflowPanelComponent, PanelComponent, TestWrapperComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            schemas: [NO_ERRORS_SCHEMA],
+            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);

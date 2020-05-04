@@ -4,6 +4,8 @@ import {MatGridListModule} from '@angular/material';
 import {DashboardModule} from '../dashboard.module';
 import {Component} from '@angular/core';
 import {DashboardParams} from './dashboard-params';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
 
 describe('DashboardContentComponent', () => {
     let component: DashboardContentComponent;
@@ -12,7 +14,8 @@ describe('DashboardContentComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [MatGridListModule, DashboardModule],
-            declarations: [TestWrapperComponent]
+            declarations: [TestWrapperComponent],
+            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         })
             .compileComponents();
     }));

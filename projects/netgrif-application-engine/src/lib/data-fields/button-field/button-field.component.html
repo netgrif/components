@@ -15,9 +15,8 @@
                 'mat-fab': dataField.view === 'fab',
                 'mat-mini-fab': dataField.view === 'minifab'}"
                 color="primary"
-                ngDefaultControl
                 [matTooltip]="dataField.description"
-                [formControl]="formControl"
+                [disabled]="formControl.disabled"
                 (click)="formControl.setValue(formControl.value + 1)">
             {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : dataField.placeholder }}
         </button>

@@ -41,8 +41,7 @@ export abstract class TabbedCaseView extends AbstractCaseView {
                 canBeClosed: true,
                 tabContentComponent: this._injectedTabData.tabViewComponent,
                 injectedObject: {
-                    // TODO Filters
-                    baseFilter: `{"case":"${clickedCase.stringId}"}`
+                    baseFilter: new SimpleFilter('', FilterType.TASK, {case: `${clickedCase.stringId}`})
                 },
                 order: this._injectedTabData.tabViewOrder
             }, this._autoswitchToTaskTab);
