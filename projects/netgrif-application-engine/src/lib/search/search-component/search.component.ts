@@ -23,14 +23,21 @@ import {SearchInputType} from '../models/category/search-input-type';
 export class SearchComponent implements OnInit {
 
     /**
+     * Array that holds all the available [Categories]{@link Category}
+     */
+    @Input() public searchCategories: Array<Category<any>>;
+    /**
      * @ignore
      * FormControl for the user input field
      */
     public formControl = new FormControl();
     /**
-     * Array that holds all the available [Categories]{@link Category}
+     * @ignore
+     * Stores the state of the search GUI.
+     * If some category is selected, then the next input completes it and adds a new Predicate to the search.
+     * If not then the next input creates a fulltext search, or selects a new category.
      */
-    @Input() public searchCategories: Array<Category<any>>;
+    public selectedCategory: Category<any>;
     /**
      * @ignore
      * Observable that contains [Categories]{@link Category} that match user input. It updates it's content every time user input changes.
@@ -39,17 +46,15 @@ export class SearchComponent implements OnInit {
     /**
      * @ignore
      * Array that holds constructed search chips.
-     * If [_selectedCategory]{@link SearchComponent#_selectedCategory} has a value set,
+     * If [selectedCategory]{@link SearchComponent#selectedCategory} has a value set,
      * then the last entry in the array is an incomplete chip.
      */
     public searchChips: Array<SimpleSearchChip> = [];
     /**
      * @ignore
-     * Stores the state of the search GUI.
-     * If some category is selected, then the next input completes it and adds a new Predicate to the search.
-     * If not then the next input creates a fulltext search, or selects a new category.
+     * exists so that we can access Enum in HTML
      */
-    private _selectedCategory: Category<any>;
+    public searchInputType = SearchInputType;
     /**
      * @ignore
      * Lambda that is used to preserve `this` reference in HTML binding.
@@ -84,12 +89,12 @@ export class SearchComponent implements OnInit {
      * @returns [Categories]{@link Category} that start with the user input. Case insensitive. Based on locale translation.
      */
     private _filterOptions(userInput: string): Array<Category<any>> | Array<SearchAutocompleteOption> {
-        if (!this._selectedCategory) {
+        if (!this.selectedCategory) {
             const value = userInput.toLocaleLowerCase();
             return this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value));
         } else {
-            if (this._selectedCategory instanceof AutocompleteCategory) {
-                return this._selectedCategory.filterOptions(userInput);
+            if (this.selectedCategory instanceof AutocompleteCategory) {
+                return this.selectedCategory.filterOptions(userInput);
             }
             return [];
         }
@@ -135,7 +140,7 @@ export class SearchComponent implements OnInit {
      */
     public confirmUserInput(): void {
         const inputValue = this.formControl.value;
-        if (!this._selectedCategory) {
+        if (!this.selectedCategory) {
             if (!(inputValue instanceof Category)) {
                 // full text search
                 if (inputValue === '') {
@@ -145,7 +150,7 @@ export class SearchComponent implements OnInit {
                 }
             } else {
                 // start new chip
-                this._selectedCategory = inputValue;
+                this.selectedCategory = inputValue;
                 this.searchChips.push({text: `${this.categoryName(inputValue)}: `});
                 this.formControl.setValue('');
             }
@@ -153,14 +158,14 @@ export class SearchComponent implements OnInit {
             if (inputValue === '') {
                 return;
             }
-            if (this._selectedCategory.inputType === SearchInputType.AUTOCOMPLETE) {
-                this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));
+            if (this.selectedCategory.inputType === SearchInputType.AUTOCOMPLETE) {
+                this._searchService.addPredicate(this.selectedCategory.generatePredicate(inputValue.value));
                 this.appendTextToLastChip(inputValue.text);
             } else {
-                this._searchService.addPredicate(this._selectedCategory.generatePredicate([inputValue]));
+                this._searchService.addPredicate(this.selectedCategory.generatePredicate([inputValue]));
                 this.appendTextToLastChip(inputValue);
             }
-            this._selectedCategory = undefined;
+            this.selectedCategory = undefined;
             this.formControl.setValue('');
         }
     }
@@ -180,8 +185,8 @@ export class SearchComponent implements OnInit {
      * @param index index of the chip that should be removed. No bounds checks are performed!
      */
     public removeChip(index: number): void {
-        if (!!this._selectedCategory && index === this.searchChips.length - 1) {
-            this._selectedCategory = undefined;
+        if (!!this.selectedCategory && index === this.searchChips.length - 1) {
+            this.selectedCategory = undefined;
         } else {
             this._searchService.removePredicate(index);
         }

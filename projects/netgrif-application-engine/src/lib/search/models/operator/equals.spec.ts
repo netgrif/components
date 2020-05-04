@@ -1,7 +1,7 @@
-import { Equals } from './equals';
+import {Equals} from './equals';
 
 describe('Equals', () => {
-  it('should create an instance', () => {
-    expect(new Equals()).toBeTruthy();
-  });
+    it('should create an instance', () => {
+        expect(new Equals()).toBeTruthy();
+    });
 });

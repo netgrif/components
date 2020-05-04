@@ -6,15 +6,17 @@
         </mat-chip>
     </mat-chip-list>
     <mat-form-field>
-        <input type="text" matInput
+        <input type="{{!selectedCategory || selectedCategory.inputType === searchInputType.AUTOCOMPLETE ? 'text' : selectedCategory.inputType}}" matInput
                [formControl]="formControl"
                [matAutocomplete]="searchAutocomplete"
+               [matDatepicker]="searchDatepicker"
                (keydown.enter)="$event.target.blur();confirmUserInput()">
         <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                 {{option.translationPath ? (option.translationPath | translate) : option.text}}
             </mat-option>
         </mat-autocomplete>
+        <mat-datepicker #searchDatepicker></mat-datepicker>
     </mat-form-field>
     <button mat-icon-button (click)="confirmUserInput()">
         <mat-icon>search</mat-icon>

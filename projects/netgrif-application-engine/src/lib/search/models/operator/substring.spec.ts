@@ -1,7 +1,7 @@
-import { Substring } from './substring';
+import {Substring} from './substring';
 
 describe('Substring', () => {
-  it('should create an instance', () => {
-    expect(new Substring()).toBeTruthy();
-  });
+    it('should create an instance', () => {
+        expect(new Substring()).toBeTruthy();
+    });
 });

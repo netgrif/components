@@ -5,7 +5,7 @@ import {Query} from '../query/query';
  * Operator that matches if the input is a substring of some value.
  * Can only be used on fields that are texts and are not indexed as keywords.
  */
-export class Substring extends Operator {
+export class Substring extends Operator<string> {
     constructor() {
         super(1);
     }

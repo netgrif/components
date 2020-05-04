@@ -11,6 +11,8 @@ export * from './models/predicate/clause-predicate';
 export * from './models/operator/operator';
 export * from './models/operator/substring';
 export * from './models/operator/equals';
+export * from './models/operator/equals-date';
+export * from './models/operator/in-range-date';
 
 export * from './models/category/category';
 export * from './models/category/autocomplete-category';
@@ -20,6 +22,7 @@ export * from './models/category/case/case-author';
 export * from './models/category/case/case-process';
 export * from './models/category/case/case-role';
 export * from './models/category/case/case-task';
+export * from './models/category/case/case-creation-date';
 export * from './models/category/task/task-assignee';
 
 /* Interfaces */

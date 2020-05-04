@@ -23,7 +23,7 @@ export abstract class Category<T> {
     /**
      * The operator that is currently selected for this category. It is used to save state of the search GUI.
      */
-    protected _selectedOperator: Operator;
+    protected _selectedOperator: Operator<any>;
 
     /**
      * @param _elasticKeywords Elasticsearch keywords that should be queried by queries generated with this category
@@ -33,7 +33,7 @@ export abstract class Category<T> {
      * @param _log used to record information about incorrect use of this class
      */
     protected constructor(protected readonly _elasticKeywords: Array<string>,
-                          protected readonly _allowedOperators: Array<Operator>,
+                          protected readonly _allowedOperators: Array<Operator<any>>,
                           public readonly translationPath: string,
                           public readonly inputType: SearchInputType,
                           protected _log: LoggerService) {
@@ -42,7 +42,7 @@ export abstract class Category<T> {
     /**
      * @returns the set of Operators that can be used with this category.
      */
-    public get allowedOperators(): Array<Operator> {
+    public get allowedOperators(): Array<Operator<any>> {
         const result = [];
         result.push(...this._allowedOperators);
         return result;

@@ -1,4 +1,5 @@
 export enum SearchInputType {
     TEXT = 'text',
-    AUTOCOMPLETE = 'autocomplete'
+    AUTOCOMPLETE = 'autocomplete',
+    DATE = 'date',
 }

@@ -9,8 +9,10 @@ import {WrapResult} from '../wrap-result';
  * Operators are ment to be stateless and held as singleton instances, as they can be shared without any issues.
  * This library uses the {@link OperatorService} to store the singleton instances, but you can use your own solution,
  * or instantiate them multiple times if you prefer.
+ *
+ * @typeparam T type of arguments this Operator can generate queries from
  */
-export abstract class Operator {
+export abstract class Operator<T> {
 
     /**
      * Reserved characters for Elasticsearch queries. These characters can be escaped with a `\` character.
@@ -107,14 +109,14 @@ export abstract class Operator {
      *
      * Escapes the first argument from the `args` array, calls the [query()]{@link Operator#query} function for each `keyword` and combines
      * the results with an `OR` operator.
-     * @returns query that wos constructed with the given arguments and keywords
+     * @returns query that wos constructed with the given arguments and keywords. Returns an empty query if no arguments are provided.
      */
-    public createQuery(elasticKeywords: Array<string>, args: Array<string>): Query {
+    public createQuery(elasticKeywords: Array<string>, args: Array<T>): Query {
         if (args.length === 0) {
             return Query.emptyQuery();
         }
         return Operator.forEachKeyword(elasticKeywords, (keyword: string) => {
-            const escapedValue = Operator.escapeInput(args[0]);
+            const escapedValue = Operator.escapeInput(args[0] as unknown as string);
             const wrappedValue = Operator.wrapInputWithQuotes(escapedValue.value, escapedValue.wasEscaped);
             const queryString = Operator.query(keyword, wrappedValue.value, this._operatorSymbols);
             return new Query(queryString);
