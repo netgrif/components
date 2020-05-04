@@ -44,7 +44,7 @@ export abstract class Operator<T> {
      * Escapes all escapable Elasticsearch symbols. Removes all unescapable Elasticsearch symbols.
      *
      * For a list of symbols see Elasticsearch's Query string query
-     * [documentation]{@link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters}
+     * [doc]{@link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters}.
      * @param input user input that should have special characters escaped
      * @returns user input with the escapable characters escaped and the unescapable characters removed
      */

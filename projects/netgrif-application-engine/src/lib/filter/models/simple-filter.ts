@@ -11,18 +11,18 @@ import {FilterType} from './filter-type';
 export class SimpleFilter extends Filter {
 
     /**
+     * @ignore
+     * Stores the underlying filter data
+     */
+    private readonly _filter: CaseSearchRequestBody | TaskSearchRequestBody;
+
+    /**
      * Create empty filter of provided type
      * @param type type of resources that the filter can query
      */
     public static empty(type: FilterType): Filter {
         return new SimpleFilter('', type, {});
     }
-
-    /**
-     * @ignore
-     * Stores the underlying filter data
-     */
-    private readonly _filter: CaseSearchRequestBody | TaskSearchRequestBody;
 
     /**
      * @param id identifier of the filter
