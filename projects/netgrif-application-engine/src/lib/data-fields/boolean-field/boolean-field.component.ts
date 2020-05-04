@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {BooleanField} from './models/boolean-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {TranslateService} from '@ngx-translate/core';
+import {SelectLanguageService} from '../../toolbar/select-language.service';
 
 @Component({
     selector: 'nae-boolean-field',
@@ -11,16 +13,16 @@ export class BooleanFieldComponent extends AbstractDataFieldComponent {
 
     @Input() dataField: BooleanField;
 
-    constructor() {
+    constructor(private _translate: TranslateService, private _select: SelectLanguageService) {
         super();
     }
 
     public getErrorMessage() {
         if (this.formControl.hasError('required')) {
-            return 'This field is required!';
+            return this._translate.instant('dataField.validations.required');
         } else if (this.formControl.hasError('requiredTrue')) {
             return this.resolveErrorMessage(this.dataField, 'requiredTrue',
-                'Entered value must be true');
+                this._translate.instant('dataField.validations.requiredTrue'));
         }
         return '';
     }

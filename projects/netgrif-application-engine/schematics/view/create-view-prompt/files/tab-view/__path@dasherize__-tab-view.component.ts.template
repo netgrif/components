@@ -15,7 +15,7 @@ export class <%= classify(path) %>TabViewComponent {
                 icon: '<%= tab.icon %>',<% } if (tab.text !== undefined) { %>
                 text: '<%= tab.text %>',<% } %>
             },<% } %>
-            canBeDeleted: <%= tab.canBeDeleted %>,
+            canBeClosed: <%= tab.canBeClosed %>,
             tabContentComponent: <%= tab.tabContentComponent %>,<% if (tab.order !== undefined) { %>
             order: <%= tab.order %>,<% } %><% if (!!tab.injectedObject) { %>
             injectedObject: {

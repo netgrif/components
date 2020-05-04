@@ -1,4 +1,4 @@
-import {FieldBehavior} from './field-behavior';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
 
 export interface ChangedFieldContainer {
     changedFields: ChangedFields2;
@@ -27,8 +27,10 @@ export interface ChangedFields2 {
 
 export interface Change2 {
     value?: string | number | boolean | any;
-    // behavior is "cleared" and contains information only for one transition
-    behavior?: FieldBehavior;
+    /**
+     * behavior is "cleared" and contains information only for one transition
+     */
+    behavior?: ChangedFields;
 
     [key: string]: any;
 }

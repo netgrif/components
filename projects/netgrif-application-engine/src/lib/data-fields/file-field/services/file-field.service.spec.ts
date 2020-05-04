@@ -9,13 +9,14 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../../material/material.module';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 describe('FileFieldService', () => {
   let service: FileFieldService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule, MaterialModule],
+        imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, HttpClientTestingModule],
         providers: [
             FileDownloadService,
             FileUploadService,

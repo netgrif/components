@@ -13,6 +13,8 @@ import {
     EnumerationAutocompleteSelectFieldComponent
 } from './enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('EnumerationFieldComponent', () => {
     let component: EnumerationFieldComponent;
@@ -20,7 +22,7 @@ describe('EnumerationFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule],
+            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [
                 EnumerationFieldComponent,
                 EnumerationSelectFieldComponent,

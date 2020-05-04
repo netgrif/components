@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DialogService, DialogType} from '@netgrif/application-engine';
+import {DialogService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-dialog-example',
@@ -9,36 +9,30 @@ import {DialogService, DialogType} from '@netgrif/application-engine';
 export class DialogExampleComponent implements OnInit {
     readonly TITLE = 'Dialog';
     readonly DESCRIPTION = 'Ukážka použitia dialogu...';
-    public questionResult: string;
+    public questionResult: boolean;
     public answerResult: string;
-    public colors: Array<object>;
 
     constructor(private dialogService: DialogService) {
-        this.colors = [
-            {value: 'primary', viewValue: 'Primary'},
-            {value: 'accent', viewValue: 'Accent'},
-            {value: 'warn', viewValue: 'Warn'}
-            ];
     }
 
     ngOnInit(): void {
     }
 
-    simple(message: string, select: string) {
-        this.dialogService.openSimpleDialog('Simple info dialog title', message, select as DialogType);
+    simple(title: string, message: string) {
+        this.dialogService.openAlertDialog(title, message);
     }
 
-    question(question: string, pos: string, neg: string) {
-        this.dialogService.openQuestionDialog('Question dialog title', question, neg, pos)
-            .afterClosed().subscribe( result => {
-                this.questionResult = result;
+    question(title: string, question: string, pos: string, neg: string) {
+        this.dialogService.openConfirmDialog(title, question, neg, pos)
+            .afterClosed().subscribe(result => {
+            this.questionResult = result.confirmed;
         });
     }
 
-    answer(question: string, placeholder: string) {
-        this.dialogService.openQuestionWithAnswerDialog('Question with answer dialog title', question, placeholder)
-            .afterClosed().subscribe( result => {
-            this.answerResult = result;
+    answer(title: string, question: string, placeholder: string) {
+        this.dialogService.openPromptDialog(title, question, placeholder)
+            .afterClosed().subscribe(result => {
+            this.answerResult = result.prompt;
         });
     }
 }

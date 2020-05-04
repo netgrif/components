@@ -6,38 +6,27 @@ import {
     AuthenticationModule,
     ConfigurationService,
     CovalentModule,
+    DashboardModule,
     DataFieldsModule,
     DialogModule,
+    ForgottenPasswordFormModule,
     HeaderModule,
+    LoginFormModule,
     MaterialModule,
     NavigationModule,
-    NewCaseComponent,
     PanelModule,
-    QuestionDialogComponent,
-    QuestionDialogWithAnswerComponent,
+    ProfileModule,
     QuickPanelModule,
+    RegistrationFormModule,
+    ResourceProvider,
+    SideMenuContentModule,
     SideMenuModule,
-    SimpleDialogComponent,
-    GenericSnackBarComponent,
-    SuccessSnackBarComponent,
-    WarningSnackBarComponent,
-    ErrorSnackBarComponent,
+    SignUpModule,
+    SnackBarModule,
     TabsModule,
     ToolbarModule,
-    UserAssignComponent,
-    ResourceProvider,
     UserModule,
-    ImportNetComponent,
     WorkflowViewModule,
-    DashboardModule,
-    FilterSelectorComponent,
-    FilesUploadComponent,
-    LoginFormModule,
-    ForgottenPasswordFormModule,
-    RegistrationFormModule,
-    SignUpModule,
-    SideMenuContentModule,
-    ProfileModule,
     SearchModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -71,7 +60,7 @@ import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/filter-repository-example.component';
-import { ProfileComponent } from './doc/profile/profile.component';
+import {ProfileComponent} from './doc/profile/profile.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -145,24 +134,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         SearchModule,
         SideMenuContentModule,
         ProfileModule,
-        SearchModule,
+        SnackBarModule,
     ],
     entryComponents: [
-        FilesUploadComponent,
-        NewCaseComponent,
-        UserAssignComponent,
-        SimpleDialogComponent,
-        QuestionDialogComponent,
-        QuestionDialogWithAnswerComponent,
         ContentComponent,
         TabbedCaseViewComponent,
-        TabbedTaskViewComponent,
-        ImportNetComponent,
-        FilterSelectorComponent,
-        GenericSnackBarComponent,
-        SuccessSnackBarComponent,
-        WarningSnackBarComponent,
-        ErrorSnackBarComponent,
+        TabbedTaskViewComponent
     ],
     providers: [{
         provide: ConfigurationService,

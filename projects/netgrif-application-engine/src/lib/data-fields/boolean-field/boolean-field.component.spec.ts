@@ -6,6 +6,8 @@ import {MaterialModule} from '../../material/material.module';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('BooleanFieldComponent', () => {
     let component: BooleanFieldComponent;
@@ -13,7 +15,7 @@ describe('BooleanFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule],
+            imports: [MaterialModule, AngularResizedEventModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [
                 BooleanFieldComponent,
                 DataFieldTemplateComponent,

@@ -1,50 +1,76 @@
 import {Injectable} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {QuestionDialogComponent} from '../question-dialog/question-dialog.component';
-import {SimpleDialogComponent} from '../simple-dialog/simple-dialog.component';
-import {QuestionDialogWithAnswerComponent} from '../question-dialog-with-answer/question-dialog-with-answer.component';
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
+import {ConfirmDialogComponent} from '../components/confirm-dialog/confirm-dialog.component';
+import {AlertDialogComponent} from '../components/alert-dialog/alert-dialog.component';
+import {PromptDialogComponent} from '../components/prompt-dialog/prompt-dialog.component';
+import {DialogData} from '../models/DialogData';
+import {DialogResult} from '../models/DialogResult';
 
-export enum DialogType {
-    PRIMARY = 'primary',
-    ACCENT = 'accent',
-    WARNING = 'warn'
-}
-
+/**  Service to open own modal interacting dialog components based on Material Design via [MatDialog]{@link MatDialog} service. */
 @Injectable({
     providedIn: 'root'
 })
 export class DialogService {
-
+    /**
+     * Only inject service.
+     * @param dialog Service to open Material Design modal dialogs.
+     */
     constructor(private dialog: MatDialog) {
     }
 
-    openSimpleDialog(title: string, content: string, type = DialogType.PRIMARY, configMatDialog?: object) {
-        return this.dialog.open(SimpleDialogComponent,
+    /**
+     * Open the alert modal dialog and show his content.
+     * Alert dialog should be used to show the user a crucial message.
+     * @param title Dialog title.
+     * @param content Informs user about message.
+     * @param configMatDialog Extra configuration options.
+     * @returns Reference to the newly-opened alert dialog. When dialog closes an empty object is returned.
+     */
+    public openAlertDialog(title: string, content: string,
+                           configMatDialog?: MatDialogConfig<DialogData>): MatDialogRef<AlertDialogComponent, DialogResult> {
+        return this.dialog.open<AlertDialogComponent, DialogData, DialogResult>(AlertDialogComponent,
             Object.assign({
                 data: {
                     title,
-                    content,
-                    type
+                    content
                 }
             }, configMatDialog)
         );
     }
 
-    openQuestionDialog(title: string, question: string, negativeAnswer: string, positiveAnswer: string, configMatDialog?: object) {
-        return this.dialog.open(QuestionDialogComponent,
+    /**
+     * Open question model dialog with positive and negative answer button.
+     * @param title Dialog title.
+     * @param question Question forming the idea of the whole dialogue with the user.
+     * @param negativeChoiceLabel Negative answer label
+     * @param positiveChoiceLabel Positive answer label
+     * @param configMatDialog Extra configuration options.
+     * @returns Reference to the newly-opened question dialog. When dialog is closed made choice is returned.
+     */
+    openConfirmDialog(title: string, question: string, negativeChoiceLabel: string, positiveChoiceLabel: string,
+                      configMatDialog?: MatDialogConfig<DialogData>): MatDialogRef<ConfirmDialogComponent, DialogResult> {
+        return this.dialog.open<ConfirmDialogComponent, DialogData, DialogResult>(ConfirmDialogComponent,
             Object.assign({
                 data: {
                     title,
                     content: question,
-                    negativeAnswer,
-                    positiveAnswer
+                    negativeLabel: negativeChoiceLabel,
+                    positiveLabel: positiveChoiceLabel
                 }
             }, configMatDialog)
         );
     }
 
-    openQuestionWithAnswerDialog(title: string, question: string, placeholder: string, configMatDialog?: object) {
-        return this.dialog.open(QuestionDialogWithAnswerComponent,
+    /**
+     * Open question model dialog with answer from user as message response.
+     * @param title Dialog title.
+     * @param question Question forming the idea of the whole dialogue with the user.
+     * @param placeholder Label for answer input box.
+     * @param configMatDialog Extra configuration options.
+     * @returns Reference to the newly-opened question with answer dialog.
+     */
+    openPromptDialog(title: string, question: string, placeholder: string, configMatDialog?: MatDialogConfig<DialogData>) {
+        return this.dialog.open(PromptDialogComponent,
             Object.assign({
                 data: {
                     title,

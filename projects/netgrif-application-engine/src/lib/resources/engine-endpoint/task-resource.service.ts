@@ -31,16 +31,12 @@ export class TaskResourceService implements CountService {
      *  POST
      *  {{baseUrl}}/api/task/count
      */
-    public countTask(filterParam: Filter): Observable<Count> {
+    public count(filterParam: Filter): Observable<Count> {
         if (filterParam.type !== FilterType.TASK) {
             throw new Error('Provided filter doesn\'t have type TASK');
         }
         return this.provider.post$('task/count', this.SERVER_URL, filterParam.getRequestBody(), filterParam.getRequestParams())
             .pipe(map(r => changeType(r, undefined)));
-    }
-
-    public count(filterParam: Filter): Observable<Count> {
-        return this.countTask(filterParam);
     }
 
     /**

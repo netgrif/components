@@ -1,0 +1,74 @@
+@import '~@angular/material/theming';
+@import '~@covalent/core/theming/all-theme';
+@import '~@covalent/markdown/markdown-theme';
+@import '~@netgrif/application-engine/nae-theme';
+
+$typography: mat-typography-config(
+    $font-family: 'Roboto, monospace',
+    $headline: mat-typography-level(32px, 48px, 700)
+);
+
+@include mat-core($typography);
+
+$netgrif-blue: (
+    50: #e2eaf0,
+    100: #b7c9d9,
+    200: #87a6c0,
+    300: #5782a7,
+    400: #336794,
+    500: #0f4c81,
+    600: #0d4579,
+    700: #0b3c6e,
+    800: #083364,
+    900: #042451,
+    A100: #ffd180,
+    A200: #ffab40,
+    A400: #ff9100,
+    A700: #ff6d00,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $dark-primary-text,
+        A400: $dark-primary-text,
+        A700: $dark-primary-text,
+    )
+);
+
+$netgrif-primary: mat-palette($netgrif-blue);
+$netgrif-accent:  mat-palette($netgrif-blue, A200, A100, A400);
+$netgrif-warn:    mat-palette($mat-red);
+
+$netgrif-theme: mat-light-theme($netgrif-primary, $netgrif-accent, $netgrif-warn);
+
+@include angular-material-theme($netgrif-theme);
+//@include covalent-theme($theme, $typography);
+
+@include nae-lib-theme($netgrif-theme, $typography);
+
+body {
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        background-color: $light-primary-text;
+    }
+
+    ::-webkit-scrollbar {
+        width: 7px;
+        height: 7px;
+        background-color: $light-primary-text;
+    }
+    ::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #82A5DD;
+    }
+}

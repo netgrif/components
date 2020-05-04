@@ -8,6 +8,8 @@ import {InternalLinkComponent} from './internal-link/internal-link.component';
 import {LogoutShortcutComponent} from './logout-shortcut/logout-shortcut.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('QuickPanelComponent', () => {
     let component: QuickPanelComponent;
@@ -25,7 +27,9 @@ describe('QuickPanelComponent', () => {
             imports: [
                 CommonModule,
                 RouterTestingModule,
-                MaterialModule
+                MaterialModule,
+                TranslateLibModule,
+                HttpClientTestingModule
             ]
         })
             .compileComponents();

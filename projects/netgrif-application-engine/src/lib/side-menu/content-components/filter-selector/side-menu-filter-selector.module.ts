@@ -18,6 +18,9 @@ import {TranslateLibModule} from '../../../translate/translate-lib.module';
     ],
     exports: [
         FilterSelectorComponent,
+    ],
+    entryComponents: [
+        FilterSelectorComponent
     ]
 })
 export class SideMenuFilterSelectorModule {

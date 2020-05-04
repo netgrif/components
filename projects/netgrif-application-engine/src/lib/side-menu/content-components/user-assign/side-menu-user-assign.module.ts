@@ -23,7 +23,8 @@ import {FormsModule} from '@angular/forms';
         FlexModule,
         FormsModule
     ],
-    exports: [UserAssignComponent]
+    exports: [UserAssignComponent],
+    entryComponents: [UserAssignComponent]
 })
 export class SideMenuUserAssignModule {
 }

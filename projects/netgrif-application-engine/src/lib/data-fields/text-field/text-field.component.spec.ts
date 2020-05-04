@@ -12,6 +12,8 @@ import {RichTextareaFieldComponent} from './rich-textarea-field/rich-textarea-fi
 import {TextFieldComponent} from './text-field.component';
 import {TextField} from './models/text-field';
 import {CovalentModule} from '../../covalent/covalent.module';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('TextFieldComponent', () => {
     let component: TextFieldComponent;
@@ -19,7 +21,8 @@ describe('TextFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, CovalentModule],
+            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule,
+                CovalentModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [
                 DataFieldTemplateComponent,
                 SimpleTextFieldComponent,

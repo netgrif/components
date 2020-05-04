@@ -1,33 +1,26 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {QuestionDialogComponent} from './question-dialog/question-dialog.component';
 import {FormsModule} from '@angular/forms';
-import {SimpleDialogComponent} from './simple-dialog/simple-dialog.component';
-import {QuestionDialogWithAnswerComponent} from './question-dialog-with-answer/question-dialog-with-answer.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MaterialModule} from '../material/material.module';
+import {AlertDialogModule} from './components/alert-dialog/alert-dialog.module';
+import {ConfirmDialogModule} from './components/confirm-dialog/confirm-dialog.module';
+import {PromptDialogModule} from './components/prompt-dialog/prompt-dialog.module';
 
 @NgModule({
-    declarations: [
-        SimpleDialogComponent,
-        QuestionDialogComponent,
-        QuestionDialogWithAnswerComponent
-    ],
-    exports: [
-        SimpleDialogComponent,
-        QuestionDialogComponent,
-        QuestionDialogWithAnswerComponent
-    ],
     imports: [
         CommonModule,
         MaterialModule,
         FormsModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        AlertDialogModule,
+        ConfirmDialogModule,
+        PromptDialogModule
     ],
-    entryComponents: [
-        SimpleDialogComponent,
-        QuestionDialogComponent,
-        QuestionDialogWithAnswerComponent
+    exports: [
+        AlertDialogModule,
+        ConfirmDialogModule,
+        PromptDialogModule
     ]
 })
 export class DialogModule {

@@ -1,6 +1,6 @@
 export * from './data-fields.module';
 
-// Components
+/* Components */
 export * from './text-field/text-field.component';
 export * from './boolean-field/boolean-field.component';
 export * from './number-field/number-field.component';
@@ -12,7 +12,7 @@ export * from './multichoice-field/multichoice-field.component';
 export * from './file-field/file-field.component';
 export * from './user-field/user-field.component';
 
-// Class
+/* Class */
 export * from './models/abstract-data-field';
 export * from './text-field/models/text-field';
 export * from './number-field/models/number-field';
@@ -26,5 +26,11 @@ export * from './user-field/models/user-value';
 export * from './date-time-field/models/date-time-field';
 export * from './button-field/models/button-field';
 
-// Interfaces
+/* Interfaces */
 export * from './models/changed-fields';
+export * from './models/validation';
+export * from './models/layout';
+
+/* Enums */
+export * from './models/template-appearance';
+export * from './models/material-appearance';

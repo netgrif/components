@@ -18,7 +18,7 @@ export class TabbedViewsExampleComponent implements OnInit {
                 text: 'case view',
                 icon: 'storage'
             },
-            canBeDeleted: false,
+            canBeClosed: false,
             tabContentComponent: TabbedCaseViewComponent,
             injectedObject: {
                 tabViewComponent: TabbedTaskViewComponent,

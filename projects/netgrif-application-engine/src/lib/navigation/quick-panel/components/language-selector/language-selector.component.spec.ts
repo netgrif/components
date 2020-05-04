@@ -5,6 +5,8 @@ import {MaterialModule} from '../../../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
+import {TranslateLibModule} from '../../../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('LanguageSelectorComponent', () => {
     let component: LanguageSelectorComponent;
@@ -16,7 +18,9 @@ describe('LanguageSelectorComponent', () => {
             imports: [
                 CommonModule,
                 RouterTestingModule,
-                MaterialModule
+                MaterialModule,
+                TranslateLibModule,
+                HttpClientTestingModule
             ]
         })
             .compileComponents();

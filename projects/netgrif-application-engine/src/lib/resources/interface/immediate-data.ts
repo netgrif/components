@@ -1,10 +1,23 @@
+/**
+ * @ignore
+ */
 export interface ImmediateData {
+    /**
+     * @ignore
+     */
     stringId: string;
     /**
-     * TODO Doesn't actually exist
+     * @ignore
      */
+    // TODO Doesn't actually exist
     title: any;
+    /**
+     * @ignore
+     */
     type: string;
+    /**
+     * @ignore
+     */
     value?: any;
 }
 
