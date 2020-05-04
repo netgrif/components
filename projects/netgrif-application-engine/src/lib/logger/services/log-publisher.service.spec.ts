@@ -5,12 +5,19 @@ import {LogPublisher} from '../publishers/log-publisher';
 import {LogEntry} from '../models/log-entry';
 import {LocalStorageLogPublisher} from '../publishers/local-storage-log-publisher';
 import {LogLevel} from './log-level';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {Test} from 'tslint';
 
 describe('LogPublisherService', () => {
     let service: LogPublisherService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ]
+        });
         service = TestBed.inject(LogPublisherService);
     });
 
@@ -33,7 +40,7 @@ describe('LogPublisherService', () => {
             }
         }(service);
         expect(service.register).toHaveBeenCalled();
-        expect(service.publishers.length).toBe(Object.keys(PUBLISHERS).length + 1);
+        expect(service.publishers.length).toBe(new TestConfigurationService().get().services.log.publishers.length + 1);
         expect(service.publishers).toContain(publisher);
     });
 
