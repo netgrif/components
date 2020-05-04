@@ -4,7 +4,7 @@ import {
     Tree
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration} from '../../utility-functions';
-import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
+import {View as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
 import {constructRoutePath, createAppRoutesMap, Route} from '../view-utility-functions';
 import {CreateViewArguments} from '../create-view-prompt/schema';
 

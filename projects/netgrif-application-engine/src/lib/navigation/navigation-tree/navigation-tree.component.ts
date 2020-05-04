@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Route} from '../../configuration/interfaces/schema';
+import {View} from '../../configuration/interfaces/schema';
 
 interface NavigationNode {
     name: string;
@@ -42,7 +42,7 @@ export class NavigationTreeComponent implements OnInit {
         }
         const nodes: Array<NavigationNode> = [];
         Object.keys(routes).forEach((routeKey: string) => {
-            const route: Route = routes[routeKey] as Route;
+            const route: View = routes[routeKey] as View;
             if (!this.hasNavigation(route) && !this.hasSubRoutes(route)) {
                 return;
             }
@@ -61,7 +61,7 @@ export class NavigationTreeComponent implements OnInit {
         return nodes;
     }
 
-    private hasNavigation(route: Route): boolean {
+    private hasNavigation(route: View): boolean {
         if (!route.navigation) {
             return false;
         }
@@ -73,7 +73,7 @@ export class NavigationTreeComponent implements OnInit {
         }
     }
 
-    private hasSubRoutes(route: Route): boolean {
+    private hasSubRoutes(route: View): boolean {
         if (!route.routes) {
             return false;
         }
@@ -85,7 +85,7 @@ export class NavigationTreeComponent implements OnInit {
         }
     }
 
-    private buildNode(route: Route, routeKey: string, parentUrl: string): NavigationNode {
+    private buildNode(route: View, routeKey: string, parentUrl: string): NavigationNode {
         const node: NavigationNode = {
             name: null,
             url: null
@@ -96,7 +96,7 @@ export class NavigationTreeComponent implements OnInit {
         return node;
     }
 
-    private getNodeName(route: Route, routeKeys: string): string {
+    private getNodeName(route: View, routeKeys: string): string {
         if (route.navigation['title']) {
             return route.navigation['title'];
         }
@@ -104,7 +104,7 @@ export class NavigationTreeComponent implements OnInit {
         return str.charAt(0).toUpperCase() + str.substring(1);
     }
 
-    private getNodeIcon(route: Route): string {
+    private getNodeIcon(route: View): string {
         return !route.navigation['icon'] ? undefined : route.navigation['icon'];
     }
 

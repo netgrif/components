@@ -18,7 +18,7 @@ import {
     getRoutesJsonContent,
     Route
 } from '../../view/view-utility-functions';
-import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
+import {View as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
 
 export function createNaeFiles(): Rule {
     return (tree: Tree) => {

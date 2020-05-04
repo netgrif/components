@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {AuthenticationService} from '../authentication/authentication.service';
-import {Route} from '../../../configuration/interfaces/schema';
+import {View} from '../../../configuration/interfaces/schema';
 import {AuthenticationModule} from '../../authentication.module';
 
 @Injectable({
@@ -26,14 +26,14 @@ export class AuthenticationGuardService implements CanActivate {
             return null;
         }
         const route = Object.keys(routes).find(routeKey => {
-            const layout = (routes[routeKey] as Route).layout;
+            const layout = (routes[routeKey] as View).layout;
             return layout.name === searchedLayout;
         });
         if (route) {
             return route;
         }
         for (const routeKey of Object.keys(routes)) {
-            const resolved = this.resolveLoginPath((routes[routeKey] as Route).routes, searchedLayout);
+            const resolved = this.resolveLoginPath((routes[routeKey] as View).routes, searchedLayout);
             if (resolved) {
                 return routeKey + '/' + resolved;
             }

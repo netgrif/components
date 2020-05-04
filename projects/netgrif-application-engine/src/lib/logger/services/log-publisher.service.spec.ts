@@ -5,12 +5,18 @@ import {LogPublisher} from '../publishers/log-publisher';
 import {LogEntry} from '../models/log-entry';
 import {LocalStorageLogPublisher} from '../publishers/local-storage-log-publisher';
 import {LogLevel} from './log-level';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
 
 describe('LogPublisherService', () => {
     let service: LogPublisherService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ]
+        });
         service = TestBed.inject(LogPublisherService);
     });
 
