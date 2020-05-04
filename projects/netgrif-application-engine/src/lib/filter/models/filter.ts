@@ -1,5 +1,4 @@
 import {MergeOperator} from './merge-operator';
-import {MergedFilter} from './merged-filter';
 import {TaskSearchRequestBody} from './task-search-request-body';
 import {CaseSearchRequestBody} from './case-search-request-body';
 import {FilterType} from './filter-type';

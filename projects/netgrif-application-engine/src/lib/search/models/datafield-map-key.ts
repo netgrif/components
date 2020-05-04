@@ -22,8 +22,6 @@ export class DatafieldMapKey {
 
     public get icon(): string {
         switch (this._inputType) {
-            default:
-                return 'text_format';
             case 'boolean':
                 return 'toggle_off';
             case 'date':
@@ -40,6 +38,8 @@ export class DatafieldMapKey {
                 return 'person';
             case 'dateTime':
                 return 'schedule';
+            default:
+                return 'text_format';
         }
     }
 
