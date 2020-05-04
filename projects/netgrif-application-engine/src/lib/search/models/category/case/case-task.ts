@@ -28,7 +28,6 @@ export class CaseTask extends AutocompleteCategory<NetTaskPair> {
     }
 
     protected createOptions(): void {
-        this._optionsMap = new Map<string, Array<NetTaskPair>>();
         this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 petriNet.transitions.forEach(transition => {

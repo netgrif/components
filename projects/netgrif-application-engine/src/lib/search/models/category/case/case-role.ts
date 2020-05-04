@@ -26,7 +26,6 @@ export class CaseRole extends AutocompleteCategory<NetRolePair> {
     }
 
     protected createOptions(): void {
-        this._optionsMap = new Map<string, Array<NetRolePair>>();
         this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 petriNet.roles.forEach(processRole => {

@@ -16,7 +16,6 @@ export class CaseProcess extends AutocompleteCategory<string> {
     }
 
     protected createOptions(): void {
-        this._optionsMap = new Map<string, Array<string>>();
         this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 this.addToMap(petriNet.title, petriNet.stringId);

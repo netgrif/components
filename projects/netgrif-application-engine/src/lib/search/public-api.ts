@@ -23,7 +23,10 @@ export * from './models/category/case/case-process';
 export * from './models/category/case/case-role';
 export * from './models/category/case/case-task';
 export * from './models/category/case/case-creation-date';
+export * from './models/category/case/case-dataset';
 export * from './models/category/task/task-assignee';
+
+export * from './models/datafield-map-key';
 
 /* Interfaces */
 export * from './models/escape-result';
