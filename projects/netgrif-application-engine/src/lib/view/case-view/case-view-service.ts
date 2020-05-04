@@ -23,16 +23,14 @@ export class CaseViewService extends SortableView {
     protected _loading$: BehaviorSubject<boolean>;
     protected _cases$: Subject<Array<Case>>;
     protected _allowedNets$: ReplaySubject<Array<Net>>;
-    protected _viewParams: CaseParams;
 
-    constructor(webViewPath: string,
+    constructor(allowedNets: Observable<Array<Net>>,
                 protected _sideMenuService: SideMenuService,
                 protected _caseResourceService: CaseResourceService,
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService,
                 protected _searchService: SearchService,
-                processService: ProcessService,
-                configService: ConfigurationService) {
+                protected _viewParams?: CaseParams) {
         super();
         this._loading$ = new BehaviorSubject<boolean>(false);
         this._cases$ = new Subject<Array<Case>>();
@@ -40,23 +38,9 @@ export class CaseViewService extends SortableView {
             this.reload();
         });
         this._allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        const view = configService.getViewByPath(webViewPath);
-        if (view && view.layout && view.layout.params) {
-            this._viewParams = view.layout.params as CaseParams;
-            if (this._viewParams.allowedNets !== undefined) {
-                const nets = [];
-                this._viewParams.allowedNets.forEach(netId => {
-                    processService.getNet(netId).subscribe(net => {
-                        nets.push(net);
-                        if (nets.length === this._viewParams.allowedNets.length) {
-                            this._allowedNets$.next(nets);
-                        }
-                    });
-                });
-            }
-        } else {
-            this._log.warn(`Can't load configuration for view with webPath: '${webViewPath}'`);
-        }
+        allowedNets.subscribe( nets => {
+            this._allowedNets$.next(nets);
+        });
     }
 
     public get loading(): boolean {
