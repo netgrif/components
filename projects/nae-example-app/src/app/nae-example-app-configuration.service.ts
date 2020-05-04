@@ -306,17 +306,6 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                     'sk-SK',
                     'en-US'
                 ],
-                defaults: {
-                    log: {
-                        level: 'INFO',
-                        logWithDate: true,
-                        serializeExtraParams: true,
-                        includeLogLevel: true,
-                        publishers: [
-                            'console'
-                        ]
-                    }
-                },
                 services: {
                     log: {
                         level: 'ALL',

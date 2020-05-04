@@ -3,8 +3,7 @@ import {DashboardCardTypes} from '../../dashboard/cards/model/dashboard-card-typ
 import {LoggerService} from '../../logger/services/logger.service';
 import {LogPublisherService} from '../../logger/services/log-publisher.service';
 import {DashboardParams} from '../../dashboard/dashboard-content/dashboard-params';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {NetgrifApplicationEngine} from '../../configuration/interfaces/schema';
+import {TestConfigurationService} from '../tests/test-config';
 
 describe('GridLayoutHelper', () => {
     it('should create an instance', () => {
@@ -47,14 +46,8 @@ describe('GridLayoutHelper', () => {
                 }
             }]
         } as DashboardParams;
-        const config = new MockConfigService();
-        const gridHelper = new GridLayoutHelper(new LoggerService(new LogPublisherService(config), config));
+        const gridHelper = new GridLayoutHelper(new LoggerService(new LogPublisherService(new TestConfigurationService()),
+            new TestConfigurationService()));
         expect(gridHelper.fillBlankSpace(params.cards, params.columns).length).toEqual(5);
     });
 });
-
-class MockConfigService extends ConfigurationService {
-    constructor() {
-        super({} as NetgrifApplicationEngine);
-    }
-}
