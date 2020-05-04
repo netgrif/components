@@ -8,6 +8,7 @@ import {CaseProcess} from '../../models/category/case/case-process';
 import {CaseRole} from '../../models/category/case/case-role';
 import {CaseTask} from '../../models/category/case/case-task';
 import {CaseCreationDate} from '../../models/category/case/case-creation-date';
+import {CaseDataset} from '../../models/category/case/case-dataset';
 
 @Component({
     selector: 'nae-case-search',
@@ -30,6 +31,7 @@ export class CaseSearchComponent {
             this._categoryFactory.get(CaseRole),
             this._categoryFactory.get(CaseTask),
             this._categoryFactory.get(CaseCreationDate),
+            this._categoryFactory.get(CaseDataset),
         ];
     }
 

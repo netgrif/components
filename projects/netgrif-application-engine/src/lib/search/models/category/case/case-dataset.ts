@@ -1,14 +1,12 @@
 import {AutocompleteCategory} from '../autocomplete-category';
-import {Moment} from 'moment';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
-import {Equals} from '../../operator/equals';
-import {EqualsDate} from '../../operator/equals-date';
 import {Operator} from '../../operator/operator';
 import {Query} from '../../query/query';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {SearchInputType} from '../search-input-type';
 import {DatafieldMapKey} from '../../datafield-map-key';
+import {SearchAutocompleteOption} from '../search-autocomplete-option';
 
 interface Datafield {
     netId: string;
@@ -33,7 +31,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
     }
 
     get inputType(): SearchInputType {
-        return super.inputType;
+        return SearchInputType.AUTOCOMPLETE;
     }
 
     get allowedOperators(): Array<Operator<any>> {
@@ -45,8 +43,25 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         }
     }
 
+    get options(): Array<SearchAutocompleteOption> {
+        const result = [];
+
+        if (!this._selectedDatafield) {
+            for (const entry of this._optionsMap.entries()) {
+                const mapKey = DatafieldMapKey.parse(entry[0]);
+                result.push({
+                    text: mapKey.title,
+                    value: entry[1],
+                    icon: mapKey.icon
+                });
+            }
+        }
+
+        return result;
+    }
+
     protected get elasticKeywords(): Array<string> {
-        return super.elasticKeywords;
+        return [];
     }
 
     reset() {

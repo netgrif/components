@@ -43,7 +43,8 @@
                 "process": "Proces prípadu",
                 "role": "Procesná rola",
                 "task": "Úloha prípadu",
-                "creationDate": "Dátum vytvorenia prípadu"
+                "creationDate": "Dátum vytvorenia prípadu",
+                "dataset": "Dáta prípadu"
             },
             "task": {
                 "assignee": "Riešiteľ úlohy"

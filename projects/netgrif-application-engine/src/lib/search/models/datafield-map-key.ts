@@ -4,7 +4,7 @@ export class DatafieldMapKey {
         return `${type}#${title}`;
     }
 
-    public static fromSerializedForm(serializedMapKey: string): DatafieldMapKey {
+    public static parse(serializedMapKey: string): DatafieldMapKey {
         const parts = serializedMapKey.split('#');
         return new DatafieldMapKey(parts.shift(), parts.join('#'));
     }
@@ -12,7 +12,15 @@ export class DatafieldMapKey {
     constructor(protected _inputType, protected _title) {
     }
 
-    public getTypeIcon(): string {
+    public get title(): string {
+        return this._title;
+    }
+
+    public get type(): string {
+        return this._inputType;
+    }
+
+    public get icon(): string {
         switch (this._inputType) {
             default:
                 return 'text_format';

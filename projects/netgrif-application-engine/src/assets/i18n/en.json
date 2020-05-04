@@ -54,7 +54,8 @@
                 "process": "Case process",
                 "role": "Process role",
                 "task": "Case task",
-                "creationDate": "Case creation date"
+                "creationDate": "Case creation date",
+                "dataset": "Case data"
             },
             "task": {
                 "assignee": "Task assignee"

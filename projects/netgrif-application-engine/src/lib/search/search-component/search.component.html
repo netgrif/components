@@ -15,7 +15,8 @@
                        (keydown.enter)="$event.target.blur();confirmUserInput()">
                 <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                        {{option.translationPath ? (option.translationPath | translate) : option.text}}
+                        <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
+                        <span>{{option.translationPath ? (option.translationPath | translate) : option.text}}</span>
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
