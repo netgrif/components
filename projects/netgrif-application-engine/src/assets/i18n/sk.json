@@ -48,6 +48,10 @@
             "task": {
                 "assignee": "Riešiteľ úlohy"
             }
+        },
+        "placeholder": {
+            "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií",
+            "date": "Zvoľte dátum"
         }
     },
     "dataField": {

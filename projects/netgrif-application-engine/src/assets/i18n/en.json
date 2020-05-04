@@ -59,6 +59,10 @@
             "task": {
                 "assignee": "Task assignee"
             }
+        },
+        "placeholder": {
+            "text": "Type anything to search or select a category",
+            "date": "Choose a date"
         }
     },
     "dataField": {

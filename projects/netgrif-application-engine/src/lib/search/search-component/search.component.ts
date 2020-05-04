@@ -10,6 +10,9 @@ import {SimpleSearchChip} from '../models/chips/simple-search-chip';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {AutocompleteCategory} from '../models/category/autocomplete-category';
 import {SearchInputType} from '../models/category/search-input-type';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {DATE_FORMAT, DATE_FORMAT_STRING} from '../../moment/time-formats';
+import {Moment} from 'moment';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
@@ -18,7 +21,10 @@ import {SearchInputType} from '../models/category/search-input-type';
 @Component({
     selector: 'nae-search',
     templateUrl: './search.component.html',
-    styleUrls: ['./search.component.scss']
+    styleUrls: ['./search.component.scss'],
+    providers: [
+        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
+    ]
 })
 export class SearchComponent implements OnInit {
 
@@ -181,7 +187,12 @@ export class SearchComponent implements OnInit {
                 this.appendTextToLastChip(inputValue.text);
             } else {
                 this._searchService.addPredicate(this._selectedCategory.generatePredicate([inputValue]));
-                this.appendTextToLastChip(inputValue);
+                if (this._selectedCategory.inputType === SearchInputType.DATE) {
+                    const date = inputValue as Moment;
+                    this.appendTextToLastChip(date.format(DATE_FORMAT_STRING));
+                } else {
+                    this.appendTextToLastChip(inputValue);
+                }
             }
             this._selectedCategory = undefined;
             this.formControl.setValue('');

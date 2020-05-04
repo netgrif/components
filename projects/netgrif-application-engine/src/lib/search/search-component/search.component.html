@@ -9,6 +9,7 @@
         <ng-template [ngSwitchCase]="'text'">
             <mat-form-field>
                 <input type="text" matInput
+                       [placeholder]="'search.placeholder.text' | translate"
                        [formControl]="formControls['text']"
                        [matAutocomplete]="searchAutocomplete"
                        (keydown.enter)="$event.target.blur();confirmUserInput()">
@@ -22,8 +23,12 @@
         <ng-template [ngSwitchCase]="'date'">
             <mat-form-field>
                 <input matInput
+                       [placeholder]="'search.placeholder.date' | translate"
                        [formControl]="formControls['date']"
-                       [matDatepicker]="searchDatepicker">
+                       [matDatepicker]="searchDatepicker"
+                       (click)="searchDatepicker.open()"
+                       (keydown.enter)="searchDatepicker.close()">
+                <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #searchDatepicker></mat-datepicker>
             </mat-form-field>
         </ng-template>
