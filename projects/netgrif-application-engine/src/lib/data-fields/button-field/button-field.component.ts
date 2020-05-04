@@ -13,8 +13,6 @@ export class ButtonFieldComponent extends AbstractDataFieldComponent {
 
     @Input() dataField: ButtonField;
 
-    // TODO BUG - disabled dont working on init, due ngDefaultControl
-
     constructor(private _translate: TranslateService, private _select: SelectLanguageService) {
         super();
     }

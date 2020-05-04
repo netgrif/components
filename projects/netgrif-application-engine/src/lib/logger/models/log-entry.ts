@@ -9,6 +9,8 @@ export interface LogEntryConfiguration {
     logWithDate?: boolean;
     serializeParams?: boolean;
     includeLogLevel?: boolean;
+
+    [k: string]: any;
 }
 
 export class LogEntry {

@@ -566,7 +566,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     private autoRequiredDataFocusPolicy(success: boolean) {
         if (success) {
-            // TODO focus next()
+            // TODO Implement focus in FUTURE, if someone wants this feature (for now we don't want it )
         }
     }
 

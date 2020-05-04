@@ -232,7 +232,7 @@ export interface Services {
     log?: {
         level?: string;
         logWithDate?: boolean;
-        serializeExtraParams?: boolean;
+        serializeParams?: boolean;
         includeLogLevel?: boolean;
         publishers?: any[];
         [k: string]: any;

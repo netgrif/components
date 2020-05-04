@@ -11,6 +11,7 @@ import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
 import {Net} from '../../process/net';
 import {MessageResource} from '../interface/message-resource';
+import {PetriNetReference} from '../interface/petri-net-reference';
 
 @Injectable({
     providedIn: 'root'
@@ -107,7 +108,7 @@ export class PetriNetResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/{identifier}/{version}
      */
-    public getOne(identifier: string, version: string, params?: Params): Observable<Net> {
+    public getOne(identifier: string, version: string, params?: Params): Observable<PetriNetReference> {
         return this.provider.get$('petrinet/' + identifier + '/' + version, this.SERVER_URL, params)
             .pipe(map(r => changeType(r, 'petriNetReferences')));
     }

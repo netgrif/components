@@ -36,7 +36,7 @@ export class WorkflowViewService extends SortableView {
         return '';
     }
 
-    private loadNets(force = false): Observable<Array<Net>> {
+    private loadNets(): Observable<Array<Net>> {
             return this._petriNetResource.getAll().pipe(
                 map( nets => {
                     if (nets instanceof Array) {

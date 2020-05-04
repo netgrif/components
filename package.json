@@ -39,7 +39,8 @@
         "nae:prod-build": "npm run nae:full-test && npm run nae:sonar && npm run nae:build && npm run nae:doc",
         "nae:prod-build-without-tests": "ng lint netgrif-application-engine && npm run nae:sonar && npm run nae:build && npm run nae:doc",
         "project:start": "npm run nae:local-build && ng serve",
-        "example-app:start": "ng serve",
+        "example:start": "ng serve",
+        "example:build": "ng build --prod",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
@@ -112,7 +113,8 @@
         "sonarqube-scanner": "^2.5.0",
         "ts-node": "~8.3.0",
         "tslint": "~5.18.0",
-        "typescript": "~3.6.5"
+        "typescript": "~3.6.5",
+        "unique-names-generator": "^4.2.0"
     },
     "optionalDependencies": {
         "@netgrif/application-engine": "file:dist/netgrif-application-engine"
