@@ -23,7 +23,7 @@ export abstract class AutocompleteCategory<T> extends Category<T> {
     protected _optionsMap: Map<string, Array<T>>;
 
     protected constructor(elasticKeywords: Array<string>,
-                          allowedOperators: Array<Operator>,
+                          allowedOperators: Array<Operator<any>>,
                           translationPath: string,
                           log: LoggerService) {
         super(elasticKeywords, allowedOperators, translationPath, SearchInputType.AUTOCOMPLETE, log);
