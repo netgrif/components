@@ -201,6 +201,9 @@ export class SearchComponent implements OnInit {
                 } else {
                     this.appendTextToLastChip(inputValue);
                 }
+                if (this._selectedCategory instanceof CaseDataset) {
+                    this._selectedCategory.reset();
+                }
             }
             this._selectedCategory = undefined;
             this.formControl.setValue('');
@@ -223,7 +226,11 @@ export class SearchComponent implements OnInit {
      */
     public removeChip(index: number): void {
         if (!!this._selectedCategory && index === this.searchChips.length - 1) {
+            if (this._selectedCategory instanceof CaseDataset) {
+                this._selectedCategory.reset();
+            }
             this._selectedCategory = undefined;
+            this.formControl.setValue(this.formControl.value); // forces a refresh of autocomplete options
             this.updateInputType();
         } else {
             this._searchService.removePredicate(index);

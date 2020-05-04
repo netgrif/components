@@ -9,8 +9,8 @@ import {DatafieldMapKey} from '../../datafield-map-key';
 import {SearchAutocompleteOption} from '../search-autocomplete-option';
 import {BooleanOperator} from '../../boolean-operator';
 import {CaseProcess} from './case-process';
-import {Equals} from '../../operator/equals';
 import {EqualsDate} from '../../operator/equals-date';
+import {Substring} from '../../operator/substring';
 
 interface Datafield {
     netId: string;
@@ -62,7 +62,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             case 'date':
                 return [this._operators.getOperator(EqualsDate)];
             default:
-                return [this._operators.getOperator(Equals)];
+                return [this._operators.getOperator(Substring)];
         }
     }
 
@@ -96,7 +96,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         if (!this._selectedDatafields) {
             return [];
         } else {
-            return this._selectedDatafields.map(datafield => `dataset.${datafield.fieldId}.value`);
+            return this._selectedDatafields.map(datafield => `dataSet.${datafield.fieldId}.value`);
         }
     }
 
