@@ -50,6 +50,7 @@ export class TaskViewService extends SortableView {
                     });
                 });
             } else {
+                this.taskArray.splice(0, this.taskArray.length);
                 this._snackBarService.openWarningSnackBar(this._translate.instant('tasks.snackbar.noTasksFound'));
             }
             this.loading.next(false);
@@ -81,7 +82,10 @@ export class TaskViewService extends SortableView {
             }
         });
         tasksToDelete.sort((a, b) => b - a);
-        tasksToDelete.forEach(index => tasks.splice(index, 1));
+        tasksToDelete.forEach(index => {
+            tasks.splice(index, 1);
+            this.taskArray.splice(index, 1);
+        });
         return tasks;
     }
 
