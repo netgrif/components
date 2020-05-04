@@ -6,8 +6,18 @@ import {MaterialModule} from '../../material/material.module';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {of} from 'rxjs';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {CaseViewServiceFactory} from './case-view-service-factory';
+import {SearchService} from '../../search/search-service/search.service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
+
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.create('cases');
+};
+
+const searchServiceFactory = () => {
+    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
+};
 
 describe('CaseViewService', () => {
     let service: CaseViewService;
@@ -16,10 +26,19 @@ describe('CaseViewService', () => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, MaterialModule],
             providers: [
-                CaseViewService,
                 {provide: CaseResourceService, useClass: MyResources},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-                ]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                CaseViewServiceFactory,
+                {
+                    provide: CaseViewService,
+                    useFactory: localCaseViewServiceFactory,
+                    deps: [CaseViewServiceFactory]
+                },
+                {
+                    provide: SearchService,
+                    useFactory: searchServiceFactory
+                },
+            ]
         });
         service = TestBed.inject(CaseViewService);
     });

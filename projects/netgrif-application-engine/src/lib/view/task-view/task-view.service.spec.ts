@@ -11,6 +11,8 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-pane
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
+import {SearchService} from '../../search/search-service/search.service';
+import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -22,6 +24,7 @@ describe('TaskViewService', () => {
                 TaskViewService,
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
                 AuthenticationMethodService
             ]
         });
