@@ -7,6 +7,10 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {SearchInputType} from '../search-input-type';
 import {DatafieldMapKey} from '../../datafield-map-key';
 import {SearchAutocompleteOption} from '../search-autocomplete-option';
+import {BooleanOperator} from '../../boolean-operator';
+import {CaseProcess} from './case-process';
+import {Equals} from '../../operator/equals';
+import {EqualsDate} from '../../operator/equals-date';
 
 interface Datafield {
     netId: string;
@@ -16,42 +20,61 @@ interface Datafield {
 
 export class CaseDataset extends AutocompleteCategory<Datafield> {
 
-    protected static DISABLED_TYPES = ['button', 'file'];
+    // TODO 4.5.2020 - user and boolean fields are supported, but were skipped for now
+    protected static DISABLED_TYPES = ['button', 'file', 'user', 'boolean'];
 
-    protected _selectedDatafield: Datafield;
+    protected _selectedDatafields: Array<Datafield>;
 
-    protected _dynamicOptionsMap: Map<string, Array<any>>;
+    protected _processCategory: CaseProcess;
 
+    public static FieldTypeToInputType(fieldType: string): SearchInputType {
+        switch (fieldType) {
+            case 'date':
+                return SearchInputType.DATE;
+            default:
+                return SearchInputType.TEXT;
+        }
+    }
 
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(undefined,
             undefined,
             'search.category.case.dataset',
             logger);
+        this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
+        this._processCategory.selectDefaultOperator();
     }
 
-    get inputType(): SearchInputType {
-        return SearchInputType.AUTOCOMPLETE;
+    public get inputType(): SearchInputType {
+        if (!this._selectedDatafields) {
+            return SearchInputType.AUTOCOMPLETE;
+        } else {
+            return CaseDataset.FieldTypeToInputType(this._selectedDatafields[0].fieldType);
+        }
     }
 
-    get allowedOperators(): Array<Operator<any>> {
-        if (!this._selectedDatafield) {
+    public get allowedOperators(): Array<Operator<any>> {
+        if (!this._selectedDatafields) {
             return [];
         }
-        switch (this._selectedDatafield.fieldType) {
-
+        switch (this._selectedDatafields[0].fieldType) {
+            // TODO 4.5.2020 - Operators should match the options from old frontend
+            case 'date':
+                return [this._operators.getOperator(EqualsDate)];
+            default:
+                return [this._operators.getOperator(Equals)];
         }
     }
 
-    get options(): Array<SearchAutocompleteOption> {
+    public get options(): Array<SearchAutocompleteOption> {
         const result = [];
 
-        if (!this._selectedDatafield) {
-            for (const entry of this._optionsMap.entries()) {
-                const mapKey = DatafieldMapKey.parse(entry[0]);
+        if (!this._selectedDatafields) {
+            for (const serializedKey of this._optionsMap.keys()) {
+                const mapKey = DatafieldMapKey.parse(serializedKey);
                 result.push({
                     text: mapKey.title,
-                    value: entry[1],
+                    value: mapKey.toSerializedForm(),
                     icon: mapKey.icon
                 });
             }
@@ -60,16 +83,30 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         return result;
     }
 
-    protected get elasticKeywords(): Array<string> {
-        return [];
+    public get hasSelectedDatafields(): boolean {
+        return !!this._selectedDatafields;
     }
 
-    reset() {
+    public reset() {
         super.reset();
+        this._selectedDatafields = undefined;
     }
 
-    protected generateQuery(userInput: Array<Datafield>): Query {
-        return super.generateQuery(userInput);
+    protected get elasticKeywords(): Array<string> {
+        if (!this._selectedDatafields) {
+            return [];
+        } else {
+            return this._selectedDatafields.map(datafield => `dataset.${datafield.fieldId}.value`);
+        }
+    }
+
+    protected generateQuery(userInput: Array<unknown>): Query {
+        const queries = this._selectedDatafields.map(datafield => {
+            const valueQuery = this._selectedOperator.createQuery(this.elasticKeywords, userInput);
+            const netQuery = this._processCategory.generatePredicate([datafield.netId]).query;
+            return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
+        });
+        return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
     protected createOptions(): void {
@@ -90,5 +127,16 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
                     });
             });
         });
+    }
+
+    public selectDatafields(datafieldMapKey: string, selectDefaultOperator = true): void {
+        if (!this._optionsMap.has(datafieldMapKey)) {
+            this._log.warn(`The provided 'datafieldMapKey' does not exist.`);
+            return;
+        }
+        this._selectedDatafields = this._optionsMap.get(datafieldMapKey);
+        if (selectDefaultOperator) {
+            this.selectDefaultOperator();
+        }
     }
 }

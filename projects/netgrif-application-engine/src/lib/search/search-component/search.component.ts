@@ -13,6 +13,7 @@ import {SearchInputType} from '../models/category/search-input-type';
 import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT, DATE_FORMAT_STRING} from '../../moment/time-formats';
 import {Moment} from 'moment';
+import {CaseDataset} from '../models/category/case/case-dataset';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
@@ -183,8 +184,15 @@ export class SearchComponent implements OnInit {
                 return;
             }
             if (this._selectedCategory.inputType === SearchInputType.AUTOCOMPLETE) {
-                this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));
-                this.appendTextToLastChip(inputValue.text);
+                if (this._selectedCategory instanceof CaseDataset && !this._selectedCategory.hasSelectedDatafields) {
+                    this._selectedCategory.selectDatafields(inputValue.value);
+                    this.appendTextToLastChip(`${inputValue.text}: `);
+                    this.formControl.setValue('');
+                    return;
+                } else {
+                    this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));
+                    this.appendTextToLastChip(inputValue.text);
+                }
             } else {
                 this._searchService.addPredicate(this._selectedCategory.generatePredicate([inputValue]));
                 if (this._selectedCategory.inputType === SearchInputType.DATE) {
