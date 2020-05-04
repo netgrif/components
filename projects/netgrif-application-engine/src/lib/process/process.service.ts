@@ -85,6 +85,7 @@ export class ProcessService {
                 this._nets[net.identifier].transactions = values.transactions;
                 this._nets[net.identifier].roles = values.roles;
                 returnNet.next(this._nets[net.identifier]);
+                returnNet.complete();
             }, error => {
                 this._log.error('Failed to load part of Petri net ' + net.title, error);
                 throw error;
