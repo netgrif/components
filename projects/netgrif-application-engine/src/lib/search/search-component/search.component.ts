@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../models/category/category';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {SelectLanguageService} from '../../toolbar/select-language.service';
@@ -23,6 +23,19 @@ import {SearchInputType} from '../models/category/search-input-type';
 export class SearchComponent implements OnInit {
 
     /**
+     * @ignore
+     * Stores the state of the search GUI.
+     * If some category is selected, then the next input completes it and adds a new Predicate to the search.
+     * If not then the next input creates a fulltext search, or selects a new category.
+     */
+    private _selectedCategory: Category<any>;
+    /**
+     * @ignore
+     * Stores what input is currently being shown to the user
+     */
+    private _shownInput$: BehaviorSubject<string> = new BehaviorSubject<string>('text');
+
+    /**
      * Array that holds all the available [Categories]{@link Category}
      */
     @Input() public searchCategories: Array<Category<any>>;
@@ -30,14 +43,10 @@ export class SearchComponent implements OnInit {
      * @ignore
      * FormControl for the user input field
      */
-    public formControl = new FormControl();
-    /**
-     * @ignore
-     * Stores the state of the search GUI.
-     * If some category is selected, then the next input completes it and adds a new Predicate to the search.
-     * If not then the next input creates a fulltext search, or selects a new category.
-     */
-    public selectedCategory: Category<any>;
+    public formControls = {
+        text: new FormControl(),
+        date: new FormControl(),
+    };
     /**
      * @ignore
      * Observable that contains [Categories]{@link Category} that match user input. It updates it's content every time user input changes.
@@ -46,7 +55,7 @@ export class SearchComponent implements OnInit {
     /**
      * @ignore
      * Array that holds constructed search chips.
-     * If [selectedCategory]{@link SearchComponent#selectedCategory} has a value set,
+     * If [_selectedCategory]{@link SearchComponent#_selectedCategory} has a value set,
      * then the last entry in the array is an incomplete chip.
      */
     public searchChips: Array<SimpleSearchChip> = [];
@@ -82,6 +91,14 @@ export class SearchComponent implements OnInit {
         this.selectDefaultOperators();
     }
 
+    public get shownInput$(): Observable<string> {
+        return this._shownInput$.asObservable();
+    }
+
+    public get shownInput(): string {
+        return this._shownInput$.getValue();
+    }
+
     /**
      * @ignore
      * filters available [Categories]{@link Category} based on user input
@@ -89,12 +106,12 @@ export class SearchComponent implements OnInit {
      * @returns [Categories]{@link Category} that start with the user input. Case insensitive. Based on locale translation.
      */
     private _filterOptions(userInput: string): Array<Category<any>> | Array<SearchAutocompleteOption> {
-        if (!this.selectedCategory) {
+        if (!this._selectedCategory) {
             const value = userInput.toLocaleLowerCase();
             return this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value));
         } else {
-            if (this.selectedCategory instanceof AutocompleteCategory) {
-                return this.selectedCategory.filterOptions(userInput);
+            if (this._selectedCategory instanceof AutocompleteCategory) {
+                return this._selectedCategory.filterOptions(userInput);
             }
             return [];
         }
@@ -140,7 +157,7 @@ export class SearchComponent implements OnInit {
      */
     public confirmUserInput(): void {
         const inputValue = this.formControl.value;
-        if (!this.selectedCategory) {
+        if (!this._selectedCategory) {
             if (!(inputValue instanceof Category)) {
                 // full text search
                 if (inputValue === '') {
@@ -150,22 +167,23 @@ export class SearchComponent implements OnInit {
                 }
             } else {
                 // start new chip
-                this.selectedCategory = inputValue;
+                this._selectedCategory = inputValue;
                 this.searchChips.push({text: `${this.categoryName(inputValue)}: `});
                 this.formControl.setValue('');
+                this.updateInputType();
             }
         } else {
             if (inputValue === '') {
                 return;
             }
-            if (this.selectedCategory.inputType === SearchInputType.AUTOCOMPLETE) {
-                this._searchService.addPredicate(this.selectedCategory.generatePredicate(inputValue.value));
+            if (this._selectedCategory.inputType === SearchInputType.AUTOCOMPLETE) {
+                this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));
                 this.appendTextToLastChip(inputValue.text);
             } else {
-                this._searchService.addPredicate(this.selectedCategory.generatePredicate([inputValue]));
+                this._searchService.addPredicate(this._selectedCategory.generatePredicate([inputValue]));
                 this.appendTextToLastChip(inputValue);
             }
-            this.selectedCategory = undefined;
+            this._selectedCategory = undefined;
             this.formControl.setValue('');
         }
     }
@@ -185,8 +203,9 @@ export class SearchComponent implements OnInit {
      * @param index index of the chip that should be removed. No bounds checks are performed!
      */
     public removeChip(index: number): void {
-        if (!!this.selectedCategory && index === this.searchChips.length - 1) {
-            this.selectedCategory = undefined;
+        if (!!this._selectedCategory && index === this.searchChips.length - 1) {
+            this._selectedCategory = undefined;
+            this.updateInputType();
         } else {
             this._searchService.removePredicate(index);
         }
@@ -201,5 +220,32 @@ export class SearchComponent implements OnInit {
         this.searchCategories.forEach(category => {
             category.selectDefaultOperator();
         });
+    }
+
+    /**
+     * @ignore
+     * Determines which input should be displayed and updates the value in [_shownInput$]{@link SearchComponent#_shownInput$}.
+     */
+    public updateInputType(): void {
+        if (!this._selectedCategory) {
+            this._shownInput$.next('text');
+            return;
+        }
+        switch (this._selectedCategory.inputType) {
+            case SearchInputType.DATE:
+                this._shownInput$.next('date');
+                return;
+            default:
+                this._shownInput$.next('text');
+                return;
+        }
+    }
+
+    /**
+     * @ignore
+     * @returns the FormControl instance that corresponds to the input currently shown to the user.
+     */
+    private get formControl(): FormControl {
+        return this.formControls[this.shownInput];
     }
 }

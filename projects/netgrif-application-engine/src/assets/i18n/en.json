@@ -53,7 +53,8 @@
                 "author": "Case author",
                 "process": "Case process",
                 "role": "Process role",
-                "task": "Case task"
+                "task": "Case task",
+                "creationDate": "Case creation date"
             },
             "task": {
                 "assignee": "Task assignee"

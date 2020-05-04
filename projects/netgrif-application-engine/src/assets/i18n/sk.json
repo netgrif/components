@@ -42,7 +42,8 @@
                 "author": "Autor prípadu",
                 "process": "Proces prípadu",
                 "role": "Procesná rola",
-                "task": "Úloha prípadu"
+                "task": "Úloha prípadu",
+                "creationDate": "Dátum vytvorenia prípadu"
             },
             "task": {
                 "assignee": "Riešiteľ úlohy"
