@@ -1,5 +1,4 @@
 import {TestBed} from '@angular/core/testing';
-
 import {LogPublisherService, PUBLISHERS} from './log-publisher.service';
 import {LogPublisher} from '../publishers/log-publisher';
 import {LogEntry} from '../models/log-entry';
