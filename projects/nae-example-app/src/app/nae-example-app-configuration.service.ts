@@ -306,6 +306,18 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                             'console'
                         ]
                     }
+                },
+                services: {
+                    log: {
+                        level: 'ALL',
+                        logWithDate: true,
+                        serializeExtraParams: true,
+                        includeLogLevel: true,
+                        publishers: [
+                            'console',
+                            'localStorage'
+                        ]
+                    }
                 }
             }
         );
