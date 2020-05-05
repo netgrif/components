@@ -1,8 +1,8 @@
 import {TestBed} from '@angular/core/testing';
-
 import {FieldConvertorService} from './field-convertor.service';
 import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
 import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
+import moment from 'moment';
 
 describe('FieldConvertorService', () => {
     let service: FieldConvertorService;
@@ -42,18 +42,18 @@ describe('FieldConvertorService', () => {
         };
         expect(service.formatValue(service.toClass(dataField), null)).toEqual(null);
 
+        const date = moment();
         dataField.type = 'date';
         expect(service.formatValue(service.toClass(dataField), null)).toEqual(undefined);
-        expect(service.formatValue(service.toClass(dataField), new Date()))
-            .toEqual(`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`);
+        expect(service.formatValue(service.toClass(dataField), date))
+            .toEqual(date.format('YYYY-MM-DD'));
 
         dataField.type = 'user';
         expect(service.formatValue(service.toClass(dataField), {id: 5})).toEqual(5);
 
         dataField.type = 'dateTime';
-        expect(service.formatValue(service.toClass(dataField), new Date()))
-            .toEqual(`${new Date().getDate()}.${new Date().getMonth()}.${new Date().getFullYear()} ` +
-                `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`);
+        expect(service.formatValue(service.toClass(dataField), date))
+            .toEqual(date.format('DD.MM.YYYY HH:mm:ss'));
 
         dataField.type = 'number';
         expect(service.formatValue(service.toClass(dataField), 5)).toEqual(5);

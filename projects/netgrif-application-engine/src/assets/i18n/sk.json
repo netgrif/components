@@ -5,14 +5,28 @@
             "profile": "Profil",
             "logout": "Odhlasiť sa",
             "en": "Anglický",
-            "sk": "Slovenský"
+            "sk": "Slovenský",
+            "de": "Nemecký"
         }
     },
     "tasks": {
         "snackbar": {
             "noTasksFound": "Nenašli sa žiadne úlohy",
             "failedToLoad": "sa nepodarilo načítať",
-            "errorTaskSearch": "Úlohy na task/search"
+            "errorTaskSearch": "Úlohy na task/search",
+            "noData": "Úloha nemá žiadne dáta",
+            "noGroup": "Úloha nemá žiadnu dátovú skupinu",
+            "dataFor": "Dáta pre",
+            "dataSaved": "Dáta úspešne uložené",
+            "failedSave": "Ukladanie dát zlyhalo",
+            "assignTask": "Priradiť úlohu",
+            "delegateTask": "Delegovať úlohu",
+            "cancelTask": "Ruším priradenie úlohy",
+            "finishTask": "Dokončujem úlohu",
+            "invalidData": "Niektoré polia majú nepovolené hodnoty",
+            "failed": "zlyhalo",
+            "noCase": "Nenašli sa žiadne prípady",
+            "caseGetFailed": "Načítanie prípadov zlyhalo"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Pre tento filter nie sú vyhovujúce žiadne úlohy",
@@ -32,6 +46,35 @@
             "case-filters": "Filtre prípadov",
             "task-filters": "Filtre úloh",
             "select": "Zvoliť"
+        },
+        "files-upload": {
+            "upload": "Nahrať súbory",
+            "send": "Odoslať"
+        },
+        "import-net": {
+            "upload": "Nahrať model",
+            "choose": "Vyberte súbor s procesom",
+            "done" : "Dokončiť"
+        },
+        "new-case": {
+            "case": "Nová prípad",
+            "choose": "Vyberte proces",
+            "caseTitle": "Vyplňte názov prípadu",
+            "color": "Vyberte farbu prípadu",
+            "back": "Späť",
+            "next": "Ďalej",
+            "reset": "Zrušiť",
+            "create": "Vytvoriť",
+            "selection": "Musíte niečo vybrať",
+            "errFirst": "Proces je povinné pole.",
+            "errSecond": "Názov je povinné pole.",
+            "errThird": "Farba je povinné pole."
+        },
+        "user": {
+            "assign": "Priradiť používateľa",
+            "noUser": "Neexistujú žiadny používatelia",
+            "err": "Nepodarilo sa načítať používateľov",
+            "showcase": "Nebol zvolený mód zobrazenia používateľa!"
         }
     },
     "search": {
@@ -52,7 +95,8 @@
         },
         "placeholder": {
             "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií",
-            "date": "Zvoľte dátum"
+            "date": "Zvoľte dátum",
+            "dateTime": "Zvoľte dátum a čas"
         }
     },
     "dataField": {
@@ -80,5 +124,80 @@
             "sameFiles": "Nemôžeš nahrať dva rovnaké súbory",
             "fileSize": "Veľkosť súboru presiahla povolený limit"
         }
+    },
+    "dialog": {
+        "close": "Zatvoriť",
+        "submit": "Potvrdiť"
+    },
+    "forms": {
+        "pass": {
+            "enterEmail": "Zadajte svoj email"
+        },
+        "login": {
+            "length": "Prihlasovacie meno musí mať aspoň 4 písmená",
+            "login": "Prihlásiť",
+            "reset": "Obnova hesla",
+            "sign": "Registrovať",
+            "enterPass": "Zadajťe svoje heslo"
+        },
+        "register": {
+            "name": "Name",
+            "surname": "Surname",
+            "repeatPass": "Repeat your password",
+            "register": "Register"
+        }
+    },
+    "headers": {
+        "newHeader": "Select new header",
+        "date": "Choose a date",
+        "caseMeta": {
+            "visualID": "Visual ID",
+            "title": "Title",
+            "author": "Author",
+            "creaDate": "Creation date"
+        },
+        "taskMeta": {
+            "case": "Case",
+            "priority": "Priority",
+            "user": "User",
+            "assignDate": "Assign Date"
+        },
+        "workflowMeta": {
+            "initials": "Initials",
+            "version": "Version",
+            "creaDate": "Upload date"
+        },
+        "orderMode": "Ordering mode",
+        "searchMode": "Search mode",
+        "editMode": "Enable edit mode"
+    },
+    "panel": {
+        "case": {
+            "delete": "Delete"
+        },
+        "workflow": {
+            "net": "Net identifier",
+            "title": "Title",
+            "version": "Version",
+            "author": "Author",
+            "upload": "Uploaded"
+        }
+    },
+    "profile": {
+        "notLogged": "You are not logged in!",
+        "general": "General Informations",
+        "personal": "Personal Information",
+        "name": "First name",
+        "surname": "Last name",
+        "authority": "Authorities",
+        "roles": "Roles",
+        "groups": "Groups",
+        "preference": "Preferences",
+        "caseHead": "Case headers",
+        "caseFilter": "Case filters",
+        "taskHead": "Task headers",
+        "taskFilter": "Task filters",
+        "workHead": "Workflow headers",
+        "workFilter": "Workflow filters"
     }
 }
