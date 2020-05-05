@@ -6,6 +6,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {PromptDialogComponent} from './prompt-dialog.component';
 import {DialogModule} from '../../dialog.module';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('QuestionDialogWithAnswerComponent', () => {
     let component: PromptDialogComponent;
@@ -13,7 +15,7 @@ describe('QuestionDialogWithAnswerComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, DialogModule, BrowserAnimationsModule],
+            imports: [MaterialModule, DialogModule, BrowserAnimationsModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },

@@ -7,6 +7,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {CovalentModule} from '../../../covalent/covalent.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {FormsModule} from '@angular/forms';
         CovalentModule,
         FlexLayoutModule,
         FlexModule,
-        FormsModule
+        FormsModule,
+        TranslateLibModule
     ],
     exports: [UserAssignComponent],
     entryComponents: [UserAssignComponent]

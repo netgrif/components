@@ -6,6 +6,7 @@ import {FlexModule} from '@angular/flex-layout';
 import { SortModeComponent } from './header-modes/sort-mode/sort-mode.component';
 import { SearchModeComponent } from './header-modes/search-mode/search-mode.component';
 import { EditModeComponent } from './header-modes/edit-mode/edit-mode.component';
+import {TranslateLibModule} from '../translate/translate-lib.module';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { EditModeComponent } from './header-modes/edit-mode/edit-mode.component'
         CommonModule,
         MaterialModule,
         FlexModule,
+        TranslateLibModule
     ]
 })
 export class HeaderModule {

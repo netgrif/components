@@ -7,6 +7,7 @@ import {SideMenuControl} from '../../models/side-menu-control';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'nae-user-assign',
@@ -25,7 +26,7 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
                 private _userResourceService: UserResourceService,
-                private _snackBar: SnackBarService, private _log: LoggerService) {
+                private _snackBar: SnackBarService, private _log: LoggerService, private _translate: TranslateService) {
         this.users = [];
         this.loadUsers();
     }
@@ -66,11 +67,11 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
             if (result instanceof Array) {
                 this.users = result.map( user => new UserValue(user.id, user.name, user.surname, user.email));
             } else {
-                this._snackBar.openWarningSnackBar('There are no users :)');
+                this._snackBar.openWarningSnackBar(this._translate.instant('side-menu.user.noUser'));
             }
             this._loading = false;
         }, error => {
-            this._snackBar.openErrorSnackBar('Users failed to load');
+            this._snackBar.openErrorSnackBar(this._translate.instant('side-menu.user.err'));
             this._log.error(error);
             this._loading = false;
         });

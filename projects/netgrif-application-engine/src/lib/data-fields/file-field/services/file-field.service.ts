@@ -9,7 +9,7 @@ import {FileUploadModel} from '../../../side-menu/content-components/files-uploa
 import {FilesUploadComponent} from '../../../side-menu/content-components/files-upload/files-upload.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
-import {SelectLanguageService} from '../../../toolbar/select-language.service';
+import {LanguageService} from '../../../translate/language.service';
 
 /**
  * Links communication between
@@ -44,14 +44,14 @@ export class FileFieldService {
      * @param _sideMenuService Open right side menu
      * @param _snackBarService Notify user about exceeded validations
      * @param _translate for translations
-     * @param _select Initialize languages
+     * @param _lang Initialize languages
      */
     constructor(private _fileUploadService: FileUploadService,
                 private _fileDownloadService: FileDownloadService,
                 private _sideMenuService: SideMenuService,
                 private _snackBarService: SnackBarService,
                 private _translate: TranslateService,
-                private _select: SelectLanguageService) {
+                private _lang: LanguageService) {
         this._fileUploadService.fileUploadCompleted.subscribe(() => {
             // this.fileField.value = this.resolveFilesArray();
         });

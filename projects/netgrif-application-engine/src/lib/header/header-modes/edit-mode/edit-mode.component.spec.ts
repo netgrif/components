@@ -13,6 +13,7 @@ import {CaseViewService} from '../../../view/case-view/case-view-service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
@@ -30,6 +31,7 @@ describe('EditModeComponent', () => {
                 MatSelectModule,
                 HttpClientTestingModule,
                 MatSnackBarModule,
+                TranslateLibModule,
             ],
             providers: [
                 CaseHeaderService,

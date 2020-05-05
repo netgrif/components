@@ -2,13 +2,30 @@
 
 @mixin panel-component($theme) {
     $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
     .panel-color:hover {
         background: mat-color($primary) !important;
         color: white !important;
+
+        .panel-primary-icon {
+            color: mat-color($accent);
+        }
+
+        .panel-accent-icon {
+            color: mat-color($accent);
+        }
     }
 
     .line-datagroup {
         height: 1px;
         background: mat-color($primary) !important;
+    }
+
+    .panel-primary-icon {
+        color: mat-color($primary);
+    }
+
+    .panel-accent-icon {
+        color: mat-color($accent);
     }
 }

@@ -6,6 +6,7 @@ import {CovalentModule} from '../../../covalent/covalent.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
         FlexLayoutModule,
         FlexModule,
         FormsModule,
-        SnackBarModule
+        SnackBarModule,
+        TranslateLibModule
     ],
     exports: [NewCaseComponent],
     entryComponents: [NewCaseComponent]

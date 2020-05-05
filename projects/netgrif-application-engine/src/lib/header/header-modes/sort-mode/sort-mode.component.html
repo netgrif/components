@@ -7,7 +7,7 @@
                  [fxHide.lt-md]="i >= 3"
                  [fxHide.lt-sm]="i >= 2"
                  mat-sort-header="{{i}}-{{header.uniqueId}}">
-            {{header.title}}
+            {{ header.title | translate}}
             </div>
         </ng-template>
         <ng-template #elseBlock>

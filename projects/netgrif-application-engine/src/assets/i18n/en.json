@@ -5,7 +5,8 @@
             "profile": "Profile",
             "logout": "Logout",
             "en": "English",
-            "sk": "Slovak"
+            "sk": "Slovak",
+            "de": "German"
         }
     },
     "tasks": {
@@ -23,7 +24,9 @@
             "cancelTask": "Canceling assignment of task",
             "finishTask": "Finishing task",
             "invalidData": "Some fields have invalid values",
-            "failed": "failed"
+            "failed": "failed",
+            "noCase": "No resource for cases was found",
+            "caseGetFailed": "Getting cases failed"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "There are any tasks satisfying this filter",
@@ -43,6 +46,35 @@
             "case-filters": "Case filters",
             "task-filters": "Task filters",
             "select": "Select"
+        },
+        "files-upload": {
+            "upload": "Upload files",
+            "send": "Send"
+        },
+        "import-net": {
+            "upload": "Upload model",
+            "choose": "Choose a process file",
+            "done" : "Done"
+        },
+        "new-case": {
+            "case": "New Case",
+            "choose": "Choose process",
+            "caseTitle": "Fill out case title",
+            "color": "Choose case color",
+            "back": "Back",
+            "next": "Next",
+            "reset": "Reset",
+            "create": "Create",
+            "selection": "You must make a selection",
+            "errFirst": "Process is required.",
+            "errSecond": "Title is required.",
+            "errThird": "Color is required."
+        },
+        "user": {
+            "assign": "User Assign",
+            "noUser": "There are no users :)",
+            "err": "Users failed to load",
+            "showcase": "User showcase mode not set!"
         }
     },
     "search": {
@@ -79,7 +111,7 @@
             "length": "Entered text must be at the most ",
             "pattern": "Entered text is in wrong format",
             "phone": "Entered text must be in telephone number format",
-            "email": "Entered test must be in email format",
+            "email": "Entered text must be in email format",
             "dateRange": "Entered date must be in range ",
             "weekend": "Entered date must be weekend day",
             "workday": "Entered date must be week day"
@@ -91,5 +123,80 @@
             "sameFiles": "You cannot upload two of the same files",
             "fileSize": "Files size exceeded allowed limit"
         }
+    },
+    "dialog": {
+        "close": "Close",
+        "submit": "Submit"
+    },
+    "forms": {
+        "pass": {
+            "enterEmail": "Enter your email"
+        },
+        "login": {
+            "length": "The login name must have at least 4 letters",
+            "login": "Login",
+            "reset": "Reset password",
+            "sign": "Sign Up",
+            "enterPass": "Enter your password"
+        },
+        "register": {
+            "name": "Name",
+            "surname": "Surname",
+            "repeatPass": "Repeat your password",
+            "register": "Register"
+        }
+    },
+    "headers": {
+        "newHeader": "Select new header",
+        "date": "Choose a date",
+        "caseMeta": {
+            "visualID": "Visual ID",
+            "title": "Title",
+            "author": "Author",
+            "creaDate": "Creation date"
+        },
+        "taskMeta": {
+            "case": "Case",
+            "priority": "Priority",
+            "user": "User",
+            "assignDate": "Assign Date"
+        },
+        "workflowMeta": {
+            "initials": "Initials",
+            "version": "Version",
+            "creaDate": "Upload date"
+        },
+        "orderMode": "Ordering mode",
+        "searchMode": "Search mode",
+        "editMode": "Enable edit mode"
+    },
+    "panel": {
+        "case": {
+            "delete": "Delete"
+        },
+        "workflow": {
+            "net": "Net identifier",
+            "title": "Title",
+            "version": "Version",
+            "author": "Author",
+            "upload": "Uploaded"
+        }
+    },
+    "profile": {
+        "notLogged": "You are not logged in!",
+        "general": "General Informations",
+        "personal": "Personal Information",
+        "name": "First name",
+        "surname": "Last name",
+        "authority": "Authorities",
+        "roles": "Roles",
+        "groups": "Groups",
+        "preference": "Preferences",
+        "caseHead": "Case headers",
+        "caseFilter": "Case filters",
+        "taskHead": "Task headers",
+        "taskFilter": "Task filters",
+        "workHead": "Workflow headers",
+        "workFilter": "Workflow filters"
     }
 }

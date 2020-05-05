@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {SelectLanguageService} from './select-language.service';
+import {LanguageService} from '../translate/language.service';
 
 @Component({
     selector: 'nae-toolbar',
@@ -21,7 +21,7 @@ export class ToolbarComponent implements OnInit {
     @Input()
     public logoAlt: string;
 
-    constructor(private translate: TranslateService, private selectLangService: SelectLanguageService) {
+    constructor(private translate: TranslateService, private selectLangService: LanguageService) {
     }
 
     ngOnInit() {

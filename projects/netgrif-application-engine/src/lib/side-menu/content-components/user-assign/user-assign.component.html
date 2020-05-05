@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">User Assign</mat-toolbar>
+<mat-toolbar color="primary">{{ 'side-menu.user.assign' | translate | uppercase}}</mat-toolbar>
 <div class="user-assign-container side-menu-root">
     <div class="user-assign-search-container">
         <mat-icon class="search-icon">search</mat-icon>
@@ -14,5 +14,5 @@
         [userList]="users"
         (userSelected)="userWasSelected($event)">
     </nae-user-assign-list>
-    <button mat-button color="primary" class="assign-button" (click)="assign()">ASSIGN</button>
+    <button mat-button color="primary" class="assign-button" (click)="assign()">{{ 'tasks.view.assign' | translate | uppercase}}</button>
 </div>

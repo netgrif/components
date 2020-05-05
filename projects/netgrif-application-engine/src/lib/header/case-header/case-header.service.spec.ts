@@ -15,6 +15,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MatSnackBarModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -25,6 +26,7 @@ describe('CaseHeaderService', () => {
                 HttpClientTestingModule,
                 MatSnackBarModule,
                 NoopAnimationsModule,
+                TranslateLibModule
             ],
             providers: [
                 CaseHeaderService,

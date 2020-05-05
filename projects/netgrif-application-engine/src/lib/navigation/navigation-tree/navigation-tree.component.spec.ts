@@ -10,6 +10,8 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('NavigationTreeComponent', () => {
     let component: NavigationTreeComponent;
@@ -30,6 +32,7 @@ describe('NavigationTreeComponent', () => {
                 UserModule,
                 RouterTestingModule.withRoutes([]),
                 HttpClientTestingModule,
+                TranslateLibModule
             ]
         })
             .compileComponents();

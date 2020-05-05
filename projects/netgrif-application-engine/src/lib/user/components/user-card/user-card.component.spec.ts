@@ -9,6 +9,8 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 describe('UserCardComponent', () => {
     let component: UserCardComponent;
@@ -23,6 +25,7 @@ describe('UserCardComponent', () => {
                 MaterialModule,
                 HttpClientTestingModule,
                 RouterTestingModule.withRoutes([]),
+                TranslateLibModule
             ],
             providers: [
                 AuthenticationMethodService,

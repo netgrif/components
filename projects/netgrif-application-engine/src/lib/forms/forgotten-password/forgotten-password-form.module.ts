@@ -4,6 +4,7 @@ import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ForgottenPasswordFormComponent} from './forgotten-password-form.component';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import {ForgottenPasswordFormComponent} from './forgotten-password-form.componen
         MaterialModule,
         FlexLayoutModule,
         ReactiveFormsModule,
+        TranslateLibModule
     ]
 })
 export class ForgottenPasswordFormModule {
