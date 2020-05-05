@@ -8,6 +8,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CaseViewService} from './case-view-service';
 import {CaseParams} from './case-params';
+import {TranslateService} from '@ngx-translate/core';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link CaseViewService} dependencies.
@@ -25,7 +26,8 @@ export class CaseViewServiceFactory {
                 protected _searchService: SearchService,
                 protected _processService: ProcessService,
                 protected _configService: ConfigurationService,
-                protected _log: LoggerService) {
+                protected _log: LoggerService,
+                protected _translate: TranslateService) {
     }
 
     /**
@@ -46,6 +48,7 @@ export class CaseViewServiceFactory {
                     this._log,
                     this._snackBarService,
                     this._searchService,
+                    this._translate,
                     viewParams);
             }
         } else {

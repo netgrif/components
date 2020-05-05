@@ -13,6 +13,7 @@ import {SearchService} from '../../search/search-service/search.service';
 import {Net} from '../../process/net';
 import {CaseParams} from './case-params';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Injectable()
@@ -28,6 +29,7 @@ export class CaseViewService extends SortableView {
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService,
                 protected _searchService: SearchService,
+                protected _translate: TranslateService,
                 protected _viewParams?: CaseParams) {
         super();
         this._loading$ = new BehaviorSubject<boolean>(false);
@@ -74,11 +76,11 @@ export class CaseViewService extends SortableView {
                 if (newCases instanceof Array) {
                     this.updateCases(newCases);
                 } else {
-                    this._snackBarService.openWarningSnackBar('No resource for cases was found');
+                    this._snackBarService.openWarningSnackBar(this._translate.instant('tasks.snackbar.noCase'));
                 }
                 this.setLoading(false);
             }, error => {
-                this._snackBarService.openErrorSnackBar('Getting cases failed');
+                this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.caseGetFailed'));
                 this._log.error(error);
                 this.setLoading(false);
             });
