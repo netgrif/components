@@ -9,8 +9,6 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {of} from 'rxjs';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-panel/policy';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {SimpleFilter} from '../../filter/models/simple-filter';
-import {FilterType} from '../../filter/models/filter-type';
 import {SearchService} from '../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 

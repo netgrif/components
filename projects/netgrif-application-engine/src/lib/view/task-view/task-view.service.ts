@@ -20,7 +20,7 @@ export class TaskViewService extends SortableView {
 
     constructor(protected _taskService: TaskResourceService, private _userService: UserService,
                 private _snackBarService: SnackBarService, private _translate: TranslateService,
-                private _selectLanguage: LanguageService, protected _searchService: SearchService) { // need for translations
+                private _Language: LanguageService, protected _searchService: SearchService) { // need for translations
         super();
         this.taskArray = [];
         this.taskData = new Subject<Array<TaskPanelData>>();
