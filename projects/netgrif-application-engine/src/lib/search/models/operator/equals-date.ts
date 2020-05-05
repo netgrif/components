@@ -16,7 +16,7 @@ export class EqualsDate extends Operator<Moment> {
 
     constructor(operators: OperatorService) {
         super(1);
-        this.dateRange = operators.getOperator(InRangeDate);
+        this.dateRange = operators.getOperator(InRangeDate) as InRangeDate;
     }
 
     createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {

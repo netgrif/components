@@ -10,7 +10,7 @@ import {
 
 const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     return new SearchService(injectedTabData.baseFilter);
-}
+};
 
 @Component({
     selector: 'nae-app-tabbed-task-view',

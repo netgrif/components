@@ -11,6 +11,7 @@ import {BooleanOperator} from '../../boolean-operator';
 import {CaseProcess} from './case-process';
 import {EqualsDate} from '../../operator/equals-date';
 import {Substring} from '../../operator/substring';
+import {EqualsDateTime} from '../../operator/equals-date-time';
 
 interface Datafield {
     netId: string;
@@ -21,7 +22,7 @@ interface Datafield {
 export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     // TODO 4.5.2020 - only button and file fields are truly unsupported, the rest is yet to be implemented
-    protected static DISABLED_TYPES = ['button', 'file', 'user', 'boolean', 'date', 'dateTime', 'number'];
+    protected static DISABLED_TYPES = ['button', 'file', 'user', 'boolean', 'number', 'dateTime'];
 
     protected _selectedDatafields: Array<Datafield>;
 
@@ -31,6 +32,8 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         switch (fieldType) {
             case 'date':
                 return SearchInputType.DATE;
+            case 'dateTime':
+                return SearchInputType.DATE_TIME;
             default:
                 return SearchInputType.TEXT;
         }
@@ -61,6 +64,8 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             // TODO 4.5.2020 - Operators should match the options from old frontend
             case 'date':
                 return [this._operators.getOperator(EqualsDate)];
+            case 'dateTime':
+                return [this._operators.getOperator(EqualsDateTime)];
             default:
                 return [this._operators.getOperator(Substring)];
         }
