@@ -6,6 +6,14 @@
     .panel-color:hover {
         background: mat-color($primary) !important;
         color: white !important;
+
+        .panel-primary-icon {
+            color: mat-color($accent);
+        }
+
+        .panel-accent-icon {
+            color: mat-color($accent);
+        }
     }
 
     .line-datagroup {
@@ -19,13 +27,5 @@
 
     .panel-accent-icon {
         color: mat-color($accent);
-    }
-
-    .panel-primary-icon:hover {
-        color: mat-color($accent);
-    }
-
-    .panel-accent-icon:hover {
-        color: mat-color($primary);
     }
 }

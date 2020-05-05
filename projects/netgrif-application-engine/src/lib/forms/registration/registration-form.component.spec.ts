@@ -9,7 +9,7 @@ import {SignUpService} from '../../authentication/sign-up/services/sign-up.servi
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {SignUpModule} from '../../authentication/sign-up/sign-up.module';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('RegistrationPanelComponent', () => {
     let component: RegistrationFormComponent;
@@ -21,7 +21,8 @@ describe('RegistrationPanelComponent', () => {
                 MaterialModule,
                 FlexLayoutModule,
                 BrowserAnimationsModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                TranslateLibModule
             ],
             declarations: [RegistrationFormComponent],
             providers: [

@@ -44,6 +44,11 @@
                                   aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
                         </mat-icon>
                     </button>
+                    <button mat-menu-item (click)="setLang('de-DE')">{{ 'toolbar.menu.de' | translate }}
+                        <mat-icon *ngIf="activeLang('de-DE')" class="main-toolbar-menu-icon"
+                                  aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
+                        </mat-icon>
+                    </button>
                 </mat-menu>
             </button>
         </div>

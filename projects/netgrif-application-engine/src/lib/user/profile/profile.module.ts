@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ProfileComponent} from './profile.component';
 import {MaterialModule} from '../../material/material.module';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {MaterialModule} from '../../material/material.module';
     ],
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateLibModule
     ]
 })
 export class ProfileModule {

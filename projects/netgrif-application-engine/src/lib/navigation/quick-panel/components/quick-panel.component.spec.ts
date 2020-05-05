@@ -10,6 +10,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('QuickPanelComponent', () => {
     let component: QuickPanelComponent;

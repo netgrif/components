@@ -7,6 +7,8 @@ import {CaseHeaderService} from '../../case-header/case-header.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CaseViewService} from '../../../view/case-view/case-view-service';
 import {of} from 'rxjs';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('SortModeComponent', () => {
     let component: SortModeComponent;
@@ -16,7 +18,8 @@ describe('SortModeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [SortModeComponent, TestWrapperComponent],
-            imports: [FlexModule, FlexLayoutModule, MatSortModule, NoopAnimationsModule],
+            imports: [FlexModule, FlexLayoutModule, MatSortModule, NoopAnimationsModule,
+                TranslateLibModule, HttpClientTestingModule],
             providers: [
                 CaseHeaderService,
                 {provide: CaseViewService, useValue: {allowedNets$: of([])}}

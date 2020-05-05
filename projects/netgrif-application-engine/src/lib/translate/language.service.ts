@@ -10,7 +10,7 @@ import {ConfigurationService} from '../configuration/configuration.service';
 })
 export class LanguageService {
 
-    constructor(private _translate: TranslateService, private _config: ConfigurationService) {
+    constructor(private _translate: TranslateService) {
         _translate.addLangs(['en-US', 'sk-SK', 'de-DE']);
         _translate.setTranslation('en-US', en, true);
         _translate.setTranslation('sk-SK', sk, true);

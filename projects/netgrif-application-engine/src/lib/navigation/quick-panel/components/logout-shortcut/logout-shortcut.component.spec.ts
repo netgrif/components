@@ -11,6 +11,8 @@ import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {UserService} from '../../../../user/services/user.service';
 import {of} from 'rxjs';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 
 describe('LogoutShortcutComponent', () => {
     let component: LogoutShortcutComponent;
@@ -24,7 +26,8 @@ describe('LogoutShortcutComponent', () => {
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                TranslateLibModule
             ],
             providers: [
                 AuthenticationMethodService,

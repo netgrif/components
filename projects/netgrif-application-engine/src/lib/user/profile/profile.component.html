@@ -1,7 +1,7 @@
 <div *ngIf="!user">
     <div fxLayout="row" fxFlex="50" fxLayoutAlign="center center">
         <mat-card fxLayoutAlign="center center">
-            <h1>You are not logged in!</h1>
+            <h1>{{ 'profile.notLogged' | translate}}</h1>
         </mat-card>
     </div>
 </div>
@@ -18,22 +18,22 @@
             <mat-tab class="tab">
                 <ng-template mat-tab-label>
                     <mat-icon class="margin-right-x2">info</mat-icon>
-                    General Informations
+                    {{ 'profile.general' | translate}}
                 </ng-template>
 
                 <div fxLayout="row">
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Personal Information</h2>
+                                <h2>{{ 'profile.personal' | translate}}</h2>
                             </div>
                             <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field appearance="outline" class="full-width">
-                                    <mat-label>First name</mat-label>
+                                    <mat-label>{{ 'profile.name' | translate}}</mat-label>
                                     <input matInput disabled [value]=user.firstName>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="full-width">
-                                    <mat-label>Last name</mat-label>
+                                    <mat-label>{{ 'profile.surname' | translate}}</mat-label>
                                     <input matInput disabled [value]=user.lastName>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="full-width">
@@ -46,7 +46,7 @@
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Authorities</h2>
+                                <h2>{{ 'profile.authority' | translate}}</h2>
                             </div>
                             <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field appearance="outline" class="user-chip-list">
@@ -62,7 +62,7 @@
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Roles</h2>
+                                <h2>{{ 'profile.roles' | translate}}</h2>
                             </div>
                             <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field appearance="outline" class="user-chip-list">
@@ -76,7 +76,7 @@
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Groups</h2>
+                                <h2>{{ 'profile.groups' | translate}}</h2>
                             </div>
                             <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field appearance="outline" class="user-chip-list">
@@ -92,14 +92,14 @@
             <mat-tab>
                 <ng-template mat-tab-label>
                     <mat-icon class="margin-right-x2">build</mat-icon>
-                    Preferences
+                    {{ 'profile.preference' | translate}}
                 </ng-template>
 
                 <div fxLayout="row">
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Case headers</h2>
+                                <h2>{{ 'profile.caseHead' | translate}}</h2>
                             </div>
                             <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field *ngFor="let key of obj.keys(user.preferences.caseHeaders)" appearance="outline" class="user-chip-list">
@@ -114,7 +114,7 @@
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Case filters</h2>
+                                <h2>{{ 'profile.caseFilter' | translate}}</h2>
                             </div>
                             <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field *ngFor="let key of obj.keys(user.preferences.caseFilters)" appearance="outline" class="user-chip-list">
@@ -132,7 +132,7 @@
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Task headers</h2>
+                                <h2>{{ 'profile.taskHead' | translate}}</h2>
                             </div>
                             <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field *ngFor="let key of obj.keys(user.preferences.taskHeaders)" appearance="outline" class="user-chip-list">
@@ -147,7 +147,7 @@
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Task filters</h2>
+                                <h2>{{ 'profile.taskFilter' | translate}}</h2>
                             </div>
                             <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field *ngFor="let key of obj.keys(user.preferences.taskFilters)" appearance="outline" class="user-chip-list">
@@ -165,7 +165,7 @@
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Workflow headers</h2>
+                                <h2>{{ 'profile.workFilter' | translate}}</h2>
                             </div>
                             <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field *ngFor="let key of obj.keys(user.preferences.workflowHeaders)" appearance="outline" class="user-chip-list">
@@ -180,7 +180,7 @@
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
                         <div fxLayout="column" class="full-height border">
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
-                                <h2>Workflow filters</h2>
+                                <h2>{{ 'profile.workFilter' | translate}}</h2>
                             </div>
                             <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                                 <mat-form-field *ngFor="let key of obj.keys(user.preferences.workflowFilters)" appearance="outline" class="user-chip-list">

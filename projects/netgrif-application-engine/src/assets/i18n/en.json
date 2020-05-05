@@ -5,7 +5,8 @@
             "profile": "Profile",
             "logout": "Logout",
             "en": "English",
-            "sk": "Slovak"
+            "sk": "Slovak",
+            "de": "German"
         }
     },
     "tasks": {
@@ -23,7 +24,9 @@
             "cancelTask": "Canceling assignment of task",
             "finishTask": "Finishing task",
             "invalidData": "Some fields have invalid values",
-            "failed": "failed"
+            "failed": "failed",
+            "noCase": "No resource for cases was found",
+            "caseGetFailed": "Getting cases failed"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "There are any tasks satisfying this filter",
@@ -66,6 +69,12 @@
             "errFirst": "Process is required.",
             "errSecond": "Title is required.",
             "errThird": "Color is required."
+        },
+        "user": {
+            "assign": "User Assign",
+            "noUser": "There are no users :)",
+            "err": "Users failed to load",
+            "showcase": "User showcase mode not set!"
         }
     },
     "search": {
@@ -172,5 +181,22 @@
             "author": "Author",
             "upload": "Uploaded"
         }
+    },
+    "profile": {
+        "notLogged": "You are not logged in!",
+        "general": "General Informations",
+        "personal": "Personal Information",
+        "name": "First name",
+        "surname": "Last name",
+        "authority": "Authorities",
+        "roles": "Roles",
+        "groups": "Groups",
+        "preference": "Preferences",
+        "caseHead": "Case headers",
+        "caseFilter": "Case filters",
+        "taskHead": "Task headers",
+        "taskFilter": "Task filters",
+        "workHead": "Workflow headers",
+        "workFilter": "Workflow filters"
     }
 }

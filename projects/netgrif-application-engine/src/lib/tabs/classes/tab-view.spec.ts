@@ -1,7 +1,7 @@
 import {TabTestComponent} from './opened-tab.spec';
 import {TabView} from './tab-view';
 
-describe('TabGroup', () => {
+describe('TabView', () => {
     it('should create an instance', () => {
         expect(new TabView([])).toBeTruthy();
     });
