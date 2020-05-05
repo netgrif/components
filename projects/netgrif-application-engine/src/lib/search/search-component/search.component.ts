@@ -188,6 +188,7 @@ export class SearchComponent implements OnInit {
                     this._selectedCategory.selectDatafields(inputValue.value);
                     this.appendTextToLastChip(`${inputValue.text}: `);
                     this.formControl.setValue('');
+                    this.updateInputType();
                     return;
                 } else {
                     this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));

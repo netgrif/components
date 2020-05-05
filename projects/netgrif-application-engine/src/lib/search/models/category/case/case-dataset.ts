@@ -21,7 +21,7 @@ interface Datafield {
 export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     // TODO 4.5.2020 - only button and file fields are truly unsupported, the rest is yet to be implemented
-    protected static DISABLED_TYPES = ['button', 'file', 'user', 'boolean', 'date', 'dateTime', 'number'];
+    protected static DISABLED_TYPES = ['button', 'file', 'user', 'boolean', 'dateTime', 'number'];
 
     protected _selectedDatafields: Array<Datafield>;
 
