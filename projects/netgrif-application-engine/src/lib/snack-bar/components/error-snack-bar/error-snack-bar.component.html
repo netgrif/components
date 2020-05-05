@@ -2,7 +2,7 @@
     <mat-icon color="warn" class="snack-bar-icon-margin">{{data.matIconName}}</mat-icon>
     <span>{{data.message}}</span>
     <div fxFlex></div>
-    <button mat-icon-button (click)="onDismiss()">
-        <mat-icon color="warn">close</mat-icon>
+    <button *ngIf="data.closable" mat-icon-button (click)="onDismiss()">
+        <mat-icon class="snack-bar-close-icon">close</mat-icon>
     </button>
 </div>

@@ -88,6 +88,6 @@ export class FileDownloadService {
         this._logger.error(error);
         this._snackBarService.openErrorSnackBar((file.data as FileUploadDataModel).file.name +
             this._translate.instant('dataField.snackBar.downloadFail'),
-            SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 1);
+            SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT);
     }
 }

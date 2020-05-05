@@ -38,8 +38,17 @@ export class ProcessService {
      * If any of the processes failed to load it is skipped from the result.
      */
     public getNets(identifiers: Array<string>): Observable<Array<Net>> {
-        return forkJoin(identifiers.map(i => this.loadNet(i))).pipe(
+        return forkJoin(identifiers.map(i => {
+            if (this._nets[i]) {
+                return of(this._nets[i]);
+            }
+            return this.loadNet(i);
+        })).pipe(
+            map(nets => nets.filter(n => !!n)),
             tap(nets => {
+                if (nets.length === 0) {
+                    return;
+                }
                 this._netsSubject.next(this._nets);
                 nets.forEach(n => this._netUpdate.next(n));
             })
@@ -57,7 +66,12 @@ export class ProcessService {
         }
 
         return this.loadNet(identifier).pipe(
-            tap(net => this.publishUpdate(net))
+            tap(net => {
+                if (!net) {
+                    return;
+                }
+                this.publishUpdate(net);
+            })
         );
     }
 
@@ -105,10 +119,13 @@ export class ProcessService {
 
     private loadNet(id: string): Observable<Net> {
         const returnNet = new Subject<Net>();
-        this._petriNetResource.getOne(id, '^').pipe(
-            map(n => new Net(n))
-        ).subscribe(net => {
-            this._nets[net.identifier] = net;
+        this._petriNetResource.getOne(id, '^').subscribe(net => {
+            if (!net.stringId) {
+                returnNet.next(null);
+                returnNet.complete();
+                return;
+            }
+            this._nets[net.identifier] = new Net(net);
             forkJoin({
                 transitions: this.loadTransitions(net.stringId),
                 transactions: this.loadTransactions(net.stringId),
@@ -121,11 +138,15 @@ export class ProcessService {
                 returnNet.complete();
             }, error => {
                 this._log.error('Failed to load part of Petri net ' + net.title, error);
-                throw error;
+                returnNet.next(this._nets[net.identifier]);
+                returnNet.complete();
+                // throw error;
             });
         }, error => {
             this._log.error('Failed to load Petri nets', error);
-            throw error;
+            returnNet.next(null);
+            returnNet.complete();
+            // throw error;
         });
 
         return returnNet.asObservable();
