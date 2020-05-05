@@ -2,6 +2,7 @@ import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CaseParams,
     CaseViewService,
+    CaseViewServiceFactory,
     ConfigurationService,
     FilterType,
     HeaderComponent,
@@ -10,16 +11,32 @@ import {
     NAE_TAB_DATA,
     Net,
     ProcessService,
+    SearchService,
     SimpleFilter,
     TabbedCaseView,
 } from '@netgrif/application-engine';
 import {ReplaySubject} from 'rxjs';
 
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.create('case');
+};
+
+const searchServiceFactory = () => {
+    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
+};
+
 @Component({
     selector: 'nae-app-tabbed-case-view',
     templateUrl: './tabbed-case-view.component.html',
     styleUrls: ['./tabbed-case-view.component.scss'],
-    providers: [CaseViewService]
+    providers: [
+        CaseViewServiceFactory,
+        {   provide: SearchService,
+            useFactory: searchServiceFactory},
+        {   provide: CaseViewService,
+            useFactory: localCaseViewServiceFactory,
+            deps: [CaseViewServiceFactory]},
+    ]
 })
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
 
@@ -32,7 +49,7 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData,
                 processService: ProcessService,
                 configService: ConfigurationService) {
-        super(caseViewService, loggerService, injectedTabData, new SimpleFilter('', FilterType.CASE, {}));
+        super(caseViewService, loggerService, injectedTabData);
         this.allowedNets$ = new ReplaySubject<Array<Net>>(1);
         // TODO 16.4. 2020 initialize allowedNets by filter
         const view = configService.getViewByPath('<%= webPath %>');

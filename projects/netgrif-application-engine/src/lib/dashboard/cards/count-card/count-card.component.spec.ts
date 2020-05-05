@@ -9,6 +9,7 @@ import {CountService} from '../../../resources/abstract-endpoint/count-service';
 import {Observable, of} from 'rxjs';
 import {Count} from '../../../resources/interface/count';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
+import {FilterType} from '../../../filter/models/filter-type';
 
 describe('CountCardComponent', () => {
     let component: CountCardComponent;
@@ -47,14 +48,14 @@ describe('CountCardComponent', () => {
 })
 class TestWrapperComponent {
     card: CountCard = {
-        filter: '{}',
+        filter: {},
         layout: {
             x: 0,
             y: 0,
             cols: 1,
             rows: 1,
         },
-        resourceType: 'case',
+        resourceType: FilterType.CASE,
         title: '',
         type: DashboardCardTypes.COUNT
     };

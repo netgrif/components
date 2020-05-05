@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {MatExpansionModule} from '@angular/material/expansion';
 import {PanelModule} from '../panel.module';
 import {CommonModule} from '@angular/common';
@@ -22,6 +21,8 @@ import {map} from 'rxjs/operators';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {User} from '../../resources/interface/user';
+import {SearchService} from '../../search/search-service/search.service';
+import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
@@ -43,6 +44,7 @@ describe('TaskPanelComponent', () => {
                 TaskViewService,
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: UserResourceService, useClass: MyUserResources},
+                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
                 SideMenuService
             ],
             declarations: [TestWrapperComponent]

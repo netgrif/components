@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../resources/interface/case';
 import {NewCaseComponent} from '../../side-menu/content-components/new-case/new-case.component';
@@ -9,26 +9,36 @@ import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {SortableView} from '../abstract/sortable-view';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
-import {Filter} from '../../filter/models/filter';
-import {SimpleFilter} from '../../filter/models/simple-filter';
-import {FilterType} from '../../filter/models/filter-type';
+import {SearchService} from '../../search/search-service/search.service';
+import {Net} from '../../process/net';
+import {CaseParams} from './case-params';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 
 
 @Injectable()
 export class CaseViewService extends SortableView {
 
     protected _loading$: BehaviorSubject<boolean>;
-    protected _baseFilter: Filter;
     protected _cases$: Subject<Array<Case>>;
+    protected _allowedNets$: ReplaySubject<Array<Net>>;
 
-    constructor(protected _sideMenuService: SideMenuService,
+    constructor(allowedNets: Observable<Array<Net>>,
+                protected _sideMenuService: SideMenuService,
                 protected _caseResourceService: CaseResourceService,
                 protected _log: LoggerService,
-                protected _snackBarService: SnackBarService) {
+                protected _snackBarService: SnackBarService,
+                protected _searchService: SearchService,
+                protected _viewParams?: CaseParams) {
         super();
-        this._baseFilter = new SimpleFilter('', FilterType.CASE, {});
         this._loading$ = new BehaviorSubject<boolean>(false);
         this._cases$ = new Subject<Array<Case>>();
+        this._searchService.activeFilter$.subscribe( () => {
+            this.reload();
+        });
+        this._allowedNets$ = new ReplaySubject<Array<Net>>(1);
+        allowedNets.subscribe( nets => {
+            this._allowedNets$.next(nets);
+        });
     }
 
     public get loading(): boolean {
@@ -43,12 +53,12 @@ export class CaseViewService extends SortableView {
         return this._loading$.asObservable();
     }
 
-    public set baseFilter(newFilter: Filter) {
-        this._baseFilter = newFilter.clone();
-    }
-
     public get cases$(): Observable<Array<Case>> {
         return this._cases$.asObservable();
+    }
+
+    public get allowedNets$(): Observable<Array<Net>> {
+        return this._allowedNets$.asObservable();
     }
 
     public loadCases(): void {
@@ -59,7 +69,7 @@ export class CaseViewService extends SortableView {
 
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
-        this._caseResourceService.searchCases(this._baseFilter, params)
+        this._caseResourceService.searchCases(this._searchService.activeFilter, params)
             .subscribe((newCases: Array<Case>) => {
                 if (newCases instanceof Array) {
                     this.updateCases(newCases);
@@ -79,8 +89,7 @@ export class CaseViewService extends SortableView {
     }
 
     public createNewCase(): void {
-        // TODO 16.4. 2020 Add filter to injected data for newCase Component to get there allowedNets
-        this._sideMenuService.open(NewCaseComponent).onClose.subscribe($event => {
+        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.loadCases();

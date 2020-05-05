@@ -55,8 +55,8 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                                     cards: [{
                                         type: DashboardCardTypes.COUNT,
                                         title: 'All tasks',
-                                        resourceType: 'task',
-                                        filter: '{}',
+                                        resourceType: 'Task',
+                                        filter: {},
                                         layout: {
                                             x: 0,
                                             y: 0,
@@ -75,8 +75,8 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                                     }, {
                                         type: DashboardCardTypes.COUNT,
                                         title: 'All cases',
-                                        resourceType: 'case',
-                                        filter: '{}',
+                                        resourceType: 'Case',
+                                        filter: {},
                                         layout: {
                                             x: 1,
                                             y: 1,
@@ -155,6 +155,16 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                                     }
                                 }
                             }
+                        },
+                        case: {
+                            layout: {
+                                name: 'CaseView',
+                                params: {
+                                    allowedNets: ['search-test-defaultRole']
+                                }
+                            },
+                            access: 'private',
+                            navigation: {}
                         }
                     }
                 },

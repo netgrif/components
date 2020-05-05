@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
+import {CaseViewService} from '../../view/case-view/case-view-service';
 
 
 export enum CaseMetaField {
@@ -13,8 +14,11 @@ export enum CaseMetaField {
 
 @Injectable()
 export class CaseHeaderService extends AbstractHeaderService {
-    constructor() {
+    constructor(protected _caseViewService: CaseViewService) {
         super(HeaderType.CASE);
+        this._caseViewService.allowedNets$.subscribe(allowedNets => {
+            this.setAllowedNets(allowedNets);
+        });
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {

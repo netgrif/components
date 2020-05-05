@@ -3,6 +3,9 @@ import {CountCard} from '../model/count-card';
 import {CountService} from '../../../resources/abstract-endpoint/count-service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
+import {FilterType} from '../../../filter/models/filter-type';
+import {Filter} from '../../../filter/models/filter';
+import {SimpleFilter} from '../../../filter/models/simple-filter';
 
 
 @Component({
@@ -14,6 +17,7 @@ export class CountCardComponent implements OnInit {
 
     @Input() public card: CountCard;
     private _countService: CountService;
+    private _filter: Filter;
     public loading: boolean;
     public count: number;
 
@@ -22,23 +26,27 @@ export class CountCardComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.resolveFilter();
         this.resolveResourceService();
-        // TODO 10.4.2020 - don't pass filters as strings
-        this._countService.count(JSON.parse(this.card.filter)).subscribe(result => {
+        this._countService.count(this._filter).subscribe(result => {
             this.count = result.count;
             this.loading = false;
         });
     }
 
-    private resolveResourceService() {
-        switch (this.card.resourceType) {
-            case 'case':
+    private resolveResourceService(): void {
+        switch (this._filter.type) {
+            case FilterType.CASE:
                 this._countService = this._injector.get(CaseResourceService);
                 break;
-            case 'task':
+            case FilterType.TASK:
                 this._countService = this._injector.get(TaskResourceService);
                 break;
         }
+    }
+
+    private resolveFilter(): void {
+        this._filter = new SimpleFilter('', this.card.resourceType, this.card.filter);
     }
 
 }

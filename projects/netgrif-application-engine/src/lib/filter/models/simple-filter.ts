@@ -17,6 +17,14 @@ export class SimpleFilter extends Filter {
     private readonly _filter: CaseSearchRequestBody | TaskSearchRequestBody;
 
     /**
+     * Create empty filter of provided type
+     * @param type type of resources that the filter can query
+     */
+    public static empty(type: FilterType): Filter {
+        return new SimpleFilter('', type, {});
+    }
+
+    /**
      * @param id identifier of the filter
      * @param type type of resources that the filter can query
      * @param filterBody search request matching this filter's `type`

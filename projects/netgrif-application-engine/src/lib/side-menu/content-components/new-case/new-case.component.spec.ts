@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {NewCaseComponent} from './new-case.component';
 import {CommonModule} from '@angular/common';
 import {MaterialModule} from '../../../material/material.module';
@@ -29,7 +28,7 @@ describe('NewCaseComponent', () => {
             providers: [
                 {
                     provide: NAE_SIDE_MENU_CONTROL,
-                    useValue: new SideMenuControl(undefined, undefined, () => of('close'), [])
+                    useValue: new SideMenuControl(undefined, undefined, () => of('close'), {allowedNets$: of([])})
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]

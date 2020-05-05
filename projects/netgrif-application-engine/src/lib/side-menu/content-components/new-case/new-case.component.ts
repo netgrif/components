@@ -10,7 +10,7 @@ import {CaseResourceService} from '../../../resources/engine-endpoint/case-resou
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {ProcessService} from '../../../process/process.service';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {SideMenuInjectionData} from '../../models/side-menu-injection-data';
+import {NewCaseInjectionData} from './model/new-case-injection-data';
 
 
 interface Form {
@@ -41,7 +41,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
     options: Array<Form> = [];
     filteredOptions: Observable<Array<Form>>;
     processOne: Promise<boolean>;
-    allowedNets: SideMenuInjectionData = [];
+    injectedData: NewCaseInjectionData;
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
                 private _formBuilder: FormBuilder,
@@ -51,29 +51,22 @@ export class NewCaseComponent implements OnInit, OnChanges {
                 private _petriNetResource: PetriNetResourceService,
                 private _log: LoggerService) {
         if (this._sideMenuControl.data) {
-            this.allowedNets = this._sideMenuControl.data;
+            this.injectedData = this._sideMenuControl.data as NewCaseInjectionData;
         }
     }
 
     ngOnInit() {
-        if (this.allowedNets.length === 0) {
+        if (!this.injectedData) {
             this._snackBarService.openErrorSnackBar('No allowed Nets');
             this._sideMenuControl.close({
                 opened: false
             });
         }
-        this.allowedNets.forEach(id => {
-            this._processService.getNet(id).subscribe(petriNet => {
-                this.options.push({value: petriNet.stringId, viewValue: petriNet.title});
-                this.filteredOptions = this.processFormControl.valueChanges
-                    .pipe(
-                        startWith(''),
-                        map(value => typeof value === 'string' ? value : value.viewValue),
-                        map(name => name ? this._filter(name) : this.options.slice()),
-                    );
 
-            });
+        this.injectedData.allowedNets$.subscribe( allowedNets => {
+            this.options = allowedNets.map( petriNet => ({value: petriNet.stringId, viewValue: petriNet.title}));
         });
+
         this.filteredOptions = this.processFormControl.valueChanges
             .pipe(
                 startWith(''),

@@ -8,9 +8,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {SelectLanguageService} from '../../toolbar/select-language.service';
 import {SortableView} from '../abstract/sortable-view';
-import {Filter} from '../../filter/models/filter';
-import {SimpleFilter} from '../../filter/models/simple-filter';
-import {FilterType} from '../../filter/models/filter-type';
+import {SearchService} from '../../search/search-service/search.service';
 
 
 @Injectable()
@@ -19,21 +17,18 @@ export class TaskViewService extends SortableView {
     taskData: Subject<Array<TaskPanelData>>;
     changedFields: Subject<ChangedFields>;
     loading: BehaviorSubject<boolean>;
-    private _activeFilter: Filter;
 
     constructor(protected _taskService: TaskResourceService, private _userService: UserService,
                 private _snackBarService: SnackBarService, private _translate: TranslateService,
-                private _selectLanguage: SelectLanguageService) { // need for translations
+                private _selectLanguage: SelectLanguageService, protected _searchService: SearchService) { // need for translations
         super();
         this.taskArray = [];
         this.taskData = new Subject<Array<TaskPanelData>>();
         this.loading = new BehaviorSubject<boolean>(false);
         this.changedFields = new Subject<ChangedFields>();
-        this._activeFilter = new SimpleFilter('', FilterType.TASK, {});
-    }
-
-    public set activeFilter(newFilter: Filter) {
-        this._activeFilter = newFilter.clone();
+        this._searchService.activeFilter$.subscribe(() => {
+            this.reload();
+        });
     }
 
     public loadTasks() {
@@ -43,7 +38,7 @@ export class TaskViewService extends SortableView {
         this.loading.next(true);
 
         // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation
-        this._taskService.searchTask(this._activeFilter).subscribe(tasks => {
+        this._taskService.searchTask(this._searchService.activeFilter).subscribe(tasks => {
             if (tasks instanceof Array) {
                 if (this.taskArray.length) {
                     tasks = this.resolveUpdate(tasks);
@@ -55,6 +50,7 @@ export class TaskViewService extends SortableView {
                     });
                 });
             } else {
+                this.taskArray.splice(0, this.taskArray.length);
                 this._snackBarService.openWarningSnackBar(this._translate.instant('tasks.snackbar.noTasksFound'));
             }
             this.loading.next(false);
@@ -86,7 +82,10 @@ export class TaskViewService extends SortableView {
             }
         });
         tasksToDelete.sort((a, b) => b - a);
-        tasksToDelete.forEach(index => tasks.splice(index, 1));
+        tasksToDelete.forEach(index => {
+            tasks.splice(index, 1);
+            this.taskArray.splice(index, 1);
+        });
         return tasks;
     }
 

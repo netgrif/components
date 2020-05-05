@@ -1,11 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {SortModeComponent} from './sort-mode.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {MatSortModule} from '@angular/material';
 import {Component} from '@angular/core';
-import {CaseHeaderService, CaseMetaField} from '../../case-header/case-header.service';
+import {CaseHeaderService} from '../../case-header/case-header.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {CaseViewService} from '../../../view/case-view/case-view-service';
+import {of} from 'rxjs';
 
 describe('SortModeComponent', () => {
     let component: SortModeComponent;
@@ -18,6 +19,7 @@ describe('SortModeComponent', () => {
             imports: [FlexModule, FlexLayoutModule, MatSortModule, NoopAnimationsModule],
             providers: [
                 CaseHeaderService,
+                {provide: CaseViewService, useValue: {allowedNets$: of([])}}
             ],
         })
             .compileComponents();

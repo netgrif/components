@@ -93,7 +93,10 @@ export class TestConfigurationService extends ConfigurationService {
                     cases: {
                         type: '',
                         layout: {
-                            name: ''
+                            name: '',
+                            params: {
+                                allowedNets: []
+                            }
                         },
                         access: 'private',
                         navigation: {

@@ -34,6 +34,27 @@
             "select": "Zvoliť"
         }
     },
+    "search": {
+        "category": {
+            "case": {
+                "title": "Názov prípadu",
+                "visualId": "Vizuálne ID prípadu",
+                "author": "Autor prípadu",
+                "process": "Proces prípadu",
+                "role": "Procesná rola",
+                "task": "Úloha prípadu",
+                "creationDate": "Dátum vytvorenia prípadu",
+                "dataset": "Dáta prípadu"
+            },
+            "task": {
+                "assignee": "Riešiteľ úlohy"
+            }
+        },
+        "placeholder": {
+            "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií",
+            "date": "Zvoľte dátum"
+        }
+    },
     "dataField": {
         "validations": {
             "required": "Toto pole je potrebné!",

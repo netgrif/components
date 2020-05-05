@@ -26,7 +26,8 @@ import {
     TabsModule,
     ToolbarModule,
     UserModule,
-    WorkflowViewModule
+    WorkflowViewModule,
+    SearchModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -92,7 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         PanelsComponent,
         DashboardExampleComponent,
         FilterRepositoryExampleComponent,
-        ProfileComponent
+        ProfileComponent,
     ],
     imports: [
         BrowserModule,
@@ -130,9 +131,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         LoginFormModule,
         ForgottenPasswordFormModule,
         RegistrationFormModule,
+        SearchModule,
         SideMenuContentModule,
         ProfileModule,
-        SnackBarModule
+        SnackBarModule,
     ],
     entryComponents: [
         ContentComponent,

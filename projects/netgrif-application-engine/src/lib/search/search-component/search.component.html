@@ -1,0 +1,40 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+    <mat-chip-list selectable="false">
+        <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true" (removed)="removeChip(i)">
+            {{chip.text}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+    <div [ngSwitch]="shownInput$ | async">
+        <ng-template [ngSwitchCase]="'text'">
+            <mat-form-field>
+                <input type="text" matInput
+                       [placeholder]="'search.placeholder.text' | translate"
+                       [formControl]="formControls['text']"
+                       [matAutocomplete]="searchAutocomplete"
+                       (keydown.enter)="$event.target.blur();confirmUserInput()">
+                <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
+                        <span>{{option.translationPath ? (option.translationPath | translate) : option.text}}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'date'">
+            <mat-form-field>
+                <input matInput
+                       [placeholder]="'search.placeholder.date' | translate"
+                       [formControl]="formControls['date']"
+                       [matDatepicker]="searchDatepicker"
+                       (click)="searchDatepicker.open()"
+                       (keydown.enter)="searchDatepicker.close()">
+                <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #searchDatepicker></mat-datepicker>
+            </mat-form-field>
+        </ng-template>
+    </div>
+    <button mat-icon-button (click)="confirmUserInput()">
+        <mat-icon>search</mat-icon>
+    </button>
+</div>
