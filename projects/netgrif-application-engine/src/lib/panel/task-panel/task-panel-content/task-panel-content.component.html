@@ -1,4 +1,4 @@
-<div *ngIf="!loading && dataSource.length !== 0">
+<div *ngIf="!loading && dataSource.length !== 0" [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView()}">
     <mat-grid-list [cols]="formCols" rowHeight="105px">
         <mat-grid-tile *ngFor="let item of dataSource"
                        class="border"
