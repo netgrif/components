@@ -206,6 +206,7 @@ export class SearchComponent implements OnInit {
                 }
             }
             this._selectedCategory = undefined;
+            this.updateInputType();
             this.formControl.setValue('');
         }
     }
