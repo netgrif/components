@@ -74,6 +74,7 @@ export class CaseViewService extends SortableView {
                 if (newCases instanceof Array) {
                     this.updateCases(newCases);
                 } else {
+                    this.updateCases([]);
                     this._snackBarService.openWarningSnackBar('No resource for cases was found');
                 }
                 this.setLoading(false);
