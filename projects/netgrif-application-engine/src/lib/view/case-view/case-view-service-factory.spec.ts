@@ -7,6 +7,7 @@ import {MaterialModule} from '../../material/material.module';
 import {SearchService} from '../../search/search-service/search.service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 
 describe('CaseViewServiceFactoryService', () => {
@@ -16,7 +17,7 @@ describe('CaseViewServiceFactoryService', () => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                MaterialModule
+                MaterialModule, TranslateLibModule
             ],
             providers: [
                 {provide: SearchService, useFactory: () => new SearchService(SimpleFilter.empty(FilterType.CASE))},
