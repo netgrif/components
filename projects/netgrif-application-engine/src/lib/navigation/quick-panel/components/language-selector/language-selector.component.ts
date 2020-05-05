@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SelectLanguageService} from '../../../../toolbar/select-language.service';
+import {LanguageService} from '../../../../translate/language.service';
 
 @Component({
     selector: 'nae-language-selector',
@@ -19,11 +19,15 @@ export class LanguageSelectorComponent implements OnInit {
             value: 'sk'
         },
         {
+            key: 'de-DE',
+            value: 'de'
+        },
+        {
             key: 'en-US',
             value: 'en'
         }];
 
-    constructor(private _select: SelectLanguageService) {
+    constructor(private _select: LanguageService) {
     }
 
     ngOnInit(): void {

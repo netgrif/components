@@ -8,6 +8,7 @@ import {NavigationTreeComponent} from './navigation-tree/navigation-tree.compone
 import {RouterModule} from '@angular/router';
 import {QuickPanelModule} from './quick-panel/quick-panel.module';
 import {UserModule} from '../user/user.module';
+import {TranslateLibModule} from '../translate/translate-lib.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {UserModule} from '../user/user.module';
         FlexModule,
         FlexLayoutModule,
         QuickPanelModule,
-        UserModule
+        UserModule,
+        TranslateLibModule
     ],
     exports: [
         NavigationDrawerComponent,

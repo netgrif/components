@@ -36,7 +36,7 @@ import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-textarea-field.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
-import {SelectLanguageService} from '../toolbar/select-language.service';
+import {LanguageService} from '../translate/language.service';
 
 @NgModule({
     declarations: [
@@ -90,7 +90,7 @@ import {SelectLanguageService} from '../toolbar/select-language.service';
         FileUploadService,
         FileDownloadService,
         {provide: DateAdapter, useClass: CustomDateAdapter},
-        SelectLanguageService
+        LanguageService
     ]
 })
 export class DataFieldsModule {

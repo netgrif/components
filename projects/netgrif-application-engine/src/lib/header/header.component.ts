@@ -5,6 +5,7 @@ import {TaskHeaderService} from './task-header/task-header.service';
 import {WorkflowHeaderService} from './workflow-header/workflow-header.service';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
+import {LanguageService} from '../translate/language.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit {
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 
-    constructor(private _injector: Injector) {
+    constructor(private _injector: Injector, private _lang: LanguageService) {
     }
 
     ngOnInit(): void {

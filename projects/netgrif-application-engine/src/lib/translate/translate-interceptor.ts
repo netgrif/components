@@ -6,12 +6,12 @@ import {
 } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {SelectLanguageService} from '../toolbar/select-language.service';
+import {LanguageService} from './language.service';
 
 @Injectable()
 export class TranslateInterceptor implements HttpInterceptor {
 
-    constructor(private _select: SelectLanguageService) {
+    constructor(private _select: LanguageService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

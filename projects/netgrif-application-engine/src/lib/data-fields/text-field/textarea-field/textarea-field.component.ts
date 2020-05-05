@@ -4,7 +4,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {AbstractTextFieldComponent} from '../abstract-text-field.component';
 import {TranslateService} from '@ngx-translate/core';
-import {SelectLanguageService} from '../../../toolbar/select-language.service';
+import {LanguageService} from '../../../translate/language.service';
 
 @Component({
     selector: 'nae-textarea-field',
@@ -17,7 +17,7 @@ export class TextareaFieldComponent extends AbstractTextFieldComponent {
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
 
-    constructor(protected _translate: TranslateService, private _select: SelectLanguageService) {
+    constructor(protected _translate: TranslateService, private _lang: LanguageService) {
         super(_translate);
     }
 

@@ -6,7 +6,7 @@ import {Filter} from '../../../filter/models/filter';
 import {FilterSelectorInjectionData} from './model/filter-selector-injection-data';
 import {FilteredArray} from './model/filtered-array';
 import {FilterType} from '../../../filter/models/filter-type';
-import {SelectLanguageService} from '../../../toolbar/select-language.service';
+import {LanguageService} from '../../../translate/language.service';
 import {MatSelectionList, MatSelectionListChange} from '@angular/material';
 import {FormControl} from '@angular/forms';
 
@@ -85,7 +85,7 @@ export class FilterSelectorComponent {
      * @param _i18n -
      */
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
-                private _filterRepository: FilterRepository, private _i18n: SelectLanguageService) {
+                private _filterRepository: FilterRepository, private _i18n: LanguageService) {
         const filterConstraints = _sideMenuControl.data as FilterSelectorInjectionData;
 
         let caseFilters = [];

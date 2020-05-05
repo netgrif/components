@@ -11,6 +11,7 @@ import {TextField} from '../../data-fields/text-field/models/text-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {Behavior} from '../../data-fields/models/behavior';
 import {Net} from '../../process/net';
+import {TranslateService} from '@ngx-translate/core';
 
 
 export interface WorkflowPanelContent {
@@ -35,7 +36,7 @@ export class WorkflowPanelComponent extends PanelWithHeaderBinding implements On
 
     private dataFieldsBehaviour: Behavior = {visible: true, editable: false};
 
-    constructor(private _log: LoggerService) {
+    constructor(private _log: LoggerService, private _translate: TranslateService) {
         super();
     }
 
@@ -61,11 +62,16 @@ export class WorkflowPanelComponent extends PanelWithHeaderBinding implements On
      */
     private createPanelContent(): WorkflowPanelContent {
         return {
-            netIdentifier: new TextField('', 'Net identifier', this.workflow.identifier, this.dataFieldsBehaviour),
-            title: new TextField('', 'Title', this.workflow.title, this.dataFieldsBehaviour),
-            version: new TextField('', 'Version', this.workflow.version, this.dataFieldsBehaviour),
-            author: new TextField('', 'Author', this.workflow.author.fullName, this.dataFieldsBehaviour),
-            uploaded: new DateTimeField('', 'Uploaded', toMoment(this.workflow.createdDate), this.dataFieldsBehaviour)
+            netIdentifier: new TextField('', this._translate.instant('panel.workflow.net'),
+                this.workflow.identifier, this.dataFieldsBehaviour),
+            title: new TextField('', this._translate.instant('panel.workflow.title'),
+                this.workflow.title, this.dataFieldsBehaviour),
+            version: new TextField('', this._translate.instant('panel.workflow.version'),
+                this.workflow.version, this.dataFieldsBehaviour),
+            author: new TextField('', this._translate.instant('panel.workflow.author'),
+                this.workflow.author.fullName, this.dataFieldsBehaviour),
+            uploaded: new DateTimeField('', this._translate.instant('panel.workflow.upload'),
+                toMoment(this.workflow.createdDate), this.dataFieldsBehaviour)
         };
     }
 

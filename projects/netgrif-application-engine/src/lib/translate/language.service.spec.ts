@@ -1,18 +1,18 @@
 import {TestBed} from '@angular/core/testing';
 
-import {SelectLanguageService} from './select-language.service';
+import {LanguageService} from './language.service';
 import {MaterialModule} from '../material/material.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TranslateLibModule} from '../translate/translate-lib.module';
+import {TranslateLibModule} from './translate-lib.module';
 
 describe('SelectLanguageService', () => {
-    let service: SelectLanguageService;
+    let service: LanguageService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, HttpClientTestingModule, TranslateLibModule],
         });
-        service = TestBed.inject(SelectLanguageService);
+        service = TestBed.inject(LanguageService);
     });
 
     it('should be created', () => {

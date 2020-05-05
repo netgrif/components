@@ -7,12 +7,12 @@
                             [fxHide.lt-lg]="i >= 4"
                             [fxHide.lt-md]="i >= 3"
                             [fxHide.lt-sm]="i >= 2">
-                <mat-label *ngIf="header.fieldType === 'date'">Choose a date</mat-label>
+                <mat-label *ngIf="header.fieldType === 'date'">{{ 'headers.date' | translate}}</mat-label>
                 <input *ngIf="header.fieldType === 'date'" matInput [matDatepicker]="picker" (dateChange)="headerSearchInputChanged(i,  $event)">
                 <mat-datepicker-toggle *ngIf="header.fieldType === 'date'" matPrefix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
 
-                <mat-label *ngIf="header.fieldType !== 'date'" >{{header.title}}</mat-label>
+                <mat-label *ngIf="header.fieldType !== 'date'" >{{header.title | translate}}</mat-label>
                 <input *ngIf="header.fieldType !== 'date'" matInput (keyup)="headerSearchInputChanged(i, $event.target['value'])">
             </mat-form-field>
         </ng-template>
