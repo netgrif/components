@@ -76,6 +76,7 @@ export class CaseViewService extends SortableView {
                 if (newCases instanceof Array) {
                     this.updateCases(newCases);
                 } else {
+                    this.updateCases([]);
                     this._snackBarService.openWarningSnackBar(this._translate.instant('tasks.snackbar.noCase'));
                 }
                 this.setLoading(false);
