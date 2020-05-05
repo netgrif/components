@@ -160,7 +160,7 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                             layout: {
                                 name: 'CaseView',
                                 params: {
-                                    allowedNets: ['search-test-defaultRole']
+                                    allowedNets: ['search-test-defaultRole', 'leukemia', '1']
                                 }
                             },
                             access: 'private',

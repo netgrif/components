@@ -9,3 +9,7 @@ export * from './snack-bar.module';
 
 // SERVICES
 export * from './services/snack-bar.service';
+
+// MODELS
+export * from './models/snack-bar-injection-data';
+export * from './models/abstract-snack-bar';
