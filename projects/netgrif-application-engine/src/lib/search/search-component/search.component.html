@@ -7,7 +7,7 @@
     </mat-chip-list>
     <div [ngSwitch]="shownInput$ | async">
         <ng-template [ngSwitchCase]="'text'">
-            <mat-form-field>
+            <mat-form-field class="search-input">
                 <input type="text" matInput
                        [placeholder]="'search.placeholder.text' | translate"
                        [formControl]="formControls['text']"
@@ -22,7 +22,7 @@
             </mat-form-field>
         </ng-template>
         <ng-template [ngSwitchCase]="'date'">
-            <mat-form-field>
+            <mat-form-field class="search-input">
                 <input matInput
                        [placeholder]="'search.placeholder.date' | translate"
                        [formControl]="formControls['date']"
@@ -34,7 +34,7 @@
             </mat-form-field>
         </ng-template>
         <ng-template [ngSwitchCase]="'dateTime'">
-            <mat-form-field>
+            <mat-form-field class="search-input">
                 <input matInput
                        [placeholder]="'search.placeholder.dateTime' | translate"
                        [formControl]="formControls['dateTime']"
