@@ -106,12 +106,12 @@
             "positive": "Zadané číslo musí byť kladné",
             "negative": "Zadané číslo musí byť záporné",
             "decimal": "Zadané číslo musí byť decimálne",
-            "inrange": "Zadané číslo musí byť v rozsahu ",
-            "length": "Zadaný text musí byť dlhý aspoň ",
+            "inrange": "Zadané číslo musí byť v rozsahu {{range}}",
+            "length": "Zadaný text musí byť dlhý aspoň {{length}}",
             "pattern": "Zadaný text je v nesprávnom formáte",
             "phone": "Zadaný text musí byť tel. číslo",
             "email": "Zadaný text musí byť email",
-            "dateRange": "Zadaný dátum musí byť v rozsahu ",
+            "dateRange": "Zadaný dátum musí byť v rozsahu {{range}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň"
 
