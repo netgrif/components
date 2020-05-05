@@ -4,7 +4,6 @@ import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, Trans
 import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {SelectLanguageService} from '../toolbar/select-language.service';
-import {AuthenticationInterceptor} from '../authentication/services/authentication-interceptor';
 import {TranslateInterceptor} from './translate-interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {

@@ -53,7 +53,7 @@ export class FileFieldService {
                 private _translate: TranslateService,
                 private _select: SelectLanguageService) {
         this._fileUploadService.fileUploadCompleted.subscribe(() => {
-            this.fileField.value = this.resolveFilesArray();
+            // this.fileField.value = this.resolveFilesArray();
         });
     }
 
@@ -124,7 +124,7 @@ export class FileFieldService {
         const index = this.allFiles.indexOf(file);
         if (index > -1) {
             this.allFiles.splice(index, 1);
-            this.fileField.value = this.resolveFilesArray();
+            // this.fileField.value = this.resolveFilesArray();
         }
     }
 

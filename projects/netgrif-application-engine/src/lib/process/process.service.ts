@@ -12,6 +12,9 @@ export interface NetCache {
     [k: string]: Net;
 }
 
+/**
+ * Process service is responsible for loading and caching processes needed for any functionality of an app.
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -27,6 +30,13 @@ export class ProcessService {
         this._netUpdate = new Subject<Net>();
     }
 
+    /**
+     * Get process nets according to provided identifiers.
+     * If any of the requested processes is not loaded it will be loaded from a server and save for later.
+     * @param identifiers Array of identifiers of requested processes. See [Net]{@link Net}
+     * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
+     * If any of the processes failed to load it is skipped from the result.
+     */
     public getNets(identifiers: Array<string>): Observable<Array<Net>> {
         return forkJoin(identifiers.map(i => this.loadNet(i))).pipe(
             tap(nets => {
@@ -36,6 +46,11 @@ export class ProcessService {
         );
     }
 
+    /**
+     * Get process net by identifier.
+     * @param identifier Identifier of the requested process. See [Net]{@link Net}
+     * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
+     */
     public getNet(identifier: string): Observable<Net> {
         if (this._nets[identifier]) {
             return of(this._nets[identifier]);
@@ -46,6 +61,10 @@ export class ProcessService {
         );
     }
 
+    /**
+     * Remove cached process by identifier. If the process is not found nothing happens.
+     * @param identifier Process identifier
+     */
     public removeNet(identifier: string): void {
         if (!this._nets[identifier]) {
             return;
@@ -54,6 +73,10 @@ export class ProcessService {
         this.publishUpdate();
     }
 
+    /**
+     * Update cached process object. If the process is not found nothing happens. Process object is replaced.
+     * @param net Updated process object.
+     */
     public updateNet(net: Net): void {
         if (!this._nets[net.identifier]) {
             return;
@@ -62,10 +85,20 @@ export class ProcessService {
         this.publishUpdate(net);
     }
 
+    /**
+     * Stream of change of the process cache.
+     * New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.
+     * @returns Observable of whole updated cache.
+     */
     public get nets$(): Observable<NetCache> {
         return this._netsSubject.asObservable();
     }
 
+    /**
+     * Stream of change in the process cache.
+     * New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.
+     * @returns Observable of updated or newly loaded process net.
+     */
     public get netUpdate$(): Observable<Net> {
         return this._netUpdate.asObservable();
     }

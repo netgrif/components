@@ -1,6 +1,7 @@
 import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
+import {FileFieldValue} from './file-field-value';
 
 /**
  * Supported types of files a user can select through a file picker.
@@ -28,7 +29,7 @@ export interface FileUploadDataModel {
 /**
  * Holds information represent file field implements in Petri Net
  */
-export class FileField extends DataField<Array<File>> {
+export class FileField extends DataField<FileFieldValue> {
     /**
      * Specifies the size of all uploaded files in bytes.
      *
@@ -41,9 +42,9 @@ export class FileField extends DataField<Array<File>> {
      *
      * Placeholder is a substitute for the value name if not set value.
      */
-    constructor(stringId: string, title: string, behavior: Behavior, value?: Array<File>, placeholder?: string, description?: string,
+    constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1,
-                private _zipped: boolean = true, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
+                private _zipped: boolean = false, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
         super(stringId, title, value, behavior, placeholder, description, layout);
     }
 
@@ -66,12 +67,16 @@ export class FileField extends DataField<Array<File>> {
     /**
      * We assume that files are always given in the same order.
      */
-    protected valueEquality(a: Array<File>, b: Array<File>): boolean {
+    protected valueEquality(a: FileFieldValue, b: FileFieldValue): boolean {
+        let array = true;
+        if (a && a.files) {
+            array = a.files.every((element, index) => element.name === b.files[index].name);
+        }
         return (!a && !b) || (
             !!a
             && !!b
-            && a.length === b.length
-            && a.every((element, index) => element.name === b[index].name)
+            && a.name === b.name
+            && array
         );
     }
 }

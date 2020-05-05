@@ -5,19 +5,30 @@
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
     <div>
-        <div class="file-field-image-wrapper">
-            <img #imageEl src="" alt="" class="file-field-image">
-        </div>
+<!--        <div class="file-field-image-wrapper">-->
+<!--            <img #imageEl src="" alt="" class="file-field-image">-->
+<!--        </div>-->
         <mat-label *ngIf="!showLargeLayout.value">
             {{dataField.title}}
             <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label>
             <br>
         </mat-label>
-        <button mat-stroked-button class="margin-bottom-10px" color="primary" (click)="onFileUpload()"
-                [disabled]="formControl.disabled">
-            <mat-icon>file_upload</mat-icon>
-            {{name}}
-        </button>
+        <div fxLayout="column" fxLayoutAlign="start center">
+            <mat-progress-bar color="primary" [value]="state.progress" class="progress-bar-size margin-bottom-default" fxFlex></mat-progress-bar>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon *ngIf="state.completed" color="accent">done</mat-icon>
+                <mat-icon *ngIf="state.error" color="warn">error</mat-icon>
+                <a href="javascript:null" (click)="download()">{{name}}</a>
+                <button *ngIf="!state.uploading" mat-stroked-button class="margin-bottom-default" color="primary" (click)="upload()"
+                        [disabled]="formControl.disabled">
+                    <mat-icon>file_upload</mat-icon>
+                </button>
+                <button *ngIf="state.uploading" mat-stroked-button class="margin-bottom-default" color="primary" (click)="cancel()"
+                        [disabled]="formControl.disabled">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="multiple"
                accept="{{dataField.allowTypes}}" class="invisible-input"/>
         <input type="hidden" [formControl]="formControl" [multiple]="multiple" accept="{{dataField.allowTypes}}">

@@ -6,6 +6,18 @@ import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
+import {MessageResource} from '../../resources/interface/message-resource';
+import {LoggerService} from '../../logger/services/logger.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+
+export interface FileState {
+    progress: number;
+    uploading: boolean;
+    downloading: boolean;
+    completed: boolean;
+    error: boolean;
+}
 
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
@@ -25,7 +37,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
      * Keep display name.
      */
     public name: string;
-
+    public state: FileState;
     /**
      * Task mongo string id is binding property from parent component.
      */
@@ -48,11 +60,22 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
      * @param _fileFieldService Handles communication between components
      * @param _sideMenuService Open right side menu
      * @param _taskResourceService Provides to download a file from the backend
+     * @param _log Logger service
+     * @param _snackbar Snackbar service to notify user
      */
     constructor(private _fileFieldService: FileFieldService,
                 private _sideMenuService: SideMenuService,
-                private _taskResourceService: TaskResourceService) {
+                private _taskResourceService: TaskResourceService,
+                private _log: LoggerService,
+                private _snackbar: SnackBarService) {
         super();
+        this.state = {
+            progress: 0,
+            uploading: false,
+            downloading: false,
+            completed: false,
+            error: false
+        };
     }
 
     /**
@@ -87,7 +110,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
      *
      * Otherwise opens a file picker from which the user can select files.
      */
-    public onFileUpload() {
+    public upload() {
         if (this._fileFieldService.allFiles.length !== 0) {
             this._sideMenuService.open(FilesUploadComponent, SideMenuSize.LARGE, this._fileFieldService);
         } else {
@@ -95,15 +118,36 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         }
     }
 
+    public download() {
+        if (!this.dataField.value || !this.dataField.value.name) {
+            return;
+        }
+        this.state.downloading = true;
+        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+            if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.DOWNLOAD) {
+                this.state.progress = (response as ProviderProgress).progress;
+            } else {
+                this._log.info((response as MessageResource).success);
+                this.state.completed = true;
+                const file: File = new File([response as Blob], this.name);
+            }
+        }, error => {
+            this.state.completed = false;
+            this.state.error = true;
+            this._log.error('Importing process file has failed!', error);
+            this._snackbar.openErrorSnackBar('Uploading process file has failed');
+        });
+    }
+
+    public cancel() {
+
+    }
+
     /**
      * Construct display name.
      */
     private constructDisplayName(): string {
-        if (this.dataField.value !== undefined) {
-            return this.dataField.value.map(file => file.name).join(', ');
-        } else {
-            return this.dataField.placeholder;
-        }
+        return this.dataField.value && this.dataField.value.name ? this.dataField.value.name : this.dataField.placeholder;
     }
 
     /**
