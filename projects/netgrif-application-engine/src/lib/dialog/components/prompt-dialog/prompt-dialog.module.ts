@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MaterialModule} from '../../../material/material.module';
 import {PromptDialogComponent} from './prompt-dialog.component';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {PromptDialogComponent} from './prompt-dialog.component';
         CommonModule,
         MaterialModule,
         FormsModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        TranslateLibModule
     ],
     entryComponents: [
         PromptDialogComponent

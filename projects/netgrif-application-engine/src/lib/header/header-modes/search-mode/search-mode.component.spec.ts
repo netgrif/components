@@ -20,6 +20,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 
 describe('SearchModeComponent', () => {
@@ -42,6 +43,7 @@ describe('SearchModeComponent', () => {
                 MatNativeDateModule,
                 MatSnackBarModule,
                 HttpClientTestingModule,
+                TranslateLibModule
             ],
             providers: [
                 CaseViewServiceFactory,

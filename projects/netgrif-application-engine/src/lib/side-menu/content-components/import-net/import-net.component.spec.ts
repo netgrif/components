@@ -9,6 +9,7 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {SideMenuImportNetModule} from './side-menu-import-net.module';
 import {ImportNetComponent} from './import-net.component';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 describe('ImportNetComponent', () => {
     let component: ImportNetComponent;
@@ -21,6 +22,7 @@ describe('ImportNetComponent', () => {
                 SideMenuImportNetModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                TranslateLibModule
             ],
             declarations: [],
             providers: [{

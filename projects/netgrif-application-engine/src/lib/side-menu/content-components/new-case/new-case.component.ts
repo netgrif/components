@@ -30,13 +30,11 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
     processFormControl = new FormControl('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
-    selectedColorControl = new FormControl('', Validators.required);
+    selectedColorControl = new FormControl('primary-color', Validators.required);
 
     colors: Form[] = [
-        {value: 'color-fg-deep-purple-600', viewValue: 'Purple'},
-        {value: 'color-fg-amber-500', viewValue: 'Yellow'},
-        {value: 'color-fg-deep-orange-500', viewValue: 'Orange'},
-        {value: 'color-fg-brown-500', viewValue: 'Brown'}
+        {value: 'panel-primary-icon', viewValue: 'Primary'},
+        {value: 'panel-accent-icon', viewValue: 'Accent'},
     ];
     options: Array<Form> = [];
     filteredOptions: Observable<Array<Form>>;

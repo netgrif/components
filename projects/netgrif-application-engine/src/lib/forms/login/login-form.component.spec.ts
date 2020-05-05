@@ -9,11 +9,10 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {Credentials} from '../../authentication/models/credentials';
 import {Observable, of} from 'rxjs';
 import {User} from '../../authentication/models/user';
-import {SignUpModule} from '../../authentication/sign-up/sign-up.module';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('LoginPanelComponent', () => {
     let component: LoginFormComponent;
@@ -25,7 +24,8 @@ describe('LoginPanelComponent', () => {
                 MaterialModule,
                 FlexLayoutModule,
                 BrowserAnimationsModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                TranslateLibModule
             ],
             declarations: [LoginFormComponent],
             providers: [

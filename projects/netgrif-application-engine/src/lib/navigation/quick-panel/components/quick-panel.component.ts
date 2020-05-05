@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SelectLanguageService} from '../../../toolbar/select-language.service';
+import {LanguageService} from '../../../translate/language.service';
 
 export type QuickPanelItem = 'language' | 'settings' | 'logout';
 
@@ -12,7 +12,7 @@ export class QuickPanelComponent implements OnInit {
 
     @Input() public items: Array<QuickPanelItem>;
 
-    constructor(private _select: SelectLanguageService) {
+    constructor(private _select: LanguageService) {
     }
 
     ngOnInit(): void {

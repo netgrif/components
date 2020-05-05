@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {NumberField} from './models/number-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
-import {SelectLanguageService} from '../../toolbar/select-language.service';
+import {LanguageService} from '../../translate/language.service';
 
 @Component({
   selector: 'nae-number-field',
@@ -13,7 +13,7 @@ export class NumberFieldComponent extends AbstractDataFieldComponent {
 
     @Input() public dataField: NumberField;
 
-    constructor(private _translate: TranslateService, private _select: SelectLanguageService) {
+    constructor(private _translate: TranslateService, private _lang: LanguageService) {
         super();
     }
 

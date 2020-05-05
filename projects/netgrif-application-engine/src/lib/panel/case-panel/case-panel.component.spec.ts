@@ -4,13 +4,15 @@ import {CasePanelComponent} from './case-panel.component';
 import {MaterialModule} from '../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {CaseMetaField} from '../../header/case-header/case-header.service';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -23,7 +25,9 @@ describe('CasePanelComponent', () => {
                 CommonModule,
                 FlexModule,
                 BrowserAnimationsModule,
-                DataFieldsModule
+                DataFieldsModule,
+                TranslateLibModule,
+                HttpClientTestingModule
             ],
             declarations: [CasePanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA]

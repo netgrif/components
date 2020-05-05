@@ -5,7 +5,7 @@ import {PanelComponent} from '../panel.component';
 import {MaterialModule} from '../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {of} from 'rxjs';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
@@ -13,6 +13,8 @@ import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column'
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-header.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 
 describe('WorkflowPanelComponent', () => {
@@ -26,7 +28,9 @@ describe('WorkflowPanelComponent', () => {
                 CommonModule,
                 FlexModule,
                 BrowserAnimationsModule,
-                DataFieldsModule
+                DataFieldsModule,
+                TranslateLibModule,
+                HttpClientTestingModule
             ],
             declarations: [WorkflowPanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA],

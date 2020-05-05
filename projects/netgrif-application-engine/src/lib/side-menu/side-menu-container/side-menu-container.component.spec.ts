@@ -3,9 +3,11 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SideMenuContainerComponent} from './side-menu-container.component';
 import {CommonModule} from '@angular/common';
 import {MaterialModule} from '../../material/material.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SideMenuService} from '../services/side-menu.service';
 import {ImportNetComponent} from '../content-components/import-net/import-net.component';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('SideMenuContainerComponent', () => {
     let component: SideMenuContainerComponent;
@@ -17,7 +19,9 @@ describe('SideMenuContainerComponent', () => {
             imports: [
                 CommonModule,
                 MaterialModule,
-                BrowserAnimationsModule
+                BrowserAnimationsModule,
+                TranslateLibModule,
+                HttpClientTestingModule
             ],
             declarations: [SideMenuContainerComponent]
         })

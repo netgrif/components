@@ -1,7 +1,7 @@
-<mat-toolbar color="primary">New Case</mat-toolbar>
+<mat-toolbar color="primary">{{ 'side-menu.new-case.case' | translate}} - {{options.length === 1 ? options[0].viewValue : processFormControl.value.viewValue}}</mat-toolbar>
 <mat-vertical-stepper *ngIf="(processOne | async) === false" linear #stepper>
-    <mat-step  [stepControl]="processFormControl" errorMessage="Process is required.">
-        <ng-template matStepLabel>Choose process</ng-template>
+    <mat-step  [stepControl]="processFormControl" errorMessage="{{'side-menu.new-case.errFirst' | translate}}">
+        <ng-template matStepLabel>{{'side-menu.new-case.choose' | translate}}</ng-template>
         <mat-form-field>
             <input type="text" matInput [formControl]="processFormControl" [matAutocomplete]="auto" required>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
@@ -11,78 +11,62 @@
             </mat-autocomplete>
         </mat-form-field>
         <div>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperNext>{{'side-menu.new-case.next' | translate}}</button>
         </div>
     </mat-step>
-    <mat-step [stepControl]="titleFormControl" errorMessage="Title is required.">
-        <ng-template matStepLabel>Fill out case title</ng-template>
+    <mat-step [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}">
+        <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
         <mat-form-field>
             <input matInput placeholder="Title" [formControl]="titleFormControl" required>
         </mat-form-field>
         <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperPrevious>{{'side-menu.new-case.back' | translate}}</button>
+            <button mat-button matStepperNext>{{'side-menu.new-case.next' | translate}}</button>
         </div>
     </mat-step>
-    <mat-step [stepControl]="selectedColorControl" errorMessage="Color is required.">
+    <mat-step [stepControl]="selectedColorControl" errorMessage="{{'side-menu.new-case.errThird' | translate}}">
         <mat-form-field>
-            <ng-template matStepLabel>Choose case color</ng-template>
+            <ng-template matStepLabel>{{'side-menu.new-case.color' | translate}}</ng-template>
             <mat-label>Color</mat-label>
             <mat-select [formControl]="selectedColorControl" required>
                 <mat-option *ngFor="let color of colors" [value]="color.value">
                     {{color.viewValue}}
                 </mat-option>
             </mat-select>
-            <mat-error>You must make a selection</mat-error>
+            <mat-error>{{'side-menu.new-case.selection' | translate}}</mat-error>
         </mat-form-field>
 
         <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-        </div>
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        You are now done.
-        <div>
-            <button mat-button (click)="stepper.reset()">Reset</button>
-            <button mat-button (click)="createNewCase()">Create</button>
+            <button mat-button (click)="stepper.reset()">{{'side-menu.new-case.reset' | translate}}</button>
+            <button mat-button (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
         </div>
     </mat-step>
 </mat-vertical-stepper>
 <mat-vertical-stepper *ngIf="processOne | async" linear #stepper>
-    <mat-step [stepControl]="titleFormControl" errorMessage="Title is required.">
-        <ng-template matStepLabel>Fill out case title</ng-template>
+    <mat-step [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}">
+        <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
         <mat-form-field>
             <input matInput placeholder="Title" [formControl]="titleFormControl" required>
         </mat-form-field>
         <div>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperNext>{{'side-menu.new-case.next' | translate}}</button>
         </div>
     </mat-step>
-    <mat-step [stepControl]="selectedColorControl" errorMessage="Color is required.">
+    <mat-step [stepControl]="selectedColorControl" errorMessage="{{'side-menu.new-case.errThird' | translate}}">
         <mat-form-field>
-            <ng-template matStepLabel>Choose case color</ng-template>
+            <ng-template matStepLabel>{{'side-menu.new-case.color' | translate}}</ng-template>
             <mat-label>Color</mat-label>
             <mat-select [formControl]="selectedColorControl" required>
                 <mat-option *ngFor="let color of colors" [value]="color.value">
                     {{color.viewValue}}
                 </mat-option>
             </mat-select>
-            <mat-error>You must make a selection</mat-error>
+            <mat-error>{{'side-menu.new-case.selection' | translate}}</mat-error>
         </mat-form-field>
 
         <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-        </div>
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        You are now done.
-        <div>
-            <button mat-button (click)="stepper.reset()">Reset</button>
-            <button mat-button (click)="createNewCase()">Create</button>
+            <button mat-button (click)="stepper.reset()">{{'side-menu.new-case.reset' | translate}}</button>
+            <button mat-button (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
         </div>
     </mat-step>
 </mat-vertical-stepper>

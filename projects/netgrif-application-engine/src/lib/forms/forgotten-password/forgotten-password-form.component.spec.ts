@@ -4,7 +4,8 @@ import {FormBuilder} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MaterialModule} from '../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {SignUpModule} from '../../authentication/sign-up/sign-up.module';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('ForgottenPasswordPanelComponent', () => {
     let component: ForgottenPasswordFormComponent;
@@ -12,7 +13,7 @@ describe('ForgottenPasswordPanelComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, FlexLayoutModule, BrowserAnimationsModule],
+            imports: [MaterialModule, FlexLayoutModule, BrowserAnimationsModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [ForgottenPasswordFormComponent],
             providers: [FormBuilder]
         })

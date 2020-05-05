@@ -6,7 +6,7 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {UserService} from '../../user/services/user.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {SelectLanguageService} from '../../toolbar/select-language.service';
+import {LanguageService} from '../../translate/language.service';
 import {SortableView} from '../abstract/sortable-view';
 import {SearchService} from '../../search/search-service/search.service';
 
@@ -20,7 +20,7 @@ export class TaskViewService extends SortableView {
 
     constructor(protected _taskService: TaskResourceService, private _userService: UserService,
                 private _snackBarService: SnackBarService, private _translate: TranslateService,
-                private _selectLanguage: SelectLanguageService, protected _searchService: SearchService) { // need for translations
+                private _selectLanguage: LanguageService, protected _searchService: SearchService) { // need for translations
         super();
         this.taskArray = [];
         this.taskData = new Subject<Array<TaskPanelData>>();

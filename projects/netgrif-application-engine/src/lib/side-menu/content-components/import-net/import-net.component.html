@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">Upload model</mat-toolbar>
+<mat-toolbar color="primary">{{ 'side-menu.import-net.upload' | translate}}</mat-toolbar>
 
 <div fxLayout="column" class="container side-menu-root">
 
@@ -38,11 +38,11 @@
 
     <button mat-raised-button color="primary" (click)="onProcessFileChosen()">
         <mat-icon>file_upload</mat-icon>
-        Choose a process file
+        {{ 'side-menu.import-net.choose' | translate}}
     </button>
 
     <button *ngIf="isAllFinished" mat-flat-button (click)="close()">
-        Done
+        {{ 'side-menu.import-net.done' | translate}}
     </button>
 
 </div>

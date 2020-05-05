@@ -11,6 +11,7 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
 import {MatSelectionListChange} from '@angular/material';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 describe('FilterSelectorComponent', () => {
     let component: FilterSelectorComponent;
@@ -24,6 +25,7 @@ describe('FilterSelectorComponent', () => {
                 SideMenuFilterSelectorModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                HttpClientTestingModule
             ],
             declarations: [],
             providers: [

@@ -4,7 +4,6 @@ import {Category} from '../models/category/category';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {SelectLanguageService} from '../../toolbar/select-language.service';
 import {SearchService} from '../search-service/search.service';
 import {SimpleSearchChip} from '../models/chips/simple-search-chip';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
@@ -14,6 +13,7 @@ import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT, DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {Moment} from 'moment';
 import {CaseDataset} from '../models/category/case/case-dataset';
+import {LanguageService} from '../../translate/language.service';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
@@ -83,7 +83,7 @@ export class SearchComponent implements OnInit {
 
     constructor(private _translate: TranslateService,
                 private _searchService: SearchService,
-                private _: SelectLanguageService) {
+                private _lang: LanguageService) {
         this.filteredOptions = this.formControl.valueChanges.pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : this.objectName(value)),

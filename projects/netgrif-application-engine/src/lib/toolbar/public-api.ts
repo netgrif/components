@@ -1,4 +1,4 @@
 export * from './toolbar.module';
-export * from './select-language.service';
+export * from '../translate/language.service';
 
 export * from './toolbar.component';

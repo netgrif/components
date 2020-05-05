@@ -194,7 +194,7 @@ export class TaskPanelContentComponent {
                 return 1;
             }
             console.log(a, b);
-            console.log('illegal');
+            console.log('Illegal layout');
             return 0;
         });
     }

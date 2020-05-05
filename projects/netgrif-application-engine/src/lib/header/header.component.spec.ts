@@ -4,6 +4,8 @@ import {HeaderModule} from './header.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CaseViewService} from '../view/case-view/case-view-service';
 import {of} from 'rxjs';
+import {TranslateLibModule} from '../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
@@ -11,7 +13,7 @@ describe('HeaderComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [HeaderModule, NoopAnimationsModule],
+            imports: [HeaderModule, NoopAnimationsModule, TranslateLibModule, HttpClientTestingModule],
             providers: [
                 {provide: CaseViewService, useValue: {allowedNets$: of([])}}
             ]

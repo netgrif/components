@@ -7,7 +7,9 @@ import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelModule} from '../quick-panel/quick-panel.module';
 import {UserModule} from '../../user/user.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('NavigationRailComponent', () => {
     let component: NavigationRailComponent;
@@ -24,7 +26,9 @@ describe('NavigationRailComponent', () => {
                 FlexLayoutModule,
                 QuickPanelModule,
                 UserModule,
-                BrowserAnimationsModule
+                BrowserAnimationsModule,
+                TranslateLibModule,
+                HttpClientTestingModule
             ],
         })
             .compileComponents();
