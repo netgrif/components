@@ -13,23 +13,21 @@
         "snackbar": {
             "noTasksFound": "No tasks found",
             "failedToLoad": "failed to load",
-            "errorTaskSearch": "Tasks on task/search",
             "noData": "No data for task",
             "noGroup": "No data group for task",
-            "dataFor": "Data for",
             "dataSaved": "Data saved successfully",
             "failedSave": "Saving data failed",
             "assignTask": "Assigning task",
             "delegateTask": "Delegating task",
+            "failed": "failed",
             "cancelTask": "Canceling assignment of task",
             "finishTask": "Finishing task",
             "invalidData": "Some fields have invalid values",
-            "failed": "failed",
-            "noCase": "No resource for cases was found",
+            "noCase": "No cases found",
             "caseGetFailed": "Getting cases failed"
         },
         "view": {
-            "noTasksSatisfyingThisFilter": "There are any tasks satisfying this filter",
+            "noTasksSatisfyingThisFilter": "There are no tasks satisfying this filter",
             "collapse": "Collapse",
             "assign": "Assign",
             "reassign": "Reassign",
@@ -72,7 +70,7 @@
         },
         "user": {
             "assign": "User Assign",
-            "noUser": "There are no users :)",
+            "noUser": "There are no users",
             "err": "Users failed to load",
             "showcase": "User showcase mode not set!"
         }
@@ -110,7 +108,7 @@
             "decimal": "Entered number must be decimal",
             "inrange": "Entered number must be in range ",
             "length": "Entered text must be at the most ",
-            "pattern": "Entered text is in wrong format",
+            "pattern": "Entered text is in a wrong format",
             "phone": "Entered text must be in telephone number format",
             "email": "Entered text must be in email format",
             "dateRange": "Entered date must be in range ",
@@ -184,7 +182,7 @@
     },
     "profile": {
         "notLogged": "You are not logged in!",
-        "general": "General Informations",
+        "general": "General Information",
         "personal": "Personal Information",
         "name": "First name",
         "surname": "Last name",

@@ -57,7 +57,6 @@ export class TaskViewService extends SortableView {
             this.taskData.next(this.taskArray);
         }, error => {
             this._snackBarService.openErrorSnackBar(
-                this._translate.instant('tasks.snackbar.errorTaskSearch') + ' ' +
                 this._translate.instant('tasks.snackbar.failedToLoad')
             );
             this.loading.next(false);
