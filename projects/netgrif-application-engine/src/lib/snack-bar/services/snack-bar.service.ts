@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {MatSnackBar, MatSnackBarRef} from '@angular/material';
+import {MatSnackBar, MatSnackBarConfig, MatSnackBarRef} from '@angular/material';
 import {GenericSnackBarComponent} from '../components/generic-snack-bar/generic-snack-bar.component';
 import {SuccessSnackBarComponent} from '../components/success-snack-bar/success-snack-bar.component';
 import {ErrorSnackBarComponent} from '../components/error-snack-bar/error-snack-bar.component';
 import {WarningSnackBarComponent} from '../components/warning-snack-bar/warning-snack-bar.component';
+import {SnackBarInjectionData} from '../models/snack-bar-injection-data';
 
 export enum SnackBarVerticalPosition {
     BOTTOM = 'bottom',
@@ -21,18 +22,21 @@ export enum SnackBarHorizontalPosition {
 })
 export class SnackBarService {
 
+    private _defaultTimeout = 2.5;
+
     constructor(private _snackBar: MatSnackBar) {
     }
 
     public openSuccessSnackBar(message: string,
                                verticalPosition = SnackBarVerticalPosition.BOTTOM,
                                horizontalPosition = SnackBarHorizontalPosition.CENTER,
-                               durationInSeconds = 4,
-                               config?: object): MatSnackBarRef<SuccessSnackBarComponent> {
+                               durationInSeconds = this._defaultTimeout,
+                               config?: MatSnackBarConfig<SnackBarInjectionData>): MatSnackBarRef<SuccessSnackBarComponent> {
         return this._snackBar.openFromComponent(SuccessSnackBarComponent, Object.assign({
             data: {
                 message,
-                matIconName: 'done'
+                matIconName: 'done',
+                closable: false
             },
             duration: durationInSeconds * 1000,
             horizontalPosition,
@@ -43,12 +47,13 @@ export class SnackBarService {
     public openErrorSnackBar(message: string,
                              verticalPosition = SnackBarVerticalPosition.BOTTOM,
                              horizontalPosition = SnackBarHorizontalPosition.CENTER,
-                             durationInSeconds = 4,
-                             config?: object): MatSnackBarRef<ErrorSnackBarComponent> {
+                             // durationInSeconds = this._defaultTimeout,
+                             config?: MatSnackBarConfig<SnackBarInjectionData>): MatSnackBarRef<ErrorSnackBarComponent> {
         return this._snackBar.openFromComponent(ErrorSnackBarComponent, Object.assign({
             data: {
                 message,
-                matIconName: 'error'
+                matIconName: 'error',
+                closable: true
             },
             // duration: durationInSeconds * 1000, // Error has to be acknowledged to be closed
             horizontalPosition,
@@ -59,12 +64,13 @@ export class SnackBarService {
     public openWarningSnackBar(message: string,
                                verticalPosition = SnackBarVerticalPosition.BOTTOM,
                                horizontalPosition = SnackBarHorizontalPosition.CENTER,
-                               durationInSeconds = 4,
-                               config?: object): MatSnackBarRef<WarningSnackBarComponent> {
+                               durationInSeconds = this._defaultTimeout,
+                               config?: MatSnackBarConfig<SnackBarInjectionData>): MatSnackBarRef<WarningSnackBarComponent> {
         return this._snackBar.openFromComponent(WarningSnackBarComponent, Object.assign({
             data: {
                 message,
-                matIconName: 'priority_high'
+                matIconName: 'warning',
+                closable: false
             },
             duration: durationInSeconds * 1000,
             horizontalPosition,
@@ -76,12 +82,13 @@ export class SnackBarService {
                                matIconName: string,
                                verticalPosition = SnackBarVerticalPosition.BOTTOM,
                                horizontalPosition = SnackBarHorizontalPosition.CENTER,
-                               durationInSeconds = 4,
-                               config?: object): MatSnackBarRef<GenericSnackBarComponent> {
+                               durationInSeconds = this._defaultTimeout,
+                               config?: MatSnackBarConfig<SnackBarInjectionData>): MatSnackBarRef<GenericSnackBarComponent> {
         return this._snackBar.openFromComponent(GenericSnackBarComponent, Object.assign({
             data: {
                 message,
-                matIconName
+                matIconName,
+                closable: true
             },
             duration: durationInSeconds * 1000,
             horizontalPosition,
