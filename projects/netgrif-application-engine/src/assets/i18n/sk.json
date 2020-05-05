@@ -138,66 +138,66 @@
             "login": "Prihlásiť",
             "reset": "Obnova hesla",
             "sign": "Registrovať",
-            "enterPass": "Zadajťe svoje heslo"
+            "enterPass": "Zadajte svoje heslo"
         },
         "register": {
-            "name": "Name",
-            "surname": "Surname",
-            "repeatPass": "Repeat your password",
-            "register": "Register"
+            "name": "Meno",
+            "surname": "Priezvisko",
+            "repeatPass": "Zopakujte heslo",
+            "register": "Registrovať"
         }
     },
     "headers": {
-        "newHeader": "Select new header",
-        "date": "Choose a date",
+        "newHeader": "Zvoľte novú hlavičku",
+        "date": "Zvoľte dátum",
         "caseMeta": {
-            "visualID": "Visual ID",
-            "title": "Title",
-            "author": "Author",
-            "creaDate": "Creation date"
+            "visualID": "Vizuálne ID",
+            "title": "Názov",
+            "author": "Autor",
+            "creaDate": "Dátum vytvorenia"
         },
         "taskMeta": {
-            "case": "Case",
-            "priority": "Priority",
-            "user": "User",
-            "assignDate": "Assign Date"
+            "case": "Prípad",
+            "priority": "Priorita",
+            "user": "Riešiteľ",
+            "assignDate": "Dátum priradenia"
         },
         "workflowMeta": {
-            "initials": "Initials",
-            "version": "Version",
-            "creaDate": "Upload date"
+            "initials": "Iniciály",
+            "version": "Verzia",
+            "creaDate": "Dátum nahratia"
         },
-        "orderMode": "Ordering mode",
-        "searchMode": "Search mode",
-        "editMode": "Enable edit mode"
+        "orderMode": "Mód zoraďovania",
+        "searchMode": "Mód vyhľadávania",
+        "editMode": "Zapnúť editačný mód"
     },
     "panel": {
         "case": {
-            "delete": "Delete"
+            "delete": "Vymazať"
         },
         "workflow": {
-            "net": "Net identifier",
-            "title": "Title",
-            "version": "Version",
-            "author": "Author",
-            "upload": "Uploaded"
+            "net": "Identifikátor siete",
+            "title": "Názov",
+            "version": "Verzia",
+            "author": "Autor",
+            "upload": "Dátum nahratia"
         }
     },
     "profile": {
-        "notLogged": "You are not logged in!",
-        "general": "General Informations",
-        "personal": "Personal Information",
-        "name": "First name",
-        "surname": "Last name",
-        "authority": "Authorities",
-        "roles": "Roles",
-        "groups": "Groups",
-        "preference": "Preferences",
-        "caseHead": "Case headers",
-        "caseFilter": "Case filters",
-        "taskHead": "Task headers",
-        "taskFilter": "Task filters",
-        "workHead": "Workflow headers",
-        "workFilter": "Workflow filters"
+        "notLogged": "Nie ste prihlásený!",
+        "general": "Všeobecné údaje",
+        "personal": "Osobné údaje",
+        "name": "Krstné meno",
+        "surname": "Priezvisko",
+        "authority": "Právomoci",
+        "roles": "Roly",
+        "groups": "Skupiny",
+        "preference": "Preferencie",
+        "caseHead": "Hlavičky prípadov",
+        "caseFilter": "Filtre prípadov",
+        "taskHead": "Hlavičky prípadov",
+        "taskFilter": "Filtre prípadov",
+        "workHead": "Workflow hlavičky",
+        "workFilter": "Workflow filtre"
     }
 }

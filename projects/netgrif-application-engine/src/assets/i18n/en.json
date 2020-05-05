@@ -158,7 +158,7 @@
         "taskMeta": {
             "case": "Case",
             "priority": "Priority",
-            "user": "User",
+            "user": "Assignee",
             "assignDate": "Assign Date"
         },
         "workflowMeta": {
@@ -179,7 +179,7 @@
             "title": "Title",
             "version": "Version",
             "author": "Author",
-            "upload": "Uploaded"
+            "upload": "Upload date"
         }
     },
     "profile": {
