@@ -33,6 +33,26 @@
                 <mat-datepicker #searchDatepicker></mat-datepicker>
             </mat-form-field>
         </ng-template>
+        <ng-template [ngSwitchCase]="'dateTime'">
+            <mat-form-field>
+                <input matInput
+                       [placeholder]="'search.placeholder.dateTime' | translate"
+                       [formControl]="formControls['dateTime']"
+                       [ngxMatDatetimePicker]="searchDateTimepicker"
+                       (click)="searchDateTimepicker.open()"
+                       (keydown.enter)="searchDateTimepicker.close()">
+                <mat-datepicker-toggle matPrefix [for]="searchDateTimepicker">
+                    <mat-icon matDatepickerToggleIcon>schedule</mat-icon>
+                </mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #searchDateTimepicker
+                                         [showSpinners]="true"
+                                         [showSeconds]="false"
+                                         [stepHour]="1"
+                                         [stepMinute]="5"
+                                         [color]="'primary'"
+                                         [enableMeridian]="false"></ngx-mat-datetime-picker>
+            </mat-form-field>
+        </ng-template>
     </div>
     <button mat-icon-button (click)="confirmUserInput()">
         <mat-icon>search</mat-icon>

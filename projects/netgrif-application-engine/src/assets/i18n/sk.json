@@ -52,7 +52,8 @@
         },
         "placeholder": {
             "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií",
-            "date": "Zvoľte dátum"
+            "date": "Zvoľte dátum",
+            "dateTime": "Zvoľte dátum a čas"
         }
     },
     "dataField": {

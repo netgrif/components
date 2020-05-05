@@ -5,6 +5,7 @@ import {MaterialModule} from '../material/material.module';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {CaseSearchComponent} from './search-component/case-search/case-search.component';
 import { TaskSearchComponent } from './search-component/task-search/task-search.component';
+import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { TaskSearchComponent } from './search-component/task-search/task-search.
         CommonModule,
         MaterialModule,
         TranslateLibModule,
+        NgxMatDatetimePickerModule,
     ]
 })
 export class SearchModule {

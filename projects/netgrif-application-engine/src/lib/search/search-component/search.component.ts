@@ -11,7 +11,7 @@ import {SearchAutocompleteOption} from '../models/category/search-autocomplete-o
 import {AutocompleteCategory} from '../models/category/autocomplete-category';
 import {SearchInputType} from '../models/category/search-input-type';
 import {MAT_DATE_FORMATS} from '@angular/material';
-import {DATE_FORMAT, DATE_FORMAT_STRING} from '../../moment/time-formats';
+import {DATE_FORMAT, DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {Moment} from 'moment';
 import {CaseDataset} from '../models/category/case/case-dataset';
 
@@ -48,11 +48,12 @@ export class SearchComponent implements OnInit {
     @Input() public searchCategories: Array<Category<any>>;
     /**
      * @ignore
-     * FormControl for the user input field
+     * FormControls for the user input fields. One for each input type.
      */
     public formControls = {
         text: new FormControl(),
         date: new FormControl(),
+        dateTime: new FormControl(),
     };
     /**
      * @ignore
@@ -199,6 +200,9 @@ export class SearchComponent implements OnInit {
                 if (this._selectedCategory.inputType === SearchInputType.DATE) {
                     const date = inputValue as Moment;
                     this.appendTextToLastChip(date.format(DATE_FORMAT_STRING));
+                } else if (this._selectedCategory.inputType === SearchInputType.DATE_TIME) {
+                    const date = inputValue as Moment;
+                    this.appendTextToLastChip(date.format(DATE_TIME_FORMAT_STRING));
                 } else {
                     this.appendTextToLastChip(inputValue);
                 }
@@ -262,6 +266,9 @@ export class SearchComponent implements OnInit {
         switch (this._selectedCategory.inputType) {
             case SearchInputType.DATE:
                 this._shownInput$.next('date');
+                return;
+            case SearchInputType.DATE_TIME:
+                this._shownInput$.next('dateTime');
                 return;
             default:
                 this._shownInput$.next('text');
