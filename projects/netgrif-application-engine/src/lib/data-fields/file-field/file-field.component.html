@@ -23,7 +23,7 @@
                         [disabled]="formControl.disabled">
                     <mat-icon>file_upload</mat-icon>
                 </button>
-                <button *ngIf="state.uploading" mat-stroked-button class="margin-bottom-default" color="primary" (click)=""
+                <button *ngIf="state.uploading" mat-stroked-button class="margin-bottom-default" color="primary" (click)="cancel()"
                         [disabled]="formControl.disabled">
                     <mat-icon>close</mat-icon>
                 </button>

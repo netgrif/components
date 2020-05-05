@@ -139,6 +139,10 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         });
     }
 
+    public cancel() {
+
+    }
+
     /**
      * Construct display name.
      */
