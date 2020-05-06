@@ -49,7 +49,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // TEXT FIELD
     @ViewChild('textFieldComponent') naeTextField: TextFieldComponent;
     textField = new TextField('textFieldId', 'Reactive text field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
-                undefined, undefined );
+                undefined, [{validationMessage: '', validationRule: 'minLength 4'}] );
 
     // TEXT AREA FIELD
     @ViewChild('textAreaFieldComponent') naeTextAreaField: TextFieldComponent;

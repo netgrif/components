@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Route} from '../../configuration/interfaces/schema';
+import {NavigationEnd, Router} from '@angular/router';
 
 interface NavigationNode {
     name: string;
@@ -19,10 +20,14 @@ interface NavigationNode {
 })
 export class NavigationTreeComponent implements OnInit {
 
+    @Input() public viewPath: string;
+    @Input() public parentUrl: string;
+    @Input() public routerChange: boolean;
+
     treeControl: NestedTreeControl<NavigationNode>;
     dataSource: MatTreeNestedDataSource<NavigationNode>;
 
-    constructor(private _config: ConfigurationService) {
+    constructor(private _config: ConfigurationService, private _router: Router) {
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
         this.dataSource.data = this.resolveNavigationNodes(_config.get().views.routes, '');
@@ -30,6 +35,22 @@ export class NavigationTreeComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
+            this._router.events.subscribe((event) => {
+                if (event instanceof NavigationEnd && this.routerChange) {
+                    const viewRoute = this._config.getViewByPath(this.viewPath);
+                    if (viewRoute && viewRoute.routes) {
+                        this.dataSource.data = this.resolveNavigationNodes(viewRoute.routes, this.parentUrl);
+                    }
+                    this.resolveLevels(this.dataSource.data);
+                }
+            });
+            const view = this._config.getViewByPath(this.viewPath);
+            if (view && view.routes) {
+                this.dataSource.data = this.resolveNavigationNodes(view.routes, this.parentUrl);
+            }
+            this.resolveLevels(this.dataSource.data);
+        }
     }
 
     public hasChild(_: number, node: NavigationNode): boolean {
