@@ -103,7 +103,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     public isPaperView() {
-        return this._paperView.paperView
+        return this._paperView.paperView;
     }
 
     public setPanelRef(panelRef: MatExpansionPanel) {
