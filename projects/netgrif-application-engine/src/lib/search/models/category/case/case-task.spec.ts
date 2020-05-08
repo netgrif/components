@@ -1,7 +1,7 @@
 import {CaseTask} from './case-task';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {CategoryFactory} from '../../../category-factory/category-factory';
-import {CaseViewService} from '../../../../view/case-view/case-view-service';
+import {CaseViewService} from '../../../../view/case-view/service/case-view-service';
 import {TestBed} from '@angular/core/testing';
 import {of} from 'rxjs';
 

@@ -14,7 +14,8 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
         }
         if (this.formControl.hasError('validBetween')) {
             const tmp = dataField.validations.find(value => value.validationRule.includes('between')).validationRule.split(' ');
-            return this.resolveErrorMessage(dataField, 'between', this._translate.instant('dataField.validations.dateRange') + tmp[1]);
+            return this.resolveErrorMessage(dataField, 'between',
+                this._translate.instant('dataField.validations.dateRange', {range: tmp[1]}));
         }
         if (this.formControl.hasError('validWorkday')) {
             return this.resolveErrorMessage(dataField, 'workday', this._translate.instant('dataField.validations.workday'));

@@ -1,202 +1,200 @@
 {
     "toolbar": {
         "menu": {
-            "lang": "Language",
-            "profile": "Profile",
-            "logout": "Logout",
+            "lang": "Sprache",
+            "profile": "Benutzerprofil",
+            "logout": "Abmelden",
             "en": "English",
-            "sk": "Slovak",
-            "de": "German"
+            "sk": "Slowakisch",
+            "de": "Deutsch"
         }
     },
     "tasks": {
         "snackbar": {
-            "noTasksFound": "No tasks found",
-            "failedToLoad": "failed to load",
-            "errorTaskSearch": "Tasks on task/search",
-            "noData": "No data for task",
-            "noGroup": "No data group for task",
-            "dataFor": "Data for",
-            "dataSaved": "Data saved successfully",
-            "failedSave": "Saving data failed",
-            "assignTask": "Assigning task",
-            "delegateTask": "Delegating task",
-            "cancelTask": "Canceling assignment of task",
-            "finishTask": "Finishing task",
-            "invalidData": "Some fields have invalid values",
-            "failed": "failed",
-            "noCase": "No resource for cases was found",
-            "caseGetFailed": "Getting cases failed"
+            "noTasksFound": "Keine Aufgaben gefunden",
+            "failedToLoad": "Beim laden der Aufgaben ist eine Fehler aufgetreten",
+            "noData": "Diese Aufgabe hat keine Daten",
+            "noGroup": "Diese Aufgabe hat keine Datengruppe",
+            "dataSaved": "Daten erfolgreich gespeichert",
+            "failedSave": "Beim speichern der Daten ist eine Fehler aufgetreten",
+            "assignTask": "Beim zuweisen der Aufgabe",
+            "delegateTask": "Beim delegieren der Aufgabe",
+            "failed": "ist eine Fehler aufgetreten",
+            "cancelTask": "Aufgabenzuweisung wird abgebrochen",
+            "finishTask": "Aufgabe wird abgeschlossen",
+            "invalidData": "Manche Felder haben ungültige Werten",
+            "noCase": "Keine Fälle gefunden",
+            "caseGetFailed": "Beim laden der Fälle ist eine Fehler aufgetreten"
         },
         "view": {
-            "noTasksSatisfyingThisFilter": "There are any tasks satisfying this filter",
-            "collapse": "Collapse",
-            "assign": "Assign",
-            "reassign": "Reassign",
-            "delegate": "Delegate",
-            "finish": "Finish",
-            "cancel": "Cancel",
-            "noData": "This task has no data. Finish to continue."
+            "noTasksSatisfyingThisFilter": "Es gibt keine Aufgaben, die den ausgewählten Filter erfüllen",
+            "collapse": "Schrumpfen",
+            "assign": "Zuweisen",
+            "reassign": "Neu zuweisen",
+            "delegate": "Delegieren",
+            "finish": "Abschließen",
+            "cancel": "Stornieren",
+            "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren."
         }
     },
     "side-menu": {
         "filter-selector": {
-            "choose-filter": "Choose a filter",
-            "search-filter": "Search filters",
-            "case-filters": "Case filters",
-            "task-filters": "Task filters",
-            "select": "Select"
+            "choose-filter": "Wählen Sie einen Filter aus",
+            "search-filter": "Filter durchsuchen",
+            "case-filters": "Fallfilter",
+            "task-filters": "Aufgabenfilter",
+            "select": "Auswählen"
         },
         "files-upload": {
-            "upload": "Upload files",
-            "send": "Send"
+            "upload": "Datei hochladen",
+            "send": "Absenden"
         },
         "import-net": {
-            "upload": "Upload model",
-            "choose": "Choose a process file",
-            "done" : "Done"
+            "upload": "Model hochladen",
+            "choose": "Prozessdatei auswählen",
+            "done" : "Bestätigen"
         },
         "new-case": {
-            "case": "New Case",
-            "choose": "Choose process",
-            "caseTitle": "Fill out case title",
-            "color": "Choose case color",
-            "back": "Back",
-            "next": "Next",
-            "reset": "Reset",
-            "create": "Create",
-            "selection": "You must make a selection",
-            "errFirst": "Process is required.",
-            "errSecond": "Title is required.",
-            "errThird": "Color is required."
+            "case": "Neuen Fall erstellen",
+            "choose": "Wählen Sie einen Prozess aus",
+            "caseTitle": "Geben Sie den Fallnamen ein",
+            "color": "Wählen Sie die Fallfarbe aus",
+            "back": "Zurück",
+            "next": "Weiter",
+            "reset": "Alles löschen",
+            "create": "Fall erstellen",
+            "selection": "Sie müssen einen Wert auswählen",
+            "errFirst": "Sie müssen einen Prozess auswählen.",
+            "errSecond": "Sie müssen einen Namen eingeben.",
+            "errThird": "Sie müssen eine Farbe auswählen."
         },
         "user": {
-            "assign": "User Assign",
-            "noUser": "There are no users :)",
-            "err": "Users failed to load",
-            "showcase": "User showcase mode not set!"
+            "assign": "Benützer zuweisen",
+            "noUser": "Es gibt keine Benützer",
+            "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
+            "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
         }
     },
     "search": {
         "category": {
             "case": {
-                "title": "Case title",
-                "visualId": "Case visual ID",
-                "author": "Case author",
-                "process": "Case process",
-                "role": "Process role",
-                "task": "Case task",
-                "creationDate": "Case creation date",
-                "dataset": "Case data"
+                "title": "Fallname",
+                "visualId": "Visuelle ID",
+                "author": "Fallautor",
+                "process": "Prozess",
+                "role": "Prozessrolle",
+                "task": "Fallaufgabe",
+                "creationDate": "Erstellungsdatum",
+                "dataset": "Falldatei"
             },
             "task": {
-                "assignee": "Task assignee"
+                "assignee": "Zugewiesener/in"
             }
         },
         "placeholder": {
-            "text": "Type anything to search or select a category",
-            "date": "Choose a date",
-            "dateTime": "Choose date and time"
+            "text": "Suchen oder Suchkategorie auswählen",
+            "date": "Datum auswählen",
+            "dateTime": "Datum und Zeit auswählen"
         }
     },
     "dataField": {
         "validations": {
-            "required": "This field is required!",
-            "requiredTrue": "Entered value must be true",
-            "odd": "Entered number must be odd",
-            "even": "Entered number must be even",
-            "positive": "Entered number must be positive",
-            "negative": "Entered number must be negative",
-            "decimal": "Entered number must be decimal",
-            "inrange": "Entered number must be in range ",
-            "length": "Entered text must be at the most ",
-            "pattern": "Entered text is in wrong format",
-            "phone": "Entered text must be in telephone number format",
-            "email": "Entered text must be in email format",
-            "dateRange": "Entered date must be in range ",
-            "weekend": "Entered date must be weekend day",
-            "workday": "Entered date must be week day"
+            "required": "Dieses Feld ist ein Pflichtfeld!",
+            "requiredTrue": "Der eingegebene Wert muss wahr sein",
+            "odd": "Die eingegebene Nummer muss ungerade sein",
+            "even": "Die eingegebene Nummer muss gerade sein",
+            "positive": "Die eingegebene Nummer muss positiv sein",
+            "negative": "Die eingegebene Nummer muss negativ sein",
+            "decimal": "Die eingegebene Nummer muss ein Dezimalzahl sein",
+            "inrange": "Die eingegebene Nummer muss aus dem gegebenen Nummernbereich {{range}} sein",
+            "length": "Der eingegebene Text muss länger als {{length}} Zeichen sein",
+            "pattern": "Der eingegebene Text ist nicht im richtigen Format",
+            "phone": "Der eingegebene Text muss ein Telefonnummer sein",
+            "email": "Der eingegebene Text muss ein E-Mail sein",
+            "dateRange": "Das eingegebene Datum muss aus dem gegebenen Bereich {{range}} sein",
+            "weekend": "Das eingegebene Datum muss das Wochenende sein",
+            "workday": "Das eingegebene Datum muss ein Wochentag sein"
         },
         "snackBar": {
-            "downloadFail": " download failed",
-            "moreFiles": "You choose more files as you allowed",
-            "sameFiles": "You cannot upload two of the same files",
-            "fileSize": "Files size exceeded allowed limit"
+            "downloadFail": " könnte nicht heruntergeladen werden",
+            "moreFiles": "Sie haven zu viel Dateien ausgewählt",
+            "sameFiles": "Sie können nicht dieselbe Datei zweimal hochladen",
+            "fileSize": "Die Dateigröße hat das zulässige Limit überschritten"
         }
     },
     "dialog": {
-        "close": "Close",
-        "submit": "Submit"
+        "close": "Schließen",
+        "submit": "Bestätigen"
     },
     "forms": {
         "pass": {
-            "enterEmail": "Enter your email"
+            "enterEmail": "Ihre E-Mail Adresse eingeben"
         },
         "login": {
-            "length": "The login name must have at least 4 letters",
-            "login": "Login",
-            "reset": "Reset password",
-            "sign": "Sign Up",
-            "enterPass": "Enter your password"
+            "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
+            "login": "Anmelden",
+            "reset": "Kennwort wiederherstellen",
+            "sign": "Registrieren",
+            "enterPass": "Ihre Kennwort eingeben"
         },
         "register": {
-            "name": "Name",
-            "surname": "Surname",
-            "repeatPass": "Repeat your password",
-            "register": "Register"
+            "name": "Vorname",
+            "surname": "Nachname",
+            "repeatPass": "Kennwort viederhollen",
+            "register": "Registrieren"
         }
     },
     "headers": {
-        "newHeader": "Select new header",
-        "date": "Choose a date",
+        "newHeader": "Kopfzeile auswählen",
+        "date": "Datum auswählen",
         "caseMeta": {
-            "visualID": "Visual ID",
-            "title": "Title",
-            "author": "Author",
-            "creaDate": "Creation date"
+            "visualID": "Visuelle ID",
+            "title": "Fallname",
+            "author": "Fallautor",
+            "creaDate": "Erstellungsdatum"
         },
         "taskMeta": {
-            "case": "Case",
-            "priority": "Priority",
-            "user": "Assignee",
-            "assignDate": "Assign Date"
+            "case": "Fall",
+            "priority": "Priorität",
+            "user": "Zugewiesener/in",
+            "assignDate": "Zugewieserungsdatum"
         },
         "workflowMeta": {
-            "initials": "Initials",
+            "initials": "Initialen",
             "version": "Version",
-            "creaDate": "Upload date"
+            "creaDate": "Hochladungsdatum"
         },
-        "orderMode": "Ordering mode",
-        "searchMode": "Search mode",
-        "editMode": "Enable edit mode"
+        "orderMode": "Anordnungsmodus",
+        "searchMode": "Suchmodus",
+        "editMode": "Editationsmodus einschalten"
     },
     "panel": {
         "case": {
-            "delete": "Delete"
+            "delete": "Löschen"
         },
         "workflow": {
-            "net": "Net identifier",
-            "title": "Title",
+            "net": "Netzidentifikator",
+            "title": "Netzname",
             "version": "Version",
-            "author": "Author",
-            "upload": "Upload date"
+            "author": "Netzauthor",
+            "upload": "Hochladungsdatum"
         }
     },
     "profile": {
-        "notLogged": "You are not logged in!",
-        "general": "General Informations",
-        "personal": "Personal Information",
-        "name": "First name",
-        "surname": "Last name",
-        "authority": "Authorities",
-        "roles": "Roles",
-        "groups": "Groups",
-        "preference": "Preferences",
-        "caseHead": "Case headers",
-        "caseFilter": "Case filters",
-        "taskHead": "Task headers",
-        "taskFilter": "Task filters",
-        "workHead": "Workflow headers",
-        "workFilter": "Workflow filters"
+        "notLogged": "Sie sind nicht angemeldet!",
+        "general": "Allgemeine Informationen",
+        "personal": "Persönliche Informationen",
+        "name": "Vorname",
+        "surname": "Nachname",
+        "authority": "Berechtigungen",
+        "roles": "Rollen",
+        "groups": "Gruppen",
+        "preference": "Persönliche Einstellungen",
+        "caseHead": "Fall Kopfzeilen",
+        "caseFilter": "Fall Filter",
+        "taskHead": "Aufgabe Kopfzeilen",
+        "taskFilter": "Aufgabe Filter",
+        "workHead": "Workflow Kopfzeilen",
+        "workFilter": "Workflow Filter"
     }
 }

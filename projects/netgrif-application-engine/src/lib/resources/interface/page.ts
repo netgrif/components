@@ -1,21 +1,18 @@
+import {Pagination} from './pagination';
+
 /**
- * Page
+ * One resource page
  */
-export interface Page {
+export interface Page<T> {
+
     /**
-     * actual size
+     * Resource content of a page
      */
-    size: number;
+    content: Array<T>;
+
     /**
-     * total count
+     * Information about current pagination state
      */
-    totalElements: number;
-    /**
-     * total count page
-     */
-    totalPages: number;
-    /**
-     * actual page
-     */
-    number: number;
+    pagination: Pagination;
+
 }

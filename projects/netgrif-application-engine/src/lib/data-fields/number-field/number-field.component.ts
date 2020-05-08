@@ -38,7 +38,7 @@ export class NumberFieldComponent extends AbstractDataFieldComponent {
         }
         if (this.formControl.hasError('validInRange')) {
             const tmp = this.dataField.validations.find(value => value.validationRule.includes('inrange')).validationRule.split(' ');
-            return this.resolveErrorMessage('inrange', this._translate.instant('dataField.validations.inrange') + tmp[1]);
+            return this.resolveErrorMessage('inrange', this._translate.instant('dataField.validations.inrange', {range: tmp[1]}));
         }
         return '';
     }

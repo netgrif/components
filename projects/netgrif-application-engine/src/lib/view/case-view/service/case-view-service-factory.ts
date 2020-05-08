@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
-import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
-import {SearchService} from '../../search/search-service/search.service';
-import {ProcessService} from '../../process/process.service';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {LoggerService} from '../../logger/services/logger.service';
+import {SideMenuService} from '../../../side-menu/services/side-menu.service';
+import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
+import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
+import {SearchService} from '../../../search/search-service/search.service';
+import {ProcessService} from '../../../process/process.service';
+import {ConfigurationService} from '../../../configuration/configuration.service';
+import {LoggerService} from '../../../logger/services/logger.service';
 import {CaseViewService} from './case-view-service';
-import {CaseParams} from './case-params';
+import {CaseParams} from '../models/case-params';
 import {TranslateService} from '@ngx-translate/core';
 
 /**

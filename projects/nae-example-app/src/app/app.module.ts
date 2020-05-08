@@ -27,7 +27,7 @@ import {
     ToolbarModule,
     UserModule,
     WorkflowViewModule,
-    SearchModule,
+    SearchModule, CaseViewModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -139,6 +139,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         SideMenuContentModule,
         ProfileModule,
         SnackBarModule,
+        CaseViewModule,
         MatButtonModule,
         MatSidenavModule,
     ],
