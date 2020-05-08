@@ -3,6 +3,7 @@ import {DatafieldGridLayoutElement} from './datafield-grid-layout-element';
 import {GridFiller} from '../../../utility/grid-layout/model/grid-filler';
 import {FieldConvertorService} from './field-convertor.service';
 import {TaskPanelContentService} from './task-panel-content.service';
+import {PaperViewService} from '../../../navigation/quick-panel/components/paper-view.service';
 
 export const NAE_TASK_COLS = new InjectionToken<number>('NaeTaskCols');
 
@@ -18,6 +19,7 @@ export class TaskPanelContentComponent {
 
     constructor(private _fieldConvertor: FieldConvertorService,
                 private taskPanelContentService: TaskPanelContentService,
+                private _paperView: PaperViewService,
                 @Inject(NAE_TASK_COLS) public taskCols) {
         this.loading = true;
         if (taskCols === undefined) {
@@ -39,6 +41,10 @@ export class TaskPanelContentComponent {
 
     private static newGridRow(cols: number): Array<GridFiller> {
         return [new GridFiller(0, cols - 1)];
+    }
+
+    public isPaperView() {
+        return this._paperView.paperView;
     }
 
     fillBlankSpace(resource: any[], columnCount: number): Array<DatafieldGridLayoutElement> {

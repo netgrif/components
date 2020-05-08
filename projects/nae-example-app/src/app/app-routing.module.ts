@@ -21,6 +21,8 @@ import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/filter-repository-example.component';
 import {ProfileComponent} from './doc/profile/profile.component';
+import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
+import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
 
 const routes: Routes = [
     {path: 'authentication', component: AuthenticationComponent},
@@ -44,6 +46,16 @@ const routes: Routes = [
     {path: 'dashboard-view', component: DashboardExampleComponent},
     {path: 'filter-repository', component: FilterRepositoryExampleComponent},
     {path: 'profile', component: ProfileComponent},
+    {path: 'navigation-test', component: NavigationExampleComponent, children: [
+        {path: 'one', component: ButtonsNavComponent, children: [
+                {path: 'one-one', component: ButtonsNavComponent},
+                {path: 'one-two', component: ButtonsNavComponent}
+        ]},
+        {path: 'two', component: ButtonsNavComponent, children: [
+                {path: 'two-one', component: ButtonsNavComponent},
+                {path: 'two-two', component: ButtonsNavComponent}
+        ]}
+    ]}
 ];
 
 @NgModule({

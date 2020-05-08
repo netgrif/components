@@ -43,7 +43,7 @@
     </ng-template>
     <ng-template #taskPanelContent>
         <div class="panel-main-content" fxLayout="column">
-            <div class="task-panel-body" fxFlex="100">
+            <div class="task-panel-body" [ngClass]="{'paper-view': isPaperView()}" fxFlex="100">
                 <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>
             <mat-action-row>

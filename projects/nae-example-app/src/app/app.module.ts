@@ -37,7 +37,7 @@ import {AuthenticationComponent} from './doc/authentication/authentication.compo
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {MatCardModule, MatIconModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatIconModule, MatSidenavModule} from '@angular/material';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
@@ -61,6 +61,8 @@ import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/filter-repository-example.component';
 import {ProfileComponent} from './doc/profile/profile.component';
+import { NavigationExampleComponent } from './doc/navigation-example/navigation-example.component';
+import { ButtonsNavComponent } from './doc/navigation-example/buttons-nav/buttons-nav.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -94,6 +96,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         DashboardExampleComponent,
         FilterRepositoryExampleComponent,
         ProfileComponent,
+        NavigationExampleComponent,
+        ButtonsNavComponent,
     ],
     imports: [
         BrowserModule,
@@ -136,6 +140,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileModule,
         SnackBarModule,
         CaseViewModule,
+        MatButtonModule,
+        MatSidenavModule,
     ],
     entryComponents: [
         ContentComponent,

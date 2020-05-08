@@ -160,12 +160,94 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                             layout: {
                                 name: 'CaseView',
                                 params: {
-                                    allowedNets: ['search-test-defaultRole', 'leukemia', '1']
+                                    allowedNets: ['search-test-defaultRole', 'leukemia', '1', 'bill']
                                 }
                             },
                             access: 'private',
                             navigation: {}
-                        }
+                        },
+                        'navigation-test': {
+                            type: 'sideMenu',
+                            layout: {
+                                name: ''
+                            },
+                            access: 'private',
+                            navigation: {
+                                title: 'NavTest'
+                            },
+                            routes: {
+                                one: {
+                                    type: '',
+                                    layout: {
+                                        name: ''
+                                    },
+                                    access: 'private',
+                                    navigation: {
+                                        title: 'one',
+                                        icon: 'account_circle'
+                                    },
+                                    routes: {
+                                       'one-one': {
+                                            type: '',
+                                            layout: {
+                                                name: ''
+                                            },
+                                            access: 'private',
+                                            navigation: {
+                                                title: 'one-one',
+                                                icon: 'account_circle'
+                                            },
+                                        },
+                                        'one-two': {
+                                            type: '',
+                                            layout: {
+                                                name: ''
+                                            },
+                                            access: 'private',
+                                            navigation: {
+                                                title: 'one-two',
+                                                icon: 'account_circle'
+                                            },
+                                        }
+                                    }
+                                },
+                                two: {
+                                    type: '',
+                                    layout: {
+                                        name: ''
+                                    },
+                                    access: 'private',
+                                    navigation: {
+                                        title: 'second',
+                                        icon: 'account_circle'
+                                    },
+                                    routes: {
+                                        'two-one': {
+                                            type: '',
+                                            layout: {
+                                                name: ''
+                                            },
+                                            access: 'private',
+                                            navigation: {
+                                                title: 'two-one',
+                                                icon: 'account_circle'
+                                            },
+                                        },
+                                        'two-two': {
+                                            type: '',
+                                            layout: {
+                                                name: ''
+                                            },
+                                            access: 'private',
+                                            navigation: {
+                                                title: 'two-two',
+                                                icon: 'account_circle'
+                                            },
+                                        }
+                                    }
+                                }
+                            }
+                        },
                     }
                 },
                 theme: {

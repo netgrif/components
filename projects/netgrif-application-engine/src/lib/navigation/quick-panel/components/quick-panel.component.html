@@ -8,6 +8,9 @@
     </button>
 </div>
 <mat-menu #quickPanelMoreMenu="matMenu">
-    <button mat-menu-item (click)="null" fxLayout="row" fxLayoutAlign="start center">
+    <button mat-menu-item (click)="setPaperView()" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon *ngIf="isPaperView()">cancel</mat-icon>
+        <mat-icon *ngIf="!isPaperView()">check</mat-icon>
+        <span>{{isPaperView() ? 'Disable' : 'Enable'}} Paper View</span>
     </button>
 </mat-menu>

@@ -1,0 +1,15 @@
+<mat-sidenav-container class="drawer-container">
+    <mat-sidenav opened position="start" [disableClose]="true" class="drawer-content mat-elevation-z10" mode="side">
+        <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+            <nae-navigation-tree [parentUrl]="parentUrl" [viewPath]="viewPath" [routerChange]="true"></nae-navigation-tree>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="div">
+            <button mat-raised-button routerLink="/navigation-test/one">One</button>
+            <button mat-raised-button routerLink="/navigation-test/two">Two</button>
+            <button mat-raised-button routerLink="/navigation-test">Start</button>
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
