@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine",
-    "version": "4.0.0-beta.5",
+    "version": "4.0.0-rc.1",
     "scripts": {
         "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
         "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/netgrif-application-engine/ && cp --parents schematics/*/*/schema.json ../../dist/netgrif-application-engine/",

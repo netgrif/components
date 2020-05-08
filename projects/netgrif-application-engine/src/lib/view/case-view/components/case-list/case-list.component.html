@@ -1,6 +1,6 @@
 <ng-container *ngIf="cases$ | async as cases">
 
-    <div #emptyMessage *ngIf="!(loading$ | async) && cases.length === 0" fxLayout="column" fxLayoutAlign="center center">
+    <div #emptyMessage *ngIf="(loading$ | async) === false && cases.length === 0" fxLayout="column" fxLayoutAlign="center center">
         <mat-icon color="accent" class="font-size-40 block-size-40 margin-bottom-default">storage</mat-icon>
         <span class="font-size-20">There are any cases satisfying specified filter</span>
     </div>

@@ -38,7 +38,7 @@ describe('CaseViewService', () => {
                 {
                     provide: SearchService,
                     useFactory: searchServiceFactory
-                },
+                }
             ]
         });
         service = TestBed.inject(CaseViewService);
@@ -49,7 +49,7 @@ describe('CaseViewService', () => {
     });
 
     it('should load cases', () => {
-        service.loadCases();
+        service.reload();
         service.cases$.subscribe(res => {
             expect(res.length).toEqual(0);
         });
@@ -71,6 +71,13 @@ describe('CaseViewService', () => {
 
 class MyResources {
     searchCases(filter, params) {
-        return of([]);
+        return of({
+            content: [], pagination: {
+                number: -1,
+                size: 0,
+                totalPages: 0,
+                totalElements: 0
+            }
+        });
     }
 }
