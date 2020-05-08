@@ -1,26 +1,22 @@
 import {Case} from '../../resources/interface/case';
-import {BehaviorSubject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {HeaderType} from '../../header/models/header-type';
-import {CaseViewService} from './case-view-service';
+import {CaseViewService} from './service/case-view-service';
 import {ViewWithHeaders} from '../abstract/view-with-headers';
 
 
 export abstract class AbstractCaseView extends ViewWithHeaders {
 
     public readonly headerType: HeaderType = HeaderType.CASE;
-    public cases$: BehaviorSubject<Array<Case>>;
+    public cases$: Observable<Array<Case>>;
     public loading: boolean;
 
     protected constructor(protected _caseViewService: CaseViewService) {
         super(_caseViewService);
-        this._caseViewService.loading$.subscribe( loading => {
+        this._caseViewService.loading$.subscribe(loading => {
             this.loading = loading;
         });
-        this.cases$ = new BehaviorSubject<Array<Case>>([]);
-        this._caseViewService.cases$.subscribe(newCases => {
-            this.cases$.next(newCases);
-        });
-        this._caseViewService.loadCases();
+        this.cases$ = this._caseViewService.cases$;
     }
 
     public createNewCase(): void {

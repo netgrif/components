@@ -1,4 +1,4 @@
-import {CaseViewService} from '../../view/case-view/case-view-service';
+import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {CategoryFactory} from './category-factory';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 

@@ -4,7 +4,7 @@ import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injecti
 import {InjectedTabData} from '../../tabs/interfaces';
 import {Case} from '../../resources/interface/case';
 import {LoggerService} from '../../logger/services/logger.service';
-import {CaseViewService} from './case-view-service';
+import {CaseViewService} from './service/case-view-service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 

@@ -50,7 +50,7 @@ describe('CaseResourceService', () => {
     it('should searchCases', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.searchCases(new SimpleFilter('', FilterType.CASE, {})).subscribe(res => {
-                expect(res.length).toEqual(0);
+                expect(res.content.length).toEqual(0);
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/search');

@@ -1,16 +1,16 @@
 import {TestBed} from '@angular/core/testing';
 import {CaseViewService} from './case-view-service';
-import {ConfigurationService} from '../../configuration/configuration.service';
+import {ConfigurationService} from '../../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MaterialModule} from '../../material/material.module';
-import {TestConfigurationService} from '../../utility/tests/test-config';
+import {MaterialModule} from '../../../material/material.module';
+import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {of} from 'rxjs';
-import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {CaseViewServiceFactory} from './case-view-service-factory';
-import {SearchService} from '../../search/search-service/search.service';
-import {SimpleFilter} from '../../filter/models/simple-filter';
-import {FilterType} from '../../filter/models/filter-type';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {SearchService} from '../../../search/search-service/search.service';
+import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {FilterType} from '../../../filter/models/filter-type';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
     return factory.create('cases');

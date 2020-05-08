@@ -5,7 +5,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {NetgrifApplicationEngine} from '../../configuration/interfaces/schema';
-import {CaseViewService} from '../../view/case-view/case-view-service';
+import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 
 describe('CategoryFactoryService', () => {

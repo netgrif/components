@@ -19,7 +19,7 @@ export * from './interface/petri-net-reference';
 export * from './interface/fields';
 export * from './interface/authority';
 export * from './interface/link';
-export * from './interface/page';
+export * from './interface/pagination';
 export * from './interface/user-process-role';
 export * from './interface/changed-field-container';
 export * from './interface/file-resource';

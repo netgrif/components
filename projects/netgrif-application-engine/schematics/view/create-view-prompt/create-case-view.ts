@@ -49,7 +49,8 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
         new ImportToAdd('FlexLayoutModule', '@angular/flex-layout'),
         new ImportToAdd('MaterialModule', '@netgrif/application-engine'),
         new ImportToAdd('HeaderModule', '@netgrif/application-engine'),
-        new ImportToAdd('PanelModule', '@netgrif/application-engine')
+        new ImportToAdd('PanelModule', '@netgrif/application-engine'),
+        new ImportToAdd('CaseViewModule', '@netgrif/application-engine')
     ]);
 
     const appModule = getAppModule(tree, projectInfo.path);

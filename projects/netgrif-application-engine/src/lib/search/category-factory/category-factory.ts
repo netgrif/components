@@ -2,7 +2,7 @@ import {Injectable, Optional, Type} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OperatorService} from '../operator-service/operator.service';
 import {Category} from '../models/category/category';
-import {CaseViewService} from '../../view/case-view/case-view-service';
+import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {OptionalDependencies} from './optional-dependencies';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 

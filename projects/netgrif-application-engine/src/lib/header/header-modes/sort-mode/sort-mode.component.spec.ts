@@ -5,7 +5,7 @@ import {MatSortModule} from '@angular/material';
 import {Component} from '@angular/core';
 import {CaseHeaderService} from '../../case-header/case-header.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {CaseViewService} from '../../../view/case-view/case-view-service';
+import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {of} from 'rxjs';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
