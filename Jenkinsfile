@@ -132,7 +132,7 @@ pipeline {
 
      stage('Build Examples') {
         steps {
-            sh 'npm run nae:local-build && npm run build --prod'
+            sh 'npm run nae:local-build && npm run example:build'
         }
      }
 
