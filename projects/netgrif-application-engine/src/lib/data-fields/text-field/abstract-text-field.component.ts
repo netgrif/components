@@ -13,7 +13,7 @@ export abstract class AbstractTextFieldComponent {
         }
         if (formControlRef.hasError('minlength')) {
             return this.resolveErrorMessage(textField, 'length',
-                this._translate.instant('dataField.validations.length') + formControlRef.errors.minlength.requiredLength);
+                this._translate.instant('dataField.validations.length', {length: formControlRef.errors.minlength.requiredLength}));
         }
         if (formControlRef.hasError('pattern')) {
             return this.resolveErrorMessage(textField, 'regex', this._translate.instant('dataField.validations.pattern'));
