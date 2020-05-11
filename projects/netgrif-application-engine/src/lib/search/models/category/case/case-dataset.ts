@@ -144,4 +144,11 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             this.selectDefaultOperator();
         }
     }
+
+    get inputPlaceholder(): string {
+        if (!this._selectedDatafields) {
+            return 'search.placeholder.category.case.dataset.field';
+        }
+        return 'search.placeholder.category.case.dataset.value';
+    }
 }

@@ -49,4 +49,7 @@ export class CaseTask extends AutocompleteCategory<NetTaskPair> {
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
+    get inputPlaceholder(): string {
+        return 'search.placeholder.category.case.task';
+    }
 }

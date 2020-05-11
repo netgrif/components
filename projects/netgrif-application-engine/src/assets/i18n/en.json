@@ -94,7 +94,22 @@
         "placeholder": {
             "text": "Type anything to search or select a category",
             "date": "Choose a date",
-            "dateTime": "Choose date and time"
+            "dateTime": "Choose date and time",
+            "category": {
+                "case": {
+                    "title": "Enter case title",
+                    "visualId": "Enter case visual ID",
+                    "author": "Enter author's name or email",
+                    "process": "Select case process",
+                    "role": "Select process role",
+                    "task": "Select case task",
+                    "creationDate": "Select case creation date",
+                    "dataset": {
+                        "field": "Select data field",
+                        "value": "Enter data field value"
+                    }
+                }
+            }
         }
     },
     "dataField": {

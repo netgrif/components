@@ -14,4 +14,8 @@ export class CaseCreationDate extends Category<Moment> {
             SearchInputType.DATE,
             logger);
     }
+
+    get inputPlaceholder(): string {
+        return 'search.placeholder.category.case.creationDate';
+    }
 }

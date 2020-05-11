@@ -13,4 +13,8 @@ export class CaseAuthor extends Category<string> {
             SearchInputType.TEXT,
             logger);
     }
+
+    get inputPlaceholder(): string {
+        return 'search.placeholder.category.case.author';
+    }
 }

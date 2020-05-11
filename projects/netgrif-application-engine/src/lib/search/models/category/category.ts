@@ -125,4 +125,9 @@ export abstract class Category<T> {
     public selectDefaultOperator(): void {
         this.selectOperator(0);
     }
+
+    /**
+     * @returns the translation string path for the text that should be displayed in the input placeholder
+     */
+    public abstract get inputPlaceholder(): string;
 }
