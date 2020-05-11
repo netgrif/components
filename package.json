@@ -40,7 +40,7 @@
         "nae:prod-build-without-tests": "ng lint netgrif-application-engine && npm run nae:sonar && npm run nae:build && npm run nae:doc",
         "project:start": "npm run nae:local-build && ng serve",
         "example:start": "ng serve",
-        "example:build": "ng build --prod",
+        "example:build": "ng build --prod --base-href /projects/engine-frontend/examples/",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"

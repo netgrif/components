@@ -44,7 +44,7 @@ export class CaseListComponent implements OnInit, AfterViewInit {
         this.calculateHeight();
     }
 
-    public trackBy(i): void {
+    public trackBy(i): any {
         return i;
     }
 
