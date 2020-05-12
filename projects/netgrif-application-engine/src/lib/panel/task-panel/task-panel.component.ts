@@ -152,6 +152,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             } else {
                 this._log.info(this._translate.instant('tasks.snackbar.noGroup') + ' ' + this.taskPanelData.task);
                 this.loading = false;
+                this.taskPanelData.task.dataSize = 0;
                 afterAction.next(true);
             }
             this._taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
