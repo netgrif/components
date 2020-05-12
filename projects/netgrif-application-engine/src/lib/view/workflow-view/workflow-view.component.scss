@@ -15,4 +15,9 @@
     position: fixed;
     bottom: 24px;
     right: 24px;
+    z-index: 999;
+}
+
+.width-100 {
+    width: 100%;
 }
