@@ -24,7 +24,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     private static readonly _i18n = 'search.category.case.dataset';
     // TODO 4.5.2020 - only button and file fields are truly unsupported, the rest is yet to be implemented
-    protected static DISABLED_TYPES = ['button', 'file', 'user', 'boolean', 'dateTime'];
+    protected static DISABLED_TYPES = ['button', 'file', 'user', 'dateTime'];
 
     protected _selectedDatafields: Array<Datafield>;
 
@@ -38,6 +38,8 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
                 return SearchInputType.DATE_TIME;
             case 'number':
                 return SearchInputType.NUMBER;
+            case 'boolean':
+                return SearchInputType.BOOLEAN;
             default:
                 return SearchInputType.TEXT;
         }
@@ -66,12 +68,14 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         }
         switch (this._selectedDatafields[0].fieldType) {
             // TODO 4.5.2020 - Operators should match the options from old frontend
+            case 'number':
+                return [this._operators.getOperator(Equals)];
+            case 'boolean':
+                return [this._operators.getOperator(Equals)];
             case 'date':
                 return [this._operators.getOperator(EqualsDate)];
             case 'dateTime':
                 return [this._operators.getOperator(EqualsDateTime)];
-            case 'number':
-                return [this._operators.getOperator(Equals)];
             default:
                 return [this._operators.getOperator(Substring)];
         }

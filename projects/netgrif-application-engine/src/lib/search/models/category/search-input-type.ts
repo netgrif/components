@@ -3,5 +3,6 @@ export enum SearchInputType {
     AUTOCOMPLETE = 'autocomplete',
     DATE = 'date',
     DATE_TIME = 'dateTime',
-    NUMBER = 'number'
+    NUMBER = 'number',
+    BOOLEAN = 'boolean'
 }

@@ -62,6 +62,9 @@
                        (keydown.enter)="$event.target.blur();confirmUserInput()">
             </mat-form-field>
         </ng-template>
+        <ng-template [ngSwitchCase]="'boolean'">
+            <mat-slide-toggle [formControl]="formControls['boolean']">{{(inputPlaceholder$ | async) | translate}}</mat-slide-toggle>
+        </ng-template>
     </div>
     <button mat-icon-button (click)="confirmUserInput()">
         <mat-icon>search</mat-icon>
