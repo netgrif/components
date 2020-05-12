@@ -54,6 +54,14 @@
                                          [enableMeridian]="false"></ngx-mat-datetime-picker>
             </mat-form-field>
         </ng-template>
+        <ng-template [ngSwitchCase]="'number'">
+            <mat-form-field class="search-input">
+                <input type="number" matInput
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
+                       [formControl]="formControls['number']"
+                       (keydown.enter)="$event.target.blur();confirmUserInput()">
+            </mat-form-field>
+        </ng-template>
     </div>
     <button mat-icon-button (click)="confirmUserInput()">
         <mat-icon>search</mat-icon>

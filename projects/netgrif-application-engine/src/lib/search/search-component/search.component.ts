@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../models/category/category';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {SearchService} from '../search-service/search.service';
@@ -9,7 +9,7 @@ import {SimpleSearchChip} from '../models/chips/simple-search-chip';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {AutocompleteCategory} from '../models/category/autocomplete-category';
 import {SearchInputType} from '../models/category/search-input-type';
-import {MAT_DATE_FORMATS, MatAutocompleteSelectedEvent} from '@angular/material';
+import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT, DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {Moment} from 'moment';
 import {CaseDataset} from '../models/category/case/case-dataset';
@@ -59,6 +59,7 @@ export class SearchComponent implements OnInit {
         text: new FormControl(),
         date: new FormControl(),
         dateTime: new FormControl(),
+        number: new FormControl(),
     };
     /**
      * @ignore
@@ -217,6 +218,7 @@ export class SearchComponent implements OnInit {
                 } else {
                     this.appendTextToLastChip(inputValue);
                 }
+                this.formControl.setValue('');
                 if (this._selectedCategory instanceof CaseDataset) {
                     this._selectedCategory.reset();
                 }
@@ -282,6 +284,9 @@ export class SearchComponent implements OnInit {
                 return;
             case SearchInputType.DATE_TIME:
                 this._shownInput$.next('dateTime');
+                return;
+            case SearchInputType.NUMBER:
+                this._shownInput$.next('number');
                 return;
             default:
                 this._shownInput$.next('text');
