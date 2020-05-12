@@ -21,6 +21,7 @@ interface Datafield {
 
 export class CaseDataset extends AutocompleteCategory<Datafield> {
 
+    private static readonly _i18n = 'search.category.case.dataset';
     // TODO 4.5.2020 - only button and file fields are truly unsupported, the rest is yet to be implemented
     protected static DISABLED_TYPES = ['button', 'file', 'user', 'boolean', 'number', 'dateTime'];
 
@@ -42,7 +43,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(undefined,
             undefined,
-            'search.category.case.dataset',
+            `${CaseDataset._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
@@ -147,8 +148,8 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     get inputPlaceholder(): string {
         if (!this._selectedDatafields) {
-            return 'search.placeholder.category.case.dataset.field';
+            return `${CaseDataset._i18n}.placeholder.field`;
         }
-        return 'search.placeholder.category.case.dataset.value';
+        return `${CaseDataset._i18n}.placeholder.value`;
     }
 }

@@ -10,12 +10,13 @@ import {Query} from '../../query/query';
 
 export class TaskAssignee extends AutocompleteCategory<User> {
 
+    private static readonly _i18n = 'search.category.task.assignee';
     protected _options: Array<SearchAutocompleteOption> = [];
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['userId'],
             [operators.getOperator(Equals)],
-            'search.category.task.assignee',
+            `${TaskAssignee._i18n}.name`,
             logger);
     }
 
@@ -38,5 +39,9 @@ export class TaskAssignee extends AutocompleteCategory<User> {
 
     protected generateQuery(userInput: Array<User>): Query {
         return this._selectedOperator.createQuery(this.elasticKeywords, [`${userInput[0].id}`]);
+    }
+
+    get inputPlaceholder(): string {
+        return `${TaskAssignee._i18n}.placeholder`;
     }
 }

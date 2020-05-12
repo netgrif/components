@@ -7,15 +7,17 @@ import {SearchInputType} from '../search-input-type';
 
 export class CaseCreationDate extends Category<Moment> {
 
+    private static readonly _i18n = 'search.category.case.creationDate';
+
     constructor(operators: OperatorService, logger: LoggerService) {
         super(['creationDateSortable'],
             [operators.getOperator(EqualsDate)],
-            'search.category.case.creationDate',
+            `${CaseCreationDate._i18n}.name`,
             SearchInputType.DATE,
             logger);
     }
 
     get inputPlaceholder(): string {
-        return 'search.placeholder.category.case.creationDate';
+        return `${CaseCreationDate._i18n}.placeholder`;
     }
 }

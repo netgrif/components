@@ -8,10 +8,12 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 
 export class CaseProcess extends AutocompleteCategory<string> {
 
+    private static readonly _i18n = 'search.category.case.process';
+
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
             [operators.getOperator(Equals)],
-            'search.category.case.process',
+            `${CaseProcess._i18n}.name`,
             logger);
     }
 
@@ -29,6 +31,6 @@ export class CaseProcess extends AutocompleteCategory<string> {
     }
 
     get inputPlaceholder(): string {
-        return 'search.placeholder.category.case.process';
+        return `${CaseProcess._i18n}.placeholder`;
     }
 }

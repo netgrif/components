@@ -14,12 +14,13 @@ interface NetRolePair {
 
 export class CaseRole extends AutocompleteCategory<NetRolePair> {
 
+    private static readonly _i18n = 'search.category.case.role';
     protected _processCategory: CaseProcess;
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['enabledRoles'],
             [operators.getOperator(Equals)],
-            'search.category.case.role',
+            `${CaseRole._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
@@ -48,6 +49,6 @@ export class CaseRole extends AutocompleteCategory<NetRolePair> {
     }
 
     get inputPlaceholder(): string {
-        return 'search.placeholder.category.case.role';
+        return `${CaseRole._i18n}.placeholder`;
     }
 }
