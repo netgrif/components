@@ -55,6 +55,21 @@ export class SearchService {
     }
 
     /**
+     * @returns `true` if a filter other than the base filter is currently applied.
+     * Returns `false` if only the base filter is currently applied.
+     */
+    public get additionalFiltersApplied(): boolean {
+        return !this._rootPredicate.query.isEmpty || !!this._fullTextFilter;
+    }
+
+    /**
+     * @returns a copy of the base filter
+     */
+    public get baseFilter(): Filter {
+        return this._baseFilter.clone();
+    }
+
+    /**
      * Adds a {@link Predicate} to the Predicate root and updates the active Filter.
      * @param newPredicate Predicate that should be added to the search queries.
      */

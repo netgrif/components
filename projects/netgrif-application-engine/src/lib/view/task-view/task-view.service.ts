@@ -9,6 +9,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {LanguageService} from '../../translate/language.service';
 import {SortableView} from '../abstract/sortable-view';
 import {SearchService} from '../../search/search-service/search.service';
+import {Task} from '../../resources/interface/task';
+import {SimpleFilter} from '../../filter/models/simple-filter';
 
 
 @Injectable()
@@ -18,6 +20,14 @@ export class TaskViewService extends SortableView {
     changedFields: Subject<ChangedFields>;
     loading: BehaviorSubject<boolean>;
 
+    /**
+     * @ignore
+     * Used to decide if the mongo endpoint should be used instead
+     */
+    private readonly _parentCaseId: string = undefined;
+
+    private readonly _initializing: boolean = true;
+
     constructor(protected _taskService: TaskResourceService, private _userService: UserService,
                 private _snackBarService: SnackBarService, private _translate: TranslateService,
                 private _Language: LanguageService, protected _searchService: SearchService) { // need for translations
@@ -26,41 +36,62 @@ export class TaskViewService extends SortableView {
         this.taskData = new Subject<Array<TaskPanelData>>();
         this.loading = new BehaviorSubject<boolean>(false);
         this.changedFields = new Subject<ChangedFields>();
+
+        const baseFilter = this._searchService.baseFilter;
+        if (baseFilter instanceof SimpleFilter) {
+            const keys = Object.keys(baseFilter.getRequestBody());
+            if (keys.length === 1 && keys[0] === 'case' && typeof baseFilter.getRequestBody()[keys[0]] === 'string') {
+                this._parentCaseId = baseFilter.getRequestBody()[keys[0]];
+            }
+        }
+        this._initializing = false;
+
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
     }
 
     public loadTasks() {
-        if (this.loading.getValue()) {
+        if (this.loading.getValue() || this._initializing) {
             return;
         }
         this.loading.next(true);
 
-        // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation
-        this._taskService.searchTask(this._searchService.activeFilter).subscribe(tasks => {
-            if (tasks instanceof Array) {
-                if (this.taskArray.length) {
-                    tasks = this.resolveUpdate(tasks);
-                }
-                tasks.forEach(task => {
-                    this.taskArray.push({
-                        task,
-                        changedFields: this.changedFields
-                    });
-                });
-            } else {
-                this.taskArray.splice(0, this.taskArray.length);
-                this._snackBarService.openWarningSnackBar(this._translate.instant('tasks.snackbar.noTasksFound'));
+        // TODO 12.5.2020 - better solution for mongo searching
+        if (!this._searchService.additionalFiltersApplied && !!this._parentCaseId) {
+            this._taskService.getTasks({case: this._parentCaseId}).subscribe(tasks => this.processTasks(tasks),
+                error => this.processError());
+        } else {
+            // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation
+            this._taskService.searchTask(this._searchService.activeFilter).subscribe(tasks => this.processTasks(tasks),
+                error => this.processError());
+        }
+    }
+
+    private processTasks(tasks: Array<Task>): void {
+        if (tasks instanceof Array) {
+            if (this.taskArray.length) {
+                tasks = this.resolveUpdate(tasks);
             }
-            this.loading.next(false);
-            this.taskData.next(this.taskArray);
-        }, error => {
-            this._snackBarService.openErrorSnackBar(
-                this._translate.instant('tasks.snackbar.failedToLoad')
-            );
-            this.loading.next(false);
-        });
+            tasks.forEach(task => {
+                this.taskArray.push({
+                    task,
+                    changedFields: this.changedFields
+                });
+            });
+        } else {
+            this.taskArray.splice(0, this.taskArray.length);
+            this._snackBarService.openWarningSnackBar(this._translate.instant('tasks.snackbar.noTasksFound'));
+        }
+        this.loading.next(false);
+        this.taskData.next(this.taskArray);
+    }
+
+    private processError(): void {
+        this._snackBarService.openErrorSnackBar(
+            this._translate.instant('tasks.snackbar.failedToLoad')
+        );
+        this.loading.next(false);
     }
 
     private resolveUpdate(tasks) {
@@ -70,7 +101,7 @@ export class TaskViewService extends SortableView {
             if (index === -1)
                 tasksToDelete.push(i);
             else {
-                Object.keys(this.taskArray[i].task).forEach( key => {
+                Object.keys(this.taskArray[i].task).forEach(key => {
                     if (tasks[index][key] !== undefined) {
                         this.taskArray[i].task[key] = tasks[index][key];
                     }
@@ -89,7 +120,7 @@ export class TaskViewService extends SortableView {
 
     private blockFields(bool: boolean, index: number) {
         if (this.taskArray[index].task.dataGroups) {
-            this.taskArray[index].task.dataGroups.forEach( group => {
+            this.taskArray[index].task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
                     field.block = bool;
                 });
