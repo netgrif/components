@@ -78,17 +78,47 @@
     "search": {
         "category": {
             "case": {
-                "title": "Fallname",
-                "visualId": "Visuelle ID",
-                "author": "Fallautor",
-                "process": "Prozess",
-                "role": "Prozessrolle",
-                "task": "Fallaufgabe",
-                "creationDate": "Erstellungsdatum",
-                "dataset": "Falldatei"
+                "title": {
+                    "name": "Fallname",
+                    "placeholder": "Geben Sie den Fallnamen ein"
+                },
+                "visualId": {
+                    "name": "Visuelle ID",
+                    "placeholder": "Geben Sie die visuelle ID ein"
+                },
+                "author": {
+                    "name": "Fallautor/in",
+                    "placeholder": "Geben Sie den Namen, oder das E-Mail des/er Fallautors/in ein"
+                },
+                "process": {
+                    "name": "Prozess",
+                    "placeholder": "Wählen Sie den Prozess aus"
+                },
+                "role": {
+                    "name": "Prozessrolle",
+                    "placeholder": "Wählen Sie die Prozessrolle aus"
+                },
+                "task": {
+                    "name": "Fallaufgabe",
+                    "placeholder": "Wählen Sie die Fallaufgabe aus"
+                },
+                "creationDate": {
+                    "name": "Erstellungsdatum",
+                    "placeholder": "Geben Sie das Erstellungsdatum ein"
+                },
+                "dataset": {
+                    "name": "Falldatei",
+                    "placeholder": {
+                        "field": "Wählen Sie das Datenfeld aus",
+                        "value": "Geben Sie den Wert des Datenfeldes ein"
+                    }
+                }
             },
             "task": {
-                "assignee": "Zugewiesener/in"
+                "assignee": {
+                    "name": "Zugewiesener/in",
+                    "placeholder": "Wählen Sie den/ie Zugewiesener/in aus"
+                }
             }
         },
         "placeholder": {
