@@ -82,7 +82,6 @@ export class TaskViewService extends SortableView {
         });
         tasksToDelete.sort((a, b) => b - a);
         tasksToDelete.forEach(index => {
-            tasks.splice(index, 1);
             this.taskArray.splice(index, 1);
         });
         return tasks;
