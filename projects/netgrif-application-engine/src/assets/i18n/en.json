@@ -122,9 +122,7 @@
             }
         },
         "placeholder": {
-            "text": "Type anything to search or select a category",
-            "date": "Choose a date",
-            "dateTime": "Choose date and time"
+            "text": "Type anything to search or select a category"
         }
     },
     "dataField": {

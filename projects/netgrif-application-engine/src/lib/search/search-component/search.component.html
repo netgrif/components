@@ -10,7 +10,7 @@
             <mat-form-field class="search-input">
                 <input type="text" matInput
                        #autocompleteInput
-                       [placeholder]="'search.placeholder.text' | translate"
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
                        [formControl]="formControls['text']"
                        [matAutocomplete]="searchAutocomplete"
                        (keydown.enter)="$event.target.blur();confirmUserInput()">
@@ -25,7 +25,7 @@
         <ng-template [ngSwitchCase]="'date'">
             <mat-form-field class="search-input">
                 <input matInput
-                       [placeholder]="'search.placeholder.date' | translate"
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
                        [formControl]="formControls['date']"
                        [matDatepicker]="searchDatepicker"
                        (click)="searchDatepicker.open()"
@@ -37,7 +37,7 @@
         <ng-template [ngSwitchCase]="'dateTime'">
             <mat-form-field class="search-input">
                 <input matInput
-                       [placeholder]="'search.placeholder.dateTime' | translate"
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
                        [formControl]="formControls['dateTime']"
                        [ngxMatDatetimePicker]="searchDateTimepicker"
                        (click)="searchDateTimepicker.open()"

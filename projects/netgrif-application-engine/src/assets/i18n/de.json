@@ -122,9 +122,7 @@
             }
         },
         "placeholder": {
-            "text": "Suchen oder Suchkategorie auswählen",
-            "date": "Datum auswählen",
-            "dateTime": "Datum und Zeit auswählen"
+            "text": "Suchen oder Suchkategorie auswählen"
         }
     },
     "dataField": {
