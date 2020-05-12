@@ -29,7 +29,7 @@
                        [formControl]="formControls['date']"
                        [matDatepicker]="searchDatepicker"
                        (click)="searchDatepicker.open()"
-                       (keydown.enter)="searchDatepicker.close()">
+                       (keydown.enter)="searchDatepicker.close();confirmUserInput()">
                 <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #searchDatepicker></mat-datepicker>
             </mat-form-field>
@@ -41,7 +41,7 @@
                        [formControl]="formControls['dateTime']"
                        [ngxMatDatetimePicker]="searchDateTimepicker"
                        (click)="searchDateTimepicker.open()"
-                       (keydown.enter)="searchDateTimepicker.close()">
+                       (keydown.enter)="searchDateTimepicker.close();confirmUserInput()">
                 <mat-datepicker-toggle matPrefix [for]="searchDateTimepicker">
                     <mat-icon matDatepickerToggleIcon>schedule</mat-icon>
                 </mat-datepicker-toggle>
