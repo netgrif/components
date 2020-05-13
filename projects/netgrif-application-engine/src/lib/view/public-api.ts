@@ -20,6 +20,7 @@ export * from './case-view/service/factory/array-case-view-service-factory';
 
 export * from './task-view/service/task-view.service';
 export * from './task-view/service/factory/config-task-view-service-factory';
+export * from './task-view/service/factory/array-task-view-service-factory';
 
 export * from './workflow-view/workflow-view.service';
 

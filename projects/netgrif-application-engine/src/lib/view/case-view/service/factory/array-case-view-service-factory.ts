@@ -17,7 +17,7 @@ import {ProcessService} from '../../../../process/process.service';
  *
  * This is one of available `CaseViewServiceFactory` implementations, see {@link ConfigCaseViewServiceFactory} for another one.
  *
- * This implementation is useful if you need to provide {@link CaseViewService} without having to define it in the configuration object.
+ * This implementation is useful if you need to provide {@link CaseViewService} without having to define it in the configuration file.
  * The down side is that no view parameters can be extracted from the configuration and so, they will not be passed to the created service.
  */
 @Injectable()

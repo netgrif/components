@@ -13,7 +13,6 @@ export interface InjectedTabbedTaskViewData extends InjectedTabData {
 export abstract class TabbedTaskView extends AbstractTaskView {
     protected constructor(taskViewService: TaskViewService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTaskViewData) {
-        // , !!_injectedTabData.baseFilter ? _injectedTabData.baseFilter : new SimpleFilter('', FilterType.TASK, {})
         super(taskViewService);
     }
 }
