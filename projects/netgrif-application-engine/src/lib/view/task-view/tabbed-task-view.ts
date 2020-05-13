@@ -1,5 +1,5 @@
 import {AbstractTaskView} from './abstract-task-view';
-import {TaskViewService} from './task-view.service';
+import {TaskViewService} from './service/task-view.service';
 import {Inject} from '@angular/core';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token.module';
 import {InjectedTabData} from '../../tabs/interfaces';

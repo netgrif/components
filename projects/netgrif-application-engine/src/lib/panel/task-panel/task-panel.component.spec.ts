@@ -13,7 +13,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
-import {TaskViewService} from '../../view/task-view/task-view.service';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';

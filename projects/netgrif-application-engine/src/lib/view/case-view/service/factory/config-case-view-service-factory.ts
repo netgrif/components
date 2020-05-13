@@ -7,7 +7,7 @@ import {ProcessService} from '../../../../process/process.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {CaseViewService} from '../case-view-service';
-import {CaseParams} from '../../models/case-params';
+import {CaseViewParams} from '../../models/case-view-params';
 import {TranslateService} from '@ngx-translate/core';
 import {of} from 'rxjs';
 
@@ -40,13 +40,13 @@ export class ConfigCaseViewServiceFactory {
     /**
      * Creates an instance of {@link CaseViewService} without having to provide all the dependencies yourself.
      * @param webViewPath path to the case view as specified in it's configuration. No leading backslash.
-     * It is used to load [allowedNets]{@link CaseViewService#_allowedNets$} from configuration.
+     * It is used to load [allowedNets]{@link SortableViewWithAllowedNets#_allowedNets$} from configuration.
      * @returns an instance of {@link CaseViewService} configured for view at the specified path.
      */
     public create(webViewPath: string): CaseViewService {
         const view = this._configService.getViewByPath(webViewPath);
         if (view && view.layout && view.layout.params) {
-            const viewParams = view.layout.params as CaseParams;
+            const viewParams = view.layout.params as CaseViewParams;
             let nets = of([]);
             if (viewParams.allowedNets !== undefined) {
                 nets = this._processService.getNets(viewParams.allowedNets);
