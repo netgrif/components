@@ -14,7 +14,7 @@ import {Substring} from '../../operator/substring';
 import {EqualsDateTime} from '../../operator/equals-date-time';
 import {Equals} from '../../operator/equals';
 import {Observable, of} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
+import {filter, map, tap} from 'rxjs/operators';
 
 interface Datafield {
     netId: string;
@@ -27,6 +27,8 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
     private static readonly _i18n = 'search.category.case.dataset';
     // TODO 4.5.2020 - only button and file fields are truly unsupported, dateTime is implemented but lacks elastic support
     protected static DISABLED_TYPES = ['button', 'file', 'dateTime'];
+
+    private _searchingUsers = false;
 
     protected _selectedDatafields: Array<Datafield>;
 
@@ -161,10 +163,14 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         if (!this._selectedDatafields) {
             return super.filterOptions(userInput);
         }
-        if (!(this._selectedDatafields[0].fieldType === 'user')) {
+        if (!(this._selectedDatafields[0].fieldType === 'user') || this._searchingUsers) {
             return of([]);
         }
+        this._searchingUsers = true;
         return this._optionalDependencies.userResourceService.search({fulltext: userInput}).pipe(
+            tap(() => {
+                this._searchingUsers = false;
+            }),
             filter(result => Array.isArray(result)),
             map(users => users.map(
                 user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})

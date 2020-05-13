@@ -220,9 +220,9 @@ export class SearchComponent implements OnInit {
                 } else {
                     this.appendTextToLastChip(inputValue);
                 }
-                if (this._selectedCategory instanceof CaseDataset) {
-                    this._selectedCategory.reset();
-                }
+            }
+            if (this._selectedCategory instanceof CaseDataset) {
+                this._selectedCategory.reset();
             }
             this._selectedCategory = undefined;
             this._inputPlaceholder$.next('search.placeholder.text');
