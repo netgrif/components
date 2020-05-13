@@ -78,23 +78,51 @@
     "search": {
         "category": {
             "case": {
-                "title": "Názov prípadu",
-                "visualId": "Vizuálne ID prípadu",
-                "author": "Autor prípadu",
-                "process": "Proces prípadu",
-                "role": "Procesná rola",
-                "task": "Úloha prípadu",
-                "creationDate": "Dátum vytvorenia prípadu",
-                "dataset": "Dáta prípadu"
+                "title": {
+                    "name": "Názov prípadu",
+                    "placeholder": "Zadajte názov prípadu"
+                },
+                "visualId": {
+                    "name": "Vizuálne ID prípadu",
+                    "placeholder": "Zadajte vizuálne ID prípadu"
+                },
+                "author": {
+                    "name": "Autor prípadu",
+                    "placeholder": "Zadajte meno, alebo email autora prípadu"
+                },
+                "process": {
+                    "name": "Proces prípadu",
+                    "placeholder": "Vyberte proces prípadu"
+                },
+                "role": {
+                    "name": "Procesná rola",
+                    "placeholder": "Vyberte procesnú rolu"
+                },
+                "task": {
+                    "name": "Úloha prípadu",
+                    "placeholder": "Vyberte úlohu"
+                },
+                "creationDate": {
+                    "name": "Dátum vytvorenia prípadu",
+                    "placeholder": "Zadajte dátum vytvorenia prípadu"
+                },
+                "dataset": {
+                    "name": "Dáta prípadu",
+                    "placeholder": {
+                        "field": "Vyberte dátovú položku",
+                        "value": "Zadajte hodnotu dátovej položky"
+                    }
+                }
             },
             "task": {
-                "assignee": "Riešiteľ úlohy"
+                "assignee": {
+                    "name": "Riešiteľ úlohy",
+                    "placeholder": "Vyberte riešiteľa úlohy"
+                }
             }
         },
         "placeholder": {
-            "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií",
-            "date": "Zvoľte dátum",
-            "dateTime": "Zvoľte dátum a čas"
+            "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií"
         }
     },
     "dataField": {

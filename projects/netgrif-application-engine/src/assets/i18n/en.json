@@ -78,23 +78,51 @@
     "search": {
         "category": {
             "case": {
-                "title": "Case title",
-                "visualId": "Case visual ID",
-                "author": "Case author",
-                "process": "Case process",
-                "role": "Process role",
-                "task": "Case task",
-                "creationDate": "Case creation date",
-                "dataset": "Case data"
+                "title": {
+                    "name": "Case title",
+                    "placeholder": "Enter case title"
+                },
+                "visualId": {
+                    "name": "Case visual ID",
+                    "placeholder": "Enter case visual ID"
+                },
+                "author": {
+                    "name": "Case author",
+                    "placeholder": "Enter author's name or email"
+                },
+                "process": {
+                    "name": "Case process",
+                    "placeholder": "Select case process"
+                },
+                "role": {
+                    "name": "Process role",
+                    "placeholder": "Select process role"
+                },
+                "task": {
+                    "name": "Case task",
+                    "placeholder": "Select case task"
+                },
+                "creationDate": {
+                    "name": "Case creation date",
+                    "placeholder": "Select case creation date"
+                },
+                "dataset": {
+                    "name": "Case data",
+                    "placeholder": {
+                        "field": "Select data field",
+                        "value": "Enter data field value"
+                    }
+                }
             },
             "task": {
-                "assignee": "Task assignee"
+                "assignee": {
+                    "name": "Task assignee",
+                    "placeholder": "Select task assignee"
+                }
             }
         },
         "placeholder": {
-            "text": "Type anything to search or select a category",
-            "date": "Choose a date",
-            "dateTime": "Choose date and time"
+            "text": "Type anything to search or select a category"
         }
     },
     "dataField": {

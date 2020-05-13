@@ -41,6 +41,11 @@ export class SearchComponent implements OnInit {
      * Stores what input is currently being shown to the user
      */
     private _shownInput$: BehaviorSubject<string> = new BehaviorSubject<string>('text');
+    /**
+     * @ignore
+     * Contains the i18n paths for currently displayed placeholder
+     */
+    private _inputPlaceholder$: BehaviorSubject<string> = new BehaviorSubject<string>('search.placeholder.text');
 
     /**
      * Array that holds all the available [Categories]{@link Category}
@@ -54,6 +59,8 @@ export class SearchComponent implements OnInit {
         text: new FormControl(),
         date: new FormControl(),
         dateTime: new FormControl(),
+        number: new FormControl(),
+        boolean: new FormControl(false),
     };
     /**
      * @ignore
@@ -105,6 +112,10 @@ export class SearchComponent implements OnInit {
 
     public get shownInput(): string {
         return this._shownInput$.getValue();
+    }
+
+    public get inputPlaceholder$(): Observable<string> {
+        return this._inputPlaceholder$.asObservable();
     }
 
     /**
@@ -177,7 +188,8 @@ export class SearchComponent implements OnInit {
                 // start new chip
                 this._selectedCategory = inputValue;
                 this.searchChips.push({text: `${this.categoryName(inputValue)}: `});
-                this.formControl.setValue('');
+                this._inputPlaceholder$.next(this._selectedCategory.inputPlaceholder);
+                this.clearFormControlValue();
                 this.updateInputType();
             }
         } else {
@@ -188,8 +200,8 @@ export class SearchComponent implements OnInit {
                 if (this._selectedCategory instanceof CaseDataset && !this._selectedCategory.hasSelectedDatafields) {
                     this._selectedCategory.selectDatafields(inputValue.value);
                     this.appendTextToLastChip(`${inputValue.text}: `);
-                    this.formControl.setValue('');
                     this.updateInputType();
+                    this._inputPlaceholder$.next(this._selectedCategory.inputPlaceholder);
                     return;
                 } else {
                     this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));
@@ -211,8 +223,9 @@ export class SearchComponent implements OnInit {
                 }
             }
             this._selectedCategory = undefined;
+            this._inputPlaceholder$.next('search.placeholder.text');
             this.updateInputType();
-            this.formControl.setValue('');
+            this.clearFormControlValue();
         }
     }
 
@@ -236,6 +249,7 @@ export class SearchComponent implements OnInit {
                 this._selectedCategory.reset();
             }
             this._selectedCategory = undefined;
+            this._inputPlaceholder$.next('search.placeholder.text');
             this.formControl.setValue(this.formControl.value); // forces a refresh of autocomplete options
             this.updateInputType();
         } else {
@@ -270,6 +284,12 @@ export class SearchComponent implements OnInit {
             case SearchInputType.DATE_TIME:
                 this._shownInput$.next('dateTime');
                 return;
+            case SearchInputType.NUMBER:
+                this._shownInput$.next('number');
+                return;
+            case SearchInputType.BOOLEAN:
+                this._shownInput$.next('boolean');
+                return;
             default:
                 this._shownInput$.next('text');
                 return;
@@ -282,5 +302,15 @@ export class SearchComponent implements OnInit {
      */
     private get formControl(): FormControl {
         return this.formControls[this.shownInput];
+    }
+
+    /**
+     * @ignore
+     * Clears the value of all formcontrols
+     */
+    private clearFormControlValue(): void {
+        Object.keys(this.formControls).forEach( key => {
+            this.formControls[key].setValue( key === 'boolean' ? false : '');
+        });
     }
 }

@@ -6,11 +6,17 @@ import {SearchInputType} from '../search-input-type';
 
 export class CaseAuthor extends Category<string> {
 
+    private static readonly _i18n = 'search.category.case.author';
+
     constructor(operators: OperatorService, logger: LoggerService) {
         super(['authorEmail', 'authorName'],
             [operators.getOperator(Substring)],
-            'search.category.case.author',
+            `${CaseAuthor._i18n}.name`,
             SearchInputType.TEXT,
             logger);
+    }
+
+    get inputPlaceholder(): string {
+        return `${CaseAuthor._i18n}.placeholder`;
     }
 }

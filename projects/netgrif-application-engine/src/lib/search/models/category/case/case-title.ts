@@ -6,11 +6,17 @@ import {SearchInputType} from '../search-input-type';
 
 export class CaseTitle extends Category<string> {
 
+    private static readonly _i18n = 'search.category.case.title';
+
     constructor(operators: OperatorService, logger: LoggerService) {
         super(['title'],
             [operators.getOperator(Substring)],
-            'search.category.case.title',
+            `${CaseTitle._i18n}.name`,
             SearchInputType.TEXT,
             logger);
+    }
+
+    get inputPlaceholder(): string {
+        return `${CaseTitle._i18n}.placeholder`;
     }
 }

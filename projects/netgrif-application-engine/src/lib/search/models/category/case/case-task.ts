@@ -14,6 +14,7 @@ interface NetTaskPair {
 
 export class CaseTask extends AutocompleteCategory<NetTaskPair> {
 
+    private static readonly _i18n = 'search.category.case.task';
     protected _processCategory: CaseProcess;
 
     // TODO 30.4.2020 - CaseTask and CaseRole are almost identical, consider making an abstract class with implementation and
@@ -21,7 +22,7 @@ export class CaseTask extends AutocompleteCategory<NetTaskPair> {
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['taskIds'],
             [operators.getOperator(Equals)],
-            'search.category.case.task',
+            `${CaseTask._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
@@ -49,4 +50,7 @@ export class CaseTask extends AutocompleteCategory<NetTaskPair> {
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
+    get inputPlaceholder(): string {
+        return `${CaseTask._i18n}.placeholder`;
+    }
 }

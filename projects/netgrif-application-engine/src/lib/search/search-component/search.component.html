@@ -9,11 +9,12 @@
         <ng-template [ngSwitchCase]="'text'">
             <mat-form-field class="search-input">
                 <input type="text" matInput
-                       [placeholder]="'search.placeholder.text' | translate"
+                       #autocompleteInput
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
                        [formControl]="formControls['text']"
                        [matAutocomplete]="searchAutocomplete"
                        (keydown.enter)="$event.target.blur();confirmUserInput()">
-                <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection">
+                <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection" (optionSelected)="autocompleteInput.blur();confirmUserInput()">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                         <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
                         <span>{{option.translationPath ? (option.translationPath | translate) : option.text}}</span>
@@ -24,11 +25,11 @@
         <ng-template [ngSwitchCase]="'date'">
             <mat-form-field class="search-input">
                 <input matInput
-                       [placeholder]="'search.placeholder.date' | translate"
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
                        [formControl]="formControls['date']"
                        [matDatepicker]="searchDatepicker"
                        (click)="searchDatepicker.open()"
-                       (keydown.enter)="searchDatepicker.close()">
+                       (keydown.enter)="searchDatepicker.close();confirmUserInput()">
                 <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #searchDatepicker></mat-datepicker>
             </mat-form-field>
@@ -36,11 +37,11 @@
         <ng-template [ngSwitchCase]="'dateTime'">
             <mat-form-field class="search-input">
                 <input matInput
-                       [placeholder]="'search.placeholder.dateTime' | translate"
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
                        [formControl]="formControls['dateTime']"
                        [ngxMatDatetimePicker]="searchDateTimepicker"
                        (click)="searchDateTimepicker.open()"
-                       (keydown.enter)="searchDateTimepicker.close()">
+                       (keydown.enter)="searchDateTimepicker.close();confirmUserInput()">
                 <mat-datepicker-toggle matPrefix [for]="searchDateTimepicker">
                     <mat-icon matDatepickerToggleIcon>schedule</mat-icon>
                 </mat-datepicker-toggle>
@@ -52,6 +53,17 @@
                                          [color]="'primary'"
                                          [enableMeridian]="false"></ngx-mat-datetime-picker>
             </mat-form-field>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'number'">
+            <mat-form-field class="search-input">
+                <input type="number" matInput
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
+                       [formControl]="formControls['number']"
+                       (keydown.enter)="$event.target.blur();confirmUserInput()">
+            </mat-form-field>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'boolean'">
+            <mat-slide-toggle [formControl]="formControls['boolean']">{{(inputPlaceholder$ | async) | translate}}</mat-slide-toggle>
         </ng-template>
     </div>
     <button mat-icon-button (click)="confirmUserInput()">

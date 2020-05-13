@@ -10,11 +10,11 @@ import {SearchInputType} from './search-input-type';
  *
  * As opposed to {@link Operator}s Categories are not stateless and shouldn't be shared between multiple search GUI instances.
  *
- * You can use {@link CategoryFactoryService} to get instances of Category classes.
+ * You can use {@link CategoryFactory} to get instances of Category classes.
  *
  * If you want to make your own Category class you have to make sure that the constructor takes {@link OperatorService} as it's first
  * argument and {@link LoggerService} as it's second argument. Alternatively you can make your own implementation of the
- * {@link CategoryFactoryService} so, that your style of constructors is supported.
+ * {@link CategoryFactory} so, that your style of constructors is supported.
  *
  * @typeparam T type of objects the category expects to generate queries from
  */
@@ -118,11 +118,16 @@ export abstract class Category<T> {
     /**
      * Selects the default operator that should be used for query generation, when no Operator selection is provided to the user.
      *
-     * The default implementation selects the first operator in the [_allowedOperators]{@link Category#_allowedOperators} array.
+     * The default implementation selects the first operator in the [_allowedOperators]{@link Category#allowedOperators} array.
      *
      * See [selectOperator()]{@link Category#selectOperator} for more information.
      */
     public selectDefaultOperator(): void {
         this.selectOperator(0);
     }
+
+    /**
+     * @returns the translation string path for the text that should be displayed in the input placeholder
+     */
+    public abstract get inputPlaceholder(): string;
 }
