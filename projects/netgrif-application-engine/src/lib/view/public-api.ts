@@ -8,6 +8,7 @@ export * from './task-view/tabbed-task-view';
 
 export * from './abstract/view-with-headers';
 export * from './abstract/sortable-view';
+export * from './abstract/sortable-view-with-allowed-nets';
 
 /* SERVICES */
 export * from './case-view/service/case-view-service';

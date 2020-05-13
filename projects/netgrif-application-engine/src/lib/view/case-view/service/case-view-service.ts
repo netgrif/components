@@ -16,14 +16,14 @@ import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
+import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 
 
 @Injectable()
-export class CaseViewService extends SortableView {
+export class CaseViewService extends SortableViewWithAllowedNets {
 
     protected _loading$: BehaviorSubject<boolean>;
     protected _cases$: Observable<Array<Case>>;
-    protected _allowedNets$: ReplaySubject<Array<Net>>;
     protected _nextPage$: BehaviorSubject<number>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
@@ -38,14 +38,10 @@ export class CaseViewService extends SortableView {
                 protected _searchService: SearchService,
                 protected _translate: TranslateService,
                 protected _viewParams?: CaseParams) {
-        super();
+        super(allowedNets);
         this._loading$ = new BehaviorSubject<boolean>(false);
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
-        });
-        this._allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        allowedNets.subscribe(nets => {
-            this._allowedNets$.next(nets);
         });
         this._endOfData = false;
         this._nextPage$ = new BehaviorSubject<number>(null);
@@ -84,10 +80,6 @@ export class CaseViewService extends SortableView {
 
     public get cases$(): Observable<Array<Case>> {
         return this._cases$;
-    }
-
-    public get allowedNets$(): Observable<Array<Net>> {
-        return this._allowedNets$.asObservable();
     }
 
     public loadPage(page: number): Observable<{ [k: string]: Case }> {
