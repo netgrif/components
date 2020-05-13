@@ -9,6 +9,7 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {CaseViewService} from './case-view-service';
 import {CaseParams} from '../models/case-params';
 import {TranslateService} from '@ngx-translate/core';
+import {of} from 'rxjs';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link CaseViewService} dependencies.
@@ -40,17 +41,21 @@ export class CaseViewServiceFactory {
         const view = this._configService.getViewByPath(webViewPath);
         if (view && view.layout && view.layout.params) {
             const viewParams = view.layout.params as CaseParams;
+            let nets = of([]);
             if (viewParams.allowedNets !== undefined) {
-                return new CaseViewService(
-                    this._processService.getNets(viewParams.allowedNets),
-                    this._sideMenuService,
-                    this._caseResourceService,
-                    this._log,
-                    this._snackBarService,
-                    this._searchService,
-                    this._translate,
-                    viewParams);
+                nets = this._processService.getNets(viewParams.allowedNets);
+            } else {
+                this._log.warn(`No 'allowedNets' provided for case view with path '${webViewPath}'`);
             }
+            return new CaseViewService(
+                nets,
+                this._sideMenuService,
+                this._caseResourceService,
+                this._log,
+                this._snackBarService,
+                this._searchService,
+                this._translate,
+                viewParams);
         } else {
             throw new Error(`Can't load configuration for view with webPath: '${webViewPath}'`);
         }
