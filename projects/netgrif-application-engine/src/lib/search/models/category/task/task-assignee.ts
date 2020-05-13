@@ -4,15 +4,16 @@ import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {Equals} from '../../operator/equals';
-import {User} from '../../../../resources/interface/user';
 import {Query} from '../../query/query';
 import {Observable, of} from 'rxjs';
+import {filter, map, tap} from 'rxjs/operators';
 
 
-export class TaskAssignee extends AutocompleteCategory<User> {
+export class TaskAssignee extends AutocompleteCategory<number> {
 
     private static readonly _i18n = 'search.category.task.assignee';
-    protected _options: Array<SearchAutocompleteOption> = [];
+
+    private _searchingUsers = false;
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['userId'],
@@ -21,25 +22,28 @@ export class TaskAssignee extends AutocompleteCategory<User> {
             logger);
     }
 
-    protected createOptions(): void {
-        this._optionalDependencies.userResourceService.getAll().subscribe(users => {
-            this._options = users.map(user => ({text: user.fullName, value: [user]}));
-        });
-    }
-
-    get options(): Array<SearchAutocompleteOption> {
-        return this._options.slice();
-    }
+    protected createOptions(): void {}
 
     filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
-        const value = userInput.toLocaleLowerCase();
-        return of(this.options.filter(option => {
-            return option.text.toLocaleLowerCase().includes(value) || option.value[0].email.includes(value);
-        }));
+        if (this._searchingUsers) {
+            return of([]);
+        }
+        this._searchingUsers = true;
+        // TODO 13.5.2020 - Endpoint searches for substrings in name and surname separately, won't match "Name Surname" string to any result
+        //  User search should possibly be delegated to elastic in the future
+        return this._optionalDependencies.userResourceService.search({fulltext: userInput}).pipe(
+            tap(() => {
+                this._searchingUsers = false;
+            }),
+            filter(result => Array.isArray(result)),
+            map(users => users.map(
+                user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
+            ))
+        );
     }
 
-    protected generateQuery(userInput: Array<User>): Query {
-        return this._selectedOperator.createQuery(this.elasticKeywords, [`${userInput[0].id}`]);
+    protected generateQuery(userInput: Array<number>): Query {
+        return this._selectedOperator.createQuery(this.elasticKeywords, [`${userInput[0]}`]);
     }
 
     get inputPlaceholder(): string {
