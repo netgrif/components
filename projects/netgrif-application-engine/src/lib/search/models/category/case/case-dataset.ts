@@ -13,6 +13,8 @@ import {EqualsDate} from '../../operator/equals-date';
 import {Substring} from '../../operator/substring';
 import {EqualsDateTime} from '../../operator/equals-date-time';
 import {Equals} from '../../operator/equals';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 
 interface Datafield {
     netId: string;
@@ -23,8 +25,8 @@ interface Datafield {
 export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     private static readonly _i18n = 'search.category.case.dataset';
-    // TODO 4.5.2020 - only button and file fields are truly unsupported, the rest is yet to be implemented
-    protected static DISABLED_TYPES = ['button', 'file', 'user', 'dateTime'];
+    // TODO 4.5.2020 - only button and file fields are truly unsupported, dateTime is implemented but lacks elastic support
+    protected static DISABLED_TYPES = ['button', 'file', 'dateTime'];
 
     protected _selectedDatafields: Array<Datafield>;
 
@@ -40,6 +42,8 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
                 return SearchInputType.NUMBER;
             case 'boolean':
                 return SearchInputType.BOOLEAN;
+            case 'user':
+                return SearchInputType.AUTOCOMPLETE;
             default:
                 return SearchInputType.TEXT;
         }
@@ -71,6 +75,8 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             case 'number':
                 return [this._operators.getOperator(Equals)];
             case 'boolean':
+                return [this._operators.getOperator(Equals)];
+            case 'user':
                 return [this._operators.getOperator(Equals)];
             case 'date':
                 return [this._operators.getOperator(EqualsDate)];
@@ -115,6 +121,13 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         }
     }
 
+    get inputPlaceholder(): string {
+        if (!this._selectedDatafields) {
+            return `${CaseDataset._i18n}.placeholder.field`;
+        }
+        return `${CaseDataset._i18n}.placeholder.value`;
+    }
+
     protected generateQuery(userInput: Array<unknown>): Query {
         const queries = this._selectedDatafields.map(datafield => {
             const valueQuery = this._selectedOperator.createQuery(this.elasticKeywords, userInput);
@@ -144,6 +157,21 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         });
     }
 
+    filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
+        if (!this._selectedDatafields) {
+            return super.filterOptions(userInput);
+        }
+        if (!(this._selectedDatafields[0].fieldType === 'user')) {
+            return of([]);
+        }
+        return this._optionalDependencies.userResourceService.search({fulltext: userInput}).pipe(
+            filter(result => Array.isArray(result)),
+            map(users => users.map(
+                user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
+            ))
+        );
+    }
+
     public selectDatafields(datafieldMapKey: string, selectDefaultOperator = true): void {
         if (!this._optionsMap.has(datafieldMapKey)) {
             this._log.warn(`The provided 'datafieldMapKey' does not exist.`);
@@ -153,12 +181,5 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         if (selectDefaultOperator) {
             this.selectDefaultOperator();
         }
-    }
-
-    get inputPlaceholder(): string {
-        if (!this._selectedDatafields) {
-            return `${CaseDataset._i18n}.placeholder.field`;
-        }
-        return `${CaseDataset._i18n}.placeholder.value`;
     }
 }
