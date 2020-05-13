@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {SideMenuService} from '../../../side-menu/services/side-menu.service';
-import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
-import {SearchService} from '../../../search/search-service/search.service';
-import {ProcessService} from '../../../process/process.service';
-import {ConfigurationService} from '../../../configuration/configuration.service';
-import {LoggerService} from '../../../logger/services/logger.service';
-import {CaseViewService} from './case-view-service';
-import {CaseParams} from '../models/case-params';
+import {SideMenuService} from '../../../../side-menu/services/side-menu.service';
+import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
+import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
+import {SearchService} from '../../../../search/search-service/search.service';
+import {ProcessService} from '../../../../process/process.service';
+import {ConfigurationService} from '../../../../configuration/configuration.service';
+import {LoggerService} from '../../../../logger/services/logger.service';
+import {CaseViewService} from '../case-view-service';
+import {CaseParams} from '../../models/case-params';
 import {TranslateService} from '@ngx-translate/core';
 import {of} from 'rxjs';
 
@@ -17,9 +17,15 @@ import {of} from 'rxjs';
  * to create an instance for that view.
  *
  * If you have extended {@link CaseViewService} with your own functionality, you are encouraged to extend this service as well.
+ *
+ * This is one of available `CaseViewServiceFactory` implementations, see {@link ArrayCaseViewServiceFactory} for another one.
+ *
+ * This implementation is useful if you need to provide {@link CaseViewService} and have a view with `allowedNets`
+ * defined in your configuration. The benefit of this approach is that you can pass view parameters from the configuration to the service
+ * as well as the allowed nets.
  */
 @Injectable()
-export class CaseViewServiceFactory {
+export class ConfigCaseViewServiceFactory {
 
     constructor(protected _sideMenuService: SideMenuService,
                 protected _caseResourceService: CaseResourceService,

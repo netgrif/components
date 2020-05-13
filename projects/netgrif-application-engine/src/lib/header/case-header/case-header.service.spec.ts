@@ -6,7 +6,7 @@ import {HeaderMode} from '../models/header-mode';
 import {SearchChangeDescription} from '../models/user-changes/search-change-description';
 import {EditChangeDescription} from '../models/user-changes/edit-change-description';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
-import {CaseViewServiceFactory} from '../../view/case-view/service/case-view-service-factory';
+import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 import {SearchService} from '../../search/search-service/search.service';
 import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
@@ -30,12 +30,12 @@ describe('CaseHeaderService', () => {
             ],
             providers: [
                 CaseHeaderService,
-                CaseViewServiceFactory,
+                ConfigCaseViewServiceFactory,
                 {   provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory},
                 {   provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]},
+                    deps: [ConfigCaseViewServiceFactory]},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
         });

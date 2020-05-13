@@ -3,7 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseListComponent} from './case-list.component';
 import {MaterialModule} from '../../../../material/material.module';
 import {CaseViewService} from '../../service/case-view-service';
-import {CaseViewServiceFactory} from '../../service/case-view-service-factory';
+import {ConfigCaseViewServiceFactory} from '../../service/factory/case-view-service-factory';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
@@ -15,7 +15,7 @@ import {SearchService} from '../../../../search/search-service/search.service';
 import {SimpleFilter} from '../../../../filter/models/simple-filter';
 import {FilterType} from '../../../../filter/models/filter-type';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
 };
 
@@ -38,11 +38,11 @@ describe('CaseListComponent', () => {
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                CaseViewServiceFactory,
+                ConfigCaseViewServiceFactory,
                 {
                     provide: CaseViewService,
                     useFactory: localCaseViewServiceFactory,
-                    deps: [CaseViewServiceFactory]
+                    deps: [ConfigCaseViewServiceFactory]
                 },
                 {
                     provide: SearchService,

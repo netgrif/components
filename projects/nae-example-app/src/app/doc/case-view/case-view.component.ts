@@ -3,14 +3,14 @@ import {
     AbstractCaseView,
     Case,
     CaseViewService,
-    CaseViewServiceFactory,
+    ConfigCaseViewServiceFactory,
     FilterType,
     HeaderComponent,
     SearchService,
     SimpleFilter
 } from '@netgrif/application-engine';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('case');
 };
 
@@ -24,12 +24,12 @@ const searchServiceFactory = () => {
     templateUrl: './case-view.component.html',
     styleUrls: ['./case-view.component.scss'],
     providers: [
-        CaseViewServiceFactory,
+        ConfigCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
-            deps: [CaseViewServiceFactory]},
+            deps: [ConfigCaseViewServiceFactory]},
     ],
 })
 export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {

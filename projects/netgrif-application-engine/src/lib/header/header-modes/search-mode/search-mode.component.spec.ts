@@ -13,7 +13,7 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
 import {CaseHeaderService} from '../../case-header/case-header.service';
-import {CaseViewServiceFactory} from '../../../view/case-view/service/case-view-service-factory';
+import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/case-view-service-factory';
 import {SearchService} from '../../../search/search-service/search.service';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -46,12 +46,12 @@ describe('SearchModeComponent', () => {
                 TranslateLibModule
             ],
             providers: [
-                CaseViewServiceFactory,
+                ConfigCaseViewServiceFactory,
                 {   provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory},
                 {   provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]},
+                    deps: [ConfigCaseViewServiceFactory]},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 CaseHeaderService
             ]
