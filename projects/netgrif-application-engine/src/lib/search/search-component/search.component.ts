@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../models/category/category';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {map, mergeAll, startWith} from 'rxjs/operators';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {SearchService} from '../search-service/search.service';
 import {SimpleSearchChip} from '../models/chips/simple-search-chip';
@@ -94,8 +94,7 @@ export class SearchComponent implements OnInit {
         this.filteredOptions = this.formControl.valueChanges.pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : this.objectName(value)),
-            map(inputText => this._filterOptions(inputText)),
-            mergeAll()
+            map(inputText => this._filterOptions(inputText))
         );
     }
 
@@ -125,15 +124,15 @@ export class SearchComponent implements OnInit {
      * @param userInput string entered by the user
      * @returns [Categories]{@link Category} that start with the user input. Case insensitive. Based on locale translation.
      */
-    private _filterOptions(userInput: string): Observable<Array<Category<any>>> | Observable<Array<SearchAutocompleteOption>> {
+    private _filterOptions(userInput: string): Array<Category<any>> | Array<SearchAutocompleteOption> {
         if (!this._selectedCategory) {
             const value = userInput.toLocaleLowerCase();
-            return of(this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value)));
+            return this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value));
         } else {
             if (this._selectedCategory instanceof AutocompleteCategory) {
                 return this._selectedCategory.filterOptions(userInput);
             }
-            return of([]);
+            return [];
         }
     }
 
@@ -203,7 +202,6 @@ export class SearchComponent implements OnInit {
                     this.appendTextToLastChip(`${inputValue.text}: `);
                     this.updateInputType();
                     this._inputPlaceholder$.next(this._selectedCategory.inputPlaceholder);
-                    this.clearFormControlValue();
                     return;
                 } else {
                     this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));

@@ -6,7 +6,6 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {Equals} from '../../operator/equals';
 import {User} from '../../../../resources/interface/user';
 import {Query} from '../../query/query';
-import {Observable, of} from 'rxjs';
 
 
 export class TaskAssignee extends AutocompleteCategory<User> {
@@ -31,11 +30,11 @@ export class TaskAssignee extends AutocompleteCategory<User> {
         return this._options.slice();
     }
 
-    filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
+    filterOptions(userInput: string): Array<SearchAutocompleteOption> {
         const value = userInput.toLocaleLowerCase();
-        return of(this.options.filter(option => {
+        return this.options.filter(option => {
             return option.text.toLocaleLowerCase().includes(value) || option.value[0].email.includes(value);
-        }));
+        });
     }
 
     protected generateQuery(userInput: Array<User>): Query {
