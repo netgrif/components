@@ -59,7 +59,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     ngOnInit() {
         super.ngOnInit();
-        this._taskViewService.taskData.subscribe(() => this.resolveFeaturedFieldsValues());
+        // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         let cols: number;
         if (this.taskPanelData.task && this.taskPanelData.task.layout && this.taskPanelData.task.layout.cols) {
             cols = this.taskPanelData.task.layout.cols;
