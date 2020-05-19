@@ -1,5 +1,13 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {AbstractTaskView, FilterType, HeaderComponent, SearchService, SimpleFilter, TaskViewService} from '@netgrif/application-engine';
+import {
+    AbstractTaskView,
+    ArrayTaskViewServiceFactory,
+    FilterType,
+    HeaderComponent,
+    SearchService,
+    SimpleFilter,
+    TaskViewService
+} from '@netgrif/application-engine';
 
 const searchServiceFactory = () => {
     // TODO load/use base filter somehow
@@ -11,9 +19,12 @@ const searchServiceFactory = () => {
     templateUrl: './task-view.component.html',
     styleUrls: ['./task-view.component.scss'],
     providers: [
-        TaskViewService,
+        ArrayTaskViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
+        {   provide: TaskViewService,
+            useFactory: ArrayTaskViewServiceFactory.noNetsTaskViewServiceFactory,
+            deps: [ArrayTaskViewServiceFactory]},
     ]
 })
 export class TaskViewComponent extends AbstractTaskView implements AfterViewInit {
