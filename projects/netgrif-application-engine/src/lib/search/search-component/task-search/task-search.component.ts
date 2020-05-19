@@ -3,6 +3,7 @@ import {CategoryFactory} from '../../category-factory/category-factory';
 import {Category} from '../../models/category/category';
 import {TaskAssignee} from '../../models/category/task/task-assignee';
 import {TaskProcess} from '../../models/category/task/task-process';
+import {TaskRole} from '../../models/category/task/task-role';
 
 @Component({
     selector: 'nae-task-search',
@@ -19,7 +20,8 @@ export class TaskSearchComponent {
     constructor(private _categoryFactory: CategoryFactory) {
         this.searchCategories = [
             this._categoryFactory.get(TaskAssignee),
-            this._categoryFactory.get(TaskProcess)
+            this._categoryFactory.get(TaskProcess),
+            this._categoryFactory.get(TaskRole),
         ];
     }
 

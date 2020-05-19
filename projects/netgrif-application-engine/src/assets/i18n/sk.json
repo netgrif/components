@@ -122,6 +122,10 @@
                 "process": {
                     "name": "Proces úlohy",
                     "placeholder": "Vyberte proces úlohy"
+                },
+                "role": {
+                    "name": "Procesná rola úlohy",
+                    "placeholder": "Vyberte procesnú rolu"
                 }
             }
         },

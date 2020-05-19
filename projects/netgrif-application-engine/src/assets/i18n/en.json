@@ -122,6 +122,10 @@
                 "process": {
                     "name": "Task process",
                     "placeholder": "Select task process"
+                },
+                "role": {
+                    "name": "Task process role",
+                    "placeholder": "Select task process role"
                 }
             }
         },

@@ -122,6 +122,10 @@
                 "process": {
                     "name": "Prozess",
                     "placeholder": "Wählen Sie den Prozess aus"
+                },
+                "role": {
+                    "name": "Aufgabenprocessrolle",
+                    "placeholder": "Wählen Sie die Prozessrolle der Aufgabe aus"
                 }
             }
         },

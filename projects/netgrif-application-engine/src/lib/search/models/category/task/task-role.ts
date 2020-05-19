@@ -1,29 +1,29 @@
 import {AutocompleteCategory} from '../autocomplete-category';
+import {NetRolePair} from '../net-role-pair';
+import {TaskProcess} from './task-process';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
+import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {Equals} from '../../operator/equals';
 import {Query} from '../../query/query';
-import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
-import {CaseProcess} from './case-process';
 import {BooleanOperator} from '../../boolean-operator';
-import {NetRolePair} from '../net-role-pair';
 
-export class CaseRole extends AutocompleteCategory<NetRolePair> {
+export class TaskRole extends AutocompleteCategory<NetRolePair> {
 
-    private static readonly _i18n = 'search.category.case.role';
-    protected _processCategory: CaseProcess;
+    private static readonly _i18n = 'search.category.task.role';
+    protected _processCategory: TaskProcess;
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
-        super(['enabledRoles'],
+        super(['roles'],
             [operators.getOperator(Equals)],
-            `${CaseRole._i18n}.name`,
+            `${TaskRole._i18n}.name`,
             logger);
-        this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
+        this._processCategory = this._optionalDependencies.categoryFactory.get(TaskProcess) as TaskProcess;
         this._processCategory.selectDefaultOperator();
     }
 
     protected createOptions(): void {
-        this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
+        this._optionalDependencies.taskViewService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 petriNet.roles.forEach(processRole => {
                     this.addToMap(processRole.name, {
@@ -45,6 +45,6 @@ export class CaseRole extends AutocompleteCategory<NetRolePair> {
     }
 
     get inputPlaceholder(): string {
-        return `${CaseRole._i18n}.placeholder`;
+        return `${TaskRole._i18n}.placeholder`;
     }
 }
