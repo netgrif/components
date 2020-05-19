@@ -125,6 +125,17 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                                 }
                             }
                         },
+                        drawer: {
+                            type: '',
+                            layout: {
+                                name: ''
+                            },
+                            access: 'private',
+                            navigation: {
+                                title: 'Drawer',
+                                icon: 'settings'
+                            },
+                        },
                         task: {
                             type: '',
                             layout: {

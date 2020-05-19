@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="padding-custom">
     <div fxLayout="row">
         <div fxLayout="row" fxFlex="90" class="header-content-container"
              [ngSwitch]="headerService.headerState.mode">
@@ -26,17 +26,17 @@
                 </button>
             </div>
             <mat-menu #headerMenu="matMenu">
-                <button mat-menu-item
+                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
                         (click)="headerService.changeMode(headerModeEnum.SORT, false)">
                     <mat-icon>sort</mat-icon>
                     {{ 'headers.orderMode' | translate}}
                 </button>
-                <button mat-menu-item
+                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
                         (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
                     <mat-icon>search</mat-icon>
                     {{ 'headers.searchMode' | translate}}
                 </button>
-                <button mat-menu-item
+                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.EDIT}"
                         (click)="headerService.changeMode(headerModeEnum.EDIT)">
                     <mat-icon>edit</mat-icon>
                     {{ 'headers.editMode' | translate}}
