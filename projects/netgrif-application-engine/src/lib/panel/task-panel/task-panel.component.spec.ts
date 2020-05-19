@@ -25,6 +25,7 @@ import {SearchService} from '../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ArrayTaskViewServiceFactory} from '../../view/task-view/service/factory/array-task-view-service-factory';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
@@ -44,8 +45,11 @@ describe('TaskPanelComponent', () => {
                 HttpClientTestingModule
             ],
             providers: [
+                ArrayTaskViewServiceFactory,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                TaskViewService,
+                {   provide: TaskViewService,
+                    useFactory: ArrayTaskViewServiceFactory.noNetsTaskViewServiceFactory,
+                    deps: [ArrayTaskViewServiceFactory]},
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: UserResourceService, useClass: MyUserResources},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},

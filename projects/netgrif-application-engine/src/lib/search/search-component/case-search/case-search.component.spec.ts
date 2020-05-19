@@ -7,9 +7,9 @@ import {SearchService} from '../../search-service/search.service';
 import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/case-view-service-factory';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {CategoryFactory} from '../../category-factory/category-factory';
+import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/config-case-view-service-factory';
 
 describe('CaseSearchComponent', () => {
     let component: CaseSearchComponent;

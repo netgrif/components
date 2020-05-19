@@ -1,9 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {CaseListComponent} from './case-list.component';
 import {MaterialModule} from '../../../../material/material.module';
 import {CaseViewService} from '../../service/case-view-service';
-import {ConfigCaseViewServiceFactory} from '../../service/factory/case-view-service-factory';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
@@ -14,6 +12,7 @@ import {PanelModule} from '../../../../panel/panel.module';
 import {SearchService} from '../../../../search/search-service/search.service';
 import {SimpleFilter} from '../../../../filter/models/simple-filter';
 import {FilterType} from '../../../../filter/models/filter-type';
+import {ConfigCaseViewServiceFactory} from '../../service/factory/config-case-view-service-factory';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');

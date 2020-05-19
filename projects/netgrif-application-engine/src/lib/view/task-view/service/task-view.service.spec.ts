@@ -11,6 +11,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../panel/task-p
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../../utility/tests/test-factory-methods';
+import {ArrayTaskViewServiceFactory} from './factory/array-task-view-service-factory';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -19,7 +20,10 @@ describe('TaskViewService', () => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
             providers: [
-                TaskViewService,
+                ArrayTaskViewServiceFactory,
+                {   provide: TaskViewService,
+                    useFactory: ArrayTaskViewServiceFactory.noNetsTaskViewServiceFactory,
+                    deps: [ArrayTaskViewServiceFactory]},
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
