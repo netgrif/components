@@ -118,6 +118,10 @@
                 "assignee": {
                     "name": "Riešiteľ úlohy",
                     "placeholder": "Vyberte riešiteľa úlohy"
+                },
+                "process": {
+                    "name": "Proces úlohy",
+                    "placeholder": "Vyberte proces úlohy"
                 }
             }
         },

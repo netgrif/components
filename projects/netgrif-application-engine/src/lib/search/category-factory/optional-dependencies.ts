@@ -1,6 +1,7 @@
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {CategoryFactory} from './category-factory';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 
 /**
  * Other dependencies that the {@link CategoryFactory} provides to the [Categories]{@link Category} it creates.
@@ -8,15 +9,19 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
  */
 export interface OptionalDependencies {
     /**
-     * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
-     */
-    caseViewService: CaseViewService | null;
-    /**
      * Reference to the Factory itself. Useful if your choices in one category require a query from a different category as well.
      * Most commonly used to get an instance of {@link CaseProcess} Category to limit queries on identifiers that are only unique
      * within a net to that net.
      */
     categoryFactory: CategoryFactory;
+    /**
+     * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
+     */
+    caseViewService: CaseViewService | null;
+    /**
+     * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
+     */
+    taskViewService: TaskViewService | null;
     /**
      * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
      */
