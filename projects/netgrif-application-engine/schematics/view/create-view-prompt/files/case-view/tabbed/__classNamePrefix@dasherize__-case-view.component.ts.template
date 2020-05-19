@@ -8,11 +8,11 @@ import {
     NAE_TAB_DATA,
     SearchService,
     SimpleFilter,
-    TabbedCaseView,,
+    TabbedCaseView,
 } from '@netgrif/application-engine';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
-    return factory.create('<%= viewPath %>');;
+    return factory.create('<%= viewPath %>');
 };
 
 const searchServiceFactory = () => {

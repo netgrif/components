@@ -21,6 +21,6 @@ export interface EmbeddedView {
         icon?: string,
         text?: string
     };
-    canBeClosed?: boolean;
+    canBeClosed: boolean;
     order?: number;
 }
