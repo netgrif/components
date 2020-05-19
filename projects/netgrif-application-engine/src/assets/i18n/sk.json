@@ -126,6 +126,10 @@
                 "role": {
                     "name": "Procesná rola úlohy",
                     "placeholder": "Vyberte procesnú rolu"
+                },
+                "task": {
+                    "name": "Úloha",
+                    "placeholder": "Vyberte úlohu"
                 }
             }
         },

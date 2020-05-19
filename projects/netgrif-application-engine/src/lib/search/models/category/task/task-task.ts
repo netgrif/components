@@ -1,31 +1,30 @@
 import {AutocompleteCategory} from '../autocomplete-category';
+import {NetTaskPair} from '../net-task-pair';
+import {TaskProcess} from './task-process';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {Equals} from '../../operator/equals';
-import {CaseProcess} from './case-process';
 import {Query} from '../../query/query';
 import {BooleanOperator} from '../../boolean-operator';
-import {NetTaskPair} from '../net-task-pair';
 
-export class CaseTask extends AutocompleteCategory<NetTaskPair> {
 
-    private static readonly _i18n = 'search.category.case.task';
-    protected _processCategory: CaseProcess;
+export class TaskTask extends AutocompleteCategory<NetTaskPair> {
 
-    // TODO 30.4.2020 - CaseTask and CaseRole are almost identical, consider making an abstract class with implementation and
-    //  extending it for specific details
+    private static readonly _i18n = 'search.category.task.task';
+    protected _processCategory: TaskProcess;
+
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
-        super(['taskIds'],
+        super(['transitionId'],
             [operators.getOperator(Equals)],
-            `${CaseTask._i18n}.name`,
+            `${TaskTask._i18n}.name`,
             logger);
-        this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
+        this._processCategory = this._optionalDependencies.categoryFactory.get(TaskProcess) as TaskProcess;
         this._processCategory.selectDefaultOperator();
     }
 
     protected createOptions(): void {
-        this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
+        this._optionalDependencies.taskViewService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 petriNet.transitions.forEach(transition => {
                     this.addToMap(transition.title, {
@@ -47,6 +46,6 @@ export class CaseTask extends AutocompleteCategory<NetTaskPair> {
     }
 
     get inputPlaceholder(): string {
-        return `${CaseTask._i18n}.placeholder`;
+        return `${TaskTask._i18n}.placeholder`;
     }
 }

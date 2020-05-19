@@ -27,6 +27,7 @@ export * from './models/category/case/case-dataset';
 export * from './models/category/task/task-assignee';
 export * from './models/category/task/task-process';
 export * from './models/category/task/task-role';
+export * from './models/category/task/task-task';
 
 export * from './models/datafield-map-key';
 
