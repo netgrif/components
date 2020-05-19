@@ -163,7 +163,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         if (!this._selectedDatafields) {
             return super.filterOptions(userInput);
         }
-        if (!(this._selectedDatafields[0].fieldType === 'user') || this._searchingUsers) {
+        if (this._selectedDatafields[0].fieldType !== 'user' || this._searchingUsers) {
             return of([]);
         }
         this._searchingUsers = true;
