@@ -4,7 +4,6 @@ import {
     Case,
     CaseViewService,
     ConfigCaseViewServiceFactory,
-    FilterType,
     HeaderComponent,
     SearchService,
     SimpleFilter
@@ -16,7 +15,7 @@ const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
 
 const searchServiceFactory = () => {
     // TODO load/use base filter somehow
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
+    return new SearchService(SimpleFilter.emptyCaseFilter());
 };
 
 @Component({

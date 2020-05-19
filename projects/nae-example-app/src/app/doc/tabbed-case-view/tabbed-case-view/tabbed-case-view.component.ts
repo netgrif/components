@@ -2,7 +2,6 @@ import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CaseViewService,
     ConfigCaseViewServiceFactory,
-    FilterType,
     HeaderComponent,
     InjectedTabbedCaseViewData,
     LoggerService,
@@ -17,7 +16,7 @@ const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
 };
 
 const searchServiceFactory = () => {
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
+    return new SearchService(SimpleFilter.emptyCaseFilter());
 };
 
 @Component({

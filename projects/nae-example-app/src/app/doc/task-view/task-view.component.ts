@@ -2,7 +2,6 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
     ConfigTaskViewServiceFactory,
-    FilterType,
     HeaderComponent,
     SearchService,
     SimpleFilter,
@@ -15,7 +14,7 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
 
 const searchServiceFactory = () => {
     // TODO load/use base filter somehow
-    return new SearchService(new SimpleFilter('', FilterType.TASK, {}));
+    return new SearchService(SimpleFilter.emptyTaskFilter());
 };
 
 @Component({

@@ -1,20 +1,33 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
+    ArrayTaskViewServiceFactory,
     HeaderComponent,
     InjectedTabbedTaskViewData,
     NAE_TAB_DATA,
+    SearchService,
     TabbedTaskView,
     TaskViewService
 } from '@netgrif/application-engine';
 
+const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
+    return new SearchService(injectedTabData.baseFilter);
+};
 
 @Component({
-    selector: '<%= prefix %>-<%= dasherize(path) %>-task-view',
-    templateUrl: './<%= dasherize(path) %>-task-view.component.html',
-    styleUrls: ['./<%= dasherize(path) %>-task-view.component.scss'],
-    providers: [TaskViewService]
+    selector: '<%= prefix %>-<%= dasherize(classNamePrefix) %>-task-view',
+    templateUrl: './<%= dasherize(classNamePrefix) %>-task-view.component.html',
+    styleUrls: ['./<%= dasherize(classNamePrefix) %>-task-view.component.scss'],
+    providers: [
+        ArrayTaskViewServiceFactory,
+        {   provide: SearchService,
+            useFactory: searchServiceFactory,
+            deps: [NAE_TAB_DATA]},
+        {   provide: TaskViewService,
+            useFactory: ArrayTaskViewServiceFactory.tabbedTaskViewServiceFactory,
+            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},
+    ]
 })
-export class <%= classify(path) %>TaskViewComponent extends TabbedTaskView implements AfterViewInit {
+export class <%= classify(classNamePrefix) %>TaskViewComponent extends TabbedTaskView implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 

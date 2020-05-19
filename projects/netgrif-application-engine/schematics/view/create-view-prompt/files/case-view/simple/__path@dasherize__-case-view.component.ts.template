@@ -1,26 +1,41 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
-    HeaderComponent,
     AbstractCaseView,
-    CaseViewService,
     Case,
-    SimpleFilter,
-    FilterType,
+    CaseViewService,
+    ConfigCaseViewServiceFactory,
+    HeaderComponent,
+    SearchService,
+    SimpleFilter
 } from '@netgrif/application-engine';
 
+const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
+    return factory.create('<%= viewPath %>');
+};
+
+const searchServiceFactory = () => {
+    return new SearchService(SimpleFilter.emptyCaseFilter());
+};
+
 @Component({
-  selector: '<%= prefix %>-<%= dasherize(path) %>-case-view',
-  templateUrl: './<%= dasherize(path) %>-case-view.component.html',
-  styleUrls: ['./<%= dasherize(path) %>-case-view.component.scss'],
-  providers: [CaseViewService],
+    selector: '<%= prefix %>-<%= dasherize(classNamePrefix) %>-case-view',
+    templateUrl: './<%= dasherize(classNamePrefix) %>-case-view.component.html',
+    styleUrls: ['./<%= dasherize(classNamePrefix) %>-case-view.component.scss'],
+    providers: [
+        ConfigCaseViewServiceFactory,
+        {   provide: SearchService,
+            useFactory: searchServiceFactory},
+        {   provide: CaseViewService,
+            useFactory: localCaseViewServiceFactory,
+            deps: [ConfigCaseViewServiceFactory]},
+    ],
 })
-export class <%= classify(path) %>CaseViewComponent extends AbstractCaseView implements AfterViewInit {
+export class <%= classify(classNamePrefix) %>CaseViewComponent extends AbstractCaseView implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
     constructor(caseViewService: CaseViewService) {
-        super(caseViewService, new SimpleFilter('', FilterType.CASE, {}));
-        // TODO implement allowedNets
+        super(caseViewService);
     }
 
     ngAfterViewInit(): void {
