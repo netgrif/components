@@ -20,15 +20,10 @@
             "factory": "./before-build/index#beforeBuild",
             "schema": "./before-build/schema.json"
         },
-        "initialize-configuration-service": {
+        "create-configuration-service": {
             "description": "Generate a project specific configuration service and add the correct provider entry to app.module",
-            "factory": "./configuration-service/initialize-configuration-service/index#initializeConfigurationService",
-            "schema": "./configuration-service/initialize-configuration-service/schema.json"
-        },
-        "populate-configuration-service": {
-            "description": "Generate a project specific configuration service that contains the information from nae.json.",
-            "factory": "./configuration-service/populate-configuration-service/index#populateConfigurationService",
-            "schema": "./configuration-service/populate-configuration-service/schema.json"
+            "factory": "./configuration-service/schematic-create-configuration-service#schematicEntryPoint",
+            "schema": "./configuration-service/schema.json"
         },
         "create-view": {
             "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt for the user to input their settings.",
