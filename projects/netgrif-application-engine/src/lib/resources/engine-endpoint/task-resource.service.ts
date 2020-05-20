@@ -14,7 +14,7 @@ import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TaskGetRequestBody} from '../interface/task-get-request-body';
-import {HttpEvent, HttpEventType} from '@angular/common/http';
+import {HttpEvent, HttpEventType, HttpParams} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -107,10 +107,11 @@ export class TaskResourceService implements CountService {
      * Searches tasks trough the Mongo endpoint.
      * POST
      * @param body search request body
+     * @param params sort request params
      */
     // {{baseUrl}}/api/task/search
-    public getTasks(body: TaskGetRequestBody): Observable<Array<Task>> {
-        return this.provider.post$('task/search', this.SERVER_URL, body)
+    public getTasks(body: TaskGetRequestBody, params?: HttpParams): Observable<Array<Task>> {
+        return this.provider.post$('task/search', this.SERVER_URL, body, params)
             .pipe(map(r => changeType(r, 'tasks')));
     }
 

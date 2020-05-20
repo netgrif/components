@@ -35,8 +35,11 @@ export class EnumerationAutocompleteSelectFieldComponent implements OnInit {
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-        return this.options.filter(option => option.toLowerCase().normalize('NFD')
+        return this.enumerationField.choices.map(choice => choice.value).filter(option => option.toLowerCase().normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
     }
 
+    public renderSelection = (key) => {
+        return this.enumerationField.choices.find(choice => choice.key === key).value;
+    }
 }

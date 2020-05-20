@@ -6,6 +6,8 @@ import {Net} from '../../process/net';
 import {catchError, map, mergeMap, tap} from 'rxjs/operators';
 import {LoggerService} from '../../logger/services/logger.service';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
+import {HttpParams} from '@angular/common/http';
+import {CaseMetaField} from '../../header/case-header/case-header.service';
 
 
 @Injectable()
@@ -56,8 +58,14 @@ export class WorkflowViewService extends SortableView {
     }
 
     protected getMetaFieldSortId(): string {
-        // TODO 7.4.2020 - workflow sorting and searching
-        return this._lastHeaderSearchState.fieldIdentifier;
+        switch (this._lastHeaderSearchState.fieldIdentifier) {
+            case CaseMetaField.TITLE:
+                return 'titleSortable';
+            case CaseMetaField.CREATION_DATE:
+                return 'creationDateSortable';
+            default:
+                return this._lastHeaderSearchState.fieldIdentifier;
+        }
     }
 
     protected getDefaultSortParam(): string {
@@ -70,8 +78,11 @@ export class WorkflowViewService extends SortableView {
             return of([]);
         }
 
+        let params: HttpParams = new HttpParams();
+        params = this.addSortParams(params);
+
         this._loading$.next(true);
-        return this._petriNetResource.getAll().pipe(
+        return this._petriNetResource.searchPetriNets({}, params).pipe(
             catchError(err => {
                 this._log.error('Failed to load Petri nets', err);
                 return of([]);
@@ -79,6 +90,14 @@ export class WorkflowViewService extends SortableView {
             map((nets: Array<PetriNetReference>) => Array.isArray(nets) ? nets.map(net => new Net(net)) : []),
             tap(_ => this._loading$.next(false))
         );
+    }
+
+    protected addSortParams(params: HttpParams): HttpParams {
+        if (this._lastHeaderSearchState.sortDirection !== '') {
+            return params.set('sort', `${this.getSortId()},${this._lastHeaderSearchState.sortDirection}`);
+        } else {
+            return params.set('sort', this.getDefaultSortParam());
+        }
     }
 
 }

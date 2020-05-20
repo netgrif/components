@@ -224,5 +224,9 @@
         "taskFilter": "Aufgabe Filter",
         "workHead": "Workflow Kopfzeilen",
         "workFilter": "Workflow Filter"
+    },
+    "view-list": {
+        "noCasesSatisfyingThisFilter": "Es gibt keine Fälle, die den ausgewählten Filter erfüllen",
+        "noCProcessesSatisfyingThisFilter": "Es gibt keine Prozesse, die den ausgewählten Filter erfüllen"
     }
 }

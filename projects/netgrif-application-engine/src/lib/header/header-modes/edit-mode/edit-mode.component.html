@@ -6,12 +6,17 @@
                     [fxHide.lt-md]="i >= 3"
                     [fxHide.lt-sm]="i >= 2">
         <mat-label *ngIf="!header">{{ 'headers.newHeader' | translate}}</mat-label>
-        <mat-select [value]="header" (selectionChange)="headerColumnSelected(i, $event.value)">
-            <mat-optgroup *ngFor="let group of this.headerService.fieldsGroup" [label]="group.groupTitle">
+        <input type="text"
+               aria-label="Autocomplete"
+               matInput
+               [formControl]="formControls[i]"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="renderSelection" (optionSelected)="headerColumnSelected(i, $event.option.value)">
+            <mat-optgroup *ngFor="let group of this.filterOptions[i] | async" [label]="group.groupTitle">
                 <mat-option *ngFor="let field of group.fields" [value]="field">
                     {{field.title | translate}}
                 </mat-option>
             </mat-optgroup>
-        </mat-select>
+        </mat-autocomplete>
     </mat-form-field>
 </div>

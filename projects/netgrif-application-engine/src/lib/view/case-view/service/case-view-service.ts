@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, ReplaySubject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, of, ReplaySubject, Subject, timer} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {NewCaseComponent} from '../../../side-menu/content-components/new-case/new-case.component';
@@ -127,13 +127,17 @@ export class CaseViewService extends SortableView {
         }
     }
 
-    public createNewCase(): void {
+    public createNewCase(): Observable<Case> {
+        const myCase = new Subject<Case>();
         this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.reload();
+                myCase.next($event.data);
             }
+            myCase.complete();
         });
+        return myCase.asObservable();
     }
 
     protected addPageParams(params: HttpParams, page?: number): HttpParams {

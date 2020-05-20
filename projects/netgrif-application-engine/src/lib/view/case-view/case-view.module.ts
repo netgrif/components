@@ -4,6 +4,7 @@ import {CaseListComponent} from './components/case-list/case-list.component';
 import {MaterialModule} from '../../material/material.module';
 import {FlexModule} from '@angular/flex-layout';
 import {PanelModule} from '../../panel/panel.module';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {PanelModule} from '../../panel/panel.module';
         CommonModule,
         MaterialModule,
         FlexModule,
-        PanelModule
+        PanelModule,
+        TranslateLibModule
     ]
 })
 export class CaseViewModule {

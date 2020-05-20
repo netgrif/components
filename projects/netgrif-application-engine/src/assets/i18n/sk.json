@@ -225,5 +225,9 @@
         "taskFilter": "Filtre prípadov",
         "workHead": "Workflow hlavičky",
         "workFilter": "Workflow filtre"
+    },
+    "view-list": {
+        "noCasesSatisfyingThisFilter": "Pre zvolený filter nevyhovujú žiadne prípady",
+        "noProcessesSatisfyingThisFilter": "Pre zvolený filter nevyhovujú žiadne procesy"
     }
 }

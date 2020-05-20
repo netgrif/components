@@ -11,6 +11,7 @@ import {SortableView} from '../abstract/sortable-view';
 import {SearchService} from '../../search/search-service/search.service';
 import {Task} from '../../resources/interface/task';
 import {SimpleFilter} from '../../filter/models/simple-filter';
+import {HttpParams} from '@angular/common/http';
 
 
 @Injectable()
@@ -56,10 +57,12 @@ export class TaskViewService extends SortableView {
             return;
         }
         this.loading.next(true);
+        let params: HttpParams = new HttpParams();
+        params = this.addSortParams(params);
 
         // TODO 12.5.2020 - better solution for mongo searching
         if (!this._searchService.additionalFiltersApplied && !!this._parentCaseId) {
-            this._taskService.getTasks({case: this._parentCaseId}).subscribe(tasks => this.processTasks(tasks),
+            this._taskService.getTasks({case: this._parentCaseId}, params).subscribe(tasks => this.processTasks(tasks),
                 error => this.processError());
         } else {
             // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation

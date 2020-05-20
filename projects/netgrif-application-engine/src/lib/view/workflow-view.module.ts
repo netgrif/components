@@ -8,6 +8,7 @@ import {PanelModule} from '../panel/panel.module';
 import {DataFieldsModule} from '../data-fields/data-fields.module';
 import {ImportNetComponent} from '../side-menu/content-components/import-net/import-net.component';
 import {WorkflowViewComponent} from './workflow-view/workflow-view.component';
+import {TranslateLibModule} from '../translate/translate-lib.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {WorkflowViewComponent} from './workflow-view/workflow-view.component';
         SideMenuModule,
         HeaderModule,
         PanelModule,
-        DataFieldsModule
+        DataFieldsModule,
+        TranslateLibModule
     ],
     exports: [
         WorkflowViewComponent,

@@ -1,7 +1,7 @@
 <mat-form-field [appearance]="enumerationField.materialAppearance" class="full-width" color="primary">
     <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}</mat-label>
     <input type="text"
-           aria-label="Number"
+           aria-label="Autocomplete"
            matInput
            [placeholder]="enumerationField.placeholder"
            [formControl]="formControlRef"
