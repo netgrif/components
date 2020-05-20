@@ -1,4 +1,4 @@
-import {NetgrifApplicationEngine, Route} from './interfaces/schema';
+import {NetgrifApplicationEngine, View} from './interfaces/schema';
 import {Observable, of} from 'rxjs';
 
 export abstract class ConfigurationService {
@@ -19,7 +19,7 @@ export abstract class ConfigurationService {
      * @param viewPath - path to requested view. No leading backslash.
      * @return requested configuration if it exists. `undefined` otherwise.
      */
-    public getViewByPath(viewPath: string): Route | undefined {
+    public getViewByPath(viewPath: string): View | undefined {
         const pathFragments = viewPath.split('/');
 
         const config = this.createConfigurationCopy() as NetgrifApplicationEngine;
