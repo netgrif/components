@@ -1,5 +1,6 @@
 import {
     Rule,
+    SchematicsException,
     Tree,
 } from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
@@ -23,10 +24,6 @@ export function schematicEntryPoint(): Rule {
         const configFileName = `${projectInfo.projectNameDasherized}-configuration.service`;
         const configPathFromRoot = `${projectInfo.path}/${configFileName}`;
 
-        // if (tree.exists(configPathFromRoot)) {
-        //     tree.delete(configPathFromRoot);
-        // }
-
         const changes = addProviderToModule(appModule.sourceFile, appModule.fileEntry.path,
             configClassName,
             `./${configFileName}`,
@@ -35,6 +32,18 @@ export function schematicEntryPoint(): Rule {
             insertImport(appModule.sourceFile, appModule.fileEntry.path, 'ConfigurationService', '@netgrif/application-engine')
         );
         commitChangesToFile(tree, appModule.fileEntry, changes);
+
+        const tsconfigString = tree.read('./tsconfig.json');
+        if (!tsconfigString) {
+            throw new SchematicsException('Missing \'tsconfig.json\'');
+        }
+        const tsconfigContents = JSON.parse(tsconfigString.toString());
+        if (!tsconfigContents.compilerOptions) {
+            tsconfigContents.compilerOptions = {resolveJsonModule: true};
+        } else {
+            tsconfigContents.compilerOptions.resolveJsonModule = true;
+        }
+        tree.overwrite('./tsconfig.json', JSON.stringify(tsconfigContents, null, 4));
 
         return createFilesFromTemplates('./files', projectInfo.path as string, {
             classify: strings.classify,
