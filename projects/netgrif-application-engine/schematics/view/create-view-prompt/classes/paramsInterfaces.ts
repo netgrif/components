@@ -1,4 +1,4 @@
-import {View as NaeRoute} from '../../../../src/lib/configuration/interfaces/schema';
+import {View} from '../../../../src/lib/configuration/interfaces/schema';
 
 export interface TabViewParams {
     tabs: Array<EmbeddedView>;
@@ -8,7 +8,7 @@ export interface TabViewParams {
 export interface EmbeddedView {
     view?: {
         name: string,
-        params?: NaeRoute['layout']['params']
+        params?: View['layout']['params']
     };
     component?: {
         class: string,

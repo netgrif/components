@@ -4,7 +4,7 @@ import {
     Tree
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration} from '../../utility-functions';
-import {View as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
+import {View} from '../../../src/lib/configuration/interfaces/schema';
 import {constructRoutePath, createAppRoutesMap, Route} from '../view-utility-functions';
 import {CreateViewArguments} from '../create-view-prompt/schema';
 
@@ -15,7 +15,7 @@ export function createView(): Rule {
     };
 }
 
-function getSchematicArguments(naeRoutes: { [k: string]: NaeRoute } | undefined, tree: Tree): CreateViewArguments {
+function getSchematicArguments(naeRoutes: { [k: string]: View } | undefined, tree: Tree): CreateViewArguments {
     if (!naeRoutes) {
         return emptyArguments();
     }
@@ -24,7 +24,7 @@ function getSchematicArguments(naeRoutes: { [k: string]: NaeRoute } | undefined,
 }
 
 
-function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k: string]: NaeRoute },
+function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k: string]: View },
                          pathPrefix: string = ''): CreateViewArguments {
     for (const routePathPart of Object.keys(naeRoutes)) {
         const route = naeRoutes[routePathPart];

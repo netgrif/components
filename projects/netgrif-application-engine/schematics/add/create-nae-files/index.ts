@@ -18,7 +18,8 @@ import {
     getRoutesJsonContent,
     Route
 } from '../../view/view-utility-functions';
-import {View as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
+import {View} from '../../../src/lib/configuration/interfaces/schema';
+
 
 export function createNaeFiles(): Rule {
     return (tree: Tree) => {
@@ -58,7 +59,7 @@ function getNumberOfMissingViews(tree: Tree): number {
 }
 
 function findNumberOfMissingViews(existingRoutesMap: Map<string, Route>,
-                                  naeRoutes: { [k: string]: NaeRoute }, pathPrefix: string = ''): number {
+                                  naeRoutes: { [k: string]: View }, pathPrefix: string = ''): number {
     let counter = 0;
     for (const routePathPart of Object.keys(naeRoutes)) {
         const route = naeRoutes[routePathPart];
