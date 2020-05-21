@@ -197,7 +197,8 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
         path: newViewPath,
         viewType: embeddedView.view.name,
         layoutParams: embeddedView.view.params,
-        isTabbed: true
+        isTabbed: true,
+        access: 'private' as 'private'
     };
 
     result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
