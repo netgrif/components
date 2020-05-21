@@ -115,7 +115,7 @@ export class FieldConvertorService {
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout);
             case 'file':
-                return new FileField(item.stringId, item.name, item.behavior, undefined, item.placeholder, item.description, item.layout);
+                return new FileField(item.stringId, item.name, item.behavior, item.value, item.placeholder, item.description, item.layout);
         }
     }
 
@@ -149,17 +149,16 @@ export class FieldConvertorService {
         if (value === undefined || value === null)
             return;
         if (this.resolveType(field) === 'date') {
-            if (value instanceof Date) {
-                return `${value.getFullYear()}-${value.getMonth()}-${value.getDate()}`;
+            if (moment.isMoment(value)) {
+                return value.format('YYYY-MM-DD');
             }
         }
         if (this.resolveType(field) === 'user') {
             return value.id;
         }
         if (this.resolveType(field) === 'dateTime') {
-            if (value instanceof Date) {
-                return `${value.getDate()}.${value.getMonth()}.${value.getFullYear()} ` +
-                    `${value.getHours()}:${value.getMinutes()}:${value.getSeconds()}`;
+            if (moment.isMoment(value)) {
+                return value.format('DD.MM.YYYY HH:mm:ss');
             }
         }
         return value;

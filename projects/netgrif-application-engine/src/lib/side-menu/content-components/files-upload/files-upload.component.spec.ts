@@ -9,6 +9,8 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {FileFieldService} from '../../../data-fields/file-field/services/file-field.service';
 import {NgModule} from '@angular/core';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('FilesUploadComponent', () => {
     let component: FilesUploadComponent;
@@ -19,7 +21,8 @@ describe('FilesUploadComponent', () => {
             imports: [
                 SideMenuFilesUploadModule,
                 NoopAnimationsModule,
-                TestFileFieldServiceProviderModule
+                TestFileFieldServiceProviderModule,
+                TranslateLibModule, HttpClientTestingModule
             ],
             declarations: [],
             providers: [

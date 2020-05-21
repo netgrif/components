@@ -4,7 +4,7 @@ import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT} from '../../moment/time-formats';
 import {AbstractTimeInstanceFieldComponent} from '../time-instance-abstract-field/abstract-time-instance-field.component';
 import {TranslateService} from '@ngx-translate/core';
-import {SelectLanguageService} from '../../toolbar/select-language.service';
+import {LanguageService} from '../../translate/language.service';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class DateFieldComponent extends AbstractTimeInstanceFieldComponent {
 
     @Input() public dataField: DateField;
 
-    constructor(protected _translate: TranslateService, private _select: SelectLanguageService) {
+    constructor(protected _translate: TranslateService, private _lang: LanguageService) {
         super(_translate);
     }
 

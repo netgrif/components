@@ -59,8 +59,8 @@ describe('SnackBarService', () => {
         service.openSuccessSnackBar('info');
         expect(snackSpy).toHaveBeenCalledWith(SuccessSnackBarComponent, {
             ...testConfig,
-            data: Object.assign(testConfig.data, {message: 'info', matIconName: 'done'}),
-            duration: 4000
+            data: Object.assign(testConfig.data, {message: 'info', matIconName: 'done', closable: false}),
+            duration: 2500
         });
     });
 
@@ -68,7 +68,7 @@ describe('SnackBarService', () => {
         service.openErrorSnackBar('error');
         expect(snackSpy).toHaveBeenCalledWith(ErrorSnackBarComponent, {
             ...testConfig,
-            data: Object.assign(testConfig.data, {message: 'error', matIconName: 'error'})
+            data: Object.assign(testConfig.data, {message: 'error', matIconName: 'error', closable: true})
         });
     });
 
@@ -76,8 +76,8 @@ describe('SnackBarService', () => {
         service.openWarningSnackBar('warn');
         expect(snackSpy).toHaveBeenCalledWith(WarningSnackBarComponent, {
             ...testConfig,
-            data: Object.assign(testConfig.data, {message: 'warn', matIconName: 'priority_high'}),
-            duration: 4000
+            data: Object.assign(testConfig.data, {message: 'warn', matIconName: 'warning', closable: false}),
+            duration: 2500
         });
     });
 
@@ -85,8 +85,8 @@ describe('SnackBarService', () => {
         service.openGenericSnackBar('gen', 'done');
         expect(snackSpy).toHaveBeenCalledWith(GenericSnackBarComponent, {
             ...testConfig,
-            data: Object.assign(testConfig.data, {message: 'gen', matIconName: 'done'}),
-            duration: 4000
+            data: Object.assign(testConfig.data, {message: 'gen', matIconName: 'done', closable: true}),
+            duration: 2500
         });
     });
 

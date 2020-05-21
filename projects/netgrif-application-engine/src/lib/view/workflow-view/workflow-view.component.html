@@ -7,10 +7,33 @@
     <div fxLayout="row" fxLayoutAlign="center" class="workflow-header">
         <nae-header #header fxFlex="100" [type]="headerType"></nae-header>
     </div>
-    <div fxLayout="row" fxLayoutAlign="center" class="workflow-panels-container">
-        <mat-accordion [multi]="true" fxFlex="100">
-            <nae-workflow-panel *ngFor="let workflow of workflows$ | async" [workflow]="workflow" [selectedHeaders$]="selectedHeaders$">
-            </nae-workflow-panel>
+    <div *ngIf="workflows$ | async as workflows" fxLayout="column" fxLayoutAlign="start center"
+         class="workflow-panels-container">
+
+        <div *ngIf="(loading$ | async) === false && workflows.length === 0" fxLayout="column"
+             fxLayoutAlign="center center">
+            <mat-icon color="accent" class="font-size-40 block-size-40 margin-bottom-default">linear_scale
+            </mat-icon>
+            <span class="font-size-20">There are any processes satisfying specified filter</span>
+        </div>
+
+        <mat-accordion [multi]="true" fxFlex="100" class="width-100">
+
+            <cdk-virtual-scroll-viewport #scrollViewport itemSize="50" class="width-100">
+
+                <nae-workflow-panel *cdkVirtualFor="let workflow of workflows; let i = index; trackBy: trackBy"
+                                    [workflow]="workflow"
+                                    [selectedHeaders$]="selectedHeaders$">
+                </nae-workflow-panel>
+
+                <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center"
+                     class="margin-top-default">
+                    <mat-spinner color="primary" diameter="50"></mat-spinner>
+                </div>
+
+            </cdk-virtual-scroll-viewport>
+
         </mat-accordion>
+
     </div>
 </div>

@@ -40,9 +40,6 @@ describe('ProcessService', () => {
         service.getNet('true').subscribe(res => {
             expect(res.stringId).toEqual('true');
         });
-        service.getNet('true').subscribe(res => {
-            expect(res.stringId).toEqual('true');
-        });
         service.getNet('false').subscribe(res => {
             expect(res.stringId).toEqual('false');
         });
@@ -58,6 +55,14 @@ describe('ProcessService', () => {
 
         service.getNet('err').subscribe();
         expect(logSpy).toHaveBeenCalled();
+    });
+
+    it('should return array', () => {
+        service.getNets(['true', 'false']).subscribe(nets => {
+            expect(nets.length).toEqual(2);
+            expect(nets[0].stringId).toEqual('true');
+            expect(nets[1].stringId).toEqual('false');
+        });
     });
 
     afterAll(() => {

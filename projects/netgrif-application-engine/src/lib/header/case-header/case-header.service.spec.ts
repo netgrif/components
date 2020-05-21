@@ -6,12 +6,39 @@ import {HeaderMode} from '../models/header-mode';
 import {SearchChangeDescription} from '../models/user-changes/search-change-description';
 import {EditChangeDescription} from '../models/user-changes/edit-change-description';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
+import {CaseViewServiceFactory} from '../../view/case-view/service/case-view-service-factory';
+import {SearchService} from '../../search/search-service/search.service';
+import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {CaseViewService} from '../../view/case-view/service/case-view-service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {MatSnackBarModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({providers: [CaseHeaderService]});
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientTestingModule,
+                MatSnackBarModule,
+                NoopAnimationsModule,
+                TranslateLibModule
+            ],
+            providers: [
+                CaseHeaderService,
+                CaseViewServiceFactory,
+                {   provide: SearchService,
+                    useFactory: TestCaseSearchServiceFactory},
+                {   provide: CaseViewService,
+                    useFactory: TestCaseViewFactory,
+                    deps: [CaseViewServiceFactory]},
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ]
+        });
         service = TestBed.inject(CaseHeaderService);
     });
 
@@ -62,14 +89,12 @@ describe('CaseHeaderService', () => {
         service.headerChange$.subscribe(res => {
             expect(res.headerType).toEqual(HeaderType.CASE);
             expect(res.mode).toEqual(HeaderMode.EDIT);
-            expect((res.description as EditChangeDescription).preferredHeaders.length).toEqual(5);
         });
         service.headerColumnSelected(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
 
         service.headerChange$.subscribe(res => {
             expect(res.headerType).toEqual(HeaderType.CASE);
             expect(res.mode).toEqual(HeaderMode.EDIT);
-            expect((res.description as EditChangeDescription).preferredHeaders.length).toEqual(0);
         });
         service.revertEditMode();
     });

@@ -9,8 +9,8 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {of} from 'rxjs';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-panel/policy';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {SimpleFilter} from '../../filter/models/simple-filter';
-import {FilterType} from '../../filter/models/filter-type';
+import {SearchService} from '../../search/search-service/search.service';
+import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -22,6 +22,7 @@ describe('TaskViewService', () => {
                 TaskViewService,
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
                 AuthenticationMethodService
             ]
         });
@@ -33,7 +34,6 @@ describe('TaskViewService', () => {
     });
 
     it('should load tasks', () => {
-        service.activeFilter = new SimpleFilter('id', FilterType.TASK, {});
         service.loadTasks();
         expect(service.taskArray.length).toEqual(1);
         service.reload();

@@ -1,5 +1,13 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {NewCaseComponent, SideMenuService, UserAssignComponent, FilterSelectorComponent} from '@netgrif/application-engine';
+import {
+    FilterSelectorComponent,
+    Net,
+    NewCaseComponent,
+    SideMenuService,
+    SideMenuSize,
+    UserAssignComponent
+} from '@netgrif/application-engine';
+import {of} from 'rxjs';
 
 @Component({
     selector: 'nae-app-sidemenu-example',
@@ -23,7 +31,30 @@ export class SidemenuExampleComponent implements OnInit {
     }
 
     public toggleCaseSideMenu() {
-        this.sideMenuService.open(NewCaseComponent);
+        this.sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, {
+            allowedNets$: of([new Net({
+                stringId: '666',
+                author: {email: 'test@test.com', fullName: 'TEST'},
+                createdDate: [],
+                defaultCaseName: 'test',
+                identifier: 'example',
+                immediateData: [],
+                initials: 'EX',
+                title: 'Example Dummy Process',
+                version: '1.0.0.'
+            }),
+                new Net({
+                    stringId: '999',
+                    author: {email: 'test@test.com', fullName: 'TEST'},
+                    createdDate: [],
+                    defaultCaseName: 'test',
+                    identifier: 'example',
+                    immediateData: [],
+                    initials: 'EXX',
+                    title: 'Other Example Dummy Process',
+                    version: '1.0.0.'
+                })])
+        });
     }
 
     public toggleUserSideMenu() {

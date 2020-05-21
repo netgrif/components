@@ -1,6 +1,6 @@
 <div class="container-position-relative side-menu-root">
     <mat-toolbar color="primary" class="container-position-relative">
-        Upload files
+        {{ 'side-menu.files-upload.upload' | translate}}
         <button mat-mini-fab class="add-files-button" (click)="onFileUpload()">
             <mat-icon class="add-files-icon">add</mat-icon>
         </button>
@@ -10,6 +10,6 @@
 
     <button *ngIf="fileField.zipped" class="send-button" mat-raised-button color="primary" (click)="onSend()">
         <mat-icon>send</mat-icon>
-        SEND
+        {{ 'side-menu.files-upload.send' | translate | uppercase}}
     </button>
 </div>

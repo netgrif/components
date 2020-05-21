@@ -121,7 +121,7 @@ export class ImportNetComponent implements OnInit, AfterViewInit {
     private uploadFile(file: FileUploadModel) {
         const fileFormData = new FormData();
         fileFormData.append('file', file.data as File);
-        fileFormData.append('meta', JSON.stringify({releaseType: this.releaseTypeControl.value.toString().toUpperCase()}));
+        fileFormData.append('meta', this.releaseTypeControl.value.toString().toUpperCase());
 
         file.inProgress = true;
         file.completed = false;

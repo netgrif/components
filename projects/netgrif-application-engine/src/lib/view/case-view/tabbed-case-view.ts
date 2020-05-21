@@ -4,8 +4,7 @@ import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injecti
 import {InjectedTabData} from '../../tabs/interfaces';
 import {Case} from '../../resources/interface/case';
 import {LoggerService} from '../../logger/services/logger.service';
-import {CaseViewService} from './case-view-service';
-import {Filter} from '../../filter/models/filter';
+import {CaseViewService} from './service/case-view-service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 
@@ -21,10 +20,9 @@ export abstract class TabbedCaseView extends AbstractCaseView {
     protected constructor(caseViewService: CaseViewService,
                           protected _loggerService: LoggerService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
-                          baseFilter: Filter = new SimpleFilter('', FilterType.CASE, {}),
                           protected _autoswitchToTaskTab: boolean = true) {
 
-        super(caseViewService, baseFilter);
+        super(caseViewService);
         this._correctlyInjected = !!this._injectedTabData.tabViewComponent && this._injectedTabData.tabViewOrder !== undefined;
         if (!this._correctlyInjected) {
             this._loggerService.warn('TabbedCaseView must inject a filled object of type InjectedTabbedCaseViewData to work properly!');

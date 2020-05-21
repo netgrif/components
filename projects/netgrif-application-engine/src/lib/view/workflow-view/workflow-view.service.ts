@@ -1,29 +1,58 @@
 import {Injectable} from '@angular/core';
 import {SortableView} from '../abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
-import {Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable, of, timer} from 'rxjs';
 import {Net} from '../../process/net';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, mergeMap, tap} from 'rxjs/operators';
 import {LoggerService} from '../../logger/services/logger.service';
+import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 
 
 @Injectable()
 export class WorkflowViewService extends SortableView {
 
-    private _workflows$: ReplaySubject<Array<Net>>;
+    private _loading$: BehaviorSubject<boolean>;
+    private _workflows$: Observable<Array<Net>>;
+    private _loadBatch$: BehaviorSubject<number>;
+    private _clear: boolean;
 
     constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
         super();
-        this._workflows$ = new ReplaySubject<Array<Net>>(1);
+        this._loading$ = new BehaviorSubject<boolean>(null);
+        this._loadBatch$ = new BehaviorSubject<number>(null);
+        this._clear = false;
+
+        this._workflows$ = this._loadBatch$.pipe(
+            mergeMap(n => this.loadNets()),
+            tap(_ => this._clear = false)
+        );
+    }
+
+    public get loading(): boolean {
+        return this._loading$.getValue();
+    }
+
+    public get loading$(): Observable<boolean> {
+        return this._loading$.asObservable();
     }
 
     public get workflows$(): Observable<Array<Net>> {
-        return this._workflows$.asObservable();
+        return this._workflows$;
+    }
+
+    public loadBatch() {
+        this._loadBatch$.next(Math.random());
     }
 
     public reload(): void {
         // TODO 8.4.2020 - allow filtering of petri nets in workflow view
-        this.loadNets().subscribe(petriNet => this._workflows$.next(petriNet));
+        if (!this._workflows$) {
+            return;
+        }
+
+        this._clear = true;
+        this.loadBatch();
+        timer(100).subscribe(_ => this.loadBatch());
     }
 
     protected getMetaFieldSortId(): string {
@@ -37,18 +66,19 @@ export class WorkflowViewService extends SortableView {
     }
 
     private loadNets(): Observable<Array<Net>> {
-            return this._petriNetResource.getAll().pipe(
-                map( nets => {
-                    if (nets instanceof Array) {
-                        return nets.map( net => new Net(net));
-                    }
-                    return [];
-                }),
-                catchError(err => {
-                    this._log.error('Failed to load Petri nets', err);
-                    throw err;
-                })
-            );
+        if (this.loading || this._clear) {
+            return of([]);
         }
+
+        this._loading$.next(true);
+        return this._petriNetResource.getAll().pipe(
+            catchError(err => {
+                this._log.error('Failed to load Petri nets', err);
+                return of([]);
+            }),
+            map((nets: Array<PetriNetReference>) => Array.isArray(nets) ? nets.map(net => new Net(net)) : []),
+            tap(_ => this._loading$.next(false))
+        );
+    }
 
 }

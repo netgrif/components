@@ -10,6 +10,7 @@ import {TaskPanelContentService} from './task-panel-content.service';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
 import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
 import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 describe('TaskPanelContentComponent', () => {
     let component: TaskPanelContentComponent;
@@ -22,7 +23,8 @@ describe('TaskPanelContentComponent', () => {
                 PanelModule,
                 MaterialModule,
                 NoopAnimationsModule,
-                CommonModule
+                CommonModule,
+                TranslateLibModule
             ],
             providers: [
                 TaskViewService,

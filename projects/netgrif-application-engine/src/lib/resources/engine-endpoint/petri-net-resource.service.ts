@@ -36,7 +36,7 @@ export class PetriNetResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet
      */
-    public getAll(): Observable<Array<Net>> {
+    public getAll(): Observable<Array<PetriNetReference>> {
         return this.provider.get$('petrinet', this.SERVER_URL)
             .pipe(map(r => changeType(r, 'petriNetReferences')));
     }

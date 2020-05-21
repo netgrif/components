@@ -17,6 +17,31 @@ export class SimpleFilter extends Filter {
     private readonly _filter: CaseSearchRequestBody | TaskSearchRequestBody;
 
     /**
+     * Create empty filter of provided type
+     * @param type type of resources that the filter can query
+     * @returns a filter with empty body of the provided type
+     */
+    public static empty(type: FilterType): Filter {
+        return new SimpleFilter('', type, {});
+    }
+
+    /**
+     * Equivalent to calling `SimpleFilter.empty(FilterType.CASE)`.
+     * @returns a filter with empty body that can be used to search cases
+     */
+    public static emptyCaseFilter(): Filter {
+        return SimpleFilter.empty(FilterType.CASE);
+    }
+
+    /**
+     * Equivalent to calling `SimpleFilter.empty(FilterType.TASK)`.
+     * @returns a filter with empty body that can be used to search tasks
+     */
+    public static emptyTaskFilter(): Filter {
+        return SimpleFilter.empty(FilterType.TASK);
+    }
+
+    /**
      * @param id identifier of the filter
      * @param type type of resources that the filter can query
      * @param filterBody search request matching this filter's `type`

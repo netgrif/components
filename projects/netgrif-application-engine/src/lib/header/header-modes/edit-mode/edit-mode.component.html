@@ -5,11 +5,11 @@
                     [fxHide.lt-lg]="i >= 4"
                     [fxHide.lt-md]="i >= 3"
                     [fxHide.lt-sm]="i >= 2">
-        <mat-label *ngIf="!header">Select new header</mat-label>
+        <mat-label *ngIf="!header">{{ 'headers.newHeader' | translate}}</mat-label>
         <mat-select [value]="header" (selectionChange)="headerColumnSelected(i, $event.value)">
             <mat-optgroup *ngFor="let group of this.headerService.fieldsGroup" [label]="group.groupTitle">
                 <mat-option *ngFor="let field of group.fields" [value]="field">
-                    {{field.title}}
+                    {{field.title | translate}}
                 </mat-option>
             </mat-optgroup>
         </mat-select>

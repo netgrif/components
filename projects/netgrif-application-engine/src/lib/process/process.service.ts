@@ -12,6 +12,9 @@ export interface NetCache {
     [k: string]: Net;
 }
 
+/**
+ * Process service is responsible for loading and caching processes needed for any functionality of an app.
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -27,25 +30,55 @@ export class ProcessService {
         this._netUpdate = new Subject<Net>();
     }
 
+    /**
+     * Get process nets according to provided identifiers.
+     * If any of the requested processes is not loaded it will be loaded from a server and save for later.
+     * @param identifiers Array of identifiers of requested processes. See [Net]{@link Net}
+     * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
+     * If any of the processes failed to load it is skipped from the result.
+     */
     public getNets(identifiers: Array<string>): Observable<Array<Net>> {
-        return forkJoin(identifiers.map(i => this.loadNet(i))).pipe(
+        return forkJoin(identifiers.map(i => {
+            if (this._nets[i]) {
+                return of(this._nets[i]);
+            }
+            return this.loadNet(i);
+        })).pipe(
+            map(nets => nets.filter(n => !!n)),
             tap(nets => {
+                if (nets.length === 0) {
+                    return;
+                }
                 this._netsSubject.next(this._nets);
                 nets.forEach(n => this._netUpdate.next(n));
             })
         );
     }
 
+    /**
+     * Get process net by identifier.
+     * @param identifier Identifier of the requested process. See [Net]{@link Net}
+     * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
+     */
     public getNet(identifier: string): Observable<Net> {
         if (this._nets[identifier]) {
             return of(this._nets[identifier]);
         }
 
         return this.loadNet(identifier).pipe(
-            tap(net => this.publishUpdate(net))
+            tap(net => {
+                if (!net) {
+                    return;
+                }
+                this.publishUpdate(net);
+            })
         );
     }
 
+    /**
+     * Remove cached process by identifier. If the process is not found nothing happens.
+     * @param identifier Process identifier
+     */
     public removeNet(identifier: string): void {
         if (!this._nets[identifier]) {
             return;
@@ -54,6 +87,10 @@ export class ProcessService {
         this.publishUpdate();
     }
 
+    /**
+     * Update cached process object. If the process is not found nothing happens. Process object is replaced.
+     * @param net Updated process object.
+     */
     public updateNet(net: Net): void {
         if (!this._nets[net.identifier]) {
             return;
@@ -62,20 +99,33 @@ export class ProcessService {
         this.publishUpdate(net);
     }
 
+    /**
+     * Stream of change of the process cache.
+     * New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.
+     * @returns Observable of whole updated cache.
+     */
     public get nets$(): Observable<NetCache> {
         return this._netsSubject.asObservable();
     }
 
+    /**
+     * Stream of change in the process cache.
+     * New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.
+     * @returns Observable of updated or newly loaded process net.
+     */
     public get netUpdate$(): Observable<Net> {
         return this._netUpdate.asObservable();
     }
 
     private loadNet(id: string): Observable<Net> {
         const returnNet = new Subject<Net>();
-        this._petriNetResource.getOne(id, '^').pipe(
-            map(n => new Net(n))
-        ).subscribe(net => {
-            this._nets[net.identifier] = net;
+        this._petriNetResource.getOne(id, '^').subscribe(net => {
+            if (!net.stringId) {
+                returnNet.next(null);
+                returnNet.complete();
+                return;
+            }
+            this._nets[net.identifier] = new Net(net);
             forkJoin({
                 transitions: this.loadTransitions(net.stringId),
                 transactions: this.loadTransactions(net.stringId),
@@ -85,13 +135,18 @@ export class ProcessService {
                 this._nets[net.identifier].transactions = values.transactions;
                 this._nets[net.identifier].roles = values.roles;
                 returnNet.next(this._nets[net.identifier]);
+                returnNet.complete();
             }, error => {
                 this._log.error('Failed to load part of Petri net ' + net.title, error);
-                throw error;
+                returnNet.next(this._nets[net.identifier]);
+                returnNet.complete();
+                // throw error;
             });
         }, error => {
             this._log.error('Failed to load Petri nets', error);
-            throw error;
+            returnNet.next(null);
+            returnNet.complete();
+            // throw error;
         });
 
         return returnNet.asObservable();

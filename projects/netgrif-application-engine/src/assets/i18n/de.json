@@ -1,0 +1,228 @@
+{
+    "toolbar": {
+        "menu": {
+            "lang": "Sprache",
+            "profile": "Benutzerprofil",
+            "logout": "Abmelden",
+            "en": "English",
+            "sk": "Slowakisch",
+            "de": "Deutsch"
+        }
+    },
+    "tasks": {
+        "snackbar": {
+            "noTasksFound": "Keine Aufgaben gefunden",
+            "failedToLoad": "Beim laden der Aufgaben ist eine Fehler aufgetreten",
+            "noData": "Diese Aufgabe hat keine Daten",
+            "noGroup": "Diese Aufgabe hat keine Datengruppe",
+            "dataSaved": "Daten erfolgreich gespeichert",
+            "failedSave": "Beim speichern der Daten ist eine Fehler aufgetreten",
+            "assignTask": "Beim zuweisen der Aufgabe",
+            "delegateTask": "Beim delegieren der Aufgabe",
+            "failed": "ist eine Fehler aufgetreten",
+            "cancelTask": "Aufgabenzuweisung wird abgebrochen",
+            "finishTask": "Aufgabe wird abgeschlossen",
+            "invalidData": "Manche Felder haben ungültige Werten",
+            "noCase": "Keine Fälle gefunden",
+            "caseGetFailed": "Beim laden der Fälle ist eine Fehler aufgetreten"
+        },
+        "view": {
+            "noTasksSatisfyingThisFilter": "Es gibt keine Aufgaben, die den ausgewählten Filter erfüllen",
+            "collapse": "Schrumpfen",
+            "assign": "Zuweisen",
+            "reassign": "Neu zuweisen",
+            "delegate": "Delegieren",
+            "finish": "Abschließen",
+            "cancel": "Stornieren",
+            "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren."
+        }
+    },
+    "side-menu": {
+        "filter-selector": {
+            "choose-filter": "Wählen Sie einen Filter aus",
+            "search-filter": "Filter durchsuchen",
+            "case-filters": "Fallfilter",
+            "task-filters": "Aufgabenfilter",
+            "select": "Auswählen"
+        },
+        "files-upload": {
+            "upload": "Datei hochladen",
+            "send": "Absenden"
+        },
+        "import-net": {
+            "upload": "Model hochladen",
+            "choose": "Prozessdatei auswählen",
+            "done" : "Bestätigen"
+        },
+        "new-case": {
+            "case": "Neuen Fall erstellen",
+            "choose": "Wählen Sie einen Prozess aus",
+            "caseTitle": "Geben Sie den Fallnamen ein",
+            "color": "Wählen Sie die Fallfarbe aus",
+            "back": "Zurück",
+            "next": "Weiter",
+            "reset": "Alles löschen",
+            "create": "Fall erstellen",
+            "selection": "Sie müssen einen Wert auswählen",
+            "errFirst": "Sie müssen einen Prozess auswählen.",
+            "errSecond": "Sie müssen einen Namen eingeben.",
+            "errThird": "Sie müssen eine Farbe auswählen."
+        },
+        "user": {
+            "assign": "Benützer zuweisen",
+            "noUser": "Es gibt keine Benützer",
+            "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
+            "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
+        }
+    },
+    "search": {
+        "category": {
+            "case": {
+                "title": {
+                    "name": "Fallname",
+                    "placeholder": "Geben Sie den Fallnamen ein"
+                },
+                "visualId": {
+                    "name": "Visuelle ID",
+                    "placeholder": "Geben Sie die visuelle ID ein"
+                },
+                "author": {
+                    "name": "Fallautor/in",
+                    "placeholder": "Geben Sie den Namen, oder das E-Mail des/er Fallautors/in ein"
+                },
+                "process": {
+                    "name": "Prozess",
+                    "placeholder": "Wählen Sie den Prozess aus"
+                },
+                "role": {
+                    "name": "Prozessrolle",
+                    "placeholder": "Wählen Sie die Prozessrolle aus"
+                },
+                "task": {
+                    "name": "Fallaufgabe",
+                    "placeholder": "Wählen Sie die Fallaufgabe aus"
+                },
+                "creationDate": {
+                    "name": "Erstellungsdatum",
+                    "placeholder": "Geben Sie das Erstellungsdatum ein"
+                },
+                "dataset": {
+                    "name": "Falldatei",
+                    "placeholder": {
+                        "field": "Wählen Sie das Datenfeld aus",
+                        "value": "Geben Sie den Wert des Datenfeldes ein"
+                    }
+                }
+            },
+            "task": {
+                "assignee": {
+                    "name": "Zugewiesener/in",
+                    "placeholder": "Wählen Sie den/ie Zugewiesener/in aus"
+                }
+            }
+        },
+        "placeholder": {
+            "text": "Suchen oder Suchkategorie auswählen"
+        }
+    },
+    "dataField": {
+        "validations": {
+            "required": "Dieses Feld ist ein Pflichtfeld!",
+            "requiredTrue": "Der eingegebene Wert muss wahr sein",
+            "odd": "Die eingegebene Nummer muss ungerade sein",
+            "even": "Die eingegebene Nummer muss gerade sein",
+            "positive": "Die eingegebene Nummer muss positiv sein",
+            "negative": "Die eingegebene Nummer muss negativ sein",
+            "decimal": "Die eingegebene Nummer muss ein Dezimalzahl sein",
+            "inrange": "Die eingegebene Nummer muss aus dem gegebenen Nummernbereich {{range}} sein",
+            "length": "Der eingegebene Text muss länger als {{length}} Zeichen sein",
+            "pattern": "Der eingegebene Text ist nicht im richtigen Format",
+            "phone": "Der eingegebene Text muss ein Telefonnummer sein",
+            "email": "Der eingegebene Text muss ein E-Mail sein",
+            "dateRange": "Das eingegebene Datum muss aus dem gegebenen Bereich {{range}} sein",
+            "weekend": "Das eingegebene Datum muss das Wochenende sein",
+            "workday": "Das eingegebene Datum muss ein Wochentag sein"
+        },
+        "snackBar": {
+            "downloadFail": " könnte nicht heruntergeladen werden",
+            "moreFiles": "Sie haven zu viel Dateien ausgewählt",
+            "sameFiles": "Sie können nicht dieselbe Datei zweimal hochladen",
+            "fileSize": "Die Dateigröße hat das zulässige Limit überschritten"
+        }
+    },
+    "dialog": {
+        "close": "Schließen",
+        "submit": "Bestätigen"
+    },
+    "forms": {
+        "pass": {
+            "enterEmail": "Ihre E-Mail Adresse eingeben"
+        },
+        "login": {
+            "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
+            "login": "Anmelden",
+            "reset": "Kennwort wiederherstellen",
+            "sign": "Registrieren",
+            "enterPass": "Ihre Kennwort eingeben"
+        },
+        "register": {
+            "name": "Vorname",
+            "surname": "Nachname",
+            "repeatPass": "Kennwort viederhollen",
+            "register": "Registrieren"
+        }
+    },
+    "headers": {
+        "newHeader": "Kopfzeile auswählen",
+        "date": "Datum auswählen",
+        "caseMeta": {
+            "visualID": "Visuelle ID",
+            "title": "Fallname",
+            "author": "Fallautor",
+            "creaDate": "Erstellungsdatum"
+        },
+        "taskMeta": {
+            "case": "Fall",
+            "priority": "Priorität",
+            "user": "Zugewiesener/in",
+            "assignDate": "Zugewieserungsdatum"
+        },
+        "workflowMeta": {
+            "initials": "Initialen",
+            "version": "Version",
+            "creaDate": "Hochladungsdatum"
+        },
+        "orderMode": "Anordnungsmodus",
+        "searchMode": "Suchmodus",
+        "editMode": "Editationsmodus einschalten"
+    },
+    "panel": {
+        "case": {
+            "delete": "Löschen"
+        },
+        "workflow": {
+            "net": "Netzidentifikator",
+            "title": "Netzname",
+            "version": "Version",
+            "author": "Netzauthor",
+            "upload": "Hochladungsdatum"
+        }
+    },
+    "profile": {
+        "notLogged": "Sie sind nicht angemeldet!",
+        "general": "Allgemeine Informationen",
+        "personal": "Persönliche Informationen",
+        "name": "Vorname",
+        "surname": "Nachname",
+        "authority": "Berechtigungen",
+        "roles": "Rollen",
+        "groups": "Gruppen",
+        "preference": "Persönliche Einstellungen",
+        "caseHead": "Fall Kopfzeilen",
+        "caseFilter": "Fall Filter",
+        "taskHead": "Aufgabe Kopfzeilen",
+        "taskFilter": "Aufgabe Filter",
+        "workHead": "Workflow Kopfzeilen",
+        "workFilter": "Workflow Filter"
+    }
+}

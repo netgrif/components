@@ -26,6 +26,7 @@ import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
+import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 
 
 @Component({
@@ -49,7 +50,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
                 private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
                 private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService,
-                private _translate: TranslateService) {
+                private _translate: TranslateService, private _paperView: PaperViewService) {
         super();
         this.loading = false;
         this._updating = false;
@@ -101,6 +102,10 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         return false;
     }
 
+    public isPaperView() {
+        return this._paperView.paperView;
+    }
+
     public setPanelRef(panelRef: MatExpansionPanel) {
         this.panelRef = panelRef;
     }
@@ -147,7 +152,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             } else {
                 this._log.info(this._translate.instant('tasks.snackbar.noGroup') + ' ' + this.taskPanelData.task);
                 this.loading = false;
-                afterAction.next(false);
+                this.taskPanelData.task.dataSize = 0;
+                afterAction.next(true);
             }
             this._taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
         }, error => {

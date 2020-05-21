@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import {Params, ResourceProvider} from '../resource-provider.service';
 import {Count} from '../interface/count';
 import {Case} from '../interface/case';
-import {changeType, getResourceAddress} from '../resource-utility-functions';
+import {changeType, getResourceAddress, getResourcePage} from '../resource-utility-functions';
 import {MessageResource} from '../interface/message-resource';
 import {DataGroupsResource} from '../interface/data-groups';
 import {FileResource} from '../interface/file-resource';
@@ -12,6 +12,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
+import {Page} from '../interface/page';
 
 @Injectable({
     providedIn: 'root'
@@ -52,13 +53,13 @@ export class CaseResourceService implements CountService {
      * @param filter filter used to search cases. Must be of type `CASE`.
      * @param params request parameters, that can be used for sorting of results.
      */
-    public searchCases(filter: Filter, params?: Params): Observable<Array<Case>> {
+    public searchCases(filter: Filter, params?: Params): Observable<Page<Case>> {
         if (filter.type !== FilterType.CASE) {
             throw new Error('Provided filter doesn\'t have type CASE');
         }
         params = ResourceProvider.combineParams(filter.getRequestParams(), params);
         return this.provider.post$('workflow/case/search', this.SERVER_URL, filter.getRequestBody(), params)
-            .pipe(map(r => changeType(r, 'cases')));
+            .pipe(map(r => getResourcePage<Case>(r, 'cases')));
     }
 
 
@@ -130,7 +131,7 @@ export class CaseResourceService implements CountService {
      */
     public getOptionsEnumeration(caseId: string, fieldId: string): Observable<Case> {
         return this.provider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL)
-                            .pipe(map(r => changeType(r, undefined)));
+            .pipe(map(r => changeType(r, undefined)));
     }
 
 }

@@ -93,7 +93,10 @@ export class TestConfigurationService extends ConfigurationService {
                     cases: {
                         type: '',
                         layout: {
-                            name: ''
+                            name: '',
+                            params: {
+                                allowedNets: []
+                            }
                         },
                         access: 'private',
                         navigation: {
@@ -291,14 +294,15 @@ export class TestConfigurationService extends ConfigurationService {
                 'sk-SK',
                 'en-US'
             ],
-            defaults: {
+            services: {
                 log: {
-                    level: 'INFO',
+                    level: 'ALL',
                     logWithDate: true,
                     serializeExtraParams: true,
                     includeLogLevel: true,
                     publishers: [
-                        'console'
+                        'console',
+                        'localStorage'
                     ]
                 }
             }

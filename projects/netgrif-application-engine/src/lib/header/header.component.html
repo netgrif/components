@@ -29,17 +29,17 @@
                 <button mat-menu-item
                         (click)="headerService.changeMode(headerModeEnum.SORT, false)">
                     <mat-icon>sort</mat-icon>
-                    Ordering mode
+                    {{ 'headers.orderMode' | translate}}
                 </button>
                 <button mat-menu-item
                         (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
                     <mat-icon>search</mat-icon>
-                    Search mode
+                    {{ 'headers.searchMode' | translate}}
                 </button>
                 <button mat-menu-item
                         (click)="headerService.changeMode(headerModeEnum.EDIT)">
                     <mat-icon>edit</mat-icon>
-                    Enable edit mode
+                    {{ 'headers.editMode' | translate}}
                 </button>
             </mat-menu>
         </div>

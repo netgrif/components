@@ -1,0 +1,72 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+    <mat-chip-list selectable="false">
+        <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true" (removed)="removeChip(i)">
+            {{chip.text}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+    <div [ngSwitch]="shownInput$ | async">
+        <ng-template [ngSwitchCase]="'text'">
+            <mat-form-field class="search-input">
+                <input type="text" matInput
+                       #autocompleteInput
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
+                       [formControl]="formControls['text']"
+                       [matAutocomplete]="searchAutocomplete"
+                       (keydown.enter)="$event.target.blur();confirmUserInput()">
+                <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection" (optionSelected)="autocompleteInput.blur();confirmUserInput()">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
+                        <span>{{option.translationPath ? (option.translationPath | translate) : option.text}}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'date'">
+            <mat-form-field class="search-input">
+                <input matInput
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
+                       [formControl]="formControls['date']"
+                       [matDatepicker]="searchDatepicker"
+                       (click)="searchDatepicker.open()"
+                       (keydown.enter)="searchDatepicker.close();confirmUserInput()">
+                <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #searchDatepicker></mat-datepicker>
+            </mat-form-field>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'dateTime'">
+            <mat-form-field class="search-input">
+                <input matInput
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
+                       [formControl]="formControls['dateTime']"
+                       [ngxMatDatetimePicker]="searchDateTimepicker"
+                       (click)="searchDateTimepicker.open()"
+                       (keydown.enter)="searchDateTimepicker.close();confirmUserInput()">
+                <mat-datepicker-toggle matPrefix [for]="searchDateTimepicker">
+                    <mat-icon matDatepickerToggleIcon>schedule</mat-icon>
+                </mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #searchDateTimepicker
+                                         [showSpinners]="true"
+                                         [showSeconds]="false"
+                                         [stepHour]="1"
+                                         [stepMinute]="5"
+                                         [color]="'primary'"
+                                         [enableMeridian]="false"></ngx-mat-datetime-picker>
+            </mat-form-field>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'number'">
+            <mat-form-field class="search-input">
+                <input type="number" matInput
+                       [placeholder]="(inputPlaceholder$ | async) | translate"
+                       [formControl]="formControls['number']"
+                       (keydown.enter)="$event.target.blur();confirmUserInput()">
+            </mat-form-field>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'boolean'">
+            <mat-slide-toggle [formControl]="formControls['boolean']">{{(inputPlaceholder$ | async) | translate}}</mat-slide-toggle>
+        </ng-template>
+    </div>
+    <button mat-icon-button (click)="confirmUserInput()">
+        <mat-icon>search</mat-icon>
+    </button>
+</div>

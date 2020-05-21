@@ -1,7 +1,7 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree-dimension">
 
     <!-- This is the tree node template for leaf nodes -->
-    <mat-tree-node *matTreeNodeDef="let node" [routerLink]="node.url" matTreeNodeToggle matRipple class="tree-node">
+    <mat-tree-node *matTreeNodeDef="let node" [routerLink]="node.url" routerLinkActive="active-navigation-route" matTreeNodeToggle matRipple class="tree-node">
         <button *ngIf="node.level >= 1" mat-icon-button disabled class="margin-component"></button>
         <button *ngIf="node.level >= 2" mat-icon-button disabled class="margin-component"></button>
         <mat-icon color="primary" class="tree-node-icon">{{node.icon}}</mat-icon>

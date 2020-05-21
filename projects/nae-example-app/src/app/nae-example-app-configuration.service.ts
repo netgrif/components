@@ -55,8 +55,8 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                                     cards: [{
                                         type: DashboardCardTypes.COUNT,
                                         title: 'All tasks',
-                                        resourceType: 'task',
-                                        filter: '{}',
+                                        resourceType: 'Task',
+                                        filter: {},
                                         layout: {
                                             x: 0,
                                             y: 0,
@@ -75,8 +75,8 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                                     }, {
                                         type: DashboardCardTypes.COUNT,
                                         title: 'All cases',
-                                        resourceType: 'case',
-                                        filter: '{}',
+                                        resourceType: 'Case',
+                                        filter: {},
                                         layout: {
                                             x: 1,
                                             y: 1,
@@ -155,7 +155,99 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                                     }
                                 }
                             }
-                        }
+                        },
+                        case: {
+                            layout: {
+                                name: 'CaseView',
+                                params: {
+                                    allowedNets: ['search-test-defaultRole', 'leukemia', '1', 'bill']
+                                }
+                            },
+                            access: 'private',
+                            navigation: {}
+                        },
+                        'navigation-test': {
+                            type: 'sideMenu',
+                            layout: {
+                                name: ''
+                            },
+                            access: 'private',
+                            navigation: {
+                                title: 'NavTest'
+                            },
+                            routes: {
+                                one: {
+                                    type: '',
+                                    layout: {
+                                        name: ''
+                                    },
+                                    access: 'private',
+                                    navigation: {
+                                        title: 'one',
+                                        icon: 'account_circle'
+                                    },
+                                    routes: {
+                                       'one-one': {
+                                            type: '',
+                                            layout: {
+                                                name: ''
+                                            },
+                                            access: 'private',
+                                            navigation: {
+                                                title: 'one-one',
+                                                icon: 'account_circle'
+                                            },
+                                        },
+                                        'one-two': {
+                                            type: '',
+                                            layout: {
+                                                name: ''
+                                            },
+                                            access: 'private',
+                                            navigation: {
+                                                title: 'one-two',
+                                                icon: 'account_circle'
+                                            },
+                                        }
+                                    }
+                                },
+                                two: {
+                                    type: '',
+                                    layout: {
+                                        name: ''
+                                    },
+                                    access: 'private',
+                                    navigation: {
+                                        title: 'second',
+                                        icon: 'account_circle'
+                                    },
+                                    routes: {
+                                        'two-one': {
+                                            type: '',
+                                            layout: {
+                                                name: ''
+                                            },
+                                            access: 'private',
+                                            navigation: {
+                                                title: 'two-one',
+                                                icon: 'account_circle'
+                                            },
+                                        },
+                                        'two-two': {
+                                            type: '',
+                                            layout: {
+                                                name: ''
+                                            },
+                                            access: 'private',
+                                            navigation: {
+                                                title: 'two-two',
+                                                icon: 'account_circle'
+                                            },
+                                        }
+                                    }
+                                }
+                            }
+                        },
                     }
                 },
                 theme: {
@@ -296,14 +388,15 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
                     'sk-SK',
                     'en-US'
                 ],
-                defaults: {
+                services: {
                     log: {
-                        level: 'INFO',
+                        level: 'ALL',
                         logWithDate: true,
                         serializeExtraParams: true,
                         includeLogLevel: true,
                         publishers: [
-                            'console'
+                            'console',
+                            'localStorage'
                         ]
                     }
                 }

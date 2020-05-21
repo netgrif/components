@@ -1,4 +1,4 @@
-import {Page} from './page';
+import {Pagination} from './pagination';
 
 /**
  * Response form Backend
@@ -16,5 +16,5 @@ export interface ResponseData<T> {
     /**
      * Pages
      */
-    page: Page;
+    page: Pagination;
 }

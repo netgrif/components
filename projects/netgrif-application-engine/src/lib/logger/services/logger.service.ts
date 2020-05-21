@@ -22,11 +22,11 @@ export abstract class AbstractLoggerService {
         };
         const servicesConfig = _config.get().services;
         if (servicesConfig && servicesConfig.log) {
-            this.config = Object.assign(this.config, servicesConfig.log);
+            this.config = Object.assign(this.config, servicesConfig.log, {level: this.resolveLevel(servicesConfig.log.level)});
         }
     }
 
-    get level() {
+    public get level() {
         return this.config.level;
     }
 
@@ -42,24 +42,31 @@ export abstract class AbstractLoggerService {
         this.publisher.publish(entry);
     }
 
-    info(message: string, ...params: Array<any>): void {
+    public info(message: string, ...params: Array<any>): void {
         this.writeToLog(LogLevel.INFO, message, params);
     }
 
-    debug(message: string, ...params: Array<any>): void {
+    public debug(message: string, ...params: Array<any>): void {
         this.writeToLog(LogLevel.DEBUG, message, params);
     }
 
-    warn(message: string, ...params: Array<any>): void {
+    public warn(message: string, ...params: Array<any>): void {
         this.writeToLog(LogLevel.WARN, message, params);
     }
 
-    error(message: string, ...params: Array<any>): void {
+    public error(message: string, ...params: Array<any>): void {
         this.writeToLog(LogLevel.ERROR, message, params);
     }
 
-    log(level: LogLevel, message: string, ...param: Array<any>): void {
+    public log(level: LogLevel, message: string, ...param: Array<any>): void {
         this.writeToLog(level, message, param);
+    }
+
+    private resolveLevel(level: string): LogLevel {
+        if (!level) {
+            return LogLevel.OFF;
+        }
+        return LogLevel[level] as LogLevel;
     }
 }
 

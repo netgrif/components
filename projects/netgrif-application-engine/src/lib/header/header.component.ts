@@ -5,8 +5,7 @@ import {TaskHeaderService} from './task-header/task-header.service';
 import {WorkflowHeaderService} from './workflow-header/workflow-header.service';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
-import {Observable} from 'rxjs';
-import {Net} from '../process/net';
+import {LanguageService} from '../translate/language.service';
 
 
 @Component({
@@ -19,18 +18,14 @@ export class HeaderComponent implements OnInit {
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
-    @Input() allowedNets$: Observable<Array<Net>> = new Observable<Array<Net>>();
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 
-    constructor(private _injector: Injector) {
+    constructor(private _injector: Injector, private _lang: LanguageService) {
     }
 
     ngOnInit(): void {
         this.resolveHeaderService();
-        this.allowedNets$.subscribe(newAllowedNets => {
-            this.headerService.setAllowedNets(newAllowedNets);
-        });
     }
 
     private resolveHeaderService() {

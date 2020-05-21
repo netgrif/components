@@ -5,14 +5,26 @@
             "profile": "Profil",
             "logout": "Odhlasiť sa",
             "en": "Anglický",
-            "sk": "Slovenský"
+            "sk": "Slovenský",
+            "de": "Nemecký"
         }
     },
     "tasks": {
         "snackbar": {
             "noTasksFound": "Nenašli sa žiadne úlohy",
             "failedToLoad": "sa nepodarilo načítať",
-            "errorTaskSearch": "Úlohy na task/search"
+            "noData": "Úloha nemá žiadne dáta",
+            "noGroup": "Úloha nemá žiadnu dátovú skupinu",
+            "dataSaved": "Dáta úspešne uložené",
+            "failedSave": "Ukladanie dát zlyhalo",
+            "assignTask": "Priradenie dát",
+            "delegateTask": "Delegovanie úlohy",
+            "failed": "zlyhalo",
+            "cancelTask": "Ruším priradenie úlohy",
+            "finishTask": "Dokončujem úlohu",
+            "invalidData": "Niektoré polia majú nepovolené hodnoty",
+            "noCase": "Nenašli sa žiadne prípady",
+            "caseGetFailed": "Načítanie prípadov zlyhalo"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Pre tento filter nie sú vyhovujúce žiadne úlohy",
@@ -32,6 +44,85 @@
             "case-filters": "Filtre prípadov",
             "task-filters": "Filtre úloh",
             "select": "Zvoliť"
+        },
+        "files-upload": {
+            "upload": "Nahrať súbory",
+            "send": "Odoslať"
+        },
+        "import-net": {
+            "upload": "Nahrať model",
+            "choose": "Vyberte súbor s procesom",
+            "done" : "Dokončiť"
+        },
+        "new-case": {
+            "case": "Nová prípad",
+            "choose": "Vyberte proces",
+            "caseTitle": "Vyplňte názov prípadu",
+            "color": "Vyberte farbu prípadu",
+            "back": "Späť",
+            "next": "Ďalej",
+            "reset": "Zrušiť",
+            "create": "Vytvoriť",
+            "selection": "Musíte niečo vybrať",
+            "errFirst": "Proces je povinné pole.",
+            "errSecond": "Názov je povinné pole.",
+            "errThird": "Farba je povinné pole."
+        },
+        "user": {
+            "assign": "Priradiť používateľa",
+            "noUser": "Neexistujú žiadny používatelia",
+            "err": "Nepodarilo sa načítať používateľov",
+            "showcase": "Nebol zvolený mód zobrazenia používateľa!"
+        }
+    },
+    "search": {
+        "category": {
+            "case": {
+                "title": {
+                    "name": "Názov prípadu",
+                    "placeholder": "Zadajte názov prípadu"
+                },
+                "visualId": {
+                    "name": "Vizuálne ID prípadu",
+                    "placeholder": "Zadajte vizuálne ID prípadu"
+                },
+                "author": {
+                    "name": "Autor prípadu",
+                    "placeholder": "Zadajte meno, alebo email autora prípadu"
+                },
+                "process": {
+                    "name": "Proces prípadu",
+                    "placeholder": "Vyberte proces prípadu"
+                },
+                "role": {
+                    "name": "Procesná rola",
+                    "placeholder": "Vyberte procesnú rolu"
+                },
+                "task": {
+                    "name": "Úloha prípadu",
+                    "placeholder": "Vyberte úlohu"
+                },
+                "creationDate": {
+                    "name": "Dátum vytvorenia prípadu",
+                    "placeholder": "Zadajte dátum vytvorenia prípadu"
+                },
+                "dataset": {
+                    "name": "Dáta prípadu",
+                    "placeholder": {
+                        "field": "Vyberte dátovú položku",
+                        "value": "Zadajte hodnotu dátovej položky"
+                    }
+                }
+            },
+            "task": {
+                "assignee": {
+                    "name": "Riešiteľ úlohy",
+                    "placeholder": "Vyberte riešiteľa úlohy"
+                }
+            }
+        },
+        "placeholder": {
+            "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií"
         }
     },
     "dataField": {
@@ -43,12 +134,12 @@
             "positive": "Zadané číslo musí byť kladné",
             "negative": "Zadané číslo musí byť záporné",
             "decimal": "Zadané číslo musí byť decimálne",
-            "inrange": "Zadané číslo musí byť v rozsahu ",
-            "length": "Zadaný text musí byť dlhý aspoň ",
+            "inrange": "Zadané číslo musí byť v rozsahu {{range}}",
+            "length": "Zadaný text musí byť dlhý aspoň {{length}}",
             "pattern": "Zadaný text je v nesprávnom formáte",
             "phone": "Zadaný text musí byť tel. číslo",
             "email": "Zadaný text musí byť email",
-            "dateRange": "Zadaný dátum musí byť v rozsahu ",
+            "dateRange": "Zadaný dátum musí byť v rozsahu {{range}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň"
 
@@ -59,5 +150,80 @@
             "sameFiles": "Nemôžeš nahrať dva rovnaké súbory",
             "fileSize": "Veľkosť súboru presiahla povolený limit"
         }
+    },
+    "dialog": {
+        "close": "Zatvoriť",
+        "submit": "Potvrdiť"
+    },
+    "forms": {
+        "pass": {
+            "enterEmail": "Zadajte svoj email"
+        },
+        "login": {
+            "length": "Prihlasovacie meno musí mať aspoň 4 písmená",
+            "login": "Prihlásiť",
+            "reset": "Obnova hesla",
+            "sign": "Registrovať",
+            "enterPass": "Zadajte svoje heslo"
+        },
+        "register": {
+            "name": "Meno",
+            "surname": "Priezvisko",
+            "repeatPass": "Zopakujte heslo",
+            "register": "Registrovať"
+        }
+    },
+    "headers": {
+        "newHeader": "Zvoľte novú hlavičku",
+        "date": "Zvoľte dátum",
+        "caseMeta": {
+            "visualID": "Vizuálne ID",
+            "title": "Názov",
+            "author": "Autor",
+            "creaDate": "Dátum vytvorenia"
+        },
+        "taskMeta": {
+            "case": "Prípad",
+            "priority": "Priorita",
+            "user": "Riešiteľ",
+            "assignDate": "Dátum priradenia"
+        },
+        "workflowMeta": {
+            "initials": "Iniciály",
+            "version": "Verzia",
+            "creaDate": "Dátum nahratia"
+        },
+        "orderMode": "Mód zoraďovania",
+        "searchMode": "Mód vyhľadávania",
+        "editMode": "Zapnúť editačný mód"
+    },
+    "panel": {
+        "case": {
+            "delete": "Vymazať"
+        },
+        "workflow": {
+            "net": "Identifikátor siete",
+            "title": "Názov",
+            "version": "Verzia",
+            "author": "Autor",
+            "upload": "Dátum nahratia"
+        }
+    },
+    "profile": {
+        "notLogged": "Nie ste prihlásený!",
+        "general": "Všeobecné údaje",
+        "personal": "Osobné údaje",
+        "name": "Krstné meno",
+        "surname": "Priezvisko",
+        "authority": "Právomoci",
+        "roles": "Roly",
+        "groups": "Skupiny",
+        "preference": "Preferencie",
+        "caseHead": "Hlavičky prípadov",
+        "caseFilter": "Filtre prípadov",
+        "taskHead": "Hlavičky prípadov",
+        "taskFilter": "Filtre prípadov",
+        "workHead": "Workflow hlavičky",
+        "workFilter": "Workflow filtre"
     }
 }

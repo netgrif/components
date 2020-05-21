@@ -1,9 +1,7 @@
 import {MergeOperator} from './merge-operator';
-import {MergedFilter} from './merged-filter';
 import {TaskSearchRequestBody} from './task-search-request-body';
 import {CaseSearchRequestBody} from './case-search-request-body';
 import {FilterType} from './filter-type';
-import {SimpleFilter} from './simple-filter';
 import {Params} from '../../resources/resource-provider.service';
 
 /**
@@ -18,14 +16,6 @@ export abstract class Filter {
      * @param _title human readable filter name
      */
     protected constructor(protected readonly _id: string, protected readonly _type: FilterType, protected readonly _title: string = '') {
-    }
-
-    /**
-     * Create empty filter of provided type
-     * @param type type of resources that the filter can query
-     */
-    public static empty(type: FilterType): Filter {
-        return new SimpleFilter('', type, {});
     }
 
     /**
@@ -61,9 +51,10 @@ export abstract class Filter {
      * Combines two filters together with the given operator.
      * @param filter filter that should be combined with this filter
      * @param operator operator that is used to combine the two filters
-     * @returns a new filter that is the combination of this filter and the filter passed trough the argument
+     * @returns a new filter that is the combination of this filter and the filter passed trough the argument.
+     * Library implementation always returns a {@link MergedFilter} object instance.
      */
-    public abstract merge(filter: Filter, operator: MergeOperator): MergedFilter;
+    public abstract merge(filter: Filter, operator: MergeOperator): Filter;
 
     /**
      * @returns search request body specified by this filter. Type of the result is determined by the `type` of the Filter instance.

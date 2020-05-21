@@ -129,6 +129,38 @@ pipeline {
             }
         }
      }
+
+     stage('Build Examples') {
+        steps {
+            sh 'npm run nae:local-build && npm run example:build'
+        }
+     }
+
+     stage('Publish Examples') {
+        steps {
+            sshPublisher(
+                publishers: [
+                    sshPublisherDesc(
+                        configName: 'monitor.netgrif.com',
+                        transfers: [
+                            sshTransfer(
+                                cleanRemote: true,
+                                excludes: '',
+                                execCommand: '',
+                                execTimeout: 120000,
+                                flatten: false,
+                                makeEmptyDirs: false,
+                                noDefaultExcludes: false,
+                                patternSeparator: '[, ]+',
+                                remoteDirectory: '/var/www/html/developer/projects/engine-frontend/examples',
+                                remoteDirectorySDF: false,
+                                removePrefix: 'dist/nae-example-app',
+                                sourceFiles: 'dist/nae-example-app/**')],
+                        usePromotionTimestamp: false,
+                        useWorkspaceInPromotion: false,
+                        verbose: true)])
+        }
+     }
   }
 
   post {

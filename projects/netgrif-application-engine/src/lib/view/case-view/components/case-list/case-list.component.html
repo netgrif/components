@@ -1,0 +1,22 @@
+<ng-container *ngIf="cases$ | async as cases">
+
+    <div #emptyMessage *ngIf="(loading$ | async) === false && cases.length === 0" fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon color="accent" class="font-size-40 block-size-40 margin-bottom-default">storage</mat-icon>
+        <span class="font-size-20">There are any cases satisfying specified filter</span>
+    </div>
+
+    <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()">
+
+        <nae-case-panel *cdkVirtualFor="let case_ of cases; let i = index; trackBy: trackBy; templateCacheSize: 0"
+                        [case_]="case_"
+                        [selectedHeaders$]="selectedHeaders$"
+                        (click)="onCaseClick(case_)">
+        </nae-case-panel>
+
+        <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
+            <mat-spinner color="primary" diameter="50"></mat-spinner>
+        </div>
+
+    </cdk-virtual-scroll-viewport>
+
+</ng-container>

@@ -7,16 +7,16 @@
                         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
                             <mat-icon color="primary">account_circle</mat-icon>
                             <mat-form-field fxFlex="96">
-                                <input matInput placeholder="Login" formControlName="login" minlength="4" required>
+                                <input matInput placeholder="{{ 'forms.login.login' | translate}}" formControlName="login" minlength="4" required>
                                 <mat-error *ngIf="rootFormGroup.controls['login'].hasError('minlength')">
-                                    The login name must have at least 4 letters
+                                    {{ 'forms.login.length' | translate}}
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
                             <mat-icon color="primary">vpn_key</mat-icon>
                             <mat-form-field fxFlex="96">
-                                <input matInput placeholder="Enter your password"
+                                <input matInput placeholder="{{ 'forms.login.enterPass' | translate}}"
                                        [type]="hidePassword ? 'password' : 'text'"
                                        formControlName="password" required>
                                 <button mat-icon-button matSuffix type="button"
@@ -31,16 +31,16 @@
                         </div>
                         <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-2x">
                             <button color="primary" type="submit" mat-raised-button fxFlex="50" fxFlex.xs="70">
-                                Login
+                                {{ 'forms.login.login' | translate}}
                             </button>
                         </div>
                     </form>
 
-                    <mat-divider class="position-relative"></mat-divider>
+                    <mat-divider *ngIf="registerResetButtons" class="position-relative"></mat-divider>
 
-                    <div fxLayout="row" class="width-100" fxLayoutAlign="end" fxLayoutGap="16px">
-                        <button mat-stroked-button (click)="resetEmit()" fxFlex="60">Reset password</button>
-                        <button mat-stroked-button (click)="signUpEmit()" color="accent" fxFlex="40">Sign Up</button>
+                    <div *ngIf="registerResetButtons" fxLayout="row" class="width-100" fxLayoutAlign="end" fxLayoutGap="16px">
+                        <button mat-stroked-button (click)="resetEmit()" fxFlex="60">{{ 'forms.login.reset' | translate}}</button>
+                        <button mat-stroked-button (click)="signUpEmit()" color="accent" fxFlex="40">{{ 'forms.login.sign' | translate}}</button>
                     </div>
                 </div>
             </mat-card>

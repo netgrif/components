@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SelectLanguageService} from '../../../toolbar/select-language.service';
+import {LanguageService} from '../../../translate/language.service';
+import {PaperViewService} from './paper-view.service';
 
 export type QuickPanelItem = 'language' | 'settings' | 'logout';
 
@@ -12,7 +13,7 @@ export class QuickPanelComponent implements OnInit {
 
     @Input() public items: Array<QuickPanelItem>;
 
-    constructor(private _select: SelectLanguageService) {
+    constructor(private _select: LanguageService, private _paperView: PaperViewService) {
     }
 
     ngOnInit(): void {
@@ -20,5 +21,13 @@ export class QuickPanelComponent implements OnInit {
 
     getLang(): string {
         return this._select.getLanguage();
+    }
+
+    setPaperView() {
+        this._paperView.paperView = !this._paperView.paperView;
+    }
+
+    isPaperView() {
+        return this._paperView.paperView;
     }
 }

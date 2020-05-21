@@ -3,7 +3,7 @@
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="90">
             <span fxLayoutAlign="start center" fxFlex>
-                <mat-icon class="task-panel-icon">{{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
+                <mat-icon class="task-panel-icon" [ngClass]="taskPanelData.task.caseColor">{{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
                 <span>{{firstFeaturedValue}}</span>
             </span>
             <span *ngFor="let value of featuredFieldsValues; let i = index" fxLayout="start center" fxFlex
@@ -43,7 +43,7 @@
     </ng-template>
     <ng-template #taskPanelContent>
         <div class="panel-main-content" fxLayout="column">
-            <div class="task-panel-body" fxFlex="100">
+            <div class="task-panel-body" [ngClass]="{'paper-view': isPaperView()}" fxFlex="100">
                 <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>
             <mat-action-row>

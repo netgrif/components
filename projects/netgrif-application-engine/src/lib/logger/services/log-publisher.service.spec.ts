@@ -1,6 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-
-import {LogPublisherService, PUBLISHERS} from './log-publisher.service';
+import {LogPublisherService} from './log-publisher.service';
 import {LogPublisher} from '../publishers/log-publisher';
 import {LogEntry} from '../models/log-entry';
 import {LocalStorageLogPublisher} from '../publishers/local-storage-log-publisher';
@@ -39,7 +38,7 @@ describe('LogPublisherService', () => {
             }
         }(service);
         expect(service.register).toHaveBeenCalled();
-        expect(service.publishers.length).toBe(Object.keys(PUBLISHERS).length + 1);
+        expect(service.publishers.length).toBe(new TestConfigurationService().get().services.log.publishers.length + 1);
         expect(service.publishers).toContain(publisher);
     });
 
