@@ -28,7 +28,7 @@
     ],
     "scripts": {
         "ng": "ng",
-        "nae:build": "ng build netgrif-application-engine --prod",
+        "nae:build": "ng build netgrif-application-engine --prod && npm run nae:build-schematics",
         "nae:build-schematics": "node projects/netgrif-application-engine/src/scripts/build-schematics.js",
         "nae:full-test": "ng lint netgrif-application-engine && ng test netgrif-application-engine",
         "nae:normalize-coverage-summary": "node projects/netgrif-application-engine/src/scripts/normalize-file-paths.js coverage/netgrif-application-engine/coverage-summary.json",
