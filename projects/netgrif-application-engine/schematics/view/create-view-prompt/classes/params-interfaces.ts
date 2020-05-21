@@ -1,4 +1,4 @@
-import {View} from '../../../../src/lib/configuration/interfaces/schema';
+
 
 export interface TabViewParams {
     tabs: Array<EmbeddedView>;
@@ -8,7 +8,7 @@ export interface TabViewParams {
 export interface EmbeddedView {
     view?: {
         name: string,
-        params?: View['layout']['params']
+        params?: {[k: string]: any}
     };
     component?: {
         class: string,

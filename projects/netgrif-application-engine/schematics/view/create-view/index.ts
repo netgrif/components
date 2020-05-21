@@ -1,7 +1,8 @@
 import {
     Rule,
     schematic,
-    Tree
+    Tree,
+    SchematicsException
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration} from '../../utility-functions';
 import {View} from '../../../src/lib/configuration/interfaces/schema';
@@ -30,6 +31,11 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
         const route = naeRoutes[routePathPart];
         const routePath = constructRoutePath(pathPrefix, routePathPart);
 
+        // temporary schematic fix
+        if (route.layout === undefined) {
+            throw new SchematicsException('Missing \'layout\' property. Other behavior is currently unsupported');
+        }
+
         if (!existingRoutesMap.has(routePath)) {
             return {
                 path: routePath,
@@ -51,7 +57,8 @@ function findMissingView(existingRoutesMap: Map<string, Route>, naeRoutes: { [k:
 
 function emptyArguments(): CreateViewArguments {
     return {
-        path: undefined,
-        viewType: undefined
+        path: '',
+        viewType: '',
+        access: 'private' as 'private'
     };
 }

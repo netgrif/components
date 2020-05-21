@@ -2,7 +2,7 @@ import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics
 import {CreateViewArguments} from './schema';
 import {commitChangesToFile, createFilesFromTemplates, createRelativePath, getAppModule, getProjectInfo} from '../../utility-functions';
 import {ClassName} from './classes/ClassName';
-import {EmbeddedView, TabViewParams} from './classes/paramsInterfaces';
+import {EmbeddedView, TabViewParams} from './classes/params-interfaces';
 import {strings} from '@angular-devkit/core';
 import {
     addAuthGuardImport,
@@ -197,7 +197,8 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
         path: newViewPath,
         viewType: embeddedView.view.name,
         layoutParams: embeddedView.view.params,
-        isTabbed: true
+        isTabbed: true,
+        access: 'private' as 'private'
     };
 
     result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
