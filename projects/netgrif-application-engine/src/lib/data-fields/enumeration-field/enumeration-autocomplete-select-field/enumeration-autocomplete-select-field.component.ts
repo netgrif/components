@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {EnumerationField} from '../models/enumeration-field';
+import {EnumerationField, EnumerationFieldValue} from '../models/enumeration-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
 @Component({
@@ -15,12 +15,11 @@ export class EnumerationAutocompleteSelectFieldComponent implements OnInit {
     @Input() enumerationField: EnumerationField;
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
+    @ViewChild('input') text: ElementRef;
 
-    options: string[];
-    filteredOptions: Observable<string[]>;
+    filteredOptions: Observable<EnumerationFieldValue[]>;
 
     ngOnInit() {
-        this.options = this.enumerationField.choices.map(value => value['value']);
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value))
@@ -32,14 +31,25 @@ export class EnumerationAutocompleteSelectFieldComponent implements OnInit {
      * @param  value to compare matching options
      * @return  return matched options
      */
-    private _filter(value: string): string[] {
+    private _filter(value: string): EnumerationFieldValue[] {
         const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-        return this.enumerationField.choices.map(choice => choice.value).filter(option => option.toLowerCase().normalize('NFD')
+        return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
     }
 
+    change() {
+        if (this.text.nativeElement.value !== undefined) {
+            this.filteredOptions = of(this._filter(this.text.nativeElement.value));
+        }
+    }
+
     public renderSelection = (key) => {
-        return this.enumerationField.choices.find(choice => choice.key === key).value;
+        if (key !== undefined && key !== '' && key !== null) {
+            if (this.enumerationField.choices.find(choice => choice.key === key)) {
+                return this.enumerationField.choices.find(choice => choice.key === key).value;
+            }
+        }
+        return key;
     }
 }
