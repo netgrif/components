@@ -21,13 +21,13 @@ export function checkJsonParamsForSidenav(args: CreateViewArguments, addRoute: b
         for (const objectIterator of Object.entries(args.layoutParams)) {
             switch (objectIterator[0]) {
                 case 'user':
-                    sidenav.user = objectIterator[1];
+                    sidenav.user = objectIterator[1] as boolean;
                     break;
                 case 'quickPanel':
-                    sidenav.quickPanel = objectIterator[1];
+                    sidenav.quickPanel = objectIterator[1] as boolean;
                     break;
                 case 'navigation':
-                    sidenav.navigation = objectIterator[1];
+                    sidenav.navigation = objectIterator[1] as boolean;
                     break;
             }
         }
