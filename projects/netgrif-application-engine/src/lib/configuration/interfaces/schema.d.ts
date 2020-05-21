@@ -169,10 +169,10 @@ export interface Theme {
 }
 
 export interface Filters {
-    [k: string]: Filter;
+    [k: string]: ConfigFilter;
 }
 
-export interface Filter {
+export interface ConfigFilter {
     title: string;
     access?: string;
     query: object | Array<object>;
