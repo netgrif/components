@@ -4,5 +4,5 @@ export interface CreateViewArguments {
     path: string | undefined;
     viewType: NaeRoute['layout']['name'] | undefined;
     layoutParams?: NaeRoute['layout']['params'];
-    access?: { [k: string]: any; } | ('public' | 'private');
+    access: { [k: string]: any; } | ('public' | 'private');
 }
