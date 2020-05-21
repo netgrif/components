@@ -1,0 +1,11 @@
+import {Injectable} from '@angular/core';
+import {ViewService} from '@netgrif/application-engine';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class <%= classify(project) %>ViewService extends ViewService {
+    constructor() {
+        super([]);
+    }
+}

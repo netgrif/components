@@ -51,6 +51,5 @@ export function schematicEntryPoint(): Rule {
             project: projectInfo.projectName,
             configPath: createRelativePath(configPathFromRoot, 'nae.json')
         });
-
     };
 }

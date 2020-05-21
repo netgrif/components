@@ -27,7 +27,9 @@ import {
     ToolbarModule,
     UserModule,
     WorkflowViewModule,
-    SearchModule, CaseViewModule,
+    SearchModule,
+    CaseViewModule,
+    ViewService,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -63,6 +65,7 @@ import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/
 import {ProfileComponent} from './doc/profile/profile.component';
 import { NavigationExampleComponent } from './doc/navigation-example/navigation-example.component';
 import { ButtonsNavComponent } from './doc/navigation-example/buttons-nav/buttons-nav.component';
+import { NaeExampleAppViewService } from './nae-example-app-view.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -156,6 +159,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TranslateService,
         TranslatePipe,
         TranslateStore,
+        {provide: ViewService, useClass: NaeExampleAppViewService},
     ],
     bootstrap: [AppComponent]
 })

@@ -27,6 +27,7 @@ export function createNaeFiles(): Rule {
         const rules = [];
         rules.push(createRoutesModule());
         rules.push(schematic('create-configuration-service', {}));
+        rules.push(schematic('create-view-service', {}));
         rules.push(schematic('custom-themes', {}));
         rules.push(updateAppComponentHTML());
         for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
