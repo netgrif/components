@@ -84,11 +84,9 @@ export function getFileData(tree: Tree, projectRootPath: string, relativeFilePat
         throw new SchematicsException(`Could not find requested file. Missing '${relativeFilePath}'.`);
     }
 
-    const source = fileEntryToTsSource(file);
-
     return {
         fileEntry: file,
-        sourceFile: source
+        sourceFile: fileEntryToTsSource(file)
     };
 }
 

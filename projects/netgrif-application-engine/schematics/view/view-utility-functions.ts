@@ -1,7 +1,8 @@
+import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import {Tree, SchematicsException} from '@angular-devkit/schematics';
-import {commitChangesToFile, getAppModule, getProjectInfo} from '../utility-functions';
+import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../_utility/utility-functions';
 import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
-import {addDeclarationToModule, addImportToModule} from '@schematics/angular/utility/ast-utils';
+import {addDeclarationToModule, addImportToModule, findNodes} from '@schematics/angular/utility/ast-utils';
 import {ClassName} from './create-view-prompt/classes/ClassName';
 
 export function getParentPath(path: string): string {
@@ -61,5 +62,17 @@ export function resolveClassSuffixForView(view: string): string {
 
 export function addViewToViewService(tree: Tree, className: ClassName): void {
     const projectInfo = getProjectInfo(tree);
+    const fileData = getFileData(tree, projectInfo.path, `${projectInfo.projectNameDasherized}-view.service.ts`);
+    const arrayContent = getArrayNodeContent(fileData.sourceFile);
+    // arrayContent.getChildren();
+    // String(className.fileImportPath);
 
+}
+
+function getArrayNodeContent(source: ts.SourceFile): ts.Node {
+    const arrayNodes: ts.Node[] = findNodes(source, ts.SyntaxKind.ArrayLiteralExpression);
+    if (arrayNodes === null) {
+        throw new SchematicsException('Source file doesn\'t contain any array tokens');
+    }
+    return arrayNodes[0].getChildren()[1];
 }
