@@ -4,9 +4,6 @@ import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../.
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
 import {
-    addAuthGuardImport,
-    addRouteToRoutesJson,
-    addRoutingModuleImport,
     resolveClassSuffixForView,
     updateAppModule
 } from '../view-utility-functions';

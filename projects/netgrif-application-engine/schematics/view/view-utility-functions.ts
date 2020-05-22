@@ -1,9 +1,8 @@
 import {Tree, SchematicsException} from '@angular-devkit/schematics';
-import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../utility-functions';
+import {commitChangesToFile, getAppModule, getProjectInfo} from '../utility-functions';
 import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
-import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
-import {Change} from '@schematics/angular/utility/change';
-import {CreateViewArguments} from './create-view-prompt/schema';
+import {addDeclarationToModule, addImportToModule} from '@schematics/angular/utility/ast-utils';
+import {ClassName} from './create-view-prompt/classes/ClassName';
 
 export function getParentPath(path: string): string {
     const index = path.lastIndexOf('/');
@@ -29,19 +28,6 @@ export function addImportsToAppModule(tree: Tree, imports: Array<ImportToAdd>): 
             addImportToModule(appModule.sourceFile, appModule.fileEntry.path, importToAdd.className, importToAdd.importPath)
         );
     });
-}
-
-export function addRoutingModuleImport(tree: Tree, className: string, componentPath: string): void {
-    const routingModuleChanges: Array<Change> = [];
-    const routesModule = getFileData(tree, getProjectInfo(tree).path, 'app-routing.module.ts');
-    routingModuleChanges.push(insertImport(routesModule.sourceFile, routesModule.fileEntry.path, className, componentPath));
-    commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);
-}
-
-export function addAuthGuardImport(tree: Tree, access: CreateViewArguments['access']) {
-    // TODO 9.4.2020 - Add condition if access is object
-    if (access === 'private')
-        addRoutingModuleImport(tree, 'AuthenticationGuardService', '@netgrif/application-engine');
 }
 
 export function constructRoutePath(pathPrefix: string, pathPart: string): string {
@@ -71,4 +57,9 @@ export function resolveClassSuffixForView(view: string): string {
         default:
             throw new SchematicsException(`Unknown view type '${view}'`);
     }
+}
+
+export function addViewToViewService(tree: Tree, className: ClassName): void {
+    const projectInfo = getProjectInfo(tree);
+
 }
