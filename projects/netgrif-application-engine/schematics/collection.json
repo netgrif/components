@@ -15,11 +15,6 @@
             "factory": "./add/custom-themes/index#customThemes",
             "schema": "./add/custom-themes/schema.json"
         },
-        "before-build": {
-            "description": "Is run before each build to fill all the project classes with the most recent state of various configurations.",
-            "factory": "./before-build/index#beforeBuild",
-            "schema": "./before-build/schema.json"
-        },
         "create-configuration-service": {
             "description": "Generate a project specific configuration service and add the correct provider entry to app.module",
             "factory": "./configuration-service/schematic-create-configuration-service#schematicEntryPoint",

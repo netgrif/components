@@ -7,8 +7,8 @@ import {
     createFilesFromTemplates,
     getAppModule,
     getProjectInfo
-} from '../utility-functions';
-import {addProviderToModule} from '../modified-library-functions';
+} from '../_utility/utility-functions';
+import {addProviderToModule} from '../_utility/modified-library-functions';
 import {insertImport} from '@schematics/angular/utility/ast-utils';
 import {strings} from '@angular-devkit/core';
 

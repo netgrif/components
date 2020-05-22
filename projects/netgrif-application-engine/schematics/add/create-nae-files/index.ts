@@ -10,7 +10,7 @@ import {
     getAppModule,
     getNaeConfiguration,
     getProjectInfo
-} from '../../utility-functions';
+} from '../../_utility/utility-functions';
 import {addImportToModule} from '@schematics/angular/utility/ast-utils';
 import {
     addAllRoutesToMap,

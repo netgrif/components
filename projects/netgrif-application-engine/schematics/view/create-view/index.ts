@@ -4,7 +4,7 @@ import {
     Tree,
     SchematicsException
 } from '@angular-devkit/schematics';
-import {getNaeConfiguration} from '../../utility-functions';
+import {getNaeConfiguration} from '../../_utility/utility-functions';
 import {View} from '../../../src/lib/configuration/interfaces/schema';
 import {constructRoutePath, createAppRoutesMap, Route} from '../view-utility-functions';
 import {CreateViewArguments} from '../create-view-prompt/schema';

@@ -1,5 +1,4 @@
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
-
 import {
     apply,
     applyTemplates,
@@ -12,28 +11,11 @@ import {
 } from '@angular-devkit/schematics';
 import {FileEntry, UpdateRecorder} from '@angular-devkit/schematics/src/tree/interface';
 import {experimental, normalize, strings} from '@angular-devkit/core';
-import {NetgrifApplicationEngine} from '../src/lib/configuration/interfaces/schema';
+import {NetgrifApplicationEngine} from '../../src/lib/configuration/interfaces/schema';
 import {Change, InsertChange} from '@schematics/angular/utility/change';
-import {FileSystemNode} from './utility-classes';
-
-export class ProjectInfo {
-    /**
-     * [path prefix relative to root folder]/[name]/src/app
-     *
-     * eg. projects/nae-example-app/src/app
-     */
-    path = '';
-    projectName = '';
-    projectNameClassified = '';
-    projectNameDasherized = '';
-    projectPrefix = '';
-    projectPrefixDasherized = '';
-}
-
-export interface FileData {
-    fileEntry: FileEntry;
-    sourceFile: ts.SourceFile;
-}
+import {FileData} from './models/file-data';
+import {FileSystemNode} from './models/file-system-node';
+import {ProjectInfo} from './models/project-info';
 
 
 export function getProjectInfo(tree: Tree): ProjectInfo {
@@ -77,14 +59,6 @@ export function getNaeConfiguration(tree: Tree): NetgrifApplicationEngine {
     return JSON.parse(getNaeConfigurationString(tree));
 }
 
-export function getTsSource(path: string, content: string): ts.SourceFile {
-    return ts.createSourceFile(path, content, ts.ScriptTarget.Latest, true);
-}
-
-export function fileEntryToTsSource(file: FileEntry, encoding: string = 'utf8'): ts.SourceFile {
-    return getTsSource(file.path, file.content.toString(encoding));
-}
-
 export function commitChangesToFile(tree: Tree, file: FileEntry, changes: Array<Change>): void {
     const changesRecorder = createChangesRecorder(tree, file, changes);
     tree.commitUpdate(changesRecorder);
@@ -116,6 +90,18 @@ export function getFileData(tree: Tree, projectRootPath: string, relativeFilePat
         fileEntry: file,
         sourceFile: source
     };
+}
+
+export function fileEntryToTsSource(file: FileEntry, encoding: string = 'utf8'): ts.SourceFile {
+    const source = getTsSource(file.path, file.content.toString(encoding));
+    if (source === null) {
+        throw new SchematicsException(`'${file.path}' could not be read. Make sure it has UTF-8 encoding.`);
+    }
+    return source;
+}
+
+export function getTsSource(path: string, content: string): ts.SourceFile {
+    return ts.createSourceFile(path, content, ts.ScriptTarget.Latest, true);
 }
 
 export function createFilesFromTemplates(pathToTemplates: string, pathToMoveGeneratedFiles: string, options: object = {}): Rule {
@@ -189,4 +175,3 @@ export function createRelativePath(sourcePath: string, destinationPath: string):
 
     return pathFragments.join('/');
 }
-

@@ -6,7 +6,7 @@ import {
     createRelativePath,
     getAppModule,
     getProjectInfo
-} from '../../utility-functions';
+} from '../../_utility/utility-functions';
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
 import {

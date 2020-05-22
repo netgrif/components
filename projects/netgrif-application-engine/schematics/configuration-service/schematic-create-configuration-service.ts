@@ -5,14 +5,14 @@ import {
 } from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
 import {insertImport} from '@schematics/angular/utility/ast-utils';
-import {addProviderToModule} from '../modified-library-functions';
+import {addProviderToModule} from '../_utility/modified-library-functions';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
     createRelativePath,
     getAppModule,
     getProjectInfo
-} from '../utility-functions';
+} from '../_utility/utility-functions';
 
 
 export function schematicEntryPoint(): Rule {

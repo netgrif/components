@@ -4,7 +4,7 @@ import {
     Tree
 } from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {getNaeConfiguration} from '../../utility-functions';
+import {getNaeConfiguration} from '../../_utility/utility-functions';
 import {View} from '../../../src/lib/configuration/interfaces/schema';
 
 

@@ -1,6 +1,6 @@
 import {Rule, Tree, chain} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../utility-functions';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../_utility/utility-functions';
 import {ClassName} from './classes/ClassName';
 import {
     addAuthGuardImport,

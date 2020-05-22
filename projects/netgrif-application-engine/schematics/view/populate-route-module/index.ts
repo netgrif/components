@@ -2,7 +2,7 @@ import {
     Rule, SchematicsException,
     Tree,
 } from '@angular-devkit/schematics';
-import {fileEntryToTsSource, getProjectInfo} from '../../utility-functions';
+import {fileEntryToTsSource, getProjectInfo} from '../../_utility/utility-functions';
 import {getRoutesJsonContent} from '../view-utility-functions';
 import {Route} from '@angular/router';
 import {findNodes} from '@schematics/angular/utility/ast-utils';
