@@ -90,6 +90,10 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
 
     public createNewCase(): void {
+        if (!this.selectedColorControl.valid) {
+            return;
+        }
+
         const newCase = {
             title: this.titleFormControl.value,
             color: this.selectedColorControl.value,
