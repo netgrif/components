@@ -4,9 +4,6 @@ import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../.
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
 import {
-    addAuthGuardImport,
-    addRouteToRoutesJson,
-    addRoutingModuleImport,
     resolveClassSuffixForView,
     updateAppModule
 } from '../view-utility-functions';
@@ -14,7 +11,7 @@ import {ImportToAdd} from './classes/ImportToAdd';
 import {TabbedView} from './tabbed-view';
 
 
-export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedView, addRoute: boolean): Rule {
+export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedView): Rule {
     const projectInfo = getProjectInfo(tree);
     const className = new ClassName(args.path as string, resolveClassSuffixForView(args.viewType as string));
     const rules = [];
@@ -43,10 +40,10 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
         new ImportToAdd('PanelModule', '@netgrif/application-engine')
     ]);
 
-    if (addRoute) {
-        addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push( addRouteToRoutesJson(args.path as string, className.name, args.access));
-        addAuthGuardImport(tree, args.access);
-    }
+    // if (addRoute) {
+    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
+    //     rules.push( addRouteToRoutesJson(args.path as string, className.name, args.access));
+    //     addAuthGuardImport(tree, args.access);
+    // }
     return chain(rules);
 }

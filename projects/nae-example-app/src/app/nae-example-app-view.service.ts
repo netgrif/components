@@ -6,6 +6,6 @@ import {ViewService} from '@netgrif/application-engine';
 })
 export class NaeExampleAppViewService extends ViewService {
     constructor() {
-        super([]);
+        super([NaeExampleAppViewService, NaeExampleAppViewService]);
     }
 }

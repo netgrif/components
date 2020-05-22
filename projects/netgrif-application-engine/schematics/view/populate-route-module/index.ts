@@ -3,7 +3,6 @@ import {
     Tree,
 } from '@angular-devkit/schematics';
 import {fileEntryToTsSource, getProjectInfo} from '../../_utility/utility-functions';
-import {getRoutesJsonContent} from '../view-utility-functions';
 import {Route} from '@angular/router';
 import {findNodes} from '@schematics/angular/utility/ast-utils';
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
@@ -11,7 +10,8 @@ import {FileEntry, UpdateRecorder} from '@angular-devkit/schematics/src/tree/int
 
 export function populateRouteModule(): Rule {
     return (tree: Tree) => {
-        const data: Array<any> = getRoutesJsonContent(tree, getProjectInfo(tree));
+        // const data: Array<any> = getRoutesJsonContent(tree, getProjectInfo(tree));
+        const data: Array<Route> = [];
         checkFileExists(tree);
         prepareAndUpdateRoutes(tree, data);
     };

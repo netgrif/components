@@ -10,9 +10,6 @@ import {
 import {ClassName} from './classes/ClassName';
 import {strings} from '@angular-devkit/core';
 import {
-    addAuthGuardImport,
-    addRouteToRoutesJson,
-    addRoutingModuleImport,
     resolveClassSuffixForView,
     updateAppModule
 } from '../view-utility-functions';
@@ -21,7 +18,7 @@ import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {TabbedView} from './tabbed-view';
 
 
-export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedView, addRoute: boolean): Rule {
+export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedView): Rule {
     const projectInfo = getProjectInfo(tree);
     const className = new ClassName(args.path as string, resolveClassSuffixForView(args.viewType as string));
     const rules = [];
@@ -62,10 +59,10 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
     );
     commitChangesToFile(tree, appModule.fileEntry, changes);
 
-    if (addRoute) {
-        addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
-        addAuthGuardImport(tree, args.access);
-    }
+    // if (addRoute) {
+    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
+    //     rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
+    //     addAuthGuardImport(tree, args.access);
+    // }
     return chain(rules);
 }

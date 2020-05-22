@@ -64,8 +64,8 @@ export function addViewToViewService(tree: Tree, className: ClassName): void {
     const projectInfo = getProjectInfo(tree);
     const fileData = getFileData(tree, projectInfo.path, `${projectInfo.projectNameDasherized}-view.service.ts`);
     const arrayContent = getArrayNodeContent(fileData.sourceFile);
-    // arrayContent.getChildren();
-    // String(className.fileImportPath);
+    arrayContent.getChildren();
+    String(className.fileImportPath);
 
 }
 

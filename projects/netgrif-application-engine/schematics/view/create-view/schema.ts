@@ -1,6 +1,4 @@
-import {Route} from '../view-utility-functions';
-
 export interface AddRouteArguments {
-    routeObject: Route;
+    routeObject: object;
     path: string;
 }

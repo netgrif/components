@@ -3,15 +3,13 @@ import {CreateViewArguments} from './schema';
 import {createFilesFromTemplates, getProjectInfo} from '../../_utility/utility-functions';
 import {ClassName} from './classes/ClassName';
 import {
-    addAuthGuardImport,
-    addRouteToRoutesJson,
-    addRoutingModuleImport,
-    resolveClassSuffixForView, updateAppModule
+    resolveClassSuffixForView,
+    updateAppModule
 } from '../view-utility-functions';
 import {strings} from '@angular-devkit/core';
 
 
-export function createEmptyView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
+export function createEmptyView(tree: Tree, args: CreateViewArguments): Rule {
     const projectInfo = getProjectInfo(tree);
     const className = new ClassName(args.path as string, resolveClassSuffixForView(args.viewType as string));
     const rules = [];
@@ -24,10 +22,10 @@ export function createEmptyView(tree: Tree, args: CreateViewArguments, addRoute:
     }));
     updateAppModule(tree, className.name, className.fileImportPath, []);
 
-    if (addRoute) {
-        addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
-        addAuthGuardImport(tree, args.access);
-    }
+    // if (addRoute) {
+    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
+    //     rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
+    //     addAuthGuardImport(tree, args.access);
+    // }
     return chain(rules);
 }

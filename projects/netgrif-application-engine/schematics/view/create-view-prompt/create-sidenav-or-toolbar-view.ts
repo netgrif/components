@@ -2,10 +2,8 @@ import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../_utility/utility-functions';
 import {ClassName} from './classes/ClassName';
 import {
-    addAuthGuardImport,
-    addRouteToRoutesJson,
-    addRoutingModuleImport,
-    resolveClassSuffixForView, updateAppModule
+    resolveClassSuffixForView,
+    updateAppModule
 } from '../view-utility-functions';
 import {strings} from '@angular-devkit/core';
 import {SidenavPromptOptions} from './files/sidenav-toolbar-files/sidenav-prompt-options';
@@ -41,12 +39,12 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
         }));
     updateAppModule(tree, className.name, className.fileImportPath, []);
 
-    if (sidenavOptions.addRoute) {
-        addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push(addRouteToRoutesJson(sidenavOptions.createViewArguments.path as string,
-            className.name, sidenavOptions.createViewArguments.access));
-        addAuthGuardImport(tree, sidenavOptions.createViewArguments.access);
-    }
+    // if (sidenavOptions.addRoute) {
+    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
+    //     rules.push(addRouteToRoutesJson(sidenavOptions.createViewArguments.path as string,
+    //         className.name, sidenavOptions.createViewArguments.access));
+    //     addAuthGuardImport(tree, sidenavOptions.createViewArguments.access);
+    // }
     if (sidenavOptions.addRoute) {
         sidenavOptions.createViewArguments.layoutParams = {
             user: sidenavOptions.user,

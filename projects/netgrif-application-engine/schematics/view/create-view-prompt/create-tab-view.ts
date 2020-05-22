@@ -5,9 +5,6 @@ import {ClassName} from './classes/ClassName';
 import {EmbeddedView, TabViewParams} from './classes/params-interfaces';
 import {strings} from '@angular-devkit/core';
 import {
-    addAuthGuardImport,
-    addRouteToRoutesJson,
-    addRoutingModuleImport,
     resolveClassSuffixForView,
     updateAppModule
 } from '../view-utility-functions';
@@ -26,7 +23,6 @@ interface TabViews {
 export function createTabView(
     tree: Tree,
     args: CreateViewArguments,
-    addRoute: boolean,
     createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
 ): Rule {
 
@@ -88,12 +84,12 @@ export function createTabView(
         commitChangesToFile(tree, appModule.fileEntry, changes);
     });
 
-    if (addRoute) {
-        addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
-        rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name, args.access));
-        addAuthGuardImport(tree, args.access);
-    }
+    // if (addRoute) {
+    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
+    //     rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
+    //     rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name, args.access));
+    //     addAuthGuardImport(tree, args.access);
+    // }
     return chain(rules);
 }
 

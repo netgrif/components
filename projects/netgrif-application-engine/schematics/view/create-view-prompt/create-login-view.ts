@@ -10,7 +10,7 @@ import {
 import {ImportToAdd} from './classes/ImportToAdd';
 
 
-export function createLoginView(tree: Tree, args: CreateViewArguments, addRoute: boolean): Rule {
+export function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
     const className = new ClassName(args.path as string, resolveClassSuffixForView(args.viewType as string));
@@ -28,10 +28,10 @@ export function createLoginView(tree: Tree, args: CreateViewArguments, addRoute:
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('LoginFormModule', '@netgrif/application-engine')]);
 
-    if (addRoute) {
-        addRoutingModuleImport(tree, className.name, className.fileImportPath);
-        rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
-        addAuthGuardImport(tree, args.access);
-    }
+    // if (addRoute) {
+    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
+    //     rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
+    //     addAuthGuardImport(tree, args.access);
+    // }
     return chain(rules);
 }
