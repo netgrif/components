@@ -40,20 +40,10 @@
             "factory": "./view/create-view-prompt/index#createViewPrompt",
             "schema": "./view/create-view-prompt/schema.json"
         },
-        "add-route": {
-            "description": "Adds a new Route object into an existing routes.json file.",
-            "factory": "./view/add-route/index#addRouteToRoutes",
-            "schema": "./view/add-route/schema.json"
-        },
         "populate-route-module": {
             "description": "Updates routes in route module to match with those in routes.json",
             "factory": "./view/populate-route-module/index#populateRouteModule",
             "schema": "./view/populate-route-module/schema.json"
-        },
-        "market-resource": {
-            "description": "Resource market",
-            "factory": "./resources/market-resource/index#initializeMarketResources",
-            "schema": "./resources/market-resource/schema.json"
         },
         "create-sidenav-prompt": {
             "description": "Adds extension to sidenav based on user inputs.",

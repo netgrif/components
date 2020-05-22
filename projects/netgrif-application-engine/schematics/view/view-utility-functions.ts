@@ -1,31 +1,9 @@
-import {Rule, schematic, Tree, SchematicsException} from '@angular-devkit/schematics';
-import {commitChangesToFile, getAppModule, getFileData, getProjectInfo, ProjectInfo} from '../utility-functions';
+import {Tree, SchematicsException} from '@angular-devkit/schematics';
+import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../utility-functions';
 import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
 import {addDeclarationToModule, addImportToModule, insertImport} from '@schematics/angular/utility/ast-utils';
 import {Change} from '@schematics/angular/utility/change';
 import {CreateViewArguments} from './create-view-prompt/schema';
-
-
-/**
- * Mocks the `Route` interface of [Angular's router package]{@link @angular/router#Route}.
- * But changes the type of the `component` attribute to `string`.
- */
-export interface Route {
-    component: string;
-    path: string;
-    children?: Array<Route>;
-    canActivate?: any[];
-}
-
-export declare type Routes = Route[];
-
-export function getRoutesJsonContent(tree: Tree, projectInfo: ProjectInfo): Array<Route> {
-    const routes = tree.read(`${projectInfo.path}/routes.json`);
-    if (!routes) {
-        return [];
-    }
-    return JSON.parse(routes.toString());
-}
 
 export function getParentPath(path: string): string {
     const index = path.lastIndexOf('/');
@@ -60,27 +38,6 @@ export function addRoutingModuleImport(tree: Tree, className: string, componentP
     commitChangesToFile(tree, routesModule.fileEntry, routingModuleChanges);
 }
 
-export function addRouteToRoutesJson(path: string, className: string, access?: CreateViewArguments['access']): Rule {
-    return schematic('add-route', {
-        routeObject: createRouteObject(path, className, access),
-        path
-    });
-}
-
-export function createRouteObject(path: string, className: string,
-                                  access?: CreateViewArguments['access']): Route {
-    const index = path.lastIndexOf('/');
-    let relevantPath = path;
-    if (index !== -1) {
-        relevantPath = path.substring(index + 1);
-    }
-    if (access === 'private') {
-        return {path: relevantPath, component: className, canActivate: ['AuthenticationGuardService']};
-    } else {
-        return {path: relevantPath, component: className};
-    }
-}
-
 export function addAuthGuardImport(tree: Tree, access: CreateViewArguments['access']) {
     // TODO 9.4.2020 - Add condition if access is object
     if (access === 'private')
@@ -89,32 +46,6 @@ export function addAuthGuardImport(tree: Tree, access: CreateViewArguments['acce
 
 export function constructRoutePath(pathPrefix: string, pathPart: string): string {
     return `${pathPrefix}${pathPrefix.length > 0 ? '/' : ''}${pathPart}`;
-}
-
-/**
- * Creates a Map object with address paths as keys and corresponding Route objects as values.
- * The source for this information is routes.json file in the application project.
- *
- * @param tree - schematic tree
- * @returns Key is the whole path, with leading backslash omitted. Value is the Route object from routes.json corresponding to the path
- */
-export function createAppRoutesMap(tree: Tree) {
-    const angularRoutes = getRoutesJsonContent(tree, getProjectInfo(tree));
-    const map = new Map<string, Route>();
-    addAllRoutesToMap(map, angularRoutes);
-    return map;
-}
-
-export function addAllRoutesToMap(map: Map<string, Route>, routes: Routes, pathPrefix: string = ''): void {
-    routes.forEach(route => {
-        if (route.path !== undefined) {
-            const routePath = constructRoutePath(pathPrefix, route.path);
-            map.set(routePath, route);
-            if (route.children !== undefined) {
-                addAllRoutesToMap(map, route.children, routePath);
-            }
-        }
-    });
 }
 
 export function resolveClassSuffixForView(view: string): string {
