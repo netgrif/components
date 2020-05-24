@@ -6,7 +6,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CaseHeaderService, CaseMetaField} from '../../case-header/case-header.service';
 import {Component} from '@angular/core';
 import {HeaderColumn, HeaderColumnType} from '../../models/header-column';
-import {CaseViewServiceFactory} from '../../../view/case-view/service/case-view-service-factory';
 import {SearchService} from '../../../search/search-service/search.service';
 import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
@@ -14,6 +13,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/config-case-view-service-factory';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
@@ -35,7 +35,7 @@ describe('EditModeComponent', () => {
             ],
             providers: [
                 CaseHeaderService,
-                CaseViewServiceFactory,
+                ConfigCaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory
@@ -43,7 +43,7 @@ describe('EditModeComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
+                    deps: [ConfigCaseViewServiceFactory]
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]

@@ -1,16 +1,17 @@
 import {TestBed} from '@angular/core/testing';
-import {ConfigurationService} from '../../configuration/configuration.service';
+import {ConfigurationService} from '../../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MaterialModule} from '../../material/material.module';
+import {MaterialModule} from '../../../material/material.module';
 import {TaskViewService} from './task-view.service';
-import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {TestConfigurationService} from '../../utility/tests/test-config';
+import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {of} from 'rxjs';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-panel/policy';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {SearchService} from '../../search/search-service/search.service';
-import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../panel/task-panel/policy';
+import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
+import {SearchService} from '../../../search/search-service/search.service';
+import {TestTaskSearchServiceFactory} from '../../../utility/tests/test-factory-methods';
+import {ArrayTaskViewServiceFactory} from './factory/array-task-view-service-factory';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -19,7 +20,10 @@ describe('TaskViewService', () => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
             providers: [
-                TaskViewService,
+                ArrayTaskViewServiceFactory,
+                {   provide: TaskViewService,
+                    useFactory: ArrayTaskViewServiceFactory.noNetsTaskViewServiceFactory,
+                    deps: [ArrayTaskViewServiceFactory]},
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},

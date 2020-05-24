@@ -6,13 +6,13 @@ import {MaterialModule} from '../../../material/material.module';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {of} from 'rxjs';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {CaseViewServiceFactory} from './case-view-service-factory';
+import {ConfigCaseViewServiceFactory} from './factory/config-case-view-service-factory';
 import {SearchService} from '../../../search/search-service/search.service';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
 };
 
@@ -29,11 +29,11 @@ describe('CaseViewService', () => {
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                CaseViewServiceFactory,
+                ConfigCaseViewServiceFactory,
                 {
                     provide: CaseViewService,
                     useFactory: localCaseViewServiceFactory,
-                    deps: [CaseViewServiceFactory]
+                    deps: [ConfigCaseViewServiceFactory]
                 },
                 {
                     provide: SearchService,

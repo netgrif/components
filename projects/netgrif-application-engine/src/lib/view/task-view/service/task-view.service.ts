@@ -1,20 +1,21 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
-import {ChangedFields} from '../../data-fields/models/changed-fields';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {UserService} from '../../user/services/user.service';
-import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {ChangedFields} from '../../../data-fields/models/changed-fields';
+import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
+import {UserService} from '../../../user/services/user.service';
+import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {LanguageService} from '../../translate/language.service';
-import {SortableView} from '../abstract/sortable-view';
-import {SearchService} from '../../search/search-service/search.service';
-import {Task} from '../../resources/interface/task';
-import {SimpleFilter} from '../../filter/models/simple-filter';
+import {LanguageService} from '../../../translate/language.service';
+import {SearchService} from '../../../search/search-service/search.service';
+import {Task} from '../../../resources/interface/task';
+import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
+import {Net} from '../../../process/net';
 
 
 @Injectable()
-export class TaskViewService extends SortableView {
+export class TaskViewService extends SortableViewWithAllowedNets {
     taskArray: Array<TaskPanelData>;
     taskData: Subject<Array<TaskPanelData>>;
     changedFields: Subject<ChangedFields>;
@@ -30,8 +31,9 @@ export class TaskViewService extends SortableView {
 
     constructor(protected _taskService: TaskResourceService, private _userService: UserService,
                 private _snackBarService: SnackBarService, private _translate: TranslateService,
-                private _Language: LanguageService, protected _searchService: SearchService) { // need for translations
-        super();
+                private _Language: LanguageService, protected _searchService: SearchService,
+                allowedNets: Observable<Array<Net>> = of([])) {
+        super(allowedNets);
         this.taskArray = [];
         this.taskData = new Subject<Array<TaskPanelData>>();
         this.loading = new BehaviorSubject<boolean>(false);
@@ -60,11 +62,11 @@ export class TaskViewService extends SortableView {
         // TODO 12.5.2020 - better solution for mongo searching
         if (!this._searchService.additionalFiltersApplied && !!this._parentCaseId) {
             this._taskService.getTasks({case: this._parentCaseId}).subscribe(tasks => this.processTasks(tasks),
-                error => this.processError());
+                () => this.processError());
         } else {
             // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation
             this._taskService.searchTask(this._searchService.activeFilter).subscribe(tasks => this.processTasks(tasks),
-                error => this.processError());
+                () => this.processError());
         }
     }
 

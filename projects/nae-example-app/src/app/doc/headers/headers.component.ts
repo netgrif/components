@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {
     CaseViewService,
-    CaseViewServiceFactory,
+    ConfigCaseViewServiceFactory,
     FilterType,
     SearchService,
     SimpleFilter,
     TaskViewService
 } from '@netgrif/application-engine';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('case');
 };
 
@@ -23,11 +23,11 @@ const searchServiceFactory = () => {
     styleUrls: ['./headers.component.scss'],
     providers: [
         TaskViewService,
-        CaseViewServiceFactory,
+        ConfigCaseViewServiceFactory,
         {
             provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
-            deps: [CaseViewServiceFactory]
+            deps: [ConfigCaseViewServiceFactory]
         },
         {
             provide: SearchService,
