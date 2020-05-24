@@ -3,7 +3,7 @@ import {TaskPanelData} from './task-panel-data/task-panel-data';
 import {Observable} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {TaskViewService} from '../../view/task-view/task-view.service';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 
 

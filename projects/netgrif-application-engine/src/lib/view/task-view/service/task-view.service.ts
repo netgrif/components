@@ -6,22 +6,17 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {LanguageService} from '../../translate/language.service';
-import {SortableView} from '../abstract/sortable-view';
-import {SearchService} from '../../search/search-service/search.service';
-import {Task} from '../../resources/interface/task';
-import {SimpleFilter} from '../../filter/models/simple-filter';
-import {LoadingEmitter} from '../../utility/loading-emitter';
-import {Pagination} from '../../resources/interface/pagination';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
-import {LoggerService} from '../../logger/services/logger.service';
-import {LanguageService} from '../../../translate/language.service';
-import {SearchService} from '../../../search/search-service/search.service';
-import {Task} from '../../../resources/interface/task';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {Net} from '../../../process/net';
+import {LoadingEmitter} from '../../../utility/loading-emitter';
+import {Pagination} from '../../../resources/interface/pagination';
+import {Task} from '../../../resources/interface/task';
+import {LanguageService} from '../../../translate/language.service';
+import {SearchService} from '../../../search/search-service/search.service';
+import {LoggerService} from '../../../logger/services/logger.service';
 
 
 @Injectable()

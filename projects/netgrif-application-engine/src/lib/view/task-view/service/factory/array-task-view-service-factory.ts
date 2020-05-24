@@ -8,6 +8,7 @@ import {SearchService} from '../../../../search/search-service/search.service';
 import {ProcessService} from '../../../../process/process.service';
 import {TaskViewService} from '../task-view.service';
 import {InjectedTabbedTaskViewData} from '../../models/injected-tabbed-task-view-data';
+import {LoggerService} from '../../../../logger/services/logger.service';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link TaskViewService} dependencies.
@@ -52,7 +53,8 @@ export class ArrayTaskViewServiceFactory {
                 protected _translate: TranslateService,
                 protected _language: LanguageService,
                 protected _searchService: SearchService,
-                protected _processService: ProcessService) {
+                protected _processService: ProcessService,
+                protected _loggerService: LoggerService) {
     }
 
     /**
@@ -68,6 +70,7 @@ export class ArrayTaskViewServiceFactory {
             this._translate,
             this._language,
             this._searchService,
+            this._loggerService,
             this._processService.getNets(allowedNetsIds)
         );
     }
