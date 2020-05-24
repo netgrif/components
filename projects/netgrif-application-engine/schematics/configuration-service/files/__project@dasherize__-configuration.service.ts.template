@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {ConfigurationService} from '@netgrif/application-engine';
 import {NetgrifApplicationEngine} from '@netgrif/application-engine/';
-import {default as naeConfig} from '../../../../nae.json';
+import {default as naeConfig} from '<%= configPath %>';
 
 @Injectable({
     providedIn: 'root'
 })
-export class NaeExampleAppConfigurationService extends ConfigurationService {
+export class <%= classify(project) %>ConfigurationService extends ConfigurationService {
     constructor() {
         super(naeConfig as unknown as NetgrifApplicationEngine);
     }

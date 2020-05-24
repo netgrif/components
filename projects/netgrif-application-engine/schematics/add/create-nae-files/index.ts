@@ -20,11 +20,12 @@ import {
 } from '../../view/view-utility-functions';
 import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
 
+
 export function createNaeFiles(): Rule {
     return (tree: Tree) => {
         const rules = [];
         rules.push(createRoutesModule());
-        rules.push(schematic('initialize-configuration-service', {}));
+        rules.push(schematic('create-configuration-service', {}));
         rules.push(schematic('custom-themes', {}));
         rules.push(updateAppComponentHTML());
         for (let index = 0; index < getNumberOfMissingViews(tree); index++) {

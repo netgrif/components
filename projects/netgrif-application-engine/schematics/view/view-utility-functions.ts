@@ -7,7 +7,7 @@ import {CreateViewArguments} from './create-view-prompt/schema';
 
 
 /**
- * Mocks the `Route` interface of {@link @angular/router#Route | Angular's router package}.
+ * Mocks the `Route` interface of [Angular's router package]{@link @angular/router#Route}.
  * But changes the type of the `component` attribute to `string`.
  */
 export interface Route {
