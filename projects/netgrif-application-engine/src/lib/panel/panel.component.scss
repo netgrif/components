@@ -1,6 +1,6 @@
 .mat-expansion-panel-header {
-    border-bottom: 1px solid rgba(0,0,0,.03);
-    color: rgba(0,0,0,.87);
+    border-bottom: 1px solid rgba(0, 0, 0, .03);
+    color: rgba(0, 0, 0, .87);
 }
 
 .header-padding {
@@ -9,5 +9,8 @@
 
 .panel-margin {
     margin: 0 2px;
-    margin-bottom: 0;
+
+    .mat-expanded {
+        margin: 16px 2px !important;
+    }
 }
