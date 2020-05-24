@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ConfigurationService} from '../configuration/configuration.service';
-import {Filter as ConfigFilter} from '../configuration/interfaces/schema';
+import {ConfigFilter} from '../configuration/interfaces/schema';
 import {LoggerService} from '../logger/services/logger.service';
 import {MergeOperator} from './models/merge-operator';
 import {FilterType} from './models/filter-type';

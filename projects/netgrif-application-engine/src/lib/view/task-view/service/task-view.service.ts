@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
-import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
-import {ChangedFields} from '../../data-fields/models/changed-fields';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {UserService} from '../../user/services/user.service';
-import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {ChangedFields} from '../../../data-fields/models/changed-fields';
+import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
+import {UserService} from '../../../user/services/user.service';
+import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {LanguageService} from '../../translate/language.service';
 import {SortableView} from '../abstract/sortable-view';
@@ -16,13 +16,19 @@ import {Pagination} from '../../resources/interface/pagination';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import {LoggerService} from '../../logger/services/logger.service';
+import {LanguageService} from '../../../translate/language.service';
+import {SearchService} from '../../../search/search-service/search.service';
+import {Task} from '../../../resources/interface/task';
+import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
+import {Net} from '../../../process/net';
 
 
 @Injectable()
-export class TaskViewService extends SortableView {
+export class TaskViewService extends SortableViewWithAllowedNets {
 
-    protected _changedFields$: Subject<ChangedFields>;
     protected _tasks$: Observable<Array<TaskPanelData>>;
+    protected _changedFields$: Subject<ChangedFields>;
     protected _requestedPage$: BehaviorSubject<number>;
     protected _loading$: LoadingEmitter;
     protected _endOfData: boolean;
@@ -40,8 +46,9 @@ export class TaskViewService extends SortableView {
     constructor(protected _taskService: TaskResourceService, private _userService: UserService,
                 private _snackBarService: SnackBarService, private _translate: TranslateService,
                 private _Language: LanguageService, protected _searchService: SearchService,
-                private _log: LoggerService) { // need for translations
-        super();
+                private _log: LoggerService,
+                allowedNets: Observable<Array<Net>> = of([])) { // need for translations
+        super(allowedNets);
         this._taskArray = [];
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingEmitter();

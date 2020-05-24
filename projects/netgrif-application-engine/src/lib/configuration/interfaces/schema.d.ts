@@ -171,15 +171,15 @@ export interface Filters {
      * This interface was referenced by `Filter`'s JSON-Schema definition
      * via the `patternProperty` "^[a-zA-Z0-9_]+$".
      */
-    [k: string]: Filter;
+    [k: string]: ConfigFilter;
 }
 
-export interface Filter {
+export interface ConfigFilter {
     title: string;
     access: string;
     query: object | Array<object>;
-    type: 'Task' | 'Case';
-    mergeOperator?: 'AND' | 'OR';
+    type: "Task" | "Case";
+    mergeOperator?: "AND" | "OR";
     [k: string]: any;
 }
 

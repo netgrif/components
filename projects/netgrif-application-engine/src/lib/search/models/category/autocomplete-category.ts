@@ -3,6 +3,7 @@ import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SearchInputType} from './search-input-type';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
+import {Observable, of} from 'rxjs';
 
 /**
  * Represents a Search Category whose values are a known set. The value selection is done with an autocomplete field.
@@ -64,9 +65,9 @@ export abstract class AutocompleteCategory<T> extends Category<T> {
      * @param userInput user search input
      * @returns options that satisfy the autocomplete condition
      */
-    public filterOptions(userInput: string): Array<SearchAutocompleteOption> {
+    public filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
         const value = userInput.toLocaleLowerCase();
-        return this.options.filter(option => option.text.toLocaleLowerCase().startsWith(value));
+        return of(this.options.filter(option => option.text.toLocaleLowerCase().startsWith(value)));
     }
 
     /**
