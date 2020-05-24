@@ -6,11 +6,7 @@ import {Equals} from '../../operator/equals';
 import {CaseProcess} from './case-process';
 import {Query} from '../../query/query';
 import {BooleanOperator} from '../../boolean-operator';
-
-interface NetTaskPair {
-    netId: string;
-    taskId: string;
-}
+import {NetTaskPair} from '../net-task-pair';
 
 export class CaseTask extends AutocompleteCategory<NetTaskPair> {
 

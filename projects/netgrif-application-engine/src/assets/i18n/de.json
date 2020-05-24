@@ -52,7 +52,7 @@
         "import-net": {
             "upload": "Model hochladen",
             "choose": "Prozessdatei auswählen",
-            "done" : "Bestätigen"
+            "done": "Bestätigen"
         },
         "new-case": {
             "case": "Neuen Fall erstellen",
@@ -118,6 +118,18 @@
                 "assignee": {
                     "name": "Zugewiesener/in",
                     "placeholder": "Wählen Sie den/ie Zugewiesener/in aus"
+                },
+                "process": {
+                    "name": "Prozess",
+                    "placeholder": "Wählen Sie den Prozess aus"
+                },
+                "role": {
+                    "name": "Aufgabenprocessrolle",
+                    "placeholder": "Wählen Sie die Prozessrolle der Aufgabe aus"
+                },
+                "task": {
+                    "name": "Aufgabe",
+                    "placeholder": "Wählen Sie die Aufgabe aus"
                 }
             }
         },

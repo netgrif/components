@@ -5,6 +5,7 @@ import {Category} from '../models/category/category';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {OptionalDependencies} from './optional-dependencies';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 
 /**
  * Can be used to generate {@link Category} class instances.
@@ -22,10 +23,12 @@ export class CategoryFactory {
     constructor(protected _operators: OperatorService,
                 protected _log: LoggerService,
                 @Optional() protected _caseViewService: CaseViewService,
+                @Optional() protected _taskViewService: TaskViewService,
                 @Optional() protected _userResourceService: UserResourceService) {
         this._optionalDependencies = {
-            caseViewService: this._caseViewService,
             categoryFactory: this,
+            caseViewService: this._caseViewService,
+            taskViewService: this._taskViewService,
             userResourceService: this._userResourceService,
         };
     }
