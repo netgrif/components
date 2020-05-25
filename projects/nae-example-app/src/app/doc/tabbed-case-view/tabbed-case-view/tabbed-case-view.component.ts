@@ -1,8 +1,7 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CaseViewService,
-    CaseViewServiceFactory,
-    FilterType,
+    ConfigCaseViewServiceFactory,
     HeaderComponent,
     InjectedTabbedCaseViewData,
     LoggerService,
@@ -12,12 +11,12 @@ import {
     TabbedCaseView,
 } from '@netgrif/application-engine';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('case');
 };
 
 const searchServiceFactory = () => {
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
+    return new SearchService(SimpleFilter.emptyCaseFilter());
 };
 
 @Component({
@@ -25,12 +24,12 @@ const searchServiceFactory = () => {
     templateUrl: './tabbed-case-view.component.html',
     styleUrls: ['./tabbed-case-view.component.scss'],
     providers: [
-        CaseViewServiceFactory,
+        ConfigCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
-            deps: [CaseViewServiceFactory]},
+            deps: [ConfigCaseViewServiceFactory]},
     ]
 })
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {

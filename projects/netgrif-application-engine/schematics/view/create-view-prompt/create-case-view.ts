@@ -26,7 +26,8 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
 
     const templateParams = {
         prefix: projectInfo.projectPrefixDasherized,
-        path: className.prefix,
+        classNamePrefix: className.prefix,
+        viewPath: args.path as string,
         dasherize: strings.dasherize,
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,

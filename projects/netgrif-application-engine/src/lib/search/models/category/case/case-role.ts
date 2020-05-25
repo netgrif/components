@@ -6,11 +6,7 @@ import {Query} from '../../query/query';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {CaseProcess} from './case-process';
 import {BooleanOperator} from '../../boolean-operator';
-
-interface NetRolePair {
-    netId: string;
-    roleId: string;
-}
+import {NetRolePair} from '../net-role-pair';
 
 export class CaseRole extends AutocompleteCategory<NetRolePair> {
 

@@ -13,7 +13,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
-import {TaskViewService} from '../../view/task-view/task-view.service';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -25,6 +25,7 @@ import {SearchService} from '../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ArrayTaskViewServiceFactory} from '../../view/task-view/service/factory/array-task-view-service-factory';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
@@ -44,8 +45,11 @@ describe('TaskPanelComponent', () => {
                 HttpClientTestingModule
             ],
             providers: [
+                ArrayTaskViewServiceFactory,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                TaskViewService,
+                {   provide: TaskViewService,
+                    useFactory: ArrayTaskViewServiceFactory.noNetsTaskViewServiceFactory,
+                    deps: [ArrayTaskViewServiceFactory]},
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: UserResourceService, useClass: MyUserResources},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},

@@ -13,7 +13,7 @@ import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {UserService} from '../../user/services/user.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {Observable, Subject} from 'rxjs';
-import {TaskViewService} from '../../view/task-view/task-view.service';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -59,7 +59,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     ngOnInit() {
         super.ngOnInit();
-        this._taskViewService.taskData.subscribe(() => this.resolveFeaturedFieldsValues());
+        // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         let cols: number;
         if (this.taskPanelData.task && this.taskPanelData.task.layout && this.taskPanelData.task.layout.cols) {
             cols = this.taskPanelData.task.layout.cols;

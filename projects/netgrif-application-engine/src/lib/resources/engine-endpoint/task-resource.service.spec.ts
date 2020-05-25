@@ -102,7 +102,7 @@ describe('TaskResourceService', () => {
     it('should searchTask', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.searchTask(new SimpleFilter('', FilterType.TASK, {})).subscribe(res => {
-                expect(res.length).toEqual(0);
+                expect(res.content.length).toEqual(0);
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/task/search_es');
@@ -115,7 +115,7 @@ describe('TaskResourceService', () => {
     it('should getTasks', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.getTasks({}).subscribe(res => {
-                expect(res.length).toEqual(0);
+                expect(res.content.length).toEqual(0);
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/task/search');

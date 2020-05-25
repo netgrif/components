@@ -5,8 +5,11 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SearchService} from '../../search-service/search.service';
-import {TestTaskSearchServiceFactory} from '../../../utility/tests/test-factory-methods';
+import {TestTaskSearchServiceFactory, TestTaskViewFactory} from '../../../utility/tests/test-factory-methods';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TaskViewService} from '../../../view/task-view/service/task-view.service';
+import {ConfigTaskViewServiceFactory} from '../../../view/task-view/service/factory/config-task-view-service-factory';
+import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 
 describe('TaskSearchComponent', () => {
     let component: TaskSearchComponent;
@@ -20,11 +23,16 @@ describe('TaskSearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
+                ConfigTaskViewServiceFactory,
+                AuthenticationMethodService,
                 {
                     provide: SearchService,
                     useFactory: TestTaskSearchServiceFactory
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {   provide: TaskViewService,
+                    useFactory: TestTaskViewFactory,
+                    deps: [ConfigTaskViewServiceFactory]},
             ]
         })
             .compileComponents();

@@ -138,7 +138,7 @@ function processEmbeddedView(embeddedView: EmbeddedView,
     } else {
         throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
     }
-
+    // TODO BUG 19.5.2020 - canBeClosed attribute does not transfer from config to generated file properly - no value is generated at all
     if (embeddedView.canBeClosed !== undefined) {
         tabTemplate.canBeDeleted = embeddedView.canBeClosed;
     }

@@ -1,6 +1,6 @@
 import {NAE_TASK_COLS, TaskPanelContentComponent} from './task-panel-content.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {TaskViewService} from '../../../view/task-view/task-view.service';
+import {TaskViewService} from '../../../view/task-view/service/task-view.service';
 import {MatExpansionModule} from '@angular/material';
 import {PanelModule} from '../../panel.module';
 import {MaterialModule} from '../../../material/material.module';
