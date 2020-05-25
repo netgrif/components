@@ -6,6 +6,7 @@ import {Change} from '@schematics/angular/utility/change';
 import {ViewClassInfo} from '../create-view-prompt/models/view-class-info';
 import {ImportToAdd} from '../create-view-prompt/models/import-to-add';
 
+
 export function getParentPath(path: string): string {
     const index = path.lastIndexOf('/');
     if (index === -1) {
@@ -79,6 +80,18 @@ export function addViewToViewService(tree: Tree, className: ViewClassInfo): void
         insertImport(fileData.sourceFile, fileData.fileEntry.path, className.name, className.fileImportPath)
     );
     commitChangesToFile(tree, fileData.fileEntry, changes);
+}
+
+export function getGeneratedViewClassNames(tree: Tree): Set<string> {
+    const projectInfo = getProjectInfo(tree);
+    const fileData = getFileData(tree, projectInfo.path, `${projectInfo.projectNameDasherized}-view.service.ts`);
+
+    const nodesInArray = getArrayNodeContent(fileData.sourceFile).getChildren();
+    const result = new Set<string>();
+    for (let i = 0; i < nodesInArray.length; i += 2 /* Even nodes are commas */) {
+        result.add(nodesInArray[i].getText());
+    }
+    return result;
 }
 
 function getArrayNodeContent(source: ts.SourceFile): ts.Node {

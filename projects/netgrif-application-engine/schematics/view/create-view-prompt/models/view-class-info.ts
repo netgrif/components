@@ -19,11 +19,17 @@ export class ViewClassInfo {
      */
     public fileImportPath: string;
 
-    constructor(path: string, componentSuffix: string) {
-        this.prefix = ViewClassInfo.convertPathToClassNamePrefix(path);
-        this.withoutComponent = `${strings.classify(this.prefix)}${componentSuffix}`;
+    constructor(path: string, componentSuffix: string, customComponentName?: string) {
+        if (!customComponentName) {
+            this.prefix = ViewClassInfo.convertPathToClassNamePrefix(path);
+            this.withoutComponent = `${strings.classify(this.prefix)}${componentSuffix}`;
+            this.fileImportPath = `./views/${path}/${this.prefix}-${strings.dasherize(componentSuffix)}.component`;
+        } else {
+            this.prefix = '';
+            this.withoutComponent = customComponentName;
+            this.fileImportPath = `./views/${path}/${strings.dasherize(customComponentName)}.component`;
+        }
         this.name = `${this.withoutComponent}Component`;
-        this.fileImportPath = `./views/${path}/${this.prefix}-${strings.dasherize(componentSuffix)}.component`;
     }
 
     private static convertPathToClassNamePrefix(path: string): string {

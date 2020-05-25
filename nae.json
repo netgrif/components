@@ -36,213 +36,210 @@
         ]
     },
     "views": {
-        "layout": "empty",
-        "routes": {
-            "dashboard": {
-                "layout": {
-                    "name": "dashboard",
-                    "params": {
-                        "columns": 4,
-                        "cards": [
-                            {
-                                "type": "DashboardCardTypes.COUNT",
-                                "title": "All tasks",
-                                "resourceType": "Task",
-                                "filter": {},
-                                "layout": {
-                                    "x": 0,
-                                    "y": 0,
-                                    "rows": 1,
-                                    "cols": 1
-                                }
-                            },
-                            {
-                                "type": "DashboardCardTypes.IFRAME",
-                                "url": "https://netgrif.com/",
-                                "layout": {
-                                    "x": 2,
-                                    "y": 0,
-                                    "rows": 2,
-                                    "cols": 2
-                                }
-                            },
-                            {
-                                "type": "DashboardCardTypes.COUNT",
-                                "title": "All cases",
-                                "resourceType": "Case",
-                                "filter": {},
-                                "layout": {
-                                    "x": 1,
-                                    "y": 1,
-                                    "rows": 1,
-                                    "cols": 1
-                                }
+        "dashboard": {
+            "layout": {
+                "name": "dashboard",
+                "params": {
+                    "columns": 4,
+                    "cards": [
+                        {
+                            "type": "DashboardCardTypes.COUNT",
+                            "title": "All tasks",
+                            "resourceType": "Task",
+                            "filter": {},
+                            "layout": {
+                                "x": 0,
+                                "y": 0,
+                                "rows": 1,
+                                "cols": 1
                             }
-                        ]
-                    }
-                },
-                "access": "private",
-                "navigation": {
-                    "title": "Dashboard",
-                    "icon": "dashboard"
-                }
-            },
-            "cases": {
-                "type": "",
-                "layout": {
-                    "name": ""
-                },
-                "access": "private",
-                "navigation": {
-                    "title": "Cases",
-                    "icon": "settings"
-                },
-                "routes": {
-                    "some_cases": {
-                        "type": "",
-                        "layout": {
-                            "name": ""
                         },
-                        "access": "private",
-                        "navigation": {
-                            "icon": "account_circle"
+                        {
+                            "type": "DashboardCardTypes.IFRAME",
+                            "url": "https://netgrif.com/",
+                            "layout": {
+                                "x": 2,
+                                "y": 0,
+                                "rows": 2,
+                                "cols": 2
+                            }
                         },
-                        "routes": {
-                            "some_specifics": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": true
+                        {
+                            "type": "DashboardCardTypes.COUNT",
+                            "title": "All cases",
+                            "resourceType": "Case",
+                            "filter": {},
+                            "layout": {
+                                "x": 1,
+                                "y": 1,
+                                "rows": 1,
+                                "cols": 1
                             }
                         }
-                    }
+                    ]
                 }
             },
-            "task": {
-                "type": "",
-                "layout": {
-                    "name": ""
-                },
-                "access": "private",
-                "navigation": {
-                    "title": "Tasks",
-                    "icon": "assignment"
-                },
-                "routes": {
-                    "some_tasks": {
-                        "type": "",
-                        "layout": {
-                            "name": ""
-                        },
-                        "access": "private",
-                        "navigation": false,
-                        "routes": {
-                            "some_specifics": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": true
-                            }
-                        }
-                    }
-                }
+            "access": "private",
+            "navigation": {
+                "title": "Dashboard",
+                "icon": "dashboard"
+            }
+        },
+        "cases": {
+            "type": "",
+            "layout": {
+                "name": ""
             },
-            "case": {
-                "layout": {
-                    "name": "CaseView",
-                    "params": {
-                        "allowedNets": [
-                            "search-test-defaultRole",
-                            "leukemia",
-                            "1",
-                            "bill"
-                        ]
-                    }
-                },
-                "access": "private",
-                "navigation": {}
+            "access": "private",
+            "navigation": {
+                "title": "Cases",
+                "icon": "settings"
             },
-            "navigation-test": {
-                "type": "sideMenu",
-                "layout": {
-                    "name": ""
-                },
-                "access": "private",
-                "navigation": {
-                    "title": "NavTest"
-                },
-                "routes": {
-                    "one": {
-                        "type": "",
-                        "layout": {
-                            "name": ""
-                        },
-                        "access": "private",
-                        "navigation": {
-                            "title": "one",
-                            "icon": "account_circle"
-                        },
-                        "routes": {
-                            "one-one": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": {
-                                    "title": "one-one",
-                                    "icon": "account_circle"
-                                }
-                            },
-                            "one-two": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": {
-                                    "title": "one-two",
-                                    "icon": "account_circle"
-                                }
-                            }
-                        }
+            "routes": {
+                "some_cases": {
+                    "type": "",
+                    "layout": {
+                        "name": ""
                     },
-                    "two": {
-                        "type": "",
-                        "layout": {
-                            "name": ""
-                        },
-                        "access": "private",
-                        "navigation": {
-                            "title": "second",
-                            "icon": "account_circle"
-                        },
-                        "routes": {
-                            "two-one": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": {
-                                    "title": "two-one",
-                                    "icon": "account_circle"
-                                }
+                    "access": "private",
+                    "navigation": {
+                        "icon": "account_circle"
+                    },
+                    "routes": {
+                        "some_specifics": {
+                            "type": "",
+                            "layout": {
+                                "name": ""
                             },
-                            "two-two": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": {
-                                    "title": "two-two",
-                                    "icon": "account_circle"
-                                }
+                            "access": "private",
+                            "navigation": true
+                        }
+                    }
+                }
+            }
+        },
+        "task": {
+            "type": "",
+            "layout": {
+                "name": ""
+            },
+            "access": "private",
+            "navigation": {
+                "title": "Tasks",
+                "icon": "assignment"
+            },
+            "routes": {
+                "some_tasks": {
+                    "type": "",
+                    "layout": {
+                        "name": ""
+                    },
+                    "access": "private",
+                    "navigation": false,
+                    "routes": {
+                        "some_specifics": {
+                            "type": "",
+                            "layout": {
+                                "name": ""
+                            },
+                            "access": "private",
+                            "navigation": true
+                        }
+                    }
+                }
+            }
+        },
+        "case": {
+            "layout": {
+                "name": "CaseView",
+                "params": {
+                    "allowedNets": [
+                        "search-test-defaultRole",
+                        "leukemia",
+                        "1",
+                        "bill"
+                    ]
+                }
+            },
+            "access": "private",
+            "navigation": {}
+        },
+        "navigation-test": {
+            "type": "sideMenu",
+            "layout": {
+                "name": ""
+            },
+            "access": "private",
+            "navigation": {
+                "title": "NavTest"
+            },
+            "routes": {
+                "one": {
+                    "type": "",
+                    "layout": {
+                        "name": ""
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "one",
+                        "icon": "account_circle"
+                    },
+                    "routes": {
+                        "one-one": {
+                            "type": "",
+                            "layout": {
+                                "name": ""
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "one-one",
+                                "icon": "account_circle"
+                            }
+                        },
+                        "one-two": {
+                            "type": "",
+                            "layout": {
+                                "name": ""
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "one-two",
+                                "icon": "account_circle"
+                            }
+                        }
+                    }
+                },
+                "two": {
+                    "type": "",
+                    "layout": {
+                        "name": ""
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "second",
+                        "icon": "account_circle"
+                    },
+                    "routes": {
+                        "two-one": {
+                            "type": "",
+                            "layout": {
+                                "name": ""
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "two-one",
+                                "icon": "account_circle"
+                            }
+                        },
+                        "two-two": {
+                            "type": "",
+                            "layout": {
+                                "name": ""
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "two-two",
+                                "icon": "account_circle"
                             }
                         }
                     }

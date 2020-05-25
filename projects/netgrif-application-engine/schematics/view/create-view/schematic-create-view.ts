@@ -1,0 +1,86 @@
+import {
+    Rule,
+    schematic,
+    Tree,
+    SchematicsException
+} from '@angular-devkit/schematics';
+import {getNaeConfiguration} from '../../_utility/utility-functions';
+import {Views} from '../../../src/lib/configuration/interfaces/schema';
+import {NullableCreateViewArguments} from './models/nullable-create-view-arguments';
+import {
+    constructRoutePath,
+    getGeneratedViewClassNames,
+    resolveClassSuffixForView
+} from '../_utility/view-utility-functions';
+import {ViewClassInfo} from '../create-view-prompt/models/view-class-info';
+
+
+export function schematicEntryPoint(): Rule {
+    return (tree: Tree) => {
+        const naeConfig = getNaeConfiguration(tree);
+        return schematic('create-view-prompt', getSchematicArguments(tree, naeConfig.views));
+    };
+}
+
+function getSchematicArguments(tree: Tree, naeViews: Views): NullableCreateViewArguments {
+    if (Object.keys(naeViews).length === 0) {
+        return emptyArguments();
+    }
+    const generatedViews = getGeneratedViewClassNames(tree);
+    return findMissingView(naeViews, generatedViews);
+}
+
+/**
+ * Finds the first view that is declared in `nae.json` but was not yet generated in the app.
+ * @param naeViews configuration holding all the views from one level and their children
+ * @param generatedViews class names of views that have already been generated
+ * @param pathPrefix web path prefix common to all views of the given level
+ * @returns [CreateViewArguments]{@link CreateViewArguments} of the missing view.
+ * Arguments will be empty (and thus a prompt will be displayed) if no missing views exist
+ */
+function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefix: string = ''): NullableCreateViewArguments {
+    for (const pathSegment of Object.keys(naeViews)) {
+        const view = naeViews[pathSegment];
+        const viewPath = constructRoutePath(pathPrefix, pathSegment);
+
+        if (view.layout === undefined && view.component === undefined) {
+            throw new SchematicsException(
+                `View must have either the 'layout' or the 'component' attribute defined! (Web path: ${viewPath} )`);
+        }
+
+        if (!!view.layout) {
+            const viewClassInfo = new ViewClassInfo(viewPath, resolveClassSuffixForView(view.layout.name), view.layout.componentName);
+            if (!generatedViews.has(viewClassInfo.name)) {
+               return {
+                   path: viewPath,
+                   viewType: view.layout.name,
+                   access: view.access
+               };
+            }
+        } else {
+            if (view.component !== undefined && !generatedViews.has(view.component.class)) {
+                return {
+                    path: viewPath,
+                    viewType: 'customView',
+                    access: view.access
+                };
+            }
+        }
+        if (!!view.children) {
+            const result = findMissingView(view.children, generatedViews, viewPath);
+            if (result.path !== undefined) {
+                return result;
+            }
+        }
+    }
+
+    return emptyArguments();
+}
+
+function emptyArguments(): NullableCreateViewArguments {
+    return {
+        path: undefined,
+        viewType: undefined,
+        access: undefined
+    };
+}
