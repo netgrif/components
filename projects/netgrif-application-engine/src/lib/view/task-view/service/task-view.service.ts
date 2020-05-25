@@ -6,11 +6,6 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {LanguageService} from '../../translate/language.service';
-import {SortableView} from '../abstract/sortable-view';
-import {SearchService} from '../../search/search-service/search.service';
-import {Task} from '../../resources/interface/task';
-import {SimpleFilter} from '../../filter/models/simple-filter';
 import {HttpParams} from '@angular/common/http';
 import {LanguageService} from '../../../translate/language.service';
 import {SearchService} from '../../../search/search-service/search.service';

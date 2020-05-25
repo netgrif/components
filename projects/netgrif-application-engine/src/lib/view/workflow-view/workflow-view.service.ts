@@ -3,11 +3,10 @@ import {SortableView} from '../abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {BehaviorSubject, Observable, of, timer} from 'rxjs';
 import {Net} from '../../process/net';
-import {catchError, map, mergeMap, tap} from 'rxjs/operators';
+import {catchError, concatMap, map, tap} from 'rxjs/operators';
 import {LoggerService} from '../../logger/services/logger.service';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {HttpParams} from '@angular/common/http';
-import {CaseMetaField} from '../../header/case-header/case-header.service';
 
 
 @Injectable()
@@ -25,8 +24,8 @@ export class WorkflowViewService extends SortableView {
         this._clear = false;
 
         this._workflows$ = this._loadBatch$.pipe(
-            mergeMap(n => this.loadNets()),
-            tap(_ => this._clear = false)
+            concatMap(n => this.loadNets()),
+            tap(_ => this._clear = false),
         );
     }
 
@@ -58,14 +57,7 @@ export class WorkflowViewService extends SortableView {
     }
 
     protected getMetaFieldSortId(): string {
-        switch (this._lastHeaderSearchState.fieldIdentifier) {
-            case CaseMetaField.TITLE:
-                return 'titleSortable';
-            case CaseMetaField.CREATION_DATE:
-                return 'creationDateSortable';
-            default:
-                return this._lastHeaderSearchState.fieldIdentifier;
-        }
+        return this._lastHeaderSearchState.fieldIdentifier;
     }
 
     protected getDefaultSortParam(): string {
@@ -87,8 +79,19 @@ export class WorkflowViewService extends SortableView {
                 this._log.error('Failed to load Petri nets', err);
                 return of([]);
             }),
-            map((nets: Array<PetriNetReference>) => Array.isArray(nets) ? nets.map(net => new Net(net)) : []),
-            tap(_ => this._loading$.next(false))
+            map((nets: Array<PetriNetReference>) => {
+                    if (Array.isArray(nets)) {
+                        const array: Array<Net> = [];
+                        nets.forEach(net => {
+                            array.push(new Net(net));
+                        });
+                        return array;
+                    }
+                    return [];
+            }),
+            tap(_ =>
+                this._loading$.next(false)
+            )
         );
     }
 
