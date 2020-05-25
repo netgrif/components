@@ -86,30 +86,28 @@
             }
         },
         "cases": {
-            "type": "",
             "layout": {
-                "name": ""
+                "name": "emptyView"
             },
             "access": "private",
             "navigation": {
                 "title": "Cases",
                 "icon": "settings"
             },
-            "routes": {
+            "children": {
                 "some_cases": {
-                    "type": "",
                     "layout": {
-                        "name": ""
+                        "name": "emptyView",
+                        "params": {}
                     },
                     "access": "private",
                     "navigation": {
                         "icon": "account_circle"
                     },
-                    "routes": {
+                    "children": {
                         "some_specifics": {
-                            "type": "",
                             "layout": {
-                                "name": ""
+                                "name": "emptyView"
                             },
                             "access": "private",
                             "navigation": true
@@ -119,28 +117,25 @@
             }
         },
         "task": {
-            "type": "",
             "layout": {
-                "name": ""
+                "name": "emptyView"
             },
             "access": "private",
             "navigation": {
                 "title": "Tasks",
                 "icon": "assignment"
             },
-            "routes": {
+            "children": {
                 "some_tasks": {
-                    "type": "",
                     "layout": {
-                        "name": ""
+                        "name": "emptyView"
                     },
                     "access": "private",
                     "navigation": false,
-                    "routes": {
+                    "children": {
                         "some_specifics": {
-                            "type": "",
                             "layout": {
-                                "name": ""
+                                "name": "emptyView"
                             },
                             "access": "private",
                             "navigation": true
@@ -173,22 +168,20 @@
             "navigation": {
                 "title": "NavTest"
             },
-            "routes": {
+            "children": {
                 "one": {
-                    "type": "",
                     "layout": {
-                        "name": ""
+                        "name": "emptyView"
                     },
                     "access": "private",
                     "navigation": {
                         "title": "one",
                         "icon": "account_circle"
                     },
-                    "routes": {
+                    "children": {
                         "one-one": {
-                            "type": "",
                             "layout": {
-                                "name": ""
+                                "name": "emptyView"
                             },
                             "access": "private",
                             "navigation": {
@@ -197,9 +190,8 @@
                             }
                         },
                         "one-two": {
-                            "type": "",
                             "layout": {
-                                "name": ""
+                                "name": "emptyView"
                             },
                             "access": "private",
                             "navigation": {
@@ -210,20 +202,18 @@
                     }
                 },
                 "two": {
-                    "type": "",
                     "layout": {
-                        "name": ""
+                        "name": "emptyView"
                     },
                     "access": "private",
                     "navigation": {
                         "title": "second",
                         "icon": "account_circle"
                     },
-                    "routes": {
+                    "children": {
                         "two-one": {
-                            "type": "",
                             "layout": {
-                                "name": ""
+                                "name": "emptyView"
                             },
                             "access": "private",
                             "navigation": {
@@ -232,9 +222,8 @@
                             }
                         },
                         "two-two": {
-                            "type": "",
                             "layout": {
-                                "name": ""
+                                "name": "emptyView"
                             },
                             "access": "private",
                             "navigation": {
