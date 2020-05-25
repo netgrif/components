@@ -12,14 +12,16 @@ export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule
     return (tree: Tree) => {
         const naeJsonContent = getNaeConfiguration(tree);
 
-        const pathSegments = (createViewArguments.path as string).split('/');
+        const pathSegments = (createViewArguments.path).split('/');
         const lastPathSegment = pathSegments[pathSegments.length - 1];
 
         if (pathSegments.length === 1) {
             if (naeJsonContent.views === undefined) {
                 naeJsonContent.views = {};
             }
-            naeJsonContent[lastPathSegment] = createViewObject(createViewArguments, lastPathSegment);
+            if (naeJsonContent.views[lastPathSegment] === undefined) {
+                naeJsonContent.views[lastPathSegment] = createViewObject(createViewArguments, lastPathSegment);
+            }
         } else {
             let parentRoute = naeJsonContent.views[pathSegments[0]];
 
@@ -37,7 +39,9 @@ export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule
             if (parentRoute.children === undefined) {
                 parentRoute.children = {};
             }
-            parentRoute.children[lastPathSegment] = createViewObject(createViewArguments, lastPathSegment);
+            if (parentRoute.children[lastPathSegment] === undefined) {
+                parentRoute.children[lastPathSegment] = createViewObject(createViewArguments, lastPathSegment);
+            }
         }
         tree.overwrite('nae.json', JSON.stringify(naeJsonContent, null, 4));
         return tree;
@@ -45,18 +49,15 @@ export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule
 }
 
 function createViewObject(createViewArguments: CreateViewArguments, lastPathSegment: string): View {
-    if (createViewArguments.access !== undefined) {
-        return {
-            layout: {
-                name: createViewArguments.viewType as string,
-                params: (createViewArguments.layoutParams === undefined) ? {} : createViewArguments.layoutParams
-            },
-            access: createViewArguments.access,
-            navigation: true,
-            routing: {
-                path: lastPathSegment
-            }
-        };
-    }
-    throw new SchematicsException('Malformed data');
+    return {
+        layout: {
+            name: createViewArguments.viewType as string,
+            params: (createViewArguments.layoutParams === undefined) ? {} : createViewArguments.layoutParams
+        },
+        access: createViewArguments.access,
+        navigation: true,
+        routing: {
+            path: lastPathSegment
+        }
+    };
 }

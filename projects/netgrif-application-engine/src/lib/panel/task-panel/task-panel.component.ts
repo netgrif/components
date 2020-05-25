@@ -37,7 +37,7 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
 
-    @Input() taskPanelData: TaskPanelData;
+    @Input() taskPanelData: TaskPaneTaskPanelContentClData;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
 

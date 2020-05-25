@@ -45,7 +45,7 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
 
         if (view.layout === undefined && view.component === undefined) {
             throw new SchematicsException(
-                `View must have either the 'layout' or the 'component' attribute defined! (Web path: ${viewPath} )`);
+                `View must have either the 'layout' or the 'component' attribute defined! (Path: ${viewPath} )`);
         }
 
         if (!!view.layout) {

@@ -5,6 +5,7 @@ import {
     Tree
 } from '@angular-devkit/schematics';
 import {addViewToNaeJson} from '../_utility/add-view-to-nae-json';
+import {getParentPath, parentViewDefined} from '../_utility/view-utility-functions';
 import {createLoginView} from './views/login/create-login-view';
 import {createTabView} from './views/tab-view/create-tab-view';
 import {createTaskView} from './views/task-view/create-task-view';
@@ -14,7 +15,6 @@ import {createEmptyView} from './views/empty-view/create-empty-view';
 import {createDashboardView} from './views/dashboard-view/create-dashboard-view';
 import {checkJsonParamsForSidenav} from '../create-sidenav-prompt/schematic-create-sidenav-prompt';
 import {CreateViewArguments} from './models/create-view-arguments';
-import {getParentPath, parentViewDefined} from '../_utility/view-utility-functions';
 
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
