@@ -1,23 +1,23 @@
 import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
-import {CreateViewArguments} from './schema';
+import {CreateViewArguments} from '../../schema';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
     createRelativePath,
     getAppModule,
     getProjectInfo
-} from '../../_utility/utility-functions';
-import {EmbeddedView, TabViewParams} from './models/params-interfaces';
+} from '../../../../_utility/utility-functions';
+import {EmbeddedView, TabViewParams} from '../../models/params-interfaces';
 import {strings} from '@angular-devkit/core';
 import {
     addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
-} from '../view-utility-functions';
+} from '../../../view-utility-functions';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
-import {TabContentTemplate} from './models/tab-content-template';
-import {ImportToAdd} from './models/import-to-add';
-import {ViewClassInfo} from './models/view-class-info';
+import {TabContentTemplate} from '../../models/tab-content-template';
+import {ImportToAdd} from '../../models/import-to-add';
+import {ViewClassInfo} from '../../models/view-class-info';
 
 
 interface TabViews {

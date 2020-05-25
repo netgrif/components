@@ -1,7 +1,7 @@
 import {Rule, Tree} from '@angular-devkit/schematics';
-import {SidenavPromptOptions} from './files/sidenav-toolbar-files/sidenav-prompt-options';
-import {createSidenavOrToolbarView} from './create-sidenav-or-toolbar-view';
-import {CreateViewArguments} from './schema';
+import {SidenavPromptOptions} from './sidenav-prompt-options';
+import {createSidenavOrToolbarView} from '../create-view-prompt/views/sidenav-toolbar-view/create-sidenav-or-toolbar-view';
+import {CreateViewArguments} from '../create-view-prompt/schema';
 
 export function chooseSideNavType(options: SidenavPromptOptions): Rule {
     return (tree: Tree) => {

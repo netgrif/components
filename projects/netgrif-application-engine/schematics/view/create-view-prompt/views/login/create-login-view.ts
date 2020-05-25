@@ -1,14 +1,14 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {CreateViewArguments} from './schema';
-import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../_utility/utility-functions';
+import {CreateViewArguments} from '../../schema';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
 import {strings} from '@angular-devkit/core';
 import {
     addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
-} from '../view-utility-functions';
-import {ViewClassInfo} from './models/view-class-info';
-import {ImportToAdd} from './models/import-to-add';
+} from '../../../view-utility-functions';
+import {ViewClassInfo} from '../../models/view-class-info';
+import {ImportToAdd} from '../../models/import-to-add';
 
 
 export function createLoginView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {

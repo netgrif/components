@@ -1,22 +1,22 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {CreateViewArguments} from './schema';
+import {CreateViewArguments} from '../../schema';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
     createRelativePath,
     getAppModule,
     getProjectInfo
-} from '../../_utility/utility-functions';
+} from '../../../../_utility/utility-functions';
 import {strings} from '@angular-devkit/core';
 import {
     addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
-} from '../view-utility-functions';
+} from '../../../view-utility-functions';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
-import {TabbedView} from './models/tabbed-view';
-import {ViewClassInfo} from './models/view-class-info';
-import {ImportToAdd} from './models/import-to-add';
+import {TabbedView} from '../../models/tabbed-view';
+import {ViewClassInfo} from '../../models/view-class-info';
+import {ImportToAdd} from '../../models/import-to-add';
 
 
 export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedView, addViewToService: boolean): Rule {

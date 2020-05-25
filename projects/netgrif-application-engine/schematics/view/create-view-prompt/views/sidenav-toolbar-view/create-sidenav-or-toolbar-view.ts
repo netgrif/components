@@ -1,13 +1,13 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../_utility/utility-functions';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
 import {
     resolveClassSuffixForView,
     updateAppModule
-} from '../view-utility-functions';
+} from '../../../view-utility-functions';
 import {strings} from '@angular-devkit/core';
-import {SidenavPromptOptions} from './files/sidenav-toolbar-files/sidenav-prompt-options';
-import {addViewToNaeJson} from './add-view-to-nae-json';
-import {ViewClassInfo} from './models/view-class-info';
+import {SidenavPromptOptions} from '../../../create-sidenav-prompt/sidenav-prompt-options';
+import {addViewToNaeJson} from '../../functions/add-view-to-nae-json';
+import {ViewClassInfo} from '../../models/view-class-info';
 
 
 export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPromptOptions): Rule {

@@ -1,4 +1,4 @@
-import {CreateViewArguments} from '../../schema';
+import {CreateViewArguments} from '../create-view-prompt/schema';
 
 export interface SidenavPromptOptions {
     user?: boolean;

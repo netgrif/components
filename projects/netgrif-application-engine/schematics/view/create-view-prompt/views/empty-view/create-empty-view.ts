@@ -1,12 +1,12 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {CreateViewArguments} from './schema';
-import {createFilesFromTemplates, getProjectInfo} from '../../_utility/utility-functions';
-import {ViewClassInfo} from './models/view-class-info';
+import {CreateViewArguments} from '../../schema';
+import {createFilesFromTemplates, getProjectInfo} from '../../../../_utility/utility-functions';
+import {ViewClassInfo} from '../../models/view-class-info';
 import {
     addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
-} from '../view-utility-functions';
+} from '../../../view-utility-functions';
 import {strings} from '@angular-devkit/core';
 
 

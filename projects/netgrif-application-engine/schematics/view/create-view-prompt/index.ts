@@ -5,15 +5,15 @@ import {
     Tree
 } from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {addViewToNaeJson} from './add-view-to-nae-json';
-import {createLoginView} from './create-login-view';
-import {createTabView} from './create-tab-view';
-import {createTaskView} from './create-task-view';
-import {createCaseView} from './create-case-view';
-import {createSidenavOrToolbarView} from './create-sidenav-or-toolbar-view';
-import {createEmptyView} from './create-empty-view';
-import {checkJsonParamsForSidenav} from './create-sidenav-prompt';
-import {createDashboardView} from './create-dashboard-view';
+import {addViewToNaeJson} from './functions/add-view-to-nae-json';
+import {createLoginView} from './views/login/create-login-view';
+import {createTabView} from './views/tab-view/create-tab-view';
+import {createTaskView} from './views/task-view/create-task-view';
+import {createCaseView} from './views/case-view/create-case-view';
+import {createSidenavOrToolbarView} from './views/sidenav-toolbar-view/create-sidenav-or-toolbar-view';
+import {createEmptyView} from './views/empty-view/create-empty-view';
+import {checkJsonParamsForSidenav} from '../create-sidenav-prompt/create-sidenav-prompt';
+import {createDashboardView} from './views/dashboard-view/create-dashboard-view';
 
 
 export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
