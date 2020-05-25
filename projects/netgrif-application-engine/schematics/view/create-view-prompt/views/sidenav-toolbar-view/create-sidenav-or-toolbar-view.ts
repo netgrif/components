@@ -1,6 +1,7 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
 import {
+    addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
 } from '../../../_utility/view-utility-functions';
@@ -12,7 +13,7 @@ import {ViewClassInfo} from '../../models/view-class-info';
 
 export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPromptOptions): Rule {
     const projectInfo = getProjectInfo(tree);
-    const className = new ViewClassInfo(
+    const view = new ViewClassInfo(
         sidenavOptions.createViewArguments.path as string,
         resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string)
     );
@@ -28,7 +29,7 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
     rules.push(createFilesFromTemplates('./files',
         `${projectInfo.path}/views/${sidenavOptions.createViewArguments.path}`, {
             prefix: projectInfo.projectPrefixDasherized,
-            path: className.prefix,
+            path: view.prefix,
             dasherize: strings.dasherize,
             classify: strings.classify,
             viewType: strings.dasherize(nameOfComponent),
@@ -37,17 +38,12 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             drawerType,
             fileName: resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string),
             configName: projectInfo.projectNameClassified,
-            configImportPath: createRelativePath(className.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
+            configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
         }));
-    updateAppModule(tree, className.name, className.fileImportPath, []);
+    updateAppModule(tree, view.name, view.fileImportPath, []);
 
-    // if (sidenavOptions.addRoute) {
-    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
-    //     rules.push(addRouteToRoutesJson(sidenavOptions.createViewArguments.path as string,
-    //         className.name, sidenavOptions.createViewArguments.access));
-    //     addAuthGuardImport(tree, sidenavOptions.createViewArguments.access);
-    // }
-    if (sidenavOptions.addRoute) {
+    if (sidenavOptions.addViewToService) {
+        addViewToViewService(tree, view);
         sidenavOptions.createViewArguments.layoutParams = {
             user: sidenavOptions.user,
             quickPanel: sidenavOptions.quickPanel,

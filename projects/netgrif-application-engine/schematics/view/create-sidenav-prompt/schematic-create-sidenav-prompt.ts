@@ -9,13 +9,13 @@ export function schematicEntryPoint(options: SidenavPromptOptions): Rule {
     };
 }
 
-export function checkJsonParamsForSidenav(args: CreateViewArguments, addRoute: boolean): SidenavPromptOptions {
+export function checkJsonParamsForSidenav(args: CreateViewArguments, addViewToService: boolean): SidenavPromptOptions {
     let sidenav: SidenavPromptOptions = {
         user: undefined,
         quickPanel: undefined,
         navigation: undefined,
         createViewArguments: args,
-        addRoute
+        addViewToService
     };
     if (args.layoutParams !== undefined && Object.keys(args.layoutParams).length !== 0) {
         for (const objectIterator of Object.entries(args.layoutParams)) {

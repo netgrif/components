@@ -5,5 +5,5 @@ export interface SidenavPromptOptions {
     quickPanel?: boolean;
     navigation?: boolean;
     createViewArguments: CreateViewArguments;
-    addRoute: boolean;
+    addViewToService: boolean;
 }

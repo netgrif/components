@@ -59,7 +59,7 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
         case 'toolbarView':
             rules.push(createSidenavOrToolbarView(tree, {
                 createViewArguments: args,
-                addRoute: addViewToService
+                addViewToService
             }));
             break;
         case 'sidenavView':
