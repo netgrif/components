@@ -1,4 +1,6 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
+import {strings} from '@angular-devkit/core';
+import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
@@ -6,13 +8,11 @@ import {
     getAppModule,
     getProjectInfo
 } from '../../../../_utility/utility-functions';
-import {strings} from '@angular-devkit/core';
 import {
-    addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
 } from '../../../_utility/view-utility-functions';
-import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
+import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabbedView} from '../../models/tabbed-view';
 import {ViewClassInfo} from '../../models/view-class-info';
 import {ImportToAdd} from '../../models/import-to-add';

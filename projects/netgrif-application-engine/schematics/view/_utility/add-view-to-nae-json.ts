@@ -3,9 +3,9 @@ import {
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
-import {getNaeConfiguration} from '../../../_utility/utility-functions';
-import {View} from '../../../../src/lib/configuration/interfaces/schema';
-import {CreateViewArguments} from '../models/create-view-arguments';
+import {getNaeConfiguration} from '../../_utility/utility-functions';
+import {View} from '../../../src/lib/configuration/interfaces/schema';
+import {CreateViewArguments} from '../create-view-prompt/models/create-view-arguments';
 
 
 export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule {

@@ -9,10 +9,10 @@ import {Views} from '../../../src/lib/configuration/interfaces/schema';
 import {NullableCreateViewArguments} from './models/nullable-create-view-arguments';
 import {
     constructRoutePath,
-    getGeneratedViewClassNames,
     resolveClassSuffixForView
 } from '../_utility/view-utility-functions';
 import {ViewClassInfo} from '../create-view-prompt/models/view-class-info';
+import {getGeneratedViewClassNames} from '../_utility/view-service-functions';
 
 
 export function schematicEntryPoint(): Rule {

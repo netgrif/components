@@ -1,4 +1,5 @@
 import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
+import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
@@ -9,11 +10,10 @@ import {
 import {EmbeddedView, TabViewParams} from '../../models/params-interfaces';
 import {strings} from '@angular-devkit/core';
 import {
-    addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
 } from '../../../_utility/view-utility-functions';
-import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
+import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabContentTemplate} from '../../models/tab-content-template';
 import {ImportToAdd} from '../../models/import-to-add';
 import {ViewClassInfo} from '../../models/view-class-info';

@@ -1,11 +1,11 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
 import {strings} from '@angular-devkit/core';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
 import {
-    addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
 } from '../../../_utility/view-utility-functions';
+import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabbedView} from '../../models/tabbed-view';
 import {ViewClassInfo} from '../../models/view-class-info';
 import {ImportToAdd} from '../../models/import-to-add';

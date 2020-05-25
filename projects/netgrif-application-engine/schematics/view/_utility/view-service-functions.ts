@@ -1,0 +1,46 @@
+import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
+import {SchematicsException, Tree} from '@angular-devkit/schematics';
+import {ViewClassInfo} from '../create-view-prompt/models/view-class-info';
+import {commitChangesToFile, getFileData, getProjectInfo} from '../../_utility/utility-functions';
+import {Change} from '@schematics/angular/utility/change';
+import {findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
+
+export function addViewToViewService(tree: Tree, className: ViewClassInfo): void {
+    const projectInfo = getProjectInfo(tree);
+    const fileData = getFileData(tree, projectInfo.path, `${projectInfo.projectNameDasherized}-view.service.ts`);
+
+    const arrayContent = getArrayNodeContent(fileData.sourceFile);
+    const recorder = tree.beginUpdate(fileData.fileEntry.path);
+    if (arrayContent.getChildren().length === 0) {
+        recorder.insertRight(arrayContent.pos, `${className.name}`);
+    } else {
+        recorder.insertRight(arrayContent.pos, `${className.name}, `);
+    }
+    tree.commitUpdate(recorder);
+
+    const changes: Array<Change> = [];
+    changes.push(
+        insertImport(fileData.sourceFile, fileData.fileEntry.path, className.name, className.fileImportPath)
+    );
+    commitChangesToFile(tree, fileData.fileEntry, changes);
+}
+
+export function getGeneratedViewClassNames(tree: Tree): Set<string> {
+    const projectInfo = getProjectInfo(tree);
+    const fileData = getFileData(tree, projectInfo.path, `${projectInfo.projectNameDasherized}-view.service.ts`);
+
+    const nodesInArray = getArrayNodeContent(fileData.sourceFile).getChildren();
+    const result = new Set<string>();
+    for (let i = 0; i < nodesInArray.length; i += 2 /* Even nodes are commas */) {
+        result.add(nodesInArray[i].getText());
+    }
+    return result;
+}
+
+function getArrayNodeContent(source: ts.SourceFile): ts.Node {
+    const arrayNodes: ts.Node[] = findNodes(source, ts.SyntaxKind.ArrayLiteralExpression);
+    if (arrayNodes === null) {
+        throw new SchematicsException('Source file doesn\'t contain any array tokens');
+    }
+    return arrayNodes[0].getChildren()[1];
+}

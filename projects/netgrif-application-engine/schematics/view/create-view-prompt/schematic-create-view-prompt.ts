@@ -4,7 +4,7 @@ import {
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
-import {addViewToNaeJson} from './functions/add-view-to-nae-json';
+import {addViewToNaeJson} from '../_utility/add-view-to-nae-json';
 import {createLoginView} from './views/login/create-login-view';
 import {createTabView} from './views/tab-view/create-tab-view';
 import {createTaskView} from './views/task-view/create-task-view';
@@ -14,26 +14,24 @@ import {createEmptyView} from './views/empty-view/create-empty-view';
 import {createDashboardView} from './views/dashboard-view/create-dashboard-view';
 import {checkJsonParamsForSidenav} from '../create-sidenav-prompt/schematic-create-sidenav-prompt';
 import {CreateViewArguments} from './models/create-view-arguments';
+import {getParentPath, parentViewDefined} from '../_utility/view-utility-functions';
 
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
-        // checkPathValidity(tree, schematicArguments.path);
+        checkPathValidity(tree, schematicArguments.path);
         return createView(tree, schematicArguments);
     };
 }
 
-// function checkPathValidity(tree: Tree, path: string | undefined) {
-//     if (path === undefined) {
-//         throw new SchematicsException(`Path cannot be undefined!`);
-//     }
-//     // if the path was entered from a prompt, it might not have a parent
-//     const parentPath = getParentPath(path);
-//     const routeMap = createAppRoutesMap(tree);
-//     if (parentPath !== '' && !routeMap.has(parentPath)) {
-//         throw new SchematicsException(`Parent view doesn't exist! Create a view with '${parentPath}' path first.`);
-//     }
-// }
+function checkPathValidity(tree: Tree, path: string | undefined) {
+    if (path === undefined) {
+        throw new SchematicsException(`View path cannot be undefined!`);
+    }
+    if (!parentViewDefined(tree, path)) {
+        throw new SchematicsException(`Parent view doesn't exist! Create a view with '${getParentPath(path)}' path first.`);
+    }
+}
 
 function createView(tree: Tree, args: CreateViewArguments, addViewToService: boolean = true): Rule {
     const rules = [];

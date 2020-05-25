@@ -1,13 +1,13 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
+import {strings} from '@angular-devkit/core';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
 import {
-    addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
 } from '../../../_utility/view-utility-functions';
-import {strings} from '@angular-devkit/core';
+import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {SidenavPromptOptions} from '../../../create-sidenav-prompt/sidenav-prompt-options';
-import {addViewToNaeJson} from '../../functions/add-view-to-nae-json';
+import {addViewToNaeJson} from '../../../_utility/add-view-to-nae-json';
 import {ViewClassInfo} from '../../models/view-class-info';
 
 

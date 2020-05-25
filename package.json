@@ -43,7 +43,8 @@
         "example:build": "ng build --prod --base-href /projects/engine-frontend/examples/",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "debug-script": "ng g @netgrif/application-engine:create-view"
     },
     "private": true,
     "dependencies": {
