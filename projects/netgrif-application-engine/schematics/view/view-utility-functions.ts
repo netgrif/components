@@ -2,8 +2,9 @@ import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeSc
 import {Tree, SchematicsException} from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../_utility/utility-functions';
 import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
-import {addDeclarationToModule, addImportToModule, findNodes} from '@schematics/angular/utility/ast-utils';
+import {addDeclarationToModule, addImportToModule, findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
 import {ClassName} from './create-view-prompt/classes/ClassName';
+import {Change} from '@schematics/angular/utility/change';
 
 export function getParentPath(path: string): string {
     const index = path.lastIndexOf('/');
@@ -63,10 +64,21 @@ export function resolveClassSuffixForView(view: string): string {
 export function addViewToViewService(tree: Tree, className: ClassName): void {
     const projectInfo = getProjectInfo(tree);
     const fileData = getFileData(tree, projectInfo.path, `${projectInfo.projectNameDasherized}-view.service.ts`);
-    const arrayContent = getArrayNodeContent(fileData.sourceFile);
-    arrayContent.getChildren();
-    String(className.fileImportPath);
 
+    const arrayContent = getArrayNodeContent(fileData.sourceFile);
+    const recorder = tree.beginUpdate(fileData.fileEntry.path);
+    if (arrayContent.getChildren().length === 0) {
+        recorder.insertRight(arrayContent.pos, `${className.name}`);
+    } else {
+        recorder.insertRight(arrayContent.pos, `${className.name}, `);
+    }
+    tree.commitUpdate(recorder);
+
+    const changes: Array<Change> = [];
+    changes.push(
+        insertImport(fileData.sourceFile, fileData.fileEntry.path, className.name, className.fileImportPath)
+    );
+    commitChangesToFile(tree, fileData.fileEntry, changes);
 }
 
 function getArrayNodeContent(source: ts.SourceFile): ts.Node {

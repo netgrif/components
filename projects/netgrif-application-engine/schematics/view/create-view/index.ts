@@ -52,8 +52,8 @@ function getSchematicArguments(): CreateViewArguments {
 
 function emptyArguments(): CreateViewArguments {
     return {
-        path: '',
-        viewType: '',
-        access: 'private' as 'private'
+        path: undefined,
+        viewType: undefined,
+        access: undefined
     };
 }

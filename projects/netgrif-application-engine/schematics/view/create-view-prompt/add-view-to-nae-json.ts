@@ -45,15 +45,18 @@ export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule
 }
 
 function createViewObject(createViewArguments: CreateViewArguments, lastPathSegment: string): View {
-    return {
-        layout: {
-            name: createViewArguments.viewType as string,
-            params: (createViewArguments.layoutParams === undefined) ? {} : createViewArguments.layoutParams
-        },
-        access: createViewArguments.access,
-        navigation: true,
-        routing: {
-            path: lastPathSegment
-        }
-    };
+    if (createViewArguments.access !== undefined) {
+        return {
+            layout: {
+                name: createViewArguments.viewType as string,
+                params: (createViewArguments.layoutParams === undefined) ? {} : createViewArguments.layoutParams
+            },
+            access: createViewArguments.access,
+            navigation: true,
+            routing: {
+                path: lastPathSegment
+            }
+        };
+    }
+    throw new SchematicsException('Malformed data');
 }
