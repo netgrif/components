@@ -27,7 +27,7 @@ export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule
 
             for (let i = 1; i < pathSegments.length - 1; i++) {
                 if (parentRoute.children !== undefined) {
-                    parentRoute = parentRoute[pathSegments[i]].children;
+                    parentRoute = parentRoute.children[pathSegments[i]];
                 } else {
                     // else cannot happen because that would mean this object doesn't have a parent view
                     // such cases end with error in create-view-prompt schematic
