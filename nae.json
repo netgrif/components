@@ -146,7 +146,7 @@
         },
         "case": {
             "layout": {
-                "name": "CaseView",
+                "name": "caseView",
                 "params": {
                     "allowedNets": [
                         "search-test-defaultRole",
