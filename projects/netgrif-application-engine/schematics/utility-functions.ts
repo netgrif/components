@@ -18,7 +18,9 @@ import {FileSystemNode} from './utility-classes';
 
 export class ProjectInfo {
     /**
-     * projects/[name]/src/app
+     * [path prefix relative to root folder]/[name]/src/app
+     *
+     * eg. projects/nae-example-app/src/app
      */
     path = '';
     projectName = '';

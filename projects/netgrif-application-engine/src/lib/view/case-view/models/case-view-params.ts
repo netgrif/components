@@ -1,3 +1,3 @@
-export interface CaseParams {
+export interface CaseViewParams {
     allowedNets: Array<string>;
 }

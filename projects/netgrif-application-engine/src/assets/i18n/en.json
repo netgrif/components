@@ -118,6 +118,18 @@
                 "assignee": {
                     "name": "Task assignee",
                     "placeholder": "Select task assignee"
+                },
+                "process": {
+                    "name": "Task process",
+                    "placeholder": "Select task process"
+                },
+                "role": {
+                    "name": "Task process role",
+                    "placeholder": "Select task process role"
+                },
+                "task": {
+                    "name": "Task",
+                    "placeholder": "Select task"
                 }
             }
         },

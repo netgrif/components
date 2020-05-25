@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { <%= classify(path) %>CaseViewComponent } from './<%= dasherize(path) %>-case-view.component';
+import { <%= classify(classNamePrefix) %>CaseViewComponent } from './<%= dasherize(classNamePrefix) %>-case-view.component';
 import {
     CaseHeaderService,
     ConfigurationService,
@@ -13,9 +12,9 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('<%= classify(path) %>CaseViewComponent', () => {
-    let component: <%= classify(path) %>CaseViewComponent;
-    let fixture: ComponentFixture<<%= classify(path) %>CaseViewComponent>;
+describe('<%= classify(classNamePrefix) %>CaseViewComponent', () => {
+    let component: <%= classify(classNamePrefix) %>CaseViewComponent;
+    let fixture: ComponentFixture<<%= classify(classNamePrefix) %>CaseViewComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -30,14 +29,14 @@ describe('<%= classify(path) %>CaseViewComponent', () => {
                 {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService},
                 CaseHeaderService
                 ],
-            declarations: [<%= classify(path) %>CaseViewComponent],
+            declarations: [<%= classify(classNamePrefix) %>CaseViewComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(<%= classify(path) %>CaseViewComponent);
+        fixture = TestBed.createComponent(<%= classify(classNamePrefix) %>CaseViewComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
