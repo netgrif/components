@@ -3,7 +3,7 @@ import {SidenavPromptOptions} from './sidenav-prompt-options';
 import {createSidenavOrToolbarView} from '../create-view-prompt/views/sidenav-toolbar-view/create-sidenav-or-toolbar-view';
 import {CreateViewArguments} from '../create-view-prompt/schema';
 
-export function chooseSideNavType(options: SidenavPromptOptions): Rule {
+export function schematicEntryPoint(options: SidenavPromptOptions): Rule {
     return (tree: Tree) => {
         return createSidenavOrToolbarView(tree, options);
     };

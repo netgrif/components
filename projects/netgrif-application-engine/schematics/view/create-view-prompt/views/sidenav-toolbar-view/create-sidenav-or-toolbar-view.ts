@@ -3,7 +3,7 @@ import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../.
 import {
     resolveClassSuffixForView,
     updateAppModule
-} from '../../../view-utility-functions';
+} from '../../../_utility/view-utility-functions';
 import {strings} from '@angular-devkit/core';
 import {SidenavPromptOptions} from '../../../create-sidenav-prompt/sidenav-prompt-options';
 import {addViewToNaeJson} from '../../functions/add-view-to-nae-json';
@@ -25,7 +25,7 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
 
     checkArgsToCreateAppropriateView();
 
-    rules.push(createFilesFromTemplates('./files/sidenav-toolbar-view',
+    rules.push(createFilesFromTemplates('./files',
         `${projectInfo.path}/views/${sidenavOptions.createViewArguments.path}`, {
             prefix: projectInfo.projectPrefixDasherized,
             path: className.prefix,

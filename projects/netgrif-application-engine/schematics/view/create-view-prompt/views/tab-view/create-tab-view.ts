@@ -13,7 +13,7 @@ import {
     addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
-} from '../../../view-utility-functions';
+} from '../../../_utility/view-utility-functions';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {TabContentTemplate} from '../../models/tab-content-template';
 import {ImportToAdd} from '../../models/import-to-add';
@@ -71,7 +71,7 @@ export function createTabView(
 
     const rules = tabViews.rules;
 
-    rules.push(createFilesFromTemplates('./files/tab-view', `${projectInfo.path}/views/${args.path}`, {
+    rules.push(createFilesFromTemplates('./files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         path: view.prefix,
         tabs: tabViews.tabTemplates,
@@ -215,7 +215,7 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
 }
 
 function pushTabViews(destination: TabViews, source: TabViews): TabViews {
-    // iteration trough Object.keys() caused a type compilation error
+    // iteration over Object.keys() caused a type compilation error
     destination.entryComponentsImports.push(...source.entryComponentsImports);
     destination.tabViewImports.push(...source.tabViewImports);
     destination.tabTemplates.push(...source.tabTemplates);

@@ -6,7 +6,7 @@ import {
     addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
-} from '../../../view-utility-functions';
+} from '../../../_utility/view-utility-functions';
 import {TabbedView} from '../../models/tabbed-view';
 import {ViewClassInfo} from '../../models/view-class-info';
 import {ImportToAdd} from '../../models/import-to-add';
@@ -27,7 +27,7 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     };
 
-    const commonPathPrefix = './files/task-view/';
+    const commonPathPrefix = './files/';
     const destinationPath = `${projectInfo.path}/views/${args.path}`;
     rules.push(createFilesFromTemplates(`${commonPathPrefix}common`, destinationPath, templateParams));
     if (!!args.isTabbed) {

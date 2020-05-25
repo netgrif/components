@@ -12,11 +12,11 @@ import {createTaskView} from './views/task-view/create-task-view';
 import {createCaseView} from './views/case-view/create-case-view';
 import {createSidenavOrToolbarView} from './views/sidenav-toolbar-view/create-sidenav-or-toolbar-view';
 import {createEmptyView} from './views/empty-view/create-empty-view';
-import {checkJsonParamsForSidenav} from '../create-sidenav-prompt/create-sidenav-prompt';
 import {createDashboardView} from './views/dashboard-view/create-dashboard-view';
+import {checkJsonParamsForSidenav} from '../create-sidenav-prompt/schematic-create-sidenav-prompt';
 
 
-export function createViewPrompt(schematicArguments: CreateViewArguments): Rule {
+export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
         // checkPathValidity(tree, schematicArguments.path);
         return createView(tree, schematicArguments);
@@ -35,44 +35,44 @@ export function createViewPrompt(schematicArguments: CreateViewArguments): Rule 
 //     }
 // }
 
-function createView(tree: Tree, args: CreateViewArguments, addRoute: boolean = true): Rule {
+function createView(tree: Tree, args: CreateViewArguments, addViewToService: boolean = true): Rule {
     const rules = [];
     switch (args.viewType) {
         case 'login':
-            rules.push(createLoginView(tree, args));
+            rules.push(createLoginView(tree, args, addViewToService));
             break;
         case 'tabView':
-            rules.push(createTabView(tree, args, createViewRef));
+            rules.push(createTabView(tree, args, addViewToService, createViewRef));
             break;
         case 'taskView':
-            rules.push(createTaskView(tree, args));
+            rules.push(createTaskView(tree, args, addViewToService));
             break;
         case 'caseView':
-            rules.push(createCaseView(tree, args));
+            rules.push(createCaseView(tree, args, addViewToService));
             break;
         case 'emptyView':
-            rules.push(createEmptyView(tree, args));
+            rules.push(createEmptyView(tree, args, addViewToService));
             break;
         case 'dashboard':
-            rules.push(createDashboardView(tree, args));
+            rules.push(createDashboardView(tree, args, addViewToService));
             break;
         case 'toolbarView':
             rules.push(createSidenavOrToolbarView(tree, {
                 createViewArguments: args,
-                addRoute
+                addRoute: addViewToService
             }));
             break;
         case 'sidenavView':
         case 'sidenavAndToolbarView':
-            rules.push(schematic('create-sidenav-prompt', checkJsonParamsForSidenav(args, addRoute)
+            rules.push(schematic('create-sidenav-prompt', checkJsonParamsForSidenav(args, addViewToService)
             ));
             // we want to add the route AFTER we get the data from the schematic
-            addRoute = false;
+            addViewToService = false;
             break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
-    if (addRoute) {
+    if (addViewToService) {
         rules.push(addViewToNaeJson(args));
     }
     return chain(rules);

@@ -12,7 +12,7 @@ import {
     addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
-} from '../../../view-utility-functions';
+} from '../../../_utility/view-utility-functions';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {TabbedView} from '../../models/tabbed-view';
 import {ViewClassInfo} from '../../models/view-class-info';
@@ -35,7 +35,7 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     };
 
-    const commonPathPrefix = './files/case-view/';
+    const commonPathPrefix = './files/';
     rules.push(createFilesFromTemplates(`${commonPathPrefix}common`, destinationPath, templateParams));
     if (!!args.isTabbed) {
         rules.push(createFilesFromTemplates(`${commonPathPrefix}tabbed`, destinationPath, templateParams));

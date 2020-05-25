@@ -5,7 +5,7 @@ import {
     addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
-} from '../../../view-utility-functions';
+} from '../../../_utility/view-utility-functions';
 import {strings} from '@angular-devkit/core';
 import {ViewClassInfo} from '../../models/view-class-info';
 import {ImportToAdd} from '../../models/import-to-add';
@@ -16,7 +16,7 @@ export function createDashboardView(tree: Tree, args: CreateViewArguments, addVi
     const rules = [];
     const className = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
 
-    rules.push(createFilesFromTemplates('./files/dashboard-view', `${projectInfo.path}/views/${args.path}`, {
+    rules.push(createFilesFromTemplates('./files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         path: className.prefix,
         webPath: args.path,
