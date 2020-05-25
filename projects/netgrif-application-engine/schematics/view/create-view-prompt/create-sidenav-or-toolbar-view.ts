@@ -1,6 +1,5 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../_utility/utility-functions';
-import {ViewClassInfo} from './models/ViewClassInfo';
 import {
     resolveClassSuffixForView,
     updateAppModule
@@ -8,12 +7,15 @@ import {
 import {strings} from '@angular-devkit/core';
 import {SidenavPromptOptions} from './files/sidenav-toolbar-files/sidenav-prompt-options';
 import {addViewToNaeJson} from './add-view-to-nae-json';
+import {ViewClassInfo} from './models/view-class-info';
 
 
 export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPromptOptions): Rule {
     const projectInfo = getProjectInfo(tree);
-    const className = new ViewClassInfo(sidenavOptions.createViewArguments.path as string,
-        resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string));
+    const className = new ViewClassInfo(
+        sidenavOptions.createViewArguments.path as string,
+        resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string)
+    );
     let drawerType = '<nae-navigation-drawer';
     checkTypeOfSideNav();
     const rules = [];

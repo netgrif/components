@@ -1,37 +1,36 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../_utility/utility-functions';
-import {ViewClassInfo} from './models/ViewClassInfo';
 import {strings} from '@angular-devkit/core';
 import {
+    addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
 } from '../view-utility-functions';
-import {ImportToAdd} from './models/ImportToAdd';
+import {ViewClassInfo} from './models/view-class-info';
+import {ImportToAdd} from './models/import-to-add';
 
 
-export function createLoginView(tree: Tree, args: CreateViewArguments): Rule {
+export function createLoginView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
-    const className = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
+    const view = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
 
     rules.push(createFilesFromTemplates('./files/login', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: className.prefix,
+        path: view.prefix,
         dasherize: strings.dasherize,
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
-        configImportPath: createRelativePath(className.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
+        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     }));
 
-    updateAppModule(tree, className.name, className.fileImportPath, [
+    updateAppModule(tree, view.name, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('LoginFormModule', '@netgrif/application-engine')]);
 
-    // if (addRoute) {
-    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
-    //     rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
-    //     addAuthGuardImport(tree, args.access);
-    // }
+    if (addViewToService) {
+        addViewToViewService(tree, view);
+    }
     return chain(rules);
 }

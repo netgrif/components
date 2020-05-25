@@ -1,16 +1,23 @@
 import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
-import {commitChangesToFile, createFilesFromTemplates, createRelativePath, getAppModule, getProjectInfo} from '../../_utility/utility-functions';
-import {ViewClassInfo} from './models/ViewClassInfo';
+import {
+    commitChangesToFile,
+    createFilesFromTemplates,
+    createRelativePath,
+    getAppModule,
+    getProjectInfo
+} from '../../_utility/utility-functions';
 import {EmbeddedView, TabViewParams} from './models/params-interfaces';
 import {strings} from '@angular-devkit/core';
 import {
+    addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
 } from '../view-utility-functions';
-import {ImportToAdd} from './models/ImportToAdd';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
-import {TabContentTemplate} from './models/TabContentTemplate';
+import {TabContentTemplate} from './models/tab-content-template';
+import {ImportToAdd} from './models/import-to-add';
+import {ViewClassInfo} from './models/view-class-info';
 
 
 interface TabViews {
@@ -23,18 +30,19 @@ interface TabViews {
 export function createTabView(
     tree: Tree,
     args: CreateViewArguments,
-    createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
+    addViewToService: boolean,
+    createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addViewToService?: boolean) => Rule
 ): Rule {
 
     const projectInfo = getProjectInfo(tree);
-    const className = new ViewClassInfo(args.path as string, 'TabView');
+    const view = new ViewClassInfo(args.path as string, 'TabView');
     const params = args.layoutParams as TabViewParams;
 
     const tabViews = newTabViews();
     let viewCounterStart = 0;
 
     if (!!params.defaultTaskView) {
-        processEmbeddedView(params.defaultTaskView, tabViews, className, args.path as string,
+        processEmbeddedView(params.defaultTaskView, tabViews, view, args.path as string,
                             viewCounterStart, tree, createViewFunctionRef);
         viewCounterStart++;
     }
@@ -43,7 +51,7 @@ export function createTabView(
         tree,
         params,
         args.path as string,
-        className,
+        view,
         createViewFunctionRef,
         viewCounterStart
     ));
@@ -65,15 +73,15 @@ export function createTabView(
 
     rules.push(createFilesFromTemplates('./files/tab-view', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: className.prefix,
+        path: view.prefix,
         tabs: tabViews.tabTemplates,
         imports: tabViews.tabViewImports,
         dasherize: strings.dasherize,
         classify: strings.classify,
-        modulePath: createRelativePath(className.fileImportPath, './app.module')
+        modulePath: createRelativePath(view.fileImportPath, './app.module')
     }));
 
-    updateAppModule(tree, className.name, className.fileImportPath, [
+    updateAppModule(tree, view.name, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('TabsModule', '@netgrif/application-engine')]);
 
@@ -84,12 +92,9 @@ export function createTabView(
         commitChangesToFile(tree, appModule.fileEntry, changes);
     });
 
-    // if (addRoute) {
-    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
-    //     rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
-    //     rules.push(addRouteToRoutesJson(`${args.path}/**`, className.name, args.access));
-    //     addAuthGuardImport(tree, args.access);
-    // }
+    if (addViewToService) {
+        addViewToViewService(tree, view);
+    }
     return chain(rules);
 }
 

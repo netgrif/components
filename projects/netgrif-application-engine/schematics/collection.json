@@ -35,11 +35,6 @@
             "factory": "./view/create-view-prompt/index#createViewPrompt",
             "schema": "./view/create-view-prompt/schema.json"
         },
-        "populate-route-module": {
-            "description": "Updates routes in route module to match with those in routes.json",
-            "factory": "./view/populate-route-module/index#populateRouteModule",
-            "schema": "./view/populate-route-module/schema.json"
-        },
         "create-sidenav-prompt": {
             "description": "Adds extension to sidenav based on user inputs.",
             "factory": "./view/create-view-prompt/create-sidenav-prompt#chooseSideNavType",

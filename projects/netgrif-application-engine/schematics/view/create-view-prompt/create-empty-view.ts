@@ -10,7 +10,7 @@ import {
 import {strings} from '@angular-devkit/core';
 
 
-export function createEmptyView(tree: Tree, args: CreateViewArguments, addView: boolean): Rule {
+export function createEmptyView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const className = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
     const rules = [];
@@ -23,7 +23,7 @@ export function createEmptyView(tree: Tree, args: CreateViewArguments, addView: 
     }));
     updateAppModule(tree, className.name, className.fileImportPath, []);
 
-    if (addView) {
+    if (addViewToService) {
         addViewToViewService(tree, className);
     }
     return chain(rules);
