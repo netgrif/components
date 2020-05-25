@@ -1,16 +1,16 @@
 import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
 import {commitChangesToFile, createFilesFromTemplates, createRelativePath, getAppModule, getProjectInfo} from '../../_utility/utility-functions';
-import {ClassName} from './classes/ClassName';
-import {EmbeddedView, TabViewParams} from './classes/params-interfaces';
+import {ViewClassInfo} from './models/ViewClassInfo';
+import {EmbeddedView, TabViewParams} from './models/params-interfaces';
 import {strings} from '@angular-devkit/core';
 import {
     resolveClassSuffixForView,
     updateAppModule
 } from '../view-utility-functions';
-import {ImportToAdd} from './classes/ImportToAdd';
+import {ImportToAdd} from './models/ImportToAdd';
 import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
-import {TabContentTemplate} from './classes/TabContentTemplate';
+import {TabContentTemplate} from './models/TabContentTemplate';
 
 
 interface TabViews {
@@ -27,7 +27,7 @@ export function createTabView(
 ): Rule {
 
     const projectInfo = getProjectInfo(tree);
-    const className = new ClassName(args.path as string, 'TabView');
+    const className = new ViewClassInfo(args.path as string, 'TabView');
     const params = args.layoutParams as TabViewParams;
 
     const tabViews = newTabViews();
@@ -97,7 +97,7 @@ function processTabViewContents(
     tree: Tree,
     tabViewParams: TabViewParams,
     hostViewPath: string,
-    hostClassName: ClassName,
+    hostClassName: ViewClassInfo,
     createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
     viewCounterStartValue: number = 0
 ): TabViews {
@@ -119,7 +119,7 @@ function processTabViewContents(
 
 function processEmbeddedView(embeddedView: EmbeddedView,
                              result: TabViews,
-                             hostClassName: ClassName,
+                             hostClassName: ViewClassInfo,
                              hostViewPath: string,
                              viewNumber: number,
                              tree: Tree,
@@ -151,7 +151,7 @@ function processEmbeddedView(embeddedView: EmbeddedView,
     result.tabTemplates.push(tabTemplate);
 }
 
-function processEmbeddedComponent(embeddedComponent: EmbeddedView, result: TabViews, hostClassName: ClassName): TabContentTemplate {
+function processEmbeddedComponent(embeddedComponent: EmbeddedView, result: TabViews, hostClassName: ViewClassInfo): TabContentTemplate {
     if (!embeddedComponent.component) {
         throw new SchematicsException('processEmbeddedComponent can\'t be called with EmbeddedView object' +
             ' that doesn\'t contain the \'component\' attribute!');
@@ -175,7 +175,7 @@ function processEmbeddedComponent(embeddedComponent: EmbeddedView, result: TabVi
 
 function processEmbeddedNewView(embeddedView: EmbeddedView,
                                 result: TabViews,
-                                hostClassName: ClassName,
+                                hostClassName: ViewClassInfo,
                                 newViewPath: string,
                                 tree: Tree,
                                 createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
@@ -199,7 +199,7 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
 
     result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
 
-    const newComponentName = new ClassName(newViewPath, resolveClassSuffixForView(embeddedView.view.name));
+    const newComponentName = new ViewClassInfo(newViewPath, resolveClassSuffixForView(embeddedView.view.name));
 
     result.tabViewImports.push(
         new ImportToAdd(newComponentName.name, createRelativePath(hostClassName.fileImportPath, newComponentName.fileImportPath))

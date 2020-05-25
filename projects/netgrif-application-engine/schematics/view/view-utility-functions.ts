@@ -1,9 +1,9 @@
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import {Tree, SchematicsException} from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../_utility/utility-functions';
-import {ImportToAdd} from './create-view-prompt/classes/ImportToAdd';
+import {ImportToAdd} from './create-view-prompt/models/ImportToAdd';
 import {addDeclarationToModule, addImportToModule, findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
-import {ClassName} from './create-view-prompt/classes/ClassName';
+import {ViewClassInfo} from './create-view-prompt/models/ViewClassInfo';
 import {Change} from '@schematics/angular/utility/change';
 
 export function getParentPath(path: string): string {
@@ -61,7 +61,7 @@ export function resolveClassSuffixForView(view: string): string {
     }
 }
 
-export function addViewToViewService(tree: Tree, className: ClassName): void {
+export function addViewToViewService(tree: Tree, className: ViewClassInfo): void {
     const projectInfo = getProjectInfo(tree);
     const fileData = getFileData(tree, projectInfo.path, `${projectInfo.projectNameDasherized}-view.service.ts`);
 

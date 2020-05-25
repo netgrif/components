@@ -1,17 +1,18 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from './schema';
 import {createFilesFromTemplates, getProjectInfo} from '../../_utility/utility-functions';
-import {ClassName} from './classes/ClassName';
+import {ViewClassInfo} from './models/view-class-info';
 import {
+    addViewToViewService,
     resolveClassSuffixForView,
     updateAppModule
 } from '../view-utility-functions';
 import {strings} from '@angular-devkit/core';
 
 
-export function createEmptyView(tree: Tree, args: CreateViewArguments): Rule {
+export function createEmptyView(tree: Tree, args: CreateViewArguments, addView: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
-    const className = new ClassName(args.path as string, resolveClassSuffixForView(args.viewType as string));
+    const className = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
     const rules = [];
 
     rules.push(createFilesFromTemplates('./files/empty-view', `${projectInfo.path}/views/${args.path}`, {
@@ -22,10 +23,8 @@ export function createEmptyView(tree: Tree, args: CreateViewArguments): Rule {
     }));
     updateAppModule(tree, className.name, className.fileImportPath, []);
 
-    // if (addRoute) {
-    //     addRoutingModuleImport(tree, className.name, className.fileImportPath);
-    //     rules.push(addRouteToRoutesJson(args.path as string, className.name, args.access));
-    //     addAuthGuardImport(tree, args.access);
-    // }
+    if (addView) {
+        addViewToViewService(tree, className);
+    }
     return chain(rules);
 }

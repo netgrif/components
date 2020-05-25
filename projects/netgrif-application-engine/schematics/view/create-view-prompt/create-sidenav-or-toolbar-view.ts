@@ -1,6 +1,6 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../_utility/utility-functions';
-import {ClassName} from './classes/ClassName';
+import {ViewClassInfo} from './models/ViewClassInfo';
 import {
     resolveClassSuffixForView,
     updateAppModule
@@ -12,7 +12,7 @@ import {addViewToNaeJson} from './add-view-to-nae-json';
 
 export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPromptOptions): Rule {
     const projectInfo = getProjectInfo(tree);
-    const className = new ClassName(sidenavOptions.createViewArguments.path as string,
+    const className = new ViewClassInfo(sidenavOptions.createViewArguments.path as string,
         resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string));
     let drawerType = '<nae-navigation-drawer';
     checkTypeOfSideNav();

@@ -1,6 +1,6 @@
 import { strings } from '@angular-devkit/core';
 
-export class ClassName {
+export class ViewClassInfo {
 
     /**
      * for `caseView` located at route `cases/all/` this is equal to `cases-all`
@@ -20,7 +20,7 @@ export class ClassName {
     public fileImportPath: string;
 
     constructor(path: string, componentSuffix: string) {
-        this.prefix = ClassName.convertPathToClassNamePrefix(path);
+        this.prefix = ViewClassInfo.convertPathToClassNamePrefix(path);
         this.withoutComponent = `${strings.classify(this.prefix)}${componentSuffix}`;
         this.name = `${this.withoutComponent}Component`;
         this.fileImportPath = `./views/${path}/${this.prefix}-${strings.dasherize(componentSuffix)}.component`;
