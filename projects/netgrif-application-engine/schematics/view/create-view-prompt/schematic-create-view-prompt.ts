@@ -4,7 +4,6 @@ import {
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
-import {CreateViewArguments} from './schema';
 import {addViewToNaeJson} from './functions/add-view-to-nae-json';
 import {createLoginView} from './views/login/create-login-view';
 import {createTabView} from './views/tab-view/create-tab-view';
@@ -14,6 +13,7 @@ import {createSidenavOrToolbarView} from './views/sidenav-toolbar-view/create-si
 import {createEmptyView} from './views/empty-view/create-empty-view';
 import {createDashboardView} from './views/dashboard-view/create-dashboard-view';
 import {checkJsonParamsForSidenav} from '../create-sidenav-prompt/schematic-create-sidenav-prompt';
+import {CreateViewArguments} from './models/create-view-arguments';
 
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {

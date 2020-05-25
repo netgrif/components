@@ -1,5 +1,4 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {CreateViewArguments} from '../../schema';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
@@ -17,6 +16,7 @@ import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {TabbedView} from '../../models/tabbed-view';
 import {ViewClassInfo} from '../../models/view-class-info';
 import {ImportToAdd} from '../../models/import-to-add';
+import {CreateViewArguments} from '../../models/create-view-arguments';
 
 
 export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedView, addViewToService: boolean): Rule {

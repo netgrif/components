@@ -1,5 +1,4 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {CreateViewArguments} from '../../schema';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
 import {strings} from '@angular-devkit/core';
 import {
@@ -10,6 +9,7 @@ import {
 import {TabbedView} from '../../models/tabbed-view';
 import {ViewClassInfo} from '../../models/view-class-info';
 import {ImportToAdd} from '../../models/import-to-add';
+import {CreateViewArguments} from '../../models/create-view-arguments';
 
 
 export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedView, addViewToService: boolean): Rule {

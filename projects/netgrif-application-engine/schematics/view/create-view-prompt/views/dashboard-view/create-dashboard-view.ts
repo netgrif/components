@@ -1,5 +1,4 @@
 import {Rule, Tree, chain} from '@angular-devkit/schematics';
-import {CreateViewArguments} from '../../schema';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
 import {
     addViewToViewService,
@@ -9,6 +8,7 @@ import {
 import {strings} from '@angular-devkit/core';
 import {ViewClassInfo} from '../../models/view-class-info';
 import {ImportToAdd} from '../../models/import-to-add';
+import {CreateViewArguments} from '../../models/create-view-arguments';
 
 
 export function createDashboardView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {

@@ -1,5 +1,4 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
-import {CreateViewArguments} from '../../schema';
 import {createFilesFromTemplates, getProjectInfo} from '../../../../_utility/utility-functions';
 import {ViewClassInfo} from '../../models/view-class-info';
 import {
@@ -8,6 +7,7 @@ import {
     updateAppModule
 } from '../../../_utility/view-utility-functions';
 import {strings} from '@angular-devkit/core';
+import {CreateViewArguments} from '../../models/create-view-arguments';
 
 
 export function createEmptyView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {

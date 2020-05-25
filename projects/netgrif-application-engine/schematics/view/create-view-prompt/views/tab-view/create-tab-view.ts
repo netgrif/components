@@ -1,5 +1,4 @@
 import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
-import {CreateViewArguments} from '../../schema';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
@@ -18,6 +17,7 @@ import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {TabContentTemplate} from '../../models/tab-content-template';
 import {ImportToAdd} from '../../models/import-to-add';
 import {ViewClassInfo} from '../../models/view-class-info';
+import {CreateViewArguments} from '../../models/create-view-arguments';
 
 
 interface TabViews {
