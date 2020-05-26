@@ -4,6 +4,6 @@
     $accent: map-get($theme, accent);
 
     .active-navigation-route {
-        background-color: (mat-color($accent),0.5);
+        background-color: rgba(mat-color($accent),0.3);
     }
 }

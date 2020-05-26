@@ -236,5 +236,9 @@
         "taskFilter": "Task filters",
         "workHead": "Workflow headers",
         "workFilter": "Workflow filters"
+    },
+    "view-list": {
+        "noCasesSatisfyingThisFilter": "There are any cases satisfying specified filter",
+        "noCProcessesSatisfyingThisFilter": "There are any processes satisfying specified filter"
     }
 }

@@ -156,6 +156,7 @@
                     "name": "CaseView",
                     "params": {
                         "allowedNets": [
+                            "search-test",
                             "search-test-defaultRole",
                             "leukemia",
                             "1",

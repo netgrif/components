@@ -9,7 +9,7 @@ export enum WorkflowMetaField {
     TITLE = 'title',
     VERSION = 'version',
     AUTHOR = 'author',
-    CREATION_DATE = 'createdDate',
+    CREATION_DATE = 'creationDate',
 }
 
 @Injectable()

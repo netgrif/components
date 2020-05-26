@@ -31,19 +31,30 @@ export abstract class TabbedCaseView extends AbstractCaseView {
 
     public handleCaseClick(clickedCase: Case): void {
         if (this._correctlyInjected) {
-            this._injectedTabData.tabViewRef.openTab({
-                label: {
-                    text: clickedCase.title,
-                    icon: clickedCase.icon ? clickedCase.icon : 'check_box'
-                },
-                canBeClosed: true,
-                tabContentComponent: this._injectedTabData.tabViewComponent,
-                injectedObject: {
-                    baseFilter: new SimpleFilter('', FilterType.TASK, {case: `${clickedCase.stringId}`}),
-                    allowedNets: [clickedCase.processIdentifier]
-                },
-                order: this._injectedTabData.tabViewOrder
-            }, this._autoswitchToTaskTab);
+            this.openTab(clickedCase);
         }
+    }
+
+    public createNewCase(): void {
+        const myCase = this._caseViewService.createNewCase();
+        myCase.subscribe( kaze => {
+            this.openTab(kaze);
+        });
+    }
+
+    private openTab(openCase: Case) {
+        this._injectedTabData.tabViewRef.openTab({
+            label: {
+                text: openCase.title,
+                icon: openCase.icon ? openCase.icon : 'check_box'
+            },
+            canBeClosed: true,
+            tabContentComponent: this._injectedTabData.tabViewComponent,
+            injectedObject: {
+                baseFilter: new SimpleFilter('', FilterType.TASK, {case: `${openCase.stringId}`}),
+                allowedNets: [openCase.processIdentifier]
+            },
+            order: this._injectedTabData.tabViewOrder
+        }, this._autoswitchToTaskTab);
     }
 }

@@ -14,14 +14,14 @@
              fxLayoutAlign="center center">
             <mat-icon color="accent" class="font-size-40 block-size-40 margin-bottom-default">linear_scale
             </mat-icon>
-            <span class="font-size-20">There are any processes satisfying specified filter</span>
+            <span class="font-size-20">{{ 'view-list.noProcessesSatisfyingThisFilter' | translate}}</span>
         </div>
 
         <mat-accordion [multi]="true" fxFlex="100" class="width-100">
 
             <cdk-virtual-scroll-viewport #scrollViewport itemSize="50" class="width-100">
 
-                <nae-workflow-panel *cdkVirtualFor="let workflow of workflows; let i = index; trackBy: trackBy"
+                <nae-workflow-panel *cdkVirtualFor="let workflow of workflows; let i = index; templateCacheSize: 0; trackBy: trackBy"
                                     [workflow]="workflow"
                                     [selectedHeaders$]="selectedHeaders$">
                 </nae-workflow-panel>

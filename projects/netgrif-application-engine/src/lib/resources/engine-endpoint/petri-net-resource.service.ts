@@ -35,8 +35,8 @@ export class PetriNetResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet
      */
-    public getAll(): Observable<Array<PetriNetReference>> {
-        return this.provider.get$('petrinet', this.SERVER_URL)
+    public getAll(params?: Params): Observable<Array<PetriNetReference>> {
+        return this.provider.get$('petrinet', this.SERVER_URL, params)
             .pipe(map(r => changeType(r, 'petriNetReferences')));
     }
 
@@ -156,8 +156,8 @@ export class PetriNetResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/search
      */
-    public searchPetriNets(body: object, params?: Params): Observable<PetriNet> {
+    public searchPetriNets(body: object, params?: Params): Observable<Array<PetriNetReference>> {
         return this.provider.post$('petrinet/search', this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, undefined)));
+            .pipe(map(r => changeType(r, 'petriNetReferences')));
     }
 }

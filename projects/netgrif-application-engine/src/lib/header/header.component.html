@@ -1,6 +1,6 @@
-<mat-card>
+<mat-card class="padding-custom">
     <div fxLayout="row">
-        <div fxLayout="row" fxFlex="90" class="header-content-container"
+        <div fxLayout="row" fxFlex="95" class="header-content-container"
              [ngSwitch]="headerService.headerState.mode">
             <div *ngSwitchCase="headerModeEnum.SORT" fxFlex="100" fxLayout="row">
                 <nae-sort-mode fxFlex="100" [headerService]="headerService"></nae-sort-mode>
@@ -12,7 +12,7 @@
                 <nae-edit-mode fxFlex="100" [headerService]="headerService"></nae-edit-mode>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10"
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5"
              [ngSwitch]="headerService.headerState.mode" *ngIf="!hideEditMode">
             <button *ngSwitchDefault mat-icon-button [matMenuTriggerFor]="headerMenu">
                 <mat-icon>more_vert</mat-icon>
@@ -26,17 +26,17 @@
                 </button>
             </div>
             <mat-menu #headerMenu="matMenu">
-                <button mat-menu-item
+                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
                         (click)="headerService.changeMode(headerModeEnum.SORT, false)">
                     <mat-icon>sort</mat-icon>
                     {{ 'headers.orderMode' | translate}}
                 </button>
-                <button mat-menu-item
+                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
                         (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
                     <mat-icon>search</mat-icon>
                     {{ 'headers.searchMode' | translate}}
                 </button>
-                <button mat-menu-item
+                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.EDIT}"
                         (click)="headerService.changeMode(headerModeEnum.EDIT)">
                     <mat-icon>edit</mat-icon>
                     {{ 'headers.editMode' | translate}}
