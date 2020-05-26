@@ -23,23 +23,23 @@ export abstract class ConfigurationService {
         const pathFragments = viewPath.split('/');
 
         const config = this.createConfigurationCopy() as NetgrifApplicationEngine;
-        if (!config.views || !config.views.routes) {
+        if (!config.views) {
             return undefined;
         }
-        let routes = config.views.routes;
+        let views = config.views;
         for (let i = 0; i < pathFragments.length; i++) {
             const pathFragment = pathFragments[i];
-            const route = routes[pathFragment];
-            if (!route) {
+            const view = views[pathFragment];
+            if (!view) {
                 return undefined;
             }
             if (i === pathFragments.length - 1) {
-                return route;
+                return view;
             }
-            if (!route.routes) {
+            if (!view.children) {
                 return undefined;
             }
-            routes = route.routes;
+            views = view.children;
         }
     }
 
