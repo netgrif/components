@@ -71,7 +71,11 @@ function getNumberOfMissingViews(): number {
 function updateAppComponentHTML(): Rule {
     return (tree: Tree) => {
         const pathToComponent = getProjectInfo(tree).path + '/app.component.html';
-        const content: string = '<nae-side-menu>' + '\n' + tree.read(pathToComponent) + '</nae-side-menu>';
+        const content =
+`<nae-routing></nae-routing>
+<nae-side-menu-container>
+    <router-outlet></router-outlet>
+</nae-side-menu-container>`;
         tree.overwrite(pathToComponent, content);
     };
 }
