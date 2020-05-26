@@ -26,7 +26,7 @@ export class ViewClassInfo {
             this.fileImportPath = `./views/${path}/${this.prefix}-${strings.dasherize(componentSuffix)}.component`;
         } else {
             this.prefix = '';
-            this.withoutComponent = customComponentName;
+            this.withoutComponent = strings.classify(customComponentName);
             this.fileImportPath = `./views/${path}/${strings.dasherize(customComponentName)}.component`;
         }
         this.name = `${this.withoutComponent}Component`;

@@ -14,24 +14,27 @@ import {CreateViewArguments} from '../../models/create-view-arguments';
 export function createDashboardView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
-    const className = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
+    const view = new ViewClassInfo(
+        args.path as string,
+        resolveClassSuffixForView(args.viewType as string),
+        args.componentName);
 
     rules.push(createFilesFromTemplates('./views/dashboard-view/files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: className.prefix,
+        className: view.withoutComponent,
         webPath: args.path,
         dasherize: strings.dasherize,
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
-        configImportPath: createRelativePath(className.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
+        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     }));
 
-    updateAppModule(tree, className.name, className.fileImportPath, [
+    updateAppModule(tree, view.name, view.fileImportPath, [
         new ImportToAdd('DashboardModule', '@netgrif/application-engine'),
     ]);
 
     if (addViewToService) {
-        addViewToViewService(tree, className);
+        addViewToViewService(tree, view);
     }
     return chain(rules);
 }

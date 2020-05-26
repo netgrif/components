@@ -7,7 +7,7 @@
         "path": {
             "description": "web address path from site root that corresponds to this view",
             "type": "string",
-            "x-prompt": "enter the view path. No leading backslash."
+            "x-prompt": "Enter the view path. No leading backslash."
         },
         "viewType": {
             "description": "type of the created view",
@@ -26,7 +26,7 @@
             ],
             "x-prompt": {
                 "type": "list",
-                "message": "select a view type",
+                "message": "Select a view type",
                 "items": [
                     "emptyView",
                     "login",
@@ -40,6 +40,10 @@
                     "customView"
                 ]
             }
+        },
+        "componentName": {
+            "type": "string",
+            "message": "Enter class name of the view component (without the Component suffix)"
         },
         "access": {
             "description": "access type",

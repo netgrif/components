@@ -54,6 +54,7 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
                return {
                    path: viewPath,
                    viewType: view.layout.name,
+                   componentName: view.layout.componentName,
                    access: view.access
                };
             }
@@ -62,6 +63,7 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
                 return {
                     path: viewPath,
                     viewType: 'customView',
+                    componentName: view.component.class,
                     access: view.access
                 };
             }
@@ -81,6 +83,7 @@ function emptyArguments(): NullableCreateViewArguments {
     return {
         path: undefined,
         viewType: undefined,
+        componentName: undefined,
         access: undefined
     };
 }

@@ -3,11 +3,11 @@ import {ConfigurationService, DashboardParams} from '@netgrif/application-engine
 
 
 @Component({
-  selector: '<%= prefix %>-<%= dasherize(path) %>-dashboard',
-  templateUrl: './<%= dasherize(path) %>-dashboard.component.html',
-  styleUrls: ['./<%= dasherize(path) %>-dashboard.component.scss']
+  selector: '<%= prefix %>-<%= dasherize(className) %>',
+  templateUrl: './<%= dasherize(className) %>.component.html',
+  styleUrls: ['./<%= dasherize(className) %>.component.scss']
 })
-export class <%= classify(path) %>DashboardComponent {
+export class <%= classify(className) %>Component {
 
   public params: DashboardParams;
 

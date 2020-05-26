@@ -3,6 +3,7 @@ import {CreateViewArguments} from '../../create-view-prompt/models/create-view-a
 export interface NullableCreateViewArguments {
     path: CreateViewArguments['path'] | undefined;
     viewType: CreateViewArguments['viewType'] | undefined;
+    componentName: CreateViewArguments['componentName'] | undefined;
     layoutParams?: CreateViewArguments['layoutParams'];
     access: CreateViewArguments['access'] | undefined;
 }
