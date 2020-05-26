@@ -102,6 +102,35 @@
             "access": "private",
             "navigation": {}
         },
+        "login": {
+            "layout": {
+                "name": "login",
+                "componentName": "MyLogin"
+            },
+            "navigation": false,
+            "access": "private"
+        },
+        "sn": {
+            "layout": {
+                "name": "sidenavView"
+            },
+            "navigation": false,
+            "access": "private"
+        },
+        "tb": {
+            "layout": {
+                "name": "toolbarView"
+            },
+            "navigation": false,
+            "access": "private"
+        },
+        "sntb": {
+            "layout": {
+                "name": "sidenavAndToolbarView"
+            },
+            "navigation": false,
+            "access": "private"
+        },
         "cases": {
             "layout": {
                 "name": "emptyView",

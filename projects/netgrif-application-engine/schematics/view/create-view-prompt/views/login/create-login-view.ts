@@ -14,11 +14,15 @@ import {CreateViewArguments} from '../../models/create-view-arguments';
 export function createLoginView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
-    const view = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
+    const view = new ViewClassInfo(
+        args.path as string,
+        resolveClassSuffixForView(args.viewType as string),
+        args.componentName
+    );
 
     rules.push(createFilesFromTemplates('./views/login/files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: view.prefix,
+        className: view.nameWithoutComponent,
         dasherize: strings.dasherize,
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
