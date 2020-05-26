@@ -1,4 +1,4 @@
-import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Inject, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith, tap} from 'rxjs/operators';
@@ -11,6 +11,8 @@ import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-
 import {ProcessService} from '../../../process/process.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {NewCaseInjectionData} from './model/new-case-injection-data';
+import {TranslateService} from '@ngx-translate/core';
+import {MatToolbar} from '@angular/material';
 
 
 interface Form {
@@ -40,6 +42,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
     filteredOptions: Observable<Array<Form>>;
     processOne: Promise<boolean>;
     injectedData: NewCaseInjectionData;
+    @ViewChild('toolbar') toolbar: MatToolbar;
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
                 private _formBuilder: FormBuilder,
@@ -47,7 +50,8 @@ export class NewCaseComponent implements OnInit, OnChanges {
                 private _caseResourceService: CaseResourceService,
                 private _processService: ProcessService,
                 private _petriNetResource: PetriNetResourceService,
-                private _log: LoggerService) {
+                private _log: LoggerService,
+                private _translate: TranslateService) {
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as NewCaseInjectionData;
         }
@@ -131,5 +135,37 @@ export class NewCaseComponent implements OnInit, OnChanges {
             startWith(''),
             map(value => this._filter(value))
         );
+    }
+
+    titleShortening() {
+        let size;
+        if (this.toolbar && this.toolbar._elementRef && this.toolbar._elementRef.nativeElement &&
+            this.toolbar._elementRef.nativeElement.offsetWidth) {
+            switch (this.toolbar._elementRef.nativeElement.offsetWidth) {
+                case 296:
+                    size = 22;
+                    break;
+                case 496:
+                    size = 42;
+                    break;
+                case 246:
+                    size = 18;
+                    break;
+                default:
+                    size = 32;
+                    break;
+            }
+        } else {
+            size = 32;
+        }
+
+        const caze = this._translate.instant('side-menu.new-case.case');
+        const name = this.options.length === 1 ? this.options[0].viewValue : this.processFormControl.value.viewValue;
+        const title = caze + '-' + name;
+        if (title.length > size) {
+            const tmp = title.slice(0, size);
+            return tmp + '...';
+        }
+        return title;
     }
 }
