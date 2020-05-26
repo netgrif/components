@@ -9,7 +9,7 @@ export class ViewClassInfo {
     /**
      * for `caseView` located at route `cases/all/` this is equal to `CasesAllCaseView`
      */
-    public withoutComponent: string;
+    public nameWithoutComponent: string;
     /**
      * for `caseView` located at route `cases/all/` this is equal to `CasesAllCaseViewComponent`
      */
@@ -22,14 +22,14 @@ export class ViewClassInfo {
     constructor(path: string, componentSuffix: string, customComponentName?: string) {
         if (!customComponentName) {
             this.prefix = ViewClassInfo.convertPathToClassNamePrefix(path);
-            this.withoutComponent = `${strings.classify(this.prefix)}${componentSuffix}`;
+            this.nameWithoutComponent = `${strings.classify(this.prefix)}${componentSuffix}`;
             this.fileImportPath = `./views/${path}/${this.prefix}-${strings.dasherize(componentSuffix)}.component`;
         } else {
             this.prefix = '';
-            this.withoutComponent = strings.classify(customComponentName);
+            this.nameWithoutComponent = strings.classify(customComponentName);
             this.fileImportPath = `./views/${path}/${strings.dasherize(customComponentName)}.component`;
         }
-        this.name = `${this.withoutComponent}Component`;
+        this.name = `${this.nameWithoutComponent}Component`;
     }
 
     private static convertPathToClassNamePrefix(path: string): string {

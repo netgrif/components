@@ -86,6 +86,21 @@
                 "icon": "dashboard"
             }
         },
+        "case": {
+            "layout": {
+                "name": "caseView",
+                "params": {
+                    "allowedNets": [
+                        "search-test-defaultRole",
+                        "leukemia",
+                        "1",
+                        "bill"
+                    ]
+                }
+            },
+            "access": "private",
+            "navigation": {}
+        },
         "cases": {
             "layout": {
                 "name": "emptyView"
@@ -144,21 +159,6 @@
                     }
                 }
             }
-        },
-        "case": {
-            "layout": {
-                "name": "caseView",
-                "params": {
-                    "allowedNets": [
-                        "search-test-defaultRole",
-                        "leukemia",
-                        "1",
-                        "bill"
-                    ]
-                }
-            },
-            "access": "private",
-            "navigation": {}
         },
         "navigation-test": {
             "type": "sideMenu",

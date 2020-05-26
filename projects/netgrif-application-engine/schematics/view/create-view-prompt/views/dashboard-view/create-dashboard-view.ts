@@ -21,7 +21,7 @@ export function createDashboardView(tree: Tree, args: CreateViewArguments, addVi
 
     rules.push(createFilesFromTemplates('./views/dashboard-view/files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        className: view.withoutComponent,
+        className: view.nameWithoutComponent,
         webPath: args.path,
         dasherize: strings.dasherize,
         classify: strings.classify,

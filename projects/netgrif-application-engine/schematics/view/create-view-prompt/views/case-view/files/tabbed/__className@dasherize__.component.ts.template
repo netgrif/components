@@ -20,9 +20,9 @@ const searchServiceFactory = () => {
 };
 
 @Component({
-    selector: '<%= prefix %>-<%= dasherize(classNamePrefix) %>-case-view',
-    templateUrl: './<%= dasherize(classNamePrefix) %>-case-view.component.html',
-    styleUrls: ['./<%= dasherize(classNamePrefix) %>-case-view.component.scss'],
+    selector: '<%= prefix %>-<%= dasherize(className) %>',
+    templateUrl: './<%= dasherize(className) %>.component.html',
+    styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         ConfigCaseViewServiceFactory,
         {   provide: SearchService,
@@ -32,7 +32,7 @@ const searchServiceFactory = () => {
             deps: [ConfigCaseViewServiceFactory]},
     ]
 })
-export class <%= classify(classNamePrefix) %>CaseViewComponent extends TabbedCaseView implements AfterViewInit {
+export class <%= classify(className) %>Component extends TabbedCaseView implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
