@@ -14,12 +14,15 @@ import {CreateViewArguments} from '../../models/create-view-arguments';
 
 export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedView, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
-    const view = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
+    const view = new ViewClassInfo(
+        args.path as string,
+        resolveClassSuffixForView(args.viewType as string),
+        args.componentName);
     const rules = [];
 
     const templateParams = {
         prefix: projectInfo.projectPrefixDasherized,
-        classNamePrefix: view.prefix,
+        className: view.nameWithoutComponent,
         viewPath: args.path as string,
         dasherize: strings.dasherize,
         classify: strings.classify,

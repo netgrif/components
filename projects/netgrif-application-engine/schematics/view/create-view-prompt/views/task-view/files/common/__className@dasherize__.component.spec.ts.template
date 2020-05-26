@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { <%= classify(classNamePrefix) %>TaskViewComponent } from './<%= dasherize(classNamePrefix) %>-task-view.component';
+import { <%= classify(className) %>Component } from './<%= dasherize(className) %>.component';
 import {
     MaterialModule,
     HeaderModule,
@@ -13,9 +13,9 @@ import {
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
 
-describe('<%= classify(classNamePrefix) %>TaskViewComponent', () => {
-    let component: <%= classify(classNamePrefix) %>TaskViewComponent;
-    let fixture: ComponentFixture<<%= classify(classNamePrefix) %>TaskViewComponent>;
+describe('<%= classify(className) %>Component', () => {
+    let component: <%= classify(className) %>Component;
+    let fixture: ComponentFixture<<%= classify(className) %>Component>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -30,13 +30,13 @@ describe('<%= classify(classNamePrefix) %>TaskViewComponent', () => {
                 AuthenticationMethodService,
                 {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService}
             ],
-            declarations: [<%= classify(classNamePrefix) %>TaskViewComponent]
+            declarations: [<%= classify(className) %>Component]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(<%= classify(classNamePrefix) %>TaskViewComponent);
+        fixture = TestBed.createComponent(<%= classify(className) %>Component);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

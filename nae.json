@@ -102,9 +102,9 @@
             "access": "private",
             "navigation": {}
         },
-        "login": {
+        "hello": {
             "layout": {
-                "name": "login",
+                "name": "taskView",
                 "componentName": "MyLogin"
             },
             "navigation": false,
@@ -192,7 +192,7 @@
         "navigation-test": {
             "type": "sideMenu",
             "layout": {
-                "name": ""
+                "name": "emptyView"
             },
             "access": "private",
             "navigation": {

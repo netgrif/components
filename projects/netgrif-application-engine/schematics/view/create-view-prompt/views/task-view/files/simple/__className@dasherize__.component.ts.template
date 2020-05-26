@@ -17,9 +17,9 @@ const searchServiceFactory = () => {
 };
 
 @Component({
-    selector: '<%= prefix %>-<%= dasherize(classNamePrefix) %>-task-view',
-    templateUrl: './<%= dasherize(classNamePrefix) %>-task-view.component.html',
-    styleUrls: ['./<%= dasherize(classNamePrefix) %>-task-view.component.scss'],
+    selector: '<%= prefix %>-<%= dasherize(className) %>',
+    templateUrl: './<%= dasherize(className) %>.component.html',
+    styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         ConfigTaskViewServiceFactory,
         {   provide: SearchService,
@@ -29,7 +29,7 @@ const searchServiceFactory = () => {
             deps: [ConfigTaskViewServiceFactory]},
     ]
 })
-export class <%= classify(classNamePrefix) %>TaskViewComponent extends AbstractTaskView implements AfterViewInit {
+export class <%= classify(className) %>Component extends AbstractTaskView implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
