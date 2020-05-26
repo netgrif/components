@@ -24,7 +24,7 @@ export function createEmptyView(tree: Tree, args: CreateViewArguments, addViewTo
         dasherize: strings.dasherize,
         classify: strings.classify
     }));
-    updateAppModule(tree, view.name, view.fileImportPath, []);
+    updateAppModule(tree, view.className, view.fileImportPath, []);
 
     if (addViewToService) {
         addViewToViewService(tree, view);

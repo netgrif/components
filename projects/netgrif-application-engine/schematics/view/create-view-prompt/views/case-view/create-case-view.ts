@@ -46,7 +46,7 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
         rules.push(createFilesFromTemplates(`${commonPathPrefix}simple`, destinationPath, templateParams));
     }
 
-    updateAppModule(tree, view.name, view.fileImportPath, [
+    updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('FlexLayoutModule', '@angular/flex-layout'),
         new ImportToAdd('MaterialModule', '@netgrif/application-engine'),

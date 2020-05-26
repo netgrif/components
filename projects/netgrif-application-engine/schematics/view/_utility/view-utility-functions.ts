@@ -49,7 +49,7 @@ export function addImportsToAppModule(tree: Tree, imports: Array<ImportToAdd>): 
     imports.forEach(importToAdd => {
         const appModule = getAppModule(tree, projectPath);
         commitChangesToFile(tree, appModule.fileEntry,
-            addImportToModule(appModule.sourceFile, appModule.fileEntry.path, importToAdd.className, importToAdd.importPath)
+            addImportToModule(appModule.sourceFile, appModule.fileEntry.path, importToAdd.className, importToAdd.fileImportPath)
         );
     });
 }

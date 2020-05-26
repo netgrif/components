@@ -102,10 +102,10 @@
             "access": "private",
             "navigation": {}
         },
-        "hello": {
-            "layout": {
-                "name": "taskView",
-                "componentName": "MyLogin"
+        "custom": {
+            "component": {
+                "class": "CaseViewComponent",
+                "from": "./doc/case-view/case-view.component"
             },
             "navigation": false,
             "access": "private"

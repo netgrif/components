@@ -40,7 +40,7 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             configName: projectInfo.projectNameClassified,
             configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
         }));
-    updateAppModule(tree, view.name, view.fileImportPath, []);
+    updateAppModule(tree, view.className, view.fileImportPath, []);
 
     if (sidenavOptions.addViewToService) {
         addViewToViewService(tree, view);

@@ -39,7 +39,7 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
         rules.push(createFilesFromTemplates(`${commonPathPrefix}simple`, destinationPath, templateParams));
     }
 
-    updateAppModule(tree, view.name, view.fileImportPath, [
+    updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('MaterialModule', '@netgrif/application-engine'),
         new ImportToAdd('PanelModule', '@netgrif/application-engine')

@@ -85,14 +85,14 @@ export function createTabView(
         modulePath: createRelativePath(view.fileImportPath, './app.module')
     }));
 
-    updateAppModule(tree, view.name, view.fileImportPath, [
+    updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('TabsModule', '@netgrif/application-engine')]);
 
     tabViews.entryComponentsImports.forEach(imp => {
         // the tree/fileEntry gets updated with every iteration, so we need to get the current state every time
         const appModule = getAppModule(tree, projectInfo.path);
-        const changes = addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, imp.className, imp.importPath);
+        const changes = addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, imp.className, imp.fileImportPath);
         commitChangesToFile(tree, appModule.fileEntry, changes);
     });
 
@@ -212,11 +212,11 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
     const newComponentName = new ViewClassInfo(newViewPath, resolveClassSuffixForView(embeddedView.view.name));
 
     result.tabViewImports.push(
-        new ImportToAdd(newComponentName.name, createRelativePath(hostClassName.fileImportPath, newComponentName.fileImportPath))
+        new ImportToAdd(newComponentName.className, createRelativePath(hostClassName.fileImportPath, newComponentName.fileImportPath))
     );
-    result.entryComponentsImports.push(new ImportToAdd(newComponentName.name, newComponentName.fileImportPath));
+    result.entryComponentsImports.push(new ImportToAdd(newComponentName.className, newComponentName.fileImportPath));
 
-    return new TabContentTemplate(newComponentName.name);
+    return new TabContentTemplate(newComponentName.className);
 }
 
 function pushTabViews(destination: TabViews, source: TabViews): TabViews {

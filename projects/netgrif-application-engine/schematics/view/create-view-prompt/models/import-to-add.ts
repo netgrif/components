@@ -1,3 +1,3 @@
 export class ImportToAdd {
-    constructor(public className: string, public importPath: string) {}
+    constructor(public className: string, public fileImportPath: string) {}
 }

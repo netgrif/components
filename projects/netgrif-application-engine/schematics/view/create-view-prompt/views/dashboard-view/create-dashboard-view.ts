@@ -29,7 +29,7 @@ export function createDashboardView(tree: Tree, args: CreateViewArguments, addVi
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     }));
 
-    updateAppModule(tree, view.name, view.fileImportPath, [
+    updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('DashboardModule', '@netgrif/application-engine'),
     ]);
 

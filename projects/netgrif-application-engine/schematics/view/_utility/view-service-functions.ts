@@ -1,26 +1,26 @@
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import {SchematicsException, Tree} from '@angular-devkit/schematics';
-import {ViewClassInfo} from '../create-view-prompt/models/view-class-info';
 import {commitChangesToFile, getFileData, getProjectInfo} from '../../_utility/utility-functions';
 import {Change} from '@schematics/angular/utility/change';
 import {findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
+import {ImportToAdd} from '../create-view-prompt/models/import-to-add';
 
-export function addViewToViewService(tree: Tree, className: ViewClassInfo): void {
+export function addViewToViewService(tree: Tree, view: ImportToAdd): void {
     const projectInfo = getProjectInfo(tree);
     const fileData = getFileData(tree, projectInfo.path, `${projectInfo.projectNameDasherized}-view.service.ts`);
 
     const arrayContent = getArrayNodeContent(fileData.sourceFile);
     const recorder = tree.beginUpdate(fileData.fileEntry.path);
     if (arrayContent.getChildren().length === 0) {
-        recorder.insertRight(arrayContent.pos, `${className.name}`);
+        recorder.insertRight(arrayContent.pos, `${view.className}`);
     } else {
-        recorder.insertRight(arrayContent.pos, `${className.name}, `);
+        recorder.insertRight(arrayContent.pos, `${view.className}, `);
     }
     tree.commitUpdate(recorder);
 
     const changes: Array<Change> = [];
     changes.push(
-        insertImport(fileData.sourceFile, fileData.fileEntry.path, className.name, className.fileImportPath)
+        insertImport(fileData.sourceFile, fileData.fileEntry.path, view.className, view.fileImportPath)
     );
     commitChangesToFile(tree, fileData.fileEntry, changes);
 }

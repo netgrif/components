@@ -29,7 +29,7 @@ export function createLoginView(tree: Tree, args: CreateViewArguments, addViewTo
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     }));
 
-    updateAppModule(tree, view.name, view.fileImportPath, [
+    updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('LoginFormModule', '@netgrif/application-engine')]);
 

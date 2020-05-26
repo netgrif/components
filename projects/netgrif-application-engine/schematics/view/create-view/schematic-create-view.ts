@@ -50,7 +50,7 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
 
         if (!!view.layout) {
             const viewClassInfo = new ViewClassInfo(viewPath, resolveClassSuffixForView(view.layout.name), view.layout.componentName);
-            if (!generatedViews.has(viewClassInfo.name)) {
+            if (!generatedViews.has(viewClassInfo.className)) {
                return {
                    path: viewPath,
                    viewType: view.layout.name,
@@ -65,6 +65,7 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
                     path: viewPath,
                     viewType: 'customView',
                     componentName: view.component.class,
+                    customImportPath: view.component.from,
                     access: view.access
                 };
             }

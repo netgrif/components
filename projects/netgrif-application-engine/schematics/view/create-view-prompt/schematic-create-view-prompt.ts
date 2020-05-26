@@ -15,6 +15,8 @@ import {createEmptyView} from './views/empty-view/create-empty-view';
 import {createDashboardView} from './views/dashboard-view/create-dashboard-view';
 import {checkJsonParamsForSidenav} from './schematic-create-sidenav-prompt';
 import {CreateViewArguments} from './models/create-view-arguments';
+import {addViewToViewService} from '../_utility/view-service-functions';
+import {ImportToAdd} from './models/import-to-add';
 
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
@@ -66,6 +68,12 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
             ));
             // we want to add the route AFTER we get the data from the schematic
             addViewToService = false;
+            break;
+        case 'customView':
+            if (!args.componentName || !args.customImportPath) {
+                throw new SchematicsException(`Custom components must define both a 'class' and a 'from' attribute! Path: '${args.path}'`);
+            }
+            addViewToViewService(tree, new ImportToAdd(args.componentName, args.customImportPath));
             break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);

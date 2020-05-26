@@ -1,6 +1,7 @@
-import { strings } from '@angular-devkit/core';
+import {strings} from '@angular-devkit/core';
+import {ImportToAdd} from './import-to-add';
 
-export class ViewClassInfo {
+export class ViewClassInfo extends ImportToAdd {
 
     /**
      * for `caseView` located at route `cases/all/` this is equal to `cases-all`
@@ -13,13 +14,14 @@ export class ViewClassInfo {
     /**
      * for `caseView` located at route `cases/all/` this is equal to `CasesAllCaseViewComponent`
      */
-    public name: string;
+    public className: string;
     /**
      * for `caseView` located at route `cases/all/` this is equal to `./views/cases/all/cases-all-case-view.component`
      */
     public fileImportPath: string;
 
     constructor(path: string, componentSuffix: string, customComponentName?: string) {
+        super('', '');
         if (!customComponentName) {
             this.prefix = ViewClassInfo.convertPathToClassNamePrefix(path);
             this.nameWithoutComponent = `${strings.classify(this.prefix)}${componentSuffix}`;
@@ -29,7 +31,7 @@ export class ViewClassInfo {
             this.nameWithoutComponent = strings.classify(customComponentName);
             this.fileImportPath = `./views/${path}/${strings.dasherize(customComponentName)}.component`;
         }
-        this.name = `${this.nameWithoutComponent}Component`;
+        this.className = `${this.nameWithoutComponent}Component`;
     }
 
     private static convertPathToClassNamePrefix(path: string): string {
