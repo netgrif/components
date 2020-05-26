@@ -1,13 +1,15 @@
 <nae-app-panel [panelHeader]="header" [panelContent]="content" (getExpansionPanelRef)="setPanelRef($event)">
     <ng-template #header>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="90">
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <div *ngFor="let value of featuredFieldsValues; let i = index" fxLayout="start center" fxFlex
-                 [fxHide.lt-lg]="i >= 4"
-                 [fxHide.lt-md]="i >= 3"
-                 [fxHide.lt-sm]="i >= 2">
+                 [fxHide.lt-xl]="i >= 4"
+                 [fxHide.lt-lg]="i >= 3"
+                 [fxHide.lt-md]="i >= 2"
+                 [fxHide.lt-sm]="i >= 1">
                 {{value}}
             </div>
         </div>
+        <div fxFlex="5"></div>
     </ng-template>
     <ng-template #content>
         <div class="panel-main-content" fxLayout="column">

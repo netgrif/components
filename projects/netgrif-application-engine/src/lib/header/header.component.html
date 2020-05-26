@@ -1,6 +1,6 @@
 <mat-card class="padding-custom">
     <div fxLayout="row">
-        <div fxLayout="row" fxFlex="90" class="header-content-container"
+        <div fxLayout="row" fxFlex="95" class="header-content-container"
              [ngSwitch]="headerService.headerState.mode">
             <div *ngSwitchCase="headerModeEnum.SORT" fxFlex="100" fxLayout="row">
                 <nae-sort-mode fxFlex="100" [headerService]="headerService"></nae-sort-mode>
@@ -12,7 +12,7 @@
                 <nae-edit-mode fxFlex="100" [headerService]="headerService"></nae-edit-mode>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10"
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5"
              [ngSwitch]="headerService.headerState.mode" *ngIf="!hideEditMode">
             <button *ngSwitchDefault mat-icon-button [matMenuTriggerFor]="headerMenu">
                 <mat-icon>more_vert</mat-icon>
