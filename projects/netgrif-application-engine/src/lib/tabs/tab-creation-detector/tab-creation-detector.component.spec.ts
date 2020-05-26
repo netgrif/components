@@ -3,8 +3,9 @@ import {TabCreationDetectorComponent} from './tab-creation-detector.component';
 import {Component, NgModule, OnInit} from '@angular/core';
 import {TabContent} from '../interfaces';
 import {MaterialModule} from '../../material/material.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabView} from '../classes/tab-view';
+
 describe('TabCreationDetectorComponent', () => {
     let component: TabCreationDetectorComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
@@ -14,7 +15,7 @@ describe('TabCreationDetectorComponent', () => {
             imports: [
                 MaterialModule,
                 TabTestModule,
-                BrowserAnimationsModule
+                NoopAnimationsModule
             ],
             declarations: [
                 TabCreationDetectorComponent,

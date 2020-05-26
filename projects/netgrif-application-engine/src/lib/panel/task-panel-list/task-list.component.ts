@@ -34,6 +34,6 @@ export class TaskListComponent implements OnInit {
         if (!this.viewport) {
             return;
         }
-        this._taskViewService.nextPage(this.viewport.getRenderedRange().end, this.viewport.getDataLength());
+        this._taskViewService.nextPage(this.viewport.getRenderedRange(), this.viewport.getDataLength());
     }
 }
