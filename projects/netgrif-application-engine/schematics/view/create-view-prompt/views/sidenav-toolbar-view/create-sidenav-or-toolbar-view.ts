@@ -26,7 +26,7 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
 
     checkArgsToCreateAppropriateView();
 
-    rules.push(createFilesFromTemplates('./files',
+    rules.push(createFilesFromTemplates('./views/sidenav-toolbar-view/files',
         `${projectInfo.path}/views/${sidenavOptions.createViewArguments.path}`, {
             prefix: projectInfo.projectPrefixDasherized,
             path: view.prefix,

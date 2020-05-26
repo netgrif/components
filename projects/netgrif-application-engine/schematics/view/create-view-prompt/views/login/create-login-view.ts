@@ -16,7 +16,7 @@ export function createLoginView(tree: Tree, args: CreateViewArguments, addViewTo
     const rules = [];
     const view = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
 
-    rules.push(createFilesFromTemplates('./files', `${projectInfo.path}/views/${args.path}`, {
+    rules.push(createFilesFromTemplates('./views/login/files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         path: view.prefix,
         dasherize: strings.dasherize,

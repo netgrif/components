@@ -102,6 +102,13 @@ export function getTsSource(path: string, content: string): ts.SourceFile {
     return ts.createSourceFile(path, content, ts.ScriptTarget.Latest, true);
 }
 
+/**
+ * A convenience method that creates source files from template files and places them at the specified location in the file system.
+ * @param pathToTemplates path relative to the location of the schematic entry-point file
+ * (might not necessarily be the same as the file that contains the call!)
+ * @param pathToMoveGeneratedFiles path relative to the workspace root where the generated files should be placed
+ * @param options the object that supplies parameters to the template files
+ */
 export function createFilesFromTemplates(pathToTemplates: string, pathToMoveGeneratedFiles: string, options: object = {}): Rule {
     const templateSource = apply(url(pathToTemplates), [
         applyTemplates(options),

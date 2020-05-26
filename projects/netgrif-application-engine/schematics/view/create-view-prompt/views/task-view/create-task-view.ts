@@ -27,7 +27,7 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     };
 
-    const commonPathPrefix = './files/';
+    const commonPathPrefix = './views/task-view/files/';
     const destinationPath = `${projectInfo.path}/views/${args.path}`;
     rules.push(createFilesFromTemplates(`${commonPathPrefix}common`, destinationPath, templateParams));
     if (!!args.isTabbed) {

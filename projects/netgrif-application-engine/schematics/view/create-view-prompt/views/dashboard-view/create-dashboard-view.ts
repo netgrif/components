@@ -16,7 +16,7 @@ export function createDashboardView(tree: Tree, args: CreateViewArguments, addVi
     const rules = [];
     const className = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
 
-    rules.push(createFilesFromTemplates('./files', `${projectInfo.path}/views/${args.path}`, {
+    rules.push(createFilesFromTemplates('./views/dashboard-view/files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         path: className.prefix,
         webPath: args.path,

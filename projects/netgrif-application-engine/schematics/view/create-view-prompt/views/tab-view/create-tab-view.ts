@@ -71,7 +71,7 @@ export function createTabView(
 
     const rules = tabViews.rules;
 
-    rules.push(createFilesFromTemplates('./files', `${projectInfo.path}/views/${args.path}`, {
+    rules.push(createFilesFromTemplates('./views/tab-view/files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         path: view.prefix,
         tabs: tabViews.tabTemplates,

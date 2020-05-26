@@ -35,7 +35,7 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
     };
 
-    const commonPathPrefix = './files/';
+    const commonPathPrefix = './views/case-view/files/';
     rules.push(createFilesFromTemplates(`${commonPathPrefix}common`, destinationPath, templateParams));
     if (!!args.isTabbed) {
         rules.push(createFilesFromTemplates(`${commonPathPrefix}tabbed`, destinationPath, templateParams));

@@ -15,7 +15,7 @@ export function createEmptyView(tree: Tree, args: CreateViewArguments, addViewTo
     const className = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
     const rules = [];
 
-    rules.push(createFilesFromTemplates('./files', `${projectInfo.path}/views/${args.path}`, {
+    rules.push(createFilesFromTemplates('./views/empty-view/files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         path: className.prefix,
         dasherize: strings.dasherize,
