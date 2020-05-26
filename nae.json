@@ -110,23 +110,21 @@
             "navigation": false,
             "access": "private"
         },
-        "sn": {
+        "tab": {
             "layout": {
-                "name": "sidenavView"
-            },
-            "navigation": false,
-            "access": "private"
-        },
-        "tb": {
-            "layout": {
-                "name": "toolbarView"
-            },
-            "navigation": false,
-            "access": "private"
-        },
-        "sntb": {
-            "layout": {
-                "name": "sidenavAndToolbarView"
+                "name": "tabView",
+                "componentName": "MyTabs",
+                "params": {
+                    "tabs": [
+                        {
+                            "view": {
+                                "name": "login",
+                                "componentName": "TabbedLogin"
+                            },
+                            "canBeClosed": false
+                        }
+                    ]
+                }
             },
             "navigation": false,
             "access": "private"

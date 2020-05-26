@@ -35,7 +35,11 @@ export function createTabView(
 ): Rule {
 
     const projectInfo = getProjectInfo(tree);
-    const view = new ViewClassInfo(args.path as string, 'TabView');
+    const view = new ViewClassInfo(
+        args.path,
+        'TabView',
+        args.componentName
+    );
     const params = args.layoutParams as TabViewParams;
 
     const tabViews = newTabViews();
@@ -73,7 +77,7 @@ export function createTabView(
 
     rules.push(createFilesFromTemplates('./views/tab-view/files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: view.prefix,
+        className: view.nameWithoutComponent,
         tabs: tabViews.tabTemplates,
         imports: tabViews.tabViewImports,
         dasherize: strings.dasherize,
@@ -198,6 +202,7 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
         path: newViewPath,
         viewType: embeddedView.view.name,
         layoutParams: embeddedView.view.params,
+        componentName: embeddedView.view.componentName,
         isTabbed: true,
         access: 'private' as 'private'
     };

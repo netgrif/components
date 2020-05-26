@@ -8,7 +8,8 @@ export interface TabViewParams {
 export interface EmbeddedView {
     view?: {
         name: string,
-        params?: {[k: string]: any}
+        params?: {[k: string]: any},
+        componentName?: string
     };
     component?: {
         class: string,

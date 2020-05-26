@@ -55,6 +55,7 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
                    path: viewPath,
                    viewType: view.layout.name,
                    componentName: view.layout.componentName,
+                   layoutParams: view.layout.params,
                    access: view.access
                };
             }

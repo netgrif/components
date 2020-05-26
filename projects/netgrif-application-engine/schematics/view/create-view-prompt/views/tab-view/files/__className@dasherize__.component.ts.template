@@ -3,11 +3,11 @@ import { Component} from '@angular/core';
 import { <%= imp.className %> } from '<%= imp.importPath %>';<% } %>
 
 @Component({
-  selector: '<%= prefix %>-<%= dasherize(path) %>-tab-view',
-  templateUrl: './<%= dasherize(path) %>-tab-view.component.html',
-  styleUrls: ['./<%= dasherize(path) %>-tab-view.component.scss']
+  selector: '<%= prefix %>-<%= dasherize(className) %>',
+  templateUrl: './<%= dasherize(className) %>.component.html',
+  styleUrls: ['./<%= dasherize(className) %>.component.scss']
 })
-export class <%= classify(path) %>TabViewComponent {
+export class <%= classify(className) %>Component {
 
     tabs = [<% for(let tab of tabs) { %>
         {<% if (tab.icon !== undefined || tab.text !== undefined) { %>

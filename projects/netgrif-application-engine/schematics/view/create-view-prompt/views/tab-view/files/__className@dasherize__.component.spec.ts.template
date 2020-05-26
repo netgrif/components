@@ -1,12 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { <%= classify(path) %>TabViewComponent } from './<%= dasherize(path) %>-tab-view.component';
+import { <%= classify(className) %>Component } from './<%= dasherize(className) %>.component';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {AppModule} from '<%= modulePath %>';
 
-describe('<%= classify(path) %>TabViewComponent', () => {
-  let component: <%= classify(path) %>TabViewComponent;
-  let fixture: ComponentFixture<<%= classify(path) %>TabViewComponent>;
+describe('<%= classify(className) %>Component', () => {
+  let component: <%= classify(className) %>Component;
+  let fixture: ComponentFixture<<%= classify(className) %>Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,7 +16,7 @@ describe('<%= classify(path) %>TabViewComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(<%= classify(path) %>TabViewComponent);
+    fixture = TestBed.createComponent(<%= classify(className) %>Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
