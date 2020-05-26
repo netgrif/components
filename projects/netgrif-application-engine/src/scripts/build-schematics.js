@@ -25,11 +25,11 @@ function copySchematicFiles() {
     const sourcePrefix = path.join('projects', 'netgrif-application-engine', 'schematics');
     const destinationPrefix = path.join('dist', 'netgrif-application-engine', 'schematics');
 
-    // copy schema.json
-    copyFiles(sourcePrefix, destinationPrefix, 'schema.json');
+    // copy schema*.json
+    copyFiles(sourcePrefix, destinationPrefix, {prefix: 'schema', suffix:".json"});
 
     // copy all resources from files directories
-    copyFiles(sourcePrefix, destinationPrefix, 'files');
+    copyFiles(sourcePrefix, destinationPrefix, {exact: 'files'});
 
     fs.copyFileSync(path.join(sourcePrefix, 'collection.json'), path.join(destinationPrefix, 'collection.json'));
 }
@@ -42,7 +42,11 @@ function copyFiles(sourcePrefix, destinationPrefix, target, relativePath = '') {
 
         files.forEach(file => {
             const source = path.join(sourcePrefix, relativePath, file);
-            if(file === target) {
+            if(
+                ((!!target.exact && file === target.exact) || !target.exact)
+                && ((!!target.prefix && file.startsWith(target.prefix)) || !target.prefix)
+                && ((!!target.suffix && file.endsWith(target.suffix)) || !target.suffix)
+            ) {
                 const destination = path.join(destinationPrefix, relativePath, file);
                 if(isDir(source)) {
                     // copy all content

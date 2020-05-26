@@ -33,12 +33,12 @@
         "create-view-prompt": {
             "description": "DON'T CALL THIS SCHEMATIC DIRECTLY! Call 'create-view' instead. Creates a view based on provided settings. Opens a prompt if no settings are provided.",
             "factory": "./view/create-view-prompt/schematic-create-view-prompt#schematicEntryPoint",
-            "schema": "./view/create-view-prompt/schema.json"
+            "schema": "./view/create-view-prompt/schema-create-view-prompt.json"
         },
         "create-sidenav-prompt": {
             "description": "Adds extension to sidenav based on user inputs.",
-            "factory": "./view/create-sidenav-prompt/schematic-create-sidenav-prompt#schematicEntryPoint",
-            "schema": "./view/create-sidenav-prompt/schema.json"
+            "factory": "./view/create-view-prompt/schematic-create-sidenav-prompt#schematicEntryPoint",
+            "schema": "./view/create-view-prompt/schema-create-sidenav-prompt.json"
         }
     }
 }

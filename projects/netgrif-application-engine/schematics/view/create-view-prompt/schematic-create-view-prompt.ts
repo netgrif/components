@@ -13,7 +13,7 @@ import {createCaseView} from './views/case-view/create-case-view';
 import {createSidenavOrToolbarView} from './views/sidenav-toolbar-view/create-sidenav-or-toolbar-view';
 import {createEmptyView} from './views/empty-view/create-empty-view';
 import {createDashboardView} from './views/dashboard-view/create-dashboard-view';
-import {checkJsonParamsForSidenav} from '../create-sidenav-prompt/schematic-create-sidenav-prompt';
+import {checkJsonParamsForSidenav} from './schematic-create-sidenav-prompt';
 import {CreateViewArguments} from './models/create-view-arguments';
 
 

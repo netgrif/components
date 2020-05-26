@@ -6,7 +6,7 @@ import {
     updateAppModule
 } from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
-import {SidenavPromptOptions} from '../../../create-sidenav-prompt/sidenav-prompt-options';
+import {SidenavPromptOptions} from '../../models/sidenav-prompt-options';
 import {addViewToNaeJson} from '../../../_utility/add-view-to-nae-json';
 import {ViewClassInfo} from '../../models/view-class-info';
 
@@ -15,7 +15,8 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
     const projectInfo = getProjectInfo(tree);
     const view = new ViewClassInfo(
         sidenavOptions.createViewArguments.path as string,
-        resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string)
+        resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string),
+        sidenavOptions.createViewArguments.componentName
     );
     let drawerType = '<nae-navigation-drawer';
     checkTypeOfSideNav();
@@ -29,14 +30,13 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
     rules.push(createFilesFromTemplates('./views/sidenav-toolbar-view/files',
         `${projectInfo.path}/views/${sidenavOptions.createViewArguments.path}`, {
             prefix: projectInfo.projectPrefixDasherized,
-            path: view.prefix,
+            className: view.nameWithoutComponent,
             dasherize: strings.dasherize,
             classify: strings.classify,
             viewType: strings.dasherize(nameOfComponent),
             isSideNav,
             isToolbar,
             drawerType,
-            fileName: resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string),
             configName: projectInfo.projectNameClassified,
             configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
         }));

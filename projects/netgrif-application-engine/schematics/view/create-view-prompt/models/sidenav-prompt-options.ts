@@ -1,4 +1,4 @@
-import {CreateViewArguments} from '../create-view-prompt/models/create-view-arguments';
+import {CreateViewArguments} from './create-view-arguments';
 
 export interface SidenavPromptOptions {
     user?: boolean;

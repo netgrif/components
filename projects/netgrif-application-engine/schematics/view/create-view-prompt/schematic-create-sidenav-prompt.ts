@@ -1,7 +1,7 @@
 import {Rule, Tree} from '@angular-devkit/schematics';
-import {SidenavPromptOptions} from './sidenav-prompt-options';
-import {createSidenavOrToolbarView} from '../create-view-prompt/views/sidenav-toolbar-view/create-sidenav-or-toolbar-view';
-import {CreateViewArguments} from '../create-view-prompt/models/create-view-arguments';
+import {SidenavPromptOptions} from './models/sidenav-prompt-options';
+import {createSidenavOrToolbarView} from './views/sidenav-toolbar-view/create-sidenav-or-toolbar-view';
+import {CreateViewArguments} from './models/create-view-arguments';
 
 export function schematicEntryPoint(options: SidenavPromptOptions): Rule {
     return (tree: Tree) => {
