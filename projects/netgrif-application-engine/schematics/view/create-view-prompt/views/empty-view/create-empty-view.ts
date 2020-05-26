@@ -12,19 +12,22 @@ import {CreateViewArguments} from '../../models/create-view-arguments';
 
 export function createEmptyView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
-    const className = new ViewClassInfo(args.path as string, resolveClassSuffixForView(args.viewType as string));
+    const view = new ViewClassInfo(
+        args.path as string,
+        resolveClassSuffixForView(args.viewType as string),
+        args.componentName);
     const rules = [];
 
     rules.push(createFilesFromTemplates('./views/empty-view/files', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
-        path: className.prefix,
+        className: view.nameWithoutComponent,
         dasherize: strings.dasherize,
         classify: strings.classify
     }));
-    updateAppModule(tree, className.name, className.fileImportPath, []);
+    updateAppModule(tree, view.name, view.fileImportPath, []);
 
     if (addViewToService) {
-        addViewToViewService(tree, className);
+        addViewToViewService(tree, view);
     }
     return chain(rules);
 }

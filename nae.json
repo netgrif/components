@@ -96,14 +96,16 @@
                         "1",
                         "bill"
                     ]
-                }
+                },
+                "componentName": "MyCaseView"
             },
             "access": "private",
             "navigation": {}
         },
         "cases": {
             "layout": {
-                "name": "emptyView"
+                "name": "emptyView",
+                "componentName": "EmptyViewCustomNameTest"
             },
             "access": "private",
             "navigation": {
