@@ -85,13 +85,15 @@
             </mat-form-field>
         </ng-template>
         <ng-template [ngSwitchCase]="'boolean'">
-            <mat-chip-list selectable="false">
-                <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true" (removed)="removeChip(i)">
-                    {{chip.text}}
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
-            </mat-chip-list>
-            <mat-slide-toggle [formControl]="formControls['boolean']">{{(inputPlaceholder$ | async) | translate}}</mat-slide-toggle>
+            <div fxLayout="row">
+                <mat-chip-list selectable="false">
+                    <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true" (removed)="removeChip(i)">
+                        {{chip.text}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+                <mat-slide-toggle [formControl]="formControls['boolean']">{{(inputPlaceholder$ | async) | translate}}</mat-slide-toggle>
+            </div>
         </ng-template>
     </div>
     <button mat-icon-button (click)="confirmUserInput()">

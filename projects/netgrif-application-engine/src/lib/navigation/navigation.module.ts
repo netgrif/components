@@ -9,6 +9,7 @@ import {RouterModule} from '@angular/router';
 import {QuickPanelModule} from './quick-panel/quick-panel.module';
 import {UserModule} from '../user/user.module';
 import {TranslateLibModule} from '../translate/translate-lib.module';
+import 'hammerjs';
 
 
 @NgModule({

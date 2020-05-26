@@ -14,6 +14,7 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/config-case-view-service-factory';
+import {MaterialModule} from '../../../material/material.module';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
@@ -26,11 +27,9 @@ describe('EditModeComponent', () => {
             imports: [
                 FlexModule,
                 FlexLayoutModule,
-                MatSortModule,
                 NoopAnimationsModule,
-                MatSelectModule,
                 HttpClientTestingModule,
-                MatSnackBarModule,
+                MaterialModule,
                 TranslateLibModule,
             ],
             providers: [

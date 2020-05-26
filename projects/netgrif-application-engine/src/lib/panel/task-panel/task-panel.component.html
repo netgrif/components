@@ -49,21 +49,7 @@
                 <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>
             <mat-action-row>
-                <div fxHide.lt-sm>
-                    <button *ngIf="canAssign()" (click)="processTask('assign')" mat-button>
-                        {{ 'tasks.view.assign' | translate | uppercase }}</button>
-                    <button *ngIf="canDo('delegate')" (click)="processTask('delegate')" mat-button>
-                        {{ 'tasks.view.delegate' | translate | uppercase }}</button>
-                    <button *ngIf="canReassign()" (click)="processTask('delegate')" mat-button>
-                        {{ 'tasks.view.reassign' | translate | uppercase }}</button>
-                    <button *ngIf="canCancel()" (click)="processTask('cancel')" mat-button>
-                        {{ 'tasks.view.cancel' | translate | uppercase }}</button>
-                    <button *ngIf="canFinish()" (click)="processTask('finish')" mat-button>
-                        {{ 'tasks.view.finish' | translate | uppercase }}</button>
-                    <button *ngIf="canColapse()" color="primary" (click)="collapse()" mat-button>
-                        {{ 'tasks.view.collapse' | translate | uppercase }}</button>
-                </div>
-                <div fxHide.gt-xs fxLayout="column" fxLayoutAlign="center stretch" class="width-100">
+                <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100">
                     <button *ngIf="canAssign()" (click)="processTask('assign')" mat-button>
                         {{ 'tasks.view.assign' | translate | uppercase }}</button>
                     <button *ngIf="canDo('delegate')" (click)="processTask('delegate')" mat-button>

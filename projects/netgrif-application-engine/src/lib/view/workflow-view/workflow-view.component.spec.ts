@@ -12,6 +12,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HeaderModule} from '../../header/header.module';
 import {WorkflowHeaderService} from '../../header/workflow-header/workflow-header.service';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('WorkflowViewComponent', () => {
     let component: WorkflowViewComponent;
@@ -29,7 +30,8 @@ describe('WorkflowViewComponent', () => {
                 PanelModule,
                 HeaderModule,
                 HttpClientTestingModule,
-                SideMenuContentModule
+                SideMenuContentModule,
+                TranslateLibModule
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [

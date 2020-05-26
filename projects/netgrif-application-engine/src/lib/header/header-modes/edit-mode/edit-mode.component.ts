@@ -4,8 +4,6 @@ import {HeaderColumn} from '../../models/header-column';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {Category} from '../../../search/models/category/category';
-import {SearchAutocompleteOption} from '../../../search/models/category/search-autocomplete-option';
 import {string} from 'postcss-selector-parser';
 
 @Component({
@@ -13,7 +11,7 @@ import {string} from 'postcss-selector-parser';
     templateUrl: './edit-mode.component.html',
     styleUrls: ['./edit-mode.component.scss']
 })
-export class EditModeComponent implements OnInit{
+export class EditModeComponent implements OnInit {
     public formControls = {
         0: new FormControl(),
         1: new FormControl(),
