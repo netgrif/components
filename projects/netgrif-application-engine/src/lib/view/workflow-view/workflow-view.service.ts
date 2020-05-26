@@ -42,7 +42,7 @@ export class WorkflowViewService extends SortableView {
     }
 
     public loadBatch() {
-        this._loadBatch$.next(Math.random());
+        this._loadBatch$.next(this._loadBatch$.getValue() === 0 ? 1 : 0);
     }
 
     public reload(): void {

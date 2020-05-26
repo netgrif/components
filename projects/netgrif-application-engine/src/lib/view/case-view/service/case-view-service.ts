@@ -16,12 +16,13 @@ import {TranslateService} from '@ngx-translate/core';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
+import {LoadingEmitter} from '../../../utility/loading-emitter';
 
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets {
 
-    protected _loading$: BehaviorSubject<boolean>;
+    protected _loading$: LoadingEmitter;
     protected _cases$: Observable<Array<Case>>;
     protected _nextPage$: BehaviorSubject<number>;
     protected _endOfData: boolean;
@@ -38,7 +39,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                 protected _translate: TranslateService,
                 protected _viewParams?: CaseViewParams) {
         super(allowedNets);
-        this._loading$ = new BehaviorSubject<boolean>(false);
+        this._loading$ = new LoadingEmitter();
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
@@ -66,11 +67,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
     }
 
     public get loading(): boolean {
-        return this._loading$.getValue();
-    }
-
-    protected setLoading(loading: boolean): void {
-        this._loading$.next(loading);
+        return this._loading$.isActive;
     }
 
     public get loading$(): Observable<boolean> {
@@ -88,7 +85,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
         params = this.addPageParams(params, page);
-        this.setLoading(true);
+        this._loading$.on();
         return this._caseResourceService.searchCases(this._searchService.activeFilter, params).pipe(
             catchError(err => {
                 this._log.error('Loading cases has failed!', err);
@@ -104,7 +101,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                     return {...acc, [cur.stringId]: cur};
                 }, {});
             }),
-            tap(_ => this.setLoading(false))
+            tap(_ => this._loading$.off())
         );
     }
 

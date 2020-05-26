@@ -1,22 +1,24 @@
-<ng-container *ngIf="cases$ | async as cases">
+<div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+    <ng-container *ngIf="cases$ | async as cases">
 
-    <div #emptyMessage *ngIf="(loading$ | async) === false && cases.length === 0" fxLayout="column" fxLayoutAlign="center center">
+    <div #emptyMessage *ngIf="(loading$ | async) === false && cases.length === 0" fxLayout="column" fxLayoutAlign="center center" fxFlex>
         <mat-icon color="accent" class="font-size-40 block-size-40 margin-bottom-default">storage</mat-icon>
         <span class="font-size-20">{{ 'view-list.noCasesSatisfyingThisFilter' | translate}}</span>
     </div>
 
-    <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()">
+        <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()" fxFlex="100">
 
-        <nae-case-panel *cdkVirtualFor="let case_ of cases; let i = index; trackBy: trackBy; templateCacheSize: 0"
-                        [case_]="case_"
-                        [selectedHeaders$]="selectedHeaders$"
-                        (click)="onCaseClick(case_)">
-        </nae-case-panel>
+            <nae-case-panel *cdkVirtualFor="let case_ of cases; let i = index; trackBy: trackBy; templateCacheSize: 0"
+                            [case_]="case_"
+                            [selectedHeaders$]="selectedHeaders$"
+                            (click)="onCaseClick(case_)">
+            </nae-case-panel>
 
-        <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
-            <mat-spinner color="primary" diameter="50"></mat-spinner>
-        </div>
+            <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default" fxFlex>
+                <mat-spinner color="primary" diameter="50"></mat-spinner>
+            </div>
 
-    </cdk-virtual-scroll-viewport>
+        </cdk-virtual-scroll-viewport>
 
-</ng-container>
+    </ng-container>
+</div>

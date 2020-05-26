@@ -4,7 +4,7 @@ import {MaterialModule} from '../../material/material.module';
 import {TabCreationDetectorComponent} from '../tab-creation-detector/tab-creation-detector.component';
 import {Component, NgModule} from '@angular/core';
 import {TabContent} from '../interfaces';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractTabComponent', () => {
     let component: TabViewComponent;
@@ -12,13 +12,13 @@ describe('AbstractTabComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, TabTestModule, BrowserAnimationsModule],
+            imports: [MaterialModule, TabTestModule, NoopAnimationsModule],
             declarations: [TabViewComponent,
                 TabCreationDetectorComponent,
                 TestWrapperComponent,
             ]
         })
-        .compileComponents();
+            .compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -55,13 +55,15 @@ class TestWrapperComponent {
     selector: 'nae-test-div',
     template: '<div></div>'
 })
-class TestComponent {}
+class TestComponent {
+}
 
 @NgModule({
     declarations: [TestComponent],
     entryComponents: [TestComponent]
 })
-class TabTestModule { }
+class TabTestModule {
+}
 
 
 

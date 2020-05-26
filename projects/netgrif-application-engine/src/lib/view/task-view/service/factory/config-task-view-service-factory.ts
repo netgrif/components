@@ -61,6 +61,7 @@ export class ConfigTaskViewServiceFactory {
                 this._translate,
                 this._language,
                 this._searchService,
+                this._log,
                 nets
             );
         } else {
