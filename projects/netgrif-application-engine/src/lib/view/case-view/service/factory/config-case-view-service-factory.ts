@@ -60,8 +60,7 @@ export class ConfigCaseViewServiceFactory {
                 this._log,
                 this._snackBarService,
                 this._searchService,
-                this._translate,
-                viewParams);
+                this._translate);
         } else {
             throw new Error(`Can't load configuration for view with webPath: '${webViewPath}'`);
         }
