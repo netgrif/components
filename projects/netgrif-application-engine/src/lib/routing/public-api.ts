@@ -1,5 +1,5 @@
 /* MODULES */
-export * from './routing.module';
+export * from './nae-routing.module';
 
 /* SERVICES */
 export * from './view-service/view.service';

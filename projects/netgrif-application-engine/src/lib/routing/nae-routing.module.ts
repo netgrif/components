@@ -14,5 +14,5 @@ import {RoutingComponent} from './routing-component/routing.component';
         RoutingComponent
     ]
 })
-export class RoutingModule {
+export class NaeRoutingModule {
 }
