@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
         "lib": [
             "es2018",
             "dom"
@@ -14,8 +13,6 @@
         "noImplicitThis": true,
         "noUnusedParameters": true,
         "noUnusedLocals": true,
-        "rootDir": "schematics",
-        "outDir": "../../dist/netgrif-application-engine/schematics",
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "sourceMap": true,
@@ -24,12 +21,7 @@
         "types": [
             "jasmine",
             "node"
-        ]
-    },
-    "include": [
-        "schematics/**/*"
-    ],
-    "exclude": [
-        "schematics/*/files/**/*"
-    ]
+        ],
+        "composite": true
+    }
 }
