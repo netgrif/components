@@ -6,6 +6,8 @@ import {ViewService} from '@netgrif/application-engine';
 })
 export class NaeExampleAppViewService extends ViewService {
     constructor() {
+        // This class is managed by schematics. Do not modify it by hand.
+        // If you want to add views to the application run the 'create-view' schematic.
         super([]);
     }
 }
