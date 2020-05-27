@@ -5,42 +5,13 @@ import {Route, Router} from '@angular/router';
 import {View} from '../../configuration/interfaces/schema';
 import {strings} from '@angular-devkit/core';
 import {AuthenticationGuardService} from '../../authentication/services/guard/authentication-guard.service';
+import {ViewClassInfo} from '../../../../commons/view-class-info';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class RoutingBuilderService {
-
-    private static resolveClassSuffixForView(view: string): string {
-        switch (view) {
-            case 'login':
-                return 'Login';
-            case 'tabView':
-                return 'TabView';
-            case 'taskView':
-                return 'TaskView';
-            case 'caseView':
-                return 'CaseView';
-            case 'emptyView':
-                return 'EmptyView';
-            case 'sidenavView':
-                return 'SidenavView';
-            case 'toolbarView':
-                return 'ToolbarView';
-            case 'sidenavAndToolbarView':
-                return 'SidenavAndToolbarView';
-            case 'dashboard':
-                return 'Dashboard';
-            default:
-                throw new Error(`nae.json configuration is invalid. Unknown view type '${view}'`);
-        }
-    }
-
-    private static convertPathToClassNamePrefix(path: string): string {
-        const regexDash = /-/g;
-        return path.replace(regexDash, '_').replace(/\//g, '-').toLocaleLowerCase();
-    }
 
     constructor(configService: ConfigurationService, private _viewService: ViewService, router: Router) {
         router.config.splice(0, router.config.length);
@@ -81,8 +52,8 @@ export class RoutingBuilderService {
             if (!!view.layout.componentName) {
                 className = `${strings.classify(view.layout.componentName)}Component`;
             } else {
-                const prefix = RoutingBuilderService.convertPathToClassNamePrefix(configPath);
-                className = `${strings.classify(prefix)}${RoutingBuilderService.resolveClassSuffixForView(view.layout.name)}Component`;
+                const classInfo = new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
+                className = classInfo.className;
             }
             result = this._viewService.resolveNameToClass(className);
         } else {

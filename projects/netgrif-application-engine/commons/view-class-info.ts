@@ -1,6 +1,5 @@
-import {strings} from '@angular-devkit/core';
 import {ImportToAdd} from './import-to-add';
-import {SchematicsException} from '@angular-devkit/schematics';
+import {classify, dasherize} from './angular-cli-devkit-core-strings';
 
 export class ViewClassInfo extends ImportToAdd {
 
@@ -26,18 +25,19 @@ export class ViewClassInfo extends ImportToAdd {
         if (!customComponentName) {
             this.prefix = ViewClassInfo.convertPathToClassNamePrefix(path);
             const classSuffix = ViewClassInfo.resolveClassSuffixForView(viewType);
-            this.nameWithoutComponent = `${strings.classify(this.prefix)}${classSuffix}`;
-            this.fileImportPath = `./views/${path}/${this.prefix}-${strings.dasherize(classSuffix)}.component`;
+            this.nameWithoutComponent = `${classify(this.prefix)}${classSuffix}`;
+            this.fileImportPath = `./views/${path}/${this.prefix}-${dasherize(classSuffix)}.component`;
         } else {
             this.prefix = '';
-            this.nameWithoutComponent = strings.classify(customComponentName);
-            this.fileImportPath = `./views/${path}/${strings.dasherize(customComponentName)}.component`;
+            this.nameWithoutComponent = classify(customComponentName);
+            this.fileImportPath = `./views/${path}/${dasherize(customComponentName)}.component`;
         }
         this.className = `${this.nameWithoutComponent}Component`;
     }
 
     private static convertPathToClassNamePrefix(path: string): string {
-        return path.replace(/-/g, '_').replace(/\//g, '-').toLocaleLowerCase();
+        const regexDash = /-/g;
+        return path.replace(regexDash, '_').replace(/\//g, '-').toLocaleLowerCase();
     }
 
     private static resolveClassSuffixForView(view: string): string {
@@ -61,7 +61,7 @@ export class ViewClassInfo extends ImportToAdd {
             case 'dashboard':
                 return 'Dashboard';
             default:
-                throw new SchematicsException(`Unknown view type '${view}'`);
+                throw new Error(`Unknown view type '${view}'`);
         }
     }
 }
