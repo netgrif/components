@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {AuthenticationService} from '../authentication/authentication.service';
-import {View} from '../../../configuration/interfaces/schema';
+import {Views} from '../../../configuration/interfaces/schema';
 import {AuthenticationModule} from '../../authentication.module';
 
 @Injectable({
@@ -17,23 +17,23 @@ export class AuthenticationGuardService implements CanActivate {
     constructor(private _auth: AuthenticationService,
                 private _config: ConfigurationService,
                 private _router: Router) {
-        this._loginUrl = '/' + this.resolveLoginPath(this._config.get().views.routes, AuthenticationGuardService.LOGIN_COMPONENT);
+        this._loginUrl = '/' + this.resolveLoginPath(this._config.get().views, AuthenticationGuardService.LOGIN_COMPONENT);
     }
 
 
-    resolveLoginPath(routes: {}, searchedLayout: string): string {
-        if (!routes || Object.keys(routes).length === 0) {
+    resolveLoginPath(views: Views, searchedLayout: string): string {
+        if (!views || Object.keys(views).length === 0) {
             return null;
         }
-        const route = Object.keys(routes).find(routeKey => {
-            const layout = (routes[routeKey] as View).layout;
+        const route = Object.keys(views).find(routeKey => {
+            const layout = views[routeKey].layout;
             return layout.name === searchedLayout;
         });
         if (route) {
             return route;
         }
-        for (const routeKey of Object.keys(routes)) {
-            const resolved = this.resolveLoginPath((routes[routeKey] as View).routes, searchedLayout);
+        for (const routeKey of Object.keys(views)) {
+            const resolved = this.resolveLoginPath(views[routeKey].children, searchedLayout);
             if (resolved) {
                 return routeKey + '/' + resolved;
             }
