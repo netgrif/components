@@ -30,7 +30,6 @@
                 "items": [
                     "emptyView",
                     "login",
-                    "tabView",
                     "caseView",
                     "taskView",
                     "sidenavView",
