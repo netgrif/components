@@ -6,7 +6,7 @@ const path = require('path');
 console.log("Building schematics ...");
 
 // run the compiler
-exec(path.join('node_modules', '.bin', 'tsc -b projects', 'netgrif-application-engine/schematics', 'tsconfig.json'), (error, stdout, stderr) => {
+exec(path.join('node_modules', '.bin', 'tsc -b projects', 'netgrif-application-engine', 'schematics', 'tsconfig.json'), (error, stdout, stderr) => {
     if (stdout) {
         console.log(stdout);
     }
