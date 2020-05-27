@@ -8,22 +8,19 @@ import {
     getAppModule,
     getProjectInfo
 } from '../../../../_utility/utility-functions';
-import {
-    resolveClassSuffixForView,
-    updateAppModule
-} from '../../../_utility/view-utility-functions';
+import {updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabbedView} from '../../models/tabbed-view';
-import {ViewClassInfo} from '../../models/view-class-info';
-import {ImportToAdd} from '../../models/import-to-add';
+import {ViewClassInfo} from '../../../../../commons/view-class-info';
+import {ImportToAdd} from '../../../../../commons/import-to-add';
 import {CreateViewArguments} from '../../models/create-view-arguments';
 
 
 export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedView, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const view = new ViewClassInfo(
-        args.path as string,
-        resolveClassSuffixForView(args.viewType as string),
+        args.path,
+        args.viewType,
         args.componentName);
     const rules = [];
     const destinationPath = `${projectInfo.path}/views/${args.path}`;

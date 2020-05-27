@@ -1,21 +1,18 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
-import {
-    resolveClassSuffixForView,
-    updateAppModule
-} from '../../../_utility/view-utility-functions';
+import {updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {SidenavPromptOptions} from '../../models/sidenav-prompt-options';
 import {addViewToNaeJson} from '../../../_utility/add-view-to-nae-json';
-import {ViewClassInfo} from '../../models/view-class-info';
+import {ViewClassInfo} from '../../../../../commons/view-class-info';
 
 
 export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPromptOptions): Rule {
     const projectInfo = getProjectInfo(tree);
     const view = new ViewClassInfo(
-        sidenavOptions.createViewArguments.path as string,
-        resolveClassSuffixForView(sidenavOptions.createViewArguments.viewType as string),
+        sidenavOptions.createViewArguments.path,
+        sidenavOptions.createViewArguments.viewType,
         sidenavOptions.createViewArguments.componentName
     );
     let drawerType = '<nae-navigation-drawer';

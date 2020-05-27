@@ -7,11 +7,8 @@ import {
 import {getNaeConfiguration} from '../../_utility/utility-functions';
 import {Views} from '../../../src/lib/configuration/interfaces/schema';
 import {NullableCreateViewArguments} from './models/nullable-create-view-arguments';
-import {
-    constructRoutePath,
-    resolveClassSuffixForView
-} from '../_utility/view-utility-functions';
-import {ViewClassInfo} from '../create-view-prompt/models/view-class-info';
+import {constructRoutePath} from '../_utility/view-utility-functions';
+import {ViewClassInfo} from '../../../commons/view-class-info';
 import {getGeneratedViewClassNames} from '../_utility/view-service-functions';
 
 
@@ -49,7 +46,7 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
         }
 
         if (!!view.layout) {
-            const viewClassInfo = new ViewClassInfo(viewPath, resolveClassSuffixForView(view.layout.name), view.layout.componentName);
+            const viewClassInfo = new ViewClassInfo(viewPath, view.layout.name, view.layout.componentName);
             if (!generatedViews.has(viewClassInfo.className)) {
                return {
                    path: viewPath,

@@ -3,7 +3,7 @@ import {SchematicsException, Tree} from '@angular-devkit/schematics';
 import {commitChangesToFile, getFileData, getProjectInfo} from '../../_utility/utility-functions';
 import {Change} from '@schematics/angular/utility/change';
 import {findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
-import {ImportToAdd} from '../create-view-prompt/models/import-to-add';
+import {ImportToAdd} from '../../../commons/import-to-add';
 
 export function addViewToViewService(tree: Tree, view: ImportToAdd): void {
     const projectInfo = getProjectInfo(tree);

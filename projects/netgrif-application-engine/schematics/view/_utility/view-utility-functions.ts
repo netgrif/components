@@ -1,7 +1,7 @@
-import {Tree, SchematicsException} from '@angular-devkit/schematics';
+import {Tree} from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getNaeConfiguration, getProjectInfo} from '../../_utility/utility-functions';
 import {addDeclarationToModule, addImportToModule} from '@schematics/angular/utility/ast-utils';
-import {ImportToAdd} from '../create-view-prompt/models/import-to-add';
+import {ImportToAdd} from '../../../commons/import-to-add';
 import {View, Views} from '../../../src/lib/configuration/interfaces/schema';
 
 
@@ -56,29 +56,4 @@ export function addImportsToAppModule(tree: Tree, imports: Array<ImportToAdd>): 
 
 export function constructRoutePath(pathPrefix: string, pathPart: string): string {
     return `${pathPrefix}${pathPrefix.length > 0 ? '/' : ''}${pathPart}`;
-}
-
-export function resolveClassSuffixForView(view: string): string {
-    switch (view) {
-        case 'login':
-            return 'Login';
-        case 'tabView':
-            return 'TabView';
-        case 'taskView':
-            return 'TaskView';
-        case 'caseView':
-            return 'CaseView';
-        case 'emptyView':
-            return 'EmptyView';
-        case 'sidenavView':
-            return 'SidenavView';
-        case 'toolbarView':
-            return 'ToolbarView';
-        case 'sidenavAndToolbarView':
-            return 'SidenavAndToolbarView';
-        case 'dashboard':
-            return 'Dashboard';
-        default:
-            throw new SchematicsException(`Unknown view type '${view}'`);
-    }
 }

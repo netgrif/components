@@ -9,14 +9,11 @@ import {
 } from '../../../../_utility/utility-functions';
 import {EmbeddedView, TabViewParams} from '../../models/params-interfaces';
 import {strings} from '@angular-devkit/core';
-import {
-    resolveClassSuffixForView,
-    updateAppModule
-} from '../../../_utility/view-utility-functions';
+import {updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabContentTemplate} from '../../models/tab-content-template';
-import {ImportToAdd} from '../../models/import-to-add';
-import {ViewClassInfo} from '../../models/view-class-info';
+import {ImportToAdd} from '../../../../../commons/import-to-add';
+import {ViewClassInfo} from '../../../../../commons/view-class-info';
 import {CreateViewArguments} from '../../models/create-view-arguments';
 
 
@@ -209,7 +206,7 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
 
     result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
 
-    const newComponentName = new ViewClassInfo(newViewPath, resolveClassSuffixForView(embeddedView.view.name));
+    const newComponentName = new ViewClassInfo(newViewPath, embeddedView.view.name);
 
     result.tabViewImports.push(
         new ImportToAdd(newComponentName.className, createRelativePath(hostClassName.fileImportPath, newComponentName.fileImportPath))

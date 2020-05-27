@@ -1,5 +1,6 @@
 import {strings} from '@angular-devkit/core';
 import {ImportToAdd} from './import-to-add';
+import {SchematicsException} from '@angular-devkit/schematics';
 
 export class ViewClassInfo extends ImportToAdd {
 
@@ -20,12 +21,13 @@ export class ViewClassInfo extends ImportToAdd {
      */
     public fileImportPath: string;
 
-    constructor(path: string, componentSuffix: string, customComponentName?: string) {
+    constructor(path: string, viewType: string, customComponentName?: string) {
         super('', '');
         if (!customComponentName) {
             this.prefix = ViewClassInfo.convertPathToClassNamePrefix(path);
-            this.nameWithoutComponent = `${strings.classify(this.prefix)}${componentSuffix}`;
-            this.fileImportPath = `./views/${path}/${this.prefix}-${strings.dasherize(componentSuffix)}.component`;
+            const classSuffix = ViewClassInfo.resolveClassSuffixForView(viewType);
+            this.nameWithoutComponent = `${strings.classify(this.prefix)}${classSuffix}`;
+            this.fileImportPath = `./views/${path}/${this.prefix}-${strings.dasherize(classSuffix)}.component`;
         } else {
             this.prefix = '';
             this.nameWithoutComponent = strings.classify(customComponentName);
@@ -36,5 +38,30 @@ export class ViewClassInfo extends ImportToAdd {
 
     private static convertPathToClassNamePrefix(path: string): string {
         return path.replace(/-/g, '_').replace(/\//g, '-').toLocaleLowerCase();
+    }
+
+    private static resolveClassSuffixForView(view: string): string {
+        switch (view) {
+            case 'login':
+                return 'Login';
+            case 'tabView':
+                return 'TabView';
+            case 'taskView':
+                return 'TaskView';
+            case 'caseView':
+                return 'CaseView';
+            case 'emptyView':
+                return 'EmptyView';
+            case 'sidenavView':
+                return 'SidenavView';
+            case 'toolbarView':
+                return 'ToolbarView';
+            case 'sidenavAndToolbarView':
+                return 'SidenavAndToolbarView';
+            case 'dashboard':
+                return 'Dashboard';
+            default:
+                throw new SchematicsException(`Unknown view type '${view}'`);
+        }
     }
 }

@@ -1,22 +1,19 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
-import {
-    resolveClassSuffixForView,
-    updateAppModule
-} from '../../../_utility/view-utility-functions';
+import {updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabbedView} from '../../models/tabbed-view';
-import {ViewClassInfo} from '../../models/view-class-info';
-import {ImportToAdd} from '../../models/import-to-add';
+import {ViewClassInfo} from '../../../../../commons/view-class-info';
+import {ImportToAdd} from '../../../../../commons/import-to-add';
 import {CreateViewArguments} from '../../models/create-view-arguments';
 
 
 export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedView, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const view = new ViewClassInfo(
-        args.path as string,
-        resolveClassSuffixForView(args.viewType as string),
+        args.path,
+        args.viewType,
         args.componentName);
     const rules = [];
 
