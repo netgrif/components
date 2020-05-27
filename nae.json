@@ -36,6 +36,340 @@
         ]
     },
     "views": {
+        "demo-authentication": {
+            "component": {
+                "class": "AuthenticationComponent",
+                "from": "./doc/authentication/authentication.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "authentication"
+            }
+        },
+        "demo-login": {
+            "component": {
+                "class": "LoginFormComponent",
+                "from": "./doc/forms/login-form/login-form.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "login"
+            }
+        },
+        "demo-reset-password": {
+            "component": {
+                "class": "PasswordFormComponent",
+                "from": "./doc/forms/password-form/password-form.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "reset-password"
+            }
+        },
+        "demo-registration": {
+            "component": {
+                "class": "RegisterFormComponent",
+                "from": "./doc/forms/register-form/register-form.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "registration"
+            }
+        },
+        "demo-drawer": {
+            "component": {
+                "class": "DrawerExampleComponent",
+                "from": "./doc/drawer-example/drawer-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "drawer"
+            }
+        },
+        "demo-rail": {
+            "component": {
+                "class": "RailExampleComponent",
+                "from": "./doc/rail-example/rail-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "rail"
+            }
+        },
+        "demo-headers": {
+            "component": {
+                "class": "HeadersComponent",
+                "from": "./doc/headers/headers.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "headers"
+            }
+        },
+        "demo-sidemenu": {
+            "component": {
+                "class": "SidemenuExampleComponent",
+                "from": "./doc/sidemenu-example/sidemenu-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "sidemenu"
+            }
+        },
+        "demo-snack-bar": {
+            "component": {
+                "class": "SnackBarExampleComponent",
+                "from": "./doc/snack-bar-example/snack-bar-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "snack-bar"
+            }
+        },
+        "demo-dialog": {
+            "component": {
+                "class": "DialogExampleComponent",
+                "from": "./doc/dialog-example/dialog-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "dialog"
+            }
+        },
+        "demo-tab-view": {
+            "component": {
+                "class": "TabViewExampleComponent",
+                "from": "./doc/tab-view-example/tab-view-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "tab-view"
+            }
+        },
+        "demo-reactive-forms": {
+            "component": {
+                "class": "ReactiveTextFieldComponent",
+                "from": "./doc/reactive-text-field/reactive-text-field.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "reactive-forms"
+            }
+        },
+        "demo-toolbar": {
+            "component": {
+                "class": "ToolbarExampleComponent",
+                "from": "./doc/toolbar-example/toolbar-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "toolbar"
+            }
+        },
+        "demo-panels": {
+            "component": {
+                "class": "PanelsComponent",
+                "from": "./doc/panels/panels.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "panels"
+            }
+        },
+        "demo-task-view": {
+            "component": {
+                "class": "TaskViewComponent",
+                "from": "./doc/task-view/task-view.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "task-view"
+            }
+        },
+        "demo-case-view": {
+            "component": {
+                "class": "CaseViewComponent",
+                "from": "./doc/case-view/case-view.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "case-view"
+            }
+        },
+        "demo-tabbed-views": {
+            "component": {
+                "class": "TabbedViewsExampleComponent",
+                "from": "./doc/tabbed-case-view/tabbed-views-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "tabbed-views"
+            }
+        },
+        "demo-workflow-view": {
+            "component": {
+                "class": "WorkflowViewExampleComponent",
+                "from": "./doc/workflow-view-example/workflow-view-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "workflow-view"
+            }
+        },
+        "demo-dashboard-view": {
+            "component": {
+                "class": "DashboardExampleComponent",
+                "from": "./doc/dashboard-example/dashboard-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "dashboard-view"
+            }
+        },
+        "demo-filter-repository": {
+            "component": {
+                "class": "FilterRepositoryExampleComponent",
+                "from": "./doc/filter-repository-example/filter-repository-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "filter-repository"
+            }
+        },
+        "demo-profile": {
+            "component": {
+                "class": "ProfileComponent",
+                "from": "./doc/profile/profile.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "profile"
+            }
+        },
+        "demo-navigation-test": {
+            "component": {
+                "class": "NavigationExampleComponent",
+                "from": "./doc/navigation-example/navigation-example.component"
+            },
+            "access": "private",
+            "navigation": {
+                "title": "NavTest"
+            },
+            "routing": {
+                "path": "navigation-test"
+            },
+            "children": {
+                "one": {
+                    "component": {
+                        "class": "ButtonsNavComponent",
+                        "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "one",
+                        "icon": "account_circle"
+                    },
+                    "routing": {
+                        "path": "one"
+                    },
+                    "children": {
+                        "one-one": {
+                            "component": {
+                                "class": "ButtonsNavComponent",
+                                "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "one-one",
+                                "icon": "account_circle"
+                            },
+                            "routing": {
+                                "path": "one-one"
+                            }
+                        },
+                        "one-two": {
+                            "component": {
+                                "class": "ButtonsNavComponent",
+                                "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "one-two",
+                                "icon": "account_circle"
+                            },
+                            "routing": {
+                                "path": "one-two"
+                            }
+                        }
+                    }
+                },
+                "two": {
+                    "component": {
+                        "class": "ButtonsNavComponent",
+                        "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "second",
+                        "icon": "account_circle"
+                    },
+                    "routing": {
+                        "path": "two"
+                    },
+                    "children": {
+                        "two-one": {
+                            "component": {
+                                "class": "ButtonsNavComponent",
+                                "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "two-one",
+                                "icon": "account_circle"
+                            },
+                            "routing": {
+                                "path": "two-one"
+                            }
+                        },
+                        "two-two": {
+                            "component": {
+                                "class": "ButtonsNavComponent",
+                                "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "two-two",
+                                "icon": "account_circle"
+                            },
+                            "routing": {
+                                "path": "two-two"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "dashboard": {
             "layout": {
                 "name": "dashboard",
@@ -184,82 +518,6 @@
                             },
                             "access": "private",
                             "navigation": true
-                        }
-                    }
-                }
-            }
-        },
-        "navigation-test": {
-            "type": "sideMenu",
-            "layout": {
-                "name": "emptyView"
-            },
-            "access": "private",
-            "navigation": {
-                "title": "NavTest"
-            },
-            "children": {
-                "one": {
-                    "layout": {
-                        "name": "emptyView"
-                    },
-                    "access": "private",
-                    "navigation": {
-                        "title": "one",
-                        "icon": "account_circle"
-                    },
-                    "children": {
-                        "one-one": {
-                            "layout": {
-                                "name": "emptyView"
-                            },
-                            "access": "private",
-                            "navigation": {
-                                "title": "one-one",
-                                "icon": "account_circle"
-                            }
-                        },
-                        "one-two": {
-                            "layout": {
-                                "name": "emptyView"
-                            },
-                            "access": "private",
-                            "navigation": {
-                                "title": "one-two",
-                                "icon": "account_circle"
-                            }
-                        }
-                    }
-                },
-                "two": {
-                    "layout": {
-                        "name": "emptyView"
-                    },
-                    "access": "private",
-                    "navigation": {
-                        "title": "second",
-                        "icon": "account_circle"
-                    },
-                    "children": {
-                        "two-one": {
-                            "layout": {
-                                "name": "emptyView"
-                            },
-                            "access": "private",
-                            "navigation": {
-                                "title": "two-one",
-                                "icon": "account_circle"
-                            }
-                        },
-                        "two-two": {
-                            "layout": {
-                                "name": "emptyView"
-                            },
-                            "access": "private",
-                            "navigation": {
-                                "title": "two-two",
-                                "icon": "account_circle"
-                            }
                         }
                     }
                 }
