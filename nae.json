@@ -418,6 +418,9 @@
             "navigation": {
                 "title": "Dashboard",
                 "icon": "dashboard"
+            },
+            "routing": {
+                "path": "comp-dashboard"
             }
         },
         "case": {
@@ -434,7 +437,10 @@
                 "componentName": "MyCaseView"
             },
             "access": "private",
-            "navigation": {}
+            "navigation": {},
+            "routing": {
+                "path": "comp-case"
+            }
         },
         "custom": {
             "component": {
@@ -442,7 +448,10 @@
                 "from": "./doc/case-view/case-view.component"
             },
             "navigation": false,
-            "access": "private"
+            "access": "private",
+            "routing": {
+                "path": "comp-custom"
+            }
         },
         "tab": {
             "layout": {
@@ -461,7 +470,10 @@
                 }
             },
             "navigation": false,
-            "access": "private"
+            "access": "private",
+            "routing": {
+                "path": "comp-tab"
+            }
         },
         "cases": {
             "layout": {
@@ -489,10 +501,19 @@
                                 "name": "emptyView"
                             },
                             "access": "private",
-                            "navigation": true
+                            "navigation": true,
+                            "routing": {
+                                "path": "comp-some_specifics"
+                            }
                         }
+                    },
+                    "routing": {
+                        "path": "comp-some_cases"
                     }
                 }
+            },
+            "routing": {
+                "path": "comp-cases"
             }
         },
         "task": {
@@ -517,10 +538,19 @@
                                 "name": "emptyView"
                             },
                             "access": "private",
-                            "navigation": true
+                            "navigation": true,
+                            "routing": {
+                                "path": "comp-some_specifics"
+                            }
                         }
+                    },
+                    "routing": {
+                        "path": "comp-some_tasks"
                     }
                 }
+            },
+            "routing": {
+                "path": "comp-task"
             }
         }
     },
