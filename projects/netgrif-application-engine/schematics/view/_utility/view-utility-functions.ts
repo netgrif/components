@@ -1,7 +1,7 @@
 import {Tree} from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getNaeConfiguration, getProjectInfo} from '../../_utility/utility-functions';
 import {addDeclarationToModule, addImportToModule} from '@schematics/angular/utility/ast-utils';
-import {ImportToAdd} from '../../../commons/import-to-add';
+import {ImportToAdd} from '../../../src/commons/import-to-add';
 import {View, Views} from '../../../src/lib/configuration/interfaces/schema';
 
 

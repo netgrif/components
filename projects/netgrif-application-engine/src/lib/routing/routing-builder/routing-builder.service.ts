@@ -3,9 +3,9 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {ViewService} from '../view-service/view.service';
 import {Route, Router} from '@angular/router';
 import {View} from '../../configuration/interfaces/schema';
-import {strings} from '@angular-devkit/core';
 import {AuthenticationGuardService} from '../../authentication/services/guard/authentication-guard.service';
-import {ViewClassInfo} from '../../../../commons/view-class-info';
+import {ViewClassInfo} from '../../../commons/view-class-info';
+import {classify} from '../../../commons/angular-cli-devkit-core-strings';
 
 
 @Injectable({
@@ -50,7 +50,7 @@ export class RoutingBuilderService {
             // more or less copied from schematic implementation of ViewClassInfo, but referencing this class caused a compilation error
             let className;
             if (!!view.layout.componentName) {
-                className = `${strings.classify(view.layout.componentName)}Component`;
+                className = `${classify(view.layout.componentName)}Component`;
             } else {
                 const classInfo = new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
                 className = classInfo.className;

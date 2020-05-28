@@ -1,5 +1,5 @@
 {
-    "extends": "../tsconfig.strict.json",
+    "extends": "../../tsconfig.strict.json",
     "compilerOptions": {
         "rootDir": ".",
         "outDir": "../../../dist/netgrif-application-engine/commons"

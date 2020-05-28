@@ -11,8 +11,8 @@ import {
 import {updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabbedView} from '../../models/tabbed-view';
-import {ViewClassInfo} from '../../../../../commons/view-class-info';
-import {ImportToAdd} from '../../../../../commons/import-to-add';
+import {ViewClassInfo} from '../../../../../src/commons/view-class-info';
+import {ImportToAdd} from '../../../../../src/commons/import-to-add';
 import {CreateViewArguments} from '../../models/create-view-arguments';
 
 

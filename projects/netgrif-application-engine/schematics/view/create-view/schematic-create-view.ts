@@ -8,7 +8,7 @@ import {getNaeConfiguration} from '../../_utility/utility-functions';
 import {Views} from '../../../src/lib/configuration/interfaces/schema';
 import {NullableCreateViewArguments} from './models/nullable-create-view-arguments';
 import {constructRoutePath} from '../_utility/view-utility-functions';
-import {ViewClassInfo} from '../../../commons/view-class-info';
+import {ViewClassInfo} from '../../../src/commons/view-class-info';
 import {getGeneratedViewClassNames} from '../_utility/view-service-functions';
 
 
