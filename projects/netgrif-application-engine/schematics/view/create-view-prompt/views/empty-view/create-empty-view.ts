@@ -1,7 +1,7 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
 import {createFilesFromTemplates, getProjectInfo} from '../../../../_utility/utility-functions';
-import {ViewClassInfo} from '../../../../../src/commons/view-class-info';
+import {ViewClassInfo} from '../../../../_commons/view-class-info';
 import {updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {CreateViewArguments} from '../../models/create-view-arguments';

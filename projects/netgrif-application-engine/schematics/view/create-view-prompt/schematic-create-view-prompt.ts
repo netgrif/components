@@ -16,7 +16,7 @@ import {createDashboardView} from './views/dashboard-view/create-dashboard-view'
 import {checkJsonParamsForSidenav} from './schematic-create-sidenav-prompt';
 import {CreateViewArguments} from './models/create-view-arguments';
 import {addViewToViewService} from '../_utility/view-service-functions';
-import {ImportToAdd} from '../../../src/commons/import-to-add';
+import {ImportToAdd} from '../../_commons/import-to-add';
 
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {

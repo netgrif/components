@@ -2,7 +2,7 @@ import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeSc
 import {SchematicsException, Tree} from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../../_utility/utility-functions';
 import {addEntryComponentToModule, findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
-import {ImportToAdd} from '../../../src/commons/import-to-add';
+import {ImportToAdd} from '../../_commons/import-to-add';
 
 /**
  * Adds the view to the ViewService array and into module's EntryComponents as the dynamic routing doesn't work otherwise

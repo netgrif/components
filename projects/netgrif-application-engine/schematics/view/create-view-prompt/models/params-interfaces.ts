@@ -1,5 +1,3 @@
-
-
 export interface TabViewParams {
     tabs: Array<EmbeddedView>;
     defaultTaskView?: EmbeddedView;
