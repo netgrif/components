@@ -3,6 +3,7 @@ import {SchematicsException, Tree} from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../../_utility/utility-functions';
 import {addEntryComponentToModule, findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
 import {ImportToAdd} from '../../_commons/import-to-add';
+import {Change} from '@schematics/angular/utility/change';
 
 /**
  * Adds the view to the ViewService array and into module's EntryComponents as the dynamic routing doesn't work otherwise
@@ -22,17 +23,20 @@ export function addViewToViewService(tree: Tree, view: ImportToAdd): void {
     }
     tree.commitUpdate(recorder);
 
+    const viewServiceChanges: Array<Change> = [];
+    viewServiceChanges.push(
+        insertImport(fileData.sourceFile, fileData.fileEntry.path, view.className, view.fileImportPath)
+    );
+    commitChangesToFile(tree, fileData.fileEntry, viewServiceChanges);
+
     const appModule = getAppModule(tree, projectInfo.path);
-    const changes = addEntryComponentToModule(
+    const appModuleChanges = addEntryComponentToModule(
         appModule.sourceFile,
         appModule.fileEntry.path,
         view.className,
         view.fileImportPath
     );
-    changes.push(
-        insertImport(fileData.sourceFile, fileData.fileEntry.path, view.className, view.fileImportPath)
-    );
-    commitChangesToFile(tree, fileData.fileEntry, changes);
+    commitChangesToFile(tree, appModule.fileEntry, appModuleChanges);
 }
 
 export function getGeneratedViewClassNames(tree: Tree): Set<string> {
