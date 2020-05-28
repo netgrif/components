@@ -1,10 +1,14 @@
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import {SchematicsException, Tree} from '@angular-devkit/schematics';
-import {commitChangesToFile, getFileData, getProjectInfo} from '../../_utility/utility-functions';
-import {Change} from '@schematics/angular/utility/change';
-import {findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
+import {commitChangesToFile, getAppModule, getFileData, getProjectInfo} from '../../_utility/utility-functions';
+import {addEntryComponentToModule, findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
 import {ImportToAdd} from '../../../src/commons/import-to-add';
 
+/**
+ * Adds the view to the ViewService array and into module's EntryComponents as the dynamic routing doesn't work otherwise
+ * @param tree schematic Tree object
+ * @param view the view that should be imported
+ */
 export function addViewToViewService(tree: Tree, view: ImportToAdd): void {
     const projectInfo = getProjectInfo(tree);
     const fileData = getFileData(tree, projectInfo.path, `${projectInfo.projectNameDasherized}-view.service.ts`);
@@ -14,11 +18,17 @@ export function addViewToViewService(tree: Tree, view: ImportToAdd): void {
     if (arrayContent.getChildren().length === 0) {
         recorder.insertRight(arrayContent.pos, `${view.className}`);
     } else {
-        recorder.insertRight(arrayContent.pos, `${view.className}, `);
+        recorder.insertRight(arrayContent.pos, `${view.className},\n\t\t\t`);
     }
     tree.commitUpdate(recorder);
 
-    const changes: Array<Change> = [];
+    const appModule = getAppModule(tree, projectInfo.path);
+    const changes = addEntryComponentToModule(
+        appModule.sourceFile,
+        appModule.fileEntry.path,
+        view.className,
+        view.fileImportPath
+    );
     changes.push(
         insertImport(fileData.sourceFile, fileData.fileEntry.path, view.className, view.fileImportPath)
     );
