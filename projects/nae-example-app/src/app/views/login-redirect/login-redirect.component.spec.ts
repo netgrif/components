@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LoginRedirectLoginComponent } from './login-redirect-login.component';
+import { LoginRedirectComponent } from './login-redirect.component';
 import {AuthenticationMethodService, LoginFormModule, ConfigurationService} from '@netgrif/application-engine';
 import {NaeExampleAppConfigurationService} from '../../nae-example-app-configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('LoginRedirectLoginComponent', () => {
-    let component: LoginRedirectLoginComponent;
-    let fixture: ComponentFixture<LoginRedirectLoginComponent>;
+describe('LoginRedirectComponent', () => {
+    let component: LoginRedirectComponent;
+    let fixture: ComponentFixture<LoginRedirectComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -20,13 +20,13 @@ describe('LoginRedirectLoginComponent', () => {
                 AuthenticationMethodService,
                 {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
             ],
-            declarations: [LoginRedirectLoginComponent]
+            declarations: [LoginRedirectComponent]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(LoginRedirectLoginComponent);
+        fixture = TestBed.createComponent(LoginRedirectComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
