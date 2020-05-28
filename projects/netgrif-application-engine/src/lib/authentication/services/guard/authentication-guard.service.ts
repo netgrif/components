@@ -27,7 +27,7 @@ export class AuthenticationGuardService implements CanActivate {
         }
         const route = Object.keys(views).find(routeKey => {
             const layout = views[routeKey].layout;
-            return layout.name === searchedLayout;
+            return !!layout && layout.name === searchedLayout;
         });
         if (route) {
             return route;

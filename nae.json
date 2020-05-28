@@ -370,6 +370,17 @@
                 }
             }
         },
+        "login-redirect": {
+            "layout": {
+                "name": "login",
+                "componentName": "LoginRedirect"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "login-redirect"
+            }
+        },
         "dashboard": {
             "layout": {
                 "name": "dashboard",

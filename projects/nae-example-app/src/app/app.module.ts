@@ -67,6 +67,7 @@ import {ProfileComponent} from './doc/profile/profile.component';
 import { NavigationExampleComponent } from './doc/navigation-example/navigation-example.component';
 import { ButtonsNavComponent } from './doc/navigation-example/buttons-nav/buttons-nav.component';
 import { NaeExampleAppViewService } from './nae-example-app-view.service';
+import { LoginRedirectComponent } from './views/login-redirect/login-redirect.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -102,6 +103,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
+        LoginRedirectComponent,
     ],
     imports: [
         BrowserModule,
@@ -174,7 +176,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         FilterRepositoryExampleComponent,
         ProfileComponent,
         NavigationExampleComponent,
-        ButtonsNavComponent
+        ButtonsNavComponent,
+        LoginRedirectComponent
     ],
     providers: [{
         provide: ConfigurationService,

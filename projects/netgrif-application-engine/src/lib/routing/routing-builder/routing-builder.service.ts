@@ -30,7 +30,7 @@ export class RoutingBuilderService {
         }
         // TODO 26.5.2020 - Finer granularity for view access control
         if (view.access === 'private') {
-            route['canActivate'] = AuthenticationGuardService;
+            route['canActivate'] = [AuthenticationGuardService];
         }
         if (!!view.children) {
             route['children'] = [];
