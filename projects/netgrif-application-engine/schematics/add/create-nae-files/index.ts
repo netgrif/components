@@ -2,26 +2,31 @@ import {
     chain,
     Rule,
     Tree,
-    schematic
+    schematic,
+    SchematicsException
 } from '@angular-devkit/schematics';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
-    getAppModule,
+    getAppModule, getNaeConfiguration,
     getProjectInfo
 } from '../../_utility/utility-functions';
 import {addImportToModule} from '@schematics/angular/utility/ast-utils';
+import {getGeneratedViewClassNames} from '../../view/_utility/view-service-functions';
+import {View} from '../../../src/lib/configuration/interfaces/schema';
+import {ViewClassInfo} from '../../_commons/view-class-info';
+import {classify} from '../../_commons/angular-cli-devkit-core-strings';
 
 
 export function createNaeFiles(): Rule {
-    return () => {
+    return (tree: Tree) => {
         const rules = [];
         rules.push(createRoutesModule());
         rules.push(schematic('create-configuration-service', {}));
         rules.push(schematic('create-view-service', {}));
         rules.push(schematic('custom-themes', {}));
         rules.push(updateAppComponentHTML());
-        for (let index = 0; index < getNumberOfMissingViews(); index++) {
+        for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
             rules.push(schematic('create-view', {}));
         }
         return chain(rules);
@@ -39,40 +44,57 @@ function createRoutesModule(): Rule {
     };
 }
 
-function getNumberOfMissingViews(): number {
-    return 0;
-    // const projectInfo = getProjectInfo(tree);
-    // const naeConfig = getNaeConfiguration(tree);
-    // const routesContent = getRoutesJsonContent(tree, projectInfo);
-    // const pathToRouteMap = new Map<string, Route>();
-    // addAllRoutesToMap(pathToRouteMap, routesContent);
-    // if (naeConfig.views.routes === undefined) {
-    //     return 0;
-    // }
-    // return findNumberOfMissingViews(pathToRouteMap, naeConfig.views.routes);
+function getNumberOfMissingViews(tree: Tree): number {
+    const config = getNaeConfiguration(tree);
+    const generatedClasses = getGeneratedViewClassNames(tree);
+    const naeJsonClasses = new Set<string>();
+    Object.keys(config.views).forEach(viewPath => {
+        union(naeJsonClasses, getViewClassNames(config.views[viewPath], viewPath));
+    });
+    return naeJsonClasses.size - generatedClasses.size;
 }
 
-// function findNumberOfMissingViews(existingRoutesMap: Map<string, Route>,
-//                                   naeRoutes: { [k: string]: View }, pathPrefix: string = ''): number {
-//     let counter = 0;
-//     for (const routePathPart of Object.keys(naeRoutes)) {
-//         const route = naeRoutes[routePathPart];
-//         const routePath = constructRoutePath(pathPrefix, routePathPart);
-//         if (!existingRoutesMap.has(routePath)) {
-//             counter++;
-//         }
-//         if (route.routes !== undefined) {
-//             counter += findNumberOfMissingViews(existingRoutesMap, route.routes, routePath);
-//         }
-//     }
-//     return counter;
-// }
+function getViewClassNames(view: View | undefined, configPath: string): Set<string> {
+    const classNames = new Set<string>();
+
+    if (view === undefined) {
+        return classNames;
+    }
+
+    if (!!view.component) {
+        classNames.add(view.component.class);
+    } else if (!!view.layout) {
+        if (!!view.layout.componentName) {
+            classNames.add(`${classify(view.layout.componentName)}Component`);
+        } else {
+            const classInfo = new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
+            classNames.add(classInfo.className);
+        }
+    } else {
+        throw new SchematicsException(`View with path '${configPath}' must have either 'layout' or 'component' attribute defined`);
+    }
+
+    if (!!view.children) {
+        Object.keys(view.children).forEach(childPath => {
+            if (view.children !== undefined) {
+                union(classNames, getViewClassNames(view.children[childPath], `${childPath}/${childPath}`));
+            }
+        });
+    }
+    return classNames;
+}
+
+function union(setA: Set<string>, setB: Set<string>) {
+    setB.forEach(str => {
+        setA.add(str);
+    });
+}
 
 function updateAppComponentHTML(): Rule {
     return (tree: Tree) => {
         const pathToComponent = getProjectInfo(tree).path + '/app.component.html';
         const content =
-`<nae-routing></nae-routing>
+            `<nae-routing></nae-routing>
 <nae-side-menu-container>
     <router-outlet></router-outlet>
 </nae-side-menu-container>`;
