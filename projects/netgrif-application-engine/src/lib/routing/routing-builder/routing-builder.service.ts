@@ -9,6 +9,9 @@ import {classify} from '../../../commons/angular-cli-devkit-core-strings';
 import {LoggerService} from '../../logger/services/logger.service';
 
 
+/**
+ * Uses the information from nae.json to construct the application's routing
+ */
 @Injectable({
     providedIn: 'root'
 })
