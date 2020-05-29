@@ -1,3 +1,4 @@
+import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import {
     chain,
     Rule,
@@ -8,14 +9,17 @@ import {
 import {
     commitChangesToFile,
     createFilesFromTemplates,
-    getAppModule, getNaeConfiguration,
+    getAppModule,
+    getFileData,
+    getNaeConfiguration,
     getProjectInfo
 } from '../../_utility/utility-functions';
-import {addImportToModule} from '@schematics/angular/utility/ast-utils';
+import {addImportToModule, findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
 import {getGeneratedViewClassNames} from '../../view/_utility/view-service-functions';
 import {View} from '../../../src/lib/configuration/interfaces/schema';
 import {ViewClassInfo} from '../../_commons/view-class-info';
 import {classify} from '../../_commons/angular-cli-devkit-core-strings';
+import {Change} from '@schematics/angular/utility/change';
 
 
 export function createNaeFiles(): Rule {
@@ -26,6 +30,7 @@ export function createNaeFiles(): Rule {
         rules.push(schematic('create-view-service', {}));
         rules.push(schematic('custom-themes', {}));
         rules.push(updateAppComponentHTML());
+        rules.push(updateAppComponentTS());
         for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
             rules.push(schematic('create-view', {}));
         }
@@ -94,10 +99,42 @@ function updateAppComponentHTML(): Rule {
     return (tree: Tree) => {
         const pathToComponent = getProjectInfo(tree).path + '/app.component.html';
         const content =
-            `<nae-routing></nae-routing>
-<nae-side-menu-container>
+            `<nae-side-menu-container>
     <router-outlet></router-outlet>
 </nae-side-menu-container>`;
         tree.overwrite(pathToComponent, content);
     };
+}
+
+function updateAppComponentTS(): Rule {
+    return (tree: Tree) => {
+        const projectInfo = getProjectInfo(tree);
+        const fileData = getFileData(tree, projectInfo.path, 'app.component.ts');
+
+        const argumentsNode = getConstructorArguments(fileData.sourceFile);
+        const recorder = tree.beginUpdate(fileData.fileEntry.path);
+        const delimiter = argumentsNode.getChildren().length > 0 ? ', ' : '';
+        recorder.insertRight(argumentsNode.pos,
+            `private _languageService: LanguageService, private _naeRouting: RoutingBuilderService${delimiter}`);
+        tree.commitUpdate(recorder);
+
+        const appComponentChanges: Array<Change> = [];
+        appComponentChanges.push(
+            insertImport(fileData.sourceFile, fileData.fileEntry.path, 'LanguageService', '@netgrif/application-engine'),
+            insertImport(fileData.sourceFile, fileData.fileEntry.path, 'RoutingBuilderService', '@netgrif/application-engine')
+        );
+        commitChangesToFile(tree, fileData.fileEntry, appComponentChanges);
+    };
+}
+
+function getConstructorArguments(source: ts.SourceFile): ts.Node {
+    const nodes = findNodes(source, ts.SyntaxKind.Constructor, 1, true);
+    if (nodes.length === 0) {
+        throw new SchematicsException('Source file doesn\'t have a Constructor node.');
+    }
+    const argumentList = nodes[0].getChildren().find(node => node.kind === ts.SyntaxKind.SyntaxList);
+    if (argumentList === undefined) {
+        throw new SchematicsException('Malformed file. Constructor doesn\'t have arguments list');
+    }
+    return argumentList;
 }
