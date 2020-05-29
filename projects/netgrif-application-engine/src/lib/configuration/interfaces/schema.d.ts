@@ -252,6 +252,7 @@ export interface Services {
     };
     auth?: {
         logoutRedirect?: string;
+        loginRedirect?: string;
     };
 
     [k: string]: any;

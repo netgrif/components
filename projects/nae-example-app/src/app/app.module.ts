@@ -64,10 +64,9 @@ import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/filter-repository-example.component';
 import {ProfileComponent} from './doc/profile/profile.component';
-import { NavigationExampleComponent } from './doc/navigation-example/navigation-example.component';
-import { ButtonsNavComponent } from './doc/navigation-example/buttons-nav/buttons-nav.component';
-import { NaeExampleAppViewService } from './nae-example-app-view.service';
-import { LoginRedirectComponent } from './views/login-redirect/login-redirect.component';
+import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
+import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
+import {NaeExampleAppViewService} from './nae-example-app-view.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -103,7 +102,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
-        LoginRedirectComponent,
     ],
     imports: [
         BrowserModule,
@@ -177,7 +175,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
-        LoginRedirectComponent
     ],
     providers: [{
         provide: ConfigurationService,

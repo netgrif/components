@@ -22,6 +22,18 @@ export class AuthenticationGuardService implements CanActivate {
 
 
     resolveLoginPath(views: Views, searchedLayout: string): string {
+        const route = this.resolveLoginPathFromViewConfiguration(views, searchedLayout);
+        if (route === null) {
+            const config = this._config.get();
+            if (!!config.services && !!config.services.auth && !!config.services.auth.loginRedirect) {
+                return config.services.auth.loginRedirect;
+            }
+        }
+        throw new Error('No login view found in application. Authentication guard can\'t redirect. Add a view with'
+            + ' layout.name="login" to your application, or set the desired redirect path in \'services.auth.loginRedirect\'');
+    }
+
+    private resolveLoginPathFromViewConfiguration(views: Views, searchedLayout: string): string {
         if (!views || Object.keys(views).length === 0) {
             return null;
         }
@@ -33,7 +45,7 @@ export class AuthenticationGuardService implements CanActivate {
             return route;
         }
         for (const routeKey of Object.keys(views)) {
-            const resolved = this.resolveLoginPath(views[routeKey].children, searchedLayout);
+            const resolved = this.resolveLoginPathFromViewConfiguration(views[routeKey].children, searchedLayout);
             if (resolved) {
                 return routeKey + '/' + resolved;
             }
