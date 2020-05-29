@@ -90,6 +90,10 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
 
     public createNewCase(): void {
+        if (!this.selectedColorControl.valid) {
+            return;
+        }
+
         const newCase = {
             title: this.titleFormControl.value,
             color: this.selectedColorControl.value,
@@ -98,12 +102,12 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
         this._caseResourceService.createCase(newCase)
             .subscribe(
-                () => {
+                response => {
                     this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
                     this._sideMenuControl.close({
                         opened: false,
                         message: 'Confirm new case setup',
-                        data: newCase
+                        data: response
                     });
                 },
                 error => this._snackBarService.openErrorSnackBar(error)

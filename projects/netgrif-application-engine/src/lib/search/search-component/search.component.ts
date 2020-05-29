@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../models/category/category';
 import {BehaviorSubject, Observable, of} from 'rxjs';
@@ -62,6 +62,11 @@ export class SearchComponent implements OnInit {
         number: new FormControl(),
         boolean: new FormControl(false),
     };
+    /**
+     * @ignore
+     * Used to clear the value of the text input as there is a bug in angular
+     */
+    @ViewChild('autocompleteInput') textInputRef: ElementRef<HTMLInputElement>;
     /**
      * @ignore
      * Observable that contains [Categories]{@link Category} that match user input. It updates it's content every time user input changes.
@@ -312,7 +317,11 @@ export class SearchComponent implements OnInit {
      */
     private clearFormControlValue(): void {
         Object.keys(this.formControls).forEach( key => {
-            this.formControls[key].setValue( key === 'boolean' ? false : '');
+            this.formControls[key].reset( key === 'boolean' ? false : '');
+            if (key === 'text' && this.textInputRef !== undefined) {
+                // TODO 26.5.2020 remove this work-around when the issue is fixed: https://github.com/angular/components/issues/10968
+                this.textInputRef.nativeElement.value = '';
+            }
         });
     }
 }

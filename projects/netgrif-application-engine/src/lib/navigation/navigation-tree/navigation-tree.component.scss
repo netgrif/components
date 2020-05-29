@@ -22,8 +22,9 @@
 }
 
 .tree-node {
+    outline: none !important;
     cursor: pointer;
-    padding: 4px;
+    padding: 4px 12px;
 
     mat-icon.tree-node-icon {
         line-height: 40px;

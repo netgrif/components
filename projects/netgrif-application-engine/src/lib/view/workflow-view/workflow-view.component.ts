@@ -59,8 +59,8 @@ export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewI
         });
     }
 
-    public trackBy(i): any {
-        return i;
+    public trackBy(i, item): any {
+        return i + '_' + item;
     }
 
     private calculateListHeight(preciseHeight?: number): void {

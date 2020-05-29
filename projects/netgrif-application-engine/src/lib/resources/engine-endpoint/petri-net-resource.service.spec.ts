@@ -126,13 +126,13 @@ describe('PetriNetResourceService', () => {
     it('should searchPetriNets', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.searchPetriNets({}).subscribe(res => {
-                expect(res.petriNetReferences[0].stringId).toEqual('string');
+                expect(res.length).toEqual(0);
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/search');
             expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({petriNetReferences: [{stringId: 'string'}]});
+            reqLog.flush([]);
         })
     );
 

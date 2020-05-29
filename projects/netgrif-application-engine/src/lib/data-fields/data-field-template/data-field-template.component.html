@@ -3,10 +3,12 @@
     <!-- Large layout -->
     <ng-template [ngIf]="showLargeLayout.value" [ngIfElse]="elseTemplate">
         <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space">
-            <div fxFlex="50" class="cell-padding">
+            <div fxFlex="5"></div>
+            <div fxFlex="45" class="cell-padding">
                 <span class="data-field-title" [matTooltip]="dataField.description">{{dataField.title}}<nae-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nae-required-label></span>
             </div>
-            <div fxFlex="50" class="cell-padding">
+            <div fxFlex="5"></div>
+            <div fxFlex="45" class="cell-padding">
                 <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
             </div>
         </div>

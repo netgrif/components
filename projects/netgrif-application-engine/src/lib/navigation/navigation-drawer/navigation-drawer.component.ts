@@ -2,6 +2,8 @@ import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material';
 import {User} from '../../user/models/user';
 import {QuickPanelItem} from '../quick-panel/components/quick-panel.component';
+import 'hammerjs';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
     selector: 'nae-navigation-drawer',
@@ -30,7 +32,7 @@ export class NavigationDrawerComponent implements OnInit, AfterViewInit {
         disableClose: false
     };
 
-    constructor() {
+    constructor(private breakpoint: BreakpointObserver) {
         this.openedChange = new EventEmitter<boolean>();
         this._fixed = true;
         this.opened = true;
@@ -38,7 +40,17 @@ export class NavigationDrawerComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        this.resolveFixed();
+        this.resolveLayout(this._fixed);
+        this.breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe( result => {
+            console.log(this.breakpoint.isMatched('(max-width: 959.99px)'));
+            if (this.breakpoint.isMatched('(max-width: 959.99px)')) {
+                this.resolveLayout(false);
+                this.opened = this._config.opened;
+            } else {
+                this.resolveLayout(this._fixed);
+                this.opened = this._config.opened;
+            }
+        });
         this.opened = this._config.opened;
     }
 
@@ -57,7 +69,7 @@ export class NavigationDrawerComponent implements OnInit, AfterViewInit {
     @Input('fixed')
     set fixed(value: boolean) {
         this._fixed = value;
-        this.resolveFixed();
+        this.resolveLayout(this._fixed);
     }
 
     open(): Promise<MatDrawerToggleResult> {
@@ -81,8 +93,8 @@ export class NavigationDrawerComponent implements OnInit, AfterViewInit {
         return this._sideNav.toggle();
     }
 
-    private resolveFixed(): void {
-        this._config = this._fixed ? {
+    private resolveLayout(bool: boolean): void {
+        this._config = bool ? {
             mode: 'side',
             opened: true,
             disableClose: true
@@ -91,9 +103,20 @@ export class NavigationDrawerComponent implements OnInit, AfterViewInit {
             opened: false,
             disableClose: false
         };
-        if (this._fixed && this._sideNav) {
+        if (bool && this._sideNav) {
             this._sideNav.open();
         }
     }
 
+    swipeRight() {
+        if (this.breakpoint.isMatched('(max-width: 959.99px)')) {
+            this._sideNav.open();
+        }
+    }
+
+    swipeLeft() {
+        if (this.breakpoint.isMatched('(max-width: 959.99px)')) {
+            this._sideNav.close();
+        }
+    }
 }

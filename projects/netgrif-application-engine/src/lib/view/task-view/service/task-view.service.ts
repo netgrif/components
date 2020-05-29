@@ -140,11 +140,13 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             return;
         }
         this._loading$.on();
+        let params: HttpParams = new HttpParams();
+        params = this.addSortParams(params);
 
         // TODO 12.5.2020 - better solution for mongo searching
         if (!this._searchService.additionalFiltersApplied && !!this._parentCaseId) {
-            this._taskService.getTasks({case: this._parentCaseId}).subscribe(tasks => this.processTasks(tasks.content),
-                error => this.processError());
+            this._taskService.getTasks({case: this._parentCaseId}, params).subscribe(tasks => this.processTasks(tasks.content),
+                () => this.processError());
         } else {
             // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation
             this._taskService.searchTask(this._searchService.activeFilter).subscribe(tasks => this.processTasks(tasks.content),
