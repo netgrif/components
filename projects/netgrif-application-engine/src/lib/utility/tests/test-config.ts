@@ -92,9 +92,8 @@ export class TestConfigurationService extends ConfigurationService {
                     }
                 },
                 cases: {
-                    type: '',
                     layout: {
-                        name: '',
+                        name: 'emptyView',
                         params: {
                             allowedNets: []
                         }
@@ -109,9 +108,8 @@ export class TestConfigurationService extends ConfigurationService {
                     },
                     children: {
                         some_cases: {
-                            type: '',
                             layout: {
-                                name: ''
+                                name: 'emptyView'
                             },
                             access: 'private',
                             navigation: {
@@ -122,9 +120,8 @@ export class TestConfigurationService extends ConfigurationService {
                             },
                             children: {
                                 some_specifics: {
-                                    type: '',
                                     layout: {
-                                        name: ''
+                                        name: 'emptyView'
                                     },
                                     access: 'private',
                                     navigation: true,
@@ -137,9 +134,8 @@ export class TestConfigurationService extends ConfigurationService {
                     }
                 },
                 task: {
-                    type: '',
                     layout: {
-                        name: ''
+                        name: 'emptyView'
                     },
                     access: 'private',
                     navigation: {
@@ -151,9 +147,8 @@ export class TestConfigurationService extends ConfigurationService {
                     },
                     children: {
                         some_tasks: {
-                            type: '',
                             layout: {
-                                name: ''
+                                name: 'emptyView'
                             },
                             access: 'private',
                             navigation: false,
@@ -162,9 +157,8 @@ export class TestConfigurationService extends ConfigurationService {
                             },
                             children: {
                                 some_specifics: {
-                                    type: '',
                                     layout: {
-                                        name: ''
+                                        name: 'emptyView'
                                     },
                                     access: 'private',
                                     navigation: true,
@@ -322,6 +316,9 @@ export class TestConfigurationService extends ConfigurationService {
                         'console',
                         'localStorage'
                     ]
+                },
+                auth: {
+                    loginRedirect: 'login'
                 }
             }
         });
