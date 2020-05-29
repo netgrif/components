@@ -1,7 +1,7 @@
 import {Type} from '@angular/core';
 
 /**
- * Used by the {@link DynamicRoutingService} to resolve view names to their component class objects.
+ * Used by the {@link RoutingBuilderService} to resolve view names to their component class objects.
  */
 export abstract class ViewService {
 
