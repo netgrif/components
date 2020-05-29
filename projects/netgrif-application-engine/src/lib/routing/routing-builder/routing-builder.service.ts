@@ -6,6 +6,7 @@ import {View} from '../../configuration/interfaces/schema';
 import {AuthenticationGuardService} from '../../authentication/services/guard/authentication-guard.service';
 import {ViewClassInfo} from '../../../commons/view-class-info';
 import {classify} from '../../../commons/angular-cli-devkit-core-strings';
+import {LoggerService} from '../../logger/services/logger.service';
 
 
 @Injectable({
@@ -13,17 +14,29 @@ import {classify} from '../../../commons/angular-cli-devkit-core-strings';
 })
 export class RoutingBuilderService {
 
-    constructor(configService: ConfigurationService, private _viewService: ViewService, router: Router) {
+    constructor(configService: ConfigurationService, router: Router, private _viewService: ViewService, private _logger: LoggerService) {
         router.config.splice(0, router.config.length);
         for (const [pathSegment, view] of Object.entries(configService.get().views)) {
-            router.config.push(this.constructRouteObject(view, pathSegment));
+            const route = this.constructRouteObject(view, pathSegment);
+            if (route !== undefined) {
+                router.config.push(route);
+            }
         }
     }
 
-    private constructRouteObject(view: View, configPath: string): Route {
+    private constructRouteObject(view: View, configPath: string): Route | undefined {
+        const component = this.resolveComponentClass(view, configPath);
+        if (component === undefined) {
+            return undefined;
+        }
+        if (!view.routing || !view.routing.path) {
+            this._logger.warn(`nae.json configuration is invalid. View at path '${configPath}'` +
+                ` must define a 'routing' attribute. Skipping this view for routing generation.`);
+            return undefined;
+        }
         const route = {
             path: view.routing.path,
-            component: this.resolveComponentClass(view, configPath)
+            component
         };
         if (view.routing.match !== undefined && view.routing.match) {
             route['pathMatch'] = 'full';
@@ -35,19 +48,20 @@ export class RoutingBuilderService {
         if (!!view.children) {
             route['children'] = [];
             Object.entries(view.children).forEach(([configPathSegment, childView]) => {
-                route['children'].push(this.constructRouteObject(childView, `${configPath}/${configPathSegment}`));
+                const childRoute = this.constructRouteObject(childView, `${configPath}/${configPathSegment}`);
+                if (childRoute !== undefined) {
+                    route['children'].push(childRoute);                }
             });
         }
 
         return route;
     }
 
-    private resolveComponentClass(view: View, configPath: string): Type<any> {
+    private resolveComponentClass(view: View, configPath: string): Type<any> | undefined {
         let result;
         if (!!view.component) {
             result = this._viewService.resolveNameToClass(view.component.class);
         } else if (!!view.layout) {
-            // more or less copied from schematic implementation of ViewClassInfo, but referencing this class caused a compilation error
             let className;
             if (!!view.layout.componentName) {
                 className = `${classify(view.layout.componentName)}Component`;
@@ -57,12 +71,14 @@ export class RoutingBuilderService {
             }
             result = this._viewService.resolveNameToClass(className);
         } else {
-            throw new Error(`nae.json configuration is invalid. View at path ${configPath}` +
-                ` must define either a 'layout' or a 'component' attribute`);
+            this._logger.warn(`nae.json configuration is invalid. View at path '${configPath}'` +
+                ` must define either a 'layout' or a 'component' attribute. Skipping this view for routing generation.`);
+            return undefined;
         }
-        if (result === null) {
-            throw new Error(`Some views from nae.json configuration have not been created in the project.` +
-                ` Run  create-view schematic to rectify this`);
+        if (result === undefined) {
+            this._logger.warn(`Some views from nae.json configuration have not been created in the project.` +
+                ` Run create-view schematic to rectify this. Skipping this view for routing generation.`);
+            return undefined;
         }
         return result;
     }
