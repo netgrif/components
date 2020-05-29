@@ -20,7 +20,7 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
     const templateParams = {
         prefix: projectInfo.projectPrefixDasherized,
         className: view.nameWithoutComponent,
-        viewPath: args.path as string,
+        viewPath: args.path,
         dasherize: strings.dasherize,
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,

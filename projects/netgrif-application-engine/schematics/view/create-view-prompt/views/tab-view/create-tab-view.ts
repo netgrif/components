@@ -43,7 +43,7 @@ export function createTabView(
     let viewCounterStart = 0;
 
     if (!!params.defaultTaskView) {
-        processEmbeddedView(params.defaultTaskView, tabViews, view, args.path as string,
+        processEmbeddedView(params.defaultTaskView, tabViews, view, args.path,
                             viewCounterStart, tree, createViewFunctionRef);
         viewCounterStart++;
     }
@@ -51,7 +51,7 @@ export function createTabView(
     pushTabViews(tabViews, processTabViewContents(
         tree,
         params,
-        args.path as string,
+        args.path,
         view,
         createViewFunctionRef,
         viewCounterStart

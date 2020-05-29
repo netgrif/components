@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, ReplaySubject, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {NewCaseComponent} from '../../../side-menu/content-components/new-case/new-case.component';

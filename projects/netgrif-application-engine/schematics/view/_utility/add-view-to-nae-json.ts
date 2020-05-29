@@ -51,7 +51,7 @@ export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule
 function createViewObject(createViewArguments: CreateViewArguments, lastPathSegment: string): View {
     return {
         layout: {
-            name: createViewArguments.viewType as string,
+            name: createViewArguments.viewType,
             params: (createViewArguments.layoutParams === undefined) ? {} : createViewArguments.layoutParams
         },
         access: createViewArguments.access,

@@ -4,7 +4,7 @@ export interface NullableCreateViewArguments {
     path: CreateViewArguments['path'] | undefined;
     viewType: CreateViewArguments['viewType'] | undefined;
     componentName: CreateViewArguments['componentName'] | undefined;
-    customImportPath?: CreateViewArguments['customImportPath'] | undefined;
+    customImportPath?: CreateViewArguments['customImportPath'];
     layoutParams?: CreateViewArguments['layoutParams'];
     access: CreateViewArguments['access'] | undefined;
 }

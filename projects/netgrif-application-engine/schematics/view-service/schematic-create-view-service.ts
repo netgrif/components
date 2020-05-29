@@ -30,7 +30,7 @@ export function schematicEntryPoint(): Rule {
         );
         commitChangesToFile(tree, appModule.fileEntry, changes);
 
-        return createFilesFromTemplates('./files', projectInfo.path as string, {
+        return createFilesFromTemplates('./files', projectInfo.path, {
             classify: strings.classify,
             dasherize: strings.dasherize,
             project: projectInfo.projectName

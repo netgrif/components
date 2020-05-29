@@ -45,7 +45,7 @@ export function schematicEntryPoint(): Rule {
         }
         tree.overwrite('./tsconfig.json', JSON.stringify(tsconfigContents, null, 4));
 
-        return createFilesFromTemplates('./files', projectInfo.path as string, {
+        return createFilesFromTemplates('./files', projectInfo.path, {
             classify: strings.classify,
             dasherize: strings.dasherize,
             project: projectInfo.projectName,
