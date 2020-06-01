@@ -1,5 +1,5 @@
 import Role from './role';
-import {Preferences} from './preferences/preferences';
+import {Preferences} from './preferences';
 
 export class User {
     constructor(
