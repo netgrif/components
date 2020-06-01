@@ -56,6 +56,15 @@ export class RoutingBuilderService {
                     route['children'].push(childRoute);                }
             });
         }
+        if (!!view.layout && !!view.layout.name && view.layout.name === 'tabView') {
+            if (!view.children) {
+                route['children'] = [];
+            }
+            route['children'].push({
+                path: '**',
+                component
+            });
+        }
 
         return route;
     }
