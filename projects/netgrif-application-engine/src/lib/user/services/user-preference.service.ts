@@ -1,149 +1,105 @@
 import {Injectable} from '@angular/core';
-import {User} from '../models/user';
-import {Observable, of} from 'rxjs';
-import {Preferences} from '../models/preferences/preferences';
-import {PreferenceFilters} from '../models/preferences/preference-filters';
-import {PreferenceHeaders} from '../models/preferences/preference-headers';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Preferences} from '../models/preferences';
+import {UserService} from './user.service';
+import {map} from 'rxjs/operators';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {LoggerService} from '../../logger/services/logger.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserPreferenceService {
 
-    private _user: User;
+    protected _preferences$: BehaviorSubject<Preferences>;
 
-    constructor(
-        // private _resourceService: ResourceService
-    ) {
+    protected _caseViewHeaders$: Observable<Preferences['caseViewHeaders']>;
+    protected _caseFilters$: Observable<Preferences['caseFilters']>;
+    protected _taskFilters$: Observable<Preferences['taskFilters']>;
+
+    constructor(protected _userService: UserService,
+                protected _userResourceService: UserResourceService,
+                protected _logger: LoggerService,
+                protected _snackbar: SnackBarService) {
+        this._preferences$ = new BehaviorSubject<Preferences>(this._emptyPreferences());
+
+        this._userService.user$.subscribe(loggedUser => {
+            if (loggedUser.id !== '') {
+                this._userResourceService.getPreferences().subscribe(
+                    prefs => this._preferences$.next(prefs)
+                );
+            } else {
+                this._preferences$.next(this._emptyPreferences());
+            }
+        });
+
+        this._caseViewHeaders$ = this._preferences$.pipe(map(prefs => prefs.caseViewHeaders));
+        this._caseFilters$ = this._preferences$.pipe(map(prefs => prefs.caseFilters));
+        this._taskFilters$ = this._preferences$.pipe(map(prefs => prefs.taskFilters));
     }
 
-    set user(value: User) {
-        this._user = value;
-    }
-
-    ///// PREFERENCE FILTERS /////
-
-    /**
-     * @param viewId - task view viewId
-     * @param value - list of filters stringIds
-     */
-    public saveTaskFilters(viewId: string, value: PreferenceFilters) {
-        this._user.preferences.taskFilters[viewId] = value;
+    public saveTaskFilters(viewId: string, value: Array<string>): void {
+        const prefs = this._preferences$.getValue();
+        prefs.taskFilters[viewId] = value;
+        this._preferences$.next(prefs);
         this._savePreferences();
     }
 
-    /**
-     * @param viewId - task view viewId
-     * @returns list of filters stringIds
-     */
-    public getTaskFilters(viewId: string): Observable<PreferenceFilters> {
-        return of(this._user.preferences.taskFilters[viewId]);
+    public getTaskFilters$(viewId: string): Observable<Preferences['taskFilters']['']> {
+        return this._taskFilters$.pipe(map(taskFilterPrefs => taskFilterPrefs[viewId]));
     }
 
-
-    /**
-     * @param viewId - case view viewId
-     * @param value - list of filters stringIds
-     */
-    public saveCaseFilters(viewId: string, value: PreferenceFilters) {
-        this._user.preferences.caseFilters[viewId] = value;
+    public saveCaseFilters(viewId: string, value: Array<string>): void {
+        const prefs = this._preferences$.getValue();
+        prefs.caseFilters[viewId] = value;
+        this._preferences$.next(prefs);
         this._savePreferences();
     }
 
-    /**
-     * @param viewId - case view viewId
-     * @returns list of filters stringIds
-     */
-    public getCaseFilters(viewId: string): Observable<PreferenceFilters> {
-        return of(this._user.preferences.caseFilters[viewId]);
+    public getCaseFilters$(viewId: string): Observable<Preferences['caseFilters']['']> {
+        return this._caseFilters$.pipe(map(caseFilterPrefs => caseFilterPrefs[viewId]));
     }
 
-
-    /**
-     * @param viewId - workflow view viewId
-     * @param value - list of filters stringIds
-     */
-    public saveWorkflowFilters(viewId: string, value: PreferenceFilters) {
-        this._user.preferences.workflowFilters[viewId] = value;
+    public saveCaseHeaders(viewId: string, value: Array<string>): void {
+        const prefs = this._preferences$.getValue();
+        prefs.caseViewHeaders[viewId] = value;
+        this._preferences$.next(prefs);
         this._savePreferences();
     }
 
-    /**
-     * @param viewId - workflow view viewId
-     * @returns list of filters stringIds
-     */
-    public getWorkflowFilters(viewId: string): Observable<PreferenceFilters> {
-        return of(this._user.preferences.workflowFilters[viewId]);
+    public getCaseHeaders$(viewId: string): Observable<Preferences['caseViewHeaders']['']> {
+        return this._caseViewHeaders$.pipe(map(caseHeaderPrefs => caseHeaderPrefs[viewId]));
     }
 
-    ///// PREFERENCE HEADERS /////
-
-    /**
-     * @param viewId - task view viewId
-     * @param value - list of headers
-     */
-    public saveTaskHeaders(viewId: string, value: PreferenceHeaders) {
-        this._user.preferences.taskHeaders[viewId] = value;
+    public saveLocale(locale: string): void {
+        const prefs = this._preferences$.getValue();
+        prefs.locale = locale;
+        this._preferences$.next(prefs);
         this._savePreferences();
     }
 
-    /**
-     * @param viewId - task view viewId
-     * @returns list of filters stringIds
-     */
-    public getTaskHeaders(viewId: string): Observable<PreferenceHeaders> {
-        return of(this._user.preferences.taskHeaders[viewId]);
+    public getLocale$(): Observable<Preferences['locale']> {
+        return this._preferences$.pipe(map(prefs => prefs.locale));
     }
 
-
-    /**
-     * @param viewId - case view viewId
-     * @param value - list of headers
-     */
-    public saveCaseHeaders(viewId: string, value: PreferenceHeaders) {
-        this._user.preferences.caseHeaders[viewId] = value;
-        this._savePreferences();
+    protected _savePreferences(): void {
+        this._userResourceService.setPreferences(this._preferences$.getValue()).subscribe(resultMessage => {
+            if (!!resultMessage.success) {
+                // TODO i18n
+                this._snackbar.openSuccessSnackBar('User preferences saved successfully');
+            } else {
+                this._snackbar.openErrorSnackBar('An error occurred while saving user preferences');
+                this._logger.error('User preferences failed to save', resultMessage);
+            }
+        });
     }
 
-    /**
-     * @param viewId - case view viewId
-     * @returns list of filters stringIds
-     */
-    public getCaseHeaders(viewId: string): Observable<PreferenceHeaders> {
-        return of(this._user.preferences.caseHeaders[viewId]);
-    }
-
-
-    /**
-     * @param viewId - workflow view viewId
-     * @param value - list of headers
-     */
-    public saveWorkflowHeaders(viewId: string, value: PreferenceHeaders) {
-        this._user.preferences.workflowHeaders[viewId] = value;
-        this._savePreferences();
-    }
-
-    /**
-     * @param viewId - workflow view viewId
-     * @returns list of filters stringIds
-     */
-    public getWorkflowHeaders(viewId: string): Observable<PreferenceHeaders> {
-        return of(this._user.preferences.workflowHeaders[viewId]);
-    }
-
-
-
-    private _savePreferences() {
-        // TODO: Save preferences via resourceService to backend
-        // return this._resourceService.savePreferences(this._user.preferences);
-    }
-
-    private _loadPreferences(): Observable<Preferences> {
-        // TODO: Load preferences via resourceService from backend
-        // return this._resourceService.loadPreferences()
-        //     .pipe( preferences =>
-        //         tap(this._user.preferences = preferences)
-        //     );
-        return;
+    protected _emptyPreferences(): Preferences {
+        return {
+            caseViewHeaders: {},
+            caseFilters: {},
+            taskFilters: {}
+        };
     }
 }

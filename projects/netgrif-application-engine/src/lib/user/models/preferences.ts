@@ -1,5 +1,5 @@
 export interface Preferences {
-    locale: string;
+    locale?: string;
 
     taskFilters: {
         [viewId: string]: Array<string>
