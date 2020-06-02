@@ -1,7 +1,0 @@
-{
-    "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsBeforeBuild",
-    "title": "Prepares project for build",
-    "type": "object",
-    "properties": {}
-}

@@ -1,24 +1,25 @@
+import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import {
     chain,
     Rule,
     Tree,
-    schematic
+    schematic,
+    SchematicsException
 } from '@angular-devkit/schematics';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
     getAppModule,
+    getFileData,
     getNaeConfiguration,
     getProjectInfo
-} from '../../utility-functions';
-import {addImportToModule} from '@schematics/angular/utility/ast-utils';
-import {
-    addAllRoutesToMap,
-    constructRoutePath,
-    getRoutesJsonContent,
-    Route
-} from '../../view/view-utility-functions';
-import {Route as NaeRoute} from '../../../src/lib/configuration/interfaces/schema';
+} from '../../_utility/utility-functions';
+import {addImportToModule, findNodes, insertImport} from '@schematics/angular/utility/ast-utils';
+import {getGeneratedViewClassNames} from '../../view/_utility/view-service-functions';
+import {View} from '../../../src/lib/configuration/interfaces/schema';
+import {ViewClassInfo} from '../../_commons/view-class-info';
+import {classify} from '../../_commons/angular-cli-devkit-core-strings';
+import {Change} from '@schematics/angular/utility/change';
 
 
 export function createNaeFiles(): Rule {
@@ -26,8 +27,10 @@ export function createNaeFiles(): Rule {
         const rules = [];
         rules.push(createRoutesModule());
         rules.push(schematic('create-configuration-service', {}));
+        rules.push(schematic('create-view-service', {}));
         rules.push(schematic('custom-themes', {}));
         rules.push(updateAppComponentHTML());
+        rules.push(updateAppComponentTS());
         for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
             rules.push(schematic('create-view', {}));
         }
@@ -47,37 +50,91 @@ function createRoutesModule(): Rule {
 }
 
 function getNumberOfMissingViews(tree: Tree): number {
-    const projectInfo = getProjectInfo(tree);
-    const naeConfig = getNaeConfiguration(tree);
-    const routesContent = getRoutesJsonContent(tree, projectInfo);
-    const pathToRouteMap = new Map<string, Route>();
-    addAllRoutesToMap(pathToRouteMap, routesContent);
-    if (naeConfig.views.routes === undefined) {
-        return 0;
-    }
-    return findNumberOfMissingViews(pathToRouteMap, naeConfig.views.routes);
+    const config = getNaeConfiguration(tree);
+    const generatedClasses = getGeneratedViewClassNames(tree);
+    const naeJsonClasses = new Set<string>();
+    Object.keys(config.views).forEach(viewPath => {
+        union(naeJsonClasses, getViewClassNames(config.views[viewPath], viewPath));
+    });
+    return naeJsonClasses.size - generatedClasses.size;
 }
 
-function findNumberOfMissingViews(existingRoutesMap: Map<string, Route>,
-                                  naeRoutes: { [k: string]: NaeRoute }, pathPrefix: string = ''): number {
-    let counter = 0;
-    for (const routePathPart of Object.keys(naeRoutes)) {
-        const route = naeRoutes[routePathPart];
-        const routePath = constructRoutePath(pathPrefix, routePathPart);
-        if (!existingRoutesMap.has(routePath)) {
-            counter++;
-        }
-        if (route.routes !== undefined) {
-            counter += findNumberOfMissingViews(existingRoutesMap, route.routes, routePath);
-        }
+function getViewClassNames(view: View | undefined, configPath: string): Set<string> {
+    const classNames = new Set<string>();
+
+    if (view === undefined) {
+        return classNames;
     }
-    return counter;
+
+    if (!!view.component) {
+        classNames.add(view.component.class);
+    } else if (!!view.layout) {
+        if (!!view.layout.componentName) {
+            classNames.add(`${classify(view.layout.componentName)}Component`);
+        } else {
+            const classInfo = new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
+            classNames.add(classInfo.className);
+        }
+    } else {
+        throw new SchematicsException(`View with path '${configPath}' must have either 'layout' or 'component' attribute defined`);
+    }
+
+    if (!!view.children) {
+        Object.keys(view.children).forEach(childPath => {
+            if (view.children !== undefined) {
+                union(classNames, getViewClassNames(view.children[childPath], `${childPath}/${childPath}`));
+            }
+        });
+    }
+    return classNames;
+}
+
+function union(setA: Set<string>, setB: Set<string>) {
+    setB.forEach(str => {
+        setA.add(str);
+    });
 }
 
 function updateAppComponentHTML(): Rule {
     return (tree: Tree) => {
         const pathToComponent = getProjectInfo(tree).path + '/app.component.html';
-        const content: string = '<nae-side-menu>' + '\n' + tree.read(pathToComponent) + '</nae-side-menu>';
+        const content =
+            `<nae-side-menu-container>
+    <router-outlet></router-outlet>
+</nae-side-menu-container>`;
         tree.overwrite(pathToComponent, content);
     };
+}
+
+function updateAppComponentTS(): Rule {
+    return (tree: Tree) => {
+        const projectInfo = getProjectInfo(tree);
+        const fileData = getFileData(tree, projectInfo.path, 'app.component.ts');
+
+        const argumentsNode = getConstructorArguments(fileData.sourceFile);
+        const recorder = tree.beginUpdate(fileData.fileEntry.path);
+        const delimiter = argumentsNode.getChildren().length > 0 ? ', ' : '';
+        recorder.insertRight(argumentsNode.pos,
+            `private _languageService: LanguageService, private _naeRouting: RoutingBuilderService${delimiter}`);
+        tree.commitUpdate(recorder);
+
+        const appComponentChanges: Array<Change> = [];
+        appComponentChanges.push(
+            insertImport(fileData.sourceFile, fileData.fileEntry.path, 'LanguageService', '@netgrif/application-engine'),
+            insertImport(fileData.sourceFile, fileData.fileEntry.path, 'RoutingBuilderService', '@netgrif/application-engine')
+        );
+        commitChangesToFile(tree, fileData.fileEntry, appComponentChanges);
+    };
+}
+
+function getConstructorArguments(source: ts.SourceFile): ts.Node {
+    const nodes = findNodes(source, ts.SyntaxKind.Constructor, 1, true);
+    if (nodes.length === 0) {
+        throw new SchematicsException('Source file doesn\'t have a Constructor node.');
+    }
+    const argumentList = nodes[0].getChildren().find(node => node.kind === ts.SyntaxKind.SyntaxList);
+    if (argumentList === undefined) {
+        throw new SchematicsException('Malformed file. Constructor doesn\'t have arguments list');
+    }
+    return argumentList;
 }

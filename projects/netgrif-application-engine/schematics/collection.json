@@ -8,52 +8,43 @@
         "create-nae-files": {
             "description": "Creates all the necessary files for a NAE project",
             "factory": "./add/create-nae-files/index#createNaeFiles",
-            "schema": "./add/create-nae-files/schema.json"
+            "schema": "./add/create-nae-files/schema.json",
+            "private": true
         },
         "custom-themes": {
             "description": "Generate a project custom themes from nae.json.",
             "factory": "./add/custom-themes/index#customThemes",
-            "schema": "./add/custom-themes/schema.json"
-        },
-        "before-build": {
-            "description": "Is run before each build to fill all the project classes with the most recent state of various configurations.",
-            "factory": "./before-build/index#beforeBuild",
-            "schema": "./before-build/schema.json"
+            "schema": "./add/custom-themes/schema.json",
+            "private": true
         },
         "create-configuration-service": {
             "description": "Generate a project specific configuration service and add the correct provider entry to app.module",
             "factory": "./configuration-service/schematic-create-configuration-service#schematicEntryPoint",
-            "schema": "./configuration-service/schema.json"
+            "schema": "./configuration-service/schema.json",
+            "private": true
+        },
+        "create-view-service": {
+            "description": "Generate a project specific view service and add the correct provider entry to app.module",
+            "factory": "./view-service/schematic-create-view-service#schematicEntryPoint",
+            "schema": "./view-service/schema.json",
+            "private": true
         },
         "create-view": {
-            "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt for the user to input their settings.",
-            "factory": "./view/create-view/index#createView",
+            "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt to input the settings.",
+            "factory": "./view/create-view/schematic-create-view#schematicEntryPoint",
             "schema": "./view/create-view/schema.json"
         },
         "create-view-prompt": {
             "description": "Creates a view based on provided settings. Opens a prompt if no settings are provided.",
-            "factory": "./view/create-view-prompt/index#createViewPrompt",
-            "schema": "./view/create-view-prompt/schema.json"
-        },
-        "add-route": {
-            "description": "Adds a new Route object into an existing routes.json file.",
-            "factory": "./view/add-route/index#addRouteToRoutes",
-            "schema": "./view/add-route/schema.json"
-        },
-        "populate-route-module": {
-            "description": "Updates routes in route module to match with those in routes.json",
-            "factory": "./view/populate-route-module/index#populateRouteModule",
-            "schema": "./view/populate-route-module/schema.json"
-        },
-        "market-resource": {
-            "description": "Resource market",
-            "factory": "./resources/market-resource/index#initializeMarketResources",
-            "schema": "./resources/market-resource/schema.json"
+            "factory": "./view/create-view-prompt/schematic-create-view-prompt#schematicEntryPoint",
+            "schema": "./view/create-view-prompt/schema-create-view-prompt.json",
+            "hidden": true
         },
         "create-sidenav-prompt": {
             "description": "Adds extension to sidenav based on user inputs.",
-            "factory": "./view/create-view-prompt/create-sidenav-prompt#chooseSideNavType",
-            "schema": "./view/create-view-prompt/files/sidenav-toolbar-files/schema.json"
+            "factory": "./view/create-view-prompt/schematic-create-sidenav-prompt#schematicEntryPoint",
+            "schema": "./view/create-view-prompt/schema-create-sidenav-prompt.json",
+            "hidden": true
         }
     }
 }

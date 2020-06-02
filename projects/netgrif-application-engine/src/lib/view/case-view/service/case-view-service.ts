@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, ReplaySubject, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {NewCaseComponent} from '../../../side-menu/content-components/new-case/new-case.component';
@@ -10,7 +10,6 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {Net} from '../../../process/net';
-import {CaseViewParams} from '../models/case-view-params';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
@@ -36,8 +35,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService,
                 protected _searchService: SearchService,
-                protected _translate: TranslateService,
-                protected _viewParams?: CaseViewParams) {
+                protected _translate: TranslateService) {
         super(allowedNets);
         this._loading$ = new LoadingEmitter();
         this._searchService.activeFilter$.subscribe(() => {
