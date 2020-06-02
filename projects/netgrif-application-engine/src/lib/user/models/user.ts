@@ -1,5 +1,4 @@
 import Role from './role';
-import {Preferences} from './preferences';
 
 export class User {
     constructor(
@@ -9,8 +8,7 @@ export class User {
         public lastName: string,
         public authorities: Array<string>,
         public roles: Array<Role>,
-        public groups?: Array<string>,
-        public preferences?: Preferences) {
+        public groups?: Array<string>) {
     }
 
     get fullName() {

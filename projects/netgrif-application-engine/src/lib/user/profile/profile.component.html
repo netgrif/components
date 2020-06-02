@@ -116,14 +116,14 @@
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
                                 <h2>{{ 'profile.caseFilter' | translate}}</h2>
                             </div>
-                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.caseFilters)" appearance="outline" class="user-chip-list">
-                                    <mat-label>{{key}}</mat-label>
-                                    <mat-chip-list  disabled>
-                                        <mat-chip color="primary" *ngFor="let filter of user.preferences.caseFilters[key]">{{filter}}</mat-chip>
-                                    </mat-chip-list>
-                                </mat-form-field>
-                            </div>
+<!--                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">-->
+<!--                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.caseFilters)" appearance="outline" class="user-chip-list">-->
+<!--                                    <mat-label>{{key}}</mat-label>-->
+<!--                                    <mat-chip-list  disabled>-->
+<!--                                        <mat-chip color="primary" *ngFor="let filter of user.preferences.caseFilters[key]">{{filter}}</mat-chip>-->
+<!--                                    </mat-chip-list>-->
+<!--                                </mat-form-field>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -149,14 +149,14 @@
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
                                 <h2>{{ 'profile.taskFilter' | translate}}</h2>
                             </div>
-                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.taskFilters)" appearance="outline" class="user-chip-list">
-                                    <mat-label>{{key}}</mat-label>
-                                    <mat-chip-list  disabled>
-                                        <mat-chip color="primary" *ngFor="let filter of obj.keys(user.preferences.taskFilters[key])">{{filter}}</mat-chip>
-                                    </mat-chip-list>
-                                </mat-form-field>
-                            </div>
+<!--                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">-->
+<!--                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.taskFilters)" appearance="outline" class="user-chip-list">-->
+<!--                                    <mat-label>{{key}}</mat-label>-->
+<!--                                    <mat-chip-list  disabled>-->
+<!--                                        <mat-chip color="primary" *ngFor="let filter of obj.keys(user.preferences.taskFilters[key])">{{filter}}</mat-chip>-->
+<!--                                    </mat-chip-list>-->
+<!--                                </mat-form-field>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>

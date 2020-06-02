@@ -23,44 +23,6 @@ export class ProfileComponent implements OnInit {
                 this.user = userService.user;
                 userService.user$.subscribe(user => {
                     this.user = user;
-                    this.user.preferences = {
-                        caseHeaders: {
-                            viewId: {
-                                column0: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column1: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column2: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column3: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column4: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'}
-                            }
-                        },
-                        caseFilters: {
-                            viewId: []
-                        },
-                        taskHeaders: {
-                            viewId: {
-                                column0: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column1: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column2: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column3: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column4: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'}
-                            }
-                        },
-                        taskFilters: {
-                            viewId: []
-                        },
-                        workflowHeaders: {
-                            viewId: {
-                                column0: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column1: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column2: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column3: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'},
-                                column4: {type: 'string', identifier: 'string', title: 'string', sortMode: 'string', searchQuery: 'string'}
-                            }
-                        },
-                        workflowFilters: {
-                            viewId: []
-                        },
-                    };
                 });
             }
         }

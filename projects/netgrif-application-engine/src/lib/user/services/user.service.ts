@@ -20,11 +20,8 @@ export class UserService {
     private _userChange$: Subject<User>;
     private _loginCalled: boolean;
 
-    constructor(
-        // private _store: Store<State>,
-        private _preferenceService: UserPreferenceService,
-        private _authService: AuthenticationService,
-        private _userResource: UserResourceService) {
+    constructor(private _authService: AuthenticationService,
+                private _userResource: UserResourceService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new Subject<User>();
