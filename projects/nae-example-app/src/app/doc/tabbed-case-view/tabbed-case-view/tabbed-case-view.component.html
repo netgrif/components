@@ -1,4 +1,4 @@
-<div class="case-view-container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+<div class="case-view-container" fxLayout="column" fxLayoutAlign="start stretch">
 
     <mat-card class="case-view-search-container">
         <div fxLayout="row" fxLayoutAlign="space-between">
@@ -15,6 +15,6 @@
 
     <nae-header #header [type]="headerType" class="case-header-padding"></nae-header>
 
-    <nae-case-list footerSize="500" [selectedHeaders$]="selectedHeaders$"
-                   (caseClick)="handleCaseClick($event)"></nae-case-list>
+    <nae-case-list [selectedHeaders$]="selectedHeaders$"
+                   (caseClick)="handleCaseClick($event)" fxFlex></nae-case-list>
 </div>

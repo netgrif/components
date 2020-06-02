@@ -141,7 +141,6 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             return;
         }
         this._loading$.on();
-        this.loading.next(true);
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
 
