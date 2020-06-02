@@ -11,6 +11,8 @@ import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {HeaderColumn, HeaderColumnType} from './models/header-column';
 import {SortDirection} from '@angular/material';
+import {UserPreferenceService} from '../user/services/user-preference.service';
+import {View} from '../view/abstract/view';
 
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
@@ -19,7 +21,7 @@ const MAX_HEADER_COLUMNS = 5;
 
 export abstract class AbstractHeaderService implements OnDestroy {
 
-    protected constructor(private _headerType: HeaderType) {
+    protected constructor(private _headerType: HeaderType, private _preferences: UserPreferenceService, private _viewService: View) {
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this.initializeHeaderState();
@@ -148,6 +150,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         }
         newHeaders[columnIndex] = newHeaderColumn;
         this._headerState.updateSelectedHeaders(newHeaders);
+        this._preferences.setHeaders(this._viewService.uniqueViewId, newHeaders.map(header => !!header ? header.uniqueId : ''));
         this._headerChange$.next({
             headerType: this.headerType,
             mode: HeaderMode.EDIT,

@@ -53,13 +53,13 @@ export class UserPreferenceService {
         return this._preferences.caseFilters[viewId];
     }
 
-    public setCaseHeaders(viewId: string, value: Array<string>): void {
-        this._preferences.caseViewHeaders[viewId] = value;
+    public setHeaders(viewId: string, value: Array<string>): void {
+        this._preferences.headers[viewId] = value;
         this._savePreferences();
     }
 
-    public getCaseHeaders(viewId: string): Array<string> | undefined {
-        return this._preferences.caseViewHeaders[viewId];
+    public getHeaders(viewId: string): Array<string> | undefined {
+        return this._preferences.headers[viewId];
     }
 
     public setLocale(locale: string): void {
@@ -98,7 +98,7 @@ export class UserPreferenceService {
 
     protected _emptyPreferences(): Preferences {
         return {
-            caseViewHeaders: {},
+            headers: {},
             caseFilters: {},
             taskFilters: {},
             other: {}

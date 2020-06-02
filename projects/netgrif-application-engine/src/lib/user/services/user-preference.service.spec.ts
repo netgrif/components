@@ -53,8 +53,8 @@ describe('UserPreferenceService', () => {
             expect(res).toEqual(header);
         });
 
-        service.setCaseHeaders('viewCaseId', header);
-        service.getCaseHeaders('viewCaseId').subscribe( res => {
+        service.setHeaders('viewCaseId', header);
+        service.getHeaders('viewCaseId').subscribe(res => {
             expect(res).toEqual(header);
         });
 

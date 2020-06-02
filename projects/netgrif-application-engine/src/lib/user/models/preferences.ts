@@ -12,7 +12,7 @@ export interface Preferences {
     /**
      * Header preferences are strings in format: <petrinet identifier>-<datafield id> or meta-<meta identifier>
      */
-    caseViewHeaders: {
+    headers: {
         [viewId: string]: Array<string>
     };
 
