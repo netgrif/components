@@ -4,6 +4,7 @@ import {UserService} from './user.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -11,21 +12,25 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 export class UserPreferenceService {
 
     protected _preferences: Preferences;
+    protected _preferencesChanged$: Subject<void>;
 
     constructor(protected _userService: UserService,
                 protected _userResourceService: UserResourceService,
                 protected _logger: LoggerService,
                 protected _snackbar: SnackBarService) {
         this._preferences = this._emptyPreferences();
+        this._preferencesChanged$ = new Subject<void>();
 
         this._userService.user$.subscribe(loggedUser => {
             if (loggedUser.id !== '') {
                 this._userResourceService.getPreferences().subscribe(prefs => {
                         this._preferences = prefs;
+                        this._preferencesChanged$.next();
                     }
                 );
             } else {
                 this._preferences = this._emptyPreferences();
+                this._preferencesChanged$.next();
             }
         });
     }
@@ -64,6 +69,10 @@ export class UserPreferenceService {
 
     public getLocale(): string {
         return this._preferences.locale;
+    }
+
+    public preferencesChanged$(): Observable<void> {
+        return this._preferencesChanged$.asObservable();
     }
 
     protected _savePreferences(): void {
