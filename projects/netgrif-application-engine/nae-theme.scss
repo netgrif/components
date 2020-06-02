@@ -13,3 +13,7 @@
     @include navigation-theme($app-theme);
     @include header-component($app-theme);
 }
+
+.mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {
+    flex: 1 1 100%;
+}

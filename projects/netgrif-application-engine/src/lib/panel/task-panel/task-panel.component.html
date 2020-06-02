@@ -1,5 +1,5 @@
 <nae-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
-               (stopLoading)="loading=false" (getExpansionPanelRef)="setPanelRef($event)">
+               (stopLoading)="loading=false" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <span fxLayoutAlign="start center" fxFlex>
@@ -60,7 +60,7 @@
                         {{ 'tasks.view.cancel' | translate | uppercase }}</button>
                     <button *ngIf="canFinish()" (click)="processTask('finish')" mat-button>
                         {{ 'tasks.view.finish' | translate | uppercase }}</button>
-                    <button *ngIf="canColapse()" color="primary" (click)="collapse()" mat-button>
+                    <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-button>
                         {{ 'tasks.view.collapse' | translate | uppercase }}</button>
                 </div>
             </mat-action-row>

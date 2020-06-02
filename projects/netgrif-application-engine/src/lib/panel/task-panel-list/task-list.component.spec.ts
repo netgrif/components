@@ -8,6 +8,19 @@ import {Component} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {of} from 'rxjs';
+import {SearchService} from '../../search/search-service/search.service';
+import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {
+    ArrayTaskViewServiceFactory,
+    noNetsTaskViewServiceFactory
+} from '../../view/task-view/service/factory/array-task-view-service-factory';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../task-panel/policy';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {AuthenticationModule} from '../../authentication/authentication.module';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
@@ -21,9 +34,27 @@ describe('TaskListComponent', () => {
                 MaterialModule,
                 NoopAnimationsModule,
                 CommonModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                AuthenticationModule
             ],
-            declarations: [TestWrapperComponent]
+            declarations: [TestWrapperComponent],
+            providers: [
+                ArrayTaskViewServiceFactory,
+                {
+                    provide: SearchService,
+                    useFactory: TestTaskSearchServiceFactory
+                },
+                {
+                    provide: ConfigurationService,
+                    useClass: TestConfigurationService
+                },
+                {
+                    provide: TaskViewService,
+                    useFactory: noNetsTaskViewServiceFactory,
+                    deps: [ArrayTaskViewServiceFactory]
+                },
+                {provide: TaskResourceService, useClass: MyResources},
+            ]
         })
             .compileComponents();
 
@@ -43,8 +74,31 @@ describe('TaskListComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-task-list [taskPanels]="taskPanels"></nae-task-list>'
+    template: '<nae-task-list [tasks$]="taskPanels"></nae-task-list>'
 })
 class TestWrapperComponent {
-    taskPanels = [];
+    taskPanels = of([]);
+}
+
+class MyResources {
+    searchTask(filter) {
+        return of([{
+            caseId: 'string',
+            transitionId: 'string',
+            title: 'string',
+            caseColor: 'string',
+            caseTitle: 'string',
+            user: undefined,
+            roles: {},
+            startDate: undefined,
+            finishDate: undefined,
+            assignPolicy: AssignPolicy.manual,
+            dataFocusPolicy: DataFocusPolicy.manual,
+            finishPolicy: FinishPolicy.manual,
+            stringId: 'string',
+            cols: undefined,
+            dataGroups: [],
+            _links: {}
+        }]);
+    }
 }

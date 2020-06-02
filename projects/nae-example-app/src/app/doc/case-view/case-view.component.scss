@@ -1,14 +1,17 @@
 .case-view-container {
-    margin: 16px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 .case-view-search-container {
+    margin-top: 16px;
     padding: 16px;
 }
 
 .case-header-padding {
-    padding-bottom: 20px;
-    padding-top: 20px;
+    padding-bottom: 16px;
+    padding-top: 16px;
 }
 
 .font-size-20 {
@@ -19,3 +22,7 @@
     width: 100%;
 }
 
+
+.full-height {
+    height: 100%;
+}
