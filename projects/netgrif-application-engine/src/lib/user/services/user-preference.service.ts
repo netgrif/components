@@ -91,7 +91,8 @@ export class UserPreferenceService {
         return {
             caseViewHeaders: {},
             caseFilters: {},
-            taskFilters: {}
+            taskFilters: {},
+            other: {}
         };
     }
 }
