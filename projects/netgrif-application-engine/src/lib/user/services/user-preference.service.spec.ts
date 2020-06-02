@@ -25,12 +25,12 @@ describe('UserPreferenceService', () => {
                 workflowFilters: {},
                 workflowHeaders: {}
             });
-        service.saveTaskFilters('viewId', {filter: ''});
+        service.setTaskFilters('viewId', {filter: ''});
         service.getTaskFilters('viewId').subscribe(res => {
             expect(res).toEqual({filter: ''});
         });
 
-        service.saveCaseFilters('viewCaseId', {filter: ''});
+        service.setCaseFilters('viewCaseId', {filter: ''});
         service.getCaseFilters('viewCaseId').subscribe(res => {
             expect(res).toEqual({filter: ''});
         });
@@ -53,7 +53,7 @@ describe('UserPreferenceService', () => {
             expect(res).toEqual(header);
         });
 
-        service.saveCaseHeaders('viewCaseId', header);
+        service.setCaseHeaders('viewCaseId', header);
         service.getCaseHeaders('viewCaseId').subscribe( res => {
             expect(res).toEqual(header);
         });

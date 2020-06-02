@@ -50,7 +50,7 @@ export class LanguageService {
     setLanguage(lang: string, saveToPreferences = false) {
         this._translate.use(lang.match(this._LANG_MATCHER) ? lang : this._DEFAULT_LANG);
         if (saveToPreferences) {
-            this._preferenceService.saveLocale(lang);
+            this._preferenceService.setLocale(lang);
         }
         localStorage.setItem('Language', lang.match(this._LANG_MATCHER) ? lang : this._DEFAULT_LANG);
         this._langChange$.next(lang.match(this._LANG_MATCHER) ? lang : this._DEFAULT_LANG);

@@ -35,7 +35,7 @@ export class UserPreferenceService {
         });
     }
 
-    public saveTaskFilters(viewId: string, value: Array<string>): void {
+    public setTaskFilters(viewId: string, value: Array<string>): void {
         this._preferences.taskFilters[viewId] = value;
         this._savePreferences();
     }
@@ -44,7 +44,7 @@ export class UserPreferenceService {
         return this._preferences.taskFilters[viewId];
     }
 
-    public saveCaseFilters(viewId: string, value: Array<string>): void {
+    public setCaseFilters(viewId: string, value: Array<string>): void {
         this._preferences.caseFilters[viewId] = value;
         this._savePreferences();
     }
@@ -53,7 +53,7 @@ export class UserPreferenceService {
         return this._preferences.caseFilters[viewId];
     }
 
-    public saveCaseHeaders(viewId: string, value: Array<string>): void {
+    public setCaseHeaders(viewId: string, value: Array<string>): void {
         this._preferences.caseViewHeaders[viewId] = value;
         this._savePreferences();
     }
@@ -62,13 +62,22 @@ export class UserPreferenceService {
         return this._preferences.caseViewHeaders[viewId];
     }
 
-    public saveLocale(locale: string): void {
+    public setLocale(locale: string): void {
         this._preferences.locale = locale;
         this._savePreferences();
     }
 
     public getLocale(): string {
         return this._preferences.locale;
+    }
+
+    public setOther(key: string, value: any): void {
+        this._preferences.other[key] = value;
+        this._savePreferences();
+    }
+
+    public getOther(key: string): any | undefined {
+        return this._preferences.other[key];
     }
 
     public preferencesChanged$(): Observable<void> {
