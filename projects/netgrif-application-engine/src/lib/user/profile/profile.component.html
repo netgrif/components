@@ -101,14 +101,14 @@
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
                                 <h2>{{ 'profile.caseHead' | translate}}</h2>
                             </div>
-                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.caseHeaders)" appearance="outline" class="user-chip-list">
-                                    <mat-label>{{key}}</mat-label>
-                                    <mat-chip-list  disabled>
-                                        <mat-chip color="primary" *ngFor="let header of obj.keys(user.preferences.caseHeaders[key])">{{user.preferences.caseHeaders[key][header].title}}</mat-chip>
-                                    </mat-chip-list>
-                                </mat-form-field>
-                            </div>
+<!--                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">-->
+<!--                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.caseHeaders)" appearance="outline" class="user-chip-list">-->
+<!--                                    <mat-label>{{key}}</mat-label>-->
+<!--                                    <mat-chip-list  disabled>-->
+<!--                                        <mat-chip color="primary" *ngFor="let header of obj.keys(user.preferences.caseHeaders[key])">{{user.preferences.caseHeaders[key][header].title}}</mat-chip>-->
+<!--                                    </mat-chip-list>-->
+<!--                                </mat-form-field>-->
+<!--                            </div>-->
                         </div>
                     </div>
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
@@ -134,14 +134,14 @@
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
                                 <h2>{{ 'profile.taskHead' | translate}}</h2>
                             </div>
-                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.taskHeaders)" appearance="outline" class="user-chip-list">
-                                    <mat-label>{{key}}</mat-label>
-                                    <mat-chip-list  disabled>
-                                        <mat-chip color="primary" *ngFor="let header of obj.keys(user.preferences.taskHeaders[key])">{{user.preferences.taskHeaders[key][header].title}}</mat-chip>
-                                    </mat-chip-list>
-                                </mat-form-field>
-                            </div>
+<!--                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">-->
+<!--                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.taskHeaders)" appearance="outline" class="user-chip-list">-->
+<!--                                    <mat-label>{{key}}</mat-label>-->
+<!--                                    <mat-chip-list  disabled>-->
+<!--                                        <mat-chip color="primary" *ngFor="let header of obj.keys(user.preferences.taskHeaders[key])">{{user.preferences.taskHeaders[key][header].title}}</mat-chip>-->
+<!--                                    </mat-chip-list>-->
+<!--                                </mat-form-field>-->
+<!--                            </div>-->
                         </div>
                     </div>
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
@@ -167,14 +167,14 @@
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
                                 <h2>{{ 'profile.workFilter' | translate}}</h2>
                             </div>
-                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.workflowHeaders)" appearance="outline" class="user-chip-list">
-                                    <mat-label>{{key}}</mat-label>
-                                    <mat-chip-list  disabled>
-                                        <mat-chip color="primary" *ngFor="let header of obj.keys(user.preferences.workflowHeaders[key])">{{user.preferences.workflowHeaders[key][header].title}}</mat-chip>
-                                    </mat-chip-list>
-                                </mat-form-field>
-                            </div>
+<!--                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">-->
+<!--                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.workflowHeaders)" appearance="outline" class="user-chip-list">-->
+<!--                                    <mat-label>{{key}}</mat-label>-->
+<!--                                    <mat-chip-list  disabled>-->
+<!--                                        <mat-chip color="primary" *ngFor="let header of obj.keys(user.preferences.workflowHeaders[key])">{{user.preferences.workflowHeaders[key][header].title}}</mat-chip>-->
+<!--                                    </mat-chip-list>-->
+<!--                                </mat-form-field>-->
+<!--                            </div>-->
                         </div>
                     </div>
                     <div fxFlex="50" class="padding-x2" fxLayout="column">
@@ -182,14 +182,14 @@
                             <div fxLayoutAlign="center start" class="card-title" matRipple>
                                 <h2>{{ 'profile.workFilter' | translate}}</h2>
                             </div>
-                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.workflowFilters)" appearance="outline" class="user-chip-list">
-                                    <mat-label>{{key}}</mat-label>
-                                    <mat-chip-list  disabled>
-                                        <mat-chip color="primary" *ngFor="let filter of obj.keys(user.preferences.workflowFilters[key])">{{filter}}</mat-chip>
-                                    </mat-chip-list>
-                                </mat-form-field>
-                            </div>
+<!--                            <div *ngIf="user.preferences" fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">-->
+<!--                                <mat-form-field *ngFor="let key of obj.keys(user.preferences.workflowFilters)" appearance="outline" class="user-chip-list">-->
+<!--                                    <mat-label>{{key}}</mat-label>-->
+<!--                                    <mat-chip-list  disabled>-->
+<!--                                        <mat-chip color="primary" *ngFor="let filter of obj.keys(user.preferences.workflowFilters[key])">{{filter}}</mat-chip>-->
+<!--                                    </mat-chip-list>-->
+<!--                                </mat-form-field>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
