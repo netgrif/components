@@ -18,6 +18,10 @@ export class TabViewComponent implements OnInit {
      * Tabs that are opened initially in the view
      */
     @Input() public initialTabs: Array<TabContent>;
+    /**
+     * Flag if the height of the content has to stretch to fill the available window
+     */
+    @Input() public stretch: boolean;
     public tabView: TabView;
 
     /**

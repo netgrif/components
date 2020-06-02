@@ -15,6 +15,6 @@
 
     <nae-header #header [type]="headerType" class="case-header-padding"></nae-header>
 
-    <nae-case-list footerSize="0" [selectedHeaders$]="selectedHeaders$"
+    <nae-case-list [selectedHeaders$]="selectedHeaders$"
                    (caseClick)="handleCaseClick($event)" fxFlex></nae-case-list>
 </div>

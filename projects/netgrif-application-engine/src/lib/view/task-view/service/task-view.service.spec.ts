@@ -11,7 +11,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../panel/task-p
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../../utility/tests/test-factory-methods';
-import {ArrayTaskViewServiceFactory} from './factory/array-task-view-service-factory';
+import {ArrayTaskViewServiceFactory, noNetsTaskViewServiceFactory} from './factory/array-task-view-service-factory';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -22,7 +22,7 @@ describe('TaskViewService', () => {
             providers: [
                 ArrayTaskViewServiceFactory,
                 {   provide: TaskViewService,
-                    useFactory: ArrayTaskViewServiceFactory.noNetsTaskViewServiceFactory,
+                    useFactory: noNetsTaskViewServiceFactory,
                     deps: [ArrayTaskViewServiceFactory]},
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

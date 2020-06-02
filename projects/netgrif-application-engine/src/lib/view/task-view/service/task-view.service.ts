@@ -17,6 +17,7 @@ import {Task} from '../../../resources/interface/task';
 import {LanguageService} from '../../../translate/language.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
+import {ListRange} from '@angular/cdk/collections';
 
 
 @Injectable()
@@ -100,7 +101,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     }
 
     public loadPage(page: number): Observable<{ [k: string]: TaskPanelData }> {
-        if (this._loading$.isActive || page === null || page === undefined || this._clear) {
+        if (this._loading$.isActive || page === null || page === undefined || page < 0 || this._clear) {
             return of({});
         }
         let params: HttpParams = new HttpParams();
@@ -146,7 +147,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         // TODO 12.5.2020 - better solution for mongo searching
         if (!this._searchService.additionalFiltersApplied && !!this._parentCaseId) {
             this._taskService.getTasks({case: this._parentCaseId}, params).subscribe(tasks => this.processTasks(tasks.content),
-                () => this.processError());
+                error => this.processError());
         } else {
             // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation
             this._taskService.searchTask(this._searchService.activeFilter).subscribe(tasks => this.processTasks(tasks.content),
@@ -221,11 +222,15 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         }
     }
 
-    public nextPage(lastRendered, totalLoaded): void {
+    public nextPage(renderedRange: ListRange, totalLoaded: number): void {
         if (this._loading$.isActive || this._endOfData) {
             return;
         }
-        if (lastRendered === totalLoaded) {
+
+        // if (renderedRange.start === 0) {
+        //     this._requestedPage$.next(this._pagination.number - 1);
+        // } else
+        if (renderedRange.end === totalLoaded) {
             this._requestedPage$.next(this._pagination.number + 1);
         }
     }
@@ -237,10 +242,14 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         this._clear = true;
         this._pagination.number = -1;
         this._endOfData = false;
-        this.nextPage(0, 0);
+        const range = {
+            start: -1,
+            end: 0
+        };
+        this.nextPage(range, 0);
         timer(100).subscribe(_ => {
             this._pagination.number = -1;
-            this.nextPage(0, 0);
+            this.nextPage(range, 0);
         });
     }
 

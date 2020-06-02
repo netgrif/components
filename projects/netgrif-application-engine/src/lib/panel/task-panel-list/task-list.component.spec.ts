@@ -13,10 +13,14 @@ import {SearchService} from '../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {ArrayTaskViewServiceFactory} from '../../view/task-view/service/factory/array-task-view-service-factory';
+import {
+    ArrayTaskViewServiceFactory,
+    noNetsTaskViewServiceFactory
+} from '../../view/task-view/service/factory/array-task-view-service-factory';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../task-panel/policy';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {AuthenticationModule} from '../../authentication/authentication.module';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
@@ -30,10 +34,12 @@ describe('TaskListComponent', () => {
                 MaterialModule,
                 NoopAnimationsModule,
                 CommonModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                AuthenticationModule
             ],
             declarations: [TestWrapperComponent],
             providers: [
+                ArrayTaskViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestTaskSearchServiceFactory
@@ -43,8 +49,8 @@ describe('TaskListComponent', () => {
                     useClass: TestConfigurationService
                 },
                 {
-                    provide: ArrayTaskViewServiceFactory,
-                    useFactory: ArrayTaskViewServiceFactory.noNetsTaskViewServiceFactory,
+                    provide: TaskViewService,
+                    useFactory: noNetsTaskViewServiceFactory,
                     deps: [ArrayTaskViewServiceFactory]
                 },
                 {provide: TaskResourceService, useClass: MyResources},

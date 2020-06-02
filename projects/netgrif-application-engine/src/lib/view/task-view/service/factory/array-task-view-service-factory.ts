@@ -11,6 +11,25 @@ import {InjectedTabbedTaskViewData} from '../../models/injected-tabbed-task-view
 import {LoggerService} from '../../../../logger/services/logger.service';
 
 /**
+ * Convenience method that can be used as a factory if no `allowedNets` are necessary.
+ * It has a dependency on this class, so the component must provide {@link ArrayTaskViewServiceFactory}.
+ */
+export function noNetsTaskViewServiceFactory(factory: ArrayTaskViewServiceFactory): TaskViewService {
+    return factory.create([]);
+}
+
+/**
+ * Convenience method that can be used as a factory for tabbed task views.
+ * If no allowed nets are provided in the injected data
+ * the function will create a {@link TaskViewService} instance with no allowed nets.
+ * It has a dependency on this class and {@link NAE_TAB_DATA} injection token.
+ */
+export function tabbedTaskViewServiceFactory(factory: ArrayTaskViewServiceFactory, tabData: InjectedTabbedTaskViewData): TaskViewService {
+    return factory.create(!!tabData.allowedNets ? tabData.allowedNets : []);
+}
+
+
+/**
  * Utility Service that saves you from injecting a bunch of {@link TaskViewService} dependencies.
  * Simply provide this service in your task view and use it in your local {@link TaskViewService} factory
  * to create an instance for that view.
@@ -27,25 +46,6 @@ import {LoggerService} from '../../../../logger/services/logger.service';
  */
 @Injectable()
 export class ArrayTaskViewServiceFactory {
-
-    /**
-     * Convenience method that can be used as a factory if no `allowedNets` are necessary.
-     * It has a dependency on this class, so the component must provide {@link ArrayTaskViewServiceFactory}.
-     */
-    public static noNetsTaskViewServiceFactory(factory: ArrayTaskViewServiceFactory): TaskViewService {
-        return factory.create([]);
-    }
-
-    /**
-     * Convenience method that can be used as a factory for tabbed task views.
-     * If no allowed nets are provided in the injected data
-     * the function will create a {@link TaskViewService} instance with no allowed nets.
-     * It has a dependency on this class and {@link NAE_TAB_DATA} injection token.
-     */
-    public static tabbedTaskViewServiceFactory(factory: ArrayTaskViewServiceFactory, tabData: InjectedTabbedTaskViewData): TaskViewService {
-        return factory.create(!!tabData.allowedNets ? tabData.allowedNets : []);
-    }
-
 
     constructor(protected _taskResourceService: TaskResourceService,
                 protected _userService: UserService,

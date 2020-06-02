@@ -40,6 +40,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     @Input() taskPanelData: TaskPanelData;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
+    @Input() public first: boolean;
+    @Input() public last: boolean;
 
     public portal: ComponentPortal<any>;
     public loading: boolean;
@@ -228,7 +230,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 this._queue.next(false);
             }
             afterAction.next(false);
-            this._taskViewService.loadTasks();
+            this._taskViewService.reload();
         });
     }
 
@@ -250,7 +252,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                                     newChoices.push({key: it, value: it} as EnumerationFieldValue);
                                 });
                             } else {
-                                Object.keys(updatedField.choices).forEach( choice => {
+                                Object.keys(updatedField.choices).forEach(choice => {
                                     newChoices.push({key: choice, value: updatedField.choices[key]} as EnumerationFieldValue);
                                 });
                             }
@@ -270,7 +272,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         const after = new Subject<boolean>();
         after.subscribe(bool => {
             if (bool) {
-                this._taskViewService.loadTasks();
+                this._taskViewService.reload();
             }
             after.complete();
         });
@@ -430,6 +432,9 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private validateTaskData(): boolean {
+        if (!this.taskPanelData.task.dataGroups) {
+            return false;
+        }
         const valid = !this.taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
         if (!valid) {
             this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
@@ -476,7 +481,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         return this.taskPanelData.task.user && this.taskPanelData.task.user.email === this._userService.user.email;
     }
 
-    canColapse() {
+    canCollapse() {
         return this.taskPanelData.task.assignPolicy === AssignPolicy.manual;
     }
 
@@ -498,7 +503,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         const after = new Subject<boolean>();
         if (success) {
             after.subscribe(bool => {
-                this._taskViewService.loadTasks();
+                this._taskViewService.reload();
                 if (bool) {
                     const afterLoad = new Subject<boolean>();
                     afterLoad.subscribe(boolean => {
@@ -514,7 +519,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             this.assign(after);
         } else {
             after.subscribe(bool => {
-                this._taskViewService.loadTasks();
+                this._taskViewService.reload();
                 this.collapse();
                 after.complete();
             });
