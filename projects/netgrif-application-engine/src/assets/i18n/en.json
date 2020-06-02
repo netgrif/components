@@ -191,7 +191,7 @@
             "visualID": "Visual ID",
             "title": "Title",
             "author": "Author",
-            "creaDate": "Creation date"
+            "creationDate": "Creation date"
         },
         "taskMeta": {
             "case": "Case",
@@ -202,7 +202,7 @@
         "workflowMeta": {
             "initials": "Initials",
             "version": "Version",
-            "creaDate": "Upload date"
+            "creationDate": "Upload date"
         },
         "orderMode": "Ordering mode",
         "searchMode": "Search mode",

@@ -25,7 +25,7 @@ export class WorkflowHeaderService extends AbstractHeaderService {
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.TITLE, 'headers.caseMeta.title', 'text'),
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.VERSION, 'headers.workflowMeta.version', 'text'),
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.AUTHOR, 'headers.caseMeta.author', 'text'),
-            new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.CREATION_DATE, 'headers.workflowMeta.creaDate', 'date'),
+            new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.CREATION_DATE, 'headers.workflowMeta.creationDate', 'date'),
         ];
     }
 }

@@ -192,7 +192,7 @@
             "visualID": "Vizuálne ID",
             "title": "Názov",
             "author": "Autor",
-            "creaDate": "Dátum vytvorenia"
+            "creationDate": "Dátum vytvorenia"
         },
         "taskMeta": {
             "case": "Prípad",
@@ -203,7 +203,7 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
-            "creaDate": "Dátum nahratia"
+            "creationDate": "Dátum nahratia"
         },
         "orderMode": "Mód zoraďovania",
         "searchMode": "Mód vyhľadávania",
