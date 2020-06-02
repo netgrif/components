@@ -5,14 +5,14 @@ import {
 } from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
 import {insertImport} from '@schematics/angular/utility/ast-utils';
-import {addProviderToModule} from '../modified-library-functions';
+import {addProviderToModule} from '../_utility/modified-library-functions';
 import {
     commitChangesToFile,
     createFilesFromTemplates,
     createRelativePath,
     getAppModule,
     getProjectInfo
-} from '../utility-functions';
+} from '../_utility/utility-functions';
 
 
 export function schematicEntryPoint(): Rule {
@@ -45,12 +45,11 @@ export function schematicEntryPoint(): Rule {
         }
         tree.overwrite('./tsconfig.json', JSON.stringify(tsconfigContents, null, 4));
 
-        return createFilesFromTemplates('./files', projectInfo.path as string, {
+        return createFilesFromTemplates('./files', projectInfo.path, {
             classify: strings.classify,
             dasherize: strings.dasherize,
             project: projectInfo.projectName,
             configPath: createRelativePath(configPathFromRoot, 'nae.json')
         });
-
     };
 }

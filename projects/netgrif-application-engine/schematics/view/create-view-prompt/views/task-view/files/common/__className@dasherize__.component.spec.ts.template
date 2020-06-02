@@ -1,0 +1,47 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { <%= classify(className) %>Component } from './<%= dasherize(className) %>.component';
+import {
+    MaterialModule,
+    HeaderModule,
+    ConfigurationService,
+    PanelModule,
+    AuthenticationMethodService,
+    NAE_TAB_DATA,
+    SimpleFilter,
+    FilterType
+} from '@netgrif/application-engine';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
+
+describe('<%= classify(className) %>Component', () => {
+    let component: <%= classify(className) %>Component;
+    let fixture: ComponentFixture<<%= classify(className) %>Component>;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                MaterialModule,
+                HeaderModule,
+                PanelModule,
+                BrowserAnimationsModule
+            ],
+            providers: [
+                {provide: NAE_TAB_DATA, useValue: {baseFilter: new SimpleFilter('id', FilterType.TASK, {})}},
+                AuthenticationMethodService,
+                {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService}
+            ],
+            declarations: [<%= classify(className) %>Component]
+        })
+            .compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(<%= classify(className) %>Component);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+});

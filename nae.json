@@ -36,218 +36,522 @@
         ]
     },
     "views": {
-        "layout": "empty",
-        "routes": {
-            "dashboard": {
-                "layout": {
-                    "name": "dashboard",
-                    "params": {
-                        "columns": 4,
-                        "cards": [
-                            {
-                                "type": "DashboardCardTypes.COUNT",
-                                "title": "All tasks",
-                                "resourceType": "Task",
-                                "filter": {},
-                                "layout": {
-                                    "x": 0,
-                                    "y": 0,
-                                    "rows": 1,
-                                    "cols": 1
-                                }
+        "demo-authentication": {
+            "component": {
+                "class": "AuthenticationComponent",
+                "from": "./doc/authentication/authentication.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "authentication"
+            }
+        },
+        "demo-login": {
+            "component": {
+                "class": "LoginFormComponent",
+                "from": "./doc/forms/login-form/login-form.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "login"
+            }
+        },
+        "demo-reset-password": {
+            "component": {
+                "class": "PasswordFormComponent",
+                "from": "./doc/forms/password-form/password-form.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "reset-password"
+            }
+        },
+        "demo-registration": {
+            "component": {
+                "class": "RegisterFormComponent",
+                "from": "./doc/forms/register-form/register-form.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "registration"
+            }
+        },
+        "demo-drawer": {
+            "component": {
+                "class": "DrawerExampleComponent",
+                "from": "./doc/drawer-example/drawer-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "drawer"
+            }
+        },
+        "demo-rail": {
+            "component": {
+                "class": "RailExampleComponent",
+                "from": "./doc/rail-example/rail-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "rail"
+            }
+        },
+        "demo-headers": {
+            "component": {
+                "class": "HeadersComponent",
+                "from": "./doc/headers/headers.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "headers"
+            }
+        },
+        "demo-sidemenu": {
+            "component": {
+                "class": "SidemenuExampleComponent",
+                "from": "./doc/sidemenu-example/sidemenu-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "sidemenu"
+            }
+        },
+        "demo-snack-bar": {
+            "component": {
+                "class": "SnackBarExampleComponent",
+                "from": "./doc/snack-bar-example/snack-bar-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "snack-bar"
+            }
+        },
+        "demo-dialog": {
+            "component": {
+                "class": "DialogExampleComponent",
+                "from": "./doc/dialog-example/dialog-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "dialog"
+            }
+        },
+        "demo-tab-view": {
+            "component": {
+                "class": "TabViewExampleComponent",
+                "from": "./doc/tab-view-example/tab-view-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "tab-view"
+            }
+        },
+        "demo-reactive-forms": {
+            "component": {
+                "class": "ReactiveTextFieldComponent",
+                "from": "./doc/reactive-text-field/reactive-text-field.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "reactive-forms"
+            }
+        },
+        "demo-toolbar": {
+            "component": {
+                "class": "ToolbarExampleComponent",
+                "from": "./doc/toolbar-example/toolbar-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "toolbar"
+            }
+        },
+        "demo-panels": {
+            "component": {
+                "class": "PanelsComponent",
+                "from": "./doc/panels/panels.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "panels"
+            }
+        },
+        "demo-task-view": {
+            "component": {
+                "class": "TaskViewComponent",
+                "from": "./doc/task-view/task-view.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "task-view"
+            }
+        },
+        "demo-case-view": {
+            "component": {
+                "class": "CaseViewComponent",
+                "from": "./doc/case-view/case-view.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "case-view"
+            }
+        },
+        "demo-tabbed-views": {
+            "component": {
+                "class": "TabbedViewsExampleComponent",
+                "from": "./doc/tabbed-case-view/tabbed-views-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "tabbed-views"
+            }
+        },
+        "demo-workflow-view": {
+            "component": {
+                "class": "WorkflowViewExampleComponent",
+                "from": "./doc/workflow-view-example/workflow-view-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "workflow-view"
+            }
+        },
+        "demo-dashboard-view": {
+            "component": {
+                "class": "DashboardExampleComponent",
+                "from": "./doc/dashboard-example/dashboard-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "dashboard-view"
+            }
+        },
+        "demo-filter-repository": {
+            "component": {
+                "class": "FilterRepositoryExampleComponent",
+                "from": "./doc/filter-repository-example/filter-repository-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "filter-repository"
+            }
+        },
+        "demo-profile": {
+            "component": {
+                "class": "ProfileComponent",
+                "from": "./doc/profile/profile.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "profile"
+            }
+        },
+        "demo-navigation-test": {
+            "component": {
+                "class": "NavigationExampleComponent",
+                "from": "./doc/navigation-example/navigation-example.component"
+            },
+            "access": "private",
+            "navigation": {
+                "title": "NavTest"
+            },
+            "routing": {
+                "path": "navigation-test"
+            },
+            "children": {
+                "one": {
+                    "component": {
+                        "class": "ButtonsNavComponent",
+                        "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "one",
+                        "icon": "account_circle"
+                    },
+                    "routing": {
+                        "path": "one"
+                    },
+                    "children": {
+                        "one-one": {
+                            "component": {
+                                "class": "ButtonsNavComponent",
+                                "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
                             },
-                            {
-                                "type": "DashboardCardTypes.IFRAME",
-                                "url": "https://netgrif.com/",
-                                "layout": {
-                                    "x": 2,
-                                    "y": 0,
-                                    "rows": 2,
-                                    "cols": 2
-                                }
+                            "access": "private",
+                            "navigation": {
+                                "title": "one-one",
+                                "icon": "account_circle"
                             },
-                            {
-                                "type": "DashboardCardTypes.COUNT",
-                                "title": "All cases",
-                                "resourceType": "Case",
-                                "filter": {},
-                                "layout": {
-                                    "x": 1,
-                                    "y": 1,
-                                    "rows": 1,
-                                    "cols": 1
-                                }
+                            "routing": {
+                                "path": "one-one"
                             }
-                        ]
+                        },
+                        "one-two": {
+                            "component": {
+                                "class": "ButtonsNavComponent",
+                                "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "one-two",
+                                "icon": "account_circle"
+                            },
+                            "routing": {
+                                "path": "one-two"
+                            }
+                        }
                     }
                 },
-                "access": "private",
-                "navigation": {
-                    "title": "Dashboard",
-                    "icon": "dashboard"
-                }
-            },
-            "cases": {
-                "type": "",
-                "layout": {
-                    "name": ""
-                },
-                "access": "private",
-                "navigation": {
-                    "title": "Cases",
-                    "icon": "settings"
-                },
-                "routes": {
-                    "some_cases": {
-                        "type": "",
-                        "layout": {
-                            "name": ""
+                "two": {
+                    "component": {
+                        "class": "ButtonsNavComponent",
+                        "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "second",
+                        "icon": "account_circle"
+                    },
+                    "routing": {
+                        "path": "two"
+                    },
+                    "children": {
+                        "two-one": {
+                            "component": {
+                                "class": "ButtonsNavComponent",
+                                "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "two-one",
+                                "icon": "account_circle"
+                            },
+                            "routing": {
+                                "path": "two-one"
+                            }
                         },
-                        "access": "private",
-                        "navigation": {
-                            "icon": "account_circle"
-                        },
-                        "routes": {
-                            "some_specifics": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": true
+                        "two-two": {
+                            "component": {
+                                "class": "ButtonsNavComponent",
+                                "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                            },
+                            "access": "private",
+                            "navigation": {
+                                "title": "two-two",
+                                "icon": "account_circle"
+                            },
+                            "routing": {
+                                "path": "two-two"
                             }
                         }
                     }
                 }
-            },
-            "task": {
-                "type": "",
-                "layout": {
-                    "name": ""
-                },
-                "access": "private",
-                "navigation": {
-                    "title": "Tasks",
-                    "icon": "assignment"
-                },
-                "routes": {
-                    "some_tasks": {
-                        "type": "",
-                        "layout": {
-                            "name": ""
+            }
+        },
+        "dashboard": {
+            "layout": {
+                "name": "dashboard",
+                "params": {
+                    "columns": 4,
+                    "cards": [
+                        {
+                            "type": "DashboardCardTypes.COUNT",
+                            "title": "All tasks",
+                            "resourceType": "Task",
+                            "filter": {},
+                            "layout": {
+                                "x": 0,
+                                "y": 0,
+                                "rows": 1,
+                                "cols": 1
+                            }
                         },
-                        "access": "private",
-                        "navigation": false,
-                        "routes": {
-                            "some_specifics": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": true
+                        {
+                            "type": "DashboardCardTypes.IFRAME",
+                            "url": "https://netgrif.com/",
+                            "layout": {
+                                "x": 2,
+                                "y": 0,
+                                "rows": 2,
+                                "cols": 2
+                            }
+                        },
+                        {
+                            "type": "DashboardCardTypes.COUNT",
+                            "title": "All cases",
+                            "resourceType": "Case",
+                            "filter": {},
+                            "layout": {
+                                "x": 1,
+                                "y": 1,
+                                "rows": 1,
+                                "cols": 1
                             }
                         }
-                    }
+                    ]
+                },
+                "componentName": "MyDashboard"
+            },
+            "access": "private",
+            "navigation": {
+                "title": "Dashboard",
+                "icon": "dashboard"
+            },
+            "routing": {
+                "path": "comp-dashboard"
+            }
+        },
+        "case": {
+            "layout": {
+                "name": "caseView",
+                "params": {
+                    "allowedNets": [
+                        "search-test",
+                        "search-test-defaultRole",
+                        "leukemia",
+                        "1",
+                        "bill"
+                    ]
+                },
+                "componentName": "MyCaseView"
+            },
+            "access": "private",
+            "navigation": {},
+            "routing": {
+                "path": "comp-case"
+            }
+        },
+        "custom": {
+            "component": {
+                "class": "CaseViewComponent",
+                "from": "./doc/case-view/case-view.component"
+            },
+            "navigation": false,
+            "access": "private",
+            "routing": {
+                "path": "comp-custom"
+            }
+        },
+        "tab": {
+            "layout": {
+                "name": "tabView",
+                "componentName": "MyTabs",
+                "params": {
+                    "tabs": [
+                        {
+                            "view": {
+                                "name": "login",
+                                "componentName": "TabbedLogin"
+                            },
+                            "canBeClosed": false
+                        }
+                    ]
                 }
             },
-            "case": {
-                "layout": {
-                    "name": "CaseView",
-                    "params": {
-                        "allowedNets": [
-                            "search-test",
-                            "search-test-defaultRole",
-                            "leukemia",
-                            "1",
-                            "bill"
-                        ]
-                    }
-                },
-                "access": "private",
-                "navigation": {}
+            "navigation": false,
+            "access": "private",
+            "routing": {
+                "path": "comp-tab"
+            }
+        },
+        "cases": {
+            "layout": {
+                "name": "emptyView",
+                "componentName": "EmptyViewCustomNameTest"
             },
-            "navigation-test": {
-                "type": "sideMenu",
-                "layout": {
-                    "name": ""
-                },
-                "access": "private",
-                "navigation": {
-                    "title": "NavTest"
-                },
-                "routes": {
-                    "one": {
-                        "type": "",
-                        "layout": {
-                            "name": ""
-                        },
-                        "access": "private",
-                        "navigation": {
-                            "title": "one",
-                            "icon": "account_circle"
-                        },
-                        "routes": {
-                            "one-one": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": {
-                                    "title": "one-one",
-                                    "icon": "account_circle"
-                                }
+            "access": "private",
+            "navigation": {
+                "title": "Cases",
+                "icon": "settings"
+            },
+            "children": {
+                "some_cases": {
+                    "layout": {
+                        "name": "emptyView",
+                        "params": {}
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "icon": "account_circle"
+                    },
+                    "children": {
+                        "some_specifics": {
+                            "layout": {
+                                "name": "emptyView"
                             },
-                            "one-two": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": {
-                                    "title": "one-two",
-                                    "icon": "account_circle"
-                                }
+                            "access": "private",
+                            "navigation": true,
+                            "routing": {
+                                "path": "comp-some_specifics"
                             }
                         }
                     },
-                    "two": {
-                        "type": "",
-                        "layout": {
-                            "name": ""
-                        },
-                        "access": "private",
-                        "navigation": {
-                            "title": "second",
-                            "icon": "account_circle"
-                        },
-                        "routes": {
-                            "two-one": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": {
-                                    "title": "two-one",
-                                    "icon": "account_circle"
-                                }
-                            },
-                            "two-two": {
-                                "type": "",
-                                "layout": {
-                                    "name": ""
-                                },
-                                "access": "private",
-                                "navigation": {
-                                    "title": "two-two",
-                                    "icon": "account_circle"
-                                }
-                            }
-                        }
+                    "routing": {
+                        "path": "comp-some_cases"
                     }
                 }
+            },
+            "routing": {
+                "path": "comp-cases"
+            }
+        },
+        "task": {
+            "layout": {
+                "name": "emptyView"
+            },
+            "access": "private",
+            "navigation": {
+                "title": "Tasks",
+                "icon": "assignment"
+            },
+            "children": {
+                "some_tasks": {
+                    "layout": {
+                        "name": "emptyView"
+                    },
+                    "access": "private",
+                    "navigation": false,
+                    "children": {
+                        "some_specifics": {
+                            "layout": {
+                                "name": "emptyView"
+                            },
+                            "access": "private",
+                            "navigation": true,
+                            "routing": {
+                                "path": "comp-some_specifics"
+                            }
+                        }
+                    },
+                    "routing": {
+                        "path": "comp-some_tasks"
+                    }
+                }
+            },
+            "routing": {
+                "path": "comp-task"
             }
         }
     },
@@ -399,6 +703,9 @@
                 "console",
                 "localStorage"
             ]
+        },
+        "auth": {
+            "loginRedirect": "login"
         }
     }
 }

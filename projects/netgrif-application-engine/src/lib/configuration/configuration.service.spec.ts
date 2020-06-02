@@ -108,6 +108,9 @@ describe('ConfigurationService', () => {
             navigation: {
                 title: 'Dashboard',
                 icon: 'dashboard'
+            },
+            routing: {
+                path: 'dashboard'
             }
         });
     });
