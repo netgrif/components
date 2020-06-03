@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {ViewService, ConfigurationService, LoggerService} from '@netgrif/application-engine';
 import {AuthenticationComponent} from './doc/authentication/authentication.component';
 import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
@@ -28,7 +29,7 @@ import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-
     providedIn: 'root'
 })
 export class NaeExampleAppViewService extends ViewService {
-    constructor(configurationService: ConfigurationService, loggerService: LoggerService) {
+    constructor(configurationService: ConfigurationService, activatedRoute: ActivatedRoute, loggerService: LoggerService) {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([ButtonsNavComponent,
@@ -53,6 +54,6 @@ export class NaeExampleAppViewService extends ViewService {
             RegisterFormComponent,
             PasswordFormComponent,
             LoginFormComponent,
-            AuthenticationComponent], configurationService, loggerService);
+            AuthenticationComponent], configurationService, activatedRoute, loggerService);
     }
 }

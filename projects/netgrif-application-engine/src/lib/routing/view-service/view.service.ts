@@ -2,6 +2,7 @@ import {Type} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Views} from '../../configuration/interfaces/schema';
 import {LoggerService} from '../../logger/services/logger.service';
+import {ActivatedRoute} from '@angular/router';
 
 /**
  * Holds information about views in the application. Can be used to resolve view component class objects from their names.
@@ -27,9 +28,13 @@ export abstract class ViewService {
     /**
      * @param componentClasses Class objects of view components that should be dynamically routed
      * @param configService application's ConfigurationService
+     * @param _activeRoute the currently active Route
      * @param _logger application's logging service
      */
-    protected constructor(componentClasses: Array<Type<any>>, configService: ConfigurationService, protected _logger: LoggerService) {
+    protected constructor(componentClasses: Array<Type<any>>,
+                          configService: ConfigurationService,
+                          protected _activeRoute: ActivatedRoute,
+                          protected _logger: LoggerService) {
         this._nameToClass = new Map<string, Type<any>>();
         componentClasses.forEach(component => {
             this._nameToClass.set(component.name, component);
@@ -44,6 +49,19 @@ export abstract class ViewService {
      */
     public resolveNameToClass(componentClassName: string): Type<any> | null {
         return this._nameToClass.get(componentClassName);
+    }
+
+    /**
+     * @returns the unique ID of the view that is currently displayed.
+     * If no ID was resolved for the current view `undefined` will be returned.
+     *
+     * Note that the ID only attempts to be unique. Routing with empty paths creates collisions and so multiple
+     * views can end up having the same "unique" ID. If this proves to be a problem you can override the
+     * [resolveViewIds]{@link ViewService#_resolveViewIds} method and change the way view IDs are resolved in your application.
+     */
+    public getViewId(): string | undefined {
+        const currentWebPath = this._activeRoute.snapshot.url.map(url => url.path).join('/');
+        return this._webRouteToViewId.get(currentWebPath);
     }
 
     /**
