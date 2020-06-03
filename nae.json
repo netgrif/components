@@ -706,6 +706,10 @@
         },
         "auth": {
             "loginRedirect": "login"
+        },
+        "routing": {
+            "defaultRedirect": "login",
+            "wildcardRedirect": "login"
         }
     }
 }

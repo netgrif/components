@@ -254,6 +254,10 @@ export interface Services {
         logoutRedirect?: string;
         loginRedirect?: string;
     };
+    routing?: {
+        defaultRedirect?: string;
+        wildcardRedirect?: string;
+    };
 
     [k: string]: any;
 }
