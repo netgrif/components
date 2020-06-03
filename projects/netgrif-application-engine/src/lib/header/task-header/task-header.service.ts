@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
+import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {ViewService} from '../../routing/view-service/view.service';
 
 
 export enum TaskMetaField {
@@ -14,8 +16,8 @@ export enum TaskMetaField {
 
 @Injectable()
 export class TaskHeaderService extends AbstractHeaderService {
-    constructor() {
-        super(HeaderType.TASK);
+    constructor(preferences: UserPreferenceService, viewService: ViewService) {
+        super(HeaderType.TASK, preferences, viewService);
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {

@@ -4,15 +4,13 @@ import {Observable} from 'rxjs';
 import {HeaderChange} from '../../header/models/user-changes/header-change';
 import {HeaderMode} from '../../header/models/header-mode';
 import {HttpParams} from '@angular/common/http';
-import {View} from './view';
 
 
-export abstract class SortableView extends View {
+export abstract class SortableView {
 
     protected _lastHeaderSearchState: SortChangeDescription;
 
     protected constructor() {
-        super();
         this._lastHeaderSearchState = {
             columnType: undefined,
             fieldIdentifier: '',

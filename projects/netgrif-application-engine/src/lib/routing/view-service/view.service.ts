@@ -2,7 +2,7 @@ import {Type} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Views} from '../../configuration/interfaces/schema';
 import {LoggerService} from '../../logger/services/logger.service';
-import {ActivatedRoute} from '@angular/router';
+import {Router} from '@angular/router';
 
 /**
  * Holds information about views in the application. Can be used to resolve view component class objects from their names.
@@ -28,12 +28,12 @@ export abstract class ViewService {
     /**
      * @param componentClasses Class objects of view components that should be dynamically routed
      * @param configService application's ConfigurationService
-     * @param _activeRoute the currently active Route
+     * @param _router the application's Router
      * @param _logger application's logging service
      */
     protected constructor(componentClasses: Array<Type<any>>,
                           configService: ConfigurationService,
-                          protected _activeRoute: ActivatedRoute,
+                          protected _router: Router,
                           protected _logger: LoggerService) {
         this._nameToClass = new Map<string, Type<any>>();
         componentClasses.forEach(component => {
@@ -60,7 +60,7 @@ export abstract class ViewService {
      * [resolveViewIds]{@link ViewService#_resolveViewIds} method and change the way view IDs are resolved in your application.
      */
     public getViewId(): string | undefined {
-        const currentWebPath = this._activeRoute.snapshot.url.map(url => url.path).join('/');
+        const currentWebPath = this._router.routerState.snapshot.url;
         return this._webRouteToViewId.get(currentWebPath);
     }
 
@@ -76,7 +76,7 @@ export abstract class ViewService {
                 this._logger.warn('A view in nae.json configuration misses routing parameter. No ID will be generated for this view.');
                 return; // skip this view
             }
-            const currentRoute = (!!parentRoute && parentRoute.length > 0 ? `${parentRoute}/` : '') + view.routing.path;
+            const currentRoute = (!!parentRoute && parentRoute.length > 0 ? `${parentRoute}/` : '/') + view.routing.path;
             const currentId = (!!commonIdPrefix ? `${commonIdPrefix}${this.ID_DELIMITER}` : '') + viewKey;
             this._webRouteToViewId.set(currentRoute, currentId);
             if (!!view.children) {

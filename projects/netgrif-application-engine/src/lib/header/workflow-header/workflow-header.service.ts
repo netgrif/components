@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
+import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {ViewService} from '../../routing/view-service/view.service';
 
 
 export enum WorkflowMetaField {
@@ -15,8 +17,8 @@ export enum WorkflowMetaField {
 @Injectable()
 export class WorkflowHeaderService extends AbstractHeaderService {
 
-    constructor() {
-        super(HeaderType.WORKFLOW);
+    constructor(preferences: UserPreferenceService, viewService: ViewService) {
+        super(HeaderType.WORKFLOW, preferences, viewService);
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {
