@@ -135,6 +135,11 @@ export class ProcessList {
             .map(r => this._rolesIndex[r].length !== 0 ? this._rolesIndex[r][0].processIdentifier : null));
     }
 
+    public updateSelectedRoles(role: ProcessRole): void {
+        role.selected ? this._selectedRoles.add(role.stringId) : this._selectedRoles.delete(role.stringId);
+        this._rolesIndex[role.stringId].forEach(r => r.selected = role.selected);
+    }
+
     public loadProcessItemRoles(item: ProcessListItem): void {
         if (!item || !item.emptyRoles) {
             return;
@@ -187,6 +192,11 @@ export class ProcessList {
             return;
         }
         timer(0).subscribe(_ => {
+            if (identifiers.length === 0) {
+                this._processes.forEach(process => {
+                    process.someRolesSelected = false;
+                });
+            }
             identifiers.forEach(identifier => {
                 if (!identifier) {
                     return;
@@ -194,6 +204,11 @@ export class ProcessList {
                 const requested = this._processes.find(process => process.identifier === identifier);
                 if (requested) {
                     requested.someRolesSelected = requested.processes.some(version => version.roles.length !== 0);
+                }
+            });
+            this._processes.forEach(process => {
+                if (!identifiers.find(i => process.identifier === i)) {
+                    process.someRolesSelected = false;
                 }
             });
         });

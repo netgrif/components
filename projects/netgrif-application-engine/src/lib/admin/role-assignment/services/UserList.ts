@@ -1,5 +1,5 @@
 import {LoadingEmitter} from '../../../utility/loading-emitter';
-import {BehaviorSubject, Observable, of, timer} from 'rxjs';
+import {BehaviorSubject, forkJoin, Observable, of, timer} from 'rxjs';
 import {User} from '../../../resources/interface/user';
 import {Pagination} from '../../../resources/interface/pagination';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
@@ -8,6 +8,7 @@ import {UserResourceService} from '../../../resources/engine-endpoint/user-resou
 import {LoggerService} from '../../../logger/services/logger.service';
 import {Page} from '../../../resources/interface/page';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
+import {MessageResource} from '../../../resources/interface/message-resource';
 
 export interface UserListItem extends User {
     selected: boolean;
@@ -137,23 +138,25 @@ export class UserList {
         });
     }
 
-    public updateRoles(selectedUsers: Array<number>, selectedRoles: Array<string> = []) {
+    public updateRoles(selectedUsers: Array<UserListItem>, selectedRoles: Array<string> = []): Observable<Array<MessageResource>> {
         if (!selectedUsers || selectedUsers.length === 0) {
-            return;
+            return of([]);
         }
         this._updateProgress$.on();
-        selectedUsers.forEach(user => {
-            this._resources.assignRoles(user + '', selectedRoles).subscribe(message => {
-                if (message.error) {
-                    this._log.error(message.error, message);
-                    this._snackbar.openErrorSnackBar(message.error);
-                } else {
-                    this._log.info(message.success);
-                    this._snackbar.openSuccessSnackBar(message.success);
-                }
+        return forkJoin(selectedUsers.map(user => this._resources.assignRoles(user.id + '', selectedRoles))).pipe(
+            tap(messages => {
+                messages.forEach((message, idx) => {
+                    if (message.error) {
+                        this._log.error(message.error, message);
+                        this._snackbar.openErrorSnackBar(message.error);
+                    } else {
+                        this._log.info(message.success);
+                        selectedUsers[idx].roles = new Set<string>(selectedRoles);
+                        this._snackbar.openSuccessSnackBar('Roles successfully assigned to selected users');
+                    }
+                });
                 this._updateProgress$.off();
-            });
-        });
+            }));
     }
 
 }

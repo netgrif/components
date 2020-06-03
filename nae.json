@@ -47,6 +47,17 @@
                 "path": "authentication"
             }
         },
+        "demo-roles": {
+            "component": {
+                "class": "RolesAssignComponent",
+                "from": "./doc/roles-assign/roles-assign.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "roles"
+            }
+        },
         "demo-login": {
             "component": {
                 "class": "LoginFormComponent",

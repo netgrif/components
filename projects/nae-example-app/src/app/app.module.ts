@@ -177,6 +177,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
+        RolesAssignComponent
     ],
     providers: [{
         provide: ConfigurationService,

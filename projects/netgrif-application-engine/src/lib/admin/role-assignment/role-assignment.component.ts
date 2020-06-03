@@ -3,7 +3,7 @@ import {MatSelectionList} from '@angular/material';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {RoleAssignmentService} from './services/role-assignment.service';
 import {UserList, UserListItem} from './services/UserList';
-import {ProcessList} from './services/ProcessList';
+import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
 
 @Component({
     selector: 'nae-role-assignment',
@@ -20,10 +20,12 @@ export class RoleAssignmentComponent implements OnInit {
 
     public users: UserList;
     public nets: ProcessList;
+    public userMultiSelect: boolean;
 
     constructor(private _service: RoleAssignmentService) {
         this.users = this._service.userList;
         this.nets = this._service.processList;
+        this.userMultiSelect = true;
     }
 
     ngOnInit(): void {
@@ -46,9 +48,30 @@ export class RoleAssignmentComponent implements OnInit {
         this.nets.selectRoles(intersection);
     }
 
-    public update(): void {
-        const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem).id);
-        this.users.updateRoles(selected, this.nets.selectedRoles);
+    public update(role: ProcessRole): void {
+        this.nets.updateSelectedRoles(role);
+        const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
+        this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
+            this.autoSelectRoles(null);
+        });
+    }
+
+    public selectAllUsers(select: boolean): void {
+        this.userList.options.forEach(option => {
+            (option.value as UserListItem).selected = select;
+        });
+        this.autoSelectRoles(null);
+    }
+
+    public toggleAllRoles(net: ProcessVersion, select: boolean): void {
+        net.roles.forEach(r => {
+            r.selected = select;
+            this.nets.updateSelectedRoles(r);
+        });
+        const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
+        this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
+            this.autoSelectRoles(null);
+        });
     }
 
 }
