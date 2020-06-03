@@ -14,8 +14,8 @@ import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TaskGetRequestBody} from '../interface/task-get-request-body';
+import {HttpEventType} from '@angular/common/http';
 import {Page} from '../interface/page';
-import {HttpEvent, HttpEventType, HttpParams} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'

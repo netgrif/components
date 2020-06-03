@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Route} from '../../configuration/interfaces/schema';
+import {View, Views} from '../../configuration/interfaces/schema';
 import {NavigationEnd, Router} from '@angular/router';
 
 interface NavigationNode {
@@ -30,7 +30,7 @@ export class NavigationTreeComponent implements OnInit {
     constructor(private _config: ConfigurationService, private _router: Router) {
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
-        this.dataSource.data = this.resolveNavigationNodes(_config.get().views.routes, '');
+        this.dataSource.data = this.resolveNavigationNodes(_config.get().views, '');
         this.resolveLevels(this.dataSource.data);
     }
 
@@ -39,8 +39,8 @@ export class NavigationTreeComponent implements OnInit {
             this._router.events.subscribe((event) => {
                 if (event instanceof NavigationEnd && this.routerChange) {
                     const viewRoute = this._config.getViewByPath(this.viewPath);
-                    if (viewRoute && viewRoute.routes) {
-                        this.dataSource.data = this.resolveNavigationNodes(viewRoute.routes, this.parentUrl);
+                    if (viewRoute && viewRoute.children) {
+                        this.dataSource.data = this.resolveNavigationNodes(viewRoute.children, this.parentUrl);
                     }
                     this.resolveLevels(this.dataSource.data);
                 }
@@ -57,32 +57,32 @@ export class NavigationTreeComponent implements OnInit {
         return !!node.children && node.children.length > 0;
     }
 
-    private resolveNavigationNodes(routes, parentUrl: string): Array<NavigationNode> {
-        if (!routes || Object.keys(routes).length === 0) {
+    private resolveNavigationNodes(views: Views, parentUrl: string): Array<NavigationNode> {
+        if (!views || Object.keys(views).length === 0) {
             return null;
         }
         const nodes: Array<NavigationNode> = [];
-        Object.keys(routes).forEach((routeKey: string) => {
-            const route: Route = routes[routeKey] as Route;
-            if (!this.hasNavigation(route) && !this.hasSubRoutes(route)) {
+        Object.keys(views).forEach((routeKey: string) => {
+            const view = views[routeKey];
+            if (!this.hasNavigation(view) && !this.hasSubRoutes(view)) {
                 return;
             }
-            if (this.hasNavigation(route)) {
-                const node: NavigationNode = this.buildNode(route, routeKey, parentUrl);
-                if (this.hasSubRoutes(route)) {
-                    node.children = this.resolveNavigationNodes(route.routes, node.url);
+            if (this.hasNavigation(view)) {
+                const node: NavigationNode = this.buildNode(view, routeKey, parentUrl);
+                if (this.hasSubRoutes(view)) {
+                    node.children = this.resolveNavigationNodes(view.children, node.url);
                 }
                 nodes.push(node);
             } else {
-                if (this.hasSubRoutes(route)) {
-                    nodes.push(...this.resolveNavigationNodes(route.routes, parentUrl + '/' + routeKey));
+                if (this.hasSubRoutes(view)) {
+                    nodes.push(...this.resolveNavigationNodes(view.children, parentUrl + '/' + routeKey));
                 }
             }
         });
         return nodes;
     }
 
-    private hasNavigation(route: Route): boolean {
+    private hasNavigation(route: View): boolean {
         if (!route.navigation) {
             return false;
         }
@@ -94,39 +94,36 @@ export class NavigationTreeComponent implements OnInit {
         }
     }
 
-    private hasSubRoutes(route: Route): boolean {
+    private hasSubRoutes(route: View): boolean {
         if (!route.routes) {
             return false;
         }
-        if (typeof route.routes === 'boolean') {
-            return route.routes;
-        }
-        if (typeof route.routes === 'object') {
-            return Object.keys(route.routes).length !== 0;
+        if (typeof route.children === 'object') {
+            return Object.keys(route.children).length !== 0;
         }
     }
 
-    private buildNode(route: Route, routeKey: string, parentUrl: string): NavigationNode {
+    private buildNode(view: View, routeKey: string, parentUrl: string): NavigationNode {
         const node: NavigationNode = {
             name: null,
             url: null
         };
-        node.name = this.getNodeName(route, routeKey);
-        node.icon = this.getNodeIcon(route);
+        node.name = this.getNodeName(view, routeKey);
+        node.icon = this.getNodeIcon(view);
         node.url = parentUrl + '/' + routeKey;
         return node;
     }
 
-    private getNodeName(route: Route, routeKeys: string): string {
-        if (route.navigation['title']) {
-            return route.navigation['title'];
+    private getNodeName(view: View, routeKeys: string): string {
+        if (view.navigation['title']) {
+            return view.navigation['title'];
         }
         const str = routeKeys.replace('_', ' ');
         return str.charAt(0).toUpperCase() + str.substring(1);
     }
 
-    private getNodeIcon(route: Route): string {
-        return !route.navigation['icon'] ? undefined : route.navigation['icon'];
+    private getNodeIcon(view: View): string {
+        return !view.navigation['icon'] ? undefined : view.navigation['icon'];
     }
 
     private resolveLevels(nodes: NavigationNode[], parentLevel?: number): void {

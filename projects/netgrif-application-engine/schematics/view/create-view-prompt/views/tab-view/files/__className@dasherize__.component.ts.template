@@ -1,0 +1,28 @@
+import { Component} from '@angular/core';
+<% for(imp of imports) { %>
+import { <%= imp.className %> } from '<%= imp.importPath %>';<% } %>
+
+@Component({
+  selector: '<%= prefix %>-<%= dasherize(className) %>',
+  templateUrl: './<%= dasherize(className) %>.component.html',
+  styleUrls: ['./<%= dasherize(className) %>.component.scss']
+})
+export class <%= classify(className) %>Component {
+
+    tabs = [<% for(let tab of tabs) { %>
+        {<% if (tab.icon !== undefined || tab.text !== undefined) { %>
+            label: {<% if (tab.icon !== undefined) { %>
+                icon: '<%= tab.icon %>',<% } if (tab.text !== undefined) { %>
+                text: '<%= tab.text %>',<% } %>
+            },<% } %>
+            canBeClosed: <%= tab.canBeClosed %>,
+            tabContentComponent: <%= tab.tabContentComponent %>,<% if (tab.order !== undefined) { %>
+            order: <%= tab.order %>,<% } %><% if (!!tab.injectedObject) { %>
+            injectedObject: {
+                tabViewComponent: <%= tab.injectedObject.tabViewComponent %>,
+                tabViewOrder: <%= tab.injectedObject.tabViewOrder %>
+            }<% } %>
+        },<% } %>
+    ];
+
+}
