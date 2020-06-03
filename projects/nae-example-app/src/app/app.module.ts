@@ -3,7 +3,9 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
+    AdministrationModule,
     AuthenticationModule,
+    CaseViewModule,
     ConfigurationService,
     CovalentModule,
     DashboardModule,
@@ -19,6 +21,7 @@ import {
     QuickPanelModule,
     RegistrationFormModule,
     ResourceProvider,
+    SearchModule,
     SideMenuContentModule,
     SideMenuModule,
     SignUpModule,
@@ -27,8 +30,6 @@ import {
     ToolbarModule,
     UserModule,
     WorkflowViewModule,
-    SearchModule,
-    CaseViewModule,
     ViewService,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -65,6 +66,7 @@ import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/
 import {ProfileComponent} from './doc/profile/profile.component';
 import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
+import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
 import {NaeExampleAppViewService} from './nae-example-app-view.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -101,6 +103,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
+        RolesAssignComponent,
     ],
     imports: [
         BrowserModule,
@@ -145,6 +148,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         CaseViewModule,
         MatButtonModule,
         MatSidenavModule,
+        AdministrationModule,
     ],
     entryComponents: [
         ContentComponent,
@@ -173,6 +177,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
+        RolesAssignComponent
     ],
     providers: [{
         provide: ConfigurationService,

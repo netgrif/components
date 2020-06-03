@@ -10,7 +10,7 @@ const opService = new OperatorService();
 export const createMockDependencies = () => {
     const mockCaseView = {allowedNets$: of([])} as CaseViewService;
     const mockTaskView = {allowedNets$: of([])} as TaskViewService;
-    const mockUserResourceService = {getAll: () => of([])} as UserResourceService;
+    const mockUserResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService;
 
     return {
         categoryFactory: new CategoryFactory(opService, null, mockCaseView, mockTaskView, mockUserResourceService),

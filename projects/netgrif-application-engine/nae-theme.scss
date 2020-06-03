@@ -4,6 +4,7 @@
 @import 'src/lib/data-fields/data-field.theme';
 @import 'src/lib/user/user.theme';
 @import "src/lib/navigation/navigation.theme";
+@import "src/lib/admin/role-assignment/role-assignment.component.theme";
 
 @mixin nae-lib-theme($app-theme, $app-typography-config) {
     @include nae-typography($app-typography-config);
@@ -12,6 +13,7 @@
     @include user-profile($app-theme);
     @include navigation-theme($app-theme);
     @include header-component($app-theme);
+    @include roles-assignment-theme($app-theme);
 }
 
 .mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {

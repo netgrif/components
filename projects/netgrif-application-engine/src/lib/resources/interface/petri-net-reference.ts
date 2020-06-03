@@ -1,5 +1,6 @@
 import {Author} from './author';
 import {ImmediateData} from './immediate-data';
+import NetRole from '../../process/netRole';
 
 /**
  * Information Petri Net
@@ -40,7 +41,7 @@ export interface PetriNetReference {
      */
     author: Author;
     /**
-     * Immediate Data [ImmediateData]{@link ImmediateData}
+     * [ImmediateData]{@link ImmediateData}
      */
     immediateData: Array<ImmediateData>;
 }

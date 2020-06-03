@@ -52,7 +52,7 @@
         "import-net": {
             "upload": "Nahrať model",
             "choose": "Vyberte súbor s procesom",
-            "done" : "Dokončiť"
+            "done": "Dokončiť"
         },
         "new-case": {
             "case": "Nová prípad",
@@ -154,7 +154,6 @@
             "dateRange": "Zadaný dátum musí byť v rozsahu {{range}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň"
-
         },
         "snackBar": {
             "downloadFail": " stahovanie zlyhalo",
@@ -241,5 +240,17 @@
     "view-list": {
         "noCasesSatisfyingThisFilter": "Pre zvolený filter nevyhovujú žiadne prípady",
         "noProcessesSatisfyingThisFilter": "Pre zvolený filter nevyhovujú žiadne procesy"
+    },
+    "admin": {
+        "user-list": {
+            "noUsersWereFound": "Momentálne nie sú v systéme žiadny používatelia",
+            "listTitle": "Users"
+        },
+        "process-list": {
+            "newestVersion": "Najnovšia verzia",
+            "listTitle": "Procesy",
+            "noRoles": "Tento proces neobsahuje žiadne roly",
+            "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
+        }
     }
 }
