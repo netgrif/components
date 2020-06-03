@@ -41,7 +41,7 @@
                 "class": "AuthenticationComponent",
                 "from": "./doc/authentication/authentication.component"
             },
-            "access": "private",
+            "access": "public",
             "navigation": false,
             "routing": {
                 "path": "authentication"
@@ -708,8 +708,8 @@
             "loginRedirect": "login"
         },
         "routing": {
-            "defaultRedirect": "login",
-            "wildcardRedirect": "login"
+            "defaultRedirect": "authentication",
+            "wildcardRedirect": "authentication"
         }
     }
 }
