@@ -240,5 +240,17 @@
     "view-list": {
         "noCasesSatisfyingThisFilter": "There are any cases satisfying specified filter",
         "noCProcessesSatisfyingThisFilter": "There are any processes satisfying specified filter"
+    },
+    "admin": {
+        "user-list": {
+            "noUsersWereFound": "There are any user in the system at the moment",
+            "listTitle": "Users"
+        },
+        "process-list": {
+            "newestVersion": "Newest version",
+            "listTitle": "Processes",
+            "noRoles": "There are any roles in the process",
+            "noProcessesWereFound": "There are any processes in the system at the moment"
+        }
     }
 }

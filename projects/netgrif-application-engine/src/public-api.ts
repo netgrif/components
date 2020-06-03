@@ -28,3 +28,5 @@ export * from './lib/filter/public-api';
 export * from './lib/snack-bar/public-api';
 export * from './lib/search/public-api';
 export * from './lib/translate/public-api';
+export * from './lib/admin/public-api';
+export * from './lib/utility/public-api';
