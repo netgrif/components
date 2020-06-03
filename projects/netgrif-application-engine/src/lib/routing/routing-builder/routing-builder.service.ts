@@ -17,14 +17,18 @@ import {LoggerService} from '../../logger/services/logger.service';
 })
 export class RoutingBuilderService {
 
-    constructor(configService: ConfigurationService, router: Router, private _viewService: ViewService, private _logger: LoggerService) {
+    constructor(router: Router,
+                private _configService: ConfigurationService,
+                private _viewService: ViewService,
+                private _logger: LoggerService) {
         router.config.splice(0, router.config.length);
-        for (const [pathSegment, view] of Object.entries(configService.get().views)) {
+        for (const [pathSegment, view] of Object.entries(_configService.get().views)) {
             const route = this.constructRouteObject(view, pathSegment);
             if (route !== undefined) {
                 router.config.push(route);
             }
         }
+        router.config.push(...this.defaultRoutesRedirects());
     }
 
     private constructRouteObject(view: View, configPath: string): Route | undefined {
@@ -95,4 +99,24 @@ export class RoutingBuilderService {
         return result;
     }
 
+    private defaultRoutesRedirects(): Array<Route> {
+        const result = [];
+        const servicesConfig = this._configService.get().services;
+        if (!!servicesConfig && !!servicesConfig.routing) {
+            if (!!servicesConfig.routing.defaultRedirect) {
+                result.push({
+                    path: '',
+                    redirectTo: servicesConfig.routing.defaultRedirect,
+                    pathMatch: 'full'
+                });
+            }
+            if (!!servicesConfig.routing.wildcardRedirect) {
+                result.push({
+                    path: '**',
+                    redirectTo: servicesConfig.routing.wildcardRedirect
+                });
+            }
+        }
+        return result;
+    }
 }
