@@ -4,6 +4,7 @@ import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {ViewService} from '../../routing/view-service/view.service';
+import {LoggerService} from '../../logger/services/logger.service';
 
 
 export enum WorkflowMetaField {
@@ -17,8 +18,9 @@ export enum WorkflowMetaField {
 @Injectable()
 export class WorkflowHeaderService extends AbstractHeaderService {
 
-    constructor(preferences: UserPreferenceService, viewService: ViewService) {
-        super(HeaderType.WORKFLOW, preferences, viewService);
+    constructor(preferences: UserPreferenceService, viewService: ViewService, logger: LoggerService) {
+        super(HeaderType.WORKFLOW, preferences, viewService, logger);
+        this.loadHeadersFromPreferences();
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {

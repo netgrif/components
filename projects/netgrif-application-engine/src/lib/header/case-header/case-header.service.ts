@@ -6,6 +6,7 @@ import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {LanguageService} from '../../translate/language.service';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {ViewService} from '../../routing/view-service/view.service';
+import {LoggerService} from '../../logger/services/logger.service';
 
 
 export enum CaseMetaField {
@@ -20,10 +21,12 @@ export class CaseHeaderService extends AbstractHeaderService {
     constructor(protected _caseViewService: CaseViewService,
                 private _lang: LanguageService,
                 preferences: UserPreferenceService,
-                viewService: ViewService) {
-        super(HeaderType.CASE, preferences, viewService);
+                viewService: ViewService,
+                logger: LoggerService) {
+        super(HeaderType.CASE, preferences, viewService, logger);
         this._caseViewService.allowedNets$.subscribe(allowedNets => {
             this.setAllowedNets(allowedNets);
+            this.loadHeadersFromPreferences();
         });
     }
 

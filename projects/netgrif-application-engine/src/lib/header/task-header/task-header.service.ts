@@ -4,6 +4,7 @@ import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {ViewService} from '../../routing/view-service/view.service';
+import {LoggerService} from '../../logger/services/logger.service';
 
 
 export enum TaskMetaField {
@@ -16,8 +17,9 @@ export enum TaskMetaField {
 
 @Injectable()
 export class TaskHeaderService extends AbstractHeaderService {
-    constructor(preferences: UserPreferenceService, viewService: ViewService) {
-        super(HeaderType.TASK, preferences, viewService);
+    constructor(preferences: UserPreferenceService, viewService: ViewService, logger: LoggerService) {
+        super(HeaderType.TASK, preferences, viewService, logger);
+        this.loadHeadersFromPreferences();
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {
