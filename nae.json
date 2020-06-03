@@ -41,10 +41,21 @@
                 "class": "AuthenticationComponent",
                 "from": "./doc/authentication/authentication.component"
             },
-            "access": "private",
+            "access": "public",
             "navigation": false,
             "routing": {
                 "path": "authentication"
+            }
+        },
+        "demo-roles": {
+            "component": {
+                "class": "RolesAssignComponent",
+                "from": "./doc/roles-assign/roles-assign.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "roles"
             }
         },
         "demo-login": {
@@ -708,8 +719,8 @@
             "loginRedirect": "login"
         },
         "routing": {
-            "defaultRedirect": "login",
-            "wildcardRedirect": "login"
+            "defaultRedirect": "authentication",
+            "wildcardRedirect": "authentication"
         }
     }
 }

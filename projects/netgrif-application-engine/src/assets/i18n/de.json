@@ -240,5 +240,10 @@
     "view-list": {
         "noCasesSatisfyingThisFilter": "Es gibt keine Fälle, die den ausgewählten Filter erfüllen",
         "noCProcessesSatisfyingThisFilter": "Es gibt keine Prozesse, die den ausgewählten Filter erfüllen"
+    },
+    "admin": {
+        "user-list": {
+            "noUsersWereFound": "Derzeit befinden sich Benutzer im System"
+        }
     }
 }

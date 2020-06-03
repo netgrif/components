@@ -24,6 +24,7 @@ import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/
 import {ProfileComponent} from './doc/profile/profile.component';
 import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
+import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
 
 @Injectable({
     providedIn: 'root'
@@ -54,6 +55,7 @@ export class NaeExampleAppViewService extends ViewService {
             RegisterFormComponent,
             PasswordFormComponent,
             LoginFormComponent,
-            AuthenticationComponent], configurationService, router, loggerService);
+            AuthenticationComponent,
+            RolesAssignComponent], configurationService, router, loggerService);
     }
 }
