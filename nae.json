@@ -443,7 +443,8 @@
                         "search-test-defaultRole",
                         "leukemia",
                         "1",
-                        "bill"
+                        "bill",
+                        "drobny_nakup"
                     ]
                 },
                 "componentName": "MyCaseView"

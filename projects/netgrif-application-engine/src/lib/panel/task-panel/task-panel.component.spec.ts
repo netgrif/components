@@ -222,7 +222,8 @@ class TestWrapperComponent {
             dataGroups: [],
             _links: {}
         },
-        changedFields: new Subject<ChangedFields>()
+        changedFields: new Subject<ChangedFields>(),
+        initiallyExpanded: false
     };
     selectedHeaders$ = of([
         new HeaderColumn(HeaderColumnType.META, TaskMetaField.CASE, 'string', 'string'),

@@ -26,8 +26,8 @@ export class TaskListComponent implements OnInit {
     ngOnInit() {
     }
 
-    public trackBy(i): any {
-        return i;
+    public trackBy(idx: number, item: TaskPanelData): any {
+        return item.task.stringId; // + (item.task.user ? item.task.user.email : '');
     }
 
     public loadNextPage(): void {

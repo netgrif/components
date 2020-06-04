@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelectionList} from '@angular/material';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {RoleAssignmentService} from './services/role-assignment.service';
 import {UserList, UserListItem} from './services/UserList';
 import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
+import {UserService} from '../../user/services/user.service';
 
 @Component({
     selector: 'nae-role-assignment',
@@ -13,7 +14,7 @@ import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
         RoleAssignmentService
     ]
 })
-export class RoleAssignmentComponent implements OnInit {
+export class RoleAssignmentComponent implements OnInit, OnDestroy {
 
     @ViewChild('userList') public userList: MatSelectionList;
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
@@ -22,7 +23,7 @@ export class RoleAssignmentComponent implements OnInit {
     public nets: ProcessList;
     public userMultiSelect: boolean;
 
-    constructor(private _service: RoleAssignmentService) {
+    constructor(private _service: RoleAssignmentService, private _userService: UserService) {
         this.users = this._service.userList;
         this.nets = this._service.processList;
         this.userMultiSelect = true;
@@ -30,6 +31,10 @@ export class RoleAssignmentComponent implements OnInit {
 
     ngOnInit(): void {
         this.nets.loadProcesses();
+    }
+
+    ngOnDestroy(): void {
+        this._userService.reload();
     }
 
     public loadNextUserPage(): void {
