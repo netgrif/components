@@ -15,7 +15,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {take} from 'rxjs/operators';
+import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {TaskMetaField} from '../../header/task-header/task-header.service';
@@ -80,6 +80,13 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }
         this._taskPanelData.changedFields.subscribe(chFields => {
             this.updateFromChangedFields(chFields);
+        });
+
+        this._taskViewService.panelUpdate.pipe(
+            map(a => a.find(p => p.task.stringId === this.taskPanelData.task.stringId)),
+            filter(p => !!p)
+        ).subscribe(value => {
+            this.resolveFeaturedFieldsValues();
         });
     }
 

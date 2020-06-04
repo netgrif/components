@@ -30,6 +30,9 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     protected _endOfData: boolean;
     protected _pagination: Pagination;
 
+    // Kovy fix
+    protected _panelUpdate$: BehaviorSubject<Array<TaskPanelData>>;
+
     /**
      * @ignore
      * Used to decide if the mongo endpoint should be used instead
@@ -58,6 +61,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             totalPages: undefined,
             number: -1
         };
+        this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
 
         const baseFilter = this._searchService.baseFilter;
         if (baseFilter instanceof SimpleFilter) {
@@ -102,8 +106,8 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             }, {})
         );
         this._tasks$ = tasksMap$.pipe(
-            map(v => Object.values(v))
-        );
+            map(v => Object.values(v) as Array<TaskPanelData>),
+            tap(v => this._panelUpdate$.next(v)));
     }
 
     public get tasks$(): Observable<Array<TaskPanelData>> {
@@ -120,6 +124,10 @@ export class TaskViewService extends SortableViewWithAllowedNets {
 
     public get loading(): boolean {
         return this._loading$.isActive;
+    }
+
+    public get panelUpdate(): Observable<Array<TaskPanelData>> {
+        return this._panelUpdate$.asObservable();
     }
 
     public loadPage(page: number): Observable<{ [k: string]: TaskPanelData }> {
