@@ -168,13 +168,13 @@ export abstract class DataField<T> {
         formControl.valueChanges.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
-            this._valid = formControl.valid;
+            this._valid = this._determineFormControlValidity(formControl);
             this.value = newValue;
         });
         this._value.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
-            this._valid = formControl.valid;
+            this._valid = this._determineFormControlValidity(formControl);
             formControl.setValue(newValue);
         });
         this.updateFormControlState(formControl);
@@ -187,7 +187,7 @@ export abstract class DataField<T> {
             this.disabled ? formControl.disable() : formControl.enable();
             formControl.clearValidators();
             formControl.setValidators(this.resolveFormControlValidators());
-            this._valid = formControl.valid;
+            this._valid = this._determineFormControlValidity(formControl);
         });
         this._block.subscribe(bool => {
             if (bool) {
@@ -205,7 +205,16 @@ export abstract class DataField<T> {
         });
         this.update();
         formControl.setValue(this.value);
-        this._valid = formControl.valid;
+        this._valid = this._determineFormControlValidity(formControl);
+    }
+
+    /**
+     * Computes whether the FormControl si valid.
+     * @param formControl check form control
+     */
+    protected _determineFormControlValidity(formControl: FormControl): boolean {
+        // disabled form controls are marked as invalid as per W3C standard, this solves that problem
+        return formControl.disabled || formControl.valid;
     }
 
     /**
