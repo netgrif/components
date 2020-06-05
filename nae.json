@@ -388,7 +388,7 @@
                     "columns": 4,
                     "cards": [
                         {
-                            "type": "DashboardCardTypes.COUNT",
+                            "type": "count",
                             "title": "All tasks",
                             "resourceType": "Task",
                             "filter": {},
@@ -400,7 +400,7 @@
                             }
                         },
                         {
-                            "type": "DashboardCardTypes.IFRAME",
+                            "type": "iframe",
                             "url": "https://netgrif.com/",
                             "layout": {
                                 "x": 2,
@@ -410,7 +410,7 @@
                             }
                         },
                         {
-                            "type": "DashboardCardTypes.COUNT",
+                            "type": "count",
                             "title": "All cases",
                             "resourceType": "Case",
                             "filter": {},
