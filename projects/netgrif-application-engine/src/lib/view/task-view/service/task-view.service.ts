@@ -56,7 +56,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         this._requestedPage$ = new BehaviorSubject<number>(null);
         this._endOfData = false;
         this._pagination = {
-            size: 25,
+            size: 50,
             totalElements: undefined,
             totalPages: undefined,
             number: -1
@@ -298,7 +298,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             return;
         }
         this._reloadPage = true;
-        this._pagination.number--;
+        this._pagination.number = -1; // TODO [BUG] - Reloading only first page
         this._endOfData = false;
         const range = {
             start: -1,
