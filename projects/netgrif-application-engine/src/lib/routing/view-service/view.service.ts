@@ -3,12 +3,13 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {Views} from '../../configuration/interfaces/schema';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Router} from '@angular/router';
+import {ViewServiceInterface} from './view-service-interface';
 
 /**
  * Holds information about views in the application. Can be used to resolve view component class objects from their names.
  * Can also be used to get unique ids for each view.
  */
-export abstract class ViewService {
+export abstract class ViewService implements ViewServiceInterface {
 
     /**
      * @ignore

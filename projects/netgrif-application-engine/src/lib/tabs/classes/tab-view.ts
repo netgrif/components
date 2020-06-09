@@ -5,6 +5,9 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {FormControl} from '@angular/forms';
 import {orderBy} from 'natural-orderby';
 import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token.module';
+import {ViewService} from '../../routing/view-service/view.service';
+import {LoggerService} from '../../logger/services/logger.service';
+import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
 
 /**
  * Holds the logic for tab management in {@link TabViewComponent}.
@@ -41,13 +44,16 @@ export class TabView implements TabViewInterface {
     };
 
     /**
-     * @param initialTabs - Tabs that should be initially opened int he tab view
+     * @param _viewService [ViewService]{@link ViewService} reference
+     * @param _logger [Logger]{@link LoggerService} reference
+     * @param initialTabs - Tabs that should be initially opened in the tab view
      */
-    constructor(private initialTabs: Array<TabContent>) {
+    constructor(private _viewService: ViewService, private _logger: LoggerService, private initialTabs: Array<TabContent>) {
         this.initialTabs.forEach(tab => {
             if (tab.order === undefined) {
                 tab.order = 0;
             }
+            tab.initial = true;
         });
 
         // orderBy is a stable sort
@@ -62,6 +68,11 @@ export class TabView implements TabViewInterface {
      * @returns the `tabUniqueId` of the newly opened tab
      */
     public openTab(tabContent: TabContent, autoswitch: boolean = false): string {
+        if (tabContent.initial) {
+            this._logger.warn(`'initial' attribute is not meant to be used with new tabs and will be ignored`);
+            delete tabContent.initial;
+        }
+
         const newTab = new OpenedTab(tabContent, `${this.getNextId()}`);
         let index = this.openedTabs.findIndex(existingTab => existingTab.order > newTab.order);
         if (index === -1) {
@@ -143,6 +154,13 @@ export class TabView implements TabViewInterface {
             const providers: StaticProvider[] = [
                 {provide: NAE_TAB_DATA, useValue: tab.injectedObject}
             ];
+            if (tab.initial) {
+                tab.tabViewService = new FixedIdViewService(
+                    `${this._viewService.getViewId()}${this._viewService.ID_DELIMITER}${tab.uniqueId}`,
+                    this._viewService);
+                providers.push({provide: ViewService, useValue: tab.tabViewService});
+            }
+
             const injector = Injector.create({providers});
 
             tab.portal = new ComponentPortal(tab.tabContentComponent, null, injector);
