@@ -93,6 +93,10 @@ export class UserService {
         );
     }
 
+    public reload(): void {
+        this.loadUser();
+    }
+
     private emptyUser() {
         return new User('', '', '', '', [], [], []);
     }

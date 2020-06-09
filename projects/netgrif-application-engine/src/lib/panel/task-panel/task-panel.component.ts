@@ -15,7 +15,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
 import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {take} from 'rxjs/operators';
+import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {TaskMetaField} from '../../header/task-header/task-header.service';
@@ -37,7 +37,7 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
 
-    @Input() taskPanelData: TaskPanelData;
+    private _taskPanelData: TaskPanelData;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
@@ -63,8 +63,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         super.ngOnInit();
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         let cols: number;
-        if (this.taskPanelData.task && this.taskPanelData.task.layout && this.taskPanelData.task.layout.cols) {
-            cols = this.taskPanelData.task.layout.cols;
+        if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
+            cols = this._taskPanelData.task.layout.cols;
         }
 
         const providers: StaticProvider[] = [
@@ -78,8 +78,15 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         } else {
             this.portal = new ComponentPortal(this.panelContentComponent, null, injector);
         }
-        this.taskPanelData.changedFields.subscribe(chFields => {
+        this._taskPanelData.changedFields.subscribe(chFields => {
             this.updateFromChangedFields(chFields);
+        });
+
+        this._taskViewService.panelUpdate.pipe(
+            map(a => a.find(p => p.task.stringId === this.taskPanelData.task.stringId)),
+            filter(p => !!p)
+        ).subscribe(value => {
+            this.resolveFeaturedFieldsValues();
         });
     }
 
@@ -96,7 +103,25 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         });
         this.panelRef.afterExpand.subscribe(() => {
             this.blockFields(!this.canFinish());
+            this._taskPanelData.initiallyExpanded = true;
         });
+        this.panelRef.afterCollapse.subscribe(() => {
+            this._taskPanelData.initiallyExpanded = false;
+        });
+
+        if (this._taskPanelData.initiallyExpanded) {
+            this.panelRef.expanded = true;
+        }
+    }
+
+    @Input()
+    public set taskPanelData(data: TaskPanelData) {
+        this._taskPanelData = data;
+        this.resolveFeaturedFieldsValues();
+    }
+
+    public get taskPanelData(): TaskPanelData {
+        return this._taskPanelData;
     }
 
     public show($event: MouseEvent): boolean {
@@ -113,13 +138,13 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     public getTaskDataFields(afterAction = new Subject<boolean>()): void {
-        if (this.taskPanelData.task.dataSize > 0) {
+        if (this._taskPanelData.task.dataSize > 0) {
             afterAction.next(true);
             return;
         }
         this.loading = true;
-        this._taskService.getData(this.taskPanelData.task.stringId).subscribe(dataGroups => {
-            this.taskPanelData.task.dataGroups = [];
+        this._taskService.getData(this._taskPanelData.task.stringId).subscribe(dataGroups => {
+            this._taskPanelData.task.dataGroups = [];
             if (dataGroups instanceof Array) {
                 dataGroups.forEach(group => {
                         const dataGroup: DataField<any>[] = [];
@@ -134,16 +159,16 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                                     }
                                 });
                             });
-                            this.taskPanelData.task.dataGroups.push({
+                            this._taskPanelData.task.dataGroups.push({
                                 fields: dataGroup,
                                 stretch: group.stretch,
                                 title: group.title,
                                 layout: group.layout,
                                 alignment: group.alignment
                             });
-                            this.taskPanelData.task.dataSize += dataGroup.length;
+                            this._taskPanelData.task.dataSize += dataGroup.length;
                         } else {
-                            this._log.info(this._translate.instant('tasks.snackbar.noData') + ' ' + this.taskPanelData.task);
+                            this._log.info(this._translate.instant('tasks.snackbar.noData') + ' ' + this._taskPanelData.task);
                             this.loading = false;
                             afterAction.next(true);
                         }
@@ -152,15 +177,15 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 this.loading = false;
                 afterAction.next(true);
             } else {
-                this._log.info(this._translate.instant('tasks.snackbar.noGroup') + ' ' + this.taskPanelData.task);
+                this._log.info(this._translate.instant('tasks.snackbar.noGroup') + ' ' + this._taskPanelData.task);
                 this.loading = false;
-                this.taskPanelData.task.dataSize = 0;
+                this._taskPanelData.task.dataSize = 0;
                 afterAction.next(true);
             }
-            this._taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
+            this._taskPanelContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
         }, error => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
-             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
+             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
             this._log.debug(error);
             this.loading = false;
             afterAction.next(false);
@@ -168,7 +193,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     public updateTaskDataFields(afterAction = new Subject<boolean>()): void {
-        if (this.taskPanelData.task.dataSize <= 0) {
+        if (this._taskPanelData.task.dataSize <= 0) {
             return;
         }
 
@@ -184,7 +209,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }
 
         const body = {};
-        this.taskPanelData.task.dataGroups.forEach(dataGroup => {
+        this._taskPanelData.task.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
                 if (field.initialized && field.valid && field.changed) {
                     body[field.stringId] = {
@@ -202,12 +227,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
         this.loading = true;
         this._updating = true;
-        this._taskService.setData(this.taskPanelData.task.stringId, body).subscribe(response => {
+        this._taskService.setData(this._taskPanelData.task.stringId, body).subscribe(response => {
             if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
-                this.taskPanelData.changedFields.next(response.changedFields as ChangedFields);
+                this._taskPanelData.changedFields.next(response.changedFields as ChangedFields);
             }
             Object.keys(body).forEach(id => {
-                this.taskPanelData.task.dataGroups.forEach(dataGroup => {
+                this._taskPanelData.task.dataGroups.forEach(dataGroup => {
                     const changed = dataGroup.fields.find(f => f.stringId === id);
                     if (changed !== undefined) {
                         changed.changed = false;
@@ -230,12 +255,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 this._queue.next(false);
             }
             afterAction.next(false);
-            this._taskViewService.reload();
+            this._taskViewService.reloadCurrentPage();
         });
     }
 
     private updateFromChangedFields(chFields): void {
-        this.taskPanelData.task.dataGroups.forEach(dataGroup => {
+        this._taskPanelData.task.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
                 if (chFields[field.stringId]) {
                     const updatedField = chFields[field.stringId];
@@ -243,8 +268,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                         if (key === 'value') {
                             field.value = this._fieldConvertorService.formatValue(field, updatedField[key]);
                             field.changed = false;
-                        } else if (key === 'behavior' && updatedField.behavior[this.taskPanelData.task.transitionId]) {
-                            field.behavior = updatedField.behavior[this.taskPanelData.task.transitionId];
+                        } else if (key === 'behavior' && updatedField.behavior[this._taskPanelData.task.transitionId]) {
+                            field.behavior = updatedField.behavior[this._taskPanelData.task.transitionId];
                         } else if (key === 'choices') {
                             const newChoices: EnumerationFieldValue[] = [];
                             if (updatedField.choices instanceof Array) {
@@ -265,14 +290,14 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 }
             });
         });
-        this._taskPanelContentService.$shouldCreate.next(this.taskPanelData.task.dataGroups);
+        this._taskPanelContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
     }
 
     processTask(type: string) {
         const after = new Subject<boolean>();
         after.subscribe(bool => {
             if (bool) {
-                this._taskViewService.reload();
+                this._taskViewService.reloadCurrentPage();
             }
             after.complete();
         });
@@ -296,12 +321,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         if (this.loading) {
             return;
         }
-        if (this.taskPanelData.task.user) {
+        if (this._taskPanelData.task.user) {
             afterAction.next(true);
             return;
         }
         this.loading = true;
-        this._taskService.assignTask(this.taskPanelData.task.stringId).subscribe(response => {
+        this._taskService.assignTask(this._taskPanelData.task.stringId).subscribe(response => {
             this.loading = false;
             if (response.success) {
                 this.removeStateData();
@@ -312,7 +337,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             }
         }, error => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
-             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
+             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this._log.debug(error);
             this.loading = false;
             afterAction.next(false);
@@ -328,7 +353,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             if (event.data !== undefined) {
                 this.loading = true;
 
-                this._taskService.delegateTask(this.taskPanelData.task.stringId, event.data.id).subscribe(response => {
+                this._taskService.delegateTask(this._taskPanelData.task.stringId, event.data.id).subscribe(response => {
                     this.loading = false;
                     if (response.success) {
                         this.removeStateData();
@@ -339,7 +364,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                     }
                 }, error => {
                     this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
-                     ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
+                     ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
                     this.loading = false;
                     afterAction.next(false);
                 });
@@ -352,13 +377,13 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         if (this.loading) {
             return;
         }
-        if (!this.taskPanelData.task.user || ((this.taskPanelData.task.user.email !== this._userService.user.email)
+        if (!this._taskPanelData.task.user || ((this._taskPanelData.task.user.email !== this._userService.user.email)
             && !this.canDo('cancel'))) {
             afterAction.next(false);
             return;
         }
         this.loading = true;
-        this._taskService.cancelTask(this.taskPanelData.task.stringId).subscribe(response => {
+        this._taskService.cancelTask(this._taskPanelData.task.stringId).subscribe(response => {
             this.loading = false;
             if (response.success) {
                 this.removeStateData();
@@ -369,7 +394,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             }
         }, error => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
-             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
+             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.loading = false;
             afterAction.next(false);
         });
@@ -377,9 +402,9 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     finish(afterAction = new Subject<boolean>()) {
         const after = new Subject<boolean>();
-        if (this.taskPanelData.task.dataSize <= 0) {
+        if (this._taskPanelData.task.dataSize <= 0) {
             after.subscribe(boolean => {
-                if (this.taskPanelData.task.dataSize <= 0 || this.validateTaskData()) {
+                if (this._taskPanelData.task.dataSize <= 0 || this.validateTaskData()) {
                     this.sendFinishTaskRequest(afterAction);
                     this.collapse();
                 }
@@ -414,7 +439,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             return;
         }
         this.loading = true;
-        this._taskService.finishTask(this.taskPanelData.task.stringId).subscribe(response => {
+        this._taskService.finishTask(this._taskPanelData.task.stringId).subscribe(response => {
             this.loading = false;
             if (response.success) {
                 this.removeStateData();
@@ -425,20 +450,20 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             }
         }, error => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
-             ${this.taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
+             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.loading = false;
             afterAction.next(false);
         });
     }
 
     private validateTaskData(): boolean {
-        if (!this.taskPanelData.task.dataGroups) {
+        if (!this._taskPanelData.task.dataGroups) {
             return false;
         }
-        const valid = !this.taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
+        const valid = !this._taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
         if (!valid) {
             this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
-            this.taskPanelData.task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
+            this._taskPanelData.task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
         }
         return valid;
     }
@@ -454,45 +479,45 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     canDo(action) {
-        if (!this.taskPanelData.task.roles || !action || !(this.taskPanelData.task.roles instanceof Object)) {
+        if (!this._taskPanelData.task.roles || !action || !(this._taskPanelData.task.roles instanceof Object)) {
             return false;
         }
-        return Object.keys(this.taskPanelData.task.roles).some(role =>
-            this._userService.hasRoleById(role) ? this.taskPanelData.task.roles[role][action] : false
+        return Object.keys(this._taskPanelData.task.roles).some(role =>
+            this._userService.hasRoleById(role) ? this._taskPanelData.task.roles[role][action] : false
         );
     }
 
     canAssign() {
-        return this.taskPanelData.task.assignPolicy === AssignPolicy.manual && !this.taskPanelData.task.user && this.canDo('perform');
+        return this._taskPanelData.task.assignPolicy === AssignPolicy.manual && !this._taskPanelData.task.user && this.canDo('perform');
     }
 
     canReassign() {
-        return (this.taskPanelData.task.user && this.taskPanelData.task.user.email === this._userService.user.email)
+        return (this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email)
             && (this.canDo('delegate'));
     }
 
     canCancel() {
-        return (this.taskPanelData.task.assignPolicy === AssignPolicy.manual &&
-            this.taskPanelData.task.user && this.taskPanelData.task.user.email === this._userService.user.email) ||
-            (this.taskPanelData.task.user && this.canDo('cancel'));
+        return (this._taskPanelData.task.assignPolicy === AssignPolicy.manual &&
+            this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email) ||
+            (this._taskPanelData.task.user && this.canDo('cancel'));
     }
 
     canFinish() {
-        return this.taskPanelData.task.user && this.taskPanelData.task.user.email === this._userService.user.email;
+        return this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email;
     }
 
     canCollapse() {
-        return this.taskPanelData.task.assignPolicy === AssignPolicy.manual;
+        return this._taskPanelData.task.assignPolicy === AssignPolicy.manual;
     }
 
     private removeStateData(): void {
-        this.taskPanelData.task.user = undefined;
-        this.taskPanelData.task.startDate = undefined;
-        this.taskPanelData.task.finishDate = undefined;
+        this._taskPanelData.task.user = undefined;
+        this._taskPanelData.task.startDate = undefined;
+        this._taskPanelData.task.finishDate = undefined;
     }
 
     private buildAssignPolicy(success: boolean): void {
-        if (this.taskPanelData.task.assignPolicy === AssignPolicy.auto) {
+        if (this._taskPanelData.task.assignPolicy === AssignPolicy.auto) {
             this.autoAssignPolicy(success);
         } else {
             this.manualAssignPolicy(success);
@@ -503,7 +528,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         const after = new Subject<boolean>();
         if (success) {
             after.subscribe(bool => {
-                this._taskViewService.reload();
+                this._taskViewService.reloadCurrentPage();
                 if (bool) {
                     const afterLoad = new Subject<boolean>();
                     afterLoad.subscribe(boolean => {
@@ -519,7 +544,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             this.assign(after);
         } else {
             after.subscribe(bool => {
-                this._taskViewService.reload();
+                this._taskViewService.reloadCurrentPage();
                 this.collapse();
                 after.complete();
             });
@@ -541,7 +566,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private buildFinishPolicy(success: boolean): void {
-        if (this.taskPanelData.task.finishPolicy === FinishPolicy.autoNoData) {
+        if (this._taskPanelData.task.finishPolicy === FinishPolicy.autoNoData) {
             this.autoNoDataFinishPolicy(success);
         } else {
             this.manualFinishPolicy(success);
@@ -550,7 +575,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     private autoNoDataFinishPolicy(success: boolean): void {
         if (success) {
-            if (this.taskPanelData.task.dataSize <= 0) {
+            if (this._taskPanelData.task.dataSize <= 0) {
                 this.processTask('finish');
                 this.collapse();
             } else {
@@ -570,7 +595,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private buildDataFocusPolicy(success: boolean) {
-        if (this.taskPanelData.task.dataFocusPolicy === DataFocusPolicy.autoRequired) {
+        if (this._taskPanelData.task.dataFocusPolicy === DataFocusPolicy.autoRequired) {
             this.autoRequiredDataFocusPolicy(success);
         }
     }
@@ -582,8 +607,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private blockFields(bool: boolean) {
-        if (this.taskPanelData.task.dataGroups) {
-            this.taskPanelData.task.dataGroups.forEach(group => {
+        if (this._taskPanelData.task.dataGroups) {
+            this._taskPanelData.task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
                     field.block = bool;
                 });
@@ -592,7 +617,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
-        const task = this.taskPanelData.task;
+        const task = this._taskPanelData.task;
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
                 return task.caseTitle;

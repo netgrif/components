@@ -18,7 +18,8 @@
                                     let last = last;
                                     trackBy: trackBy;
                                     templateCacheSize: 0"
-                    [taskPanelData]="task" [selectedHeaders$]="selectedHeaders$" [first]="first" [last]="last">
+                    [taskPanelData]="task" [selectedHeaders$]="selectedHeaders$" [first]="first" [last]="last"
+                    class="panel-expanded-spacing">
                 </nae-task-panel>
 
                 <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center">

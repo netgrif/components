@@ -30,6 +30,9 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     protected _endOfData: boolean;
     protected _pagination: Pagination;
 
+    // Kovy fix
+    protected _panelUpdate$: BehaviorSubject<Array<TaskPanelData>>;
+
     /**
      * @ignore
      * Used to decide if the mongo endpoint should be used instead
@@ -38,6 +41,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     private readonly _initializing: boolean = true;
     private readonly _taskArray: Array<TaskPanelData>;
     private _clear = false;
+    private _reloadPage = false;
 
     constructor(protected _taskService: TaskResourceService, private _userService: UserService,
                 private _snackBarService: SnackBarService, private _translate: TranslateService,
@@ -52,11 +56,12 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         this._requestedPage$ = new BehaviorSubject<number>(null);
         this._endOfData = false;
         this._pagination = {
-            size: 25,
+            size: 50,
             totalElements: undefined,
             totalPages: undefined,
             number: -1
         };
+        this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
 
         const baseFilter = this._searchService.baseFilter;
         if (baseFilter instanceof SimpleFilter) {
@@ -74,14 +79,35 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         const tasksMap$ = this._requestedPage$.pipe(
             mergeMap(p => this.loadPage(p)),
             scan((acc, value) => {
-                const result = this._clear ? {} : {...acc, ...value};
-                this._clear = false;
+                let result: { [k: string]: TaskPanelData } = {};
+                if (this._clear) {
+                    this._clear = false;
+
+                } else if (this._reloadPage) {
+                    this._reloadPage = false;
+                    Object.keys(acc).forEach(taskId => {
+                        if (!value[taskId]) {
+                            delete acc[taskId];
+                        } else {
+                            this.updateTask(acc[taskId].task, value[taskId].task);
+                            value[taskId].task.dataGroups = acc[taskId].task.dataGroups;
+                            value[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
+                            // acc[taskId] = value[taskId];
+                            this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.user &&
+                                acc[taskId].task.user.email === this._userService.user.email));
+                            delete value[taskId];
+                        }
+                    });
+                    result = Object.assign(acc, value);
+                } else {
+                    result = {...acc, ...value};
+                }
                 return result;
             }, {})
         );
         this._tasks$ = tasksMap$.pipe(
-            map(v => Object.values(v))
-        );
+            map(v => Object.values(v) as Array<TaskPanelData>),
+            tap(v => this._panelUpdate$.next(v)));
     }
 
     public get tasks$(): Observable<Array<TaskPanelData>> {
@@ -100,6 +126,10 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         return this._loading$.isActive;
     }
 
+    public get panelUpdate(): Observable<Array<TaskPanelData>> {
+        return this._panelUpdate$.asObservable();
+    }
+
     public loadPage(page: number): Observable<{ [k: string]: TaskPanelData }> {
         if (this._loading$.isActive || page === null || page === undefined || page < 0 || this._clear) {
             return of({});
@@ -108,10 +138,10 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         params = this.addSortParams(params);
         params = this.addPageParams(params, page);
         this._loading$.on();
-        const endpointCall = !this._searchService.additionalFiltersApplied && !!this._parentCaseId ?
-            this._taskService.getTasks({case: this._parentCaseId}, params) :
-            this._taskService.searchTask(this._searchService.activeFilter, params);
-        return endpointCall.pipe(
+        return timer(200).pipe(
+            mergeMap(_ => !this._searchService.additionalFiltersApplied && !!this._parentCaseId ?
+                this._taskService.getTasks({case: this._parentCaseId}, params) :
+                this._taskService.searchTask(this._searchService.activeFilter, params)),
             catchError(err => {
                 this._log.error('Loading tasks has failed!', err);
                 return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
@@ -127,13 +157,23 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                     return {
                         ...acc, [curr.stringId]: {
                             task: curr,
-                            changedFields: this._changedFields$
+                            changedFields: this._changedFields$,
+                            initiallyExpanded: false
                         }
                     };
                 }, {});
             }),
             tap(_ => this._loading$.off())
         );
+    }
+
+    private updateTask(old: Task, neww: Task) {
+        Object.keys(neww).forEach(key => {
+            if (neww[key] !== undefined && neww[key] !== null) {
+                old[key] = neww[key];
+            }
+        });
+        this.blockTaskFields(old, !(old.user && old.user.email === this._userService.user.email));
     }
 
     public loadTasks() {
@@ -161,10 +201,10 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 tasks = this.resolveUpdate(tasks);
             }
             tasks.forEach(task => {
-                this._taskArray.push({
-                    task,
-                    changedFields: this._changedFields$
-                });
+                // this._taskArray.push({
+                //     task,
+                //     changedFields: this._changedFields$
+                // });
             });
         } else {
             this._taskArray.splice(0, this._taskArray.length);
@@ -251,6 +291,20 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             this._pagination.number = -1;
             this.nextPage(range, 0);
         });
+    }
+
+    public reloadCurrentPage(): void {
+        if (!this._tasks$ || !this._pagination) {
+            return;
+        }
+        this._reloadPage = true;
+        this._pagination.number = -1; // TODO [BUG] - Reloading only first page
+        this._endOfData = false;
+        const range = {
+            start: -1,
+            end: 0
+        };
+        this.nextPage(range, 0);
     }
 
     protected getMetaFieldSortId(): string {

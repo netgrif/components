@@ -19,3 +19,8 @@
 .mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {
     flex: 1 1 100%;
 }
+
+.panel-expanded-spacing mat-expansion-panel.mat-expanded {
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+}
