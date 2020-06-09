@@ -1,13 +1,27 @@
 import {TabTestComponent} from './opened-tab.spec';
 import {TabView} from './tab-view';
+import {TestBed} from '@angular/core/testing';
+import {ViewService} from '../../routing/view-service/view.service';
+import {LoggerService} from '../../logger/services/logger.service';
 
 describe('TabView', () => {
+    let viewService: ViewService;
+    let logger: LoggerService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: []
+        });
+        viewService = TestBed.inject(ViewService);
+        logger = TestBed.inject(LoggerService);
+    });
+
     it('should create an instance', () => {
-        expect(new TabView([])).toBeTruthy();
+        expect(new TabView(viewService, logger, [])).toBeTruthy();
     });
 
     it('should play with tabs', () => {
-        const tabs = new TabView([{
+        const tabs = new TabView(viewService, logger, [{
             label: {
                 text: 'tab title',
                 icon: 'home'

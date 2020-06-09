@@ -1,13 +1,27 @@
 import {TestBed} from '@angular/core/testing';
-
 import {UserPreferenceService} from './user-preference.service';
-import {User} from '../models/user';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {MatSnackBarModule} from '@angular/material';
 
 describe('UserPreferenceService', () => {
     let service: UserPreferenceService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            imports: [MatSnackBarModule],
+            providers: [
+                AuthenticationMethodService,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService}
+            ]
+        });
         service = TestBed.inject(UserPreferenceService);
     });
 
@@ -16,52 +30,26 @@ describe('UserPreferenceService', () => {
     });
 
     it('should test user preferencies', () => {
-        service.user = new User('id', 'mail',  'name', 'surname',
-            ['ADMIN'], [], [], {
-                caseFilters: {},
-                caseHeaders: {},
-                taskFilters: {},
-                taskHeaders: {},
-                workflowFilters: {},
-                workflowHeaders: {}
-            });
-        service.setTaskFilters('viewId', {filter: ''});
-        service.getTaskFilters('viewId').subscribe(res => {
-            expect(res).toEqual({filter: ''});
-        });
+        service.setTaskFilters('viewId', ['filterId']);
+        const taskFilters = service.getTaskFilters('viewId');
+        expect(taskFilters.length).toEqual(1);
+        expect(taskFilters[0]).toEqual('filterId');
 
-        service.setCaseFilters('viewCaseId', {filter: ''});
-        service.getCaseFilters('viewCaseId').subscribe(res => {
-            expect(res).toEqual({filter: ''});
-        });
+        service.setCaseFilters('viewId', ['filterId']);
+        const caseFilters = service.getCaseFilters('viewId');
+        expect(caseFilters.length).toEqual(1);
+        expect(caseFilters[0]).toEqual('filterId');
 
-        service.saveWorkflowFilters('viewWorkId', {filter: ''});
-        service.getWorkflowFilters('viewWorkId').subscribe(res => {
-            expect(res).toEqual({filter: ''});
-        });
+        service.setHeaders('viewId', ['header0']);
+        const headers = service.getHeaders('viewId');
+        expect(headers.length).toEqual(1);
+        expect(headers[0]).toEqual('header0');
 
-        const header = {
-            column0: undefined,
-            column1: undefined,
-            column2: undefined,
-            column3: undefined,
-            column4: undefined,
-        };
+        service.setLocale('sk-SK');
+        expect(service.getLocale).toEqual('sk-SK');
 
-        service.saveTaskHeaders('viewId', header);
-        service.getTaskHeaders('viewId').subscribe( res => {
-            expect(res).toEqual(header);
-        });
-
-        service.setHeaders('viewCaseId', header);
-        service.getHeaders('viewCaseId').subscribe(res => {
-            expect(res).toEqual(header);
-        });
-
-        service.saveWorkflowHeaders('viewWorkId', header);
-        service.getWorkflowHeaders('viewWorkId').subscribe( res => {
-            expect(res).toEqual(header);
-        });
+        service.setOther('key', 'value');
+        expect(service.getOther('key')).toEqual('value');
     });
 
     afterAll(() => {

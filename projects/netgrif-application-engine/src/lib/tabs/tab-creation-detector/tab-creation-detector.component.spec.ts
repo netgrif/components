@@ -5,6 +5,8 @@ import {TabContent} from '../interfaces';
 import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabView} from '../classes/tab-view';
+import {ViewService} from '../../routing/view-service/view.service';
+import {LoggerService} from '../../logger/services/logger.service';
 
 describe('TabCreationDetectorComponent', () => {
     let component: TabCreationDetectorComponent;
@@ -58,8 +60,11 @@ class TestWrapperComponent implements OnInit {
         this.tabGroup.initializeTab(index);
     }
 
+    constructor(private viewService: ViewService, private logger: LoggerService) {
+    }
+
     ngOnInit(): void {
-        this.tabGroup = new TabView(this.tabs);
+        this.tabGroup = new TabView(this.viewService, this.logger, this.tabs);
     }
 }
 
