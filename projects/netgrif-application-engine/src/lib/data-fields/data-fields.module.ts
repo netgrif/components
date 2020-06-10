@@ -89,8 +89,7 @@ import {LanguageService} from '../translate/language.service';
     providers: [
         FileUploadService,
         FileDownloadService,
-        {provide: DateAdapter, useClass: CustomDateAdapter},
-        LanguageService
+        {provide: DateAdapter, useClass: CustomDateAdapter}
     ]
 })
 export class DataFieldsModule {

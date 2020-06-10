@@ -1,6 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {EditModeComponent} from './edit-mode.component';
-import {MatSelectModule, MatSnackBarModule, MatSortModule} from '@angular/material';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CaseHeaderService, CaseMetaField} from '../../case-header/case-header.service';
@@ -15,6 +14,14 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/config-case-view-service-factory';
 import {MaterialModule} from '../../../material/material.module';
+import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
+import {ViewService} from '../../../routing/view-service/view.service';
+import {TestViewService} from '../../../utility/tests/test-view-service';
+import {RouterModule} from '@angular/router';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
@@ -31,10 +38,12 @@ describe('EditModeComponent', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
+                RouterModule.forRoot([]),
             ],
             providers: [
                 CaseHeaderService,
                 ConfigCaseViewServiceFactory,
+                AuthenticationMethodService,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory
@@ -44,7 +53,10 @@ describe('EditModeComponent', () => {
                     useFactory: TestCaseViewFactory,
                     deps: [ConfigCaseViewServiceFactory]
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: ViewService, useClass: TestViewService},
             ]
         })
             .compileComponents();

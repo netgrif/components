@@ -3,7 +3,6 @@ import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
-import {LanguageService} from '../../translate/language.service';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -19,7 +18,6 @@ export enum CaseMetaField {
 @Injectable()
 export class CaseHeaderService extends AbstractHeaderService {
     constructor(protected _caseViewService: CaseViewService,
-                private _lang: LanguageService,
                 preferences: UserPreferenceService,
                 viewService: ViewService,
                 logger: LoggerService) {

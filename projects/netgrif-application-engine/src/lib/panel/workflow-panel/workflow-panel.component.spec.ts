@@ -5,7 +5,7 @@ import {PanelComponent} from '../panel.component';
 import {MaterialModule} from '../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {of} from 'rxjs';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
@@ -15,6 +15,11 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 
 
 describe('WorkflowPanelComponent', () => {
@@ -32,9 +37,14 @@ describe('WorkflowPanelComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule
             ],
+            providers: [
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ],
             declarations: [WorkflowPanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA],
-            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);

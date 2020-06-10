@@ -10,6 +10,10 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TaskViewService} from '../../../view/task-view/service/task-view.service';
 import {ConfigTaskViewServiceFactory} from '../../../view/task-view/service/factory/config-task-view-service-factory';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 
 describe('TaskSearchComponent', () => {
     let component: TaskSearchComponent;
@@ -29,10 +33,12 @@ describe('TaskSearchComponent', () => {
                     provide: SearchService,
                     useFactory: TestTaskSearchServiceFactory
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService},
                 {   provide: TaskViewService,
                     useFactory: TestTaskViewFactory,
                     deps: [ConfigTaskViewServiceFactory]},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
             ]
         })
             .compileComponents();

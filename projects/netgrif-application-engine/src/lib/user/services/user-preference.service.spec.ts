@@ -7,20 +7,39 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {MatSnackBarModule} from '@angular/material';
+import {MatIconModule, MatSnackBarModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('UserPreferenceService', () => {
     let service: UserPreferenceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatSnackBarModule],
+            imports: [
+                MatSnackBarModule,
+                NoopAnimationsModule,
+                MatIconModule
+            ],
             providers: [
                 AuthenticationMethodService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService}
+            ],
+            declarations: [
+                ErrorSnackBarComponent,
+                SuccessSnackBarComponent
             ]
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                    SuccessSnackBarComponent
+                ]
+            }
         });
         service = TestBed.inject(UserPreferenceService);
     });
@@ -29,7 +48,7 @@ describe('UserPreferenceService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should test user preferencies', () => {
+    it('should test user preferences', () => {
         service.setTaskFilters('viewId', ['filterId']);
         const taskFilters = service.getTaskFilters('viewId');
         expect(taskFilters.length).toEqual(1);
@@ -46,7 +65,7 @@ describe('UserPreferenceService', () => {
         expect(headers[0]).toEqual('header0');
 
         service.setLocale('sk-SK');
-        expect(service.getLocale).toEqual('sk-SK');
+        expect(service.getLocale()).toEqual('sk-SK');
 
         service.setOther('key', 'value');
         expect(service.getOther('key')).toEqual('value');

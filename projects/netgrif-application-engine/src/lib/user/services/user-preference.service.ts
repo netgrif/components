@@ -86,7 +86,7 @@ export class UserPreferenceService {
 
     protected _savePreferences(): void {
         this._userResourceService.setPreferences(this._preferences).subscribe(resultMessage => {
-            if (!!resultMessage.success) {
+            if (typeof resultMessage.success === 'string') {
                 // TODO i18n
                 this._snackbar.openSuccessSnackBar('User preferences saved successfully');
             } else {

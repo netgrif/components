@@ -7,6 +7,15 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabView} from '../classes/tab-view';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {TestViewService} from '../../utility/tests/test-view-service';
+import {RouterModule} from '@angular/router';
 
 describe('TabCreationDetectorComponent', () => {
     let component: TabCreationDetectorComponent;
@@ -17,7 +26,15 @@ describe('TabCreationDetectorComponent', () => {
             imports: [
                 MaterialModule,
                 TabTestModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                RouterModule.forRoot([])
+            ],
+            providers: [
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: ViewService, useClass: TestViewService}
             ],
             declarations: [
                 TabCreationDetectorComponent,

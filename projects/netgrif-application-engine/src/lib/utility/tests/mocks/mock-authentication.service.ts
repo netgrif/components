@@ -11,4 +11,12 @@ export class MockAuthenticationService extends AuthenticationService {
     logout(): Observable<object> {
         return of(undefined);
     }
+
+    isAuthenticated(): boolean {
+        return true;
+    }
+
+    get authenticated$(): Observable<boolean> {
+        return of(true);
+    }
 }

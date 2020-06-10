@@ -3,6 +3,15 @@ import {TabView} from './tab-view';
 import {TestBed} from '@angular/core/testing';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {TestViewService} from '../../utility/tests/test-view-service';
+import {RouterModule} from '@angular/router';
 
 describe('TabView', () => {
     let viewService: ViewService;
@@ -10,7 +19,16 @@ describe('TabView', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: []
+            imports: [
+                RouterModule.forRoot([])
+            ],
+            providers: [
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: ViewService, useClass: TestViewService}
+            ]
         });
         viewService = TestBed.inject(ViewService);
         logger = TestBed.inject(LoggerService);

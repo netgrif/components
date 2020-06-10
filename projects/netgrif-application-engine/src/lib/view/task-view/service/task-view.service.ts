@@ -43,9 +43,11 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     private _clear = false;
     private _reloadPage = false;
 
-    constructor(protected _taskService: TaskResourceService, private _userService: UserService,
-                private _snackBarService: SnackBarService, private _translate: TranslateService,
-                private _Language: LanguageService, protected _searchService: SearchService,
+    constructor(protected _taskService: TaskResourceService,
+                private _userService: UserService,
+                private _snackBarService: SnackBarService,
+                private _translate: TranslateService,
+                protected _searchService: SearchService,
                 private _log: LoggerService,
                 allowedNets: Observable<Array<Net>> = of([])) { // need for translations
         super(allowedNets);
