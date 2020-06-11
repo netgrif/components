@@ -36,7 +36,6 @@ import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-textarea-field.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
-import {LanguageService} from '../translate/language.service';
 
 @NgModule({
     declarations: [

@@ -14,7 +14,6 @@ import {Net} from '../../../process/net';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Pagination} from '../../../resources/interface/pagination';
 import {Task} from '../../../resources/interface/task';
-import {LanguageService} from '../../../translate/language.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ListRange} from '@angular/cdk/collections';
