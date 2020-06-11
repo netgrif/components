@@ -30,7 +30,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
     processFormControl = new FormControl('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
-    selectedColorControl = new FormControl('primary-color', Validators.required);
+    selectedColorControl = new FormControl('', Validators.required);
 
     colors: Form[] = [
         {value: 'panel-primary-icon', viewValue: 'Primary'},
@@ -90,28 +90,28 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
 
     public createNewCase(): void {
-        if (!this.selectedColorControl.valid) {
-            return;
-        }
+        if (this.selectedColorControl.valid) {
+            const newCase = {
+                title: this.titleFormControl.value,
+                color: this.selectedColorControl.value,
+                netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
+            };
 
-        const newCase = {
-            title: this.titleFormControl.value,
-            color: this.selectedColorControl.value,
-            netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
-        };
-
-        this._caseResourceService.createCase(newCase)
-            .subscribe(
-                response => {
-                    this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
-                    this._sideMenuControl.close({
-                        opened: false,
-                        message: 'Confirm new case setup',
-                        data: response
-                    });
-                },
-                error => this._snackBarService.openErrorSnackBar(error)
+            this._caseResourceService.createCase(newCase)
+                .subscribe(
+                    response => {
+                        this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
+                        this._sideMenuControl.close({
+                            opened: false,
+                            message: 'Confirm new case setup',
+                            data: response
+                        });
+                    },
+                    error => this._snackBarService.openErrorSnackBar(error)
             );
+        } else {
+            this.selectedColorControl.markAsTouched();
+        }
     }
 
     /**
