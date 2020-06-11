@@ -1,4 +1,4 @@
-import {AbstractDataField} from '../../models/abstract-data-field';
+import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
@@ -10,7 +10,7 @@ export enum TextFieldView {
     RICHTEXTAREA = 'richtextarea'
 }
 
-export class TextField extends AbstractDataField<string> {
+export class TextField extends DataField<string> {
 
     private _validators: Array<ValidatorFn>;
     public materialAppearance: string;

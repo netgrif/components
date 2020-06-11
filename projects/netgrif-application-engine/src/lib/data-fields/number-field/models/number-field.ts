@@ -1,10 +1,10 @@
-import {AbstractDataField} from '../../models/abstract-data-field';
+import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 
-export class NumberField extends AbstractDataField<number> {
+export class NumberField extends DataField<number> {
     private _validators: Array<ValidatorFn>;
     public materialAppearance: string;
 

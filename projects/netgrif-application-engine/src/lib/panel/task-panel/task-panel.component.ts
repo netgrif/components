@@ -3,7 +3,7 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {NAE_TASK_COLS, TaskPanelContentComponent} from './task-panel-content/task-panel-content.component';
 import {TaskPanelContentService} from './task-panel-content/task-panel-content.service';
-import {AbstractDataField} from '../../data-fields/models/abstract-data-field';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConvertorService} from './task-panel-content/field-convertor.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -147,7 +147,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             this._taskPanelData.task.dataGroups = [];
             if (dataGroups instanceof Array) {
                 dataGroups.forEach(group => {
-                        const dataGroup: AbstractDataField<any>[] = [];
+                        const dataGroup: DataField<any>[] = [];
                         if (group.fields._embedded) {
                             Object.keys(group.fields._embedded).forEach(item => {
                                 dataGroup.push(...group.fields._embedded[item].map(df => this._fieldConvertorService.toClass(df)));

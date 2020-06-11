@@ -1,5 +1,5 @@
 import {Fields} from './fields';
-import {AbstractDataField} from '../../data-fields/models/abstract-data-field';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 import {DataGroupLayout} from './data-group-layout';
 
 /**
@@ -30,9 +30,9 @@ export interface DataGroupsResource {
  */
 export interface DataGroup {
     /**
-     * Array [DataField]{@link AbstractDataField}
+     * Array [DataField]{@link DataField}
      */
-    fields: Array<AbstractDataField<any>>;
+    fields: Array<DataField<any>>;
     /**
      * Name datagroup
      */

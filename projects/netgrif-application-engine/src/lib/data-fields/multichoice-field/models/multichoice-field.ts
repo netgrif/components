@@ -1,4 +1,4 @@
-import {AbstractDataField} from '../../models/abstract-data-field';
+import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 
@@ -12,7 +12,7 @@ export enum MultichoiceFieldView {
     LIST = 'list'
 }
 
-export class MultichoiceField  extends AbstractDataField<Array<string>> {
+export class MultichoiceField  extends DataField<Array<string>> {
     public materialAppearance: string;
 
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,

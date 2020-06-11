@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DataFieldResource} from './resource-interface';
-import {AbstractDataField} from '../../../data-fields/models/abstract-data-field';
+import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
 import {TextField, TextFieldView} from '../../../data-fields/text-field/models/text-field';
 import {NumberField} from '../../../data-fields/number-field/models/number-field';
@@ -30,7 +30,7 @@ export class FieldConvertorService {
     constructor() {
     }
 
-    public toClass(item: DataFieldResource): AbstractDataField<any> {
+    public toClass(item: DataFieldResource): DataField<any> {
         switch (item.type) {
             case 'boolean':
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
@@ -119,7 +119,7 @@ export class FieldConvertorService {
         }
     }
 
-    public resolveType(item: AbstractDataField<any>): string {
+    public resolveType(item: DataField<any>): string {
         if (item instanceof BooleanField) {
             return 'boolean';
         } else if (item instanceof ButtonField) {
@@ -143,7 +143,7 @@ export class FieldConvertorService {
         }
     }
 
-    public formatValue(field: AbstractDataField<any>, value: any): any {
+    public formatValue(field: DataField<any>, value: any): any {
         if (this.resolveType(field) === 'text' && value === null)
             return null;
         if (value === undefined || value === null)
