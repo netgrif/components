@@ -5,6 +5,7 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {Observable, Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,8 @@ export class UserPreferenceService {
     constructor(protected _userService: UserService,
                 protected _userResourceService: UserResourceService,
                 protected _logger: LoggerService,
-                protected _snackbar: SnackBarService) {
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService) {
         this._preferences = this._emptyPreferences();
         this._preferencesChanged$ = new Subject<void>();
 
@@ -87,10 +89,9 @@ export class UserPreferenceService {
     protected _savePreferences(): void {
         this._userResourceService.setPreferences(this._preferences).subscribe(resultMessage => {
             if (typeof resultMessage.success === 'string') {
-                // TODO i18n
-                this._snackbar.openSuccessSnackBar('User preferences saved successfully');
+                this._snackbar.openSuccessSnackBar(this._translate.instant('preferences.snackbar.saveSuccess'));
             } else {
-                this._snackbar.openErrorSnackBar('An error occurred while saving user preferences');
+                this._snackbar.openErrorSnackBar(this._translate.instant('preferences.snackbar.saveFailure'));
                 this._logger.error('User preferences failed to save', resultMessage);
             }
         });

@@ -245,5 +245,11 @@
         "user-list": {
             "noUsersWereFound": "Derzeit befinden sich Benutzer im System"
         }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "Benutzereinstellungen wurden gespeichert",
+            "saveFailure": "Benutzereinstellungen können nicht gespeichert werden"
+        }
     }
 }

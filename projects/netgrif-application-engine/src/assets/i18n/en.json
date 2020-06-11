@@ -252,5 +252,11 @@
             "noRoles": "There are any roles in the process",
             "noProcessesWereFound": "There are any processes in the system at the moment"
         }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "User preferences saved successfully",
+            "saveFailure": "An error occurred while saving user preferences"
+        }
     }
 }

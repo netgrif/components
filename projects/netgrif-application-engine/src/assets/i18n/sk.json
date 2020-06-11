@@ -252,5 +252,11 @@
             "noRoles": "Tento proces neobsahuje žiadne roly",
             "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
         }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "Vaše preferencie boli uložené",
+            "saveFailure": "Nepodarilo sa uložiť preferencie"
+        }
     }
 }
