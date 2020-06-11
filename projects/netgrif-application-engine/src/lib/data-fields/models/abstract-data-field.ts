@@ -9,7 +9,7 @@ import {Layout} from './layout';
  * Holds the logic common to all data field Model objects.
  * @typeparam T - type of the `value` property of the data field
  */
-export abstract class DataField<T> {
+export abstract class AbstractDataField<T> {
     /**
      * @ignore
      * Current value of the data field

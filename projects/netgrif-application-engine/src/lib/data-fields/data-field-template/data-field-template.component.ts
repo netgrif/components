@@ -1,7 +1,7 @@
 import {Component, Input, TemplateRef} from '@angular/core';
 import {ResizedEvent} from 'angular-resize-event';
 import {WrappedBoolean} from './models/wrapped-boolean';
-import {DataField} from '../models/abstract-data-field';
+import {AbstractDataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 
@@ -15,7 +15,7 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
  * If the datafield's layout is set to `TemplateAppearance.MATERIAL` the field always occupies 100% of the available space
  * regardless of it's width.
  *
- * See {@link DataField} and {@link TemplateAppearance} for more information.
+ * See {@link AbstractDataField} and {@link TemplateAppearance} for more information.
  */
 @Component({
     selector: 'nae-data-field-template',
@@ -27,7 +27,7 @@ export class DataFieldTemplateComponent {
     /**
      * Datafield model object that should be displayed in the template
      */
-    @Input() public dataField: DataField<any>;
+    @Input() public dataField: AbstractDataField<any>;
     /**
      * Content of the datafield that should be displayed in the template
      */
@@ -37,7 +37,7 @@ export class DataFieldTemplateComponent {
      *
      * The breakpoint is only taken into consideration if `TemplateAppearance.NETGRIF` is set on the data field.
      *
-     * See [DataField.layout]{@link DataField#layout} for more information.
+     * See [DataField.layout]{@link AbstractDataField#layout} for more information.
      */
     @Input() public layoutChangeWidthBreakpoint = 250;
 

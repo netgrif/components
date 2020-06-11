@@ -1,4 +1,4 @@
-import {DataField} from '../../models/abstract-data-field';
+import {AbstractDataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
@@ -14,7 +14,7 @@ export enum EnumerationFieldView {
     AUTOCOMPLETE = 'autocomplete'
 }
 
-export class EnumerationField extends DataField<string> {
+export class EnumerationField extends AbstractDataField<string> {
 
     public materialAppearance: string;
     private _validators: Array<ValidatorFn>;

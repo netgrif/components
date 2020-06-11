@@ -1,4 +1,4 @@
-import {DataField} from './abstract-data-field';
+import {AbstractDataField} from './abstract-data-field';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {ChangedFields} from './changed-fields';
@@ -16,7 +16,7 @@ export abstract class AbstractDataFieldComponent implements OnInit {
      * The Model object that this Component should render.
      * It should be overridden in each class that extends this one, to provide a more specific type.
      */
-    @Input() dataField: DataField<any>;
+    @Input() dataField: AbstractDataField<any>;
     /**
      * @ignore
      * See [formControl]{@link AbstractDataFieldComponent#formControl}
@@ -30,7 +30,7 @@ export abstract class AbstractDataFieldComponent implements OnInit {
     /**
      * Registers the {@link FormControl} to the provided data field.
      *
-     * See [DataField.registerFormControl]{@link DataField#registerFormControl} form more information.
+     * See [DataField.registerFormControl]{@link AbstractDataField#registerFormControl} form more information.
      */
     ngOnInit(): void {
         this.dataField.registerFormControl(this._formControl);

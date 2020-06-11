@@ -1,4 +1,4 @@
-import {DataField} from '../../models/abstract-data-field';
+import {AbstractDataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FileFieldValue} from './file-field-value';
@@ -29,7 +29,7 @@ export interface FileUploadDataModel {
 /**
  * Holds information represent file field implements in Petri Net
  */
-export class FileField extends DataField<FileFieldValue> {
+export class FileField extends AbstractDataField<FileFieldValue> {
     /**
      * Specifies the size of all uploaded files in bytes.
      *
