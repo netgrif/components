@@ -1,4 +1,4 @@
-import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Inject, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith, tap} from 'rxjs/operators';
@@ -7,11 +7,8 @@ import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
-import {ProcessService} from '../../../process/process.service';
-import {LoggerService} from '../../../logger/services/logger.service';
 import {NewCaseInjectionData} from './model/new-case-injection-data';
-
+import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 
 interface Form {
     value: string;
@@ -41,16 +38,32 @@ export class NewCaseComponent implements OnInit, OnChanges {
     processOne: Promise<boolean>;
     injectedData: NewCaseInjectionData;
 
+    @ViewChild('stepper1') stepper1;
+    @ViewChild('stepper2') stepper2;
+
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
                 private _formBuilder: FormBuilder,
                 private _snackBarService: SnackBarService,
                 private _caseResourceService: CaseResourceService,
-                private _processService: ProcessService,
-                private _petriNetResource: PetriNetResourceService,
-                private _log: LoggerService) {
+                private _hotkeysService: HotkeysService) {
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as NewCaseInjectionData;
         }
+        this._hotkeysService.add(new Hotkey('enter', (event: KeyboardEvent): boolean => {
+            if (this.stepper1) {
+                this.stepper1.next();
+                if (this.stepper1.selectedIndex === 2) {
+                    this.createNewCase();
+                }
+            }
+            if (this.stepper2) {
+                this.stepper2.next();
+                if (this.stepper2.selectedIndex === 1) {
+                    this.createNewCase();
+                }
+            }
+            return false;
+        }));
     }
 
     ngOnInit() {
@@ -131,5 +144,22 @@ export class NewCaseComponent implements OnInit, OnChanges {
             startWith(''),
             map(value => this._filter(value))
         );
+    }
+
+    nextStep() {
+        if (this.stepper1) {
+            if (this.stepper1.selectedIndex === 2) {
+                this.createNewCase();
+            } else {
+                this.stepper1.next();
+            }
+        }
+        if (this.stepper2) {
+            if (this.stepper2.selectedIndex === 1) {
+                this.createNewCase();
+            } else {
+                this.stepper2.next();
+            }
+        }
     }
 }

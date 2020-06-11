@@ -7,6 +7,7 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {HotkeyModule} from 'angular2-hotkeys';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {TranslateLibModule} from '../../../translate/translate-lib.module';
         FlexModule,
         FormsModule,
         SnackBarModule,
-        TranslateLibModule
+        TranslateLibModule,
+        HotkeyModule.forRoot()
     ],
     exports: [NewCaseComponent],
     entryComponents: [NewCaseComponent]

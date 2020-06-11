@@ -1,9 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {EditModeComponent} from './edit-mode.component';
-import {MatSelectModule, MatSnackBarModule, MatSortModule} from '@angular/material';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {CaseHeaderService, CaseMetaField} from '../../case-header/case-header.service';
+import {CaseHeaderService} from '../../case-header/case-header.service';
 import {Component} from '@angular/core';
 import {HeaderColumn, HeaderColumnType} from '../../models/header-column';
 import {SearchService} from '../../../search/search-service/search.service';
@@ -15,6 +14,7 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/config-case-view-service-factory';
 import {MaterialModule} from '../../../material/material.module';
+import {CaseMetaField} from '../../case-header/case-menta-enum';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;

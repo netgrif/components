@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {CaseHeaderService, CaseMetaField} from './case-header.service';
+import {CaseHeaderService} from './case-header.service';
 import {HeaderType} from '../models/header-type';
 import {HeaderMode} from '../models/header-mode';
 import {SearchChangeDescription} from '../models/user-changes/search-change-description';
@@ -14,6 +14,7 @@ import {MatSnackBarModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/config-case-view-service-factory';
+import {CaseMetaField} from './case-menta-enum';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
