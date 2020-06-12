@@ -37,6 +37,10 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
 
+    /**
+     * @ignore
+     * Set by an @Input() on a setter function, that also resolves featured fields.
+     */
     private _taskPanelData: TaskPanelData;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
@@ -49,10 +53,16 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     private _updating: boolean;
     private _queue: Subject<boolean>;
 
-    constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
-                private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
-                private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService,
-                private _translate: TranslateService, private _paperView: PaperViewService) {
+    constructor(private _taskPanelContentService: TaskPanelContentService,
+                private _fieldConvertorService: FieldConvertorService,
+                private _log: LoggerService,
+                private _snackBar: SnackBarService,
+                private _taskService: TaskResourceService,
+                private _sideMenuService: SideMenuService,
+                private _userService: UserService,
+                private _taskViewService: TaskViewService,
+                private _translate: TranslateService,
+                private _paperView: PaperViewService) {
         super();
         this.loading = false;
         this._updating = false;
