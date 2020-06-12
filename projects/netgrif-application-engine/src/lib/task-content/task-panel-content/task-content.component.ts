@@ -1,7 +1,7 @@
 import {Component, Inject, InjectionToken} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
-import {FieldConvertorService} from '../services/field-convertor.service';
+import {FieldConverterService} from '../services/field-converter.service';
 import {TaskPanelContentService} from '../services/task-panel-content.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 
@@ -17,7 +17,7 @@ export class TaskContentComponent {
     formCols: number;
     loading: boolean;
 
-    constructor(private _fieldConvertor: FieldConvertorService,
+    constructor(private _fieldConvertor: FieldConverterService,
                 private taskPanelContentService: TaskPanelContentService,
                 private _paperView: PaperViewService,
                 @Inject(NAE_TASK_COLS) public taskCols) {

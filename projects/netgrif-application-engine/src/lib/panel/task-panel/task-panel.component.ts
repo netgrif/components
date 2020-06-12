@@ -4,7 +4,7 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {NAE_TASK_COLS, TaskContentComponent} from '../../task-content/task-panel-content/task-content.component';
 import {TaskPanelContentService} from '../../task-content/services/task-panel-content.service';
 import {DataField} from '../../data-fields/models/abstract-data-field';
-import {FieldConvertorService} from '../../task-content/services/field-convertor.service';
+import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
@@ -58,7 +58,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     private _queue: Subject<boolean>;
 
     constructor(private _taskPanelContentService: TaskPanelContentService,
-                private _fieldConvertorService: FieldConvertorService,
+                private _fieldConverterService: FieldConverterService,
                 private _log: LoggerService,
                 private _snackBar: SnackBarService,
                 private _taskService: TaskResourceService,
@@ -167,7 +167,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                         const dataGroup: DataField<any>[] = [];
                         if (group.fields._embedded) {
                             Object.keys(group.fields._embedded).forEach(item => {
-                                dataGroup.push(...group.fields._embedded[item].map(df => this._fieldConvertorService.toClass(df)));
+                                dataGroup.push(...group.fields._embedded[item].map(df => this._fieldConverterService.toClass(df)));
                             });
                             dataGroup.forEach(field => {
                                 field.valueChanges().subscribe(newValue => {
@@ -230,8 +230,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             dataGroup.fields.forEach(field => {
                 if (field.initialized && field.valid && field.changed) {
                     body[field.stringId] = {
-                        type: this._fieldConvertorService.resolveType(field),
-                        value: this._fieldConvertorService.formatValue(field, field.value)
+                        type: this._fieldConverterService.resolveType(field),
+                        value: this._fieldConverterService.formatValue(field, field.value)
                     };
                 }
             });
@@ -283,7 +283,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                     const updatedField = chFields[field.stringId];
                     Object.keys(updatedField).forEach(key => {
                         if (key === 'value') {
-                            field.value = this._fieldConvertorService.formatValue(field, updatedField[key]);
+                            field.value = this._fieldConverterService.formatValue(field, updatedField[key]);
                             field.changed = false;
                         } else if (key === 'behavior' && updatedField.behavior[this._taskPanelData.task.transitionId]) {
                             field.behavior = updatedField.behavior[this._taskPanelData.task.transitionId];

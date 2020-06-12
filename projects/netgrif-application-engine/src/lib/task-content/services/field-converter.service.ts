@@ -25,7 +25,7 @@ import {UserValue} from '../../data-fields/user-field/models/user-value';
 @Injectable({
     providedIn: 'root'
 })
-export class FieldConvertorService {
+export class FieldConverterService {
 
     constructor() {
     }
