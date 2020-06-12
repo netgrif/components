@@ -10,6 +10,7 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {MessageResource} from '../../resources/interface/message-resource';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TaskPanelContentService} from "../../panel/task-panel/task-panel-content/task-panel-content.service";
 
 export interface FileState {
     progress: number;
@@ -62,12 +63,14 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
      * @param _taskResourceService Provides to download a file from the backend
      * @param _log Logger service
      * @param _snackbar Snackbar service to notify user
+     * @param _taskPanelContentService Provides taskId for file upload and download
      */
     constructor(private _fileFieldService: FileFieldService,
                 private _sideMenuService: SideMenuService,
                 private _taskResourceService: TaskResourceService,
                 private _log: LoggerService,
-                private _snackbar: SnackBarService) {
+                private _snackbar: SnackBarService,
+                private _taskPanelContentService: TaskPanelContentService) {
         super();
         this.state = {
             progress: 0,
@@ -123,13 +126,15 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
             return;
         }
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+        this._taskResourceService.downloadFile(this._taskPanelContentService.taskId, this.dataField.stringId).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.DOWNLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
                 this._log.info((response as MessageResource).success);
                 this.state.completed = true;
-                const file: File = new File([response as Blob], this.name);
+                const blob = new Blob([response as Blob], {type: 'application/octet-stream'});
+                const url = window.URL.createObjectURL(blob);
+                window.open(url);
             }
         }, error => {
             this.state.completed = false;

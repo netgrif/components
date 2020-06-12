@@ -444,7 +444,8 @@
                         "leukemia",
                         "1",
                         "bill",
-                        "drobny_nakup"
+                        "drobny_nakup",
+                        "processId1"
                     ]
                 },
                 "componentName": "MyCaseView"

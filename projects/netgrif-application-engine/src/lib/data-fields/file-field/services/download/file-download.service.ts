@@ -8,6 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LanguageService} from '../../../../translate/language.service';
 
 /**
+ * @Deprecated
  * Provides to download a file from the backend and set some
  * [FileUploadModel]{@link FileUploadModel} download properties for this file.
  */

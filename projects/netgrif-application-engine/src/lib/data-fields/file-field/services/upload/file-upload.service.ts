@@ -9,6 +9,7 @@ import {TaskResourceService} from '../../../../resources/engine-endpoint/task-re
 import {LoggerService} from '../../../../logger/services/logger.service';
 
 /**
+ * @Deprecated
  * Provides to upload a file to the backend and set some
  * [FileUploadModel]{@link FileUploadModel} upload properties for this file.
  */

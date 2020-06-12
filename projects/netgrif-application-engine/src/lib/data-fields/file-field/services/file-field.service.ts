@@ -2,14 +2,21 @@ import {ElementRef, Injectable} from '@angular/core';
 import * as JSZip from 'jszip';
 import {FileField, FileUploadDataModel} from '../models/file-field';
 import {FileUploadService} from './upload/file-upload.service';
-import {FileDownloadService} from './download/file-download.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../snack-bar/services/snack-bar.service';
+import {
+    SnackBarHorizontalPosition,
+    SnackBarService,
+    SnackBarVerticalPosition
+} from '../../../snack-bar/services/snack-bar.service';
 import {FileUploadModel} from '../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {FilesUploadComponent} from '../../../side-menu/content-components/files-upload/files-upload.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
 import {LanguageService} from '../../../translate/language.service';
+import {TaskResourceService} from "../../../resources/engine-endpoint/task-resource.service";
+import {ProgressType, ProviderProgress} from "../../../resources/resource-provider.service";
+import {LoggerService} from "../../../logger/services/logger.service";
+import {TaskPanelContentService} from "../../../panel/task-panel/task-panel-content/task-panel-content.service";
 
 /**
  * Links communication between
@@ -40,24 +47,29 @@ export class FileFieldService {
     /**
      * After complete file upload set value for file field.
      * @param _fileUploadService Provides upload file to backend
-     * @param _fileDownloadService Provides download file from backend
      * @param _sideMenuService Open right side menu
      * @param _snackBarService Notify user about exceeded validations
      * @param _translate for translations
      * @param _lang Initialize languages
+     * @param _taskResourceService Provides upload and download file
+     * @param _taskPanelContentService Provides taskId for file upload and download
+     * @param _log Log error of file upload
      */
     constructor(private _fileUploadService: FileUploadService,
-                private _fileDownloadService: FileDownloadService,
                 private _sideMenuService: SideMenuService,
                 private _snackBarService: SnackBarService,
                 private _translate: TranslateService,
-                private _lang: LanguageService) {
+                private _lang: LanguageService,
+                private _taskResourceService: TaskResourceService,
+                private _taskPanelContentService: TaskPanelContentService,
+                private _log: LoggerService) {
         this._fileUploadService.fileUploadCompleted.subscribe(() => {
             // this.fileField.value = this.resolveFilesArray();
         });
     }
 
     /**
+     * ZIP files are not used anymore
      * All select files after click send zipped to backend on send button.
      */
     public onSend() {
@@ -85,7 +97,7 @@ export class FileFieldService {
      */
     public retryFile(file: FileUploadModel) {
         file.completed = false;
-        this._fileUploadService.uploadFile(file);
+        this.uploadOneFile(file);
     }
 
     /**
@@ -96,7 +108,13 @@ export class FileFieldService {
         if (!file.completed) {
             return;
         }
-        this._fileDownloadService.downloadFile(file);
+        this._taskResourceService.downloadFile(this._taskPanelContentService.taskId, file.stringId).subscribe(data => {
+            if(data instanceof Blob) {
+                const blob = new Blob([data], {type: 'application/octet-stream'});
+                const url = window.URL.createObjectURL(blob);
+                window.open(url);
+            }
+        });
     }
 
     public setImageSourceUrl(file: File | Blob): void {
@@ -149,19 +167,16 @@ export class FileFieldService {
                     this._snackBarService.openWarningSnackBar(this._translate.instant('dataField.snackBar.sameFiles'),
                         SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2);
                     return;
-                }
-                if (this.maxUploadSizeControl(fileUploadModel)) {
-                    return;
+                } else {
+                    this.allFiles.push(fileUploadModel);
                 }
 
-                this.allFiles.push(fileUploadModel);
-                // One by one upload file
-                if (!this.fileField.zipped) {
-                    this._fileUploadService.uploadFile(fileUploadModel);
-                }
-                if (file.type.includes('image') && this.allFiles.length === 1) {
-                    this.setImageSourceUrl(file);
-                }
+                this.uploadOneFile(fileUploadModel);
+
+                // not existing imageRef
+                // if (file.type.includes('image') && this.allFiles.length === 1) {
+                //     this.setImageSourceUrl(file);
+                // }
             });
             this.fileUploadEl.nativeElement.value = '';
             if (!this._sideMenuService.isOpened()) {
@@ -169,6 +184,43 @@ export class FileFieldService {
             }
         };
         this.fileUploadEl.nativeElement.click();
+    }
+
+    /**
+     * Uploads one file on backend
+     * @param fileUploadModel Selected file for upload
+     */
+    private uploadOneFile(fileUploadModel: FileUploadModel) {
+        if (this.maxUploadSizeControl(fileUploadModel)) {
+            return;
+        }
+
+        if (!this.fileField.zipped) {
+            const fileFormData = new FormData();
+            fileFormData.append('file', (fileUploadModel.data as FileUploadDataModel).file as File);
+
+            fileUploadModel.inProgress = true;
+            fileUploadModel.completed = false;
+            fileUploadModel.error = false;
+            fileUploadModel.sub = this._taskResourceService.uploadFile(this._taskPanelContentService.taskId, fileUploadModel.stringId, fileFormData).subscribe(response => {
+                if ((response as ProviderProgress).type && (response as ProviderProgress).type == ProgressType.UPLOAD) {
+                    fileUploadModel.progress = (response as ProviderProgress).progress;
+                    if (fileUploadModel.progress === 100) {
+                        fileUploadModel.uploaded = true;
+                    }
+                } else {
+                    fileUploadModel.inProgress = false;
+                    fileUploadModel.completed = true;
+
+                }
+            }, error => {
+                fileUploadModel.inProgress = false;
+                fileUploadModel.completed = false;
+                fileUploadModel.error = true;
+                this._log.error('File uploading has failed!', error);
+                this._snackBarService.openErrorSnackBar('Uploading file has failed');
+            });
+        }
     }
 
     /**
