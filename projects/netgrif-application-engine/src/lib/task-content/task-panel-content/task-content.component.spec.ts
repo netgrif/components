@@ -6,7 +6,7 @@ import {PanelModule} from '../../panel/panel.module';
 import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
-import {TaskPanelContentService} from '../services/task-panel-content.service';
+import {TaskContentService} from '../services/task-content.service';
 import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
 import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import {TemplateAppearance} from '../../data-fields/models/template-appearance';
@@ -28,7 +28,7 @@ describe('TaskContentComponent', () => {
             ],
             providers: [
                 TaskViewService,
-                TaskPanelContentService,
+                TaskContentService,
                 {provide: NAE_TASK_COLS, useValue: 4},
             ],
             declarations: []

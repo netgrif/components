@@ -3,20 +3,25 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {Observable, Subject} from 'rxjs';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TranslateService} from '@ngx-translate/core';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
  *
  * Notable example of a parent Component is the {@link TaskPanelComponent}.
  *
- * Notable example of a task content renderer is the {@link TaskPanelContentComponent}.
+ * Notable example of a task content renderer is the {@link TaskPanelComponent}.
  */
 @Injectable()
-export class TaskPanelContentService {
+export class TaskContentService {
     $shouldCreate: Subject<DataGroup[]>;
     protected _task$: Subject<Task>;
+    protected _task: Task;
 
-    constructor(protected _logger: LoggerService) {
+    constructor(protected _snackBarService: SnackBarService,
+                protected _translate: TranslateService,
+                protected _logger: LoggerService) {
         this.$shouldCreate = new Subject<DataGroup[]>();
         this._task$ = new Subject<Task>();
     }
@@ -27,6 +32,7 @@ export class TaskPanelContentService {
      */
     public set task(task: Task) {
         if (!this._task$.closed) {
+            this._task = task;
             this._task$.next(task);
             this._task$.complete();
         } else {
@@ -41,5 +47,17 @@ export class TaskPanelContentService {
      */
     public get task$(): Observable<Task> {
         return this._task$.asObservable();
+    }
+
+    public validateTaskData(): boolean {
+        if (!this._task || !this._task.dataGroups) {
+            return false;
+        }
+        const valid = !this._task.dataGroups.some(group => group.fields.some(field => !field.valid));
+        if (!valid) {
+            this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
+            this._task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
+        }
+        return valid;
     }
 }

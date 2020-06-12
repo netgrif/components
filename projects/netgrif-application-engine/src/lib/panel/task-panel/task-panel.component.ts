@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Injector, Input, OnInit, StaticProvider, Type}
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {NAE_TASK_COLS, TaskContentComponent} from '../../task-content/task-panel-content/task-content.component';
-import {TaskPanelContentService} from '../../task-content/services/task-panel-content.service';
+import {TaskContentService} from '../../task-content/services/task-content.service';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -35,7 +35,7 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
     templateUrl: './task-panel.component.html',
     styleUrls: ['./task-panel.component.scss'],
     providers: [
-        TaskPanelContentService,
+        TaskContentService,
         TaskEventService
     ]
 })
@@ -57,7 +57,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     private _updating: boolean;
     private _queue: Subject<boolean>;
 
-    constructor(private _taskPanelContentService: TaskPanelContentService,
+    constructor(private _taskContentService: TaskContentService,
                 private _fieldConverterService: FieldConverterService,
                 private _log: LoggerService,
                 private _snackBar: SnackBarService,
@@ -76,7 +76,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     ngOnInit() {
         super.ngOnInit();
-        this._taskPanelContentService.task = this._taskPanelData.task;
+        this._taskContentService.task = this._taskPanelData.task;
 
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         let cols: number;
@@ -86,7 +86,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
         const providers: StaticProvider[] = [
             {provide: NAE_TASK_COLS, useValue: cols},
-            {provide: TaskPanelContentService, useValue: this._taskPanelContentService}
+            {provide: TaskContentService, useValue: this._taskContentService}
         ];
         const injector = Injector.create({providers});
 
@@ -199,7 +199,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 this._taskPanelData.task.dataSize = 0;
                 afterAction.next(true);
             }
-            this._taskPanelContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
+            this._taskContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
         }, error => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
              ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
@@ -307,7 +307,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 }
             });
         });
-        this._taskPanelContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
+        this._taskContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
     }
 
     processTask(type: string) {
@@ -421,7 +421,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         const after = new Subject<boolean>();
         if (this._taskPanelData.task.dataSize <= 0) {
             after.subscribe(boolean => {
-                if (this._taskPanelData.task.dataSize <= 0 || this.validateTaskData()) {
+                if (this._taskPanelData.task.dataSize <= 0 || this._taskContentService.validateTaskData()) {
                     this.sendFinishTaskRequest(afterAction);
                     this.collapse();
                 }
@@ -429,7 +429,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             });
             this.getTaskDataFields(after);
         } else {
-            if (this.validateTaskData()) {
+            if (this._taskContentService.validateTaskData()) {
                 after.subscribe(boolean => {
                     if (boolean) {
                         if (this._updating) {
@@ -471,18 +471,6 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             this.loading = false;
             afterAction.next(false);
         });
-    }
-
-    private validateTaskData(): boolean {
-        if (!this._taskPanelData.task.dataGroups) {
-            return false;
-        }
-        const valid = !this._taskPanelData.task.dataGroups.some(group => group.fields.some(field => !field.valid));
-        if (!valid) {
-            this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
-            this._taskPanelData.task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
-        }
-        return valid;
     }
 
     collapse() {

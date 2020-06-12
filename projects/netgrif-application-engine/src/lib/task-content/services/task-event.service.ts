@@ -4,7 +4,7 @@ import {UserService} from '../../user/services/user.service';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AssignPolicy} from '../model/policy';
-import {TaskPanelContentService} from './task-panel-content.service';
+import {TaskContentService} from './task-content.service';
 
 @Injectable()
 export class TaskEventService {
@@ -14,7 +14,7 @@ export class TaskEventService {
 
     constructor(protected _taskViewService: TaskViewService,
                 protected _userService: UserService,
-                protected _taskContentService: TaskPanelContentService,
+                protected _taskContentService: TaskContentService,
                 protected _logger: LoggerService) {
         this._taskContentService.task$.subscribe(task => {
             this._task = task;

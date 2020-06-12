@@ -1,15 +1,15 @@
 import {TestBed} from '@angular/core/testing';
 
-import {TaskPanelContentService} from './task-panel-content.service';
+import {TaskContentService} from './task-content.service';
 
 describe('TaskPanelContentService', () => {
-    let service: TaskPanelContentService;
+    let service: TaskContentService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [TaskPanelContentService]
+            providers: [TaskContentService]
         });
-        service = TestBed.inject(TaskPanelContentService);
+        service = TestBed.inject(TaskContentService);
     });
 
     it('should be created', () => {

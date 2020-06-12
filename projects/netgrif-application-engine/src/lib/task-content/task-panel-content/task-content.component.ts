@@ -2,7 +2,7 @@ import {Component, Inject, InjectionToken} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
 import {FieldConverterService} from '../services/field-converter.service';
-import {TaskPanelContentService} from '../services/task-panel-content.service';
+import {TaskContentService} from '../services/task-content.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 
 export const NAE_TASK_COLS = new InjectionToken<number>('NaeTaskCols');
@@ -18,7 +18,7 @@ export class TaskContentComponent {
     loading: boolean;
 
     constructor(private _fieldConvertor: FieldConverterService,
-                private taskPanelContentService: TaskPanelContentService,
+                private taskPanelContentService: TaskContentService,
                 private _paperView: PaperViewService,
                 @Inject(NAE_TASK_COLS) public taskCols) {
         this.loading = true;
