@@ -7,7 +7,7 @@ import {AuthenticationMethodService} from '../../../authentication/services/auth
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {of} from 'rxjs';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../panel/task-panel/policy';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../task-content/model/policy';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../../utility/tests/test-factory-methods';

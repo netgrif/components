@@ -9,7 +9,7 @@ import {TaskPanelComponent} from './task-panel.component';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
 import {Observable, of, Subject, throwError} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';

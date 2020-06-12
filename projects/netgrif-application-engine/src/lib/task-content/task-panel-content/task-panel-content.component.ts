@@ -1,9 +1,9 @@
 import {Component, Inject, InjectionToken} from '@angular/core';
-import {DatafieldGridLayoutElement} from './datafield-grid-layout-element';
-import {GridFiller} from '../../../utility/grid-layout/model/grid-filler';
-import {FieldConvertorService} from './field-convertor.service';
-import {TaskPanelContentService} from './task-panel-content.service';
-import {PaperViewService} from '../../../navigation/quick-panel/components/paper-view.service';
+import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
+import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
+import {FieldConvertorService} from '../services/field-convertor.service';
+import {TaskPanelContentService} from '../services/task-panel-content.service';
+import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 
 export const NAE_TASK_COLS = new InjectionToken<number>('NaeTaskCols');
 

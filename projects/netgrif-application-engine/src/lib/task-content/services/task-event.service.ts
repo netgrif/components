@@ -3,8 +3,8 @@ import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {UserService} from '../../user/services/user.service';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
-import {AssignPolicy} from '../../panel/task-panel/policy';
-import {TaskPanelContentService} from '../../panel/task-panel/task-panel-content/task-panel-content.service';
+import {AssignPolicy} from '../model/policy';
+import {TaskPanelContentService} from './task-panel-content.service';
 
 @Injectable()
 export class TaskEventService {

@@ -1,16 +1,16 @@
 import {NAE_TASK_COLS, TaskPanelContentComponent} from './task-panel-content.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {TaskViewService} from '../../../view/task-view/service/task-view.service';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {MatExpansionModule} from '@angular/material';
-import {PanelModule} from '../../panel.module';
-import {MaterialModule} from '../../../material/material.module';
+import {PanelModule} from '../../panel/panel.module';
+import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
-import {TaskPanelContentService} from './task-panel-content.service';
-import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
-import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
-import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {TaskPanelContentService} from '../services/task-panel-content.service';
+import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
+import {MaterialAppearance} from '../../data-fields/models/material-appearance';
+import {TemplateAppearance} from '../../data-fields/models/template-appearance';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('TaskPanelContentComponent', () => {
     let component: TaskPanelContentComponent;

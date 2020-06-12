@@ -18,7 +18,7 @@ import {
     noNetsTaskViewServiceFactory
 } from '../../view/task-view/service/factory/array-task-view-service-factory';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../task-panel/policy';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 

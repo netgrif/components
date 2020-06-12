@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {FieldConvertorService} from './field-convertor.service';
-import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
-import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
+import {TemplateAppearance} from '../../data-fields/models/template-appearance';
+import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import moment from 'moment';
 
 describe('FieldConvertorService', () => {

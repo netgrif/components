@@ -1,6 +1,6 @@
-import {Behavior} from '../../../data-fields/models/behavior';
-import {Layout} from '../../../data-fields/models/layout';
-import {Validation} from '../../../data-fields/models/validation';
+import {Behavior} from '../../data-fields/models/behavior';
+import {Layout} from '../../data-fields/models/layout';
+import {Validation} from '../../data-fields/models/validation';
 
 export interface DataFieldResource {
     stringId: string;

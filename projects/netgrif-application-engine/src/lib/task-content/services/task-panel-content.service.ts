@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {DataGroup} from '../../../resources/interface/data-groups';
+import {DataGroup} from '../../resources/interface/data-groups';
 import {Observable, Subject} from 'rxjs';
-import {Task} from '../../../resources/interface/task';
-import {LoggerService} from '../../../logger/services/logger.service';
+import {Task} from '../../resources/interface/task';
+import {LoggerService} from '../../logger/services/logger.service';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
