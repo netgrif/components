@@ -119,7 +119,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             }
         });
         this.panelRef.afterExpand.subscribe(() => {
-            this.blockFields(!this.canFinish());
+            this._taskContentService.blockFields(!this.canFinish());
             this._taskPanelData.initiallyExpanded = true;
         });
         this.panelRef.afterCollapse.subscribe(() => {
@@ -346,7 +346,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         this._taskService.assignTask(this._taskPanelData.task.stringId).subscribe(response => {
             this.loading = false;
             if (response.success) {
-                this.removeStateData();
+                this._taskContentService.removeStateData();
                 afterAction.next(true);
             } else if (response.error) {
                 this._snackBar.openErrorSnackBar(response.error);
@@ -373,7 +373,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 this._taskService.delegateTask(this._taskPanelData.task.stringId, event.data.id).subscribe(response => {
                     this.loading = false;
                     if (response.success) {
-                        this.removeStateData();
+                        this._taskContentService.removeStateData();
                         afterAction.next(true);
                     } else if (response.error) {
                         this._snackBar.openErrorSnackBar(response.error);
@@ -403,7 +403,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         this._taskService.cancelTask(this._taskPanelData.task.stringId).subscribe(response => {
             this.loading = false;
             if (response.success) {
-                this.removeStateData();
+                this._taskContentService.removeStateData();
                 afterAction.next(true);
             } else if (response.error) {
                 this._snackBar.openErrorSnackBar(response.error);
@@ -459,7 +459,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         this._taskService.finishTask(this._taskPanelData.task.stringId).subscribe(response => {
             this.loading = false;
             if (response.success) {
-                this.removeStateData();
+                this._taskContentService.removeStateData();
                 afterAction.next(true);
             } else if (response.error) {
                 this._snackBar.openErrorSnackBar(response.error);
@@ -505,12 +505,6 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     public canDo(action): boolean {
         return this._taskEventService.canDo(action);
-    }
-
-    private removeStateData(): void {
-        this._taskPanelData.task.user = undefined;
-        this._taskPanelData.task.startDate = undefined;
-        this._taskPanelData.task.finishDate = undefined;
     }
 
     private buildAssignPolicy(success: boolean): void {
@@ -600,16 +594,6 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     private autoRequiredDataFocusPolicy(success: boolean) {
         if (success) {
             // TODO Implement focus in FUTURE, if someone wants this feature (for now we don't want it )
-        }
-    }
-
-    private blockFields(bool: boolean) {
-        if (this._taskPanelData.task.dataGroups) {
-            this._taskPanelData.task.dataGroups.forEach(group => {
-                group.fields.forEach(field => {
-                    field.block = bool;
-                });
-            });
         }
     }
 
