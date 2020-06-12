@@ -27,13 +27,17 @@ import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumera
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
+import {TaskEventService} from '../../task-content/services/task-event.service';
 
 
 @Component({
     selector: 'nae-task-panel',
     templateUrl: './task-panel.component.html',
     styleUrls: ['./task-panel.component.scss'],
-    providers: [TaskPanelContentService]
+    providers: [
+        TaskPanelContentService,
+        TaskEventService
+    ]
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
 
@@ -62,7 +66,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _userService: UserService,
                 private _taskViewService: TaskViewService,
                 private _translate: TranslateService,
-                private _paperView: PaperViewService) {
+                private _paperView: PaperViewService,
+                private _taskEventService: TaskEventService) {
         super();
         this.loading = false;
         this._updating = false;
@@ -71,6 +76,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     ngOnInit() {
         super.ngOnInit();
+        this._taskPanelContentService.task = this._taskPanelData.task;
+
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         let cols: number;
         if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
@@ -488,36 +495,28 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         this.panelRef.expanded = true;
     }
 
-    canDo(action) {
-        if (!this._taskPanelData.task.roles || !action || !(this._taskPanelData.task.roles instanceof Object)) {
-            return false;
-        }
-        return Object.keys(this._taskPanelData.task.roles).some(role =>
-            this._userService.hasRoleById(role) ? this._taskPanelData.task.roles[role][action] : false
-        );
+    public canAssign(): boolean {
+        return this._taskEventService.canAssign();
     }
 
-    canAssign() {
-        return this._taskPanelData.task.assignPolicy === AssignPolicy.manual && !this._taskPanelData.task.user && this.canDo('perform');
+    public canReassign(): boolean {
+        return this._taskEventService.canReassign();
     }
 
-    canReassign() {
-        return (this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email)
-            && (this.canDo('delegate'));
+    public canCancel(): boolean {
+        return this._taskEventService.canCancel();
     }
 
-    canCancel() {
-        return (this._taskPanelData.task.assignPolicy === AssignPolicy.manual &&
-            this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email) ||
-            (this._taskPanelData.task.user && this.canDo('cancel'));
+    public canFinish(): boolean {
+        return this._taskEventService.canFinish();
     }
 
-    canFinish() {
-        return this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email;
+    public canCollapse(): boolean {
+        return this._taskEventService.canCollapse();
     }
 
-    canCollapse() {
-        return this._taskPanelData.task.assignPolicy === AssignPolicy.manual;
+    public canDo(action): boolean {
+        return this._taskEventService.canDo(action);
     }
 
     private removeStateData(): void {
