@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {TaskPanelContentComponent} from './task-panel-content/task-panel-content.component';
+import {TaskContentComponent} from './task-panel-content/task-content.component';
 import {DataFieldsModule} from '../data-fields/data-fields.module';
 import {SnackBarModule} from '../snack-bar/snack-bar.module';
 import {MaterialModule} from '../material/material.module';
@@ -10,7 +10,7 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
 
 @NgModule({
     declarations: [
-        TaskPanelContentComponent
+        TaskContentComponent
     ],
     imports: [
         CommonModule,
@@ -21,10 +21,10 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
         SnackBarModule
     ],
     exports: [
-        TaskPanelContentComponent
+        TaskContentComponent
     ],
     entryComponents: [
-        TaskPanelContentComponent
+        TaskContentComponent
     ]
 })
 export class TaskContentModule {

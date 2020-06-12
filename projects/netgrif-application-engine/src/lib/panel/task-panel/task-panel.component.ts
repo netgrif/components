@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Injector, Input, OnInit, StaticProvider, Type} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {NAE_TASK_COLS, TaskPanelContentComponent} from '../../task-content/task-panel-content/task-panel-content.component';
+import {NAE_TASK_COLS, TaskContentComponent} from '../../task-content/task-panel-content/task-content.component';
 import {TaskPanelContentService} from '../../task-content/services/task-panel-content.service';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConvertorService} from '../../task-content/services/field-convertor.service';
@@ -91,7 +91,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         const injector = Injector.create({providers});
 
         if (this.panelContentComponent === undefined) {
-            this.portal = new ComponentPortal(TaskPanelContentComponent, null, injector);
+            this.portal = new ComponentPortal(TaskContentComponent, null, injector);
         } else {
             this.portal = new ComponentPortal(this.panelContentComponent, null, injector);
         }

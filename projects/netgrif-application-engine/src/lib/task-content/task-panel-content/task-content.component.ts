@@ -8,11 +8,11 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
 export const NAE_TASK_COLS = new InjectionToken<number>('NaeTaskCols');
 
 @Component({
-    selector: 'nae-task-panel-content',
-    templateUrl: './task-panel-content.component.html',
-    styleUrls: ['./task-panel-content.component.scss']
+    selector: 'nae-task-content',
+    templateUrl: './task-content.component.html',
+    styleUrls: ['./task-content.component.scss']
 })
-export class TaskPanelContentComponent {
+export class TaskContentComponent {
     dataSource: any[];
     formCols: number;
     loading: boolean;
@@ -207,7 +207,7 @@ export class TaskPanelContentComponent {
 
     private addGridRows(grid: Array<Array<GridFiller>>, newRowCount: number, columnCount: number): void {
         while (grid.length < newRowCount) {
-            grid.push(TaskPanelContentComponent.newGridRow(columnCount));
+            grid.push(TaskContentComponent.newGridRow(columnCount));
         }
     }
 }

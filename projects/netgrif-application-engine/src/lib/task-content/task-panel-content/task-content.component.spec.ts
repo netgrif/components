@@ -1,4 +1,4 @@
-import {NAE_TASK_COLS, TaskPanelContentComponent} from './task-panel-content.component';
+import {NAE_TASK_COLS, TaskContentComponent} from './task-content.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {MatExpansionModule} from '@angular/material';
@@ -12,9 +12,9 @@ import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 
-describe('TaskPanelContentComponent', () => {
-    let component: TaskPanelContentComponent;
-    let fixture: ComponentFixture<TaskPanelContentComponent>;
+describe('TaskContentComponent', () => {
+    let component: TaskContentComponent;
+    let fixture: ComponentFixture<TaskContentComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -35,7 +35,7 @@ describe('TaskPanelContentComponent', () => {
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(TaskPanelContentComponent);
+        fixture = TestBed.createComponent(TaskContentComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));
