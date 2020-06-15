@@ -4,7 +4,7 @@ import {take} from 'rxjs/operators';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
-import {TaskContentService} from './task-content.service';
+import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -81,7 +81,7 @@ export class FinishTaskService {
 
         const after = new Subject<boolean>();
         if (this._task.dataSize <= 0) {
-            after.subscribe(boolean => {
+            after.subscribe(() => {
                 if (this._task.dataSize <= 0 || this._taskContentService.validateTaskData()) {
                     this.sendFinishTaskRequest(afterAction);
                 }

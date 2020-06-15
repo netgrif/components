@@ -32,3 +32,4 @@ export * from './lib/admin/public-api';
 export * from './lib/utility/public-api';
 export * from './lib/routing/public-api';
 export * from './lib/task-content/public-api';
+export * from './lib/task/public-api';

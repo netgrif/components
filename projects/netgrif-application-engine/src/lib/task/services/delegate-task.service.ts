@@ -6,7 +6,7 @@ import {LoadingEmitter} from '../../utility/loading-emitter';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {TaskContentService} from './task-content.service';
+import {TaskContentService} from '../../task-content/services/task-content.service';
 import {Task} from '../../resources/interface/task';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';

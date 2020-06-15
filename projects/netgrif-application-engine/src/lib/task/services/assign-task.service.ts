@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {LoggerService} from '../../logger/services/logger.service';
-import {TaskContentService} from './task-content.service';
+import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';

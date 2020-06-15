@@ -21,11 +21,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
-import {AssignTaskService} from '../../task-content/services/assign-task.service';
+import {AssignTaskService} from '../../task/services/assign-task.service';
 import {LoadingEmitter} from '../../utility/loading-emitter';
-import {DelegateTaskService} from '../../task-content/services/delegate-task.service';
-import {CancelTaskService} from '../../task-content/services/cancel-task.service';
-import {FinishTaskService} from '../../task-content/services/finish-task.service';
+import {DelegateTaskService} from '../../task/services/delegate-task.service';
+import {CancelTaskService} from '../../task/services/cancel-task.service';
+import {FinishTaskService} from '../../task/services/finish-task.service';
 
 
 @Component({
@@ -182,9 +182,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             this._taskPanelData.task.dataGroups = dataGroups;
             if (dataGroups.length === 0) {
                 this._log.info(this._translate.instant('tasks.snackbar.noData') + ' ' + this._taskPanelData.task);
-                this.loading.off();
                 this._taskPanelData.task.dataSize = 0;
-                afterAction.next(true);
             } else {
                 dataGroups.forEach(group => {
                     group.fields.forEach(field => {
@@ -196,9 +194,9 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                     });
                     this._taskPanelData.task.dataSize += group.fields.length;
                 });
-                this.loading.off();
-                afterAction.next(true);
             }
+            this.loading.off();
+            afterAction.next(true);
             this._taskContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
         }, error => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
