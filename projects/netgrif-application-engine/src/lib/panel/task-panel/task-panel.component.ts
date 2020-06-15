@@ -3,7 +3,6 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {NAE_TASK_COLS, TaskContentComponent} from '../../task-content/task-panel-content/task-content.component';
 import {TaskContentService} from '../../task-content/services/task-content.service';
-import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -26,6 +25,8 @@ import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
+import {AssignTaskService} from '../../task-content/services/assign-task.service';
+import {LoadingEmitter} from '../../utility/loading-emitter';
 
 
 @Component({
@@ -34,7 +35,8 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
     styleUrls: ['./task-panel.component.scss'],
     providers: [
         TaskContentService,
-        TaskEventService
+        TaskEventService,
+        AssignTaskService,
     ]
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
@@ -50,7 +52,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     @Input() public last: boolean;
 
     public portal: ComponentPortal<any>;
-    public loading: boolean;
+    public loading: LoadingEmitter;
     public panelRef: MatExpansionPanel;
     private _updating: boolean;
     private _queue: Subject<boolean>;
@@ -65,11 +67,14 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _taskViewService: TaskViewService,
                 private _translate: TranslateService,
                 private _paperView: PaperViewService,
-                private _taskEventService: TaskEventService) {
+                private _taskEventService: TaskEventService,
+                private _assignTaskService: AssignTaskService) {
         super();
-        this.loading = false;
+        this.loading = new LoadingEmitter();
         this._updating = false;
         this._queue = new Subject<boolean>();
+
+        this._assignTaskService.setUp(this.loading);
     }
 
     ngOnInit() {
@@ -107,12 +112,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
-            if (!this.loading) {
+            if (!this.loading.isActive) {
                 this.buildAssignPolicy(true);
             }
         });
         this.panelRef.closed.subscribe(() => {
-            if (!this.loading) {
+            if (!this.loading.isActive) {
                 this.buildAssignPolicy(false);
             }
         });
@@ -157,12 +162,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             afterAction.next(true);
             return;
         }
-        this.loading = true;
+        this.loading.on();
         this._taskService.getData(this._taskPanelData.task.stringId).subscribe(dataGroups => {
             this._taskPanelData.task.dataGroups = dataGroups;
             if (dataGroups.length === 0) {
                 this._log.info(this._translate.instant('tasks.snackbar.noData') + ' ' + this._taskPanelData.task);
-                this.loading = false;
+                this.loading.off();
                 this._taskPanelData.task.dataSize = 0;
                 afterAction.next(true);
             } else {
@@ -176,7 +181,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                     });
                     this._taskPanelData.task.dataSize += group.fields.length;
                 });
-                this.loading = false;
+                this.loading.off();
                 afterAction.next(true);
             }
             this._taskContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
@@ -184,7 +189,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
              ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
             this._log.debug(error);
-            this.loading = false;
+            this.loading.off();
             afterAction.next(false);
         });
     }
@@ -222,7 +227,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             return;
         }
 
-        this.loading = true;
+        this.loading.on();
         this._updating = true;
         this._taskService.setData(this._taskPanelData.task.stringId, body).subscribe(response => {
             if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
@@ -237,7 +242,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 });
             });
             this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
-            this.loading = false;
+            this.loading.off();
             this._updating = false;
             if (this._queue.observers.length !== 0) {
                 this._queue.next(true);
@@ -246,7 +251,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }, error => {
             this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
             this._log.debug(error);
-            this.loading = false;
+            this.loading.off();
             this._updating = false;
             if (this._queue.observers.length !== 0) {
                 this._queue.next(false);
@@ -281,43 +286,20 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     assign(afterAction = new Subject<boolean>()) {
-        if (this.loading) {
-            return;
-        }
-        if (this._taskPanelData.task.user) {
-            afterAction.next(true);
-            return;
-        }
-        this.loading = true;
-        this._taskService.assignTask(this._taskPanelData.task.stringId).subscribe(response => {
-            this.loading = false;
-            if (response.success) {
-                this._taskContentService.removeStateData();
-                afterAction.next(true);
-            } else if (response.error) {
-                this._snackBar.openErrorSnackBar(response.error);
-                afterAction.next(false);
-            }
-        }, error => {
-            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
-             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this._log.debug(error);
-            this.loading = false;
-            afterAction.next(false);
-        });
+        this._assignTaskService.assign(afterAction);
     }
 
     delegate(afterAction = new Subject<boolean>()) {
-        if (this.loading) {
+        if (this.loading.isActive) {
             return;
         }
         this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM).onClose.subscribe(event => {
             console.log(event);
             if (event.data !== undefined) {
-                this.loading = true;
+                this.loading.on();
 
                 this._taskService.delegateTask(this._taskPanelData.task.stringId, event.data.id).subscribe(response => {
-                    this.loading = false;
+                    this.loading.off();
                     if (response.success) {
                         this._taskContentService.removeStateData();
                         afterAction.next(true);
@@ -328,7 +310,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 }, error => {
                     this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
                      ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-                    this.loading = false;
+                    this.loading.off();
                     afterAction.next(false);
                 });
             }
@@ -337,7 +319,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     cancel(afterAction = new Subject<boolean>()) {
-        if (this.loading) {
+        if (this.loading.isActive) {
             return;
         }
         if (!this._taskPanelData.task.user || ((this._taskPanelData.task.user.email !== this._userService.user.email)
@@ -345,9 +327,9 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             afterAction.next(false);
             return;
         }
-        this.loading = true;
+        this.loading.on();
         this._taskService.cancelTask(this._taskPanelData.task.stringId).subscribe(response => {
-            this.loading = false;
+            this.loading.off();
             if (response.success) {
                 this._taskContentService.removeStateData();
                 afterAction.next(true);
@@ -358,7 +340,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }, error => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
              ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.loading = false;
+            this.loading.off();
             afterAction.next(false);
         });
     }
@@ -398,12 +380,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private sendFinishTaskRequest(afterAction: Subject<boolean>) {
-        if (this.loading) {
+        if (this.loading.isActive) {
             return;
         }
-        this.loading = true;
+        this.loading.on();
         this._taskService.finishTask(this._taskPanelData.task.stringId).subscribe(response => {
-            this.loading = false;
+            this.loading.off();
             if (response.success) {
                 this._taskContentService.removeStateData();
                 afterAction.next(true);
@@ -414,7 +396,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }, error => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
              ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.loading = false;
+            this.loading.off();
             afterAction.next(false);
         });
     }

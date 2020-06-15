@@ -1,5 +1,5 @@
 <nae-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
-               (stopLoading)="loading=false" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
+               (stopLoading)="loading.off()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <span fxLayoutAlign="start center" fxFlex>
@@ -15,7 +15,7 @@
             </span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
-            <button mat-icon-button (click)="show($event)" *ngIf="!loading" [matMenuTriggerFor]="menu">
+            <button mat-icon-button (click)="show($event)" *ngIf="!loading.isActive" [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -40,7 +40,7 @@
                     <span>{{ 'tasks.view.finish' | translate}}</span>
                 </button>
             </mat-menu>
-            <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
+            <mat-spinner *ngIf="loading.isActive" [diameter]="30"></mat-spinner>
         </div>
     </ng-template>
     <ng-template #taskPanelContent>
