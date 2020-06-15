@@ -24,6 +24,7 @@ import {ProfileComponent} from './doc/profile/profile.component';
 import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
+import { TreeViewExampleComponent } from './doc/tree-view-example/tree-view-example.component';
 
 @Injectable({
     providedIn: 'root'
@@ -32,7 +33,8 @@ export class NaeExampleAppViewService extends ViewService {
     constructor() {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
-        super([ButtonsNavComponent,
+        super([TreeViewExampleComponent,
+			ButtonsNavComponent,
             NavigationExampleComponent,
             ProfileComponent,
             FilterRepositoryExampleComponent,

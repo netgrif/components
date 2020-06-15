@@ -68,6 +68,7 @@ import {NavigationExampleComponent} from './doc/navigation-example/navigation-ex
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
 import {NaeExampleAppViewService} from './nae-example-app-view.service';
+import { TreeViewExampleComponent } from './doc/tree-view-example/tree-view-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -104,6 +105,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
+        TreeViewExampleComponent,
     ],
     imports: [
         BrowserModule,
@@ -177,7 +179,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
-        RolesAssignComponent
+        RolesAssignComponent,
+        TreeViewExampleComponent
     ],
     providers: [{
         provide: ConfigurationService,
