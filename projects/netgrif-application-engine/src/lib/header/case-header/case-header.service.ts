@@ -4,14 +4,7 @@ import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {LanguageService} from '../../translate/language.service';
-
-
-export enum CaseMetaField {
-    VISUAL_ID = 'visualId',
-    TITLE = 'title',
-    AUTHOR = 'author',
-    CREATION_DATE = 'creationDate',
-}
+import {CaseMetaField} from './case-menta-enum';
 
 @Injectable()
 export class CaseHeaderService extends AbstractHeaderService {

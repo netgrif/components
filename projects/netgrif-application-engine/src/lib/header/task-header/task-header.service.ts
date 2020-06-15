@@ -2,15 +2,7 @@ import {Injectable} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
-
-
-export enum TaskMetaField {
-    CASE = 'case',
-    TITLE = 'title',
-    PRIORITY = 'priority',
-    USER = 'user',
-    ASSIGN_DATE = 'assign-date',
-}
+import {TaskMetaField} from './task-meta-enum';
 
 @Injectable()
 export class TaskHeaderService extends AbstractHeaderService {

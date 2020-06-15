@@ -2,15 +2,7 @@ import {Injectable} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
-
-
-export enum WorkflowMetaField {
-    INITIALS = 'initials',
-    TITLE = 'title',
-    VERSION = 'version',
-    AUTHOR = 'author',
-    CREATION_DATE = 'creationDate',
-}
+import {WorkflowMetaField} from './workflow-meta-enum';
 
 @Injectable()
 export class WorkflowHeaderService extends AbstractHeaderService {

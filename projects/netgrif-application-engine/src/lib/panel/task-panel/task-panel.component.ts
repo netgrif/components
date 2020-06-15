@@ -18,7 +18,6 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
-import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
@@ -27,6 +26,7 @@ import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumera
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
+import {TaskMetaField} from '../../header/task-header/task-meta-enum';
 
 
 @Component({

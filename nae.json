@@ -444,7 +444,8 @@
                         "leukemia",
                         "1",
                         "bill",
-                        "drobny_nakup"
+                        "drobny_nakup",
+                        "new_model"
                     ]
                 },
                 "componentName": "MyCaseView"

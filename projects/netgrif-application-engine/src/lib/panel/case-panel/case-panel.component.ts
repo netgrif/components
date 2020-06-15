@@ -3,9 +3,9 @@ import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
 import {HeaderColumn} from '../../header/models/header-column';
-import {CaseMetaField} from '../../header/case-header/case-header.service';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
+import {CaseMetaField} from '../../header/case-header/case-menta-enum';
 
 
 @Component({
