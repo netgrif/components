@@ -11,6 +11,7 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {of} from 'rxjs';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {HotkeyModule, HotkeysService} from 'angular2-hotkeys';
 import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -27,9 +28,11 @@ describe('NewCaseComponent', () => {
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
                 SnackBarModule,
-                TranslateLibModule
+                TranslateLibModule,
+                HotkeyModule.forRoot()
             ],
             providers: [
+                HotkeysService,
                 {
                     provide: NAE_SIDE_MENU_CONTROL,
                     useValue: new SideMenuControl(undefined, undefined, () => of('close'), {allowedNets$: of([])})

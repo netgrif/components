@@ -2,18 +2,12 @@ import {Injectable} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
+import {TaskMetaField} from './task-meta-enum';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 
 
-export enum TaskMetaField {
-    CASE = 'case',
-    TITLE = 'title',
-    PRIORITY = 'priority',
-    USER = 'user',
-    ASSIGN_DATE = 'assign-date',
-}
 
 @Injectable()
 export class TaskHeaderService extends AbstractHeaderService {

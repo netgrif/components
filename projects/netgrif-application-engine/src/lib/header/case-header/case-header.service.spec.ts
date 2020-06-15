@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {CaseHeaderService, CaseMetaField} from './case-header.service';
+import {CaseHeaderService} from './case-header.service';
 import {HeaderType} from '../models/header-type';
 import {HeaderMode} from '../models/header-mode';
 import {SearchChangeDescription} from '../models/user-changes/search-change-description';
@@ -25,6 +25,7 @@ import {RouterModule} from '@angular/router';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {CaseMetaField} from './case-menta-enum';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;

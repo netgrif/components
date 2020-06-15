@@ -4,7 +4,6 @@ import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
 import {Observable} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
-import {WorkflowMetaField} from '../../header/workflow-header/workflow-header.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TextField} from '../../data-fields/text-field/models/text-field';
@@ -12,6 +11,7 @@ import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-
 import {Behavior} from '../../data-fields/models/behavior';
 import {Net} from '../../process/net';
 import {TranslateService} from '@ngx-translate/core';
+import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
 
 
 export interface WorkflowPanelContent {
