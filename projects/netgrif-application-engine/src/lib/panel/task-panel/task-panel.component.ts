@@ -7,8 +7,6 @@ import {FieldConverterService} from '../../task-content/services/field-converter
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {UserService} from '../../user/services/user.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {Observable, Subject} from 'rxjs';
@@ -21,12 +19,12 @@ import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
-import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AssignTaskService} from '../../task-content/services/assign-task.service';
 import {LoadingEmitter} from '../../utility/loading-emitter';
+import {DelegateTaskService} from '../../task-content/services/delegate-task.service';
 
 
 @Component({
@@ -37,6 +35,7 @@ import {LoadingEmitter} from '../../utility/loading-emitter';
         TaskContentService,
         TaskEventService,
         AssignTaskService,
+        DelegateTaskService
     ]
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
@@ -62,19 +61,20 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _log: LoggerService,
                 private _snackBar: SnackBarService,
                 private _taskService: TaskResourceService,
-                private _sideMenuService: SideMenuService,
                 private _userService: UserService,
                 private _taskViewService: TaskViewService,
                 private _translate: TranslateService,
                 private _paperView: PaperViewService,
                 private _taskEventService: TaskEventService,
-                private _assignTaskService: AssignTaskService) {
+                private _assignTaskService: AssignTaskService,
+                private _delegateTaskService: DelegateTaskService) {
         super();
         this.loading = new LoadingEmitter();
         this._updating = false;
         this._queue = new Subject<boolean>();
 
         this._assignTaskService.setUp(this.loading);
+        this._delegateTaskService.setUp(this.loading);
     }
 
     ngOnInit() {
@@ -290,32 +290,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     delegate(afterAction = new Subject<boolean>()) {
-        if (this.loading.isActive) {
-            return;
-        }
-        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM).onClose.subscribe(event => {
-            console.log(event);
-            if (event.data !== undefined) {
-                this.loading.on();
-
-                this._taskService.delegateTask(this._taskPanelData.task.stringId, event.data.id).subscribe(response => {
-                    this.loading.off();
-                    if (response.success) {
-                        this._taskContentService.removeStateData();
-                        afterAction.next(true);
-                    } else if (response.error) {
-                        this._snackBar.openErrorSnackBar(response.error);
-                        afterAction.next(false);
-                    }
-                }, error => {
-                    this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
-                     ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-                    this.loading.off();
-                    afterAction.next(false);
-                });
-            }
-        });
-
+        this._delegateTaskService.delegate(afterAction);
     }
 
     cancel(afterAction = new Subject<boolean>()) {
