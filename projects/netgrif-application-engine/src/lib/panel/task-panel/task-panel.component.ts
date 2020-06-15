@@ -7,7 +7,6 @@ import {FieldConverterService} from '../../task-content/services/field-converter
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {UserService} from '../../user/services/user.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
@@ -25,6 +24,7 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AssignTaskService} from '../../task-content/services/assign-task.service';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {DelegateTaskService} from '../../task-content/services/delegate-task.service';
+import {CancelTaskService} from '../../task-content/services/cancel-task.service';
 
 
 @Component({
@@ -35,7 +35,8 @@ import {DelegateTaskService} from '../../task-content/services/delegate-task.ser
         TaskContentService,
         TaskEventService,
         AssignTaskService,
-        DelegateTaskService
+        DelegateTaskService,
+        CancelTaskService
     ]
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
@@ -61,13 +62,13 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _log: LoggerService,
                 private _snackBar: SnackBarService,
                 private _taskService: TaskResourceService,
-                private _userService: UserService,
                 private _taskViewService: TaskViewService,
                 private _translate: TranslateService,
                 private _paperView: PaperViewService,
                 private _taskEventService: TaskEventService,
                 private _assignTaskService: AssignTaskService,
-                private _delegateTaskService: DelegateTaskService) {
+                private _delegateTaskService: DelegateTaskService,
+                private _cancelTaskService: CancelTaskService) {
         super();
         this.loading = new LoadingEmitter();
         this._updating = false;
@@ -75,6 +76,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
         this._assignTaskService.setUp(this.loading);
         this._delegateTaskService.setUp(this.loading);
+        this._cancelTaskService.setUp(this.loading);
     }
 
     ngOnInit() {
@@ -294,30 +296,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     cancel(afterAction = new Subject<boolean>()) {
-        if (this.loading.isActive) {
-            return;
-        }
-        if (!this._taskPanelData.task.user || ((this._taskPanelData.task.user.email !== this._userService.user.email)
-            && !this.canDo('cancel'))) {
-            afterAction.next(false);
-            return;
-        }
-        this.loading.on();
-        this._taskService.cancelTask(this._taskPanelData.task.stringId).subscribe(response => {
-            this.loading.off();
-            if (response.success) {
-                this._taskContentService.removeStateData();
-                afterAction.next(true);
-            } else if (response.error) {
-                this._snackBar.openErrorSnackBar(response.error);
-                afterAction.next(false);
-            }
-        }, error => {
-            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
-             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.loading.off();
-            afterAction.next(false);
-        });
+        this._cancelTaskService.cancel(afterAction);
     }
 
     finish(afterAction = new Subject<boolean>()) {

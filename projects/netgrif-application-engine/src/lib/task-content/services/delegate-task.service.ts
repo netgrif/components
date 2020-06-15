@@ -58,7 +58,7 @@ export class DelegateTaskService {
      */
     delegate(afterAction = new Subject<boolean>()) {
         if (!this._referencesSet) {
-            this._log.error('DelegateTaskService was not yet set up! You must call \'setUp\' before calling another method!');
+            this._log.error('DelegateTaskService was not yet set up! You must call \'setUp\' before calling other methods of this class!');
             return;
         }
 
