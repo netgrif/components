@@ -39,6 +39,14 @@ export interface TabContent {
      * Defaults to `0`.
      */
     order?: number;
+    /**
+     * Whether the tab was initially opened. Only initially opened tabs have their view ID defined.
+     * Tabs that are opened dynamically don't have a view ID and thus cannot save their state into user preferences.
+     *
+     * This attribute is only used when initial tabs are created. The [openTab]{@link TabView#openTab} method ignores this attribute
+     * and logs a warning if it is set on the provided object.
+     */
+    initial?: boolean;
 }
 
 

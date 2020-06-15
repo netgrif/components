@@ -29,6 +29,9 @@ import {
     noNetsTaskViewServiceFactory
 } from '../../view/task-view/service/factory/array-task-view-service-factory';
 import {TaskMetaField} from '../../header/task-header/task-meta-enum';
+import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
@@ -50,17 +53,27 @@ describe('TaskPanelComponent', () => {
             providers: [
                 ArrayTaskViewServiceFactory,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {   provide: TaskViewService,
+                {
+                    provide: TaskViewService,
                     useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]},
+                    deps: [ArrayTaskViewServiceFactory]
+                },
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: UserResourceService, useClass: MyUserResources},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
                 SideMenuService
             ],
-            declarations: [TestWrapperComponent]
-        })
-            .compileComponents();
+            declarations: [
+                TestWrapperComponent,
+            ]
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                    SuccessSnackBarComponent
+                ]
+            }
+        }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;

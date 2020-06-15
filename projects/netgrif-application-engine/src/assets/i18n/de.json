@@ -191,7 +191,7 @@
             "visualID": "Visuelle ID",
             "title": "Fallname",
             "author": "Fallautor",
-            "creaDate": "Erstellungsdatum"
+            "creationDate": "Erstellungsdatum"
         },
         "taskMeta": {
             "case": "Fall",
@@ -202,7 +202,7 @@
         "workflowMeta": {
             "initials": "Initialen",
             "version": "Version",
-            "creaDate": "Hochladungsdatum"
+            "creationDate": "Hochladungsdatum"
         },
         "orderMode": "Anordnungsmodus",
         "searchMode": "Suchmodus",
@@ -244,6 +244,12 @@
     "admin": {
         "user-list": {
             "noUsersWereFound": "Derzeit befinden sich Benutzer im System"
+        }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "Benutzereinstellungen wurden gespeichert",
+            "saveFailure": "Benutzereinstellungen können nicht gespeichert werden"
         }
     }
 }

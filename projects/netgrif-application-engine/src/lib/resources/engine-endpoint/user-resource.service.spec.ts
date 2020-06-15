@@ -137,13 +137,13 @@ describe('UserResourceService', () => {
     it('should getPreferences', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.getPreferences().subscribe(res => {
-                expect(res.length).toEqual(0);
+                expect(res).toBeTruthy();
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/user/preferences');
             expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
+            reqLog.flush({});
         })
     );
 

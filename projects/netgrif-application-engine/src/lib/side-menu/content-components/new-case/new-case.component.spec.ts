@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NewCaseComponent} from './new-case.component';
 import {CommonModule} from '@angular/common';
 import {MaterialModule} from '../../../material/material.module';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -12,6 +12,9 @@ import {of} from 'rxjs';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HotkeyModule, HotkeysService} from 'angular2-hotkeys';
+import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('NewCaseComponent', () => {
     let component: NewCaseComponent;
@@ -28,7 +31,6 @@ describe('NewCaseComponent', () => {
                 TranslateLibModule,
                 HotkeyModule.forRoot()
             ],
-            declarations: [NewCaseComponent],
             providers: [
                 HotkeysService,
                 {
@@ -36,9 +38,18 @@ describe('NewCaseComponent', () => {
                     useValue: new SideMenuControl(undefined, undefined, () => of('close'), {allowedNets$: of([])})
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
-            ]
-        })
-            .compileComponents();
+            ],
+            declarations: [
+                NewCaseComponent,
+            ],
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                    SuccessSnackBarComponent
+                ]
+            }
+        }).compileComponents();
     }));
 
     beforeEach(() => {

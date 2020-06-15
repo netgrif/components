@@ -14,7 +14,6 @@ import {Net} from '../../../process/net';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Pagination} from '../../../resources/interface/pagination';
 import {Task} from '../../../resources/interface/task';
-import {LanguageService} from '../../../translate/language.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ListRange} from '@angular/cdk/collections';
@@ -43,9 +42,11 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     private _clear = false;
     private _reloadPage = false;
 
-    constructor(protected _taskService: TaskResourceService, private _userService: UserService,
-                private _snackBarService: SnackBarService, private _translate: TranslateService,
-                private _Language: LanguageService, protected _searchService: SearchService,
+    constructor(protected _taskService: TaskResourceService,
+                private _userService: UserService,
+                private _snackBarService: SnackBarService,
+                private _translate: TranslateService,
+                protected _searchService: SearchService,
                 private _log: LoggerService,
                 allowedNets: Observable<Array<Net>> = of([])) { // need for translations
         super(allowedNets);

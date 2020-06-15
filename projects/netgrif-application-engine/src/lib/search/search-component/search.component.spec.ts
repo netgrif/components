@@ -8,6 +8,13 @@ import {TestCaseSearchServiceFactory} from '../../utility/tests/test-factory-met
 import {Component} from '@angular/core';
 import {SearchModule} from '../search.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 
 describe('SearchComponent', () => {
     let component: SearchComponent;
@@ -23,6 +30,10 @@ describe('SearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
+                AuthenticationMethodService,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: SearchService, useFactory: TestCaseSearchServiceFactory}
             ],
             declarations: [

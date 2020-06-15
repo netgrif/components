@@ -3,11 +3,17 @@ import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {TaskMetaField} from './task-meta-enum';
+import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {ViewService} from '../../routing/view-service/view.service';
+import {LoggerService} from '../../logger/services/logger.service';
+
+
 
 @Injectable()
 export class TaskHeaderService extends AbstractHeaderService {
-    constructor() {
-        super(HeaderType.TASK);
+    constructor(preferences: UserPreferenceService, viewService: ViewService, logger: LoggerService) {
+        super(HeaderType.TASK, preferences, viewService, logger);
+        this.loadHeadersFromPreferences();
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {

@@ -232,6 +232,19 @@
             "navigation": false,
             "routing": {
                 "path": "tabbed-views"
+            },
+            "children": {
+                "custom-redirect": {
+                    "component": {
+                        "class": "TabbedViewsExampleComponent",
+                        "from": "./doc/tabbed-case-view/tabbed-views-example.component"
+                    },
+                    "access": "private",
+                    "navigation": false,
+                    "routing": {
+                        "path": "**"
+                    }
+                }
             }
         },
         "demo-workflow-view": {

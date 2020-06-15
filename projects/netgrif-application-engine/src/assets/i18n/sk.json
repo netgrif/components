@@ -191,7 +191,7 @@
             "visualID": "Vizuálne ID",
             "title": "Názov",
             "author": "Autor",
-            "creaDate": "Dátum vytvorenia"
+            "creationDate": "Dátum vytvorenia"
         },
         "taskMeta": {
             "case": "Prípad",
@@ -202,7 +202,7 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
-            "creaDate": "Dátum nahratia"
+            "creationDate": "Dátum nahratia"
         },
         "orderMode": "Mód zoraďovania",
         "searchMode": "Mód vyhľadávania",
@@ -251,6 +251,12 @@
             "listTitle": "Procesy",
             "noRoles": "Tento proces neobsahuje žiadne roly",
             "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
+        }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "Vaše preferencie boli uložené",
+            "saveFailure": "Nepodarilo sa uložiť preferencie"
         }
     }
 }
