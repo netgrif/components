@@ -11,7 +11,11 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (this._session.sessionToken) {
+        if (!this._session) {
+            return next.handle(req);
+        }
+
+        if (this._session && !!this._session.sessionToken) {
             req = req.clone({
                 headers: req.headers.set(this._session.sessionHeader, this._session.sessionToken)
             });
@@ -20,13 +24,13 @@ export class AuthenticationInterceptor implements HttpInterceptor {
             tap(event => {
                 if (event instanceof HttpResponse) {
                     if (event.headers.has(this._session.sessionHeader)) {
-                        this._session.sessionToken = event.headers.get(this._session.sessionHeader);
+                        this._session.setVerifiedToken(event.headers.get(this._session.sessionHeader));
                     }
                 }
             }),
             catchError(errorEvent => {
                 if (errorEvent instanceof HttpErrorResponse && errorEvent.status === 401) {
-                    console.debug('Authentication token is invalid. Clearing stream');
+                    console.debug('Authentication token is invalid. Clearing session token');
                     this._session.clear();
                 }
                 return throwError(errorEvent);

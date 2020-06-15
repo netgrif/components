@@ -7,7 +7,8 @@
             "endpoints": {
                 "login": "auth/login",
                 "logout": "auth/logout",
-                "signup": "auth/signup"
+                "signup": "auth/signup",
+                "verification": "auth/verify"
             },
             "sessionBearer": "X-Auth-Token"
         },
