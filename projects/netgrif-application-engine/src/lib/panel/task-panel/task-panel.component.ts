@@ -159,42 +159,24 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }
         this.loading = true;
         this._taskService.getData(this._taskPanelData.task.stringId).subscribe(dataGroups => {
-            this._taskPanelData.task.dataGroups = [];
-            if (dataGroups instanceof Array) {
-                dataGroups.forEach(group => {
-                        const dataGroup: DataField<any>[] = [];
-                        if (group.fields._embedded) {
-                            Object.keys(group.fields._embedded).forEach(item => {
-                                dataGroup.push(...group.fields._embedded[item].map(df => this._fieldConverterService.toClass(df)));
-                            });
-                            dataGroup.forEach(field => {
-                                field.valueChanges().subscribe(newValue => {
-                                    if (field.initialized && field.valid && field.changed) {
-                                        this.updateTaskDataFields();
-                                    }
-                                });
-                            });
-                            this._taskPanelData.task.dataGroups.push({
-                                fields: dataGroup,
-                                stretch: group.stretch,
-                                title: group.title,
-                                layout: group.layout,
-                                alignment: group.alignment
-                            });
-                            this._taskPanelData.task.dataSize += dataGroup.length;
-                        } else {
-                            this._log.info(this._translate.instant('tasks.snackbar.noData') + ' ' + this._taskPanelData.task);
-                            this.loading = false;
-                            afterAction.next(true);
-                        }
-                    }
-                );
-                this.loading = false;
-                afterAction.next(true);
-            } else {
-                this._log.info(this._translate.instant('tasks.snackbar.noGroup') + ' ' + this._taskPanelData.task);
+            this._taskPanelData.task.dataGroups = dataGroups;
+            if (dataGroups.length === 0) {
+                this._log.info(this._translate.instant('tasks.snackbar.noData') + ' ' + this._taskPanelData.task);
                 this.loading = false;
                 this._taskPanelData.task.dataSize = 0;
+                afterAction.next(true);
+            } else {
+                dataGroups.forEach(group => {
+                    group.fields.forEach(field => {
+                        field.valueChanges().subscribe(() => {
+                            if (field.initialized && field.valid && field.changed) {
+                                this.updateTaskDataFields();
+                            }
+                        });
+                    });
+                    this._taskPanelData.task.dataSize += group.fields.length;
+                });
+                this.loading = false;
                 afterAction.next(true);
             }
             this._taskContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
