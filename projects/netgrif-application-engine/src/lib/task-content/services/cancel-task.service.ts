@@ -36,20 +36,23 @@ export class CancelTaskService {
 
     /**
      * Sets up the references that are necessary for this Service to function properly.
-     * @param loadingRef reference to the loading indicator of the parent Service/Component that handles the rendering of a single task
+     * @param loadingIndicator reference to the loading indicator
      */
-    public setUp(loadingRef: LoadingEmitter): void {
+    public setUp(loadingIndicator: LoadingEmitter): void {
         if (this._referencesSet) {
             this._log.error('CancelTaskService was already set up! You cannot call \'setUp\' on it again!');
             return;
         }
 
         this._referencesSet = true;
-        this._loading = loadingRef;
+        this._loading = loadingIndicator;
     }
 
     /**
      * Performs the 'cancel' operation on the task held by {@link TaskContentService}.
+     *
+     * Doesn't send any requests if the loading indicator is in it's active state.
+     * Otherwise sets the indicator to the active state and disables it once the request response is received.
      *
      * The argument can be used to chain operations together,
      * or to execute code conditionally based on the success state of the cancel operation.

@@ -11,7 +11,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/mo
 import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {filter, map, take} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {TaskMetaField} from '../../header/task-header/task-header.service';
@@ -25,6 +25,7 @@ import {AssignTaskService} from '../../task-content/services/assign-task.service
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {DelegateTaskService} from '../../task-content/services/delegate-task.service';
 import {CancelTaskService} from '../../task-content/services/cancel-task.service';
+import {FinishTaskService} from '../../task-content/services/finish-task.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ import {CancelTaskService} from '../../task-content/services/cancel-task.service
         TaskEventService,
         AssignTaskService,
         DelegateTaskService,
-        CancelTaskService
+        CancelTaskService,
+        FinishTaskService
     ]
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
@@ -54,8 +56,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     public portal: ComponentPortal<any>;
     public loading: LoadingEmitter;
     public panelRef: MatExpansionPanel;
-    private _updating: boolean;
-    private _queue: Subject<boolean>;
+    private readonly _updating: LoadingEmitter;
+    private _dataUpdateResults$: Subject<boolean>;
 
     constructor(private _taskContentService: TaskContentService,
                 private _fieldConverterService: FieldConverterService,
@@ -68,15 +70,26 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _taskEventService: TaskEventService,
                 private _assignTaskService: AssignTaskService,
                 private _delegateTaskService: DelegateTaskService,
-                private _cancelTaskService: CancelTaskService) {
+                private _cancelTaskService: CancelTaskService,
+                private _finishTaskService: FinishTaskService) {
         super();
         this.loading = new LoadingEmitter();
-        this._updating = false;
-        this._queue = new Subject<boolean>();
+        this._updating = new LoadingEmitter();
+        this._dataUpdateResults$ = new Subject<boolean>();
 
         this._assignTaskService.setUp(this.loading);
         this._delegateTaskService.setUp(this.loading);
         this._cancelTaskService.setUp(this.loading);
+        this._finishTaskService.setUp(this.loading,
+            this._updating,
+            this._dataUpdateResults$.asObservable(),
+            (afterAction) => {
+                this.getTaskDataFields(afterAction);
+            },
+            (afterAction) => {
+                this.updateTaskDataFields(afterAction);
+            }
+        );
     }
 
     ngOnInit() {
@@ -196,12 +209,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         });
     }
 
-    public updateTaskDataFields(afterAction = new Subject<boolean>()): void {
+    public updateTaskDataFields(afterAction = new Subject<boolean>()): Observable<boolean> {
         if (this._taskPanelData.task.dataSize <= 0) {
             return;
         }
 
-        if (this._updating) {
+        if (this._updating.isActive) {
             afterAction.next(true);
             return;
         }
@@ -230,7 +243,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }
 
         this.loading.on();
-        this._updating = true;
+        this._updating.on();
         this._taskService.setData(this._taskPanelData.task.stringId, body).subscribe(response => {
             if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
                 this._taskPanelData.changedFields.next(response.changedFields as ChangedFields);
@@ -245,18 +258,18 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             });
             this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
             this.loading.off();
-            this._updating = false;
-            if (this._queue.observers.length !== 0) {
-                this._queue.next(true);
+            this._updating.off();
+            if (this._dataUpdateResults$.observers.length !== 0) {
+                this._dataUpdateResults$.next(true);
             }
             afterAction.next(true);
         }, error => {
             this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
             this._log.debug(error);
             this.loading.off();
-            this._updating = false;
-            if (this._queue.observers.length !== 0) {
-                this._queue.next(false);
+            this._updating.off();
+            if (this._dataUpdateResults$.observers.length !== 0) {
+                this._dataUpdateResults$.next(false);
             }
             afterAction.next(false);
             this._taskViewService.reloadCurrentPage();
@@ -300,59 +313,15 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     finish(afterAction = new Subject<boolean>()) {
-        const after = new Subject<boolean>();
-        if (this._taskPanelData.task.dataSize <= 0) {
-            after.subscribe(boolean => {
-                if (this._taskPanelData.task.dataSize <= 0 || this._taskContentService.validateTaskData()) {
-                    this.sendFinishTaskRequest(afterAction);
-                    this.collapse();
-                }
-                after.complete();
-            });
-            this.getTaskDataFields(after);
-        } else {
-            if (this._taskContentService.validateTaskData()) {
-                after.subscribe(boolean => {
-                    if (boolean) {
-                        if (this._updating) {
-                            this._queue.pipe(take(1)).subscribe(bool => {
-                                if (bool) {
-                                    this.sendFinishTaskRequest(afterAction);
-                                    this.collapse();
-                                }
-                            });
-                        } else {
-                            this.sendFinishTaskRequest(afterAction);
-                            this.collapse();
-                        }
-                    }
-                    after.complete();
-                });
-                this.updateTaskDataFields(after);
+        const collapseAfter = new Subject<boolean>();
+        collapseAfter.subscribe( result => {
+            afterAction.next(result);
+            if (result) {
+                this.collapse();
             }
-        }
-    }
-
-    private sendFinishTaskRequest(afterAction: Subject<boolean>) {
-        if (this.loading.isActive) {
-            return;
-        }
-        this.loading.on();
-        this._taskService.finishTask(this._taskPanelData.task.stringId).subscribe(response => {
-            this.loading.off();
-            if (response.success) {
-                this._taskContentService.removeStateData();
-                afterAction.next(true);
-            } else if (response.error) {
-                this._snackBar.openErrorSnackBar(response.error);
-                afterAction.next(false);
-            }
-        }, error => {
-            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
-             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.loading.off();
-            afterAction.next(false);
+            collapseAfter.complete();
         });
+        this._finishTaskService.validateDataAndFinish(collapseAfter);
     }
 
     collapse() {
