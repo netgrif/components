@@ -4,6 +4,7 @@ import {DataFieldTemplateComponent} from './data-field-template.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
+import {TextField} from '../text-field/models/text-field';
 
 describe('DataFieldTemplateComponent', () => {
     let component: DataFieldTemplateComponent;
@@ -29,9 +30,8 @@ describe('DataFieldTemplateComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-data-field-template [title]="title" [description]="desc"></nae-data-field-template>'
+    template: '<nae-data-field-template [dataField]="field"></nae-data-field-template>'
 })
 class TestWrapperComponent {
-    title = 'title';
-    desc = 'desc';
+    field = new TextField('', '', '', {});
 }
