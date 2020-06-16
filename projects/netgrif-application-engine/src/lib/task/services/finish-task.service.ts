@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {take} from 'rxjs/operators';
-import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -9,35 +8,23 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {TaskRequestStateService} from './task-request-state.service';
 import {TaskDataService} from './task-data.service';
+import {TaskHandlingService} from './task-handling-service';
 
 
 /**
  * Service that handles the logic of finishing a task.
- *
- * It must be set up with references before it can be used. See [setUp]{@link FinishTaskService#setUp} method for more information.
  */
 @Injectable()
-export class FinishTaskService {
+export class FinishTaskService extends TaskHandlingService {
 
     constructor(protected _log: LoggerService,
-                protected _taskContentService: TaskContentService,
                 protected _taskResourceService: TaskResourceService,
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
-                protected _taskDataService: TaskDataService) {
-    }
-
-    /**
-     * @ignore
-     * Performs a check and returns the Task from the injected {@link TaskContentService} instance
-     */
-    private get _task(): Task {
-        const task = this._taskContentService.task;
-        if (!task) {
-            throw new Error('AssignTaskService cannot work without an initialized TaskContentService');
-        }
-        return task;
+                protected _taskDataService: TaskDataService,
+                _taskContentService: TaskContentService) {
+        super(_taskContentService);
     }
 
     /**

@@ -6,39 +6,26 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
-import {Task} from '../../resources/interface/task';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {TaskRequestStateService} from './task-request-state.service';
+import {TaskHandlingService} from './task-handling-service';
 
 
 /**
  * Service that handles the logic of delegating a task.
- *
- * It must be set up with references before it can be used. See [setUp]{@link DelegateTaskService#setUp} method for more information.
  */
 @Injectable()
-export class DelegateTaskService {
+export class DelegateTaskService extends TaskHandlingService {
 
     constructor(protected _log: LoggerService,
                 protected _sideMenuService: SideMenuService,
                 protected _taskResourceService: TaskResourceService,
-                protected _taskContentService: TaskContentService,
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService,
-                protected _taskState: TaskRequestStateService) {
-    }
-
-    /**
-     * @ignore
-     * Performs a check and returns the Task from the injected {@link TaskContentService} instance
-     */
-    private get _task(): Task {
-        const task = this._taskContentService.task;
-        if (!task) {
-            throw new Error('DelegateTaskService cannot work without an initialized TaskContentService');
-        }
-        return task;
+                protected _taskState: TaskRequestStateService,
+                _taskContentService: TaskContentService) {
+        super(_taskContentService);
     }
 
     /**

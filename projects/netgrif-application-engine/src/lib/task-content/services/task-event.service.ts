@@ -5,6 +5,7 @@ import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AssignPolicy} from '../model/policy';
 import {TaskContentService} from './task-content.service';
+import {TaskHandlingService} from '../../task/services/task-handling-service';
 
 /**
  * Holds logic about the available operations on a {@link Task} object based on it's state.
@@ -13,24 +14,13 @@ import {TaskContentService} from './task-content.service';
  * If the task is not initialized this class cannot work properly.
  */
 @Injectable()
-export class TaskEventService {
+export class TaskEventService extends TaskHandlingService {
 
     constructor(protected _taskViewService: TaskViewService,
                 protected _userService: UserService,
-                protected _taskContentService: TaskContentService,
-                protected _logger: LoggerService) {
-    }
-
-    /**
-     * @ignore
-     * Performs a check and returns the Task from the injected {@link TaskContentService} instance
-     */
-    private get _task(): Task {
-        const task = this._taskContentService.task;
-        if (!task) {
-            throw new Error('TaskEventService cannot work without an initialized TaskContentService');
-        }
-        return task;
+                protected _logger: LoggerService,
+                _taskContentService: TaskContentService) {
+        super(_taskContentService);
     }
 
     /**

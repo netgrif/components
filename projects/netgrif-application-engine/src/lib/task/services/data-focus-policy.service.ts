@@ -1,24 +1,13 @@
 import {Injectable} from '@angular/core';
 import {DataFocusPolicy} from '../../task-content/model/policy';
 import {TaskContentService} from '../../task-content/services/task-content.service';
-import {Task} from '../../resources/interface/task';
+import {TaskHandlingService} from './task-handling-service';
 
 @Injectable()
-export class DataFocusPolicyService {
+export class DataFocusPolicyService extends TaskHandlingService {
 
-    constructor(protected _taskContentService: TaskContentService) {
-    }
-
-    /**
-     * @ignore
-     * Performs a check and returns the Task from the injected {@link TaskContentService} instance
-     */
-    private get _task(): Task {
-        const task = this._taskContentService.task;
-        if (!task) {
-            throw new Error('DataFocusPolicyService cannot work without an initialized TaskContentService');
-        }
-        return task;
+    constructor(_taskContentService: TaskContentService) {
+        super(_taskContentService);
     }
 
     public buildDataFocusPolicy(success: boolean): void {

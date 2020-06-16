@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskContentService} from '../../task-content/services/task-content.service';
-import {Task} from '../../resources/interface/task';
 import {TaskRequestStateService} from './task-request-state.service';
 import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -12,40 +11,30 @@ import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
 import {DataFocusPolicyService} from './data-focus-policy.service';
+import {TaskHandlingService} from './task-handling-service';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
  * a single Task object managed by a {@link TaskContentService} instance.
  */
 @Injectable()
-export class TaskDataService {
+export class TaskDataService extends TaskHandlingService {
 
     protected _updateSuccess$: Subject<boolean>;
     protected _changedFields$: Subject<ChangedFields>;
 
-    constructor(protected _taskContentService: TaskContentService,
-                protected _taskState: TaskRequestStateService,
+    constructor(protected _taskState: TaskRequestStateService,
                 protected _translate: TranslateService,
                 protected _log: LoggerService,
                 protected _snackBar: SnackBarService,
                 protected _taskResourceService: TaskResourceService,
                 protected _taskViewService: TaskViewService,
                 protected _fieldConverterService: FieldConverterService,
-                protected _dataFocusPolicyService: DataFocusPolicyService) {
+                protected _dataFocusPolicyService: DataFocusPolicyService,
+                _taskContentService: TaskContentService) {
+        super(_taskContentService);
         this._updateSuccess$ = new Subject<boolean>();
         this._changedFields$ = new Subject<ChangedFields>();
-    }
-
-    /**
-     * @ignore
-     * Performs a check and returns the Task from the injected {@link TaskContentService} instance
-     */
-    private get _task(): Task {
-        const task = this._taskContentService.task;
-        if (!task) {
-            throw new Error('TaskDataService cannot work without an initialized TaskContentService');
-        }
-        return task;
     }
 
     /**

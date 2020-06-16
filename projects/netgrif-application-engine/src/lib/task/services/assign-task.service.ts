@@ -5,36 +5,23 @@ import {TaskContentService} from '../../task-content/services/task-content.servi
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {Task} from '../../resources/interface/task';
 import {TaskRequestStateService} from './task-request-state.service';
+import {TaskHandlingService} from './task-handling-service';
 
 
 /**
  * Service that handles the logic of assigning a task.
- *
- * It must be set up with references before it can be used. See [setUp]{@link AssignTaskService#setUp} method for more information.
  */
 @Injectable()
-export class AssignTaskService {
+export class AssignTaskService extends TaskHandlingService {
 
     constructor(protected _log: LoggerService,
-                protected _taskContentService: TaskContentService,
                 protected _taskResourceService: TaskResourceService,
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService,
-                protected _taskState: TaskRequestStateService) {
-    }
-
-    /**
-     * @ignore
-     * Performs a check and returns the Task from the injected {@link TaskContentService} instance
-     */
-    private get _task(): Task {
-        const task = this._taskContentService.task;
-        if (!task) {
-            throw new Error('AssignTaskService cannot work without an initialized TaskContentService');
-        }
-        return task;
+                protected _taskState: TaskRequestStateService,
+                _taskContentService: TaskContentService) {
+        super(_taskContentService);
     }
 
     /**
