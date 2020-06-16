@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {LoginFormComponent} from './login-form.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
@@ -14,7 +13,7 @@ import {Observable, of} from 'rxjs';
 import {User} from '../../authentication/models/user';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 
-describe('LoginPanelComponent', () => {
+describe('LoginFormComponent', () => {
     let component: LoginFormComponent;
     let fixture: ComponentFixture<LoginFormComponent>;
 

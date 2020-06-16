@@ -1,6 +1,7 @@
 import {TabContent, TabLabel} from '../interfaces';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Type} from '@angular/core';
+import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
 
 /**
  * Holds the information of tab opened in a tab view.
@@ -30,6 +31,10 @@ export class OpenedTab implements TabContent {
      */
     public order = 0;
     /**
+     * See [TabContent.initial]{@link TabContent#initial}.
+     */
+    public initial = false;
+    /**
      * @ignore
      * Reference to the component portal that is used to display the tab content
      */
@@ -41,6 +46,12 @@ export class OpenedTab implements TabContent {
      * See [TabGroup.initializeTab()]{@link TabView#initializeTab} for more information.
      */
     public isTabInitialized = false;
+    /**
+     * @ignore
+     * This tab's ViewService instance that provides it with its own unique view ID.
+     * It is only present for tabs that are defined in the initial array in application's config.
+     */
+    public tabViewService?: FixedIdViewService;
 
     /**
      * @param tabContent - content of the tab

@@ -7,7 +7,6 @@ import {User as UserResource} from '../../resources/interface/user';
 import {User as AuthUser} from '../../authentication/models/user';
 import {tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {UserPreferenceService} from './user-preference.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
 
@@ -20,11 +19,8 @@ export class UserService {
     private _userChange$: Subject<User>;
     private _loginCalled: boolean;
 
-    constructor(
-        // private _store: Store<State>,
-        private _preferenceService: UserPreferenceService,
-        private _authService: AuthenticationService,
-        private _userResource: UserResourceService) {
+    constructor(private _authService: AuthenticationService,
+                private _userResource: UserResourceService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new Subject<User>();

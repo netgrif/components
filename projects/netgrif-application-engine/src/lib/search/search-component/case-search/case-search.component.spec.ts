@@ -10,6 +10,11 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {CategoryFactory} from '../../category-factory/category-factory';
 import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/config-case-view-service-factory';
+import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 
 describe('CaseSearchComponent', () => {
     let component: CaseSearchComponent;
@@ -32,7 +37,10 @@ describe('CaseSearchComponent', () => {
                 {   provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
                     deps: [ConfigCaseViewServiceFactory]},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
             ]
         })
             .compileComponents();

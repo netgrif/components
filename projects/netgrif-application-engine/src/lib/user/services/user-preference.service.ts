@@ -1,149 +1,110 @@
 import {Injectable} from '@angular/core';
-import {User} from '../models/user';
-import {Observable, of} from 'rxjs';
-import {Preferences} from '../models/preferences/preferences';
-import {PreferenceFilters} from '../models/preferences/preference-filters';
-import {PreferenceHeaders} from '../models/preferences/preference-headers';
+import {Preferences} from '../models/preferences';
+import {UserService} from './user.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {LoggerService} from '../../logger/services/logger.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {Observable, Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserPreferenceService {
 
-    private _user: User;
+    protected _preferences: Preferences;
+    protected _preferencesChanged$: Subject<void>;
 
-    constructor(
-        // private _resourceService: ResourceService
-    ) {
+    constructor(protected _userService: UserService,
+                protected _userResourceService: UserResourceService,
+                protected _logger: LoggerService,
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService) {
+        this._preferences = this._emptyPreferences();
+        this._preferencesChanged$ = new Subject<void>();
+
+        if (_userService) {
+            _userService.user$.subscribe(loggedUser => {
+                if (loggedUser.id !== '') {
+                    this._userResourceService.getPreferences().subscribe(prefs => {
+                            this._preferences = prefs;
+                            this._preferencesChanged$.next();
+                        }
+                    );
+                } else {
+                    this._preferences = this._emptyPreferences();
+                    this._preferencesChanged$.next();
+                }
+            });
+        }
     }
 
-    set user(value: User) {
-        this._user = value;
-    }
-
-    ///// PREFERENCE FILTERS /////
-
-    /**
-     * @param viewId - task view viewId
-     * @param value - list of filters stringIds
-     */
-    public saveTaskFilters(viewId: string, value: PreferenceFilters) {
-        this._user.preferences.taskFilters[viewId] = value;
+    public setTaskFilters(viewId: string, value: Array<string>): void {
+        this._preferences.taskFilters[viewId] = value;
         this._savePreferences();
     }
 
-    /**
-     * @param viewId - task view viewId
-     * @returns list of filters stringIds
-     */
-    public getTaskFilters(viewId: string): Observable<PreferenceFilters> {
-        return of(this._user.preferences.taskFilters[viewId]);
+    public getTaskFilters(viewId: string): Array<string> | undefined {
+        return this._preferences.taskFilters[viewId];
     }
 
-
-    /**
-     * @param viewId - case view viewId
-     * @param value - list of filters stringIds
-     */
-    public saveCaseFilters(viewId: string, value: PreferenceFilters) {
-        this._user.preferences.caseFilters[viewId] = value;
+    public setCaseFilters(viewId: string, value: Array<string>): void {
+        this._preferences.caseFilters[viewId] = value;
         this._savePreferences();
     }
 
-    /**
-     * @param viewId - case view viewId
-     * @returns list of filters stringIds
-     */
-    public getCaseFilters(viewId: string): Observable<PreferenceFilters> {
-        return of(this._user.preferences.caseFilters[viewId]);
+    public getCaseFilters(viewId: string): Array<string> | undefined {
+        return this._preferences.caseFilters[viewId];
     }
 
-
-    /**
-     * @param viewId - workflow view viewId
-     * @param value - list of filters stringIds
-     */
-    public saveWorkflowFilters(viewId: string, value: PreferenceFilters) {
-        this._user.preferences.workflowFilters[viewId] = value;
+    public setHeaders(viewId: string, value: Array<string>): void {
+        this._preferences.headers[viewId] = value;
         this._savePreferences();
     }
 
-    /**
-     * @param viewId - workflow view viewId
-     * @returns list of filters stringIds
-     */
-    public getWorkflowFilters(viewId: string): Observable<PreferenceFilters> {
-        return of(this._user.preferences.workflowFilters[viewId]);
+    public getHeaders(viewId: string): Array<string> | undefined {
+        return this._preferences.headers[viewId];
     }
 
-    ///// PREFERENCE HEADERS /////
-
-    /**
-     * @param viewId - task view viewId
-     * @param value - list of headers
-     */
-    public saveTaskHeaders(viewId: string, value: PreferenceHeaders) {
-        this._user.preferences.taskHeaders[viewId] = value;
+    public setLocale(locale: string): void {
+        this._preferences.locale = locale;
         this._savePreferences();
     }
 
-    /**
-     * @param viewId - task view viewId
-     * @returns list of filters stringIds
-     */
-    public getTaskHeaders(viewId: string): Observable<PreferenceHeaders> {
-        return of(this._user.preferences.taskHeaders[viewId]);
+    public getLocale(): string {
+        return this._preferences.locale;
     }
 
-
-    /**
-     * @param viewId - case view viewId
-     * @param value - list of headers
-     */
-    public saveCaseHeaders(viewId: string, value: PreferenceHeaders) {
-        this._user.preferences.caseHeaders[viewId] = value;
+    public setOther(key: string, value: any): void {
+        this._preferences.other[key] = value;
         this._savePreferences();
     }
 
-    /**
-     * @param viewId - case view viewId
-     * @returns list of filters stringIds
-     */
-    public getCaseHeaders(viewId: string): Observable<PreferenceHeaders> {
-        return of(this._user.preferences.caseHeaders[viewId]);
+    public getOther(key: string): any | undefined {
+        return this._preferences.other[key];
     }
 
-
-    /**
-     * @param viewId - workflow view viewId
-     * @param value - list of headers
-     */
-    public saveWorkflowHeaders(viewId: string, value: PreferenceHeaders) {
-        this._user.preferences.workflowHeaders[viewId] = value;
-        this._savePreferences();
+    public preferencesChanged$(): Observable<void> {
+        return this._preferencesChanged$.asObservable();
     }
 
-    /**
-     * @param viewId - workflow view viewId
-     * @returns list of filters stringIds
-     */
-    public getWorkflowHeaders(viewId: string): Observable<PreferenceHeaders> {
-        return of(this._user.preferences.workflowHeaders[viewId]);
+    protected _savePreferences(): void {
+        this._userResourceService.setPreferences(this._preferences).subscribe(resultMessage => {
+            if (typeof resultMessage.success === 'string') {
+                this._snackbar.openSuccessSnackBar(this._translate.instant('preferences.snackbar.saveSuccess'));
+            } else {
+                this._snackbar.openErrorSnackBar(this._translate.instant('preferences.snackbar.saveFailure'));
+                this._logger.error('User preferences failed to save', resultMessage);
+            }
+        });
     }
 
-
-
-    private _savePreferences() {
-        // TODO: Save preferences via resourceService to backend
-        // return this._resourceService.savePreferences(this._user.preferences);
-    }
-
-    private _loadPreferences(): Observable<Preferences> {
-        // TODO: Load preferences via resourceService from backend
-        // return this._resourceService.loadPreferences()
-        //     .pipe( preferences =>
-        //         tap(this._user.preferences = preferences)
-        //     );
-        return;
+    protected _emptyPreferences(): Preferences {
+        return {
+            headers: {},
+            caseFilters: {},
+            taskFilters: {},
+            other: {}
+        };
     }
 }
