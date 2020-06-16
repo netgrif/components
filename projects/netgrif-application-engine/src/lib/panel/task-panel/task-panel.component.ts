@@ -97,22 +97,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         this._taskContentService.task = this._taskPanelData.task;
 
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
-        let cols: number;
-        if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
-            cols = this._taskPanelData.task.layout.cols;
-        }
+        this.createContentPortal();
 
-        const providers: StaticProvider[] = [
-            {provide: NAE_TASK_COLS, useValue: cols},
-            {provide: TaskContentService, useValue: this._taskContentService}
-        ];
-        const injector = Injector.create({providers});
-
-        if (this.panelContentComponent === undefined) {
-            this.portal = new ComponentPortal(TaskContentComponent, null, injector);
-        } else {
-            this.portal = new ComponentPortal(this.panelContentComponent, null, injector);
-        }
         this._taskPanelData.changedFields.subscribe(chFields => {
             this._taskContentService.updateFromChangedFields(chFields);
         });
@@ -146,6 +132,25 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
         if (this._taskPanelData.initiallyExpanded) {
             this.panelRef.expanded = true;
+        }
+    }
+
+    private createContentPortal(): void {
+        let cols: number;
+        if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
+            cols = this._taskPanelData.task.layout.cols;
+        }
+
+        const providers: StaticProvider[] = [
+            {provide: NAE_TASK_COLS, useValue: cols},
+            {provide: TaskContentService, useValue: this._taskContentService}
+        ];
+        const injector = Injector.create({providers});
+
+        if (this.panelContentComponent === undefined) {
+            this.portal = new ComponentPortal(TaskContentComponent, null, injector);
+        } else {
+            this.portal = new ComponentPortal(this.panelContentComponent, null, injector);
         }
     }
 

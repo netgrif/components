@@ -19,16 +19,24 @@ export class AssignTaskService {
 
     private _referencesSet = false;
     protected _loading: LoadingEmitter;
-    protected _task: Task;
 
     constructor(protected _log: LoggerService,
                 protected _taskContentService: TaskContentService,
                 protected _taskResourceService: TaskResourceService,
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService) {
-        this._taskContentService.task$.subscribe(task => {
-            this._task = task;
-        });
+    }
+
+    /**
+     * @ignore
+     * Performs a check and returns the Task from the injected {@link TaskContentService} instance
+     */
+    private get _task(): Task {
+        const task = this._taskContentService.task;
+        if (!task) {
+            throw new Error('AssignTaskService cannot work without an initialized TaskContentService');
+        }
+        return task;
     }
 
     /**

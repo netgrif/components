@@ -20,7 +20,6 @@ export class CancelTaskService {
 
     private _referencesSet = false;
     protected _loading: LoadingEmitter;
-    protected _task: Task;
 
     constructor(protected _log: LoggerService,
                 protected _taskContentService: TaskContentService,
@@ -29,9 +28,18 @@ export class CancelTaskService {
                 protected _taskResourceService: TaskResourceService,
                 protected _translate: TranslateService,
                 protected _snackBar: SnackBarService) {
-        this._taskContentService.task$.subscribe(task => {
-            this._task = task;
-        });
+    }
+
+    /**
+     * @ignore
+     * Performs a check and returns the Task from the injected {@link TaskContentService} instance
+     */
+    private get _task(): Task {
+        const task = this._taskContentService.task;
+        if (!task) {
+            throw new Error('AssignTaskService cannot work without an initialized TaskContentService');
+        }
+        return task;
     }
 
     /**

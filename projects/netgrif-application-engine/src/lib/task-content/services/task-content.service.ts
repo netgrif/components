@@ -29,7 +29,15 @@ export class TaskContentService {
                 protected _translate: TranslateService,
                 protected _logger: LoggerService) {
         this.$shouldCreate = new Subject<DataGroup[]>();
+        this._task = undefined;
         this._task$ = new Subject<Task>();
+    }
+
+    /**
+     * @returns the Task object if set and `undefined` otherwise
+     */
+    public get task(): Task | undefined {
+        return this._task;
     }
 
     /**
