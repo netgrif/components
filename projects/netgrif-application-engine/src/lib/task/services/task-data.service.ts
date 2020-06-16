@@ -118,8 +118,8 @@ export class TaskDataService extends TaskHandlingService {
         }
 
         if (afterAction.observers.length === 0) {
-            afterAction.subscribe(bool => {
-                this._dataFocusPolicyService.buildDataFocusPolicy(bool);
+            afterAction.subscribe(() => {
+                this._dataFocusPolicyService.performDataFocusPolicy();
             });
         }
 

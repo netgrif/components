@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Injector, Input, OnInit, StaticProvider, Type} from '@angular/core';
+import {AfterViewInit, Component, Inject, Injector, Input, OnInit, StaticProvider, Type} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {NAE_TASK_COLS, TaskContentComponent} from '../../task-content/task-panel-content/task-content.component';
@@ -7,7 +7,6 @@ import {FieldConverterService} from '../../task-content/services/field-converter
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {AssignPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -27,6 +26,14 @@ import {TaskMetaField} from '../../header/task-header/task-meta-enum';
 import {TaskRequestStateService} from '../../task/services/task-request-state.service';
 import {DataFocusPolicyService} from '../../task/services/data-focus-policy.service';
 import {TaskDataService} from '../../task/services/task-data.service';
+import {AssignPolicyService} from '../../task/services/assign-policy.service';
+import {FinishPolicyService} from '../../task/services/finish-policy.service';
+import {NAE_TASK_OPERATIONS} from '../../task/models/task-operations-injection-token';
+import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
+import {NAE_TASK_FINISH_EVENT} from '../../task/models/task-finish-event-injection-token';
+import {SubjectTaskFinishEvent} from '../../task/models/subject-task-finish-event';
+
+
 
 
 @Component({
@@ -42,7 +49,11 @@ import {TaskDataService} from '../../task/services/task-data.service';
         CancelTaskService,
         FinishTaskService,
         TaskRequestStateService,
-        DataFocusPolicyService
+        DataFocusPolicyService,
+        AssignPolicyService,
+        FinishPolicyService,
+        {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+        {provide: NAE_TASK_FINISH_EVENT, useClass: SubjectTaskFinishEvent}
     ]
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
@@ -75,10 +86,22 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _finishTaskService: FinishTaskService,
                 private _taskState: TaskRequestStateService,
                 private _taskDataService: TaskDataService,
-                private _dataFocusPolicyService: DataFocusPolicyService) {
+                private _dataFocusPolicyService: DataFocusPolicyService,
+                private _assignPolicyService: AssignPolicyService,
+                @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
+                @Inject(NAE_TASK_FINISH_EVENT) _taskFinishEvent: SubjectTaskFinishEvent) {
         super();
         _taskDataService.changedFields$.subscribe( changedFields => {
             this._taskPanelData.changedFields.next(changedFields);
+        });
+        _taskOperations.open$.subscribe(() => {
+            this.expand();
+        });
+        _taskOperations.close$.subscribe(() => {
+            this.collapse();
+        });
+        _taskFinishEvent.finish$.subscribe(() => {
+           this.processTask('finish');
         });
     }
 
@@ -104,12 +127,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
             if (!this._taskState.isLoading) {
-                this.buildAssignPolicy(true);
+                this._assignPolicyService.performAssignPolicy(true);
             }
         });
         this.panelRef.closed.subscribe(() => {
             if (!this._taskState.isLoading) {
-                this.buildAssignPolicy(false);
+                this._assignPolicyService.performAssignPolicy(false);
             }
         });
         this.panelRef.afterExpand.subscribe(() => {
@@ -255,84 +278,6 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     public canDo(action): boolean {
         return this._taskEventService.canDo(action);
-    }
-
-    private buildAssignPolicy(success: boolean): void {
-        if (this._taskPanelData.task.assignPolicy === AssignPolicy.auto) {
-            this.autoAssignPolicy(success);
-        } else {
-            this.manualAssignPolicy(success);
-        }
-    }
-
-    private autoAssignPolicy(success: boolean): void {
-        const after = new Subject<boolean>();
-        if (success) {
-            after.subscribe(bool => {
-                this._taskViewService.reloadCurrentPage();
-                if (bool) {
-                    const afterLoad = new Subject<boolean>();
-                    afterLoad.subscribe(boolean => {
-                        if (boolean) {
-                            this.buildFinishPolicy(true);
-                        }
-                        afterLoad.complete();
-                    });
-                    this._taskDataService.initializeTaskDataFields(afterLoad);
-                }
-                after.complete();
-            });
-            this.assign(after);
-        } else {
-            after.subscribe(bool => {
-                this._taskViewService.reloadCurrentPage();
-                this.collapse();
-                after.complete();
-            });
-            this.cancel(after);
-        }
-    }
-
-    private manualAssignPolicy(success: boolean): void {
-        if (success) {
-            const afterLoad = new Subject<boolean>();
-            afterLoad.subscribe(boolean => {
-                if (boolean) {
-                    this.buildFinishPolicy(true);
-                }
-                afterLoad.complete();
-            });
-            this._taskDataService.initializeTaskDataFields(afterLoad);
-        }
-    }
-
-    private buildFinishPolicy(success: boolean): void {
-        if (this._taskPanelData.task.finishPolicy === FinishPolicy.autoNoData) {
-            this.autoNoDataFinishPolicy(success);
-        } else {
-            this.manualFinishPolicy(success);
-        }
-    }
-
-    private autoNoDataFinishPolicy(success: boolean): void {
-        if (success) {
-            if (this._taskPanelData.task.dataSize <= 0) {
-                this.processTask('finish');
-                this.collapse();
-            } else {
-                this.expand();
-                this._dataFocusPolicyService.buildDataFocusPolicy(true);
-            }
-        }
-    }
-
-    private manualFinishPolicy(success: boolean): void {
-        if (success) {
-            this.expand();
-            this._dataFocusPolicyService.buildDataFocusPolicy(true);
-        } else {
-            this._taskDataService.initializeTaskDataFields();
-        }
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
