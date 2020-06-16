@@ -7,7 +7,7 @@ import {FieldConverterService} from '../../task-content/services/field-converter
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
+import {AssignPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -17,15 +17,16 @@ import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
-import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AssignTaskService} from '../../task/services/assign-task.service';
-import {LoadingEmitter} from '../../utility/loading-emitter';
 import {DelegateTaskService} from '../../task/services/delegate-task.service';
 import {CancelTaskService} from '../../task/services/cancel-task.service';
 import {FinishTaskService} from '../../task/services/finish-task.service';
 import {TaskMetaField} from '../../header/task-header/task-meta-enum';
+import {TaskRequestStateService} from '../../task/services/task-request-state.service';
+import {DataFocusPolicyService} from '../../task/services/data-focus-policy.service';
+import {TaskDataService} from '../../task/services/task-data.service';
 
 
 @Component({
@@ -34,11 +35,14 @@ import {TaskMetaField} from '../../header/task-header/task-meta-enum';
     styleUrls: ['./task-panel.component.scss'],
     providers: [
         TaskContentService,
+        TaskDataService,
         TaskEventService,
         AssignTaskService,
         DelegateTaskService,
         CancelTaskService,
-        FinishTaskService
+        FinishTaskService,
+        TaskRequestStateService,
+        DataFocusPolicyService
     ]
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
@@ -54,10 +58,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     @Input() public last: boolean;
 
     public portal: ComponentPortal<any>;
-    public loading: LoadingEmitter;
     public panelRef: MatExpansionPanel;
-    private readonly _updating: LoadingEmitter;
-    private _dataUpdateResults$: Subject<boolean>;
 
     constructor(private _taskContentService: TaskContentService,
                 private _fieldConverterService: FieldConverterService,
@@ -71,25 +72,14 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _assignTaskService: AssignTaskService,
                 private _delegateTaskService: DelegateTaskService,
                 private _cancelTaskService: CancelTaskService,
-                private _finishTaskService: FinishTaskService) {
+                private _finishTaskService: FinishTaskService,
+                private _taskState: TaskRequestStateService,
+                private _taskDataService: TaskDataService,
+                private _dataFocusPolicyService: DataFocusPolicyService) {
         super();
-        this.loading = new LoadingEmitter();
-        this._updating = new LoadingEmitter();
-        this._dataUpdateResults$ = new Subject<boolean>();
-
-        this._assignTaskService.setUp(this.loading);
-        this._delegateTaskService.setUp(this.loading);
-        this._cancelTaskService.setUp(this.loading);
-        this._finishTaskService.setUp(this.loading,
-            this._updating,
-            this._dataUpdateResults$.asObservable(),
-            (afterAction) => {
-                this.getTaskDataFields(afterAction);
-            },
-            (afterAction) => {
-                this.updateTaskDataFields(afterAction);
-            }
-        );
+        _taskDataService.changedFields$.subscribe( changedFields => {
+            this._taskPanelData.changedFields.next(changedFields);
+        });
     }
 
     ngOnInit() {
@@ -113,12 +103,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
-            if (!this.loading.isActive) {
+            if (!this._taskState.isLoading) {
                 this.buildAssignPolicy(true);
             }
         });
         this.panelRef.closed.subscribe(() => {
-            if (!this.loading.isActive) {
+            if (!this._taskState.isLoading) {
                 this.buildAssignPolicy(false);
             }
         });
@@ -164,7 +154,15 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         return this._taskPanelData;
     }
 
-    public show($event: MouseEvent): boolean {
+    public get isLoading(): boolean {
+        return this._taskState.isLoading;
+    }
+
+    public stopLoading(): void {
+        this._taskState.stopLoading();
+    }
+
+    public preventPanelOpen($event: MouseEvent): boolean {
         $event.stopPropagation();
         return false;
     }
@@ -175,108 +173,6 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     public setPanelRef(panelRef: MatExpansionPanel) {
         this.panelRef = panelRef;
-    }
-
-    public getTaskDataFields(afterAction = new Subject<boolean>()): void {
-        if (this._taskPanelData.task.dataSize > 0) {
-            afterAction.next(true);
-            return;
-        }
-        this.loading.on();
-        this._taskService.getData(this._taskPanelData.task.stringId).subscribe(dataGroups => {
-            this._taskPanelData.task.dataGroups = dataGroups;
-            if (dataGroups.length === 0) {
-                this._log.info(this._translate.instant('tasks.snackbar.noData') + ' ' + this._taskPanelData.task);
-                this._taskPanelData.task.dataSize = 0;
-            } else {
-                dataGroups.forEach(group => {
-                    group.fields.forEach(field => {
-                        field.valueChanges().subscribe(() => {
-                            if (field.initialized && field.valid && field.changed) {
-                                this.updateTaskDataFields();
-                            }
-                        });
-                    });
-                    this._taskPanelData.task.dataSize += group.fields.length;
-                });
-            }
-            this.loading.off();
-            afterAction.next(true);
-            this._taskContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
-        }, error => {
-            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
-             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
-            this._log.debug(error);
-            this.loading.off();
-            afterAction.next(false);
-        });
-    }
-
-    public updateTaskDataFields(afterAction = new Subject<boolean>()): Observable<boolean> {
-        if (this._taskPanelData.task.dataSize <= 0) {
-            return;
-        }
-
-        if (this._updating.isActive) {
-            afterAction.next(true);
-            return;
-        }
-
-        if (afterAction.observers.length === 0) {
-            afterAction.subscribe(bool => {
-                this.buildDataFocusPolicy(bool);
-            });
-        }
-
-        const body = {};
-        this._taskPanelData.task.dataGroups.forEach(dataGroup => {
-            dataGroup.fields.forEach(field => {
-                if (field.initialized && field.valid && field.changed) {
-                    body[field.stringId] = {
-                        type: this._fieldConverterService.resolveType(field),
-                        value: this._fieldConverterService.formatValue(field, field.value)
-                    };
-                }
-            });
-        });
-
-        if (Object.keys(body).length === 0) {
-            afterAction.next(true);
-            return;
-        }
-
-        this.loading.on();
-        this._updating.on();
-        this._taskService.setData(this._taskPanelData.task.stringId, body).subscribe(response => {
-            if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
-                this._taskPanelData.changedFields.next(response.changedFields as ChangedFields);
-            }
-            Object.keys(body).forEach(id => {
-                this._taskPanelData.task.dataGroups.forEach(dataGroup => {
-                    const changed = dataGroup.fields.find(f => f.stringId === id);
-                    if (changed !== undefined) {
-                        changed.changed = false;
-                    }
-                });
-            });
-            this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
-            this.loading.off();
-            this._updating.off();
-            if (this._dataUpdateResults$.observers.length !== 0) {
-                this._dataUpdateResults$.next(true);
-            }
-            afterAction.next(true);
-        }, error => {
-            this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
-            this._log.debug(error);
-            this.loading.off();
-            this._updating.off();
-            if (this._dataUpdateResults$.observers.length !== 0) {
-                this._dataUpdateResults$.next(false);
-            }
-            afterAction.next(false);
-            this._taskViewService.reloadCurrentPage();
-        });
     }
 
     processTask(type: string) {
@@ -382,7 +278,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                         }
                         afterLoad.complete();
                     });
-                    this.getTaskDataFields(afterLoad);
+                    this._taskDataService.initializeTaskDataFields(afterLoad);
                 }
                 after.complete();
             });
@@ -406,7 +302,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 }
                 afterLoad.complete();
             });
-            this.getTaskDataFields(afterLoad);
+            this._taskDataService.initializeTaskDataFields(afterLoad);
         }
     }
 
@@ -425,7 +321,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 this.collapse();
             } else {
                 this.expand();
-                this.buildDataFocusPolicy(true);
+                this._dataFocusPolicyService.buildDataFocusPolicy(true);
             }
         }
     }
@@ -433,21 +329,9 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     private manualFinishPolicy(success: boolean): void {
         if (success) {
             this.expand();
-            this.buildDataFocusPolicy(true);
+            this._dataFocusPolicyService.buildDataFocusPolicy(true);
         } else {
-            this.getTaskDataFields();
-        }
-    }
-
-    private buildDataFocusPolicy(success: boolean) {
-        if (this._taskPanelData.task.dataFocusPolicy === DataFocusPolicy.autoRequired) {
-            this.autoRequiredDataFocusPolicy(success);
-        }
-    }
-
-    private autoRequiredDataFocusPolicy(success: boolean) {
-        if (success) {
-            // TODO Implement focus in FUTURE, if someone wants this feature (for now we don't want it )
+            this._taskDataService.initializeTaskDataFields();
         }
     }
 

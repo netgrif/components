@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {take} from 'rxjs/operators';
-import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {TaskRequestStateService} from './task-request-state.service';
+import {TaskDataService} from './task-data.service';
 
 
 /**
@@ -18,18 +19,13 @@ import {TranslateService} from '@ngx-translate/core';
 @Injectable()
 export class FinishTaskService {
 
-    private _referencesSet = false;
-    protected _loading: LoadingEmitter;
-    protected _updating: LoadingEmitter;
-    protected _dataUpdateResults$: Observable<boolean>;
-    protected _loadTaskData: (afterAction: Subject<boolean>) => void;
-    protected _updateTaskData: (afterAction: Subject<boolean>) => void;
-
     constructor(protected _log: LoggerService,
                 protected _taskContentService: TaskContentService,
                 protected _taskResourceService: TaskResourceService,
                 protected _snackBar: SnackBarService,
-                protected _translate: TranslateService) {
+                protected _translate: TranslateService,
+                protected _taskState: TaskRequestStateService,
+                protected _taskDataService: TaskDataService) {
     }
 
     /**
@@ -45,32 +41,6 @@ export class FinishTaskService {
     }
 
     /**
-     * Sets up the references that are necessary for this Service to function properly.
-     * @param loadingIndicator reference to the loading indicator
-     * @param updateIndicator reference to the update indicator
-     * @param dataUpdateResults$ an Observable that contains the results of data update operations on the managed Task
-     * @param loadTaskDataLambda a function that loads the data of the managed Task
-     * @param updateTaskDataLambda a function that updates the data of the managed Task
-     */
-    public setUp(loadingIndicator: LoadingEmitter,
-                 updateIndicator: LoadingEmitter,
-                 dataUpdateResults$: Observable<boolean>,
-                 loadTaskDataLambda: (afterAction: Subject<boolean>) => void,
-                 updateTaskDataLambda: (afterAction: Subject<boolean>) => void): void {
-        if (this._referencesSet) {
-            this._log.error('FinishTaskService was already set up! You cannot call \'setUp\' on it again!');
-            return;
-        }
-
-        this._referencesSet = true;
-        this._loading = loadingIndicator;
-        this._updating = updateIndicator;
-        this._dataUpdateResults$ = dataUpdateResults$;
-        this._loadTaskData = loadTaskDataLambda;
-        this._updateTaskData = updateTaskDataLambda;
-    }
-
-    /**
      * Updates the task data to their current state from backend, checks the validity of the data and
      * sends a finish request to backend.
      *
@@ -82,11 +52,6 @@ export class FinishTaskService {
      * otherwise `false` will be emitted
      */
     public validateDataAndFinish(afterAction = new Subject<boolean>()): void {
-        if (!this._referencesSet) {
-            this._log.error('FinishTaskService was not yet set up! You must call \'setUp\' before calling other methods of this class!');
-            return;
-        }
-
         const after = new Subject<boolean>();
         if (this._task.dataSize <= 0) {
             after.subscribe(() => {
@@ -95,12 +60,12 @@ export class FinishTaskService {
                 }
                 after.complete();
             });
-            this._loadTaskData(after);
+            this._taskDataService.initializeTaskDataFields(after);
         } else if (this._taskContentService.validateTaskData()) {
             after.subscribe(boolean => {
                 if (boolean) {
-                    if (this._updating.isActive) {
-                        this._dataUpdateResults$.pipe(take(1)).subscribe(bool => {
+                    if (this._taskState.isUpdating) {
+                        this._taskDataService.updateSuccess$.pipe(take(1)).subscribe(bool => {
                             if (bool) {
                                 this.sendFinishTaskRequest(afterAction);
                             }
@@ -111,7 +76,7 @@ export class FinishTaskService {
                 }
                 after.complete();
             });
-            this._updateTaskData(after);
+            this._taskDataService.updateTaskDataFields(after);
         }
     }
 
@@ -127,12 +92,12 @@ export class FinishTaskService {
      * otherwise `false` will be emitted
      */
     private sendFinishTaskRequest(afterAction: Subject<boolean>): void {
-        if (this._loading.isActive) {
+        if (this._taskState.isLoading) {
             return;
         }
-        this._loading.on();
+        this._taskState.startLoading();
         this._taskResourceService.finishTask(this._task.stringId).subscribe(response => {
-            this._loading.off();
+            this._taskState.stopLoading();
             if (response.success) {
                 this._taskContentService.removeStateData();
                 afterAction.next(true);
@@ -143,7 +108,7 @@ export class FinishTaskService {
         }, () => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this._loading.off();
+            this._taskState.stopLoading();
             afterAction.next(false);
         });
     }

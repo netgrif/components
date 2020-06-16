@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
-import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -9,6 +8,7 @@ import {UserService} from '../../user/services/user.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {TranslateService} from '@ngx-translate/core';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TaskRequestStateService} from './task-request-state.service';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -18,16 +18,14 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 @Injectable()
 export class CancelTaskService {
 
-    private _referencesSet = false;
-    protected _loading: LoadingEmitter;
-
     constructor(protected _log: LoggerService,
                 protected _taskContentService: TaskContentService,
                 protected _taskEventService: TaskEventService,
                 protected _userService: UserService,
                 protected _taskResourceService: TaskResourceService,
                 protected _translate: TranslateService,
-                protected _snackBar: SnackBarService) {
+                protected _snackBar: SnackBarService,
+                protected _taskState: TaskRequestStateService) {
     }
 
     /**
@@ -43,20 +41,6 @@ export class CancelTaskService {
     }
 
     /**
-     * Sets up the references that are necessary for this Service to function properly.
-     * @param loadingIndicator reference to the loading indicator
-     */
-    public setUp(loadingIndicator: LoadingEmitter): void {
-        if (this._referencesSet) {
-            this._log.error('CancelTaskService was already set up! You cannot call \'setUp\' on it again!');
-            return;
-        }
-
-        this._referencesSet = true;
-        this._loading = loadingIndicator;
-    }
-
-    /**
      * Performs the 'cancel' operation on the task held by {@link TaskContentService}.
      *
      * Doesn't send any requests if the loading indicator is in it's active state.
@@ -67,12 +51,7 @@ export class CancelTaskService {
      * @param afterAction if cancel completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     cancel(afterAction = new Subject<boolean>()) {
-        if (!this._referencesSet) {
-            this._log.error('CancelTaskService was not yet set up! You must call \'setUp\' before calling other methods of this class!');
-            return;
-        }
-
-        if (this._loading.isActive) {
+        if (this._taskState.isLoading) {
             return;
         }
         if (!this._task.user
@@ -83,9 +62,9 @@ export class CancelTaskService {
             afterAction.next(false);
             return;
         }
-        this._loading.on();
+        this._taskState.startLoading();
         this._taskResourceService.cancelTask(this._task.stringId).subscribe(response => {
-            this._loading.off();
+            this._taskState.stopLoading();
             if (response.success) {
                 this._taskContentService.removeStateData();
                 afterAction.next(true);
@@ -96,7 +75,7 @@ export class CancelTaskService {
         }, () => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this._loading.off();
+            this._taskState.stopLoading();
             afterAction.next(false);
         });
     }

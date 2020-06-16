@@ -87,7 +87,7 @@ describe('TaskPanelComponent', () => {
     });
 
     it('should call show function', () => {
-        expect(component.show(new MouseEvent('type'))).toBeFalse();
+        expect(component.preventPanelOpen(new MouseEvent('type'))).toBeFalse();
     });
 
     it('should test getTaskDataFields, updateTaskDataFields and updateFromChangedFields functions', () => {

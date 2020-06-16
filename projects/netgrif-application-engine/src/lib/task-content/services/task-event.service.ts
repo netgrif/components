@@ -56,12 +56,11 @@ export class TaskEventService {
      */
     public canCancel(): boolean {
         return (
-                this._task.assignPolicy === AssignPolicy.manual
-                && this._task.user
+                this._task.user
                 && this._task.user.email === this._userService.user.email
             ) || (
                 this._task.user
-                && this.canDo('perform')
+                && this.canDo('cancel')
             );
     }
 

@@ -18,6 +18,7 @@ import {HttpEventType} from '@angular/common/http';
 import {Page} from '../interface/page';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
+import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
 
 @Injectable({
     providedIn: 'root'
@@ -224,7 +225,7 @@ export class TaskResourceService implements CountService {
      * POST
      */
     // {{baseUrl}}/api/task/:id/data
-    public setData(taskId: string, body: object): Observable<ChangedFieldContainer> {
+    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<ChangedFieldContainer> {
         return this.provider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => changeType(r, undefined)));
     }

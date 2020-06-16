@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
-import {LoadingEmitter} from '../../utility/loading-emitter';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Task} from '../../resources/interface/task';
+import {TaskRequestStateService} from './task-request-state.service';
 
 
 /**
@@ -17,14 +17,12 @@ import {Task} from '../../resources/interface/task';
 @Injectable()
 export class AssignTaskService {
 
-    private _referencesSet = false;
-    protected _loading: LoadingEmitter;
-
     constructor(protected _log: LoggerService,
                 protected _taskContentService: TaskContentService,
                 protected _taskResourceService: TaskResourceService,
                 protected _snackBar: SnackBarService,
-                protected _translate: TranslateService) {
+                protected _translate: TranslateService,
+                protected _taskState: TaskRequestStateService) {
     }
 
     /**
@@ -40,20 +38,6 @@ export class AssignTaskService {
     }
 
     /**
-     * Sets up the references that are necessary for this Service to function properly.
-     * @param loadingIndicator reference to the loading indicator
-     */
-    public setUp(loadingIndicator: LoadingEmitter): void {
-        if (this._referencesSet) {
-            this._log.error('AssignTaskService was already set up! You cannot call \'setUp\' on it again!');
-            return;
-        }
-
-        this._referencesSet = true;
-        this._loading = loadingIndicator;
-    }
-
-    /**
      * Performs the 'assign' operation on the task held by {@link TaskContentService}.
      *
      * Doesn't send any requests if the loading indicator is in it's active state.
@@ -64,21 +48,16 @@ export class AssignTaskService {
      * @param afterAction if assign completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     public assign(afterAction = new Subject<boolean>()): void {
-        if (!this._referencesSet) {
-            this._log.error('AssignTaskService was not yet set up! You must call \'setUp\' before calling other methods of this class!');
-            return;
-        }
-
-        if (this._loading.isActive) {
+        if (this._taskState.isLoading) {
             return;
         }
         if (this._task.user) {
             afterAction.next(true);
             return;
         }
-        this._loading.on();
+        this._taskState.startLoading();
         this._taskResourceService.assignTask(this._task.stringId).subscribe(response => {
-            this._loading.off();
+            this._taskState.stopLoading();
             if (response.success) {
                 this._taskContentService.removeStateData();
                 afterAction.next(true);
@@ -90,9 +69,8 @@ export class AssignTaskService {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
              ${this._taskContentService.task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this._log.debug(error);
-            this._loading.off();
+            this._taskState.stopLoading();
             afterAction.next(false);
         });
     }
-
 }
