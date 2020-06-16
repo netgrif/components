@@ -1,13 +1,50 @@
 import {TestBed} from '@angular/core/testing';
-
 import {UserPreferenceService} from './user-preference.service';
-import {User} from '../models/user';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {MatIconModule, MatSnackBarModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('UserPreferenceService', () => {
     let service: UserPreferenceService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            imports: [
+                MatSnackBarModule,
+                NoopAnimationsModule,
+                MatIconModule,
+                TranslateLibModule,
+                HttpClientTestingModule
+            ],
+            providers: [
+                AuthenticationMethodService,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService}
+            ],
+            declarations: [
+                ErrorSnackBarComponent,
+                SuccessSnackBarComponent
+            ]
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                    SuccessSnackBarComponent
+                ]
+            }
+        });
         service = TestBed.inject(UserPreferenceService);
     });
 
@@ -15,53 +52,27 @@ describe('UserPreferenceService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should test user preferencies', () => {
-        service.user = new User('id', 'mail',  'name', 'surname',
-            ['ADMIN'], [], [], {
-                caseFilters: {},
-                caseHeaders: {},
-                taskFilters: {},
-                taskHeaders: {},
-                workflowFilters: {},
-                workflowHeaders: {}
-            });
-        service.saveTaskFilters('viewId', {filter: ''});
-        service.getTaskFilters('viewId').subscribe(res => {
-            expect(res).toEqual({filter: ''});
-        });
+    it('should test user preferences', () => {
+        service.setTaskFilters('viewId', ['filterId']);
+        const taskFilters = service.getTaskFilters('viewId');
+        expect(taskFilters.length).toEqual(1);
+        expect(taskFilters[0]).toEqual('filterId');
 
-        service.saveCaseFilters('viewCaseId', {filter: ''});
-        service.getCaseFilters('viewCaseId').subscribe(res => {
-            expect(res).toEqual({filter: ''});
-        });
+        service.setCaseFilters('viewId', ['filterId']);
+        const caseFilters = service.getCaseFilters('viewId');
+        expect(caseFilters.length).toEqual(1);
+        expect(caseFilters[0]).toEqual('filterId');
 
-        service.saveWorkflowFilters('viewWorkId', {filter: ''});
-        service.getWorkflowFilters('viewWorkId').subscribe(res => {
-            expect(res).toEqual({filter: ''});
-        });
+        service.setHeaders('viewId', ['header0']);
+        const headers = service.getHeaders('viewId');
+        expect(headers.length).toEqual(1);
+        expect(headers[0]).toEqual('header0');
 
-        const header = {
-            column0: undefined,
-            column1: undefined,
-            column2: undefined,
-            column3: undefined,
-            column4: undefined,
-        };
+        service.setLocale('sk-SK');
+        expect(service.getLocale()).toEqual('sk-SK');
 
-        service.saveTaskHeaders('viewId', header);
-        service.getTaskHeaders('viewId').subscribe( res => {
-            expect(res).toEqual(header);
-        });
-
-        service.saveCaseHeaders('viewCaseId', header);
-        service.getCaseHeaders('viewCaseId').subscribe( res => {
-            expect(res).toEqual(header);
-        });
-
-        service.saveWorkflowHeaders('viewWorkId', header);
-        service.getWorkflowHeaders('viewWorkId').subscribe( res => {
-            expect(res).toEqual(header);
-        });
+        service.setOther('key', 'value');
+        expect(service.getOther('key')).toEqual('value');
     });
 
     afterAll(() => {

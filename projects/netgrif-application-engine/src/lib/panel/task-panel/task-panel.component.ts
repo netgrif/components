@@ -14,7 +14,6 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {filter, map} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
-import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
@@ -26,6 +25,7 @@ import {LoadingEmitter} from '../../utility/loading-emitter';
 import {DelegateTaskService} from '../../task/services/delegate-task.service';
 import {CancelTaskService} from '../../task/services/cancel-task.service';
 import {FinishTaskService} from '../../task/services/finish-task.service';
+import {TaskMetaField} from '../../header/task-header/task-meta-enum';
 
 
 @Component({

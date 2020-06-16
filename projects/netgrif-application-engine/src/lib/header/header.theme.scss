@@ -1,8 +1,8 @@
 @import '~@angular/material/theming';
 
 @mixin header-component($theme) {
-    $accent: map-get($theme, accent);
+    $primary: map-get($theme, primary);
     .active-header-item {
-        background: rgba(mat-color($accent),0.3);
+        background: rgba(mat-color($primary),0.3);
     }
 }

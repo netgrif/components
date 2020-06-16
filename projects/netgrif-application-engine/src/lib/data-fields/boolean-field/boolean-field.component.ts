@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {BooleanField} from './models/boolean-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
-import {LanguageService} from '../../translate/language.service';
 
 @Component({
     selector: 'nae-boolean-field',
@@ -13,7 +12,7 @@ export class BooleanFieldComponent extends AbstractDataFieldComponent {
 
     @Input() dataField: BooleanField;
 
-    constructor(private _translate: TranslateService, private _lang: LanguageService) {
+    constructor(private _translate: TranslateService) {
         super();
     }
 

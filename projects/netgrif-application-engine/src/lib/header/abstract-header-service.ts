@@ -11,6 +11,9 @@ import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {HeaderColumn, HeaderColumnType} from './models/header-column';
 import {SortDirection} from '@angular/material';
+import {UserPreferenceService} from '../user/services/user-preference.service';
+import {ViewService} from '../routing/view-service/view.service';
+import {LoggerService} from '../logger/services/logger.service';
 
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
@@ -19,7 +22,10 @@ const MAX_HEADER_COLUMNS = 5;
 
 export abstract class AbstractHeaderService implements OnDestroy {
 
-    protected constructor(private _headerType: HeaderType) {
+    protected constructor(private _headerType: HeaderType,
+                          private _preferences: UserPreferenceService,
+                          private _viewService: ViewService,
+                          private _logger: LoggerService) {
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this.initializeHeaderState();
@@ -86,6 +92,40 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
         this.fieldsGroup.splice(1, this.fieldsGroup.length - 1);
         this.fieldsGroup.push(...fieldsGroups);
+    }
+
+    /**
+     * If this view has som headers stored in it's preferences attempts to load them.
+     * If the preferences contain nonexistent headers they will be skipped.
+     *
+     * This function is NOT called by the abstract class' constructor.
+     * It is the responsibility of the child class to call it at an appropriate moment.
+     */
+    protected loadHeadersFromPreferences(): void {
+        const viewId = this._viewService.getViewId();
+        if (!viewId) {
+            return;
+        }
+        const preferredHeaderKeys = this._preferences.getHeaders(viewId);
+        if (!preferredHeaderKeys) {
+            return;
+        }
+        const newHeaders = [];
+        preferredHeaderKeys.forEach(headerKey => {
+            for (const fieldGroup of this.fieldsGroup) {
+                for (const header of fieldGroup.fields ) {
+                    if (header.uniqueId === headerKey) {
+                        newHeaders.push(header);
+                        return; // continue the outermost loop
+                    }
+                }
+            }
+            // no match found
+            newHeaders.push(null);
+            this._logger.warn(
+                `Could not restore header with ID '${headerKey}' from preferences. It is not one of the available headers for this view.`);
+        });
+        this._headerState.updateSelectedHeaders(newHeaders);
     }
 
     protected abstract createMetaHeaders(): Array<HeaderColumn>;
@@ -173,6 +213,11 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     public confirmEditMode(): void {
         this._headerState.restoreLastMode();
+        const viewId = this._viewService.getViewId();
+        if (!!viewId) {
+            const headers = this.headerState.selectedHeaders;
+            this._preferences.setHeaders(viewId, headers.map(header => !!header ? header.uniqueId : ''));
+        }
     }
 
     /**

@@ -3,7 +3,6 @@ import {TaskResourceService} from '../../../../resources/engine-endpoint/task-re
 import {UserService} from '../../../../user/services/user.service';
 import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {LanguageService} from '../../../../translate/language.service';
 import {SearchService} from '../../../../search/search-service/search.service';
 import {ProcessService} from '../../../../process/process.service';
 import {TaskViewService} from '../task-view.service';
@@ -51,7 +50,6 @@ export class ArrayTaskViewServiceFactory {
                 protected _userService: UserService,
                 protected _snackBarService: SnackBarService,
                 protected _translate: TranslateService,
-                protected _language: LanguageService,
                 protected _searchService: SearchService,
                 protected _processService: ProcessService,
                 protected _loggerService: LoggerService) {
@@ -68,7 +66,6 @@ export class ArrayTaskViewServiceFactory {
             this._userService,
             this._snackBarService,
             this._translate,
-            this._language,
             this._searchService,
             this._loggerService,
             this._processService.getNets(allowedNetsIds)

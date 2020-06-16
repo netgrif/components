@@ -129,7 +129,7 @@ export abstract class DataField<T> {
     }
 
     get disabled(): boolean {
-        return this._behavior.visible && !this._behavior.editable;
+        return !!this._behavior.visible && !this._behavior.editable;
     }
 
     get initialized(): boolean {
@@ -261,6 +261,7 @@ export abstract class DataField<T> {
                     break;
                 case 'behavior':
                     Object.assign(this.behavior, change[changedAttribute]);
+                    this.update();
                     break;
                 default:
                     throw new Error(`Unknown attribute '${changedAttribute}' in change object`);

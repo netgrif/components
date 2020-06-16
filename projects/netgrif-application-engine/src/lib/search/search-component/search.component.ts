@@ -13,7 +13,6 @@ import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT, DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {Moment} from 'moment';
 import {CaseDataset} from '../models/category/case/case-dataset';
-import {LanguageService} from '../../translate/language.service';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
@@ -94,8 +93,7 @@ export class SearchComponent implements OnInit {
     public renderSelection = (object: Category<any> | SearchAutocompleteOption) => this._renderSelection(object);
 
     constructor(private _translate: TranslateService,
-                private _searchService: SearchService,
-                private _lang: LanguageService) {
+                private _searchService: SearchService) {
         this.filteredOptions = this.formControl.valueChanges.pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : this.objectName(value)),

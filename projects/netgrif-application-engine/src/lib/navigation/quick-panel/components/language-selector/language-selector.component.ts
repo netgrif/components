@@ -46,6 +46,6 @@ export class LanguageSelectorComponent implements OnInit {
 
     setLang(lang: string) {
         this.language = lang;
-        this._select.setLanguage(lang);
+        this._select.setLanguage(lang, true);
     }
 }

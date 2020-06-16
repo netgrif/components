@@ -12,6 +12,13 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {SearchService} from '../../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../../utility/tests/test-factory-methods';
 import {ArrayTaskViewServiceFactory, noNetsTaskViewServiceFactory} from './factory/array-task-view-service-factory';
+import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
+import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -25,10 +32,23 @@ describe('TaskViewService', () => {
                     useFactory: noNetsTaskViewServiceFactory,
                     deps: [ArrayTaskViewServiceFactory]},
                 {provide: TaskResourceService, useClass: MyResources},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
                 AuthenticationMethodService
+            ],
+            declarations: [
+                ErrorSnackBarComponent,
+                SuccessSnackBarComponent
             ]
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                    SuccessSnackBarComponent
+                ]
+            }
         });
         service = TestBed.inject(TaskViewService);
     });
