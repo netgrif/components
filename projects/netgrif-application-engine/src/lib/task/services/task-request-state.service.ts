@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 
 /**
@@ -7,7 +7,7 @@ import {LoadingEmitter} from '../../utility/loading-emitter';
  * This Service is used by many other Services that handle the necessary logic for working with a single Task on frontend.
  */
 @Injectable()
-export class TaskRequestStateService {
+export class TaskRequestStateService implements OnDestroy {
 
     protected _loading: LoadingEmitter;
     protected _updating: LoadingEmitter;
@@ -57,5 +57,10 @@ export class TaskRequestStateService {
      */
     public stopUpdating(): void {
         this._updating.off();
+    }
+
+    ngOnDestroy(): void {
+        this._loading.complete();
+        this._updating.complete();
     }
 }
