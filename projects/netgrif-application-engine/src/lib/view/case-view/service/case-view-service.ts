@@ -5,7 +5,6 @@ import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {NewCaseComponent} from '../../../side-menu/content-components/new-case/new-case.component';
-import {CaseMetaField} from '../../../header/case-header/case-header.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
@@ -16,6 +15,7 @@ import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
+import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
 
 
 @Injectable()

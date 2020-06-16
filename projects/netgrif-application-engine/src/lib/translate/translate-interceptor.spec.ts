@@ -5,6 +5,12 @@ import {TranslateInterceptor} from './translate-interceptor';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
 import {TranslateLibModule} from './translate-lib.module';
+import {MatSnackBarModule} from '@angular/material';
+import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
 
 describe('TranslateInterceptor', () => {
 
@@ -12,9 +18,13 @@ describe('TranslateInterceptor', () => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                MatSnackBarModule
             ],
             providers: [
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
                     provide: HTTP_INTERCEPTORS,
@@ -32,7 +42,7 @@ describe('TranslateInterceptor', () => {
                 http.get('/api').subscribe(response => {
                     expect(response).toBeTruthy();
                 });
-                const request = mock.expectOne(req => (req.headers.has('Accept-Language')));
+                const request = mock.expectOne(req => req.headers.has('Accept-Language'));
 
                 request.flush({});
                 mock.verify();

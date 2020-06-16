@@ -5,7 +5,6 @@ import {FileUploadDataModel} from '../../models/file-field';
 import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/services/snack-bar.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {TranslateService} from '@ngx-translate/core';
-import {LanguageService} from '../../../../translate/language.service';
 
 /**
  * @Deprecated
@@ -27,13 +26,11 @@ export class FileDownloadService {
      * @param _snackBarService Used for notify user about ratio download file
      * @param _logger Log result of ratio download file
      * @param _translate Used for translate snackbar errors
-     * @param _lang initialize languages
      */
     constructor(private _taskResourceService: TaskResourceService,
                 private _snackBarService: SnackBarService,
                 private _logger: LoggerService,
-                private _translate: TranslateService,
-                private _lang: LanguageService) {
+                private _translate: TranslateService) {
     }
 
     /**

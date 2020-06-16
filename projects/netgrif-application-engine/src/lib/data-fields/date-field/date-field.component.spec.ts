@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {DateFieldComponent} from './date-field.component';
 import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
@@ -10,6 +9,13 @@ import {DateField} from './models/date-field';
 import moment from 'moment';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
 
 describe('DateFieldComponent', () => {
     let component: DateFieldComponent;
@@ -17,7 +23,18 @@ describe('DateFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, TranslateLibModule, HttpClientTestingModule],
+            imports: [
+                MaterialModule,
+                AngularResizedEventModule,
+                TranslateLibModule,
+                HttpClientTestingModule
+            ],
+            providers: [
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+            ],
             declarations: [
                 DateFieldComponent,
                 DataFieldTemplateComponent,

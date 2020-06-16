@@ -13,6 +13,9 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {Credentials} from '../../authentication/models/credentials';
 import {Observable, of} from 'rxjs';
 import {User} from '../../authentication/models/user';
+import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('RoleAssignmentComponent', () => {
     let component: RoleAssignmentComponent;
@@ -20,21 +23,31 @@ describe('RoleAssignmentComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [RoleAssignmentComponent],
             imports: [
                 NoopAnimationsModule,
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MyAuth},
                 RoleAssignmentService
-            ]
-        })
-            .compileComponents();
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+            declarations: [
+                RoleAssignmentComponent,
+                ErrorSnackBarComponent,
+                SuccessSnackBarComponent
+            ],
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                    SuccessSnackBarComponent
+                ]
+            }
+        }).compileComponents();
     }));
 
     beforeEach(() => {

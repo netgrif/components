@@ -8,6 +8,14 @@ import {DataFieldTemplateComponent} from '../data-field-template/data-field-temp
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {LanguageService} from '../../translate/language.service';
 
 describe('ButtonFieldComponent', () => {
     let component: ButtonFieldComponent;
@@ -15,7 +23,18 @@ describe('ButtonFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, TranslateLibModule, HttpClientTestingModule],
+            imports: [
+                MaterialModule,
+                AngularResizedEventModule,
+                TranslateLibModule,
+                HttpClientTestingModule
+            ],
+            providers: [
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+            ],
             declarations: [
                 ButtonFieldComponent,
                 DataFieldTemplateComponent,
@@ -27,6 +46,7 @@ describe('ButtonFieldComponent', () => {
             .compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
+        const initializeLanguage = TestBed.inject(LanguageService);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
     }));

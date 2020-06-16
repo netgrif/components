@@ -9,8 +9,8 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {UserPreferenceService} from '../../services/user-preference.service';
 
 describe('UserCardComponent', () => {
     let component: UserCardComponent;
@@ -29,7 +29,8 @@ describe('UserCardComponent', () => {
             ],
             providers: [
                 AuthenticationMethodService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: UserPreferenceService, useValue: {}}
             ]
         })
             .compileComponents();

@@ -7,6 +7,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {MessageResource} from '../interface/message-resource';
 import {User} from '../interface/user';
 import {Authority} from '../interface/authority';
+import {Preferences} from '../../user/models/preferences';
 import {Page} from '../interface/page';
 
 @Injectable({
@@ -116,7 +117,7 @@ export class UserResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/user/preferences
      */
-    public getPreferences(params?: Params): Observable<any> { // TODO OBJECT
+    public getPreferences(params?: Params): Observable<Preferences> {
         return this.provider.get$('user/preferences', this.SERVER_URL, params)
             .pipe(map(r => changeType(r, undefined)));
     }
