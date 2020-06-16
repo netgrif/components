@@ -3,19 +3,15 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {NAE_TASK_COLS, TaskContentComponent} from '../../task-content/task-panel-content/task-content.component';
 import {TaskContentService} from '../../task-content/services/task-content.service';
-import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
 import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {filter, map} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
-import {TranslateService} from '@ngx-translate/core';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AssignTaskService} from '../../task/services/assign-task.service';
@@ -32,8 +28,6 @@ import {NAE_TASK_OPERATIONS} from '../../task/models/task-operations-injection-t
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
 import {NAE_TASK_FINISH_EVENT} from '../../task/models/task-finish-event-injection-token';
 import {SubjectTaskFinishEvent} from '../../task/models/subject-task-finish-event';
-
-
 
 
 @Component({
@@ -72,12 +66,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     public panelRef: MatExpansionPanel;
 
     constructor(private _taskContentService: TaskContentService,
-                private _fieldConverterService: FieldConverterService,
                 private _log: LoggerService,
-                private _snackBar: SnackBarService,
-                private _taskService: TaskResourceService,
                 private _taskViewService: TaskViewService,
-                private _translate: TranslateService,
                 private _paperView: PaperViewService,
                 private _taskEventService: TaskEventService,
                 private _assignTaskService: AssignTaskService,
@@ -86,7 +76,6 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _finishTaskService: FinishTaskService,
                 private _taskState: TaskRequestStateService,
                 private _taskDataService: TaskDataService,
-                private _dataFocusPolicyService: DataFocusPolicyService,
                 private _assignPolicyService: AssignPolicyService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
                 @Inject(NAE_TASK_FINISH_EVENT) _taskFinishEvent: SubjectTaskFinishEvent) {
