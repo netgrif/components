@@ -73,15 +73,6 @@ export class UserPreferenceService {
         return this._preferences.locale;
     }
 
-    public setOther(key: string, value: any): void {
-        this._preferences.other[key] = value;
-        this._savePreferences();
-    }
-
-    public getOther(key: string): any | undefined {
-        return this._preferences.other[key];
-    }
-
     public preferencesChanged$(): Observable<void> {
         return this._preferencesChanged$.asObservable();
     }
@@ -101,8 +92,7 @@ export class UserPreferenceService {
         return {
             headers: {},
             caseFilters: {},
-            taskFilters: {},
-            other: {}
+            taskFilters: {}
         };
     }
 }

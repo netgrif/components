@@ -15,8 +15,4 @@ export interface Preferences {
     headers: {
         [viewId: string]: Array<string>
     };
-
-    other: {
-        [key: string]: any
-    };
 }
