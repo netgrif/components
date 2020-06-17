@@ -239,11 +239,18 @@
     },
     "view-list": {
         "noCasesSatisfyingThisFilter": "Es gibt keine Fälle, die den ausgewählten Filter erfüllen",
-        "noCProcessesSatisfyingThisFilter": "Es gibt keine Prozesse, die den ausgewählten Filter erfüllen"
+        "noProcessesSatisfyingThisFilter": "Es gibt keine Prozesse, die den ausgewählten Filter erfüllen"
     },
     "admin": {
         "user-list": {
-            "noUsersWereFound": "Derzeit befinden sich Benutzer im System"
+            "noUsersWereFound": "Derzeit befinden sich keine Benutzer im System",
+            "listTitle": "Benutzer"
+        },
+        "process-list": {
+            "newestVersion": "Neuste Version",
+            "listTitle": "Prozesse",
+            "noRoles": "Dieser Prozess enthält keine Rollen",
+            "noProcessesWereFound": "Derzeit befinden sich keine Prozesse im System"
         }
     },
     "preferences": {

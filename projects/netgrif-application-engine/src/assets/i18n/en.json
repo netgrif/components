@@ -238,8 +238,8 @@
         "workFilter": "Workflow filters"
     },
     "view-list": {
-        "noCasesSatisfyingThisFilter": "There are any cases satisfying specified filter",
-        "noCProcessesSatisfyingThisFilter": "There are any processes satisfying specified filter"
+        "noCasesSatisfyingThisFilter": "There are no cases satisfying specified filter",
+        "noProcessesSatisfyingThisFilter": "There are no processes satisfying specified filter"
     },
     "admin": {
         "user-list": {
@@ -249,8 +249,8 @@
         "process-list": {
             "newestVersion": "Newest version",
             "listTitle": "Processes",
-            "noRoles": "There are any roles in the process",
-            "noProcessesWereFound": "There are any processes in the system at the moment"
+            "noRoles": "There are no roles in the process",
+            "noProcessesWereFound": "There are no processes in the system at the moment"
         }
     },
     "preferences": {

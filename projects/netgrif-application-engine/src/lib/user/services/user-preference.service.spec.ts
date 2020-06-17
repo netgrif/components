@@ -70,9 +70,6 @@ describe('UserPreferenceService', () => {
 
         service.setLocale('sk-SK');
         expect(service.getLocale()).toEqual('sk-SK');
-
-        service.setOther('key', 'value');
-        expect(service.getOther('key')).toEqual('value');
     });
 
     afterAll(() => {
