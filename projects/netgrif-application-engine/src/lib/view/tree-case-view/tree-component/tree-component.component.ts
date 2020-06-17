@@ -5,10 +5,10 @@ import {Filter} from '../../../filter/models/filter';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {HttpParams} from '@angular/common/http';
 import {TreeCaseViewService} from '../tree-case-view.service';
+import {Case} from '../../../resources/interface/case';
 
 interface TreeNode {
-    caseId: string;
-    caseTitle: string;
+    case: Case;
     children?: TreeNode[];
 }
 
@@ -35,7 +35,7 @@ export class TreeComponentComponent implements OnInit {
                 if (kazes && kazes.content && Array.isArray(kazes.content)) {
                     const array = [];
                     kazes.content.forEach(kaze => {
-                        array.push({caseId: kaze.stringId, caseTitle: kaze.title});
+                        array.push({case: kaze});
                     });
                     this.dataSource.data = array;
                 }
@@ -45,7 +45,7 @@ export class TreeComponentComponent implements OnInit {
 
     hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
 
-    openCase(caseId: string) {
-        this._treeCaseService.caseId.next(caseId);
+    openCase(kaze: Case) {
+        this._treeCaseService.caseId.next(kaze);
     }
 }

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {UserService} from '../../user/services/user.service';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -16,8 +15,7 @@ import {TaskHandlingService} from '../../task/services/task-handling-service';
 @Injectable()
 export class TaskEventService extends TaskHandlingService {
 
-    constructor(protected _taskViewService: TaskViewService,
-                protected _userService: UserService,
+    constructor(protected _userService: UserService,
                 protected _logger: LoggerService,
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
