@@ -291,6 +291,17 @@
                 "path": "profile"
             }
         },
+        "demo-view-tree": {
+            "component": {
+                "class": "TreeViewExampleComponent",
+                "from": "./doc/tree-view-example/tree-view-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "tree-view"
+            }
+        },
         "demo-navigation-test": {
             "component": {
                 "class": "NavigationExampleComponent",
@@ -458,7 +469,8 @@
                         "1",
                         "bill",
                         "drobny_nakup",
-                        "new_model"
+                        "new_model",
+                        "all_data"
                     ]
                 },
                 "componentName": "MyCaseView"

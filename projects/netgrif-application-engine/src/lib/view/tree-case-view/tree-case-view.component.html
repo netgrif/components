@@ -1,0 +1,14 @@
+<div fxLayout="row" class="fill-all-space">
+    <mat-card class="fill-all-space" *ngIf="!loading">
+        <div fxLayout="column" fxFlex="30">
+            <nae-tree-component [filter]="filter"></nae-tree-component>
+        </div>
+
+        <mat-divider [vertical]="true" class="divider-fix"></mat-divider>
+
+        <div fxLayout="column" fxFlex="70">
+            <nae-tree-task-content></nae-tree-task-content>
+        </div>
+    </mat-card>
+    <mat-progress-spinner *ngIf="loading"></mat-progress-spinner>
+</div>
