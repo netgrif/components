@@ -9,15 +9,11 @@ import {DataFieldsModule} from '../data-fields/data-fields.module';
 import {ImportNetComponent} from '../side-menu/content-components/import-net/import-net.component';
 import {WorkflowViewComponent} from './workflow-view/workflow-view.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
-import {TreeCaseViewComponent} from './tree-case-view/tree-case-view.component';
-import { TreeComponentComponent } from './tree-case-view/tree-component/tree-component.component';
 
 
 @NgModule({
     declarations: [
         WorkflowViewComponent,
-        TreeCaseViewComponent,
-        TreeComponentComponent
     ],
     imports: [
         CommonModule,
@@ -31,7 +27,6 @@ import { TreeComponentComponent } from './tree-case-view/tree-component/tree-com
     ],
     exports: [
         WorkflowViewComponent,
-        TreeCaseViewComponent
     ],
     entryComponents: [
         ImportNetComponent

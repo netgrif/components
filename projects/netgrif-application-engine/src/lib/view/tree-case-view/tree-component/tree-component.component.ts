@@ -1,6 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
+import {Filter} from '../../../filter/models/filter';
+import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
+import {HttpParams} from '@angular/common/http';
+import {TreeCaseViewService} from '../tree-case-view.service';
 
 interface TreeNode {
     caseId: string;
@@ -14,20 +18,34 @@ interface TreeNode {
     styleUrls: ['./tree-component.component.scss']
 })
 export class TreeComponentComponent implements OnInit {
+
+    @Input() filter: Filter;
     treeControl = new NestedTreeControl<TreeNode>(node => node.children);
     dataSource = new MatTreeNestedDataSource<TreeNode>();
 
-    constructor() {
-        this.dataSource.data = [{caseId: 'asdsadsadsadasd', caseTitle: 'hej hej opica', children:
-                [{caseId: 'dasdasdadadadasd', caseTitle: 'nie nie opica'}]}];
+    constructor(private _caseResource: CaseResourceService, private _treeCaseService: TreeCaseViewService) {
     }
 
     ngOnInit(): void {
+        if (this.filter) {
+            let params: HttpParams = new HttpParams();
+            params = params.set('size', 100 + '');
+            params = params.set('page', 0 + '');
+            this._caseResource.searchCases(this.filter, params).subscribe(kazes => {
+                if (kazes && kazes.content && Array.isArray(kazes.content)) {
+                    const array = [];
+                    kazes.content.forEach(kaze => {
+                        array.push({caseId: kaze.stringId, caseTitle: kaze.title});
+                    });
+                    this.dataSource.data = array;
+                }
+            });
+        }
     }
 
     hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
 
     openCase(caseId: string) {
-        console.log(caseId);
+        this._treeCaseService.caseId.next(caseId);
     }
 }

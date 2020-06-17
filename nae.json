@@ -469,7 +469,8 @@
                         "1",
                         "bill",
                         "drobny_nakup",
-                        "new_model"
+                        "new_model",
+                        "all_data"
                     ]
                 },
                 "componentName": "MyCaseView"
