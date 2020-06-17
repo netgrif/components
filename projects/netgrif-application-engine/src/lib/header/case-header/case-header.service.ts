@@ -3,17 +3,13 @@ import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
+import {LanguageService} from '../../translate/language.service';
+import {CaseMetaField} from './case-menta-enum';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 
 
-export enum CaseMetaField {
-    VISUAL_ID = 'visualId',
-    TITLE = 'title',
-    AUTHOR = 'author',
-    CREATION_DATE = 'creationDate',
-}
 
 @Injectable()
 export class CaseHeaderService extends AbstractHeaderService {

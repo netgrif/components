@@ -15,7 +15,6 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {map} from 'rxjs/operators';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
@@ -29,6 +28,7 @@ import {
     ArrayTaskViewServiceFactory,
     noNetsTaskViewServiceFactory
 } from '../../view/task-view/service/factory/array-task-view-service-factory';
+import {TaskMetaField} from '../../header/task-header/task-meta-enum';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';

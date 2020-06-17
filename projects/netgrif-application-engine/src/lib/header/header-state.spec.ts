@@ -1,6 +1,6 @@
 import {HeaderState} from './header-state';
 import {HeaderColumn, HeaderColumnType} from './models/header-column';
-import {TaskMetaField} from './task-header/task-header.service';
+import {TaskMetaField} from './task-header/task-meta-enum';
 
 describe('HeaderState', () => {
     it('should create an instance', () => {

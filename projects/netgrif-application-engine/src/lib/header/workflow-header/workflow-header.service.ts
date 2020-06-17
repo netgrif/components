@@ -5,15 +5,7 @@ import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
-
-
-export enum WorkflowMetaField {
-    INITIALS = 'initials',
-    TITLE = 'title',
-    VERSION = 'version',
-    AUTHOR = 'author',
-    CREATION_DATE = 'creationDate',
-}
+import {WorkflowMetaField} from './workflow-meta-enum';
 
 @Injectable()
 export class WorkflowHeaderService extends AbstractHeaderService {
