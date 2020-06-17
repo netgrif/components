@@ -20,7 +20,8 @@ export class UserService {
     private _loginCalled: boolean;
 
     constructor(private _authService: AuthenticationService,
-                private _userResource: UserResourceService) {
+                private _userResource: UserResourceService,
+                private _userTransform: UserTransformer) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new Subject<User>();
@@ -105,7 +106,7 @@ export class UserService {
         this._userResource.getLoggedUser().subscribe((user: UserResource) => {
             if (user) {
                 const backendUser = {...user, id: user.id.toString()};
-                this._user = new UserTransformer().transform(backendUser as AuthUser);
+                this._user = this._userTransform.transform(backendUser as AuthUser);
                 this.publishUserChange();
             }
         });
