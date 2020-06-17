@@ -22,7 +22,7 @@ export class CaseHeaderService extends AbstractHeaderService {
                 viewService: ViewService,
                 logger: LoggerService) {
         super(HeaderType.CASE, preferences, viewService, logger);
-        this._caseViewService.allowedNets$.subscribe(allowedNets => {
+        _caseViewService.allowedNets$.subscribe(allowedNets => {
             this.setAllowedNets(allowedNets);
             this.loadHeadersFromPreferences();
         });
