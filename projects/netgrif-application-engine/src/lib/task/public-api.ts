@@ -12,9 +12,12 @@ export * from './services/finish-task.service';
 /* MODELS */
 export * from './models/task-operations-injection-token';
 export * from './models/task-finish-event-injection-token';
+export * from './models/task-list-operations-injectio-token';
 export * from './models/subject-task-operations';
 export * from './models/subject-task-finish-event';
+export * from './models/subject-task-list-operations';
 
 /* INTERFACES */
 export * from './interfaces/task-operations';
 export * from './interfaces/task-finish-event';
+export * from './interfaces/task-list-operations';
