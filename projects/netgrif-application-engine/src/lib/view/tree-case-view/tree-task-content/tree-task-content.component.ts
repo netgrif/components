@@ -7,12 +7,10 @@ import {TreeTaskContentService} from './tree-task-content.service';
 import {TaskDataService} from '../../../task/services/task-data.service';
 import {AssignTaskService} from '../../../task/services/assign-task.service';
 import {Subject} from 'rxjs';
-import {tsBooleanKeyword} from '@babel/types';
 import {TaskEventService} from '../../../task-content/services/task-event.service';
 import {CancelTaskService} from '../../../task/services/cancel-task.service';
 import {FinishTaskService} from '../../../task/services/finish-task.service';
 import {TaskRequestStateService} from '../../../task/services/task-request-state.service';
-import {TaskViewService} from '../../task-view/service/task-view.service';
 
 @Component({
     selector: 'nae-tree-task-content',

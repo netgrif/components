@@ -28,6 +28,8 @@ import {NAE_TASK_OPERATIONS} from '../../task/models/task-operations-injection-t
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
 import {NAE_TASK_FINISH_EVENT} from '../../task/models/task-finish-event-injection-token';
 import {SubjectTaskFinishEvent} from '../../task/models/subject-task-finish-event';
+import {NAE_TASK_LIST_OPERATIONS} from '../../task/models/task-list-operations-injectio-token';
+import {SubjectTaskListOperations} from '../../task/models/subject-task-list-operations';
 
 
 @Component({
@@ -47,7 +49,8 @@ import {SubjectTaskFinishEvent} from '../../task/models/subject-task-finish-even
         AssignPolicyService,
         FinishPolicyService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-        {provide: NAE_TASK_FINISH_EVENT, useClass: SubjectTaskFinishEvent}
+        {provide: NAE_TASK_FINISH_EVENT, useClass: SubjectTaskFinishEvent},
+        {provide: NAE_TASK_LIST_OPERATIONS, useClass: SubjectTaskListOperations}
     ]
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
@@ -78,7 +81,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _taskDataService: TaskDataService,
                 private _assignPolicyService: AssignPolicyService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
-                @Inject(NAE_TASK_FINISH_EVENT) _taskFinishEvent: SubjectTaskFinishEvent) {
+                @Inject(NAE_TASK_FINISH_EVENT) _taskFinishEvent: SubjectTaskFinishEvent,
+                @Inject(NAE_TASK_LIST_OPERATIONS) _taskListOperations: SubjectTaskListOperations) {
         super();
         _taskDataService.changedFields$.subscribe( changedFields => {
             this._taskPanelData.changedFields.next(changedFields);
@@ -91,6 +95,9 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         });
         _taskFinishEvent.finish$.subscribe(() => {
            this.processTask('finish');
+        });
+        _taskListOperations.reloadPage$.subscribe(() => {
+            this._taskViewService.reloadCurrentPage();
         });
     }
 

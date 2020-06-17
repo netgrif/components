@@ -3,13 +3,14 @@ import {AssignPolicy} from '../../task-content/model/policy';
 import {Subject} from 'rxjs';
 import {TaskHandlingService} from './task-handling-service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TaskDataService} from './task-data.service';
 import {AssignTaskService} from './assign-task.service';
 import {CancelTaskService} from './cancel-task.service';
 import {FinishPolicyService} from './finish-policy.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
+import {NAE_TASK_LIST_OPERATIONS} from '../models/task-list-operations-injectio-token';
+import {TaskListOperations} from '../interfaces/task-list-operations';
 
 /**
  * Handles the sequence of actions that are performed when a task is being assigned, based on the task's configuration.
@@ -17,12 +18,12 @@ import {TaskOperations} from '../interfaces/task-operations';
 @Injectable()
 export class AssignPolicyService extends TaskHandlingService {
 
-    constructor(protected _taskViewService: TaskViewService,
-                protected _taskDataService: TaskDataService,
+    constructor(protected _taskDataService: TaskDataService,
                 protected _assignTaskService: AssignTaskService,
                 protected _cancelTaskService: CancelTaskService,
                 protected _finishPolicyService: FinishPolicyService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Inject(NAE_TASK_LIST_OPERATIONS) protected _taskListOperations: TaskListOperations,
                 taskContentService: TaskContentService) {
         super(taskContentService);
     }
@@ -82,7 +83,7 @@ export class AssignPolicyService extends TaskHandlingService {
     protected createAutoAssignOpenCallChain(): Subject<boolean> {
         const callchain = new Subject<boolean>();
         callchain.subscribe(assignSuccess => {
-            this._taskViewService.reloadCurrentPage();
+            this._taskListOperations.reloadPage();
             if (assignSuccess) {
                 this._taskDataService.initializeTaskDataFields(
                     this.createAutoAssignInitializeDataCallChain()
@@ -135,7 +136,7 @@ export class AssignPolicyService extends TaskHandlingService {
     protected createAutoAssignCloseCallChain(): Subject<boolean> {
         const callchain = new Subject<boolean>();
         callchain.subscribe(() => {
-            this._taskViewService.reloadCurrentPage();
+            this._taskListOperations.reloadPage();
             this._taskOperations.close();
             callchain.complete();
         });

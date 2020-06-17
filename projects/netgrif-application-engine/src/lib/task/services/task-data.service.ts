@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -7,11 +7,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
 import {DataFocusPolicyService} from './data-focus-policy.service';
 import {TaskHandlingService} from './task-handling-service';
+import {NAE_TASK_LIST_OPERATIONS} from '../models/task-list-operations-injectio-token';
+import {TaskListOperations} from '../interfaces/task-list-operations';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -28,9 +29,9 @@ export class TaskDataService extends TaskHandlingService {
                 protected _log: LoggerService,
                 protected _snackBar: SnackBarService,
                 protected _taskResourceService: TaskResourceService,
-                protected _taskViewService: TaskViewService,
                 protected _fieldConverterService: FieldConverterService,
                 protected _dataFocusPolicyService: DataFocusPolicyService,
+                @Inject(NAE_TASK_LIST_OPERATIONS) protected _taskListOperations: TaskListOperations,
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
         this._updateSuccess$ = new Subject<boolean>();
@@ -143,7 +144,7 @@ export class TaskDataService extends TaskHandlingService {
             this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
             this._log.debug(error);
             this.updateStateInfo(afterAction, false);
-            this._taskViewService.reloadCurrentPage();
+            this._taskListOperations.reloadPage();
         });
     }
 

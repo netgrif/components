@@ -1,5 +1,6 @@
 /**
- * Represents abstract operations on a task. They concrete implementation depends on the way the tasks are displayed and represented.
+ * Represents abstract operations on a task.
+ * The concrete implementation depends on the way the tasks are displayed and represented by some specific Component.
  *
  * For example if tasks are panels, then the [open]{@link TaskOperations#open} operation corresponds to the panels expansion
  * and the [close]{@link TaskOperations#close} operation corresponds to the panel collapsing.
