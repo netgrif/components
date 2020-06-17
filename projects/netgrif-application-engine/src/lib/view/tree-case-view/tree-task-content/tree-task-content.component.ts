@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {HttpParams} from '@angular/common/http';
@@ -28,7 +28,7 @@ import {TaskViewService} from '../../task-view/service/task-view.service';
         TaskRequestStateService
     ]
 })
-export class TreeTaskContentComponent implements OnInit {
+export class TreeTaskContentComponent implements OnInit, OnDestroy {
 
     public show = false;
     public loading = false;
@@ -50,21 +50,15 @@ export class TreeTaskContentComponent implements OnInit {
         this._treeCaseService.caseId.subscribe(kaze => {
             this.show = false;
             this.loading = true;
-            if (kaze) {
-                let params: HttpParams = new HttpParams();
-                params = params.set('size', 100 + '');
-                params = params.set('page', 0 + '');
-                this._taskResourceService.getTasks({case: kaze.stringId}, params).subscribe(tasks => {
+            if (this._taskContentService.task && this.canCancel()) {
+                this._cancel.cancel();
+            }
+            if (kaze && kaze.immediateData && kaze.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId')) {
+                this._taskResourceService.getTasks({case: kaze.stringId,
+                    transition: kaze.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId').value})
+                    .subscribe(tasks => {
                     if (tasks && tasks.content && Array.isArray(tasks.content)) {
-                        if (kaze.immediateData && kaze.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId')) {
-                            const transId = kaze.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId').value;
-                            const task = tasks.content.find(tsk => tsk.transitionId === transId);
-                            if (task) {
-                                this._taskContentService.task = task;
-                            }
-                        } else {
-                            this._taskContentService.task = tasks.content[0];
-                        }
+                        this._taskContentService.task = tasks.content[0];
                         const after = new Subject<boolean>();
                         const afterSecond = new Subject<boolean>();
                         after.subscribe(bool => {
@@ -83,6 +77,8 @@ export class TreeTaskContentComponent implements OnInit {
                             afterSecond.complete();
                         });
                         this._assign.assign(after);
+                    } else {
+                        this.loading = false;
                     }
                 });
             } else {
@@ -123,5 +119,11 @@ export class TreeTaskContentComponent implements OnInit {
             after.complete();
         });
         this._finish.validateDataAndFinish(after);
+    }
+
+    ngOnDestroy(): void {
+        if (this._taskContentService.task && this.canCancel()) {
+            this._cancel.cancel();
+        }
     }
 }
