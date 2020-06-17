@@ -24,7 +24,7 @@ export class UserService {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new Subject<User>();
-        this._authService.authenticated$.subscribe(auth => {
+        _authService.authenticated$.subscribe(auth => {
             if (auth && !this._loginCalled) {
                 this.loadUser();
             } else if (!auth) {
