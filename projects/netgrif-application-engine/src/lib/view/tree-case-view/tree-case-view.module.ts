@@ -8,6 +8,7 @@ import {MaterialModule} from '../../material/material.module';
 import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {PanelModule} from '../../panel/panel.module';
+import {TaskContentModule} from '../../task-content/task-content.module';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import {PanelModule} from '../../panel/panel.module';
         MaterialModule,
         DataFieldsModule,
         TranslateLibModule,
-        PanelModule
+        PanelModule,
+        TaskContentModule
     ],
     exports: [
         TreeCaseViewComponent
