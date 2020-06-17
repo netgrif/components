@@ -31,6 +31,7 @@ import {
     UserModule,
     WorkflowViewModule,
     ViewService,
+    TreeCaseViewModule,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -68,7 +69,7 @@ import {NavigationExampleComponent} from './doc/navigation-example/navigation-ex
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
 import {NaeExampleAppViewService} from './nae-example-app-view.service';
-import { TreeViewExampleComponent } from './doc/tree-view-example/tree-view-example.component';
+import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -151,6 +152,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatButtonModule,
         MatSidenavModule,
         AdministrationModule,
+        TreeCaseViewModule,
     ],
     entryComponents: [
         ContentComponent,
