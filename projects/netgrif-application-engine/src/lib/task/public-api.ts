@@ -16,6 +16,9 @@ export * from './models/task-list-operations-injectio-token';
 export * from './models/subject-task-operations';
 export * from './models/subject-task-finish-event';
 export * from './models/subject-task-list-operations';
+export * from './models/null-task-list-operations';
+export * from './models/null-task-finish-event';
+export * from './models/null-task-list-operations';
 
 /* INTERFACES */
 export * from './interfaces/task-operations';
