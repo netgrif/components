@@ -197,42 +197,18 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         });
         switch (type) {
             case 'assign':
-                this.assign(after);
+                this._assignTaskService.assign(after);
                 break;
             case 'delegate':
-                this.delegate(after);
+                this._delegateTaskService.delegate(after);
                 break;
             case 'cancel':
-                this.cancel(after);
+                this._cancelTaskService.cancel(after);
                 break;
             case 'finish':
-                this.finish(after);
+                this._finishTaskService.validateDataAndFinish(after);
                 break;
         }
-    }
-
-    assign(afterAction = new Subject<boolean>()) {
-        this._assignTaskService.assign(afterAction);
-    }
-
-    delegate(afterAction = new Subject<boolean>()) {
-        this._delegateTaskService.delegate(afterAction);
-    }
-
-    cancel(afterAction = new Subject<boolean>()) {
-        this._cancelTaskService.cancel(afterAction);
-    }
-
-    finish(afterAction = new Subject<boolean>()) {
-        const collapseAfter = new Subject<boolean>();
-        collapseAfter.subscribe( result => {
-            afterAction.next(result);
-            if (result) {
-                this.collapse();
-            }
-            collapseAfter.complete();
-        });
-        this._finishTaskService.validateDataAndFinish(collapseAfter);
     }
 
     collapse() {

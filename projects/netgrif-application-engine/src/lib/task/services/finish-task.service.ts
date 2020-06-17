@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -9,6 +9,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {TaskRequestStateService} from './task-request-state.service';
 import {TaskDataService} from './task-data.service';
 import {TaskHandlingService} from './task-handling-service';
+import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
+import {TaskOperations} from '../interfaces/task-operations';
 
 
 /**
@@ -23,6 +25,7 @@ export class FinishTaskService extends TaskHandlingService {
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
                 protected _taskDataService: TaskDataService,
+                @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
     }
@@ -88,6 +91,7 @@ export class FinishTaskService extends TaskHandlingService {
             if (response.success) {
                 this._taskContentService.removeStateData();
                 afterAction.next(true);
+                this._taskOperations.close();
             } else if (response.error) {
                 this._snackBar.openErrorSnackBar(response.error);
                 afterAction.next(false);
