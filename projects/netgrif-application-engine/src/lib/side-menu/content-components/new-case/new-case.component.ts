@@ -74,8 +74,8 @@ export class NewCaseComponent implements OnInit, OnChanges {
             });
         }
 
-        this.injectedData.allowedNets$.subscribe( allowedNets => {
-            this.options = allowedNets.map( petriNet => ({value: petriNet.stringId, viewValue: petriNet.title}));
+        this.injectedData.allowedNets$.subscribe(allowedNets => {
+            this.options = allowedNets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title}));
         });
 
         this.filteredOptions = this.processFormControl.valueChanges
@@ -103,28 +103,24 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
 
     public createNewCase(): void {
-        if (this.selectedColorControl.valid) {
-            const newCase = {
-                title: this.titleFormControl.value,
-                color: this.selectedColorControl.value,
-                netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
-            };
+        const newCase = {
+            title: this.titleFormControl.value,
+            color: 'black',
+            netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
+        };
 
-            this._caseResourceService.createCase(newCase)
-                .subscribe(
-                    response => {
-                        this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
-                        this._sideMenuControl.close({
-                            opened: false,
-                            message: 'Confirm new case setup',
-                            data: response
-                        });
-                    },
-                    error => this._snackBarService.openErrorSnackBar(error)
+        this._caseResourceService.createCase(newCase)
+            .subscribe(
+                response => {
+                    this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
+                    this._sideMenuControl.close({
+                        opened: false,
+                        message: 'Confirm new case setup',
+                        data: response
+                    });
+                },
+                error => this._snackBarService.openErrorSnackBar(error)
             );
-        } else {
-            this.selectedColorControl.markAsTouched();
-        }
     }
 
     /**
@@ -148,14 +144,14 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
     nextStep() {
         if (this.stepper1) {
-            if (this.stepper1.selectedIndex === 2) {
+            if (this.stepper1.selectedIndex === 1) {
                 this.createNewCase();
             } else {
                 this.stepper1.next();
             }
         }
         if (this.stepper2) {
-            if (this.stepper2.selectedIndex === 1) {
+            if (this.stepper2.selectedIndex === 0) {
                 this.createNewCase();
             } else {
                 this.stepper2.next();

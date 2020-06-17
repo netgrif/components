@@ -159,8 +159,13 @@
             "downloadFail": " stahovanie zlyhalo",
             "moreFiles": "Zvolil si viac súborov ako je povolené",
             "sameFiles": "Nemôžeš nahrať dva rovnaké súbory",
-            "fileSize": "Veľkosť súboru presiahla povolený limit"
-        }
+            "fileSize": "Veľkosť súboru presiahla povolený limit",
+            "cannotDownload": "Súbor nemôže byť stiahnutý bez definovanej úlohy",
+            "cannotUpload": "Súbor nemôže byť nahraný bez definovanej úlohy",
+            "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru",
+            "fileUploadFailed": "Súbor sa nepodarilo nahrať"
+        },
+        "noFile": "Žiadny súbor"
     },
     "dialog": {
         "close": "Zatvoriť",

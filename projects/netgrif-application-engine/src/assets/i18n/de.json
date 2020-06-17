@@ -159,8 +159,13 @@
             "downloadFail": " könnte nicht heruntergeladen werden",
             "moreFiles": "Sie haven zu viel Dateien ausgewählt",
             "sameFiles": "Sie können nicht dieselbe Datei zweimal hochladen",
-            "fileSize": "Die Dateigröße hat das zulässige Limit überschritten"
-        }
+            "fileSize": "Die Dateigröße hat das zulässige Limit überschritten",
+            "cannotDownload": "The file cannot be downloaded without defined task",
+            "cannotUpload": "The file cannot be uploaded without defined task",
+            "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
+            "fileUploadFailed": "The file failed to upload"
+        },
+        "noFile": "No file"
     },
     "dialog": {
         "close": "Schließen",

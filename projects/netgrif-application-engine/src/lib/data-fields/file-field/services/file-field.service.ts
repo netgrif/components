@@ -3,20 +3,15 @@ import * as JSZip from 'jszip';
 import {FileField, FileUploadDataModel} from '../models/file-field';
 import {FileUploadService} from './upload/file-upload.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
-import {
-    SnackBarHorizontalPosition,
-    SnackBarService,
-    SnackBarVerticalPosition
-} from '../../../snack-bar/services/snack-bar.service';
+import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../snack-bar/services/snack-bar.service';
 import {FileUploadModel} from '../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {FilesUploadComponent} from '../../../side-menu/content-components/files-upload/files-upload.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
 import {LanguageService} from '../../../translate/language.service';
-import {TaskResourceService} from "../../../resources/engine-endpoint/task-resource.service";
-import {ProgressType, ProviderProgress} from "../../../resources/resource-provider.service";
-import {LoggerService} from "../../../logger/services/logger.service";
-import {TaskPanelContentService} from "../../../panel/task-panel/task-panel-content/task-panel-content.service";
+import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
+import {ProgressType, ProviderProgress} from '../../../resources/resource-provider.service';
+import {LoggerService} from '../../../logger/services/logger.service';
 
 /**
  * Links communication between
@@ -52,7 +47,6 @@ export class FileFieldService {
      * @param _translate for translations
      * @param _lang Initialize languages
      * @param _taskResourceService Provides upload and download file
-     * @param _taskPanelContentService Provides taskId for file upload and download
      * @param _log Log error of file upload
      */
     constructor(private _fileUploadService: FileUploadService,
@@ -61,7 +55,6 @@ export class FileFieldService {
                 private _translate: TranslateService,
                 private _lang: LanguageService,
                 private _taskResourceService: TaskResourceService,
-                private _taskPanelContentService: TaskPanelContentService,
                 private _log: LoggerService) {
         this._fileUploadService.fileUploadCompleted.subscribe(() => {
             // this.fileField.value = this.resolveFilesArray();
@@ -94,22 +87,24 @@ export class FileFieldService {
      * Retry upload file to backend and reset
      * [FileUploadModel]{@link FileUploadModel} upload properties.
      * @param file Selected file for re-upload
+     * @param taskId Task string id
      */
-    public retryFile(file: FileUploadModel) {
+    public retryFile(file: FileUploadModel, taskId: string) {
         file.completed = false;
-        this.uploadOneFile(file);
+        this.uploadOneFile(file, taskId);
     }
 
     /**
      * Check if file is successfully uploaded and then download it.
      * @param file Selected file for download
+     * @param taskId Task string id
      */
-    public onFileDownload(file: FileUploadModel) {
-        if (!file.completed) {
+    public onFileDownload(file: FileUploadModel, taskId: string) {
+        if (!file.completed || !taskId) {
             return;
         }
-        this._taskResourceService.downloadFile(this._taskPanelContentService.taskId, file.stringId).subscribe(data => {
-            if(data instanceof Blob) {
+        this._taskResourceService.downloadFile(taskId, file.stringId).subscribe(data => {
+            if (data instanceof Blob) {
                 const blob = new Blob([data], {type: 'application/octet-stream'});
                 const url = window.URL.createObjectURL(blob);
                 window.open(url);
@@ -152,8 +147,9 @@ export class FileFieldService {
      * Open side menu if it is closed.
      *
      * Set file field image source url if select file is image and is the only one in addFiles.
+     * @param taskId Task string id
      */
-    public fileUpload() {
+    public fileUpload(taskId: string) {
         this.fileUploadEl.nativeElement.onchange = () => {
             if ((this.allFiles.length + this.fileUploadEl.nativeElement.files.length) > this.fileField.maxUploadFiles) {
                 this._snackBarService.openWarningSnackBar(this._translate.instant('dataField.snackBar.moreFiles'),
@@ -171,7 +167,7 @@ export class FileFieldService {
                     this.allFiles.push(fileUploadModel);
                 }
 
-                this.uploadOneFile(fileUploadModel);
+                this.uploadOneFile(fileUploadModel, taskId);
 
                 // not existing imageRef
                 // if (file.type.includes('image') && this.allFiles.length === 1) {
@@ -189,9 +185,10 @@ export class FileFieldService {
     /**
      * Uploads one file on backend
      * @param fileUploadModel Selected file for upload
+     * @param taskId Task string id
      */
-    private uploadOneFile(fileUploadModel: FileUploadModel) {
-        if (this.maxUploadSizeControl(fileUploadModel)) {
+    private uploadOneFile(fileUploadModel: FileUploadModel, taskId: string) {
+        if (this.maxUploadSizeControl(fileUploadModel) || !taskId) {
             return;
         }
 
@@ -202,8 +199,9 @@ export class FileFieldService {
             fileUploadModel.inProgress = true;
             fileUploadModel.completed = false;
             fileUploadModel.error = false;
-            fileUploadModel.sub = this._taskResourceService.uploadFile(this._taskPanelContentService.taskId, fileUploadModel.stringId, fileFormData).subscribe(response => {
-                if ((response as ProviderProgress).type && (response as ProviderProgress).type == ProgressType.UPLOAD) {
+            fileUploadModel.sub = this._taskResourceService.uploadFile(taskId,
+                fileUploadModel.stringId, fileFormData).subscribe(response => {
+                if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                     fileUploadModel.progress = (response as ProviderProgress).progress;
                     if (fileUploadModel.progress === 100) {
                         fileUploadModel.uploaded = true;

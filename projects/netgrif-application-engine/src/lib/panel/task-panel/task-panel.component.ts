@@ -489,7 +489,9 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     canAssign() {
-        return this._taskPanelData.task.assignPolicy === AssignPolicy.manual && !this._taskPanelData.task.user && this.canDo('perform');
+        return (this._taskPanelData.task.assignPolicy === AssignPolicy.manual && !this._taskPanelData.task.user && this.canDo('perform'))
+            || (this._taskPanelData.task.roles === null || this._taskPanelData.task.roles === undefined
+                || Object.keys(this._taskPanelData.task.roles).length === 0);
     }
 
     canReassign() {
