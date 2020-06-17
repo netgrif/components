@@ -23,20 +23,19 @@ export class UserPreferenceService {
         this._preferences = this._emptyPreferences();
         this._preferencesChanged$ = new Subject<void>();
 
-        if (_userService) {
-            _userService.user$.subscribe(loggedUser => {
-                if (loggedUser.id !== '') {
-                    this._userResourceService.getPreferences().subscribe(prefs => {
-                            this._preferences = prefs;
-                            this._preferencesChanged$.next();
-                        }
-                    );
-                } else {
-                    this._preferences = this._emptyPreferences();
-                    this._preferencesChanged$.next();
-                }
-            });
-        }
+        _userService.user$.subscribe(loggedUser => {
+            if (loggedUser.id !== '') {
+                this._userResourceService.getPreferences().subscribe(prefs => {
+                        this._preferences = this._emptyPreferences();
+                        Object.assign(this._preferences, prefs);
+                        this._preferencesChanged$.next();
+                    }
+                );
+            } else {
+                this._preferences = this._emptyPreferences();
+                this._preferencesChanged$.next();
+            }
+        });
     }
 
     public setTaskFilters(viewId: string, value: Array<string>): void {
@@ -75,15 +74,6 @@ export class UserPreferenceService {
         return this._preferences.locale;
     }
 
-    public setOther(key: string, value: any): void {
-        this._preferences.other[key] = value;
-        this._savePreferences();
-    }
-
-    public getOther(key: string): any | undefined {
-        return this._preferences.other[key];
-    }
-
     public preferencesChanged$(): Observable<void> {
         return this._preferencesChanged$.asObservable();
     }
@@ -103,8 +93,7 @@ export class UserPreferenceService {
         return {
             headers: {},
             caseFilters: {},
-            taskFilters: {},
-            other: {}
+            taskFilters: {}
         };
     }
 }

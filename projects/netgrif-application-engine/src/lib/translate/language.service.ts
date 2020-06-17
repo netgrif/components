@@ -35,14 +35,14 @@ export class LanguageService {
             this.setLanguage(lang);
         }
 
-        this._preferenceService.preferencesChanged$().subscribe(() => {
+        _preferenceService.preferencesChanged$().subscribe(() => {
             const preferredLang = this._preferenceService.getLocale();
             if (preferredLang !== undefined && preferredLang !== this._translate.currentLang) {
                 this.setLanguage(preferredLang);
             }
         });
 
-        this._translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
+        _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
             this._logger.debug('Language changed to ' + event.lang);
         });
     }
