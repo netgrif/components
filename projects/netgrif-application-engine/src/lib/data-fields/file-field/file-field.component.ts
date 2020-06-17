@@ -88,7 +88,9 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
      * Initialize file image.
      */
     ngAfterViewInit(): void {
-        this.fileUploadEl.nativeElement.onchange = () => this.upload();
+        if (this.fileUploadEl) {
+            this.fileUploadEl.nativeElement.onchange = () => this.upload();
+        }
         this.initFileFieldImage();
     }
 
