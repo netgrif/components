@@ -60,17 +60,20 @@ export class TaskContentComponent {
                 columnGroup = columnCount;
             }
             if (dataGroup.title && dataGroup.title !== '') {
-                const row = grid.length;
-                this.addGridRows(grid, row + 1, columnGroup);
-                const newFillers = [];
-                for (const filler of grid[row]) {
-                    newFillers.push(...filler.fillersAfterCover(0, columnGroup - 1));
+                const visibleGroup: boolean = dataGroup.fields.some( dataFld => !dataFld.behavior.hidden );
+                if (visibleGroup) {
+                    const row = grid.length;
+                    this.addGridRows(grid, row + 1, columnGroup);
+                    const newFillers = [];
+                    for (const filler of grid[row]) {
+                        newFillers.push(...filler.fillersAfterCover(0, columnGroup - 1));
+                    }
+                    grid[row] = newFillers;
+                    returnResource.push({
+                        item: undefined, type: 'title',
+                        layout: {x: 0, y: row, cols: columnGroup, rows: 1}, title: dataGroup.title
+                    });
                 }
-                grid[row] = newFillers;
-                returnResource.push({
-                    item: undefined, type: 'title',
-                    layout: {x: 0, y: row, cols: columnGroup, rows: 1}, title: dataGroup.title
-                });
             }
             dataGroup.fields.sort((a, b) => a.order - b.order);
             dataGroup.fields.forEach(dataField => {
