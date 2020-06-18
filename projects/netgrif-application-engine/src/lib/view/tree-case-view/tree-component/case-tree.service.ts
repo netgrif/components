@@ -106,10 +106,17 @@ export class CaseTreeService {
             clickedNode.children.push({
                 case: page.content[0],
             });
+            this.refreshTree();
         }, error => {
             // TODO notify user about error
             this._logger.error('Child node case could not be found', error);
         });
+    }
+
+    private refreshTree(): void {
+        const d = this._treeDataSource.data;
+        this._treeDataSource.data = null;
+        this._treeDataSource.data = d;
     }
 
     protected loadNodes() {
