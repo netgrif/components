@@ -2,14 +2,12 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class TreeCaseViewService {
 
-    public case: BehaviorSubject<Case>;
+    public case$: BehaviorSubject<Case>;
 
     constructor() {
-        this.case = new BehaviorSubject<Case>(undefined);
+        this.case$ = new BehaviorSubject<Case>(undefined);
     }
 }

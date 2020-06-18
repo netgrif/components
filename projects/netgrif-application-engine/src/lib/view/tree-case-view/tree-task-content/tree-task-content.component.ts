@@ -51,7 +51,7 @@ export class TreeTaskContentComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this._treeCaseService.case.subscribe(kaze => {
+        this._treeCaseService.case$.subscribe(kaze => {
             this.show = false;
             this.loading = true;
             if (this._taskContentService.task && this.canCancel()) {

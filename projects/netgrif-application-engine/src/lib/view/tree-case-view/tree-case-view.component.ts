@@ -4,11 +4,13 @@ import {CaseResourceService} from '../../resources/engine-endpoint/case-resource
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {ProcessService} from '../../process/process.service';
+import {TreeCaseViewService} from './tree-case-view.service';
 
 @Component({
     selector: 'nae-tree-case-view',
     templateUrl: './tree-case-view.component.html',
-    styleUrls: ['./tree-case-view.component.scss']
+    styleUrls: ['./tree-case-view.component.scss'],
+    providers: [TreeCaseViewService]
 })
 export class TreeCaseViewComponent implements OnInit {
 

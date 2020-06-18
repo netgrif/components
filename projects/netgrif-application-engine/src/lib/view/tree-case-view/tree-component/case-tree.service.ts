@@ -17,8 +17,8 @@ import {FilterType} from '../../../filter/models/filter-type';
 export class CaseTreeService {
 
     private _rootNodesFilter: Filter;
-    private _treeDataSource: MatTreeNestedDataSource<CaseTreeNode>;
-    private _treeControl: NestedTreeControl<CaseTreeNode>;
+    private readonly _treeDataSource: MatTreeNestedDataSource<CaseTreeNode>;
+    private readonly _treeControl: NestedTreeControl<CaseTreeNode>;
 
     constructor(protected _caseResourceService: CaseResourceService,
                 protected _treeCaseViewService: TreeCaseViewService,
@@ -45,7 +45,7 @@ export class CaseTreeService {
      * Notifies the parent TreeCaseView that a case was clicked in the tree and it's Task should be displayed
      */
     public openCaseTask(clickedCase: Case): void {
-        this._treeCaseViewService.case.next(clickedCase);
+        this._treeCaseViewService.case$.next(clickedCase);
     }
 
     /**
@@ -56,7 +56,7 @@ export class CaseTreeService {
         this._taskResourceService.getTasks({
             case: clickedNode.case.stringId,
             transition: 'add_tree_child'
-        }).subscribe( page => {
+        }).subscribe(page => {
             if (page.content.length === 0) {
                 // TODO notify user about error
                 this._logger.error('Task for adding tree nodes doesn\'t exist');
@@ -72,7 +72,7 @@ export class CaseTreeService {
                         processId: caseRefField.allowedNets[0]
                     }
                 }
-            }).subscribe( changeContainer => {
+            }).subscribe(changeContainer => {
                 const changedFields = changeContainer.changedFields;
                 const caseRefChanges = changedFields['treeChildCases'];
                 if (!caseRefChanges) {
@@ -113,6 +113,10 @@ export class CaseTreeService {
         });
     }
 
+    /**
+     * @ignore
+     * Forces a rerender of the tree content
+     */
     private refreshTree(): void {
         const d = this._treeDataSource.data;
         this._treeDataSource.data = null;
