@@ -7,9 +7,9 @@ import {Case} from '../../resources/interface/case';
 })
 export class TreeCaseViewService {
 
-    public caseId: BehaviorSubject<Case>;
+    public case: BehaviorSubject<Case>;
 
     constructor() {
-        this.caseId = new BehaviorSubject<Case>(undefined);
+        this.case = new BehaviorSubject<Case>(undefined);
     }
 }

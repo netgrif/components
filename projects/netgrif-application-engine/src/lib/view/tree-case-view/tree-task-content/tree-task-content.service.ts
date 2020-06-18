@@ -19,7 +19,9 @@ export class TreeTaskContentService extends TaskContentService {
     public set task(task: Task) {
         this._task = task;
         this._task$.next(task);
-        this._task$.complete();
     }
 
+    public get task(): Task | undefined {
+        return this._task;
+    }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Observable, of, throwError} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 import {Params, ResourceProvider} from '../resource-provider.service';
 import {changeType, getResourceAddress, getResourcePage} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -94,8 +94,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/me
      */
     public getLoggedUser(params?: Params): Observable<User> {
-        return this.provider.get$('user/me', this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('user/me', this.SERVER_URL, params).pipe(
+                map(r => changeType(r, undefined)));
     }
 
     /**

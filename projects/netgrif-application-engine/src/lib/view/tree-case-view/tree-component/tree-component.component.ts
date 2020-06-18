@@ -19,7 +19,7 @@ interface TreeNode {
 })
 export class TreeComponentComponent implements OnInit {
 
-    @Input() filter: Filter;
+    private _filter: Filter;
     treeControl = new NestedTreeControl<TreeNode>(node => node.children);
     dataSource = new MatTreeNestedDataSource<TreeNode>();
 
@@ -27,11 +27,19 @@ export class TreeComponentComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.filter) {
+    }
+
+    @Input() set filter(filter: Filter) {
+        this._filter = filter;
+        this.loadNodes();
+    }
+
+    loadNodes() {
+        if (this._filter) {
             let params: HttpParams = new HttpParams();
             params = params.set('size', 100 + '');
             params = params.set('page', 0 + '');
-            this._caseResource.searchCases(this.filter, params).subscribe(kazes => {
+            this._caseResource.searchCases(this._filter, params).subscribe(kazes => {
                 if (kazes && kazes.content && Array.isArray(kazes.content)) {
                     const array = [];
                     kazes.content.forEach(kaze => {
@@ -46,6 +54,6 @@ export class TreeComponentComponent implements OnInit {
     hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
 
     openCase(kaze: Case) {
-        this._treeCaseService.caseId.next(kaze);
+        this._treeCaseService.case.next(kaze);
     }
 }

@@ -25,13 +25,15 @@ export class UserService {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new Subject<User>();
-        _authService.authenticated$.subscribe(auth => {
-            if (auth && !this._loginCalled) {
-                this.loadUser();
-            } else if (!auth) {
-                this._user = this.emptyUser();
-                this.publishUserChange();
-            }
+        setTimeout(() => {
+            this._authService.authenticated$.subscribe(auth => {
+                if (auth && !this._loginCalled) {
+                    this.loadUser();
+                } else if (!auth) {
+                    this._user = this.emptyUser();
+                    this.publishUserChange();
+                }
+            });
         });
     }
 
@@ -109,6 +111,8 @@ export class UserService {
                 this._user = this._userTransform.transform(backendUser as AuthUser);
                 this.publishUserChange();
             }
+        }, error1 => {
+            console.log(error1);
         });
     }
 
