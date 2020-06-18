@@ -6,54 +6,40 @@ import {CaseResourceService} from '../../../resources/engine-endpoint/case-resou
 import {HttpParams} from '@angular/common/http';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {Case} from '../../../resources/interface/case';
-
-interface TreeNode {
-    case: Case;
-    children?: TreeNode[];
-}
+import {CaseTreeService} from './case-tree.service';
+import {CaseTreeNode} from './interfaces/CaseTreeNode';
 
 @Component({
     selector: 'nae-tree-component',
     templateUrl: './tree-component.component.html',
-    styleUrls: ['./tree-component.component.scss']
+    styleUrls: ['./tree-component.component.scss'],
+    providers: [CaseTreeService]
 })
-export class TreeComponentComponent implements OnInit {
+export class TreeComponentComponent {
 
-    private _filter: Filter;
-    treeControl = new NestedTreeControl<TreeNode>(node => node.children);
-    dataSource = new MatTreeNestedDataSource<TreeNode>();
-
-    constructor(private _caseResource: CaseResourceService, private _treeCaseService: TreeCaseViewService) {
-    }
-
-    ngOnInit(): void {
+    constructor(private _treeService: CaseTreeService) {
     }
 
     @Input() set filter(filter: Filter) {
-        this._filter = filter;
-        this.loadNodes();
+        this._treeService.rootFilter = filter;
     }
 
-    loadNodes() {
-        if (this._filter) {
-            let params: HttpParams = new HttpParams();
-            params = params.set('size', 100 + '');
-            params = params.set('page', 0 + '');
-            this._caseResource.searchCases(this._filter, params).subscribe(kazes => {
-                if (kazes && kazes.content && Array.isArray(kazes.content)) {
-                    const array = [];
-                    kazes.content.forEach(kaze => {
-                        array.push({case: kaze});
-                    });
-                    this.dataSource.data = array;
-                }
-            });
-        }
+    public get dataSource(): MatTreeNestedDataSource<CaseTreeNode> {
+        return this._treeService.dataSource;
     }
 
-    hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
+    public get treeControl(): NestedTreeControl<CaseTreeNode> {
+        return this._treeService.treeControl;
+    }
 
-    openCase(kaze: Case) {
-        this._treeCaseService.case.next(kaze);
+    hasChild = (_: number, node: CaseTreeNode) => !!node.children && node.children.length > 0;
+
+    openCaseTask(clickedCase: Case) {
+        this._treeService.openCaseTask(clickedCase);
+    }
+
+    canAddChildren(queriedCase: Case): boolean {
+        const immediate = queriedCase.immediateData.find(data => data.stringId === 'canAddTreeChildren');
+        return immediate.value;
     }
 }

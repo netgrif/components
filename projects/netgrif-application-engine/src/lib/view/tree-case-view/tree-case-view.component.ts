@@ -17,7 +17,7 @@ export class TreeCaseViewComponent implements OnInit {
 
     constructor(private _caseResource: CaseResourceService, private _processService: ProcessService) {
         this.loading = true;
-        this._processService.getNet('zmluva').subscribe(net => {
+        this._processService.getNet('tree_test').subscribe(net => {
             const newCase = {
                 title: 'Nová zmluva',
                 color: 'panel-primary-icon',

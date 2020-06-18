@@ -9,12 +9,14 @@ import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {PanelModule} from '../../panel/panel.module';
 import {TaskContentModule} from '../../task-content/task-content.module';
+import { AddChildNodeComponent } from './tree-component/add-child-node/add-child-node.component';
 
 @NgModule({
     declarations: [
         TreeCaseViewComponent,
         TreeComponentComponent,
-        TreeTaskContentComponent
+        TreeTaskContentComponent,
+        AddChildNodeComponent
     ],
     imports: [
         CommonModule,
