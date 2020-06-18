@@ -4,7 +4,6 @@ import {HeaderColumn} from '../../models/header-column';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {string} from 'postcss-selector-parser';
 import {FieldsGroup} from '../../models/fields-group';
 import {orderBy} from 'natural-orderby';
 

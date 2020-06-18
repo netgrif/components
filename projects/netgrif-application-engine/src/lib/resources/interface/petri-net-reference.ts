@@ -1,6 +1,5 @@
 import {Author} from './author';
 import {ImmediateData} from './immediate-data';
-import NetRole from '../../process/netRole';
 
 /**
  * Information Petri Net
