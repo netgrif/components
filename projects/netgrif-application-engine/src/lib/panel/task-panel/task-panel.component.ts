@@ -5,7 +5,7 @@ import {NAE_TASK_COLS, TaskContentComponent} from '../../task-content/task-panel
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable, Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -26,10 +26,6 @@ import {AssignPolicyService} from '../../task/services/assign-policy.service';
 import {FinishPolicyService} from '../../task/services/finish-policy.service';
 import {NAE_TASK_OPERATIONS} from '../../task/models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
-import {NAE_TASK_FINISH_EVENT} from '../../task/models/task-finish-event-injection-token';
-import {SubjectTaskFinishEvent} from '../../task/models/subject-task-finish-event';
-import {NAE_TASK_LIST_OPERATIONS} from '../../task/models/task-list-operations-injectio-token';
-import {SubjectTaskListOperations} from '../../task/models/subject-task-list-operations';
 
 
 @Component({
@@ -49,8 +45,6 @@ import {SubjectTaskListOperations} from '../../task/models/subject-task-list-ope
         AssignPolicyService,
         FinishPolicyService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-        {provide: NAE_TASK_FINISH_EVENT, useClass: SubjectTaskFinishEvent},
-        {provide: NAE_TASK_LIST_OPERATIONS, useClass: SubjectTaskListOperations}
     ]
 })
 export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
@@ -80,11 +74,9 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _taskState: TaskRequestStateService,
                 private _taskDataService: TaskDataService,
                 private _assignPolicyService: AssignPolicyService,
-                @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
-                @Inject(NAE_TASK_FINISH_EVENT) _taskFinishEvent: SubjectTaskFinishEvent,
-                @Inject(NAE_TASK_LIST_OPERATIONS) _taskListOperations: SubjectTaskListOperations) {
+                @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations) {
         super();
-        _taskDataService.changedFields$.subscribe( changedFields => {
+        _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskPanelData.changedFields.next(changedFields);
         });
         _taskOperations.open$.subscribe(() => {
@@ -93,10 +85,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         _taskOperations.close$.subscribe(() => {
             this.collapse();
         });
-        _taskFinishEvent.finish$.subscribe(() => {
-           this.processTask('finish');
-        });
-        _taskListOperations.reloadPage$.subscribe(() => {
+        _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
         });
     }
@@ -194,28 +183,20 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         this.panelRef = panelRef;
     }
 
-    processTask(type: string) {
-        const after = new Subject<boolean>();
-        after.subscribe(bool => {
-            if (bool) {
-                this._taskViewService.reloadCurrentPage();
-            }
-            after.complete();
-        });
-        switch (type) {
-            case 'assign':
-                this._assignTaskService.assign(after);
-                break;
-            case 'delegate':
-                this._delegateTaskService.delegate(after);
-                break;
-            case 'cancel':
-                this._cancelTaskService.cancel(after);
-                break;
-            case 'finish':
-                this._finishTaskService.validateDataAndFinish(after);
-                break;
-        }
+    assign() {
+        this._assignTaskService.assign();
+    }
+
+    delegate() {
+        this._delegateTaskService.delegate();
+    }
+
+    cancel() {
+        this._cancelTaskService.cancel();
+    }
+
+    finish() {
+        this._finishTaskService.validateDataAndFinish();
     }
 
     collapse() {

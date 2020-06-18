@@ -90,7 +90,7 @@ export class FinishTaskService extends TaskHandlingService {
             this._taskState.stopLoading();
             if (response.success) {
                 this._taskContentService.removeStateData();
-                afterAction.next(true);
+                this.completeSuccess(afterAction);
                 this._taskOperations.close();
             } else if (response.error) {
                 this._snackBar.openErrorSnackBar(response.error);
@@ -102,5 +102,14 @@ export class FinishTaskService extends TaskHandlingService {
             this._taskState.stopLoading();
             afterAction.next(false);
         });
+    }
+
+    /**
+     * @ignore
+     * Reloads the task and emits `true` to the `afterAction` stream
+     */
+    private completeSuccess(afterAction: Subject<boolean>): void {
+        this._taskOperations.reload();
+        afterAction.next(true);
     }
 }

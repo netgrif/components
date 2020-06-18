@@ -15,4 +15,10 @@ export class NullTaskOperations implements TaskOperations {
      */
     open(): void {
     }
+
+    /**
+     * Calling this function does nothing
+     */
+    reload(): void {
+    }
 }

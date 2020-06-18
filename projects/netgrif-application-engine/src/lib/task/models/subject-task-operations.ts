@@ -9,10 +9,12 @@ export class SubjectTaskOperations implements TaskOperations, OnDestroy {
 
     private _open: Subject<void>;
     private _close: Subject<void>;
+    private _reload: Subject<void>;
 
     constructor() {
         this._open = new Subject<void>();
         this._close = new Subject<void>();
+        this._reload = new Subject<void>();
     }
 
     /**
@@ -29,6 +31,13 @@ export class SubjectTaskOperations implements TaskOperations, OnDestroy {
         this._close.next();
     }
 
+    /**
+     * Emits into the [reload$]{@link SubjectTaskOperations#reload$} stream.
+     */
+    reload(): void {
+        this._reload.next();
+    }
+
     public get open$(): Observable<void> {
         return this._open.asObservable();
     }
@@ -37,12 +46,17 @@ export class SubjectTaskOperations implements TaskOperations, OnDestroy {
         return this._close.asObservable();
     }
 
+    public get reload$(): Observable<void> {
+        return this._reload.asObservable();
+    }
+
     /**
      * Completes the underlying streams
      */
     ngOnDestroy(): void {
         this._open.complete();
         this._close.complete();
+        this._reload.complete();
     }
 }
 

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
@@ -10,6 +10,8 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {TaskRequestStateService} from './task-request-state.service';
 import {TaskHandlingService} from './task-handling-service';
+import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
+import {TaskOperations} from '../interfaces/task-operations';
 
 
 /**
@@ -24,6 +26,7 @@ export class DelegateTaskService extends TaskHandlingService {
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
+                @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
     }
@@ -51,7 +54,7 @@ export class DelegateTaskService extends TaskHandlingService {
                     this._taskState.stopLoading();
                     if (response.success) {
                         this._taskContentService.removeStateData();
-                        afterAction.next(true);
+                        this.completeSuccess(afterAction);
                     } else if (response.error) {
                         this._snackBar.openErrorSnackBar(response.error);
                         afterAction.next(false);
@@ -64,6 +67,14 @@ export class DelegateTaskService extends TaskHandlingService {
                 });
             }
         });
+    }
 
+    /**
+     * @ignore
+     * Reloads the task and emits `true` to the `afterAction` stream
+     */
+    private completeSuccess(afterAction: Subject<boolean>): void {
+        this._taskOperations.reload();
+        afterAction.next(true);
     }
 }

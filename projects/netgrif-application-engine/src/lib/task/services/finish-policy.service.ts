@@ -5,8 +5,7 @@ import {FinishPolicy} from '../../task-content/model/policy';
 import {DataFocusPolicyService} from './data-focus-policy.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
-import {NAE_TASK_FINISH_EVENT} from '../models/task-finish-event-injection-token';
-import {TaskFinishEvent} from '../interfaces/task-finish-event';
+import {FinishTaskService} from './finish-task.service';
 
 /**
  * Handles the sequence of actions that are performed when a task is being finished, based on the task's configuration.
@@ -15,8 +14,8 @@ import {TaskFinishEvent} from '../interfaces/task-finish-event';
 export class FinishPolicyService extends TaskHandlingService {
 
     constructor(protected _dataFocusPolicyService: DataFocusPolicyService,
+                protected _finishTaskService: FinishTaskService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
-                @Inject(NAE_TASK_FINISH_EVENT) protected _finishEvent: TaskFinishEvent,
                 taskContentService: TaskContentService) {
         super(taskContentService);
     }
@@ -40,7 +39,7 @@ export class FinishPolicyService extends TaskHandlingService {
      */
     private autoNoDataFinishPolicy(): void {
         if (this._task.dataSize <= 0) {
-            this._finishEvent.finish();
+            this._finishTaskService.validateDataAndFinish();
             this._taskOperations.close();
         } else {
             this._taskOperations.open();

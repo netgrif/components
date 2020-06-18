@@ -9,8 +9,6 @@ import {CancelTaskService} from './cancel-task.service';
 import {FinishPolicyService} from './finish-policy.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
-import {NAE_TASK_LIST_OPERATIONS} from '../models/task-list-operations-injectio-token';
-import {TaskListOperations} from '../interfaces/task-list-operations';
 
 /**
  * Handles the sequence of actions that are performed when a task is being assigned, based on the task's configuration.
@@ -23,7 +21,6 @@ export class AssignPolicyService extends TaskHandlingService {
                 protected _cancelTaskService: CancelTaskService,
                 protected _finishPolicyService: FinishPolicyService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
-                @Inject(NAE_TASK_LIST_OPERATIONS) protected _taskListOperations: TaskListOperations,
                 taskContentService: TaskContentService) {
         super(taskContentService);
     }
@@ -83,7 +80,7 @@ export class AssignPolicyService extends TaskHandlingService {
     protected createAutoAssignOpenCallChain(): Subject<boolean> {
         const callchain = new Subject<boolean>();
         callchain.subscribe(assignSuccess => {
-            this._taskListOperations.reloadPage();
+            this._taskOperations.reload();
             if (assignSuccess) {
                 this._taskDataService.initializeTaskDataFields(
                     this.createAutoAssignInitializeDataCallChain()
@@ -136,7 +133,7 @@ export class AssignPolicyService extends TaskHandlingService {
     protected createAutoAssignCloseCallChain(): Subject<boolean> {
         const callchain = new Subject<boolean>();
         callchain.subscribe(() => {
-            this._taskListOperations.reloadPage();
+            this._taskOperations.reload();
             this._taskOperations.close();
             callchain.complete();
         });

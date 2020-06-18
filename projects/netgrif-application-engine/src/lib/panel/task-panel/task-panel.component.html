@@ -19,23 +19,23 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item *ngIf="canAssign()" (click)="processTask('assign')">
+                <button mat-menu-item *ngIf="canAssign()" (click)="assign()">
                     <mat-icon>person</mat-icon>
                     <span>{{ 'tasks.view.assign' | translate}}</span>
                 </button>
-                <button mat-menu-item *ngIf="canDo('delegate')" (click)="processTask('delegate')">
+                <button mat-menu-item *ngIf="canDo('delegate')" (click)="delegate()">
                     <mat-icon>person_outline</mat-icon>
                     <span>{{ 'tasks.view.delegate' | translate}}</span>
                 </button>
-                <button mat-menu-item *ngIf="canDo('delegate')" (click)="processTask('delegate')">
+                <button mat-menu-item *ngIf="canDo('delegate')" (click)="delegate()">
                     <mat-icon>person_add</mat-icon>
                     <span>{{ 'tasks.view.reassign' | translate}}</span>
                 </button>
-                <button mat-menu-item *ngIf="canCancel()" (click)="processTask('cancel')">
+                <button mat-menu-item *ngIf="canCancel()" (click)="cancel()">
                     <mat-icon>cancel</mat-icon>
                     <span>{{ 'tasks.view.cancel' | translate}}</span>
                 </button>
-                <button mat-menu-item *ngIf="canFinish()" (click)="processTask('finish')">
+                <button mat-menu-item *ngIf="canFinish()" (click)="finish()">
                     <mat-icon>done</mat-icon>
                     <span>{{ 'tasks.view.finish' | translate}}</span>
                 </button>
@@ -50,15 +50,15 @@
             </div>
             <mat-action-row>
                 <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100">
-                    <button *ngIf="canAssign()" (click)="processTask('assign')" mat-button>
+                    <button *ngIf="canAssign()" (click)="assign()" mat-button>
                         {{ 'tasks.view.assign' | translate | uppercase }}</button>
-                    <button *ngIf="canDo('delegate')" (click)="processTask('delegate')" mat-button>
+                    <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button>
                         {{ 'tasks.view.delegate' | translate | uppercase }}</button>
-                    <button *ngIf="canReassign()" (click)="processTask('delegate')" mat-button>
+                    <button *ngIf="canReassign()" (click)="delegate()" mat-button>
                         {{ 'tasks.view.reassign' | translate | uppercase }}</button>
-                    <button *ngIf="canCancel()" (click)="processTask('cancel')" mat-button>
+                    <button *ngIf="canCancel()" (click)="cancel()" mat-button>
                         {{ 'tasks.view.cancel' | translate | uppercase }}</button>
-                    <button *ngIf="canFinish()" (click)="processTask('finish')" mat-button>
+                    <button *ngIf="canFinish()" (click)="finish()" mat-button>
                         {{ 'tasks.view.finish' | translate | uppercase }}</button>
                     <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-button>
                         {{ 'tasks.view.collapse' | translate | uppercase }}</button>

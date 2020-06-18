@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
-import {HttpParams} from '@angular/common/http';
 import {TaskContentService} from '../../../task-content/services/task-content.service';
 import {TreeTaskContentService} from './tree-task-content.service';
 import {TaskDataService} from '../../../task/services/task-data.service';
@@ -12,12 +11,8 @@ import {CancelTaskService} from '../../../task/services/cancel-task.service';
 import {FinishTaskService} from '../../../task/services/finish-task.service';
 import {TaskRequestStateService} from '../../../task/services/task-request-state.service';
 import {DataFocusPolicyService} from '../../../task/services/data-focus-policy.service';
-import {NAE_TASK_LIST_OPERATIONS} from '../../../task/models/task-list-operations-injectio-token';
-import {NullTaskListOperations} from '../../../task/models/null-task-list-operations';
 import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injection-token';
 import {NullTaskOperations} from '../../../task/models/null-task-operations';
-import {NAE_TASK_FINISH_EVENT} from '../../../task/models/task-finish-event-injection-token';
-import {NullTaskFinishEvent} from '../../../task/models/null-task-finish-event';
 import {NAE_TASK_COLS} from '../../../task-content/task-panel-content/task-content.component';
 
 @Component({
@@ -33,9 +28,7 @@ import {NAE_TASK_COLS} from '../../../task-content/task-panel-content/task-conte
         FinishTaskService,
         TaskRequestStateService,
         DataFocusPolicyService,
-        {provide: NAE_TASK_LIST_OPERATIONS, useClass: NullTaskListOperations},
         {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
-        {provide: NAE_TASK_FINISH_EVENT, useClass: NullTaskFinishEvent},
         {provide: NAE_TASK_COLS, useValue: undefined}
     ]
 })

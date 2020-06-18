@@ -11,8 +11,8 @@ import {FieldConverterService} from '../../task-content/services/field-converter
 import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
 import {DataFocusPolicyService} from './data-focus-policy.service';
 import {TaskHandlingService} from './task-handling-service';
-import {NAE_TASK_LIST_OPERATIONS} from '../models/task-list-operations-injectio-token';
-import {TaskListOperations} from '../interfaces/task-list-operations';
+import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
+import {TaskOperations} from '../interfaces/task-operations';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -31,7 +31,7 @@ export class TaskDataService extends TaskHandlingService {
                 protected _taskResourceService: TaskResourceService,
                 protected _fieldConverterService: FieldConverterService,
                 protected _dataFocusPolicyService: DataFocusPolicyService,
-                @Inject(NAE_TASK_LIST_OPERATIONS) protected _taskListOperations: TaskListOperations,
+                @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
         this._updateSuccess$ = new Subject<boolean>();
@@ -144,7 +144,7 @@ export class TaskDataService extends TaskHandlingService {
             this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
             this._log.debug(error);
             this.updateStateInfo(afterAction, false);
-            this._taskListOperations.reloadPage();
+            this._taskOperations.reload();
         });
     }
 
