@@ -27,7 +27,7 @@
                 <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item">
                 </nae-date-time-field>
 
-                <nae-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item">
+                <nae-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId">
                 </nae-file-field>
 
                 <nae-user-field *ngSwitchCase="'user'" class="full-width-auto" [dataField]="item.item">

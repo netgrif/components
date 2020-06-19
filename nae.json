@@ -458,7 +458,9 @@
                         "1",
                         "bill",
                         "drobny_nakup",
-                        "new_model"
+                        "new_model",
+                        "processId1",
+                        "test"
                     ]
                 },
                 "componentName": "MyCaseView"

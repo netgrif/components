@@ -156,11 +156,16 @@
             "workday": "Entered date must be week day"
         },
         "snackBar": {
-            "downloadFail": " download failed",
+            "downloadFail": " failed to download",
             "moreFiles": "You choose more files as you allowed",
             "sameFiles": "You cannot upload two of the same files",
-            "fileSize": "Files size exceeded allowed limit"
-        }
+            "fileSize": "Files size exceeded allowed limit",
+            "cannotDownload": "The file cannot be downloaded without defined task",
+            "cannotUpload": "The file cannot be uploaded without defined task",
+            "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
+            "fileUploadFailed": "The file failed to upload"
+        },
+        "noFile": "No file"
     },
     "dialog": {
         "close": "Close",
