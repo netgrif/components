@@ -50,18 +50,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
             this.injectedData = this._sideMenuControl.data as NewCaseInjectionData;
         }
         this._hotkeysService.add(new Hotkey('enter', (event: KeyboardEvent): boolean => {
-            if (this.stepper1) {
-                this.stepper1.next();
-                if (this.stepper1.selectedIndex === 2) {
-                    this.createNewCase();
-                }
-            }
-            if (this.stepper2) {
-                this.stepper2.next();
-                if (this.stepper2.selectedIndex === 1) {
-                    this.createNewCase();
-                }
-            }
+            this.nextStep();
             return false;
         }));
     }
@@ -103,24 +92,26 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
 
     public createNewCase(): void {
-        const newCase = {
-            title: this.titleFormControl.value,
-            color: 'black',
-            netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
-        };
+        if (this.titleFormControl.valid) {
+            const newCase = {
+                title: this.titleFormControl.value,
+                color: 'black',
+                netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
+            };
 
-        this._caseResourceService.createCase(newCase)
-            .subscribe(
-                response => {
-                    this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
-                    this._sideMenuControl.close({
-                        opened: false,
-                        message: 'Confirm new case setup',
-                        data: response
-                    });
-                },
-                error => this._snackBarService.openErrorSnackBar(error)
-            );
+            this._caseResourceService.createCase(newCase)
+                .subscribe(
+                    response => {
+                        this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
+                        this._sideMenuControl.close({
+                            opened: false,
+                            message: 'Confirm new case setup',
+                            data: response
+                        });
+                    },
+                    error => this._snackBarService.openErrorSnackBar(error)
+                );
+        }
     }
 
     /**

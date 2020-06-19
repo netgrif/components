@@ -460,7 +460,9 @@
                         "drobny_nakup",
                         "new_model",
                         "processId1",
-                        "test"
+                        "test",
+                        "all_data",
+                        "zmluva"
                     ]
                 },
                 "componentName": "MyCaseView"

@@ -27,6 +27,7 @@ import {MultichoiceField} from '../../data-fields/multichoice-field/models/multi
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskMetaField} from '../../header/task-header/task-meta-enum';
+import {UserComparatorService} from '../../user/services/user-comparator.service';
 
 
 @Component({
@@ -52,7 +53,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
                 private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
                 private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService,
-                private _translate: TranslateService, private _paperView: PaperViewService) {
+                private _translate: TranslateService, private _paperView: PaperViewService,
+                private _userComparator: UserComparatorService) {
         super();
         this.loading = false;
         this._updating = false;
@@ -378,7 +380,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         if (this.loading) {
             return;
         }
-        if (!this._taskPanelData.task.user || ((this._taskPanelData.task.user.email !== this._userService.user.email)
+        if (!this._taskPanelData.task.user || (!this._userComparator.compareUsers(this._taskPanelData.task.user)
             && !this.canDo('cancel'))) {
             afterAction.next(false);
             return;
@@ -495,18 +497,18 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     canReassign() {
-        return (this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email)
+        return (this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user))
             && (this.canDo('delegate'));
     }
 
     canCancel() {
         return (this._taskPanelData.task.assignPolicy === AssignPolicy.manual &&
-            this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email) ||
+            this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user)) ||
             (this._taskPanelData.task.user && this.canDo('cancel'));
     }
 
     canFinish() {
-        return this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email;
+        return this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user);
     }
 
     canCollapse() {

@@ -1,11 +1,12 @@
 import {Authority} from './authority';
 import {UserProcessRole} from './user-process-role';
 import {Group, ProcessRole} from './user';
+import {IUser} from '../../user/models/iuser';
 
 /**
  * User for Task
  */
-export interface UserTask {
+export interface UserTask extends IUser {
     /**
      * **Example:** example@netgrif.com
      */
