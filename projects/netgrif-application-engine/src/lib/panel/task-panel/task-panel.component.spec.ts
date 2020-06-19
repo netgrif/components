@@ -132,6 +132,7 @@ describe('TaskPanelComponent', () => {
         component.loading = false;
 
         component.taskPanelData.task.user = {
+            id: '1',
             email: 'string',
             name: 'string',
             surname: 'string',
@@ -345,7 +346,7 @@ class MyResources {
 class MyUserResources {
     getLoggedUser(params): Observable<User> {
         return of({
-            id: 5,
+            id: '5',
             email: 'string',
             name: 'string',
             surname: 'string',
