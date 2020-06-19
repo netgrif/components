@@ -176,7 +176,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 old[key] = neww[key];
             }
         });
-        this.blockTaskFields(old, !(old.user && this._userComparator.compareUsers(old.user as any)));
+        this.blockTaskFields(old, !(old.user && this._userComparator.compareUsers(old.user)));
     }
 
     public loadTasks() {
@@ -237,7 +237,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                     }
                 });
                 this.blockFields(!(this._taskArray[i].task.user &&
-                    this._userComparator.compareUsers(this._taskArray[i].task.user as any)), i);
+                    this._userComparator.compareUsers(this._taskArray[i].task.user)), i);
                 this._taskArray[i].changedFields = this._changedFields$;
                 tasks.splice(index, 1);
             }

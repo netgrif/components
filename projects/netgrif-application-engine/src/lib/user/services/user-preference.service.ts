@@ -23,7 +23,7 @@ export class UserPreferenceService {
         this._preferences = this._emptyPreferences();
         this._preferencesChanged$ = new Subject<void>();
 
-        this._userService.user$.subscribe(loggedUser => {
+        _userService.user$.subscribe(loggedUser => {
             if (loggedUser.id !== '') {
                 this._userResourceService.getPreferences().subscribe(prefs => {
                         this._preferences = this._emptyPreferences();

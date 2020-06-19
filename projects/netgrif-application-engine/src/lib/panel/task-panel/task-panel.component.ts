@@ -380,7 +380,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         if (this.loading) {
             return;
         }
-        if (!this._taskPanelData.task.user || (!this._userComparator.compareUsers(this._taskPanelData.task.user as any)
+        if (!this._taskPanelData.task.user || (!this._userComparator.compareUsers(this._taskPanelData.task.user)
             && !this.canDo('cancel'))) {
             afterAction.next(false);
             return;
@@ -497,18 +497,18 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     canReassign() {
-        return (this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user as any))
+        return (this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user))
             && (this.canDo('delegate'));
     }
 
     canCancel() {
         return (this._taskPanelData.task.assignPolicy === AssignPolicy.manual &&
-            this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user as any)) ||
+            this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user)) ||
             (this._taskPanelData.task.user && this.canDo('cancel'));
     }
 
     canFinish() {
-        return this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user as any);
+        return this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user);
     }
 
     canCollapse() {
