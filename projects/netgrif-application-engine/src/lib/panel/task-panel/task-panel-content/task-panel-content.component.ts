@@ -39,6 +39,10 @@ export class TaskPanelContentComponent {
         });
     }
 
+    public get taskId(): string {
+        return this.taskPanelContentService.taskId;
+    }
+
     private static newGridRow(cols: number): Array<GridFiller> {
         return [new GridFiller(0, cols - 1)];
     }

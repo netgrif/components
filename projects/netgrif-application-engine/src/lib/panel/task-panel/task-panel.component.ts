@@ -63,6 +63,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         super.ngOnInit();
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         let cols: number;
+        this._taskPanelContentService.taskId = this._taskPanelData.task.stringId;
         if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
             cols = this._taskPanelData.task.layout.cols;
         }
@@ -488,7 +489,9 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     canAssign() {
-        return this._taskPanelData.task.assignPolicy === AssignPolicy.manual && !this._taskPanelData.task.user && this.canDo('perform');
+        return (this._taskPanelData.task.assignPolicy === AssignPolicy.manual && !this._taskPanelData.task.user && this.canDo('perform'))
+            || (this._taskPanelData.task.roles === null || this._taskPanelData.task.roles === undefined
+                || Object.keys(this._taskPanelData.task.roles).length === 0);
     }
 
     canReassign() {

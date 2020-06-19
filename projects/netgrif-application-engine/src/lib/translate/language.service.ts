@@ -35,7 +35,7 @@ export class LanguageService {
             this.setLanguage(lang);
         }
 
-        _preferenceService.preferencesChanged$().subscribe(() => {
+        _preferenceService.preferencesChanged$.subscribe(() => {
             const preferredLang = this._preferenceService.getLocale();
             if (preferredLang !== undefined && preferredLang !== this._translate.currentLang) {
                 this.setLanguage(preferredLang);

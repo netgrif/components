@@ -74,7 +74,7 @@ export class UserPreferenceService {
         return this._preferences.locale;
     }
 
-    public preferencesChanged$(): Observable<void> {
+    public get preferencesChanged$(): Observable<void> {
         return this._preferencesChanged$.asObservable();
     }
 

@@ -49,7 +49,7 @@ export class FilesUploadItemComponent implements OnInit {
      * @param file Selected file for re-upload
      */
     public retryFile(file: FileUploadModel) {
-        this.fileFieldService.retryFile(file);
+        this.fileFieldService.retryFile(file, null);
     }
 
     /**
@@ -59,7 +59,7 @@ export class FilesUploadItemComponent implements OnInit {
      * @param file Selected file for download
      */
     public onFileDownload(file: FileUploadModel) {
-        this.fileFieldService.onFileDownload(file);
+        this.fileFieldService.onFileDownload(file, null);
     }
 
     /**

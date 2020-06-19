@@ -9,6 +9,8 @@ import {tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
+import {LoggerService} from '../../logger/services/logger.service';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +23,9 @@ export class UserService {
 
     constructor(private _authService: AuthenticationService,
                 private _userResource: UserResourceService,
-                private _userTransform: UserTransformer) {
+                private _userTransform: UserTransformer,
+                private _log: LoggerService,
+                private _http: HttpClient) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new Subject<User>();
@@ -109,6 +113,8 @@ export class UserService {
                 this._user = this._userTransform.transform(backendUser as AuthUser);
                 this.publishUserChange();
             }
+        }, error => {
+            this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
         });
     }
 
