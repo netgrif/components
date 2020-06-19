@@ -10,7 +10,8 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
 import {LoggerService} from '../../logger/services/logger.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SessionService} from '../../authentication/session/services/session.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +26,7 @@ export class UserService {
                 private _userResource: UserResourceService,
                 private _userTransform: UserTransformer,
                 private _log: LoggerService,
+                private _session: SessionService,
                 private _http: HttpClient) {
         this._user = this.emptyUser();
         this._loginCalled = false;
@@ -116,7 +118,12 @@ export class UserService {
                 this.publishUserChange();
             }
         }, error => {
-            this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
+            if (error instanceof HttpErrorResponse && error.status === 401) {
+                this._log.debug('Authentication token is invalid. Clearing stream');
+                this._session.clear();
+            } else {
+                this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
+            }
         });
     }
 
