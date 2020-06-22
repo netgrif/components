@@ -17,7 +17,7 @@ export class TaskContentComponent {
     formCols: number;
     loading: boolean;
 
-    constructor(private _fieldConvertor: FieldConverterService,
+    constructor(private _fieldConverter: FieldConverterService,
                 private taskContentService: TaskContentService,
                 private _paperView: PaperViewService,
                 @Inject(NAE_TASK_COLS) public taskCols) {
@@ -107,7 +107,7 @@ export class TaskContentComponent {
                         grid[newRow] = [];
                         if (!dataField.behavior.hidden) {
                             returnResource.push({
-                                item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                item: dataField, type: this._fieldConverter.resolveType(dataField),
                                 layout: {x: 0, y: newRow, cols: columnGroup, rows: 1}
                             });
                         }
@@ -136,7 +136,7 @@ export class TaskContentComponent {
                                         newFillers.push(...filler.fillersAfterCover(columnStart, columnEnd));
                                     }
                                     returnResource.push({
-                                        item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                        item: dataField, type: this._fieldConverter.resolveType(dataField),
                                         layout: {x: columnStart, y: newRow, cols: columnGroup - columnEnd, rows: 1}
                                     });
                                 } else if (dataGroup.alignment === 'end' && (count + 1) === dataGroup.fields.length) {
@@ -144,7 +144,7 @@ export class TaskContentComponent {
                                         newFillers.push(...filler.fillersAfterCover(columnCenter, columnGroup - 1));
                                     }
                                     returnResource.push({
-                                        item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                        item: dataField, type: this._fieldConverter.resolveType(dataField),
                                         layout: {x: columnCenter, y: newRow, cols: columnGroup - columnCenter, rows: 1}
                                     });
                                 } else {
@@ -152,7 +152,7 @@ export class TaskContentComponent {
                                         newFillers.push(...filler.fillersAfterCover(0, columnCenter - 1));
                                     }
                                     returnResource.push({
-                                        item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                        item: dataField, type: this._fieldConverter.resolveType(dataField),
                                         layout: {x: 0, y: newRow, cols: columnCenter, rows: 1}
                                     });
                                 }
@@ -167,7 +167,7 @@ export class TaskContentComponent {
                                 }
                             } else {
                                 returnResource.push({
-                                    item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                    item: dataField, type: this._fieldConverter.resolveType(dataField),
                                     layout: {x: columnCenter, y: row, cols: columnGroup - columnCenter, rows: 1}
                                 });
                                 grid[row] = [];
@@ -180,7 +180,7 @@ export class TaskContentComponent {
         });
         resource.forEach(dataGroup => {
             returnResource.push(...dataGroup.fields.filter(item => !item.behavior.hidden && item.layout !== undefined)
-                .map(item => ({item, type: this._fieldConvertor.resolveType(item), layout: item.layout})));
+                .map(item => ({item, type: this._fieldConverter.resolveType(item), layout: item.layout})));
         });
         let encounterFirst = false;
         for (let y = grid.length - 1; y >= 0; y--) {

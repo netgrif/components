@@ -24,7 +24,7 @@ export class TaskEventService extends TaskHandlingService {
     }
 
     /**
-     * Checks whether the logged user can assign the task, managed by this service, at it's current state.
+     * Checks whether the logged user can assign the task, managed by this service, in it's current state.
      */
     public canAssign(): boolean {
         return (
@@ -40,7 +40,7 @@ export class TaskEventService extends TaskHandlingService {
     }
 
     /**
-     * Checks whether the logged user can delegate the task, managed by this service, at it's current state.
+     * Checks whether the logged user can delegate the task, managed by this service, in it's current state.
      */
     public canReassign(): boolean {
         return this._task.user
@@ -49,7 +49,7 @@ export class TaskEventService extends TaskHandlingService {
     }
 
     /**
-     * Checks whether the logged user can cancel the task, managed by this service, at it's current state,
+     * Checks whether the logged user can cancel the task, managed by this service, in it's current state,
      */
     public canCancel(): boolean {
         return (
@@ -62,7 +62,7 @@ export class TaskEventService extends TaskHandlingService {
     }
 
     /**
-     * Checks whether the logged user can finish the task, managed by this service, at it's current state,
+     * Checks whether the logged user can finish the task, managed by this service, in it's current state,
      */
     public canFinish(): boolean {
         return this._task.user
@@ -70,7 +70,7 @@ export class TaskEventService extends TaskHandlingService {
     }
 
     /**
-     * Checks whether the logged user can collapse the task, managed by this service, at it's current state,
+     * Checks whether the logged user can collapse the task, managed by this service, in it's current state,
      */
     public canCollapse(): boolean {
         return this._task.assignPolicy === AssignPolicy.manual;
