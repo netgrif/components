@@ -27,9 +27,16 @@ export class TaskEventService extends TaskHandlingService {
      * Checks whether the logged user can assign the task, managed by this service, at it's current state.
      */
     public canAssign(): boolean {
-        return this._task.assignPolicy === AssignPolicy.manual
-            && !this._task.user
-            && this.canDo('perform');
+        return (
+                this._task.assignPolicy === AssignPolicy.manual
+                && !this._task.user
+                && this.canDo('perform')
+            )
+            || (
+                this._task.roles === null
+                || this._task.roles === undefined
+                || Object.keys(this._task.roles).length === 0
+            );
     }
 
     /**
