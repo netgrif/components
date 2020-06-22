@@ -40,7 +40,7 @@ export class TaskContentComponent {
     }
 
     public get taskId(): string {
-        return this.taskPanelContentService.taskId;
+        return this.taskPanelContentService.task.stringId;
     }
 
     private static newGridRow(cols: number): Array<GridFiller> {

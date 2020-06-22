@@ -5,6 +5,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {AssignPolicy} from '../model/policy';
 import {TaskContentService} from './task-content.service';
 import {TaskHandlingService} from '../../task/services/task-handling-service';
+import {UserComparatorService} from '../../user/services/user-comparator.service';
 
 /**
  * Holds logic about the available operations on a {@link Task} object based on it's state.
@@ -17,6 +18,7 @@ export class TaskEventService extends TaskHandlingService {
 
     constructor(protected _userService: UserService,
                 protected _logger: LoggerService,
+                protected _userComparator: UserComparatorService,
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
     }
@@ -35,7 +37,7 @@ export class TaskEventService extends TaskHandlingService {
      */
     public canReassign(): boolean {
         return this._task.user
-            && this._task.user.email === this._userService.user.email
+            && this._userComparator.compareUsers(this._task.user)
             && this.canDo('delegate');
     }
 
@@ -45,10 +47,10 @@ export class TaskEventService extends TaskHandlingService {
     public canCancel(): boolean {
         return (
                 this._task.user
-                && this._task.user.email === this._userService.user.email
+                && this._userComparator.compareUsers(this._task.user)
             ) || (
                 this._task.user
-                && this.canDo('cancel')
+                && this.canDo('perform')
             );
     }
 
@@ -57,7 +59,7 @@ export class TaskEventService extends TaskHandlingService {
      */
     public canFinish(): boolean {
         return this._task.user
-            && this._task.user.email === this._userService.user.email;
+            && this._userComparator.compareUsers(this._task.user);
     }
 
     /**

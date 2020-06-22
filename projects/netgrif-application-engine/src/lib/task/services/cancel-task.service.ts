@@ -3,7 +3,6 @@ import {Subject} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
-import {UserService} from '../../user/services/user.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {TranslateService} from '@ngx-translate/core';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -11,6 +10,7 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
+import {UserComparatorService} from '../../user/services/user-comparator.service';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -20,11 +20,11 @@ export class CancelTaskService extends TaskHandlingService {
 
     constructor(protected _log: LoggerService,
                 protected _taskEventService: TaskEventService,
-                protected _userService: UserService,
                 protected _taskResourceService: TaskResourceService,
                 protected _translate: TranslateService,
                 protected _snackBar: SnackBarService,
                 protected _taskState: TaskRequestStateService,
+                protected _userComparator: UserComparatorService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
@@ -46,7 +46,7 @@ export class CancelTaskService extends TaskHandlingService {
         }
         if (!this._task.user
             || (
-                (this._task.user.email !== this._userService.user.email)
+                !this._userComparator.compareUsers(this._task.user)
                 && !this._taskEventService.canDo('cancel')
             )) {
             afterAction.next(false);
