@@ -3,7 +3,6 @@ import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
-import {LanguageService} from '../../translate/language.service';
 import {CaseMetaField} from './case-menta-enum';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {ViewService} from '../../routing/view-service/view.service';

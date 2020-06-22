@@ -87,7 +87,7 @@ describe('UserResourceService', () => {
     it('should getLoggedUser', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.getLoggedUser().subscribe(res => {
-                expect(res.id).toEqual(5);
+                expect(res.id).toEqual('5');
                 expect(res.email).toEqual('string');
                 expect(res.fullName).toEqual('string string');
             });
@@ -96,7 +96,7 @@ describe('UserResourceService', () => {
             expect(reqLog.request.method).toEqual('GET');
 
             reqLog.flush({
-                id: 5,
+                id: '5',
                 email: 'string',
                 name: 'string',
                 surname: 'string',
@@ -112,7 +112,7 @@ describe('UserResourceService', () => {
     it('should getUser', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.getUser('5').subscribe(res => {
-                expect(res.id).toEqual(5);
+                expect(res.id).toEqual('5');
                 expect(res.email).toEqual('string');
                 expect(res.fullName).toEqual('string string');
             });
@@ -121,7 +121,7 @@ describe('UserResourceService', () => {
             expect(reqLog.request.method).toEqual('GET');
 
             reqLog.flush({
-                id: 5,
+                id: '5',
                 email: 'string',
                 name: 'string',
                 surname: 'string',
@@ -176,7 +176,7 @@ describe('UserResourceService', () => {
     it('should updateUser', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.updateUser('5', {}).subscribe(res => {
-                expect(res.id).toEqual(5);
+                expect(res.id).toEqual('5');
                 expect(res.email).toEqual('string');
                 expect(res.fullName).toEqual('string string');
             });
@@ -185,7 +185,7 @@ describe('UserResourceService', () => {
             expect(reqLog.request.method).toEqual('POST');
 
             reqLog.flush({
-                id: 5,
+                id: '5',
                 email: 'string',
                 name: 'string',
                 surname: 'string',

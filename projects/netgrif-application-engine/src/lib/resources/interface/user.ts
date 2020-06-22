@@ -1,13 +1,14 @@
 import {Authority} from './authority';
+import {IUser} from '../../user/models/iuser';
 
 /**
  * User Object
  */
-export interface User {
+export interface User extends IUser {
     /**
      * MySQL ID
      */
-    id: number;
+    id: string;
     /**
      * Email
      */

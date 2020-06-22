@@ -50,18 +50,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
             this.injectedData = this._sideMenuControl.data as NewCaseInjectionData;
         }
         this._hotkeysService.add(new Hotkey('enter', (event: KeyboardEvent): boolean => {
-            if (this.stepper1) {
-                this.stepper1.next();
-                if (this.stepper1.selectedIndex === 2) {
-                    this.createNewCase();
-                }
-            }
-            if (this.stepper2) {
-                this.stepper2.next();
-                if (this.stepper2.selectedIndex === 1) {
-                    this.createNewCase();
-                }
-            }
+            this.nextStep();
             return false;
         }));
     }
@@ -74,8 +63,8 @@ export class NewCaseComponent implements OnInit, OnChanges {
             });
         }
 
-        this.injectedData.allowedNets$.subscribe( allowedNets => {
-            this.options = allowedNets.map( petriNet => ({value: petriNet.stringId, viewValue: petriNet.title}));
+        this.injectedData.allowedNets$.subscribe(allowedNets => {
+            this.options = allowedNets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title}));
         });
 
         this.filteredOptions = this.processFormControl.valueChanges
@@ -103,10 +92,10 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
 
     public createNewCase(): void {
-        if (this.selectedColorControl.valid) {
+        if (this.titleFormControl.valid) {
             const newCase = {
                 title: this.titleFormControl.value,
-                color: this.selectedColorControl.value,
+                color: 'black',
                 netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
             };
 
@@ -121,9 +110,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
                         });
                     },
                     error => this._snackBarService.openErrorSnackBar(error)
-            );
-        } else {
-            this.selectedColorControl.markAsTouched();
+                );
         }
     }
 
@@ -148,14 +135,14 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
     nextStep() {
         if (this.stepper1) {
-            if (this.stepper1.selectedIndex === 2) {
+            if (this.stepper1.selectedIndex === 1) {
                 this.createNewCase();
             } else {
                 this.stepper1.next();
             }
         }
         if (this.stepper2) {
-            if (this.stepper2.selectedIndex === 1) {
+            if (this.stepper2.selectedIndex === 0) {
                 this.createNewCase();
             } else {
                 this.stepper2.next();

@@ -10,6 +10,7 @@ import {ProcessService} from '../../../../process/process.service';
 import {TaskViewService} from '../task-view.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {TaskViewParams} from '../../models/task-view-params';
+import {UserComparatorService} from '../../../../user/services/user-comparator.service';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link TaskViewService} dependencies.
@@ -33,6 +34,7 @@ export class ConfigTaskViewServiceFactory {
                 protected _searchService: SearchService,
                 protected _configService: ConfigurationService,
                 protected _processService: ProcessService,
+                protected _userComparator: UserComparatorService,
                 protected _log: LoggerService) {
     }
 
@@ -59,6 +61,7 @@ export class ConfigTaskViewServiceFactory {
                 this._translate,
                 this._searchService,
                 this._log,
+                this._userComparator,
                 nets
             );
         } else {

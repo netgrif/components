@@ -8,6 +8,7 @@ import {ProcessService} from '../../../../process/process.service';
 import {TaskViewService} from '../task-view.service';
 import {InjectedTabbedTaskViewData} from '../../models/injected-tabbed-task-view-data';
 import {LoggerService} from '../../../../logger/services/logger.service';
+import {UserComparatorService} from '../../../../user/services/user-comparator.service';
 
 /**
  * Convenience method that can be used as a factory if no `allowedNets` are necessary.
@@ -52,7 +53,8 @@ export class ArrayTaskViewServiceFactory {
                 protected _translate: TranslateService,
                 protected _searchService: SearchService,
                 protected _processService: ProcessService,
-                protected _loggerService: LoggerService) {
+                protected _loggerService: LoggerService,
+                protected _userComparator: UserComparatorService) {
     }
 
     /**
@@ -68,6 +70,7 @@ export class ArrayTaskViewServiceFactory {
             this._translate,
             this._searchService,
             this._loggerService,
+            this._userComparator,
             this._processService.getNets(allowedNetsIds)
         );
     }

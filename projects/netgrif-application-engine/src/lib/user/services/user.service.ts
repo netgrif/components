@@ -9,6 +9,9 @@ import {tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
+import {LoggerService} from '../../logger/services/logger.service';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SessionService} from '../../authentication/session/services/session.service';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +24,10 @@ export class UserService {
 
     constructor(private _authService: AuthenticationService,
                 private _userResource: UserResourceService,
-                private _userTransform: UserTransformer) {
+                private _userTransform: UserTransformer,
+                private _log: LoggerService,
+                private _session: SessionService,
+                private _http: HttpClient) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new Subject<User>();
@@ -111,8 +117,13 @@ export class UserService {
                 this._user = this._userTransform.transform(backendUser as AuthUser);
                 this.publishUserChange();
             }
-        }, error1 => {
-            console.log(error1);
+        }, error => {
+            if (error instanceof HttpErrorResponse && error.status === 401) {
+                this._log.debug('Authentication token is invalid. Clearing stream');
+                this._session.clear();
+            } else {
+                this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
+            }
         });
     }
 
