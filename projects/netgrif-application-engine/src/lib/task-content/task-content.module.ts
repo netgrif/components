@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {TaskContentComponent} from './task-panel-content/task-content.component';
+import {TaskContentComponent} from './task-content/task-content.component';
 import {DataFieldsModule} from '../data-fields/data-fields.module';
 import {SnackBarModule} from '../snack-bar/snack-bar.module';
 import {MaterialModule} from '../material/material.module';

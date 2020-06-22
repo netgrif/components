@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Inject, Injector, Input, OnInit, StaticProvider, Type} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {NAE_TASK_COLS, TaskContentComponent} from '../../task-content/task-panel-content/task-content.component';
+import {NAE_TASK_COLS, TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';

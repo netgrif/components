@@ -13,7 +13,7 @@ import {TaskRequestStateService} from '../../../task/services/task-request-state
 import {DataFocusPolicyService} from '../../../task/services/data-focus-policy.service';
 import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injection-token';
 import {NullTaskOperations} from '../../../task/models/null-task-operations';
-import {NAE_TASK_COLS} from '../../../task-content/task-panel-content/task-content.component';
+import {NAE_TASK_COLS} from '../../../task-content/task-content/task-content.component';
 
 @Component({
     selector: 'nae-tree-task-content',
