@@ -26,6 +26,7 @@ import {AssignPolicyService} from '../../task/services/assign-policy.service';
 import {FinishPolicyService} from '../../task/services/finish-policy.service';
 import {NAE_TASK_OPERATIONS} from '../../task/models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
+import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
     templateUrl: './task-panel.component.html',
     styleUrls: ['./task-panel.component.scss'],
     providers: [
-        TaskContentService,
+        {provide: TaskContentService, useClass: SingleTaskContentService},
         TaskDataService,
         TaskEventService,
         AssignTaskService,

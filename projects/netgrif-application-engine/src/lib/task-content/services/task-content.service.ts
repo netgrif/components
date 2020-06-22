@@ -16,52 +16,38 @@ import {FieldConverterService} from './field-converter.service';
  *
  * Notable example of a parent Component is the {@link TaskPanelComponent}.
  *
- * Notable example of a task content renderer is the {@link TaskPanelComponent}.
+ * Notable example of a task content renderer is the {@link TaskContentComponent}.
  */
 @Injectable()
-export class TaskContentService {
+export abstract class TaskContentService {
     $shouldCreate: Subject<DataGroup[]>;
-    protected _task$: Subject<Task>;
     protected _task: Task;
 
-    constructor(protected _fieldConverterService: FieldConverterService,
-                protected _snackBarService: SnackBarService,
-                protected _translate: TranslateService,
-                protected _logger: LoggerService) {
+    protected constructor(protected _fieldConverterService: FieldConverterService,
+                          protected _snackBarService: SnackBarService,
+                          protected _translate: TranslateService,
+                          protected _logger: LoggerService) {
         this.$shouldCreate = new Subject<DataGroup[]>();
         this._task = undefined;
-        this._task$ = new Subject<Task>();
     }
 
     /**
      * @returns the Task object if set and `undefined` otherwise
      */
-    public get task(): Task | undefined {
-        return this._task;
-    }
+    public abstract get task(): Task | undefined;
 
     /**
-     * The task can be only set once. All other call do nothing and log an error.
+     * Setting a Task also emits it into the stream accessible by the [task$]{@link TaskContentService#task$} getter method.
      * @param task the Task that owns the content managed by this service
      */
-    public set task(task: Task) {
-        if (!this._task$.closed) {
-            this._task = task;
-            this._task$.next(task);
-            this._task$.complete();
-        } else {
-            this._logger.error('TaskContentService can have it\'s task set only once');
-        }
-    }
+    public abstract set task(task: Task);
 
     /**
-     * Stream returns a single {@link Task} object and then completes.
+     * Stream returns a {@link Task} object every time this object is set.
      *
-     * use [task]{@link TaskContentService#task} setter method to set the task, that is then pushed into the underlying stream.
+     * Use [task]{@link TaskContentService#task} setter method to set the Task.
      */
-    public get task$(): Observable<Task> {
-        return this._task$.asObservable();
-    }
+    public abstract get task$(): Observable<Task>;
 
     /**
      * Checks the validity of all data fields in the managed {@link Task}.

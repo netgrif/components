@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {TaskContentService} from '../../../task-content/services/task-content.service';
-import {TreeTaskContentService} from './tree-task-content.service';
 import {TaskDataService} from '../../../task/services/task-data.service';
 import {AssignTaskService} from '../../../task/services/assign-task.service';
 import {Subject} from 'rxjs';
@@ -14,13 +13,14 @@ import {DataFocusPolicyService} from '../../../task/services/data-focus-policy.s
 import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injection-token';
 import {NullTaskOperations} from '../../../task/models/null-task-operations';
 import {NAE_TASK_COLS} from '../../../task-content/task-content/task-content.component';
+import {UnlimitedTaskContentService} from '../../../task-content/services/unlimited-task-content.service';
 
 @Component({
     selector: 'nae-tree-task-content',
     templateUrl: './tree-task-content.component.html',
     styleUrls: ['./tree-task-content.component.scss'],
     providers: [
-        {provide: TaskContentService, useClass: TreeTaskContentService},
+        {provide: TaskContentService, useClass: UnlimitedTaskContentService},
         AssignTaskService,
         TaskDataService,
         TaskEventService,

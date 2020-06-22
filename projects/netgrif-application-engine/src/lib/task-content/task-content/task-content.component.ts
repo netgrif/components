@@ -18,7 +18,7 @@ export class TaskContentComponent {
     loading: boolean;
 
     constructor(private _fieldConvertor: FieldConverterService,
-                private taskPanelContentService: TaskContentService,
+                private taskContentService: TaskContentService,
                 private _paperView: PaperViewService,
                 @Inject(NAE_TASK_COLS) public taskCols) {
         this.loading = true;
@@ -27,7 +27,7 @@ export class TaskContentComponent {
         } else {
             this.formCols = this.taskCols;
         }
-        this.taskPanelContentService.$shouldCreate.subscribe(data => {
+        this.taskContentService.$shouldCreate.subscribe(data => {
             console.time('time');
             if (data.length !== 0) {
                 this.dataSource = this.fillBlankSpace(data, this.formCols);
@@ -40,7 +40,7 @@ export class TaskContentComponent {
     }
 
     public get taskId(): string {
-        return this.taskPanelContentService.task.stringId;
+        return this.taskContentService.task.stringId;
     }
 
     private static newGridRow(cols: number): Array<GridFiller> {
