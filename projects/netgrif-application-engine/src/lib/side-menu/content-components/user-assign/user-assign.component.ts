@@ -65,7 +65,7 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
         this._loading = true;
         this._userResourceService.getAll().subscribe( result => {
             // TODO 15.6.2020 - handle pagination of users
-            if (result.content && result.content instanceof Array) {
+            if (result.content && Array.isArray(result.content)) {
                 this.users = result.content.map( user => new UserValue(user.id, user.name, user.surname, user.email));
             } else {
                 this._snackBar.openWarningSnackBar(this._translate.instant('side-menu.user.noUser'));
