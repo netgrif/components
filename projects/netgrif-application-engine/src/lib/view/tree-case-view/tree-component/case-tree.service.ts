@@ -6,7 +6,6 @@ import {MatTreeNestedDataSource} from '@angular/material';
 import {CaseTreeNode} from './interfaces/CaseTreeNode';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {TreeCaseViewService} from '../tree-case-view.service';
-import {Case} from '../../../resources/interface/case';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ImmediateData} from '../../../resources/interface/immediate-data';
@@ -16,6 +15,7 @@ import {FilterType} from '../../../filter/models/filter-type';
 @Injectable()
 export class CaseTreeService {
 
+    protected _currentNode: CaseTreeNode;
     private _rootNodesFilter: Filter;
     private readonly _treeDataSource: MatTreeNestedDataSource<CaseTreeNode>;
     private readonly _treeControl: NestedTreeControl<CaseTreeNode>;
@@ -26,6 +26,9 @@ export class CaseTreeService {
                 protected _logger: LoggerService) {
         this._treeDataSource = new MatTreeNestedDataSource<CaseTreeNode>();
         this._treeControl = new NestedTreeControl<CaseTreeNode>(node => node.children);
+        _treeCaseViewService.reloadCase$.asObservable().subscribe(() => {
+            this.reloadCurrentCase();
+        });
     }
 
     public set rootFilter(filter: Filter) {
@@ -44,8 +47,9 @@ export class CaseTreeService {
     /**
      * Notifies the parent TreeCaseView that a case was clicked in the tree and it's Task should be displayed
      */
-    public openCaseTask(clickedCase: Case): void {
-        this._treeCaseViewService.case$.next(clickedCase);
+    public caseNodeClicked(node: CaseTreeNode): void {
+        this._currentNode = node;
+        this._treeCaseViewService.loadTask$.next(node.case);
     }
 
     /**
@@ -138,5 +142,37 @@ export class CaseTreeService {
                 }
             });
         }
+    }
+
+    /**
+     * Reloads the currently selected case node. The {@link Case} object held in the {@link CaseTreeNode} instance is not replaced,
+     * but the new Case is `Object.assign`-ed into it. THis means that the reference to the Case instance is unchanged but references
+     * to all it's non-primitive attributes are changed.
+     *
+     * Note that the child nodes, nor the parent nodes are reloaded.
+     */
+    protected reloadCurrentCase(): void {
+        if (this._currentNode) {
+            this._caseResourceService.searchCases(this.createCaseFilter(this._currentNode.case.stringId)).subscribe( page => {
+                if (page && page.content && Array.isArray(page.content) && page.content.length === 1) {
+                    Object.assign(this._currentNode.case, page.content[0]);
+                    this._logger.debug('Case Tree Node reloaded');
+                } else {
+                    this._logger.error('Case Tree Node could not be reloaded. Invalid server response', page);
+                }
+            }, error => {
+                this._logger.error('Case Tree Node reload request failed', error);
+            });
+        } else {
+            this._logger.debug('No Tree Case Node selected, nothing to reload');
+        }
+    }
+
+    /**
+     * @param caseId ID of the desired Case
+     * @returns a {@link Filter} that matches the desired case by it's ID
+     */
+    protected createCaseFilter(caseId: string): Filter {
+        return new SimpleFilter(`caseWithId-${caseId}`, FilterType.CASE, {query: `stringId:${caseId}`});
     }
 }

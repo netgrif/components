@@ -34,8 +34,8 @@ export class TreeComponentComponent {
 
     hasChild = (_: number, node: CaseTreeNode) => !!node.children && node.children.length > 0;
 
-    openCaseTask(clickedCase: Case) {
-        this._treeService.openCaseTask(clickedCase);
+    caseNodeClicked(node: CaseTreeNode) {
+        this._treeService.caseNodeClicked(node);
     }
 
     canAddChildren(queriedCase: Case): boolean {

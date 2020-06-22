@@ -2,7 +2,7 @@
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
         <div class="mat-tree-node tree-offset" fxLayout="row" fxLayoutAlign="start center">
-            <span (click)="openCaseTask(node.case)">{{node.case.title}}</span>
+            <span (click)="caseNodeClicked(node)">{{node.case.title}}</span>
             <nae-add-child-node [node]="node" *ngIf="canAddChildren(node.case)"></nae-add-child-node>
         </div>
     </mat-tree-node>
@@ -11,7 +11,7 @@
     <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
         <div class="mat-tree-node" fxLayout="row" fxLayoutAlign="start center">
             <div class="mat-tree-node">
-                <span (click)="openCaseTask(node.case)">{{node.case.title}}</span>
+                <span (click)="caseNodeClicked(node)">{{node.case.title}}</span>
                 <div fxFlex></div>
                 <button mat-icon-button matTreeNodeToggle
                         [attr.aria-label]="'toggle ' + node.name">
