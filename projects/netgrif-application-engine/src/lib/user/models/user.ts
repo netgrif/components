@@ -1,4 +1,4 @@
-import Role from './role';
+import {Role} from './role';
 import {IUser} from './iuser';
 
 export class User implements IUser {

@@ -1,6 +1,6 @@
 import {Authority, ProcessRole, User as AuthUser, UserProcessRole} from './user';
 import {User} from '../../user/models/user';
-import Role from '../../user/models/role';
+import {Role} from '../../user/models/role';
 import {Transformer} from './transformer';
 import {Injectable} from '@angular/core';
 

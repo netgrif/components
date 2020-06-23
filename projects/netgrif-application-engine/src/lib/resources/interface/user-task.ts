@@ -1,7 +1,8 @@
 import {Authority} from './authority';
 import {UserProcessRole} from './user-process-role';
-import {Group, ProcessRole} from './user';
+import {Group} from './user';
 import {IUser} from '../../user/models/iuser';
+import {ProcessRole} from './process-role';
 
 /**
  * User for Task

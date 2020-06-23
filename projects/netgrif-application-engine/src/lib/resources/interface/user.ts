@@ -1,5 +1,7 @@
 import {Authority} from './authority';
 import {IUser} from '../../user/models/iuser';
+import {UserProcessRole} from './user-process-role';
+import {ProcessRole} from './process-role';
 
 /**
  * User Object
@@ -58,49 +60,3 @@ export interface Group {
     childGroups: Array<any>;
 }
 
-/**
- * Object from Backend
- */
-export interface ProcessRole {
-    /**
-     * Process ID - Process Mongo ID
-     *
-     * ***Example:*** 5e43f69c0a975a7f87551089
-     */
-    stringId: string;
-    /**
-     * Process Name
-     *
-     * ***Example:*** Klient
-     */
-    name?: string;
-    /**
-     * Process Description
-     */
-    description?: string;
-}
-
-/**
- * Object from Backend
- *
- * ***Example:***
- *
- *    {
- *     "roleId": "5e43f6aa0a975a7f87551bf8",
- *     "netId": "5e43f6aa0a975a7f87551bf7"
- *    }
- */
-export interface UserProcessRole {
-    /**
-     * Role ID - Role Mongo ID
-     *
-     * ***Example:*** 5e43f6aa0a975a7f87551bf8
-     */
-    roleId: string;
-    /**
-     * Net ID - Net Mongo ID
-     *
-     * ***Example:*** 5e43f6aa0a975a7f87551bf7
-     */
-    netId?: string;
-}
