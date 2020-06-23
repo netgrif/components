@@ -29,8 +29,6 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _userComparator: UserComparatorService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: SubjectTaskOperations) {
 
-        _taskContentService.$shouldCreate.next([]);
-
         _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskContentService.updateFromChangedFields(changedFields);
         });
@@ -54,6 +52,10 @@ export class TreeTaskContentService implements OnDestroy {
         _taskOperations.close$.subscribe(() => {
             this._taskContentService.blockFields(true);
         });
+    }
+
+    public displayEmptyTaskContent(): void {
+        this._taskContentService.$shouldCreate.next([]);
     }
 
     /**

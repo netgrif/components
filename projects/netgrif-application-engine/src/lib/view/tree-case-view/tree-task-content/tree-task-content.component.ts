@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {TaskContentService} from '../../../task-content/services/task-content.service';
 import {TaskDataService} from '../../../task/services/task-data.service';
 import {AssignTaskService} from '../../../task/services/assign-task.service';
@@ -35,13 +35,17 @@ import {FinishPolicyService} from '../../../task/services/finish-policy.service'
         {provide: NAE_TASK_COLS, useValue: undefined}
     ]
 })
-export class TreeTaskContentComponent {
+export class TreeTaskContentComponent implements AfterViewInit {
 
     constructor(private _treeTaskContentService: TreeTaskContentService,
                 private _taskEventService: TaskEventService,
                 private _assign: AssignTaskService,
                 private _cancel: CancelTaskService,
                 private _finish: FinishTaskService) {
+    }
+
+    ngAfterViewInit(): void {
+        this._treeTaskContentService.displayEmptyTaskContent();
     }
 
     public canAssign(): boolean {
