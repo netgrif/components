@@ -1,9 +1,11 @@
-.list-item {
+@import "projects/netgrif-application-engine/src/styles/core";
+
+.user-item {
     padding: 10px 15px;
     cursor: pointer;
 }
 
-.list-item:hover {
+.user-item:hover {
     background-color: rgba(0,0,0,.14);
     border-radius: 2.5px;
 }
@@ -18,17 +20,11 @@
 .name-selected {
     color: white;
 }
+
 .name-unselected {
     color: black;
 }
 
-.list-item-unselected {
+.user-assign-item-unselected {
     background-color: white;
-}
-
-.list-item-selected {
-    background-color: rgba(244, 67, 54, 0.75);
-}
-.list-item-selected:hover {
-    background-color: #f44336;
 }

@@ -70,6 +70,7 @@
         },
         "user": {
             "assign": "User Assign",
+            "choose": "Choose user",
             "noUser": "There are no users",
             "err": "Users failed to load",
             "showcase": "User showcase mode not set!"

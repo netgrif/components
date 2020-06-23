@@ -1,18 +1,23 @@
-<mat-toolbar color="primary">{{ 'side-menu.user.assign' | translate | uppercase}}</mat-toolbar>
+<mat-toolbar color="primary">{{ 'side-menu.user.assign' | translate | uppercase }}</mat-toolbar>
 <div class="user-assign-container side-menu-root">
     <div class="user-assign-search-container">
         <mat-icon class="search-icon">search</mat-icon>
         <mat-form-field class="user-assign-search" color="primary">
-            <input matInput placeholder="Choose user" [value]="formControl.value" [formControl]="formControl" #inputSearch>
-            <button mat-button *ngIf="formControl.value" matSuffix mat-icon-button (click)="formControl.setValue('')">
+            <input matInput placeholder="{{ 'side-menu.user.choose' | translate }}"
+                   [value]="searchUserControl.value"
+                   [formControl]="searchUserControl"
+                   #inputSearch>
+            <button mat-button *ngIf="searchUserControl.value" matSuffix mat-icon-button (click)="searchUserControl.setValue('')">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
     </div>
-    <nae-user-assign-list class="list"
-        [control]="formControl"
-        [userList]="users"
-        (userSelected)="userWasSelected($event)">
+
+    <nae-user-assign-list [searchUserControl]="searchUserControl"
+                          [injectedData]="injectedData"
+                          (userSelected)="userWasSelected($event)">
     </nae-user-assign-list>
-    <button mat-button color="primary" class="assign-button" (click)="assign()">{{ 'tasks.view.assign' | translate | uppercase}}</button>
+
+    <button mat-button color="primary" class="assign-button"
+            (click)="assign()">{{ 'tasks.view.assign' | translate | uppercase }}</button>
 </div>

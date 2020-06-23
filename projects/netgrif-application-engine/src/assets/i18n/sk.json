@@ -70,6 +70,7 @@
         },
         "user": {
             "assign": "Priradiť používateľa",
+            "choose": "Zvoľte používateľa",
             "noUser": "Neexistujú žiadny používatelia",
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"

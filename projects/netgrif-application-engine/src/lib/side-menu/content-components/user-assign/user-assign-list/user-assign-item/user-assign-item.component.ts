@@ -9,6 +9,8 @@ import {UserValue} from '../../../../../data-fields/user-field/models/user-value
 export class UserAssignItemComponent implements OnInit {
 
     @Input() user: UserValue;
+    @Input() first: boolean;
+    @Input() last: boolean;
 
     constructor() {
     }

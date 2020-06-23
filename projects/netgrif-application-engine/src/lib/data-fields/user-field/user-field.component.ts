@@ -6,6 +6,7 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {UserValue} from './models/user-value';
+import {UserAssignInjectedData} from '../../side-menu/content-components/user-assign/model/user-assign-injected-data';
 
 @Component({
     selector: 'nae-user-field',
@@ -26,7 +27,8 @@ export class UserFieldComponent extends AbstractDataFieldComponent implements On
     }
 
     public selectUser() {
-        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM, {roles: this.dataField.roles}).onClose.subscribe($event => {
+        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM,
+            {roles: this.dataField.roles, value: this.dataField.value} as UserAssignInjectedData).onClose.subscribe($event => {
             if ($event.data) {
                 this.dataField.value = $event.data as UserValue;
                 this._snackbar.openGenericSnackBar('User ' + this.dataField.value.fullName + ' was assigned', 'how_to_reg');
