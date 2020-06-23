@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import Role from '../models/role';
+import {Role} from '../models/role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
 import {User as UserResource} from '../../resources/interface/user';
