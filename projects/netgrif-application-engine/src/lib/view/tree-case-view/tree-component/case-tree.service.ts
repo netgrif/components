@@ -12,6 +12,11 @@ import {ImmediateData} from '../../../resources/interface/immediate-data';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
 import {Case} from '../../../resources/interface/case';
+import {Task} from '../../../resources/interface/task';
+import {ProcessService} from '../../../process/process.service';
+import {SideMenuService} from '../../../side-menu/services/side-menu.service';
+import {OptionSelectorComponent} from '../../../side-menu/content-components/option-selector/option-selector.component';
+import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 
 @Injectable()
 export class CaseTreeService {
@@ -24,7 +29,9 @@ export class CaseTreeService {
     constructor(protected _caseResourceService: CaseResourceService,
                 protected _treeCaseViewService: TreeCaseViewService,
                 protected _taskResourceService: TaskResourceService,
-                protected _logger: LoggerService) {
+                protected _logger: LoggerService,
+                protected _processService: ProcessService,
+                protected _sideMenuService: SideMenuService) {
         this._treeDataSource = new MatTreeNestedDataSource<CaseTreeNode>();
         this._treeControl = new NestedTreeControl<CaseTreeNode>(node => node.children);
         _treeCaseViewService.reloadCase$.asObservable().subscribe(() => {
@@ -61,7 +68,6 @@ export class CaseTreeService {
      * Adds a new child node to the given node based on the properties of the node's case
      */
     public addChildNode(clickedNode: CaseTreeNode): void {
-        // TODO support with multiple allowed nets
         this._taskResourceService.getTasks({
             case: clickedNode.case.stringId,
             transition: 'add_tree_child'
@@ -72,30 +78,54 @@ export class CaseTreeService {
             }
             const task = page.content[0];
             const caseRefField = clickedNode.case.immediateData.find(it => it.stringId === 'treeChildCases');
-            this._taskResourceService.setData(task.stringId, {
-                treeChildCases: {
-                    type: 'caseRef',
-                    value: {
-                        operation: 'add',
-                        title: 'New Node', // TODO some default value for each case?
-                        processId: caseRefField.allowedNets[0]
-                    }
-                }
-            }).subscribe(changeContainer => {
-                const changedFields = changeContainer.changedFields;
-                const caseRefChanges = changedFields['treeChildCases'];
-                if (!caseRefChanges) {
-                    // TODO maybe reload the case?
-                    return;
-                }
-                this.updateNodeChildren(clickedNode, caseRefField, caseRefChanges.value);
-            }, error => {
-                // TODO notify user about error
-                this._logger.error('Could not set data to tree case ref', error);
-            });
+
+            if (caseRefField.allowedNets.length === 0) {
+                this._logger.error(`Case ${clickedNode.case.stringId} can add new tree nodes but has no allowed nets`);
+                return;
+            } else if (caseRefField.allowedNets.length === 1) {
+                this.createNewChildNode(clickedNode, task, caseRefField, caseRefField.allowedNets[0]);
+            } else {
+                this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
+                    const sideMeuRef = this._sideMenuService.open(OptionSelectorComponent, SideMenuSize.MEDIUM, {
+                        title: 'TODO some title here',
+                        options: nets.map(net => ({text: net.title, value: net.identifier}))
+                    });
+                    sideMeuRef.onClose.subscribe(event => {
+                        if (!!event.data) {
+                            this.createNewChildNode(clickedNode, task, caseRefField, event.data);
+                        }
+                    });
+                });
+            }
+
         }, error => {
             // TODO notify user about error
             this._logger.error('Task for adding tree nodes could not be found', error);
+        });
+    }
+
+    private createNewChildNode(clickedNode: CaseTreeNode, addNodeTask: Task,
+                               caseRefField: ImmediateData, newCaseProcessIdentifier: string): void {
+        this._taskResourceService.setData(addNodeTask.stringId, {
+            treeChildCases: {
+                type: 'caseRef',
+                value: {
+                    operation: 'add',
+                    title: 'New Node', // TODO some default value for each case?
+                    processId: newCaseProcessIdentifier
+                }
+            }
+        }).subscribe(changeContainer => {
+            const changedFields = changeContainer.changedFields;
+            const caseRefChanges = changedFields['treeChildCases'];
+            if (!caseRefChanges) {
+                // TODO maybe reload the case?
+                return;
+            }
+            this.updateNodeChildren(clickedNode, caseRefField, caseRefChanges.value);
+        }, error => {
+            // TODO notify user about error
+            this._logger.error('Could not set data to tree case ref', error);
         });
     }
 

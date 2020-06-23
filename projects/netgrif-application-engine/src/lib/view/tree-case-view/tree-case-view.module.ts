@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {TreeCaseViewComponent} from './tree-case-view.component';
-import {TreeComponentComponent} from './tree-component/tree-component.component';
+import {TreeComponent} from './tree-component/tree.component';
 import {TreeTaskContentComponent} from './tree-task-content/tree-task-content.component';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -14,7 +14,7 @@ import { AddChildNodeComponent } from './tree-component/add-child-node/add-child
 @NgModule({
     declarations: [
         TreeCaseViewComponent,
-        TreeComponentComponent,
+        TreeComponent,
         TreeTaskContentComponent,
         AddChildNodeComponent
     ],

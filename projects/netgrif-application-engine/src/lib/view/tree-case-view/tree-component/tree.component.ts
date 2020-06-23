@@ -11,11 +11,11 @@ import {CaseTreeNode} from './interfaces/CaseTreeNode';
 
 @Component({
     selector: 'nae-tree-component',
-    templateUrl: './tree-component.component.html',
-    styleUrls: ['./tree-component.component.scss'],
+    templateUrl: './tree.component.html',
+    styleUrls: ['./tree.component.scss'],
     providers: [CaseTreeService]
 })
-export class TreeComponentComponent {
+export class TreeComponent {
 
     constructor(private _treeService: CaseTreeService) {
     }
@@ -40,6 +40,6 @@ export class TreeComponentComponent {
 
     canAddChildren(queriedCase: Case): boolean {
         const immediate = queriedCase.immediateData.find(data => data.stringId === 'canAddTreeChildren');
-        return immediate.value;
+        return !!immediate && immediate.value;
     }
 }

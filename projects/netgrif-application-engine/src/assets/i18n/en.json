@@ -73,6 +73,9 @@
             "noUser": "There are no users",
             "err": "Users failed to load",
             "showcase": "User showcase mode not set!"
+        },
+        "option-selector": {
+            "select": "Select"
         }
     },
     "search": {

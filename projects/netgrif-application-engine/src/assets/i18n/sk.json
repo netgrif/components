@@ -73,6 +73,9 @@
             "noUser": "Neexistujú žiadny používatelia",
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
+        },
+        "option-selector": {
+            "select": "Zvoliť"
         }
     },
     "search": {

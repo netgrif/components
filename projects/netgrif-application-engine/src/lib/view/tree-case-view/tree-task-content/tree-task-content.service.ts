@@ -158,6 +158,7 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected clearCurrentTask(): void {
         this._taskContentService.task = undefined;
+        this.displayEmptyTaskContent();
     }
 
     /**

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TreeComponentComponent } from './tree-component.component';
+import { OptionSelectorComponent } from './option-selector.component';
 
-describe('TreeComponentComponent', () => {
-  let component: TreeComponentComponent;
-  let fixture: ComponentFixture<TreeComponentComponent>;
+describe('OptionSelectorComponent', () => {
+  let component: OptionSelectorComponent;
+  let fixture: ComponentFixture<OptionSelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TreeComponentComponent ]
+      declarations: [ OptionSelectorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TreeComponentComponent);
+    fixture = TestBed.createComponent(OptionSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
