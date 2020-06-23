@@ -7,8 +7,6 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {AssignTaskService} from '../../../task/services/assign-task.service';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {Case} from '../../../resources/interface/case';
-import {Subject} from 'rxjs';
-import {Filter} from '../../../filter/models/filter';
 import {TaskGetRequestBody} from '../../../resources/interface/task-get-request-body';
 import {Task} from '../../../resources/interface/task';
 import {CallChainService} from '../../../utility/call-chain/call-chain.service';
@@ -32,6 +30,11 @@ export class TreeTaskContentService implements OnDestroy {
         _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskContentService.updateFromChangedFields(changedFields);
         });
+        _taskDataService.updateSuccess$.subscribe(result => {
+            if (result) {
+                this._treeCaseService.reloadCase$.next();
+            }
+        });
         _treeCaseService.loadTask$.asObservable().subscribe(selectedCase => {
             this.loadFeaturedTask(selectedCase);
         });
@@ -45,10 +48,33 @@ export class TreeTaskContentService implements OnDestroy {
     }
 
     /**
+     * Checks whether the currently displayed task differs from the new one
+     * @param newCase [Case]{@link Case} object that holds the newly selected {@link Task}
+     * @returns `true` if the currently selected Case has a different ID from the newly selected Case.
+     * If the IDs are the same returns `true` if the transition IDs are different.
+     * Returns `false` otherwise.
+     */
+    private taskChanged(newCase: Case): boolean {
+        const currentCaseId = this._selectedCase ? this._selectedCase.stringId : undefined;
+        const newCaseId = newCase ? newCase.stringId : undefined;
+        if (currentCaseId !== newCaseId) {
+            return true;
+        }
+
+        const currentTransitionId = this.getTransitionId(this._selectedCase);
+        const newTransitionId = this.getTransitionId(newCase);
+        return currentTransitionId !== newTransitionId;
+    }
+
+    /**
      * Changes the currently displayed {@link Task} based on the selected {@link Case} from the Tree.
      * @param selectedCase the Case who's task should be now displayed
      */
     protected loadFeaturedTask(selectedCase: Case) {
+        if (!this.taskChanged(selectedCase)) {
+            return;
+        }
+
         if (this.shouldCancelTask) {
             this._cancel.cancel();
         }
@@ -76,14 +102,25 @@ export class TreeTaskContentService implements OnDestroy {
      * immediate data field. Returns `undefined` if the request body cannot be created.
      */
     protected getTaskRequestBody(): TaskGetRequestBody | undefined {
-        if (this._selectedCase && this._selectedCase.immediateData) {
-            const transitionId = this._selectedCase.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId');
-            if (transitionId !== undefined) {
-                return {
-                    case: this._selectedCase.stringId,
-                    transition: transitionId.value
-                };
-            }
+        const transitionId = this.getTransitionId(this._selectedCase);
+        if (transitionId) {
+            return {
+                case: this._selectedCase.stringId,
+                transition: transitionId
+            };
+        }
+        return undefined;
+    }
+
+    /**
+     * @param examinedCase the {@link Case} object from which we want to extract the transition ID
+     * @returns the ID of the transition that should be displayed in the {@link TaskContentComponent},
+     * or `undefined` if the currently selected case doesn't define it
+     */
+    protected getTransitionId(examinedCase: Case): string | undefined {
+        if (examinedCase && examinedCase.immediateData) {
+            const transitionId = examinedCase.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId');
+            return transitionId ? transitionId.value : undefined;
         }
         return undefined;
     }
@@ -112,7 +149,7 @@ export class TreeTaskContentService implements OnDestroy {
         if (success) {
             this._taskResourceService.getTasks(this.getTaskRequestBody()).subscribe(page => {
                 if (page && page.content && Array.isArray(page.content)) {
-                    this._taskContentService.task = page.content[0];
+                    Object.assign(this._taskContentService.task, page.content[0]);
                 }
             });
             this._taskDataService.initializeTaskDataFields();

@@ -11,6 +11,7 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {ImmediateData} from '../../../resources/interface/immediate-data';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
+import {Case} from '../../../resources/interface/case';
 
 @Injectable()
 export class CaseTreeService {
@@ -42,6 +43,10 @@ export class CaseTreeService {
 
     public get treeControl(): NestedTreeControl<CaseTreeNode> {
         return this._treeControl;
+    }
+
+    protected get _currentCase(): Case | undefined {
+        return this._currentNode ? this._currentNode.case : undefined;
     }
 
     /**
@@ -128,6 +133,7 @@ export class CaseTreeService {
     }
 
     protected loadNodes() {
+        // TODO pagination
         if (this._rootNodesFilter) {
             let params: HttpParams = new HttpParams();
             params = params.set('size', 100 + '');
@@ -153,9 +159,10 @@ export class CaseTreeService {
      */
     protected reloadCurrentCase(): void {
         if (this._currentNode) {
-            this._caseResourceService.searchCases(this.createCaseFilter(this._currentNode.case.stringId)).subscribe( page => {
+            this._caseResourceService.searchCases(this.createCaseFilter(this._currentCase.stringId)).subscribe( page => {
                 if (page && page.content && Array.isArray(page.content) && page.content.length === 1) {
-                    Object.assign(this._currentNode.case, page.content[0]);
+                    Object.assign(this._currentCase, page.content[0]);
+                    this._treeCaseViewService.loadTask$.next(this._currentCase);
                     this._logger.debug('Case Tree Node reloaded');
                 } else {
                     this._logger.error('Case Tree Node could not be reloaded. Invalid server response', page);
