@@ -11,15 +11,19 @@ import {Subject} from 'rxjs';
 import {Filter} from '../../../filter/models/filter';
 import {TaskGetRequestBody} from '../../../resources/interface/task-get-request-body';
 import {Task} from '../../../resources/interface/task';
+import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
+
+    private _selectedCase: Case;
 
     constructor(protected _treeCaseService: TreeCaseViewService,
                 protected _taskDataService: TaskDataService,
                 protected _taskContentService: TaskContentService,
                 protected _taskResourceService: TaskResourceService,
                 protected _taskEventService: TaskEventService,
+                protected _callChain: CallChainService,
                 protected _cancel: CancelTaskService,
                 protected _assign: AssignTaskService) {
 
@@ -49,7 +53,9 @@ export class TreeTaskContentService implements OnDestroy {
             this._cancel.cancel();
         }
 
-        const requestBody = this.getTaskRequestBody(selectedCase);
+        this._selectedCase = selectedCase;
+
+        const requestBody = this.getTaskRequestBody();
         if (requestBody === undefined) {
             this.clearCurrentTask();
             return;
@@ -65,17 +71,16 @@ export class TreeTaskContentService implements OnDestroy {
     }
 
     /**
-     * Creates a {@link TaskGetRequestBody} object that finds the specified Task for the selected Case in a Tree Case View
-     * @param selectedCase Case from a tree node
+     * Creates a {@link TaskGetRequestBody} object that finds the specified Task for the currently selected Case in a Tree Case View
      * @returns a request body that finds tasks of the given case with task id that corresponds to the value in the `treeTaskTransitionId`
      * immediate data field. Returns `undefined` if the request body cannot be created.
      */
-    protected getTaskRequestBody(selectedCase: Case): TaskGetRequestBody | undefined {
-        if (selectedCase && selectedCase.immediateData) {
-            const transitionId = selectedCase.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId');
+    protected getTaskRequestBody(): TaskGetRequestBody | undefined {
+        if (this._selectedCase && this._selectedCase.immediateData) {
+            const transitionId = this._selectedCase.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId');
             if (transitionId !== undefined) {
                 return {
-                    case: selectedCase.stringId,
+                    case: this._selectedCase.stringId,
                     transition: transitionId.value
                 };
             }
@@ -95,35 +100,23 @@ export class TreeTaskContentService implements OnDestroy {
      * @param task the Task that should now be selected
      */
     protected switchToTask(task: Task): void {
-        // continue here
         this._taskContentService.task = task;
-        const after = new Subject<boolean>();
-        const afterSecond = new Subject<boolean>();
-        after.subscribe(bool => {
-            if (bool) {
-                this._taskResourceService.getTasks({
-                    case: kaze.stringId,
-                    transition: kaze.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId').value
-                })
-                    .subscribe(tazk => {
-                        if (tazk && tazk.content && Array.isArray(tazk.content)) {
-                            this._taskContentService.task = tazk.content[0];
-                        }
-                    });
-                this._taskDataService.initializeTaskDataFields(afterSecond);
-            } else {
-                this.loading = false;
-            }
-            after.complete();
-        });
-        afterSecond.subscribe(bool => {
-            if (bool) {
-                this.show = true;
-            }
-            this.loading = false;
-            afterSecond.complete();
-        });
-        this._assign.assign(after);
+        this._assign.assign(this._callChain.create(b => this.afterAssignCallback(b)));
+    }
+
+    /**
+     * initializes the Task and reloads it's state after a successful assign
+     * @param success whether the assign operation succeeded or not
+     */
+    protected afterAssignCallback(success: boolean): void {
+        if (success) {
+            this._taskResourceService.getTasks(this.getTaskRequestBody()).subscribe(page => {
+                if (page && page.content && Array.isArray(page.content)) {
+                    this._taskContentService.task = page.content[0];
+                }
+            });
+            this._taskDataService.initializeTaskDataFields();
+        }
     }
 
     /**

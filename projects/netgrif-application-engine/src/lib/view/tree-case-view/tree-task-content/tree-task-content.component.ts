@@ -36,7 +36,7 @@ export class TreeTaskContentComponent {
     public show = false;
     public loading = false;
 
-    constructor(private _treeTaskContentService: TreeTaskContentComponent,
+    constructor(private _treeTaskContentService: TreeTaskContentService,
                 private _taskEventService: TaskEventService,
                 private _cancel: CancelTaskService,
                 private _finish: FinishTaskService) {
