@@ -2,14 +2,13 @@
     <div class="task-panel-body" fxFlex="100">
         <nae-task-content></nae-task-content>
 
-        <div *ngIf="show && !loading">
+        <div>
+            <button *ngIf="canAssign()" (click)="assign()" mat-button>
+                {{ 'tasks.view.assign' | translate | uppercase }}</button>
             <button *ngIf="canCancel()" (click)="cancel()" mat-button>
                 {{ 'tasks.view.cancel' | translate | uppercase }}</button>
             <button *ngIf="canFinish()" (click)="finish()" mat-button>
                 {{ 'tasks.view.finish' | translate | uppercase }}</button>
         </div>
-
-
-        <mat-progress-spinner *ngIf="loading"></mat-progress-spinner>
     </div>
 </div>

@@ -41,12 +41,12 @@ export class AssignTaskService extends TaskHandlingService {
         if (this._taskState.isLoading) {
             return;
         }
-        if (this._task.user) {
+        if (this._safeTask.user) {
             this.completeSuccess(afterAction);
             return;
         }
         this._taskState.startLoading();
-        this._taskResourceService.assignTask(this._task.stringId).subscribe(response => {
+        this._taskResourceService.assignTask(this._safeTask.stringId).subscribe(response => {
             this._taskState.stopLoading();
             if (response.success) {
                 this._taskContentService.removeStateData();

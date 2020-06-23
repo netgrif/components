@@ -38,8 +38,13 @@ export class TreeTaskContentComponent {
 
     constructor(private _treeTaskContentService: TreeTaskContentService,
                 private _taskEventService: TaskEventService,
+                private _assign: AssignTaskService,
                 private _cancel: CancelTaskService,
                 private _finish: FinishTaskService) {
+    }
+
+    public canAssign(): boolean {
+        return this._taskEventService.canAssign();
     }
 
     public canCancel(): boolean {
@@ -48,6 +53,10 @@ export class TreeTaskContentComponent {
 
     public canFinish(): boolean {
         return this._taskEventService.canFinish();
+    }
+
+    public assign(): void {
+        this._assign.assign();
     }
 
     public cancel(): void {

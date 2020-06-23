@@ -10,11 +10,18 @@ export abstract class TaskHandlingService {
     }
 
     /**
+     * @returns the Task object held by {@link TaskContentService} or `undefined` if the Service currently holds no Task.
+     */
+    protected get _task(): Task | undefined {
+        return this._taskContentService.task;
+    }
+
+    /**
      * Throws an error if the {@link TaskContentService} didn't have the Task object set yet.
      *
      * @returns the Task object held by {@link TaskContentService}.
      */
-    protected get _task(): Task {
+    protected get _safeTask(): Task {
         const task = this._taskContentService.task;
         if (!task) {
             throw new Error('Attempting to access Task object of an uninitialized TaskContentService');

@@ -50,7 +50,7 @@ export class DelegateTaskService extends TaskHandlingService {
             if (event.data !== undefined) {
                 this._taskState.startLoading();
 
-                this._taskResourceService.delegateTask(this._task.stringId, event.data.id).subscribe(response => {
+                this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).subscribe(response => {
                     this._taskState.stopLoading();
                     if (response.success) {
                         this._taskContentService.removeStateData();

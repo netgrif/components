@@ -44,16 +44,16 @@ export class CancelTaskService extends TaskHandlingService {
         if (this._taskState.isLoading) {
             return;
         }
-        if (!this._task.user
+        if (!this._safeTask.user
             || (
-                !this._userComparator.compareUsers(this._task.user)
+                !this._userComparator.compareUsers(this._safeTask.user)
                 && !this._taskEventService.canDo('cancel')
             )) {
             afterAction.next(false);
             return;
         }
         this._taskState.startLoading();
-        this._taskResourceService.cancelTask(this._task.stringId).subscribe(response => {
+        this._taskResourceService.cancelTask(this._safeTask.stringId).subscribe(response => {
             this._taskState.stopLoading();
             if (response.success) {
                 this._taskContentService.removeStateData();

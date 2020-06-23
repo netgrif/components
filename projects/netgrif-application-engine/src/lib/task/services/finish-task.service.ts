@@ -11,6 +11,7 @@ import {TaskDataService} from './task-data.service';
 import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
+import {CallChainService} from '../../utility/call-chain/call-chain.service';
 
 
 /**
@@ -25,6 +26,7 @@ export class FinishTaskService extends TaskHandlingService {
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
                 protected _taskDataService: TaskDataService,
+                protected _callChain: CallChainService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
@@ -42,18 +44,15 @@ export class FinishTaskService extends TaskHandlingService {
      * otherwise `false` will be emitted
      */
     public validateDataAndFinish(afterAction = new Subject<boolean>()): void {
-        const after = new Subject<boolean>();
-        if (this._task.dataSize <= 0) {
-            after.subscribe(() => {
-                if (this._task.dataSize <= 0 || this._taskContentService.validateTaskData()) {
+        if (this._safeTask.dataSize <= 0) {
+            this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
+                if (this._safeTask.dataSize <= 0 || this._taskContentService.validateTaskData()) {
                     this.sendFinishTaskRequest(afterAction);
                 }
-                after.complete();
-            });
-            this._taskDataService.initializeTaskDataFields(after);
+            }));
         } else if (this._taskContentService.validateTaskData()) {
-            after.subscribe(boolean => {
-                if (boolean) {
+            this._taskDataService.updateTaskDataFields(this._callChain.create(success => {
+                if (success) {
                     if (this._taskState.isUpdating) {
                         this._taskDataService.updateSuccess$.pipe(take(1)).subscribe(bool => {
                             if (bool) {
@@ -64,9 +63,7 @@ export class FinishTaskService extends TaskHandlingService {
                         this.sendFinishTaskRequest(afterAction);
                     }
                 }
-                after.complete();
-            });
-            this._taskDataService.updateTaskDataFields(after);
+            }));
         }
     }
 
@@ -86,7 +83,7 @@ export class FinishTaskService extends TaskHandlingService {
             return;
         }
         this._taskState.startLoading();
-        this._taskResourceService.finishTask(this._task.stringId).subscribe(response => {
+        this._taskResourceService.finishTask(this._safeTask.stringId).subscribe(response => {
             this._taskState.stopLoading();
             if (response.success) {
                 this._taskContentService.removeStateData();

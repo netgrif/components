@@ -27,15 +27,18 @@ export class TaskEventService extends TaskHandlingService {
      * Checks whether the logged user can assign the task, managed by this service, in it's current state.
      */
     public canAssign(): boolean {
-        return (
-                this._task.assignPolicy === AssignPolicy.manual
-                && !this._task.user
-                && this.canDo('perform')
-            )
-            || (
-                this._task.roles === null
-                || this._task.roles === undefined
-                || Object.keys(this._task.roles).length === 0
+        return !!this._task
+            && (
+                (
+                    this._task.assignPolicy === AssignPolicy.manual
+                    && !this._task.user
+                    && this.canDo('perform')
+                )
+                || (
+                    this._task.roles === null
+                    || this._task.roles === undefined
+                    || Object.keys(this._task.roles).length === 0
+                )
             );
     }
 
@@ -43,7 +46,8 @@ export class TaskEventService extends TaskHandlingService {
      * Checks whether the logged user can delegate the task, managed by this service, in it's current state.
      */
     public canReassign(): boolean {
-        return this._task.user
+        return !!this._task
+            && !!this._task.user
             && this._userComparator.compareUsers(this._task.user)
             && this.canDo('delegate');
     }
@@ -52,12 +56,15 @@ export class TaskEventService extends TaskHandlingService {
      * Checks whether the logged user can cancel the task, managed by this service, in it's current state,
      */
     public canCancel(): boolean {
-        return (
-                this._task.user
-                && this._userComparator.compareUsers(this._task.user)
-            ) || (
-                this._task.user
-                && this.canDo('perform')
+        return !!this._task
+            && (
+                (
+                    !!this._task.user
+                    && this._userComparator.compareUsers(this._task.user)
+                ) || (
+                    !!this._task.user
+                    && this.canDo('perform')
+                )
             );
     }
 
@@ -65,7 +72,8 @@ export class TaskEventService extends TaskHandlingService {
      * Checks whether the logged user can finish the task, managed by this service, in it's current state,
      */
     public canFinish(): boolean {
-        return this._task.user
+        return !!this._task
+            && !!this._task.user
             && this._userComparator.compareUsers(this._task.user);
     }
 
@@ -73,7 +81,8 @@ export class TaskEventService extends TaskHandlingService {
      * Checks whether the logged user can collapse the task, managed by this service, in it's current state,
      */
     public canCollapse(): boolean {
-        return this._task.assignPolicy === AssignPolicy.manual;
+        return !!this._task
+            && this._task.assignPolicy === AssignPolicy.manual;
     }
 
     /**
@@ -81,7 +90,11 @@ export class TaskEventService extends TaskHandlingService {
      * @param action the action that is checked
      */
     public canDo(action): boolean {
-        if (!this._task.roles || !action || !(this._task.roles instanceof Object)) {
+        if (!this._task
+            || !this._task.roles
+            || !action
+            || !(this._task.roles instanceof Object)
+        ) {
             return false;
         }
         return Object.keys(this._task.roles).some(role =>

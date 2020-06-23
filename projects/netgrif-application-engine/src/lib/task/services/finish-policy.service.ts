@@ -24,7 +24,7 @@ export class FinishPolicyService extends TaskHandlingService {
      * Performs the actions that correspond to the policy defined by the Task when it's finished.
      */
     public performFinishPolicy(): void {
-        if (this._task.finishPolicy === FinishPolicy.autoNoData) {
+        if (this._safeTask.finishPolicy === FinishPolicy.autoNoData) {
             this.autoNoDataFinishPolicy();
         } else {
             this.manualFinishPolicy();
@@ -38,7 +38,7 @@ export class FinishPolicyService extends TaskHandlingService {
      * Otherwise [opens]{@link TaskOperations#open} it and performs the [data focus policy]{@link DataFocusPolicyService}.
      */
     private autoNoDataFinishPolicy(): void {
-        if (this._task.dataSize <= 0) {
+        if (this._safeTask.dataSize <= 0) {
             this._finishTaskService.validateDataAndFinish();
             this._taskOperations.close();
         } else {

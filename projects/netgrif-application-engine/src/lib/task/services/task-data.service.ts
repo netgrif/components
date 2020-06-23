@@ -66,16 +66,16 @@ export class TaskDataService extends TaskHandlingService {
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
      */
     public initializeTaskDataFields(afterAction = new Subject<boolean>()): void {
-        if (this._task.dataSize > 0) {
+        if (this._safeTask.dataSize > 0) {
             afterAction.next(true);
             return;
         }
         this._taskState.startLoading();
-        this._taskResourceService.getData(this._task.stringId).subscribe(dataGroups => {
-            this._task.dataGroups = dataGroups;
+        this._taskResourceService.getData(this._safeTask.stringId).subscribe(dataGroups => {
+            this._safeTask.dataGroups = dataGroups;
             if (dataGroups.length === 0) {
-                this._log.info('Task has no data ' + this._task);
-                this._task.dataSize = 0;
+                this._log.info('Task has no data ' + this._safeTask);
+                this._safeTask.dataSize = 0;
             } else {
                 dataGroups.forEach(group => {
                     group.fields.forEach(field => {
@@ -85,12 +85,12 @@ export class TaskDataService extends TaskHandlingService {
                             }
                         });
                     });
-                    this._task.dataSize += group.fields.length;
+                    this._safeTask.dataSize += group.fields.length;
                 });
             }
             this._taskState.stopLoading();
             afterAction.next(true);
-            this._taskContentService.$shouldCreate.next(this._task.dataGroups);
+            this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
         }, error => {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
@@ -109,7 +109,7 @@ export class TaskDataService extends TaskHandlingService {
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
      */
     public updateTaskDataFields(afterAction = new Subject<boolean>()): void {
-        if (this._task.dataSize <= 0) {
+        if (this._safeTask.dataSize <= 0) {
             return;
         }
 
@@ -133,7 +133,7 @@ export class TaskDataService extends TaskHandlingService {
 
         this._taskState.startLoading();
         this._taskState.startUpdating();
-        this._taskResourceService.setData(this._task.stringId, body).subscribe(response => {
+        this._taskResourceService.setData(this._safeTask.stringId, body).subscribe(response => {
             if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
                 this._changedFields$.next(response.changedFields as ChangedFields);
             }
@@ -154,7 +154,7 @@ export class TaskDataService extends TaskHandlingService {
      */
     private createUpdateRequestBody(): TaskSetDataRequestBody {
         const body = {};
-        this._task.dataGroups.forEach(dataGroup => {
+        this._safeTask.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
                 if (field.initialized && field.valid && field.changed) {
                     body[field.stringId] = {
@@ -176,7 +176,7 @@ export class TaskDataService extends TaskHandlingService {
      */
     private clearChangedFlagFromDataFields(body: TaskSetDataRequestBody): void {
         Object.keys(body).forEach(id => {
-            this._task.dataGroups.forEach(dataGroup => {
+            this._safeTask.dataGroups.forEach(dataGroup => {
                 const changed = dataGroup.fields.find(f => f.stringId === id);
                 if (changed !== undefined) {
                     changed.changed = false;

@@ -30,7 +30,7 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param taskOpened whether the Task was 'opened' (eg. task panel is expanding) or 'closed' (eg. task panel is collapsing)
      */
     public performAssignPolicy(taskOpened: boolean): void {
-        if (this._task.assignPolicy === AssignPolicy.auto) {
+        if (this._safeTask.assignPolicy === AssignPolicy.auto) {
             this.autoAssignPolicy(taskOpened);
         } else {
             this.manualAssignPolicy(taskOpened);
@@ -64,6 +64,8 @@ export class AssignPolicyService extends TaskHandlingService {
             this.createAutoAssignOpenCallChain()
         );
     }
+
+    // TODO 23.6.2020 - Simplify the implementation of this file by using the CallChainService
 
     /**
      * Creates a call chain Subject that performs an action when a value is emitted into it.
