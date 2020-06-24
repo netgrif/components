@@ -45,6 +45,7 @@ export class TreeTaskContentService implements OnDestroy {
 
         _taskOperations.reload$.subscribe(() => {
             this.updateTaskState();
+            this._treeCaseService.reloadCase$.next();
         });
         _taskOperations.open$.subscribe(() => {
             this._taskContentService.blockFields(false);
