@@ -17,6 +17,8 @@ import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {OptionSelectorComponent} from '../../../side-menu/content-components/option-selector/option-selector.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
+import {Observable, Subject} from 'rxjs';
+import {Page} from '../../../resources/interface/page';
 
 @Injectable()
 export class CaseTreeService {
@@ -25,6 +27,7 @@ export class CaseTreeService {
     private _rootNodesFilter: Filter;
     private readonly _treeDataSource: MatTreeNestedDataSource<CaseTreeNode>;
     private readonly _treeControl: NestedTreeControl<CaseTreeNode>;
+    private _finishedLoadingFirstLevel$: Subject<boolean>;
 
     constructor(protected _caseResourceService: CaseResourceService,
                 protected _treeCaseViewService: TreeCaseViewService,
@@ -37,11 +40,13 @@ export class CaseTreeService {
         _treeCaseViewService.reloadCase$.asObservable().subscribe(() => {
             this.reloadCurrentCase();
         });
+        this._finishedLoadingFirstLevel$ = new Subject<boolean>();
     }
 
     public set rootFilter(filter: Filter) {
         this._rootNodesFilter = filter;
-        this.loadNodes();
+        this.dataSource.data = [];
+        this.loadFirstTreeLevel(0);
     }
 
     public get dataSource(): MatTreeNestedDataSource<CaseTreeNode> {
@@ -52,8 +57,68 @@ export class CaseTreeService {
         return this._treeControl;
     }
 
+    public get finishedLoadingFirstLevel$(): Observable<boolean> {
+        return this._finishedLoadingFirstLevel$.asObservable();
+    }
+
     protected get _currentCase(): Case | undefined {
         return this._currentNode ? this._currentNode.case : undefined;
+    }
+
+    /**
+     * Loads and populates the topmost level of the tree.
+     *
+     * The displayed cases are determined by this object's [rootFilter]{@link CaseTreeService#rootFilter}.
+     *
+     * Cases are loaded one page at a time and the tree is refreshed after each page.
+     * [finishedLoadingFirstLevel$]{@link CaseTreeService#finishedLoadingFirstLevel$}
+     * will emit `true` once the last page loads successfully.
+     * `false` will be emitted if any of the requests fail.
+     *
+     * @param loadedPageNumber the page number of the first page that should be loaded and appended into the tree.
+     * All following pages will be processed as well.
+     */
+    protected loadFirstTreeLevel(loadedPageNumber: number) {
+        if (this._rootNodesFilter) {
+            let params: HttpParams = new HttpParams();
+            params = params.set('page', `${loadedPageNumber}`);
+            this._caseResourceService.searchCases(this._rootNodesFilter, params).subscribe(page => {
+                if (page && page.content && Array.isArray(page.content)) {
+                    this.dataSource.data.push(...this.getNodesFromPage(page));
+                    this.refreshTree();
+
+                    if (loadedPageNumber + 1 < page.pagination.totalPages) {
+                        this.loadFirstTreeLevel(loadedPageNumber + 1);
+                    } else {
+                        this._finishedLoadingFirstLevel$.next(true);
+                    }
+                }
+            }, error => {
+                this._logger.error('Tree first level nodes could not be loaded', error);
+                this._finishedLoadingFirstLevel$.next(false);
+            });
+        }
+    }
+
+    /**
+     * Transforms a page of cases into an array of tree nodes
+     * @param page a {@link Page} with `content` that contains the cases we want to transform into nodes
+     * @returns an array of nodes created from the cases by calling [newNode]{@link CaseTreeService#newNode} method on each of them
+     */
+    private getNodesFromPage(page: Page<Case>): Array<CaseTreeNode> {
+        return page.content.map(c => this.newNode(c));
+    }
+
+    /**
+     * @param nodeCase Case that should be represented as a Node in the Case Tree
+     * @returns a Node that contains the provided case, has an empty `Array` as children and they are set as dirty
+     */
+    private newNode(nodeCase: Case): CaseTreeNode {
+        return {
+            case: nodeCase,
+            children: [],
+            dirtyChildren: true
+        };
     }
 
     /**
@@ -139,12 +204,7 @@ export class CaseTreeService {
                 // TODO notify user about error
                 this._logger.error('Child node case could not be found');
             }
-            if (!Array.isArray(clickedNode.children)) {
-                clickedNode.children = [];
-            }
-            clickedNode.children.push({
-                case: page.content[0],
-            });
+            clickedNode.children.push(this.newNode(page.content[0]));
             this.refreshTree();
         }, error => {
             // TODO notify user about error
@@ -162,24 +222,6 @@ export class CaseTreeService {
         this._treeDataSource.data = d;
     }
 
-    protected loadNodes() {
-        // TODO pagination
-        if (this._rootNodesFilter) {
-            let params: HttpParams = new HttpParams();
-            params = params.set('size', 100 + '');
-            params = params.set('page', 0 + '');
-            this._caseResourceService.searchCases(this._rootNodesFilter, params).subscribe(cases => {
-                if (cases && cases.content && Array.isArray(cases.content)) {
-                    const array = [];
-                    cases.content.forEach(c => {
-                        array.push({case: c});
-                    });
-                    this.dataSource.data = array;
-                }
-            });
-        }
-    }
-
     /**
      * Reloads the currently selected case node. The {@link Case} object held in the {@link CaseTreeNode} instance is not replaced,
      * but the new Case is `Object.assign`-ed into it. THis means that the reference to the Case instance is unchanged but references
@@ -189,7 +231,7 @@ export class CaseTreeService {
      */
     protected reloadCurrentCase(): void {
         if (this._currentNode) {
-            this._caseResourceService.searchCases(this.createCaseFilter(this._currentCase.stringId)).subscribe( page => {
+            this._caseResourceService.searchCases(this.createCaseFilter(this._currentCase.stringId)).subscribe(page => {
                 if (page && page.content && Array.isArray(page.content) && page.content.length === 1) {
                     Object.assign(this._currentCase, page.content[0]);
                     this._treeCaseViewService.loadTask$.next(this._currentCase);
