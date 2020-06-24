@@ -19,19 +19,30 @@ export class TreeCaseViewComponent implements OnInit {
 
     constructor(private _caseResource: CaseResourceService, private _processService: ProcessService) {
         this.loading = true;
-        this._processService.getNet('tree_test').subscribe(net => {
-            const newCase = {
-                title: 'Nová zmluva',
-                color: 'panel-primary-icon',
-                netId: net.stringId
-            };
-            this._caseResource.createCase(newCase).subscribe( kaze => {
-                this.filter = new SimpleFilter('id', FilterType.CASE, {
-                    query: 'stringId:' + kaze.stringId
-                });
-                this.loading = false;
+
+        this._caseResource.searchCases(new SimpleFilter('', FilterType.CASE, {petriNet: {identifier: 'tree_test'}, query: '(title:root)'}))
+            .subscribe(page => {
+                if (page && page.content && Array.isArray(page.content) && page.content.length === 1) {
+                    this.filter = new SimpleFilter('id', FilterType.CASE, {
+                        query: 'stringId:' + page.content[0].stringId
+                    });
+                    this.loading = false;
+                } else {
+                    this._processService.getNet('tree_test').subscribe(net => {
+                        const newCaseRequest = {
+                            title: 'root',
+                            color: 'panel-primary-icon',
+                            netId: net.stringId
+                        };
+                        this._caseResource.createCase(newCaseRequest).subscribe(newCase => {
+                            this.filter = new SimpleFilter('id', FilterType.CASE, {
+                                query: 'stringId:' + newCase.stringId
+                            });
+                            this.loading = false;
+                        });
+                    });
+                }
             });
-        });
     }
 
     ngOnInit(): void {
