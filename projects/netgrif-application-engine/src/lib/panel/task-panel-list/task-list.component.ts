@@ -17,6 +17,7 @@ export class TaskListComponent implements OnInit {
     @Input() tasks$: Observable<Array<TaskPanelData>>;
     @Input() loading$: Observable<boolean>;
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
+    @Input() responsiveBody: boolean = true;
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
