@@ -13,6 +13,7 @@ import {AssignPolicy} from '../../../task-content/model/policy';
 import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
 import {UserComparatorService} from '../../../user/services/user-comparator.service';
+import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -138,7 +139,8 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected getTransitionId(examinedCase: Case): string | undefined {
         if (examinedCase && examinedCase.immediateData) {
-            const transitionId = examinedCase.immediateData.find(imData => imData.stringId === 'treeTaskTransitionId');
+            const transitionId = examinedCase.immediateData
+                .find(imData => imData.stringId === TreePetriflowIdentifiers.FEATURED_TRANSITION);
             return transitionId ? transitionId.value : undefined;
         }
         return undefined;

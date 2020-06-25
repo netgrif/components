@@ -7,7 +7,8 @@ import {HttpParams} from '@angular/common/http';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {Case} from '../../../resources/interface/case';
 import {CaseTreeService} from './case-tree.service';
-import {CaseTreeNode} from './interfaces/CaseTreeNode';
+import {CaseTreeNode} from './model/CaseTreeNode';
+import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 
 @Component({
     selector: 'nae-tree-component',
@@ -32,14 +33,21 @@ export class TreeComponent {
         return this._treeService.treeControl;
     }
 
-    hasChild = (_: number, node: CaseTreeNode) => !!node.children && node.children.length > 0;
+    hasChild = (_: number, node: CaseTreeNode) => {
+        const childrenCaseRef = node.case.immediateData.find(data => data.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        return !!childrenCaseRef && !!childrenCaseRef.value && childrenCaseRef.value.length > 0;
+    }
 
     caseNodeClicked(node: CaseTreeNode) {
         this._treeService.caseNodeClicked(node);
     }
 
+    expandCaseNode(node: CaseTreeNode) {
+        this._treeService.expandNode(node);
+    }
+
     canAddChildren(queriedCase: Case): boolean {
-        const immediate = queriedCase.immediateData.find(data => data.stringId === 'canAddTreeChildren');
+        const immediate = queriedCase.immediateData.find(data => data.stringId === TreePetriflowIdentifiers.CAN_ADD_CHILDREN);
         return !!immediate && immediate.value;
     }
 }

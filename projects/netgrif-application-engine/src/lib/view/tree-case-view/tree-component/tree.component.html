@@ -13,8 +13,7 @@
             <div class="mat-tree-node">
                 <span (click)="caseNodeClicked(node)">{{node.case.title}}</span>
                 <div fxFlex></div>
-                <button mat-icon-button matTreeNodeToggle
-                        [attr.aria-label]="'toggle ' + node.name">
+                <button (click)="expandCaseNode(node)" mat-icon-button [attr.aria-label]="'toggle ' + node.case.title">
                     <mat-icon class="mat-icon-rtl-mirror">
                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                     </mat-icon>

@@ -21,7 +21,7 @@ export class TreeCaseViewComponent implements OnInit {
         this.loading = true;
         this._caseResource.searchCases(new SimpleFilter('', FilterType.CASE, {petriNet: {identifier: 'tree_test'}, query: '(title:root)'}))
             .subscribe(page => {
-                if (page && page.content && Array.isArray(page.content) && page.content.length === 1) {
+                if (page && page.content && Array.isArray(page.content) && page.content.length > 0) {
                     this.filter = new SimpleFilter('id', FilterType.CASE, {
                         query: 'stringId:' + page.content[0].stringId
                     });

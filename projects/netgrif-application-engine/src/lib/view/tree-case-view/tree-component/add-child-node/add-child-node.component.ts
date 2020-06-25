@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {CaseTreeService} from '../case-tree.service';
-import {CaseTreeNode} from '../interfaces/CaseTreeNode';
+import {CaseTreeNode} from '../model/CaseTreeNode';
 
 @Component({
     selector: 'nae-add-child-node',

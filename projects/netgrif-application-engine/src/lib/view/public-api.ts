@@ -3,6 +3,9 @@ export * from './case-view/models/case-view-params';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
 
+/* ENUMS */
+export * from './tree-case-view/model/tree-petriflow-identifiers';
+
 /* CLASSES */
 export * from './case-view/abstract-case-view';
 export * from './case-view/tabbed-case-view';
