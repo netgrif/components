@@ -295,6 +295,15 @@ export class CaseTreeService implements OnDestroy {
     }
 
     /**
+     * Adds a child to the root node.
+     *
+     * Useful if you are using the layout where the root node is hidden.
+     */
+    public addRootChildNode(): void {
+        this.addChildNode(this._rootNode);
+    }
+
+    /**
      * Adds a new child node to the given node based on the properties of the node's case
      */
     public addChildNode(clickedNode: CaseTreeNode): void {
