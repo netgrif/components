@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Filter} from '../../../filter/models/filter';
 import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
@@ -17,19 +17,20 @@ import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {OptionSelectorComponent} from '../../../side-menu/content-components/option-selector/option-selector.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
-import {Observable, of, Subject} from 'rxjs';
+import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {tap} from 'rxjs/operators';
 
 @Injectable()
-export class CaseTreeService {
+export class CaseTreeService implements OnDestroy {
 
     protected _currentNode: CaseTreeNode;
     private _rootNodesFilter: Filter;
     private readonly _treeDataSource: MatTreeNestedDataSource<CaseTreeNode>;
     private readonly _treeControl: NestedTreeControl<CaseTreeNode>;
-    private _finishedLoadingFirstLevel$: Subject<boolean>;
+    private _treeRootLoaded$: ReplaySubject<boolean>;
+    private _rootNode: CaseTreeNode;
 
     constructor(protected _caseResourceService: CaseResourceService,
                 protected _treeCaseViewService: TreeCaseViewService,
@@ -42,13 +43,17 @@ export class CaseTreeService {
         _treeCaseViewService.reloadCase$.asObservable().subscribe(() => {
             this.reloadCurrentCase();
         });
-        this._finishedLoadingFirstLevel$ = new Subject<boolean>();
+        this._treeRootLoaded$ = new ReplaySubject<boolean>(1);
+    }
+
+    ngOnDestroy(): void {
+        this._treeRootLoaded$.complete();
     }
 
     public set rootFilter(filter: Filter) {
         this._rootNodesFilter = filter;
         this.dataSource.data = [];
-        this.loadFirstTreeLevel(0);
+        this.loadTreeRoot();
     }
 
     public get dataSource(): MatTreeNestedDataSource<CaseTreeNode> {
@@ -59,8 +64,15 @@ export class CaseTreeService {
         return this._treeControl;
     }
 
-    public get finishedLoadingFirstLevel$(): Observable<boolean> {
-        return this._finishedLoadingFirstLevel$.asObservable();
+    /**
+     * Emits a value whenever a new root node Filter is set.
+     *
+     * `true` is emitted if the root node was successfully loaded. `false` otherwise.
+     *
+     * On subscription emits the last emitted value (if any) to the subscriber.
+     */
+    public get treeRootLoaded$(): Observable<boolean> {
+        return this._treeRootLoaded$.asObservable();
     }
 
     protected get _currentCase(): Case | undefined {
@@ -73,42 +85,49 @@ export class CaseTreeService {
      * The displayed cases are determined by this object's [rootFilter]{@link CaseTreeService#rootFilter}.
      *
      * Cases are loaded one page at a time and the tree is refreshed after each page.
-     * [finishedLoadingFirstLevel$]{@link CaseTreeService#finishedLoadingFirstLevel$}
+     * [finishedLoadingFirstLevel$]{@link CaseTreeService#treeRootLoaded$}
      * will emit `true` once the last page loads successfully.
      * `false` will be emitted if any of the requests fail.
-     *
-     * @param loadedPageNumber the page number of the first page that should be loaded and appended into the tree.
-     * All following pages will be processed as well.
      */
-    protected loadFirstTreeLevel(loadedPageNumber: number) {
+    protected loadTreeRoot() {
         if (this._rootNodesFilter) {
-            let params: HttpParams = new HttpParams();
-            params = params.set('page', `${loadedPageNumber}`);
-            this._caseResourceService.searchCases(this._rootNodesFilter, params).subscribe(page => {
-                if (page && page.content && Array.isArray(page.content)) {
-                    this.dataSource.data.push(...this.getNodesFromPage(page));
-                    this.refreshTree();
-
-                    if (loadedPageNumber + 1 < page.pagination.totalPages) {
-                        this.loadFirstTreeLevel(loadedPageNumber + 1);
-                    } else {
-                        this._finishedLoadingFirstLevel$.next(true);
+            this._caseResourceService.searchCases(this._rootNodesFilter).subscribe(page => {
+                if (page && page.content && Array.isArray(page.content) && page.content.length > 0) {
+                    this._rootNode = new CaseTreeNode(page.content[0]);
+                    if (page.content.length !== 1) {
+                        this._logger.warn('Filter for tree root returned more than one case. Using the first value as tree root...');
                     }
+                    this._treeRootLoaded$.next(true);
+                } else {
+                    this._logger.error('Tree root cannot be generated from the provided filter', page);
                 }
             }, error => {
-                this._logger.error('Tree first level nodes could not be loaded', error);
-                this._finishedLoadingFirstLevel$.next(false);
+                this._logger.error('Root node of the case tree could not be loaded', error);
+                this._treeRootLoaded$.next(false);
             });
         }
     }
 
     /**
-     * Transforms a page of cases into an array of tree nodes
-     * @param page a {@link Page} with `content` that contains the cases we want to transform into nodes
-     * @returns an array of nodes created from the cases by calling [newNode]{@link CaseTreeService#newNode} method on each of them
+     * Adds the loaded tree root to the display based on the setting.
+     * @param showRoot whether the root of the tree should be displayed in the tree or not.
+     * If the root is not displayed it's children will be displayed on the first level.
      */
-    private getNodesFromPage(page: Page<Case>): Array<CaseTreeNode> {
-        return page.content.map(c => new CaseTreeNode(c));
+    public initializeTree(showRoot: boolean): void {
+        if (!this._rootNode) {
+            this._logger.error('Set a Filter before initializing the case tree');
+            return;
+        }
+
+        if (showRoot) {
+            this.dataSource.data = [this._rootNode];
+        } else {
+            this.dataSource.data = this._rootNode.children;
+            this.expandNode(this._rootNode);
+        }
+
+        this.refreshTree();
+
     }
 
     /**
@@ -120,10 +139,22 @@ export class CaseTreeService {
     }
 
     /**
+     * Toggles the expansion state of a node
+     * @param node the {@link CaseTreeNode} who's content should be toggled
+     */
+    public toggleNode(node: CaseTreeNode): void {
+        if (this._treeControl.isExpanded(node)) {
+            this._treeControl.collapse(node);
+        } else {
+            this.expandNode(node);
+        }
+    }
+
+    /**
      * Expands the target node in the tree and reloads it's children if they are marked as dirty
      * @param node the {@link CaseTreeNode} that should be expanded
      */
-    public expandNode(node: CaseTreeNode): void {
+    protected expandNode(node: CaseTreeNode): void {
         if (node.loadingChildren.isActive) {
             return;
         }

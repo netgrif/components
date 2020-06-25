@@ -1,7 +1,7 @@
 <div fxLayout="row" class="fill-all-space">
     <mat-card class="fill-all-space" *ngIf="!loading">
         <div fxLayout="column" fxFlex="30">
-            <nae-tree-component [filter]="filter"></nae-tree-component>
+            <nae-tree-component [filter]="filter" [showTreeRoot]="false"></nae-tree-component>
         </div>
 
         <mat-divider [vertical]="true" class="divider-fix"></mat-divider>

@@ -25,6 +25,14 @@ export class TreeComponent {
         this._treeService.rootFilter = filter;
     }
 
+    @Input() set showTreeRoot(showTreeRoot: boolean) {
+        this._treeService.treeRootLoaded$.subscribe(success => {
+            if (success) {
+                this._treeService.initializeTree(showTreeRoot);
+            }
+        });
+    }
+
     public get dataSource(): MatTreeNestedDataSource<CaseTreeNode> {
         return this._treeService.dataSource;
     }
@@ -42,8 +50,8 @@ export class TreeComponent {
         this._treeService.caseNodeClicked(node);
     }
 
-    expandCaseNode(node: CaseTreeNode) {
-        this._treeService.expandNode(node);
+    toggleCaseNode(node: CaseTreeNode) {
+        this._treeService.toggleNode(node);
     }
 
     canAddChildren(queriedCase: Case): boolean {
