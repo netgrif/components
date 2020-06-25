@@ -5,6 +5,7 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {ProcessService} from '../../process/process.service';
 import {TreeCaseViewService} from './tree-case-view.service';
+import {HttpParams} from '@angular/common/http';
 
 @Component({
     selector: 'nae-tree-case-view',
@@ -19,7 +20,10 @@ export class TreeCaseViewComponent implements OnInit {
 
     constructor(private _caseResource: CaseResourceService, private _processService: ProcessService) {
         this.loading = true;
-        this._caseResource.searchCases(new SimpleFilter('', FilterType.CASE, {petriNet: {identifier: 'tree_test'}, query: '(title:root)'}))
+        let params: HttpParams = new HttpParams();
+        params = params.set('sort', 'creationDateSortable,asc');
+        this._caseResource.searchCases(
+            new SimpleFilter('', FilterType.CASE, {petriNet: {identifier: 'tree_test'}, query: '(title:root)'}), params)
             .subscribe(page => {
                 if (page && page.content && Array.isArray(page.content) && page.content.length > 0) {
                     this.filter = new SimpleFilter('id', FilterType.CASE, {
