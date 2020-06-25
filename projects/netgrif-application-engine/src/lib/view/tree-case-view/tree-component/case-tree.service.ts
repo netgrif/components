@@ -303,8 +303,8 @@ export class CaseTreeService implements OnDestroy {
             transition: TreePetriflowIdentifiers.ADD_CHILD_TRANSITION
         }).subscribe(page => {
             if (page.content.length === 0) {
-                // TODO notify user about error
-                this._logger.error('Task for adding tree nodes doesn\'t exist');
+                this._logger.error('Task for adding tree nodes doesn\'t exist!');
+                return;
             }
             const task = page.content[0];
             const caseRefField = clickedNode.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
@@ -329,7 +329,6 @@ export class CaseTreeService implements OnDestroy {
             }
 
         }, error => {
-            // TODO notify user about error
             this._logger.error('Task for adding tree nodes could not be found', error);
         });
     }
@@ -343,26 +342,40 @@ export class CaseTreeService implements OnDestroy {
      */
     private createNewChildNode(clickedNode: CaseTreeNode, addNodeTask: Task,
                                caseRefField: ImmediateData, newCaseProcessIdentifier: string): void {
-        this._taskResourceService.setData(addNodeTask.stringId, {
-            treeChildCases: {
-                type: 'caseRef',
-                value: {
-                    operation: 'add',
-                    title: 'New Node', // TODO some default value for each case?
-                    processId: newCaseProcessIdentifier
+        this._taskResourceService.assignTask(addNodeTask.stringId).subscribe(assignResponse => {
+            if (!assignResponse.success) {
+                this._logger.error('Add node task could not be assigned', assignResponse.error);
+            }
+            this._taskResourceService.setData(addNodeTask.stringId, {
+                treeChildCases: {
+                    type: 'caseRef',
+                    value: {
+                        operation: 'add',
+                        title: 'New Node', // TODO some default value for each case?
+                        processId: newCaseProcessIdentifier
+                    }
                 }
-            }
-        }).subscribe(changeContainer => {
-            const changedFields = changeContainer.changedFields;
-            const caseRefChanges = changedFields[TreePetriflowIdentifiers.CHILDREN_CASE_REF];
-            if (!caseRefChanges) {
-                // TODO maybe reload the case?
-                return;
-            }
-            this.updateNodeChildrenAfterAdd(clickedNode, caseRefField, caseRefChanges.value);
+            }).subscribe(changeContainer => {
+                const changedFields = changeContainer.changedFields;
+                const caseRefChanges = changedFields[TreePetriflowIdentifiers.CHILDREN_CASE_REF];
+                if (!caseRefChanges) {
+                    this._logger.error('No changed fields in case ref', changedFields);
+                    return;
+                }
+
+                this.updateNodeChildrenAfterAdd(clickedNode, caseRefField, caseRefChanges.value);
+                this._taskResourceService.finishTask(addNodeTask.stringId).subscribe(finishResponse => {
+                    if (finishResponse.success) {
+                        this._logger.debug('Add node task finished', finishResponse.success);
+                    } else {
+                        this._logger.error('Add node task finish failed', finishResponse.error);
+                    }
+                });
+            }, error => {
+                this._logger.error('Could not set data to tree case ref', error);
+            });
         }, error => {
-            // TODO notify user about error
-            this._logger.error('Could not set data to tree case ref', error);
+            this._logger.error('Add node task could not be assigned', error);
         });
     }
 
@@ -388,13 +401,11 @@ export class CaseTreeService implements OnDestroy {
             query: 'stringId:' + newCaseRefValue[newCaseRefValue.length - 1]
         })).subscribe(page => {
             if (page.content.length !== 1) {
-                // TODO notify user about error
                 this._logger.error('Child node case could not be found');
             }
             clickedNode.children.push(new CaseTreeNode(page.content[0]));
             this.refreshTree();
         }, error => {
-            // TODO notify user about error
             this._logger.error('Child node case could not be found', error);
         });
     }
