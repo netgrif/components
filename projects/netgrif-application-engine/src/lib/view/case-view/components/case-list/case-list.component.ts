@@ -14,7 +14,7 @@ import {LoggerService} from '../../../../logger/services/logger.service';
 export class CaseListComponent implements OnInit, AfterViewInit {
 
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
-
+    @Input() responsiveBody: boolean = true;
     @Output() caseClick: EventEmitter<Case>;
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;

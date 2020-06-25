@@ -11,7 +11,7 @@
             <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()"
                                          class="full-height full-width">
 
-                <nae-case-panel *cdkVirtualFor="let case_ of cases;
+                <nae-case-panel [responsiveBody]="responsiveBody" *cdkVirtualFor="let case_ of cases;
                                 let i = index;
                                 let first = first;
                                 let last = last;
