@@ -67,7 +67,7 @@ export function customThemes(): Rule {
         }
 
         const rules = [];
-        const pathTomove = path + '/../styles/templates';
+        const pathTomove = path + '/../styles/themes';
         rules.push(createFilesFromTemplates('./files/light-theme', pathTomove, {
             primaryLight,
             primaryContrastLight,
@@ -89,7 +89,13 @@ export function customThemes(): Rule {
 
         }
         rules.push(createFilesFromTemplates('./files/custom-themes', pathTomove, {
-            darkExists
+            darkExists,
+            primaryLight,
+            secondaryLight,
+            warnLight,
+            primaryDark,
+            secondaryDark,
+            warnDark,
         }));
 
         deleteExistingFiles(tree, pathTomove);
@@ -102,8 +108,8 @@ export function customThemes(): Rule {
             if (wholeStyleContent.toString().match('@include mat-core()') === null) {
                 importsAndIncludes += '@include mat-core();' + '\n';
             }
-            if (wholeStyleContent.toString().match('./styles/templates/custom-themes.scss') === null) {
-                importsAndIncludes += '@import \'./styles/templates/custom-themes.scss\';' + '\n';
+            if (wholeStyleContent.toString().match('./styles/themes/custom-themes.scss') === null) {
+                importsAndIncludes += '@import \'./styles/themes/custom-themes.scss\';' + '\n';
             }
             tree.overwrite(path + '/../styles.scss',
                 importsAndIncludes + tree.read(path + '/../styles.scss'));
@@ -158,11 +164,11 @@ function deleteExistingFiles(tree: Tree, pathTomove: string) {
     if (tree.exists(pathTomove + '/custom-themes.scss')) {
         tree.delete(pathTomove + '/custom-themes.scss');
     }
-    if (tree.exists(pathTomove + '/custom-dark-template.scss')) {
-        tree.delete(pathTomove + '/custom-dark-template.scss');
+    if (tree.exists(pathTomove + '/custom-dark-theme.scss')) {
+        tree.delete(pathTomove + '/custom-dark-theme.scss');
     }
-    if (tree.exists(pathTomove + '/custom-light-template.scss')) {
-        tree.delete(pathTomove + '/custom-light-template.scss');
+    if (tree.exists(pathTomove + '/custom-light-theme.scss')) {
+        tree.delete(pathTomove + '/custom-light-theme.scss');
     }
 }
 

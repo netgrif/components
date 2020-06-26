@@ -33,6 +33,10 @@
         "Daniel Vaník <vanik@netgrif.com>",
         "Lukáš Rezák <rezak@netgrif.com>"
     ],
+    "dependencies": {
+        "palette-creator": "^0.5.4",
+        "angular2-hotkeys": "^2.2.0"
+    },
     "peerDependencies": {
         "@angular-material-components/datetime-picker": "^2.0.2",
         "@angular-material-components/moment-adapter": "^2.0.1",
