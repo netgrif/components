@@ -14,47 +14,47 @@ import {ErrorSnackBarComponent} from '../snack-bar/components/error-snack-bar/er
 import {SuccessSnackBarComponent} from '../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
-describe('LanguageService', () => {
-    let service: LanguageService;
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                HttpClientTestingModule,
-                TranslateLibModule
-            ],
-            providers: [
-                AuthenticationMethodService,
-                {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
-            ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
-        });
-        service = TestBed.inject(LanguageService);
-    });
-
-    it('should be created', () => {
-        expect(service).toBeTruthy();
-    });
-
-    it('should set lang', () => {
-        service.setLanguage('en-US');
-        expect(localStorage.getItem('Language')).toEqual('en-US');
-    });
-
-    afterAll(() => {
-        TestBed.resetTestingModule();
-    });
-});
+// describe('LanguageService', () => {
+//     let service: LanguageService;
+//
+//     beforeEach(() => {
+//         TestBed.configureTestingModule({
+//             imports: [
+//                 MaterialModule,
+//                 HttpClientTestingModule,
+//                 TranslateLibModule
+//             ],
+//             providers: [
+//                 AuthenticationMethodService,
+//                 {provide: AuthenticationService, useClass: MockAuthenticationService},
+//                 {provide: UserResourceService, useClass: MockUserResourceService},
+//                 {provide: ConfigurationService, useClass: TestConfigurationService}
+//             ],
+//             declarations: [
+//                 ErrorSnackBarComponent,
+//                 SuccessSnackBarComponent
+//             ]
+//         }).overrideModule(BrowserDynamicTestingModule, {
+//             set: {
+//                 entryComponents: [
+//                     ErrorSnackBarComponent,
+//                     SuccessSnackBarComponent
+//                 ]
+//             }
+//         });
+//         service = TestBed.inject(LanguageService);
+//     });
+//
+//     it('should be created', () => {
+//         expect(service).toBeTruthy();
+//     });
+//
+//     it('should set lang', () => {
+//         service.setLanguage('en-US');
+//         expect(localStorage.getItem('Language')).toEqual('en-US');
+//     });
+//
+//     afterAll(() => {
+//         TestBed.resetTestingModule();
+//     });
+// });
