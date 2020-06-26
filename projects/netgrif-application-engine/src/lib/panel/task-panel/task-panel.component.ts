@@ -621,32 +621,34 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
         const task = this._taskPanelData.task;
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
-                return task.caseTitle;
+                return {value: task.caseTitle, icon: ''};
             case TaskMetaField.TITLE:
-                return task.title;
+                return {value: task.title, icon: ''};
             case TaskMetaField.PRIORITY:
                 // TODO priority
                 if (!task.priority || task.priority < 2) {
-                    return 'high';
+                    return {value: 'high', icon: 'error'};
                 }
                 if (task.priority === 2) {
-                    return 'medium';
+                    return {value: 'medium', icon: 'north'};
                 }
-                return 'low';
+                return {value: 'low', icon: 'south'};
             case TaskMetaField.USER:
-                return task.user ? task.user.fullName : '';
+                console.log(task.user);
+                return {value: task.user ? task.user.fullName : '', icon: 'account_circle'};
             case TaskMetaField.ASSIGN_DATE:
-                return task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '';
+                console.log(task.startDate);
+                return {value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '', icon: 'event'};
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
         this._log.warn('Immediate data in task panel headers are currently not supported');
-        return '';
+        return {value: '', icon: ''};
     }
 
 }
