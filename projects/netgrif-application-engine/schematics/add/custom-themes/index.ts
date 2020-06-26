@@ -53,17 +53,45 @@ export function customThemes(): Rule {
         let warnContrastDark: string | null = '';
         const primaryLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.primary, false);
         const primaryContrastLight = (primaryLight) ? returnContrastIfExist(data.theme.pallets.light.primary.contrast) : null;
-        const secondaryLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.secondary, false);
-        const secondaryContrastLight = (secondaryLight) ? returnContrastIfExist(data.theme.pallets.light.secondary.contrast) : null;
-        const warnLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.warn, false);
-        const warnContrastLight = (warnLight) ? returnContrastIfExist(data.theme.pallets.light.warn.contrast) : null;
+        let secondaryLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.secondary, false);
+        let secondaryContrastLight = null;
+        if (secondaryLight.length === 0) {
+            if (typeof data.theme.pallets.light.primary === 'string') {
+                const palette = PaletteGenerator.default.getSimilar(data.theme.pallets.light.primary);
+                secondaryLight = returnPaletteIfExistOrCreate(palette.complementary.hex, false);
+            } else {
+                throw new SchematicsException('Secondary color required');
+            }
+        } else {
+            secondaryContrastLight = returnContrastIfExist(data.theme.pallets.light.secondary.contrast);
+        }
+        let warnLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.warn, false);
+        let warnContrastLight = null;
+        if (warnLight.length === 0) {
+            warnLight = returnPaletteIfExistOrCreate('#FF5722', false);
+        } else {
+            warnContrastLight = returnContrastIfExist(data.theme.pallets.light.warn.contrast);
+        }
         if (darkExists) {
             primaryDark = returnPaletteIfExistOrCreate(data.theme.pallets.dark.primary, true);
             primaryContrastDark = (primaryDark) ? returnContrastIfExist(data.theme.pallets.dark.primary.contrast) : null;
             secondaryDark = returnPaletteIfExistOrCreate(data.theme.pallets.dark.secondary, true);
-            secondaryContrastDark = (secondaryDark) ? returnContrastIfExist(data.theme.pallets.dark.secondary.contrast) : null;
+            if (secondaryDark.length === 0) {
+                if (typeof data.theme.pallets.dark.primary === 'string') {
+                    const palette = PaletteGenerator.default.getSimilar(data.theme.pallets.dark.primary);
+                    secondaryDark = returnPaletteIfExistOrCreate(palette.complementary.hex, false);
+                } else {
+                    throw new SchematicsException('Secondary dark color required');
+                }
+            } else {
+                secondaryContrastDark = returnContrastIfExist(data.theme.pallets.dark.secondary.contrast);
+            }
             warnDark = returnPaletteIfExistOrCreate(data.theme.pallets.dark.warn, true);
-            warnContrastDark = (warnDark) ? returnContrastIfExist(data.theme.pallets.dark.warn.contrast) : null;
+            if (warnDark.length === 0) {
+                warnDark = returnPaletteIfExistOrCreate('#FF5722', false);
+            } else {
+                warnContrastDark = returnContrastIfExist(data.theme.pallets.dark.warn.contrast);
+            }
         }
 
         const rules = [];
