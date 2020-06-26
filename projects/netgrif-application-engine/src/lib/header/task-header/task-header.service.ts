@@ -14,6 +14,7 @@ export class TaskHeaderService extends AbstractHeaderService {
     constructor(preferences: UserPreferenceService, viewService: ViewService, logger: LoggerService) {
         super(HeaderType.TASK, preferences, viewService, logger);
         this.loadHeadersFromPreferences();
+        this.loading.off();
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {

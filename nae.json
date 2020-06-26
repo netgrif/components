@@ -462,7 +462,8 @@
                         "processId1",
                         "test",
                         "all_data",
-                        "zmluva"
+                        "zmluva",
+                        "address"
                     ]
                 },
                 "componentName": "MyCaseView"

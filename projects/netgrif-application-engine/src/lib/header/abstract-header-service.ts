@@ -14,6 +14,7 @@ import {SortDirection} from '@angular/material';
 import {UserPreferenceService} from '../user/services/user-preference.service';
 import {ViewService} from '../routing/view-service/view.service';
 import {LoggerService} from '../logger/services/logger.service';
+import {LoadingEmitter} from '../utility/loading-emitter';
 
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
@@ -22,10 +23,13 @@ const MAX_HEADER_COLUMNS = 5;
 
 export abstract class AbstractHeaderService implements OnDestroy {
 
+    public loading: LoadingEmitter;
+
     protected constructor(private _headerType: HeaderType,
                           private _preferences: UserPreferenceService,
                           private _viewService: ViewService,
                           private _logger: LoggerService) {
+        this.loading = new LoadingEmitter(true);
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this.initializeHeaderState();
@@ -92,6 +96,26 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
         this.fieldsGroup.splice(1, this.fieldsGroup.length - 1);
         this.fieldsGroup.push(...fieldsGroups);
+    }
+
+    protected initializeDefaultHeaderState(naeDefaultHeaders: Array<string>): void {
+        if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders)) {
+            const defaultHeaders = [];
+            for (let i = 0; i < MAX_HEADER_COLUMNS; i++) {
+                defaultHeaders.push(null);
+            }
+            naeDefaultHeaders.forEach((headerId, i) => {
+                let head;
+                for (const h of this.fieldsGroup) {
+                    head = h.fields.find( header => header.uniqueId === headerId);
+                    if (head) {
+                        defaultHeaders[i] = head;
+                        break;
+                    }
+                }
+            });
+            this._headerState.updateSelectedHeaders(defaultHeaders);
+        }
     }
 
     /**
