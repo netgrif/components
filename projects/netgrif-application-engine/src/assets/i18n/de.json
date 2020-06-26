@@ -266,5 +266,8 @@
             "saveSuccess": "Benutzereinstellungen wurden gespeichert",
             "saveFailure": "Benutzereinstellungen können nicht gespeichert werden"
         }
+    },
+    "caseTree": {
+        "newNodeDefaultName": "Neuer Knoten"
     }
 }

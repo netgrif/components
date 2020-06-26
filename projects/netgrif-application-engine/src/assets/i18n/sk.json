@@ -266,5 +266,8 @@
             "saveSuccess": "Vaše preferencie boli uložené",
             "saveFailure": "Nepodarilo sa uložiť preferencie"
         }
+    },
+    "caseTree": {
+        "newNodeDefaultName": "Nový Vrchol"
     }
 }

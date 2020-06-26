@@ -266,5 +266,8 @@
             "saveSuccess": "User preferences saved successfully",
             "saveFailure": "An error occurred while saving user preferences"
         }
+    },
+    "caseTree": {
+        "newNodeDefaultName": "New Node"
     }
 }

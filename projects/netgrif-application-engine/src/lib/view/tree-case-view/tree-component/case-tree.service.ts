@@ -21,6 +21,7 @@ import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {tap} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
@@ -37,7 +38,8 @@ export class CaseTreeService implements OnDestroy {
                 protected _taskResourceService: TaskResourceService,
                 protected _logger: LoggerService,
                 protected _processService: ProcessService,
-                protected _sideMenuService: SideMenuService) {
+                protected _sideMenuService: SideMenuService,
+                protected _translateService: TranslateService) {
         this._treeDataSource = new MatTreeNestedDataSource<CaseTreeNode>();
         this._treeControl = new NestedTreeControl<CaseTreeNode>(node => node.children);
         _treeCaseViewService.reloadCase$.asObservable().subscribe(() => {
@@ -331,7 +333,7 @@ export class CaseTreeService implements OnDestroy {
                     });
                     sideMeuRef.onClose.subscribe(event => {
                         if (!!event.data) {
-                            this.createNewChildNode(clickedNode, task, caseRefField, event.data);
+                            this.createNewChildNode(clickedNode, task, caseRefField, event.data.value);
                         }
                     });
                 });
@@ -355,12 +357,15 @@ export class CaseTreeService implements OnDestroy {
             if (!assignResponse.success) {
                 this._logger.error('Add node task could not be assigned', assignResponse.error);
             }
+
+            const childTitle = clickedNode.case.immediateData.find(field => field.stringId === TreePetriflowIdentifiers.CHILD_NODE_TITLE);
+
             this._taskResourceService.setData(addNodeTask.stringId, {
                 treeChildCases: {
                     type: 'caseRef',
                     value: {
                         operation: 'add',
-                        title: 'New Node', // TODO some default value for each case?
+                        title: childTitle ? childTitle.value : this._translateService.instant('caseTree.newNodeDefaultName'),
                         processId: newCaseProcessIdentifier
                     }
                 }

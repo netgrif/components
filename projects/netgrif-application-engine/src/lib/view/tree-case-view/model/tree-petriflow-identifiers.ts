@@ -7,7 +7,7 @@ export enum TreePetriflowIdentifiers {
      */
     CHILDREN_CASE_REF = 'treeChildCases',
     /**
-     * Immediate boolean data variable that determines whether this node can add new child nodes or not.
+     * Immediate boolean data variable that determines whether the option to can add new child nodes should be displayed.
      *
      * The type of node added is determined by the `allowedNets` property of the case ref field that holds the children
      */
@@ -17,7 +17,17 @@ export enum TreePetriflowIdentifiers {
      */
     FEATURED_TRANSITION = 'treeTaskTransitionId',
     /**
+     * Immediate boolean data variable that determines whether the option to remove this node from the tree should be displayed
+     */
+    CAN_REMOVE_NODE = 'canRemoveTreeNode',
+    /**
+     * Immediate text data variable that contains the default case title for this node's children.
+     *
+     * If no value is provided an appropriate translation of 'New Node' will be used instead.
+     */
+    CHILD_NODE_TITLE = 'childNodeCaseTitle',
+    /**
      * Id of the transition that is executed to set the new child data
      */
-    ADD_CHILD_TRANSITION = 'add_tree_child'
+    ADD_CHILD_TRANSITION = 'addTreeChild',
 }
