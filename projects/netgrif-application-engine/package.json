@@ -65,7 +65,6 @@
         "natural-orderby": "^2.0.3",
         "jszip": "^3.2.2",
         "moment": "^2.24.0",
-        "palette-creator": "^0.5.4",
         "rxjs": "^6.5.4",
         "tslib": "^1.11.1",
         "zone.js": "~0.10.2"
