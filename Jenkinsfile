@@ -12,7 +12,6 @@ pipeline {
     stage('Install') {
       steps {
         bitbucketStatusNotify(buildState: 'INPROGRESS')
-        echo packageJson
         echo 'Installing dependencies'
         sh 'npm install'
       }
@@ -93,7 +92,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.packageJson['version']}",
+                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}",
                                         remoteDirectorySDF: false,
                                         removePrefix: 'docs/compodoc',
                                         sourceFiles: 'docs/compodoc/**')],
@@ -120,7 +119,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.packageJson['version']}/coverage",
+                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/coverage",
                                         remoteDirectorySDF: false,
                                         removePrefix: 'coverage/netgrif-application-engine',
                                         sourceFiles: 'coverage/netgrif-application-engine/**')],
@@ -154,7 +153,7 @@ pipeline {
                                 makeEmptyDirs: false,
                                 noDefaultExcludes: false,
                                 patternSeparator: '[, ]+',
-                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.packageJson['version']}/examples",
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/examples",
                                 remoteDirectorySDF: false,
                                 removePrefix: 'dist/nae-example-app',
                                 sourceFiles: 'dist/nae-example-app/**')],
