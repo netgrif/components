@@ -113,9 +113,18 @@ function updateAppComponentTS(): Rule {
 
         const argumentsNode = getConstructorArguments(fileData.sourceFile);
         const recorder = tree.beginUpdate(fileData.fileEntry.path);
-        const delimiter = argumentsNode.getChildren().length > 0 ? ', ' : '';
-        recorder.insertRight(argumentsNode.pos,
-            `private _languageService: LanguageService, private _naeRouting: RoutingBuilderService${delimiter}`);
+
+        const injectedServices = 'private _languageService: LanguageService, private _naeRouting: RoutingBuilderService';
+
+        if (argumentsNode !== undefined) {
+            const delimiter = argumentsNode.getChildren().length > 0 ? ', ' : '';
+            recorder.insertRight(argumentsNode.pos,
+                `${injectedServices}${delimiter}`);
+        } else {
+            const classBodyToken = getClassBody(fileData.sourceFile);
+            recorder.insertLeft(classBodyToken.pos,
+                `constructor(${injectedServices}) {}`);
+        }
         tree.commitUpdate(recorder);
 
         const appComponentChanges: Array<Change> = [];
@@ -127,14 +136,39 @@ function updateAppComponentTS(): Rule {
     };
 }
 
-function getConstructorArguments(source: ts.SourceFile): ts.Node {
+function getConstructorArguments(source: ts.SourceFile): ts.Node | undefined {
     const nodes = findNodes(source, ts.SyntaxKind.Constructor, 1, true);
     if (nodes.length === 0) {
-        throw new SchematicsException('Source file doesn\'t have a Constructor node.');
+        return undefined;
     }
-    const argumentList = nodes[0].getChildren().find(node => node.kind === ts.SyntaxKind.SyntaxList);
-    if (argumentList === undefined) {
-        throw new SchematicsException('Malformed file. Constructor doesn\'t have arguments list');
+    return nodes[0].getChildren().find(node => node.kind === ts.SyntaxKind.SyntaxList);
+}
+
+function getClassBody(source: ts.SourceFile): ts.Node {
+    const nodes = findNodes(source, ts.SyntaxKind.ClassDeclaration, 1, true);
+    if (nodes.length === 0) {
+        throw new SchematicsException(`No class declaration found`);
     }
-    return argumentList;
+
+    let result;
+    let foundClassToken = false;
+    let foundClassBrace = false;
+    for (const node of nodes[0].getChildren()) {
+        if (!foundClassBrace && node.kind === ts.SyntaxKind.ClassKeyword) {
+            foundClassToken = true;
+            continue;
+        }
+        if (foundClassToken && !foundClassBrace && node.kind === ts.SyntaxKind.OpenBraceToken) {
+            foundClassBrace = true;
+            continue;
+        }
+        if (foundClassBrace && node.kind === ts.SyntaxKind.SyntaxList) {
+            result = node;
+            break;
+        }
+    }
+    if (result === undefined) {
+        throw new SchematicsException(`No class body found`);
+    }
+    return result;
 }
