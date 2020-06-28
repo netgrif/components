@@ -3,7 +3,6 @@ pipeline {
   environment {
         NEXUS_CRED = credentials('1986c778-eba7-44d7-b6f6-71e73906d894')
         packageJson = readJSON(file: 'package.json')
-        version = packageJson['version']
   }
   tools {
     nodejs 'localNodeJS'
@@ -93,7 +92,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.version}",
+                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.packageJson.version}",
                                         remoteDirectorySDF: false,
                                         removePrefix: 'docs/compodoc',
                                         sourceFiles: 'docs/compodoc/**')],
@@ -120,7 +119,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.version}/coverage",
+                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.packageJson.version}/coverage",
                                         remoteDirectorySDF: false,
                                         removePrefix: 'coverage/netgrif-application-engine',
                                         sourceFiles: 'coverage/netgrif-application-engine/**')],
@@ -154,7 +153,7 @@ pipeline {
                                 makeEmptyDirs: false,
                                 noDefaultExcludes: false,
                                 patternSeparator: '[, ]+',
-                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.version}/examples",
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.packageJson.version}/examples",
                                 remoteDirectorySDF: false,
                                 removePrefix: 'dist/nae-example-app',
                                 sourceFiles: 'dist/nae-example-app/**')],
