@@ -1,7 +1,7 @@
 <mat-card [ngClass]="{'padding-custom': headerService.headerState.mode === headerModeEnum.SORT}">
     <div fxLayout="row">
         <div fxLayout="row" fxFlex="95" class="header-content-container" fxLayoutAlign="start center"
-             [ngSwitch]="headerService.headerState.mode">
+             [ngSwitch]="headerService.headerState.mode" *ngIf="!headerService.loading.isActive">
             <div *ngSwitchCase="headerModeEnum.SORT" fxFlex="100" fxLayout="row">
                 <nae-sort-mode fxFlex="100" [headerService]="headerService"></nae-sort-mode>
             </div>
@@ -10,6 +10,12 @@
             </div>
             <div *ngSwitchCase="headerModeEnum.EDIT" fxFlex="100" fxLayout="row">
                 <nae-edit-mode fxFlex="100" [headerService]="headerService"></nae-edit-mode>
+            </div>
+        </div>
+        <div fxLayout="row" fxFlex="95" class="header-content-container" fxLayoutAlign="start center"
+             *ngIf="headerService.loading.isActive">
+            <div fxFlex="100" fxLayout="row">
+                <nae-loading-mode fxFlex="100" [headerService]="headerService"></nae-loading-mode>
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5"
