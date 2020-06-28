@@ -12,6 +12,7 @@ pipeline {
     stage('Install') {
       steps {
         bitbucketStatusNotify(buildState: 'INPROGRESS')
+        echo packageJson
         echo 'Installing dependencies'
         sh 'npm install'
       }
