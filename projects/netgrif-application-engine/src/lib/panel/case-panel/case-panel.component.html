@@ -11,7 +11,7 @@
                   [fxHide.lt-lg]="i >= 2 && responsiveBody"
                   [fxHide.lt-md]="i >= 1 && responsiveBody"
                   [fxHide.lt-sm]="i >= 0 && responsiveBody">
-                <mat-icon class="case-panel-icon" *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
+                <mat-icon class="case-panel-icon" *ngIf="field.icon && field.value">{{field.icon}}</mat-icon>
                 {{field.value}}
             </span>
         </div>

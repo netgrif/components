@@ -2,6 +2,8 @@ pipeline {
   agent any
   environment {
         NEXUS_CRED = credentials('1986c778-eba7-44d7-b6f6-71e73906d894')
+        def package = readJSON file: 'package.json'
+        version = package['version']
   }
   tools {
     nodejs 'localNodeJS'
@@ -80,7 +82,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'monitor.netgrif.com',
+                                configName: 'developer.netgrif.com',
                                 transfers: [
                                     sshTransfer(
                                         cleanRemote: true,
@@ -91,7 +93,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: '/var/www/html/developer/projects/engine-frontend',
+                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.version}",
                                         remoteDirectorySDF: false,
                                         removePrefix: 'docs/compodoc',
                                         sourceFiles: 'docs/compodoc/**')],
@@ -107,7 +109,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'monitor.netgrif.com',
+                                configName: 'developer.netgrif.com',
                                 transfers: [
                                     sshTransfer(
                                         cleanRemote: true,
@@ -118,7 +120,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: '/var/www/html/developer/projects/engine-frontend/coverage',
+                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.version}/coverage",
                                         remoteDirectorySDF: false,
                                         removePrefix: 'coverage/netgrif-application-engine',
                                         sourceFiles: 'coverage/netgrif-application-engine/**')],
@@ -141,7 +143,7 @@ pipeline {
             sshPublisher(
                 publishers: [
                     sshPublisherDesc(
-                        configName: 'monitor.netgrif.com',
+                        configName: 'developer.netgrif.com',
                         transfers: [
                             sshTransfer(
                                 cleanRemote: true,
@@ -152,7 +154,7 @@ pipeline {
                                 makeEmptyDirs: false,
                                 noDefaultExcludes: false,
                                 patternSeparator: '[, ]+',
-                                remoteDirectory: '/var/www/html/developer/projects/engine-frontend/examples',
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${env.version}/examples",
                                 remoteDirectorySDF: false,
                                 removePrefix: 'dist/nae-example-app',
                                 sourceFiles: 'dist/nae-example-app/**')],

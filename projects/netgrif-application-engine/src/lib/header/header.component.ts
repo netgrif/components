@@ -17,8 +17,8 @@ export class HeaderComponent implements OnInit {
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
-    @Input() maxHeaderColumns: number = 5;
-    @Input() responsiveHeaders: boolean = true;
+    @Input() maxHeaderColumns = 5;
+    @Input() responsiveHeaders = true;
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 

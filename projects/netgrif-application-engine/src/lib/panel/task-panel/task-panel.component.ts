@@ -43,7 +43,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
     @Input() public last: boolean;
-    @Input() responsiveBody: boolean = true;
+    @Input() responsiveBody = true;
 
     public portal: ComponentPortal<any>;
     public loading: boolean;
