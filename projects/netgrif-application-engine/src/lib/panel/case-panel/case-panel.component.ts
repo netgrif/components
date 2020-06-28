@@ -17,6 +17,7 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
 
     @Input() public case_: Case;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
+    @Input() responsiveBody: boolean = true;
     @Input() first: boolean;
     @Input() last: boolean;
 
