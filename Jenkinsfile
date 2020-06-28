@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
         NEXUS_CRED = credentials('1986c778-eba7-44d7-b6f6-71e73906d894')
-        def package = readJSON file: 'package.json'
+        package = readJSON(file: 'package.json')
         version = package['version']
   }
   tools {
