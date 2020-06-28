@@ -2,10 +2,6 @@ pipeline {
   agent any
   environment {
         NEXUS_CRED = credentials('1986c778-eba7-44d7-b6f6-71e73906d894')
-        packageJson = [:]
-        script {
-            packageJson = readJSON(file: 'package.json')
-        }
   }
   tools {
     nodejs 'localNodeJS'
@@ -15,6 +11,9 @@ pipeline {
     stage('Install') {
       steps {
         bitbucketStatusNotify(buildState: 'INPROGRESS')
+        script {
+                    packageJson = readJSON(file: 'package.json')
+                }
         echo packageJson['version']
         echo 'Installing dependencies'
         sh 'npm install'
