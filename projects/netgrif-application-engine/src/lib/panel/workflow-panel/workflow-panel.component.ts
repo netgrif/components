@@ -87,24 +87,24 @@ export class WorkflowPanelComponent extends PanelWithHeaderBinding implements On
         });
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
         switch (selectedHeader.fieldIdentifier) {
             case WorkflowMetaField.INITIALS:
-                return this.workflow.initials;
+                return {value: this.workflow.initials, icon: ''};
             case WorkflowMetaField.TITLE:
-                return this.workflow.title;
+                return {value: this.workflow.title, icon: ''};
             case WorkflowMetaField.VERSION:
-                return this.workflow.version;
+                return {value: this.workflow.version, icon: ''};
             case WorkflowMetaField.AUTHOR:
-                return this.workflow.author.fullName;
+                return {value: this.workflow.author.fullName, icon: 'account_circle'};
             case WorkflowMetaField.CREATION_DATE:
-                return toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING);
+                return {value: toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING), icon: 'event'};
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
         this._log.warn('Immediate data in workflow panel headers are currently not supported');
-        return '';
+        return {value: '', icon: ''};
     }
 
 }

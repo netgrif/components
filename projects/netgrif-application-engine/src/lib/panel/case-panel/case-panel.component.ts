@@ -30,36 +30,45 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
         return false;
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
         switch (selectedHeader.fieldIdentifier) {
             case CaseMetaField.VISUAL_ID:
-                return this.case_.visualId;
+                return {value: this.case_.visualId, icon: undefined};
             case CaseMetaField.TITLE:
-                return this.case_.title;
+                return {value: this.case_.title, icon: undefined};
             case CaseMetaField.AUTHOR:
-                return this.case_.author.fullName;
+                return {value: this.case_.author.fullName, icon: 'account_circle'};
             case CaseMetaField.CREATION_DATE:
-                return toMoment(this.case_.creationDate as NaeDate).format(DATE_TIME_FORMAT_STRING);
+                return {
+                    value: toMoment(this.case_.creationDate as NaeDate).format(DATE_TIME_FORMAT_STRING),
+                    icon: 'event'
+                };
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
         const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
         if (immediate && immediate.value !== undefined) {
             switch (immediate.type) {
                 case 'date':
-                    return toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING);
+                    return {value: toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING), icon: 'event'};
                 case 'dateTime':
-                    return toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING);
+                    return {value: toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING), icon: 'event'};
                 case 'enumeration':
-                    return immediate.value.defaultValue;
+                    return {value: immediate.value.defaultValue, icon: undefined};
                 case 'multichoice':
-                    return immediate.value.map(it => it.defaultValue).join(', ');
+                    return {value: immediate.value.map(it => it.defaultValue).join(', '), icon: undefined};
+                case 'file':
+                    return {value: immediate.value, icon: 'insert_drive_file'};
+                case 'user':
+                    return {value: immediate.value, icon: 'account_circle'};
                 default:
                     // TODO 8.4.2020 - File field value rendering once file field works
                     // TODO 8.4.2020 - User field value rendering once user field works
-                    return immediate.value;
+                    return {value: immediate.value, icon: undefined};
             }
+        } else {
+            return {value: '', icon: ''};
         }
     }
 
