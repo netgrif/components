@@ -18,9 +18,10 @@ import {LoggerService} from '../logger/services/logger.service';
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 
-const MAX_HEADER_COLUMNS = 5;
-
 export abstract class AbstractHeaderService implements OnDestroy {
+
+    protected MAX_HEADER_COLUMNS: number = 5
+    protected _responsiveHeaders: boolean = true;
 
     protected constructor(private _headerType: HeaderType,
                           private _preferences: UserPreferenceService,
@@ -28,7 +29,6 @@ export abstract class AbstractHeaderService implements OnDestroy {
                           private _logger: LoggerService) {
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
-        this.initializeHeaderState();
     }
 
     /**
@@ -50,6 +50,23 @@ export abstract class AbstractHeaderService implements OnDestroy {
         return this._headerType;
     }
 
+    get maxHeaderColumns(): number {
+        return this.MAX_HEADER_COLUMNS;
+    }
+
+    set maxHeaderColumns(maxColumns: number) {
+        this.MAX_HEADER_COLUMNS = maxColumns;
+        this.initializeHeaderState();
+    }
+
+    get responsiveHeaders(): boolean {
+        return this._responsiveHeaders;
+    }
+
+    set responsiveHeaders(responsiveHeaders: boolean) {
+        this._responsiveHeaders = responsiveHeaders;
+    }
+
     public fieldsGroup: Array<FieldsGroup>;
 
     protected _headerState: HeaderState;
@@ -61,10 +78,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     private initializeHeaderState(): void {
         const defaultHeaders = [];
-        for (let i = 0; i < MAX_HEADER_COLUMNS; i++) {
+        for (let i = 0; i < this.MAX_HEADER_COLUMNS; i++) {
             defaultHeaders.push(null);
         }
-        for (let i = 0; i < this.fieldsGroup[0].fields.length && i < MAX_HEADER_COLUMNS; i++) {
+        for (let i = 0; i < this.fieldsGroup[0].fields.length && i < this.MAX_HEADER_COLUMNS; i++) {
             defaultHeaders[i] = this.fieldsGroup[0].fields[i];
         }
         this._headerState = new HeaderState(defaultHeaders);

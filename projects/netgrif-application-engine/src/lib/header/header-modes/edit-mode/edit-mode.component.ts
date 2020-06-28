@@ -13,21 +13,9 @@ import {orderBy} from 'natural-orderby';
     styleUrls: ['./edit-mode.component.scss']
 })
 export class EditModeComponent implements OnInit {
-    public formControls = {
-        0: new FormControl(),
-        1: new FormControl(),
-        2: new FormControl(),
-        3: new FormControl(),
-        4: new FormControl(),
-    };
+    public formControls = {};
 
-    public filterOptions = {
-        0: [],
-        1: [],
-        2: [],
-        3: [],
-        4: [],
-    };
+    public filterOptions = {};
 
     @Input() public headerService: AbstractHeaderService;
 
@@ -35,7 +23,12 @@ export class EditModeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const array = [0, 1, 2, 3, 4];
+        const array = [];
+        for (let i = 0; i < this.headerService.maxHeaderColumns; i++) {
+            array.push(i);
+            this.filterOptions[i] = [];
+            this.formControls[i] = new FormControl();
+        }
         array.forEach( index => {
             this.formControls[index].setValue(this.headerService.headerState.selectedHeaders[index]);
             this.filterOptions[index] = this.formControls[index].valueChanges

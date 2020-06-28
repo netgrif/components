@@ -31,6 +31,7 @@ export class WorkflowPanelComponent extends PanelWithHeaderBinding implements On
 
     @Input() public workflow: Net;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
+    @Input() responsiveBody: boolean = true;
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;
 
