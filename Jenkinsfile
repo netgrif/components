@@ -11,10 +11,6 @@ pipeline {
     stage('Install') {
       steps {
         bitbucketStatusNotify(buildState: 'INPROGRESS')
-        script {
-                    packageJson = readJSON(file: 'package.json')
-                }
-        echo packageJson['version']
         echo 'Installing dependencies'
         sh 'npm install'
       }
@@ -80,6 +76,9 @@ pipeline {
 
             stage('Publish docs') {
                 steps {
+                    script {
+                        packageJson = readJSON(file: 'package.json')
+                    }
                     echo 'Uploading documentation via sshPublisher'
                     sshPublisher(
                         publishers: [
@@ -107,6 +106,9 @@ pipeline {
 
             stage('Publish test reports') {
                 steps {
+                    script {
+                        packageJson = readJSON(file: 'package.json')
+                    }
                     echo 'Uploading test reports via sshPublisher'
                     sshPublisher(
                         publishers: [
@@ -142,6 +144,9 @@ pipeline {
 
      stage('Publish Examples') {
         steps {
+            script {
+                packageJson = readJSON(file: 'package.json')
+            }
             sshPublisher(
                 publishers: [
                     sshPublisherDesc(
