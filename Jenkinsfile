@@ -94,7 +94,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}",
+                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/docs",
                                         remoteDirectorySDF: false,
                                         removePrefix: 'docs/compodoc',
                                         sourceFiles: 'docs/compodoc/**')],
@@ -183,7 +183,11 @@ pipeline {
 
     success {
         bitbucketStatusNotify(buildState: 'SUCCESSFUL')
-        zip(archive: true, zipFile: 'nae-frontend-dist.zip', dir: 'dist/netgrif-application-engine')
+        script {
+            DATETIME_TAG = java.time.LocalDateTime.now()
+        }
+        zip zipFile: "NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", archive: false, dir: 'dist/netgrif-application-engine'
+        archiveArtifacts artifacts:"NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", fingerprint: true
         // archiveArtifacts artifacts: 'dist/netgrif-application-engine/nae-frontend-dist.zip', fingerprint: true
     }
 
