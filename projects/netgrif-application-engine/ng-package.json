@@ -5,7 +5,7 @@
         "./src/assets",
         "**/*theme.scss",
         "./nae-typography.scss",
-        "./src/schema/test-nae-schema.json"
+        "./src/schema/nae-schema.json"
     ],
     "lib": {
         "entryFile": "src/public-api.ts",
