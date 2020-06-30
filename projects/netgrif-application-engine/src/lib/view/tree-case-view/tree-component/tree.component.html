@@ -1,7 +1,7 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-        <div class="mat-tree-node" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'selected-tree-node border-radius': selectedCaseNode(node)}">
+        <div class="min-node-height" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'selected-tree-node border-radius': selectedCaseNode(node)}">
             <span (click)="caseNodeClicked(node)" class="padding-12px" [ngClass]="{'selected-tree-node': selectedCaseNode(node)}">{{node.case.title}}</span>
             <div fxFlex></div>
             <nae-add-child-node [node]="node" *ngIf="node.canAddChildren()"></nae-add-child-node>
@@ -11,7 +11,7 @@
 
     <!-- This is the tree node template for expandable nodes -->
     <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-        <div class="mat-tree-node" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'selected-tree-node border-radius': selectedCaseNode(node)}">
+        <div class="min-node-height" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'selected-tree-node border-radius': selectedCaseNode(node)}">
             <div class="mat-tree-node">
                 <span (click)="caseNodeClicked(node)" class="padding-12px" [ngClass]="{'selected-tree-node': selectedCaseNode(node)}">{{node.case.title}}</span>
                 <div fxFlex></div>
