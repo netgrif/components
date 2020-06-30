@@ -22,6 +22,7 @@ import {Page} from '../../../resources/interface/page';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
+import {CaseRefOperation, CaseRefSetDataBody} from './model/CaseRefSetDataBody';
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
@@ -95,7 +96,7 @@ export class CaseTreeService implements OnDestroy {
         if (this._rootNodesFilter) {
             this._caseResourceService.searchCases(this._rootNodesFilter).subscribe(page => {
                 if (page && page.content && Array.isArray(page.content) && page.content.length > 0) {
-                    this._rootNode = new CaseTreeNode(page.content[0]);
+                    this._rootNode = new CaseTreeNode(page.content[0], undefined);
                     if (page.content.length !== 1) {
                         this._logger.warn('Filter for tree root returned more than one case. Using the first value as tree root...');
                     }
@@ -272,7 +273,7 @@ export class CaseTreeService implements OnDestroy {
                 node.children.splice(position, 1);
             }
             if (node.children.length === position) {
-                node.children.push(new CaseTreeNode(newCase));
+                node.children.push(new CaseTreeNode(newCase, node));
             } else {
                 node.children[position].case = newCase;
                 node.dirtyChildren = true;
@@ -309,88 +310,105 @@ export class CaseTreeService implements OnDestroy {
      * Adds a new child node to the given node based on the properties of the node's case
      */
     public addChildNode(clickedNode: CaseTreeNode): void {
-        this._taskResourceService.getTasks({
-            case: clickedNode.case.stringId,
-            transition: TreePetriflowIdentifiers.ADD_CHILD_TRANSITION
-        }).subscribe(page => {
-            if (page.content.length === 0) {
-                this._logger.error('Task for adding tree nodes doesn\'t exist!');
-                return;
-            }
-            const task = page.content[0];
-            const caseRefField = clickedNode.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const caseRefField = clickedNode.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
 
-            if (caseRefField.allowedNets.length === 0) {
-                this._logger.error(`Case ${clickedNode.case.stringId} can add new tree nodes but has no allowed nets`);
-                return;
-            } else if (caseRefField.allowedNets.length === 1) {
-                this.createNewChildNode(clickedNode, task, caseRefField, caseRefField.allowedNets[0]);
-            } else {
-                this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
-                    const sideMeuRef = this._sideMenuService.open(OptionSelectorComponent, SideMenuSize.MEDIUM, {
-                        title: 'TODO some title here',
-                        options: nets.map(net => ({text: net.title, value: net.identifier}))
-                    });
-                    sideMeuRef.onClose.subscribe(event => {
-                        if (!!event.data) {
-                            this.createNewChildNode(clickedNode, task, caseRefField, event.data.value);
-                        }
-                    });
+        if (caseRefField.allowedNets.length === 0) {
+            this._logger.error(`Case ${clickedNode.case.stringId} can add new tree nodes but has no allowed nets`);
+            return;
+        }
+
+        const childTitle = clickedNode.case.immediateData.find(field => field.stringId === TreePetriflowIdentifiers.CHILD_NODE_TITLE);
+        const addChildBody = {
+            operation: CaseRefOperation.ADD,
+                title: childTitle ? childTitle.value : this._translateService.instant('caseTree.newNodeDefaultName'),
+            processId: ''
+        };
+
+        if (caseRefField.allowedNets.length === 1) {
+            addChildBody.processId = caseRefField.allowedNets[0];
+            this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(newCaseRefValue => {
+                this.updateNodeChildrenAfterAdd(clickedNode, caseRefField, newCaseRefValue);
+            });
+        } else {
+            this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
+                const sideMeuRef = this._sideMenuService.open(OptionSelectorComponent, SideMenuSize.MEDIUM, {
+                    title: 'TODO some title here',
+                    options: nets.map(net => ({text: net.title, value: net.identifier}))
                 });
-            }
-
-        }, error => {
-            this._logger.error('Task for adding tree nodes could not be found', error);
-        });
+                sideMeuRef.onClose.subscribe(event => {
+                    if (!!event.data) {
+                        addChildBody.processId = event.data.value;
+                        this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(newCaseRefValue => {
+                            this.updateNodeChildrenAfterAdd(clickedNode, caseRefField, newCaseRefValue);
+                        });
+                    }
+                });
+            });
+        }
     }
 
     /**
-     * Performs the backend call to add new child node
-     * @param clickedNode the {@link CaseTreeNode} to which we want to add a child
-     * @param addNodeTask the {@link Task} that contains the CaseRef datafield with node's children
-     * @param caseRefField the CaseRef current state
-     * @param newCaseProcessIdentifier identifier of the process for the new child
+     * Performs a backend call on the given case, and sets the value of the case ref field in the transition defined by
+     * [CASE_REF_TRANSITION]{@link TreePetriflowIdentifiers#CASE_REF_TRANSITION}.
+     * @param caseId string ID of the case that should have it's tree case ref set
+     * @param caseRefSetDataBody the request body that contains the operation we want to perform on the case ref
      */
-    private createNewChildNode(clickedNode: CaseTreeNode, addNodeTask: Task,
-                               caseRefField: ImmediateData, newCaseProcessIdentifier: string): void {
-        this._taskResourceService.assignTask(addNodeTask.stringId).subscribe(assignResponse => {
-            if (!assignResponse.success) {
-                this._logger.error('Add node task could not be assigned', assignResponse.error);
+    private performCaseRefCall(caseId: string, caseRefSetDataBody: CaseRefSetDataBody): Observable<Array<string>> {
+        const result$ = new Subject<Array<string>>();
+
+        this._taskResourceService.getTasks({
+            case: caseId,
+            transition: TreePetriflowIdentifiers.CASE_REF_TRANSITION
+        }).subscribe(page => {
+            if (page.content.length === 0) {
+                this._logger.error('Task for adding tree nodes doesn\'t exist!');
+                result$.complete();
+                return;
             }
 
-            const childTitle = clickedNode.case.immediateData.find(field => field.stringId === TreePetriflowIdentifiers.CHILD_NODE_TITLE);
+            const task = page.content[0];
 
-            this._taskResourceService.setData(addNodeTask.stringId, {
-                treeChildCases: {
+            this._taskResourceService.assignTask(task.stringId).subscribe(assignResponse => {
+                if (!assignResponse.success) {
+                    this._logger.error('Add node task could not be assigned', assignResponse.error);
+                }
+
+                const body = {};
+                body[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {
                     type: 'caseRef',
-                    value: {
-                        operation: 'add',
-                        title: childTitle ? childTitle.value : this._translateService.instant('caseTree.newNodeDefaultName'),
-                        processId: newCaseProcessIdentifier
+                    value: caseRefSetDataBody
+                };
+                this._taskResourceService.setData(task.stringId, body).subscribe(changeContainer => {
+                    const changedFields = changeContainer.changedFields;
+                    const caseRefChanges = changedFields[TreePetriflowIdentifiers.CHILDREN_CASE_REF];
+                    if (!caseRefChanges) {
+                        this._logger.error('No changed fields in case ref', changedFields);
+                        result$.complete();
+                        return;
                     }
-                }
-            }).subscribe(changeContainer => {
-                const changedFields = changeContainer.changedFields;
-                const caseRefChanges = changedFields[TreePetriflowIdentifiers.CHILDREN_CASE_REF];
-                if (!caseRefChanges) {
-                    this._logger.error('No changed fields in case ref', changedFields);
-                    return;
-                }
 
-                this.updateNodeChildrenAfterAdd(clickedNode, caseRefField, caseRefChanges.value);
-                this._taskResourceService.finishTask(addNodeTask.stringId).subscribe(finishResponse => {
-                    if (finishResponse.success) {
-                        this._logger.debug('Add node task finished', finishResponse.success);
-                    } else {
-                        this._logger.error('Add node task finish failed', finishResponse.error);
-                    }
+                    result$.next(caseRefChanges.value);
+                    result$.complete();
+                    this._taskResourceService.finishTask(task.stringId).subscribe(finishResponse => {
+                        if (finishResponse.success) {
+                            this._logger.debug('Case ref task finished', finishResponse.success);
+                        } else {
+                            this._logger.error('Case ref task finish failed', finishResponse.error);
+                        }
+                    });
+                }, error => {
+                    this._logger.error('Could not set data to tree case ref', error);
+                    result$.complete();
                 });
             }, error => {
-                this._logger.error('Could not set data to tree case ref', error);
+                this._logger.error('Case ref task could not be assigned', error);
+                result$.complete();
             });
         }, error => {
-            this._logger.error('Add node task could not be assigned', error);
+            this._logger.error('Case ref task could not be found', error);
+            result$.complete();
         });
+        return result$.asObservable();
     }
 
     /**
@@ -417,10 +435,32 @@ export class CaseTreeService implements OnDestroy {
             if (page.content.length !== 1) {
                 this._logger.error('Child node case could not be found');
             }
-            clickedNode.children.push(new CaseTreeNode(page.content[0]));
+            clickedNode.children.push(new CaseTreeNode(page.content[0], clickedNode));
             this.refreshTree();
         }, error => {
             this._logger.error('Child node case could not be found', error);
+        });
+    }
+
+    /**
+     * removes the provided node if the underlying case allows it.
+     *
+     * The underlying case is removed from the case ref of it's parent element with the help from the `remove`
+     * operation provided by case ref itself.
+     * @param node the node that should be removed from the tree
+     */
+    public removeNode(node: CaseTreeNode): void {
+        this._taskResourceService.getTasks({
+            case: node.case.stringId,
+            transition: TreePetriflowIdentifiers.CASE_REF_TRANSITION
+        }).subscribe(page => {
+            if (page.content.length === 0) {
+                this._logger.error('Task for removing tree nodes doesn\'t exist!');
+                return;
+            }
+
+        }, error => {
+            this._logger.error('Task for removing tree nodes could not be found', error);
         });
     }
 

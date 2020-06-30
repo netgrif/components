@@ -89,14 +89,6 @@ export class TreeComponent {
     }
 
     /**
-     * @ignore
-     */
-    canAddChildren(queriedCase: Case): boolean {
-        const immediate = queriedCase.immediateData.find(data => data.stringId === TreePetriflowIdentifiers.CAN_ADD_CHILDREN);
-        return !!immediate && immediate.value;
-    }
-
-    /**
      * Adds a child to the root node.
      *
      * Useful if you set the [showTreeRoot]{@link TreeComponent#showTreeRoot} property to `false`.

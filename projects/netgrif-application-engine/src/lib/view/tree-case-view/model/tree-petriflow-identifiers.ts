@@ -29,5 +29,5 @@ export enum TreePetriflowIdentifiers {
     /**
      * Id of the transition that is executed to set the new child data
      */
-    ADD_CHILD_TRANSITION = 'addTreeChild',
+    CASE_REF_TRANSITION = 'treeCaseRefAccessor',
 }

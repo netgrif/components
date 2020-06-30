@@ -3,7 +3,8 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
         <div class="mat-tree-node tree-offset" fxLayout="row" fxLayoutAlign="start center">
             <span (click)="caseNodeClicked(node)">{{node.case.title}}</span>
-            <nae-add-child-node [node]="node" *ngIf="canAddChildren(node.case)"></nae-add-child-node>
+            <nae-remove-node [node]="node" *ngIf="node.canBeRemoved()"></nae-remove-node>
+            <nae-add-child-node [node]="node" *ngIf="node.canAddChildren()"></nae-add-child-node>
         </div>
     </mat-tree-node>
 
@@ -18,7 +19,8 @@
                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                     </mat-icon>
                 </button>
-                <nae-add-child-node [node]="node" *ngIf="canAddChildren(node.case)"></nae-add-child-node>
+                <nae-remove-node [node]="node" *ngIf="node.canBeRemoved()"></nae-remove-node>
+                <nae-add-child-node [node]="node" *ngIf="node.canAddChildren()"></nae-add-child-node>
             </div>
         </div>
         <div class="tree-offset" [class.tree-invisible]="!treeControl.isExpanded(node)">

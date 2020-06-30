@@ -16,6 +16,7 @@ export interface CaseSearchRequestBody {
      * If more than one author is specified, the returned cases were created by one of them
      */
     author?: AuthorSearchRequest | Array<AuthorSearchRequest>;
+    // TODO BUG NAE-892
     /**
      * Maps field IDs to field values. Returned cases must have data fields with the provided IDs that have the provided values.
      * If more than one field-value pair is specified, the data set of the returned cases must match all of the pairs.
