@@ -1,39 +1,10 @@
 {
+    "$schema": "./dist/netgrif-application-engine/src/schema/nae-schema.json",
     "extends": "nae-default",
     "providers": {
         "auth": {
-            "address": "http://localhost:8080/api/",
-            "authentication": "Basic",
-            "endpoints": {
-                "login": "auth/login",
-                "logout": "auth/logout",
-                "signup": "auth/signup"
-            },
-            "sessionBearer": "X-Auth-Token"
-        },
-        "resources": [
-            {
-                "name": "case",
-                "address": "http://localhost:8080/api/",
-                "format": "hal",
-                "openApi": "https://swagger.io"
-            },
-            {
-                "name": "task",
-                "address": "http://localhost:8080/api/",
-                "format": "json"
-            },
-            {
-                "name": "petrinet",
-                "address": "http://localhost:8080/api/",
-                "format": "json"
-            },
-            {
-                "name": "user",
-                "address": "http://localhost:8080/api/",
-                "format": "json"
-            }
-        ]
+
+        }
     },
     "views": {
         "demo-authentication": {
