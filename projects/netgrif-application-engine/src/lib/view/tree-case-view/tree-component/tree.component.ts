@@ -89,6 +89,13 @@ export class TreeComponent {
     }
 
     /**
+     * @ignore
+     */
+    selectedCaseNode(node: CaseTreeNode) {
+        return node === this._treeService.currentNode;
+    }
+
+    /**
      * Adds a child to the root node.
      *
      * Useful if you set the [showTreeRoot]{@link TreeComponent#showTreeRoot} property to `false`.

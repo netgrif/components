@@ -67,6 +67,10 @@ export class CaseTreeService implements OnDestroy {
         return this._treeControl;
     }
 
+    public get currentNode(): CaseTreeNode {
+        return this._currentNode;
+    }
+
     /**
      * Emits a value whenever a new root node Filter is set.
      *
