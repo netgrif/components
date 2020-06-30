@@ -320,14 +320,14 @@ export class CaseTreeService implements OnDestroy {
         const childTitle = clickedNode.case.immediateData.find(field => field.stringId === TreePetriflowIdentifiers.CHILD_NODE_TITLE);
         const addChildBody = {
             operation: CaseRefOperation.ADD,
-                title: childTitle ? childTitle.value : this._translateService.instant('caseTree.newNodeDefaultName'),
+            title: childTitle ? childTitle.value : this._translateService.instant('caseTree.newNodeDefaultName'),
             processId: ''
         };
 
         if (caseRefField.allowedNets.length === 1) {
             addChildBody.processId = caseRefField.allowedNets[0];
             this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(newCaseRefValue => {
-                this.updateNodeChildrenAfterAdd(clickedNode, caseRefField, newCaseRefValue);
+                this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue);
             });
         } else {
             this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
@@ -339,12 +339,28 @@ export class CaseTreeService implements OnDestroy {
                     if (!!event.data) {
                         addChildBody.processId = event.data.value;
                         this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(newCaseRefValue => {
-                            this.updateNodeChildrenAfterAdd(clickedNode, caseRefField, newCaseRefValue);
+                            this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue);
                         });
                     }
                 });
             });
         }
+    }
+
+    /**
+     * removes the provided node if the underlying case allows it.
+     *
+     * The underlying case is removed from the case ref of it's parent element with the help from the `remove`
+     * operation provided by case ref itself.
+     * @param node the node that should be removed from the tree
+     */
+    public removeNode(node: CaseTreeNode): void {
+        this.performCaseRefCall(node.parent.case.stringId, {
+            operation: CaseRefOperation.REMOVE,
+            caseId: node.case.stringId
+        }).subscribe(newCaseRefValue => {
+            this.updateNodeChildrenFromChangedFields(node.parent, newCaseRefValue);
+        });
     }
 
     /**
@@ -361,7 +377,7 @@ export class CaseTreeService implements OnDestroy {
             transition: TreePetriflowIdentifiers.CASE_REF_TRANSITION
         }).subscribe(page => {
             if (page.content.length === 0) {
-                this._logger.error('Task for adding tree nodes doesn\'t exist!');
+                this._logger.error('Case ref accessor task doesn\'t exist!');
                 result$.complete();
                 return;
             }
@@ -370,7 +386,7 @@ export class CaseTreeService implements OnDestroy {
 
             this._taskResourceService.assignTask(task.stringId).subscribe(assignResponse => {
                 if (!assignResponse.success) {
-                    this._logger.error('Add node task could not be assigned', assignResponse.error);
+                    this._logger.error('Case ref accessor task could not be assigned', assignResponse.error);
                 }
 
                 const body = {};
@@ -391,9 +407,9 @@ export class CaseTreeService implements OnDestroy {
                     result$.complete();
                     this._taskResourceService.finishTask(task.stringId).subscribe(finishResponse => {
                         if (finishResponse.success) {
-                            this._logger.debug('Case ref task finished', finishResponse.success);
+                            this._logger.debug('Case ref accessor task finished', finishResponse.success);
                         } else {
-                            this._logger.error('Case ref task finish failed', finishResponse.error);
+                            this._logger.error('Case ref accessor task finish failed', finishResponse.error);
                         }
                     });
                 }, error => {
@@ -401,33 +417,66 @@ export class CaseTreeService implements OnDestroy {
                     result$.complete();
                 });
             }, error => {
-                this._logger.error('Case ref task could not be assigned', error);
+                this._logger.error('Case ref accessor task could not be assigned', error);
                 result$.complete();
             });
         }, error => {
-            this._logger.error('Case ref task could not be found', error);
+            this._logger.error('Case ref accessor task could not be found', error);
             result$.complete();
         });
         return result$.asObservable();
     }
 
     /**
-     * Performs an update after adding a new child node
-     * @param clickedNode node that had a child added
-     * @param caseRefField previous state of the caseRef field
+     * Performs an update after adding or removing a node from the tree.
+     *
+     * If only one node was added adds it into the tree
+     *
+     * If only one node was removed removes it from the tree
+     *
+     * Otherwise collapses the affected node and marks it's children as dirty
+     *
+     * @param affectedNode node that had it's children changed
      * @param newCaseRefValue new value of the caseRef field returned by backend
      */
-    private updateNodeChildrenAfterAdd(clickedNode: CaseTreeNode, caseRefField: ImmediateData, newCaseRefValue: Array<string>): void {
+    private updateNodeChildrenFromChangedFields(affectedNode: CaseTreeNode,
+                                                newCaseRefValue: Array<string>): void {
+        const caseRefField = affectedNode.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         const newChildren = new Set<string>();
         newCaseRefValue.forEach(id => newChildren.add(id));
 
-        if (caseRefField.value.length + 1 !== newCaseRefValue.length || caseRefField.value.some(id => !newChildren.has(id))) {
+        let numberOfMissingChildren = 0;
+        for (let i = 0; i < caseRefField.value.length && numberOfMissingChildren < 2; i++) {
+            numberOfMissingChildren += !newChildren.has(caseRefField.value[i]) ? 1 : 0;
+        }
+
+        const exactlyOneChildAdded = caseRefField.value.length + 1 === newCaseRefValue.length
+            && caseRefField.value.every(it => newChildren.has(it));
+
+        const exactlyOneChildRemoved = caseRefField.value.length - 1 === newCaseRefValue.length
+            && numberOfMissingChildren === 1;
+
+        if (!exactlyOneChildAdded && !exactlyOneChildRemoved) {
             caseRefField.value = newCaseRefValue;
-            this._treeControl.collapseDescendants(clickedNode);
-            clickedNode.dirtyChildren = true;
+            this._treeControl.collapseDescendants(affectedNode);
+            affectedNode.dirtyChildren = true;
             return;
         }
 
+        if (exactlyOneChildAdded) {
+            this.processChildNodeAdd(affectedNode, caseRefField, newCaseRefValue);
+        } else {
+            this.processChildNodeRemove(affectedNode, caseRefField, newChildren);
+        }
+    }
+
+    /**
+     * Adds a new child node to the `affectedNode` by adding the last net from the `newCaseRefValue`
+     * @param affectedNode the node in the tree that had a child added
+     * @param caseRefField the case ref field of the affected node
+     * @param newCaseRefValue the new value of the case ref field in the node
+     */
+    protected processChildNodeAdd(affectedNode: CaseTreeNode, caseRefField: ImmediateData, newCaseRefValue: Array<string>): void {
         caseRefField.value = newCaseRefValue;
         this._caseResourceService.searchCases(new SimpleFilter('', FilterType.CASE, {
             query: 'stringId:' + newCaseRefValue[newCaseRefValue.length - 1]
@@ -435,7 +484,7 @@ export class CaseTreeService implements OnDestroy {
             if (page.content.length !== 1) {
                 this._logger.error('Child node case could not be found');
             }
-            clickedNode.children.push(new CaseTreeNode(page.content[0], clickedNode));
+            affectedNode.children.push(new CaseTreeNode(page.content[0], affectedNode));
             this.refreshTree();
         }, error => {
             this._logger.error('Child node case could not be found', error);
@@ -443,25 +492,16 @@ export class CaseTreeService implements OnDestroy {
     }
 
     /**
-     * removes the provided node if the underlying case allows it.
-     *
-     * The underlying case is removed from the case ref of it's parent element with the help from the `remove`
-     * operation provided by case ref itself.
-     * @param node the node that should be removed from the tree
+     * Removes the deleted node from the children of the `affectedNode`
+     * @param affectedNode the node in the tree that had it's child removed
+     * @param caseRefField the case ref field of the affected node
+     * @param newCaseRefValues the new value of the case ref field in the node
      */
-    public removeNode(node: CaseTreeNode): void {
-        this._taskResourceService.getTasks({
-            case: node.case.stringId,
-            transition: TreePetriflowIdentifiers.CASE_REF_TRANSITION
-        }).subscribe(page => {
-            if (page.content.length === 0) {
-                this._logger.error('Task for removing tree nodes doesn\'t exist!');
-                return;
-            }
-
-        }, error => {
-            this._logger.error('Task for removing tree nodes could not be found', error);
-        });
+    protected processChildNodeRemove(affectedNode: CaseTreeNode, caseRefField: ImmediateData, newCaseRefValues: Set<string>) {
+        const index = caseRefField.value.findIndex(it => !newCaseRefValues.has(it));
+        caseRefField.value.splice(index, 1);
+        affectedNode.children.splice(index, 1);
+        this.refreshTree();
     }
 
     /**
