@@ -35,6 +35,10 @@ export class OpenedTab implements TabContent {
      */
     public initial = false;
     /**
+     * See [TabContent.parentUniqueId]{@link TabContent#parentUniqueId}.
+     */
+    public parentUniqueId = undefined;
+    /**
      * @ignore
      * Reference to the component portal that is used to display the tab content
      */

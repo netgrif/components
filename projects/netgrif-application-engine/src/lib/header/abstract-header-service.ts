@@ -14,18 +14,26 @@ import {SortDirection} from '@angular/material';
 import {UserPreferenceService} from '../user/services/user-preference.service';
 import {ViewService} from '../routing/view-service/view.service';
 import {LoggerService} from '../logger/services/logger.service';
+import {LoadingEmitter} from '../utility/loading-emitter';
 
 
 export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
 
-const MAX_HEADER_COLUMNS = 5;
-
 export abstract class AbstractHeaderService implements OnDestroy {
+
+    protected MAX_HEADER_COLUMNS = 5;
+    protected _responsiveHeaders = true;
+    protected _headerState: HeaderState;
+    protected _headerChange$: Subject<HeaderChange>;
+
+    public loading: LoadingEmitter;
+    public fieldsGroup: Array<FieldsGroup>;
 
     protected constructor(private _headerType: HeaderType,
                           private _preferences: UserPreferenceService,
                           private _viewService: ViewService,
                           private _logger: LoggerService) {
+        this.loading = new LoadingEmitter(true);
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this.initializeHeaderState();
@@ -50,10 +58,22 @@ export abstract class AbstractHeaderService implements OnDestroy {
         return this._headerType;
     }
 
-    public fieldsGroup: Array<FieldsGroup>;
+    get maxHeaderColumns(): number {
+        return this.MAX_HEADER_COLUMNS;
+    }
 
-    protected _headerState: HeaderState;
-    protected _headerChange$: Subject<HeaderChange>;
+    set maxHeaderColumns(maxColumns: number) {
+        this.MAX_HEADER_COLUMNS = maxColumns;
+        this.initializeHeaderState();
+    }
+
+    get responsiveHeaders(): boolean {
+        return this._responsiveHeaders;
+    }
+
+    set responsiveHeaders(responsiveHeaders: boolean) {
+        this._responsiveHeaders = responsiveHeaders;
+    }
 
     private static uniqueNetFieldID(netId: string, fieldId: string): string {
         return `${netId}-${fieldId}`;
@@ -61,13 +81,33 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     private initializeHeaderState(): void {
         const defaultHeaders = [];
-        for (let i = 0; i < MAX_HEADER_COLUMNS; i++) {
+        for (let i = 0; i < this.MAX_HEADER_COLUMNS; i++) {
             defaultHeaders.push(null);
         }
-        for (let i = 0; i < this.fieldsGroup[0].fields.length && i < MAX_HEADER_COLUMNS; i++) {
+        for (let i = 0; i < this.fieldsGroup[0].fields.length && i < this.MAX_HEADER_COLUMNS; i++) {
             defaultHeaders[i] = this.fieldsGroup[0].fields[i];
         }
         this._headerState = new HeaderState(defaultHeaders);
+    }
+
+    protected initializeDefaultHeaderState(naeDefaultHeaders: Array<string>): void {
+        if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders)) {
+            const defaultHeaders = [];
+            for (let i = 0; i < this.MAX_HEADER_COLUMNS; i++) {
+                defaultHeaders.push(null);
+            }
+            naeDefaultHeaders.forEach((headerId, i) => {
+                let head;
+                for (const h of this.fieldsGroup) {
+                    head = h.fields.find(header => header.uniqueId === headerId);
+                    if (head) {
+                        defaultHeaders[i] = head;
+                        break;
+                    }
+                }
+            });
+            this._headerState.updateSelectedHeaders(defaultHeaders);
+        }
     }
 
     public setAllowedNets(allowedNets: Array<PetriNetReference>) {
@@ -113,7 +153,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         const newHeaders = [];
         preferredHeaderKeys.forEach(headerKey => {
             for (const fieldGroup of this.fieldsGroup) {
-                for (const header of fieldGroup.fields ) {
+                for (const header of fieldGroup.fields) {
                     if (header.uniqueId === headerKey) {
                         newHeaders.push(header);
                         return; // continue the outermost loop

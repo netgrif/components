@@ -121,6 +121,9 @@ export class TabView implements TabViewInterface {
         if (!this.openedTabs[index].canBeClosed) {
             throw new Error(`Tab at index ${index} can't be closed`);
         }
+        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
+            this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
+        }
         this.openedTabs.splice(index, 1);
     }
 
@@ -133,6 +136,9 @@ export class TabView implements TabViewInterface {
         const index = this.getTabIndex(uniqueId);
         if (!this.openedTabs[index].canBeClosed) {
             throw new Error(`Tab with ID ${uniqueId} can't be closed`);
+        }
+        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
+            this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
         }
         this.openedTabs.splice(index, 1);
     }

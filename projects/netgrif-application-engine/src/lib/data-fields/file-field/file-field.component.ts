@@ -2,7 +2,6 @@ import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@a
 import {FileField} from './models/file-field';
 import {FileFieldService} from './services/file-field.service';
 import {FilesUploadComponent} from '../../side-menu/content-components/files-upload/files-upload.component';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';

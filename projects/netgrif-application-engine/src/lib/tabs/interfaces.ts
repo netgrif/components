@@ -47,6 +47,11 @@ export interface TabContent {
      * and logs a warning if it is set on the provided object.
      */
     initial?: boolean;
+    /**
+     * When we need to know, tho which tab we need to switch when we close current tab, we need a parent unique id, its
+     * a unique ID of tab, from which we open current tab. Initial tabs and case tabs dont have those property.
+     */
+    parentUniqueId?: string;
 }
 
 
