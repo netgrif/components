@@ -14,7 +14,8 @@ export class AddChildNodeComponent {
     constructor(private _treeService: CaseTreeService) {
     }
 
-    public addChild(): void {
+    public addChild(event: Event): void {
+        event.stopPropagation();
         this._treeService.addChildNode(this.node);
     }
 }

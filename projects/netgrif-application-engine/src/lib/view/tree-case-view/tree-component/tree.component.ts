@@ -72,19 +72,20 @@ export class TreeComponent {
     hasChild = (_: number, node: CaseTreeNode) => {
         const childrenCaseRef = node.case.immediateData.find(data => data.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         return !!childrenCaseRef && !!childrenCaseRef.value && childrenCaseRef.value.length > 0;
-    };
-
-    /**
-     * @ignore
-     */
-    caseNodeClicked(node: CaseTreeNode) {
-        this._treeService.caseNodeClicked(node);
     }
 
     /**
      * @ignore
      */
-    toggleCaseNode(node: CaseTreeNode) {
+    caseNodeClicked(node: CaseTreeNode) {
+        this._treeService.changeActiveNode(node);
+    }
+
+    /**
+     * @ignore
+     */
+    toggleCaseNode(event: Event, node: CaseTreeNode) {
+        event.stopPropagation();
         this._treeService.toggleNode(node);
     }
 

@@ -14,6 +14,7 @@ import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injectio
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
 import {UserComparatorService} from '../../../user/services/user-comparator.service';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
+import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -28,6 +29,7 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _assignPolicy: AssignPolicyService,
                 protected _cancel: CancelTaskService,
                 protected _userComparator: UserComparatorService,
+                protected _callchain: CallChainService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: SubjectTaskOperations) {
 
         _taskDataService.changedFields$.subscribe(changedFields => {
@@ -41,7 +43,7 @@ export class TreeTaskContentService implements OnDestroy {
         });
 
         _treeCaseService.loadTask$.asObservable().subscribe(selectedCase => {
-            this.loadFeaturedTask(selectedCase);
+            this.cancelAndLoadFeaturedTask(selectedCase);
         });
 
         _taskOperations.reload$.subscribe(() => {
@@ -61,18 +63,28 @@ export class TreeTaskContentService implements OnDestroy {
     }
 
     /**
-     * Changes the currently displayed {@link Task} based on the selected {@link Case} from the Tree.
+     * Cancels the currently selected {@link Task} if any. And then loads and assigns the new Task.
      * @param selectedCase the Case who's task should be now displayed
      */
-    protected loadFeaturedTask(selectedCase: Case) {
+    protected cancelAndLoadFeaturedTask(selectedCase: Case) {
         if (!this.taskChanged(selectedCase)) {
             return;
         }
 
         if (this.shouldCancelTask) {
-            this._cancel.cancel();
+            this._cancel.cancel(this._callchain.create(() => {
+                this.loadFeaturedTask(selectedCase);
+            }));
+        } else {
+            this.loadFeaturedTask(selectedCase);
         }
+    }
 
+    /**
+     * Changes the currently displayed {@link Task} based on the selected {@link Case} from the Tree.
+     * @param selectedCase the Case who's task should be now displayed
+     */
+    protected loadFeaturedTask(selectedCase: Case) {
         this._selectedCase = selectedCase;
 
         const requestBody = this.getTaskRequestBody();
@@ -154,6 +166,7 @@ export class TreeTaskContentService implements OnDestroy {
         task.assignPolicy = AssignPolicy.auto;
         this._taskContentService.task = task;
         this._assignPolicy.performAssignPolicy(true);
+
     }
 
     /**

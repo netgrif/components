@@ -14,7 +14,8 @@ export class RemoveNodeComponent {
     constructor(private _treeService: CaseTreeService) {
     }
 
-    public removeNode(): void {
+    public removeNode(event: Event): void {
+        event.stopPropagation();
         this._treeService.removeNode(this.node);
     }
 

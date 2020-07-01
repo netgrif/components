@@ -140,9 +140,9 @@ export class CaseTreeService implements OnDestroy {
     /**
      * Notifies the parent TreeCaseView that a case was clicked in the tree and it's Task should be displayed
      */
-    public caseNodeClicked(node: CaseTreeNode): void {
+    public changeActiveNode(node: CaseTreeNode | undefined): void {
         this._currentNode = node;
-        this._treeCaseViewService.loadTask$.next(node.case);
+        this._treeCaseViewService.loadTask$.next(node ? node.case : undefined);
     }
 
     /**
@@ -365,6 +365,15 @@ export class CaseTreeService implements OnDestroy {
         }).subscribe(newCaseRefValue => {
             this.updateNodeChildrenFromChangedFields(node.parent, newCaseRefValue);
         });
+
+        let bubblingNode = this.currentNode;
+        while (bubblingNode !== this._rootNode) {
+            if (bubblingNode === node) {
+                this.changeActiveNode(undefined);
+                break;
+            }
+            bubblingNode = bubblingNode.parent;
+        }
     }
 
     /**

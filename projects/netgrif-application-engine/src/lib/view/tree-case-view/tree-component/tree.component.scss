@@ -3,6 +3,10 @@
     padding-right: 12px;
 }
 
+.padding-12px:hover {
+    cursor: pointer;
+}
+
 .border-radius {
     border-radius: 8px;
 }
@@ -20,5 +24,9 @@
 }
 
 .min-node-height {
-    min-height: 40px;
+    min-height: 40px !important;
+}
+
+.width-100 {
+    width: 100%;
 }
