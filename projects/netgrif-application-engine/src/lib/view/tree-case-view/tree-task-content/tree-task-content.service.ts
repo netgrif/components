@@ -66,7 +66,7 @@ export class TreeTaskContentService implements OnDestroy {
      * Cancels the currently selected {@link Task} if any. And then loads and assigns the new Task.
      * @param selectedCase the Case who's task should be now displayed
      */
-    protected cancelAndLoadFeaturedTask(selectedCase: Case) {
+    protected cancelAndLoadFeaturedTask(selectedCase: Case | undefined) {
         if (!this.taskChanged(selectedCase)) {
             return;
         }
@@ -84,7 +84,7 @@ export class TreeTaskContentService implements OnDestroy {
      * Changes the currently displayed {@link Task} based on the selected {@link Case} from the Tree.
      * @param selectedCase the Case who's task should be now displayed
      */
-    protected loadFeaturedTask(selectedCase: Case) {
+    protected loadFeaturedTask(selectedCase: Case | undefined): void {
         this._selectedCase = selectedCase;
 
         const requestBody = this.getTaskRequestBody();
@@ -109,7 +109,7 @@ export class TreeTaskContentService implements OnDestroy {
      * If the IDs are the same returns `true` if the transition IDs are different.
      * Returns `false` otherwise.
      */
-    private taskChanged(newCase: Case): boolean {
+    private taskChanged(newCase: Case | undefined): boolean {
         const currentCaseId = this._selectedCase ? this._selectedCase.stringId : undefined;
         const newCaseId = newCase ? newCase.stringId : undefined;
         if (currentCaseId !== newCaseId) {
@@ -183,7 +183,9 @@ export class TreeTaskContentService implements OnDestroy {
     protected updateTaskState(): void {
         this._taskResourceService.getTasks(this.getTaskRequestBody()).subscribe(page => {
             if (page && page.content && Array.isArray(page.content)) {
-                Object.assign(this._taskContentService.task, page.content[0]);
+                if (this._taskContentService.task) {
+                    Object.assign(this._taskContentService.task, page.content[0]);
+                }
                 this.resolveTaskBlockState();
             }
         });

@@ -12,7 +12,6 @@ import {ImmediateData} from '../../../resources/interface/immediate-data';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
 import {Case} from '../../../resources/interface/case';
-import {Task} from '../../../resources/interface/task';
 import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {OptionSelectorComponent} from '../../../side-menu/content-components/option-selector/option-selector.component';
@@ -328,11 +327,14 @@ export class CaseTreeService implements OnDestroy {
             processId: ''
         };
 
+        const callback = (newCaseRefValue) => {
+            this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue);
+            this.expandNode(clickedNode);
+        };
+
         if (caseRefField.allowedNets.length === 1) {
             addChildBody.processId = caseRefField.allowedNets[0];
-            this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(newCaseRefValue => {
-                this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue);
-            });
+            this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(callback);
         } else {
             this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
                 const sideMeuRef = this._sideMenuService.open(OptionSelectorComponent, SideMenuSize.MEDIUM, {
@@ -342,9 +344,7 @@ export class CaseTreeService implements OnDestroy {
                 sideMeuRef.onClose.subscribe(event => {
                     if (!!event.data) {
                         addChildBody.processId = event.data.value;
-                        this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(newCaseRefValue => {
-                            this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue);
-                        });
+                        this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(callback);
                     }
                 });
             });
