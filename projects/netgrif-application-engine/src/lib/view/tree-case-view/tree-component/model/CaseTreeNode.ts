@@ -8,6 +8,8 @@ export class CaseTreeNode {
     public children: Array<CaseTreeNode>;
     public dirtyChildren: boolean;
     public loadingChildren: LoadingEmitter;
+    public removingNode: LoadingEmitter;
+    public addingNode: LoadingEmitter;
     public parent: CaseTreeNode;
 
     constructor(nodeCase: Case, parentNode: CaseTreeNode) {
@@ -15,6 +17,8 @@ export class CaseTreeNode {
         this.children = [];
         this.dirtyChildren = true;
         this.loadingChildren = new LoadingEmitter();
+        this.removingNode = new LoadingEmitter();
+        this.addingNode = new LoadingEmitter();
         this.parent = parentNode;
     }
 
@@ -34,6 +38,27 @@ export class CaseTreeNode {
     public canBeRemoved(): boolean {
         const immediate = this.searchImmediateData(TreePetriflowIdentifiers.CAN_REMOVE_NODE);
         return !!immediate && immediate.value;
+    }
+
+    /**
+     * @returns whether this node's children are currently being loaded
+     */
+    public isLoadingChildren(): boolean {
+        return this.loadingChildren.isActive;
+    }
+
+    /**
+     * @returns whether this node is being removed from the tree
+     */
+    public isBeingRemoved(): boolean {
+        return this.removingNode.isActive;
+    }
+
+    /**
+     * @returns whether children are being added to this node
+     */
+    public isAddingNode(): boolean {
+        return this.addingNode.isActive;
     }
 
     private searchImmediateData(dataId: string): ImmediateData | undefined {

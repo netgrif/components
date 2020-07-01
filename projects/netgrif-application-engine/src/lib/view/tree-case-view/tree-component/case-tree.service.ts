@@ -313,10 +313,12 @@ export class CaseTreeService implements OnDestroy {
      * Adds a new child node to the given node based on the properties of the node's case
      */
     public addChildNode(clickedNode: CaseTreeNode): void {
+        clickedNode.addingNode.on();
         const caseRefField = clickedNode.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
 
         if (caseRefField.allowedNets.length === 0) {
             this._logger.error(`Case ${clickedNode.case.stringId} can add new tree nodes but has no allowed nets`);
+            clickedNode.addingNode.off();
             return;
         }
 
@@ -329,6 +331,7 @@ export class CaseTreeService implements OnDestroy {
 
         const callback = (newCaseRefValue) => {
             this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue);
+            clickedNode.addingNode.off();
             this.expandNode(clickedNode);
         };
 
@@ -359,15 +362,17 @@ export class CaseTreeService implements OnDestroy {
      * @param node the node that should be removed from the tree
      */
     public removeNode(node: CaseTreeNode): void {
+        node.removingNode.on();
         this.performCaseRefCall(node.parent.case.stringId, {
             operation: CaseRefOperation.REMOVE,
             caseId: node.case.stringId
         }).subscribe(newCaseRefValue => {
             this.updateNodeChildrenFromChangedFields(node.parent, newCaseRefValue);
+            node.removingNode.off();
         });
 
         let bubblingNode = this.currentNode;
-        while (bubblingNode !== this._rootNode) {
+        while (bubblingNode && bubblingNode !== this._rootNode) {
             if (bubblingNode === node) {
                 this.changeActiveNode(undefined);
                 break;

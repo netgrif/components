@@ -1,3 +1,7 @@
-<button mat-icon-button (click)="addChild($event)">
+<button *ngIf="!node.isAddingNode()" mat-icon-button (click)="addChild($event)">
     <mat-icon>add</mat-icon>
 </button>
+
+<div *ngIf="node.isAddingNode()" class="spinner-margin">
+    <mat-spinner [diameter]="24"></mat-spinner>
+</div>
