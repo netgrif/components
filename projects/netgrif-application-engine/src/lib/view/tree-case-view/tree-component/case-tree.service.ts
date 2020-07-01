@@ -355,13 +355,18 @@ export class CaseTreeService implements OnDestroy {
     }
 
     /**
-     * removes the provided node if the underlying case allows it.
+     * removes the provided non-root node if the underlying case allows it.
      *
      * The underlying case is removed from the case ref of it's parent element with the help from the `remove`
      * operation provided by case ref itself.
      * @param node the node that should be removed from the tree
      */
     public removeNode(node: CaseTreeNode): void {
+        if (!node.parent) {
+            this._logger.error('Case tree doesn\'t support removal of the root node, as it has no parent case ref.');
+            return;
+        }
+
         node.removingNode.on();
         this.performCaseRefCall(node.parent.case.stringId, {
             operation: CaseRefOperation.REMOVE,

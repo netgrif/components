@@ -37,7 +37,7 @@ export class CaseTreeNode {
      */
     public canBeRemoved(): boolean {
         const immediate = this.searchImmediateData(TreePetriflowIdentifiers.CAN_REMOVE_NODE);
-        return !!immediate && immediate.value;
+        return this.parent && !!immediate && immediate.value;
     }
 
     /**
