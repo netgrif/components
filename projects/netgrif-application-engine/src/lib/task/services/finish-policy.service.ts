@@ -6,12 +6,15 @@ import {DataFocusPolicyService} from './data-focus-policy.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {FinishTaskService} from './finish-task.service';
+import {Subject} from 'rxjs';
 
 /**
  * Handles the sequence of actions that are performed when a task is being finished, based on the task's configuration.
  */
 @Injectable()
 export class FinishPolicyService extends TaskHandlingService {
+
+    private afterAction: Subject<boolean>;
 
     constructor(protected _dataFocusPolicyService: DataFocusPolicyService,
                 protected _finishTaskService: FinishTaskService,
@@ -22,8 +25,10 @@ export class FinishPolicyService extends TaskHandlingService {
 
     /**
      * Performs the actions that correspond to the policy defined by the Task when it's finished.
+     * @param afterAction the action that should be performed when the finish policy finishes
      */
-    public performFinishPolicy(): void {
+    public performFinishPolicy(afterAction: Subject<boolean> = new Subject<boolean>()): void {
+        this.afterAction = afterAction;
         if (this._safeTask.finishPolicy === FinishPolicy.autoNoData) {
             this.autoNoDataFinishPolicy();
         } else {
@@ -39,11 +44,12 @@ export class FinishPolicyService extends TaskHandlingService {
      */
     private autoNoDataFinishPolicy(): void {
         if (this._safeTask.dataSize <= 0) {
-            this._finishTaskService.validateDataAndFinish();
+            this._finishTaskService.validateDataAndFinish(this.afterAction);
             this._taskOperations.close();
         } else {
             this._taskOperations.open();
             this._dataFocusPolicyService.performDataFocusPolicy();
+            this.afterAction.next(true);
         }
     }
 
@@ -55,5 +61,6 @@ export class FinishPolicyService extends TaskHandlingService {
     private manualFinishPolicy(): void {
         this._taskOperations.open();
         this._dataFocusPolicyService.performDataFocusPolicy();
+        this.afterAction.next(true);
     }
 }

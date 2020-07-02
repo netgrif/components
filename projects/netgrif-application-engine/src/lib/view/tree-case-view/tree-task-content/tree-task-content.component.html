@@ -2,13 +2,16 @@
     <div class="task-panel-body" fxFlex="100">
         <nae-task-content></nae-task-content>
 
-        <div fxLayoutAlign="center center">
+        <div *ngIf="!processingTaskChange" fxLayoutAlign="center center">
             <button *ngIf="canAssign()" color="primary" (click)="assign()" mat-raised-button>
                 {{ 'tasks.view.assign' | translate | uppercase }}</button>
             <button *ngIf="canCancel()" color="warn" (click)="cancel()" mat-stroked-button>
                 {{ 'tasks.view.cancel' | translate | uppercase }}</button>
             <button *ngIf="canFinish()" color="primary" (click)="finish()" mat-raised-button>
                 {{ 'tasks.view.finish' | translate | uppercase }}</button>
+        </div>
+        <div *ngIf="processingTaskChange" fxLayoutAlign="center center">
+            <mat-spinner [diameter]="40"></mat-spinner>
         </div>
     </div>
 </div>

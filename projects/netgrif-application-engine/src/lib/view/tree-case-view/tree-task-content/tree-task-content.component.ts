@@ -71,4 +71,8 @@ export class TreeTaskContentComponent implements AfterViewInit {
     public finish(): void {
         this._finish.validateDataAndFinish();
     }
+
+    public get processingTaskChange(): boolean {
+        return this._treeTaskContentService.processingTaskChange;
+    }
 }
