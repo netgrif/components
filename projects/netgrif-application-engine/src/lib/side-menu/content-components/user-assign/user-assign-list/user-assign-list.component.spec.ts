@@ -49,6 +49,6 @@ describe('UserAssignListComponent', () => {
 })
 class TestWrapperComponent {
     users = [
-        new UserValue(0, '', '', '')
+        new UserValue('0', '', '', '')
     ];
 }

@@ -5,7 +5,9 @@ describe('TaskRequestStateService', () => {
     let service: TaskRequestStateService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            providers: [TaskRequestStateService]
+        });
         service = TestBed.inject(TaskRequestStateService);
     });
 

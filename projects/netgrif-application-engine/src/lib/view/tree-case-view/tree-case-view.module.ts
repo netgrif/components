@@ -9,8 +9,8 @@ import {DataFieldsModule} from '../../data-fields/data-fields.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {PanelModule} from '../../panel/panel.module';
 import {TaskContentModule} from '../../task-content/task-content.module';
-import { AddChildNodeComponent } from './tree-component/add-child-node/add-child-node.component';
-import { RemoveNodeComponent } from './tree-component/remove-node/remove-node.component';
+import {AddChildNodeComponent} from './tree-component/add-child-node/add-child-node.component';
+import {RemoveNodeComponent} from './tree-component/remove-node/remove-node.component';
 
 @NgModule({
     declarations: [
@@ -30,10 +30,12 @@ import { RemoveNodeComponent } from './tree-component/remove-node/remove-node.co
         TaskContentModule
     ],
     exports: [
-        TreeCaseViewComponent
+        TreeCaseViewComponent,
+        TreeComponent,
+        TreeTaskContentComponent,
     ],
-    entryComponents: [
-    ]
+    entryComponents: []
 
 })
-export class TreeCaseViewModule { }
+export class TreeCaseViewModule {
+}
