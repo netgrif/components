@@ -1,12 +1,18 @@
 <mat-toolbar color="primary">{{ data.title | translate}}</mat-toolbar>
 <div fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-form-field>
-        <input type="text" matInput [formControl]="selectorFormControl" [matAutocomplete]="auto" required (keyup.enter)="submit()">
+    <mat-form-field class="select-field-margin">
+        <input type="text" matInput required
+               [placeholder]="'side-menu.option-selector.choose-one-option' | translate"
+               [formControl]="selectorFormControl"
+               [matAutocomplete]="auto"
+               (keyup.enter)="submit()">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                 {{option.text}}
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
-    <button mat-button (click)="submit()">{{'side-menu.option-selector.select' | translate}}</button>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <button mat-stroked-button (click)="submit()">{{'side-menu.option-selector.select' | translate}}</button>
+    </div>
 </div>

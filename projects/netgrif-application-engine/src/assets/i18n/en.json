@@ -75,7 +75,8 @@
             "showcase": "User showcase mode not set!"
         },
         "option-selector": {
-            "select": "Select"
+            "select": "Select",
+            "choose-one-option": "Choose one of the provided options"
         }
     },
     "search": {

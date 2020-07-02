@@ -75,7 +75,8 @@
             "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
         },
         "option-selector": {
-            "select": "Auswählen"
+            "select": "Auswählen",
+            "choose-one-option": "Wählen Sie eine Option aus"
         }
     },
     "search": {

@@ -341,7 +341,7 @@ export class CaseTreeService implements OnDestroy {
         } else {
             this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
                 const sideMeuRef = this._sideMenuService.open(OptionSelectorComponent, SideMenuSize.MEDIUM, {
-                    title: 'TODO some title here',
+                    title: clickedNode.case.title,
                     options: nets.map(net => ({text: net.title, value: net.identifier}))
                 });
                 sideMeuRef.onClose.subscribe(event => {

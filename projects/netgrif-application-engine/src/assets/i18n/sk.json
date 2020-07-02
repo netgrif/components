@@ -75,7 +75,8 @@
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
         },
         "option-selector": {
-            "select": "Zvoliť"
+            "select": "Zvoliť",
+            "choose-one-option": "Vyberte jednu z možností"
         }
     },
     "search": {
