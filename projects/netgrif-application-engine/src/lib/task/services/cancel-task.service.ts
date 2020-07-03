@@ -47,7 +47,7 @@ export class CancelTaskService extends TaskHandlingService {
         if (!this._safeTask.user
             || (
                 !this._userComparator.compareUsers(this._safeTask.user)
-                && !this._taskEventService.canDo('cancel')
+                && !this._taskEventService.canDo('perform')
             )) {
             afterAction.next(false);
             return;

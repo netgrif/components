@@ -93,96 +93,20 @@ describe('TaskPanelComponent', () => {
     });
 
     it('should perform assign policy on panel open', () => {
-        // component.taskPanelData.task.stringId = 'true';
-        //
-        // component.taskPanelData.task.finishPolicy = FinishPolicy.autoNoData;
-        // component.taskPanelData.task.dataFocusPolicy = DataFocusPolicy.autoRequired;
-        // component.taskPanelData.task.assignPolicy = AssignPolicy.auto;
         component.panelRef.open();
         expect(assignSpy).toHaveBeenCalled();
-        // component.panelRef.close();
-        //
-        // component.taskPanelData.task.assignPolicy = AssignPolicy.manual;
-        // component.panelRef.open();
-        // component.panelRef.close();
-        //
-        // component.taskPanelData.task.dataFocusPolicy = DataFocusPolicy.manual;
-        // component.taskPanelData.task.finishPolicy = FinishPolicy.manual;
-        // component.panelRef.open();
-        // component.panelRef.close();
-    });
-
-    it('should test getTaskDataFields, updateTaskDataFields and updateFromChangedFields functions', () => {
-        // component.getTaskDataFields();
-        // component.updateTaskDataFields();
-        expect(component.taskPanelData.task.dataGroups.length).toEqual(1);
-
-        component.taskPanelData.changedFields.next({number: {value: 10, behavior: {string: {editable: true}}}});
-        expect(component.taskPanelData.task.dataGroups[0].fields[0].value).toEqual(10);
-        expect(component.taskPanelData.task.dataGroups[0].fields[0].behavior).toEqual({editable: true});
     });
 
     it('should process tasks', () => {
         component.taskPanelData.task.stringId = 'true';
         component.taskPanelData.task.startDate = [2020, 1, 1, 1, 1];
-        // component.processTask('assign');
+        component.assign();
         expect(component.taskPanelData.task.startDate).toBe(undefined);
-
-        component.taskPanelData.task.stringId = 'true';
-        // component.loading = true;
-        // component.processTask('assign');
-        // component.loading = false;
-
-        component.taskPanelData.task.user = {
-            id: '1',
-            email: 'string',
-            name: 'string',
-            surname: 'string',
-            state: 'string',
-            authorities: [],
-            userProcessRoles: [],
-            processRoles: [],
-            groups: [],
-            fullName: 'string',
-            registered: true
-        };
-        // component.processTask('assign');
-        component.taskPanelData.task.user = undefined;
-
-        // component.loading = true;
-        // component.processTask('delegate');
-        // component.loading = false;
-
-        // component.loading = true;
-        // component.processTask('cancel');
-        // component.loading = false;
-
-        // component.processTask('cancel');
 
         component.taskPanelData.task.stringId = 'true';
         component.taskPanelData.task.startDate = [2020, 1, 1, 1, 1];
-        // component.processTask('finish');
+        component.finish();
         expect(component.taskPanelData.task.startDate).toBe(undefined);
-    });
-
-    it('should test finish', async () => {
-        component.taskPanelData.task.stringId = 'true';
-        const afterTrue = new Subject<boolean>();
-        afterTrue.subscribe(res => {
-            expect(res).toBeTrue();
-        });
-        // await component.finish(afterTrue);
-
-        component.taskPanelData.task.stringId = 'false';
-        const afterFalse = new Subject<boolean>();
-        afterFalse.subscribe(res => expect(res).toBeFalse());
-        // await component.finish(afterFalse);
-
-        component.taskPanelData.task.stringId = 'error';
-        component.taskPanelData.task.dataSize = 0;
-        const afterErr = new Subject<boolean>();
-        afterErr.subscribe(res => expect(res).toBeFalse());
-        // await component.finish(afterErr);
     });
 
     afterAll(() => {
@@ -225,7 +149,6 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, TaskMetaField.TITLE, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, TaskMetaField.PRIORITY, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, TaskMetaField.USER, 'string', 'string'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'string'),
     ]);
 }
 

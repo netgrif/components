@@ -19,9 +19,12 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {FinishPolicyService} from './finish-policy.service';
 import {FinishTaskService} from './finish-task.service';
+import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 
 describe('AssignPolicyService', () => {
     let service: AssignPolicyService;
+    let assignSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,7 +40,8 @@ describe('AssignPolicyService', () => {
                 TaskDataService,
                 TaskRequestStateService,
                 DataFocusPolicyService,
-                TaskContentService,
+                SingleTaskContentService,
+                {provide: TaskContentService, useValue: SingleTaskContentService},
                 AssignTaskService,
                 CancelTaskService,
                 TaskEventService,
@@ -49,9 +53,37 @@ describe('AssignPolicyService', () => {
             ]
         });
         service = TestBed.inject(AssignPolicyService);
+        TestBed.inject(TaskContentService).task = {
+            caseId: 'string',
+            transitionId: 'string',
+            title: 'string',
+            caseColor: 'string',
+            caseTitle: 'string',
+            user: undefined,
+            roles: {},
+            startDate: undefined,
+            finishDate: undefined,
+            assignPolicy: AssignPolicy.auto,
+            dataFocusPolicy: DataFocusPolicy.manual,
+            finishPolicy: FinishPolicy.manual,
+            stringId: 'string',
+            layout: {
+                cols: undefined,
+                rows: undefined
+            },
+            dataGroups: [],
+            _links: {}
+        };
+
+        assignSpy = spyOn(TestBed.inject(AssignTaskService), 'assign').and.callThrough();
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    it('should performAssignPolicy', () => {
+        service.performAssignPolicy(true);
+        expect(assignSpy).toHaveBeenCalled();
     });
 });

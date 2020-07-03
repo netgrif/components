@@ -92,7 +92,7 @@ describe('FinishTaskService', () => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {success: 'success'};
         service.validateDataAndFinish(callChainService.create((result) => {
-            expect(testTask.startDate).toBeFalsy();
+            expect(testTask.startDate).toBeTruthy();
             expect(result).toBeTrue();
             done();
         }));
