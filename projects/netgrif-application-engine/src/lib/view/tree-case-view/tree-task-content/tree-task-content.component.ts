@@ -14,6 +14,7 @@ import {TreeTaskContentService} from './tree-task-content.service';
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
 import {AssignPolicyService} from '../../../task/services/assign-policy.service';
 import {FinishPolicyService} from '../../../task/services/finish-policy.service';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'nae-tree-task-content',
@@ -76,5 +77,9 @@ export class TreeTaskContentComponent implements AfterViewInit {
 
     public get processingTaskChange(): boolean {
         return this._treeTaskContentService.processingTaskChange;
+    }
+
+    public get taskContentText$(): Observable<string> {
+        return this._treeTaskContentService.taskContentText$;
     }
 }

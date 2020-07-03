@@ -1,6 +1,6 @@
 <div class="panel-main-content" fxLayout="column">
     <div class="task-panel-body" fxFlex="100">
-        <nae-task-content></nae-task-content>
+        <nae-task-content [noDataText]="taskContentText$ | async"></nae-task-content>
 
         <div *ngIf="!processingTaskChange" fxLayoutAlign="center center">
             <button *ngIf="canAssign()" color="primary" (click)="assign()" mat-raised-button>

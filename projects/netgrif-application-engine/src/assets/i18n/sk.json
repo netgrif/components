@@ -269,6 +269,7 @@
         }
     },
     "caseTree": {
-        "newNodeDefaultName": "Nový Vrchol"
+        "newNodeDefaultName": "Nový Vrchol",
+        "noTaskSelected": "Momentálne nie je zvolený žiaden prípad. Pre vybranie prípadu zvoľte vrchol v strome."
     }
 }

@@ -16,12 +16,14 @@ import {UserComparatorService} from '../../../user/services/user-comparator.serv
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
+import {Observable, ReplaySubject, Subject} from 'rxjs';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
 
     private _selectedCase: Case;
     private _processingTaskChange: LoadingEmitter;
+    private _displayedTaskText$: Subject<string>;
 
     constructor(protected _treeCaseService: TreeCaseViewService,
                 protected _taskDataService: TaskDataService,
@@ -34,6 +36,7 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _callchain: CallChainService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: SubjectTaskOperations) {
         this._processingTaskChange = new LoadingEmitter();
+        this._displayedTaskText$ = new ReplaySubject<string>();
 
         _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskContentService.updateFromChangedFields(changedFields);
@@ -61,12 +64,17 @@ export class TreeTaskContentService implements OnDestroy {
         });
     }
 
+    public get taskContentText$(): Observable<string> {
+        return this._displayedTaskText$.asObservable();
+    }
+
     public get processingTaskChange(): boolean {
         return this._processingTaskChange.isActive;
     }
 
     public displayEmptyTaskContent(): void {
         this._taskContentService.$shouldCreate.next([]);
+        this._displayedTaskText$.next('caseTree.noTaskSelected');
     }
 
     /**
@@ -103,6 +111,7 @@ export class TreeTaskContentService implements OnDestroy {
 
         this._taskResourceService.getTasks(requestBody).subscribe(page => {
             if (page && page.content && Array.isArray(page.content)) {
+                this.setStandardTaskText();
                 this.switchToTask(page.content[0]);
             } else {
                 this.clearCurrentTask();
@@ -209,6 +218,13 @@ export class TreeTaskContentService implements OnDestroy {
                                     || this._taskContentService.task.user === undefined
                                     || !this._userComparator.compareUsers(this._taskContentService.task.user);
         this._taskContentService.blockFields(taskShouldBeBlocked);
+    }
+
+    /**
+     * Sets the noData text in the task content to it's default value
+     */
+    protected setStandardTaskText(): void {
+        this._displayedTaskText$.next(undefined);
     }
 
     /**

@@ -269,6 +269,7 @@
         }
     },
     "caseTree": {
-        "newNodeDefaultName": "Neuer Knoten"
+        "newNodeDefaultName": "Neuer Knoten",
+        "noTaskSelected": "Momentan ist keiner Fall ausgewählt. Klicken Sie einen Knoten in dem Baum an, um einen Fall auszuwählen."
     }
 }

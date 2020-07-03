@@ -1,4 +1,4 @@
-import {Component, Inject, InjectionToken} from '@angular/core';
+import {Component, Inject, InjectionToken, Input} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
 import {FieldConverterService} from '../services/field-converter.service';
@@ -16,6 +16,13 @@ export class TaskContentComponent {
     dataSource: any[];
     formCols: number;
     loading: boolean;
+
+    /**
+     * The translate text that should be displayed when the task contains no data.
+     *
+     * If no text is provided the default text is displayed
+     */
+    @Input() noDataText: string;
 
     constructor(private _fieldConverter: FieldConverterService,
                 private taskContentService: TaskContentService,
@@ -64,7 +71,7 @@ export class TaskContentComponent {
                 columnGroup = columnCount;
             }
             if (dataGroup.title && dataGroup.title !== '') {
-                const visibleGroup: boolean = dataGroup.fields.some( dataFld => !dataFld.behavior.hidden );
+                const visibleGroup: boolean = dataGroup.fields.some(dataFld => !dataFld.behavior.hidden);
                 if (visibleGroup) {
                     const row = grid.length;
                     this.addGridRows(grid, row + 1, columnGroup);
