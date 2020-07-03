@@ -13,9 +13,23 @@ import {TaskContentService} from '../../task-content/services/task-content.servi
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MessageResource} from '../../resources/interface/message-resource';
+import {Observable, of, throwError} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
+import {Task} from '../../resources/interface/task';
+import {CallChainService} from '../../utility/call-chain/call-chain.service';
+import {DataGroup} from '../../resources/interface/data-groups';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
+    let testTask: Task;
+    let resourceService: TestTaskResourceService;
+    let callChainService: CallChainService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -25,6 +39,7 @@ describe('FinishTaskService', () => {
                 TranslateModule,
                 TranslateLibModule,
                 NoopAnimationsModule,
+                SnackBarModule,
             ],
             providers: [
                 FinishTaskService,
@@ -33,13 +48,91 @@ describe('FinishTaskService', () => {
                 DataFocusPolicyService,
                 TaskContentService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations}
+                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
+                {provide: TaskResourceService, useClass: TestTaskResourceService}
             ]
-        });
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                ]
+            }
+        }).compileComponents();
         service = TestBed.inject(FinishTaskService);
+        testTask = {
+            caseId: '',
+            transitionId: '',
+            title: '',
+            caseColor: '',
+            caseTitle: '',
+            user: undefined,
+            roles: {},
+            startDate: [1],
+            finishDate: [1],
+            assignPolicy: AssignPolicy.manual,
+            dataFocusPolicy: DataFocusPolicy.manual,
+            finishPolicy: FinishPolicy.manual,
+            stringId: '',
+            layout: {rows: 1, cols: 1},
+            dataGroups: [],
+            dataSize: 0,
+            _links: {}
+        };
+        TestBed.inject(TaskContentService).task = testTask;
+        resourceService = TestBed.inject(TaskResourceService) as unknown as TestTaskResourceService;
+        callChainService = TestBed.inject(CallChainService);
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
+
+
+    it('should finish successfully', done => {
+        expect(testTask.startDate).toBeTruthy();
+        resourceService.response = {success: 'success'};
+        service.validateDataAndFinish(callChainService.create((result) => {
+            expect(testTask.startDate).toBeFalsy();
+            expect(result).toBeTrue();
+            done();
+        }));
+    });
+
+    it('should finish unsuccessful', done => {
+        expect(testTask.startDate).toBeTruthy();
+        resourceService.response = {error: 'error'};
+        service.validateDataAndFinish(callChainService.create((result) => {
+            expect(testTask.startDate).toBeTruthy();
+            expect(result).toBeFalse();
+            done();
+        }));
+    });
+
+    it('should finish error', done => {
+        expect(testTask.startDate).toBeTruthy();
+        resourceService.response = {error: 'throw'};
+        service.validateDataAndFinish(callChainService.create((result) => {
+            expect(testTask.startDate).toBeTruthy();
+            expect(result).toBeFalse();
+            done();
+        }));
+    });
 });
+
+class TestTaskResourceService {
+
+    public response: MessageResource;
+
+    public finishTask(): Observable<MessageResource> {
+        if (this.response.error === 'throw') {
+            return of(this.response).pipe(map(r => {
+                throw throwError(r);
+            }));
+        }
+        return of(this.response);
+    }
+
+    public getData(): Observable<Array<DataGroup>> {
+        return of([]);
+    }
+}
