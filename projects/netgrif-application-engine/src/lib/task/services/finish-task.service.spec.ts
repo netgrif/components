@@ -12,6 +12,7 @@ import {DataFocusPolicyService} from './data-focus-policy.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
@@ -22,7 +23,8 @@ describe('FinishTaskService', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateModule,
-                TranslateLibModule
+                TranslateLibModule,
+                NoopAnimationsModule,
             ],
             providers: [
                 FinishTaskService,

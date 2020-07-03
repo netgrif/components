@@ -9,26 +9,37 @@ import {CaseTreeService} from '../case-tree.service';
 import {TreeCaseViewService} from '../../tree-case-view.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {Component} from '@angular/core';
+import {CaseTreeNode} from '../model/CaseTreeNode';
+import {TreeCaseViewModule} from '../../tree-case-view.module';
 
 describe('AddChildNodeComponent', () => {
     let component: AddChildNodeComponent;
-    let fixture: ComponentFixture<AddChildNodeComponent>;
+    let fixture: ComponentFixture<TestComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, NoopAnimationsModule, HttpClientTestingModule, TranslateLibModule],
+            imports: [
+                MaterialModule,
+                NoopAnimationsModule,
+                HttpClientTestingModule,
+                TranslateLibModule
+            ],
             providers: [
                 CaseTreeService,
                 TreeCaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
-            declarations: [AddChildNodeComponent]
+            declarations: [
+                TestComponent,
+                AddChildNodeComponent
+            ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AddChildNodeComponent);
-        component = fixture.componentInstance;
+        fixture = TestBed.createComponent(TestComponent);
+        component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
     });
 
@@ -36,3 +47,11 @@ describe('AddChildNodeComponent', () => {
         expect(component).toBeTruthy();
     });
 });
+
+@Component({
+    selector: 'nae-test-wrapper',
+    template: '<nae-add-child-node [node]="node"></nae-add-child-node>'
+})
+class TestComponent {
+    node = new CaseTreeNode(undefined, undefined);
+}
