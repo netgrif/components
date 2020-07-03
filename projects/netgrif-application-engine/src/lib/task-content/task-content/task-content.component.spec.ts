@@ -11,6 +11,8 @@ import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field
 import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
 
 describe('TaskContentComponent', () => {
     let component: TaskContentComponent;
@@ -30,6 +32,7 @@ describe('TaskContentComponent', () => {
                 TaskViewService,
                 TaskContentService,
                 {provide: NAE_TASK_COLS, useValue: 4},
+                {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: []
         })

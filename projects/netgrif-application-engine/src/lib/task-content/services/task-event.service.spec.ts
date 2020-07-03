@@ -1,12 +1,30 @@
 import {TestBed} from '@angular/core/testing';
 import {TaskEventService} from './task-event.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TaskContentService} from './task-content.service';
+import {MaterialModule} from '../../material/material.module';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TaskEventService', () => {
     let service: TaskEventService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [TaskEventService]
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
+            providers: [
+                TaskEventService,
+                TaskContentService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ]
         });
         service = TestBed.inject(TaskEventService);
     });

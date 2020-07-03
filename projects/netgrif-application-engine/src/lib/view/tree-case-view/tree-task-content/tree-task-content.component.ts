@@ -45,7 +45,9 @@ export class TreeTaskContentComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this._treeTaskContentService.displayEmptyTaskContent();
+        setTimeout(() => {
+            this._treeTaskContentService.displayEmptyTaskContent();
+        });
     }
 
     public canAssign(): boolean {
