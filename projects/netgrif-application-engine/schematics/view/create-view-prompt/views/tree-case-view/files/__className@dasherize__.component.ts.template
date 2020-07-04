@@ -1,0 +1,18 @@
+import {Component} from '@angular/core';
+import {Filter, TreeCaseViewService, FilterRepository} from '@netgrif/application-engine';
+
+@Component({
+    selector: '<%= prefix %>-<%= dasherize(className) %>',
+    templateUrl: './<%= dasherize(className) %>.component.html',
+    styleUrls: ['./<%= dasherize(className) %>.component.scss'],
+    providers: [TreeCaseViewService]
+})
+export class <%= classify(className) %>Component {
+
+    public filter: Filter;
+
+    constructor(private _filterRepository: FilterRepository) {
+        this.filter = _filterRepository.getFilter(<%= filterId%>);
+    }
+
+}
