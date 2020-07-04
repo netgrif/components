@@ -225,7 +225,7 @@ export class TreeTaskContentService implements OnDestroy {
      * Sets the noData text in the task content to it's default value
      */
     protected setStandardTaskText(): void {
-        this._displayedTaskText$.next(undefined);
+        this._displayedTaskText$.next();
     }
 
     /**

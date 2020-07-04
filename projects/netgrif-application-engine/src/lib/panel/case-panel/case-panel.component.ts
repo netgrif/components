@@ -40,7 +40,7 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
                 return {value: this.case_.author.fullName, icon: 'account_circle'};
             case CaseMetaField.CREATION_DATE:
                 return {
-                    value: toMoment(this.case_.creationDate as NaeDate).format(DATE_TIME_FORMAT_STRING),
+                    value: toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING),
                     icon: 'event'
                 };
         }
