@@ -17,6 +17,7 @@ import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {hasContent} from '../../../utility/pagination/page-has-content';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -110,7 +111,7 @@ export class TreeTaskContentService implements OnDestroy {
         }
 
         this._taskResourceService.getTasks(requestBody).subscribe(page => {
-            if (page && page.content && Array.isArray(page.content)) {
+            if (hasContent(page)) {
                 this.setStandardTaskText();
                 this.switchToTask(page.content[0]);
             } else {
@@ -201,7 +202,7 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected updateTaskState(): void {
         this._taskResourceService.getTasks(this.getTaskRequestBody()).subscribe(page => {
-            if (page && page.content && Array.isArray(page.content)) {
+            if (hasContent(page)) {
                 if (this._taskContentService.task) {
                     Object.assign(this._taskContentService.task, page.content[0]);
                 }

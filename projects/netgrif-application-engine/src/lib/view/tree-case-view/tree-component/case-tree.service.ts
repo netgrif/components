@@ -22,6 +22,7 @@ import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {CaseRefOperation, CaseRefSetDataBody} from './model/CaseRefSetDataBody';
+import {hasContent} from '../../../utility/pagination/page-has-content';
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
@@ -98,7 +99,7 @@ export class CaseTreeService implements OnDestroy {
     protected loadTreeRoot() {
         if (this._rootNodesFilter) {
             this._caseResourceService.searchCases(this._rootNodesFilter).subscribe(page => {
-                if (page && page.content && Array.isArray(page.content) && page.content.length > 0) {
+                if (hasContent(page)) {
                     this._rootNode = new CaseTreeNode(page.content[0], undefined);
                     if (page.content.length !== 1) {
                         this._logger.warn('Filter for tree root returned more than one case. Using the first value as tree root...');
@@ -236,7 +237,7 @@ export class CaseTreeService implements OnDestroy {
         let params: HttpParams = new HttpParams();
         params = params.set('page', `${pageNumber}`).set('sort', 'creationDateSortable,asc');
         this._caseResourceService.searchCases(filter, params).subscribe(page => {
-            if (!page || !page.content || !Array.isArray(page.content)) {
+            if (!hasContent(page)) {
                 this._logger.error('Child cases invalid page content', page);
                 done.next();
                 done.complete();
@@ -400,7 +401,7 @@ export class CaseTreeService implements OnDestroy {
             case: caseId,
             transition: TreePetriflowIdentifiers.CASE_REF_TRANSITION
         }).subscribe(page => {
-            if (page.content.length === 0) {
+            if (!hasContent(page)) {
                 this._logger.error('Case ref accessor task doesn\'t exist!');
                 result$.complete();
                 return;
@@ -511,7 +512,7 @@ export class CaseTreeService implements OnDestroy {
         this._caseResourceService.searchCases(new SimpleFilter('', FilterType.CASE, {
             query: 'stringId:' + newCaseRefValue[newCaseRefValue.length - 1]
         })).subscribe(page => {
-            if (page.content.length !== 1) {
+            if (!hasContent(page) || page.content.length !== 1) {
                 this._logger.error('Child node case could not be found');
             }
             affectedNode.children.push(new CaseTreeNode(page.content[0], affectedNode));
@@ -574,7 +575,7 @@ export class CaseTreeService implements OnDestroy {
     protected reloadCurrentCase(): void {
         if (this._currentNode) {
             this._caseResourceService.searchCases(this.createCaseFilter(this._currentCase.stringId)).subscribe(page => {
-                if (page && page.content && Array.isArray(page.content) && page.content.length === 1) {
+                if (hasContent(page) && page.content.length === 1) {
                     Object.assign(this._currentCase, page.content[0]);
                     this._treeCaseViewService.loadTask$.next(this._currentCase);
                     this._logger.debug('Case Tree Node reloaded');
