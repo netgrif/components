@@ -15,19 +15,19 @@
             "description": "Generate a project custom themes from nae.json.",
             "factory": "./add/custom-themes/index#customThemes",
             "schema": "./add/custom-themes/schema.json",
-            "private": true
+            "hidden": true
         },
         "create-configuration-service": {
             "description": "Generate a project specific configuration service and add the correct provider entry to app.module",
             "factory": "./configuration-service/schematic-create-configuration-service#schematicEntryPoint",
             "schema": "./configuration-service/schema.json",
-            "private": true
+            "hidden": true
         },
         "create-view-service": {
             "description": "Generate a project specific view service and add the correct provider entry to app.module",
             "factory": "./view-service/schematic-create-view-service#schematicEntryPoint",
             "schema": "./view-service/schema.json",
-            "private": true
+            "hidden": true
         },
         "create-view": {
             "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt to input the settings.",

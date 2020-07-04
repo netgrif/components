@@ -27,6 +27,7 @@ import {MultichoiceField} from '../../data-fields/multichoice-field/models/multi
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskMetaField} from '../../header/task-header/task-meta-enum';
+import {UserComparatorService} from '../../user/services/user-comparator.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
     @Input() public last: boolean;
+    @Input() responsiveBody = true;
 
     public portal: ComponentPortal<any>;
     public loading: boolean;
@@ -52,7 +54,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
                 private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
                 private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService,
-                private _translate: TranslateService, private _paperView: PaperViewService) {
+                private _translate: TranslateService, private _paperView: PaperViewService,
+                private _userComparator: UserComparatorService) {
         super();
         this.loading = false;
         this._updating = false;
@@ -378,7 +381,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         if (this.loading) {
             return;
         }
-        if (!this._taskPanelData.task.user || ((this._taskPanelData.task.user.email !== this._userService.user.email)
+        if (!this._taskPanelData.task.user || (!this._userComparator.compareUsers(this._taskPanelData.task.user)
             && !this.canDo('cancel'))) {
             afterAction.next(false);
             return;
@@ -495,18 +498,18 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     canReassign() {
-        return (this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email)
+        return (this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user))
             && (this.canDo('delegate'));
     }
 
     canCancel() {
         return (this._taskPanelData.task.assignPolicy === AssignPolicy.manual &&
-            this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email) ||
+            this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user)) ||
             (this._taskPanelData.task.user && this.canDo('cancel'));
     }
 
     canFinish() {
-        return this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email;
+        return this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user);
     }
 
     canCollapse() {
@@ -619,32 +622,34 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
         const task = this._taskPanelData.task;
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
-                return task.caseTitle;
+                return {value: task.caseTitle, icon: ''};
             case TaskMetaField.TITLE:
-                return task.title;
+                return {value: task.title, icon: ''};
             case TaskMetaField.PRIORITY:
                 // TODO priority
                 if (!task.priority || task.priority < 2) {
-                    return 'high';
+                    return {value: 'high', icon: 'error'};
                 }
                 if (task.priority === 2) {
-                    return 'medium';
+                    return {value: 'medium', icon: 'north'};
                 }
-                return 'low';
+                return {value: 'low', icon: 'south'};
             case TaskMetaField.USER:
-                return task.user ? task.user.fullName : '';
+                console.log(task.user);
+                return {value: task.user ? task.user.fullName : '', icon: 'account_circle'};
             case TaskMetaField.ASSIGN_DATE:
-                return task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '';
+                console.log(task.startDate);
+                return {value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '', icon: 'event'};
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
         this._log.warn('Immediate data in task panel headers are currently not supported');
-        return '';
+        return {value: '', icon: ''};
     }
 
 }

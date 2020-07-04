@@ -149,6 +149,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatButtonModule,
         MatSidenavModule,
         AdministrationModule,
+        HeaderModule,
+        CaseViewModule,
+        PanelModule,
     ],
     entryComponents: [
         ContentComponent,

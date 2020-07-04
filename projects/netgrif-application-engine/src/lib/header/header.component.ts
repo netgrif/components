@@ -17,6 +17,8 @@ export class HeaderComponent implements OnInit {
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
+    @Input() maxHeaderColumns = 5;
+    @Input() responsiveHeaders = true;
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 
@@ -39,6 +41,8 @@ export class HeaderComponent implements OnInit {
                 this.headerService = this._injector.get(WorkflowHeaderService);
                 break;
         }
+        this.headerService.maxHeaderColumns = this.maxHeaderColumns;
+        this.headerService.responsiveHeaders = this.responsiveHeaders;
     }
 
 }

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {UserList, UserListItem} from './UserList';
+import {UserList} from './UserList';
 import {ProcessList} from './ProcessList';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 

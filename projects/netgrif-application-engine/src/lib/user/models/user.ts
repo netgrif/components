@@ -1,6 +1,7 @@
-import Role from './role';
+import {Role} from './role';
+import {IUser} from './iuser';
 
-export class User {
+export class User implements IUser {
     constructor(
         public id: string,
         public email: string,
@@ -13,5 +14,13 @@ export class User {
 
     get fullName() {
         return this.firstName + ' ' + this.lastName;
+    }
+
+    public get name(): string {
+        return this.firstName;
+    }
+
+    public get surname(): string {
+        return this.lastName;
     }
 }

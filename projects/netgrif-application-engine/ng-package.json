@@ -14,5 +14,6 @@
             "angular-resize-event": "angularResizeEvent",
             "@covalent/core": "@covalent/core"
         }
-    }
+    },
+    "whitelistedNonPeerDependencies": ["palette-creator", "angular2-hotkeys"]
 }
