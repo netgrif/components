@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {TreeCaseViewComponent} from './tree-case-view.component';
 import {TreeComponent} from './tree-component/tree.component';
 import {TreeTaskContentComponent} from './tree-task-content/tree-task-content.component';
 import {CommonModule} from '@angular/common';
@@ -14,7 +13,6 @@ import {RemoveNodeComponent} from './tree-component/remove-node/remove-node.comp
 
 @NgModule({
     declarations: [
-        TreeCaseViewComponent,
         TreeComponent,
         TreeTaskContentComponent,
         AddChildNodeComponent,
@@ -30,7 +28,6 @@ import {RemoveNodeComponent} from './tree-component/remove-node/remove-node.comp
         TaskContentModule
     ],
     exports: [
-        TreeCaseViewComponent,
         TreeComponent,
         TreeTaskContentComponent,
     ],

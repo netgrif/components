@@ -1,2 +1,16 @@
-<nae-tree-case-view></nae-tree-case-view>
+<div fxLayoutAlign="center start" class="height-100">
+    <div class="fill-all-space" fxLayout="row" fxFlex="80">
+        <mat-card class="fill-all-space" *ngIf="!loading">
+            <div fxLayout="column" fxFlex="25" class="overflow-auto">
+                <nae-tree-component [filter]="filter" [showTreeRoot]="true"></nae-tree-component>
+            </div>
 
+            <mat-divider [vertical]="true" class="divider-fix"></mat-divider>
+
+            <div fxLayout="column" fxFlex="75" class="overflow-auto">
+                <nae-tree-task-content></nae-tree-task-content>
+            </div>
+        </mat-card>
+        <mat-progress-spinner *ngIf="loading"></mat-progress-spinner>
+    </div>
+</div>

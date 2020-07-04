@@ -41,7 +41,7 @@ import {AuthenticationComponent} from './doc/authentication/authentication.compo
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {MatButtonModule, MatCardModule, MatIconModule, MatSidenavModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule} from '@angular/material';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
@@ -156,6 +156,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         CaseViewModule,
         PanelModule,
         TreeCaseViewModule,
+        MatProgressSpinnerModule,
     ],
     entryComponents: [
         ContentComponent,
