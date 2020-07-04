@@ -18,7 +18,7 @@ export default class StringUtil {
      * Return string without accent and format to lower case.
      * @param value - String value
      */
-    static removeAccentAndCaseSensitive(value: string): string {
+    static removeAccentAndCaseSensitivity(value: string): string {
         return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 }

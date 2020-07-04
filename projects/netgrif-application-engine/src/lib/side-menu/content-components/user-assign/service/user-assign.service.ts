@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {LoadingEmitter} from '../../../../utility/loading-emitter';
 import {BehaviorSubject, Observable, of, timer} from 'rxjs';
 import {Pagination} from '../../../../resources/interface/pagination';
-import {SideMenuService} from '../../../services/side-menu.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -12,24 +11,55 @@ import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {UserResourceService} from '../../../../resources/engine-endpoint/user-resource.service';
 import {User} from '../../../../resources/interface/user';
 
+/**
+ * Performs paged loading users from backend for [UserAssignComponent]{@link UserAssignComponent}.
+ */
 @Injectable()
 export class UserAssignService {
-
+    /**
+     * Static page size for user assigning pagination.
+     */
     public readonly PAGE_SIZE = 12;
 
-    protected _loading$: LoadingEmitter;
-    protected _users$: Observable<Array<UserValue>>;
-    protected _nextPage$: BehaviorSubject<number>;
-    protected _endOfData: boolean;
-    protected _pagination: Pagination;
-
+    /**
+     * UserValue array stream, that represents users loading from backend.
+     */
+    private readonly _users$: Observable<Array<UserValue>>;
+    /**
+     * Emit users loading status from backend.
+     */
+    private _loading$: LoadingEmitter;
+    /**
+     * Number stream of next page users list, that to be requested from backend.
+     */
+    private _nextPage$: BehaviorSubject<number>;
+    /**
+     * Signals the end of loaded users.
+     */
+    private _endOfData: boolean;
+    /**
+     * Necessary for pagination parameters in user assign loading from backend.
+     */
+    private _pagination: Pagination;
+    /**
+     * Signals if response is empty or no.
+     */
     private _clear: boolean;
 
-    constructor(protected _sideMenuService: SideMenuService,
-                protected _userResourceService: UserResourceService,
-                protected _log: LoggerService,
-                protected _snackBarService: SnackBarService,
-                protected _translate: TranslateService) {
+    /**
+     * Inject services.
+     * Initialize declared attributes.
+     *
+     * Loading and mapped stream of users.
+     * @param _userResourceService Loading users from backend.
+     * @param _log Logging action status.
+     * @param _snackBarService Display info about loading from backend for user.
+     * @param _translate Translate messages for user.
+     */
+    constructor(private _userResourceService: UserResourceService,
+                private _log: LoggerService,
+                private _snackBarService: SnackBarService,
+                private _translate: TranslateService) {
         this._loading$ = new LoadingEmitter();
         this._endOfData = false;
         this._nextPage$ = new BehaviorSubject<number>(null);
@@ -66,12 +96,16 @@ export class UserAssignService {
         return this._users$;
     }
 
+    /**
+     * Get all users from backend and mapped to [UserValue]{@link UserValue} interface with catching errors.
+     * @param page Page number that is requested. / Next page users list.
+     */
     public loadPage(page: number): Observable<{ [k: string]: UserValue }> {
         if (page === null || page === undefined || this._clear) {
             return of(null);
         }
         let params: HttpParams = new HttpParams();
-        params = this.addPageParams(params, page);
+        params = this._addPageParams(params, page);
         this._loading$.on();
         return this._userResourceService.getAll(params).pipe(
             catchError(err => {
@@ -94,6 +128,11 @@ export class UserAssignService {
         );
     }
 
+    /**
+     * Set value to nextPage stream as next page users list.
+     * @param lastRendered Last rendered user index.
+     * @param totalLoaded Total loaded size users.
+     */
     public nextPage(lastRendered, totalLoaded) {
         if (this.loading || this._endOfData) {
             return;
@@ -104,13 +143,9 @@ export class UserAssignService {
         }
     }
 
-    protected addPageParams(params: HttpParams, page?: number): HttpParams {
-        params = params.set('size', this._pagination.size + '');
-        page = page !== null ? page : this._pagination.number;
-        params = params.set('page', page + '');
-        return params;
-    }
-
+    /**
+     * Reload page with users.
+     */
     public reload(): void {
         if (!this._users$ || !this._pagination) {
             return;
@@ -123,6 +158,18 @@ export class UserAssignService {
             this._pagination.number = -1;
             this.nextPage(0, 0);
         });
+    }
+
+    /**
+     * Returns HttpParams with page params addition.
+     * @param params Existing HttpParams.
+     * @param page Page number that is requested. / Next page users list.
+     */
+    private _addPageParams(params: HttpParams, page?: number): HttpParams {
+        params = params.set('size', this._pagination.size + '');
+        page = page !== null ? page : this._pagination.number;
+        params = params.set('page', page + '');
+        return params;
     }
 
 }

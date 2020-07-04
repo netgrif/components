@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
@@ -7,34 +7,63 @@ import {SideMenuControl} from '../../models/side-menu-control';
 import {UserAssignService} from './service/user-assign.service';
 import {UserAssignInjectedData} from './model/user-assign-injected-data';
 
+/**
+ * Is the main - parent component of the entire user assignment in the side menu.
+ *
+ * Holds logic link of the [UserAssignListComponent]{@link UserAssignListComponent}
+ * along with searching, selecting, and then assigning to the user field.
+ */
 @Component({
     selector: 'nae-user-assign',
     templateUrl: './user-assign.component.html',
     styleUrls: ['./user-assign.component.scss'],
     providers: [UserAssignService]
 })
-export class UserAssignComponent implements OnInit, AfterViewInit {
-
+export class UserAssignComponent implements AfterViewInit {
+    /**
+     * Reference to [UserAssignListComponent]{@link UserAssignListComponent}.
+     */
     @ViewChild(UserAssignListComponent) public listComponent: UserAssignListComponent;
+    /**
+     * Represents input HTML element for user search.
+     */
     @ViewChild('inputSearch') public input;
 
+    /**
+     * Form control for user search value.
+     */
     public searchUserControl = new FormControl();
+    /**
+     * Data about preselected user send from [UserFieldComponent]{@link UserFieldComponent}.
+     */
     public injectedData: UserAssignInjectedData;
+
+    /**
+     * Value of the current selected user.
+     */
     private _currentUser: UserValue;
 
+    /**
+     * Inject and set data send from [UserFieldComponent]{@link UserFieldComponent} if the user is preselected.
+     * @param _sideMenuControl Contains [Roles]{@link Role} and [UserValue]{@link UserValue}.
+     */
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl) {
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as UserAssignInjectedData;
         }
     }
 
-    ngOnInit() {
-    }
-
+    /**
+     * After view initialize this component links autocomplete search bar together with autocomplete in list component.
+     */
     ngAfterViewInit(): void {
         this.input.matAutocomplete = this.listComponent.autocomplete;
     }
 
+    /**
+     * On select user from users assign list publish side menu with selected user as data and message about selection.
+     * @param user Select current user as [UserValue]{@link UserValue}
+     */
     public userWasSelected(user: UserValue): void {
         this._currentUser = user;
         this._sideMenuControl.publish({
@@ -44,6 +73,9 @@ export class UserAssignComponent implements OnInit, AfterViewInit {
         });
     }
 
+    /**
+     * On assign button close side menu with selected user as data and message about confirm.
+     */
     public assign(): void {
         if (this._currentUser !== undefined) {
             this._sideMenuControl.close({
