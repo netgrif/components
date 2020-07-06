@@ -350,6 +350,8 @@ export class CaseTreeService implements OnDestroy {
                     if (!!event.data) {
                         addChildBody.processId = event.data.value;
                         this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(callback);
+                    } else {
+                        clickedNode.addingNode.off();
                     }
                 });
             });
