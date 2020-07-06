@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Inject, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith, tap} from 'rxjs/operators';
@@ -30,7 +30,6 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
     processFormControl = new FormControl('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
-    selectedColorControl = new FormControl('', Validators.required);
 
     colors: Form[] = [
         {value: 'panel-primary-icon', viewValue: 'Primary'},
@@ -50,9 +49,6 @@ export class NewCaseComponent implements OnInit, OnChanges {
                 private _snackBarService: SnackBarService,
                 private _caseResourceService: CaseResourceService,
                 private _hotkeysService: HotkeysService,
-                private _processService: ProcessService,
-                private _petriNetResource: PetriNetResourceService,
-                private _log: LoggerService,
                 private _translate: TranslateService) {
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as NewCaseInjectionData;
@@ -65,7 +61,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         if (!this.injectedData) {
-            this._snackBarService.openErrorSnackBar('No allowed Nets');
+            this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.new-case.noNets'));
             this._sideMenuControl.close({
                 opened: false
             });
@@ -110,7 +106,8 @@ export class NewCaseComponent implements OnInit, OnChanges {
             this._caseResourceService.createCase(newCase)
                 .subscribe(
                     response => {
-                        this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
+                        this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
+                            + ' ' + newCase.title);
                         this._sideMenuControl.close({
                             opened: false,
                             message: 'Confirm new case setup',
