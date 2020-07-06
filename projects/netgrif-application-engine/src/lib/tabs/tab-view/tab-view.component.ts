@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TabContent} from '../interfaces';
 import {TabView} from '../classes/tab-view';
+import {ViewService} from '../../routing/view-service/view.service';
+import {LoggerService} from '../../logger/services/logger.service';
 
 /**
  * Component that renders a tab view.
@@ -18,6 +20,10 @@ export class TabViewComponent implements OnInit {
      * Tabs that are opened initially in the view
      */
     @Input() public initialTabs: Array<TabContent>;
+    /**
+     * Flag if the height of the content has to stretch to fill the available window
+     */
+    @Input() public stretch: boolean;
     public tabView: TabView;
 
     /**
@@ -26,7 +32,10 @@ export class TabViewComponent implements OnInit {
      */
     public initializeTabLambda = (index: number) => {this.tabView.initializeTab(index); };
 
+    constructor(private _viewService: ViewService, private _logger: LoggerService) {
+    }
+
     ngOnInit(): void {
-        this.tabView = new TabView(this.initialTabs);
+        this.tabView = new TabView(this._viewService, this._logger, this.initialTabs);
     }
 }

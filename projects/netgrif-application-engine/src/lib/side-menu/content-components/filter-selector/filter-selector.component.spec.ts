@@ -11,7 +11,11 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
 import {MatSelectionListChange} from '@angular/material';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 
 describe('FilterSelectorComponent', () => {
     let component: FilterSelectorComponent;
@@ -27,8 +31,10 @@ describe('FilterSelectorComponent', () => {
                 NoopAnimationsModule,
                 HttpClientTestingModule
             ],
-            declarations: [],
             providers: [
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
                 {
                     provide: NAE_SIDE_MENU_CONTROL,
                     useValue: new SideMenuControl(() => {}, new Observable<boolean>(), null)

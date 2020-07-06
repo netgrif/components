@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {of} from 'rxjs';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../../../user/services/user.service';
 import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
-import {TranslateService} from '@ngx-translate/core';
-import {LanguageService} from '../../../../translate/language.service';
 import {SearchService} from '../../../../search/search-service/search.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {ProcessService} from '../../../../process/process.service';
 import {TaskViewService} from '../task-view.service';
-import {of} from 'rxjs';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {TaskViewParams} from '../../models/task-view-params';
+import {UserComparatorService} from '../../../../user/services/user-comparator.service';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link TaskViewService} dependencies.
@@ -31,10 +31,10 @@ export class ConfigTaskViewServiceFactory {
                 protected _userService: UserService,
                 protected _snackBarService: SnackBarService,
                 protected _translate: TranslateService,
-                protected _language: LanguageService,
                 protected _searchService: SearchService,
                 protected _configService: ConfigurationService,
                 protected _processService: ProcessService,
+                protected _userComparator: UserComparatorService,
                 protected _log: LoggerService) {
     }
 
@@ -59,8 +59,9 @@ export class ConfigTaskViewServiceFactory {
                 this._userService,
                 this._snackBarService,
                 this._translate,
-                this._language,
                 this._searchService,
+                this._log,
+                this._userComparator,
                 nets
             );
         } else {

@@ -10,6 +10,10 @@ import {SideMenuImportNetModule} from './side-menu-import-net.module';
 import {ImportNetComponent} from './import-net.component';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {MatIconModule} from '@angular/material';
 
 describe('ImportNetComponent', () => {
     let component: ImportNetComponent;
@@ -22,18 +26,28 @@ describe('ImportNetComponent', () => {
                 SideMenuImportNetModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                TranslateLibModule
+                TranslateLibModule,
+                MatIconModule,
             ],
-            declarations: [],
             providers: [{
                     provide: NAE_SIDE_MENU_CONTROL,
                     useValue: new SideMenuControl(() => {}, new Observable<boolean>(), null)
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource}
-            ]
-        })
-            .compileComponents();
+            ],
+            declarations: [
+                ErrorSnackBarComponent,
+                SuccessSnackBarComponent
+            ],
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                    SuccessSnackBarComponent
+                ]
+            }
+        }).compileComponents();
     }));
 
     beforeEach(() => {

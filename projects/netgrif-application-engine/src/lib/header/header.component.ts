@@ -5,7 +5,6 @@ import {TaskHeaderService} from './task-header/task-header.service';
 import {WorkflowHeaderService} from './workflow-header/workflow-header.service';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
-import {LanguageService} from '../translate/language.service';
 
 
 @Component({
@@ -18,10 +17,12 @@ export class HeaderComponent implements OnInit {
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
+    @Input() maxHeaderColumns = 5;
+    @Input() responsiveHeaders = true;
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 
-    constructor(private _injector: Injector, private _lang: LanguageService) {
+    constructor(private _injector: Injector) {
     }
 
     ngOnInit(): void {
@@ -40,6 +41,8 @@ export class HeaderComponent implements OnInit {
                 this.headerService = this._injector.get(WorkflowHeaderService);
                 break;
         }
+        this.headerService.maxHeaderColumns = this.maxHeaderColumns;
+        this.headerService.responsiveHeaders = this.responsiveHeaders;
     }
 
 }

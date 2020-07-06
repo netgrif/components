@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsCreateViewPrompt",
+    "title": "Create new View with prompt for settings",
+    "type": "object",
+    "properties": {
+        "path": {
+            "description": "web address path from site root that corresponds to this view",
+            "type": "string",
+            "x-prompt": "Enter the view path. No leading backslash."
+        },
+        "viewType": {
+            "description": "type of the created view",
+            "type": "string",
+            "enum": [
+                "emptyView",
+                "login",
+                "tabView",
+                "caseView",
+                "taskView",
+                "sidenavView",
+                "toolbarView",
+                "sidenavAndToolbarView",
+                "dashboard",
+                "customView"
+            ],
+            "x-prompt": {
+                "type": "list",
+                "message": "Select a view type",
+                "items": [
+                    "emptyView",
+                    "login",
+                    "caseView",
+                    "taskView",
+                    "sidenavView",
+                    "toolbarView",
+                    "sidenavAndToolbarView",
+                    "dashboard",
+                    "customView"
+                ]
+            }
+        },
+        "componentName": {
+            "type": "string",
+            "message": "Enter class name of the view component (without the Component suffix)"
+        },
+        "access": {
+            "description": "access type",
+            "type": "string",
+            "x-prompt": {
+                "type": "list",
+                "message": "select a access type",
+                "items": [
+                    "public",
+                    "private"
+                ]
+            }
+        }
+    },
+    "required": [
+        "path",
+        "viewType"
+    ]
+}

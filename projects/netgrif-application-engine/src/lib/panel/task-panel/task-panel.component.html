@@ -1,5 +1,5 @@
 <nae-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
-               (stopLoading)="loading=false" (getExpansionPanelRef)="setPanelRef($event)">
+               (stopLoading)="loading=false" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <span fxLayoutAlign="start center" fxFlex>
@@ -7,11 +7,13 @@
                           [ngClass]="taskPanelData.task.caseColor">{{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
                 <span>{{firstFeaturedValue}}</span>
             </span>
-            <span *ngFor="let value of featuredFieldsValues; let i = index" fxLayout="start center" fxFlex
-                  [fxHide.lt-xl]="i >= 3"
-                  [fxHide.lt-lg]="i >= 2"
-                  [fxHide.lt-md]="i >= 1"
-                  [fxHide.lt-sm]="i >= 0">{{value}}
+            <span *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
+                  [fxHide.lt-xl]="i >= 3 && responsiveBody"
+                  [fxHide.lt-lg]="i >= 2 && responsiveBody"
+                  [fxHide.lt-md]="i >= 1 && responsiveBody"
+                  [fxHide.lt-sm]="i >= 0 && responsiveBody">
+                <mat-icon class="task-panel-icon" *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
+                {{field.value}}
             </span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
@@ -60,7 +62,7 @@
                         {{ 'tasks.view.cancel' | translate | uppercase }}</button>
                     <button *ngIf="canFinish()" (click)="processTask('finish')" mat-button>
                         {{ 'tasks.view.finish' | translate | uppercase }}</button>
-                    <button *ngIf="canColapse()" color="primary" (click)="collapse()" mat-button>
+                    <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-button>
                         {{ 'tasks.view.collapse' | translate | uppercase }}</button>
                 </div>
             </mat-action-row>

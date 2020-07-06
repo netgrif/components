@@ -3,7 +3,9 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
+    AdministrationModule,
     AuthenticationModule,
+    CaseViewModule,
     ConfigurationService,
     CovalentModule,
     DashboardModule,
@@ -19,6 +21,7 @@ import {
     QuickPanelModule,
     RegistrationFormModule,
     ResourceProvider,
+    SearchModule,
     SideMenuContentModule,
     SideMenuModule,
     SignUpModule,
@@ -27,7 +30,7 @@ import {
     ToolbarModule,
     UserModule,
     WorkflowViewModule,
-    SearchModule, CaseViewModule,
+    ViewService,
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -61,8 +64,10 @@ import {PanelsComponent} from './doc/panels/panels.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/filter-repository-example.component';
 import {ProfileComponent} from './doc/profile/profile.component';
-import { NavigationExampleComponent } from './doc/navigation-example/navigation-example.component';
-import { ButtonsNavComponent } from './doc/navigation-example/buttons-nav/buttons-nav.component';
+import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
+import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
+import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
+import {NaeExampleAppViewService} from './nae-example-app-view.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -98,6 +103,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
+        RolesAssignComponent,
     ],
     imports: [
         BrowserModule,
@@ -142,11 +148,39 @@ export function HttpLoaderFactory(http: HttpClient) {
         CaseViewModule,
         MatButtonModule,
         MatSidenavModule,
+        AdministrationModule,
+        HeaderModule,
+        CaseViewModule,
+        PanelModule,
     ],
     entryComponents: [
         ContentComponent,
         TabbedCaseViewComponent,
-        TabbedTaskViewComponent
+        TabbedTaskViewComponent,
+        AuthenticationComponent,
+        LoginFormComponent,
+        PasswordFormComponent,
+        RegisterFormComponent,
+        DrawerExampleComponent,
+        RailExampleComponent,
+        HeadersComponent,
+        SidemenuExampleComponent,
+        SnackBarExampleComponent,
+        DialogExampleComponent,
+        TabViewExampleComponent,
+        ReactiveTextFieldComponent,
+        ToolbarExampleComponent,
+        PanelsComponent,
+        TaskViewComponent,
+        CaseViewComponent,
+        TabbedViewsExampleComponent,
+        WorkflowViewExampleComponent,
+        DashboardExampleComponent,
+        FilterRepositoryExampleComponent,
+        ProfileComponent,
+        NavigationExampleComponent,
+        ButtonsNavComponent,
+        RolesAssignComponent
     ],
     providers: [{
         provide: ConfigurationService,
@@ -156,6 +190,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TranslateService,
         TranslatePipe,
         TranslateStore,
+        {provide: ViewService, useClass: NaeExampleAppViewService},
     ],
     bootstrap: [AppComponent]
 })

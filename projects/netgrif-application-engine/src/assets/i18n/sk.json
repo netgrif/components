@@ -52,7 +52,7 @@
         "import-net": {
             "upload": "Nahrať model",
             "choose": "Vyberte súbor s procesom",
-            "done" : "Dokončiť"
+            "done": "Dokončiť"
         },
         "new-case": {
             "case": "Nová prípad",
@@ -154,14 +154,18 @@
             "dateRange": "Zadaný dátum musí byť v rozsahu {{range}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň"
-
         },
         "snackBar": {
             "downloadFail": " stahovanie zlyhalo",
             "moreFiles": "Zvolil si viac súborov ako je povolené",
             "sameFiles": "Nemôžeš nahrať dva rovnaké súbory",
-            "fileSize": "Veľkosť súboru presiahla povolený limit"
-        }
+            "fileSize": "Veľkosť súboru presiahla povolený limit",
+            "cannotDownload": "Súbor nemôže byť stiahnutý bez definovanej úlohy",
+            "cannotUpload": "Súbor nemôže byť nahraný bez definovanej úlohy",
+            "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru",
+            "fileUploadFailed": "Súbor sa nepodarilo nahrať"
+        },
+        "noFile": "Žiadny súbor"
     },
     "dialog": {
         "close": "Zatvoriť",
@@ -192,7 +196,7 @@
             "visualID": "Vizuálne ID",
             "title": "Názov",
             "author": "Autor",
-            "creaDate": "Dátum vytvorenia"
+            "creationDate": "Dátum vytvorenia"
         },
         "taskMeta": {
             "case": "Prípad",
@@ -203,7 +207,7 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
-            "creaDate": "Dátum nahratia"
+            "creationDate": "Dátum nahratia"
         },
         "orderMode": "Mód zoraďovania",
         "searchMode": "Mód vyhľadávania",
@@ -241,5 +245,23 @@
     "view-list": {
         "noCasesSatisfyingThisFilter": "Pre zvolený filter nevyhovujú žiadne prípady",
         "noProcessesSatisfyingThisFilter": "Pre zvolený filter nevyhovujú žiadne procesy"
+    },
+    "admin": {
+        "user-list": {
+            "noUsersWereFound": "Momentálne nie sú v systéme žiadny používatelia",
+            "listTitle": "Users"
+        },
+        "process-list": {
+            "newestVersion": "Najnovšia verzia",
+            "listTitle": "Procesy",
+            "noRoles": "Tento proces neobsahuje žiadne roly",
+            "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
+        }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "Vaše preferencie boli uložené",
+            "saveFailure": "Nepodarilo sa uložiť preferencie"
+        }
     }
 }

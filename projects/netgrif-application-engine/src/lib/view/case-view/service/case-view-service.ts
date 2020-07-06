@@ -1,27 +1,27 @@
 import {Injectable} from '@angular/core';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, ReplaySubject, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {NewCaseComponent} from '../../../side-menu/content-components/new-case/new-case.component';
-import {CaseMetaField} from '../../../header/case-header/case-header.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {Net} from '../../../process/net';
-import {CaseViewParams} from '../models/case-view-params';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
+import {LoadingEmitter} from '../../../utility/loading-emitter';
+import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
 
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets {
 
-    protected _loading$: BehaviorSubject<boolean>;
+    protected _loading$: LoadingEmitter;
     protected _cases$: Observable<Array<Case>>;
     protected _nextPage$: BehaviorSubject<number>;
     protected _endOfData: boolean;
@@ -35,10 +35,9 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService,
                 protected _searchService: SearchService,
-                protected _translate: TranslateService,
-                protected _viewParams?: CaseViewParams) {
+                protected _translate: TranslateService) {
         super(allowedNets);
-        this._loading$ = new BehaviorSubject<boolean>(false);
+        this._loading$ = new LoadingEmitter();
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
@@ -66,11 +65,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
     }
 
     public get loading(): boolean {
-        return this._loading$.getValue();
-    }
-
-    protected setLoading(loading: boolean): void {
-        this._loading$.next(loading);
+        return this._loading$.isActive;
     }
 
     public get loading$(): Observable<boolean> {
@@ -88,7 +83,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
         params = this.addPageParams(params, page);
-        this.setLoading(true);
+        this._loading$.on();
         return this._caseResourceService.searchCases(this._searchService.activeFilter, params).pipe(
             catchError(err => {
                 this._log.error('Loading cases has failed!', err);
@@ -104,7 +99,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                     return {...acc, [cur.stringId]: cur};
                 }, {});
             }),
-            tap(_ => this.setLoading(false))
+            tap(_ => this._loading$.off())
         );
     }
 

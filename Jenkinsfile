@@ -76,11 +76,14 @@ pipeline {
 
             stage('Publish docs') {
                 steps {
+                    script {
+                        packageJson = readJSON(file: 'package.json')
+                    }
                     echo 'Uploading documentation via sshPublisher'
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'monitor.netgrif.com',
+                                configName: 'developer.netgrif.com',
                                 transfers: [
                                     sshTransfer(
                                         cleanRemote: true,
@@ -91,7 +94,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: '/var/www/html/developer/projects/engine-frontend',
+                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/docs",
                                         remoteDirectorySDF: false,
                                         removePrefix: 'docs/compodoc',
                                         sourceFiles: 'docs/compodoc/**')],
@@ -103,11 +106,14 @@ pipeline {
 
             stage('Publish test reports') {
                 steps {
+                    script {
+                        packageJson = readJSON(file: 'package.json')
+                    }
                     echo 'Uploading test reports via sshPublisher'
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'monitor.netgrif.com',
+                                configName: 'developer.netgrif.com',
                                 transfers: [
                                     sshTransfer(
                                         cleanRemote: true,
@@ -118,7 +124,7 @@ pipeline {
                                         makeEmptyDirs: false,
                                         noDefaultExcludes: false,
                                         patternSeparator: '[, ]+',
-                                        remoteDirectory: '/var/www/html/developer/projects/engine-frontend/coverage',
+                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/coverage",
                                         remoteDirectorySDF: false,
                                         removePrefix: 'coverage/netgrif-application-engine',
                                         sourceFiles: 'coverage/netgrif-application-engine/**')],
@@ -138,10 +144,13 @@ pipeline {
 
      stage('Publish Examples') {
         steps {
+            script {
+                packageJson = readJSON(file: 'package.json')
+            }
             sshPublisher(
                 publishers: [
                     sshPublisherDesc(
-                        configName: 'monitor.netgrif.com',
+                        configName: 'developer.netgrif.com',
                         transfers: [
                             sshTransfer(
                                 cleanRemote: true,
@@ -152,7 +161,7 @@ pipeline {
                                 makeEmptyDirs: false,
                                 noDefaultExcludes: false,
                                 patternSeparator: '[, ]+',
-                                remoteDirectory: '/var/www/html/developer/projects/engine-frontend/examples',
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/examples",
                                 remoteDirectorySDF: false,
                                 removePrefix: 'dist/nae-example-app',
                                 sourceFiles: 'dist/nae-example-app/**')],
@@ -174,7 +183,11 @@ pipeline {
 
     success {
         bitbucketStatusNotify(buildState: 'SUCCESSFUL')
-        zip(archive: true, zipFile: 'nae-frontend-dist.zip', dir: 'dist/netgrif-application-engine')
+        script {
+            DATETIME_TAG = java.time.LocalDateTime.now()
+        }
+        zip zipFile: "NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", archive: false, dir: 'dist/netgrif-application-engine'
+        archiveArtifacts artifacts:"NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", fingerprint: true
         // archiveArtifacts artifacts: 'dist/netgrif-application-engine/nae-frontend-dist.zip', fingerprint: true
     }
 

@@ -3,7 +3,7 @@ import {TestBed} from '@angular/core/testing';
 import {SnackBarService} from './snack-bar.service';
 import {MatSnackBar} from '@angular/material';
 import {MaterialModule} from '../../material/material.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SuccessSnackBarComponent} from '../components/success-snack-bar/success-snack-bar.component';
 import {ErrorSnackBarComponent} from '../components/error-snack-bar/error-snack-bar.component';
@@ -28,7 +28,7 @@ describe('SnackBarService', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule
             ],
             declarations: [

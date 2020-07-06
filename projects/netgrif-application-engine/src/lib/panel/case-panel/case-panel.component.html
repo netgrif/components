@@ -1,4 +1,4 @@
-<nae-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true">
+<nae-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true" [first]="first" [last]="last">
     <ng-template #casePanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <span fxLayoutAlign="start center" fxFlex>
@@ -6,11 +6,13 @@
                           [ngClass]="case_.color">{{case_.icon ? case_.icon : 'label'}}</mat-icon>
                 <span>{{firstFeaturedValue}}</span>
             </span>
-            <span *ngFor="let value of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
-                  [fxHide.lt-xl]="i >= 3"
-                  [fxHide.lt-lg]="i >= 2"
-                  [fxHide.lt-md]="i >= 1"
-                  [fxHide.lt-sm]="i >= 0">{{value}}
+            <span *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
+                  [fxHide.lt-xl]="i >= 3 && responsiveBody"
+                  [fxHide.lt-lg]="i >= 2 && responsiveBody"
+                  [fxHide.lt-md]="i >= 1 && responsiveBody"
+                  [fxHide.lt-sm]="i >= 0 && responsiveBody">
+                <mat-icon class="case-panel-icon" *ngIf="field.icon && field.value">{{field.icon}}</mat-icon>
+                {{field.value}}
             </span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">

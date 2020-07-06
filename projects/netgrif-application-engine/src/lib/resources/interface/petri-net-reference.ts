@@ -40,7 +40,7 @@ export interface PetriNetReference {
      */
     author: Author;
     /**
-     * Immediate Data [ImmediateData]{@link ImmediateData}
+     * [ImmediateData]{@link ImmediateData}
      */
     immediateData: Array<ImmediateData>;
 }

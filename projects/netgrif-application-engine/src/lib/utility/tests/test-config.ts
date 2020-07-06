@@ -43,115 +43,127 @@ export class TestConfigurationService extends ConfigurationService {
                 ]
             },
             views: {
-                layout: 'empty',
-                routes: {
-                    dashboard: {
-                        layout: {
-                            name: 'dashboard',
-                            params: {
-                                columns: 4,
-                                cards: [{
-                                    type: DashboardCardTypes.COUNT,
-                                    title: 'All tasks',
-                                    resourceType: 'task',
-                                    filter: '{}',
-                                    layout: {
-                                        x: 0,
-                                        y: 0,
-                                        rows: 1,
-                                        cols: 1
-                                    }
-                                }, {
-                                    type: DashboardCardTypes.IFRAME,
-                                    url: 'https://netgrif.com/',
-                                    layout: {
-                                        x: 2,
-                                        y: 0,
-                                        rows: 2,
-                                        cols: 2
-                                    }
-                                }, {
-                                    type: DashboardCardTypes.COUNT,
-                                    title: 'All cases',
-                                    resourceType: 'case',
-                                    filter: '{}',
-                                    layout: {
-                                        x: 1,
-                                        y: 1,
-                                        rows: 1,
-                                        cols: 1
-                                    }
-                                }]
-                            }
-                        },
-                        access: 'private',
-                        navigation: {
-                            title: 'Dashboard',
-                            icon: 'dashboard'
+                dashboard: {
+                    layout: {
+                        name: 'dashboard',
+                        params: {
+                            columns: 4,
+                            cards: [{
+                                type: DashboardCardTypes.COUNT,
+                                title: 'All tasks',
+                                resourceType: 'task',
+                                filter: '{}',
+                                layout: {
+                                    x: 0,
+                                    y: 0,
+                                    rows: 1,
+                                    cols: 1
+                                }
+                            }, {
+                                type: DashboardCardTypes.IFRAME,
+                                url: 'https://netgrif.com/',
+                                layout: {
+                                    x: 2,
+                                    y: 0,
+                                    rows: 2,
+                                    cols: 2
+                                }
+                            }, {
+                                type: DashboardCardTypes.COUNT,
+                                title: 'All cases',
+                                resourceType: 'case',
+                                filter: '{}',
+                                layout: {
+                                    x: 1,
+                                    y: 1,
+                                    rows: 1,
+                                    cols: 1
+                                }
+                            }]
                         }
                     },
-                    cases: {
-                        type: '',
-                        layout: {
-                            name: '',
-                            params: {
-                                allowedNets: []
-                            }
-                        },
-                        access: 'private',
-                        navigation: {
-                            title: 'Cases',
-                            icon: 'settings'
-                        },
-                        routes: {
-                            some_cases: {
-                                type: '',
-                                layout: {
-                                    name: ''
-                                },
-                                access: 'private',
-                                navigation: {
-                                    icon: 'account_circle'
-                                },
-                                routes: {
-                                    some_specifics: {
-                                        type: '',
-                                        layout: {
-                                            name: ''
-                                        },
-                                        access: 'private',
-                                        navigation: true
+                    access: 'private',
+                    navigation: {
+                        title: 'Dashboard',
+                        icon: 'dashboard'
+                    },
+                    routing: {
+                        path: 'dashboard'
+                    }
+                },
+                cases: {
+                    layout: {
+                        name: 'emptyView',
+                        params: {
+                            allowedNets: []
+                        }
+                    },
+                    access: 'private',
+                    navigation: {
+                        title: 'Cases',
+                        icon: 'settings'
+                    },
+                    routing: {
+                        path: 'cases'
+                    },
+                    children: {
+                        some_cases: {
+                            layout: {
+                                name: 'emptyView'
+                            },
+                            access: 'private',
+                            navigation: {
+                                icon: 'account_circle'
+                            },
+                            routing: {
+                                path: 'some_cases'
+                            },
+                            children: {
+                                some_specifics: {
+                                    layout: {
+                                        name: 'emptyView'
+                                    },
+                                    access: 'private',
+                                    navigation: true,
+                                    routing: {
+                                        path: 'some_specifics'
                                     }
                                 }
                             }
                         }
+                    }
+                },
+                task: {
+                    layout: {
+                        name: 'emptyView'
                     },
-                    task: {
-                        type: '',
-                        layout: {
-                            name: ''
-                        },
-                        access: 'private',
-                        navigation: {
-                            title: 'Tasks',
-                            icon: 'assignment'
-                        },
-                        routes: {
-                            some_tasks: {
-                                type: '',
-                                layout: {
-                                    name: ''
-                                },
-                                access: 'private',
-                                navigation: false,
-                                routes: {
-                                    some_specifics: {
-                                        type: '',
-                                        layout: {
-                                            name: ''
-                                        },
-                                        access: 'private',
-                                        navigation: true
+                    access: 'private',
+                    navigation: {
+                        title: 'Tasks',
+                        icon: 'assignment'
+                    },
+                    routing: {
+                        path: 'task'
+                    },
+                    children: {
+                        some_tasks: {
+                            layout: {
+                                name: 'emptyView'
+                            },
+                            access: 'private',
+                            navigation: false,
+                            routing: {
+                                path: 'some_tasks'
+                            },
+                            children: {
+                                some_specifics: {
+                                    layout: {
+                                        name: 'emptyView'
+                                    },
+                                    access: 'private',
+                                    navigation: true,
+                                    routing: {
+                                        path: 'some_specifics'
                                     }
                                 }
                             }
@@ -304,6 +316,9 @@ export class TestConfigurationService extends ConfigurationService {
                         'console',
                         'localStorage'
                     ]
+                },
+                auth: {
+                    loginRedirect: 'login'
                 }
             }
         });

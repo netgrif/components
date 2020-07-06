@@ -5,6 +5,7 @@ import {Subject} from 'rxjs';
 @Injectable()
 export class TaskPanelContentService {
     $shouldCreate: Subject<DataGroup[]>;
+    taskId: string;
 
     constructor() {
         this.$shouldCreate = new Subject<DataGroup[]>();

@@ -1,4 +1,4 @@
-<div class="case-view-container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+<div class="case-view-container" fxLayout="column" fxLayoutAlign="start stretch">
 
     <mat-card class="case-view-search-container">
         <div fxLayout="row" fxLayoutAlign="space-between">
@@ -13,8 +13,8 @@
         </div>
     </mat-card>
 
-    <nae-header #header [type]="headerType" class="case-header-padding"></nae-header>
+    <nae-header #header [type]="headerType" [maxHeaderColumns]="7" [responsiveHeaders]="false" class="case-header-padding"></nae-header>
 
-    <nae-case-list footerSize="96" [selectedHeaders$]="selectedHeaders$"
-                   (caseClick)="handleCaseClick($event)"></nae-case-list>
+    <nae-case-list [selectedHeaders$]="selectedHeaders$"
+                   (caseClick)="handleCaseClick($event)" [responsiveBody]="false" fxFlex></nae-case-list>
 </div>

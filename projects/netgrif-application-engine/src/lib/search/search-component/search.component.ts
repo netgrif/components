@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../models/category/category';
 import {BehaviorSubject, Observable, of} from 'rxjs';
@@ -13,7 +13,6 @@ import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT, DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {Moment} from 'moment';
 import {CaseDataset} from '../models/category/case/case-dataset';
-import {LanguageService} from '../../translate/language.service';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
@@ -64,6 +63,11 @@ export class SearchComponent implements OnInit {
     };
     /**
      * @ignore
+     * Used to clear the value of the text input as there is a bug in angular
+     */
+    @ViewChild('autocompleteInput') textInputRef: ElementRef<HTMLInputElement>;
+    /**
+     * @ignore
      * Observable that contains [Categories]{@link Category} that match user input. It updates it's content every time user input changes.
      */
     public filteredOptions: Observable<Array<Category<any>> | Array<SearchAutocompleteOption>>;
@@ -89,8 +93,7 @@ export class SearchComponent implements OnInit {
     public renderSelection = (object: Category<any> | SearchAutocompleteOption) => this._renderSelection(object);
 
     constructor(private _translate: TranslateService,
-                private _searchService: SearchService,
-                private _lang: LanguageService) {
+                private _searchService: SearchService) {
         this.filteredOptions = this.formControl.valueChanges.pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : this.objectName(value)),
@@ -312,7 +315,11 @@ export class SearchComponent implements OnInit {
      */
     private clearFormControlValue(): void {
         Object.keys(this.formControls).forEach( key => {
-            this.formControls[key].setValue( key === 'boolean' ? false : '');
+            this.formControls[key].reset( key === 'boolean' ? false : '');
+            if (key === 'text' && this.textInputRef !== undefined) {
+                // TODO 26.5.2020 remove this work-around when the issue is fixed: https://github.com/angular/components/issues/10968
+                this.textInputRef.nativeElement.value = '';
+            }
         });
     }
 }

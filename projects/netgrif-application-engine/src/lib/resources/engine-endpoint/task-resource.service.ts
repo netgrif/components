@@ -1,9 +1,9 @@
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Injectable} from '@angular/core';
-import {ProviderProgress, ResourceProvider} from '../resource-provider.service';
+import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
 import {Observable} from 'rxjs';
 import {Count} from '../interface/count';
-import {changeType, getResourceAddress} from '../resource-utility-functions';
+import {changeType, getResourceAddress, getResourcePage} from '../resource-utility-functions';
 import {MessageResource} from '../interface/message-resource';
 import {filter, map} from 'rxjs/operators';
 import {TaskReference} from '../interface/task-reference';
@@ -14,7 +14,8 @@ import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TaskGetRequestBody} from '../interface/task-get-request-body';
-import {HttpEvent, HttpEventType, HttpParams} from '@angular/common/http';
+import {HttpEventType} from '@angular/common/http';
+import {Page} from '../interface/page';
 
 @Injectable({
     providedIn: 'root'
@@ -93,26 +94,28 @@ export class TaskResourceService implements CountService {
      * Searches tasks trough the Elastic endpoint.
      * POST
      * @param filterParam filter used to search the tasks. Must be of type `TASK`.
+     * @param params Additional parameters
      */
     // {{baseUrl}}/api/task/search_es
-    public searchTask(filterParam: Filter): Observable<Array<Task>> {
+    public searchTask(filterParam: Filter, params?: Params): Observable<Page<Task>> {
         if (filterParam.type !== FilterType.TASK) {
             throw new Error('Provided filter doesn\'t have type TASK');
         }
-        return this.provider.post$('task/search_es', this.SERVER_URL, filterParam.getRequestBody(), filterParam.getRequestParams())
-            .pipe(map(r => changeType(r, 'tasks')));
+        params = ResourceProvider.combineParams(filterParam.getRequestParams(), params);
+        return this.provider.post$('task/search_es', this.SERVER_URL, filterParam.getRequestBody(), params)
+            .pipe(map(r => getResourcePage<Task>(r, 'tasks')));
     }
 
     /**
      * Searches tasks trough the Mongo endpoint.
      * POST
      * @param body search request body
-     * @param params sort request params
+     * @param params Additional request parameters
      */
     // {{baseUrl}}/api/task/search
-    public getTasks(body: TaskGetRequestBody, params?: HttpParams): Observable<Array<Task>> {
+    public getTasks(body: TaskGetRequestBody, params?: Params): Observable<Page<Task>> {
         return this.provider.post$('task/search', this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, 'tasks')));
+            .pipe(map(r => getResourcePage<Task>(r, 'tasks')));
     }
 
     // ----------- CASE ----------

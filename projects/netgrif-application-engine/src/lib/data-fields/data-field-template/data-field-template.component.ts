@@ -1,8 +1,9 @@
-import {Component, Input, TemplateRef} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {ResizedEvent} from 'angular-resize-event';
 import {WrappedBoolean} from './models/wrapped-boolean';
 import {DataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
+import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 
 /**
  * Provides a responsive layout to data fields where their appearance can change based on the width of space they have available.
@@ -21,7 +22,7 @@ import {TemplateAppearance} from '../models/template-appearance';
     templateUrl: './data-field-template.component.html',
     styleUrls: ['./data-field-template.component.scss']
 })
-export class DataFieldTemplateComponent {
+export class DataFieldTemplateComponent implements OnInit {
 
     /**
      * Datafield model object that should be displayed in the template
@@ -46,6 +47,13 @@ export class DataFieldTemplateComponent {
      */
     private _showLargeLayout: WrappedBoolean = new WrappedBoolean();
 
+    constructor(private _paperView: PaperViewService) {
+    }
+
+    public ngOnInit() {
+        this._showLargeLayout.value = this.evaluateTemplate();
+    }
+
     get showLargeLayout(): WrappedBoolean {
         return this._showLargeLayout;
     }
@@ -60,12 +68,16 @@ export class DataFieldTemplateComponent {
     }
 
     /**
-     * Returns `false` if the data field uses the `TemplateAppearance.MATERIAL` and `true` otherwise.
+     * @returns `false` if the data field uses the `TemplateAppearance.MATERIAL` and `true` otherwise.
      */
     private evaluateTemplate(): boolean {
         if (!this.dataField) {
             return true;
         }
         return !!this.dataField.layout ? this.dataField.layout.template === TemplateAppearance.NETGRIF : true;
+    }
+
+    public isPaperView() {
+        return this._paperView.paperView;
     }
 }

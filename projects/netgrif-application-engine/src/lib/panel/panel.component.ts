@@ -12,8 +12,12 @@ export class PanelComponent implements OnInit, AfterViewInit {
     @Input() preventExpand = false;
     @Input() panelHeader: TemplateRef<object>;
     @Input() panelContent: TemplateRef<object>;
+    @Input() first: boolean;
+    @Input() last: boolean;
+
     @Output() stopLoading: EventEmitter<object> = new EventEmitter();
     @Output() getExpansionPanelRef: EventEmitter<MatExpansionPanel> = new EventEmitter();
+
     @ViewChild('matExpansionPanel') matExpansionPanel;
 
     constructor() {

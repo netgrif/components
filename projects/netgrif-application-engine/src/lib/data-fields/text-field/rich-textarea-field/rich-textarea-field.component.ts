@@ -4,7 +4,6 @@ import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {AbstractTextFieldComponent} from '../abstract-text-field.component';
 import {TranslateService} from '@ngx-translate/core';
-import {LanguageService} from '../../../translate/language.service';
 
 @Component({
     selector: 'nae-rich-textarea-field',
@@ -19,7 +18,7 @@ export class RichTextareaFieldComponent extends AbstractTextFieldComponent imple
     options: any;
     // TODO BUG: update on blur dont working, switch back to update on ngModel
 
-    constructor(protected _translate: TranslateService, private _lang: LanguageService) {
+    constructor(protected _translate: TranslateService) {
         super(_translate);
         this.options = {
             autoDownloadFontAwesome: true,

@@ -6,4 +6,5 @@ import {ChangedFields} from '../../../data-fields/models/changed-fields';
 export interface TaskPanelData {
     task: Task;
     changedFields: Subject<ChangedFields>;
+    initiallyExpanded: boolean;
 }

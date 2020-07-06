@@ -10,6 +10,9 @@ export * from './header-modes/search-mode/search-mode.component';
 
 /* MODELS */
 export * from './models/public-api';
+export * from './case-header/case-menta-enum';
+export * from './task-header/task-meta-enum';
+export * from './workflow-header/workflow-meta-enum';
 
 /* MODULES */
 export * from './header.module';

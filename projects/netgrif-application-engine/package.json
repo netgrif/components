@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine",
-    "version": "4.0.0-rc.2",
+    "version": "4.0.0-rc.11",
     "scripts": {
         "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
         "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/netgrif-application-engine/ && cp --parents schematics/*/*/schema.json ../../dist/netgrif-application-engine/",
@@ -33,6 +33,10 @@
         "Daniel Vaník <vanik@netgrif.com>",
         "Lukáš Rezák <rezak@netgrif.com>"
     ],
+    "dependencies": {
+        "palette-creator": "^0.5.4",
+        "angular2-hotkeys": "^2.2.0"
+    },
     "peerDependencies": {
         "@angular-material-components/datetime-picker": "^2.0.2",
         "@angular-material-components/moment-adapter": "^2.0.1",
@@ -55,13 +59,13 @@
         "@ngx-translate/core": "^12.1.2",
         "@ngx-translate/http-loader": "^4.0.0",
         "@schematics/angular": "^9.0.5",
+        "angular2-hotkeys": "^2.2.0",
         "angular-resize-event": "^1.2.1",
         "hammerjs": "^2.0.8",
         "json-schema-to-typescript": "^8.1.0",
         "natural-orderby": "^2.0.3",
         "jszip": "^3.2.2",
         "moment": "^2.24.0",
-        "palette-creator": "^0.5.4",
         "rxjs": "^6.5.4",
         "tslib": "^1.11.1",
         "zone.js": "~0.10.2"

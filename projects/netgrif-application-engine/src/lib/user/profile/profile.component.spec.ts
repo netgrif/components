@@ -1,8 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {ProfileComponent} from './profile.component';
 import {MaterialModule} from '../../material/material.module';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
@@ -18,7 +17,7 @@ describe('ProfileComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule
             ],

@@ -15,7 +15,6 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {map} from 'rxjs/operators';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
@@ -25,7 +24,14 @@ import {SearchService} from '../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ArrayTaskViewServiceFactory} from '../../view/task-view/service/factory/array-task-view-service-factory';
+import {
+    ArrayTaskViewServiceFactory,
+    noNetsTaskViewServiceFactory
+} from '../../view/task-view/service/factory/array-task-view-service-factory';
+import {TaskMetaField} from '../../header/task-header/task-meta-enum';
+import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
@@ -47,17 +53,27 @@ describe('TaskPanelComponent', () => {
             providers: [
                 ArrayTaskViewServiceFactory,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {   provide: TaskViewService,
-                    useFactory: ArrayTaskViewServiceFactory.noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]},
+                {
+                    provide: TaskViewService,
+                    useFactory: noNetsTaskViewServiceFactory,
+                    deps: [ArrayTaskViewServiceFactory]
+                },
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: UserResourceService, useClass: MyUserResources},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
                 SideMenuService
             ],
-            declarations: [TestWrapperComponent]
-        })
-            .compileComponents();
+            declarations: [
+                TestWrapperComponent,
+            ]
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                    SuccessSnackBarComponent
+                ]
+            }
+        }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -116,6 +132,7 @@ describe('TaskPanelComponent', () => {
         component.loading = false;
 
         component.taskPanelData.task.user = {
+            id: '1',
             email: 'string',
             name: 'string',
             surname: 'string',
@@ -219,7 +236,8 @@ class TestWrapperComponent {
             dataGroups: [],
             _links: {}
         },
-        changedFields: new Subject<ChangedFields>()
+        changedFields: new Subject<ChangedFields>(),
+        initiallyExpanded: false
     };
     selectedHeaders$ = of([
         new HeaderColumn(HeaderColumnType.META, TaskMetaField.CASE, 'string', 'string'),
@@ -328,7 +346,7 @@ class MyResources {
 class MyUserResources {
     getLoggedUser(params): Observable<User> {
         return of({
-            id: 5,
+            id: '5',
             email: 'string',
             name: 'string',
             surname: 'string',

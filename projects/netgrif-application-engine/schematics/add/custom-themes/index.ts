@@ -4,7 +4,7 @@ import {
     Tree,
     chain,
 } from '@angular-devkit/schematics';
-import {createFilesFromTemplates, getProjectInfo} from '../../utility-functions';
+import {createFilesFromTemplates, getProjectInfo} from '../../_utility/utility-functions';
 // Javascript libka, ktoru typescript nechcel skompilovat. Problem ja internete vyrieseny takto a aj samotne readme obsahuje tento sposob.
 const PaletteGenerator = require('palette-creator');
 
@@ -53,21 +53,49 @@ export function customThemes(): Rule {
         let warnContrastDark: string | null = '';
         const primaryLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.primary, false);
         const primaryContrastLight = (primaryLight) ? returnContrastIfExist(data.theme.pallets.light.primary.contrast) : null;
-        const secondaryLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.secondary, false);
-        const secondaryContrastLight = (secondaryLight) ? returnContrastIfExist(data.theme.pallets.light.secondary.contrast) : null;
-        const warnLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.warn, false);
-        const warnContrastLight = (warnLight) ? returnContrastIfExist(data.theme.pallets.light.warn.contrast) : null;
+        let secondaryLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.secondary, false);
+        let secondaryContrastLight = null;
+        if (secondaryLight.length === 0) {
+            if (typeof data.theme.pallets.light.primary === 'string') {
+                const palette = PaletteGenerator.default.getSimilar(data.theme.pallets.light.primary);
+                secondaryLight = returnPaletteIfExistOrCreate(palette.complementary.hex, false);
+            } else {
+                throw new SchematicsException('Secondary color required');
+            }
+        } else {
+            secondaryContrastLight = returnContrastIfExist(data.theme.pallets.light.secondary.contrast);
+        }
+        let warnLight = returnPaletteIfExistOrCreate(data.theme.pallets.light.warn, false);
+        let warnContrastLight = null;
+        if (warnLight.length === 0) {
+            warnLight = returnPaletteIfExistOrCreate('#FF5722', false);
+        } else {
+            warnContrastLight = returnContrastIfExist(data.theme.pallets.light.warn.contrast);
+        }
         if (darkExists) {
             primaryDark = returnPaletteIfExistOrCreate(data.theme.pallets.dark.primary, true);
             primaryContrastDark = (primaryDark) ? returnContrastIfExist(data.theme.pallets.dark.primary.contrast) : null;
             secondaryDark = returnPaletteIfExistOrCreate(data.theme.pallets.dark.secondary, true);
-            secondaryContrastDark = (secondaryDark) ? returnContrastIfExist(data.theme.pallets.dark.secondary.contrast) : null;
+            if (secondaryDark.length === 0) {
+                if (typeof data.theme.pallets.dark.primary === 'string') {
+                    const palette = PaletteGenerator.default.getSimilar(data.theme.pallets.dark.primary);
+                    secondaryDark = returnPaletteIfExistOrCreate(palette.complementary.hex, false);
+                } else {
+                    throw new SchematicsException('Secondary dark color required');
+                }
+            } else {
+                secondaryContrastDark = returnContrastIfExist(data.theme.pallets.dark.secondary.contrast);
+            }
             warnDark = returnPaletteIfExistOrCreate(data.theme.pallets.dark.warn, true);
-            warnContrastDark = (warnDark) ? returnContrastIfExist(data.theme.pallets.dark.warn.contrast) : null;
+            if (warnDark.length === 0) {
+                warnDark = returnPaletteIfExistOrCreate('#FF5722', false);
+            } else {
+                warnContrastDark = returnContrastIfExist(data.theme.pallets.dark.warn.contrast);
+            }
         }
 
         const rules = [];
-        const pathTomove = path + '/../styles/templates';
+        const pathTomove = path + '/../styles/themes';
         rules.push(createFilesFromTemplates('./files/light-theme', pathTomove, {
             primaryLight,
             primaryContrastLight,
@@ -89,7 +117,13 @@ export function customThemes(): Rule {
 
         }
         rules.push(createFilesFromTemplates('./files/custom-themes', pathTomove, {
-            darkExists
+            darkExists,
+            primaryLight,
+            secondaryLight,
+            warnLight,
+            primaryDark,
+            secondaryDark,
+            warnDark,
         }));
 
         deleteExistingFiles(tree, pathTomove);
@@ -102,8 +136,8 @@ export function customThemes(): Rule {
             if (wholeStyleContent.toString().match('@include mat-core()') === null) {
                 importsAndIncludes += '@include mat-core();' + '\n';
             }
-            if (wholeStyleContent.toString().match('./styles/templates/custom-themes.scss') === null) {
-                importsAndIncludes += '@import \'./styles/templates/custom-themes.scss\';' + '\n';
+            if (wholeStyleContent.toString().match('./styles/themes/custom-themes.scss') === null) {
+                importsAndIncludes += '@import \'./styles/themes/custom-themes.scss\';' + '\n';
             }
             tree.overwrite(path + '/../styles.scss',
                 importsAndIncludes + tree.read(path + '/../styles.scss'));
@@ -158,11 +192,11 @@ function deleteExistingFiles(tree: Tree, pathTomove: string) {
     if (tree.exists(pathTomove + '/custom-themes.scss')) {
         tree.delete(pathTomove + '/custom-themes.scss');
     }
-    if (tree.exists(pathTomove + '/custom-dark-template.scss')) {
-        tree.delete(pathTomove + '/custom-dark-template.scss');
+    if (tree.exists(pathTomove + '/custom-dark-theme.scss')) {
+        tree.delete(pathTomove + '/custom-dark-theme.scss');
     }
-    if (tree.exists(pathTomove + '/custom-light-template.scss')) {
-        tree.delete(pathTomove + '/custom-light-template.scss');
+    if (tree.exists(pathTomove + '/custom-light-theme.scss')) {
+        tree.delete(pathTomove + '/custom-light-theme.scss');
     }
 }
 
