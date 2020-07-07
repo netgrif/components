@@ -8,9 +8,13 @@ import {NAE_TAB_DATA} from '@netgrif/application-engine';
 })
 export class ContentComponent implements OnInit {
 
-  constructor(@Inject(NAE_TAB_DATA) public injected) { }
+  constructor(@Inject(NAE_TAB_DATA) public injected) {}
 
   ngOnInit(): void {
+  }
+
+  currentIndex(): void {
+      console.log(this.injected.tabViewRef.currentlySelectedTab());
   }
 
 }

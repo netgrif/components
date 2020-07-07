@@ -99,6 +99,10 @@ export interface InjectedTabData {
  */
 export interface TabViewInterface {
     /**
+     * See [TabView.currentlySelectedTab]{@link TabView#currentlySelectedTab}
+     */
+    currentlySelectedTab(): number;
+    /**
      * See [TabView.openTab]{@link TabView#openTab}
      */
     openTab(tabContent: TabContent, autoswitch?: boolean): string;
