@@ -16,10 +16,12 @@ import {User} from '../../authentication/models/user';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 
 describe('RoleAssignmentComponent', () => {
     let component: RoleAssignmentComponent;
     let fixture: ComponentFixture<RoleAssignmentComponent>;
+    let getAllSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -54,10 +56,16 @@ describe('RoleAssignmentComponent', () => {
         fixture = TestBed.createComponent(RoleAssignmentComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+        getAllSpy = spyOn(TestBed.inject(UserResourceService), 'getAll');
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should load next page', () => {
+        component.loadNextUserPage();
+        expect(getAllSpy).toHaveBeenCalled();
     });
 });
 
