@@ -1,4 +1,4 @@
-import {NAE_TASK_COLS, TaskContentComponent} from './task-content.component';
+import {TaskContentComponent} from './task-content.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {MatExpansionModule} from '@angular/material';
@@ -13,6 +13,7 @@ import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {NAE_TASK_COLS} from '../model/nae-task-cols-injection-token';
 
 describe('TaskContentComponent', () => {
     let component: TaskContentComponent;

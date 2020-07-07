@@ -4,8 +4,7 @@ import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
 import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
-
-export const NAE_TASK_COLS = new InjectionToken<number>('NaeTaskCols');
+import {NAE_TASK_COLS} from '../model/nae-task-cols-injection-token';
 
 @Component({
     selector: 'nae-task-content',

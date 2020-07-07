@@ -8,13 +8,13 @@ import {FinishTaskService} from '../../../task/services/finish-task.service';
 import {TaskRequestStateService} from '../../../task/services/task-request-state.service';
 import {DataFocusPolicyService} from '../../../task/services/data-focus-policy.service';
 import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injection-token';
-import {NAE_TASK_COLS} from '../../../task-content/task-content/task-content.component';
 import {UnlimitedTaskContentService} from '../../../task-content/services/unlimited-task-content.service';
 import {TreeTaskContentService} from './tree-task-content.service';
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
 import {AssignPolicyService} from '../../../task/services/assign-policy.service';
 import {FinishPolicyService} from '../../../task/services/finish-policy.service';
 import {Observable} from 'rxjs';
+import {NAE_TASK_COLS} from '../../../task-content/model/nae-task-cols-injection-token';
 
 @Component({
     selector: 'nae-tree-task-content',
