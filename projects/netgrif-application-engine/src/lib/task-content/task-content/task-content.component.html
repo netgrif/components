@@ -6,49 +6,49 @@
                        [rowspan]="item.layout.rows"
                        [ngSwitch]="item.type">
 
-                <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item">
-                </nae-boolean-field>
+            <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item">
+            </nae-boolean-field>
 
-                <nae-text-field *ngSwitchCase="'text'" class="full-width-auto" [dataField]="item.item">
-                </nae-text-field>
+            <nae-text-field *ngSwitchCase="'text'" class="full-width-auto" [dataField]="item.item">
+            </nae-text-field>
 
-                <nae-number-field *ngSwitchCase="'number'" class="full-width-auto" [dataField]="item.item">
-                </nae-number-field>
+            <nae-number-field *ngSwitchCase="'number'" class="full-width-auto" [dataField]="item.item">
+            </nae-number-field>
 
-                <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width-auto" [dataField]="item.item">
-                </nae-enumeration-field>
+            <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width-auto" [dataField]="item.item">
+            </nae-enumeration-field>
 
-                <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width-auto" [dataField]="item.item">
-                </nae-multichoice-field>
+            <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width-auto" [dataField]="item.item">
+            </nae-multichoice-field>
 
-                <nae-date-field *ngSwitchCase="'date'" class="full-width-auto" [dataField]="item.item">
-                </nae-date-field>
+            <nae-date-field *ngSwitchCase="'date'" class="full-width-auto" [dataField]="item.item">
+            </nae-date-field>
 
-                <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item">
-                </nae-date-time-field>
+            <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item">
+            </nae-date-time-field>
 
-                <nae-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId">
-                </nae-file-field>
+            <nae-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId">
+            </nae-file-field>
 
-                <nae-user-field *ngSwitchCase="'user'" class="full-width-auto" [dataField]="item.item">
-                </nae-user-field>
+            <nae-user-field *ngSwitchCase="'user'" class="full-width-auto" [dataField]="item.item">
+            </nae-user-field>
 
-                <nae-button-field *ngSwitchCase="'button'" class="full-width-auto" [dataField]="item.item" >
-                </nae-button-field>
+            <nae-button-field *ngSwitchCase="'button'" class="full-width-auto" [dataField]="item.item">
+            </nae-button-field>
 
-                <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width-auto">
-                    <div fxFlex="20" class="line-datagroup"></div>
-                    <span class="margin-default">{{item.title}}</span>
-                    <div fxFlex class="line-datagroup"></div>
-                </div>
+            <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width-auto">
+                <div fxFlex="20" class="line-datagroup"></div>
+                <span class="margin-default">{{item.title}}</span>
+                <div fxFlex class="line-datagroup"></div>
+            </div>
 
-                <div *ngSwitchCase="'blank'"></div>
+            <div *ngSwitchCase="'blank'"></div>
         </mat-grid-tile>
     </mat-grid-list>
 </div>
 
 <div *ngIf="!loading && dataSource.length === 0" fxLayout="column" fxLayoutAlign="center center">
-    <mat-icon>block</mat-icon>
+    <mat-icon *ngIf="displayNoDataIcon">{{noDataIcon ? noDataIcon : 'block'}}</mat-icon>
     <span>{{(noDataText ? noDataText : 'tasks.view.noData') | translate}}</span>
 </div>
 

@@ -19,9 +19,21 @@ export class TaskContentComponent {
     /**
      * The translate text that should be displayed when the task contains no data.
      *
-     * If no text is provided the default text is displayed
+     * If a falsy value is provided the default text is displayed
      */
     @Input() noDataText: string;
+    /**
+     * The icon that should be displayed when the task contains no data.
+     *
+     * If a falsy value is provided the default icon is displayed
+     */
+    @Input() noDataIcon: string;
+    /**
+     * Whether an icon should be displayed when the no data message is shown.
+     *
+     * An icon is displayed by default
+     */
+    @Input() displayNoDataIcon = true;
 
     constructor(private _fieldConverter: FieldConverterService,
                 private taskContentService: TaskContentService,
