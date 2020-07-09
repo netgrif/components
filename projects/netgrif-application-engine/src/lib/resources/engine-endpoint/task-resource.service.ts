@@ -202,11 +202,12 @@ export class TaskResourceService implements CountService {
                     if (!dataGroupResource.fields._embedded) {
                         return; // continue
                     }
+                    const fields = [];
                     Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
-                        const fields = dataGroupResource.fields._embedded[localizedFields]
-                            .map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource));
-                        dataFields.push(...fields);
+                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
                     });
+                    fields.sort((a, b) => a.order - b.order);
+                    dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
                     result.push({
                         fields: dataFields,
                         stretch: dataGroupResource.stretch,

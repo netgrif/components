@@ -115,7 +115,8 @@ export class FieldConverterService {
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout);
             case 'file':
-                return new FileField(item.stringId, item.name, item.behavior, item.value, item.placeholder, item.description, item.layout);
+                return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
+                    item.placeholder, item.description, item.layout);
         }
     }
 

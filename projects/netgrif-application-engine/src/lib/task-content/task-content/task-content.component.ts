@@ -85,7 +85,6 @@ export class TaskContentComponent {
                     });
                 }
             }
-            dataGroup.fields.sort((a, b) => a.order - b.order);
             dataGroup.fields.forEach(dataField => {
                 if (dataField.layout !== undefined) {
                     const itemRowEnd = dataField.layout.y + dataField.layout.rows - 1;
