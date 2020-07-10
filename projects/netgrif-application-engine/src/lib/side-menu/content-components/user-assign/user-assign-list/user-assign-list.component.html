@@ -10,8 +10,8 @@
                 <nae-user-assign-item
                     *cdkVirtualFor="let user of users;"
                     [user]="user"
-                    (click)="select(user)"
-                    [selectedUser$]="selectedUser$">
+                    [selectedId$]="selectedUser$"
+                    (click)="select(user)">
                 </nae-user-assign-item>
 
                 <div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center"

@@ -21,18 +21,10 @@ import {UserAssignInjectedData} from './model/user-assign-injected-data';
 })
 export class UserAssignComponent {
     /**
-     * Reference to [UserAssignListComponent]{@link UserAssignListComponent}.
-     */
-    @ViewChild(UserAssignListComponent) public listComponent: UserAssignListComponent;
-    /**
-     * Represents input HTML element for user search.
-     */
-    @ViewChild('inputSearch') public input;
-
-    /**
      * Form control for user search value.
      */
     public searchUserControl = new FormControl();
+
     /**
      * Data about preselected user send from [UserFieldComponent]{@link UserFieldComponent}.
      */
@@ -51,6 +43,10 @@ export class UserAssignComponent {
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as UserAssignInjectedData;
         }
+    }
+
+    public get initiallySelectedUser(): UserValue | undefined {
+        return this.injectedData ? this.injectedData.value : undefined;
     }
 
     /**

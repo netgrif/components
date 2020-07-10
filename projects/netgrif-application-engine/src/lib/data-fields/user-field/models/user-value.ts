@@ -5,11 +5,6 @@
  */
 export class UserValue {
     /**
-     * An attribute that distinguishes which user in the user field is selected.
-     */
-    private _selected: boolean;
-
-    /**
      * Create UserValue.
      * @param _id User id : '5'
      * @param _name User name : 'Admin'
@@ -37,13 +32,5 @@ export class UserValue {
 
     get email(): string {
         return this._email;
-    }
-
-    get selected(): boolean {
-        return this._selected;
-    }
-
-    set selected(value: boolean) {
-        this._selected = value;
     }
 }

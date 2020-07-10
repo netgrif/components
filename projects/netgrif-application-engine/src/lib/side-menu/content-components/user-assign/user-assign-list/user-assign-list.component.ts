@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {UserAssignService} from '../service/user-assign.service';
@@ -14,12 +14,17 @@ import {debounceTime} from 'rxjs/operators';
     templateUrl: './user-assign-list.component.html',
     styleUrls: ['./user-assign-list.component.scss']
 })
-export class UserAssignListComponent implements OnInit {
+export class UserAssignListComponent implements OnInit, OnDestroy {
 
     /**
      * The time that must elapse since last keypress in search input before a search request is sent
      */
     private SEARCH_DEBOUNCE_TIME = 200;
+
+    /**
+     * The user that is initially selected, or `undefined` if none is
+     */
+    @Input() initiallySelectedUser: UserValue | undefined;
 
     /**
      * Search user form control from parent component.
@@ -43,7 +48,7 @@ export class UserAssignListComponent implements OnInit {
     /**
      * Stream of selected user with his value that we can subscribe to like the observable.
      */
-    public selectedUser$: BehaviorSubject<UserValue>;
+    private _selectedUser$: ReplaySubject<string>;
 
     /**
      * Inject and initialize attributes.
@@ -52,7 +57,7 @@ export class UserAssignListComponent implements OnInit {
     constructor(private _userAssignService: UserAssignService) {
         this.users$ = this._userAssignService.users$;
         this.userSelected = new EventEmitter();
-        this.selectedUser$ = new BehaviorSubject<UserValue>(undefined);
+        this._selectedUser$ = new ReplaySubject<string>(1);
     }
 
     /**
@@ -60,13 +65,24 @@ export class UserAssignListComponent implements OnInit {
      * Observes search user control stream on value change.
      */
     ngOnInit() {
+        if (this.initiallySelectedUser) {
+            this._selectedUser$.next(this.initiallySelectedUser.id);
+        }
         this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
             this._userAssignService.reload(searchText);
         });
     }
 
+    ngOnDestroy(): void {
+        this._selectedUser$.complete();
+    }
+
     public get loading(): boolean {
         return this._userAssignService.loading;
+    }
+
+    public get selectedUser$(): Observable<string> {
+        return this._selectedUser$.asObservable();
     }
 
     /**
@@ -98,6 +114,6 @@ export class UserAssignListComponent implements OnInit {
      */
     private _markSelectedUser(selectedUser: UserValue) {
         if (!selectedUser) return;
-        this.selectedUser$.next(selectedUser);
+        this._selectedUser$.next(selectedUser.id);
     }
 }

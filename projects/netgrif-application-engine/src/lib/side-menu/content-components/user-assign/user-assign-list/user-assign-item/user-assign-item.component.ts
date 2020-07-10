@@ -1,36 +1,26 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Observable} from 'rxjs';
 import {UserValue} from '../../../../../data-fields/user-field/models/user-value';
-import {BehaviorSubject} from 'rxjs';
 
 /**
  * Includes avatar user icon and full username in the side menu.
  */
 @Component({
-  selector: 'nae-user-assign-item',
-  templateUrl: './user-assign-item.component.html',
-  styleUrls: ['./user-assign-item.component.scss']
+    selector: 'nae-user-assign-item',
+    templateUrl: './user-assign-item.component.html',
+    styleUrls: ['./user-assign-item.component.scss']
 })
-export class UserAssignItemComponent implements OnInit {
+export class UserAssignItemComponent {
     /**
-     * Value of the current user.
+     * Value of the user held in this item component
      */
     @Input() user: UserValue;
+
     /**
-     * Stream of selected user that we can subscribe to like the observable.
-     *
-     * Still returns the [UserValue]{@link UserValue}
-     * when set in the [UserAssignListComponent]{@link UserAssignListComponent} after selection.
+     * ID of the currently selected user
      */
-    @Input() selectedUser$: BehaviorSubject<UserValue>;
+    @Input() selectedId$: Observable<string>;
 
     constructor() {
-    }
-
-    /**
-     * On initialize this item component observe on selectedUser stream.
-     * If own user id is equals with user id set in stream, then set current user as select user.
-     */
-    ngOnInit() {
-        this.selectedUser$.subscribe(user => { if (user) this.user.selected = this.user.id === user.id; });
     }
 }
