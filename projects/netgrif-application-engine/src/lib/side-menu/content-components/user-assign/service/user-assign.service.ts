@@ -16,10 +16,6 @@ import {User} from '../../../../resources/interface/user';
  */
 @Injectable()
 export class UserAssignService {
-    /**
-     * Static page size for user assigning pagination.
-     */
-    public readonly PAGE_SIZE = 12;
 
     /**
      * UserValue array stream, that represents users loading from backend.
@@ -64,7 +60,7 @@ export class UserAssignService {
         this._endOfData = false;
         this._nextPage$ = new BehaviorSubject<number>(null);
         this._pagination = {
-            size: this.PAGE_SIZE,
+            size: 20,
             totalElements: undefined,
             totalPages: undefined,
             number: -1
@@ -107,15 +103,15 @@ export class UserAssignService {
         let params: HttpParams = new HttpParams();
         params = this._addPageParams(params, page);
         this._loading$.on();
-        return this._userResourceService.getAll(params).pipe(
+        return this._userResourceService.search({fulltext: ''}, params).pipe(
             catchError(err => {
                 this._log.error('Loading users has failed!', err);
                 this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.user.err'));
                 return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
             }),
-            tap(u => this._endOfData = !Array.isArray(u.content) ||
-                (Array.isArray(u.content) && u.content.length === 0) ||
-                u.pagination.number === u.pagination.totalPages),
+            tap(u => this._endOfData = !Array.isArray(u.content)
+                                            || (Array.isArray(u.content) && u.content.length === 0)
+                                            || u.pagination.number === u.pagination.totalPages),
             map(users => Array.isArray(users.content) ? users : {...users, content: []}),
             map(users => {
                 this._pagination = users.pagination;
