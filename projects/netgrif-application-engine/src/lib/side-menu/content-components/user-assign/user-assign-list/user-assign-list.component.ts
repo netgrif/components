@@ -77,6 +77,10 @@ export class UserAssignListComponent implements OnInit, OnDestroy {
         this._selectedUser$.complete();
     }
 
+    public trackBy(index: number, item: UserValue): any {
+        return item.id;
+    }
+
     public get loading(): boolean {
         return this._userAssignService.loading;
     }

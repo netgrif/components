@@ -44,12 +44,14 @@ export class UserFieldComponent extends AbstractDataFieldComponent implements On
      * After close side menu, the snackbar info will be displayed either for the unselected user or the selected one.
      */
     public selectUser() {
+        let valueReturned = false;
         this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM,
             {roles: this.dataField.roles, value: this.dataField.value} as UserAssignInjectedData).onClose.subscribe($event => {
             if ($event.data) {
                 this.dataField.value = $event.data as UserValue;
                 this._snackbar.openGenericSnackBar('User ' + this.dataField.value.fullName + ' was assigned', 'how_to_reg');
-            } else {
+                valueReturned = true;
+            } else if (!valueReturned) {
                 this._snackbar.openWarningSnackBar('No user has been selected');
             }
         });
