@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
@@ -19,7 +19,7 @@ import {UserAssignInjectedData} from './model/user-assign-injected-data';
     styleUrls: ['./user-assign.component.scss'],
     providers: [UserAssignService]
 })
-export class UserAssignComponent implements AfterViewInit {
+export class UserAssignComponent {
     /**
      * Reference to [UserAssignListComponent]{@link UserAssignListComponent}.
      */
@@ -51,13 +51,6 @@ export class UserAssignComponent implements AfterViewInit {
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as UserAssignInjectedData;
         }
-    }
-
-    /**
-     * After view initialize this component links autocomplete search bar together with autocomplete in list component.
-     */
-    ngAfterViewInit(): void {
-        this.input.matAutocomplete = this.listComponent.autocomplete;
     }
 
     /**

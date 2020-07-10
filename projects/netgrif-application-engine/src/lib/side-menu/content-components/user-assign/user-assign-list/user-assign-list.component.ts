@@ -22,6 +22,7 @@ export class UserAssignListComponent implements OnInit {
      * Search user form control from parent component.
      */
     @Input() searchUserControl: FormControl;
+
     /**
      * Injected user value data from parent component.
      */
@@ -32,10 +33,6 @@ export class UserAssignListComponent implements OnInit {
      */
     @Output() userSelected: EventEmitter<UserValue>;
 
-    /**
-     * Autocomplete reference to users search bar.
-     */
-    @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete;
     /**
      * Viewport reference to virtual scroll.
      */
@@ -53,10 +50,6 @@ export class UserAssignListComponent implements OnInit {
      * Stream of selected user with his value that we can subscribe to like the observable.
      */
     public selectedUser$: BehaviorSubject<UserValue>;
-    /**
-     * Page size for user assigning pagination in cdkVirtualScroll.
-     */
-    public readonly PAGE_SIZE: number;
 
     /**
      * Current selected user.
@@ -71,7 +64,6 @@ export class UserAssignListComponent implements OnInit {
         this.users$ = this._userAssignService.users$;
         this.loading$ = this._userAssignService.loading$;
         this.userSelected = new EventEmitter();
-        this.PAGE_SIZE = this._userAssignService.PAGE_SIZE;
     }
 
     /**
@@ -142,7 +134,7 @@ export class UserAssignListComponent implements OnInit {
     private _filterUsers(searchQuery: string): void {
         this.users$ = this.users$.pipe(
             map(users => users.filter((user: UserValue) => (StringUtil.removeAccentAndCaseSensitivity(user.fullName)
-                    .indexOf(StringUtil.removeAccentAndCaseSensitivity(searchQuery)) === 0) || searchQuery === ''))
+                .indexOf(StringUtil.removeAccentAndCaseSensitivity(searchQuery)) === 0) || searchQuery === ''))
         );
     }
 }

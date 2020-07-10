@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">{{ 'side-menu.user.assign' | translate | uppercase }}</mat-toolbar>
-<div class="user-assign-container side-menu-root">
-    <div class="user-assign-search-container">
-        <mat-icon class="search-icon">search</mat-icon>
-        <mat-form-field class="user-assign-search" color="primary">
+<div class="user-assign-container side-menu-root" fxLayout="column">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon fxFlex class="search-icon">search</mat-icon>
+        <mat-form-field fxFlex="100" class="user-assign-search" color="primary">
             <input matInput placeholder="{{ 'side-menu.user.choose' | translate }}"
                    [value]="searchUserControl.value"
                    [formControl]="searchUserControl"
@@ -15,9 +15,11 @@
 
     <nae-user-assign-list [searchUserControl]="searchUserControl"
                           [injectedData]="injectedData"
-                          (userSelected)="userWasSelected($event)">
+                          (userSelected)="userWasSelected($event)"
+                          fxFlex="100">
     </nae-user-assign-list>
 
-    <button mat-button color="primary" class="assign-button"
-            (click)="assign()">{{ 'tasks.view.assign' | translate | uppercase }}</button>
+    <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button color="primary" (click)="assign()">{{ 'tasks.view.assign' | translate | uppercase }}</button>
+    </div>
 </div>

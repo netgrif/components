@@ -22,14 +22,6 @@ export class UserAssignItemComponent implements OnInit {
      * when set in the [UserAssignListComponent]{@link UserAssignListComponent} after selection.
      */
     @Input() selectedUser$: BehaviorSubject<UserValue>;
-    /**
-     * This is the first item in the user assign list source for CdkVirtualScrollViewport.
-     */
-    @Input() first: boolean;
-    /**
-     * This is the last item in the user assign list source for CdkVirtualScrollViewport.
-     */
-    @Input() last: boolean;
 
     constructor() {
     }
