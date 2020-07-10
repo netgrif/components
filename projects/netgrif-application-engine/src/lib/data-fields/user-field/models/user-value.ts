@@ -1,5 +1,5 @@
 /**
- * Used by [UserField]{@link UserField} and whole [UserAssignComponent]{@link UserAssignComponent}.
+ * Used by [UserField]{@link UserField} and [UserAssignComponent]{@link UserAssignComponent}.
  *
  * Represents the value of the user.
  */

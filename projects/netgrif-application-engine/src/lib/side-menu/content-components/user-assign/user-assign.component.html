@@ -4,19 +4,16 @@
         <mat-icon fxFlex class="search-icon">search</mat-icon>
         <mat-form-field fxFlex="100" class="user-assign-search" color="primary">
             <input matInput placeholder="{{ 'side-menu.user.choose' | translate }}"
-                   [value]="searchUserControl.value"
-                   [formControl]="searchUserControl"
-                   #inputSearch>
+                   [formControl]="searchUserControl">
             <button mat-button *ngIf="searchUserControl.value" matSuffix mat-icon-button (click)="searchUserControl.setValue('')">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
     </div>
 
-    <nae-user-assign-list [searchUserControl]="searchUserControl"
-                          [injectedData]="injectedData"
-                          (userSelected)="userWasSelected($event)"
-                          fxFlex="100">
+    <nae-user-assign-list fxFlex="100"
+                          [searchUserControl]="searchUserControl"
+                          (userSelected)="userWasSelected($event)">
     </nae-user-assign-list>
 
     <div fxFlex fxLayout="row" fxLayoutAlign="end center">

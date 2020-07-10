@@ -41,6 +41,10 @@ export class UserAssignService {
      * Signals if response is empty or no.
      */
     private _clear: boolean;
+    /**
+     * The search content that should be applied to the request
+     */
+    private _searchQuery: string;
 
     /**
      * Inject services.
@@ -66,6 +70,7 @@ export class UserAssignService {
             number: -1
         };
         this._clear = false;
+        this._searchQuery = '';
 
         const usersMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -103,7 +108,7 @@ export class UserAssignService {
         let params: HttpParams = new HttpParams();
         params = this._addPageParams(params, page);
         this._loading$.on();
-        return this._userResourceService.search({fulltext: ''}, params).pipe(
+        return this._userResourceService.search({fulltext: this._searchQuery}, params).pipe(
             catchError(err => {
                 this._log.error('Loading users has failed!', err);
                 this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.user.err'));
@@ -142,10 +147,11 @@ export class UserAssignService {
     /**
      * Reload page with users.
      */
-    public reload(): void {
+    public reload(newSearchQuery: string = ''): void {
         if (!this._users$ || !this._pagination) {
             return;
         }
+        this._searchQuery = newSearchQuery;
         this._clear = true;
         this._pagination.number = -1;
         this._endOfData = false;
