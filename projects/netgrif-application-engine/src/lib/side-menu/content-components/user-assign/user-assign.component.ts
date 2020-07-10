@@ -45,6 +45,9 @@ export class UserAssignComponent {
         }
     }
 
+    /**
+     * The user that is initially selected, or `undefined` if none is
+     */
     public get initiallySelectedUser(): UserValue | undefined {
         return this.injectedData ? this.injectedData.value : undefined;
     }

@@ -81,6 +81,9 @@ export class UserAssignListComponent implements OnInit, OnDestroy {
         return this._userAssignService.loading;
     }
 
+    /**
+     * ID of the currently selected user
+     */
     public get selectedUser$(): Observable<string> {
         return this._selectedUser$.asObservable();
     }
