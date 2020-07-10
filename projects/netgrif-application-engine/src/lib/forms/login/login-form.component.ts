@@ -4,7 +4,6 @@ import {FormSubmitEvent, HasForm} from '../has-form';
 import {UserService} from '../../user/services/user.service';
 import {User} from '../../user/models/user';
 import {LoadingEmitter} from '../../utility/loading-emitter';
-import {Overlay} from '@angular/cdk/overlay';
 
 @Component({
     selector: 'nae-login-form',

@@ -476,12 +476,20 @@
                     "tabs": [
                         {
                             "view": {
-                                "name": "login",
-                                "componentName": "TabbedLogin"
+                                "name": "caseView",
+                                "componentName": "TabbedCaseView"
                             },
-                            "canBeClosed": false
+                            "canBeClosed": false,
+                            "label": {
+                                "text": "Cases"
+                            }
                         }
-                    ]
+                    ],
+                    "defaultTaskView": {
+                        "view": {
+                            "name": "taskView"
+                        }
+                    }
                 }
             },
             "navigation": false,
@@ -719,7 +727,8 @@
             ]
         },
         "auth": {
-            "loginRedirect": "login"
+            "loginRedirect": "login",
+            "logoutRedirect": "login"
         },
         "routing": {
             "defaultRedirect": "authentication",

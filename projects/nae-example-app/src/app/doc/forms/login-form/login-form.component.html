@@ -4,5 +4,7 @@
                        [apiModuleImport]="'LoginFormModule'"></nae-app-documentation>
 
 <ng-template #loginFormExample>
-   <nae-login-form [downButtons]="false"></nae-login-form>
+    <nae-authentication-overlay>
+        <nae-login-form (login)="onLogin($event)" [downButtons]="false"></nae-login-form>
+    </nae-authentication-overlay>
 </ng-template>

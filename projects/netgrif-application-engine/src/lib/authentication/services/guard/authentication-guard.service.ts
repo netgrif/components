@@ -3,6 +3,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {AuthenticationModule} from '../../authentication.module';
 import {SessionService} from '../../session/services/session.service';
+import {RedirectService} from '../../../routing/redirect-service/redirect.service';
 
 @Injectable({
     providedIn: AuthenticationModule
@@ -15,6 +16,7 @@ export class AuthenticationGuardService implements CanActivate {
 
     constructor(private _session: SessionService,
                 private _config: ConfigurationService,
+                private _redirectService: RedirectService,
                 private _router: Router) {
         this._loginUrl = this.resolveLoginPath();
     }
@@ -36,6 +38,7 @@ export class AuthenticationGuardService implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
+        this._redirectService.intendedRoute = route;
         return this._session.sessionToken && this._session.verified ? true : this._router.parseUrl(this._loginUrl);
     }
 }

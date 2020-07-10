@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, Subject, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {NullStorage} from '../null-storage';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {catchError, map, tap} from 'rxjs/operators';
 import {MessageResource} from '../../../resources/interface/message-resource';
@@ -20,7 +20,7 @@ export class SessionService {
     private _storage: Storage;
     private readonly _sessionHeader: string;
     private _verified: boolean;
-    private _isVerifying: LoadingEmitter;
+    private _verifying: LoadingEmitter;
 
     constructor(private _config: ConfigurationService, private _log: LoggerService, private _http: HttpClient) {
         // const sessionConfig = this._config.get().providers.auth.session;
@@ -29,7 +29,7 @@ export class SessionService {
             this._config.get().providers.auth.sessionBearer : SessionService.SESSION_BEARER_HEADER_DEFAULT;
         this._session$ = new BehaviorSubject<string>(null);
         this._verified = false;
-        this._isVerifying = new LoadingEmitter();
+        this._verifying = new LoadingEmitter();
         this.load();
     }
 
@@ -55,8 +55,12 @@ export class SessionService {
         return this._verified;
     }
 
-    get isVerifying(): Observable<boolean> {
-        return this._isVerifying.asObservable();
+    get verifying(): Observable<boolean> {
+        return this._verifying.asObservable();
+    }
+
+    get isVerifying(): boolean {
+        return this._verifying.isActive;
     }
 
     public setVerifiedToken(sessionToken: string) {
@@ -72,7 +76,7 @@ export class SessionService {
     }
 
     public verify(token?: string): Observable<boolean> {
-        this._isVerifying.on();
+        this._verifying.on();
         token = !!token ? token : this.sessionToken;
 
         const authConfig = this._config.get().providers.auth;
@@ -82,7 +86,7 @@ export class SessionService {
         if (!url || url === authConfig.address) {
             this._verified = false;
             this.clear();
-            this._isVerifying.off();
+            this._verifying.off();
             return throwError(new Error('Cannot verify session token. ' +
                 'Login URL is not defined in the config [nae.providers.auth.endpoints.login].'));
         } else {
@@ -96,7 +100,7 @@ export class SessionService {
                         this._verified = false;
                         this.clear();
                     }
-                    this._isVerifying.off();
+                    this._verifying.off();
                     return throwError(error);
                 }),
                 map(response => {
@@ -109,7 +113,7 @@ export class SessionService {
                         return false;
                     }
                 }),
-                tap(_ => this._isVerifying.off())
+                tap(_ => this._verifying.off())
             );
         }
     }
