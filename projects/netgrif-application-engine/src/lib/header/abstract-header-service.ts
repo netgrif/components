@@ -4,7 +4,6 @@ import {HeaderState, HeaderStateInterface} from './header-state';
 import {OnDestroy} from '@angular/core';
 import {SortChangeDescription} from './models/user-changes/sort-change-description';
 import {SearchChangeDescription} from './models/user-changes/search-change-description';
-import {EditChangeDescription} from './models/user-changes/edit-change-description';
 import {HeaderChange} from './models/user-changes/header-change';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {HeaderType} from './models/header-type';
@@ -232,9 +231,6 @@ export abstract class AbstractHeaderService implements OnDestroy {
         });
     }
 
-    public setPanelsTitles(): void {
-    }
-
     /**
      * Change selected header mode there are three possible modes: SORT, SEARCH and EDIT
      * @param newMode the mode that the header should change to
@@ -242,30 +238,28 @@ export abstract class AbstractHeaderService implements OnDestroy {
      * It can be restored with the [HeaderState.restoreLastMode()]{@link HeaderState#restoreLastMode} method.
      */
     public changeMode(newMode: HeaderMode, saveLastMode = true): void {
+        if (newMode === this._headerState.mode) {
+            return;
+        }
+
         if (saveLastMode) {
             this._headerState.saveState();
         }
 
-        const change = {
-            mode: newMode,
-            description: {
-                currentMode: newMode,
-                previousMode: this._headerState.mode
-            },
-            headerType: this.headerType
-        };
-
+        const change = this.modeChangeFromCurrent(newMode);
         this._headerState.mode = newMode;
         this._headerChange$.next(change);
     }
 
     public confirmEditMode(): void {
         this._headerState.restoreLastMode();
+        const change = this.modeChangeAfterEdit();
         const viewId = this._viewService.getViewId();
         if (!!viewId) {
             const headers = this.headerState.selectedHeaders;
             this._preferences.setHeaders(viewId, headers.map(header => !!header ? header.uniqueId : ''));
         }
+        this._headerChange$.next(change);
     }
 
     /**
@@ -274,15 +268,51 @@ export abstract class AbstractHeaderService implements OnDestroy {
      */
     public revertEditMode(): void {
         this._headerState.restoreLastState();
-        this.setPanelsTitles();
+        const change = this.modeChangeAfterEdit();
         this._headerChange$.next({
             headerType: this.headerType,
             mode: HeaderMode.EDIT,
             description: {preferredHeaders: this._headerState.selectedHeaders}
         });
+        this._headerChange$.next(change);
     }
 
     ngOnDestroy(): void {
         this._headerChange$.complete();
+    }
+
+    /**
+     * @param newMode the {@link HeaderMode} that is being selected as the next mode
+     * @returnsa {@link HeaderChange} object with {@link ModeChangeDescription} object as it's `description`,
+     * where the `previousMode` is set to the currently selected mode and the `currentMode` is set to the provided argument
+     */
+    protected modeChangeFromCurrent(newMode: HeaderMode): HeaderChange {
+        return this.createModeChange(this._headerState.mode, newMode);
+    }
+
+    /**
+     * @returns a {@link HeaderChange} object with {@link ModeChangeDescription} object as it's `description`,
+     * where the `previousMode` is set to [EDIT]{@link HeaderMode#EDIT} and the `currentMode` to the mode
+     * that is currently selected
+     */
+    protected modeChangeAfterEdit(): HeaderChange {
+        return this.createModeChange(HeaderMode.EDIT, this._headerState.mode);
+    }
+
+    /**
+     * @param oldMode the {@link HeaderMode} that was previously selected
+     * @param newMode the {@link HeaderMode} that is selected now
+     * @returns a {@link HeaderChange} object with {@link ModeChangeDescription} object as it's `description`
+     * containing information about a change to the header mode
+     */
+    protected createModeChange(oldMode: HeaderMode, newMode: HeaderMode): HeaderChange {
+        return {
+            mode: newMode,
+            description: {
+                currentMode: newMode,
+                previousMode: oldMode
+            },
+            headerType: this.headerType
+        };
     }
 }
