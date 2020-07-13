@@ -1,9 +1,9 @@
 import {DataField} from './abstract-data-field';
 import {Component} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatFormFieldModule} from '@angular/material';
 import {TextField} from '../text-field/models/text-field';
 import {DataFieldsModule} from '../data-fields.module';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 describe('DataField', () => {
     let component: TestWrapperComponent;

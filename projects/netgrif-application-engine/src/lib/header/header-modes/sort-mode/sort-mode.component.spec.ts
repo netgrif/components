@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SortModeComponent} from './sort-mode.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
-import {MatSnackBarModule, MatSortModule} from '@angular/material';
 import {Component} from '@angular/core';
 import {CaseHeaderService} from '../../case-header/case-header.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -19,6 +18,8 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {RouterModule} from '@angular/router';
 import {ViewService} from '../../../routing/view-service/view.service';
 import {TestViewService} from '../../../utility/tests/test-view-service';
+import {MatSortModule} from '@angular/material/sort';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 describe('SortModeComponent', () => {
     let component: SortModeComponent;
