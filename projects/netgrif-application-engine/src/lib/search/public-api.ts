@@ -45,6 +45,7 @@ export * from './models/category/search-input-type';
 export * from './search-service/search.service';
 export * from './operator-service/operator.service';
 export * from './category-factory/category-factory';
+export * from './header-search-service/header-search.service';
 
 /* Components */
 export * from './search-component/search.component';

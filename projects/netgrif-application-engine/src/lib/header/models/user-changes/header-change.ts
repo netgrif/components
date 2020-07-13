@@ -1,4 +1,4 @@
-import {HeaderChangeDescription} from '../../abstract-header-service';
+import {HeaderChangeDescription} from './header-change-description';
 import {HeaderMode} from '../header-mode';
 import {HeaderType} from '../header-type';
 

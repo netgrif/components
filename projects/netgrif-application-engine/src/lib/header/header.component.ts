@@ -5,13 +5,14 @@ import {TaskHeaderService} from './task-header/task-header.service';
 import {WorkflowHeaderService} from './workflow-header/workflow-header.service';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
+import {HeaderSearchService} from '../search/header-search-service/header-search.service';
 
 
 @Component({
     selector: 'nae-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    providers: [CaseHeaderService, TaskHeaderService, WorkflowHeaderService]
+    providers: [CaseHeaderService, TaskHeaderService, WorkflowHeaderService, HeaderSearchService]
 })
 export class HeaderComponent implements OnInit {
 
@@ -27,6 +28,8 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.resolveHeaderService();
+        this.headerService.maxHeaderColumns = this.maxHeaderColumns;
+        this.headerService.responsiveHeaders = this.responsiveHeaders;
     }
 
     private resolveHeaderService() {
@@ -41,8 +44,6 @@ export class HeaderComponent implements OnInit {
                 this.headerService = this._injector.get(WorkflowHeaderService);
                 break;
         }
-        this.headerService.maxHeaderColumns = this.maxHeaderColumns;
-        this.headerService.responsiveHeaders = this.responsiveHeaders;
     }
 
 }

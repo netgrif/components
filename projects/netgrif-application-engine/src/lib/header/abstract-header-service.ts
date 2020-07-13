@@ -16,9 +16,6 @@ import {ViewService} from '../routing/view-service/view.service';
 import {LoggerService} from '../logger/services/logger.service';
 import {LoadingEmitter} from '../utility/loading-emitter';
 
-
-export type HeaderChangeDescription = SortChangeDescription | SearchChangeDescription | EditChangeDescription;
-
 export abstract class AbstractHeaderService implements OnDestroy {
 
     protected MAX_HEADER_COLUMNS = 5;
@@ -240,15 +237,26 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     /**
      * Change selected header mode there are three possible modes: SORT, SEARCH and EDIT
-     * @param newMode -
-     * @param saveLastMode -
+     * @param newMode the mode that the header should change to
+     * @param saveLastMode whether the last state should be remembered.
+     * It can be restored with the [HeaderState.restoreLastMode()]{@link HeaderState#restoreLastMode} method.
      */
     public changeMode(newMode: HeaderMode, saveLastMode = true): void {
         if (saveLastMode) {
             this._headerState.saveState();
         }
 
+        const change = {
+            mode: newMode,
+            description: {
+                currentMode: newMode,
+                previousMode: this._headerState.mode
+            },
+            headerType: this.headerType
+        };
+
         this._headerState.mode = newMode;
+        this._headerChange$.next(change);
     }
 
     public confirmEditMode(): void {
@@ -267,7 +275,6 @@ export abstract class AbstractHeaderService implements OnDestroy {
     public revertEditMode(): void {
         this._headerState.restoreLastState();
         this.setPanelsTitles();
-        // TODO pair the search request with the back-end and then return the searched petri net models
         this._headerChange$.next({
             headerType: this.headerType,
             mode: HeaderMode.EDIT,

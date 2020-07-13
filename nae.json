@@ -476,7 +476,8 @@
                         "all_data",
                         "zmluva",
                         "address",
-                        "NEW_CONTRACT"
+                        "NEW_CONTRACT",
+                        "data-test"
                     ]
                 },
                 "componentName": "MyCaseView"
