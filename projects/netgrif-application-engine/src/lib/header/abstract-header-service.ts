@@ -14,6 +14,7 @@ import {UserPreferenceService} from '../user/services/user-preference.service';
 import {ViewService} from '../routing/view-service/view.service';
 import {LoggerService} from '../logger/services/logger.service';
 import {LoadingEmitter} from '../utility/loading-emitter';
+import {HeaderChangeType} from './models/user-changes/header-change-type';
 
 export abstract class AbstractHeaderService implements OnDestroy {
 
@@ -189,7 +190,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
                 header.sortDirection = '';
             }
         });
-        this._headerChange$.next({headerType: this.headerType, mode: HeaderMode.SORT, description: sortChangeDescription});
+        this._headerChange$.next({headerType: this.headerType, changeType: HeaderChangeType.SORT, description: sortChangeDescription});
     }
 
     /**
@@ -207,7 +208,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         };
         this._headerChange$.next({
             headerType: this.headerType,
-            mode: HeaderMode.SEARCH,
+            changeType: HeaderChangeType.SEARCH,
             description: searchChangeDescription
         });
     }
@@ -226,7 +227,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerState.updateSelectedHeaders(newHeaders);
         this._headerChange$.next({
             headerType: this.headerType,
-            mode: HeaderMode.EDIT,
+            changeType: HeaderChangeType.EDIT,
             description: {preferredHeaders: this._headerState.selectedHeaders}
         });
     }
@@ -271,7 +272,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         const change = this.modeChangeAfterEdit();
         this._headerChange$.next({
             headerType: this.headerType,
-            mode: HeaderMode.EDIT,
+            changeType: HeaderChangeType.EDIT,
             description: {preferredHeaders: this._headerState.selectedHeaders}
         });
         this._headerChange$.next(change);
@@ -307,7 +308,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
      */
     protected createModeChange(oldMode: HeaderMode, newMode: HeaderMode): HeaderChange {
         return {
-            mode: newMode,
+            changeType: HeaderChangeType.MODE_CHANGED,
             description: {
                 currentMode: newMode,
                 previousMode: oldMode

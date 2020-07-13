@@ -2,8 +2,8 @@ import {SortChangeDescription} from '../../header/models/user-changes/sort-chang
 import {HeaderColumnType} from '../../header/models/header-column';
 import {Observable} from 'rxjs';
 import {HeaderChange} from '../../header/models/user-changes/header-change';
-import {HeaderMode} from '../../header/models/header-mode';
 import {HttpParams} from '@angular/common/http';
+import {HeaderChangeType} from '../../header/models/user-changes/header-change-type';
 
 
 export abstract class SortableView {
@@ -23,8 +23,8 @@ export abstract class SortableView {
             if (!header) {
                 return;
             }
-            if (header.mode === HeaderMode.SORT || header.mode === HeaderMode.SEARCH) {
-                if (header.mode === HeaderMode.SORT) {
+            if (header.changeType === HeaderChangeType.SORT || header.changeType === HeaderChangeType.SEARCH) {
+                if (header.changeType === HeaderChangeType.SORT) {
                     this._lastHeaderSearchState = header.description as SortChangeDescription;
                 }
                 // TODO we might not need to search all the time, do some filtering
