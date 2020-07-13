@@ -5,7 +5,7 @@
             <span class="font-size-20">{{ 'side-menu.user.noUser' | translate }}</span>
         </div>
 
-        <div class="full-width" fxFlex="100">
+        <div class="full-height full-width" fxFlex="100">
             <cdk-virtual-scroll-viewport itemSize="60" (scrolledIndexChange)="loadNextPage()" class="full-height full-width">
                 <nae-user-assign-item
                     *cdkVirtualFor="let user of users;
