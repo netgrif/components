@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
 import {ConfirmDialogComponent} from '../components/confirm-dialog/confirm-dialog.component';
 import {AlertDialogComponent} from '../components/alert-dialog/alert-dialog.component';
 import {PromptDialogComponent} from '../components/prompt-dialog/prompt-dialog.component';
 import {DialogData} from '../models/DialogData';
 import {DialogResult} from '../models/DialogResult';
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 
 /**  Service to open own modal interacting dialog components based on Material Design via [MatDialog]{@link MatDialog} service. */
 @Injectable({

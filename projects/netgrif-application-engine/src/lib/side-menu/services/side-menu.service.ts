@@ -1,5 +1,4 @@
 import {Injectable, Injector, TemplateRef, Type} from '@angular/core';
-import {MatDrawerToggleResult} from '@angular/material';
 import {ComponentPortal, ComponentType, TemplatePortal} from '@angular/cdk/portal';
 import {Observable} from 'rxjs';
 import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token.module';
@@ -10,6 +9,7 @@ import {SideMenuRef} from '../models/side-menu-ref';
 import {SideMenuInjectionData} from '../models/side-menu-injection-data';
 import {SideMenuControl} from '../models/side-menu-control';
 import {SideMenuEvent} from '../models/side-menu-event';
+import {MatDrawerToggleResult} from '@angular/material/sidenav';
 
 @Injectable({
     providedIn: 'root'

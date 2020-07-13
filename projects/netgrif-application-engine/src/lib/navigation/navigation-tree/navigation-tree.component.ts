@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
-import {MatTreeNestedDataSource} from '@angular/material';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {View, Views} from '../../configuration/interfaces/schema';
 import {NavigationEnd, Router} from '@angular/router';
+import {MatTreeNestedDataSource} from '@angular/material/tree';
 
 interface NavigationNode {
     name: string;

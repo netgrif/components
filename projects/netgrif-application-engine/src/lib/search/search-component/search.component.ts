@@ -9,10 +9,10 @@ import {SimpleSearchChip} from '../models/chips/simple-search-chip';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {AutocompleteCategory} from '../models/category/autocomplete-category';
 import {SearchInputType} from '../models/category/search-input-type';
-import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT, DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {Moment} from 'moment';
 import {CaseDataset} from '../models/category/case/case-dataset';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.

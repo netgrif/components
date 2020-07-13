@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
-import {Sort} from '@angular/material';
+import {Sort} from '@angular/material/sort';
 
 @Component({
     selector: 'nae-sort-mode',

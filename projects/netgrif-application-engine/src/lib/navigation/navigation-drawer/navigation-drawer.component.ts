@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatDrawerToggleResult, MatSidenav} from '@angular/material';
 import {User} from '../../user/models/user';
 import {QuickPanelItem} from '../quick-panel/components/quick-panel.component';
 import 'hammerjs';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {MatDrawerToggleResult, MatSidenav} from '@angular/material/sidenav';
 
 @Component({
     selector: 'nae-navigation-drawer',

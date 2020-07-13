@@ -1,8 +1,8 @@
 import {Observable, of, Subject} from 'rxjs';
 import {SideMenuEvent} from './side-menu-event';
 import {SideMenuInjectionData} from './side-menu-injection-data';
-import {MatDrawerToggleResult} from '@angular/material';
 import {tap} from 'rxjs/operators';
+import {MatDrawerToggleResult} from '@angular/material/sidenav';
 
 export class SideMenuControl {
 

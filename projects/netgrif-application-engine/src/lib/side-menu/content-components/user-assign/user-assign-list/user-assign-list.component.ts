@@ -3,7 +3,7 @@ import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
-import {MatAutocomplete} from '@angular/material';
+import {MatAutocomplete} from '@angular/material/autocomplete';
 
 @Component({
     selector: 'nae-user-assign-list',

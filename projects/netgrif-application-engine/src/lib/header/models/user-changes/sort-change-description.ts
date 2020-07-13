@@ -1,5 +1,5 @@
 import {HeaderColumnType} from '../header-column';
-import {SortDirection} from '@angular/material';
+import {SortDirection} from '@angular/material/sort';
 
 /**
  * Definition of emitted data when user changes sort mode on column

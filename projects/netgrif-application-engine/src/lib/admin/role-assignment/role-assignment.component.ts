@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatSelectionList} from '@angular/material';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {RoleAssignmentService} from './services/role-assignment.service';
 import {UserList, UserListItem} from './services/UserList';
 import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
 import {UserService} from '../../user/services/user.service';
+import {MatSelectionList} from '@angular/material/list';
 
 @Component({
     selector: 'nae-role-assignment',
