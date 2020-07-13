@@ -1,10 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {Filter} from '../../../filter/models/filter';
-import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {HttpParams} from '@angular/common/http';
-import {TreeCaseViewService} from '../tree-case-view.service';
-import {Case} from '../../../resources/interface/case';
 import {CaseTreeService} from './case-tree.service';
 import {CaseTreeNode} from './model/CaseTreeNode';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';

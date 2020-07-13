@@ -15,7 +15,7 @@ import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {OptionSelectorComponent} from '../../../side-menu/content-components/option-selector/option-selector.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
-import {Observable, of, ReplaySubject, Subject} from 'rxjs';
+import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {tap} from 'rxjs/operators';

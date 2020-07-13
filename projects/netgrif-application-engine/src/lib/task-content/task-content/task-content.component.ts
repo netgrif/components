@@ -1,4 +1,4 @@
-import {Component, Inject, InjectionToken, Input} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
 import {FieldConverterService} from '../services/field-converter.service';
