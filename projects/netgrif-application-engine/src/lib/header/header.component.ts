@@ -6,13 +6,20 @@ import {WorkflowHeaderService} from './workflow-header/workflow-header.service';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {HeaderSearchService} from '../search/header-search-service/header-search.service';
+import {CategoryFactory} from '../search/category-factory/category-factory';
 
 
 @Component({
     selector: 'nae-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    providers: [CaseHeaderService, TaskHeaderService, WorkflowHeaderService, HeaderSearchService]
+    providers: [
+        CaseHeaderService,
+        TaskHeaderService,
+        WorkflowHeaderService,
+        HeaderSearchService,
+        CategoryFactory
+    ]
 })
 export class HeaderComponent implements OnInit {
 

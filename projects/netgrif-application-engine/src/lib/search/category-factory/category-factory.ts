@@ -41,4 +41,15 @@ export class CategoryFactory {
     public get(categoryClass: Type<Category<any>>): Category<any> {
         return new categoryClass(this._operators, this._log, this._optionalDependencies);
     }
+
+    /**
+     * Create an instance of {@link Category} class and preselects it's default operator.
+     * @param categoryClass the class that should be instantiated
+     * @returns a new instance of the provided class
+     */
+    public getWithDefaultOperator(categoryClass: Type<Category<any>>): Category<any> {
+        const category = this.get(categoryClass);
+        category.selectDefaultOperator();
+        return category;
+    }
 }

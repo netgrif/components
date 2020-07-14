@@ -170,10 +170,11 @@ export abstract class AbstractHeaderService implements OnDestroy {
     /**
      * Change sort mode for selected column all other column are set to default sort mode
      * Emit request for sorted panels
+     * @param columnIndex index of the column that caused the sort change
      * @param active Represents column identifier
      * @param direction Represent one of sort modes: asd, desc and ''
      */
-    public sortHeaderChanged(active: string, direction: SortDirection): void {
+    public sortHeaderChanged(columnIndex: number, active: string, direction: SortDirection): void {
         let sortChangeDescription: SortChangeDescription;
         let foundFirstMatch = false; // column can feature in the header in multiple positions => we don't want to send multiple events
         this.headerState.selectedHeaders.filter(header => !!header).forEach(header => {
@@ -182,7 +183,8 @@ export abstract class AbstractHeaderService implements OnDestroy {
                     sortDirection: direction,
                     columnType: header.type,
                     fieldIdentifier: header.fieldIdentifier,
-                    petriNetIdentifier: header.petriNetIdentifier
+                    petriNetIdentifier: header.petriNetIdentifier,
+                    columnIdentifier: columnIndex
                 };
                 header.sortDirection = direction;
                 foundFirstMatch = true;
@@ -202,9 +204,11 @@ export abstract class AbstractHeaderService implements OnDestroy {
         affectedHeader.searchInput = searchInput;
         const searchChangeDescription: SearchChangeDescription = {
             fieldIdentifier: affectedHeader.fieldIdentifier,
+            fieldType: affectedHeader.fieldType,
             searchInput,
             type: affectedHeader.type,
             petriNetIdentifier: affectedHeader.petriNetIdentifier,
+            columnIdentifier: columnIndex
         };
         this._headerChange$.next({
             headerType: this.headerType,

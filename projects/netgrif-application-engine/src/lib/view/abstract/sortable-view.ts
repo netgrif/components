@@ -15,6 +15,7 @@ export abstract class SortableView {
             columnType: undefined,
             fieldIdentifier: '',
             sortDirection: '',
+            columnIdentifier: -1
         };
     }
 

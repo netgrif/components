@@ -72,10 +72,12 @@ export class SearchService {
     /**
      * Adds a {@link Predicate} to the Predicate root and updates the active Filter.
      * @param newPredicate Predicate that should be added to the search queries.
+     * @returns the index of the added Predicate
      */
-    public addPredicate(newPredicate: Predicate): void {
-        this._rootPredicate.addPredicate(newPredicate);
+    public addPredicate(newPredicate: Predicate): number {
+        const r = this._rootPredicate.addPredicate(newPredicate);
         this.updateActiveFilter();
+        return r;
     }
 
     /**
