@@ -71,8 +71,6 @@ export class HeaderSearchService {
     protected processSearchChange(headerType: HeaderType, changeDescription: SearchChangeDescription): void {
         if (headerType === HeaderType.CASE) {
             this.processCaseSearch(changeDescription);
-        } else {
-            this.processTaskSearch(changeDescription);
         }
     }
 
@@ -117,14 +115,12 @@ export class HeaderSearchService {
                 return this._categoryFactory.getWithDefaultOperator(CaseCreationDate);
             case CaseMetaField.TITLE:
                 return this._categoryFactory.getWithDefaultOperator(CaseTitle);
+            default:
+                return undefined;
         }
     }
 
     protected processCaseDataSearch(changeDescription: SearchChangeDescription): void {
-
-    }
-
-    protected processTaskSearch(changeDescription: SearchChangeDescription): void {
 
     }
 
@@ -154,7 +150,7 @@ export class HeaderSearchService {
      */
     protected removePredicate(column: number): void {
         const predicateIndex = this._columnToPredicate.get(column);
-        if (predicateIndex) {
+        if (predicateIndex !== undefined) {
             this._searchService.removePredicate(predicateIndex);
             this._columnToPredicate.delete(column);
         }

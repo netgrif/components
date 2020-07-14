@@ -37,7 +37,7 @@
                     <mat-icon>sort</mat-icon>
                     {{ 'headers.orderMode' | translate}}
                 </button>
-                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
+                <button *ngIf="type === headerTypeEnum.CASE" mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
                         (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
                     <mat-icon>search</mat-icon>
                     {{ 'headers.searchMode' | translate}}

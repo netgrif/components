@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
     @Input() responsiveHeaders = true;
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
+    public readonly headerTypeEnum = HeaderType;
 
     constructor(private _injector: Injector, private _headerSearch: HeaderSearchService) {
     }
