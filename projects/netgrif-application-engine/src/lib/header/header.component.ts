@@ -23,27 +23,38 @@ export class HeaderComponent implements OnInit {
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
 
-    constructor(private _injector: Injector) {
+    constructor(private _injector: Injector, private _headerSearch: HeaderSearchService) {
     }
 
     ngOnInit(): void {
         this.resolveHeaderService();
+        this.initializedHeaderSearch();
         this.headerService.maxHeaderColumns = this.maxHeaderColumns;
         this.headerService.responsiveHeaders = this.responsiveHeaders;
     }
 
+    /**
+     * Injects the correct {@link AbstractHeaderService} instance based on this component's type
+     */
     private resolveHeaderService() {
         switch (this.type) {
-            case 'case':
+            case HeaderType.CASE:
                 this.headerService = this._injector.get(CaseHeaderService);
                 break;
-            case 'task':
+            case HeaderType.TASK:
                 this.headerService = this._injector.get(TaskHeaderService);
                 break;
-            case 'workflow':
+            case HeaderType.WORKFLOW:
                 this.headerService = this._injector.get(WorkflowHeaderService);
                 break;
         }
+    }
+
+    /**
+     * Sets the correct {@link AbstractHeaderService} instance to the {@link HeaderSearchService}
+     */
+    private initializedHeaderSearch() {
+        this._headerSearch.headerService = this.headerService;
     }
 
 }
