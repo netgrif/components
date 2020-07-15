@@ -16,9 +16,8 @@ import {CaseAuthor} from '../models/category/case/case-author';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import {CaseTitle} from '../models/category/case/case-title';
 import {Predicate} from '../models/predicate/predicate';
-import {CaseDataset} from '../models/category/case/case-dataset';
-import {DatafieldMapKey} from '../models/datafield-map-key';
 import {ProcessService} from '../../process/process.service';
+import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
 
 /**
  * Acts as an intermediary between the {@link AbstractHeaderService} instances of various types and the {@link SearchService}
@@ -43,7 +42,7 @@ export class HeaderSearchService {
         ].forEach(pair => {
             this._typeToCategory.set(pair.k, this._categoryFactory.getWithDefaultOperator(pair.v));
         });
-        this._typeToCategory.set(HeaderColumnType.IMMEDIATE, this._categoryFactory.get(CaseDataset));
+        this._typeToCategory.set(HeaderColumnType.IMMEDIATE, this._categoryFactory.get(CaseSimpleDataset));
     }
 
     public set headerService(headerService: AbstractHeaderService) {
@@ -95,6 +94,11 @@ export class HeaderSearchService {
      * @param changeDescription the change object that should be resolved
      */
     protected processCaseSearch(changeDescription: SearchChangeDescription): void {
+        if (this.emptyInput(changeDescription)) {
+            this.removePredicate(changeDescription.columnIdentifier);
+            return;
+        }
+
         if (changeDescription.type === HeaderColumnType.META) {
             this.processCaseMetaSearch(changeDescription);
         } else {
@@ -107,22 +111,19 @@ export class HeaderSearchService {
      * @param changeDescription the change object that should be resolved
      */
     protected processCaseMetaSearch(changeDescription: SearchChangeDescription): void {
-        if (this.emptyInput(changeDescription)) {
-            this.removePredicate(changeDescription.columnIdentifier);
-            return;
-        }
-
         const category = this._typeToCategory.get(changeDescription.fieldIdentifier);
         const predicate = category.generatePredicate([changeDescription.searchInput]);
         this.addPredicate(changeDescription.columnIdentifier, predicate);
     }
 
+    /**
+     * Processes the change object of a case immediate data header and resolves it into the appropriate case search predicate change
+     * @param changeDescription the change object that should be resolved
+     */
     protected processCaseDataSearch(changeDescription: SearchChangeDescription): void {
-        const category = this._typeToCategory.get(changeDescription.type) as CaseDataset;
-        category.selectDatafields(DatafieldMapKey.serializedForm(changeDescription.fieldType, changeDescription.fieldIdentifier));
-
         this._processService.getNet(changeDescription.petriNetIdentifier).subscribe(net => {
-            category.setConstraintNet([net.stringId]);
+            const category = this._typeToCategory.get(changeDescription.type) as CaseSimpleDataset;
+            category.configure(changeDescription.fieldIdentifier, changeDescription.fieldType, [net.stringId]);
             const predicate = category.generatePredicate([changeDescription.searchInput]);
             this.addPredicate(changeDescription.columnIdentifier, predicate);
         });
