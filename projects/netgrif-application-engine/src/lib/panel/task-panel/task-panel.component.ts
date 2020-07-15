@@ -67,6 +67,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         let cols: number;
         this._taskPanelContentService.taskId = this._taskPanelData.task.stringId;
+        this._taskPanelContentService.offset = this._taskPanelData.task.layout.offset;
         if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
             cols = this._taskPanelData.task.layout.cols;
         }
@@ -639,10 +640,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 }
                 return {value: 'low', icon: 'south'};
             case TaskMetaField.USER:
-                console.log(task.user);
                 return {value: task.user ? task.user.fullName : '', icon: 'account_circle'};
             case TaskMetaField.ASSIGN_DATE:
-                console.log(task.startDate);
                 return {value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '', icon: 'event'};
         }
     }

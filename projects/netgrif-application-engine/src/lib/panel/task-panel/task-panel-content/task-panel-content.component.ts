@@ -18,7 +18,7 @@ export class TaskPanelContentComponent {
     loading: boolean;
 
     constructor(private _fieldConvertor: FieldConvertorService,
-                private taskPanelContentService: TaskPanelContentService,
+                public taskPanelContentService: TaskPanelContentService,
                 private _paperView: PaperViewService,
                 @Inject(NAE_TASK_COLS) public taskCols) {
         this.loading = true;

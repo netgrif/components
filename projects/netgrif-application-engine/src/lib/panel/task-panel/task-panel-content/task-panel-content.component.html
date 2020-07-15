@@ -6,34 +6,34 @@
                        [rowspan]="item.layout.rows"
                        [ngSwitch]="item.type">
 
-                <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item">
+                <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item" [taskOffset]="taskPanelContentService.offset">
                 </nae-boolean-field>
 
-                <nae-text-field *ngSwitchCase="'text'" class="full-width-auto" [dataField]="item.item">
+                <nae-text-field *ngSwitchCase="'text'" class="full-width-auto" [dataField]="item.item" [taskOffset]="taskPanelContentService.offset">
                 </nae-text-field>
 
-                <nae-number-field *ngSwitchCase="'number'" class="full-width-auto" [dataField]="item.item">
+                <nae-number-field *ngSwitchCase="'number'" class="full-width-auto" [dataField]="item.item" [taskOffset]="taskPanelContentService.offset">
                 </nae-number-field>
 
-                <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width-auto" [dataField]="item.item">
+                <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width-auto" [dataField]="item.item" [taskOffset]="taskPanelContentService.offset">
                 </nae-enumeration-field>
 
-                <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width-auto" [dataField]="item.item">
+                <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width-auto" [dataField]="item.item" [taskOffset]="taskPanelContentService.offset">
                 </nae-multichoice-field>
 
-                <nae-date-field *ngSwitchCase="'date'" class="full-width-auto" [dataField]="item.item">
+                <nae-date-field *ngSwitchCase="'date'" class="full-width-auto" [dataField]="item.item" [taskOffset]="taskPanelContentService.offset">
                 </nae-date-field>
 
-                <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item">
+                <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item" [taskOffset]="taskPanelContentService.offset">
                 </nae-date-time-field>
 
-                <nae-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId">
+                <nae-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId" [taskOffset]="taskPanelContentService.offset">
                 </nae-file-field>
 
-                <nae-user-field *ngSwitchCase="'user'" class="full-width-auto" [dataField]="item.item">
+                <nae-user-field *ngSwitchCase="'user'" class="full-width-auto" [dataField]="item.item" [taskOffset]="taskPanelContentService.offset">
                 </nae-user-field>
 
-                <nae-button-field *ngSwitchCase="'button'" class="full-width-auto" [dataField]="item.item" >
+                <nae-button-field *ngSwitchCase="'button'" class="full-width-auto" [dataField]="item.item" [taskOffset]="taskPanelContentService.offset">
                 </nae-button-field>
 
                 <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width-auto">

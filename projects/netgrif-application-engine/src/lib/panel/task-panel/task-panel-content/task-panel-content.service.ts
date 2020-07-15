@@ -6,6 +6,7 @@ import {Subject} from 'rxjs';
 export class TaskPanelContentService {
     $shouldCreate: Subject<DataGroup[]>;
     taskId: string;
+    offset: number;
 
     constructor() {
         this.$shouldCreate = new Subject<DataGroup[]>();
