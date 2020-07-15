@@ -34,6 +34,11 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     protected _processCategory: CaseProcess;
 
+    /**
+     * Queries will be generated only for datafields of these nets, or no constraint is applied if the value is `undefined`.
+     */
+    protected _constraintNetIds: Set<string>;
+
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
             case 'date':
@@ -57,7 +62,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             `${CaseDataset._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
-        this._processCategory.selectDefaultOperator();
+        this._constraintNetIds = new Set<string>();
     }
 
     public get inputType(): SearchInputType {
@@ -131,11 +136,13 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
     }
 
     protected generateQuery(userInput: Array<unknown>): Query {
-        const queries = this._selectedDatafields.map(datafield => {
-            const valueQuery = this._selectedOperator.createQuery(this.elasticKeywords, userInput);
-            const netQuery = this._processCategory.generatePredicate([datafield.netId]).query;
-            return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
-        });
+        const queries = this._selectedDatafields
+            .filter(datafield => this._constraintNetIds.size === 0 || this._constraintNetIds.has(datafield.netId))
+            .map(datafield => {
+                const valueQuery = this._selectedOperator.createQuery(this.elasticKeywords, userInput);
+                const netQuery = this._processCategory.generatePredicate([datafield.netId]).query;
+                return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
+            });
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
@@ -188,6 +195,17 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         this._selectedDatafields = this._optionsMap.get(datafieldMapKey);
         if (selectDefaultOperator) {
             this.selectDefaultOperator();
+        }
+    }
+
+    /**
+     * Narrows down the search to the nets that share the same net identifier.
+     * @param netIds the stringIds of the constrained nets, or `undefined` to clear the constraint.
+     */
+    public setConstraintNet(netIds: Array<string>): void {
+        this._constraintNetIds.clear();
+        if (netIds !== undefined) {
+            netIds.forEach(it => this._constraintNetIds.add(it));
         }
     }
 }

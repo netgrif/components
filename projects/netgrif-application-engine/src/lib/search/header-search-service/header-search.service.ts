@@ -16,6 +16,9 @@ import {CaseAuthor} from '../models/category/case/case-author';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import {CaseTitle} from '../models/category/case/case-title';
 import {Predicate} from '../models/predicate/predicate';
+import {CaseDataset} from '../models/category/case/case-dataset';
+import {DatafieldMapKey} from '../models/datafield-map-key';
+import {ProcessService} from '../../process/process.service';
 
 /**
  * Acts as an intermediary between the {@link AbstractHeaderService} instances of various types and the {@link SearchService}
@@ -25,9 +28,22 @@ export class HeaderSearchService {
 
     protected _headerService: AbstractHeaderService;
     protected _columnToPredicate: Map<number, number>;
+    protected _typeToCategory: Map<string, Category<any>>;
 
-    constructor(protected _categoryFactory: CategoryFactory, @Optional() protected _searchService: SearchService) {
+    constructor(protected _categoryFactory: CategoryFactory,
+                protected _processService: ProcessService,
+                @Optional() protected _searchService: SearchService) {
         this._columnToPredicate = new Map<number, number>();
+        this._typeToCategory = new Map<string, Category<any>>();
+        [
+            {k: CaseMetaField.VISUAL_ID, v: CaseVisualId},
+            {k: CaseMetaField.TITLE, v: CaseTitle},
+            {k: CaseMetaField.CREATION_DATE, v: CaseCreationDate},
+            {k: CaseMetaField.AUTHOR, v: CaseAuthor}
+        ].forEach(pair => {
+            this._typeToCategory.set(pair.k, this._categoryFactory.getWithDefaultOperator(pair.v));
+        });
+        this._typeToCategory.set(HeaderColumnType.IMMEDIATE, this._categoryFactory.get(CaseDataset));
     }
 
     public set headerService(headerService: AbstractHeaderService) {
@@ -96,32 +112,20 @@ export class HeaderSearchService {
             return;
         }
 
-        const category = this.resolveCaseMetaCategory(changeDescription.fieldIdentifier);
+        const category = this._typeToCategory.get(changeDescription.fieldIdentifier);
         const predicate = category.generatePredicate([changeDescription.searchInput]);
         this.addPredicate(changeDescription.columnIdentifier, predicate);
     }
 
-    /**
-     * @param metaField the type of the meta field
-     * @returns the corresponding Category object with it's default operator set
-     */
-    protected resolveCaseMetaCategory(metaField: string): Category<any> {
-        switch (metaField) {
-            case CaseMetaField.VISUAL_ID:
-                return this._categoryFactory.getWithDefaultOperator(CaseVisualId);
-            case CaseMetaField.AUTHOR:
-                return this._categoryFactory.getWithDefaultOperator(CaseAuthor);
-            case CaseMetaField.CREATION_DATE:
-                return this._categoryFactory.getWithDefaultOperator(CaseCreationDate);
-            case CaseMetaField.TITLE:
-                return this._categoryFactory.getWithDefaultOperator(CaseTitle);
-            default:
-                return undefined;
-        }
-    }
-
     protected processCaseDataSearch(changeDescription: SearchChangeDescription): void {
+        const category = this._typeToCategory.get(changeDescription.type) as CaseDataset;
+        category.selectDatafields(DatafieldMapKey.serializedForm(changeDescription.fieldType, changeDescription.fieldIdentifier));
 
+        this._processService.getNet(changeDescription.petriNetIdentifier).subscribe(net => {
+            category.setConstraintNet([net.stringId]);
+            const predicate = category.generatePredicate([changeDescription.searchInput]);
+            this.addPredicate(changeDescription.columnIdentifier, predicate);
+        });
     }
 
     /**
