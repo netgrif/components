@@ -1,4 +1,6 @@
 <mat-tab-group [selectedIndex]="tabView.selectedIndex.value"
+               [class.center-tabs]="align === 'center'"
+               [class.end-tabs]="align === 'end'"
                (selectedIndexChange)="tabView.selectedIndex.setValue($event)" class="tab-group"
                [class.nae-tab-fill-height]="stretch" fxFlex>
     <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index">

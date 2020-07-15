@@ -1,0 +1,32 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { <%= classify(className) %>Component } from './<%= dasherize(className) %>.component';
+import {TreeCaseViewModule, ConfigurationService, AuthenticationMethodService, NullAuthenticationService} from '@netgrif/application-engine';
+import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+
+describe('<%= classify(className) %>Component', () => {
+    let component: <%= classify(className) %>Component;
+    let fixture: ComponentFixture<<%= classify(className) %>Component>;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [TreeCaseViewModule, NoopAnimationsModule],
+            providers: [
+                {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService},
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService}
+            ]
+        })
+            .compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(<%= classify(className) %>Component);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+});
+

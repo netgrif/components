@@ -1,31 +1,31 @@
 import {Injectable} from '@angular/core';
-import {DataFieldResource} from './resource-interface';
-import {DataField} from '../../../data-fields/models/abstract-data-field';
-import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
-import {TextField, TextFieldView} from '../../../data-fields/text-field/models/text-field';
-import {NumberField} from '../../../data-fields/number-field/models/number-field';
+import {DataFieldResource} from '../model/resource-interface';
+import {DataField} from '../../data-fields/models/abstract-data-field';
+import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
+import {TextField, TextFieldView} from '../../data-fields/text-field/models/text-field';
+import {NumberField} from '../../data-fields/number-field/models/number-field';
 import {
     EnumerationField,
     EnumerationFieldValue,
     EnumerationFieldView
-} from '../../../data-fields/enumeration-field/models/enumeration-field';
+} from '../../data-fields/enumeration-field/models/enumeration-field';
 import {
     MultichoiceField,
     MultichoiceFieldValue,
     MultichoiceFieldView
-} from '../../../data-fields/multichoice-field/models/multichoice-field';
-import {DateField} from '../../../data-fields/date-field/models/date-field';
-import {DateTimeField} from '../../../data-fields/date-time-field/models/date-time-field';
-import {UserField} from '../../../data-fields/user-field/models/user-field';
-import {ButtonField} from '../../../data-fields/button-field/models/button-field';
-import {FileField} from '../../../data-fields/file-field/models/file-field';
+} from '../../data-fields/multichoice-field/models/multichoice-field';
+import {DateField} from '../../data-fields/date-field/models/date-field';
+import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
+import {UserField} from '../../data-fields/user-field/models/user-field';
+import {ButtonField} from '../../data-fields/button-field/models/button-field';
+import {FileField} from '../../data-fields/file-field/models/file-field';
 import moment from 'moment';
-import {UserValue} from '../../../data-fields/user-field/models/user-value';
+import {UserValue} from '../../data-fields/user-field/models/user-value';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FieldConvertorService {
+export class FieldConverterService {
 
     constructor() {
     }
@@ -115,7 +115,8 @@ export class FieldConvertorService {
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout);
             case 'file':
-                return new FileField(item.stringId, item.name, item.behavior, item.value, item.placeholder, item.description, item.layout);
+                return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
+                    item.placeholder, item.description, item.layout);
         }
     }
 

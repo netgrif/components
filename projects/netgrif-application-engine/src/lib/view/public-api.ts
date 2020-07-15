@@ -3,6 +3,9 @@ export * from './case-view/models/case-view-params';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
 
+/* ENUMS */
+export * from './tree-case-view/model/tree-petriflow-identifiers';
+
 /* CLASSES */
 export * from './case-view/abstract-case-view';
 export * from './case-view/tabbed-case-view';
@@ -25,10 +28,15 @@ export * from './task-view/service/factory/array-task-view-service-factory';
 
 export * from './workflow-view/workflow-view.service';
 
+export * from './tree-case-view/tree-case-view.service';
+
 /* COMPONENTS */
 export * from './workflow-view/workflow-view.component';
 export * from './case-view/components/case-list/case-list.component';
+export * from './tree-case-view/tree-component/tree.component';
+export * from './tree-case-view/tree-task-content/tree-task-content.component';
 
 /* MODULES */
 export * from './workflow-view.module';
 export * from './case-view/case-view.module';
+export * from './tree-case-view/tree-case-view.module';

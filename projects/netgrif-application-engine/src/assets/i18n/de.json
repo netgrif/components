@@ -73,6 +73,10 @@
             "noUser": "Es gibt keine Benützer",
             "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
             "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
+        },
+        "option-selector": {
+            "select": "Auswählen",
+            "choose-one-option": "Wählen Sie eine Option aus"
         }
     },
     "search": {
@@ -263,5 +267,9 @@
             "saveSuccess": "Benutzereinstellungen wurden gespeichert",
             "saveFailure": "Benutzereinstellungen können nicht gespeichert werden"
         }
+    },
+    "caseTree": {
+        "newNodeDefaultName": "Neuer Knoten",
+        "noTaskSelected": "Momentan ist keiner Fall ausgewählt. Klicken Sie einen Knoten in dem Baum an, um einen Fall auszuwählen."
     }
 }

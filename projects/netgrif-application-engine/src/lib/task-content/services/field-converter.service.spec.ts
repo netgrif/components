@@ -1,15 +1,15 @@
 import {TestBed} from '@angular/core/testing';
-import {FieldConvertorService} from './field-convertor.service';
-import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
-import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
+import {FieldConverterService} from './field-converter.service';
+import {TemplateAppearance} from '../../data-fields/models/template-appearance';
+import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import moment from 'moment';
 
 describe('FieldConvertorService', () => {
-    let service: FieldConvertorService;
+    let service: FieldConverterService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        service = TestBed.inject(FieldConvertorService);
+        service = TestBed.inject(FieldConverterService);
     });
 
     it('should be created', () => {

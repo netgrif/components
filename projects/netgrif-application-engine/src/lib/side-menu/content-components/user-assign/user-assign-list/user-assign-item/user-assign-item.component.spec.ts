@@ -3,7 +3,6 @@ import {UserValue} from '../../../../../data-fields/user-field/models/user-value
 import {UserAssignItemComponent} from './user-assign-item.component';
 import {Component} from '@angular/core';
 import {MaterialModule} from '../../../../../material/material.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../../../translate/translate-lib.module';
 
 describe('UserAssignItemComponent', () => {
@@ -39,5 +38,5 @@ describe('UserAssignItemComponent', () => {
     template: '<nae-user-assign-item [user]="user"></nae-user-assign-item>'
 })
 class TestWrapperComponent {
-    user = new UserValue(0, '', '', '');
+    user = new UserValue('0', '', '', '');
 }

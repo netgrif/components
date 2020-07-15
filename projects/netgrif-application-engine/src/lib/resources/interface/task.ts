@@ -1,6 +1,6 @@
 import {UserTask} from './user-task';
 import {DataGroup} from './data-groups';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-panel/policy';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {TaskLayout} from './task-layout';
 
 /**

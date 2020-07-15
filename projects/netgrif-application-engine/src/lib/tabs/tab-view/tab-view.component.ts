@@ -26,6 +26,8 @@ export class TabViewComponent implements OnInit {
     @Input() public stretch: boolean;
     public tabView: TabView;
 
+    @Input() public align = 'start';
+
     /**
      * @ignore
      * lambda function that is passed to the {@link TabCreationDetectorComponent}s

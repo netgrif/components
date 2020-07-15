@@ -1,4 +1,5 @@
 {
+    "$schema": "./dist/netgrif-application-engine/src/schema/nae-schema.json",
     "extends": "nae-default",
     "providers": {
         "auth": {
@@ -291,6 +292,17 @@
                 "path": "profile"
             }
         },
+        "demo-view-tree": {
+            "component": {
+                "class": "TreeViewExampleComponent",
+                "from": "./doc/tree-view-example/tree-view-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "tree-view"
+            }
+        },
         "demo-navigation-test": {
             "component": {
                 "class": "NavigationExampleComponent",
@@ -463,7 +475,8 @@
                         "test",
                         "all_data",
                         "zmluva",
-                        "address"
+                        "address",
+                        "NEW_CONTRACT"
                     ]
                 },
                 "componentName": "MyCaseView"

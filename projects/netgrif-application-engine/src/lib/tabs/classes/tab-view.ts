@@ -36,6 +36,7 @@ export class TabView implements TabViewInterface {
      * Holds a reference to an object that hides some public attributes and methods from tabs.
      */
     private tabViewInterface: TabViewInterface = {
+        currentlySelectedTab: () => this.currentlySelectedTab(),
         openTab: (tabContent: TabContent, autoswitch: boolean = false) => this.openTab(tabContent, autoswitch),
         switchToTabIndex: (index: number) => this.switchToTabIndex(index),
         switchToTabUniqueId: (uniqueId: string) => this.switchToTabUniqueId(uniqueId),
@@ -59,6 +60,13 @@ export class TabView implements TabViewInterface {
         // orderBy is a stable sort
         // Native javascript implementation has undefined stability and it depends on it's implementation (browser)
         this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData => new OpenedTab(tabData, `${this.getNextId()}`));
+    }
+
+    /**
+     * @returns the index of the currently selected tab
+     */
+    public currentlySelectedTab(): number {
+        return this.selectedIndex.value;
     }
 
     /**

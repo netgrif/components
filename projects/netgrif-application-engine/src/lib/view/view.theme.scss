@@ -7,5 +7,10 @@
             position: relative !important;
         }
     }
+
+    .selected-tree-node {
+        color: mat-color($primary);
+        background: mat-color($primary, 50);
+    }
 }
 

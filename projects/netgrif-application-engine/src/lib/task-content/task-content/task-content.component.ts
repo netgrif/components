@@ -1,25 +1,44 @@
-import {Component, Inject, InjectionToken} from '@angular/core';
-import {DatafieldGridLayoutElement} from './datafield-grid-layout-element';
-import {GridFiller} from '../../../utility/grid-layout/model/grid-filler';
-import {FieldConvertorService} from './field-convertor.service';
-import {TaskPanelContentService} from './task-panel-content.service';
-import {PaperViewService} from '../../../navigation/quick-panel/components/paper-view.service';
-
-export const NAE_TASK_COLS = new InjectionToken<number>('NaeTaskCols');
+import {Component, Inject, InjectionToken, Input} from '@angular/core';
+import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
+import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
+import {FieldConverterService} from '../services/field-converter.service';
+import {TaskContentService} from '../services/task-content.service';
+import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
+import {NAE_TASK_COLS} from '../model/nae-task-cols-injection-token';
 
 @Component({
-    selector: 'nae-task-panel-content',
-    templateUrl: './task-panel-content.component.html',
-    styleUrls: ['./task-panel-content.component.scss']
+    selector: 'nae-task-content',
+    templateUrl: './task-content.component.html',
+    styleUrls: ['./task-content.component.scss']
 })
-export class TaskPanelContentComponent {
+export class TaskContentComponent {
     dataSource: any[];
     formCols: number;
     loading: boolean;
 
-    constructor(private _fieldConvertor: FieldConvertorService,
-                public taskPanelContentService: TaskPanelContentService,
+    /**
+     * The translate text that should be displayed when the task contains no data.
+     *
+     * If a falsy value is provided the default text is displayed
+     */
+    @Input() noDataText: string;
+    /**
+     * The icon that should be displayed when the task contains no data.
+     *
+     * If a falsy value is provided the default icon is displayed
+     */
+    @Input() noDataIcon: string;
+    /**
+     * Whether an icon should be displayed when the no data message is shown.
+     *
+     * An icon is displayed by default
+     */
+    @Input() displayNoDataIcon = true;
+
+    constructor(private _fieldConverter: FieldConverterService,
+                private taskContentService: TaskContentService,
                 private _paperView: PaperViewService,
+                public taskPanelContentService: TaskPanelContentService,
                 @Inject(NAE_TASK_COLS) public taskCols) {
         this.loading = true;
         if (taskCols === undefined) {
@@ -27,7 +46,7 @@ export class TaskPanelContentComponent {
         } else {
             this.formCols = this.taskCols;
         }
-        this.taskPanelContentService.$shouldCreate.subscribe(data => {
+        this.taskContentService.$shouldCreate.subscribe(data => {
             console.time('time');
             if (data.length !== 0) {
                 this.dataSource = this.fillBlankSpace(data, this.formCols);
@@ -40,7 +59,7 @@ export class TaskPanelContentComponent {
     }
 
     public get taskId(): string {
-        return this.taskPanelContentService.taskId;
+        return this.taskContentService.task.stringId;
     }
 
     private static newGridRow(cols: number): Array<GridFiller> {
@@ -64,19 +83,21 @@ export class TaskPanelContentComponent {
                 columnGroup = columnCount;
             }
             if (dataGroup.title && dataGroup.title !== '') {
-                const row = grid.length;
-                this.addGridRows(grid, row + 1, columnGroup);
-                const newFillers = [];
-                for (const filler of grid[row]) {
-                    newFillers.push(...filler.fillersAfterCover(0, columnGroup - 1));
+                const visibleGroup: boolean = dataGroup.fields.some(dataFld => !dataFld.behavior.hidden);
+                if (visibleGroup) {
+                    const row = grid.length;
+                    this.addGridRows(grid, row + 1, columnGroup);
+                    const newFillers = [];
+                    for (const filler of grid[row]) {
+                        newFillers.push(...filler.fillersAfterCover(0, columnGroup - 1));
+                    }
+                    grid[row] = newFillers;
+                    returnResource.push({
+                        item: undefined, type: 'title',
+                        layout: {x: 0, y: row, cols: columnGroup, rows: 1}, title: dataGroup.title
+                    });
                 }
-                grid[row] = newFillers;
-                returnResource.push({
-                    item: undefined, type: 'title',
-                    layout: {x: 0, y: row, cols: columnGroup, rows: 1}, title: dataGroup.title
-                });
             }
-            dataGroup.fields.sort((a, b) => a.order - b.order);
             dataGroup.fields.forEach(dataField => {
                 if (dataField.layout !== undefined) {
                     const itemRowEnd = dataField.layout.y + dataField.layout.rows - 1;
@@ -104,7 +125,7 @@ export class TaskPanelContentComponent {
                         grid[newRow] = [];
                         if (!dataField.behavior.hidden) {
                             returnResource.push({
-                                item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                item: dataField, type: this._fieldConverter.resolveType(dataField),
                                 layout: {x: 0, y: newRow, cols: columnGroup, rows: 1}
                             });
                         }
@@ -133,7 +154,7 @@ export class TaskPanelContentComponent {
                                         newFillers.push(...filler.fillersAfterCover(columnStart, columnEnd));
                                     }
                                     returnResource.push({
-                                        item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                        item: dataField, type: this._fieldConverter.resolveType(dataField),
                                         layout: {x: columnStart, y: newRow, cols: columnGroup - columnEnd, rows: 1}
                                     });
                                 } else if (dataGroup.alignment === 'end' && (count + 1) === dataGroup.fields.length) {
@@ -141,7 +162,7 @@ export class TaskPanelContentComponent {
                                         newFillers.push(...filler.fillersAfterCover(columnCenter, columnGroup - 1));
                                     }
                                     returnResource.push({
-                                        item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                        item: dataField, type: this._fieldConverter.resolveType(dataField),
                                         layout: {x: columnCenter, y: newRow, cols: columnGroup - columnCenter, rows: 1}
                                     });
                                 } else {
@@ -149,7 +170,7 @@ export class TaskPanelContentComponent {
                                         newFillers.push(...filler.fillersAfterCover(0, columnCenter - 1));
                                     }
                                     returnResource.push({
-                                        item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                        item: dataField, type: this._fieldConverter.resolveType(dataField),
                                         layout: {x: 0, y: newRow, cols: columnCenter, rows: 1}
                                     });
                                 }
@@ -164,7 +185,7 @@ export class TaskPanelContentComponent {
                                 }
                             } else {
                                 returnResource.push({
-                                    item: dataField, type: this._fieldConvertor.resolveType(dataField),
+                                    item: dataField, type: this._fieldConverter.resolveType(dataField),
                                     layout: {x: columnCenter, y: row, cols: columnGroup - columnCenter, rows: 1}
                                 });
                                 grid[row] = [];
@@ -177,11 +198,14 @@ export class TaskPanelContentComponent {
         });
         resource.forEach(dataGroup => {
             returnResource.push(...dataGroup.fields.filter(item => !item.behavior.hidden && item.layout !== undefined)
-                .map(item => ({item, type: this._fieldConvertor.resolveType(item), layout: item.layout})));
+                .map(item => ({item, type: this._fieldConverter.resolveType(item), layout: item.layout})));
         });
         let encounterFirst = false;
         for (let y = grid.length - 1; y >= 0; y--) {
             const row = grid[y];
+            if (row.length === 0) {
+                encounterFirst = true;
+            }
             row.forEach(filler => {
                 if (!encounterFirst && !filler.isFullWidth(columnCount)) {
                     encounterFirst = true;
@@ -211,7 +235,7 @@ export class TaskPanelContentComponent {
 
     private addGridRows(grid: Array<Array<GridFiller>>, newRowCount: number, columnCount: number): void {
         while (grid.length < newRowCount) {
-            grid.push(TaskPanelContentComponent.newGridRow(columnCount));
+            grid.push(TaskContentComponent.newGridRow(columnCount));
         }
     }
 }

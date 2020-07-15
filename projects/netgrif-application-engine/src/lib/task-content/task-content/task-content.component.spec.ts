@@ -1,20 +1,23 @@
-import {NAE_TASK_COLS, TaskPanelContentComponent} from './task-panel-content.component';
+import {TaskContentComponent} from './task-content.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {TaskViewService} from '../../../view/task-view/service/task-view.service';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {MatExpansionModule} from '@angular/material';
-import {PanelModule} from '../../panel.module';
-import {MaterialModule} from '../../../material/material.module';
+import {PanelModule} from '../../panel/panel.module';
+import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
-import {TaskPanelContentService} from './task-panel-content.service';
-import {BooleanField} from '../../../data-fields/boolean-field/models/boolean-field';
-import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
-import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {TaskContentService} from '../services/task-content.service';
+import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
+import {MaterialAppearance} from '../../data-fields/models/material-appearance';
+import {TemplateAppearance} from '../../data-fields/models/template-appearance';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {NAE_TASK_COLS} from '../model/nae-task-cols-injection-token';
 
-describe('TaskPanelContentComponent', () => {
-    let component: TaskPanelContentComponent;
-    let fixture: ComponentFixture<TaskPanelContentComponent>;
+describe('TaskContentComponent', () => {
+    let component: TaskContentComponent;
+    let fixture: ComponentFixture<TaskContentComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -28,14 +31,15 @@ describe('TaskPanelContentComponent', () => {
             ],
             providers: [
                 TaskViewService,
-                TaskPanelContentService,
+                TaskContentService,
                 {provide: NAE_TASK_COLS, useValue: 4},
+                {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: []
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(TaskPanelContentComponent);
+        fixture = TestBed.createComponent(TaskContentComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));

@@ -73,6 +73,10 @@
             "noUser": "Neexistujú žiadny používatelia",
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
+        },
+        "option-selector": {
+            "select": "Zvoliť",
+            "choose-one-option": "Vyberte jednu z možností"
         }
     },
     "search": {
@@ -263,5 +267,9 @@
             "saveSuccess": "Vaše preferencie boli uložené",
             "saveFailure": "Nepodarilo sa uložiť preferencie"
         }
+    },
+    "caseTree": {
+        "newNodeDefaultName": "Nový Vrchol",
+        "noTaskSelected": "Momentálne nie je zvolený žiaden prípad. Pre vybranie prípadu zvoľte vrchol v strome."
     }
 }

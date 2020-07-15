@@ -63,6 +63,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'SidenavAndToolbarView';
             case 'dashboard':
                 return 'Dashboard';
+            case 'treeCaseView':
+                return 'TreeCaseView';
             default:
                 throw new SchematicsException(`Unknown view type '${view}'`);
         }

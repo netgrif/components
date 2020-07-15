@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine",
-    "version": "4.0.0-rc.11",
+    "version": "4.1.0-alpha.5",
     "scripts": {
         "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
         "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/netgrif-application-engine/ && cp --parents schematics/*/*/schema.json ../../dist/netgrif-application-engine/",
@@ -61,6 +61,7 @@
         "@schematics/angular": "^9.0.5",
         "angular2-hotkeys": "^2.2.0",
         "angular-resize-event": "^1.2.1",
+        "angular2-hotkeys": "^2.2.0",
         "hammerjs": "^2.0.8",
         "json-schema-to-typescript": "^8.1.0",
         "natural-orderby": "^2.0.3",
