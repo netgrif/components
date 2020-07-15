@@ -24,6 +24,7 @@ export * from './models/category/case/case-role';
 export * from './models/category/case/case-task';
 export * from './models/category/case/case-creation-date';
 export * from './models/category/case/case-dataset';
+export * from './models/category/case/case-simple-dataset';
 export * from './models/category/task/task-assignee';
 export * from './models/category/task/task-process';
 export * from './models/category/task/task-role';
