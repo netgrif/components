@@ -99,13 +99,6 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         this.createContentPortal();
-        //TODO: dokoncit
-        let cols: number;
-        this._taskPanelContentService.taskId = this._taskPanelData.task.stringId;
-        this._taskPanelContentService.offset = this._taskPanelData.task.layout.offset;
-        if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
-            cols = this._taskPanelData.task.layout.cols;
-        }
 
         this._taskPanelData.changedFields.subscribe(chFields => {
             this._taskContentService.updateFromChangedFields(chFields);

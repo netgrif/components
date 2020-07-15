@@ -1,4 +1,4 @@
-import {Component, Inject, InjectionToken, Input} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
 import {FieldConverterService} from '../services/field-converter.service';
@@ -36,9 +36,8 @@ export class TaskContentComponent {
     @Input() displayNoDataIcon = true;
 
     constructor(private _fieldConverter: FieldConverterService,
-                private taskContentService: TaskContentService,
+                public taskContentService: TaskContentService,
                 private _paperView: PaperViewService,
-                public taskPanelContentService: TaskPanelContentService,
                 @Inject(NAE_TASK_COLS) public taskCols) {
         this.loading = true;
         if (taskCols === undefined) {
@@ -231,6 +230,10 @@ export class TaskContentComponent {
             console.log('Illegal layout');
             return 0;
         });
+    }
+
+    isOffsetPresent() {
+        return !!this.taskContentService.task && !!this.taskContentService.task.layout && !!this.taskContentService.task.layout.offset;
     }
 
     private addGridRows(grid: Array<Array<GridFiller>>, newRowCount: number, columnCount: number): void {
