@@ -187,6 +187,7 @@ export abstract class DataField<T> {
             this.disabled ? formControl.disable() : formControl.enable();
             formControl.clearValidators();
             formControl.setValidators(this.resolveFormControlValidators());
+            formControl.updateValueAndValidity();
             this._valid = this._determineFormControlValidity(formControl);
         });
         this._block.subscribe(bool => {
