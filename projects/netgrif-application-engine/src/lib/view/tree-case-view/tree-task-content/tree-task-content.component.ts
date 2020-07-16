@@ -42,7 +42,8 @@ export class TreeTaskContentComponent implements AfterViewInit {
                 private _taskEventService: TaskEventService,
                 private _assign: AssignTaskService,
                 private _cancel: CancelTaskService,
-                private _finish: FinishTaskService) {
+                private _finish: FinishTaskService,
+                private _taskContentService: TaskContentService) {
     }
 
     ngAfterViewInit(): void {
@@ -73,6 +74,18 @@ export class TreeTaskContentComponent implements AfterViewInit {
 
     public finish(): void {
         this._finish.validateDataAndFinish();
+    }
+
+    public getAssignTitle(): string {
+        return this._taskContentService.task.assignTitle ? this._taskContentService.task.assignTitle : 'tasks.view.assign';
+    }
+
+    public getCancelTitle(): string {
+        return this._taskContentService.task.cancelTitle ? this._taskContentService.task.cancelTitle : 'tasks.view.cancel';
+    }
+
+    public getFinishTitle(): string {
+        return this._taskContentService.task.finishTitle ? this._taskContentService.task.finishTitle : 'tasks.view.finish';
     }
 
     public get processingTaskChange(): boolean {

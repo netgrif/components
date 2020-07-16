@@ -58,4 +58,8 @@ export interface Task {
     dataSize?: number;
     icon?: string;
     priority?: number;
+    assignTitle?: string;
+    finishTitle?: string;
+    cancelTitle?: string;
+    delegateTitle?: string;
 }

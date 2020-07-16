@@ -236,6 +236,22 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         return this._taskEventService.canDo(action);
     }
 
+    public getAssignTitle(): string {
+        return this.taskPanelData.task.assignTitle ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
+    }
+
+    public getCancelTitle(): string {
+        return this.taskPanelData.task.cancelTitle ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
+    }
+
+    public getDelegateTitle(): string {
+        return this.taskPanelData.task.delegateTitle ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
+    }
+
+    public getFinishTitle(): string {
+        return this.taskPanelData.task.finishTitle ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
+    }
+
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
         const task = this._taskPanelData.task;
         switch (selectedHeader.fieldIdentifier) {
