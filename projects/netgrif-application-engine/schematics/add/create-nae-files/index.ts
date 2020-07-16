@@ -20,6 +20,8 @@ import {addImportToModule, findNodes, insertImport} from '@schematics/angular/ut
 // import {ViewClassInfo} from '../../_commons/view-class-info';
 // import {classify} from '../../_commons/angular-cli-devkit-core-strings';
 import {Change} from '@schematics/angular/utility/change';
+import {addImportsToAppModule} from '../../view/_utility/view-utility-functions';
+import {ImportToAdd} from '../../_commons/import-to-add';
 
 
 export function createNaeFiles(): Rule {
@@ -30,6 +32,7 @@ export function createNaeFiles(): Rule {
         rules.push(schematic('create-view-service', {}));
         rules.push(schematic('custom-themes', {}));
         rules.push(updateAppComponentHTML());
+        rules.push(addInitialsImportsToAppModule());
         rules.push(updateAppComponentTS());
         // for (let index = 0; index < getNumberOfMissingViews(tree); index++) {
         //     rules.push(schematic('create-view', {}));
@@ -42,10 +45,26 @@ function createRoutesModule(): Rule {
     return (tree: Tree) => {
         const projectInfo = getProjectInfo(tree);
         const appModule = getAppModule(tree, projectInfo.path);
-        commitChangesToFile(tree, appModule.fileEntry,
-            addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'AppRoutingModule', './app-routing.module')
-        );
-        return createFilesFromTemplates('./files', projectInfo.path);
+        const appRouting = tree.get(`${projectInfo.path}/app-routing.module`);
+        if (appRouting) {
+            commitChangesToFile(tree, appModule.fileEntry,
+                addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'AppRoutingModule', './app-routing.module')
+            );
+            return createFilesFromTemplates('./files', projectInfo.path);
+        } else {
+            return chain([]);
+        }
+    };
+}
+
+function addInitialsImportsToAppModule(): Rule {
+    return (tree: Tree) => {
+        addImportsToAppModule(tree, [
+            new ImportToAdd('BrowserAnimationModule', '@angular/platform-browser/animations'),
+            new ImportToAdd('NavigationModule', '@netgrif/application-engine'),
+            new ImportToAdd('SideMenuModule', '@netgrif/application-engine'),
+            new ImportToAdd('SideMenuContentModule', '@netgrif/application-engine')
+        ]);
     };
 }
 
