@@ -28,6 +28,7 @@ import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskMetaField} from '../../header/task-header/task-meta-enum';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 @Component({
@@ -187,11 +188,16 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 afterAction.next(true);
             }
             this._taskPanelContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
-        }, error => {
-            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
-             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
-            this._log.debug(error);
+        }, (error: HttpErrorResponse) => {
+            this._log.debug('getting task data failed', error);
             this.loading = false;
+            if (error.status === 500 && error.error.message && error.error.message.startsWith('Could not find task with id')) {
+                this._snackBar.openWarningSnackBar(this._translate.instant('tasks.snackbar.noLongerExists'));
+                this._taskViewService.reloadCurrentPage();
+            } else {
+                this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
+             ${this._taskPanelData.task.title} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
+            }
             afterAction.next(false);
         });
     }

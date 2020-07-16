@@ -39,9 +39,10 @@ export function schematicEntryPoint(): Rule {
         }
         const tsconfigContents = JSON.parse(tsconfigString.toString());
         if (!tsconfigContents.compilerOptions) {
-            tsconfigContents.compilerOptions = {resolveJsonModule: true};
+            tsconfigContents.compilerOptions = {resolveJsonModule: true, allowSyntheticDefaultImports: true};
         } else {
             tsconfigContents.compilerOptions.resolveJsonModule = true;
+            tsconfigContents.compilerOptions.allowSyntheticDefaultImports = true;
         }
         tree.overwrite('./tsconfig.json', JSON.stringify(tsconfigContents, null, 4));
 
