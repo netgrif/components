@@ -54,6 +54,9 @@ export class GridLayoutHelper {
         let encounteredFirst = false;
         for (let y = grid.length - 1; y >= 0; y--) {
             const row = grid[y];
+            if (row.length === 0) {
+                encounteredFirst = true;
+            }
             row.forEach(filler => {
                 if (!encounteredFirst && !filler.isFullWidth(columnCount)) {
                     encounteredFirst = true;
