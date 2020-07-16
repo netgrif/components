@@ -4,7 +4,8 @@
     "assets": [
         "./src/assets",
         "**/*theme.scss",
-        "./nae-typography.scss"
+        "./nae-typography.scss",
+        "./src/schema/nae-schema.json"
     ],
     "lib": {
         "entryFile": "src/public-api.ts",

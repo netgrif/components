@@ -20,7 +20,9 @@ export interface CaseSearchRequestBody {
      * Maps field IDs to field values. Returned cases must have data fields with the provided IDs that have the provided values.
      * If more than one field-value pair is specified, the data set of the returned cases must match all of the pairs.
      */
-    data?: Map<string, string>;
+    data?: {
+        [key: string]: string
+    };
     /**
      * A full text query on all indexed fields, that are available for full text searching.
      *
