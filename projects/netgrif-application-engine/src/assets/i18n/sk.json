@@ -67,7 +67,9 @@
             "selection": "Musíte niečo vybrať",
             "errFirst": "Proces je povinné pole.",
             "errSecond": "Názov je povinné pole.",
-            "errThird": "Farba je povinné pole."
+            "errThird": "Farba je povinné pole.",
+            "noNets": "Žiadne povolené siete",
+            "createCase": "Uspešne vytvorený nový prípad"
         },
         "user": {
             "assign": "Priradiť používateľa",

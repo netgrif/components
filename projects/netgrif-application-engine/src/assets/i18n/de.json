@@ -67,7 +67,9 @@
             "selection": "Sie müssen einen Wert auswählen",
             "errFirst": "Sie müssen einen Prozess auswählen.",
             "errSecond": "Sie müssen einen Namen eingeben.",
-            "errThird": "Sie müssen eine Farbe auswählen."
+            "errThird": "Sie müssen eine Farbe auswählen.",
+            "noNets": "Es gibt keine erlaubte Netze",
+            "createCase": "Neuen Fall würde erfolgreich erzeugt"
         },
         "user": {
             "assign": "Benützer zuweisen",
