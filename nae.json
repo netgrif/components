@@ -1,4 +1,5 @@
 {
+    "$schema": "./dist/netgrif-application-engine/src/schema/nae-schema.json",
     "extends": "nae-default",
     "providers": {
         "auth": {
