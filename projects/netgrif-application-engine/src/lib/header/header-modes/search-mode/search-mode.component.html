@@ -16,6 +16,15 @@
                     <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
                     <mat-datepicker #datepicker></mat-datepicker>
                 </mat-form-field>
+                <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'number'">
+                    <mat-label>{{header.title | translate}}</mat-label>
+                    <input matInput type="number" (keyup)="headerSearchInputChanged(i, $event.target['value'])">
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'boolean'">
+                    <mat-slide-toggle color="primary" (change)="headerSearchInputChanged(i, $event.checked)">
+                        {{header.title | translate}}
+                    </mat-slide-toggle>
+                </div>
                 <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchDefault>
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput (keyup)="headerSearchInputChanged(i, $event.target['value'])">
