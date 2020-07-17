@@ -26,13 +26,14 @@ export class HeaderComponent implements OnInit {
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
     public headerService: AbstractHeaderService;
+    private _headerSearch: HeaderSearchService;
     public readonly headerModeEnum = HeaderMode;
     public readonly headerTypeEnum = HeaderType;
 
     private _initHeaderCount: number = undefined;
     private _initResponsiveHeaders: boolean = undefined;
 
-    constructor(private _injector: Injector, private _headerSearch: HeaderSearchService) {
+    constructor(private _injector: Injector) {
     }
 
     @Input()
@@ -85,7 +86,10 @@ export class HeaderComponent implements OnInit {
      * Sets the correct {@link AbstractHeaderService} instance to the {@link HeaderSearchService}
      */
     private initializedHeaderSearch() {
-        this._headerSearch.headerService = this.headerService;
+        if (this.type === HeaderType.CASE) {
+            this._headerSearch = this._injector.get(HeaderSearchService);
+            this._headerSearch.headerService = this.headerService;
+        }
     }
 
 }
