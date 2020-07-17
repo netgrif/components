@@ -134,7 +134,9 @@ export class HeaderSearchService {
      * @returns whether the input was cleared
      */
     protected emptyInput(changeDescription: SearchChangeDescription): boolean {
-        return !changeDescription.searchInput;
+        return changeDescription.searchInput === undefined
+               || changeDescription.searchInput === null
+               || (typeof changeDescription.searchInput === 'string' && changeDescription.searchInput.length === 0);
     }
 
     /**

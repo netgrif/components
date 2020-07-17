@@ -2,11 +2,16 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {FormControl} from '@angular/forms';
 import {debounceTime} from 'rxjs/operators';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {DATE_FORMAT} from '../../../moment/time-formats';
 
 @Component({
     selector: 'nae-search-mode',
     templateUrl: './search-mode.component.html',
-    styleUrls: ['./search-mode.component.scss']
+    styleUrls: ['./search-mode.component.scss'],
+    providers: [
+        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
+    ]
 })
 export class SearchModeComponent implements OnInit {
 
