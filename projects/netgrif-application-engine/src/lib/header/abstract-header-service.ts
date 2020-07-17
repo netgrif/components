@@ -1,4 +1,4 @@
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
 import {HeaderState, HeaderStateInterface} from './header-state';
 import {OnDestroy} from '@angular/core';
@@ -18,8 +18,11 @@ import {HeaderChangeType} from './models/user-changes/header-change-type';
 
 export abstract class AbstractHeaderService implements OnDestroy {
 
-    protected MAX_HEADER_COLUMNS = 5;
-    protected _responsiveHeaders = true;
+    public static readonly DEFAULT_HEADER_COUNT = 5;
+    public static readonly DEFAULT_HEADER_RESPONSIVITY = true;
+
+    protected _headerColumnCount$: BehaviorSubject<number>;
+    protected _responsiveHeaders$: BehaviorSubject<boolean>;
     protected _headerState: HeaderState;
     protected _headerChange$: Subject<HeaderChange>;
 
@@ -33,6 +36,8 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this.loading = new LoadingEmitter(true);
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
+        this._headerColumnCount$ = new BehaviorSubject<number>(AbstractHeaderService.DEFAULT_HEADER_COUNT);
+        this._responsiveHeaders$ = new BehaviorSubject<boolean>(AbstractHeaderService.DEFAULT_HEADER_RESPONSIVITY);
         this.initializeHeaderState();
     }
 
@@ -55,21 +60,31 @@ export abstract class AbstractHeaderService implements OnDestroy {
         return this._headerType;
     }
 
-    get maxHeaderColumns(): number {
-        return this.MAX_HEADER_COLUMNS;
+    get headerColumnCount(): number {
+        return this._headerColumnCount$.getValue();
     }
 
-    set maxHeaderColumns(maxColumns: number) {
-        this.MAX_HEADER_COLUMNS = maxColumns;
-        this.initializeHeaderState();
+    set headerColumnCount(maxColumns: number) {
+        if (maxColumns !== this.headerColumnCount) {
+            this._headerColumnCount$.next(maxColumns);
+            this.updateHeaderColumnCount();
+        }
+    }
+
+    get headerColumnCount$(): Observable<number> {
+        return this._headerColumnCount$.asObservable();
     }
 
     get responsiveHeaders(): boolean {
-        return this._responsiveHeaders;
+        return this._responsiveHeaders$.getValue();
     }
 
     set responsiveHeaders(responsiveHeaders: boolean) {
-        this._responsiveHeaders = responsiveHeaders;
+        this._responsiveHeaders$.next(responsiveHeaders);
+    }
+
+    get responsiveHeaders$(): Observable<boolean> {
+        return this._responsiveHeaders$.asObservable();
     }
 
     private static uniqueNetFieldID(netId: string, fieldId: string): string {
@@ -78,10 +93,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     private initializeHeaderState(): void {
         const defaultHeaders = [];
-        for (let i = 0; i < this.MAX_HEADER_COLUMNS; i++) {
+        for (let i = 0; i < this.headerColumnCount; i++) {
             defaultHeaders.push(null);
         }
-        for (let i = 0; i < this.fieldsGroup[0].fields.length && i < this.MAX_HEADER_COLUMNS; i++) {
+        for (let i = 0; i < this.fieldsGroup[0].fields.length && i < this.headerColumnCount; i++) {
             defaultHeaders[i] = this.fieldsGroup[0].fields[i];
         }
         this._headerState = new HeaderState(defaultHeaders);
@@ -90,21 +105,41 @@ export abstract class AbstractHeaderService implements OnDestroy {
     protected initializeDefaultHeaderState(naeDefaultHeaders: Array<string>): void {
         if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders)) {
             const defaultHeaders = [];
-            for (let i = 0; i < this.MAX_HEADER_COLUMNS; i++) {
+            for (let i = 0; i < this.headerColumnCount; i++) {
                 defaultHeaders.push(null);
             }
-            naeDefaultHeaders.forEach((headerId, i) => {
-                let head;
+            for (let i = 0; i < naeDefaultHeaders.length; i++) {
+                if (i >= this.headerColumnCount) {
+                    this._logger.warn('there are more NAE_DEFAULT_HEADERS than header columns. Skipping the rest...');
+                    break;
+                }
                 for (const h of this.fieldsGroup) {
-                    head = h.fields.find(header => header.uniqueId === headerId);
+                    const head = h.fields.find(header => header.uniqueId === naeDefaultHeaders[i]);
                     if (head) {
                         defaultHeaders[i] = head;
                         break;
                     }
                 }
-            });
+            }
             this._headerState.updateSelectedHeaders(defaultHeaders);
         }
+    }
+
+    /**
+     * Adds `null` headers if the new count is greater than the current count.
+     *
+     * Removes extra headers if the new count is smaller than the current count.
+     */
+    protected updateHeaderColumnCount(): void {
+        let headers = this._headerState.selectedHeaders;
+        if (headers.length < this.headerColumnCount) {
+            while (headers.length !== this.headerColumnCount) {
+                headers.push(null);
+            }
+        } else if (headers.length > this.headerColumnCount) {
+            headers = headers.slice(0, this.headerColumnCount);
+        }
+        this._headerState.updateSelectedHeaders(headers);
     }
 
     public setAllowedNets(allowedNets: Array<PetriNetReference>) {
