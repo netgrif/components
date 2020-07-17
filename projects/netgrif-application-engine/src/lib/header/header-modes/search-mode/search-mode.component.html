@@ -8,10 +8,13 @@
         <ng-template #thenBlock>
             <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType">
                 <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'">
-                    <mat-label>{{ 'headers.date' | translate}}</mat-label>
-                    <input matInput [matDatepicker]="picker" (dateChange)="headerSearchInputChanged(i,  $event)">
-                    <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-label>{{header.title | translate}}</mat-label>
+                    <input matInput [matDatepicker]="datepicker"
+                           (dateChange)="headerSearchInputChanged(i,  $event)"
+                           (click)="datepicker.open()"
+                           (keydown.enter)="datepicker.close()">
+                    <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchDefault>
                     <mat-label>{{header.title | translate}}</mat-label>
