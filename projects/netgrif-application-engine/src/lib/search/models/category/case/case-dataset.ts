@@ -15,6 +15,7 @@ import {EqualsDateTime} from '../../operator/equals-date-time';
 import {Equals} from '../../operator/equals';
 import {Observable, of} from 'rxjs';
 import {filter, map, tap} from 'rxjs/operators';
+import {hasContent} from '../../../../utility/pagination/page-has-content';
 
 interface Datafield {
     netId: string;
@@ -172,8 +173,8 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             tap(() => {
                 this._searchingUsers = false;
             }),
-            filter(result => Array.isArray(result)),
-            map(users => users.map(
+            filter(page => hasContent(page)),
+            map(users => users.content.map(
                 user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
             ))
         );

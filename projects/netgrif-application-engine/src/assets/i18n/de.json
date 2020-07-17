@@ -73,6 +73,7 @@
         },
         "user": {
             "assign": "Benützer zuweisen",
+            "choose": "Benützer auswählen",
             "noUser": "Es gibt keine Benützer",
             "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
             "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
