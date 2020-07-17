@@ -13,6 +13,7 @@ import {DataFocusPolicyService} from './data-focus-policy.service';
 import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
+import {HttpErrorResponse} from '@angular/common/http';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -91,11 +92,16 @@ export class TaskDataService extends TaskHandlingService {
             this._taskState.stopLoading();
             afterAction.next(true);
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
-        }, error => {
-            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
-             ${this._task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
-            this._log.debug(error);
+        }, (error: HttpErrorResponse) => {
+            this._log.debug('getting task data failed', error);
             this._taskState.stopLoading();
+            if (error.status === 500 && error.error.message && error.error.message.startsWith('Could not find task with id')) {
+                this._snackBar.openWarningSnackBar(this._translate.instant('tasks.snackbar.noLongerExists'));
+                this._taskOperations.reload();
+            } else {
+                this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
+             ${this._taskContentService.task.title} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
+            }
             afterAction.next(false);
         });
     }
