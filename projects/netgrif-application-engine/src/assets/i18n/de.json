@@ -200,6 +200,7 @@
     "headers": {
         "newHeader": "Kopfzeile auswählen",
         "date": "Datum auswählen",
+        "selectUser": "Benutzer auswählen",
         "caseMeta": {
             "visualID": "Visuelle ID",
             "title": "Fallname",

@@ -11,6 +11,7 @@
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput [matDatepicker]="datepicker"
                            [formControl]="formControls[i]"
+                           [placeholder]="'headers.date' | translate"
                            (click)="datepicker.open()"
                            (keydown.enter)="datepicker.close()">
                     <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
@@ -24,6 +25,15 @@
                     <mat-slide-toggle color="primary" [formControl]="formControls[i]">
                         {{header.title | translate}}
                     </mat-slide-toggle>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center start" *ngSwitchCase="'user'">
+                    <mat-label>{{header.title | translate}}</mat-label>
+                    <button mat-stroked-button
+                            color="primary"
+                            (click)="selectUser(i)">
+                        <mat-icon>person_search</mat-icon>
+                        {{formControls[i].value ? formControls[i].value.fullName : ('headers.selectUser' | translate)}}
+                    </button>
                 </div>
                 <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchDefault>
                     <mat-label>{{header.title | translate}}</mat-label>

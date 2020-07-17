@@ -200,6 +200,7 @@
     "headers": {
         "newHeader": "Select new header",
         "date": "Choose a date",
+        "selectUser": "Choose a user",
         "caseMeta": {
             "visualID": "Visual ID",
             "title": "Title",
