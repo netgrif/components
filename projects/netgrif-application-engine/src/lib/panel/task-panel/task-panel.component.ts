@@ -253,10 +253,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 }
                 return {value: 'low', icon: 'south'};
             case TaskMetaField.USER:
-                console.log(task.user);
                 return {value: task.user ? task.user.fullName : '', icon: 'account_circle'};
             case TaskMetaField.ASSIGN_DATE:
-                console.log(task.startDate);
                 return {value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '', icon: 'event'};
         }
     }
