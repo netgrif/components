@@ -35,6 +35,7 @@ export * from './models/datafield-map-key';
 /* Interfaces */
 export * from './models/escape-result';
 export * from './models/wrap-result';
+export * from './models/chips/chip-request';
 export * from './models/chips/simple-search-chip';
 export * from './category-factory/optional-dependencies';
 
@@ -47,6 +48,7 @@ export * from './search-service/search.service';
 export * from './operator-service/operator.service';
 export * from './category-factory/category-factory';
 export * from './header-search-service/header-search.service';
+export * from './search-chip-service/search-chip.service';
 
 /* Components */
 export * from './search-component/search.component';
