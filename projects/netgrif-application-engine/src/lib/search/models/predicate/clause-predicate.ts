@@ -34,7 +34,8 @@ export class ClausePredicate extends Predicate {
     /**
      * Adds another {@link Predicate} to the clause and updates this {@link Predicate}'s {@link Query}.
      * @param newPredicate - the Predicate that should be added to the clause
-     * @returns the index of the added Predicate
+     * @returns the index of the added Predicate, that can be used to remove it.
+     * Note that removing predicates with a lower index shifts the order of indices.
      */
     public addPredicate(newPredicate: Predicate): number {
         this._predicates.push(newPredicate);

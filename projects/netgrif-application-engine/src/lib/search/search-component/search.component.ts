@@ -103,6 +103,7 @@ export class SearchComponent implements OnInit {
             map(inputText => this._filterOptions(inputText)),
             mergeAll()
         );
+        this._searchService.predicateRemoved$.subscribe(index => this.processChipRemoval(index));
         if (this._searchChipService) {
             this._searchChipService.addChipRequests$.subscribe(request => this.addExternalChip(request));
         }
@@ -215,11 +216,12 @@ export class SearchComponent implements OnInit {
                     this.clearFormControlValue();
                     return;
                 } else {
-                    this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));
+                    const predicateIndex = this._searchService.addPredicate(this._selectedCategory.generatePredicate(inputValue.value));
                     this.appendTextToLastChip(inputValue.text);
+                    this.searchChips[this.searchChips.length - 1].predicateIndex = predicateIndex;
                 }
             } else {
-                this._searchService.addPredicate(this._selectedCategory.generatePredicate([inputValue]));
+                const predicateIndex = this._searchService.addPredicate(this._selectedCategory.generatePredicate([inputValue]));
                 if (this._selectedCategory.inputType === SearchInputType.DATE) {
                     const date = inputValue as Moment;
                     this.appendTextToLastChip(date.format(DATE_FORMAT_STRING));
@@ -229,6 +231,7 @@ export class SearchComponent implements OnInit {
                 } else {
                     this.appendTextToLastChip(inputValue);
                 }
+                this.searchChips[this.searchChips.length - 1].predicateIndex = predicateIndex;
             }
             if (this._selectedCategory instanceof CaseDataset) {
                 this._selectedCategory.reset();
@@ -263,10 +266,10 @@ export class SearchComponent implements OnInit {
             this._inputPlaceholder$.next('search.placeholder.text');
             this.formControl.setValue(this.formControl.value); // forces a refresh of autocomplete options
             this.updateInputType();
+            this.searchChips.splice(index, 1);
         } else {
-            this._searchService.removePredicate(index);
+            this._searchService.removePredicate(this.searchChips[index].predicateIndex);
         }
-        this.searchChips.splice(index, 1);
     }
 
     /**
@@ -320,8 +323,8 @@ export class SearchComponent implements OnInit {
      * Clears the value of all formcontrols
      */
     private clearFormControlValue(): void {
-        Object.keys(this.formControls).forEach( key => {
-            this.formControls[key].reset( key === 'boolean' ? false : '');
+        Object.keys(this.formControls).forEach(key => {
+            this.formControls[key].reset(key === 'boolean' ? false : '');
             if (key === 'text' && this.textInputRef !== undefined) {
                 // TODO 26.5.2020 remove this work-around when the issue is fixed: https://github.com/angular/components/issues/10968
                 this.textInputRef.nativeElement.value = '';
@@ -340,5 +343,26 @@ export class SearchComponent implements OnInit {
             pos--;
         }
         this.searchChips.splice(pos, 0, {text: addRequest.chipText});
+    }
+
+    /**
+     * Updates the indices referenced by the chips to still point at their predicates.
+     *
+     * If a predicate with the same index as one of the chips was removed, removes that chip.
+     * @param removedIndex the index of the removed {@link Predicate}
+     */
+    private processChipRemoval(removedIndex: number): void {
+        let index;
+        this.searchChips.forEach((chip, i) => {
+            if (chip.predicateIndex !== undefined && chip.predicateIndex === removedIndex) {
+                index = i;
+                return; // continue;
+            } else if (chip.predicateIndex !== undefined && chip.predicateIndex > removedIndex) {
+                chip.predicateIndex -= 1;
+            }
+        });
+        if (index !== undefined) {
+            this.searchChips.splice(index, 1);
+        }
     }
 }
