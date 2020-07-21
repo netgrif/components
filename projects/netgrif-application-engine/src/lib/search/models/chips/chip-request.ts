@@ -1,4 +1,4 @@
-import {Query} from '../query/query';
+import {Predicate} from '../predicate/predicate';
 
 /**
  * Holds information that is necessary for adding a search chip into the search interface from another component/service.
@@ -9,7 +9,7 @@ export interface ChipRequest {
      */
     chipText: string;
     /**
-     * The {@link Query} that should be held within the chip
+     * The {@link Predicate} that should be held within the chip
      */
-    chipQuery: Query;
+    chipPredicate: Predicate;
 }

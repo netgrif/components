@@ -7,6 +7,7 @@ import {ColumnHeaderChange} from './column-header-change';
 export interface SearchChangeDescription extends ColumnHeaderChange {
     fieldIdentifier: string;
     fieldType: string;
+    fieldTitle: string;
     searchInput: any;
     type: HeaderColumnType;
     petriNetIdentifier?: string;

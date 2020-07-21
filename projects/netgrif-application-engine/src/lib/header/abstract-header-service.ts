@@ -240,6 +240,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         const searchChangeDescription: SearchChangeDescription = {
             fieldIdentifier: affectedHeader.fieldIdentifier,
             fieldType: affectedHeader.fieldType,
+            fieldTitle: affectedHeader.title,
             searchInput,
             type: affectedHeader.type,
             petriNetIdentifier: affectedHeader.petriNetIdentifier,

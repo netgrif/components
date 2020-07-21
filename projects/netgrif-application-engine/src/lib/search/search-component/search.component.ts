@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Optional, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../models/category/category';
 import {BehaviorSubject, Observable, of} from 'rxjs';
@@ -13,6 +13,8 @@ import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT, DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {Moment} from 'moment';
 import {CaseDataset} from '../models/category/case/case-dataset';
+import {SearchChipService} from '../search-chip-service/search-chip.service';
+import {ChipRequest} from '../models/chips/chip-request';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
@@ -93,13 +95,17 @@ export class SearchComponent implements OnInit {
     public renderSelection = (object: Category<any> | SearchAutocompleteOption) => this._renderSelection(object);
 
     constructor(private _translate: TranslateService,
-                private _searchService: SearchService) {
+                private _searchService: SearchService,
+                @Optional() private _searchChipService: SearchChipService) {
         this.filteredOptions = this.formControl.valueChanges.pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : this.objectName(value)),
             map(inputText => this._filterOptions(inputText)),
             mergeAll()
         );
+        if (this._searchChipService) {
+            this._searchChipService.addChipRequests$.subscribe(request => this.addExternalChip(request));
+        }
     }
 
     /**
@@ -321,5 +327,18 @@ export class SearchComponent implements OnInit {
                 this.textInputRef.nativeElement.value = '';
             }
         });
+    }
+
+    /**
+     * Adds a chip into the search GUI and it's query into the {@link SearchService}
+     * @param addRequest object that defines the chip that should be added
+     */
+    private addExternalChip(addRequest: ChipRequest): void {
+        this._searchService.addPredicate(addRequest.chipPredicate);
+        let pos = this.searchChips.length - 1;
+        if (this._selectedCategory) {
+            pos--;
+        }
+        this.searchChips.splice(pos, 0, {text: addRequest.chipText});
     }
 }
