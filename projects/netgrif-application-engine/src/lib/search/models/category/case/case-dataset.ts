@@ -58,6 +58,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             `${CaseDataset._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
+        this._processCategory.selectDefaultOperator();
     }
 
     public get inputType(): SearchInputType {

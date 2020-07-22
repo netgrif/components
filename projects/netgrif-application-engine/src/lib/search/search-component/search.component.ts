@@ -214,6 +214,7 @@ export class SearchComponent implements OnInit {
                     this._selectedCategory.selectDatafields(inputValue.value);
                     this.appendTextToLastChip(`${inputValue.text}: `);
                     this.updateInputType();
+                    this._selectedCategory.selectDefaultOperator();
                     this._inputPlaceholder$.next(this._selectedCategory.inputPlaceholder);
                     this.clearFormControlValue();
                     return;

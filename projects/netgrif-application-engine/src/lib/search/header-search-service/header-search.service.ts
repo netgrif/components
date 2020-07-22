@@ -82,6 +82,8 @@ export class HeaderSearchService {
                     this.processModeChange();
                 }
             });
+
+        this._searchService.predicateRemoved$.subscribe(index => this.handlePredicateRemoval(index));
     }
 
     /**
@@ -95,7 +97,7 @@ export class HeaderSearchService {
         } else {
             const indices = [];
             this._columnToPredicate.forEach(info => {
-               indices.push(info.predicateIndex);
+                indices.push(info.predicateIndex);
             });
             indices.sort((a: number, b: number) => b - a);
             indices.forEach(index => {
@@ -160,8 +162,8 @@ export class HeaderSearchService {
      */
     protected emptyInput(changeDescription: SearchChangeDescription): boolean {
         return changeDescription.searchInput === undefined
-               || changeDescription.searchInput === null
-               || (typeof changeDescription.searchInput === 'string' && changeDescription.searchInput.length === 0);
+            || changeDescription.searchInput === null
+            || (typeof changeDescription.searchInput === 'string' && changeDescription.searchInput.length === 0);
     }
 
     /**
@@ -206,6 +208,28 @@ export class HeaderSearchService {
         if (predicateInfo !== undefined) {
             this._searchService.removePredicate(predicateInfo.predicateIndex);
             this._columnToPredicate.delete(column);
+        }
+    }
+
+    /**
+     * Handles the removal of a {@link Predicate} from the {@link SearchService} by shifting
+     * any affected indices referenced by the header search
+     * @param removedIndex the index of the removed {@link Predicate}
+     */
+    protected handlePredicateRemoval(removedIndex: number): void {
+        let columnToRemove;
+        this._columnToPredicate.forEach((info, columnNumber) => {
+            if (info.predicateIndex === removedIndex) {
+                columnToRemove = columnNumber;
+                if (this._headerService) {
+                    this._headerService.clearHeaderSearch(columnNumber);
+                }
+            } else if (info.predicateIndex > removedIndex) {
+                info.predicateIndex -= 1;
+            }
+        });
+        if (columnToRemove !== undefined) {
+            this._columnToPredicate.delete(columnToRemove);
         }
     }
 }

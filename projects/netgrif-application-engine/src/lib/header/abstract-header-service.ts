@@ -25,6 +25,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
     protected _responsiveHeaders$: BehaviorSubject<boolean>;
     protected _headerState: HeaderState;
     protected _headerChange$: Subject<HeaderChange>;
+    protected _clearHeaderSearch$: Subject<number>;
 
     public loading: LoadingEmitter;
     public fieldsGroup: Array<FieldsGroup>;
@@ -38,6 +39,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this._headerColumnCount$ = new BehaviorSubject<number>(AbstractHeaderService.DEFAULT_HEADER_COUNT);
         this._responsiveHeaders$ = new BehaviorSubject<boolean>(AbstractHeaderService.DEFAULT_HEADER_RESPONSIVITY);
+        this._clearHeaderSearch$ = new Subject<number>();
         this.initializeHeaderState();
     }
 
@@ -85,6 +87,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     get responsiveHeaders$(): Observable<boolean> {
         return this._responsiveHeaders$.asObservable();
+    }
+
+    get clearHeaderSearch$(): Observable<number> {
+        return this._clearHeaderSearch$.asObservable();
     }
 
     private static uniqueNetFieldID(netId: string, fieldId: string): string {
@@ -355,5 +361,14 @@ export abstract class AbstractHeaderService implements OnDestroy {
             },
             headerType: this.headerType
         };
+    }
+
+    /**
+     * Emits a new value into the [clearHeaderSearch$]{@link AbstractHeaderService#clearHeaderSearch$} stream, that notifies
+     * the header search component, that it should clear the input for the specified column.
+     * @param columnIndex the index of the column that should be cleared
+     */
+    public clearHeaderSearch(columnIndex: number): void {
+        this._clearHeaderSearch$.next(columnIndex);
     }
 }

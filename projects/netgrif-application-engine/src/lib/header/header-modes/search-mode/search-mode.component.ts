@@ -33,8 +33,18 @@ export class SearchModeComponent implements OnInit {
 
     ngOnInit() {
         this.headerService.headerColumnCount$.subscribe(newCount => this.updateHeaderCount(newCount));
+        this.headerService.clearHeaderSearch$.subscribe(columnNumber => this.clearInput(columnNumber));
     }
 
+    /**
+     * Updates the underlying objects to match the new desired number of columns.
+     *
+     * If the new number of columns is greater than the current one, the columns will be filled with default/blank values.
+     *
+     * If the new number of columns is smaller than the current one, the superfluous columns will be removed.
+     *
+     * @param newCount the new number of columns
+     */
     private updateHeaderCount(newCount: number): void {
         if (newCount < this.formControls.length) {
             this.formControls = this.formControls.slice(0, newCount);
@@ -54,6 +64,13 @@ export class SearchModeComponent implements OnInit {
         }
     }
 
+    /**
+     * Opens a user assign side menu component and sets the selected user as value of the form control object
+     * that corresponds to the given column.
+     *
+     * If no user is selected the value of the corresponding form control si cleared.
+     * @param column the index of the columns that should have it's form control value set to the selected user
+     */
     public selectUser(column: number): void {
         let valueReturned = false;
         this._sideMenuService.open(UserAssignComponent).onClose.subscribe($event => {
@@ -64,5 +81,15 @@ export class SearchModeComponent implements OnInit {
                 this.formControls[column].setValue(undefined);
             }
         });
+    }
+
+    /**
+     * Clears the value of the form control object in the given column
+     * @param column the index of the column that should have it's value cleared
+     */
+    private clearInput(column: number): void {
+        if (column >= 0 && column < this.formControls.length) {
+            this.formControls[column].setValue(undefined);
+        }
     }
 }
