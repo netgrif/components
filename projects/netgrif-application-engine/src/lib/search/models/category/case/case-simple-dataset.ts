@@ -20,6 +20,8 @@ import {BooleanOperator} from '../../boolean-operator';
  */
 export class CaseSimpleDataset extends Category<string> {
 
+    private static readonly _i18n = 'search.category.case.dataset';
+
     protected _fieldId: string;
     protected _fieldType: string;
     protected _netIds: Array<string>;
@@ -31,7 +33,7 @@ export class CaseSimpleDataset extends Category<string> {
                 protected _optionalDependencies: OptionalDependencies) {
         super(undefined,
             undefined,
-            '',
+            `${CaseSimpleDataset._i18n}.name`,
             undefined,
             _logger);
 

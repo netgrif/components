@@ -15,6 +15,7 @@ import {Moment} from 'moment';
 import {CaseDataset} from '../models/category/case/case-dataset';
 import {SearchChipService} from '../search-chip-service/search-chip.service';
 import {ChipRequest} from '../models/chips/chip-request';
+import {LoggerService} from '../../logger/services/logger.service';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
@@ -96,6 +97,7 @@ export class SearchComponent implements OnInit {
 
     constructor(private _translate: TranslateService,
                 private _searchService: SearchService,
+                private _logger: LoggerService,
                 @Optional() private _searchChipService: SearchChipService) {
         this.filteredOptions = this.formControl.valueChanges.pipe(
             startWith(''),
@@ -337,12 +339,22 @@ export class SearchComponent implements OnInit {
      * @param addRequest object that defines the chip that should be added
      */
     private addExternalChip(addRequest: ChipRequest): void {
-        this._searchService.addPredicate(addRequest.chipPredicate);
-        let pos = this.searchChips.length - 1;
-        if (this._selectedCategory) {
-            pos--;
+        const chip: SimpleSearchChip = {text: addRequest.chipText};
+        if (addRequest.chipPredicate) {
+            chip.predicateIndex = this._searchService.addPredicate(addRequest.chipPredicate);
+        } else if (addRequest.predicateIndex !== undefined) {
+            chip.predicateIndex = addRequest.predicateIndex;
+        } else {
+            this._logger.error('Cannot add chip into search GUi that has neither \'chipPredicate\' nor \'predicateIndex\' defined');
+            return;
         }
-        this.searchChips.splice(pos, 0, {text: addRequest.chipText});
+
+        let chipPosition = this.searchChips.length;
+        if (this._selectedCategory) {
+            chipPosition--;
+        }
+
+        this.searchChips.splice(chipPosition, 0, chip);
     }
 
     /**

@@ -20,11 +20,20 @@ export class SearchChipService {
     }
 
     /**
-     * Add a new chip into the search GUI, if no GUI exists does nothing
+     * Adds a new chip into the search GUI, if no GUI exists does nothing
      * @param chipText the text that should be displayed on the chip
      * @param chipPredicate the search predicate that should be contained within the chip
      */
-    public addChip(chipText: string, chipPredicate: Predicate): void {
+    public addNewChip(chipText: string, chipPredicate: Predicate): void {
         this._addChipRequests$.next({chipText, chipPredicate});
+    }
+
+    /**
+     * Adds a new chip into the search GUI, that represents an existing {@link Predicate} object
+     * @param chipText the text that should be displayed on the chip
+     * @param predicateIndex the index of the {@link Predicate} inside of the {@link SearchService}
+     */
+    public addExistingChip(chipText: string, predicateIndex: number): void {
+        this._addChipRequests$.next({chipText, predicateIndex});
     }
 }

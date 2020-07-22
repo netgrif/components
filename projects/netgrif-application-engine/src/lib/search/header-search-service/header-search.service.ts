@@ -89,8 +89,20 @@ export class HeaderSearchService {
      */
     protected processModeChange(): void {
         if (this._searchChipService) {
-            this._columnToPredicate.forEach();
+            this._columnToPredicate.forEach(info => {
+                this._searchChipService.addExistingChip(info.chipText, info.predicateIndex);
+            });
+        } else {
+            const indices = [];
+            this._columnToPredicate.forEach(info => {
+               indices.push(info.predicateIndex);
+            });
+            indices.sort((a: number, b: number) => b - a);
+            indices.forEach(index => {
+                this._searchService.removePredicate(index);
+            });
         }
+        this._columnToPredicate.clear();
     }
 
     /**
