@@ -16,6 +16,7 @@ import {Change, InsertChange} from '@schematics/angular/utility/change';
 import {FileData} from './models/file-data';
 import {FileSystemNode} from './models/file-system-node';
 import {ProjectInfo} from './models/project-info';
+import {addSymbolToDecoratorMetadata} from './modified-library-functions';
 
 
 export function getProjectInfo(tree: Tree): ProjectInfo {
@@ -219,7 +220,7 @@ export function forEachSubDirFile(subRoot: DirEntry, lambda: (fe: FileEntry) => 
  * @returns an array of the children that are of the given type. Order of the children is not guaranteed.
  */
 export function findNodesInChildren(start: ts.Node, target: ts.SyntaxKind, recursive: boolean = false): Array<ts.Node> {
-    const result = [];
+    const result: Array<ts.Node> = [];
 
     start.getChildren().forEach(child => {
         if (child.kind === target) {
@@ -231,4 +232,26 @@ export function findNodesInChildren(start: ts.Node, target: ts.SyntaxKind, recur
     });
 
     return result;
+}
+
+/**
+ * Adds another provider to the providers of a specified component
+ * @param componentFile the file with the component
+ * @param symbolName the class name of the added provider
+ * @param insertedText the text that should be inserted into the providers array
+ * @param importPath the path from which to import the symbol
+ */
+export function addProviderToComponent(componentFile: FileEntry,
+                                       symbolName: string,
+                                       insertedText?: string,
+                                       importPath: string | null = null): Array<Change> {
+    return addSymbolToDecoratorMetadata(
+        fileEntryToTsSource(componentFile),
+        componentFile.path,
+        'Component',
+        'providers',
+        symbolName,
+        insertedText,
+        importPath
+    );
 }
