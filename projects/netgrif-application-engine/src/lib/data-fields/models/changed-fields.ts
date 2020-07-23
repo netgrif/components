@@ -21,7 +21,7 @@ export interface ChangedFields {
 
 export interface Change {
     value?: string | number | boolean | any;
-    type?: string
+    type?: string;
     // behavior  contains information about transition id
     behavior?: {
         [key: string]: Behavior

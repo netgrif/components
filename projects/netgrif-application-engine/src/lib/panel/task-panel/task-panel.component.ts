@@ -86,7 +86,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                     if (changedFields[value].type === 'taskRef') {
                         this._taskDataService.initializeTaskDataFields(new Subject<boolean>(), true);
                     }
-                })
+                });
             }
         });
         _taskOperations.open$.subscribe(() => {

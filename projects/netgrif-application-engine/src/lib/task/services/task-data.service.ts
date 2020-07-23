@@ -65,7 +65,7 @@ export class TaskDataService extends TaskHandlingService {
      * and only passes `true` to the `afterAction` argument.
      *
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
-     * @param force
+     * @param force set to `true` if you need force reload of all task data
      */
     public initializeTaskDataFields(afterAction = new Subject<boolean>(), force: boolean = false): void {
         if (this._safeTask.dataSize > 0 && !force) {
