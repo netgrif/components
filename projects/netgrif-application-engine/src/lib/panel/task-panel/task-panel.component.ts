@@ -5,7 +5,7 @@ import {TaskContentComponent} from '../../task-content/task-content/task-content
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -81,6 +81,13 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         super();
         _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskPanelData.changedFields.next(changedFields);
+            if (this._taskContentService.task) {
+                Object.keys(changedFields).forEach(value => {
+                    if (changedFields[value].type === 'taskRef') {
+                        this._taskDataService.initializeTaskDataFields(new Subject<boolean>(), true);
+                    }
+                })
+            }
         });
         _taskOperations.open$.subscribe(() => {
             this.expand();
@@ -257,7 +264,10 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 return {value: task.user ? task.user.fullName : '', icon: 'account_circle'};
             case TaskMetaField.ASSIGN_DATE:
                 console.log(task.startDate);
-                return {value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '', icon: 'event'};
+                return {
+                    value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '',
+                    icon: 'event'
+                };
         }
     }
 

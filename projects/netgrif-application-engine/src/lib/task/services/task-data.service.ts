@@ -65,11 +65,15 @@ export class TaskDataService extends TaskHandlingService {
      * and only passes `true` to the `afterAction` argument.
      *
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
+     * @param force
      */
-    public initializeTaskDataFields(afterAction = new Subject<boolean>()): void {
-        if (this._safeTask.dataSize > 0) {
+    public initializeTaskDataFields(afterAction = new Subject<boolean>(), force: boolean = false): void {
+        if (this._safeTask.dataSize > 0 && !force) {
             afterAction.next(true);
             return;
+        }
+        if (force) {
+            this._safeTask.dataSize = 0;
         }
         this._taskState.startLoading();
         this._taskResourceService.getData(this._safeTask.stringId).subscribe(dataGroups => {
