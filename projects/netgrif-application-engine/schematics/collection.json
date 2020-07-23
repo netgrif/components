@@ -29,6 +29,12 @@
             "schema": "./view-service/schema.json",
             "hidden": true
         },
+        "update-package-json": {
+            "description": "Modifies build script in package.json file",
+            "factory": "./add/update-package-json/update-package-json#schematicEntryPoint",
+            "schema": "./add/update-package-json/schema.json",
+            "hidden": true
+        },
         "create-view": {
             "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt to input the settings.",
             "factory": "./view/create-view/schematic-create-view#schematicEntryPoint",
