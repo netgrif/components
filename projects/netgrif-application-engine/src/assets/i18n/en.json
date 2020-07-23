@@ -67,7 +67,9 @@
             "selection": "You must make a selection",
             "errFirst": "Process is required.",
             "errSecond": "Title is required.",
-            "errThird": "Color is required."
+            "errThird": "Color is required.",
+            "noNets": "No allowed Nets",
+            "createCase": "Successful create new case"
         },
         "user": {
             "assign": "User Assign",
