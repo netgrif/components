@@ -163,22 +163,27 @@ export class CaseTreeService implements OnDestroy {
     /**
      * Expands the target node in the tree and reloads it's children if they are marked as dirty
      * @param node the {@link CaseTreeNode} that should be expanded
+     * @returns emits `true` if the node is expanded and `false` if not
      */
-    protected expandNode(node: CaseTreeNode): void {
+    protected expandNode(node: CaseTreeNode): Observable<boolean> {
         if (node.loadingChildren.isActive) {
-            return;
+            return of(false);
         }
 
         if (!node.dirtyChildren) {
             this.treeControl.expand(node);
-            return;
+            return of(true);
         }
 
+        const ret = new ReplaySubject<boolean>(1);
         this.updateNodeChildren(node).subscribe(() => {
             if (node.children.length > 0) {
                 this.treeControl.expand(node);
             }
+            ret.next(node.children.length > 0);
+            ret.complete();
         });
+        return ret;
     }
 
     /**
@@ -325,7 +330,7 @@ export class CaseTreeService implements OnDestroy {
      * @returns emits `true` if the child was successfully added, `false` if not
      */
     public addChildNode(clickedNode: CaseTreeNode): Observable<boolean> {
-        const ret = new ReplaySubject<boolean>();
+        const ret = new ReplaySubject<boolean>(1);
         clickedNode.addingNode.on();
         const caseRefField = clickedNode.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
 
@@ -346,8 +351,12 @@ export class CaseTreeService implements OnDestroy {
         const callback = (newCaseRefValue) => {
             this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(() => {
                 clickedNode.addingNode.off();
-                this.expandNode(clickedNode);
-                ret.next(true);
+                this.expandNode(clickedNode).subscribe(expandSuccess => {
+                    if (expandSuccess) {
+                        this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
+                    }
+                    ret.next(true);
+                });
             });
         };
 
