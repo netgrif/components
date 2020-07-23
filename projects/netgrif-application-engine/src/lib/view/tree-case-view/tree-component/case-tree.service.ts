@@ -33,6 +33,7 @@ export class CaseTreeService implements OnDestroy {
     private readonly _treeControl: NestedTreeControl<CaseTreeNode>;
     private _treeRootLoaded$: ReplaySubject<boolean>;
     private _rootNode: CaseTreeNode;
+    private _showRoot: boolean;
 
     constructor(protected _caseResourceService: CaseResourceService,
                 protected _treeCaseViewService: TreeCaseViewService,
@@ -125,6 +126,8 @@ export class CaseTreeService implements OnDestroy {
             this._logger.error('Set a Filter before initializing the case tree');
             return;
         }
+
+        this._showRoot = showRoot;
 
         if (showRoot) {
             this.dataSource.data = [this._rootNode];
@@ -307,20 +310,30 @@ export class CaseTreeService implements OnDestroy {
      * Useful if you are using the layout where the root node is hidden.
      */
     public addRootChildNode(): void {
-        this.addChildNode(this._rootNode);
+        this.addChildNode(this._rootNode).subscribe(added => {
+            if (added) {
+                if (!this._showRoot && this._treeDataSource.data.length === 0) {
+                    this._treeDataSource.data = this._rootNode.children;
+                    this.refreshTree();
+                }
+            }
+        });
     }
 
     /**
      * Adds a new child node to the given node based on the properties of the node's case
+     * @returns emits `true` if the child was successfully added, `false` if not
      */
-    public addChildNode(clickedNode: CaseTreeNode): void {
+    public addChildNode(clickedNode: CaseTreeNode): Observable<boolean> {
+        const ret = new ReplaySubject<boolean>();
         clickedNode.addingNode.on();
         const caseRefField = clickedNode.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
 
         if (caseRefField.allowedNets.length === 0) {
             this._logger.error(`Case ${clickedNode.case.stringId} can add new tree nodes but has no allowed nets`);
             clickedNode.addingNode.off();
-            return;
+            ret.next(false);
+            return ret;
         }
 
         const childTitle = clickedNode.case.immediateData.find(field => field.stringId === TreePetriflowIdentifiers.CHILD_NODE_TITLE);
@@ -334,6 +347,7 @@ export class CaseTreeService implements OnDestroy {
             this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(() => {
                 clickedNode.addingNode.off();
                 this.expandNode(clickedNode);
+                ret.next(true);
             });
         };
 
@@ -352,10 +366,12 @@ export class CaseTreeService implements OnDestroy {
                         this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(callback);
                     } else {
                         clickedNode.addingNode.off();
+                        ret.next(false);
                     }
                 });
             });
         }
+        return ret.asObservable();
     }
 
     /**
