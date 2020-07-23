@@ -9,7 +9,5 @@ describe('UserValue', () => {
         expect(user.surname).toEqual('surname');
         expect(user.fullName).toEqual('name surname');
         expect(user.email).toEqual('mail');
-        user.selected = true;
-        expect(user.selected).toEqual(true);
     });
 });

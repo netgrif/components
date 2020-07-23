@@ -26,6 +26,7 @@ import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {CaseMetaField} from './case-menta-enum';
+import {HeaderChangeType} from '../models/user-changes/header-change-type';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -44,11 +45,15 @@ describe('CaseHeaderService', () => {
                 CaseHeaderService,
                 ConfigCaseViewServiceFactory,
                 AuthenticationMethodService,
-                {   provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory},
-                {   provide: CaseViewService,
+                {
+                    provide: SearchService,
+                    useFactory: TestCaseSearchServiceFactory
+                },
+                {
+                    provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]},
+                    deps: [ConfigCaseViewServiceFactory]
+                },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -94,15 +99,15 @@ describe('CaseHeaderService', () => {
 
     it('call sort header changed', () => {
         service.headerChange$.subscribe(res => {
-            expect(res).toEqual({headerType: HeaderType.CASE, mode: HeaderMode.SORT, description: undefined});
+            expect(res).toEqual({headerType: HeaderType.CASE, changeType: HeaderChangeType.SORT, description: undefined});
         });
-        service.sortHeaderChanged('', 'asc');
+        service.sortHeaderChanged(0, '', 'asc');
     });
 
     it('call search input changed', () => {
         service.headerChange$.subscribe(res => {
             expect(res).toEqual({
-                headerType: HeaderType.CASE, mode: HeaderMode.SEARCH, description:
+                headerType: HeaderType.CASE, changeType: HeaderChangeType.SEARCH, description:
                     {
                         fieldIdentifier: 'visualId', searchInput: 'hladaj', type: 'meta',
                         petriNetIdentifier: undefined
@@ -115,13 +120,13 @@ describe('CaseHeaderService', () => {
     it('call column selected', () => {
         service.headerChange$.subscribe(res => {
             expect(res.headerType).toEqual(HeaderType.CASE);
-            expect(res.mode).toEqual(HeaderMode.EDIT);
+            expect(res.changeType).toEqual(HeaderChangeType.EDIT);
         });
         service.headerColumnSelected(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
 
         service.headerChange$.subscribe(res => {
             expect(res.headerType).toEqual(HeaderType.CASE);
-            expect(res.mode).toEqual(HeaderMode.EDIT);
+            expect(res.changeType).toEqual(HeaderChangeType.EDIT);
         });
         service.revertEditMode();
     });
@@ -129,9 +134,11 @@ describe('CaseHeaderService', () => {
     it('call search input changed', () => {
         service.headerChange$.subscribe(res => {
             expect(res).toEqual({
-                headerType: HeaderType.CASE, mode: HeaderMode.SEARCH,
-                description: {fieldIdentifier: 'visualId', searchInput: 'hladaj', type: 'meta',
-                        petriNetIdentifier: undefined} as SearchChangeDescription
+                headerType: HeaderType.CASE, changeType: HeaderChangeType.SEARCH,
+                description: {
+                    fieldIdentifier: 'visualId', searchInput: 'hladaj', type: 'meta',
+                    petriNetIdentifier: undefined
+                } as SearchChangeDescription
             });
         });
         service.headerSearchInputChanged(0, 'hladaj');

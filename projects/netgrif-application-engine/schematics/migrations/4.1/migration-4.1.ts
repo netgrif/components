@@ -9,6 +9,9 @@ import {
 } from '../../_utility/utility-functions';
 import {findNodes} from '@schematics/angular/utility/ast-utils';
 
+/**
+ * Adds a new provider to all subclasses of CaseView in the project
+ */
 export function schematicEntryPoint(): Rule {
     return (tree: Tree) => {
         forEachProjectFile(tree, (file: FileEntry) => {
