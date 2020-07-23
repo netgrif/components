@@ -120,10 +120,10 @@ export interface TabViewInterface {
     /**
      * See [TabView.closeTabIndex]{@link TabView#closeTabIndex}
      */
-    closeTabIndex(index: number): void;
+    closeTabIndex(index: number, force?: boolean): void;
 
     /**
      * See [TabView.closeTabUniqueId]{@link TabView#closeTabUniqueId}
      */
-    closeTabUniqueId(uniqueId: string): void;
+    closeTabUniqueId(uniqueId: string, force?: boolean): void;
 }

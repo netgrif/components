@@ -40,8 +40,8 @@ export class TabView implements TabViewInterface {
         openTab: (tabContent: TabContent, autoswitch: boolean = false) => this.openTab(tabContent, autoswitch),
         switchToTabIndex: (index: number) => this.switchToTabIndex(index),
         switchToTabUniqueId: (uniqueId: string) => this.switchToTabUniqueId(uniqueId),
-        closeTabIndex: (index: number) => this.closeTabIndex(index),
-        closeTabUniqueId: (uniqueId: string) => this.closeTabUniqueId(uniqueId)
+        closeTabIndex: (index: number, force: boolean = false) => this.closeTabIndex(index, force),
+        closeTabUniqueId: (uniqueId: string, force: boolean = false) => this.closeTabUniqueId(uniqueId, force)
     };
 
     /**
@@ -122,11 +122,12 @@ export class TabView implements TabViewInterface {
      * Throws an error if the `index` is invalid.
      *
      * Throws an error if the tab has it's `canBeClosed` property set to `false`.
-     * @param index - index of the tab that should be closed
+     * @param index index of the tab that should be closed
+     * @param force when `true` closes a tab that has it's `cantBeClosed` attribute set to `true`
      */
-    public closeTabIndex(index: number): void {
+    public closeTabIndex(index: number, force: boolean = false): void {
         this.checkIndexRange(index);
-        if (!this.openedTabs[index].canBeClosed) {
+        if (!force && !this.openedTabs[index].canBeClosed) {
             throw new Error(`Tab at index ${index} can't be closed`);
         }
         if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
@@ -139,10 +140,11 @@ export class TabView implements TabViewInterface {
      * Closes the tab with the given `uniqueId`. Throws an error if the `uniqueId` is invalid.
      * Throws an error if the tab has it's `canBeClosed` property set to `false`.
      * @param uniqueId - id of the tab that should be closed
+     * @param force when `true` closes a tab that has it's `cantBeClosed` attribute set to `true`
      */
-    public closeTabUniqueId(uniqueId: string): void {
+    public closeTabUniqueId(uniqueId: string, force: boolean = false): void {
         const index = this.getTabIndex(uniqueId);
-        if (!this.openedTabs[index].canBeClosed) {
+        if (!force && !this.openedTabs[index].canBeClosed) {
             throw new Error(`Tab with ID ${uniqueId} can't be closed`);
         }
         if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
