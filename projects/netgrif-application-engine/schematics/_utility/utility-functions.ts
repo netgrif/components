@@ -9,7 +9,7 @@ import {
     Tree,
     url,
 } from '@angular-devkit/schematics';
-import {FileEntry, UpdateRecorder} from '@angular-devkit/schematics/src/tree/interface';
+import {FileEntry, UpdateRecorder, DirEntry} from '@angular-devkit/schematics/src/tree/interface';
 import {experimental, normalize, strings} from '@angular-devkit/core';
 import {NetgrifApplicationEngine} from '../../src/lib/configuration/interfaces/schema';
 import {Change, InsertChange} from '@schematics/angular/utility/change';
@@ -179,4 +179,19 @@ export function createRelativePath(sourcePath: string, destinationPath: string):
     }
 
     return pathFragments.join('/');
+}
+
+export function forEachProjectFile(tree: Tree, lambda: (fe: FileEntry) => void): void {
+    const projectInfo = getProjectInfo(tree);
+    const rootDir = tree.getDir(projectInfo.path);
+    forEachSubDirFile(rootDir, lambda);
+}
+
+export function forEachSubDirFile(subRoot: DirEntry, lambda: (fe: FileEntry) => void): void {
+    subRoot.subfiles.forEach(pathFragment => {
+        lambda(subRoot.file(pathFragment));
+    });
+    subRoot.subdirs.forEach(pathFragment => {
+        forEachSubDirFile(subRoot.dir(pathFragment), lambda);
+    });
 }
