@@ -432,13 +432,33 @@ export class CaseTreeService implements OnDestroy {
         node.removingNode.on();
         const caseRefImmediate = this.getImmediateData(node.parent.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         const setCaseRefValue = (caseRefImmediate.value as Array<string>).filter(id => id !== node.case.stringId);
-        this.performCaseRefCall(node.parent.case.stringId, setCaseRefValue).subscribe(newCaseRefValue => {
-            this.updateNodeChildrenFromChangedFields(node.parent, newCaseRefValue ? newCaseRefValue : setCaseRefValue);
-            // TODO delete the removed child cases
+        this.performCaseRefCall(node.parent.case.stringId, setCaseRefValue).subscribe(caseRefChange => {
+            const newCaseRefValue = caseRefChange ? caseRefChange : setCaseRefValue;
+            this.deleteRemovedNodes(node.parent, newCaseRefValue);
+            this.updateNodeChildrenFromChangedFields(node.parent, newCaseRefValue);
+
             node.removingNode.off();
         });
 
         this.deselectNodeIfDescendantOf(node);
+    }
+
+    /**
+     * Deletes the subtrees rooted at the nodes that are present in the parent node's child case ref values,
+     * but are no longer present in the new value
+     * @param parentNode an inner node of the tree that had some of it's children removed
+     * @param newCaseRefValue the new value of the parent node's case ref
+     */
+    protected deleteRemovedNodes(parentNode: CaseTreeNode, newCaseRefValue: Array<string>): void {
+        const removedChildren = new Set<string>();
+        this.getImmediateData(parentNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value.forEach(id => removedChildren.add(id));
+        newCaseRefValue.forEach(id => removedChildren.delete(id));
+        removedChildren.forEach(removedId => this._caseResourceService.deleteCase(removedId, true)
+            .subscribe(responseMessage => {
+                if (responseMessage.error) {
+                    this._logger.error('Removal of child case unsuccessful', responseMessage.error);
+                }
+        }));
     }
 
     /**
