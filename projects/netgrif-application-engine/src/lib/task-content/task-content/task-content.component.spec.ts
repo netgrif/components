@@ -117,7 +117,7 @@ describe('TaskContentComponent', () => {
                 stretch: false,
                 layout: {cols: 3, rows: undefined}
             },
-        ], 4).length).toEqual(20);
+        ], 4).length).toEqual(24);
     });
 
     afterAll(() => {
