@@ -46,7 +46,7 @@ export class DelegateTaskService extends TaskHandlingService {
             return;
         }
         this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM).onClose.subscribe(event => {
-            console.log(event);
+            this._log.info('Sidemenu event:' + event);
             if (event.data !== undefined) {
                 this._taskState.startLoading();
 

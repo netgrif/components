@@ -10,7 +10,7 @@
             <mat-divider [vertical]="true" class="divider-fix"></mat-divider>
 
             <div fxLayout="column" fxFlex="75" class="overflow-auto">
-                <nae-tree-task-content></nae-tree-task-content>
+                <nae-tree-task-content [displayTaskControlButtons]="false"></nae-tree-task-content>
             </div>
         </mat-card>
         <mat-progress-spinner *ngIf="loading"></mat-progress-spinner>
