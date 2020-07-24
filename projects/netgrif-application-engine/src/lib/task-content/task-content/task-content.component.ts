@@ -5,6 +5,7 @@ import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {NAE_TASK_COLS} from '../model/nae-task-cols-injection-token';
+import {LoggerService} from '../../logger/services/logger.service';
 
 @Component({
     selector: 'nae-task-content',
@@ -38,6 +39,7 @@ export class TaskContentComponent {
     constructor(private _fieldConverter: FieldConverterService,
                 private taskContentService: TaskContentService,
                 private _paperView: PaperViewService,
+                private _logger: LoggerService,
                 @Inject(NAE_TASK_COLS) public taskCols) {
         this.loading = true;
         if (taskCols === undefined) {
@@ -46,13 +48,11 @@ export class TaskContentComponent {
             this.formCols = this.taskCols;
         }
         this.taskContentService.$shouldCreate.subscribe(data => {
-            console.time('time');
             if (data.length !== 0) {
                 this.dataSource = this.fillBlankSpace(data, this.formCols);
             } else {
                 this.dataSource = [];
             }
-            console.timeEnd('time');
             this.loading = false;
         });
     }
@@ -72,6 +72,7 @@ export class TaskContentComponent {
     fillBlankSpace(resource: any[], columnCount: number): Array<DatafieldGridLayoutElement> {
         const grid: Array<Array<GridFiller>> = [];
         const returnResource = [];
+        const dataGroupTitles = [];
 
         resource.forEach(dataGroup => {
             let count = 0;
@@ -85,13 +86,7 @@ export class TaskContentComponent {
                 const visibleGroup: boolean = dataGroup.fields.some(dataFld => !dataFld.behavior.hidden);
                 if (visibleGroup) {
                     const row = grid.length;
-                    this.addGridRows(grid, row + 1, columnGroup);
-                    const newFillers = [];
-                    for (const filler of grid[row]) {
-                        newFillers.push(...filler.fillersAfterCover(0, columnGroup - 1));
-                    }
-                    grid[row] = newFillers;
-                    returnResource.push({
+                    dataGroupTitles.push({
                         item: undefined, type: 'title',
                         layout: {x: 0, y: row, cols: columnGroup, rows: 1}, title: dataGroup.title
                     });
@@ -215,7 +210,7 @@ export class TaskContentComponent {
             });
         }
 
-        return returnResource.sort((a, b) => {
+        returnResource.sort((a, b) => {
             if (a.layout.y < b.layout.y) {
                 return -1;
             } else if (a.layout.y > b.layout.y) {
@@ -226,10 +221,30 @@ export class TaskContentComponent {
             } else if (a.layout.x > b.layout.x) {
                 return 1;
             }
-            console.log(a, b);
-            console.log('Illegal layout');
+            this._logger.warn(`Two data fields have overlapping layouts`, [a, b]);
             return 0;
         });
+
+        if (dataGroupTitles.length > 0) {
+            dataGroupTitles.sort((a, b) => {
+                return a.layout.y - b.layout.y;
+            });
+            let lastDataGroupIndex = 0;
+            for (let i = 0; i < returnResource.length && lastDataGroupIndex < dataGroupTitles.length; i++) {
+                if (returnResource[i].layout.y < dataGroupTitles[lastDataGroupIndex].layout.y) {
+                    continue;
+                }
+                returnResource.splice(i, 0, dataGroupTitles[lastDataGroupIndex]);
+                lastDataGroupIndex += 1;
+                for (let j = i + 1; j < returnResource.length; j++) {
+                    returnResource[j].layout.y += 1;
+                }
+                for (let j = lastDataGroupIndex; j < dataGroupTitles.length; j++) {
+                    dataGroupTitles[j].layout.y += 1;
+                }
+            }
+        }
+        return returnResource;
     }
 
     private addGridRows(grid: Array<Array<GridFiller>>, newRowCount: number, columnCount: number): void {
