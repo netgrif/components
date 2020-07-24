@@ -541,9 +541,10 @@ export class CaseTreeService implements OnDestroy {
         })).subscribe(page => {
             if (!hasContent(page) || page.content.length !== 1) {
                 this._logger.error('Child node case could not be found');
+            } else {
+                affectedNode.children.push(new CaseTreeNode(page.content[0], affectedNode));
+                this.refreshTree();
             }
-            affectedNode.children.push(new CaseTreeNode(page.content[0], affectedNode));
-            this.refreshTree();
             result$.next();
             result$.complete();
         }, error => {
