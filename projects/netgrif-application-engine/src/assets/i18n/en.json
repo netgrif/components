@@ -1,0 +1,270 @@
+{
+    "toolbar": {
+        "menu": {
+            "lang": "Language",
+            "profile": "Profile",
+            "logout": "Logout",
+            "en": "English",
+            "sk": "Slovak",
+            "de": "German"
+        }
+    },
+    "tasks": {
+        "snackbar": {
+            "noTasksFound": "No tasks found",
+            "failedToLoad": "failed to load",
+            "noData": "No data for task",
+            "noGroup": "No data group for task",
+            "dataSaved": "Data saved successfully",
+            "failedSave": "Saving data failed",
+            "assignTask": "Assigning task",
+            "delegateTask": "Delegating task",
+            "failed": "failed",
+            "cancelTask": "Canceling assignment of task",
+            "finishTask": "Finishing task",
+            "invalidData": "Some fields have invalid values",
+            "noCase": "No cases found",
+            "caseGetFailed": "Getting cases failed",
+            "noLongerExists": "The selected task no longer exists"
+        },
+        "view": {
+            "noTasksSatisfyingThisFilter": "There are no tasks satisfying this filter",
+            "collapse": "Collapse",
+            "assign": "Assign",
+            "reassign": "Reassign",
+            "delegate": "Delegate",
+            "finish": "Finish",
+            "cancel": "Cancel",
+            "noData": "This task has no data. Finish to continue."
+        }
+    },
+    "side-menu": {
+        "filter-selector": {
+            "choose-filter": "Choose a filter",
+            "search-filter": "Search filters",
+            "case-filters": "Case filters",
+            "task-filters": "Task filters",
+            "select": "Select"
+        },
+        "files-upload": {
+            "upload": "Upload files",
+            "send": "Send"
+        },
+        "import-net": {
+            "upload": "Upload model",
+            "choose": "Choose a process file",
+            "done" : "Done"
+        },
+        "new-case": {
+            "case": "New Case",
+            "choose": "Choose process",
+            "caseTitle": "Fill out case title",
+            "color": "Choose case color",
+            "back": "Back",
+            "next": "Next",
+            "reset": "Reset",
+            "create": "Create",
+            "selection": "You must make a selection",
+            "errFirst": "Process is required.",
+            "errSecond": "Title is required.",
+            "errThird": "Color is required.",
+            "noNets": "No allowed Nets",
+            "createCase": "Successful create new case"
+        },
+        "user": {
+            "assign": "User Assign",
+            "noUser": "There are no users",
+            "err": "Users failed to load",
+            "showcase": "User showcase mode not set!"
+        }
+    },
+    "search": {
+        "category": {
+            "case": {
+                "title": {
+                    "name": "Case title",
+                    "placeholder": "Enter case title"
+                },
+                "visualId": {
+                    "name": "Case visual ID",
+                    "placeholder": "Enter case visual ID"
+                },
+                "author": {
+                    "name": "Case author",
+                    "placeholder": "Enter author's name or email"
+                },
+                "process": {
+                    "name": "Case process",
+                    "placeholder": "Select case process"
+                },
+                "role": {
+                    "name": "Process role",
+                    "placeholder": "Select process role"
+                },
+                "task": {
+                    "name": "Case task",
+                    "placeholder": "Select case task"
+                },
+                "creationDate": {
+                    "name": "Case creation date",
+                    "placeholder": "Select case creation date"
+                },
+                "dataset": {
+                    "name": "Case data",
+                    "placeholder": {
+                        "field": "Select data field",
+                        "value": "Enter data field value"
+                    }
+                }
+            },
+            "task": {
+                "assignee": {
+                    "name": "Task assignee",
+                    "placeholder": "Select task assignee"
+                },
+                "process": {
+                    "name": "Task process",
+                    "placeholder": "Select task process"
+                },
+                "role": {
+                    "name": "Task process role",
+                    "placeholder": "Select task process role"
+                },
+                "task": {
+                    "name": "Task",
+                    "placeholder": "Select task"
+                }
+            }
+        },
+        "placeholder": {
+            "text": "Type anything to search or select a category"
+        }
+    },
+    "dataField": {
+        "validations": {
+            "required": "This field is required!",
+            "requiredTrue": "Entered value must be true",
+            "odd": "Entered number must be odd",
+            "even": "Entered number must be even",
+            "positive": "Entered number must be positive",
+            "negative": "Entered number must be negative",
+            "decimal": "Entered number must be decimal",
+            "inrange": "Entered number must be in range {{range}}",
+            "length": "Entered text must be at the most {{length}}",
+            "pattern": "Entered text is in a wrong format",
+            "phone": "Entered text must be in telephone number format",
+            "email": "Entered text must be in email format",
+            "dateRange": "Entered date must be in range {{range}}",
+            "weekend": "Entered date must be weekend day",
+            "workday": "Entered date must be week day"
+        },
+        "snackBar": {
+            "downloadFail": " failed to download",
+            "moreFiles": "You choose more files as you allowed",
+            "sameFiles": "You cannot upload two of the same files",
+            "fileSize": "Files size exceeded allowed limit",
+            "cannotDownload": "The file cannot be downloaded without defined task",
+            "cannotUpload": "The file cannot be uploaded without defined task",
+            "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
+            "fileUploadFailed": "The file failed to upload"
+        },
+        "noFile": "No file"
+    },
+    "dialog": {
+        "close": "Close",
+        "submit": "Submit"
+    },
+    "forms": {
+        "pass": {
+            "enterEmail": "Enter your email"
+        },
+        "login": {
+            "length": "The login name must have at least 4 letters",
+            "login": "Login",
+            "reset": "Reset password",
+            "sign": "Sign Up",
+            "enterPass": "Enter your password"
+        },
+        "register": {
+            "name": "Name",
+            "surname": "Surname",
+            "repeatPass": "Repeat your password",
+            "register": "Register"
+        }
+    },
+    "headers": {
+        "newHeader": "Select new header",
+        "date": "Choose a date",
+        "caseMeta": {
+            "visualID": "Visual ID",
+            "title": "Title",
+            "author": "Author",
+            "creationDate": "Creation date"
+        },
+        "taskMeta": {
+            "case": "Case",
+            "priority": "Priority",
+            "user": "Assignee",
+            "assignDate": "Assign Date"
+        },
+        "workflowMeta": {
+            "initials": "Initials",
+            "version": "Version",
+            "creationDate": "Upload date"
+        },
+        "orderMode": "Ordering mode",
+        "searchMode": "Search mode",
+        "editMode": "Enable edit mode"
+    },
+    "panel": {
+        "case": {
+            "delete": "Delete"
+        },
+        "workflow": {
+            "net": "Net identifier",
+            "title": "Title",
+            "version": "Version",
+            "author": "Author",
+            "upload": "Upload date"
+        }
+    },
+    "profile": {
+        "notLogged": "You are not logged in!",
+        "general": "General Information",
+        "personal": "Personal Information",
+        "name": "First name",
+        "surname": "Last name",
+        "authority": "Authorities",
+        "roles": "Roles",
+        "groups": "Groups",
+        "preference": "Preferences",
+        "caseHead": "Case headers",
+        "caseFilter": "Case filters",
+        "taskHead": "Task headers",
+        "taskFilter": "Task filters",
+        "workHead": "Workflow headers",
+        "workFilter": "Workflow filters"
+    },
+    "view-list": {
+        "noCasesSatisfyingThisFilter": "There are no cases satisfying specified filter",
+        "noProcessesSatisfyingThisFilter": "There are no processes satisfying specified filter"
+    },
+    "admin": {
+        "user-list": {
+            "noUsersWereFound": "There are any user in the system at the moment",
+            "listTitle": "Users"
+        },
+        "process-list": {
+            "newestVersion": "Newest version",
+            "listTitle": "Processes",
+            "noRoles": "There are no roles in the process",
+            "noProcessesWereFound": "There are no processes in the system at the moment"
+        }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "User preferences saved successfully",
+            "saveFailure": "An error occurred while saving user preferences"
+        }
+    }
+}

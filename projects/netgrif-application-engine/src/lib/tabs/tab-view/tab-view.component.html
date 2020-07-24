@@ -1,0 +1,26 @@
+<mat-tab-group [selectedIndex]="tabView.selectedIndex.value"
+               (selectedIndexChange)="tabView.selectedIndex.setValue($event)" class="tab-group"
+               [class.nae-tab-fill-height]="stretch" fxFlex>
+    <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index">
+        <ng-template mat-tab-label>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon class="icon-margin-right"
+                              *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
+                    <span>{{tab.label.text}}</span>
+                </div>
+                <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabView.closeTabIndex(i)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </div>
+        </ng-template>
+        <!--        TODO 16.4.2020 - lazy loading of tab contents is disabled for now -->
+        <!--        <ng-template matTabContent>-->
+        <nae-tab-creation-detector [initializeTabFunction]="initializeTabLambda"
+                                   [tabIndex]="i"></nae-tab-creation-detector>
+        <ng-template [ngIf]="tab.isTabInitialized" class="full-height">
+            <ng-template [cdkPortalOutlet]="tab.portal" class="full-height"></ng-template>
+        </ng-template>
+        <!--        </ng-template>-->
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,34 @@
+@import 'custom-highlight-theme';
+@import 'netgrif-theme';
+
+@include custom-covalent-highlight-theme();
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+tr mat-header-row {
+    background-color: green;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-expansion-panel-content > .mat-expansion-panel-body {
+    padding: 0;
+}
+
+h1, h2 {
+    font-weight: 400;
+}
+
+.table-properties-name {
+    font-weight: 400;
+    color: rgba(0,0,0,.70);
+    font-family: 'Roboto Mono',monospace;
+    font-size: 12px;
+}
+

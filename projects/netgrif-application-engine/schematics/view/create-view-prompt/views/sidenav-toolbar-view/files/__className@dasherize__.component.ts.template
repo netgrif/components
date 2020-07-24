@@ -1,0 +1,13 @@
+import { Component } from '@angular/core';
+import {Router} from '@angular/router';
+
+@Component({
+  selector: '<%= prefix %>-<%= dasherize(className) %>',
+  templateUrl: './<%= dasherize(className) %>.component.html',
+  styleUrls: ['./<%= dasherize(className) %>.component.scss']
+})
+export class <%= classify(className) %>Component {
+
+  constructor(public routes: Router) { }
+
+}

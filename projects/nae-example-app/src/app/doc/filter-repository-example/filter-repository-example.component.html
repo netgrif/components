@@ -1,0 +1,16 @@
+<nae-app-documentation [liveExample]="example"
+                       [mainTitle]="TITLE"
+                       [mainDescription]="DESCRIPTION"></nae-app-documentation>
+
+<ng-template #example>
+
+    <h4>Case filters</h4>
+    <div *ngFor="let caseF of caseFilters">{{caseF}}</div>
+
+    <h4>Task filters</h4>
+    <div *ngFor="let taskF of taskFilters">{{taskF}}</div>
+
+    <h4>Merged filter</h4>
+    <div>{{merged}}</div>
+
+</ng-template>

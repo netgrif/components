@@ -1,0 +1,49 @@
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {
+    CaseViewService,
+    ConfigCaseViewServiceFactory,
+    HeaderComponent,
+    InjectedTabbedCaseViewData,
+    LoggerService,
+    NAE_TAB_DATA,
+    SearchService,
+    SimpleFilter,
+    TabbedCaseView,
+} from '@netgrif/application-engine';
+
+const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
+    return factory.create('<%= viewPath %>');
+};
+
+const searchServiceFactory = () => {
+    return new SearchService(SimpleFilter.emptyCaseFilter());
+};
+
+@Component({
+    selector: '<%= prefix %>-<%= dasherize(className) %>',
+    templateUrl: './<%= dasherize(className) %>.component.html',
+    styleUrls: ['./<%= dasherize(className) %>.component.scss'],
+    providers: [
+        ConfigCaseViewServiceFactory,
+        {   provide: SearchService,
+            useFactory: searchServiceFactory},
+        {   provide: CaseViewService,
+            useFactory: localCaseViewServiceFactory,
+            deps: [ConfigCaseViewServiceFactory]},
+    ]
+})
+export class <%= classify(className) %>Component extends TabbedCaseView implements AfterViewInit {
+
+    @ViewChild('header') public caseHeaderComponent: HeaderComponent;
+
+    constructor(caseViewService: CaseViewService,
+                loggerService: LoggerService,
+                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
+        super(caseViewService, loggerService, injectedTabData);
+    }
+
+    ngAfterViewInit(): void {
+        super.initializeHeader(this.caseHeaderComponent);
+    }
+
+}

@@ -1,0 +1,28 @@
+@import "nae-typography";
+@import 'src/lib/panel/panel.theme';
+@import 'src/lib/header/header.theme';
+@import 'src/lib/data-fields/data-field.theme';
+@import 'src/lib/user/user.theme';
+@import "src/lib/navigation/navigation.theme";
+@import "src/lib/admin/role-assignment/role-assignment.component.theme";
+@import 'src/lib/view/view.theme';
+
+@mixin nae-lib-theme($app-theme, $app-typography-config) {
+    @include nae-typography($app-typography-config);
+    @include panel-component($app-theme);
+    @include data-field-component();
+    @include user-profile($app-theme);
+    @include navigation-theme($app-theme);
+    @include header-component($app-theme);
+    @include roles-assignment-theme($app-theme);
+    @include view-theme($app-theme);
+}
+
+.mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {
+    flex: 1 1 100%;
+}
+
+.panel-expanded-spacing mat-expansion-panel.mat-expanded {
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+}

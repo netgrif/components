@@ -1,0 +1,35 @@
+<mat-sidenav-container class="drawer-container">
+    <mat-sidenav #sideRail mode="side" opened="true" position="start" disableClose="true"
+                 class="drawer-content mat-elevation-z16"
+                 (mouseenter)="expandOnHover && open()"
+                 (mouseleave)="expandOnHover && close()">
+
+        <div [@transform]="expanded ? 'expand' : 'collapse'">
+
+            <div fxLayout="column" fxLayoutAlign="start start" fxFlex>
+                <div fxLayout="row">
+                    <mat-icon>account_circle</mat-icon>
+                    <span *ngIf="expanded" class="margin-left-default">User</span>
+                </div>
+                <div fxLayout="row">
+                    <mat-icon>assignment</mat-icon>
+                    <span *ngIf="expanded" class="margin-left-default">Report</span>
+                </div>
+                <div fxLayout="row">
+                    <mat-icon>bug_report</mat-icon>
+                    <span *ngIf="expanded" class="margin-left-default">Bugs</span>
+                </div>
+                <div fxLayout="row">
+                    <mat-icon>fingerprint</mat-icon>
+                    <span *ngIf="expanded" class="margin-left-default">Security</span>
+                </div>
+            </div>
+
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content [@transformContent]="expanded ? 'shrink' : 'grow'">
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

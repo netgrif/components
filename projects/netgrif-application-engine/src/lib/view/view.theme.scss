@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+
+@mixin view-theme($theme) {
+    $primary: map-get($theme, primary);
+    .fix-content-wrapper {
+        .cdk-virtual-scroll-content-wrapper {
+            position: relative !important;
+        }
+    }
+}
+

@@ -1,0 +1,10 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="list-item" [ngClass]="{
+            'list-item-unselected': user.selected === false,
+            'list-item-selected': user.selected === true
+        }">
+    <mat-icon class="icon">account_circle</mat-icon>
+    <span [ngClass]="{
+            'name-unselected': user.selected === false,
+            'name-selected': user.selected === true
+        }">{{user.fullName}}</span>
+</div>

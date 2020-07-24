@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+
+<div mat-dialog-content class="dialog-container dialog-content-margin">
+    <span>{{data.content}}</span>
+    <br>
+    <mat-form-field class="dialog-prompt-margin">
+        <mat-label>{{data.placeholder}}</mat-label>
+        <input matInput [(ngModel)]="prompt" (ngModelChange)="disableButton = !prompt || prompt.trim().length === 0">
+    </mat-form-field>
+</div>
+
+<mat-dialog-actions fxLayoutAlign="end">
+    <button mat-button (click)="onClose()">{{ 'dialog.close' | translate}}</button>
+    <button mat-flat-button color="primary" [disabled]="disableButton" (click)="onClose()">{{ 'dialog.submit' | translate}}</button>
+</mat-dialog-actions>

@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+
+@mixin snack-bar-typography($typography-config) {
+    .snack-bar-container {
+        font: {
+            family: unquote(map-get($typography-config, font-family));
+        }
+    }
+}
+
+.snack-bar-icon-margin {
+    margin-right: 8px;
+}
+
+.snack-bar-close-icon {
+    color: #dedede
+}

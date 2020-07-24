@@ -1,0 +1,56 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <div class="main-toolbar-logo" fxFlex fxLayout="row">
+            <a href="/">
+                <img [src]="logoSrc" [alt]="logoAlt">
+            </a>
+        </div>
+        <div fxFlex fxHide.gt-xs="false" fxHide.lt-md="true" fxLayout="row" fxLayoutAlign="center">
+            {{appName}}
+        </div>
+        <div class="main-toolbar-menu" fxFlex fxLayout="row" fxLayoutAlign="end">
+            <button mat-button [matMenuTriggerFor]="mainMenu" class="main-toolbar-menu-button" fxLayout="row">
+                <span class="main-toolbar-logged-user" fxHide.xs="true">{{loggedUser}}</span>
+                <mat-icon class="main-toolbar-icon" aria-hidden="false" aria-label="Example home icon">account_circle
+                </mat-icon>
+                <mat-menu #mainMenu="matMenu" class="main-toolbar-opened-menu">
+                    <button mat-menu-item [matMenuTriggerFor]="languages">
+                        <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
+                            language
+                        </mat-icon>
+                        {{ 'toolbar.menu.lang' | translate }}
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
+                            account_circle
+                        </mat-icon>
+                        {{ 'toolbar.menu.profile' | translate }}
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
+                            exit_to_app
+                        </mat-icon>
+                        {{ 'toolbar.menu.logout' | translate }}
+                    </button>
+                </mat-menu>
+                <mat-menu #languages="matMenu">
+                    <button mat-menu-item (click)="setLang('en-UK')">{{ 'toolbar.menu.en' | translate }}
+                        <mat-icon *ngIf="activeLang('en-UK')" class="main-toolbar-menu-icon"
+                                  aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
+                        </mat-icon>
+                    </button>
+                    <button mat-menu-item (click)="setLang('sk-SK')">{{ 'toolbar.menu.sk' | translate }}
+                        <mat-icon *ngIf="activeLang('sk-SK')" class="main-toolbar-menu-icon"
+                                  aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
+                        </mat-icon>
+                    </button>
+                    <button mat-menu-item (click)="setLang('de-DE')">{{ 'toolbar.menu.de' | translate }}
+                        <mat-icon *ngIf="activeLang('de-DE')" class="main-toolbar-menu-icon"
+                                  aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
+                        </mat-icon>
+                    </button>
+                </mat-menu>
+            </button>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

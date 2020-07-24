@@ -1,0 +1,73 @@
+import {Predicate} from './predicate';
+import {Query} from '../query/query';
+import {BooleanOperator} from '../boolean-operator';
+
+/**
+ * Represents a clause of {@link Predicate}s combined with a {@link BooleanOperator}.
+ */
+export class ClausePredicate extends Predicate {
+
+    /**
+     * Stores the {@link Predicate}s that this Predicate combines.
+     */
+    protected _predicates: Array<Predicate>;
+    /**
+     * Stores the resulting query of this Predicate.
+     */
+    protected _query: Query;
+
+    /**
+     * @param predicates Predicates that should be combined into one
+     * @param _operator Operator that is used to combine the predicates
+     */
+    constructor(predicates: Array<Predicate>, protected _operator: BooleanOperator) {
+        super();
+        this._predicates = [];
+        this._predicates.push(...predicates);
+        this.updateQuery();
+    }
+
+    get query(): Query {
+        return this._query;
+    }
+
+    /**
+     * Adds another {@link Predicate} to the clause and updates this {@link Predicate}'s {@link Query}.
+     * @param newPredicate - the Predicate that should be added to the clause
+     */
+    public addPredicate(newPredicate: Predicate): void {
+        this._predicates.push(newPredicate);
+        this.updateQuery();
+    }
+
+    /**
+     * Removes the {@link Predicate} at the given `index` from this clause and updates this {@link Predicate}'s {@link Query}.
+     * If the `index` is invalid does nothing.
+     * @param index index of the {@link Predicate} in this clause that should be removed
+     * @returns whether a predicate was removed, or not
+     */
+    public removePredicate(index: number): boolean {
+        if (index >= 0 && index < this._predicates.length) {
+            this._predicates.splice(index, 1);
+            this.updateQuery();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Updates the value of the [_query]{@link ClausePredicate#_query} attribute.
+     *
+     * See [combineQueries()]{@link Query#combineQueries} for more information.
+     */
+    protected updateQuery(): void {
+        this._query = Query.combineQueries(this.queries, this._operator);
+    }
+
+    /**
+     * @returns the `Array` of {@link Query} objects stored within this object's [_predicates]{@link ClausePredicate#_predicates} attribute.
+     */
+    protected get queries(): Array<Query> {
+        return this._predicates.map(p => p.query);
+    }
+}
