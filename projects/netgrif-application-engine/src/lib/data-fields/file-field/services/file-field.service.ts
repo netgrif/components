@@ -3,7 +3,7 @@ import * as JSZip from 'jszip';
 import {FileField, FileUploadDataModel} from '../models/file-field';
 import {FileUploadService} from './upload/file-upload.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../snack-bar/services/snack-bar.service';
+import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {FileUploadModel} from '../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {FilesUploadComponent} from '../../../side-menu/content-components/files-upload/files-upload.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
@@ -12,6 +12,7 @@ import {LanguageService} from '../../../translate/language.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {ProgressType, ProviderProgress} from '../../../resources/resource-provider.service';
 import {LoggerService} from '../../../logger/services/logger.service';
+import {SnackBarHorizontalPosition, SnackBarVerticalPosition} from '../../../snack-bar/models/snack-bar-enums';
 
 /**
  * Links communication between
