@@ -192,7 +192,7 @@ export class TaskContentComponent {
         });
         resource.forEach(dataGroup => {
             returnResource.push(...dataGroup.fields.filter(item => !item.behavior.hidden && item.layout !== undefined)
-                .map(item => ({item, type: this._fieldConverter.resolveType(item), layout: item.layout})));
+                .map(item => ({item, type: this._fieldConverter.resolveType(item), layout: {...item.layout}})));
         });
         let encounterFirst = false;
         for (let y = grid.length - 1; y >= 0; y--) {
