@@ -14,6 +14,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 export class TaskContentComponent {
     dataSource: any[];
     loading: boolean;
+    formCols = 4;
 
     /**
      * The translate text that should be displayed when the task contains no data.
@@ -41,6 +42,7 @@ export class TaskContentComponent {
         this.loading = true;
         this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
+                this.formCols = this.getNumberOfFormColumns();
                 this.dataSource = this.fillBlankSpace(data, this.formCols);
             } else {
                 this.dataSource = [];
@@ -53,7 +55,11 @@ export class TaskContentComponent {
         return this.taskContentService.task.stringId;
     }
 
-    public get formCols(): number {
+    private static newGridRow(cols: number): Array<GridFiller> {
+        return [new GridFiller(0, cols - 1)];
+    }
+
+    public getNumberOfFormColumns(): number {
         if (!this.taskContentService.task
             || !this.taskContentService.task.layout
             || this.taskContentService.task.layout.cols === undefined) {
@@ -61,10 +67,6 @@ export class TaskContentComponent {
         } else {
             return this.taskContentService.task.layout.cols;
         }
-    }
-
-    private static newGridRow(cols: number): Array<GridFiller> {
-        return [new GridFiller(0, cols - 1)];
     }
 
     public isPaperView() {
