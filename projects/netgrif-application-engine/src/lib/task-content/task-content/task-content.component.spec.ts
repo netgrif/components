@@ -13,7 +13,6 @@ import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {NAE_TASK_COLS} from '../model/nae-task-cols-injection-token';
 
 describe('TaskContentComponent', () => {
     let component: TaskContentComponent;
@@ -32,7 +31,6 @@ describe('TaskContentComponent', () => {
             providers: [
                 TaskViewService,
                 TaskContentService,
-                {provide: NAE_TASK_COLS, useValue: 4},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: []

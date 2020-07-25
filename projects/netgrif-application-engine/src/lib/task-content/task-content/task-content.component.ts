@@ -1,10 +1,9 @@
-import {Component, Inject, InjectionToken, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
 import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
-import {NAE_TASK_COLS} from '../model/nae-task-cols-injection-token';
 import {LoggerService} from '../../logger/services/logger.service';
 
 @Component({
@@ -39,13 +38,14 @@ export class TaskContentComponent {
     constructor(private _fieldConverter: FieldConverterService,
                 private taskContentService: TaskContentService,
                 private _paperView: PaperViewService,
-                private _logger: LoggerService,
-                @Inject(NAE_TASK_COLS) public taskCols) {
+                private _logger: LoggerService) {
         this.loading = true;
-        if (taskCols === undefined) {
+        if (!this.taskContentService.task
+            || !this.taskContentService.task.layout
+            || this.taskContentService.task.layout.cols === undefined) {
             this.formCols = 4;
         } else {
-            this.formCols = this.taskCols;
+            this.formCols = this.taskContentService.task.layout.cols;
         }
         this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {

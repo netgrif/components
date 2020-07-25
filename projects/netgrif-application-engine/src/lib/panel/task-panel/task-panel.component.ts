@@ -27,7 +27,6 @@ import {FinishPolicyService} from '../../task/services/finish-policy.service';
 import {NAE_TASK_OPERATIONS} from '../../task/models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
-import {NAE_TASK_COLS} from '../../task-content/model/nae-task-cols-injection-token';
 
 
 @Component({
@@ -144,13 +143,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private createContentPortal(): void {
-        let cols: number;
-        if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
-            cols = this._taskPanelData.task.layout.cols;
-        }
-
         const providers: StaticProvider[] = [
-            {provide: NAE_TASK_COLS, useValue: cols},
             {provide: TaskContentService, useValue: this._taskContentService}
         ];
         const injector = Injector.create({providers});
