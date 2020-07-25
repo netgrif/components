@@ -68,8 +68,14 @@ export class TabView implements TabViewInterface {
 
         this.selectedIndex.valueChanges.subscribe(newSelectedIndex => {
             if (newSelectedIndex !== this._lastSelectedTabIndex) {
-                this.openedTabs[this._lastSelectedTabIndex].tabSelected$.next(false);
-                this.openedTabs[newSelectedIndex].tabSelected$.next(true);
+                let tab = this.openedTabs[this._lastSelectedTabIndex];
+                if (tab) {
+                    tab.tabSelected$.next(false);
+                }
+                tab = this.openedTabs[newSelectedIndex];
+                if (tab) {
+                    tab.tabSelected$.next(true);
+                }
                 this._lastSelectedTabIndex = newSelectedIndex;
             }
         });
@@ -168,6 +174,9 @@ export class TabView implements TabViewInterface {
         }
         if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
             this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
+        }
+        if (index === this.selectedIndex.value && this.selectedIndex.value + 1 < this.openedTabs.length) {
+            this.openedTabs[index + 1].tabSelected$.next(true);
         }
         const deleted = this.openedTabs.splice(index, 1);
         deleted[0].destroy();

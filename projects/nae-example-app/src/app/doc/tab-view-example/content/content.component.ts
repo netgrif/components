@@ -25,4 +25,7 @@ export class ContentComponent implements OnInit {
       console.log(this.injected.tabViewRef.currentlySelectedTab());
   }
 
+  closeThisTab(): void {
+      this.injected.tabViewRef.closeTabUniqueId(this.injected.tabUniqueId, true);
+  }
 }
