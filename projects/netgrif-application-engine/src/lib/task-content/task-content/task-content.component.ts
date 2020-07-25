@@ -13,7 +13,6 @@ import {LoggerService} from '../../logger/services/logger.service';
 })
 export class TaskContentComponent {
     dataSource: any[];
-    formCols: number;
     loading: boolean;
 
     /**
@@ -40,13 +39,6 @@ export class TaskContentComponent {
                 private _paperView: PaperViewService,
                 private _logger: LoggerService) {
         this.loading = true;
-        if (!this.taskContentService.task
-            || !this.taskContentService.task.layout
-            || this.taskContentService.task.layout.cols === undefined) {
-            this.formCols = 4;
-        } else {
-            this.formCols = this.taskContentService.task.layout.cols;
-        }
         this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
                 this.dataSource = this.fillBlankSpace(data, this.formCols);
@@ -59,6 +51,16 @@ export class TaskContentComponent {
 
     public get taskId(): string {
         return this.taskContentService.task.stringId;
+    }
+
+    public get formCols(): number {
+        if (!this.taskContentService.task
+            || !this.taskContentService.task.layout
+            || this.taskContentService.task.layout.cols === undefined) {
+            return 4;
+        } else {
+            return this.taskContentService.task.layout.cols;
+        }
     }
 
     private static newGridRow(cols: number): Array<GridFiller> {
