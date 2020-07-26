@@ -528,22 +528,39 @@ export class CaseTreeService implements OnDestroy {
      * @param affectedNode the node in the tree that had a child added
      * @param caseRefField the case ref field of the affected node
      * @param newCaseRefValue the new value of the case ref field in the node
+     * @param attemptNumber the number of attempts that failed before a call to this function.
+     * If the number is greater than 2 no more attempts will be made.
      * @returns an `Observable` that emits when add operation completes (either successfully or not)
      */
     protected processChildNodeAdd(affectedNode: CaseTreeNode,
                                   caseRefField: ImmediateData,
-                                  newCaseRefValue: Array<string>): Observable<void> {
+                                  newCaseRefValue: Array<string>,
+                                  attemptNumber = 0): Observable<void> {
         const result$ = new Subject<void>();
+
+        if (attemptNumber > 2) {
+            this._logger.error('Failed to find child node within 3 attempts. Giving up...');
+            return this.emitOneVoid();
+        }
 
         caseRefField.value = newCaseRefValue;
         this._caseResourceService.searchCases(new SimpleFilter('', FilterType.CASE, {
             query: 'stringId:' + newCaseRefValue[newCaseRefValue.length - 1]
         })).subscribe(page => {
-            if (!hasContent(page) || page.content.length !== 1) {
-                this._logger.error('Child node case could not be found');
+            if (!hasContent(page)) {
+                // the page should have content, since we got the id from the set data response which means
+                // a case with this id was created and thus must exist => try to search again
+                setTimeout(() => {
+                    this.processChildNodeAdd(affectedNode, caseRefField, newCaseRefValue, attemptNumber + 1).subscribe(() => {
+                        result$.next();
+                        result$.complete();
+                    });
+                }, 200);
+                return;
+            } else if (page.content.length === 1) {
+                this.pushChildToTree(affectedNode, page.content[0]);
             } else {
-                affectedNode.children.push(new CaseTreeNode(page.content[0], affectedNode));
-                this.refreshTree();
+                this._logger.error('Found multiple cases when searching for child. Only one case expected.');
             }
             result$.next();
             result$.complete();
@@ -554,6 +571,16 @@ export class CaseTreeService implements OnDestroy {
         });
 
         return result$.asObservable();
+    }
+
+    /**
+     * Adds a new child node to the target parent node.
+     * @param parentNode the nodes whose child shoulc be added
+     * @param childCase the child case
+     */
+    protected pushChildToTree(parentNode: CaseTreeNode, childCase: Case): void {
+        parentNode.children.push(new CaseTreeNode(childCase, parentNode));
+        this.refreshTree();
     }
 
     /**
