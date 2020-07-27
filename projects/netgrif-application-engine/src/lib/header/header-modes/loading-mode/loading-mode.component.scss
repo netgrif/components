@@ -1,0 +1,39 @@
+.phl-row {
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.phl-col {
+    height: 20px;
+    flex: 0 0 45%;
+    background-color: #ced4da;
+    border-radius: 4px;
+
+}
+
+.phl-item {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.phl-item::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: 1;
+    width: 500%;
+    margin-left: -250%;
+    -webkit-animation: phAnimation 0.8s linear infinite;
+    animation: phAnimation 0.8s linear infinite;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 55%) 50% 50%;
+}
+
+.phl-item, .phl-item *, .phl-item::after, .phl-item::before {
+    box-sizing: border-box;
+}

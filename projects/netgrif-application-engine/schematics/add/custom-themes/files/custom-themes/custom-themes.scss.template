@@ -1,0 +1,45 @@
+@import '~@angular/material/theming';
+@import 'custom-light-theme.scss';
+<% if (darkExists) { %>
+@import 'custom-dark-theme.scss';
+<% } %>
+@import '~@netgrif/application-engine/nae-theme';
+
+$typography: mat-typography-config(
+    $font-family: 'Roboto, monospace',
+    $headline: mat-typography-level(32px, 48px, 700)
+);
+
+@include mat-core($typography);
+
+$custom-light-theme: mat-light-theme(
+        <% if (primaryLight) { %>
+         mat-palette($bv-light-primary)<% if (secondaryLight || warnLight) { %>,<% } %>
+        <% } %>
+        <% if (secondaryLight) { %>
+         mat-palette($bv-light-secondary)<% if (warnLight) { %>,<% } %>
+        <% } %>
+        <% if (warnLight) { %>
+         mat-palette($bv-light-warn)
+        <% } %>
+        );
+@include angular-material-theme($custom-light-theme);
+@include nae-lib-theme($custom-light-theme, $typography);
+
+
+<% if (darkExists) { %>
+.custom-dark-theme {
+     $custom-dark-theme: mat-dark-theme(
+        <% if (primaryDark) { %>
+         mat-palette($bv-dark-primary)<% if (secondaryDark || warnDark) { %>,<% } %>
+        <% } %>
+        <% if (secondaryDark) { %>
+         mat-palette($bv-dark-secondary)<% if (warnDark) { %>,<% } %>
+        <% } %>
+        <% if (warnDark) { %>
+         mat-palette($bv-dark-warn)
+        <% } %>
+        );
+     @include angular-material-theme($custom-dark-theme);
+}
+<% } %>

@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+<% if (primaryLight) { %>
+$bv-light-primary: ( <%= primaryLight %>
+contrast : (<%= primaryContrastLight %>)
+);
+<% } %>
+<% if (secondaryLight) { %>
+$bv-light-secondary: ( <%= secondaryLight %>
+contrast : (<%= secondaryContrastLight %>)
+);
+<% } %>
+<% if (warnLight) { %>
+$bv-light-warn: (  <%= warnLight %>
+contrast : (<%= warnContrastLight %>)
+);
+<% } %>
+

@@ -1,0 +1,14 @@
+<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="boolean">
+</nae-data-field-template>
+
+<ng-template #boolean let-showLargeLayout="showLargeLayout">
+    <div>
+        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}<nae-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nae-required-label> <br></mat-label>
+        <mat-slide-toggle color="primary" [formControl]="formControl">
+            {{dataField.placeholder}}
+        </mat-slide-toggle>
+        <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
+    </div>
+</ng-template>

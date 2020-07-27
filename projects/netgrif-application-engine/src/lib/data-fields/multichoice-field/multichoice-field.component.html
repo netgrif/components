@@ -1,0 +1,19 @@
+<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="multiFieldTemplate">
+</nae-data-field-template>
+
+<ng-template #multiFieldTemplate let-showLargeLayout="showLargeLayout">
+    <div [ngSwitch]="dataField.view">
+        <nae-multichoice-list-field *ngSwitchCase="'list'"
+                                    [showLargeLayout]="showLargeLayout"
+                                    [multichoiceField]="dataField"
+                                    [formControlRef]="formControl">
+        </nae-multichoice-list-field>
+        <nae-multichoice-select-field *ngSwitchDefault
+                                      [showLargeLayout]="showLargeLayout"
+                                      [multichoiceField]="dataField"
+                                      [formControlRef]="formControl">
+        </nae-multichoice-select-field>
+    </div>
+</ng-template>

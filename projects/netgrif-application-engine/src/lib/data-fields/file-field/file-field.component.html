@@ -1,0 +1,46 @@
+<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="dataFieldTemplate">
+</nae-data-field-template>
+
+<ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
+    <div>
+        <!--        <div class="file-field-image-wrapper">-->
+        <!--            <img #imageEl src="" alt="" class="file-field-image">-->
+        <!--        </div>-->
+        <mat-label *ngIf="!showLargeLayout.value">
+            {{dataField.title}}
+            <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label>
+            <br>
+        </mat-label>
+        <div fxLayout="column" fxLayoutAlign="start none">
+
+            <div fxLayout="row" fxLayoutAlign="start center" class="margin-bottom-default">
+                <div fxFlex="10">
+                    <mat-icon *ngIf="state.completed && !state.error" color="accent">done</mat-icon>
+                    <mat-icon *ngIf="state.completed && state.error" color="warn">error</mat-icon>
+                </div>
+                <div fxFlex="65">
+                    <button mat-button color="primary" (click)="download()" matTooltip="Click to download" fxFlex="100">
+                        {{name}}
+                    </button>
+                </div>
+                <div fxFlex="5"></div>
+                <div fxFlex="20">
+                    <button mat-stroked-button color="accent" (click)="chooseFile()" [disabled]="formControl.disabled"
+                            [class.do-not-click]="state.uploading" fxFlex>
+                        <mat-icon>file_upload</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <mat-progress-bar *ngIf="state.uploading || state.downloading" color="primary" [value]="state.progress"
+                              [mode]="state.uploading ? 'determinate' : 'indeterminate'"
+                              class="margin-bottom-default"></mat-progress-bar>
+        </div>
+        <input type="file" #fileUploadInput name="fileUpload" [multiple]="multiple"
+               accept="{{dataField.allowTypes}}" class="invisible-input"/>
+        <input type="hidden" [formControl]="formControl" [multiple]="multiple" accept="{{dataField.allowTypes}}">
+        <mat-error
+            *ngIf="!formControl.valid && formControl.touched">{{'dataField.validations.required' | translate}}</mat-error>
+    </div>
+</ng-template>

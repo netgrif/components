@@ -1,8 +1,0 @@
-<md-button ng-if="search.searchType === search.constants.SEARCH_CASES && $user.hasAuthority(tab.authorityToCreate)"
-           ng-click="tab.openNewCaseDialog()"
-           class="md-fab md-raised md-mini md-primary">
-    <md-icon class="material-icons">add</md-icon>
-    <md-tooltip md-direction="left">
-        {{::$i18n.block.add.create + tab.createDialogTitle}}
-    </md-tooltip>
-</md-button>

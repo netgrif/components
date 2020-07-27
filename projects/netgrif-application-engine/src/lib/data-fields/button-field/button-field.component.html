@@ -1,0 +1,25 @@
+<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="button">
+</nae-data-field-template>
+
+<ng-template #button let-showLargeLayout="showLargeLayout">
+    <div>
+        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}<nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label></mat-label>
+        <button mat-button
+                [ngClass]="{
+                'mat-raised-button': dataField.view === 'raised',
+                'mat-stroked-button': dataField.view === 'stroked',
+                'mat-flat-button': dataField.view === 'flat',
+                'mat-icon-button': dataField.view === 'icon',
+                'mat-fab': dataField.view === 'fab',
+                'mat-mini-fab': dataField.view === 'minifab'}"
+                color="primary"
+                [matTooltip]="dataField.description"
+                [disabled]="formControl.disabled"
+                (click)="formControl.setValue(formControl.value + 1)">
+            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : dataField.placeholder }}
+        </button>
+        <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
+    </div>
+</ng-template>

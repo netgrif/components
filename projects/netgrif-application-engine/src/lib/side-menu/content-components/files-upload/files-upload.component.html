@@ -1,0 +1,15 @@
+<div class="container-position-relative side-menu-root">
+    <mat-toolbar color="primary" class="container-position-relative">
+        {{ 'side-menu.files-upload.upload' | translate}}
+        <button mat-mini-fab class="add-files-button" (click)="onFileUpload()">
+            <mat-icon class="add-files-icon">add</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <nae-files-upload-list [allFiles]="allFiles" [fileFieldService]="fileFieldService"></nae-files-upload-list>
+
+    <button *ngIf="fileField.zipped" class="send-button" mat-raised-button color="primary" (click)="onSend()">
+        <mat-icon>send</mat-icon>
+        {{ 'side-menu.files-upload.send' | translate | uppercase}}
+    </button>
+</div>

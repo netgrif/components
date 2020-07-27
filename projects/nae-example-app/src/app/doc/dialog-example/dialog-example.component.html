@@ -1,0 +1,73 @@
+<nae-app-documentation [liveExample]="panelExample"
+                       [mainTitle]="TITLE"
+                       [mainDescription]="DESCRIPTION"
+                       [apiModuleImport]="'PanelModule'"></nae-app-documentation>
+
+<ng-template #panelExample>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+
+        <div fxLayout="column" fxLayoutAlign="space-around start" class="padding16px">
+            <mat-form-field>
+                <mat-label>Set title</mat-label>
+                <input #alertTitleInput matInput value="Alert dialog title">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Set message</mat-label>
+                <input #alertMsgInput matInput value="Alert dialog critical message!">
+            </mat-form-field>
+            <button mat-raised-button (click)="simple(alertTitleInput.value, alertMsgInput.value)">
+                Open Dialog
+            </button>
+        </div>
+
+        <mat-divider [vertical]="true" class="height100"></mat-divider>
+
+        <div fxLayout="column" fxLayoutAlign="space-around start" class="padding16px">
+            <mat-form-field>
+                <mat-label>Set title</mat-label>
+                <input #confirmTitleInput matInput value="Are you developer?">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Set question</mat-label>
+                <input #confirmMsgInput matInput value="Are you sure you are the developer?">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Set positive button text</mat-label>
+                <input #inputPositive matInput value="Yes">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Set negative button text</mat-label>
+                <input #inputNegative matInput value="No">
+            </mat-form-field>
+            <button mat-raised-button
+                    (click)="question(confirmTitleInput.value, confirmMsgInput.value, inputPositive.value, inputNegative.value)">
+                Open Dialog
+            </button>
+            <p>Question result: {{questionResult}}</p>
+        </div>
+
+        <mat-divider [vertical]="true" class="height100"></mat-divider>
+
+        <div fxLayout="column" fxLayoutAlign="space-around start" class="padding16px">
+            <mat-form-field>
+                <mat-label>Set title</mat-label>
+                <input #promptTitleInput matInput value="Question with answer dialog title">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Set question</mat-label>
+                <input #promptMsgInput matInput value="How is your car's brand?">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Set placeholder</mat-label>
+                <input #inputPlaceholder matInput value="Answer">
+            </mat-form-field>
+            <button mat-raised-button
+                    (click)="answer(promptTitleInput.value, promptMsgInput.value, inputPlaceholder.value)">
+                Open Dialog
+            </button>
+            <p>Answer: {{answerResult}}</p>
+        </div>
+
+    </div>
+</ng-template>

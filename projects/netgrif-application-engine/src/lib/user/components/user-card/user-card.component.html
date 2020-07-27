@@ -1,0 +1,50 @@
+<div [ngSwitch]="mode" class="no-outline">
+    <div *ngSwitchCase="'full'" #fullShowcase fxLayout="column" fxLayoutAlign="start center"
+         class="full-showcase-container no-outline margin-bottom-x2"
+         [routerLink]="link">
+        <div [style.backgroundImage]="'url('+userBanner+')'" class="full-width user-banner mat-elevation-z6" matRipple
+             [matRippleTrigger]="fullShowcase"></div>
+        <div class="user-avatar-large margin-bottom-default mat-elevation-z6" matRipple [matRippleTrigger]="fullShowcase">
+            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text padding-default">
+            <span>{{user.fullName}}</span>
+            <span>{{user.email}}</span>
+        </div>
+    </div>
+    <div *ngSwitchCase="'horizontal'" fxLayout="row" fxLayoutAlign="start center"
+         class="horizontal-showcase-container no-outline padding-default" [routerLink]="link" matRipple>
+        <div class="user-avatar-large mat-elevation-z6">
+            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text">
+            <span>{{user.fullName}}</span>
+            <span>{{user.email}}</span>
+        </div>
+    </div>
+    <div *ngSwitchCase="'vertical'" fxLayout="column" fxLayoutAlign="start center" class="vertical-showcase-container no-outline padding-default"
+         [routerLink]="link" matRipple>
+        <div class="user-avatar-large mat-elevation-z6">
+            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text">
+            <span>{{user.fullName}}</span>
+            <span>{{user.email}}</span>
+        </div>
+    </div>
+    <div *ngSwitchCase="'icon'" [routerLink]="link">
+        <div class="mat-elevation-z6 no-outline"
+             [ngClass]="{'user-avatar-large':iconStyle === 'large', 'user-avatar-small':iconStyle==='small'}"
+             [matTooltip]="user.fullName+'\n'+user.email"
+             matTooltipHideDelay="1000"
+             [matTooltipPosition]="tooltipPosition"
+             matRipple>
+            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
+        </div>
+    </div>
+    <div *ngSwitchDefault>
+        <span>{{ 'side-menu.user.showcase' | translate}}</span>
+    </div>
+</div>
+
+

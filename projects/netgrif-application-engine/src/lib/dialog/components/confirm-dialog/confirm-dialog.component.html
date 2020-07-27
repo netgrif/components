@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+
+<div mat-dialog-content class="dialog-container dialog-content-margin">{{data.content}}</div>
+
+<mat-dialog-actions fxLayoutAlign="end">
+    <button mat-button color="warn" (click)="choice=false; onClose()">{{data.negativeLabel}}</button>
+    <button mat-flat-button color="primary" (click)="choice=true; onClose()">{{data.positiveLabel}}</button>
+</mat-dialog-actions>
