@@ -7,6 +7,7 @@ import {Equals} from '../../operator/equals';
 import {Query} from '../../query/query';
 import {Observable, of} from 'rxjs';
 import {filter, map, tap} from 'rxjs/operators';
+import {hasContent} from '../../../../utility/pagination/page-has-content';
 
 
 export class TaskAssignee extends AutocompleteCategory<number> {
@@ -35,8 +36,8 @@ export class TaskAssignee extends AutocompleteCategory<number> {
             tap(() => {
                 this._searchingUsers = false;
             }),
-            filter(result => Array.isArray(result)),
-            map(users => users.map(
+            filter(page => hasContent(page)),
+            map(users => users.content.map(
                 user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
             ))
         );
