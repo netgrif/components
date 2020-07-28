@@ -2,6 +2,8 @@ import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FileFieldValue} from './file-field-value';
+import {Observable, Subject} from 'rxjs';
+import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
 
 /**
  * Supported types of files a user can select through a file picker.
@@ -38,6 +40,11 @@ export class FileField extends DataField<FileFieldValue> {
     public filesSize = 0;
 
     /**
+     * Used to forward the result of the upload file backend call to the task content
+     */
+    private _changedFields$: Subject<ChangedFieldContainer>;
+
+    /**
      * Create new instance for file field with all his properties.
      *
      * Placeholder is a substitute for the value name if not set value.
@@ -46,6 +53,7 @@ export class FileField extends DataField<FileFieldValue> {
                 layout?: Layout, private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1,
                 private _zipped: boolean = false, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
         super(stringId, title, value, behavior, placeholder, description, layout);
+        this._changedFields$ = new Subject<ChangedFieldContainer>();
     }
 
     get maxUploadSizeInBytes(): number {
@@ -62,6 +70,14 @@ export class FileField extends DataField<FileFieldValue> {
 
     get allowTypes(): string {
         return this._allowTypes instanceof Array ? this._allowTypes.toString() : this._allowTypes;
+    }
+
+    get changedFields$(): Observable<ChangedFieldContainer> {
+        return this._changedFields$.asObservable();
+    }
+
+    public emitChangedFields(change: ChangedFieldContainer): void {
+        this._changedFields$.next(change);
     }
 
     /**

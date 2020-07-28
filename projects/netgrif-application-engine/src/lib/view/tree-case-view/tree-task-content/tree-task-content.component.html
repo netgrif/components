@@ -2,7 +2,7 @@
     <div class="task-panel-body" fxFlex="100">
         <nae-task-content [noDataText]="taskContentText$ | async"></nae-task-content>
 
-        <div *ngIf="!processingTaskChange" fxLayoutAlign="center center">
+        <div *ngIf="!processingTaskChange && displayTaskControlButtons" fxLayoutAlign="center center">
             <button *ngIf="canAssign()" color="primary" (click)="assign()" mat-raised-button>
                 {{ 'tasks.view.assign' | translate | uppercase }}</button>
             <button *ngIf="canCancel()" color="warn" (click)="cancel()" mat-stroked-button>

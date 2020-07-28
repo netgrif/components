@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {NAE_TAB_DATA} from '@netgrif/application-engine';
+import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/application-engine';
 
 @Component({
   selector: 'nae-app-content',
@@ -8,7 +8,15 @@ import {NAE_TAB_DATA} from '@netgrif/application-engine';
 })
 export class ContentComponent implements OnInit {
 
-  constructor(@Inject(NAE_TAB_DATA) public injected) {}
+  constructor(@Inject(NAE_TAB_DATA) public injected: InjectedTabData & {text: string}) {
+      injected.tabSelected$.subscribe(switchType => {
+          if (switchType) {
+              console.log(`Tab with id ${injected.tabUniqueId} selected`);
+          } else {
+              console.log(`Tab with id ${injected.tabUniqueId} deselected`);
+          }
+      });
+  }
 
   ngOnInit(): void {
   }
@@ -17,4 +25,7 @@ export class ContentComponent implements OnInit {
       console.log(this.injected.tabViewRef.currentlySelectedTab());
   }
 
+  closeThisTab(): void {
+      this.injected.tabViewRef.closeTabUniqueId(this.injected.tabUniqueId, true);
+  }
 }

@@ -58,7 +58,7 @@ export class EnumerationField extends DataField<string> {
     }
 
     private checkKey(control: AbstractControl): ValidationErrors | null {
-        if (this._choices === undefined || control.value === undefined || control.value === '') {
+        if (this._choices === undefined || this._choices.length === 0 || control.value === '' || control.value === undefined) {
             return null;
         }
         return this._choices.find(choice => choice.key === control.value) ? null : {wrongValue: true};

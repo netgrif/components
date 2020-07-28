@@ -98,7 +98,7 @@ export abstract class TaskContentService {
      * @param chFields object containing the delta of the changes from the previous state
      */
     public updateFromChangedFields(chFields: ChangedFields): void {
-        if (!this._task) {
+        if (!this._task || !this._task.dataGroups) {
             return;
         }
         this._task.dataGroups.forEach(dataGroup => {

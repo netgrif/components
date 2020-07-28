@@ -14,6 +14,7 @@ import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {HttpErrorResponse} from '@angular/common/http';
+import {FileField} from '../../data-fields/file-field/models/file-field';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -65,11 +66,15 @@ export class TaskDataService extends TaskHandlingService {
      * and only passes `true` to the `afterAction` argument.
      *
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
+     * @param force set to `true` if you need force reload of all task data
      */
-    public initializeTaskDataFields(afterAction = new Subject<boolean>()): void {
-        if (this._safeTask.dataSize > 0) {
+    public initializeTaskDataFields(afterAction = new Subject<boolean>(), force: boolean = false): void {
+        if (this._safeTask.dataSize > 0 && !force) {
             afterAction.next(true);
             return;
+        }
+        if (force) {
+            this._safeTask.dataSize = 0;
         }
         this._taskState.startLoading();
         this._taskResourceService.getData(this._safeTask.stringId).subscribe(dataGroups => {
@@ -85,6 +90,11 @@ export class TaskDataService extends TaskHandlingService {
                                 this.updateTaskDataFields();
                             }
                         });
+                        if (field instanceof FileField) {
+                            field.changedFields$.subscribe(change => {
+                                this._changedFields$.next(change.changedFields);
+                            });
+                        }
                     });
                     this._safeTask.dataSize += group.fields.length;
                 });

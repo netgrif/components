@@ -1,4 +1,5 @@
 import {Type} from '@angular/core';
+import {Observable} from 'rxjs';
 
 /**
  * Stores information about content of one opened tab in tab view.
@@ -89,6 +90,12 @@ export interface InjectedTabData {
      * Reference to the parent tab view allowing some control over it from the tab content component.
      */
     tabViewRef: TabViewInterface;
+    /**
+     * `true` is emitted into this stream when the tab is switched into.
+     *
+     * `false` is emitted into this stream when the tab is switched away from.
+     */
+    tabSelected$: Observable<boolean>;
 }
 
 
@@ -102,6 +109,7 @@ export interface TabViewInterface {
      * See [TabView.currentlySelectedTab]{@link TabView#currentlySelectedTab}
      */
     currentlySelectedTab(): number;
+
     /**
      * See [TabView.openTab]{@link TabView#openTab}
      */
@@ -120,10 +128,10 @@ export interface TabViewInterface {
     /**
      * See [TabView.closeTabIndex]{@link TabView#closeTabIndex}
      */
-    closeTabIndex(index: number): void;
+    closeTabIndex(index: number, force?: boolean): void;
 
     /**
      * See [TabView.closeTabUniqueId]{@link TabView#closeTabUniqueId}
      */
-    closeTabUniqueId(uniqueId: string): void;
+    closeTabUniqueId(uniqueId: string, force?: boolean): void;
 }

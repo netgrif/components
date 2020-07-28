@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {TaskContentService} from '../../../task-content/services/task-content.service';
 import {TaskDataService} from '../../../task/services/task-data.service';
 import {AssignTaskService} from '../../../task/services/assign-task.service';
@@ -14,7 +14,6 @@ import {SubjectTaskOperations} from '../../../task/models/subject-task-operation
 import {AssignPolicyService} from '../../../task/services/assign-policy.service';
 import {FinishPolicyService} from '../../../task/services/finish-policy.service';
 import {Observable} from 'rxjs';
-import {NAE_TASK_COLS} from '../../../task-content/model/nae-task-cols-injection-token';
 
 @Component({
     selector: 'nae-tree-task-content',
@@ -33,10 +32,11 @@ import {NAE_TASK_COLS} from '../../../task-content/model/nae-task-cols-injection
         AssignPolicyService,
         FinishPolicyService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-        {provide: NAE_TASK_COLS, useValue: undefined}
     ]
 })
 export class TreeTaskContentComponent implements AfterViewInit {
+
+    @Input() public displayTaskControlButtons = true;
 
     constructor(private _treeTaskContentService: TreeTaskContentService,
                 private _taskEventService: TaskEventService,
