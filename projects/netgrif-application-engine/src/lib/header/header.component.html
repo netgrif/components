@@ -1,6 +1,6 @@
 <mat-card [ngClass]="{'padding-custom': headerService.headerState.mode === headerModeEnum.SORT}">
     <div fxLayout="row">
-        <div fxLayout="row" fxFlex="95" class="header-content-container" fxLayoutAlign="start center"
+        <div fxLayout="row" fxFlex="95" class="header-content-container flex-95" fxLayoutAlign="start center"
              [ngSwitch]="headerService.headerState.mode" *ngIf="!headerService.loading.isActive">
             <div *ngSwitchCase="headerModeEnum.SORT" fxFlex="100" fxLayout="row">
                 <nae-sort-mode fxFlex="100" [headerService]="headerService"></nae-sort-mode>
@@ -18,36 +18,37 @@
                 <nae-loading-mode fxFlex="100" [headerService]="headerService"></nae-loading-mode>
             </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5"
-             [ngSwitch]="headerService.headerState.mode" *ngIf="!hideEditMode">
-            <button *ngSwitchDefault mat-icon-button [matMenuTriggerFor]="headerMenu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <div *ngSwitchCase="headerModeEnum.EDIT">
-                <button mat-icon-button (click)="headerService.confirmEditMode()">
-                    <mat-icon color="primary">done</mat-icon>
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5" class="flex-5">
+            <div [ngSwitch]="headerService.headerState.mode" *ngIf="!hideEditMode">
+                <button *ngSwitchDefault mat-icon-button [matMenuTriggerFor]="headerMenu">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <button mat-icon-button (click)="headerService.revertEditMode()">
-                    <mat-icon color="warn">close</mat-icon>
-                </button>
+                <div *ngSwitchCase="headerModeEnum.EDIT">
+                    <button mat-icon-button (click)="headerService.confirmEditMode()">
+                        <mat-icon color="primary">done</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="headerService.revertEditMode()">
+                        <mat-icon color="warn">close</mat-icon>
+                    </button>
+                </div>
+                <mat-menu #headerMenu="matMenu">
+                    <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
+                            (click)="headerService.changeMode(headerModeEnum.SORT, false)">
+                        <mat-icon>sort</mat-icon>
+                        {{ 'headers.orderMode' | translate}}
+                    </button>
+                    <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
+                            (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
+                        <mat-icon>search</mat-icon>
+                        {{ 'headers.searchMode' | translate}}
+                    </button>
+                    <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.EDIT}"
+                            (click)="headerService.changeMode(headerModeEnum.EDIT)">
+                        <mat-icon>edit</mat-icon>
+                        {{ 'headers.editMode' | translate}}
+                    </button>
+                </mat-menu>
             </div>
-            <mat-menu #headerMenu="matMenu">
-                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
-                        (click)="headerService.changeMode(headerModeEnum.SORT, false)">
-                    <mat-icon>sort</mat-icon>
-                    {{ 'headers.orderMode' | translate}}
-                </button>
-                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
-                        (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
-                    <mat-icon>search</mat-icon>
-                    {{ 'headers.searchMode' | translate}}
-                </button>
-                <button mat-menu-item [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.EDIT}"
-                        (click)="headerService.changeMode(headerModeEnum.EDIT)">
-                    <mat-icon>edit</mat-icon>
-                    {{ 'headers.editMode' | translate}}
-                </button>
-            </mat-menu>
         </div>
     </div>
 </mat-card>

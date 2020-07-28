@@ -16,6 +16,8 @@ export class CaseListComponent implements OnInit, AfterViewInit {
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Output() caseClick: EventEmitter<Case>;
+    @Input() showCasePanelIcon = true;
+    @Input() showDeleteMenu = false;
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
     public cases$: Observable<Array<Case>>;

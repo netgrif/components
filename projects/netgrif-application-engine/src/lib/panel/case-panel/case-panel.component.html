@@ -2,7 +2,7 @@
     <ng-template #casePanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <span fxLayoutAlign="start center" fxFlex>
-                <mat-icon class="case-panel-icon"
+                <mat-icon class="case-panel-icon" *ngIf="showCasePanelIcon"
                           [ngClass]="case_.color">{{case_.icon ? case_.icon : 'label'}}</mat-icon>
                 <span>{{firstFeaturedValue}}</span>
             </span>
@@ -16,15 +16,17 @@
             </span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
-            <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                    <mat-icon>delete</mat-icon>
-                    <span>{{ 'panel.case.delete' | translate}}</span>
+            <div *ngIf="showDeleteMenu">
+                <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-            </mat-menu>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>delete</mat-icon>
+                        <span>{{ 'panel.case.delete' | translate}}</span>
+                    </button>
+                </mat-menu>
+            </div>
         </div>
     </ng-template>
 </nae-app-panel>
