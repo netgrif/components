@@ -1,7 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {FormControl} from '@angular/forms';
-import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {UserListInjectedData} from './model/user-list-injected-data';

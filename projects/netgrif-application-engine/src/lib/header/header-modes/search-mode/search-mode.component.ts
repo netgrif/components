@@ -52,16 +52,23 @@ export class SearchModeComponent implements OnInit {
         }
 
         while (this.formControls.length < newCount) {
-            const formControl = new FormControl();
-            const i = this.formControls.length;
-            formControl.valueChanges.pipe(
-                debounceTime(this.SEARCH_DEBOUNCE_TIME),
-                map(value => value instanceof UserValue ? value.id : value)
-            ).subscribe(value => {
-                this.headerService.headerSearchInputChanged(i, value);
-            });
-            this.formControls.push(formControl);
+            this.addNewColumn();
         }
+    }
+
+    /**
+     * Adds a new column to the headers search and binds it's FormControl to the service
+     */
+    private addNewColumn(): void {
+        const formControl = new FormControl();
+        const i = this.formControls.length;
+        formControl.valueChanges.pipe(
+            debounceTime(this.SEARCH_DEBOUNCE_TIME),
+            map(value => value instanceof UserValue ? value.id : value)
+        ).subscribe(value => {
+            this.headerService.headerSearchInputChanged(i, value);
+        });
+        this.formControls.push(formControl);
     }
 
     /**

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of, timer} from 'rxjs';
-import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Pagination} from '../../resources/interface/pagination';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
