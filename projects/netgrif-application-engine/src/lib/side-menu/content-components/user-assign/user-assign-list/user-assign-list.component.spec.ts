@@ -1,14 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {UserAssignListComponent} from './user-assign-list.component';
 import {UserAssignItemComponent} from './user-assign-item/user-assign-item.component';
 import {MaterialModule} from '../../../../material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
-import {Component} from '@angular/core';
+import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {CovalentCommonModule} from '@covalent/core/common';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
-import StringUtil from '../../../../utility/string/string-util';
 import {FormControl} from '@angular/forms';
 import {UserListInjectedData} from '../model/user-list-injected-data';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -32,7 +30,6 @@ describe('UserAssignListComponent', () => {
                 TranslateLibModule
             ],
             providers: [
-                StringUtil,
                 UserListService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
@@ -41,7 +38,8 @@ describe('UserAssignListComponent', () => {
                 UserAssignItemComponent,
                 ErrorSnackBarComponent,
                 TestWrapperComponent
-            ]
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
         })
             .overrideModule(BrowserDynamicTestingModule, {
                 set: {
