@@ -11,3 +11,6 @@ export * from './cards/model/iframe-card';
 
 /* ENUMS */
 export * from './cards/model/dashboard-card-types';
+
+/* COMPONENT */
+export * from './dashboard-content/dashboard-content.component';
