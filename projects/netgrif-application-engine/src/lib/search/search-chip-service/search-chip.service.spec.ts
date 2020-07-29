@@ -1,16 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-
-import { SearchChipService } from './search-chip.service';
+import {TestBed} from '@angular/core/testing';
+import {SearchChipService} from './search-chip.service';
 
 describe('SearchChipService', () => {
-  let service: SearchChipService;
+    let service: SearchChipService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(SearchChipService);
-  });
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [
+                SearchChipService
+            ]
+        });
+        service = TestBed.inject(SearchChipService);
+    });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });
