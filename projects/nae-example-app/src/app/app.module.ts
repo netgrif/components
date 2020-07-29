@@ -110,7 +110,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
-        TreeViewExampleComponent,
+        TreeViewExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -161,6 +161,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         PanelModule,
         TreeCaseViewModule,
         MatProgressSpinnerModule,
+        DashboardModule,
     ],
     entryComponents: [
         ContentComponent,

@@ -258,7 +258,7 @@
     "admin": {
         "user-list": {
             "noUsersWereFound": "Momentálne nie sú v systéme žiadny používatelia",
-            "listTitle": "Users"
+            "listTitle": "Používatelia"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",

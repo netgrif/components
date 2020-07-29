@@ -12,6 +12,8 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
+import {UserListInjectedData} from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
+import {UserValue} from '../../data-fields/user-field/models/user-value';
 
 
 /**
@@ -45,7 +47,13 @@ export class DelegateTaskService extends TaskHandlingService {
         if (this._taskState.isLoading) {
             return;
         }
-        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM).onClose.subscribe(event => {
+        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM,
+            {
+                roles: undefined,
+                value: new UserValue(
+                    this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
+                )
+            } as UserListInjectedData).onClose.subscribe(event => {
             this._log.info('Sidemenu event:' + event);
             if (event.data !== undefined) {
                 this._taskState.startLoading();

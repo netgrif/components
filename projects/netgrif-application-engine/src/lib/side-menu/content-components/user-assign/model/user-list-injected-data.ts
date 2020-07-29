@@ -5,7 +5,7 @@ import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 /**
  * Interface that represents the input data to the side menu for the user assign component.
  */
-export interface UserAssignInjectedData extends SideMenuInjectionData {
+export interface UserListInjectedData extends SideMenuInjectionData {
     roles: Array<Role>;
     value: UserValue;
 }

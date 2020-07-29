@@ -1,11 +1,11 @@
-import {Component, Inject, ViewChild} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {FormControl} from '@angular/forms';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
-import {UserAssignService} from './service/user-assign.service';
-import {UserAssignInjectedData} from './model/user-assign-injected-data';
+import {UserListInjectedData} from './model/user-list-injected-data';
+import {UserListService} from '../../../user/services/user-list.service';
 
 /**
  * Is the main - parent component of the entire user assignment in the side menu.
@@ -17,7 +17,7 @@ import {UserAssignInjectedData} from './model/user-assign-injected-data';
     selector: 'nae-user-assign',
     templateUrl: './user-assign.component.html',
     styleUrls: ['./user-assign.component.scss'],
-    providers: [UserAssignService]
+    providers: [UserListService]
 })
 export class UserAssignComponent {
     /**
@@ -28,7 +28,7 @@ export class UserAssignComponent {
     /**
      * Data about preselected user send from [UserFieldComponent]{@link UserFieldComponent}.
      */
-    public injectedData: UserAssignInjectedData;
+    public injectedData: UserListInjectedData;
 
     /**
      * Value of the current selected user.
@@ -41,7 +41,7 @@ export class UserAssignComponent {
      */
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl) {
         if (this._sideMenuControl.data) {
-            this.injectedData = this._sideMenuControl.data as UserAssignInjectedData;
+            this.injectedData = this._sideMenuControl.data as UserListInjectedData;
         }
     }
 
