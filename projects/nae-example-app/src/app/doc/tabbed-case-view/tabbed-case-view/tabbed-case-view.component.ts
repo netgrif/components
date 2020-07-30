@@ -9,7 +9,7 @@ import {
     SearchService,
     SimpleFilter,
     TabbedCaseView,
-    NAE_DEFAULT_HEADERS
+    SearchChipService
 } from '@netgrif/application-engine';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
@@ -25,6 +25,7 @@ const searchServiceFactory = () => {
     templateUrl: './tabbed-case-view.component.html',
     styleUrls: ['./tabbed-case-view.component.scss'],
     providers: [
+        SearchChipService,
         ConfigCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},

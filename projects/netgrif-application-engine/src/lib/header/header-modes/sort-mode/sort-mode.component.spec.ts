@@ -63,8 +63,8 @@ describe('SortModeComponent', () => {
     });
 
     it('should call sort header changed', () => {
-        component.sortHeaderChanged({active: '', direction: 'asc'});
-        expect(headerSpy).toHaveBeenCalledWith('', 'asc');
+        component.sortHeaderChanged({active: '7-hello', direction: 'asc'});
+        expect(headerSpy).toHaveBeenCalledWith(7, 'hello', 'asc');
     });
 
     afterAll(() => {
