@@ -204,14 +204,14 @@ export class TaskContentComponent {
             if (row.length === 0) {
                 encounterFirst = true;
             }
-            row.forEach(filler => {
+            for (const filler of row) {
                 if (!encounterFirst && !filler.isFullWidth(columnCount)) {
                     encounterFirst = true;
                 }
                 if (encounterFirst && (filler.isIntentional || !filler.isFullWidth(columnCount))) {
                     returnResource.push(filler.convertToGridElement(y));
                 }
-            });
+            }
         }
 
         returnResource.sort((a, b) => {
