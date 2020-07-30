@@ -21,7 +21,7 @@ export class SearchModeComponent implements OnInit {
     /**
      * The time that must elapse since last keypress in search input before a search request is sent
      */
-    private SEARCH_DEBOUNCE_TIME = 200;
+    private SEARCH_DEBOUNCE_TIME = 350;
 
     public formControls: Array<FormControl> = [];
 

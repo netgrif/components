@@ -22,6 +22,7 @@ import {SearchChipService} from '../search-chip-service/search-chip.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Moment} from 'moment';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
+import {LoggerService} from '../../logger/services/logger.service';
 
 interface PredicateInfo {
     predicateIndex: number;
@@ -41,6 +42,7 @@ export class HeaderSearchService {
     constructor(protected _categoryFactory: CategoryFactory,
                 protected _processService: ProcessService,
                 protected _translate: TranslateService,
+                protected _logger: LoggerService,
                 @Optional() protected _searchService: SearchService,
                 @Optional() protected _searchChipService: SearchChipService) {
         this._columnToPredicate = new Map<number, PredicateInfo>();
@@ -73,6 +75,15 @@ export class HeaderSearchService {
      * Currently only task and case header searching is supported.
      */
     protected initializeHeaderSearch(): void {
+        if (!this._searchService) {
+            this._logger.error('You can\'t call initializeHeaderSearch without providing a SearchService to be injected!');
+            return;
+        }
+        if (!this._headerService) {
+            this._logger.error('You can\'t call initializeHeaderSearch without setting an AbstractHeaderService implementation instance!');
+            return;
+        }
+
         this._headerService.headerChange$
             .pipe(filter(change => change.changeType === HeaderChangeType.SEARCH || change.changeType === HeaderChangeType.MODE_CHANGED))
             .subscribe(change => {
