@@ -9,11 +9,11 @@ import {Injectable} from '@angular/core';
 })
 export class UserTransformer implements Transformer<AuthUser, User> {
 
-    private transformAuthorities(authorities: Array<Authority>): Array<string> {
+    protected static transformAuthorities(authorities: Array<Authority>): Array<string> {
         return !authorities ? [] : authorities.map(a => a.authority);
     }
 
-    private transformProcessRoles(roles: Array<ProcessRole>): Array<Role> {
+    protected static transformProcessRoles(roles: Array<ProcessRole>): Array<Role> {
         return !roles ? [] : roles.map(r => ({
             id: r.stringId,
             name: r.name,
@@ -21,7 +21,7 @@ export class UserTransformer implements Transformer<AuthUser, User> {
         }));
     }
 
-    private transformUserProcessRoles(roles: Array<UserProcessRole>): Array<Role> {
+    protected static transformUserProcessRoles(roles: Array<UserProcessRole>): Array<Role> {
         return !roles ? [] : roles.map(r => ({
             id: r.roleId,
             net: r.netId,
@@ -29,7 +29,7 @@ export class UserTransformer implements Transformer<AuthUser, User> {
         }));
     }
 
-    private mergeRoles(roles: Array<Array<Role>>): Array<Role> {
+   protected mergeRoles(roles: Array<Array<Role>>): Array<Role> {
         const result = roles[0];
 
         roles.splice(0, 1);
@@ -56,10 +56,10 @@ export class UserTransformer implements Transformer<AuthUser, User> {
             user.email,
             user.name,
             user.surname,
-            this.transformAuthorities(user.authorities),
+            UserTransformer.transformAuthorities(user.authorities),
             this.mergeRoles([
-                this.transformProcessRoles(user.processRoles),
-                this.transformUserProcessRoles(user.userProcessRoles)]),
+                UserTransformer.transformProcessRoles(user.processRoles),
+                UserTransformer.transformUserProcessRoles(user.userProcessRoles)]),
             groups);
 
     }
