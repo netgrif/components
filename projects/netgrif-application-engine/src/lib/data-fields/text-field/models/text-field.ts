@@ -61,9 +61,10 @@ export class TextField extends DataField<string> {
                     }
                 }
             } else if (item.validationRule.includes('regex')) {
-                const tmp = item.validationRule.split(' ');
-                if (tmp[1] !== undefined) {
-                    result.push(Validators.pattern(new RegExp(tmp[1])));
+                if (item.validationRule.startsWith('regex ')) {
+                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(6, item.validationRule.length ))));
+                } else if (item.validationRule.startsWith('regex("')) {
+                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(7, item.validationRule.length - 2))));
                 }
             } else if (item.validationRule.includes('email')) {
                 result.push(Validators.email);
