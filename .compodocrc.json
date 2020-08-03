@@ -7,5 +7,8 @@
     "theme": "gitbook",
     "customLogo": "assets/docs-title-logo.png",
     "customFavicon": "assets/docs-favicon.ico",
-    "language": "en-US"
+    "language": "en-US",
+    "disableSourceCode": true,
+    "disablePrivate": true,
+    "disableInternal": true
 }
