@@ -43,7 +43,7 @@ export class FieldConverterService {
                 }
                 if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'editor') {
                     type = TextFieldView.RICHTEXTAREA;
-                } else  if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
+                } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
                     type = TextFieldView.TEXTAREA;
                 }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
@@ -52,46 +52,17 @@ export class FieldConverterService {
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
                     item.validations, item.placeholder, item.description, item.layout);
             case FieldTypeResource.ENUMERATION:
-                let typeEnum = EnumerationFieldView.DEFAULT;
-                if (item.view && item.view.value !== undefined) {
-                    if (item.view.value === 'list') {
-                        typeEnum = EnumerationFieldView.LIST;
-                    } else if (item.view.value === 'autocomplete') {
-                        typeEnum = EnumerationFieldView.AUTOCOMPLETE;
-                    }
-                }
-                const enumChoices: EnumerationFieldValue[] = [];
-                if (item.choices instanceof Array) {
-                    item.choices.forEach(it => {
-                        enumChoices.push({key: it, value: it} as EnumerationFieldValue);
-                    });
-                } else {
-                    Object.keys(item.choices).forEach( key => {
-                        enumChoices.push({key, value: item.choices[key]} as EnumerationFieldValue);
-                    });
-                }
-                return new EnumerationField(item.stringId, item.name, item.value as string,
-                    enumChoices, item.behavior, item.placeholder, item.description, item.layout, typeEnum);
+                return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item));
+            case FieldTypeResource.ENUMERATION_MAP:
+                return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumOptions(item),
+                item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item));
             case FieldTypeResource.MULTICHOICE:
-                let typeMulti = MultichoiceFieldView.DEFAULT;
-                if (item.view && item.view.value !== undefined) {
-                    if (item.view.value === 'list') {
-                        typeMulti = MultichoiceFieldView.LIST;
-                    }
-                }
-                const values: string[] = item.value as string[];
-                const choicesMulti: MultichoiceFieldValue[] = [];
-                if (item.choices instanceof Array) {
-                    item.choices.forEach(it => {
-                        choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);
-                    });
-                } else {
-                    Object.keys(item.choices).forEach( key => {
-                        choicesMulti.push({key, value: item.choices[key]} as MultichoiceFieldValue);
-                    });
-                }
-                return new MultichoiceField(item.stringId, item.name, values, choicesMulti, item.behavior,
-                    item.placeholder, item.description, item.layout, typeMulti);
+                return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceChoices(item),
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item));
+            case FieldTypeResource.MULTICHOICE_MAP:
+                return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item));
             case FieldTypeResource.DATE:
                 let date;
                 if (item.value) {
@@ -164,5 +135,91 @@ export class FieldConverterService {
             }
         }
         return value;
+    }
+
+    /**
+     * @param enumField enumeration field resource object who's view type we want to resolve
+     * @returns the view type defined in the field object, or default if none, or invalid type is defined
+     */
+    protected resolveEnumViewType(enumField: DataFieldResource): EnumerationFieldView {
+        let typeEnum = EnumerationFieldView.DEFAULT;
+        if (enumField.view && enumField.view.value !== undefined) {
+            if (enumField.view.value === 'list') {
+                typeEnum = EnumerationFieldView.LIST;
+            } else if (enumField.view.value === 'autocomplete') {
+                typeEnum = EnumerationFieldView.AUTOCOMPLETE;
+            }
+        }
+        return typeEnum;
+    }
+
+    /**
+     * This function is used to parse enumeration options from the `choices` attribute
+     * @param enumField enumeration field resource object who's choices we want to resolve
+     * @returns the options for the enumeration field
+     */
+    protected resolveEnumChoices(enumField: DataFieldResource): Array<EnumerationFieldValue> {
+        const enumChoices = [];
+        if (enumField.choices instanceof Array) {
+            enumField.choices.forEach(it => {
+                enumChoices.push({key: it, value: it} as EnumerationFieldValue);
+            });
+        } else {
+            Object.keys(enumField.choices).forEach(key => {
+                enumChoices.push({key, value: enumField.choices[key]} as EnumerationFieldValue);
+            });
+        }
+        return enumChoices;
+    }
+
+    /**
+     * This function is used to parse enumeration options from the `options` attribute
+     * @param enumField enumeration field resource object who's options we want to resolve
+     * @returns the options for the enumeration field
+     */
+    protected resolveEnumOptions(enumField: DataFieldResource): Array<EnumerationFieldValue> {
+        return Object.entries(enumField.options).map(entry => ({key: entry[0], value: entry[1]}));
+    }
+
+    /**
+     * @param multiField multichoice field resource object who's view type we want to resolve
+     * @returns the view type defined in the field object, or default if none, or invalid type is defined
+     */
+    protected resolveMultichoiceViewType(multiField: DataFieldResource): MultichoiceFieldView {
+        let typeMulti = MultichoiceFieldView.DEFAULT;
+        if (multiField.view && multiField.view.value !== undefined) {
+            if (multiField.view.value === 'list') {
+                typeMulti = MultichoiceFieldView.LIST;
+            }
+        }
+        return typeMulti;
+    }
+
+    /**
+     * This function is used to parse multichoice options from the `choices` attribute
+     * @param multiField multichoice field resource object who's options we want to resolve
+     * @returns the options for the multichoice field
+     */
+    protected resolveMultichoiceChoices(multiField: DataFieldResource): Array<MultichoiceFieldValue> {
+        const choicesMulti: MultichoiceFieldValue[] = [];
+        if (multiField.choices instanceof Array) {
+            multiField.choices.forEach(it => {
+                choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);
+            });
+        } else {
+            Object.keys(multiField.choices).forEach(key => {
+                choicesMulti.push({key, value: multiField.choices[key]} as MultichoiceFieldValue);
+            });
+        }
+        return choicesMulti;
+    }
+
+    /**
+     * This function is used to parse enumeration options from the `options` attribute
+     * @param multiField multichoice field resource object who's options we want to resolve
+     * @returns the options for the multichoice field
+     */
+    protected resolveMultichoiceOptions(multiField: DataFieldResource): Array<MultichoiceFieldValue> {
+        return Object.entries(multiField.options).map(entry => ({key: entry[0], value: entry[1]}));
     }
 }
