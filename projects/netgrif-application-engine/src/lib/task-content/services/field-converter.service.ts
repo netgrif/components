@@ -21,6 +21,7 @@ import {ButtonField} from '../../data-fields/button-field/models/button-field';
 import {FileField} from '../../data-fields/file-field/models/file-field';
 import moment from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
+import {FieldTypeResource} from '../model/field-type-resource';
 
 @Injectable({
     providedIn: 'root'
@@ -32,10 +33,10 @@ export class FieldConverterService {
 
     public toClass(item: DataFieldResource): DataField<any> {
         switch (item.type) {
-            case 'boolean':
+            case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations);
-            case 'text':
+            case FieldTypeResource.TEXT:
                 let type = TextFieldView.DEFAULT;
                 if (item.subType !== undefined && item.subType === 'area') {
                     type = TextFieldView.TEXTAREA;
@@ -47,10 +48,10 @@ export class FieldConverterService {
                 }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, type);
-            case 'number':
+            case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
                     item.validations, item.placeholder, item.description, item.layout);
-            case 'enumeration':
+            case FieldTypeResource.ENUMERATION:
                 let typeEnum = EnumerationFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {
                     if (item.view.value === 'list') {
@@ -71,7 +72,7 @@ export class FieldConverterService {
                 }
                 return new EnumerationField(item.stringId, item.name, item.value as string,
                     enumChoices, item.behavior, item.placeholder, item.description, item.layout, typeEnum);
-            case 'multichoice':
+            case FieldTypeResource.MULTICHOICE:
                 let typeMulti = MultichoiceFieldView.DEFAULT;
                 if (item.view && item.view.value !== undefined) {
                     if (item.view.value === 'list') {
@@ -91,30 +92,30 @@ export class FieldConverterService {
                 }
                 return new MultichoiceField(item.stringId, item.name, values, choicesMulti, item.behavior,
                     item.placeholder, item.description, item.layout, typeMulti);
-            case 'date':
+            case FieldTypeResource.DATE:
                 let date;
                 if (item.value) {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder, item.description, item.layout);
-            case 'dateTime':
+            case FieldTypeResource.DATE_TIME:
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
                     item.placeholder, item.description, item.layout);
-            case 'user':
+            case FieldTypeResource.USER:
                 let user;
                 if (item.value) {
                     user = new UserValue(item.value.id, item.value.name, item.value.surname, item.value.email);
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout);
-            case 'button':
+            case FieldTypeResource.BUTTON:
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout);
-            case 'file':
+            case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout);
         }
@@ -122,42 +123,42 @@ export class FieldConverterService {
 
     public resolveType(item: DataField<any>): string {
         if (item instanceof BooleanField) {
-            return 'boolean';
+            return FieldTypeResource.BOOLEAN;
         } else if (item instanceof ButtonField) {
-            return 'button';
+            return FieldTypeResource.BUTTON;
         } else if (item instanceof TextField) {
-            return 'text';
+            return FieldTypeResource.TEXT;
         } else if (item instanceof EnumerationField) {
-            return 'enumeration';
+            return FieldTypeResource.ENUMERATION;
         } else if (item instanceof NumberField) {
-            return 'number';
+            return FieldTypeResource.NUMBER;
         } else if (item instanceof MultichoiceField) {
-            return 'multichoice';
+            return FieldTypeResource.MULTICHOICE;
         } else if (item instanceof DateField) {
-            return 'date';
+            return FieldTypeResource.DATE;
         } else if (item instanceof DateTimeField) {
-            return 'dateTime';
+            return FieldTypeResource.DATE_TIME;
         } else if (item instanceof FileField) {
-            return 'file';
+            return FieldTypeResource.FILE;
         } else if (item instanceof UserField) {
-            return 'user';
+            return FieldTypeResource.USER;
         }
     }
 
     public formatValue(field: DataField<any>, value: any): any {
-        if (this.resolveType(field) === 'text' && value === null)
+        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null)
             return null;
         if (value === undefined || value === null)
             return;
-        if (this.resolveType(field) === 'date') {
+        if (this.resolveType(field) === FieldTypeResource.DATE) {
             if (moment.isMoment(value)) {
                 return value.format('YYYY-MM-DD');
             }
         }
-        if (this.resolveType(field) === 'user') {
+        if (this.resolveType(field) === FieldTypeResource.USER) {
             return value.id;
         }
-        if (this.resolveType(field) === 'dateTime') {
+        if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {
                 return value.format('DD.MM.YYYY HH:mm:ss');
             }
