@@ -69,13 +69,15 @@ export class ProcessService {
         this._requestCache.set(identifier, new ReplaySubject<Net>(1));
         return this.loadNet(identifier).pipe(
             tap(net => {
-                this._requestCache.get(identifier).next(net);
-                this._requestCache.get(identifier).complete();
-                this._requestCache.delete(identifier);
-                if (!net) {
-                    return;
+                const s = this._requestCache.get(identifier);
+                if (s) {
+                    s.next(net);
+                    s.complete();
+                    this._requestCache.delete(identifier);
                 }
-                this.publishUpdate(net);
+                if (net) {
+                    this.publishUpdate(net);
+                }
             })
         );
     }
