@@ -9,11 +9,12 @@ import {
     SearchService,
     SimpleFilter,
     TabbedCaseView,
-    SearchChipService
+    SearchChipService,
+    AllNetsCaseViewServiceFactory
 } from '@netgrif/application-engine';
 
-const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
-    return factory.create('case');
+const localCaseViewServiceFactory = (factory: AllNetsCaseViewServiceFactory) => {
+    return factory.create();
 };
 
 const searchServiceFactory = () => {
@@ -26,7 +27,7 @@ const searchServiceFactory = () => {
     styleUrls: ['./tabbed-case-view.component.scss'],
     providers: [
         SearchChipService,
-        ConfigCaseViewServiceFactory,
+        AllNetsCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
