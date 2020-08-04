@@ -69,7 +69,8 @@ describe('AssignPolicyService', () => {
             stringId: 'string',
             layout: {
                 cols: undefined,
-                rows: undefined
+                rows: undefined,
+                offset: 0
             },
             dataGroups: [],
             _links: {}

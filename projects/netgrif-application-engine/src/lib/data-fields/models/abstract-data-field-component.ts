@@ -21,6 +21,7 @@ export abstract class AbstractDataFieldComponent implements OnInit {
      * @ignore
      * See [formControl]{@link AbstractDataFieldComponent#formControl}
      */
+    @Input() taskOffset = 0;
     protected _formControl: FormControl;
 
     protected constructor() {

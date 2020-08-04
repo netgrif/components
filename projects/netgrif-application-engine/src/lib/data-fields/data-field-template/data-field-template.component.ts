@@ -40,6 +40,10 @@ export class DataFieldTemplateComponent implements OnInit {
      * See [DataField.layout]{@link DataField#layout} for more information.
      */
     @Input() public layoutChangeWidthBreakpoint = 250;
+    /**
+     * Field offset defined by task
+     */
+    @Input() public offset = 0;
 
     /**
      * @ignore
@@ -51,6 +55,9 @@ export class DataFieldTemplateComponent implements OnInit {
     }
 
     public ngOnInit() {
+        if (!!this.dataField && !!this.dataField.layout && !!this.dataField.layout.offset) {
+            this.offset += this.dataField.layout.offset;
+        }
         this._showLargeLayout.value = this.evaluateTemplate();
     }
 
