@@ -10,6 +10,7 @@ import {of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LoggerService} from '../logger/services/logger.service';
 import {AuthenticationModule} from '../authentication/authentication.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ProcessService', () => {
     let service: ProcessService;
@@ -19,7 +20,8 @@ describe('ProcessService', () => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                AuthenticationModule
+                AuthenticationModule,
+                NoopAnimationsModule
             ],
             providers: [
                 HttpClient,

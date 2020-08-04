@@ -16,6 +16,7 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {LanguageService} from '../../translate/language.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('NumberFieldComponent', () => {
     let component: NumberFieldComponent;
@@ -27,7 +28,8 @@ describe('NumberFieldComponent', () => {
                 MaterialModule,
                 AngularResizedEventModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                NoopAnimationsModule
             ],
             providers: [
                 AuthenticationMethodService,

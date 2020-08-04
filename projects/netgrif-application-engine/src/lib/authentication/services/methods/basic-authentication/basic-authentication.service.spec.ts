@@ -6,13 +6,14 @@ import {BasicAuthenticationService} from './basic-authentication.service';
 import {AuthenticationModule} from '../../../authentication.module';
 import {AuthenticationMethodService} from '../../authentication-method.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('BasicAuthenticationService', () => {
     let service: BasicAuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthenticationModule, HttpClientTestingModule],
+            imports: [AuthenticationModule, HttpClientTestingModule, NoopAnimationsModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 AuthenticationMethodService,

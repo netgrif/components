@@ -11,6 +11,7 @@ import {AuthenticationService} from '../authentication/services/authentication/a
 import {MockAuthenticationService} from '../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TranslateInterceptor', () => {
 
@@ -19,7 +20,8 @@ describe('TranslateInterceptor', () => {
             imports: [
                 HttpClientTestingModule,
                 TranslateLibModule,
-                MatSnackBarModule
+                MatSnackBarModule,
+                NoopAnimationsModule
             ],
             providers: [
                 AuthenticationMethodService,

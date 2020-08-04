@@ -5,13 +5,14 @@ import {TestViewService} from '../../utility/tests/test-view-service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {RouterModule} from '@angular/router';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('RoutingBuilderService', () => {
     let service: RoutingBuilderService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [RouterModule.forRoot([])],
+            imports: [RouterModule.forRoot([]), NoopAnimationsModule],
             providers: [
                 {provide: ViewService, useClass: TestViewService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}

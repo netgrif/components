@@ -11,6 +11,7 @@ import {FileDownloadService} from '../../../../../data-fields/file-field/service
 import {ConfigurationService} from '../../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../../utility/tests/test-config';
 import {FileUploadModel} from '../../models/file-upload-model';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FilesUploadItemComponent', () => {
     let component: FilesUploadItemComponent;
@@ -27,7 +28,8 @@ describe('FilesUploadItemComponent', () => {
                 CovalentModule,
                 FlexLayoutModule,
                 FlexModule,
-                FormsModule
+                FormsModule,
+                NoopAnimationsModule
             ],
             providers: [
                 FileUploadService,
