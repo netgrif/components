@@ -5,6 +5,7 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {TextField} from '../text-field/models/text-field';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DataFieldTemplateComponent', () => {
     let component: DataFieldTemplateComponent;
@@ -12,7 +13,7 @@ describe('DataFieldTemplateComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule],
+            imports: [MaterialModule, AngularResizedEventModule, NoopAnimationsModule],
             declarations: [DataFieldTemplateComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })

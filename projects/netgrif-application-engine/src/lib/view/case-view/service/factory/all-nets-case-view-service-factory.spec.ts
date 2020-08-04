@@ -1,5 +1,8 @@
+import { AllNetsCaseViewServiceFactory } from './all-nets-case-view-service-factory';
 import {TestBed} from '@angular/core/testing';
-import {ArrayCaseViewServiceFactory} from './array-case-view-service-factory';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MaterialModule} from '../../../../material/material.module';
+import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {SideMenuService} from '../../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
 import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
@@ -8,26 +11,21 @@ import {LoggerService} from '../../../../logger/services/logger.service';
 import {TranslateService} from '@ngx-translate/core';
 import {SearchService} from '../../../../search/search-service/search.service';
 import {TestCaseSearchServiceFactory} from '../../../../utility/tests/test-factory-methods';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MaterialModule} from '../../../../material/material.module';
-import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('ArrayCaseViewServiceFactory', () => {
-    let service: ArrayCaseViewServiceFactory;
+describe('AllNetsCaseViewServiceFactory', () => {
+    let service: AllNetsCaseViewServiceFactory;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
                 MaterialModule,
-                TranslateLibModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
-                ArrayCaseViewServiceFactory,
+                AllNetsCaseViewServiceFactory,
                 SideMenuService,
                 CaseResourceService,
                 SnackBarService,
@@ -44,7 +42,7 @@ describe('ArrayCaseViewServiceFactory', () => {
                 }
             ]
         });
-        service = TestBed.inject(ArrayCaseViewServiceFactory);
+        service = TestBed.inject(AllNetsCaseViewServiceFactory);
     });
 
     it('should be created', () => {

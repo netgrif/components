@@ -5,6 +5,7 @@ import {DashboardCardTypes} from '../model/dashboard-card-types';
 import {IframeCard} from '../model/iframe-card';
 import {MatCardModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('IframeCardComponent', () => {
     let component: IframeCardComponent;
@@ -12,7 +13,7 @@ describe('IframeCardComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MatCardModule, FlexLayoutModule],
+            imports: [MatCardModule, FlexLayoutModule, NoopAnimationsModule],
             declarations: [IframeCardComponent, TestWrapperComponent]
         })
             .compileComponents();

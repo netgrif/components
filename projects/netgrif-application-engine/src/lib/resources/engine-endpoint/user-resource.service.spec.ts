@@ -3,13 +3,14 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {UserResourceService} from './user-resource.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('UserResourceService', () => {
     let service: UserResourceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(UserResourceService);

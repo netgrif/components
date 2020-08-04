@@ -22,7 +22,7 @@ export abstract class AbstractDataFieldComponent implements OnInit {
      * See [formControl]{@link AbstractDataFieldComponent#formControl}
      */
     @Input() taskOffset = 0;
-    private readonly _formControl: FormControl;
+    protected _formControl: FormControl;
 
     protected constructor() {
         this._formControl = new FormControl('', { updateOn: 'blur' });
