@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
 import {FormControl} from '@angular/forms';
-import {MatAutocomplete} from '@angular/material/autocomplete';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {debounceTime} from 'rxjs/operators';
 import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
