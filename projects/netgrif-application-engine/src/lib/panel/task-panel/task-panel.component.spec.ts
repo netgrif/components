@@ -135,6 +135,7 @@ class TestWrapperComponent {
             finishPolicy: FinishPolicy.manual,
             stringId: 'string',
             layout: {
+                offset: 0,
                 cols: undefined,
                 rows: undefined
             },

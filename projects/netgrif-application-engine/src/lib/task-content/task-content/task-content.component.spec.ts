@@ -97,6 +97,7 @@ describe('TaskContentComponent', () => {
                             y: 12,
                             cols: 2,
                             rows: 1,
+                            offset: 0,
                             appearance: MaterialAppearance.OUTLINE,
                             template: TemplateAppearance.NETGRIF,
                         }),
@@ -106,6 +107,7 @@ describe('TaskContentComponent', () => {
                             y: 13,
                             cols: 2,
                             rows: 1,
+                            offset: 0,
                             appearance: MaterialAppearance.OUTLINE,
                             template: TemplateAppearance.NETGRIF,
                         })
