@@ -1,21 +1,47 @@
-<div fxFlex="100" fxLayout="row" fxLayoutAlign=" center" >
+<div fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
     <div *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index"
          [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders"
          [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders"
          [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders"
          [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders" fxFlex>
-        <div *ngIf="!!header; then thenBlock else elseBlock" fxFlex></div>
+        <div *ngIf="!!header && header.fieldType !== 'button' && header.fieldType !== 'file' && header.fieldType !== 'dateTime'; then thenBlock else elseBlock" fxFlex></div>
         <ng-template #thenBlock>
-            <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex>
-                <mat-label *ngIf="header.fieldType === 'date'">{{ 'headers.date' | translate}}</mat-label>
-                <input *ngIf="header.fieldType === 'date'" matInput [matDatepicker]="picker" (dateChange)="headerSearchInputChanged(i,  $event)">
-                <mat-datepicker-toggle *ngIf="header.fieldType === 'date'" matPrefix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-
-                <mat-label *ngIf="header.fieldType !== 'date'" >{{header.title | translate}}</mat-label>
-                <input *ngIf="header.fieldType !== 'date'" matInput (keyup)="headerSearchInputChanged(i, $event.target['value'])">
-            </mat-form-field>
+            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType">
+                <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'">
+                    <mat-label>{{header.title | translate}}</mat-label>
+                    <input matInput [matDatepicker]="datepicker"
+                           [formControl]="formControls[i]"
+                           [placeholder]="'headers.date' | translate"
+                           (click)="datepicker.open()"
+                           (keydown.enter)="datepicker.close()">
+                    <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'number'">
+                    <mat-label>{{header.title | translate}}</mat-label>
+                    <input matInput type="number" [formControl]="formControls[i]">
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'boolean'">
+                    <mat-slide-toggle color="primary" [formControl]="formControls[i]">
+                        {{header.title | translate}}
+                    </mat-slide-toggle>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center start" *ngSwitchCase="'user'">
+                    <mat-label>{{header.title | translate}}</mat-label>
+                    <button mat-stroked-button
+                            color="primary"
+                            (click)="selectUser(i)">
+                        <mat-icon>person_search</mat-icon>
+                        {{formControls[i].value ? formControls[i].value.fullName : ('headers.selectUser' | translate)}}
+                    </button>
+                </div>
+                <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchDefault>
+                    <mat-label>{{header.title | translate}}</mat-label>
+                    <input matInput [formControl]="formControls[i]">
+                </mat-form-field>
+            </div>
         </ng-template>
+
         <ng-template #elseBlock>
             <div fxFlex></div>
         </ng-template>

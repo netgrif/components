@@ -1,21 +1,12 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {GenericSnackBarComponent} from '../components/generic-snack-bar/generic-snack-bar.component';
 import {SuccessSnackBarComponent} from '../components/success-snack-bar/success-snack-bar.component';
 import {ErrorSnackBarComponent} from '../components/error-snack-bar/error-snack-bar.component';
 import {WarningSnackBarComponent} from '../components/warning-snack-bar/warning-snack-bar.component';
 import {SnackBarInjectionData} from '../models/snack-bar-injection-data';
 import {MatSnackBar, MatSnackBarConfig, MatSnackBarRef} from '@angular/material/snack-bar';
-
-export enum SnackBarVerticalPosition {
-    BOTTOM = 'bottom',
-    TOP = 'top'
-}
-
-export enum SnackBarHorizontalPosition {
-    LEFT = 'left',
-    CENTER = 'center',
-    RIGHT = 'right'
-}
+import {SnackBarHorizontalPosition, SnackBarVerticalPosition} from '../models/snack-bar-enums';
+import {NAE_SNACKBAR_HORIZONTAL_POSITION, NAE_SNACKBAR_VERTICAL_POSITION} from '../models/injection-token-snackbar';
 
 @Injectable({
     providedIn: 'root'
@@ -23,13 +14,25 @@ export enum SnackBarHorizontalPosition {
 export class SnackBarService {
 
     private _defaultTimeout = 2.5;
+    private _verticalPosition: SnackBarVerticalPosition;
+    private _horizontalPosition: SnackBarHorizontalPosition;
 
-    constructor(private _snackBar: MatSnackBar) {
+    constructor(private _snackBar: MatSnackBar,
+                @Optional() @Inject(NAE_SNACKBAR_VERTICAL_POSITION) naeVerticalPosition: SnackBarVerticalPosition,
+                @Optional() @Inject(NAE_SNACKBAR_HORIZONTAL_POSITION) naeHorizontalPosition: SnackBarHorizontalPosition) {
+        this._verticalPosition = SnackBarVerticalPosition.BOTTOM;
+        this._horizontalPosition = SnackBarHorizontalPosition.CENTER;
+        if (naeVerticalPosition) {
+            this._verticalPosition = naeVerticalPosition;
+        }
+        if (naeHorizontalPosition) {
+            this._horizontalPosition = naeHorizontalPosition;
+        }
     }
 
     public openSuccessSnackBar(message: string,
-                               verticalPosition = SnackBarVerticalPosition.BOTTOM,
-                               horizontalPosition = SnackBarHorizontalPosition.CENTER,
+                               verticalPosition = this._verticalPosition,
+                               horizontalPosition = this._horizontalPosition,
                                durationInSeconds = this._defaultTimeout,
                                config?: MatSnackBarConfig<SnackBarInjectionData>): MatSnackBarRef<SuccessSnackBarComponent> {
         return this._snackBar.openFromComponent(SuccessSnackBarComponent, Object.assign({
@@ -45,8 +48,8 @@ export class SnackBarService {
     }
 
     public openErrorSnackBar(message: string,
-                             verticalPosition = SnackBarVerticalPosition.BOTTOM,
-                             horizontalPosition = SnackBarHorizontalPosition.CENTER,
+                             verticalPosition = this._verticalPosition,
+                             horizontalPosition = this._horizontalPosition,
                              // durationInSeconds = this._defaultTimeout,
                              config?: MatSnackBarConfig<SnackBarInjectionData>): MatSnackBarRef<ErrorSnackBarComponent> {
         return this._snackBar.openFromComponent(ErrorSnackBarComponent, Object.assign({
@@ -62,8 +65,8 @@ export class SnackBarService {
     }
 
     public openWarningSnackBar(message: string,
-                               verticalPosition = SnackBarVerticalPosition.BOTTOM,
-                               horizontalPosition = SnackBarHorizontalPosition.CENTER,
+                               verticalPosition = this._verticalPosition,
+                               horizontalPosition = this._horizontalPosition,
                                durationInSeconds = this._defaultTimeout,
                                config?: MatSnackBarConfig<SnackBarInjectionData>): MatSnackBarRef<WarningSnackBarComponent> {
         return this._snackBar.openFromComponent(WarningSnackBarComponent, Object.assign({
@@ -80,8 +83,8 @@ export class SnackBarService {
 
     public openGenericSnackBar(message: string,
                                matIconName: string,
-                               verticalPosition = SnackBarVerticalPosition.BOTTOM,
-                               horizontalPosition = SnackBarHorizontalPosition.CENTER,
+                               verticalPosition = this._verticalPosition,
+                               horizontalPosition = this._horizontalPosition,
                                durationInSeconds = this._defaultTimeout,
                                config?: MatSnackBarConfig<SnackBarInjectionData>): MatSnackBarRef<GenericSnackBarComponent> {
         return this._snackBar.openFromComponent(GenericSnackBarComponent, Object.assign({

@@ -1,16 +1,5 @@
-import {InjectionToken, NgModule} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {InjectionToken} from '@angular/core';
 import {InjectedTabData} from '../interfaces';
-
-/**
- * Declares the `NAE_TAB_DATA` injection token.
- */
-@NgModule({
-  imports: [
-    CommonModule
-  ]
-})
-export class TabDataInjectionTokenModule { }
 
 /**
  * Injection token for injection of {@link InjectedTabData} into tabs in {@link TabView}.

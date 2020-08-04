@@ -32,6 +32,10 @@ import {
     WorkflowViewModule,
     ViewService,
     TreeCaseViewModule,
+    NAE_SNACKBAR_HORIZONTAL_POSITION,
+    NAE_SNACKBAR_VERTICAL_POSITION,
+    SnackBarHorizontalPosition,
+    SnackBarVerticalPosition
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -110,7 +114,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
-        TreeViewExampleComponent,
+        TreeViewExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -161,6 +165,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         PanelModule,
         TreeCaseViewModule,
         MatProgressSpinnerModule,
+        DashboardModule,
     ],
     entryComponents: [
         ContentComponent,
@@ -196,6 +201,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         provide: ConfigurationService,
         useClass: NaeExampleAppConfigurationService
     },
+        {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP },
+        {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT },
         ResourceProvider,
         TranslateService,
         TranslatePipe,

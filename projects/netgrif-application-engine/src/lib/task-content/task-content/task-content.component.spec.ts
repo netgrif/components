@@ -12,7 +12,6 @@ import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {NAE_TASK_COLS} from '../model/nae-task-cols-injection-token';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 describe('TaskContentComponent', () => {
@@ -32,7 +31,6 @@ describe('TaskContentComponent', () => {
             providers: [
                 TaskViewService,
                 TaskContentService,
-                {provide: NAE_TASK_COLS, useValue: 4},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: []
@@ -117,7 +115,7 @@ describe('TaskContentComponent', () => {
                 stretch: false,
                 layout: {cols: 3, rows: undefined}
             },
-        ], 4).length).toEqual(20);
+        ], 4).length).toEqual(24);
     });
 
     afterAll(() => {
