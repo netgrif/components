@@ -13,6 +13,7 @@ import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-
 import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {TranslateService} from '@ngx-translate/core';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 const serviceFactory = (userResources: UserResourceService, processResources: PetriNetResourceService,
                         snackbar: SnackBarService, log: LoggerService, translate: TranslateService) => {
@@ -24,7 +25,7 @@ describe('RoleAssignmentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 UserResourceService,

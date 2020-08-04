@@ -4,11 +4,11 @@
 
         <div *ngIf="!processingTaskChange && displayTaskControlButtons" fxLayoutAlign="center center">
             <button *ngIf="canAssign()" color="primary" (click)="assign()" mat-raised-button>
-                {{ 'tasks.view.assign' | translate | uppercase }}</button>
+                {{ getAssignTitle() | translate | uppercase }}</button>
             <button *ngIf="canCancel()" color="warn" (click)="cancel()" mat-stroked-button>
-                {{ 'tasks.view.cancel' | translate | uppercase }}</button>
+                {{ getCancelTitle() | translate | uppercase }}</button>
             <button *ngIf="canFinish()" color="primary" (click)="finish()" mat-raised-button>
-                {{ 'tasks.view.finish' | translate | uppercase }}</button>
+                {{ getFinishTitle() | translate | uppercase }}</button>
         </div>
         <div *ngIf="processingTaskChange" fxLayoutAlign="center center">
             <mat-spinner [diameter]="40"></mat-spinner>

@@ -3,12 +3,14 @@ import {TestBed} from '@angular/core/testing';
 import {ConfigurationService} from './configuration.service';
 import {DashboardCardTypes} from '../dashboard/cards/model/dashboard-card-types';
 import {TestConfigurationService} from '../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ConfigurationService', () => {
     let service: ConfigurationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(ConfigurationService);

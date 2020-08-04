@@ -11,6 +11,7 @@ import {CaseResourceService} from '../../../resources/engine-endpoint/case-resou
 import {FilterType} from '../../../filter/models/filter-type';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('CountCardComponent', () => {
     let component: CountCardComponent;
@@ -18,7 +19,7 @@ describe('CountCardComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MatCardModule, FlexLayoutModule, MatProgressSpinnerModule],
+            imports: [MatCardModule, FlexLayoutModule, MatProgressSpinnerModule, NoopAnimationsModule],
             declarations: [CountCardComponent, TestWrapperComponent],
             providers: [{
                 provide: CaseResourceService,

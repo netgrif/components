@@ -13,6 +13,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {FinishTaskService} from './finish-task.service';
 import {TaskRequestStateService} from './task-request-state.service';
 import {TaskDataService} from './task-data.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FinishPolicyService', () => {
     let service: FinishPolicyService;
@@ -23,7 +24,8 @@ describe('FinishPolicyService', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateModule,
-                TranslateLibModule
+                TranslateLibModule,
+                NoopAnimationsModule
             ],
             providers: [
                 FinishPolicyService,

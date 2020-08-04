@@ -5,13 +5,14 @@ import {MaterialModule} from '../../../../material/material.module';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FileUploadService', () => {
     let service: FileUploadService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
             providers: [
                 FileUploadService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}

@@ -4,6 +4,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TextField} from '../text-field/models/text-field';
 import {DataFieldsModule} from '../data-fields.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DataField', () => {
     let component: TestWrapperComponent;
@@ -11,7 +12,7 @@ describe('DataField', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MatFormFieldModule, DataFieldsModule],
+            imports: [MatFormFieldModule, DataFieldsModule, NoopAnimationsModule],
             declarations: [
                 TestWrapperComponent
             ]

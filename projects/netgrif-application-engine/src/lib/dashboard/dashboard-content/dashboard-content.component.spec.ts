@@ -6,6 +6,7 @@ import {DashboardParams} from './dashboard-params';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DashboardContentComponent', () => {
     let component: DashboardContentComponent;
@@ -13,7 +14,7 @@ describe('DashboardContentComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MatGridListModule, DashboardModule],
+            imports: [MatGridListModule, DashboardModule, NoopAnimationsModule],
             declarations: [TestWrapperComponent],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         })

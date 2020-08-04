@@ -17,6 +17,7 @@ import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -27,7 +28,7 @@ describe('TaskHeaderService', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MatSnackBarModule,
-                MatIconModule,
+                MatIconModule, NoopAnimationsModule,
                 RouterModule.forRoot([])
             ],
             providers: [

@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FileFieldComponent} from './file-field.component';
 import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FileField} from './models/file-field';
 import {FileFieldService} from './services/file-field.service';
@@ -33,7 +33,8 @@ describe('FileFieldComponent', () => {
                 AngularResizedEventModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                NoopAnimationsModule
             ],
             providers: [
                 FileFieldService,
