@@ -24,7 +24,8 @@
             "finishTask": "Dokončujem úlohu",
             "invalidData": "Niektoré polia majú nepovolené hodnoty",
             "noCase": "Nenašli sa žiadne prípady",
-            "caseGetFailed": "Načítanie prípadov zlyhalo"
+            "caseGetFailed": "Načítanie prípadov zlyhalo",
+            "noLongerExists": "Zvolená úloha už neexistuje"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Pre tento filter nie sú vyhovujúce žiadne úlohy",
@@ -55,7 +56,7 @@
             "done": "Dokončiť"
         },
         "new-case": {
-            "case": "Nová prípad",
+            "case": "Nový prípad",
             "choose": "Vyberte proces",
             "caseTitle": "Vyplňte názov prípadu",
             "color": "Vyberte farbu prípadu",
@@ -66,13 +67,20 @@
             "selection": "Musíte niečo vybrať",
             "errFirst": "Proces je povinné pole.",
             "errSecond": "Názov je povinné pole.",
-            "errThird": "Farba je povinné pole."
+            "errThird": "Farba je povinné pole.",
+            "noNets": "Žiadne povolené siete",
+            "createCase": "Uspešne vytvorený nový prípad"
         },
         "user": {
             "assign": "Priradiť používateľa",
+            "choose": "Zvoľte používateľa",
             "noUser": "Neexistujú žiadny používatelia",
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
+        },
+        "option-selector": {
+            "select": "Zvoliť",
+            "choose-one-option": "Vyberte jednu z možností"
         }
     },
     "search": {
@@ -192,6 +200,7 @@
     "headers": {
         "newHeader": "Zvoľte novú hlavičku",
         "date": "Zvoľte dátum",
+        "selectUser": "Vyberte používateľa",
         "caseMeta": {
             "visualID": "Vizuálne ID",
             "title": "Názov",
@@ -249,7 +258,7 @@
     "admin": {
         "user-list": {
             "noUsersWereFound": "Momentálne nie sú v systéme žiadny používatelia",
-            "listTitle": "Users"
+            "listTitle": "Používatelia"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",
@@ -263,5 +272,9 @@
             "saveSuccess": "Vaše preferencie boli uložené",
             "saveFailure": "Nepodarilo sa uložiť preferencie"
         }
+    },
+    "caseTree": {
+        "newNodeDefaultName": "Nový Vrchol",
+        "noTaskSelected": "Momentálne nie je zvolený žiaden prípad. Pre vybranie prípadu zvoľte vrchol v strome."
     }
 }

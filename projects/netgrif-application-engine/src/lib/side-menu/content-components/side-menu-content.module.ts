@@ -5,6 +5,7 @@ import {SideMenuNewCaseModule} from './new-case/side-menu-new-case.module';
 import {SideMenuImportNetModule} from './import-net/side-menu-import-net.module';
 import {SideMenuFilesUploadModule} from './files-upload/side-menu-files-upload.module';
 import {SideMenuFilterSelectorModule} from './filter-selector/side-menu-filter-selector.module';
+import {SideMenuOptionSelectorModule} from './option-selector/side-menu-option-selector.module';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {SideMenuFilterSelectorModule} from './filter-selector/side-menu-filter-s
         SideMenuImportNetModule,
         SideMenuFilesUploadModule,
         SideMenuFilterSelectorModule,
+        SideMenuOptionSelectorModule,
     ],
     exports: [
         SideMenuUserAssignModule,
@@ -22,6 +24,7 @@ import {SideMenuFilterSelectorModule} from './filter-selector/side-menu-filter-s
         SideMenuImportNetModule,
         SideMenuFilesUploadModule,
         SideMenuFilterSelectorModule,
+        SideMenuOptionSelectorModule,
     ]
 })
 export class SideMenuContentModule {

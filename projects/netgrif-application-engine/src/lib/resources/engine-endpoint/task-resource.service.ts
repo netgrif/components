@@ -7,7 +7,7 @@ import {changeType, getResourceAddress, getResourcePage} from '../resource-utili
 import {MessageResource} from '../interface/message-resource';
 import {filter, map} from 'rxjs/operators';
 import {TaskReference} from '../interface/task-reference';
-import {DataGroupsResource} from '../interface/data-groups';
+import {DataGroup, DataGroupsResource} from '../interface/data-groups';
 import {Task} from '../interface/task';
 import {ChangedFieldContainer} from '../interface/changed-field-container';
 import {CountService} from '../abstract-endpoint/count-service';
@@ -16,6 +16,9 @@ import {FilterType} from '../../filter/models/filter-type';
 import {TaskGetRequestBody} from '../interface/task-get-request-body';
 import {HttpEventType} from '@angular/common/http';
 import {Page} from '../interface/page';
+import {DataField} from '../../data-fields/models/abstract-data-field';
+import {FieldConverterService} from '../../task-content/services/field-converter.service';
+import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +26,9 @@ import {Page} from '../interface/page';
 export class TaskResourceService implements CountService {
     private SERVER_URL: string;
 
-    protected constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {
+    protected constructor(protected provider: ResourceProvider,
+                          protected _configService: ConfigurationService,
+                          protected _fieldConverter: FieldConverterService) {
         this.SERVER_URL = getResourceAddress('task', this._configService.get().providers.resources);
     }
 
@@ -162,12 +167,58 @@ export class TaskResourceService implements CountService {
 
     /**
      * Get all task data
+     *
      * GET
+     *
+     * If you don't want to parse the response yourself use [getData]{@link TaskResourceService#getData} instead.
+     *
+     * @returns the raw backend response without any additional processing
      */
     // {{baseUrl}}/api/task/:id/data
-    public getData(taskId: string): Observable<Array<DataGroupsResource>> {
+    public rawGetData(taskId: string): Observable<Array<DataGroupsResource>> {
         return this.provider.get$('task/' + taskId + '/data', this.SERVER_URL)
             .pipe(map(r => changeType(r, 'dataGroups')));
+    }
+
+    /**
+     *  Get all task data
+     *
+     *  GET
+     *
+     *  If you want to process the raw backend response use [rawGetData]{@link TaskResourceService#rawGetData} instead.
+     *
+     * @param taskId ID of the task who's data should be retrieved from the server
+     * @returns processed data groups of the given task. If the task has no data an empty array will be returned.
+     */
+    public getData(taskId: string): Observable<Array<DataGroup>> {
+        return this.rawGetData(taskId).pipe(
+            map(responseArray => {
+                if (!Array.isArray(responseArray)) {
+                    return [];
+                }
+                const result = [];
+                responseArray.forEach(dataGroupResource => {
+                    const dataFields: Array<DataField<any>> = [];
+                    if (!dataGroupResource.fields._embedded) {
+                        return; // continue
+                    }
+                    const fields = [];
+                    Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
+                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
+                    });
+                    fields.sort((a, b) => a.order - b.order);
+                    dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
+                    result.push({
+                        fields: dataFields,
+                        stretch: dataGroupResource.stretch,
+                        title: dataGroupResource.title,
+                        layout: dataGroupResource.layout,
+                        alignment: dataGroupResource.alignment
+                    });
+                });
+                return result;
+            })
+        );
     }
 
     /**
@@ -175,7 +226,7 @@ export class TaskResourceService implements CountService {
      * POST
      */
     // {{baseUrl}}/api/task/:id/data
-    public setData(taskId: string, body: object): Observable<ChangedFieldContainer> {
+    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<ChangedFieldContainer> {
         return this.provider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => changeType(r, undefined)));
     }

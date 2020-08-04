@@ -8,4 +8,8 @@ export interface SimpleSearchChip {
      * Text displayed in the chip.
      */
     text: string;
+    /**
+     * Index of the {@link Predicate} object represented by this chip
+     */
+    predicateIndex?: number;
 }

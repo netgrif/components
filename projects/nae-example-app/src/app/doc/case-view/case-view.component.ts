@@ -4,6 +4,7 @@ import {
     Case,
     CaseViewService,
     HeaderComponent,
+    SearchChipService,
     SearchService,
     SimpleFilter,
     AllNetsCaseViewServiceFactory
@@ -14,7 +15,6 @@ const localCaseViewServiceFactory = (factory: AllNetsCaseViewServiceFactory) => 
 };
 
 const searchServiceFactory = () => {
-    // TODO load/use base filter somehow
     return new SearchService(SimpleFilter.emptyCaseFilter());
 };
 
@@ -23,6 +23,7 @@ const searchServiceFactory = () => {
     templateUrl: './case-view.component.html',
     styleUrls: ['./case-view.component.scss'],
     providers: [
+        SearchChipService,
         AllNetsCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},

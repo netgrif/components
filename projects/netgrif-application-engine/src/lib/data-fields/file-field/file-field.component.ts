@@ -8,6 +8,7 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 
 export interface FileState {
     progress: number;
@@ -135,9 +136,10 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                // TODO BUG 17.6.2020 - changedFields returned from backend are ignored here
-                // tslint:disable-next-line:max-line-length
-                this._log.debug(`File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`);
+                this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                this._log.debug(
+                    `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
+                );
                 this.state.completed = true;
                 this.state.error = false;
                 this.state.uploading = false;
@@ -148,8 +150,9 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
             this.state.error = true;
             this.state.uploading = false;
             this.state.progress = 0;
-            // tslint:disable-next-line:max-line-length
-            this._log.error(`File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error);
+            this._log.error(
+                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
+            );
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
         });
     }

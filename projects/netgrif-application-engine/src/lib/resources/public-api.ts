@@ -25,6 +25,8 @@ export * from './interface/process-role';
 export * from './interface/changed-field-container';
 export * from './interface/file-resource';
 export * from './interface/task-reference';
+export * from './interface/task-set-data-request-body';
+export * from './interface/task-get-request-body';
 
 export * from './types/nae-date-type';
 

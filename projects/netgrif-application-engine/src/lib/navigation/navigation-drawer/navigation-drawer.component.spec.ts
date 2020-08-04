@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {NavigationDrawerComponent} from './navigation-drawer.component';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
@@ -8,9 +7,11 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelModule} from '../quick-panel/quick-panel.module';
 import {UserModule} from '../../user/user.module';
 import {NavigationTreeComponent} from '../navigation-tree/navigation-tree.component';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
 
 describe('NavigationDrawerComponent', () => {
     let component: NavigationDrawerComponent;
@@ -27,10 +28,13 @@ describe('NavigationDrawerComponent', () => {
                 FlexLayoutModule,
                 QuickPanelModule,
                 UserModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ]
         })
             .compileComponents();
     }));

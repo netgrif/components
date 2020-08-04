@@ -107,9 +107,8 @@ export class CaseResourceService implements CountService {
      * POST
      * {{baseUrl}}/api/workflow/case/author/:id
      */
-    // TODO 24.4.2020 is that endpoint good?
-    public getAllCaseUser(body: object): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+    public getAllCaseUser(userId: string, body: object): Observable<Array<Case>> {
+        return this.provider.post$('workflow/case/author/' + userId, this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
     }
 
 
@@ -118,9 +117,8 @@ export class CaseResourceService implements CountService {
      * POST
      * {{baseUrl}}/api/workflow/case/search2
      */
-    // TODO 24.4.2020 is that endpoint good?
     public getCasesQueryDSL(body: object): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+        return this.provider.post$('workflow/case/search2', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
     }
 
 

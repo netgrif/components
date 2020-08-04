@@ -46,8 +46,8 @@ export class NavigationTreeComponent implements OnInit {
                 }
             });
             const view = this._config.getViewByPath(this.viewPath);
-            if (view && view.routes) {
-                this.dataSource.data = this.resolveNavigationNodes(view.routes, this.parentUrl);
+            if (view && view.children) {
+                this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
             }
             this.resolveLevels(this.dataSource.data);
         }
@@ -95,7 +95,7 @@ export class NavigationTreeComponent implements OnInit {
     }
 
     private hasSubRoutes(route: View): boolean {
-        if (!route.routes) {
+        if (!route.children) {
             return false;
         }
         if (typeof route.children === 'object') {

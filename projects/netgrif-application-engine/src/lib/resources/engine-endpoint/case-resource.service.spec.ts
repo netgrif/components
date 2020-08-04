@@ -117,11 +117,11 @@ describe('CaseResourceService', () => {
 
     it('should getAllCaseUser', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
-            service.getAllCaseUser({}).subscribe(res => {
+            service.getAllCaseUser('id', {}).subscribe(res => {
                 expect(res.length).toEqual(0);
             });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/');
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/author/id');
             expect(reqLog.request.method).toEqual('POST');
 
             reqLog.flush([]);
@@ -134,7 +134,7 @@ describe('CaseResourceService', () => {
                 expect(res.length).toEqual(0);
             });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/');
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/search2');
             expect(reqLog.request.method).toEqual('POST');
 
             reqLog.flush([]);
