@@ -21,6 +21,7 @@ import {ButtonField} from '../../data-fields/button-field/models/button-field';
 import {FileField} from '../../data-fields/file-field/models/file-field';
 import moment from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
+import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
 
 @Injectable({
     providedIn: 'root'
@@ -117,6 +118,9 @@ export class FieldConverterService {
             case 'file':
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout);
+            case 'fileList':
+                return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
+                    item.placeholder, item.description, item.layout);
         }
     }
 
@@ -139,6 +143,8 @@ export class FieldConverterService {
             return 'dateTime';
         } else if (item instanceof FileField) {
             return 'file';
+        } else if (item instanceof FileListField) {
+            return 'fileList';
         } else if (item instanceof UserField) {
             return 'user';
         }

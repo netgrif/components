@@ -1,37 +1,12 @@
-import {DataField} from '../../models/abstract-data-field';
-import {Behavior} from '../../models/behavior';
-import {Layout} from '../../models/layout';
-import {FileFieldValue} from './file-field-value';
 import {Observable, Subject} from 'rxjs';
 import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
+import {Behavior} from '../../models/behavior';
+import {Layout} from '../../models/layout';
+import {FileUploadMIMEType} from '../../file-field/models/file-field';
+import {DataField} from '../../models/abstract-data-field';
+import {FileListFieldValue} from './file-list-field-value';
 
-/**
- * Supported types of files a user can select through a file picker.
- */
-export enum FileUploadMIMEType {
-    IMAGE = 'image/*',
-    VIDEO = 'video/*',
-    AUDIO = 'audio/*',
-    PDF = '.pdf',
-    JPG = '.jpg',
-    XML = '.xml',
-    DOC_DOCX = '.doc,.docx',
-    XLS_XLSX = '.xls,.xlsx'
-}
-
-/**
- * Extended structure for file by name and extension.
- */
-export interface FileUploadDataModel {
-    file: File;
-    name: string;
-    extension: string;
-}
-
-/**
- * Holds information represent file field implements in Petri Net
- */
-export class FileField extends DataField<FileFieldValue> {
+export class FileListField extends DataField<FileListFieldValue> {
     /**
      * Specifies the size of all uploaded files in bytes.
      *
@@ -49,7 +24,7 @@ export class FileField extends DataField<FileFieldValue> {
      *
      * Placeholder is a substitute for the value name if not set value.
      */
-    constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
+    constructor(stringId: string, title: string, behavior: Behavior, value?: FileListFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1,
                 private _zipped: boolean = false, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
         super(stringId, title, value, behavior, placeholder, description, layout);
@@ -80,11 +55,20 @@ export class FileField extends DataField<FileFieldValue> {
         this._changedFields$.next(change);
     }
 
-    protected valueEquality(a: FileFieldValue, b: FileFieldValue): boolean {
-        let file = !a === !b;
-        if (a && a.file && b && b.file) {
-            file = a.file.name === b.file.name;
+    /**
+     * We assume that files are always given in the same order.
+     */
+    protected valueEquality(a: FileListFieldValue, b: FileListFieldValue): boolean {
+        let array = !a === !b;
+        if (a && a.files && b && b.files) {
+            array = a.files.every((element, index) => element.name === b.files[index].name);
         }
-        return (!a && !b) || (!!a && !!b && a.name === b.name && file);
+        if (!array) {
+            return false;
+        }
+        if (a && a.names && b && b.names) {
+            array = a.names.every((element, index) => element === b.names[index]);
+        }
+        return (!a && !b) || (!!a && !!b && array);
     }
 }

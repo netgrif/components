@@ -201,7 +201,7 @@ export class FileFieldService {
             fileUploadModel.completed = false;
             fileUploadModel.error = false;
             fileUploadModel.sub = this._taskResourceService.uploadFile(taskId,
-                fileUploadModel.stringId, fileFormData).subscribe(response => {
+                fileUploadModel.stringId, fileFormData, false).subscribe(response => {
                 if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                     fileUploadModel.progress = (response as ProviderProgress).progress;
                     if (fileUploadModel.progress === 100) {

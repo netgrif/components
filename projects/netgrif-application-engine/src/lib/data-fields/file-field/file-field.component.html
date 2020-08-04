@@ -33,15 +33,18 @@
                         <mat-icon *ngIf="state.completed && state.error" color="warn">error</mat-icon>
                         {{name}}
                     </button>
+                    <button mat-button *ngIf="dataField.value.name || dataField.value.file">
+                        <mat-icon color="warn" (click)="deleteFile()" matTooltip="Click to delete">close</mat-icon>
+                    </button>
                 </div>
             </div>
             <mat-progress-bar *ngIf="state.uploading || state.downloading" color="primary" [value]="state.progress"
                               [mode]="state.uploading ? 'determinate' : 'indeterminate'"
                               class="margin-bottom-default"></mat-progress-bar>
         </div>
-        <input type="file" #fileUploadInput name="fileUpload" [multiple]="multiple"
+        <input type="file" #fileUploadInput name="fileUpload" [multiple]="false"
                accept="{{dataField.allowTypes}}" class="invisible-input"/>
-        <input type="hidden" [formControl]="formControl" [multiple]="multiple" accept="{{dataField.allowTypes}}">
+        <input type="hidden" [formControl]="formControl" [multiple]="false" accept="{{dataField.allowTypes}}">
         <mat-error
             *ngIf="!formControl.valid && formControl.touched">{{'dataField.validations.required' | translate}}</mat-error>
     </div>

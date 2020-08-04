@@ -168,10 +168,10 @@
             "moreFiles": "Zvolil si viac súborov ako je povolené",
             "sameFiles": "Nemôžeš nahrať dva rovnaké súbory",
             "fileSize": "Veľkosť súboru presiahla povolený limit",
-            "cannotDownload": "Súbor nemôže byť stiahnutý bez definovanej úlohy",
-            "cannotUpload": "Súbor nemôže byť nahraný bez definovanej úlohy",
-            "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru",
-            "fileUploadFailed": "Súbor sa nepodarilo nahrať"
+            "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru alebo súbor odstránte",
+            "wontUploadSameFiles": "Vybrané súbory už boli nahrané. Ak chcete súbory aktualizovať odstránte už nahrané súbory",
+            "fileUploadFailed": "Súbor sa nepodarilo nahrať",
+            "fileDeleteFailed":  "Súbor sa nepodarilo vymazať"
         },
         "noFile": "Žiadny súbor"
     },

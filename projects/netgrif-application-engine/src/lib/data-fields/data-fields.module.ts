@@ -36,6 +36,7 @@ import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-textarea-field.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
+import { FileListFieldComponent } from './file-list-field/file-list-field.component';
 
 @NgModule({
     declarations: [
@@ -59,6 +60,7 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
         DataFieldTemplateComponent,
         RequiredLabelComponent,
         RichTextareaFieldComponent,
+        FileListFieldComponent,
     ],
     exports: [
         TextFieldComponent,
@@ -70,7 +72,8 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
         FileFieldComponent,
         UserFieldComponent,
         DateTimeFieldComponent,
-        ButtonFieldComponent
+        ButtonFieldComponent,
+        FileListFieldComponent
     ],
     imports: [
         CommonModule,

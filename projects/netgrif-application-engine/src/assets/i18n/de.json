@@ -168,10 +168,10 @@
             "moreFiles": "Sie haven zu viel Dateien ausgewählt",
             "sameFiles": "Sie können nicht dieselbe Datei zweimal hochladen",
             "fileSize": "Die Dateigröße hat das zulässige Limit überschritten",
-            "cannotDownload": "The file cannot be downloaded without defined task",
-            "cannotUpload": "The file cannot be uploaded without defined task",
             "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
-            "fileUploadFailed": "The file failed to upload"
+            "wontUploadSameFiles": "Die ausgewählten Dateien wurden bereits hochgeladen. Löschen Sie zum Aktualisieren von Dateien bereits hochgeladene Dateien",
+            "fileUploadFailed": "The file failed to upload",
+            "fileDeleteFailed":  "Die Datei konnte nicht gelöscht werden"
         },
         "noFile": "No file"
     },
