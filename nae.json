@@ -477,10 +477,7 @@
                         "zmluva",
                         "address",
                         "NEW_CONTRACT",
-                        "data-test",
-                        "enum_map",
-                        "multi_map",
-                        "old"
+                        "data-test"
                     ]
                 },
                 "componentName": "MyCaseView"
