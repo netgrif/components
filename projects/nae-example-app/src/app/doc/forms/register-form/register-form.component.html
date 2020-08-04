@@ -4,5 +4,13 @@
                        [apiModuleImport]="'RegistrationFormModule'"></nae-app-documentation>
 
 <ng-template #regFormExample>
-    <nae-registration-form></nae-registration-form>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <div fxLayout="column" fxLayoutAlign="stretch">
+            <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="16px">
+                <mat-card fxFlex="100">
+                    <nae-registration-form></nae-registration-form>
+                </mat-card>
+            </div>
+        </div>
+    </div>
 </ng-template>
