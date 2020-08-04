@@ -5,8 +5,12 @@
 </nae-data-field-template>
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
+
     <div>
-        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}  <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label><br></mat-label>
+        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}
+            <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label>
+            <br>
+        </mat-label>
         <button mat-stroked-button
                 *ngIf="dataField.value !== undefined"
                 [disabled]="formControl.disabled"
@@ -23,7 +27,8 @@
             <mat-icon>person_add</mat-icon>
             Select user
         </button>
-        <mat-error *ngIf="!formControl.valid && formControl.touched">{{'dataField.validations.required' | translate}}</mat-error>
+        <mat-error
+            *ngIf="!formControl.valid && formControl.touched">{{'dataField.validations.required' | translate}}</mat-error>
     </div>
 
 </ng-template>

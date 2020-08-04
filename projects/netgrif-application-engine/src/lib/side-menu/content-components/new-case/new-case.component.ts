@@ -8,6 +8,9 @@ import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {NewCaseInjectionData} from './model/new-case-injection-data';
+import {TranslateService} from '@ngx-translate/core';
+import {MatToolbar} from '@angular/material';
+
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 
 interface Form {
@@ -27,7 +30,6 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
     processFormControl = new FormControl('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
-    selectedColorControl = new FormControl('', Validators.required);
 
     colors: Form[] = [
         {value: 'panel-primary-icon', viewValue: 'Primary'},
@@ -37,6 +39,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
     filteredOptions: Observable<Array<Form>>;
     processOne: Promise<boolean>;
     injectedData: NewCaseInjectionData;
+    @ViewChild('toolbar') toolbar: MatToolbar;
 
     @ViewChild('stepper1') stepper1;
     @ViewChild('stepper2') stepper2;
@@ -45,7 +48,8 @@ export class NewCaseComponent implements OnInit, OnChanges {
                 private _formBuilder: FormBuilder,
                 private _snackBarService: SnackBarService,
                 private _caseResourceService: CaseResourceService,
-                private _hotkeysService: HotkeysService) {
+                private _hotkeysService: HotkeysService,
+                private _translate: TranslateService) {
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as NewCaseInjectionData;
         }
@@ -57,7 +61,7 @@ export class NewCaseComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         if (!this.injectedData) {
-            this._snackBarService.openErrorSnackBar('No allowed Nets');
+            this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.new-case.noNets'));
             this._sideMenuControl.close({
                 opened: false
             });
@@ -102,7 +106,8 @@ export class NewCaseComponent implements OnInit, OnChanges {
             this._caseResourceService.createCase(newCase)
                 .subscribe(
                     response => {
-                        this._snackBarService.openSuccessSnackBar('Successful create new case ' + newCase.title);
+                        this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
+                            + ' ' + newCase.title);
                         this._sideMenuControl.close({
                             opened: false,
                             message: 'Confirm new case setup',
@@ -148,5 +153,37 @@ export class NewCaseComponent implements OnInit, OnChanges {
                 this.stepper2.next();
             }
         }
+    }
+
+    titleShortening() {
+        let size;
+        if (this.toolbar && this.toolbar._elementRef && this.toolbar._elementRef.nativeElement &&
+            this.toolbar._elementRef.nativeElement.offsetWidth) {
+            switch (this.toolbar._elementRef.nativeElement.offsetWidth) {
+                case 296:
+                    size = 22;
+                    break;
+                case 496:
+                    size = 42;
+                    break;
+                case 246:
+                    size = 18;
+                    break;
+                default:
+                    size = 32;
+                    break;
+            }
+        } else {
+            size = 32;
+        }
+
+        const caze = this._translate.instant('side-menu.new-case.case');
+        const name = this.options.length === 1 ? this.options[0].viewValue : this.processFormControl.value.viewValue;
+        const title = caze + '-' + name;
+        if (title.length > size) {
+            const tmp = title.slice(0, size);
+            return tmp + '...';
+        }
+        return title;
     }
 }

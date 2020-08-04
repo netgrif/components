@@ -9,13 +9,14 @@ import {
     Tree,
     url,
 } from '@angular-devkit/schematics';
-import {FileEntry, UpdateRecorder} from '@angular-devkit/schematics/src/tree/interface';
+import {FileEntry, UpdateRecorder, DirEntry} from '@angular-devkit/schematics/src/tree/interface';
 import {experimental, normalize, strings} from '@angular-devkit/core';
 import {NetgrifApplicationEngine} from '../../src/lib/configuration/interfaces/schema';
 import {Change, InsertChange} from '@schematics/angular/utility/change';
 import {FileData} from './models/file-data';
 import {FileSystemNode} from './models/file-system-node';
 import {ProjectInfo} from './models/project-info';
+import {addSymbolToDecoratorMetadata} from './modified-library-functions';
 
 
 export function getProjectInfo(tree: Tree): ProjectInfo {
@@ -179,4 +180,78 @@ export function createRelativePath(sourcePath: string, destinationPath: string):
     }
 
     return pathFragments.join('/');
+}
+
+/**
+ * Recursively iterates over every file in the project and executes the given lambda with it as the input parameter.
+ * @param tree tree to get access to the file system
+ * @param lambda the function that is called with each of the project files as it's argument
+ */
+export function forEachProjectFile(tree: Tree, lambda: (fe: FileEntry) => void): void {
+    const projectInfo = getProjectInfo(tree);
+    const rootDir = tree.getDir(projectInfo.path);
+    forEachSubDirFile(rootDir, lambda);
+}
+
+
+/**
+ * Recursively iterates over every file in the given directory and executes the given lambda with it as the input parameter.
+ * @param subRoot the directory which should be recursively explored.
+ * The files in the given directory and all it's subdirectories are processed by this function
+ * @param lambda the function that is called with each of the files as it's argument
+ */
+export function forEachSubDirFile(subRoot: DirEntry, lambda: (fe: FileEntry) => void): void {
+    subRoot.subfiles.forEach(pathFragment => {
+        const file = subRoot.file(pathFragment);
+        if (file !== null) {
+            lambda(file);
+        }
+    });
+    subRoot.subdirs.forEach(pathFragment => {
+        forEachSubDirFile(subRoot.dir(pathFragment), lambda);
+    });
+}
+
+/**
+ * Finds all nodes of the given type among the child nodes of the given node.
+ * @param start the node who's children should be searched
+ * @param target the type of node that should be found
+ * @param recursive whether children of children should be examined recursively or not
+ * @returns an array of the children that are of the given type. Order of the children is not guaranteed.
+ */
+export function findNodesInChildren(start: ts.Node, target: ts.SyntaxKind, recursive: boolean = false): Array<ts.Node> {
+    const result: Array<ts.Node> = [];
+
+    start.getChildren().forEach(child => {
+        if (child.kind === target) {
+            result.push(child);
+        }
+        if (recursive && child.getChildren().length !== 0) {
+            result.push(...findNodesInChildren(child, target, recursive));
+        }
+    });
+
+    return result;
+}
+
+/**
+ * Adds another provider to the providers of a specified component
+ * @param componentFile the file with the component
+ * @param symbolName the class name of the added provider
+ * @param insertedText the text that should be inserted into the providers array
+ * @param importPath the path from which to import the symbol
+ */
+export function addProviderToComponent(componentFile: FileEntry,
+                                       symbolName: string,
+                                       insertedText?: string,
+                                       importPath: string | null = null): Array<Change> {
+    return addSymbolToDecoratorMetadata(
+        fileEntryToTsSource(componentFile),
+        componentFile.path,
+        'Component',
+        'providers',
+        symbolName,
+        insertedText,
+        importPath
+    );
 }

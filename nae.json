@@ -264,7 +264,7 @@
                 "class": "DashboardExampleComponent",
                 "from": "./doc/dashboard-example/dashboard-example.component"
             },
-            "access": "private",
+            "access": "public",
             "navigation": false,
             "routing": {
                 "path": "dashboard-view"
@@ -476,7 +476,8 @@
                         "all_data",
                         "zmluva",
                         "address",
-                        "NEW_CONTRACT"
+                        "NEW_CONTRACT",
+                        "data-test"
                     ]
                 },
                 "componentName": "MyCaseView"

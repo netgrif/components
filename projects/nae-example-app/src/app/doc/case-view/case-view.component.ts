@@ -5,6 +5,7 @@ import {
     CaseViewService,
     ConfigCaseViewServiceFactory,
     HeaderComponent,
+    SearchChipService,
     SearchService,
     SimpleFilter
 } from '@netgrif/application-engine';
@@ -14,7 +15,6 @@ const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
 };
 
 const searchServiceFactory = () => {
-    // TODO load/use base filter somehow
     return new SearchService(SimpleFilter.emptyCaseFilter());
 };
 
@@ -23,6 +23,7 @@ const searchServiceFactory = () => {
     templateUrl: './case-view.component.html',
     styleUrls: ['./case-view.component.scss'],
     providers: [
+        SearchChipService,
         ConfigCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},

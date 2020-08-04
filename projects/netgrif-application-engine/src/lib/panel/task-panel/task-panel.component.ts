@@ -5,7 +5,7 @@ import {TaskContentComponent} from '../../task-content/task-content/task-content
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -27,7 +27,6 @@ import {FinishPolicyService} from '../../task/services/finish-policy.service';
 import {NAE_TASK_OPERATIONS} from '../../task/models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
-import {NAE_TASK_COLS} from '../../task-content/model/nae-task-cols-injection-token';
 
 
 @Component({
@@ -81,6 +80,13 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         super();
         _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskPanelData.changedFields.next(changedFields);
+            if (this._taskContentService.task) {
+                Object.keys(changedFields).forEach(value => {
+                    if (changedFields[value].type === 'taskRef') {
+                        this._taskDataService.initializeTaskDataFields(new Subject<boolean>(), true);
+                    }
+                });
+            }
         });
         _taskOperations.open$.subscribe(() => {
             this.expand();
@@ -137,13 +143,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     private createContentPortal(): void {
-        let cols: number;
-        if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
-            cols = this._taskPanelData.task.layout.cols;
-        }
-
         const providers: StaticProvider[] = [
-            {provide: NAE_TASK_COLS, useValue: cols},
             {provide: TaskContentService, useValue: this._taskContentService}
         ];
         const injector = Injector.create({providers});
@@ -255,7 +255,10 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
             case TaskMetaField.USER:
                 return {value: task.user ? task.user.fullName : '', icon: 'account_circle'};
             case TaskMetaField.ASSIGN_DATE:
-                return {value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '', icon: 'event'};
+                return {
+                    value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '',
+                    icon: 'event'
+                };
         }
     }
 
