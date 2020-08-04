@@ -34,6 +34,7 @@ describe('FieldConvertorService', () => {
                 y: 0,
                 rows: 1,
                 cols: 1,
+                offset: 0,
                 template: TemplateAppearance.NETGRIF,
                 appearance: MaterialAppearance.OUTLINE
             },
@@ -77,6 +78,7 @@ describe('FieldConvertorService', () => {
                 y: 0,
                 rows: 1,
                 cols: 1,
+                offset: 0,
                 template: TemplateAppearance.NETGRIF,
                 appearance: MaterialAppearance.OUTLINE
             },
