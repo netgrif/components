@@ -6,7 +6,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations'
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('SingleTaskContentService', () => {
     let service: SingleTaskContentService;
