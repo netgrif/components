@@ -6,6 +6,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('UnlimitedTaskContentService', () => {
     let service: UnlimitedTaskContentService;
@@ -15,7 +16,8 @@ describe('UnlimitedTaskContentService', () => {
             imports: [
                 MatSnackBarModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                NoopAnimationsModule
             ],
             providers: [
                 UnlimitedTaskContentService,

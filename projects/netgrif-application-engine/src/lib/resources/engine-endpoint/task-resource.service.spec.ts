@@ -5,13 +5,14 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TaskResourceService} from './task-resource.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TaskResourceService', () => {
     let service: TaskResourceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(TaskResourceService);

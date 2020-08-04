@@ -13,6 +13,7 @@ import {UserResourceService} from '../../../../resources/engine-endpoint/user-re
 import {MockUserResourceService} from '../../../../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('LanguageSelectorComponent', () => {
     let component: LanguageSelectorComponent;
@@ -25,7 +26,8 @@ describe('LanguageSelectorComponent', () => {
                 RouterTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                NoopAnimationsModule
             ],
             providers: [
                 AuthenticationMethodService,

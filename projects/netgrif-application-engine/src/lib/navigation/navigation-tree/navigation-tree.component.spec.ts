@@ -32,7 +32,7 @@ describe('NavigationTreeComponent', () => {
                 UserModule,
                 RouterTestingModule.withRoutes([]),
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule, NoopAnimationsModule
             ]
         })
             .compileComponents();

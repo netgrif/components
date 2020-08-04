@@ -16,6 +16,7 @@ import {RouterModule} from '@angular/router';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('WorkflowHeaderService', () => {
     let service: WorkflowHeaderService;
@@ -27,7 +28,8 @@ describe('WorkflowHeaderService', () => {
                 HttpClientTestingModule,
                 MatSnackBarModule,
                 MatIconModule,
-                RouterModule.forRoot([])
+                RouterModule.forRoot([]),
+                NoopAnimationsModule
             ],
             providers: [
                 WorkflowHeaderService,

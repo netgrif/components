@@ -6,6 +6,7 @@ import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('SingleTaskContentService', () => {
     let service: SingleTaskContentService;
@@ -15,7 +16,8 @@ describe('SingleTaskContentService', () => {
             imports: [
                 MatSnackBarModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                NoopAnimationsModule
             ],
             providers: [
                 SingleTaskContentService,

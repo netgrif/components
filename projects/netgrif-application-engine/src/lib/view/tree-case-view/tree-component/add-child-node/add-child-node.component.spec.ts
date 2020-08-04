@@ -11,7 +11,6 @@ import {ConfigurationService} from '../../../../configuration/configuration.serv
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {Component} from '@angular/core';
 import {CaseTreeNode} from '../model/CaseTreeNode';
-import {TreeCaseViewModule} from '../../tree-case-view.module';
 
 describe('AddChildNodeComponent', () => {
     let component: AddChildNodeComponent;

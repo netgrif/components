@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {Role} from '../models/role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
@@ -10,7 +10,7 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
 import {LoggerService} from '../../logger/services/logger.service';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import {SessionService} from '../../authentication/session/services/session.service';
 
 @Injectable({
@@ -19,18 +19,17 @@ import {SessionService} from '../../authentication/session/services/session.serv
 export class UserService {
 
     private _user: User;
-    private _userChange$: Subject<User>;
+    private _userChange$: ReplaySubject<User>;
     private _loginCalled: boolean;
 
     constructor(private _authService: AuthenticationService,
                 private _userResource: UserResourceService,
                 private _userTransform: UserTransformer,
                 private _log: LoggerService,
-                private _session: SessionService,
-                private _http: HttpClient) {
+                private _session: SessionService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
-        this._userChange$ = new Subject<User>();
+        this._userChange$ = new ReplaySubject<User>(1);
         setTimeout(() => {
             this._authService.authenticated$.subscribe(auth => {
                 if (auth && !this._loginCalled) {

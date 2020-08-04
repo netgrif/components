@@ -36,12 +36,14 @@ export class LanguageService {
         }
 
         setTimeout(() => {
-            this._preferenceService.preferencesChanged$.subscribe(() => {
-                const preferredLang = this._preferenceService.getLocale();
-                if (preferredLang !== undefined && preferredLang !== this._translate.currentLang) {
-                    this.setLanguage(preferredLang);
-                }
-            });
+            if (this._preferenceService) {
+                this._preferenceService.preferencesChanged$.subscribe(() => {
+                    const preferredLang = this._preferenceService.getLocale();
+                    if (preferredLang !== undefined && preferredLang !== this._translate.currentLang) {
+                        this.setLanguage(preferredLang);
+                    }
+                });
+            }
         });
 
         _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
