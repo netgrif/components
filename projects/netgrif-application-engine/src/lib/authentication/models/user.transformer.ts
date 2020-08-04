@@ -9,11 +9,7 @@ import {Injectable} from '@angular/core';
 })
 export class UserTransformer implements Transformer<AuthUser, User> {
 
-    protected static transformAuthorities(authorities: Array<Authority>): Array<string> {
-        return !authorities ? [] : authorities.map(a => a.authority);
-    }
-
-    protected static transformProcessRoles(roles: Array<ProcessRole>): Array<Role> {
+    protected transformProcessRoles(roles: Array<ProcessRole>): Array<Role> {
         return !roles ? [] : roles.map(r => ({
             id: r.stringId,
             name: r.name,
@@ -21,7 +17,7 @@ export class UserTransformer implements Transformer<AuthUser, User> {
         }));
     }
 
-    protected static transformUserProcessRoles(roles: Array<UserProcessRole>): Array<Role> {
+    protected transformUserProcessRoles(roles: Array<UserProcessRole>): Array<Role> {
         return !roles ? [] : roles.map(r => ({
             id: r.roleId,
             net: r.netId,
@@ -29,7 +25,11 @@ export class UserTransformer implements Transformer<AuthUser, User> {
         }));
     }
 
-   protected mergeRoles(roles: Array<Array<Role>>): Array<Role> {
+    protected transformAuthorities(authorities: Array<Authority>): Array<string> {
+        return !authorities ? [] : authorities.map(a => a.authority);
+    }
+
+    protected mergeRoles(roles: Array<Array<Role>>): Array<Role> {
         const result = roles[0];
 
         roles.splice(0, 1);
@@ -56,10 +56,10 @@ export class UserTransformer implements Transformer<AuthUser, User> {
             user.email,
             user.name,
             user.surname,
-            UserTransformer.transformAuthorities(user.authorities),
+            this.transformAuthorities(user.authorities),
             this.mergeRoles([
-                UserTransformer.transformProcessRoles(user.processRoles),
-                UserTransformer.transformUserProcessRoles(user.userProcessRoles)]),
+                this.transformProcessRoles(user.processRoles),
+                this.transformUserProcessRoles(user.userProcessRoles)]),
             groups);
 
     }
