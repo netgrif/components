@@ -1,6 +1,7 @@
 import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
+import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
 
 export interface MultichoiceFieldValue {
     key: string;
@@ -17,7 +18,7 @@ export class MultichoiceField  extends DataField<Array<string>> {
 
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
-                private _view = MultichoiceFieldView.DEFAULT) {
+                private _view = MultichoiceFieldView.DEFAULT, private readonly _fieldType = FieldTypeResource.MULTICHOICE) {
         super(stringId, title, values, behavior, placeholder, description, layout);
         if (layout) {
             this.materialAppearance = this.layout.appearance;
@@ -40,6 +41,10 @@ export class MultichoiceField  extends DataField<Array<string>> {
 
     get view(): MultichoiceFieldView {
         return this._view;
+    }
+
+    get fieldType(): FieldTypeResource {
+        return this._fieldType;
     }
 
     protected valueEquality(a: Array<string>, b: Array<string>): boolean {

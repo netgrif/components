@@ -5,6 +5,7 @@ import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
+import {FieldTypeResource} from '../model/field-type-resource';
 
 @Component({
     selector: 'nae-task-content',
@@ -50,6 +51,11 @@ export class TaskContentComponent {
             this.loading = false;
         });
     }
+
+    /**
+     * Exists to allow references to the enum in the HTML
+     */
+    public fieldTypeResource = FieldTypeResource;
 
     public get taskId(): string {
         return this.taskContentService.task.stringId;

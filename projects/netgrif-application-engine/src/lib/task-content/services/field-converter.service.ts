@@ -53,16 +53,16 @@ export class FieldConverterService {
                     item.validations, item.placeholder, item.description, item.layout);
             case FieldTypeResource.ENUMERATION:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item));
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item), item.type);
             case FieldTypeResource.ENUMERATION_MAP:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumOptions(item),
-                item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item));
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item), item.type);
             case FieldTypeResource.MULTICHOICE:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceChoices(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item));
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item), item.type);
             case FieldTypeResource.MULTICHOICE_MAP:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item));
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item), item.type);
             case FieldTypeResource.DATE:
                 let date;
                 if (item.value) {
@@ -99,12 +99,8 @@ export class FieldConverterService {
             return FieldTypeResource.BUTTON;
         } else if (item instanceof TextField) {
             return FieldTypeResource.TEXT;
-        } else if (item instanceof EnumerationField) {
-            return FieldTypeResource.ENUMERATION;
         } else if (item instanceof NumberField) {
             return FieldTypeResource.NUMBER;
-        } else if (item instanceof MultichoiceField) {
-            return FieldTypeResource.MULTICHOICE;
         } else if (item instanceof DateField) {
             return FieldTypeResource.DATE;
         } else if (item instanceof DateTimeField) {
@@ -113,6 +109,8 @@ export class FieldConverterService {
             return FieldTypeResource.FILE;
         } else if (item instanceof UserField) {
             return FieldTypeResource.USER;
+        } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
+            return item.fieldType;
         }
     }
 

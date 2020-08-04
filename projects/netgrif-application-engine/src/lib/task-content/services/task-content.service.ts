@@ -123,6 +123,12 @@ export abstract class TaskContentService {
                                 });
                             }
                             (field as EnumerationField | MultichoiceField).choices = newChoices;
+                        } else if (key === 'options') {
+                            const newOptions = [];
+                            Object.keys(updatedField.options).forEach(option => {
+                                newOptions.push({key: option, value: updatedField.options[key]});
+                            });
+                            (field as EnumerationField | MultichoiceField).choices = newOptions;
                         } else {
                             field[key] = updatedField[key];
                         }
