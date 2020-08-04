@@ -24,7 +24,8 @@
             "finishTask": "Finishing task",
             "invalidData": "Some fields have invalid values",
             "noCase": "No cases found",
-            "caseGetFailed": "Getting cases failed"
+            "caseGetFailed": "Getting cases failed",
+            "noLongerExists": "The selected task no longer exists"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "There are no tasks satisfying this filter",
@@ -66,10 +67,13 @@
             "selection": "You must make a selection",
             "errFirst": "Process is required.",
             "errSecond": "Title is required.",
-            "errThird": "Color is required."
+            "errThird": "Color is required.",
+            "noNets": "No allowed Nets",
+            "createCase": "Successful create new case"
         },
         "user": {
             "assign": "User Assign",
+            "choose": "Choose user",
             "noUser": "There are no users",
             "err": "Users failed to load",
             "showcase": "User showcase mode not set!"
@@ -196,6 +200,7 @@
     "headers": {
         "newHeader": "Select new header",
         "date": "Choose a date",
+        "selectUser": "Choose a user",
         "caseMeta": {
             "visualID": "Visual ID",
             "title": "Title",

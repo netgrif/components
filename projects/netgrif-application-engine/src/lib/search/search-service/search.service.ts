@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {ClausePredicate} from '../models/predicate/clause-predicate';
 import {BooleanOperator} from '../models/boolean-operator';
 import {Filter} from '../../filter/models/filter';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Predicate} from '../models/predicate/predicate';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
@@ -11,7 +11,7 @@ import {MergeOperator} from '../../filter/models/merge-operator';
  * Holds information about the filter that is currently applied to the view component, that provides this services.
  */
 @Injectable()
-export class SearchService {
+export class SearchService implements OnDestroy {
 
     /**
      * {@link Filter} that is applied to the view, even if the user doesn't search anything.
@@ -29,6 +29,10 @@ export class SearchService {
      * Holds the full text {@link Filter} if set, `undefined` otherwise.
      */
     protected _fullTextFilter: SimpleFilter | undefined;
+    /**
+     * The index of a removed {@link Predicate} is emmited into this stream
+     */
+    protected _predicateRemoved$: Subject<number>;
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
@@ -38,6 +42,11 @@ export class SearchService {
         this._baseFilter = baseFilter.clone();
         this._rootPredicate = new ClausePredicate([], BooleanOperator.AND);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
+        this._predicateRemoved$ = new Subject<number>();
+    }
+
+    ngOnDestroy(): void {
+        this._predicateRemoved$.complete();
     }
 
     /**
@@ -70,12 +79,21 @@ export class SearchService {
     }
 
     /**
+     * @returns an Observable that emits the index of the removed predicate whenever a predicate is removed
+     */
+    public get predicateRemoved$(): Observable<number> {
+        return this._predicateRemoved$.asObservable();
+    }
+
+    /**
      * Adds a {@link Predicate} to the Predicate root and updates the active Filter.
      * @param newPredicate Predicate that should be added to the search queries.
+     * @returns the index of the added Predicate
      */
-    public addPredicate(newPredicate: Predicate): void {
-        this._rootPredicate.addPredicate(newPredicate);
+    public addPredicate(newPredicate: Predicate): number {
+        const result = this._rootPredicate.addPredicate(newPredicate);
         this.updateActiveFilter();
+        return result;
     }
 
     /**
@@ -85,6 +103,7 @@ export class SearchService {
      */
     public removePredicate(index: number): void {
         if (this._rootPredicate.removePredicate(index)) {
+            this._predicateRemoved$.next(index);
             this.updateActiveFilter();
         }
     }

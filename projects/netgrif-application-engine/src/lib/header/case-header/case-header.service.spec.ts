@@ -26,6 +26,9 @@ import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {CaseMetaField} from './case-menta-enum';
+import {HeaderChangeType} from '../models/user-changes/header-change-type';
+import {EditChangeDescription} from '../models/user-changes/edit-change-description';
+import {ModeChangeDescription} from '../models/user-changes/mode-change-description';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -44,11 +47,15 @@ describe('CaseHeaderService', () => {
                 CaseHeaderService,
                 ConfigCaseViewServiceFactory,
                 AuthenticationMethodService,
-                {   provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory},
-                {   provide: CaseViewService,
+                {
+                    provide: SearchService,
+                    useFactory: TestCaseSearchServiceFactory
+                },
+                {
+                    provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]},
+                    deps: [ConfigCaseViewServiceFactory]
+                },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -94,47 +101,49 @@ describe('CaseHeaderService', () => {
 
     it('call sort header changed', () => {
         service.headerChange$.subscribe(res => {
-            expect(res).toEqual({headerType: HeaderType.CASE, mode: HeaderMode.SORT, description: undefined});
+            expect(res).toEqual({headerType: HeaderType.CASE, changeType: HeaderChangeType.SORT, description: undefined});
         });
-        service.sortHeaderChanged('', 'asc');
+        service.sortHeaderChanged(0, '', 'asc');
     });
 
-    it('call search input changed', () => {
+    it('call search input changed', (done) => {
         service.headerChange$.subscribe(res => {
-            expect(res).toEqual({
-                headerType: HeaderType.CASE, mode: HeaderMode.SEARCH, description:
-                    {
-                        fieldIdentifier: 'visualId', searchInput: 'hladaj', type: 'meta',
-                        petriNetIdentifier: undefined
-                    } as SearchChangeDescription
-            });
+            expect(res.changeType).toEqual(HeaderChangeType.SEARCH);
+            expect((res.description as SearchChangeDescription).columnIdentifier).toEqual(0);
+            expect((res.description as SearchChangeDescription).searchInput).toEqual('hladaj');
+            expect((res.description as SearchChangeDescription).fieldIdentifier).toEqual('visualId');
+            expect((res.description as SearchChangeDescription).type).toEqual(HeaderColumnType.META);
+            expect((res.description as SearchChangeDescription).fieldType).toEqual('text');
+            done();
         });
         service.headerSearchInputChanged(0, 'hladaj');
     });
 
-    it('call column selected', () => {
+    it('call column selected', (done) => {
         service.headerChange$.subscribe(res => {
-            expect(res.headerType).toEqual(HeaderType.CASE);
-            expect(res.mode).toEqual(HeaderMode.EDIT);
+            expect(res.changeType).toEqual(HeaderChangeType.EDIT);
+            expect((res.description as EditChangeDescription).preferredHeaders).toBeTruthy();
+            expect((res.description as EditChangeDescription).preferredHeaders[0].title).toEqual('Title');
+            done();
         });
         service.headerColumnSelected(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
-
-        service.headerChange$.subscribe(res => {
-            expect(res.headerType).toEqual(HeaderType.CASE);
-            expect(res.mode).toEqual(HeaderMode.EDIT);
-        });
-        service.revertEditMode();
     });
 
-    it('call search input changed', () => {
+    it('revert edit mode', (done) => {
+        service.changeMode(HeaderMode.SORT);
+        service.changeMode(HeaderMode.EDIT);
         service.headerChange$.subscribe(res => {
-            expect(res).toEqual({
-                headerType: HeaderType.CASE, mode: HeaderMode.SEARCH,
-                description: {fieldIdentifier: 'visualId', searchInput: 'hladaj', type: 'meta',
-                        petriNetIdentifier: undefined} as SearchChangeDescription
-            });
+            if (res.changeType === HeaderChangeType.EDIT) {
+                expect(res.changeType).toEqual(HeaderChangeType.EDIT);
+                expect((res.description as EditChangeDescription).preferredHeaders).toBeTruthy();
+            } else {
+                expect(res.changeType).toEqual(HeaderChangeType.MODE_CHANGED);
+                expect((res.description as ModeChangeDescription).previousMode).toEqual(HeaderMode.EDIT);
+                expect((res.description as ModeChangeDescription).currentMode).toEqual(HeaderMode.SORT);
+                done();
+            }
         });
-        service.headerSearchInputChanged(0, 'hladaj');
+        service.revertEditMode();
     });
 
     it('call change mode', () => {

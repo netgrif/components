@@ -4,6 +4,7 @@ import {User} from '../../user/models/user';
 import {QuickPanelItem} from '../quick-panel/components/quick-panel.component';
 import 'hammerjs';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {LoggerService} from '../../logger/services/logger.service';
 
 @Component({
     selector: 'nae-navigation-drawer',
@@ -32,7 +33,7 @@ export class NavigationDrawerComponent implements OnInit, AfterViewInit {
         disableClose: false
     };
 
-    constructor(private breakpoint: BreakpointObserver) {
+    constructor(private breakpoint: BreakpointObserver, private _log: LoggerService) {
         this.openedChange = new EventEmitter<boolean>();
         this._fixed = true;
         this.opened = true;
@@ -42,7 +43,7 @@ export class NavigationDrawerComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.resolveLayout(this._fixed);
         this.breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe( result => {
-            console.log(this.breakpoint.isMatched('(max-width: 959.99px)'));
+            this._log.info('BreakpointObserver matches width of window: ' + this.breakpoint.isMatched('(max-width: 959.99px)'));
             if (this.breakpoint.isMatched('(max-width: 959.99px)')) {
                 this.resolveLayout(false);
                 this.opened = this._config.opened;

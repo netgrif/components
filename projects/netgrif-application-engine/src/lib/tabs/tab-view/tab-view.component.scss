@@ -22,14 +22,7 @@
 //    //}
 //}
 
-.center-tabs {
-    ::ng-deep .mat-tab-labels {
-        justify-content: center;
-    }
-}
-
-.end-tabs {
-    ::ng-deep .mat-tab-labels {
-        justify-content: flex-end;
-    }
+.mat-badge-content {
+    top: -3px !important;
+    right: -24px !important;
 }

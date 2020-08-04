@@ -1,18 +1,26 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UserValue} from '../../../../../data-fields/user-field/models/user-value';
+import {Component, Input} from '@angular/core';
+import {Observable} from 'rxjs';
+import {UserListItem} from '../../../../../user/services/user-list.service';
 
+/**
+ * Includes avatar user icon and full username in the side menu.
+ */
 @Component({
-  selector: 'nae-user-assign-item',
-  templateUrl: './user-assign-item.component.html',
-  styleUrls: ['./user-assign-item.component.scss']
+    selector: 'nae-user-assign-item',
+    templateUrl: './user-assign-item.component.html',
+    styleUrls: ['./user-assign-item.component.scss']
 })
-export class UserAssignItemComponent implements OnInit {
+export class UserAssignItemComponent {
+    /**
+     * Value of the user held in this item component
+     */
+    @Input() user: UserListItem;
 
-    @Input() user: UserValue;
+    /**
+     * ID of the currently selected user
+     */
+    @Input() selectedId$: Observable<string>;
 
     constructor() {
-    }
-
-    ngOnInit() {
     }
 }

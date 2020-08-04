@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {FileUploadModel} from '../../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
 import {FileUploadDataModel} from '../../models/file-field';
-import {SnackBarHorizontalPosition, SnackBarService, SnackBarVerticalPosition} from '../../../../snack-bar/services/snack-bar.service';
+import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {TranslateService} from '@ngx-translate/core';
+import {SnackBarHorizontalPosition, SnackBarVerticalPosition} from '../../../../snack-bar/models/snack-bar-enums';
 
 /**
  * @Deprecated

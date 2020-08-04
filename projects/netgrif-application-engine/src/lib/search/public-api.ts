@@ -24,6 +24,7 @@ export * from './models/category/case/case-role';
 export * from './models/category/case/case-task';
 export * from './models/category/case/case-creation-date';
 export * from './models/category/case/case-dataset';
+export * from './models/category/case/case-simple-dataset';
 export * from './models/category/task/task-assignee';
 export * from './models/category/task/task-process';
 export * from './models/category/task/task-role';
@@ -34,6 +35,7 @@ export * from './models/datafield-map-key';
 /* Interfaces */
 export * from './models/escape-result';
 export * from './models/wrap-result';
+export * from './models/chips/chip-request';
 export * from './models/chips/simple-search-chip';
 export * from './category-factory/optional-dependencies';
 
@@ -45,6 +47,8 @@ export * from './models/category/search-input-type';
 export * from './search-service/search.service';
 export * from './operator-service/operator.service';
 export * from './category-factory/category-factory';
+export * from './header-search-service/header-search.service';
+export * from './search-chip-service/search-chip.service';
 
 /* Components */
 export * from './search-component/search.component';
