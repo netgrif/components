@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CaseViewService,
-    ConfigCaseViewServiceFactory,
     HeaderComponent,
     InjectedTabbedCaseViewData,
     LoggerService,
@@ -32,7 +31,7 @@ const searchServiceFactory = () => {
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
-            deps: [ConfigCaseViewServiceFactory]},
+            deps: [AllNetsCaseViewServiceFactory]},
     ]
 })
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
