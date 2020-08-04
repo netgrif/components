@@ -15,7 +15,7 @@ export class BooleanFieldComponent extends AbstractDataFieldComponent {
 
     constructor(private _translate: TranslateService) {
         super();
-        this._formControl = new FormControl('', );
+        this._formControl = new FormControl('');
     }
 
     public getErrorMessage() {

@@ -14,7 +14,7 @@ export class MultichoiceFieldComponent extends AbstractDataFieldComponent {
 
   constructor() {
       super();
-      this._formControl = new FormControl('', );
+      this._formControl = new FormControl('');
   }
 
 }
