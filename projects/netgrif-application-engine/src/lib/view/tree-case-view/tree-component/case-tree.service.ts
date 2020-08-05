@@ -337,32 +337,14 @@ export class CaseTreeService implements OnDestroy {
         if (caseRefField.allowedNets.length === 0) {
             this._logger.error(`Case ${clickedNode.case.stringId} can add new tree nodes but has no allowed nets`);
             clickedNode.addingNode.off();
-            ret.next(false);
-            return ret;
+            return of(false);
         }
 
-        const childTitle = clickedNode.case.immediateData.find(field => field.stringId === TreePetriflowIdentifiers.CHILD_NODE_TITLE);
-        const addChildBody = {
-            operation: CaseRefOperation.ADD,
-            title: childTitle ? childTitle.value : this._translateService.instant('caseTree.newNodeDefaultName'),
-            processId: ''
-        };
-
-        const callback = (newCaseRefValue) => {
-            this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(() => {
-                clickedNode.addingNode.off();
-                this.expandNode(clickedNode).subscribe(expandSuccess => {
-                    if (expandSuccess) {
-                        this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
-                    }
-                    ret.next(true);
-                });
-            });
-        };
+        const childTitleImmediate = clickedNode.case.immediateData
+            .find(field => field.stringId === TreePetriflowIdentifiers.CHILD_NODE_TITLE);
 
         if (caseRefField.allowedNets.length === 1) {
-            addChildBody.processId = caseRefField.allowedNets[0];
-            this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(callback);
+            this.createAndAddChildCase(caseRefField.allowedNets[0], childTitleImmediate.value, clickedNode);
         } else {
             this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
                 const sideMeuRef = this._sideMenuService.open(OptionSelectorComponent, SideMenuSize.MEDIUM, {
@@ -371,16 +353,39 @@ export class CaseTreeService implements OnDestroy {
                 });
                 sideMeuRef.onClose.subscribe(event => {
                     if (!!event.data) {
-                        addChildBody.processId = event.data.value;
-                        this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(callback);
+                        this.createAndAddChildCase(event.data.value, childTitleImmediate.value, clickedNode);
                     } else {
                         clickedNode.addingNode.off();
                         ret.next(false);
+                        ret.complete();
                     }
                 });
             });
         }
         return ret.asObservable();
+    }
+
+    private createAndAddChildCase(processIdentifier: string, childTitle: string, clickedNode: CaseTreeNode) {
+        this._processService.getNet(processIdentifier).subscribe(net => {
+            this._caseResourceService.createCase({
+                title: childTitle,
+                netId: net.stringId
+            }).subscribe(childCase => {
+                this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(callback);
+            });
+        });
+    }
+
+    private updateTreeAfterChildAdd(newCaseRefValue) {
+        this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(() => {
+            clickedNode.addingNode.off();
+            this.expandNode(clickedNode).subscribe(expandSuccess => {
+                if (expandSuccess) {
+                    this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
+                }
+                ret.next(true);
+            });
+        });
     }
 
     /**
