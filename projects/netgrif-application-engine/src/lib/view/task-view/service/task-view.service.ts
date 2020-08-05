@@ -14,10 +14,10 @@ import {Net} from '../../../process/net';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Pagination} from '../../../resources/interface/pagination';
 import {Task} from '../../../resources/interface/task';
-import {LanguageService} from '../../../translate/language.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ListRange} from '@angular/cdk/collections';
+import {UserComparatorService} from '../../../user/services/user-comparator.service';
 
 
 @Injectable()
@@ -43,10 +43,13 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     private _clear = false;
     private _reloadPage = false;
 
-    constructor(protected _taskService: TaskResourceService, private _userService: UserService,
-                private _snackBarService: SnackBarService, private _translate: TranslateService,
-                private _Language: LanguageService, protected _searchService: SearchService,
+    constructor(protected _taskService: TaskResourceService,
+                private _userService: UserService,
+                private _snackBarService: SnackBarService,
+                private _translate: TranslateService,
+                protected _searchService: SearchService,
                 private _log: LoggerService,
+                private _userComparator: UserComparatorService,
                 allowedNets: Observable<Array<Net>> = of([])) { // need for translations
         super(allowedNets);
         this._taskArray = [];
@@ -94,7 +97,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                             value[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
                             // acc[taskId] = value[taskId];
                             this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.user &&
-                                acc[taskId].task.user.email === this._userService.user.email));
+                                this._userComparator.compareUsers(acc[taskId].task.user)));
                             delete value[taskId];
                         }
                     });
@@ -153,7 +156,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             map(tasks => {
                 this._pagination = tasks.pagination;
                 return tasks.content.reduce((acc, curr) => {
-                    this.blockTaskFields(curr, !(curr.user && curr.user.email === this._userService.user.email));
+                    this.blockTaskFields(curr, !(curr.user && this._userComparator.compareUsers(curr.user)));
                     return {
                         ...acc, [curr.stringId]: {
                             task: curr,
@@ -173,7 +176,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 old[key] = neww[key];
             }
         });
-        this.blockTaskFields(old, !(old.user && old.user.email === this._userService.user.email));
+        this.blockTaskFields(old, !(old.user && this._userComparator.compareUsers(old.user)));
     }
 
     public loadTasks() {
@@ -233,7 +236,8 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                         this._taskArray[i].task[key] = tasks[index][key];
                     }
                 });
-                this.blockFields(!(this._taskArray[i].task.user && this._taskArray[i].task.user.email === this._userService.user.email), i);
+                this.blockFields(!(this._taskArray[i].task.user &&
+                    this._userComparator.compareUsers(this._taskArray[i].task.user)), i);
                 this._taskArray[i].changedFields = this._changedFields$;
                 tasks.splice(index, 1);
             }

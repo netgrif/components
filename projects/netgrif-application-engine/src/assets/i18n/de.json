@@ -24,7 +24,8 @@
             "finishTask": "Aufgabe wird abgeschlossen",
             "invalidData": "Manche Felder haben ungültige Werten",
             "noCase": "Keine Fälle gefunden",
-            "caseGetFailed": "Beim laden der Fälle ist eine Fehler aufgetreten"
+            "caseGetFailed": "Beim laden der Fälle ist eine Fehler aufgetreten",
+            "noLongerExists": "Die ausgewählte Aufgabe existiert nicht mehr"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Es gibt keine Aufgaben, die den ausgewählten Filter erfüllen",
@@ -66,7 +67,9 @@
             "selection": "Sie müssen einen Wert auswählen",
             "errFirst": "Sie müssen einen Prozess auswählen.",
             "errSecond": "Sie müssen einen Namen eingeben.",
-            "errThird": "Sie müssen eine Farbe auswählen."
+            "errThird": "Sie müssen eine Farbe auswählen.",
+            "noNets": "Es gibt keine erlaubte Netze",
+            "createCase": "Neuen Fall würde erfolgreich erzeugt"
         },
         "user": {
             "assign": "Benützer zuweisen",
@@ -159,8 +162,13 @@
             "downloadFail": " könnte nicht heruntergeladen werden",
             "moreFiles": "Sie haven zu viel Dateien ausgewählt",
             "sameFiles": "Sie können nicht dieselbe Datei zweimal hochladen",
-            "fileSize": "Die Dateigröße hat das zulässige Limit überschritten"
-        }
+            "fileSize": "Die Dateigröße hat das zulässige Limit überschritten",
+            "cannotDownload": "The file cannot be downloaded without defined task",
+            "cannotUpload": "The file cannot be uploaded without defined task",
+            "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
+            "fileUploadFailed": "The file failed to upload"
+        },
+        "noFile": "No file"
     },
     "dialog": {
         "close": "Schließen",
@@ -191,7 +199,7 @@
             "visualID": "Visuelle ID",
             "title": "Fallname",
             "author": "Fallautor",
-            "creaDate": "Erstellungsdatum"
+            "creationDate": "Erstellungsdatum"
         },
         "taskMeta": {
             "case": "Fall",
@@ -202,7 +210,7 @@
         "workflowMeta": {
             "initials": "Initialen",
             "version": "Version",
-            "creaDate": "Hochladungsdatum"
+            "creationDate": "Hochladungsdatum"
         },
         "orderMode": "Anordnungsmodus",
         "searchMode": "Suchmodus",
@@ -239,11 +247,24 @@
     },
     "view-list": {
         "noCasesSatisfyingThisFilter": "Es gibt keine Fälle, die den ausgewählten Filter erfüllen",
-        "noCProcessesSatisfyingThisFilter": "Es gibt keine Prozesse, die den ausgewählten Filter erfüllen"
+        "noProcessesSatisfyingThisFilter": "Es gibt keine Prozesse, die den ausgewählten Filter erfüllen"
     },
     "admin": {
         "user-list": {
-            "noUsersWereFound": "Derzeit befinden sich Benutzer im System"
+            "noUsersWereFound": "Derzeit befinden sich keine Benutzer im System",
+            "listTitle": "Benutzer"
+        },
+        "process-list": {
+            "newestVersion": "Neuste Version",
+            "listTitle": "Prozesse",
+            "noRoles": "Dieser Prozess enthält keine Rollen",
+            "noProcessesWereFound": "Derzeit befinden sich keine Prozesse im System"
+        }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "Benutzereinstellungen wurden gespeichert",
+            "saveFailure": "Benutzereinstellungen können nicht gespeichert werden"
         }
     }
 }

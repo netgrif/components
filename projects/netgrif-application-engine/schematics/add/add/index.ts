@@ -2,9 +2,10 @@ import {
     Rule,
     Tree,
     schematic,
-    SchematicContext
+    SchematicContext,
+    chain
 } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import {NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
 
 export function ngAdd(): Rule {
     return (_: Tree, _context: SchematicContext) => {
@@ -12,6 +13,20 @@ export function ngAdd(): Rule {
 
         // TODO help user set up nae.json if it doesn't exist
 
-        return schematic('create-nae-files', {});
+        const rules = [];
+        rules.push(createMinimalNaeJson());
+        rules.push(schematic('create-nae-files', {}));
+        return chain(rules);
+    };
+}
+
+function createMinimalNaeJson(): Rule {
+    return (tree: Tree) => {
+        if (!tree.exists('./nae.json')) {
+            tree.create('./nae.json', '{\n  "$schema": "./node_modules/@netgrif/application-engine/src/schema/nae-schema.json",' +
+                '\n"extends": "nae-default",\n  "views": {\n\n  },\n  "theme":' +
+                ' {\n    "name": "nae-color",\n    "pallets": {\n      "light": {\n        ' +
+                '"primary": "blue"\n      }\n    }\n  }\n}');
+        }
     };
 }

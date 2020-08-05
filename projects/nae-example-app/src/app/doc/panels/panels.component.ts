@@ -56,7 +56,7 @@ export class PanelsComponent implements OnInit {
         };
         this.featuredFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),
-            new HeaderColumn(HeaderColumnType.META, 'titleSortable', 'Title', 'text'),
+            new HeaderColumn(HeaderColumnType.META, 'title', 'Title', 'text'),
             new HeaderColumn(HeaderColumnType.META, 'author', 'Author', 'text'),
             new HeaderColumn(HeaderColumnType.META, 'creationDate', 'Creation date', 'text'),
         ]);

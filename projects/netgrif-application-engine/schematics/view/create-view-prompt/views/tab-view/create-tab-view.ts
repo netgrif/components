@@ -34,7 +34,7 @@ export function createTabView(
     const projectInfo = getProjectInfo(tree);
     const view = new ViewClassInfo(
         args.path,
-        'TabView',
+        'tabView',
         args.componentName
     );
     const params = args.layoutParams as TabViewParams;

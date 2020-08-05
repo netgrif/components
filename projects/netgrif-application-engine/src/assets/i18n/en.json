@@ -24,7 +24,8 @@
             "finishTask": "Finishing task",
             "invalidData": "Some fields have invalid values",
             "noCase": "No cases found",
-            "caseGetFailed": "Getting cases failed"
+            "caseGetFailed": "Getting cases failed",
+            "noLongerExists": "The selected task no longer exists"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "There are no tasks satisfying this filter",
@@ -66,7 +67,9 @@
             "selection": "You must make a selection",
             "errFirst": "Process is required.",
             "errSecond": "Title is required.",
-            "errThird": "Color is required."
+            "errThird": "Color is required.",
+            "noNets": "No allowed Nets",
+            "createCase": "Successful create new case"
         },
         "user": {
             "assign": "User Assign",
@@ -156,11 +159,16 @@
             "workday": "Entered date must be week day"
         },
         "snackBar": {
-            "downloadFail": " download failed",
+            "downloadFail": " failed to download",
             "moreFiles": "You choose more files as you allowed",
             "sameFiles": "You cannot upload two of the same files",
-            "fileSize": "Files size exceeded allowed limit"
-        }
+            "fileSize": "Files size exceeded allowed limit",
+            "cannotDownload": "The file cannot be downloaded without defined task",
+            "cannotUpload": "The file cannot be uploaded without defined task",
+            "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
+            "fileUploadFailed": "The file failed to upload"
+        },
+        "noFile": "No file"
     },
     "dialog": {
         "close": "Close",
@@ -191,7 +199,7 @@
             "visualID": "Visual ID",
             "title": "Title",
             "author": "Author",
-            "creaDate": "Creation date"
+            "creationDate": "Creation date"
         },
         "taskMeta": {
             "case": "Case",
@@ -202,7 +210,7 @@
         "workflowMeta": {
             "initials": "Initials",
             "version": "Version",
-            "creaDate": "Upload date"
+            "creationDate": "Upload date"
         },
         "orderMode": "Ordering mode",
         "searchMode": "Search mode",
@@ -238,8 +246,8 @@
         "workFilter": "Workflow filters"
     },
     "view-list": {
-        "noCasesSatisfyingThisFilter": "There are any cases satisfying specified filter",
-        "noCProcessesSatisfyingThisFilter": "There are any processes satisfying specified filter"
+        "noCasesSatisfyingThisFilter": "There are no cases satisfying specified filter",
+        "noProcessesSatisfyingThisFilter": "There are no processes satisfying specified filter"
     },
     "admin": {
         "user-list": {
@@ -249,8 +257,14 @@
         "process-list": {
             "newestVersion": "Newest version",
             "listTitle": "Processes",
-            "noRoles": "There are any roles in the process",
-            "noProcessesWereFound": "There are any processes in the system at the moment"
+            "noRoles": "There are no roles in the process",
+            "noProcessesWereFound": "There are no processes in the system at the moment"
+        }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "User preferences saved successfully",
+            "saveFailure": "An error occurred while saving user preferences"
         }
     }
 }

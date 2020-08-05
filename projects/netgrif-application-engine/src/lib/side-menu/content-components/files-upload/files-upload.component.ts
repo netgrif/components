@@ -41,7 +41,7 @@ export class FilesUploadComponent {
      * Click on add file or files button begin upload file from file picker and upload it.
      */
     public onFileUpload() {
-        this._fileFieldService.fileUpload();
+        this._fileFieldService.fileUpload(null);
     }
 
     /**

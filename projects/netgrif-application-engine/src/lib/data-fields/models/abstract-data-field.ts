@@ -129,7 +129,7 @@ export abstract class DataField<T> {
     }
 
     get disabled(): boolean {
-        return this._behavior.visible && !this._behavior.editable;
+        return !!this._behavior.visible && !this._behavior.editable;
     }
 
     get initialized(): boolean {
@@ -187,6 +187,7 @@ export abstract class DataField<T> {
             this.disabled ? formControl.disable() : formControl.enable();
             formControl.clearValidators();
             formControl.setValidators(this.resolveFormControlValidators());
+            formControl.updateValueAndValidity();
             this._valid = this._determineFormControlValidity(formControl);
         });
         this._block.subscribe(bool => {
@@ -261,6 +262,7 @@ export abstract class DataField<T> {
                     break;
                 case 'behavior':
                     Object.assign(this.behavior, change[changedAttribute]);
+                    this.update();
                     break;
                 default:
                     throw new Error(`Unknown attribute '${changedAttribute}' in change object`);

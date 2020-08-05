@@ -39,6 +39,10 @@ export class TaskPanelContentComponent {
         });
     }
 
+    public get taskId(): string {
+        return this.taskPanelContentService.taskId;
+    }
+
     private static newGridRow(cols: number): Array<GridFiller> {
         return [new GridFiller(0, cols - 1)];
     }
@@ -178,6 +182,9 @@ export class TaskPanelContentComponent {
         let encounterFirst = false;
         for (let y = grid.length - 1; y >= 0; y--) {
             const row = grid[y];
+            if (row.length === 0) {
+                encounterFirst = true;
+            }
             row.forEach(filler => {
                 if (!encounterFirst && !filler.isFullWidth(columnCount)) {
                     encounterFirst = true;

@@ -1,4 +1,5 @@
 {
+    "$schema": "./dist/netgrif-application-engine/src/schema/nae-schema.json",
     "extends": "nae-default",
     "providers": {
         "auth": {
@@ -233,6 +234,19 @@
             "navigation": false,
             "routing": {
                 "path": "tabbed-views"
+            },
+            "children": {
+                "custom-redirect": {
+                    "component": {
+                        "class": "TabbedViewsExampleComponent",
+                        "from": "./doc/tabbed-case-view/tabbed-views-example.component"
+                    },
+                    "access": "private",
+                    "navigation": false,
+                    "routing": {
+                        "path": "**"
+                    }
+                }
             }
         },
         "demo-workflow-view": {
@@ -446,7 +460,12 @@
                         "1",
                         "bill",
                         "drobny_nakup",
-                        "new_model"
+                        "new_model",
+                        "processId1",
+                        "test",
+                        "all_data",
+                        "zmluva",
+                        "address"
                     ]
                 },
                 "componentName": "MyCaseView"

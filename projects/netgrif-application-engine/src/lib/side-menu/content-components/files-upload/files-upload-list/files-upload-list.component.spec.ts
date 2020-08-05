@@ -13,6 +13,11 @@ import {FilesUploadListComponent} from './files-upload-list.component';
 import {FilesUploadItemComponent} from './files-upload-item/files-upload-item.component';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../../../utility/tests/mocks/mock-user-resource.service';
 
 describe('FilesUploadListComponent', () => {
     let component: FilesUploadListComponent;
@@ -20,11 +25,6 @@ describe('FilesUploadListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                FilesUploadListComponent,
-                FilesUploadItemComponent,
-                TestWrapperComponent
-            ],
             imports: [
                 MaterialModule,
                 CovalentModule,
@@ -37,8 +37,16 @@ describe('FilesUploadListComponent', () => {
             providers: [
                 FileUploadService,
                 FileDownloadService,
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
-            ]
+            ],
+            declarations: [
+                FilesUploadListComponent,
+                FilesUploadItemComponent,
+                TestWrapperComponent
+            ],
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);

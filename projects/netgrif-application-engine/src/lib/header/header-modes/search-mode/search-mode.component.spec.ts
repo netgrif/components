@@ -21,6 +21,14 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/config-case-view-service-factory';
+import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
+import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
+import {ViewService} from '../../../routing/view-service/view.service';
+import {TestViewService} from '../../../utility/tests/test-view-service';
+import {RouterModule} from '@angular/router';
 
 
 describe('SearchModeComponent', () => {
@@ -30,7 +38,6 @@ describe('SearchModeComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SearchModeComponent, TestWrapperComponent],
             imports: [
                 MatInputModule,
                 FlexModule,
@@ -43,18 +50,24 @@ describe('SearchModeComponent', () => {
                 MatNativeDateModule,
                 MatSnackBarModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                RouterModule.forRoot([])
             ],
             providers: [
                 ConfigCaseViewServiceFactory,
+                AuthenticationMethodService,
                 {   provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory},
                 {   provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
                     deps: [ConfigCaseViewServiceFactory]},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: ViewService, useClass: TestViewService},
                 CaseHeaderService
-            ]
+            ],
+            declarations: [SearchModeComponent, TestWrapperComponent],
         })
             .compileComponents();
     }));

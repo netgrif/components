@@ -4,7 +4,8 @@
     "assets": [
         "./src/assets",
         "**/*theme.scss",
-        "./nae-typography.scss"
+        "./nae-typography.scss",
+        "./src/schema/nae-schema.json"
     ],
     "lib": {
         "entryFile": "src/public-api.ts",
@@ -14,5 +15,6 @@
             "angular-resize-event": "angularResizeEvent",
             "@covalent/core": "@covalent/core"
         }
-    }
+    },
+    "whitelistedNonPeerDependencies": ["palette-creator", "angular2-hotkeys"]
 }

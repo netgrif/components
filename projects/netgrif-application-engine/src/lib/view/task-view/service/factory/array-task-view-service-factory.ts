@@ -3,12 +3,12 @@ import {TaskResourceService} from '../../../../resources/engine-endpoint/task-re
 import {UserService} from '../../../../user/services/user.service';
 import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {LanguageService} from '../../../../translate/language.service';
 import {SearchService} from '../../../../search/search-service/search.service';
 import {ProcessService} from '../../../../process/process.service';
 import {TaskViewService} from '../task-view.service';
 import {InjectedTabbedTaskViewData} from '../../models/injected-tabbed-task-view-data';
 import {LoggerService} from '../../../../logger/services/logger.service';
+import {UserComparatorService} from '../../../../user/services/user-comparator.service';
 
 /**
  * Convenience method that can be used as a factory if no `allowedNets` are necessary.
@@ -51,10 +51,10 @@ export class ArrayTaskViewServiceFactory {
                 protected _userService: UserService,
                 protected _snackBarService: SnackBarService,
                 protected _translate: TranslateService,
-                protected _language: LanguageService,
                 protected _searchService: SearchService,
                 protected _processService: ProcessService,
-                protected _loggerService: LoggerService) {
+                protected _loggerService: LoggerService,
+                protected _userComparator: UserComparatorService) {
     }
 
     /**
@@ -68,9 +68,9 @@ export class ArrayTaskViewServiceFactory {
             this._userService,
             this._snackBarService,
             this._translate,
-            this._language,
             this._searchService,
             this._loggerService,
+            this._userComparator,
             this._processService.getNets(allowedNetsIds)
         );
     }

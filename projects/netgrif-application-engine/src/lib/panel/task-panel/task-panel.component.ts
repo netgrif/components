@@ -18,7 +18,6 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
-import {TaskMetaField} from '../../header/task-header/task-header.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
@@ -27,6 +26,9 @@ import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumera
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
+import {TaskMetaField} from '../../header/task-header/task-meta-enum';
+import {UserComparatorService} from '../../user/services/user-comparator.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 @Component({
@@ -42,6 +44,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
     @Input() public last: boolean;
+    @Input() responsiveBody = true;
 
     public portal: ComponentPortal<any>;
     public loading: boolean;
@@ -52,7 +55,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     constructor(private _taskPanelContentService: TaskPanelContentService, private _fieldConvertorService: FieldConvertorService,
                 private _log: LoggerService, private _snackBar: SnackBarService, private _taskService: TaskResourceService,
                 private _sideMenuService: SideMenuService, private _userService: UserService, private _taskViewService: TaskViewService,
-                private _translate: TranslateService, private _paperView: PaperViewService) {
+                private _translate: TranslateService, private _paperView: PaperViewService,
+                private _userComparator: UserComparatorService) {
         super();
         this.loading = false;
         this._updating = false;
@@ -63,6 +67,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         super.ngOnInit();
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         let cols: number;
+        this._taskPanelContentService.taskId = this._taskPanelData.task.stringId;
         if (this._taskPanelData.task && this._taskPanelData.task.layout && this._taskPanelData.task.layout.cols) {
             cols = this._taskPanelData.task.layout.cols;
         }
@@ -183,11 +188,16 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 afterAction.next(true);
             }
             this._taskPanelContentService.$shouldCreate.next(this._taskPanelData.task.dataGroups);
-        }, error => {
-            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
-             ${this._taskPanelData.task} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
-            this._log.debug(error);
+        }, (error: HttpErrorResponse) => {
+            this._log.debug('getting task data failed', error);
             this.loading = false;
+            if (error.status === 500 && error.error.message && error.error.message.startsWith('Could not find task with id')) {
+                this._snackBar.openWarningSnackBar(this._translate.instant('tasks.snackbar.noLongerExists'));
+                this._taskViewService.reloadCurrentPage();
+            } else {
+                this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
+             ${this._taskPanelData.task.title} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
+            }
             afterAction.next(false);
         });
     }
@@ -377,7 +387,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         if (this.loading) {
             return;
         }
-        if (!this._taskPanelData.task.user || ((this._taskPanelData.task.user.email !== this._userService.user.email)
+        if (!this._taskPanelData.task.user || (!this._userComparator.compareUsers(this._taskPanelData.task.user)
             && !this.canDo('cancel'))) {
             afterAction.next(false);
             return;
@@ -488,22 +498,24 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     canAssign() {
-        return this._taskPanelData.task.assignPolicy === AssignPolicy.manual && !this._taskPanelData.task.user && this.canDo('perform');
+        return (this._taskPanelData.task.assignPolicy === AssignPolicy.manual && !this._taskPanelData.task.user && this.canDo('perform'))
+            || (this._taskPanelData.task.roles === null || this._taskPanelData.task.roles === undefined
+                || Object.keys(this._taskPanelData.task.roles).length === 0);
     }
 
     canReassign() {
-        return (this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email)
+        return (this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user))
             && (this.canDo('delegate'));
     }
 
     canCancel() {
         return (this._taskPanelData.task.assignPolicy === AssignPolicy.manual &&
-            this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email) ||
+            this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user)) ||
             (this._taskPanelData.task.user && this.canDo('cancel'));
     }
 
     canFinish() {
-        return this._taskPanelData.task.user && this._taskPanelData.task.user.email === this._userService.user.email;
+        return this._taskPanelData.task.user && this._userComparator.compareUsers(this._taskPanelData.task.user);
     }
 
     canCollapse() {
@@ -616,32 +628,34 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         }
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
         const task = this._taskPanelData.task;
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
-                return task.caseTitle;
+                return {value: task.caseTitle, icon: ''};
             case TaskMetaField.TITLE:
-                return task.title;
+                return {value: task.title, icon: ''};
             case TaskMetaField.PRIORITY:
                 // TODO priority
                 if (!task.priority || task.priority < 2) {
-                    return 'high';
+                    return {value: 'high', icon: 'error'};
                 }
                 if (task.priority === 2) {
-                    return 'medium';
+                    return {value: 'medium', icon: 'north'};
                 }
-                return 'low';
+                return {value: 'low', icon: 'south'};
             case TaskMetaField.USER:
-                return task.user ? task.user.fullName : '';
+                console.log(task.user);
+                return {value: task.user ? task.user.fullName : '', icon: 'account_circle'};
             case TaskMetaField.ASSIGN_DATE:
-                return task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '';
+                console.log(task.startDate);
+                return {value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '', icon: 'event'};
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
         this._log.warn('Immediate data in task panel headers are currently not supported');
-        return '';
+        return {value: '', icon: ''};
     }
 
 }

@@ -7,13 +7,15 @@ import { SortModeComponent } from './header-modes/sort-mode/sort-mode.component'
 import { SearchModeComponent } from './header-modes/search-mode/search-mode.component';
 import { EditModeComponent } from './header-modes/edit-mode/edit-mode.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
+import { LoadingModeComponent } from './header-modes/loading-mode/loading-mode.component';
 
 @NgModule({
     declarations: [
         HeaderComponent,
         SortModeComponent,
         SearchModeComponent,
-        EditModeComponent
+        EditModeComponent,
+        LoadingModeComponent
     ],
     exports: [
         HeaderComponent,

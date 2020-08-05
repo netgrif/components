@@ -20,7 +20,8 @@ export class AuthenticationService {
 
     constructor(private _auth: AuthenticationMethodService,
                 private _config: ConfigurationService,
-                private _sessionService: SessionService) {
+                private _sessionService: SessionService,
+                private _userTransformer: UserTransformer) {
         this._authenticated$ = new BehaviorSubject<boolean>(false);
         this._sessionService.session$.subscribe(token => {
             this._authenticated$.next(!!token && token.length !== 0 && this._sessionService.verified);
@@ -32,7 +33,7 @@ export class AuthenticationService {
             tap((user: AuthUser) => {
                 this._authenticated$.next(!!user[AuthenticationService.IDENTIFICATION_ATTRIBUTE]);
             }),
-            map((user: AuthUser) => new UserTransformer().transform(user)),
+            map((user: AuthUser) => this._userTransformer.transform(user)),
             catchError(error => {
                 console.error(error);
                 return of(null);

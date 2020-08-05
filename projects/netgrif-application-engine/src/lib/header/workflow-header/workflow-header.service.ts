@@ -2,21 +2,18 @@ import {Injectable} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
-
-
-export enum WorkflowMetaField {
-    INITIALS = 'initials',
-    TITLE = 'title',
-    VERSION = 'version',
-    AUTHOR = 'author',
-    CREATION_DATE = 'creationDate',
-}
+import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {ViewService} from '../../routing/view-service/view.service';
+import {LoggerService} from '../../logger/services/logger.service';
+import {WorkflowMetaField} from './workflow-meta-enum';
 
 @Injectable()
 export class WorkflowHeaderService extends AbstractHeaderService {
 
-    constructor() {
-        super(HeaderType.WORKFLOW);
+    constructor(preferences: UserPreferenceService, viewService: ViewService, logger: LoggerService) {
+        super(HeaderType.WORKFLOW, preferences, viewService, logger);
+        this.loadHeadersFromPreferences();
+        this.loading.off();
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {
@@ -25,7 +22,7 @@ export class WorkflowHeaderService extends AbstractHeaderService {
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.TITLE, 'headers.caseMeta.title', 'text'),
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.VERSION, 'headers.workflowMeta.version', 'text'),
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.AUTHOR, 'headers.caseMeta.author', 'text'),
-            new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.CREATION_DATE, 'headers.workflowMeta.creaDate', 'date'),
+            new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.CREATION_DATE, 'headers.workflowMeta.creationDate', 'date'),
         ];
     }
 }

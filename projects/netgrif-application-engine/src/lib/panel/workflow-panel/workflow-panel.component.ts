@@ -4,7 +4,6 @@ import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
 import {Observable} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
-import {WorkflowMetaField} from '../../header/workflow-header/workflow-header.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TextField} from '../../data-fields/text-field/models/text-field';
@@ -12,6 +11,7 @@ import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-
 import {Behavior} from '../../data-fields/models/behavior';
 import {Net} from '../../process/net';
 import {TranslateService} from '@ngx-translate/core';
+import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
 
 
 export interface WorkflowPanelContent {
@@ -31,6 +31,7 @@ export class WorkflowPanelComponent extends PanelWithHeaderBinding implements On
 
     @Input() public workflow: Net;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
+    @Input() responsiveBody = true;
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;
 
@@ -86,24 +87,24 @@ export class WorkflowPanelComponent extends PanelWithHeaderBinding implements On
         });
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
         switch (selectedHeader.fieldIdentifier) {
             case WorkflowMetaField.INITIALS:
-                return this.workflow.initials;
+                return {value: this.workflow.initials, icon: ''};
             case WorkflowMetaField.TITLE:
-                return this.workflow.title;
+                return {value: this.workflow.title, icon: ''};
             case WorkflowMetaField.VERSION:
-                return this.workflow.version;
+                return {value: this.workflow.version, icon: ''};
             case WorkflowMetaField.AUTHOR:
-                return this.workflow.author.fullName;
+                return {value: this.workflow.author.fullName, icon: 'account_circle'};
             case WorkflowMetaField.CREATION_DATE:
-                return toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING);
+                return {value: toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING), icon: 'event'};
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): string {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
         this._log.warn('Immediate data in workflow panel headers are currently not supported');
-        return '';
+        return {value: '', icon: ''};
     }
 
 }

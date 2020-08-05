@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {TaskListComponent} from './task-list.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {PanelModule} from '../panel.module';
@@ -21,6 +20,11 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../task-panel/policy';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
@@ -40,6 +44,9 @@ describe('TaskListComponent', () => {
             declarations: [TestWrapperComponent],
             providers: [
                 ArrayTaskViewServiceFactory,
+                AuthenticationMethodService,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
                 {
                     provide: SearchService,
                     useFactory: TestTaskSearchServiceFactory

@@ -54,7 +54,8 @@ export abstract class TabbedCaseView extends AbstractCaseView {
                 baseFilter: new SimpleFilter('', FilterType.TASK, {case: `${openCase.stringId}`}),
                 allowedNets: [openCase.processIdentifier]
             },
-            order: this._injectedTabData.tabViewOrder
+            order: this._injectedTabData.tabViewOrder,
+            parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab);
     }
 }

@@ -24,7 +24,8 @@
             "finishTask": "Dokončujem úlohu",
             "invalidData": "Niektoré polia majú nepovolené hodnoty",
             "noCase": "Nenašli sa žiadne prípady",
-            "caseGetFailed": "Načítanie prípadov zlyhalo"
+            "caseGetFailed": "Načítanie prípadov zlyhalo",
+            "noLongerExists": "Zvolená úloha už neexistuje"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Pre tento filter nie sú vyhovujúce žiadne úlohy",
@@ -66,7 +67,9 @@
             "selection": "Musíte niečo vybrať",
             "errFirst": "Proces je povinné pole.",
             "errSecond": "Názov je povinné pole.",
-            "errThird": "Farba je povinné pole."
+            "errThird": "Farba je povinné pole.",
+            "noNets": "Žiadne povolené siete",
+            "createCase": "Uspešne vytvorený nový prípad"
         },
         "user": {
             "assign": "Priradiť používateľa",
@@ -159,8 +162,13 @@
             "downloadFail": " stahovanie zlyhalo",
             "moreFiles": "Zvolil si viac súborov ako je povolené",
             "sameFiles": "Nemôžeš nahrať dva rovnaké súbory",
-            "fileSize": "Veľkosť súboru presiahla povolený limit"
-        }
+            "fileSize": "Veľkosť súboru presiahla povolený limit",
+            "cannotDownload": "Súbor nemôže byť stiahnutý bez definovanej úlohy",
+            "cannotUpload": "Súbor nemôže byť nahraný bez definovanej úlohy",
+            "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru",
+            "fileUploadFailed": "Súbor sa nepodarilo nahrať"
+        },
+        "noFile": "Žiadny súbor"
     },
     "dialog": {
         "close": "Zatvoriť",
@@ -191,7 +199,7 @@
             "visualID": "Vizuálne ID",
             "title": "Názov",
             "author": "Autor",
-            "creaDate": "Dátum vytvorenia"
+            "creationDate": "Dátum vytvorenia"
         },
         "taskMeta": {
             "case": "Prípad",
@@ -202,7 +210,7 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
-            "creaDate": "Dátum nahratia"
+            "creationDate": "Dátum nahratia"
         },
         "orderMode": "Mód zoraďovania",
         "searchMode": "Mód vyhľadávania",
@@ -251,6 +259,12 @@
             "listTitle": "Procesy",
             "noRoles": "Tento proces neobsahuje žiadne roly",
             "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
+        }
+    },
+    "preferences": {
+        "snackbar": {
+            "saveSuccess": "Vaše preferencie boli uložené",
+            "saveFailure": "Nepodarilo sa uložiť preferencie"
         }
     }
 }
