@@ -27,7 +27,7 @@ export class RedirectService {
             });
         } else if (this._lastIntendedRoute) {
             this._router.navigateByUrl(this._lastIntendedRoute.url[0].path).then(log => {
-                this._log.info('Router navigate to path ' + this._lastIntendedRoute.url[0].path + ' : ' + log);
+                this._log.info('Router navigate to last path : ' + log);
             });
         }
     }

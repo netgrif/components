@@ -3,7 +3,7 @@ import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {Subject} from 'rxjs';
 import {MatSpinner} from '@angular/material';
 import {map, scan} from 'rxjs/operators';
-import {ComponentPortal} from '@angular/cdk/portal/typings';
+import {ComponentPortal} from '@angular/cdk/portal';
 
 @Injectable({
     providedIn: 'root'

@@ -107,8 +107,8 @@ export class SessionService {
                 }),
                 map(response => {
                     this._log.debug(response.body.success);
-                    this.sessionToken = token;
                     this._verified = true;
+                    this.sessionToken = token;
                     return true;
                 }),
                 tap(_ => this._verifying.off())
