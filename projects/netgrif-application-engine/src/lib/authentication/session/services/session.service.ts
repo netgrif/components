@@ -30,7 +30,9 @@ export class SessionService {
         this._session$ = new BehaviorSubject<string>(null);
         this._verified = false;
         this._verifying = new LoadingEmitter();
-        this.load();
+        setTimeout(() => {
+            this.load();
+        });
     }
 
     get session$(): Observable<string> {
@@ -105,13 +107,9 @@ export class SessionService {
                 }),
                 map(response => {
                     this._log.debug(response.body.success);
-                    if (response.headers.has(this._sessionHeader)) {
-                        this.sessionToken = response.headers.get(this._sessionHeader);
-                        this._verified = true;
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    this.sessionToken = token;
+                    this._verified = true;
+                    return true;
                 }),
                 tap(_ => this._verifying.off())
             );

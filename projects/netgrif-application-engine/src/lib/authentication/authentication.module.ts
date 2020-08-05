@@ -6,7 +6,7 @@ import {authenticationServiceFactory} from './authentication.factory';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {AuthenticationMethodService} from './services/authentication-method.service';
 import {AuthenticationOverlayComponent} from './components/authentication-overlay/authentication-overlay.component';
-import {MatProgressSpinnerModule} from '@angular/material';
+import {MatProgressSpinnerModule, MatSpinner} from '@angular/material';
 import {OverlayModule} from '@angular/cdk/overlay';
 
 
@@ -28,7 +28,8 @@ import {OverlayModule} from '@angular/cdk/overlay';
         {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
         {provide: AuthenticationMethodService, useFactory: authenticationServiceFactory, deps: [ConfigurationService, HttpClient]},
         // AuthenticationEffects
-    ]
+    ],
+    entryComponents: [MatSpinner]
 })
 export class AuthenticationModule {
 }
