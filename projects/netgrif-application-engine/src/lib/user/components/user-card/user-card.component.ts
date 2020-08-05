@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Injector, Input, OnInit} from '@angular/core';
-import {TooltipPosition} from '@angular/material';
 import {User} from '../../models/user';
 import {UserService} from '../../services/user.service';
+import {TooltipPosition} from '@angular/material/tooltip';
 
 export type Mode = 'full' | 'horizontal' | 'vertical' | 'icon';
 export type IconStyle = 'large' | 'small';

@@ -36,7 +36,7 @@ export class TaskContentComponent {
     @Input() displayNoDataIcon = true;
 
     constructor(private _fieldConverter: FieldConverterService,
-                private taskContentService: TaskContentService,
+                public taskContentService: TaskContentService,
                 private _paperView: PaperViewService,
                 private _logger: LoggerService) {
         this.loading = true;
@@ -204,14 +204,14 @@ export class TaskContentComponent {
             if (row.length === 0) {
                 encounterFirst = true;
             }
-            row.forEach(filler => {
+            for (const filler of row) {
                 if (!encounterFirst && !filler.isFullWidth(columnCount)) {
                     encounterFirst = true;
                 }
                 if (encounterFirst && (filler.isIntentional || !filler.isFullWidth(columnCount))) {
                     returnResource.push(filler.convertToGridElement(y));
                 }
-            });
+            }
         }
 
         returnResource.sort((a, b) => {
@@ -249,6 +249,10 @@ export class TaskContentComponent {
             }
         }
         return returnResource;
+    }
+
+    isOffsetPresent() {
+        return !!this.taskContentService.task && !!this.taskContentService.task.layout && !!this.taskContentService.task.layout.offset;
     }
 
     private addGridRows(grid: Array<Array<GridFiller>>, newRowCount: number, columnCount: number): void {

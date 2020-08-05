@@ -7,6 +7,19 @@
                 <span matTooltip="{{users_.length}}/{{users.totalUsers}}">
                     {{'admin.user-list.listTitle' | translate}}
                 </span>
+                <div fxFlex="5"></div>
+
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon fxFlex class="search-icon">search</mat-icon>
+                    <mat-form-field fxFlex="100" class="user-assign-search" color="primary">
+                        <input matInput placeholder="{{ 'side-menu.user.choose' | translate }}"
+                               [formControl]="searchUserControl">
+                        <button mat-button *ngIf="searchUserControl.value" matSuffix mat-icon-button (click)="searchUserControl.setValue('')">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
                 <span style="flex: 1 1 auto;"></span>
                 <button disabled mat-icon-button
                         matTooltip="{{userMultiSelect ? 'Multi selection' : 'Single selection'}}"

@@ -6,12 +6,14 @@ import {LocalStorageLogPublisher} from '../publishers/local-storage-log-publishe
 import {LogLevel} from './log-level';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('LogPublisherService', () => {
     let service: LogPublisherService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]

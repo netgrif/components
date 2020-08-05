@@ -1,5 +1,5 @@
 import {Type} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 
 /**
  * Stores information about content of one opened tab in tab view.
@@ -72,6 +72,10 @@ export interface TabLabel {
      * Tab name that is displayed in it's label.
      */
     text?: string;
+    /**
+     * Tab count is displayed in it's label, ich stream is provided
+     */
+    count?: ReplaySubject<number>;
 }
 
 

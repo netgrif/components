@@ -1,10 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatSelectionList} from '@angular/material';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {RoleAssignmentService} from './services/role-assignment.service';
-import {UserList, UserListItem} from './services/UserList';
 import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
 import {UserService} from '../../user/services/user.service';
+import {FormControl} from '@angular/forms';
+import {debounceTime} from 'rxjs/operators';
+import {UserListItem, UserListService} from '../../user/services/user-list.service';
+import {MatSelectionList} from '@angular/material/list';
 
 @Component({
     selector: 'nae-role-assignment',
@@ -19,9 +21,11 @@ export class RoleAssignmentComponent implements OnInit, OnDestroy {
     @ViewChild('userList') public userList: MatSelectionList;
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
-    public users: UserList;
+    public users: UserListService;
     public nets: ProcessList;
     public userMultiSelect: boolean;
+    public searchUserControl = new FormControl();
+    private SEARCH_DEBOUNCE_TIME = 200;
 
     constructor(private _service: RoleAssignmentService, private _userService: UserService) {
         this.users = this._service.userList;
@@ -31,6 +35,9 @@ export class RoleAssignmentComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.nets.loadProcesses();
+        this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
+            this.users.reload(searchText);
+        });
     }
 
     ngOnDestroy(): void {

@@ -1,10 +1,10 @@
 import {Inject, Injectable, Optional} from '@angular/core';
-import {MatSnackBar, MatSnackBarConfig, MatSnackBarRef} from '@angular/material';
 import {GenericSnackBarComponent} from '../components/generic-snack-bar/generic-snack-bar.component';
 import {SuccessSnackBarComponent} from '../components/success-snack-bar/success-snack-bar.component';
 import {ErrorSnackBarComponent} from '../components/error-snack-bar/error-snack-bar.component';
 import {WarningSnackBarComponent} from '../components/warning-snack-bar/warning-snack-bar.component';
 import {SnackBarInjectionData} from '../models/snack-bar-injection-data';
+import {MatSnackBar, MatSnackBarConfig, MatSnackBarRef} from '@angular/material/snack-bar';
 import {SnackBarHorizontalPosition, SnackBarVerticalPosition} from '../models/snack-bar-enums';
 import {NAE_SNACKBAR_HORIZONTAL_POSITION, NAE_SNACKBAR_VERTICAL_POSITION} from '../models/injection-token-snackbar';
 

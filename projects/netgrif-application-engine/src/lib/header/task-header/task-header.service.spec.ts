@@ -9,13 +9,15 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {MatIconModule, MatSnackBarModule} from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {ViewService} from '../../routing/view-service/view.service';
 import {TestViewService} from '../../utility/tests/test-view-service';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatIconModule} from '@angular/material/icon';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -26,7 +28,7 @@ describe('TaskHeaderService', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MatSnackBarModule,
-                MatIconModule,
+                MatIconModule, NoopAnimationsModule,
                 RouterModule.forRoot([])
             ],
             providers: [

@@ -11,6 +11,7 @@ import {DataFocusPolicyService} from './data-focus-policy.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -22,6 +23,7 @@ describe('TaskDataService', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MaterialModule,
+                NoopAnimationsModule
             ],
             providers: [
                 TaskDataService,

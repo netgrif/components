@@ -73,6 +73,7 @@
         },
         "user": {
             "assign": "Priradiť používateľa",
+            "choose": "Zvoľte používateľa",
             "noUser": "Neexistujú žiadny používatelia",
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
@@ -199,6 +200,7 @@
     "headers": {
         "newHeader": "Zvoľte novú hlavičku",
         "date": "Zvoľte dátum",
+        "selectUser": "Vyberte používateľa",
         "caseMeta": {
             "visualID": "Vizuálne ID",
             "title": "Názov",
@@ -256,7 +258,7 @@
     "admin": {
         "user-list": {
             "noUsersWereFound": "Momentálne nie sú v systéme žiadny používatelia",
-            "listTitle": "Users"
+            "listTitle": "Používatelia"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",

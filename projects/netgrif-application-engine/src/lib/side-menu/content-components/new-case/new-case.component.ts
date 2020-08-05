@@ -9,9 +9,8 @@ import {SideMenuControl} from '../../models/side-menu-control';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {NewCaseInjectionData} from './model/new-case-injection-data';
 import {TranslateService} from '@ngx-translate/core';
-import {MatToolbar} from '@angular/material';
-
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
+import {MatToolbar} from '@angular/material/toolbar';
 
 interface Form {
     value: string;

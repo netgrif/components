@@ -12,6 +12,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestViewService} from '../../utility/tests/test-view-service';
 import {RouterModule} from '@angular/router';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TabView', () => {
     let viewService: ViewService;
@@ -20,7 +21,8 @@ describe('TabView', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                RouterModule.forRoot([])
+                RouterModule.forRoot([]),
+                NoopAnimationsModule
             ],
             providers: [
                 AuthenticationMethodService,

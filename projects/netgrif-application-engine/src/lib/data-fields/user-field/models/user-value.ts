@@ -1,7 +1,16 @@
+/**
+ * Used by [UserField]{@link UserField} and [UserAssignComponent]{@link UserAssignComponent}.
+ *
+ * Represents the value of the user.
+ */
 export class UserValue {
-
-    private _selected: boolean;
-
+    /**
+     * Create UserValue.
+     * @param _id User id : '5'
+     * @param _name User name : 'Admin'
+     * @param _surname User surname : 'Netgrif'
+     * @param _email User email : 'super@netgrif.com'
+     */
     constructor(private _id: string, private _name: string, private _surname: string, private _email: string) {
     }
 
@@ -23,13 +32,5 @@ export class UserValue {
 
     get email(): string {
         return this._email;
-    }
-
-    get selected(): boolean {
-        return this._selected;
-    }
-
-    set selected(value: boolean) {
-        this._selected = value;
     }
 }

@@ -13,13 +13,14 @@ import {MockUserResourceService} from '../../../../utility/tests/mocks/mock-user
 import {ErrorSnackBarComponent} from '../../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FileDownloadService', () => {
     let service: FileDownloadService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
             providers: [
                 FileDownloadService,
                 AuthenticationMethodService,

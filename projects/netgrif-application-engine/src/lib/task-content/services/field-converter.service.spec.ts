@@ -3,12 +3,17 @@ import {FieldConverterService} from './field-converter.service';
 import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import moment from 'moment';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FieldConvertorService', () => {
     let service: FieldConverterService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule
+            ]
+        });
         service = TestBed.inject(FieldConverterService);
     });
 
@@ -29,6 +34,7 @@ describe('FieldConvertorService', () => {
                 y: 0,
                 rows: 1,
                 cols: 1,
+                offset: 0,
                 template: TemplateAppearance.NETGRIF,
                 appearance: MaterialAppearance.OUTLINE
             },
@@ -72,6 +78,7 @@ describe('FieldConvertorService', () => {
                 y: 0,
                 rows: 1,
                 cols: 1,
+                offset: 0,
                 template: TemplateAppearance.NETGRIF,
                 appearance: MaterialAppearance.OUTLINE
             },

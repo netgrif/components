@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
 import {FileUploadModel} from '../../../../side-menu/content-components/files-upload/models/file-upload-model';
 import {FileUploadDataModel} from '../../models/file-field';

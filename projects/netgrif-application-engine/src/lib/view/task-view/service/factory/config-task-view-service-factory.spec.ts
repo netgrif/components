@@ -15,6 +15,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../../../material/material.module';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ConfigTaskViewServiceFactory', () => {
     let service: ConfigTaskViewServiceFactory;
@@ -24,7 +25,8 @@ describe('ConfigTaskViewServiceFactory', () => {
             imports: [
                 HttpClientTestingModule,
                 MaterialModule,
-                TranslateLibModule
+                TranslateLibModule,
+                NoopAnimationsModule
             ],
             providers: [
                 ConfigTaskViewServiceFactory,

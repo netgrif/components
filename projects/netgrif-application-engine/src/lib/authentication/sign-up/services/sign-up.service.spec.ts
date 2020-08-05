@@ -4,13 +4,14 @@ import {SignUpService} from './sign-up.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('SignUpService', () => {
     let service: SignUpService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule],
             providers: [
                 SignUpService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}

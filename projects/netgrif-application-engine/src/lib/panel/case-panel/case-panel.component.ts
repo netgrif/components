@@ -20,6 +20,8 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
     @Input() responsiveBody = true;
     @Input() first: boolean;
     @Input() last: boolean;
+    @Input() showCasePanelIcon = true;
+    @Input() showDeleteMenu = false;
 
     constructor() {
         super();

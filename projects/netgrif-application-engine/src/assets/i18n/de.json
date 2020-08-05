@@ -73,6 +73,7 @@
         },
         "user": {
             "assign": "Benützer zuweisen",
+            "choose": "Benützer auswählen",
             "noUser": "Es gibt keine Benützer",
             "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
             "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
@@ -199,6 +200,7 @@
     "headers": {
         "newHeader": "Kopfzeile auswählen",
         "date": "Datum auswählen",
+        "selectUser": "Benutzer auswählen",
         "caseMeta": {
             "visualID": "Visuelle ID",
             "title": "Fallname",

@@ -3,13 +3,14 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {UserResourceService} from './user-resource.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('UserResourceService', () => {
     let service: UserResourceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(UserResourceService);
@@ -163,7 +164,7 @@ describe('UserResourceService', () => {
     it('should search', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.search({}).subscribe(res => {
-                expect(res.length).toEqual(0);
+                expect(res.content.length).toEqual(0);
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/user/search');

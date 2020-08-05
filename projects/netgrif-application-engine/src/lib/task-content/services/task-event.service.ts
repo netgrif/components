@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {UserService} from '../../user/services/user.service';
-import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AssignPolicy} from '../model/policy';
 import {TaskContentService} from './task-content.service';

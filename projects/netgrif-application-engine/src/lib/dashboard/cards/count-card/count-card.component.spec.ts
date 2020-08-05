@@ -1,6 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CountCardComponent} from './count-card.component';
-import {MatCardModule, MatProgressSpinnerModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {Component} from '@angular/core';
 import {CountCard} from '../model/count-card';
@@ -10,6 +9,9 @@ import {Observable, of} from 'rxjs';
 import {Count} from '../../../resources/interface/count';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {FilterType} from '../../../filter/models/filter-type';
+import {MatCardModule} from '@angular/material/card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('CountCardComponent', () => {
     let component: CountCardComponent;
@@ -17,7 +19,7 @@ describe('CountCardComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MatCardModule, FlexLayoutModule, MatProgressSpinnerModule],
+            imports: [MatCardModule, FlexLayoutModule, MatProgressSpinnerModule, NoopAnimationsModule],
             declarations: [CountCardComponent, TestWrapperComponent],
             providers: [{
                 provide: CaseResourceService,
