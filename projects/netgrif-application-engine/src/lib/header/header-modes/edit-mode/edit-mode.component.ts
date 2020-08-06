@@ -6,6 +6,12 @@ import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {FieldsGroup} from '../../models/fields-group';
 import {orderBy} from 'natural-orderby';
+import {Observable} from 'rxjs';
+
+interface HeaderOption {
+    groupTitle: string;
+    fields: Array<HeaderColumn>;
+}
 
 @Component({
     selector: 'nae-edit-mode',
@@ -13,9 +19,8 @@ import {orderBy} from 'natural-orderby';
     styleUrls: ['./edit-mode.component.scss']
 })
 export class EditModeComponent implements OnInit {
-    public formControls = {};
-
-    public filterOptions = {};
+    public formControls: Array<FormControl> = [];
+    public filterOptions: Array<Observable<Array<HeaderOption>>> = [];
 
     @Input() public headerService: AbstractHeaderService;
 
@@ -23,23 +28,29 @@ export class EditModeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const array = [];
-        for (let i = 0; i < this.headerService.maxHeaderColumns; i++) {
-            array.push(i);
-            this.filterOptions[i] = [];
-            this.formControls[i] = new FormControl();
-        }
-        array.forEach( index => {
-            this.formControls[index].setValue(this.headerService.headerState.selectedHeaders[index]);
-            this.filterOptions[index] = this.formControls[index].valueChanges
-                .pipe(
-                    startWith(''),
-                    map(inputText => this._filter(inputText))
-            );
-        });
+        this.headerService.headerColumnCount$.subscribe(newCount => this.updateHeaderCount(newCount));
     }
 
-    private _filter(value): string[] {
+    private updateHeaderCount(newCount: number): void {
+        if (this.formControls.length > newCount) {
+            this.formControls = this.formControls.slice(0, newCount);
+            this.filterOptions = this.filterOptions.slice(0, newCount);
+            return;
+        }
+
+        while (this.formControls.length < newCount) {
+            const i = this.formControls.length;
+            const formControl = new FormControl();
+            formControl.setValue(this.headerService.headerState.selectedHeaders[i]);
+            this.formControls.push(formControl);
+            this.filterOptions.push(formControl.valueChanges.pipe(
+                startWith(''),
+                map(inputText => this._filter(inputText)))
+            );
+        }
+    }
+
+    private _filter(value): Array<HeaderOption> {
         let filterValue;
         if (typeof value === 'string') {
             filterValue = (value as string).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -50,6 +61,8 @@ export class EditModeComponent implements OnInit {
         const arrayGroup: Array<FieldsGroup> = [];
         arrayGroup.push(...this.headerService.fieldsGroup);
         const meta = arrayGroup.splice(0, 1);
+        // TODO IMPROVEMENT 17.7.2020 - don't sort the fieldsGroup array here, but sort it once in the headerService and maintain
+        //  the sorted order there
         meta.push(...orderBy(arrayGroup, v => v.groupTitle, 'asc'));
         meta.forEach(group => group.fields = orderBy(group.fields, v => v.title, 'asc'));
 
@@ -57,7 +70,7 @@ export class EditModeComponent implements OnInit {
             groupTitle: group.groupTitle,
             fields: group.fields.filter(option => this._translate.instant(option.title).toLowerCase().normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0)
-        })).filter(group => group.fields.length > 0) as any;
+        })).filter(group => group.fields.length > 0);
     }
 
     public headerColumnSelected(columnIndex: number, newHeaderColumn: HeaderColumn) {
