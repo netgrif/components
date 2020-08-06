@@ -17,16 +17,41 @@ export class HeaderComponent implements OnInit {
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
-    @Input() maxHeaderColumns = 5;
-    @Input() responsiveHeaders = true;
     public headerService: AbstractHeaderService;
     public readonly headerModeEnum = HeaderMode;
+
+    private _initHeaderCount: number = undefined;
+    private _initResponsiveHeaders: boolean = undefined;
 
     constructor(private _injector: Injector) {
     }
 
+    @Input()
+    public set maxHeaderColumns(count: number) {
+        if (this.headerService) {
+            this.headerService.headerColumnCount = count;
+        } else {
+            this._initHeaderCount = count;
+        }
+    }
+
+    @Input()
+    public set responsiveHeaders(responsive: boolean) {
+        if (this.headerService) {
+            this.headerService.responsiveHeaders = responsive;
+        } else {
+            this._initResponsiveHeaders = responsive;
+        }
+    }
+
     ngOnInit(): void {
         this.resolveHeaderService();
+        if (this._initHeaderCount !== undefined) {
+            this.headerService.headerColumnCount = this._initHeaderCount;
+        }
+        if (this._initResponsiveHeaders !== undefined) {
+            this.headerService.responsiveHeaders = this._initResponsiveHeaders;
+        }
     }
 
     private resolveHeaderService() {
@@ -41,8 +66,6 @@ export class HeaderComponent implements OnInit {
                 this.headerService = this._injector.get(WorkflowHeaderService);
                 break;
         }
-        this.headerService.maxHeaderColumns = this.maxHeaderColumns;
-        this.headerService.responsiveHeaders = this.responsiveHeaders;
     }
 
 }
