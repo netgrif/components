@@ -21,19 +21,19 @@
 <!--                    <mat-icon *ngIf="state.completed && state.error" color="warn">error</mat-icon>-->
 <!--                </div>-->
                 <div fxFlex="20">
-                    <button mat-stroked-button color="primary" (click)="chooseFile()" [disabled]="formControl.disabled"
+                    <button mat-stroked-button color="primary" (click)="chooseFile()" *ngIf="!formControl.disabled"
                             [class.do-not-click]="state.uploading" fxFlex>
                         <mat-icon>file_upload</mat-icon>
                     </button>
                 </div>
                 <div fxFlex="5"></div>
                 <div fxFlex="75">
-                    <button mat-button color="accent" (click)="download()" matTooltip="Click to download" fxFlex="100">
+                    <button mat-button class="file-button"  color="{{dataField.downloaded ? 'primary' : 'accent'}}" (click)="download()" matTooltip="Click to download {{name}}" fxFlex="100">
                         <mat-icon *ngIf="state.completed && !state.error" color="accent">done</mat-icon>
                         <mat-icon *ngIf="state.completed && state.error" color="warn">error</mat-icon>
                         {{name}}
                     </button>
-                    <button mat-button *ngIf="dataField.value.name || dataField.value.file">
+                    <button mat-button *ngIf="dataField.value.name || dataField.value.file" [disabled]="formControl.disabled">
                         <mat-icon color="warn" (click)="deleteFile()" matTooltip="Click to delete">close</mat-icon>
                     </button>
                 </div>

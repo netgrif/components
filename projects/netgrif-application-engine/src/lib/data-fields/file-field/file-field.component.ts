@@ -135,6 +135,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
                 this.state.error = false;
                 this.state.uploading = false;
                 this.state.progress = 0;
+                this.dataField.downloaded = false;
             }
         }, error => {
             this.state.completed = true;
@@ -167,6 +168,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
                 this.downloadViaAnchor(response as Blob);
                 this.state.downloading = false;
                 this.state.progress = 0;
+                this.dataField.downloaded = true;
             }
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
@@ -203,6 +205,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
                 this.dataField.value.name = null;
                 this.dataField.value.file = null;
                 this.name = this.constructDisplayName();
+                this.dataField.downloaded = false;
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully deleted`);
             } else {
                 this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);

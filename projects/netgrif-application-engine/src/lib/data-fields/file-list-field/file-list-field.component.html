@@ -13,7 +13,7 @@
         <div fxLayout="column" fxLayoutAlign="start none">
             <div fxLayout="row" fxLayoutAlign="start center" class="margin-bottom-default">
                 <div fxFlex="20">
-                    <button mat-stroked-button color="primary" (click)="chooseFile()" [disabled]="formControl.disabled"
+                    <button mat-stroked-button color="primary" (click)="chooseFile()" *ngIf="!formControl.disabled"
                             [class.do-not-click]="state.uploading" fxFlex>
                         <mat-icon>file_upload</mat-icon>
                     </button>
@@ -27,12 +27,12 @@
                     </div>
                     <div fxLayout="column" fxFlex="100" *ngIf="uploadedFiles.length !== 0">
                         <div *ngFor="let name of uploadedFiles">
-                            <button  mat-button color="accent" (click)="download(name)" matTooltip="Click to download">
+                            <button mat-button class="file-button" color="{{dataField.downloaded.includes(name) ? 'primary' : 'accent'}}" (click)="download(name)" matTooltip="Click to download {{name}}" fxFlex="95">
                                 <mat-icon *ngIf="state.completed && !state.error" color="accent">done</mat-icon>
                                 <mat-icon *ngIf="state.completed && state.error" color="warn">error</mat-icon>
                                 {{name}}
                             </button>
-                            <button mat-button>
+                            <button mat-button [disabled]="formControl.disabled" fxFlex="5">
                                 <mat-icon color="warn" (click)="deleteFile(name)" matTooltip="Click to delete">close</mat-icon>
                             </button>
                         </div>

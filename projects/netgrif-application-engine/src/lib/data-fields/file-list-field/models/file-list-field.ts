@@ -5,19 +5,14 @@ import {Layout} from '../../models/layout';
 import {FileUploadMIMEType} from '../../file-field/models/file-field';
 import {DataField} from '../../models/abstract-data-field';
 import {FileListFieldValue} from './file-list-field-value';
+import {Validation} from '../../models/validation';
 
 export class FileListField extends DataField<FileListFieldValue> {
-    /**
-     * Specifies the size of all uploaded files in bytes.
-     *
-     * It is an indicator for checking the oversized size in the Petri Net.
-     */
-    public filesSize = 0;
-
     /**
      * Used to forward the result of the upload file backend call to the task content
      */
     private _changedFields$: Subject<ChangedFieldContainer>;
+    public downloaded: Array<string>;
 
     /**
      * Create new instance for file field with all his properties.
@@ -25,22 +20,11 @@ export class FileListField extends DataField<FileListFieldValue> {
      * Placeholder is a substitute for the value name if not set value.
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileListFieldValue, placeholder?: string, description?: string,
-                layout?: Layout, private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1,
-                private _zipped: boolean = false, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
+                layout?: Layout, public validations?: Validation[],
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
         super(stringId, title, value, behavior, placeholder, description, layout);
         this._changedFields$ = new Subject<ChangedFieldContainer>();
-    }
-
-    get maxUploadSizeInBytes(): number {
-        return this._maxUploadSizeInBytes;
-    }
-
-    get maxUploadFiles(): number {
-        return this._maxUploadFiles;
-    }
-
-    get zipped(): boolean {
-        return this._zipped;
+        this.downloaded = new Array<string>();
     }
 
     get allowTypes(): string {

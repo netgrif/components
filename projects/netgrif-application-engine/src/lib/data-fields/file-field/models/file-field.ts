@@ -44,6 +44,8 @@ export class FileField extends DataField<FileFieldValue> {
      */
     private _changedFields$: Subject<ChangedFieldContainer>;
 
+    public downloaded: boolean;
+
     /**
      * Create new instance for file field with all his properties.
      *

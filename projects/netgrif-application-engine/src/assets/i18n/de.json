@@ -171,7 +171,8 @@
             "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
             "wontUploadSameFiles": "Die ausgewählten Dateien wurden bereits hochgeladen. Löschen Sie zum Aktualisieren von Dateien bereits hochgeladene Dateien",
             "fileUploadFailed": "The file failed to upload",
-            "fileDeleteFailed":  "Die Datei konnte nicht gelöscht werden"
+            "fileDeleteFailed":  "Die Datei konnte nicht gelöscht werden",
+            "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: "
         },
         "noFile": "No file"
     },

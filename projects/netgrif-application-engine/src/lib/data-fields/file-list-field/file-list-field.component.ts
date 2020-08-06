@@ -29,6 +29,9 @@ export class FileListFieldComponent extends AbstractDataFieldComponent implement
     public uploadedFiles: Array<string>;
     public state: FilesState;
 
+    private maxFilesNumber: number;
+    private maxFilesMessage: string;
+
     /**
      * Task mongo string id is binding property from parent component.
      */
@@ -49,11 +52,19 @@ export class FileListFieldComponent extends AbstractDataFieldComponent implement
         super();
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
+        this.maxFilesNumber = Number.POSITIVE_INFINITY;
     }
 
     ngOnInit(): void {
         super.ngOnInit();
         this.parseResponse();
+        if (this.dataField.validations && this.dataField.validations.length !== 0) {
+            const val = this.dataField.validations.find(validation => validation.validationRule.includes('maxFiles'));
+            if (val && val.validationRule.split(' ').length === 2 && !isNaN(parseInt(val.validationRule.split(' ')[1], 10))) {
+                this.maxFilesNumber = parseInt(val.validationRule.split(' ')[1], 10);
+                this.maxFilesMessage = val.validationMessage && val.validationMessage !== '' ? val.validationMessage : null;
+            }
+        }
     }
 
     /**
@@ -84,6 +95,12 @@ export class FileListFieldComponent extends AbstractDataFieldComponent implement
      */
     public upload() {
         if (!this.fileUploadEl.nativeElement.files || this.fileUploadEl.nativeElement.files.length === 0) {
+            return;
+        }
+        if (this.fileUploadEl.nativeElement.files.length + this.uploadedFiles.length > this.maxFilesNumber) {
+            this._snackbar.openErrorSnackBar(this.maxFilesMessage ? this.maxFilesMessage :
+                this._translate.instant('dataField.snackBar.maxFilesExceeded') + this.maxFilesNumber
+            );
             return;
         }
         if (!this.taskId) {
@@ -157,6 +174,7 @@ export class FileListFieldComponent extends AbstractDataFieldComponent implement
                 this.downloadViaAnchor(response as Blob, fileName);
                 this.state.downloading = false;
                 this.state.progress = 0;
+                this.dataField.downloaded.push(fileName);
             }
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${fileName} has failed!`, error);
@@ -180,7 +198,7 @@ export class FileListFieldComponent extends AbstractDataFieldComponent implement
     }
 
     public deleteFile(fileName: string) {
-        if (!this.dataField.value || !this.dataField.value.names || !this.dataField.value.names.find(name => name === fileName)) {
+        if (!this.dataField.value || !this.dataField.value.names || !this.dataField.value.names.includes(fileName)) {
             return;
         }
         if (!this.taskId) {
@@ -197,6 +215,7 @@ export class FileListFieldComponent extends AbstractDataFieldComponent implement
                 if (this.dataField.value.files) {
                     this.dataField.value.files = this.dataField.value.files.filter(file => file.name !== fileName);
                 }
+                this.dataField.downloaded = this.dataField.downloaded.filter(one => one !== fileName);
                 this._log.debug(`File [${this.dataField.stringId}] ${fileName} was successfully deleted`);
             } else {
                 this._log.error(`Downloading file [${this.dataField.stringId}] ${fileName} has failed!`, response.error);

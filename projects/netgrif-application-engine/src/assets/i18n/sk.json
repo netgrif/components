@@ -171,7 +171,8 @@
             "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru alebo súbor odstránte",
             "wontUploadSameFiles": "Vybrané súbory už boli nahrané. Ak chcete súbory aktualizovať odstránte už nahrané súbory",
             "fileUploadFailed": "Súbor sa nepodarilo nahrať",
-            "fileDeleteFailed":  "Súbor sa nepodarilo vymazať"
+            "fileDeleteFailed":  "Súbor sa nepodarilo vymazať",
+            "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: "
         },
         "noFile": "Žiadny súbor"
     },

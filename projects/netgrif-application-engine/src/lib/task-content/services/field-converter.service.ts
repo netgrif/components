@@ -120,7 +120,7 @@ export class FieldConverterService {
                     item.placeholder, item.description, item.layout);
             case 'fileList':
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout);
+                    item.placeholder, item.description, item.layout, item.validations);
         }
     }
 
