@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {AuthenticationService} from '../authentication/authentication.service';
 import {Views} from '../../../configuration/interfaces/schema';
 import {AuthenticationModule} from '../../authentication.module';
 import {SessionService} from '../../session/services/session.service';
