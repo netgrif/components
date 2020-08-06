@@ -16,6 +16,7 @@ export function ngAdd(): Rule {
         const rules = [];
         rules.push(createMinimalNaeJson());
         rules.push(schematic('create-nae-files', {}));
+        rules.push(schematic('update-package-json', {}));
         return chain(rules);
     };
 }
@@ -23,8 +24,9 @@ export function ngAdd(): Rule {
 function createMinimalNaeJson(): Rule {
     return (tree: Tree) => {
         if (!tree.exists('./nae.json')) {
-            tree.create('./nae.json', '{\n  "extends": "nae-default",\n  "views": {\n\n  },\n  "theme":' +
-                ' {\n    "name": "example-classico",\n    "pallets": {\n      "light": {\n        ' +
+            tree.create('./nae.json', '{\n  "$schema": "./node_modules/@netgrif/application-engine/src/schema/nae-schema.json",' +
+                '\n"extends": "nae-default",\n  "views": {\n\n  },\n  "theme":' +
+                ' {\n    "name": "nae-color",\n    "pallets": {\n      "light": {\n        ' +
                 '"primary": "blue"\n      }\n    }\n  }\n}');
         }
     };

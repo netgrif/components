@@ -182,14 +182,17 @@ export class TaskPanelContentComponent {
         let encounterFirst = false;
         for (let y = grid.length - 1; y >= 0; y--) {
             const row = grid[y];
-            row.forEach(filler => {
+            if (row.length === 0) {
+                encounterFirst = true;
+            }
+            for (const filler of row) {
                 if (!encounterFirst && !filler.isFullWidth(columnCount)) {
                     encounterFirst = true;
                 }
                 if (encounterFirst && (filler.isIntentional || !filler.isFullWidth(columnCount))) {
                     returnResource.push(filler.convertToGridElement(y));
                 }
-            });
+            }
         }
 
         return returnResource.sort((a, b) => {
