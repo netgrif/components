@@ -381,7 +381,7 @@ export class CaseTreeService implements OnDestroy {
                 netId: net.stringId
             }).subscribe(childCase => {
                 const caseRefField = this.getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
-                const setCaseRefValue = [...caseRefField.allowedNets, childCase.stringId];
+                const setCaseRefValue = [...caseRefField.value, childCase.stringId];
                 this.performCaseRefCall(clickedNode.case.stringId, setCaseRefValue).subscribe(
                     valueChange => this.updateTreeAfterChildAdd(clickedNode, valueChange ? valueChange : setCaseRefValue, operationResult)
                 );
@@ -430,14 +430,22 @@ export class CaseTreeService implements OnDestroy {
         }
 
         node.removingNode.on();
-        this.performCaseRefCall(node.parent.case.stringId, {
-            operation: CaseRefOperation.REMOVE,
-            caseId: node.case.stringId
-        }).subscribe(newCaseRefValue => {
-            this.updateNodeChildrenFromChangedFields(node.parent, newCaseRefValue);
+        const caseRefImmediate = this.getImmediateData(node.parent.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const setCaseRefValue = (caseRefImmediate.value as Array<string>).filter(id => id !== node.case.stringId);
+        this.performCaseRefCall(node.parent.case.stringId, setCaseRefValue).subscribe(newCaseRefValue => {
+            this.updateNodeChildrenFromChangedFields(node.parent, newCaseRefValue ? newCaseRefValue : setCaseRefValue);
+            // TODO delete the removed child cases
             node.removingNode.off();
         });
 
+        this.deselectNodeIfDescendantOf(node);
+    }
+
+    /**
+     * Deselects the currently selected node if it is a descendant of the provided node
+     * @param node the node who's descendants should be deselected
+     */
+    protected deselectNodeIfDescendantOf(node: CaseTreeNode): void {
         let bubblingNode = this.currentNode;
         while (bubblingNode && bubblingNode !== this._rootNode) {
             if (bubblingNode === node) {
