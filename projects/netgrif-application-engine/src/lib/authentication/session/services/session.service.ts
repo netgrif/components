@@ -67,13 +67,13 @@ export class SessionService {
 
     public setVerifiedToken(sessionToken: string) {
         this._log.warn('Session token without explicit verification was set');
-        this.sessionToken = sessionToken;
         this._verified = true;
+        this.sessionToken = sessionToken;
     }
 
     public clear(): void {
-        this.sessionToken = '';
         this._verified = false;
+        this.sessionToken = '';
         this._storage.removeItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
     }
 
@@ -86,7 +86,6 @@ export class SessionService {
         url += authConfig.endpoints && authConfig.endpoints['verification'] ? authConfig.endpoints['verification'] :
             (authConfig.endpoints && authConfig.endpoints['login'] ? authConfig.endpoints['login'] : '');
         if (!url || url === authConfig.address) {
-            this._verified = false;
             this.clear();
             this._verifying.off();
             return throwError(new Error('Cannot verify session token. ' +
@@ -99,7 +98,6 @@ export class SessionService {
                 catchError(error => {
                     if (error instanceof HttpErrorResponse && error.status === 401) {
                         this._log.warn('Authentication token is invalid. Clearing session token');
-                        this._verified = false;
                         this.clear();
                     }
                     this._verifying.off();

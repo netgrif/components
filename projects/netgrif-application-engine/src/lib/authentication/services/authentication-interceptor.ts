@@ -3,11 +3,12 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {SessionService} from '../session/services/session.service';
+import {RedirectService} from '../../routing/redirect-service/redirect.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
-    constructor(private _session: SessionService) {
+    constructor(private _session: SessionService, private _redirect: RedirectService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -32,6 +33,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
                 if (errorEvent instanceof HttpErrorResponse && errorEvent.status === 401) {
                     console.debug('Authentication token is invalid. Clearing session token');
                     this._session.clear();
+                    this._redirect.redirect(this._redirect.resolveLoginPath());
                 }
                 return throwError(errorEvent);
             })
