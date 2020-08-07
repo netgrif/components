@@ -121,8 +121,8 @@ export class CaseResourceService implements CountService {
      * POST
      * {{baseUrl}}/api/workflow/case/search2
      */
-    public getCasesQueryDSL(body: object): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/search2', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+    public getCasesQueryDSL(body: object): Observable<Page<Case>> {
+        return this.provider.post$('workflow/case/search2', this.SERVER_URL, body).pipe(map(r => getResourcePage<Case>(r, 'cases')));
     }
 
     /**
@@ -132,8 +132,9 @@ export class CaseResourceService implements CountService {
      * @param body object defining the search query
      * @param params request parameters, that can be used for sorting of results.
      */
-    public getCases(body: CaseGetRequestBody, params?: Params): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/search_mongo', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'cases')));
+    public getCases(body: CaseGetRequestBody, params?: Params): Observable<Page<Case>> {
+        return this.provider.post$('workflow/case/search_mongo', this.SERVER_URL, body, params)
+            .pipe(map(r => getResourcePage<Case>(r, 'cases')));
     }
 
     /**
