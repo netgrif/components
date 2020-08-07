@@ -341,9 +341,10 @@ export class CaseTreeService implements OnDestroy {
         }
 
         const childTitleImmediate = this.getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILD_NODE_TITLE);
+        const childTitle = childTitleImmediate ? childTitleImmediate.value : this._translateService.instant('caseTree.newNodeDefaultName');
 
         if (caseRefField.allowedNets.length === 1) {
-            this.createAndAddChildCase(caseRefField.allowedNets[0], childTitleImmediate.value, clickedNode, ret);
+            this.createAndAddChildCase(caseRefField.allowedNets[0], childTitle, clickedNode, ret);
         } else {
             this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
                 const sideMeuRef = this._sideMenuService.open(OptionSelectorComponent, SideMenuSize.MEDIUM, {
@@ -352,7 +353,7 @@ export class CaseTreeService implements OnDestroy {
                 });
                 sideMeuRef.onClose.subscribe(event => {
                     if (!!event.data) {
-                        this.createAndAddChildCase(event.data.value, childTitleImmediate.value, clickedNode, ret);
+                        this.createAndAddChildCase(event.data.value, childTitle, clickedNode, ret);
                     } else {
                         clickedNode.addingNode.off();
                         ret.next(false);
