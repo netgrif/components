@@ -23,6 +23,7 @@ import {hasContent} from '../../../utility/pagination/page-has-content';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {ofVoid} from '../../../utility/ofVoid';
+import {CaseGetRequestBody} from '../../../resources/interface/case-get-request-body';
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
@@ -234,8 +235,8 @@ export class CaseTreeService implements OnDestroy {
      * @returns next is emitted when loading of all pages completes (regardless of the outcome)
      */
     protected updatePageOfChildren(node: CaseTreeNode, pageNumber: number): Observable<void> {
-        const filter = this.createChildFilter(node);
-        if (!filter) {
+        const requestBody = this.createChildRequestBody(node);
+        if (!requestBody) {
             this._logger.error('Cannot create filter to find children of the given node', node.case);
             return;
         }
@@ -243,8 +244,8 @@ export class CaseTreeService implements OnDestroy {
         const done = new Subject<void>();
 
         let params: HttpParams = new HttpParams();
-        params = params.set('page', `${pageNumber}`).set('sort', 'creationDateSortable,asc');
-        this._caseResourceService.searchCases(filter, params).subscribe(page => {
+        params = params.set('page', `${pageNumber}`).set('sort', 'creationDate,asc');
+        this._caseResourceService.getCases(requestBody, params).subscribe(page => {
             if (!hasContent(page)) {
                 this._logger.error('Child cases invalid page content', page);
                 done.next();
@@ -296,17 +297,16 @@ export class CaseTreeService implements OnDestroy {
 
     /**
      * @param node the {@link CaseTreeNode} who's children the {@link Filter} should return
-     * @returns a {@link Filter} that finds all child cases of the given `node`.
-     * Returns `undefined` if the provided `node` doesn't contain enough information to create the {@link Filter}.
+     * @returns a request body that finds all child cases of the given `node`.
+     * Returns `undefined` if the provided `node` doesn't contain enough information to create the request body.
      */
-    protected createChildFilter(node: CaseTreeNode): Filter | undefined {
+    protected createChildRequestBody(node: CaseTreeNode): CaseGetRequestBody {
         const childCaseRef = this.getImmediateData(node.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         if (!childCaseRef) {
             return undefined;
         }
 
-        const caseQueries = childCaseRef.value.map(caseId => `(stringId:${caseId})`);
-        return new SimpleFilter(`childrenOf-${node.case.stringId}`, FilterType.CASE, {query: caseQueries.join('OR')});
+        return {stringId: (childCaseRef.value as Array<string>)};
     }
 
     /**
@@ -351,10 +351,12 @@ export class CaseTreeService implements OnDestroy {
                     title: clickedNode.case.title,
                     options: nets.map(net => ({text: net.title, value: net.identifier}))
                 });
+                let dataReceived = false;
                 sideMeuRef.onClose.subscribe(event => {
                     if (!!event.data) {
+                        dataReceived = true;
                         this.createAndAddChildCase(event.data.value, childTitle, clickedNode, ret);
-                    } else {
+                    } else if (!dataReceived) {
                         clickedNode.addingNode.off();
                         ret.next(false);
                         ret.complete();
@@ -460,7 +462,7 @@ export class CaseTreeService implements OnDestroy {
                 if (responseMessage.error) {
                     this._logger.error('Removal of child case unsuccessful', responseMessage.error);
                 }
-        }));
+            }));
     }
 
     /**
