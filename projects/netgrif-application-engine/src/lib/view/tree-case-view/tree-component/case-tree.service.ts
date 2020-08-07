@@ -7,8 +7,6 @@ import {TreeCaseViewService} from '../tree-case-view.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ImmediateData} from '../../../resources/interface/immediate-data';
-import {SimpleFilter} from '../../../filter/models/simple-filter';
-import {FilterType} from '../../../filter/models/filter-type';
 import {Case} from '../../../resources/interface/case';
 import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
